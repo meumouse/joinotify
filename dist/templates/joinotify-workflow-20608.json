@@ -1,0 +1,48 @@
+{
+  "plugin_version": "1.0.0",
+  "post": {
+    "title": "teste 1123",
+    "date": "2024-10-08 00:15:45",
+    "status": "publish",
+    "modified": "2024-10-08 11:28:22"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_67054186962a0",
+      "type": "trigger",
+      "context": "wordpress",
+      "trigger": "user_password_recovery"
+    },
+    {
+      "id": "joinotify_action_6705be7502f48",
+      "type": "action",
+      "data": {
+        "action": "send_whatsapp_message_text",
+        "phone_number": "{{ phone }}",
+        "message": "Oi {{ first_name }}! Recebemos seu pedido! 🤗💙",
+        "funnel_action_message": "Oi <span class=\"builder-placeholder\">{{ first_name }}</span>! Recebemos seu pedido! 🤗💙"
+      }
+    },
+    {
+      "id": "joinotify_action_6705bea24dbd1",
+      "type": "action",
+      "data": {
+        "action": "time_delay",
+        "delay_type": "period",
+        "delay_value": "2",
+        "delay_period": "seconds",
+        "funnel_action_message": "Esperar por 2 segundos"
+      }
+    },
+    {
+      "id": "joinotify_action_6705bec648db1",
+      "type": "action",
+      "data": {
+        "action": "send_whatsapp_message_text",
+        "phone_number": "{{ phone }}",
+        "message": "Resumo do pedido: {{ wc_order_number }}",
+        "funnel_action_message": "Resumo do pedido: <span class=\"builder-placeholder\">{{ wc_order_number }}</span>"
+      }
+    }
+  ]
+}
