@@ -1,0 +1,64 @@
+{
+  "plugin_version": "1.0.0",
+  "post": {
+    "title": "teste",
+    "date": "2024-10-28 16:14:45",
+    "status": "draft",
+    "modified": "2024-10-28 16:14:45",
+    "category": "wordpress"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_671fe2a5a88d9",
+      "type": "trigger",
+      "context": "wordpress",
+      "trigger": "user_password_recovery"
+    },
+    {
+      "id": "joinotify_action_671fe1ef6175e",
+      "type": "action",
+      "data": {
+        "action": "time_delay",
+        "delay_type": "period",
+        "delay_value": "1",
+        "delay_period": "minute",
+        "funnel_action_message": "Esperar por 1 minuto"
+      }
+    },
+    {
+      "id": "joinotify_action_671fe232b4460",
+      "type": "action",
+      "data": {
+        "action": "send_whatsapp_message_text",
+        "sender": null,
+        "receiver": "{{ phone }}",
+        "message": "Oi {{ first_name }} 😙",
+        "funnel_action_message": "Oi <span class=\"builder-placeholder\">{{ first_name }}</span> 😙"
+      }
+    },
+    {
+      "id": "joinotify_action_671fe2433216a",
+      "type": "action",
+      "data": {
+        "action": "time_delay",
+        "delay_type": "period",
+        "delay_value": "10",
+        "delay_period": "seconds",
+        "funnel_action_message": "Esperar por 10 segundos"
+      }
+    },
+    {
+      "id": "joinotify_action_671fe25fe7f46",
+      "type": "action",
+      "data": {
+        "action": "send_whatsapp_message_media",
+        "sender": null,
+        "receiver": "{{ phone }}",
+        "media_type": "image",
+        "media_url": "https://eep.io/images/yzco4xsimv0y/1aRGO6ynIJejUp1TJqYbfL/17ea7cefb6fd4efe00624cf98afd1d68/ILLO_MiniSpot_Transactional-Analytics-600.png?w=820&fm=avif&q=60",
+        "filename": "",
+        "funnel_action_message": "<img class=\"funnel-media\" src=\"https://eep.io/images/yzco4xsimv0y/1aRGO6ynIJejUp1TJqYbfL/17ea7cefb6fd4efe00624cf98afd1d68/ILLO_MiniSpot_Transactional-Analytics-600.png?w=820&#038;fm=avif&#038;q=60\">"
+      }
+    }
+  ]
+}
