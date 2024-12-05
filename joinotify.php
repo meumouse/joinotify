@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Plugin Name: 			Joinotify
- * Description: 			Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.
+ * Plugin Name: 				Joinotify
+ * Description: 				Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
- * Author: 					MeuMouse.com
+ * Author: 						MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				1.0.0
- * Requires PHP: 			7.4
- * Tested up to:      		6.6.2
- * Text Domain: 			joinotify
- * Domain Path: 			/languages
- * License: 				GPL2
+ * Version: 					1.0.5
+ * Requires PHP: 				7.4
+ * Tested up to:      		6.7.1
+ * Text Domain: 				joinotify
+ * Domain Path: 				/languages
+ * License: 					GPL2
  */
 
 namespace MeuMouse\Joinotify;
@@ -51,7 +51,7 @@ if ( ! class_exists('Joinotify') ) {
 		 * @var string
 		 * @since 1.0.0
 		 */
-		public static $version = '1.0.0';
+		public static $version = '1.0.5';
 
 		/**
 		 * Constructor function
@@ -77,12 +77,12 @@ if ( ! class_exists('Joinotify') ) {
 				return;
 			}
 
-            $this->setup_constants();
-		
-            load_plugin_textdomain( 'joinotify', false, dirname( JOINOTIFY_BASENAME ) . '/languages/' );
+			$this->setup_constants();
+	
+			load_plugin_textdomain( 'joinotify', false, dirname( JOINOTIFY_BASENAME ) . '/languages/' );
 			add_action( 'before_woocommerce_init', array( $this, 'hpos_compatibility' ) );
-            add_filter( 'plugin_action_links_' . JOINOTIFY_BASENAME, array( $this, 'add_action_plugin_links' ), 10, 4 );
-            add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
+			add_filter( 'plugin_action_links_' . JOINOTIFY_BASENAME, array( $this, 'add_action_plugin_links' ), 10, 4 );
+			add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
 
 			// load Composer
 			require_once JOINOTIFY_DIR . 'vendor/autoload.php';
@@ -179,13 +179,20 @@ if ( ! class_exists('Joinotify') ) {
 		 * Plugin action links
 		 * 
 		 * @since 1.0.0
-         * @param array $action_links | Default plugin action links
+		 * @version 1.0.5
+		 * @param array $action_links | Default plugin action links
 		 * @return array
 		 */
 		public function add_action_plugin_links( $action_links ) {
-			$plugins_links = array(
-				'<a href="' . admin_url('admin.php?page=joinotify-settings') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
-			);
+        	if ( get_option('joinotify_license_status') !== 'valid' ) {
+				$plugins_links = array(
+					'<a href="' . admin_url('admin.php?page=joinotify-license') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
+				);
+			} else {
+				$plugins_links = array(
+					'<a href="' . admin_url('admin.php?page=joinotify-settings') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
+				);
+			}
 
 			return array_merge( $plugins_links, $action_links );
 		}
