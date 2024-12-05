@@ -11,6 +11,7 @@ defined('ABSPATH') || exit;
  * Schedule messages for a future time or date
  * 
  * @since 1.0.0
+ * @version 1.0.5
  * @package MeuMouse.com
  */
 class Schedule {
@@ -111,5 +112,36 @@ class Schedule {
      */
     public function is_scheduled( $hook, $post_id, $args = array() ) {
         return (bool) wp_next_scheduled( $hook, array( $post_id, $args ) );
+    }
+
+
+    /**
+     * Convert delay period and value into seconds
+     *
+     * @since 1.0.5
+     * @param int $delay_value | The value of the delay (e.g., 5, 10, etc.)
+     * @param string $delay_period | The period type (e.g., 'seconds', 'minute', 'hours', 'day', 'week', 'month', 'year')
+     * @return int The delay in seconds
+     */
+    public static function get_delay_timestamp( $delay_value, $delay_period ) {
+        // Ensure delay_value is an integer
+        $delay_value = intval( $delay_value );
+    
+        switch ( $delay_period ) {
+            case 'minute':
+                return $delay_value * 60;
+            case 'hours':
+                return $delay_value * 3600;
+            case 'day':
+                return $delay_value * 86400;
+            case 'week':
+                return $delay_value * 604800;
+            case 'month':
+                return $delay_value * 2592000; // Approximate: 30 days
+            case 'year':
+                return $delay_value * 31536000; // Approximate: 365 days
+            default:
+                return $delay_value; // Default is seconds
+        }
     }
 }
