@@ -8,10 +8,11 @@ use MeuMouse\Joinotify\Builder\Core;
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\API\Workflow_Templates;
 use MeuMouse\Joinotify\API\License;
-use MeuMouse\Joinotify\Validations\OTP_Validation;
+use MeuMouse\Joinotify\Validations\Otp_Validation;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Core\Components;
 use MeuMouse\Joinotify\Builder\Placeholders;
+use MeuMouse\Joinotify\Cron\Schedule;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -20,6 +21,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
+ * @version 1.0.5
  * @package MeuMouse.com
  */
 class Ajax {
@@ -174,7 +176,7 @@ class Ajax {
             update_option( 'joinotify_temp_license_key', $license_key ) || add_option('joinotify_temp_license_key', $license_key );
     
             // Check on the server if the license is valid and update responses and options
-            if ( License::check_license( $license_key, $this->license_message, $this->response_obj, FLEXIFY_CHECKOUT_FILE ) ) {
+            if ( License::check_license( $license_key, $this->license_message, $this->response_obj, JOINOTIFY_FILE ) ) {
                 if ( $this->response_obj && $this->response_obj->is_valid ) {
                     update_option( 'joinotify_license_status', 'valid' );
                     delete_option('joinotify_temp_license_key');
@@ -345,7 +347,7 @@ class Ajax {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_deactive_license' ) {
             $message = '';
 
-            if ( License::deactive_license( FLEXIFY_CHECKOUT_FILE, $message ) ) {
+            if ( License::deactive_license( JOINOTIFY_FILE, $message ) ) {
                 $response = array(
                     'status' => 'success',
                     'toast_header_title' => __( 'Licença desativada.', 'joinotify' ),
@@ -657,6 +659,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.0.5
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -708,17 +711,7 @@ class Ajax {
                             $delay_value = (int) ( $workflow_action['data']['delay_value'] ?? 0 );
                             $delay_period = $workflow_action['data']['delay_period'] ?? 'seconds';
 
-                            $seconds = match ( $delay_period ) {
-                                'minute' => $delay_value * 60,
-                                'hours' => $delay_value * 3600,
-                                'day' => $delay_value * 86400,
-                                'week' => $delay_value * 604800,
-                                'month' => $delay_value * 2592000, // Approximately 30 days
-                                'year' => $delay_value * 31536000, // Approximately 365 days
-                                default => $delay_value, // Defaults to 'seconds'
-                            };
-
-                            $new_action['data']['delay_timestamp'] = $seconds;
+                            $new_action['data']['delay_timestamp'] = Schedule::get_delay_timestamp( $delay_value, $delay_period );
                         } elseif ( $delay_type === 'date' ) {
                             // Calculate timestamp from given date and time
                             $date_value = $workflow_action['data']['date_value'] ?? '';
@@ -1116,27 +1109,31 @@ class Ajax {
      * Get phones senders on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.0.2
      * @return void
      */
     public function get_phone_numbers_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_phone_numbers' ) {
-            // Get the list of all phone numbers
-            $phone_numbers = Controller::get_numbers();
-
-            // Get the phone numbers already registered as senders
+            $response_data = Controller::get_numbers();
+    
+            // Check if the response has 'slots' and if it is an array
+            $phone_numbers = isset( $response_data['slots'] ) && is_array( $response_data['slots'] ) ? $response_data['slots'] : array();
+    
+            // Get numbers already registered as senders
             $registered_phones = get_option( 'joinotify_get_phones_senders', array() );
-
+    
             // Ensure $registered_phones is an array
             if ( ! is_array( $registered_phones ) ) {
                 $registered_phones = array();
             }
-
-            // Filter out registered phone numbers from the list of phone numbers
+    
+            // Filter already registered numbers
             $filtered_phone_numbers = array_filter( $phone_numbers, function( $value ) use ( $registered_phones ) {
-                return ! in_array( $value['phone'], $registered_phones, true );
+                // Make sure $value is an array and contains the key 'phone'
+                return is_array( $value ) && isset( $value['phone'] ) && ! in_array( $value['phone'], $registered_phones, true );
             });
-
-            // If no phone numbers are available after filtering
+    
+            // If there are no numbers available after the filter
             if ( empty( $filtered_phone_numbers ) ) {
                 $response = array(
                     'status' => 'success',
@@ -1144,26 +1141,31 @@ class Ajax {
                 );
             } else {
                 $html = '<ul class="list-group">';
-
-                foreach ( $filtered_phone_numbers as $phone => $value ) {
+    
+                foreach ( $filtered_phone_numbers as $value ) {
+                    // Make sure $value is valid
+                    if ( ! is_array( $value ) || ! isset( $value['phone'] ) ) {
+                        continue;
+                    }
+    
                     $html .= '<li class="list-group-item d-flex align-items-center justify-content-between py-3" data-phone="'. esc_attr( $value['phone'] ) .'">';
                     $html .= '<span class="fs-base">'. Helpers::format_phone_number( $value['phone'] ) .'</span>';
                     $html .= '<button class="btn btn-sm btn-outline-primary register-sender" data-phone="'. esc_attr( $value['phone'] ) .'">'. esc_html__( 'Cadastrar remetente', 'joinotify' ) .'</button>';
                     $html .= '</li>';
                 }
-
+    
                 $html .= '</ul>';
-
+    
                 $response = array(
                     'status' => 'success',
                     'phone_numbers_html' => $html,
                 );
             }
-
-            // Send response for frontend
+    
+            // Send the response to the frontend
             wp_send_json( $response );
         }
-    }
+    }    
 
 
     /**
@@ -1176,7 +1178,7 @@ class Ajax {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_register_phone_sender' ) {
             $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
-            $get_otp = OTP_Validation::generate_and_send_otp( $phone );
+            $get_otp = Otp_Validation::generate_and_send_otp( $phone );
 
             if ( $get_otp ) {
                 $response = array(
@@ -1223,7 +1225,7 @@ class Ajax {
             }
 
             // Validate the OTP using the validate_otp method
-            $otp_valid = OTP_Validation::validate_otp( $phone, $otp );
+            $otp_valid = Otp_Validation::validate_otp( $phone, $otp );
 
             if ( $otp_valid ) {
                 // Get current phone senders from options
