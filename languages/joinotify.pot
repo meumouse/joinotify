@@ -1,0 +1,3084 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Joinotify\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-20 14:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.11; wp-6.6.2\n"
+"X-Domain: joinotify"
+
+#: inc/Builder/Placeholders.php:186
+#, php-format
+msgid "%s/checkout/pay/order/12345"
+msgstr ""
+
+#: inc/Core/Components.php:404 inc/Views/Builder/Actions.php:132
+#: inc/Views/Builder/Actions.php:160
+msgid "+5541987111527"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:185
+msgid "1x - Camiseta de algodão masculina (Produto exemplo)"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:185
+msgid "1x - Óculos de sol com proteção UV (Produto exemplo)"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:18
+msgid "5541987111527"
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:111
+#, php-format
+msgid ""
+"<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados, ou "
+"riscados com variáveis do WhatsApp. Veja mais detalhes na <a href=\"%s\" "
+"class=\"alert-link\" target=\"_blank\">documentação do Joinotify</a>."
+msgstr ""
+
+#: joinotify.php:172
+msgid ""
+"<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o "
+"suporte da sua hospedagem para realizar a atualização."
+msgstr ""
+
+#: inc/Core/Ajax.php:911
+msgid "A ação foi removida do fluxo com sucesso!"
+msgstr ""
+
+#: inc/API/License.php:366
+msgid "A extensão cURL está faltando."
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:98
+msgid ""
+"A função WP-CRON está desabilitada neste site. Ative-o para usar a função "
+"Tempo de espera."
+msgstr ""
+
+#: inc/Core/Ajax.php:352
+msgid "A licença foi desativada com sucesso!"
+msgstr ""
+
+#: inc/Core/Ajax.php:288
+msgid "A licença informada não é permitida para este produto."
+msgstr ""
+
+#: inc/Core/Ajax.php:1506
+msgid "A mensagem teste foi enviada com sucesso!"
+msgstr ""
+
+#: inc/Core/Updater.php:260
+msgid "A versão do plugin <strong>Joinotify</strong> é a mais recente."
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:42
+msgid "A versão mínima exigida do PHP é 7.2"
+msgstr ""
+
+#: inc/Builder/Core.php:141
+msgid "Abandono do carrinho"
+msgstr ""
+
+#: inc/Core/Ajax.php:479
+msgid "Acionamento e fluxo atualizados com sucesso!"
+msgstr ""
+
+#: inc/Core/Ajax.php:522
+msgid "Acionamento e fluxo criados com sucesso!"
+msgstr ""
+
+#: inc/Builder/Core.php:629
+msgid "Acionamento personalizado"
+msgstr ""
+
+#: inc/Core/Ajax.php:980
+msgid "Acionamento removido com sucesso"
+msgstr ""
+
+#: inc/Core/Admin.php:224
+msgctxt "add new on admin bar"
+msgid "Fluxo"
+msgstr ""
+
+#: inc/Core/Components.php:558 inc/Core/Components.php:581
+#: inc/Views/Builder/Actions.php:187
+msgid "Adicionar ação"
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:173
+msgid "Adicionar mídia"
+msgstr ""
+
+#. parent page slug
+#. page title
+#: inc/Core/Admin.php:64 inc/Core/Admin.php:65 inc/Core/Admin.php:126
+#: inc/Core/Admin.php:226
+msgid "Adicionar novo fluxo"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:35
+msgid "Adicionar novo remetente para WhatsApp"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:30
+msgid "Adicionar novo telefone"
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:16
+msgid "Adicionar uma ação"
+msgstr ""
+
+#: inc/Core/Admin.php:223
+msgctxt "admin menu"
+msgid "Fluxos"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:66
+msgid "Afghanistan"
+msgstr ""
+
+#: inc/Core/Ajax.php:190 inc/Core/Ajax.php:321
+msgid "Agora todos os recursos estão ativos!"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:132
+msgid "Albania"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:72
+msgid "Algeria"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:143
+msgid "Andorra"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:99
+msgid "Angola"
+msgstr ""
+
+#: inc/Core/Helpers.php:33
+msgid "ano"
+msgstr ""
+
+#: inc/Core/Components.php:369 inc/Views/Builder/Actions.php:82
+msgid "Ano (s)"
+msgstr ""
+
+#: inc/Core/Helpers.php:33
+msgid "anos"
+msgstr ""
+
+#: inc/Builder/Core.php:147
+msgid "Ao entrar na etapa 1"
+msgstr ""
+
+#: inc/Builder/Core.php:153
+msgid "Ao entrar na etapa 2"
+msgstr ""
+
+#: inc/Builder/Core.php:159
+msgid "Ao entrar na etapa 3"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:255
+msgid ""
+"Ao redefinir as configurações do plugin, todas opções serão removidas, "
+"voltando ao estado original. Sua licença não será removida."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:47
+msgid "Argentina"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:141
+msgid "Armenia"
+msgstr ""
+
+#: inc/Core/Ajax.php:319
+msgid "Arquivo enviado com sucesso."
+msgstr ""
+
+#: inc/Core/Ajax.php:244
+msgid "Arquivo inválido. O arquivo deve ser extensão .key"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:79
+msgid "Arraste e solte o arquivo .json aqui"
+msgstr ""
+
+#: inc/Views/License.php:83
+msgid "Arraste e solte o arquivo .key aqui"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:124
+msgid "Aruba"
+msgstr ""
+
+#: inc/Core/Ajax.php:141
+msgid "As configurações foram atualizadas!"
+msgstr ""
+
+#: inc/Core/Ajax.php:1421
+msgid "As opções foram redefinidas"
+msgstr ""
+
+#: inc/Core/Ajax.php:1422
+msgid "As opções foram redefinidas com sucesso!"
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:71
+msgid "Assinatura cancelada pelo usuário"
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:47
+msgid "Assinatura é ativada"
+msgstr ""
+
+#: inc/Views/License.php:41
+#, php-format
+msgid "Assinatura: Clube M - %s"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:253
+msgid "Atenção! Você realmente deseja redefinir as configurações?"
+msgstr ""
+
+#: inc/Core/Components.php:741
+msgid "Ativa"
+msgstr ""
+
+#: inc/Views/License.php:115
+msgid "Ativar licença"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:34
+msgid "Ativar Proxy API"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:35
+msgid ""
+"Ative essa opção para ativar endpoints neste site para processar requisições "
+"de API do Joinotify."
+msgstr ""
+
+#: inc/Core/Ajax.php:623 inc/Core/Assets.php:104
+#: inc/Views/Settings/Tabs/About.php:24
+msgid "Ativo"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Aumente a satisfação do seu cliente automatizando o envio de mensagens via "
+"WhatsApp com o Joinotify."
+msgstr ""
+
+#: inc/Views/License.php:14 inc/Views/Settings.php:12
+msgid ""
+"Aumente a satisfação do seu cliente automatizando o envio de mensagens via "
+"WhatsApp com o Joinotify. Se precisar de ajuda para configurar, acesse nossa"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:53
+msgid "Australia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:37
+msgid "Austria"
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:66
+msgid ""
+"Automatize o envio de mensagens ao receber um formulário WPForms com "
+"telefone. Mantenha seus clientes informados em tempo real."
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:78
+msgid ""
+"Automatize o envio de mensagens em acionamentos de eventos no WordPress."
+msgstr ""
+
+#: inc/Validations/Conditions.php:72
+msgid "Autor do post"
+msgstr ""
+
+#: inc/Core/Components.php:686
+msgid "Autor do post:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:224
+msgid "Azerbaijan"
+msgstr ""
+
+#: inc/Core/Ajax.php:798
+msgid "Ação adicionada com sucesso"
+msgstr ""
+
+#: inc/Core/Ajax.php:799
+msgid "Ação adicionada no fluxo com sucesso!"
+msgstr ""
+
+#: inc/Core/Ajax.php:910
+msgid "Ação excluída com sucesso"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:217
+msgid "Bahrain"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:203
+msgid "Bangladesh"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:142
+msgid "Belarus"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:30
+msgid "Belgium"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:158
+msgid "Belize"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:84
+msgid "Benin"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:219
+msgid "Bhutan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:168
+msgid "Bolivia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:152
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:120
+msgid "Botswana"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:48
+msgid "Brasil"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:101
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:179
+msgid "Brunei"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:136
+msgid "Bulgaria"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:81
+msgid "Burkina Faso"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:111
+msgid "Burundi"
+msgstr ""
+
+#: inc/Core/Ajax.php:1151
+msgid "Cadastrar remetente"
+msgstr ""
+
+#: inc/Core/Ajax.php:1143
+msgid "Cadastrar um remetente"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:201
+msgid "Cambodia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:92
+msgid "Cameroon"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:24
+msgid "Canada"
+msgstr ""
+
+#: inc/Core/Components.php:743
+msgid "Cancelada"
+msgstr ""
+
+#: inc/Core/Components.php:321 inc/Core/Components.php:899
+#: inc/Views/Builder/Choose_Template.php:94
+msgid "Cancelar"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:93
+msgid "Cape Verde"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:91
+msgid "Central African Republic"
+msgstr ""
+
+#: inc/Views/License.php:15 inc/Views/Settings.php:13
+#: inc/Views/Builder/Navbar.php:60
+msgid "Central de ajuda"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:90
+msgid "Chad"
+msgstr ""
+
+#: inc/API/Controller.php:106
+msgid "Chave de API inválida ou ausente."
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:64
+msgid "Chave de API:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:49
+msgid "Chile"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:62
+msgid "China"
+msgstr ""
+
+#: inc/Views/License.php:77
+msgid "Clique aqui para gerar seu arquivo de licença"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:13
+msgid ""
+"Clique no botão do modelo de sua preferência para iniciar a criação do fluxo."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:50
+msgid "Colombia"
+msgstr ""
+
+#: inc/Core/Components.php:815
+msgid "Começa com"
+msgstr ""
+
+#: inc/Builder/Core.php:58
+msgid "Começar com um modelo"
+msgstr ""
+
+#: inc/Builder/Core.php:52
+msgid "Começar do zero"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:12
+msgid "Como você gostaria de criar seu novo fluxo?"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:122
+msgid "Comoros"
+msgstr ""
+
+#: inc/Views/License.php:103
+msgid "Comprar licença"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:184
+msgid "Concluído"
+msgstr ""
+
+#: inc/Builder/Core.php:283
+msgid "Condição"
+msgstr ""
+
+#: inc/Core/Components.php:822
+msgid "Condição: *"
+msgstr ""
+
+#: inc/Core/Components.php:68
+msgid "Conectado"
+msgstr ""
+
+#: joinotify.php:187 inc/Views/Settings/Tabs/General.php:43
+msgid "Configurar"
+msgstr ""
+
+#: inc/Core/Components.php:312
+msgid "Configurar ação"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:48
+msgid "Configurar Proxy API"
+msgstr ""
+
+#. parent page slug
+#. page title
+#: inc/Core/Admin.php:74 inc/Core/Admin.php:75
+msgid "Configurações"
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:86
+msgid "Continuar"
+msgstr ""
+
+#: inc/Core/Components.php:813
+msgid "Contém"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:188
+msgid "Cook Islands"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:163
+msgid "Costa Rica"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:92
+msgid "Criado"
+msgstr ""
+
+#: inc/Builder/Core.php:60
+msgid "Criar com um modelo"
+msgstr ""
+
+#: inc/Builder/Core.php:54
+msgid "Criar do zero"
+msgstr ""
+
+#: inc/Builder/Core.php:59
+msgid "Crie seu fluxo de automação a partir de um modelo de sua escolha"
+msgstr ""
+
+#: inc/Builder/Core.php:53
+msgid "Crie seu fluxo de automação do zero"
+msgstr ""
+
+#: inc/Builder/Core.php:65
+msgid "Crie seu fluxo de automação importando a partir de um arquivo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:150
+msgid "Croatia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:46
+msgid "Cuba"
+msgstr ""
+
+#: inc/Builder/Core.php:319
+msgid "Cupom de desconto"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:176
+msgid "Curaçao"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:134
+msgid "Cyprus"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:154
+msgid "Czech Republic"
+msgstr ""
+
+#: inc/Views/License.php:111
+msgid "Código da licença"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:14
+msgid "Código padrão do país"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:176
+msgid "da Silva"
+msgstr ""
+
+#: inc/Core/Ajax.php:1481
+msgid "Dados incompletos"
+msgstr ""
+
+#: inc/Core/Ajax.php:939 inc/Core/Ajax.php:1007 inc/Core/Ajax.php:1065
+msgid "Dados inválidos"
+msgstr ""
+
+#: inc/API/License.php:708
+msgid "Dados inválidos."
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:67
+msgid "Defina um nome para este fluxo"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:210
+msgid "Definir como rascunho"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:98
+msgid "Democratic Republic of the Congo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:39
+msgid "Denmark"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:24
+msgid "Desativado"
+msgstr ""
+
+#: inc/Views/License.php:61
+msgid "Desativar licença"
+msgstr ""
+
+#: inc/Core/Components.php:70
+msgid "Desconectado"
+msgstr ""
+
+#: inc/Core/Admin.php:239
+msgid "Descrição."
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:223
+msgid "Desligado"
+msgstr ""
+
+#: inc/Core/Components.php:400 inc/Views/Builder/Actions.php:129
+#: inc/Views/Builder/Actions.php:157
+msgid "Destinatário"
+msgstr ""
+
+#: inc/Core/Helpers.php:30
+msgid "dia"
+msgstr ""
+
+#: inc/Core/Components.php:366 inc/Views/Builder/Actions.php:79
+msgid "Dia (s)"
+msgstr ""
+
+#: inc/Core/Helpers.php:30
+msgid "dias"
+msgstr ""
+
+#: inc/Core/Components.php:379 inc/Views/Builder/Actions.php:92
+msgid "Digite um horário (Opcional)"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:107
+msgid "Djibouti"
+msgstr ""
+
+#: joinotify.php:207
+msgid "Documentação"
+msgstr ""
+
+#: inc/Validations/Media_Types.php:37
+msgid "Documento"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:53
+msgid "DOMDocument:"
+msgstr ""
+
+#: inc/Core/Ajax.php:1059
+msgid "Download realizado com sucesso"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:176
+msgid "Dutch Caribbean"
+msgstr ""
+
+#: inc/Core/Components.php:726 inc/Validations/Conditions.php:114
+msgid "E-mail do cliente"
+msgstr ""
+
+#: inc/Core/Components.php:725
+msgid "E-mail do cliente:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:177
+msgid "East Timor"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:170
+msgid "Ecuador"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:140
+msgid "Editar"
+msgstr ""
+
+#: inc/Core/Components.php:298
+msgid "Editar ação"
+msgstr ""
+
+#: inc/Core/Admin.php:228
+msgid "Editar fluxo"
+msgstr ""
+
+#: inc/Core/Components.php:890 inc/Views/Builder/Navbar.php:36
+msgid "Editar título do fluxo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:26
+msgid "Egypt"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:160
+msgid "El Salvador"
+msgstr ""
+
+#: inc/Builder/Core.php:649 inc/Integrations/Elementor.php:43
+#: inc/Integrations/Integrations_Base.php:54
+msgid "Elementor"
+msgstr ""
+
+#: inc/Core/Components.php:742
+msgid "Em espera"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:48
+msgid "Enviar mensagem teste"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:53
+msgid "Enviar uma mensagem de teste"
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:33
+msgid ""
+"Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação "
+"de pedidos não pagos. Mantenha seus clientes atualizados."
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:55
+msgid ""
+"Envie mensagens quando um formulário Elementor com campo de telefone for "
+"enviado. Conecte-se com seus clientes instantaneamente."
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:72
+msgid ""
+"Envie seu arquivo .json para importar o modelo da automação de mensagens."
+msgstr ""
+
+#: inc/Builder/Core.php:320
+msgid ""
+"Envie um cupom de desconto para seu usuário através de mensagem de texto do "
+"WhatsApp."
+msgstr ""
+
+#: inc/Builder/Core.php:311
+msgid ""
+"Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o "
+"WhatsApp."
+msgstr ""
+
+#: inc/Builder/Core.php:302
+msgid "Envie uma mensagem de texto com o WhatsApp."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:95
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: inc/Core/Ajax.php:919 inc/Core/Ajax.php:986
+msgid "Erro ao atualizar o fluxo"
+msgstr ""
+
+#: inc/Core/Ajax.php:220
+msgid "Erro ao carregar o arquivo. A ação não foi acionada corretamente."
+msgstr ""
+
+#: inc/Core/Ajax.php:231
+msgid "Erro ao carregar o arquivo. O arquivo não foi enviado."
+msgstr ""
+
+#: inc/Core/Ajax.php:1318
+msgid "Erro ao remover remetente"
+msgstr ""
+
+#: inc/Core/Ajax.php:1283
+msgid "Erro ao remover telefone"
+msgstr ""
+
+#: inc/API/License.php:346 inc/API/License.php:399
+msgid "Erro cURL 35: Problema de comunicação SSL/TLS."
+msgstr ""
+
+#: inc/API/License.php:401
+#, php-format
+msgid "Erro cURL: %s"
+msgstr ""
+
+#: inc/API/License.php:273
+#, php-format
+msgid "Erro JSON: %s"
+msgstr ""
+
+#: inc/Core/Ajax.php:1393
+msgid "Erro na execução do fluxo"
+msgstr ""
+
+#: inc/Core/Ajax.php:1215
+msgid "Erro na validação do OTP"
+msgstr ""
+
+#: inc/Core/Ajax.php:1259
+msgid "Erro na verificação"
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:16
+msgid "Escolha o tipo de acionamento"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:59
+msgid "Escolha um remetente:"
+msgstr ""
+
+#: inc/Core/Assets.php:109
+msgid "Escolher mídia"
+msgstr ""
+
+#: inc/Core/Components.php:375 inc/Views/Builder/Actions.php:88
+msgid "Esperar até"
+msgstr ""
+
+#: inc/Builder/Core.php:714
+#, php-format
+msgid "Esperar até %s"
+msgstr ""
+
+#: inc/Builder/Core.php:712
+#, php-format
+msgid "Esperar até %s - %s"
+msgstr ""
+
+#: inc/Core/Components.php:353 inc/Views/Builder/Actions.php:66
+msgid "Esperar até uma data"
+msgstr ""
+
+#: inc/Core/Components.php:358 inc/Views/Builder/Actions.php:71
+msgid "Esperar por"
+msgstr ""
+
+#: inc/Builder/Core.php:705
+#, php-format
+msgid "Esperar por %s %s"
+msgstr ""
+
+#: inc/Core/Components.php:352 inc/Views/Builder/Actions.php:65
+msgid "Esperar tempo"
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:105
+msgid "Esta ação não necessita de configurações auxiliares."
+msgstr ""
+
+#: inc/Builder/Core.php:630
+msgid "Este acionamento é disparado conforme registrado no gancho do_action."
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:66
+msgid "Este acionamento é disparado quando o prazo de um assinatura expirou."
+msgstr ""
+
+#: inc/Builder/Core.php:142
+msgid "Este acionamento é disparado quando o usuário abandona o carrinho."
+msgstr ""
+
+#: inc/Builder/Core.php:148
+msgid ""
+"Este acionamento é disparado quando o usuário entra na etapa 1 da "
+"finalização de compras."
+msgstr ""
+
+#: inc/Builder/Core.php:154
+msgid ""
+"Este acionamento é disparado quando o usuário entra na etapa 2 da "
+"finalização de compras."
+msgstr ""
+
+#: inc/Builder/Core.php:160
+msgid ""
+"Este acionamento é disparado quando o usuário entra na etapa 3 da "
+"finalização de compras."
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:72
+msgid ""
+"Este acionamento é disparado quando o usuário solicita o cancelamento da "
+"assinatura."
+msgstr ""
+
+#: inc/Builder/Core.php:126
+msgid ""
+"Este acionamento é disparado quando um formulário de pagamento do WPForms é "
+"processado usando PayPal."
+msgstr ""
+
+#: inc/Builder/Core.php:134
+msgid ""
+"Este acionamento é disparado quando um formulário do Elementor é enviado."
+msgstr ""
+
+#: inc/Builder/Core.php:120
+msgid "Este acionamento é disparado quando um formulário do WPForms é enviado."
+msgstr ""
+
+#: inc/Builder/Core.php:88
+msgid ""
+"Este acionamento é disparado quando um novo pedido é recebido no WooCommerce "
+"com qualquer status."
+msgstr ""
+
+#: inc/Builder/Core.php:93
+msgid ""
+"Este acionamento é disparado quando um novo pedido é recebido no WooCommerce "
+"com status processando."
+msgstr ""
+
+#: inc/Builder/Core.php:186
+msgid "Este acionamento é disparado quando um novo post é publicado no site."
+msgstr ""
+
+#: inc/Builder/Core.php:168
+msgid ""
+"Este acionamento é disparado quando um novo registro de usuário é recebido."
+msgstr ""
+
+#: inc/Builder/Core.php:98
+msgid ""
+"Este acionamento é disparado quando um pedido tem o status alterado para "
+"concluído."
+msgstr ""
+
+#: inc/Builder/Core.php:113
+msgid "Este acionamento é disparado quando um pedido tem seu status alterado."
+msgstr ""
+
+#: inc/Builder/Core.php:108
+msgid ""
+"Este acionamento é disparado quando um pedido é parcialmente reembolsado."
+msgstr ""
+
+#: inc/Builder/Core.php:103
+msgid "Este acionamento é disparado quando um pedido é totalmente reembolsado."
+msgstr ""
+
+#: inc/Builder/Core.php:174
+msgid "Este acionamento é disparado quando um usuário fizer login no site."
+msgstr ""
+
+#: inc/Builder/Core.php:180
+msgid ""
+"Este acionamento é disparado quando um usuário solicitar recuperação de "
+"senha no site."
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:54
+msgid ""
+"Este acionamento é disparado quando uma assinatura recorrente tem o "
+"pagamento recebido."
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:60
+msgid ""
+"Este acionamento é disparado quando uma assinatura recorrente tem seu "
+"pagamento falhado ou recusado."
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:48
+msgid ""
+"Este acionamento é disparado quando uma assinatura tem seu status alterado "
+"para ativo."
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:42
+msgid ""
+"Este acionamento é disparado quando uma nova assinatura é criada no "
+"WooCommerce."
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Integrations.php:46
+msgid ""
+"Este plugin precisa estar instalado e ativo para ativar esta integração."
+msgstr ""
+
+#: inc/Integrations/Elementor.php:64 inc/Integrations/Flexify_Checkout.php:66
+#: inc/Integrations/Woocommerce.php:66 inc/Integrations/Wordpress.php:62
+#: inc/Integrations/Wpforms.php:65 inc/Views/Builder/Choose_Template.php:32
+msgid "Este recurso será liberado em breve"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:139
+msgid "Estonia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:121
+msgid "Eswatini (Swaziland)"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:105
+msgid "Ethiopia"
+msgstr ""
+
+#: inc/Core/Components.php:477
+msgid "Excluir acionamento"
+msgstr ""
+
+#: inc/Core/Components.php:173 inc/Core/Components.php:290
+msgid "Excluir ação"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:127 inc/Core/Workflows_Table.php:203
+msgid "Excluir permanentemente"
+msgstr ""
+
+#: inc/Views/Builder/Navbar.php:45
+msgid "Exportar fluxo"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:69
+msgid "Extensão cURL:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:88
+msgid "Extensão OpenSSL:"
+msgstr ""
+
+#: inc/API/Controller.php:173
+msgid "Falha ao enviar mensagem de mídia."
+msgstr ""
+
+#: inc/API/Controller.php:145
+msgid "Falha ao enviar mensagem de texto."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:157
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: inc/Core/Components.php:542
+msgid "Falso"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:125
+msgid "Faroe Islands"
+msgstr ""
+
+#: inc/Core/Assets.php:71 inc/Core/Assets.php:105 inc/Core/Components.php:313
+#: inc/Core/Components.php:891 inc/Views/Builder/Actions.php:55
+#: inc/Views/Builder/Actions.php:112 inc/Views/Settings/Tabs/General.php:49
+#: inc/Views/Settings/Tabs/Phones.php:36 inc/Views/Settings/Tabs/Phones.php:54
+msgid "Fechar"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:196
+msgid "Federated States of Micronesia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:185
+msgid "Fiji"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:135
+msgid "Finland"
+msgstr ""
+
+#: inc/Builder/Core.php:648 inc/Integrations/Flexify_Checkout.php:45
+msgid "Flexify Checkout"
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:43
+msgid "Flexify Checkout para WooCommerce"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:30
+msgid "Fluxo"
+msgstr ""
+
+#: inc/Core/Admin.php:225
+msgctxt "fluxo"
+msgid "Adicionar novo"
+msgstr ""
+
+#: inc/Core/Components.php:88
+msgid "Fluxo ativo"
+msgstr ""
+
+#: inc/Core/Ajax.php:478
+msgid "Fluxo atualizado com sucesso"
+msgstr ""
+
+#: inc/Core/Ajax.php:521
+msgid "Fluxo criado com sucesso"
+msgstr ""
+
+#: inc/Core/Ajax.php:1060
+msgid "Fluxo exportado com sucesso!"
+msgstr ""
+
+#: inc/Core/Components.php:91
+msgid "Fluxo inativo"
+msgstr ""
+
+#: inc/Core/Ajax.php:645 inc/Core/Ajax.php:872
+msgid "Fluxo não encontrado"
+msgstr ""
+
+#: inc/Core/Admin.php:232
+msgid "Fluxo pai:"
+msgstr ""
+
+#: inc/Core/Ajax.php:932 inc/Core/Ajax.php:1000
+msgid "Fluxo vazio"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:31
+msgid "Fluxos"
+msgstr ""
+
+#: inc/Builder/Core.php:119 inc/Builder/Core.php:133
+msgid "Formulário é enviado"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:31
+msgid "France"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:171
+msgid "French Guiana"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:194
+msgid "French Polynesia"
+msgstr ""
+
+#: inc/Validations/Conditions.php:30 inc/Validations/Conditions.php:48
+msgid "Função do usuário"
+msgstr ""
+
+#: inc/Core/Components.php:638
+msgid "Função do usuário:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:219
+msgid "Função PHP \"file_get_content\":"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:96
+msgid "Gabon"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:75
+msgid "Gambia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:225
+msgid "Georgia"
+msgstr ""
+
+#: inc/Views/Settings.php:37
+msgid "Geral"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:67
+msgid "Gerar chave"
+msgstr ""
+
+#: inc/Core/Admin.php:125
+msgid "Gerenciar fluxos"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:43
+msgid "Germany"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:88
+msgid "Ghana"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:127
+msgid "Gibraltar"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:28
+msgid "Greece"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:126
+msgid "Greenland"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:167
+msgid "Guadeloupe"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:159
+msgid "Guatemala"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:79
+msgid "Guinea"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:100
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:169
+msgid "Guyana"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:166
+msgid "Haiti"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:161
+msgid "Honduras"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:199
+msgid "Hong Kong"
+msgstr ""
+
+#: inc/Core/Helpers.php:29
+msgid "hora"
+msgstr ""
+
+#: inc/Core/Components.php:365 inc/Views/Builder/Actions.php:78
+msgid "Hora (s)"
+msgstr ""
+
+#: inc/Core/Helpers.php:29
+msgid "horas"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://meumouse.com/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://meumouse.com/plugins/joinotify/"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:33
+msgid "Hungary"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:131
+msgid "Iceland"
+msgstr ""
+
+#: inc/Core/Components.php:787
+msgid "ID do campo"
+msgstr ""
+
+#: inc/Core/Components.php:786
+msgid "ID do campo:"
+msgstr ""
+
+#: inc/Core/Components.php:775 inc/Validations/Conditions.php:194
+#: inc/Validations/Conditions.php:208
+msgid "ID do formulário"
+msgstr ""
+
+#: inc/Core/Components.php:774
+msgid "ID do formulário:"
+msgstr ""
+
+#: inc/Core/Components.php:768
+msgid "ID dos produtos no carrinho separados por vírgula"
+msgstr ""
+
+#: inc/Core/Components.php:719
+msgid "ID dos produtos separados por vírgula"
+msgstr ""
+
+#: inc/Validations/Media_Types.php:35
+msgid "Imagem"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:95
+msgid "Importar"
+msgstr ""
+
+#: inc/Builder/Core.php:66
+msgid "Importar arquivo"
+msgstr ""
+
+#: inc/Core/Ajax.php:397
+msgid "Importar fluxo"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:71
+msgid "Importar modelo"
+msgstr ""
+
+#: inc/Builder/Core.php:64
+msgid "Importar um modelo"
+msgstr ""
+
+#: inc/Core/Ajax.php:625 inc/Core/Assets.php:103
+#: inc/Views/Builder/Navbar.php:23
+msgid "Inativo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:64
+msgid "India"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:54
+msgid "Indonesia"
+msgstr ""
+
+#: inc/Views/License.php:25
+msgid "Informações sobre a licença:"
+msgstr ""
+
+#: inc/Core/Components.php:115
+msgid "Informe o código de 4 dígitos que foi enviado para"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:68
+msgid "Informe o telefone destinatário - Apenas números com DDI + DDD:"
+msgstr ""
+
+#: inc/Views/License.php:108
+msgid "Informe sua licença abaixo para desbloquear todos os recursos."
+msgstr ""
+
+#: inc/Views/License.php:68
+msgid "Informe sua licença para começar a usar o Joinotify"
+msgstr ""
+
+#: inc/Core/Components.php:379 inc/Views/Builder/Actions.php:92
+msgid "Informe um horário no formato H:i - 20:03"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:15
+msgid ""
+"Informe um telefone para receber mensagens de teste para disparar no "
+"construtor. Use o formato internacional, informando apenas números: "
+"5541987111527"
+msgstr ""
+
+#: inc/Views/Settings.php:47
+msgid "Integrações"
+msgstr ""
+
+#: inc/Views/License.php:33
+msgid "Inválida"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:69
+msgid "Iran"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:209
+msgid "Iraq"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:130
+msgid "Ireland"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:216
+msgid "Israel"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:34
+msgid "Italy"
+msgstr ""
+
+#: inc/Validations/Conditions.php:184
+msgid "Itens no carrinho"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:80
+msgid "Ivory Coast"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:59
+msgid "Japan"
+msgstr ""
+
+#. label
+#. Name of the plugin
+#: inc/Core/Admin.php:42 inc/Core/Admin.php:43
+msgid "Joinotify"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:207
+msgid "Jordan"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:175
+msgid "João"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:25
+msgid "Kazakhstan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:108
+msgid "Kenya"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:191
+msgid "Kiribati"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:210
+msgid "Kuwait"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:226
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:202
+msgid "Lao"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:138
+msgid "Latvia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:206
+msgid "Lebanon"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:119
+msgid "Lesotho"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:86
+msgid "Liberia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:74
+msgid "Libya"
+msgstr ""
+
+#. parent page slug
+#. page title
+#: inc/Core/Admin.php:84 inc/Core/Admin.php:85
+msgid "Licença"
+msgstr ""
+
+#: inc/Core/Ajax.php:189 inc/Core/Ajax.php:320
+msgid "Licença ativada com sucesso."
+msgstr ""
+
+#: inc/Core/Ajax.php:351
+msgid "Licença desativada."
+msgstr ""
+
+#: inc/Views/License.php:46
+#, php-format
+msgid "Licença expira em: %s"
+msgstr ""
+
+#: inc/API/License.php:824
+msgid "Licença expirada"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:156
+msgid "Liechtenstein"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:227
+msgid "Ligado"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:177
+msgid "Limite de memória do PHP:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:133
+msgid "Limite de tempo do PHP:"
+msgstr ""
+
+#: inc/Views/License.php:62
+msgid "Limpar cache de ativação"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:137
+msgid "Lithuania"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:63
+msgid "Lixeira"
+msgstr ""
+
+#: inc/Builder/Core.php:173
+msgid "Login do usuário"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:129
+msgid "Luxembourg"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:200
+msgid "Macau"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:114
+msgid "Madagascar"
+msgstr ""
+
+#: inc/Core/Components.php:817
+msgid "Maior que"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:118
+msgid "Malawi"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:52
+msgid "Malaysia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:205
+msgid "Maldives"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:78
+msgid "Mali"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:133
+msgid "Malta"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:197
+msgid "Marshall Islands"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:173
+msgid "Martinique"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:77
+msgid "Mauritania"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:85
+msgid "Mauritius"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:115
+msgid "Mayotte"
+msgstr ""
+
+#: inc/Core/Components.php:818
+msgid "Menor que"
+msgstr ""
+
+#: inc/Core/Components.php:412 inc/Views/Builder/Actions.php:139
+msgid "Mensagem"
+msgstr ""
+
+#: inc/API/Controller.php:168
+msgid "Mensagem de mídia enviada com sucesso."
+msgstr ""
+
+#: inc/API/Controller.php:140
+msgid "Mensagem de texto enviada com sucesso."
+msgstr ""
+
+#: inc/Core/Ajax.php:1505
+msgid "Mensagem enviada"
+msgstr ""
+
+#: inc/Core/Ajax.php:1384
+msgid "Mensagens enviadas"
+msgstr ""
+
+#: inc/Core/Helpers.php:32
+msgid "meses"
+msgstr ""
+
+#: inc/Core/Components.php:652
+msgid "Metadados do usuário:"
+msgstr ""
+
+#: inc/Validations/Conditions.php:34 inc/Validations/Conditions.php:58
+msgid "Metadados específicos do usuário"
+msgstr ""
+
+#. Author of the plugin
+msgid "MeuMouse.com"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:45
+msgid "Mexico"
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:69
+msgid "Minha automação de mensagens"
+msgstr ""
+
+#: inc/Core/Helpers.php:28
+msgid "minuto"
+msgstr ""
+
+#: inc/Core/Components.php:364 inc/Views/Builder/Actions.php:77
+msgid "Minuto (s)"
+msgstr ""
+
+#: inc/Core/Helpers.php:28
+msgid "minutos"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:23
+msgid "Modo de depuração do WordPress:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:140
+msgid "Moldova"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:144
+msgid "Monaco"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:220
+msgid "Mongolia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:149
+msgid "Montenegro"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:71
+msgid "Morocco"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:145 inc/Core/Workflows_Table.php:208
+msgid "Mover para lixeira"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:112
+msgid "Mozambique"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:68
+msgid "Myanmar"
+msgstr ""
+
+#: inc/Core/Helpers.php:32
+msgid "mês"
+msgstr ""
+
+#: inc/Core/Components.php:368 inc/Views/Builder/Actions.php:81
+msgid "Mês (es)"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:117
+msgid "Namibia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:180
+msgid "Nauru"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:20
+msgid "Nenhum"
+msgstr ""
+
+#: inc/Core/Admin.php:234
+msgid "Nenhum fluxo encontrado na lixeira."
+msgstr ""
+
+#: inc/Core/Admin.php:233
+msgid "Nenhum fluxo encontrado."
+msgstr ""
+
+#: inc/Integrations/Woocommerce.php:144
+msgid "Nenhum item adquirido."
+msgstr ""
+
+#: inc/Core/Components.php:49
+msgid "Nenhum remetente disponível para uso"
+msgstr ""
+
+#: inc/Builder/Core.php:293
+msgid "Nenhuma ação será executada ao chegar nesse ponto."
+msgstr ""
+
+#: inc/Validations/Conditions.php:222
+msgid "Nenhuma condição disponível para esta ação"
+msgstr ""
+
+#: inc/Validations/Conditions.php:223
+msgid "Nenhuma condição foi definida para esta ação."
+msgstr ""
+
+#: inc/Core/Components.php:792
+msgid "Nenhuma configuração disponível para esta condição"
+msgstr ""
+
+#: inc/Views/License.php:31
+msgid "Nenhuma licença informada"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:221
+msgid "Nepal"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:29
+msgid "Netherlands"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:192
+msgid "New Caledonia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:56
+msgid "New Zealand"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:162
+msgid "Nicaragua"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:82
+msgid "Niger"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:89
+msgid "Nigeria"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:189
+msgid "Niue"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:91
+msgid "Nome"
+msgstr ""
+
+#: inc/Core/Components.php:687
+msgid "Nome do autor"
+msgstr ""
+
+#: inc/Core/Components.php:653
+msgid "Nome do metadado"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:178
+msgid "Norfolk Island"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:198
+msgid "North Korea"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:153
+msgid "North Macedonia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:41
+msgid "Norway"
+msgstr ""
+
+#: inc/Views/License.php:75
+msgid "Notamos que teve problemas de conexão ao tentar ativar sua licença"
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:41
+msgid "Nova assinatura criada"
+msgstr ""
+
+#: inc/Core/Admin.php:227
+msgid "Novo fluxo"
+msgstr ""
+
+#: inc/Builder/Core.php:87
+msgid "Novo pedido"
+msgstr ""
+
+#: inc/Builder/Core.php:92
+msgid "Novo pedido (Processando)"
+msgstr ""
+
+#: inc/Builder/Core.php:185
+msgid "Novo post é publicado"
+msgstr ""
+
+#: inc/Builder/Core.php:167
+msgid "Novo registro de usuário"
+msgstr ""
+
+#: inc/API/License.php:815
+msgid "Nunca expira"
+msgstr ""
+
+#: inc/Core/Components.php:753 inc/Views/Settings/Tabs/About.php:20
+#: inc/Views/Settings/Tabs/About.php:58 inc/Views/Settings/Tabs/About.php:74
+#: inc/Views/Settings/Tabs/About.php:93
+msgid "Não"
+msgstr ""
+
+#: inc/Core/Components.php:814
+msgid "Não contém"
+msgstr ""
+
+#: inc/API/License.php:799 inc/Views/License.php:52
+msgid "Não disponível"
+msgstr ""
+
+#: inc/Core/Components.php:812
+msgid "Não está vazio"
+msgstr ""
+
+#: inc/Core/Ajax.php:1143
+#, php-format
+msgid ""
+"Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro "
+"pelo link: <a class=\"fancy-link\" href=\"%s\" target=\"_blank\">%s</a>"
+msgstr ""
+
+#: inc/Core/Ajax.php:920
+msgid "Não foi possível atualizar o fluxo após a exclusão da ação."
+msgstr ""
+
+#: inc/Core/Ajax.php:987
+msgid "Não foi possível atualizar o fluxo após a exclusão do acionamento."
+msgstr ""
+
+#: inc/Core/Ajax.php:411
+msgid "Não foi possível carregar os modelos."
+msgstr ""
+
+#: inc/Core/Ajax.php:358
+msgid "Não foi possível desativar a licença."
+msgstr ""
+
+#: inc/Core/Ajax.php:330
+msgid "Não foi possível descriptografar o arquivo de licença."
+msgstr ""
+
+#: inc/Core/Ajax.php:1319
+msgid "Não foi possível encontrar o telefone informado."
+msgstr ""
+
+#: inc/Core/Ajax.php:1354 inc/Core/Ajax.php:1512
+msgid "Não foi possível enviar a mensagem de teste."
+msgstr ""
+
+#: inc/Core/Ajax.php:1190
+msgid "Não foi possível enviar o código de verificação."
+msgstr ""
+
+#: inc/Core/Ajax.php:1373
+msgid "Não foi possível enviar uma ou mais mensages de teste."
+msgstr ""
+
+#: inc/Core/Ajax.php:1098
+msgid "Não foi possível obter a quantidade de templates."
+msgstr ""
+
+#: inc/Core/Ajax.php:1394
+msgid "Não foi possível processar o conteúdo do fluxo."
+msgstr ""
+
+#: inc/Core/Updater.php:267
+msgid ""
+"Não foi possível verificar atualizações para o plugin <strong>Joinotify."
+"</strong>"
+msgstr ""
+
+#: inc/Core/Ajax.php:1001
+msgid "Não há acionamentos para remover no fluxo."
+msgstr ""
+
+#: inc/Core/Ajax.php:933
+msgid "Não há ações para remover no fluxo."
+msgstr ""
+
+#: inc/Core/Components.php:810
+msgid "Não é"
+msgstr ""
+
+#: inc/Core/Components.php:665
+msgid "Número de horas"
+msgstr ""
+
+#: inc/Core/Ajax.php:1284
+msgid "Número de telefone inválido."
+msgstr ""
+
+#: inc/Core/Ajax.php:981
+msgid "O acionamento foi removido do fluxo com sucesso!"
+msgstr ""
+
+#: inc/Core/Ajax.php:1260
+msgid ""
+"O código de verificação está incorreto ou expirou. Por favor, tente "
+"novamente."
+msgstr ""
+
+#: inc/Core/Ajax.php:272
+msgid "O domínio de ativação não é permitido."
+msgstr ""
+
+#: inc/Core/Ajax.php:646 inc/Core/Ajax.php:873
+msgid "O fluxo não foi encontrado ou o tipo de post está incorreto."
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:68
+msgid "O nome servirá para controle interno desse fluxo"
+msgstr ""
+
+#: inc/Core/Ajax.php:1474
+msgid "O status do fluxo foi atualizado com sucesso!"
+msgstr ""
+
+#: inc/Core/Ajax.php:633
+msgid "O status do fluxo foi atualizado."
+msgstr ""
+
+#: inc/Core/Ajax.php:1308
+msgid "O telefone remetente foi removido com sucesso!"
+msgstr ""
+
+#: inc/Core/Ajax.php:860
+msgid "O título do fluxo foi atualizado."
+msgstr ""
+
+#: inc/Core/Ajax.php:814
+msgid "Ocorreu um erro ao adicionar ação no fluxo."
+msgstr ""
+
+#: inc/Core/Ajax.php:497
+msgid "Ocorreu um erro ao atualizar o fluxo e acionamento."
+msgstr ""
+
+#: inc/Core/Ajax.php:639
+msgid "Ocorreu um erro ao atualizar o status do fluxo."
+msgstr ""
+
+#: inc/Core/Ajax.php:1468
+msgid "Ocorreu um erro ao atualizar o status do post"
+msgstr ""
+
+#: inc/Core/Ajax.php:866
+msgid "Ocorreu um erro ao atualizar o título do fluxo."
+msgstr ""
+
+#: inc/Core/Ajax.php:539
+msgid "Ocorreu um erro ao criar o fluxo e acionamento."
+msgstr ""
+
+#: inc/Core/Ajax.php:592
+msgid "Ocorreu um erro ao recuperar os dados do fluxo."
+msgstr ""
+
+#: inc/Core/Ajax.php:1428
+msgid "Ocorreu um erro ao redefinir as configurações."
+msgstr ""
+
+#: inc/API/License.php:252
+msgid ""
+"Ocorreu um erro na conexão com o servidor de verificação de licenças. "
+"Verifique o erro nos logs do WooCommerce."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:213
+msgid "Oman"
+msgstr ""
+
+#: inc/Core/Ajax.php:1353 inc/Core/Ajax.php:1372 inc/Core/Ajax.php:1467
+#: inc/Core/Ajax.php:1480 inc/Core/Ajax.php:1511
+msgid "Ops! Ocorreu um erro"
+msgstr ""
+
+#: inc/Core/Ajax.php:197 inc/Core/Ajax.php:219 inc/Core/Ajax.php:230
+#: inc/Core/Ajax.php:243 inc/Core/Ajax.php:271 inc/Core/Ajax.php:287
+#: inc/Core/Ajax.php:329 inc/Core/Ajax.php:357 inc/Core/Ajax.php:410
+#: inc/Core/Ajax.php:417 inc/Core/Ajax.php:496 inc/Core/Ajax.php:538
+#: inc/Core/Ajax.php:591 inc/Core/Ajax.php:638 inc/Core/Ajax.php:813
+#: inc/Core/Ajax.php:865 inc/Core/Ajax.php:1097 inc/Core/Ajax.php:1104
+#: inc/Core/Ajax.php:1189 inc/Core/Ajax.php:1427
+msgid "Ops! Ocorreu um erro."
+msgstr ""
+
+#: inc/Core/Ajax.php:940 inc/Core/Ajax.php:1008 inc/Core/Ajax.php:1066
+msgid "Os dados fornecidos são inválidos ou o fluxo não foi encontrado."
+msgstr ""
+
+#: inc/Views/License.php:91 inc/Views/Builder/Choose_Template.php:87
+msgid "Ou clique para procurar seu arquivo"
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:59
+msgid "Pagamento da renovação falhou"
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:53
+msgid "Pagamento da renovação recebido"
+msgstr ""
+
+#: inc/Core/Components.php:750
+msgid "Pagamento da renovação:"
+msgstr ""
+
+#: inc/Builder/Core.php:125
+msgid "Pagamento processado pelo PayPal"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:65
+msgid "Pakistan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:186
+msgid "Palau"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:214
+msgid "Palestine"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:164
+msgid "Panama"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:181
+msgid "Papua New Guinea"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:29
+msgid "Para quebrar uma linha na mensagem de texto"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:50
+msgid "Para recuperar a data atual"
+msgstr ""
+
+#: inc/Integrations/Woocommerce.php:92
+msgid "Para recuperar a data do pedido do WooCommerce"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:62 inc/Integrations/Woocommerce.php:100
+msgid "Para recuperar a URL de pagamento do pedido"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:44
+msgid "Para recuperar a URL do site"
+msgstr ""
+
+#: inc/Integrations/Woocommerce.php:96
+msgid ""
+"Para recuperar cada produto e quantidade adquiridos no pedido, separados por "
+"linha"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:87
+#: inc/Integrations/Flexify_Checkout.php:94
+msgid ""
+"Para recuperar o código Pix Copia e Cola da integração banco Inter com "
+"Flexify Checkout"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:41
+msgid "Para recuperar o e-mail do usuário"
+msgstr ""
+
+#: inc/Integrations/Woocommerce.php:104
+msgid "Para recuperar o endereço completo do usuário"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:47
+msgid "Para recuperar o nome do site"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:53 inc/Integrations/Woocommerce.php:84
+msgid "Para recuperar o número do pedido do WooCommerce"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:32
+msgid "Para recuperar o primeiro nome do usuário"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:35
+msgid "Para recuperar o sobrenome do usuário"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:56 inc/Integrations/Woocommerce.php:88
+msgid "Para recuperar o status do pedido do WooCommerce"
+msgstr ""
+
+#: inc/Integrations/Woocommerce.php:108
+msgid "Para recuperar o símbolo de moeda"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:38
+msgid "Para recuperar o telefone do usuário"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:59
+msgid "Para recuperar os itens adquiridos no pedido"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:172
+msgid "Paraguay"
+msgstr ""
+
+#: inc/Builder/Core.php:292
+msgid "Parar automação aqui"
+msgstr ""
+
+#: inc/Builder/Core.php:97
+msgid "Pedido concluído"
+msgstr ""
+
+#: inc/Builder/Core.php:107
+msgid "Pedido parcialmente reembolsado"
+msgstr ""
+
+#: inc/Builder/Core.php:102
+msgid "Pedido totalmente reembolsado"
+msgstr ""
+
+#: inc/Core/Ajax.php:1447
+msgid "Permissão negada"
+msgstr ""
+
+#: inc/Builder/Core.php:275
+msgid "Permite definir um tempo de espera antes da ação ser executada."
+msgstr ""
+
+#: inc/Builder/Core.php:284
+msgid "Permite definir uma condição para uma ação ser executada."
+msgstr ""
+
+#: inc/Validations/Conditions.php:31
+msgid "Permite verificar a função do usuário que disparou o acionamento."
+msgstr ""
+
+#: inc/Validations/Conditions.php:49
+msgid "Permite verificar a função do usuário que fez o login."
+msgstr ""
+
+#: inc/Validations/Conditions.php:35
+msgid ""
+"Permite verificar metadados específicos do usuário que disparou o "
+"acionamento."
+msgstr ""
+
+#: inc/Validations/Conditions.php:59
+msgid ""
+"Permite verificar metadados específicos do usuário que solicitou a "
+"redefinição de senha."
+msgstr ""
+
+#: inc/Validations/Conditions.php:73
+msgid "Permite verificar o autor do post publicado."
+msgstr ""
+
+#: inc/Validations/Conditions.php:115
+msgid "Permite verificar o e-mail do cliente que realizou o pedido."
+msgstr ""
+
+#: inc/Validations/Conditions.php:195 inc/Validations/Conditions.php:209
+msgid "Permite verificar o ID do formulário enviado."
+msgstr ""
+
+#: inc/Validations/Conditions.php:157
+msgid "Permite verificar o status da assinatura criada."
+msgstr ""
+
+#: inc/Validations/Conditions.php:83
+msgid "Permite verificar o status do pedido recebido."
+msgstr ""
+
+#: inc/Validations/Conditions.php:45
+msgid "Permite verificar o tempo desde o último login do usuário."
+msgstr ""
+
+#: inc/Validations/Conditions.php:69
+msgid "Permite verificar o tipo de post que foi publicado."
+msgstr ""
+
+#: inc/Validations/Conditions.php:133
+msgid "Permite verificar o valor do reembolso do pedido."
+msgstr ""
+
+#: inc/Validations/Conditions.php:181
+msgid "Permite verificar o valor total do carrinho abandonado."
+msgstr ""
+
+#: inc/Validations/Conditions.php:119
+msgid "Permite verificar o valor total do pedido concluído."
+msgstr ""
+
+#: inc/Validations/Conditions.php:101
+msgid "Permite verificar o valor total do pedido em processamento."
+msgstr ""
+
+#: inc/Validations/Conditions.php:87
+msgid "Permite verificar o valor total do pedido."
+msgstr ""
+
+#: inc/Validations/Conditions.php:185
+msgid "Permite verificar os itens presentes no carrinho abandonado."
+msgstr ""
+
+#: inc/Validations/Conditions.php:105
+msgid "Permite verificar os produtos adquiridos no pedido em processamento."
+msgstr ""
+
+#: inc/Validations/Conditions.php:91 inc/Validations/Conditions.php:123
+#: inc/Validations/Conditions.php:137 inc/Validations/Conditions.php:147
+#: inc/Validations/Conditions.php:161 inc/Validations/Conditions.php:171
+msgid "Permite verificar os produtos adquiridos no pedido."
+msgstr ""
+
+#: inc/Validations/Conditions.php:199 inc/Validations/Conditions.php:213
+msgid "Permite verificar valores específicos dos campos do formulário enviado."
+msgstr ""
+
+#: inc/Builder/Core.php:592
+msgid "Personalizado (avançado)"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:44
+msgid "Peru"
+msgstr ""
+
+#: inc/Core/Admin.php:231
+msgid "Pesquisar fluxos"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:51
+msgid "Pesquisar por fluxos"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:55
+msgid "Philippines"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:27
+msgid "Plugin"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:42
+msgid "Poland"
+msgstr ""
+
+#: inc/Core/Ajax.php:1216
+msgid "Por favor, preencha o número de telefone e o código OTP."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:128
+msgid "Portugal"
+msgstr ""
+
+#: inc/Core/Admin.php:221
+msgctxt "post type general name"
+msgid "Fluxos"
+msgstr ""
+
+#: inc/Core/Admin.php:222
+msgctxt "post type singular name"
+msgid "Fluxo"
+msgstr ""
+
+#: inc/Validations/Conditions.php:90 inc/Validations/Conditions.php:104
+#: inc/Validations/Conditions.php:122 inc/Validations/Conditions.php:136
+#: inc/Validations/Conditions.php:146 inc/Validations/Conditions.php:160
+#: inc/Validations/Conditions.php:170
+msgid "Produtos adquiridos"
+msgstr ""
+
+#: inc/Core/Components.php:718
+msgid "Produtos adquiridos:"
+msgstr ""
+
+#: inc/Core/Components.php:767
+msgid "Produtos no carrinho:"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:53
+msgid "Publicados"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:209
+msgid "Publicar"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:218
+msgid "Qatar"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:154
+msgid "Rascunho"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:58
+msgid "Rascunhos"
+msgstr ""
+
+#: inc/Builder/Core.php:179
+msgid "Recuperação de senha do usuário"
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:44
+msgid ""
+"Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a "
+"finalização de compras, garantindo mais conversões."
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:240
+msgid "Redefinir configurações"
+msgstr ""
+
+#: inc/Core/Assets.php:45
+msgid "Reenviar código"
+msgstr ""
+
+#: inc/Core/Components.php:127
+msgid "Reenvie o código em"
+msgstr ""
+
+#: inc/Core/Components.php:388 inc/Views/Builder/Actions.php:118
+#: inc/Views/Builder/Actions.php:146
+msgid "Remetente"
+msgstr ""
+
+#: inc/Core/Ajax.php:1307
+msgid "Remetente removido"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:22
+msgid "Remetentes cadastrados"
+msgstr ""
+
+#: inc/Core/Components.php:42
+msgid "Remover"
+msgstr ""
+
+#: inc/Integrations/Woo_Subscriptions.php:65
+msgid "Renovação da assinatura expirou"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:271
+msgid "Reportar problemas"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:97
+msgid "Republic of the Congo"
+msgstr ""
+
+#: inc/API/License.php:284
+msgid "Resposta desconhecida"
+msgstr ""
+
+#: inc/API/License.php:308
+msgid "Resposta vazia."
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:132 inc/Core/Workflows_Table.php:204
+msgid "Restaurar"
+msgstr ""
+
+#: inc/Views/Builder/Navbar.php:20
+msgid "Rodar teste"
+msgstr ""
+
+#: inc/Views/Builder/Navbar.php:20
+msgid ""
+"Rodar um teste da automação. Obs.: Atrasos e condições não são considerados."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:35
+msgid "Romania"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:59
+msgid "Rota para envio de mensagens de mídia:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:54
+msgid "Rota para envio de mensagens de texto:"
+msgstr ""
+
+#: inc/Builder/Placeholders.php:187
+msgid "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:25
+msgid "Russia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:104
+msgid "Rwanda"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:115
+msgid "Réunion"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:167
+msgid "Saint Barthelemy"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:123
+msgid "Saint Helena"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:167
+msgid "Saint Martin"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:165
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: inc/Core/Components.php:322 inc/Core/Components.php:900
+msgid "Salvar alterações"
+msgstr ""
+
+#: inc/Core/Ajax.php:140
+msgid "Salvo com sucesso"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:190
+msgid "Samoa"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:145
+msgid "San Marino"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:211
+msgid "Saudi Arabia"
+msgstr ""
+
+#: inc/Core/Helpers.php:27
+msgid "segundo"
+msgstr ""
+
+#: inc/Core/Components.php:363 inc/Views/Builder/Actions.php:76
+msgid "Segundo (s)"
+msgstr ""
+
+#: inc/Core/Components.php:129 inc/Core/Helpers.php:27
+msgid "segundos"
+msgstr ""
+
+#: inc/Core/Components.php:350 inc/Views/Builder/Actions.php:63
+msgid "Selecione o tipo de atraso da próxima ação"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:15
+msgid ""
+"Selecione um país para definir o código padrão. O código padrão do país será "
+"usado quando não for possível obter o código de país do telefone."
+msgstr ""
+
+#: inc/Core/Components.php:824
+msgid "Selecione uma condição"
+msgstr ""
+
+#: inc/Core/Components.php:378 inc/Views/Builder/Actions.php:91
+msgid "Selecione uma data"
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:17
+msgid ""
+"Selecione uma integração de acionamento para iniciar o fluxo da sua "
+"automação."
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:17
+msgid "Selecione uma ou mais ações para o fluxo da automação."
+msgstr ""
+
+#: inc/Core/Helpers.php:31
+msgid "semana"
+msgstr ""
+
+#: inc/Core/Components.php:367 inc/Views/Builder/Actions.php:80
+msgid "Semana (s)"
+msgstr ""
+
+#: inc/Core/Helpers.php:31
+msgid "semanas"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:60
+msgid "send-message/media"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:55
+msgid "send-message/text"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:76
+msgid "Senegal"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:148
+msgid "Serbia"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:32
+msgid "Servidor"
+msgstr ""
+
+#: inc/API/Controller.php:355
+#, php-format
+msgid "Seu código de verificação do Joinotify é: %s"
+msgstr ""
+
+#: inc/Core/Ajax.php:1252
+msgid "Seu WhatsApp foi verificado com sucesso!"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:102
+msgid "Seychelles"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:87
+msgid "Sierra Leone"
+msgstr ""
+
+#: inc/Core/Components.php:752 inc/Views/Settings/Tabs/About.php:20
+#: inc/Views/Settings/Tabs/About.php:62 inc/Views/Settings/Tabs/About.php:78
+#: inc/Views/Settings/Tabs/About.php:97
+msgid "Sim"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:259
+msgid "Sim, desejo redefinir"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:57
+msgid "Singapore"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:155
+msgid "Slovakia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:151
+msgid "Slovenia"
+msgstr ""
+
+#: inc/Views/Settings.php:52
+msgid "Sobre"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:183
+msgid "Solomon Islands"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:106
+msgid "Somalia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:27
+msgid "South Africa"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:60
+msgid "South Korea"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:70
+msgid "South Sudan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:32
+msgid "Spain"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:67
+msgid "Sri Lanka"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:93
+msgid "Status"
+msgstr ""
+
+#: inc/Core/Ajax.php:632
+msgid "Status atualizado com sucesso"
+msgstr ""
+
+#: inc/Validations/Conditions.php:156
+msgid "Status da assinatura"
+msgstr ""
+
+#: inc/Core/Components.php:739
+msgid "Status da assinatura:"
+msgstr ""
+
+#: inc/Views/Builder/Navbar.php:24
+msgid "Status da automação"
+msgstr ""
+
+#: inc/Views/License.php:27
+msgid "Status da licença:"
+msgstr ""
+
+#: inc/Builder/Core.php:112
+msgid "Status de um pedido alterado"
+msgstr ""
+
+#: inc/Core/Ajax.php:1473
+msgid "Status do fluxo atualizado"
+msgstr ""
+
+#: inc/Validations/Conditions.php:82
+msgid "Status do pedido"
+msgstr ""
+
+#: inc/Core/Components.php:697
+msgid "Status do pedido:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:12
+msgid "Status do sistema:"
+msgstr ""
+
+#: inc/Views/License.php:48
+msgid "Sua chave de licença:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:103
+msgid "Sudan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:174
+msgid "Suriname"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:40
+msgid "Sweden"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:36
+msgid "Switzerland"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:208
+msgid "Syria"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:94
+msgid "São Tomé and Príncipe"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:204
+msgid "Taiwan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:222
+msgid "Tajikistan"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:111
+msgid "Tamanho máximo da postagem do PHP:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:199
+msgid "Tamanho máximo de envio do PHP:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:109
+msgid "Tanzania"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/Phones.php:14
+msgid "Telefone para testes"
+msgstr ""
+
+#: inc/Views/Settings.php:42
+msgid "Telefones"
+msgstr ""
+
+#: inc/Core/Assets.php:72
+msgid "Tem certeza que deseja desativar sua licença?"
+msgstr ""
+
+#: inc/Core/Assets.php:106
+msgid "Tem certeza que deseja excluir esta ação?"
+msgstr ""
+
+#: inc/Core/Assets.php:107
+msgid "Tem certeza que deseja excluir este acionamento?"
+msgstr ""
+
+#: inc/Core/Assets.php:44
+msgid "Tem certeza que deseja remover este remetente?"
+msgstr ""
+
+#: inc/Builder/Core.php:274
+msgid "Tempo de espera"
+msgstr ""
+
+#: inc/Validations/Conditions.php:44
+msgid "Tempo desde o último login"
+msgstr ""
+
+#: inc/Core/Components.php:664
+msgid "Tempo desde o último login:"
+msgstr ""
+
+#: inc/Core/Components.php:816
+msgid "Termina com"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:58
+msgid "Thailand"
+msgstr ""
+
+#: inc/Views/License.php:43
+#, php-format
+msgid "Tipo da licença: %s"
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:164
+msgid "Tipo de mídia"
+msgstr ""
+
+#: inc/Validations/Conditions.php:68
+msgid "Tipo de post"
+msgstr ""
+
+#: inc/Core/Components.php:673
+msgid "Tipo de post:"
+msgstr ""
+
+#: inc/Core/Ajax.php:418 inc/Core/Ajax.php:1105
+msgid "Tipo de template inválido."
+msgstr ""
+
+#: inc/Core/Ajax.php:1385
+msgid "Todas as mensagens de teste foram enviadas com sucesso!"
+msgstr ""
+
+#. parent page slug
+#. page title
+#: inc/Core/Admin.php:54 inc/Core/Admin.php:55 inc/Core/Admin.php:230
+#: inc/Views/Builder/Choose_Template.php:54
+msgid "Todos os fluxos"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:83
+msgid "Togo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:195
+msgid "Tokelau"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:182
+msgid "Tonga"
+msgstr ""
+
+#: joinotify.php:224 joinotify.php:235
+msgid "Trapaceando?"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:73
+msgid "Tunisia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:63
+msgid "Turkey"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:223
+msgid "Turkmenistan"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:193
+msgid "Tuvalu"
+msgstr ""
+
+#: inc/Core/Ajax.php:859
+msgid "Título atualizado com sucesso"
+msgstr ""
+
+#: inc/Core/Components.php:895
+msgid "Título do seu fluxo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:110
+msgid "Uganda"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:147
+msgid "Ukraine"
+msgstr ""
+
+#: inc/Core/Updater.php:246
+msgid "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:215
+msgid "United Arab Emirates"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:38
+msgid "United Kingdom"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:24
+msgid "United States"
+msgstr ""
+
+#: inc/Views/Builder/Actions.php:180
+msgid "URL da mídia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:175
+msgid "Uruguay"
+msgstr ""
+
+#: inc/Core/Assets.php:110
+msgid "Usar esta mídia"
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:26
+msgid ""
+"Use o maior serviço de mensagens do mundo para notificar seu cliente em "
+"eventos do seu site."
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:227
+msgid "Uzbekistan"
+msgstr ""
+
+#: inc/Core/Components.php:782
+msgid "Valor do campo"
+msgstr ""
+
+#: inc/Core/Components.php:658
+msgid "Valor do metadado"
+msgstr ""
+
+#: inc/Core/Components.php:657
+msgid "Valor do metadado:"
+msgstr ""
+
+#: inc/Core/Components.php:733 inc/Validations/Conditions.php:132
+msgid "Valor do reembolso"
+msgstr ""
+
+#: inc/Core/Components.php:732
+msgid "Valor do reembolso:"
+msgstr ""
+
+#: inc/Core/Components.php:781
+msgid "Valor espefífico de um campo:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:164
+msgid "Valor mínimo recomendado é 10000"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:186
+msgid "Valor mínimo recomendado é 128M"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:142
+msgid "Valor mínimo recomendado é 180"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:120 inc/Views/Settings/Tabs/About.php:208
+msgid "Valor mínimo recomendado é 64M"
+msgstr ""
+
+#: inc/Core/Components.php:761 inc/Validations/Conditions.php:180
+msgid "Valor total do carrinho"
+msgstr ""
+
+#: inc/Core/Components.php:760
+msgid "Valor total do carrinho:"
+msgstr ""
+
+#: inc/Core/Components.php:712 inc/Validations/Conditions.php:86
+#: inc/Validations/Conditions.php:100 inc/Validations/Conditions.php:118
+msgid "Valor total do pedido"
+msgstr ""
+
+#: inc/Core/Components.php:711
+msgid "Valor total do pedido:"
+msgstr ""
+
+#: inc/Validations/Conditions.php:198 inc/Validations/Conditions.php:212
+msgid "Valores específicos dos campos do formulário"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:184
+msgid "Vanuatu"
+msgstr ""
+
+#: inc/Core/Components.php:418 inc/Core/Components.php:854
+msgid "Variáveis de texto"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:155
+msgid "Variáveis máximas de entrada do PHP:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:146
+msgid "Vatican City"
+msgstr ""
+
+#: inc/Core/Components.php:811
+msgid "Vazio"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:51
+msgid "Venezuela"
+msgstr ""
+
+#: inc/Core/Admin.php:229
+msgid "Ver fluxo"
+msgstr ""
+
+#: inc/Core/Components.php:565
+msgid "Verdadeiro"
+msgstr ""
+
+#: inc/Core/Updater.php:216
+msgid "Verificar atualizações"
+msgstr ""
+
+#: inc/Core/Ajax.php:1251
+msgid "Verificação bem-sucedida"
+msgstr ""
+
+#: inc/Core/Components.php:114
+msgid "Verifique seu WhatsApp"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:81
+#, php-format
+msgid "Versão %s"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:29
+#, php-format
+msgid "Versão do Joinotify: %s"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:34
+msgid "Versão do PHP:"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:15
+msgid "Versão do WordPress:"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:61
+msgid "Vietnam"
+msgstr ""
+
+#: inc/Core/Ajax.php:1448
+msgid "Você não tem permissão de editar posts"
+msgstr ""
+
+#: inc/Views/License.php:76
+msgid ""
+"Você pode fazer upload do arquivo .key da licença para fazer sua ativação "
+"manual."
+msgstr ""
+
+#: inc/Views/Builder/Triggers.php:83
+msgid "Voltar"
+msgstr ""
+
+#: inc/Views/Builder/Choose_Template.php:42 inc/Views/Builder/Navbar.php:54
+msgid "Voltar para o painel"
+msgstr ""
+
+#: inc/Views/License.php:29
+msgid "Válida"
+msgstr ""
+
+#: inc/Validations/Media_Types.php:36
+msgid "Vídeo"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:187
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:71
+msgid "Western Sahara"
+msgstr ""
+
+#: inc/Integrations/Integrations_Base.php:25
+msgid "WhatsApp"
+msgstr ""
+
+#: inc/Builder/Core.php:310
+msgid "WhatsApp: Mensagem de mídia"
+msgstr ""
+
+#: inc/Builder/Core.php:301
+msgid "WhatsApp: Mensagem de texto"
+msgstr ""
+
+#: inc/Builder/Core.php:647 inc/Integrations/Integrations_Base.php:32
+#: inc/Integrations/Woocommerce.php:45
+msgid "WooCommerce"
+msgstr ""
+
+#: inc/Builder/Core.php:646 inc/Integrations/Integrations_Base.php:77
+#: inc/Integrations/Wordpress.php:41 inc/Views/Settings/Tabs/About.php:13
+msgid "WordPress"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:19
+msgid "WordPress Multisite:"
+msgstr ""
+
+#: inc/Builder/Core.php:650 inc/Integrations/Integrations_Base.php:65
+#: inc/Integrations/Wpforms.php:44
+msgid "WPForms"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:212
+msgid "Yemen"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:113
+msgid "Zambia"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:116
+msgid "Zimbabwe"
+msgstr ""
+
+#: inc/Validations/Media_Types.php:38
+msgid "Áudio"
+msgstr ""
+
+#: inc/Validations/Country_Codes.php:135
+msgid "Åland Islands"
+msgstr ""
+
+#: inc/Core/Components.php:809
+msgid "É"
+msgstr ""
