@@ -40,7 +40,7 @@ class Assets {
 
 		// enqueue settings scripts
 		if ( strpos( $current_url, 'admin.php?page=joinotify-settings' ) !== false ) {
-			wp_enqueue_script( 'joinotify-scripts', JOINOTIFY_ASSETS . 'js/joinotify-scripts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-scripts', JOINOTIFY_ASSETS . 'admin/js/joinotify-scripts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			wp_localize_script( 'joinotify-scripts', 'joinotify_params', array(
 				'debug_mode' => JOINOTIFY_DEBUG_MODE,
@@ -58,7 +58,7 @@ class Assets {
 				wp_enqueue_style( 'bootstrap-utilities', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
 			}
 
-			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'css/joinotify-styles'. $min_file .'.css', array(), JOINOTIFY_VERSION );
+			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/joinotify-styles'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts.js', array('jquery'), JOINOTIFY_VERSION );
 
@@ -68,7 +68,7 @@ class Assets {
 
 		// license page scripts
 		if ( strpos( $current_url, 'admin.php?page=joinotify-license' ) !== false ) {
-			wp_enqueue_script( 'joinotify-license-scripts', JOINOTIFY_ASSETS . 'js/joinotify-license.js', array('jquery'), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-license-scripts', JOINOTIFY_ASSETS . 'admin/js/joinotify-license.js', array('jquery'), JOINOTIFY_VERSION );
 
 			wp_localize_script( 'joinotify-license-scripts', 'joinotify_license_params', array(
 				'debug_mode' => JOINOTIFY_DEBUG_MODE,
@@ -120,8 +120,8 @@ class Assets {
 		if ( strpos( $current_url, 'admin.php?page=joinotify-workflows' ) !== false && strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) === false ) {
 			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts.js', array('jquery'), JOINOTIFY_VERSION );
 
-			wp_enqueue_style( 'joinotify-workflows-table-styles', JOINOTIFY_ASSETS . 'css/workflows-table.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-workflows-table-scripts', JOINOTIFY_ASSETS . 'js/workflows-table.js', array('jquery'), JOINOTIFY_VERSION );
+			wp_enqueue_style( 'joinotify-workflows-table-styles', JOINOTIFY_ASSETS . 'admin/css/workflows-table.css', array(), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-workflows-table-scripts', JOINOTIFY_ASSETS . 'admin/js/workflows-table.js', array('jquery'), JOINOTIFY_VERSION );
 
 			wp_localize_script( 'joinotify-workflows-table-scripts', 'joinotify_workflows_table_params', array(
 				'debug_mode' => JOINOTIFY_DEBUG_MODE,
