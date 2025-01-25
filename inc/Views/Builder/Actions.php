@@ -6,6 +6,7 @@ use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Validations\Media_Types;
 
 use MeuMouse\Joinotify\Core\Helpers;
+
 use MeuMouse\Joinotify\Cron\Schedule;
 
 // Exit if accessed directly.

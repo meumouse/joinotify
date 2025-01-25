@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Admin;
 
+use MeuMouse\Joinotify\Core\Helpers;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 

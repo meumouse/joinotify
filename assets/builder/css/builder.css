@@ -724,14 +724,12 @@ label.custom-file-label:hover {
     transition: border-color .15s ease-in-out;
 }
 
-input::placeholder,
-::placeholder,
-::-webkit-input-placeholder
-:-ms-input-placeholder,
-::-ms-input-placeholder,
-:-moz-placeholder,
-::-moz-placeholder {
-    color: #d7dde2 !important;
+.form-control::-moz-placeholder {
+    opacity: 0.75;
+}
+
+.form-control::placeholder {
+    opacity: 0.75;
 }
 
 input.form-control:focus {

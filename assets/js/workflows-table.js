@@ -23,9 +23,11 @@ jQuery(document).ready( function($) {
  * Change post status on click on toggle switch
  * 
  * @since 1.0.0
+ * @version 1.1.0
  */
 jQuery(document).ready( function($) {
     $(document).on('change', '.toggle-switch', function() {
+        var input = $(this);
         const post_id = $(this).data('id');
         const status = $(this).is(':checked') ? 'publish' : 'draft';
 
@@ -38,6 +40,9 @@ jQuery(document).ready( function($) {
                 post_id: post_id,
                 status: status,
             },
+            beforeSend: function() {
+                input.prop('disabled', true);
+            },
             success: function(response) {
                 if ( response.status === 'success' ) {
                     display_toast('success', response.toast_header_title, response.toast_body_title, $('.wrap form'));
@@ -47,6 +52,9 @@ jQuery(document).ready( function($) {
             },
             error: function(xhr, status, error) {
                 console.error('Error on AJAX request:', xhr.responseText);
+            },
+            complete: function() {
+                input.prop('disabled', false);
             },
         });
     });

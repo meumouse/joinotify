@@ -2,8 +2,6 @@
 
 namespace MeuMouse\Joinotify\Builder;
 
-use MeuMouse\Joinotify\Validations\Conditions;
-use MeuMouse\Joinotify\Integrations\Woocommerce;
 use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
@@ -29,99 +27,31 @@ class Placeholders {
      * @return array Filtered list of placeholders based on the trigger, or if empty return all
      */
     public static function get_placeholders_list( $integration = '', $trigger = '', $context = array() ) {
-        $current_user = wp_get_current_user();
+        $placeholders = apply_filters( 'Joinotify/Builder/Placeholders_List', array(), $context );
 
-        $placeholders_list = array(
-            'wordpress' => array(
-                '{{ first_name }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar o primeiro nome do usuário', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => $current_user->exists() ? $current_user->first_name : __( 'Não foi possível recuperar o nome do usuário', 'joinotify' ),
-                        'sandbox' => $current_user->exists() ? $current_user->first_name : esc_html__( 'João', 'joinotify' ),
-                    ),
-                ),
-                '{{ last_name }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar o sobrenome do usuário', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => $current_user->exists() ? $current_user->last_name : __( 'Não foi possível recuperar o sobrenome do usuário', 'joinotify' ),
-                        'sandbox' => $current_user->exists() ? $current_user->last_name : esc_html__( 'da Silva', 'joinotify' ),
-                    ),
-                ),
-                '{{ email }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar o e-mail do usuário', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => $current_user->exists() ? $current_user->user_email : esc_html__( 'Não foi possível recuperar o e-mail do usuário', 'joinotify' ),
-                        'sandbox' => $current_user->exists() ? $current_user->user_email : esc_html__( 'usuario@exemplo.com', 'joinotify' ),
-                    ),
-                ),
-                '{{ site_url }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar a URL do site', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => get_site_url(),
-                        'sandbox' => get_site_url(),
-                    ),
-                ),
-                '{{ site_name }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar o nome do site', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => get_bloginfo('name'),
-                        'sandbox' => get_bloginfo('name'),
-                    ),
-                ),
-                '{{ current_date }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar a data atual', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => date( get_option('date_format') ),
-                        'sandbox' => date( get_option('date_format') ),
-                    ),
-                ),
-                '{{ post_id }}' => array(
-                    'triggers' => array(), // is global
-                    'description' => esc_html__( 'Para recuperar o ID do post', 'joinotify' ),
-                    'replacement' => array(
-                        'production' => get_the_ID(),
-                        'sandbox' => esc_html__( '12345', 'joinotify' ),
-                    ),
-                ),
-            ),
-        );
-
-        $placeholders = apply_filters( 'Joinotify/Builder/Placeholders_List', $placeholders_list, $context );
-
-        // check if integration is specified and exists
-        if ( ! empty( $integration ) && isset( $placeholders_list[ $integration ] ) ) {
-            $integration_placeholders = $placeholders_list[ $integration ];
-        } elseif ( ! empty( $integration ) ) {
-            // if the integration not has defined placeholders, return all array or empty
-            $integration_placeholders = array();
-        } else {
-            // if none integration specified, get all the placeholders from all integrations
-            $integration_placeholders = array();
-
-            foreach ( $placeholders_list as $int_key => $int_placeholders ) {
-                $integration_placeholders = array_merge( $integration_placeholders, $int_placeholders );
+        // initialize the global placeholders (empty triggers array)
+        foreach ( $placeholders as $group_key => $group_placeholders ) {
+            foreach ( $group_placeholders as $placeholder => $details ) {
+                if ( empty( $details['triggers'] ) ) {
+                    $filtered_placeholders[ $placeholder ] = $details;
+                }
             }
         }
 
-        // filter the placeholders based on trigger
-        $filtered_placeholders = array();
-
-        foreach ( $integration_placeholders as $placeholder => $details ) {
-            // if empty 'triggers', is global and must be included
-            if ( empty( $details['triggers'] ) ) {
-                $filtered_placeholders[ $placeholder ] = $details;
-                continue;
-            }
-
-            // if a specified trigger and it is in the placeholders triggers, include
-            if ( ! empty( $trigger ) && in_array( $trigger, $details['triggers'] ) ) {
-                $filtered_placeholders[ $placeholder ] = $details;
+        // if a specific integration and exists on filtered placeholders
+        if ( ! empty( $integration ) && isset( $placeholders[ $integration ] ) ) {
+            if ( ! empty( $trigger ) ) {
+                // include only placeholders corresponding the specific trigger
+                foreach ( $placeholders[ $integration ] as $placeholder => $details ) {
+                    if ( in_array( $trigger, $details['triggers'], true ) ) {
+                        $filtered_placeholders[ $placeholder ] = $details;
+                    }
+                }
+            } else {
+                // include all the placeholders from specific integration
+                foreach ( $placeholders[ $integration ] as $placeholder => $details ) {
+                    $filtered_placeholders[ $placeholder ] = $details;
+                }
             }
         }
 
@@ -148,26 +78,19 @@ class Placeholders {
                 return $context['fields'][$field_id];
             }
 
-            return $matches[0]; // if the field is not found, the original placeholder is returned
+            return $matches[0]; // if the field is not found, returns the original placeholder
         }, $message);
 
         // Now handles static placeholders
-        $integration = isset( $context['type'] ) ? $context['type'] : '';
+        $integration = isset( $context['integration'] ) ? $context['integration'] : '';
         $trigger = isset( $context['trigger'] ) ? $context['trigger'] : '';
         $placeholders = self::get_placeholders_list( $integration, $trigger, $context );
-
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "replace_placeholders() message after field_id substitution: " . $message );
-            Logger::register_log( "replace_placeholders() context: " . print_r( $context, true ) );
-            Logger::register_log( "replace_placeholders() mode: " . $mode );
-            Logger::register_log( "replace_placeholders() placeholders: " . print_r( $placeholders, true ) );
-        }
 
         foreach ( $placeholders as $placeholder => $details ) {
             if ( isset( $details['replacement'][ $mode ] ) ) {
                 $replacement = $details['replacement'][ $mode ];
 
-                // if the replacement is a callback function, run it
+                // if the replacement is a callback function, execute it
                 if ( is_callable( $replacement ) ) {
                     $replacement = call_user_func( $replacement, $context );
                 }
@@ -175,6 +98,29 @@ class Placeholders {
                 $message = str_replace( $placeholder, $replacement, $message );
             }
         }
+
+        // replace for checkout placeholders {{ wc_checkout_field=[] }}
+        $message = preg_replace_callback('/\{\{\s*wc_checkout_field=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $context ) {
+            $field_id = $matches[1];
+
+            // check if 'order_id' has on context array
+            if ( isset( $context['order_id'] ) ) {
+                $order_id = $context['order_id'];
+                $order = wc_get_order( $order_id );
+
+                if ( $order ) {
+                    // Retrieves the value of the specific field. Assuming it is a custom field stored as meta
+                    $field_value = $order->get_meta( $field_id );
+
+                    // Checks if field value is found
+                    if ( ! empty( $field_value ) ) {
+                        return $field_value;
+                    }
+                }
+            }
+
+            return $matches[0]; // returns the original placeholder if not found
+        }, $message );
 
         return $message;
     }

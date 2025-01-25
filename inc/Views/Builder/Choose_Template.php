@@ -26,13 +26,7 @@ defined('ABSPATH') || exit; ?>
                             <h5 class="card-title fs-5 fw-semibold"><?php esc_html_e( $value['title'] ) ?></h5>
                             <p class="card-text mb-4 mt-1 text-muted text-center"><?php esc_html_e( $value['description'] ) ?></p>
 
-                            <?php if ( $template === 'scratch' ) : ?>
-                                <button type="button" class="btn btn-outline-primary choose-template" data-template="<?php esc_attr_e( $template ) ?>"><?php esc_html_e( $value['button_title'] ) ?></button>
-                            <?php else : ?>
-                                <div class="mt-3 alert alert-info">
-                                    <?php esc_html_e( 'Este recurso será liberado em breve', 'joinotify' ) ?>
-                                </div>
-                            <?php endif; ?>
+                            <button type="button" class="btn btn-outline-primary choose-template" data-template="<?php esc_attr_e( $template ) ?>"><?php esc_html_e( $value['button_title'] ) ?></button>
                         </div>
                     </div>
                 <?php endforeach; ?>

@@ -490,12 +490,16 @@
 	 * Add builder actions
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
 		var data_action_condition = false;
 		var data_condition_type = '';
 		var get_action_id = '';
+
+		// set default workflow name
+		$('#joinotify_set_workflow_name').val(joinotify_builder_params.default_workflow_name);
 
 		function check_requirements() {
 			let name = $('#joinotify_set_workflow_name').val();

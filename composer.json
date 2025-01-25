@@ -1,0 +1,21 @@
+{
+    "name": "meumouse/joinotify",
+    "description": "Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.",
+    "type": "library",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "MeuMouse.com",
+            "email": "contato@meumouse.com",
+            "homepage": "https://meumouse.com"
+        }
+    ],
+    "require": {
+        "php": ">= 7.4"
+    },
+    "autoload": {
+        "psr-4": {
+             "MeuMouse\\Joinotify\\": "inc/"
+        }
+    }
+}

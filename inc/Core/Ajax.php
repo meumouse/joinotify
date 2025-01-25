@@ -59,7 +59,7 @@ class Ajax {
         add_action( 'wp_ajax_joinotify_deactive_license', array( $this, 'deactive_license_callback' ) );
 
         // get templates count
-    //    add_action( 'wp_ajax_joinotify_get_templates_count', array( $this, 'get_templates_count_callback' ) );
+        add_action( 'wp_ajax_joinotify_get_templates_count', array( $this, 'get_templates_count_callback' ) );
 
         // get workflow templates
     //    add_action( 'wp_ajax_joinotify_get_workflow_templates', array( $this, 'get_workflow_templates_callback' ) );
@@ -1095,6 +1095,7 @@ class Ajax {
      * Get templates library on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function get_templates_count_callback() {

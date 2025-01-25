@@ -410,19 +410,8 @@ class Components {
                                     $trigger = Triggers::get_trigger_from_post( $post_id );
                                     $integration = Utils::get_context_from_post( $post_id );
 
-                                    $context = array(
-                                        'integration' => $integration,
-                                        'trigger' => $trigger,
-                                        'type' => 'trigger',
-                                    );
-
-                                    error_log( 'trigger: ' . print_r( $trigger, true ) );
-                                    error_log( 'integration: ' . print_r( $integration, true ) );
-
                                     // get filtered placeholders
-                                    $placeholders = Placeholders::get_placeholders_list( $integration, $trigger, $context );
-                                    
-                                    error_log( 'placeholders: ' . print_r( $placeholders, true ) );
+                                    $placeholders = Placeholders::get_placeholders_list( $integration, $trigger );
 
                                     foreach( $placeholders as $placeholder => $value ) {
                                         $html .= '<div class="d-grid mb-3">';
@@ -891,8 +880,12 @@ class Components {
                     $html .= '<div class="accordion-body pe-0 pt-1">';
                         $html .= '<div class="mt-3 placeholders-list">';
                             $trigger = Triggers::get_trigger_from_post( $post_id );
+                            $integration = Utils::get_context_from_post( $post_id );
 
-                            foreach( Placeholders::get_placeholders_list( $trigger ) as $placeholder => $value ) {
+                            // get filtered placeholders
+                            $placeholders = Placeholders::get_placeholders_list( $integration, $trigger );
+
+                            foreach( $placeholders as $placeholder => $value ) {
                                 $html .= '<div class="d-grid mb-3">';
                                     $html .= '<span class="fs-sm fs-italic"><code>'. esc_html( $placeholder ) .'</code></span>';
                                     $html .= '<span class="fs-sm mt-1">'. esc_html( $value['description'] ) .'</span>';

@@ -2,6 +2,9 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
+use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Builder\Triggers;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -9,6 +12,7 @@ defined('ABSPATH') || exit;
  * Abstract base class for integrations
  * 
  * @since 1.0.0
+ * @version 1.1.0
  * @package MeuMouse.com
  */
 abstract class Integrations_Base {
@@ -81,5 +85,49 @@ abstract class Integrations_Base {
                 'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Wordpress',
             ),
         ));
+    }
+
+
+    /**
+     * Render a trigger tab on builder sidebar
+     * 
+     * @since 1.1.0
+     * @param string $slug | Integration slug (eg: 'wordpress')
+     * @param string $name | Integration name (eg: esc_html__( 'WordPress', 'text-domain' ) )
+     * @param string $icon_svg | SVG icon code
+     * @return void
+     */
+    protected function render_integration_trigger_tab( $slug, $name, $icon ) {
+        if ( Admin::get_setting("enable_{$slug}_integration") === 'yes' ) : ?>
+            <a href="#<?php echo esc_attr( $slug ); ?>" class="nav-tab">
+                <?php echo $icon; // SVG icon ?>
+                <?php echo $name; ?>
+            </a>
+        <?php endif;
+    }
+
+
+    /**
+     * Render the trigger content
+     * 
+     * @since 1.1.0
+     * @param string $slug | Slug da integração (eg: 'wordpress')
+     * @return void
+     */
+    protected function render_integration_trigger_content( $slug ) {
+        if ( Admin::get_setting("enable_{$slug}_integration") === 'yes' ) : ?>
+            <div id="<?php echo esc_attr( $slug ); ?>" class="nav-content triggers-group">
+                <?php foreach ( Triggers::get_triggers_by_context( $slug ) as $trigger ) : ?>
+                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?>" data-context="<?php echo esc_attr( $integration_slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
+                        <h4 class="title"><?php echo esc_html( $trigger['title'] ); ?></h4>
+                        <span class="description"><?php echo esc_html( $trigger['description'] ); ?></span>
+
+                        <?php if ( isset( $trigger['class'] ) && $trigger['class'] === 'locked' ) : ?>
+                            <span class="fs-sm mt-3"><?php esc_html_e( 'Este recurso será liberado em breve', 'joinotify' ); ?></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif;
     }
 }

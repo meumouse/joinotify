@@ -57,10 +57,25 @@ if ( ! class_exists('Joinotify') ) {
 		 * Constructor function
 		 *
 		 * @since 1.0.0
+		 * @version 1.1.0
 		 * @return void
 		 */
 		public function __construct() {
+			/**
+			 * Fire hook before Joinotify initialize
+			 * 
+			 * @since 1.1.0
+			 */
+			do_action('before_joinotify_init');
+
 			add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
+
+			/**
+			 * Fire hook after Joinotify initialize
+			 * 
+			 * @since 1.1.0
+			 */
+			do_action('joinotify_init');
 		}
 		
 
@@ -141,6 +156,7 @@ if ( ! class_exists('Joinotify') ) {
 			$this->define( 'JOINOTIFY_ADMIN_EMAIL', get_option('admin_email') );
 			$this->define( 'JOINOTIFY_DOCS_URL', 'https://ajuda.meumouse.com/docs/joinotify/overview' );
 			$this->define( 'JOINOTIFY_REGISTER_PHONE_URL', 'https://meumouse.com/minha-conta/joinotify-slots/' );
+			$this->define( 'JOINOTIFY_API_BASE_URL', 'https://whatsapp-api.meumouse.com' );
 			$this->define( 'JOINOTIFY_SLUG', self::$slug );
 			$this->define( 'JOINOTIFY_VERSION', self::$version );
 		}

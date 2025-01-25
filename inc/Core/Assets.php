@@ -105,17 +105,18 @@ class Assets {
 			wp_localize_script( 'joinotify-builder-scripts', 'joinotify_builder_params', array(
 				'debug_mode' => JOINOTIFY_DEBUG_MODE,
 				'ajax_url' => admin_url('admin-ajax.php'),
-				'status_active' => __( 'Ativo', 'joinotify' ),
-				'arial_label_toasts' => __( 'Fechar', 'joinotify' ),
-				'confirm_exclude_action' => __( 'Tem certeza que deseja excluir esta ação?', 'joinotify' ),
-				'confirm_exclude_trigger' => __( 'Tem certeza que deseja excluir este acionamento?', 'joinotify' ),
+				'status_active' => esc_html__( 'Ativo', 'joinotify' ),
+				'arial_label_toasts' => esc_html__( 'Fechar', 'joinotify' ),
+				'confirm_exclude_action' => esc_html__( 'Tem certeza que deseja excluir esta ação?', 'joinotify' ),
+				'confirm_exclude_trigger' => esc_html__( 'Tem certeza que deseja excluir este acionamento?', 'joinotify' ),
 				'export_nonce' => wp_create_nonce('joinotify_export_workflow_nonce'),
 				'set_media_title' => esc_html__( 'Escolher mídia', 'joinotify' ),
 				'use_this_media_title' => esc_html__( 'Usar esta mídia', 'joinotify' ),
+				'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
 			));
 		}
 
-		// enqueue assets on page builder
+		// enqueue assets on workflows table
 		if ( strpos( $current_url, 'admin.php?page=joinotify-workflows' ) !== false && strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) === false ) {
 			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts.js', array('jquery'), JOINOTIFY_VERSION );
 

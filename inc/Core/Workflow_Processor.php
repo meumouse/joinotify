@@ -50,6 +50,7 @@ class Workflow_Processor {
 
         // fire hook if Elementor is active
         if ( defined('ELEMENTOR_PATH') && Admin::get_setting('enable_elementor_integration') === 'yes' ) {
+            // when a Elementor form receive a new record
             add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
         }
     }

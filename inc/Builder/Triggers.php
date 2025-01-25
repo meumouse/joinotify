@@ -221,4 +221,18 @@ class Triggers {
 
         return null; // Returns null if no trigger is found.
     }
+
+
+    /**
+     * Get triggers names by context
+     * 
+     * @since 1.1.0
+     * @param string $integration | Integration context
+     * @return array
+     */
+    public static function get_trigger_names( $integration ) {
+        $get_array = self::get_triggers_by_context( $integration );
+
+        return array_column( $get_array, 'data_trigger' );
+    }
 }

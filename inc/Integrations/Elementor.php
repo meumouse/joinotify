@@ -26,9 +26,14 @@ class Elementor extends Integrations_Base {
      */
     public function __construct() {
         if ( defined('ELEMENTOR_PATH') ) {
-            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_elementor_triggers' ), 40 );
-            add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_elementor_tab_content' ) );
-            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'elementor_placeholders' ), 10, 1 );
+            // add trigger tab
+            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
+
+            // add trigger content
+            add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
+
+            // add placeholders
+            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
         }
     }
 
@@ -37,15 +42,15 @@ class Elementor extends Integrations_Base {
      * Add Elementor triggers on sidebar
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
-    public function add_elementor_triggers() {
-        if ( Admin::get_setting('enable_elementor_integration') === 'yes' ) : ?>
-            <a href="#elementor" class="nav-tab">
-                <svg class="joinotify-tab-icon" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d="M200 0C89.532 0 0 89.532 0 200c0 110.431 89.532 200 200 200s200-89.532 200-200C399.964 89.532 310.431 0 200 0Zm-49.991 283.306h-33.315V116.658h33.315v166.648Zm133.297 0h-99.982v-33.315h99.982v33.315Zm0-66.667h-99.982v-33.315h99.982v33.315Zm0-66.666h-99.982v-33.315h99.982v33.315Z"/></g><defs><clipPath><path fill="#fff" d="M0 0h400v400H0z"/></clipPath></defs></svg>
-                <?php esc_html_e( 'Elementor', 'joinotify' ) ?>
-            </a>
-        <?php endif;
+    public function add_triggers_tab() {
+        $integration_slug = 'elementor';
+        $integration_name = esc_html__( 'Elementor', 'joinotify' );
+        $icon_svg = '<svg class="joinotify-tab-icon" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d="M200 0C89.532 0 0 89.532 0 200c0 110.431 89.532 200 200 200s200-89.532 200-200C399.964 89.532 310.431 0 200 0Zm-49.991 283.306h-33.315V116.658h33.315v166.648Zm133.297 0h-99.982v-33.315h99.982v33.315Zm0-66.667h-99.982v-33.315h99.982v33.315Zm0-66.666h-99.982v-33.315h99.982v33.315Z"/></g><defs><clipPath><path fill="#fff" d="M0 0h400v400H0z"/></clipPath></defs></svg>';
+
+        $this->render_integration_trigger_tab( $integration_slug, $integration_name, $icon_svg );
     }
 
 
@@ -56,17 +61,8 @@ class Elementor extends Integrations_Base {
      * @version 1.1.0
      * @return void
      */
-    public function add_elementor_tab_content() {
-        if ( Admin::get_setting('enable_elementor_integration') === 'yes' ) : ?>
-            <div id="elementor" class="nav-content triggers-group">
-                <?php foreach ( Triggers::get_triggers_by_context('elementor') as $trigger ) : ?>
-                    <div class="trigger-item <?php echo ( isset( $trigger['class'] ) ? $trigger['class'] : '' ) ?>" data-context="elementor" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
-                        <h4 class="title"><?php echo $trigger['title']; ?></h4>
-                        <span class="description"><?php echo $trigger['description']; ?></span>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif;
+    public function add_triggers_content() {
+        $this->render_integration_trigger_content('elementor');
     }
 
 
@@ -74,21 +70,18 @@ class Elementor extends Integrations_Base {
      * Add Elementor placeholders on workflow builder
      * 
      * @since 1.1.0
-     * @version 1.1.0
      * @param array $placeholders | Current placeholders
      * @return array
      */
-    public function elementor_placeholders( $placeholders ) {
-        if ( isset( $context ) && $context['type'] === 'elementor' ) {
-            $placeholders['elementor'] = array(
-                '{{ {{ field_id=[FIELD_ID] }}' => array(
-                    'triggers' => Triggers::get_triggers_by_context('elementor'),
-                    'description' => esc_html__( 'Para recuperar a informação de um campo do formulário do Elementor. Substitua FIELD_ID pelo id respectivo.', 'joinotify' ),
-                    'replacement' => array(),
-                ),
-            );
+    public function add_placeholders( $placeholders ) {
+        $placeholders['elementor'] = array(
+            '{{ field_id=[FIELD_ID] }}' => array(
+                'triggers' => Triggers::get_trigger_names('elementor'),
+                'description' => esc_html__( 'Para recuperar a informação de um campo do formulário do Elementor. Substitua FIELD_ID pelo id respectivo.', 'joinotify' ),
+                'replacement' => array(),
+            ),
+        );
 
-            return $placeholders;
-        }
+        return $placeholders;
     }
 }

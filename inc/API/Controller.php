@@ -7,6 +7,7 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\API\License;
 use MeuMouse\Joinotify\Builder\Placeholders;
+
 use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -315,7 +316,7 @@ class Controller {
      */
     public static function send_message_text( $sender, $receiver, $message ) {
         $sender = preg_replace( '/\D/', '', $sender );
-        $api_url = 'https://whatsapp-api.meumouse.com/message/sendText/' . $sender;
+        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/' . $sender;
 
         $payload = wp_json_encode( array(
             'number' => preg_replace( '/\D/', '', $receiver ),
@@ -364,7 +365,7 @@ class Controller {
      */
     public static function send_message_media( $sender, $receiver, $media_type, $media ) {
         $sender = preg_replace( '/\D/', '', $sender );
-        $api_url = 'https://whatsapp-api.meumouse.com/message/sendMedia/' . $sender;
+        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendMedia/' . $sender;
 
         $payload = wp_json_encode( array(
             'number' => preg_replace( '/\D/', '', $receiver ),
@@ -418,12 +419,12 @@ class Controller {
      * @return int
      */
     public static function send_validation_otp( $phone, $otp ) {
-        $api_url = 'https://whatsapp-api.meumouse.com/message/sendText/meumouse';
+        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/meumouse';
         $message = sprintf( __( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
 
         $payload = wp_json_encode( array(
             'number' => $phone,
-            'linkPreview' => true,
+            'linkPreview' => false,
             'text' => $message,
         ));
 
@@ -442,11 +443,46 @@ class Controller {
 
         $response_body = wp_remote_retrieve_body( $response );
 
-        // record the response body for debug
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "send_validation_otp() response body: " . $response_body );
+        return wp_remote_retrieve_response_code( $response );
+    }
+
+
+    /**
+     * Get all groups
+     * 
+     * @since 1.1.0
+     * @param string $sender | Instance phone number
+     */
+    public static function fetch_all_groups( $sender ) {
+        /**
+         * Query param for fetch group partipants
+         * 
+         * @since 1.1.0
+         * @return bool
+         */
+        $get_participants = apply_filters( 'Joinotify/API/Fetch_Group_Participants', false );
+        $sender = preg_replace( '/\D/', '', $sender );
+        $api_url = JOINOTIFY_API_BASE_URL . '/group/fetchAllGroups/' . $sender . '?getParticipants=' . $get_participants;
+
+        $response = wp_remote_get( $api_url, array(
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'apikey' => Helpers::whatsapp_api_key(),
+            ),
+            'timeout' => 10,
+        ));
+
+        if ( is_wp_error( $response ) ) {
+            Logger::register_log( $response, 'ERROR' );
         }
 
-        return wp_remote_retrieve_response_code( $response );
+        $response_body = wp_remote_retrieve_body( $response );
+
+        // record the response body for debug
+        if ( JOINOTIFY_DEBUG_MODE ) {
+            Logger::register_log( "fetch_all_groups() response body: " . $response_body );
+        }
+
+        return json_decode( $response_body, true );
     }
 }

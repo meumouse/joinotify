@@ -1,7 +1,7 @@
 <?php
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Builder\Components;
+use MeuMouse\Joinotify\Admin\Components;
 use MeuMouse\Joinotify\Core\Helpers;
 
 // Exit if accessed directly.

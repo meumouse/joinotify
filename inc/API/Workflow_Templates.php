@@ -9,6 +9,7 @@ defined('ABSPATH') || exit;
  * Get workflow templates for import on builder
  * 
  * @since 1.0.0
+ * @version 1.1.0
  * @package MeuMouse.com
  */
 class Workflow_Templates {
@@ -17,11 +18,11 @@ class Workflow_Templates {
      * Get JSON files on Joinotify repository
      *
      * @since 1.0.0
-     * @param string $owner       The repository owner
-     * @param string $repository  The repository name
-     * @param string $path        Path for repository
-     * @param string $ref         The branch name or commit hash
-     * @param string $token       (Optional) Access token for auth requests
+     * @param string $owner | The repository owner
+     * @param string $repository | The repository name
+     * @param string $path | Path for repository
+     * @param string $ref | The branch name or commit hash
+     * @param string $token | (Optional) Access token for auth requests
      *
      * @return array An associative array where the keys are the names of the files and values are the JSON content
      */
@@ -70,11 +71,11 @@ class Workflow_Templates {
      * Get list of JSON template file names on Joinotify repository without downloading the content
      *
      * @since 1.0.1
-     * @param string $owner       The repository owner
-     * @param string $repository  The repository name
-     * @param string $path        Path for repository
-     * @param string $ref         The branch name or commit hash
-     * @param string $token       (Optional) Access token for auth requests
+     * @param string $owner | The repository owner
+     * @param string $repository | The repository name
+     * @param string $path | Path for repository
+     * @param string $ref | The branch name or commit hash
+     * @param string $token | (Optional) Access token for auth requests
      *
      * @return array An array of file names of the JSON templates
      */
@@ -135,11 +136,11 @@ class Workflow_Templates {
      * Get the count of JSON templates available in the repository
      *
      * @since 1.0.1
-     * @param string $owner       The repository owner
-     * @param string $repository  The repository name
-     * @param string $path        Path for repository
-     * @param string $ref         The branch name or commit hash
-     * @param string $token       (Optional) Access token for auth requests
+     * @param string $owner | The repository owner
+     * @param string $repository | The repository name
+     * @param string $path | Path for repository
+     * @param string $ref | The branch name or commit hash
+     * @param string $token | (Optional) Access token for auth requests
      *
      * @return int The number of JSON templates available
      */
