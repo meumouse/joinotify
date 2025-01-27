@@ -118,7 +118,7 @@ abstract class Integrations_Base {
         if ( Admin::get_setting("enable_{$slug}_integration") === 'yes' ) : ?>
             <div id="<?php echo esc_attr( $slug ); ?>" class="nav-content triggers-group">
                 <?php foreach ( Triggers::get_triggers_by_context( $slug ) as $trigger ) : ?>
-                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?>" data-context="<?php echo esc_attr( $integration_slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
+                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?>" data-context="<?php echo esc_attr( $slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
                         <h4 class="title"><?php echo esc_html( $trigger['title'] ); ?></h4>
                         <span class="description"><?php echo esc_html( $trigger['description'] ); ?></span>
 
