@@ -75,26 +75,40 @@
 	 * Save options in AJAX
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
 		let settings_form = $('form[name="joinotify-options-form"]');
 		let original_values = settings_form.serialize();
 		var notification_delay;
-		var debounce_timeout;
-	
+		
 		/**
-		 * Save options in AJAX
+		 * Send AJAX request for save options on click button
 		 * 
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 */
-		function ajax_save_options() {
+		$('#joinotify_save_options').on('click', function(e) {
+			e.preventDefault();
+			
+			let btn = $(this);
+			let btn_html = btn.html();
+			let btn_width = btn.width();
+			let btn_height = btn.height();
+
+			// keep original width and height
+			btn.width(btn_width);
+			btn.height(btn_height);
+
 			$.ajax({
 				url: joinotify_params.ajax_url,
 				type: 'POST',
 				data: {
 					action: 'joinotify_save_options',
 					form_data: settings_form.serialize(),
+				},
+				beforeSend: function() {
+					btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 				},
 				success: function(response) {
 					if (joinotify_params.debug_mode) {
@@ -122,22 +136,27 @@
 					} catch (error) {
 						console.log(error);
 					}
-				}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.error('AJAX Error:', textStatus, errorThrown);
+			  	},
+				complete: function() {
+					btn.html(btn_html);
+				},
 			});
-		}
+		});
 	
 		/**
 		 * Monitor changes in the form
 		 * 
 		 * @since 1.0.0
+		 * @version 1.1.0
 		 */
 		settings_form.on('change input', 'input, select, textarea', function() {
 			if (settings_form.serialize() !== original_values) {
-				if (debounce_timeout) {
-					clearTimeout(debounce_timeout);
-				}
-	
-				debounce_timeout = setTimeout(ajax_save_options, 2000); // debounce delay of 2 seconds
+				$('#joinotify_save_options').prop('disabled', false);
+			} else {
+				$('#joinotify_save_options').prop('disabled', true);
 			}
 		});
 	});

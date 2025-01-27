@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Admin;
 
 use MeuMouse\Joinotify\API\License;
+use MeuMouse\Joinotify\Admin\Components as Admin_Components;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -20,6 +21,7 @@ class Admin {
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function __construct() {
@@ -31,6 +33,9 @@ class Admin {
 
         // register new post type
         add_action( 'init', array( $this, 'register_joinotify_workflow_post_type' ) );
+
+        // render settings tabs
+        add_action( 'Joinotify/Admin/Settings_Nav_Tabs', array( $this, 'render_settings_tabs' ) );
     }
 
 
@@ -260,5 +265,24 @@ class Admin {
 
         // update permafluxos
         flush_rewrite_rules();
+    }
+
+
+    /**
+     * Render settings nav tabs
+     *
+     * @since 1.1.0
+     */
+    public function render_settings_tabs() {
+        $tabs = Admin_Components::get_settings_tabs();
+
+        foreach ( $tabs as $tab ) {
+            printf(
+                '<a href="#%1$s" class="nav-tab">%2$s %3$s</a>',
+                esc_attr( $tab['id'] ),
+                $tab['icon'],
+                $tab['label']
+            );
+        }
     }
 }

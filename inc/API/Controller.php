@@ -318,9 +318,17 @@ class Controller {
         $sender = preg_replace( '/\D/', '', $sender );
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/' . $sender;
 
+        /**
+         * Link preview for text messages
+         * 
+         * @since 1.1.0
+         * @return bool
+         */
+        $link_preview = apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true );
+
         $payload = wp_json_encode( array(
             'number' => preg_replace( '/\D/', '', $receiver ),
-            'linkPreview' => true,
+            'linkPreview' => $link_preview,
             'text' => $message,
         ));
 
