@@ -1438,4 +1438,73 @@
 		});
 	});
 
+
+	/**
+	 * Fetch all groups information
+	 * 
+	 * @since 1.1.0
+	 */
+	jQuery(document).ready( function($) {
+		// get groups details on open modal
+		$(document).on('click', '#joinotify_fetch_all_groups', function(e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: joinotify_builder_params.ajax_url,
+				method: 'POST',
+				data: {
+					action: 'joinotify_fetch_all_groups',
+					sender: $('#joinotify_get_whatsapp_phone_sender').val(),
+				},
+				success: function(response) {
+					if ( joinotify_builder_params.debug_mode ) {
+						console.log(response);
+					}
+
+					try {
+						if ( response.status === 'success' ) {
+							$('#joinotify_fetch_all_groups_container').find('.modal-body').html(response.groups_details_html);
+						} else {
+							$('#joinotify_fetch_all_groups_container').find('.btn-close').click();
+							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+						}
+					} catch (error) {
+						console.log(error);
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				},
+			});
+		});
+
+		// reinsert html placeholder on close modal
+		$('#joinotify_fetch_all_groups_container').on('hidden.bs.modal', function() {
+			$(this).find('.modal-body').html('<div class="placeholder-content" style="width: 100%; height: 10rem;"></div>');
+		});
+
+		// copy group id
+		$(document).on('click', '.get-group-id', function() {
+			var group_item = $(this);
+			var group_id = group_item.data('group-id');
+
+			// copy id event
+			navigator.clipboard.writeText(group_id).then( function() {
+				group_item.append(`<div class="confirm-copy-ui active">
+						<svg class="icon icon-lg icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg>
+						<span>${joinotify_builder_params.copy_group_id}</span>
+				</div>`);
+
+				setTimeout( function() {
+					group_item.find('.confirm-copy-ui').removeClass('active');
+				}, 800);
+
+				setTimeout( function() {
+					group_item.find('.confirm-copy-ui').remove();
+				}, 1000);
+			}).catch( function(error) {
+				console.error('Error on copy group ID: ' + error);
+			});
+		});
+	});
 })(jQuery);

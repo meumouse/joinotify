@@ -33,7 +33,7 @@ defined('ABSPATH') || exit; ?>
 							<div class="placeholder-content" style="width: 100%; height: 10rem;"></div>
 						</div>
 
-						<div class="joinotify-popup-footer">
+						<div class="joinotify-popup-footer position-sticky bottom-0">
 							<div class="d-flex align-items-center justify-content-end">
 								<button id="joinotify_clear_log_file" class="btn btn-outline-secondary me-3" disabled><?php esc_html_e( 'Limpar registros', 'joinotify' ); ?></button>
 								<button id="joinotify_download_log_file" class="btn btn-primary" disabled><?php esc_html_e( 'Baixar arquivo', 'joinotify' ); ?></button>

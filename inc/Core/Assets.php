@@ -113,6 +113,7 @@ class Assets {
 				'set_media_title' => esc_html__( 'Escolher mídia', 'joinotify' ),
 				'use_this_media_title' => esc_html__( 'Usar esta mídia', 'joinotify' ),
 				'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
+				'copy_group_id' => esc_html__( 'Copiado!', 'joinotify' ),
 			));
 		}
 

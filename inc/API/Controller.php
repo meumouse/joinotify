@@ -466,9 +466,13 @@ class Controller {
          * Query param for fetch group partipants
          * 
          * @since 1.1.0
-         * @return bool
+         * @return string
          */
-        $get_participants = apply_filters( 'Joinotify/API/Fetch_Group_Participants', false );
+        $get_participants = apply_filters( 'Joinotify/API/Fetch_Group_Participants', 'false' );
+
+        // Ensure the value is a 'true' or 'false' string for the API
+        $get_participants = filter_var( $get_participants, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false';
+
         $sender = preg_replace( '/\D/', '', $sender );
         $api_url = JOINOTIFY_API_BASE_URL . '/group/fetchAllGroups/' . $sender . '?getParticipants=' . $get_participants;
 

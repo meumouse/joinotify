@@ -1429,7 +1429,7 @@ input.toggle-switch.status:checked {
 }
 
 .funnel-action-item .description {
-    font-size: 0.825rem;
+    font-size: 0.925rem;
     color: var(--joinotify-dark-600);
 }
 
@@ -1850,4 +1850,32 @@ input.toggle-switch.status:checked {
     .modal-md {
         --bs-modal-width: 650px;
     }
+}
+
+.confirm-copy-ui {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(var(--joinotify-success-rgb), 0.45);
+    backdrop-filter: blur(3px);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: -1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+.confirm-copy-ui.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+textarea.set-whatsapp-message {
+    min-height: 3rem !important;
 }

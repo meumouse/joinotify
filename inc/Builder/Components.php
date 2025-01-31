@@ -91,25 +91,32 @@ class Components {
      * @since 1.0.0
      * @version 1.1.0
      * @param int $post_id | Post ID
-     * @param string $action_name | Action name
-     * @param string $description | Action custom description
-     * @param string $action_id | Action ID
+     * @param array $action_details | Action details array (action name, description, id, etc)
      * @return string
      */
-    public static function get_action_html( $post_id, $action_name, $description = '', $action_id = '' ) {
+    public static function get_action_html( $post_id, $action_details ) {
         foreach ( Actions::get_all_actions() as $action => $value ) {
-            if ( $action_name !== $value['action'] ) {
+            $action_id = $action_details['id'];
+
+            if ( $action_details['action_name'] !== $value['action'] ) {
                 continue;
             }
 
-            $html = '<div class="funnel-action-item" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $action_id ) .'">';
+            $html = '<div class="funnel-action-item" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $action_details['id'] ) .'">';
                 $html .= '<div class="action-item-body">';
+                    // action title
                     $html .= '<h4 class="title">'. $value['title'] .'</h4>';
 
-                    if ( empty( $description ) ) {
+                    if ( $value['action'] === 'send_whatsapp_message_text' || $value['action'] === 'send_whatsapp_message_media' ) {
+                        $html .= '<span class="text-muted fs-sm sender d-block">'. sprintf( __( 'Remetente: %s', 'joinotify' ), $action_details['sender'] ) .'</span>';
+                        $html .= '<span class="text-muted fs-sm receiver d-block mb-2">'. sprintf( __( 'Destinatário: %s', 'joinotify' ), $action_details['receiver'] ) .'</span>';
+                    }
+
+                    // action description funnel
+                    if ( empty( $action_details['description'] ) ) {
                         $html .= '<span class="description">'. $value['description'] .'</span>';
                     } else {
-                        $html .= '<span class="description">'. $description .'</span>';
+                        $html .= '<span class="description">'. $action_details['description'] .'</span>';
                     }
                 $html .= '</div>';
 
@@ -147,7 +154,7 @@ class Components {
                 // display modal settings for condition action
                 if ( $value['action'] === 'condition' ) {
                     $html .= '<div class="modal fade" id="edit_condition_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_condition_'. esc_attr( $action_id ) .'_label" aria-hidden="true">';
-                        $html .= '<div class="modal-dialog modal-dialog-centered modal-md">';
+                        $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
                                     $html .= '<h3 class="modal-title fs-5" id="edit_condition_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar condição', 'joinotify' ) .'</h3>';
@@ -168,7 +175,7 @@ class Components {
                     $html .= '</div>';
                 } elseif ( $value['action'] !== 'condition' && $value['action'] !== 'stop_funnel' ) {
                     $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action_id ) .'_label" aria-hidden="true">';
-                        $html .= '<div class="modal-dialog modal-dialog-centered modal-md">';
+                        $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
                                     $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
@@ -255,7 +262,7 @@ class Components {
                     // display modal settings for condition action
                     if ( $condition_data['data']['action'] !== 'stop_funnel' ) {
                         $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label" aria-hidden="true">';
-                            $html .= '<div class="modal-dialog modal-dialog-centered modal-md">';
+                            $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
                                         $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
@@ -481,7 +488,7 @@ class Components {
 
                     if ( $trigger['require_settings'] !== false ) {
                         $html .= '<div class="modal fade" id="edit_trigger_'. esc_attr( $trigger_id ) .'" tabindex="-1" aria-labelledby="edit_trigger_'. esc_attr( $trigger_id ) .'_label" aria-hidden="true">';
-                            $html .= '<div class="modal-dialog modal-dialog-centered modal-md">';
+                            $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
                                         $html .= '<h3 class="modal-title fs-5" id="edit_trigger_'. esc_attr( $trigger_id ) .'_label">'. esc_html__( 'Configurar acionamento', 'joinotify' ) .'</h3>';
@@ -926,6 +933,51 @@ class Components {
                         <div class="modal-footer border-top-0">
                             <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-dismiss="modal"><?php esc_html_e( 'Cancelar', 'joinotify' ) ?></button>
                             <button type="button" id="joinotify_update_workflow_title" class="btn btn-sm btn-primary"><?php esc_html_e( 'Salvar alterações', 'joinotify' ) ?></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif;
+    }
+
+
+    /**
+     * Add modal trigger for fetch all groups
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public static function fetch_all_groups_modal_trigger() {
+        $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        if ( strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) !== false ) : ?>
+            <div class="my-3">
+                <button id="joinotify_fetch_all_groups" class="btn btn-outline-secondary d-block w-100" role="button" data-bs-toggle="modal" data-bs-target="#joinotify_fetch_all_groups_container"><?php esc_html_e( 'Obter informações de grupos', 'joinotify' ) ?></button>
+            </div>
+        <?php endif;
+    }
+
+
+    /**
+     * Add modal content for fetch all groups
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public static function fetch_all_groups_modal_content() {
+        $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        if ( strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) !== false ) : ?>
+            <div class="modal fade" id="joinotify_fetch_all_groups_container" tabindex="-1" aria-labelledby="joinotify_fetch_all_groups_label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="joinotify_fetch_all_groups_label"><?php esc_html_e( 'Obter informações de grupos', 'joinotify' ) ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ) ?>"></button>
+                        </div>
+
+                        <div class="modal-body my-3 text-start">
+                            <div class="placeholder-content" style="width: 100%; height: 10rem;"></div>
                         </div>
                     </div>
                 </div>

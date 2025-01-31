@@ -158,6 +158,14 @@ defined('ABSPATH') || exit; ?>
                                 </button>
                                 <textarea type="text" id="joinotify_get_whatsapp_message_text" class="form-control set-whatsapp-message set-whatsapp-message-text" placeholder="<?php esc_attr_e( 'Mensagem', 'joinotify' ) ?>"></textarea>
                             </div>
+
+                            <?php
+                            /**
+                             * Hook for add custom content on WhatsApp message text action footer
+                             * 
+                             * @since 1.1.0
+                             */
+                            do_action('Joinotify/Builder/Actions/Footer/Whatsapp_Message_Text'); ?>
                         <!-- SEND WHATSAPP MESSAGE MEDIA CONTROLLERS -->
                         <?php elseif ( $action['action'] === 'send_whatsapp_message_media' ) : ?>
                             <div class="preview-whatsapp-message-sender media"></div>
@@ -200,6 +208,14 @@ defined('ABSPATH') || exit; ?>
                                     <input type="text" id="joinotify_get_url_media" class="form-control" placeholder="<?php esc_attr_e( 'URL da mídia', 'joinotify' ) ?>"/>
                                 </div>
                             </div>
+
+                            <?php
+                            /**
+                             * Hook for add custom content on WhatsApp message media action footer
+                             * 
+                             * @since 1.1.0
+                             */
+                            do_action('Joinotify/Builder/Actions/Footer/Whatsapp_Message_Media'); ?>
                         <?php endif; ?>
                     </div>
 

@@ -27,6 +27,13 @@ class Workflow_Manager {
     public function __construct() {
         // add modal content for edit workflow title
         add_action( 'in_admin_header', array( 'MeuMouse\Joinotify\Builder\Components', 'workflow_title_modal_content' ) );
+
+        // add modal trigger for fetch all groups
+        add_action( 'Joinotify/Builder/Actions/Footer/Whatsapp_Message_Text', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_trigger' ) );
+        add_action( 'Joinotify/Builder/Actions/Footer/Whatsapp_Message_Media', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_trigger' ) );
+
+        // add modal content for fetch all groups
+        add_action( 'in_admin_header', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_content' ) );
     }
 
 
@@ -138,10 +145,14 @@ class Workflow_Manager {
                 } elseif ( isset( $workflow['type'] ) && strpos( $workflow['type'], 'connector' ) !== false ) {
                     $workflow_html[] = Builder_Components::get_workflow_connector( $post_id, $workflow['type'], $workflow );
                 } elseif ( isset( $workflow['type'] ) && $workflow['type'] === 'action' ) {
-                    $action_name = $workflow['data']['action'];
-                    $description = isset( $workflow['data']['description'] ) ? $workflow['data']['description'] : '';
-                    $action_id = isset( $workflow['id'] ) ? $workflow['id'] : '';
-                    $workflow_html[] = Builder_Components::get_action_html( $post_id, $action_name, $description, $action_id );
+                    $action_details = array();
+                    $action_details['id'] = isset( $workflow['id'] ) ? $workflow['id'] : '';
+                    $action_details['action_name'] = isset( $workflow['data']['action'] ) ? $workflow['data']['action'] : '';
+                    $action_details['description'] = isset( $workflow['data']['description'] ) ? $workflow['data']['description'] : '';
+                    $action_details['sender'] = isset( $workflow['data']['sender'] ) ? $workflow['data']['sender'] : '';
+                    $action_details['receiver'] = isset( $workflow['data']['receiver'] ) ? $workflow['data']['receiver'] : '';
+                    
+                    $workflow_html[] = Builder_Components::get_action_html( $post_id, $action_details );
                 }
             }
     

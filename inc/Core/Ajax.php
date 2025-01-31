@@ -126,6 +126,9 @@ class Ajax {
 
         // dismiss placeholders tip
         add_action( 'wp_ajax_joinotify_dismiss_placeholders_tip', array( $this, 'dismiss_placeholders_tip_callback' ) );
+
+        // fetch all groups
+        add_action( 'wp_ajax_joinotify_fetch_all_groups', array( $this, 'fetch_all_groups_callback' ) );
     }
 
 
@@ -1707,6 +1710,63 @@ class Ajax {
                 $response = array(
                     'status' => 'error',
                 );
+            }
+
+            // send json to frontend
+            wp_send_json( $response );
+        }
+    }
+
+
+    /**
+     * Fetch all groups information on AJAX callback
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public function fetch_all_groups_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_fetch_all_groups' ) {
+            $sender = isset( $_POST['sender'] ) ? sanitize_text_field( $_POST['sender'] ) : '';
+            $fetch_groups = Controller::fetch_all_groups( $sender );
+            $groups_details_html = '';
+
+            // success on retrieve groups data
+            if ( $fetch_groups && $fetch_groups['status'] !== 404 ) {
+                $groups_details_html .= '<div id="joinotify_groups_list_details" class="list-group">';
+    
+                // iterate for each array items
+                foreach ( $fetch_groups as $group ) {
+                    $group_id = esc_attr( $group['id'] );
+                    $group_name = esc_html( $group['subject'] );
+                    $group_owner = esc_html( $group['owner'] );
+                    $group_size = esc_html( $group['size'] );
+                    $group_desc = ! empty( $group['desc'] ) ? esc_html( $group['desc'] ) : esc_html__( 'Nenhuma descrição disponível', 'joinotify' );
+                    $group_image = ! empty( $group['pictureUrl'] ) ? esc_url( $group['pictureUrl'] ) : JOINOTIFY_ASSETS . 'builder/img/empty-profile-avatar.svg';
+    
+                    $groups_details_html .= '<a href="#" class="list-group-item list-group-item-action d-flex align-items-center shadow-none get-group-id" data-group-id="'. $group_id .'">
+                        <img src="' . $group_image . '" class="rounded-circle me-3" alt="' . $group_name . '" width="50" height="50">
+                        <div>
+                            <h5 class="mb-1">' . $group_name . '</h5>
+                            <p class="mb-1 text-muted">'. sprintf( __( 'Proprietário: %s | Membros: %s', 'joinotify' ), $group_owner, $group_size ) . '</p>
+                            <small>' . $group_desc . '</small>
+                        </div>
+                    </a>';
+                }
+    
+                $groups_details_html .= '</div>';
+            }
+    
+            // JSON response
+            $response = array(
+                'status' => 'success',
+                'groups_details_html' => $groups_details_html,
+            );
+
+            // error on retrieve groups data
+            if ( $fetch_groups && $fetch_groups['status'] === 404 ) {
+                $response['status'] = 'error';
+                $response['toast_header_title'] = esc_html__( 'Ops! Ocorreu um erro', 'joinotify' );
+                $response['toast_body_title'] = esc_html__( 'Não foi possível recuperar as informações de grupos.', 'joinotify' );
             }
 
             // send json to frontend
