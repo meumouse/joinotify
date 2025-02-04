@@ -6,7 +6,7 @@ namespace MeuMouse\Joinotify\Core;
 defined('ABSPATH') || exit;
 
 /**
- * Initialize classes class
+ * Class for initialize classes
  * 
  * @since 1.0.0
  * @version 1.1.0
@@ -21,6 +21,9 @@ class Init {
      * @return void
      */
     public function __construct() {
+        // load plugin functions
+        require_once JOINOTIFY_INC . 'Core/Functions.php';
+
         self::instance_classes();
     }
 
@@ -41,6 +44,7 @@ class Init {
             '\MeuMouse\Joinotify\Core\Ajax',
             '\MeuMouse\Joinotify\Core\Logger',
             '\MeuMouse\Joinotify\Builder\Workflow_Manager',
+            '\MeuMouse\Joinotify\Integrations\Whatsapp',
             '\MeuMouse\Joinotify\Integrations\Wordpress',
             '\MeuMouse\Joinotify\Integrations\Woocommerce',
             '\MeuMouse\Joinotify\Integrations\Woo_Subscriptions',

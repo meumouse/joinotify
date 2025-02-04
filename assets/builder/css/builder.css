@@ -550,6 +550,10 @@
     width: 3.525rem;
 }
 
+.fs-xs {
+    font-size: 0.785rem !important;
+}
+
 .fs-sm {
     font-size: 0.875rem !important;
 }
@@ -1350,7 +1354,7 @@ input.toggle-switch.status:checked {
     display: block;
     width: 100%;
     min-width: 20rem;
-    max-width: -webkit-fill-available;
+    max-width: -webkit-fill-available !important;
     padding: 0.825rem 3rem 0.825rem 1rem !important;
     -moz-padding-start: calc(1rem - 3px);
     font-size: 0.875rem !important;
@@ -1876,6 +1880,67 @@ input.toggle-switch.status:checked {
     visibility: visible;
 }
 
-textarea.set-whatsapp-message {
+textarea.edit-whatsapp-message-text {
     min-height: 3rem !important;
+}
+
+.message-preview.edit-action {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.message-preview.edit-action > .funnel-media.image {
+    width: auto;
+}
+
+.message-preview.edit-action > .funnel-media.video {
+    max-height: 25rem;
+}
+
+.funnel-media.document {
+    width: 28rem;
+    height: 25rem;
+}
+
+#joinotify_set_snippet_php {
+    min-height: 25rem !important;
+}
+
+.CodeMirror {
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+    padding: 0 10px;
+}
+
+.joinotify-resize-code-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E9ECEF;
+    height: 1.5rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: row-resize;
+    border-bottom: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.joinotify-resize-code-area:hover {
+    background-color: #CED4DA;
+}
+
+#offcanvas_snippet_php .offcanvas-body {
+    padding-bottom: 0 !important;
 }

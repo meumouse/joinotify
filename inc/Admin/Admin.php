@@ -123,6 +123,17 @@ class Admin {
 
 
     /**
+     * Render license page settings
+     * 
+     * @since 1.0.0
+     * @return void
+     */
+    public function render_license_page() {
+        include JOINOTIFY_INC . 'Views/License.php';
+    }
+
+
+    /**
      * Display table with all workflows
      * 
      * @since 1.0.0
@@ -137,17 +148,6 @@ class Admin {
         echo '<form method="post">';
             $workflows_table->display();
         echo '</form></div>';
-    }
-
-
-    /**
-     * Render license page settings
-     * 
-     * @since 1.0.0
-     * @return void
-     */
-    public function render_license_page() {
-        include JOINOTIFY_INC . 'Views/License.php';
     }
 
 

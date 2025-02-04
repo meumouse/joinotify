@@ -28,10 +28,6 @@ class Workflow_Manager {
         // add modal content for edit workflow title
         add_action( 'in_admin_header', array( 'MeuMouse\Joinotify\Builder\Components', 'workflow_title_modal_content' ) );
 
-        // add modal trigger for fetch all groups
-        add_action( 'Joinotify/Builder/Actions/Footer/Whatsapp_Message_Text', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_trigger' ) );
-        add_action( 'Joinotify/Builder/Actions/Footer/Whatsapp_Message_Media', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_trigger' ) );
-
         // add modal content for fetch all groups
         add_action( 'in_admin_header', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_content' ) );
     }
@@ -203,28 +199,5 @@ class Workflow_Manager {
         }
 
         return $base_structure;
-    }
-
-
-    /**
-     * Recursive function to delete an action by ID
-     * 
-     * @since 1.1.0
-     * @param array $workflow_content | Workflow content array
-     * @param string $action_id | ID of the action or trigger to be deleted
-     * @return array | Updated workflow
-     */
-    public static function delete_item_recursive( $workflow_content, $action_id ) {
-        foreach ( $workflow_content as $key => &$item ) {
-            // If it is the item to be deleted, remove
-            if ( isset( $item['id'] ) && $item['id'] === $action_id ) {
-                unset( $workflow_content[$key] );
-
-                continue;
-            }
-        }
-
-        // Reindex the array to avoid index failures
-        return array_values( $workflow_content );
     }
 }

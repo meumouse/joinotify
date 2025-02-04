@@ -13,6 +13,7 @@ use MeuMouse\Joinotify\Builder\Workflow_Manager;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 use MeuMouse\Joinotify\Builder\Messages;
 use MeuMouse\Joinotify\Builder\Utils;
+use MeuMouse\Joinotify\Builder\Actions;
 
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\API\Workflow_Templates;
@@ -129,6 +130,9 @@ class Ajax {
 
         // fetch all groups
         add_action( 'wp_ajax_joinotify_fetch_all_groups', array( $this, 'fetch_all_groups_callback' ) );
+
+        // save action edition from workflow builder
+        add_action( 'wp_ajax_joinotify_save_action_edition', array( $this, 'save_action_edit_callback' ) );
     }
 
 
@@ -476,6 +480,7 @@ class Ajax {
                 'title' => $title,
             ));
     
+            // check post type and post id for update post
             if ( $post_id > 0 && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 // Update existing post
                 $updated_post = array(
@@ -485,6 +490,7 @@ class Ajax {
     
                 $update_result = wp_update_post( $updated_post );
     
+                // post updated successful
                 if ( $update_result ) {
                     // Retrieve existing workflow content
                     $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
@@ -511,8 +517,9 @@ class Ajax {
                     );
     
                     $action_conditions = Conditions::get_conditions_by_trigger( $trigger );
-                    $condition_selectors = Builder_Components::render_condition_selectors( $action_conditions );
-                    $response['condition_selectors'] = $condition_selectors;
+                    $response['condition_selectors'] = Builder_Components::render_condition_selectors( $action_conditions );
+                    $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
+                    $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
                     if ( JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
@@ -556,6 +563,8 @@ class Ajax {
                     $action_conditions = Conditions::get_conditions_by_trigger( $trigger );
                     $response['condition_selectors'] = Builder_Components::render_condition_selectors( $action_conditions );
                     $response['placeholders_list'] = Builder_Components::render_placeholders_list( $post_id );
+                    $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
+                    $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
                     if ( JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
@@ -606,6 +615,8 @@ class Ajax {
                             $action_conditions = Conditions::get_conditions_by_trigger( $workflow['data']['trigger'] );
                             $response['condition_selectors'] = Builder_Components::render_condition_selectors( $action_conditions );
                             $response['placeholders_list'] = Builder_Components::render_placeholders_list( $post_id );
+                            $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $workflow['data']['context'] );
+                            $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
                         }
                     }
                 }
@@ -918,7 +929,7 @@ class Ajax {
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
     
                 if ( ! empty( $workflow_content ) ) {
-                    $workflow_content = Workflow_Manager::delete_item_recursive( $workflow_content, $action_id );
+                    $workflow_content = Actions::delete_item_recursive( $workflow_content, $action_id );
     
                     // reindex the main array to prevent gaps in array keys
                     $workflow_content = array_values( $workflow_content );
@@ -973,6 +984,7 @@ class Ajax {
      * Delete trigger on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function delete_trigger_callback() {
@@ -986,7 +998,7 @@ class Ajax {
     
                 if ( ! empty( $workflow_content ) ) {
                     // Remove the trigger using delete_item_recursive
-                    $workflow_content = Workflow_Manager::delete_item_recursive( $workflow_content, $trigger_id );
+                    $workflow_content = Actions::delete_item_recursive( $workflow_content, $trigger_id );
     
                     // Reindex the array to maintain consistent indexes
                     $workflow_content = array_values( $workflow_content );
@@ -1731,15 +1743,15 @@ class Ajax {
             $groups_details_html = '';
 
             // success on retrieve groups data
-            if ( $fetch_groups && $fetch_groups['status'] !== 404 ) {
+            if ( $fetch_groups && ! isset( $fetch_groups['status'] ) ) {
                 $groups_details_html .= '<div id="joinotify_groups_list_details" class="list-group">';
     
                 // iterate for each array items
                 foreach ( $fetch_groups as $group ) {
-                    $group_id = esc_attr( $group['id'] );
-                    $group_name = esc_html( $group['subject'] );
-                    $group_owner = esc_html( $group['owner'] );
-                    $group_size = esc_html( $group['size'] );
+                    $group_id = isset( $group['id'] ) ? esc_attr( $group['id'] ) : '';
+                    $group_name = isset( $group['subject'] ) ? esc_html( $group['subject'] ) : '';
+                    $group_owner = isset( $group['owner'] ) ? esc_html( $group['owner'] ) : '';
+                    $group_size = isset( $group['size'] ) ? esc_html( $group['size'] ) : '';
                     $group_desc = ! empty( $group['desc'] ) ? esc_html( $group['desc'] ) : esc_html__( 'Nenhuma descrição disponível', 'joinotify' );
                     $group_image = ! empty( $group['pictureUrl'] ) ? esc_url( $group['pictureUrl'] ) : JOINOTIFY_ASSETS . 'builder/img/empty-profile-avatar.svg';
     
@@ -1763,7 +1775,7 @@ class Ajax {
             );
 
             // error on retrieve groups data
-            if ( $fetch_groups && $fetch_groups['status'] === 404 ) {
+            if ( $fetch_groups && isset( $fetch_groups['status'] ) && $fetch_groups['status'] === 404 ) {
                 $response['status'] = 'error';
                 $response['toast_header_title'] = esc_html__( 'Ops! Ocorreu um erro', 'joinotify' );
                 $response['toast_body_title'] = esc_html__( 'Não foi possível recuperar as informações de grupos.', 'joinotify' );
@@ -1771,6 +1783,79 @@ class Ajax {
 
             // send json to frontend
             wp_send_json( $response );
+        }
+    }
+
+
+    /**
+     * Save edition from action on workflow builder on AJAX callback
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public function save_action_edit_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_save_action_edition' ) {
+            $post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( $_POST['post_id'] ) : '';
+            $action_id = isset( $_POST['action_id'] ) ? sanitize_text_field( $_POST['action_id'] ) : '';
+            $new_action_data = isset( $_POST['new_action_data'] ) ? json_decode( stripslashes( $_POST['new_action_data'] ), true ) : array();
+
+            // check post id and post type
+            if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
+                // retrieve workflow content
+                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+    
+                // if empty workflow content, initialize empty array
+                if ( empty( $workflow_content ) ) {
+                    $workflow_content = array();
+                }
+
+                // find action inside workflow
+                $updated = false;
+
+                // iterate for each workflow content
+                foreach ( $workflow_content as &$item ) {
+                    if ( Actions::update_action_by_id( $item, $action_id, $new_action_data ) ) {
+                        $updated = true;
+
+                        break;
+                    }
+                }
+
+                // action updated successfully
+                if ( $updated ) {
+                    $updated_workflow = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
+
+                    if ( $updated_workflow ) {
+                        $response = array(
+                            'status' => 'success',
+                            'toast_header_title' => esc_html__( 'Ação atualizada', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'A ação foi atualizada com sucesso!', 'joinotify' ),
+                            'workflow_content' => Workflow_Manager::get_workflow_content( $post_id ),
+                        );
+                    } else {
+                        $response = array(
+                            'status' => 'error',
+                            'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'Não foi possível atualizar a ação.', 'joinotify' ),
+                        );
+
+                        if ( JOINOTIFY_DEBUG_MODE ) {
+                            $response['debug'] = array(
+                                'update_post_meta' => $updated_workflow,
+                            );
+                        }
+                    }
+                } else {
+                    $response = array(
+                        'status' => 'error',
+                        'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'Não foi possível encontrar a ação para atualizar.', 'joinotify' ),
+                    );
+                }
+    
+                // send json to frontend
+                wp_send_json( $response );
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ( function($) {
     "use strict";
 
-    /**
+	/**
 	 * Builder tabs
 	 * 
 	 * @since 1.0.0
@@ -24,7 +24,7 @@
 	});
 
 
-    /**
+	/**
 	 * Upload template process
 	 * 
 	 * @since 1.0.0
@@ -183,12 +183,6 @@
 			// initialize Tooltips inside modals
 			var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 			var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-
-			// change visibility for time delay action
-			multi_select_visibility_controller( $('.set-time-delay-type'), {
-				'period': '.wait-time-period-container',
-				'date': '.wait-date-container',
-			});
 		});
 	});
 
@@ -377,6 +371,7 @@
 	 * Add trigger action
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
@@ -425,7 +420,10 @@
 							}
 
 							$('#offcanvas_condition').find('.offcanvas-body').html(response.condition_selectors);
+							$('#joinotify_actions_wrapper').html(response.sidebar_actions);
+							$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.fetch_groups_trigger);
 							$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.placeholders_list);
+							$('#offcanvas_send_whatsapp_message_media').find('.offcanvas-body').append(response.fetch_groups_trigger);
 							$('#send_whatsapp_message_media').find('.offcanvas-body').append(response.placeholders_list);
 							$('#add_action_condition').prop('disabled', true);
 							$('#joinotify_triggers_group').removeClass('active');
@@ -438,6 +436,9 @@
 
 							// add trigger on funnel
 							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+
+							// set workflow content is ready
+							$(document).trigger('workflowReady');
 
 							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
 						} else {
@@ -783,6 +784,9 @@
 							// replace with new content updated
 							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 
+							// set workflow content is ready
+							$(document).trigger('workflowReady');
+
 							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
 						} else {
 							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
@@ -857,6 +861,9 @@
 
 							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 
+							// set workflow content is ready
+							$(document).trigger('workflowReady');
+
 							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
 						} else {
 							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
@@ -917,6 +924,9 @@
 							}
 
 							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+
+							// set workflow content is ready
+							$(document).trigger('workflowReady');
 
 							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
 						} else {
@@ -987,6 +997,7 @@
 	 * Load workflow data
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
@@ -1029,7 +1040,10 @@
 							}
 							
 							$('#offcanvas_condition').find('.offcanvas-body').html(response.condition_selectors);
+							$('#joinotify_actions_wrapper').html(response.sidebar_actions);
+							$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.fetch_groups_trigger);
 							$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.placeholders_list);
+							$('#offcanvas_send_whatsapp_message_media').find('.offcanvas-body').append(response.fetch_groups_trigger);
 							$('#send_whatsapp_message_media').find('.offcanvas-body').append(response.placeholders_list);
 							$('#add_action_condition').prop('disabled', true);
 							$('#joinotify_workflow_title').text(response.workflow_title);
@@ -1050,9 +1064,12 @@
 
 							// workflow content
 							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+							
+							// set workflow content is ready
+							$(document).trigger('workflowReady');
 
 							// add "active" class for trigger item on workflow content
-							if ($('.funnel-trigger-item').length > 0) {
+							if ( $('.funnel-trigger-item').length > 0 ) {
 								$('.funnel-trigger-item').each( function() {
 									var data_context = $(this).data('context');
 									var data_trigger = $(this).data('trigger');
@@ -1153,13 +1170,26 @@
 	 * Change visibility for elements
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 * @package MeuMouse.com
 	 */
-	jQuery(document).ready( function() {
+	jQuery(document).on('workflowReady', function() {
 		// change visibility for time delay action
-		multi_select_visibility_controller( $('.set-time-delay-type'), {
-			'period': '.wait-time-period-container',
-			'date': '.wait-date-container',
+		$(document).on('change', '.set-time-delay-type', function() {
+			var select = $(this);
+			var selected_option = select.val();
+
+			select.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', selected_option !== 'period');
+			select.parent('div').siblings('.wait-date-container').toggleClass('d-none', selected_option !== 'date');
+		});
+
+		// initialize visibility on load components
+		$('.set-time-delay-type').each( function() {
+			var select = $(this);
+			var selected_option = select.val();
+
+			select.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', selected_option !== 'period');
+			select.parent('div').siblings('.wait-date-container').toggleClass('d-none', selected_option !== 'date');
 		});
 	});
 
@@ -1199,23 +1229,24 @@
 	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
-		$('.set-whatsapp-message-text').on('input change blur', function() {
-			let message = $(this).val();
-			let preview_element = $(this).closest('.input-group').siblings('.preview-whatsapp-message-sender');
+		$(document).on('input change blur', '.set-whatsapp-message-text', function() {
+			var input = $(this);
+			var text = input.val();
+			var preview_message = $(this).closest('.input-group').siblings('.preview-whatsapp-message-sender');
 
 			// replace \n for <br> break row HTML element
-			message = message.replace(/\n/g, '<br>');
+			text = text.replace(/\n/g, '<br>');
 
 			// replace {{ br }} for break row HTML element
-			message = message.replace(/{{ br }}/g, '<br>');
+			text = text.replace(/{{ br }}/g, '<br>');
 	
-			if (message.trim() !== '') {
-				preview_element.addClass('active').html(message);
+			if ( text.trim() !== '' ) {
+				preview_message.addClass('active').html(text);
 			} else {
-				preview_element.removeClass('active').html('');
+				preview_message.removeClass('active').html('');
 			}
 		});
-	});	
+	});
 
 
 	/**
@@ -1449,6 +1480,12 @@
 		$(document).on('click', '#joinotify_fetch_all_groups', function(e) {
 			e.preventDefault();
 
+			// check if content has been loaded
+			if ( $('#joinotify_fetch_all_groups_container').hasClass('content-loaded') ) {
+				return;
+			}
+
+			// make request
 			$.ajax({
 				url: joinotify_builder_params.ajax_url,
 				method: 'POST',
@@ -1463,7 +1500,7 @@
 
 					try {
 						if ( response.status === 'success' ) {
-							$('#joinotify_fetch_all_groups_container').find('.modal-body').html(response.groups_details_html);
+							$('#joinotify_fetch_all_groups_container').addClass('content-loaded').find('.modal-body').html(response.groups_details_html);
 						} else {
 							$('#joinotify_fetch_all_groups_container').find('.btn-close').click();
 							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
@@ -1476,11 +1513,6 @@
 					console.log(error);
 				},
 			});
-		});
-
-		// reinsert html placeholder on close modal
-		$('#joinotify_fetch_all_groups_container').on('hidden.bs.modal', function() {
-			$(this).find('.modal-body').html('<div class="placeholder-content" style="width: 100%; height: 10rem;"></div>');
 		});
 
 		// copy group id
@@ -1506,5 +1538,201 @@
 				console.error('Error on copy group ID: ' + error);
 			});
 		});
+	});
+
+
+	/**
+	 * Save action edition
+	 * 
+	 * @since 1.1.0
+	 * @package MeuMouse.com
+	 */
+	jQuery(document).ready( function($) {
+		$(document).on('click', '.save-action-edit', function(e) {
+			e.preventDefault();
+
+			var btn = $(this);
+			var btn_width = btn.width();
+			var btn_height = btn.height();
+			var btn_html = btn.html();
+			var get_action = btn.data('action');
+			var get_action_id = btn.data('action-id');
+
+			// keep original width and height
+			btn.width(btn_width);
+			btn.height(btn_height);
+
+			var action_data = {};
+
+			// collect specific action data
+			if ( get_action === 'time_delay' ) {
+				var delay_type = $('.modal.show').find('.set-time-delay-type-edit').val();
+
+				action_data = {
+					action: 'time_delay',
+					data: {
+						delay_type: delay_type,
+					},
+				};
+		
+				if (delay_type === 'period') {
+					action_data.data.delay_value = $('.modal.show').find('.get-wait-value').val();
+					action_data.data.delay_period = $('.modal.show').find('.get-wait-period').val();
+				} else if (delay_type === 'date') {
+					action_data.data.date_value = $('.modal.show').find('.get-date-value').val();
+					action_data.data.time_value = $('.modal.show').find('.get-time-value').val();
+				}
+			} else if ( get_action === 'send_whatsapp_message_text' ) {
+				action_data = {
+					action: 'send_whatsapp_message_text',
+					data: {
+						sender: $('.modal.show').find('.get-phone-sender-edit').val(),
+						receiver: $('.modal.show').find('.get-whatsapp-number-edit').val(),
+						message: $('.modal.show').find('.edit-whatsapp-message-text').val(),
+					},
+				};
+			} else if ( get_action === 'send_whatsapp_message_media' ) {
+				action_data = {
+					action: 'send_whatsapp_message_media',
+					data: {
+						sender: $('.modal.show').find('.get-phone-sender-edit').val(),
+						receiver: $('.modal.show').find('.get-whatsapp-number-edit').val(),
+						media_type: $('.modal.show').find('.get-media-type-edit').val(),
+						media_url: $('.modal.show').find('.get-media-url-edit').val(),
+					},
+				};
+			} else if ( get_action === 'condition' ) {
+				action_data = {
+					data: {
+						action: 'condition',
+						/*
+						condition_content: {
+							condition: $('.condition-settings-item.active').data('condition'),
+							type: $('.condition-settings-item.active').find('.get-condition-type option:selected').val(),
+							type_text: $('.condition-settings-item.active').find('.get-condition-type option:selected').text(),
+							value: $('.condition-settings-item.active').find('.get-condition-value option:selected').val() || $('.condition-settings-item.active').find('.get-condition-value').val(),
+							value_text: $('.condition-settings-item.active').find('.get-condition-value option:selected').text() || $('.condition-settings-item.active').find('.get-condition-value').val(),
+						},*/
+					},
+				};
+			}
+
+			// display action data on debug mode
+			if ( joinotify_builder_params.debug_mode ) {
+				console.log(action_data);
+			}
+
+			// send request
+			$.ajax({
+				url: joinotify_builder_params.ajax_url,
+				method: 'POST',
+				data: {
+					action: 'joinotify_save_action_edition',
+					post_id: get_param_by_name('id'),
+					action_id: get_action_id,
+					new_action_data: JSON.stringify(action_data),
+				},
+				beforeSend: function() {
+					btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+				},
+				success: function(response) {
+					if ( joinotify_builder_params.debug_mode ) {
+						console.log(response);
+					}
+
+					try {
+						if ( response.status === 'success' ) {
+							// update workflow content
+							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+							$('.modal.show').find('.btn-close').click(); // close modal
+
+							// set workflow content is ready
+							$(document).trigger('workflowReady');
+
+							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+						} else {
+							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+						}
+					} catch (error) {
+						console.log(error);
+					}
+				},
+				complete: function() {
+					btn.prop('disabled', false).html(btn_html);
+				},
+			});
+		});
+	});
+
+
+	/**
+	 * Snippets PHP action
+	 * 
+	 * @since 1.1.0
+	 * @package MeuMouse.com
+	 */
+	jQuery(document).on('workflowReady', function() {
+		// initialize CodeMirror
+		var editor = CodeMirror.fromTextArea( document.getElementById('joinotify_set_snippet_php'), {
+			mode: 'application/x-httpd-php',
+			theme: 'dracula',
+			lineNumbers: true,
+			styleActiveLine: true,
+			matchBrackets: true,
+			autoCloseBrackets: true,
+			indentUnit: 4,
+			tabSize: 4,
+	  	});
+
+		// wait codemirror is ready
+		setTimeout( function() {
+			$('.joinotify-code-editor').siblings('.CodeMirror').after(`<div class="joinotify-resize-code-area">
+				<svg class="icon-sm icon-dark opacity-75" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
+			</div>`);
+
+			// change height from Codemirror
+			$('.joinotify-resize-code-area').each( function() {
+				let isResizing = false;
+				let startY = 0;
+				let startHeight = 0;
+				let codeMirrorElement = $(this).siblings('.CodeMirror');
+	
+				if (codeMirrorElement.length === 0) {
+					console.warn('Code area not found');
+					
+					return;
+				}
+	
+				// on move mouse down
+				$(this).on('mousedown', function(e) {
+					e.preventDefault();
+					isResizing = true;
+					startY = e.clientY;
+					startHeight = codeMirrorElement.outerHeight();
+	
+					$(document).on('mousemove', handleResize);
+					$(document).on('mouseup', stopResize);
+				});
+	
+				function handleResize(e) {
+					if ( ! isResizing) {
+						return;
+					}
+
+					let diffY = e.clientY - startY;
+					let newHeight = startHeight + diffY;
+
+					if (newHeight < 100) newHeight = 100; // min height
+					codeMirrorElement.css('height', newHeight + 'px');
+					codeMirrorElement.find('.CodeMirror-scroll').css('height', newHeight + 'px'); // set height on inside editor
+				}
+	
+				function stopResize() {
+					isResizing = false;
+					$(document).off('mousemove', handleResize);
+					$(document).off('mouseup', stopResize);
+				}
+			});
+		}, 500);
 	});
 })(jQuery);

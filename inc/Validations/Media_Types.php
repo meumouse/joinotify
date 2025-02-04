@@ -77,6 +77,7 @@ class Media_Types {
             'audio' => array(
                 'audio/mpeg',
                 'audio/ogg',
+                'audio/oga',
                 'audio/wav',
                 'audio/amr',
                 'audio/mp3',
