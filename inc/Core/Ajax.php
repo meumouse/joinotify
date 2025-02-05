@@ -65,6 +65,9 @@ class Ajax {
         // get workflow templates
     //    add_action( 'wp_ajax_joinotify_get_workflow_templates', array( $this, 'get_workflow_templates_callback' ) );
 
+        // import workflow template
+        add_action( 'wp_ajax_joinotify_import_workflow_templates', array( $this, 'import_workflow_templates_callback' ) );
+
         // add init trigger
         add_action( 'wp_ajax_joinotify_create_workflow', array( $this, 'create_workflow_callback' ) );
 
@@ -461,6 +464,93 @@ class Ajax {
 
 
     /**
+     * Import workflow templates on AJAX callback
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public function import_workflow_templates_callback() {
+        // check none for prevent CSRF
+        check_ajax_referer('joinotify_import_workflow_nonce', 'security');
+
+        // check if file has uploaded correctly
+        if ( ! isset( $_FILES['file'] ) || $_FILES['file']['error'] !== UPLOAD_ERR_OK ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro no upload', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'Ocorreu um problema ao enviar o arquivo.', 'joinotify' ),
+            ));
+        }
+
+        $file = $_FILES['file'];
+        $file_ext = pathinfo( $file['name'], PATHINFO_EXTENSION );
+
+        // check file extension
+        if ( strtolower( $file_ext ) !== 'json' ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Tipo de arquivo inválido', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O arquivo deve ser um JSON.', 'joinotify' ),
+            ));
+        }
+
+        // get the content file
+        $file_contents = file_get_contents( $file['tmp_name'] );
+        $workflow_data = json_decode( $file_contents, true );
+
+        // check if JSON was decoded correctly
+        if ( ! $workflow_data || ! isset( $workflow_data['post'] ) || ! isset( $workflow_data['workflow_content'] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Arquivo inválido', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O arquivo JSON não possui um formato válido.', 'joinotify' ),
+            ));
+        }
+
+        // check post type
+        if ( ! isset( $workflow_data['post']['type'] ) || $workflow_data['post']['type'] !== 'joinotify-workflow' ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Ocorreu um erro', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O arquivo enviado não é válido.', 'joinotify' ),
+            ));
+        }
+
+        // create a new post for workflow
+        $post_data = array(
+            'type' => 'joinotify-workflow',
+            'post_title' => sanitize_text_field( $workflow_data['post']['title'] ),
+            'post_status' => 'draft',
+            'post_type' => 'joinotify-workflow',
+            'post_content' => '', // keep empty, because the content is on metadata
+        );
+
+        $post_id = wp_insert_post( $post_data );
+
+        if ( is_wp_error( $post_id ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao criar fluxo', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'Ocorreu um erro ao criar o fluxo no banco de dados.', 'joinotify' ),
+            ));
+        }
+
+        // update workflow data on post metadata
+        update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_data['workflow_content'] );
+
+        // URL for edit workflow
+        $redirect_url = admin_url("admin.php?page=joinotify-workflows-builder&id={$post_id}");
+
+        wp_send_json( array(
+            'status' => 'success',
+            'redirect' => $redirect_url,
+            'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
+            'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+        ));
+    }
+
+
+    /**
      * Create workflow on AJAX callback
      * 
      * @since 1.0.0
@@ -777,6 +867,8 @@ class Ajax {
                         $new_action['data']['receiver'] = isset( $workflow_action['data']['receiver'] ) ? $workflow_action['data']['receiver'] : '';
                         $new_action['data']['media_url'] = isset( $workflow_action['data']['media_url'] ) ? $workflow_action['data']['media_url'] : '';
                         $new_action['data']['media_type'] = isset( $workflow_action['data']['media_type'] ) ? $workflow_action['data']['media_type'] : '';
+                    } elseif ( $workflow_action['data']['action'] === 'snippet_php' ) {
+                        $new_action['data']['snippet_php'] = isset( $workflow_action['data']['snippet_php'] ) ? $workflow_action['data']['snippet_php'] : '';
                     }
                 }
     
@@ -1078,6 +1170,7 @@ class Ajax {
             $export_data = array(
                 'plugin_version' => JOINOTIFY_VERSION,
                 'post' => array(
+                    'type' => 'joinotify-workflow',
                     'title' => $post->post_title,
                     'date' => $post->post_date,
                     'status' => $post->post_status,

@@ -26,6 +26,9 @@ class Elementor extends Integrations_Base {
      */
     public function __construct() {
         if ( defined('ELEMENTOR_PATH') ) {
+            // add triggers
+            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+
             // add trigger tab
             add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
 
@@ -35,6 +38,28 @@ class Elementor extends Integrations_Base {
             // add placeholders
             add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
         }
+    }
+
+
+    /**
+     * Add Elementor triggers
+     * 
+     * @since 1.1.0
+     * @param array $triggers | Current triggers
+     * @return array
+     */
+    public function add_triggers( $triggers ) {
+        $triggers['elementor'] = array(
+            array(
+                'data_trigger' => 'elementor_pro/forms/new_record',
+                'title' => esc_html__( 'Formulário é enviado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um formulário do Elementor é enviado.', 'joinotify' ),
+                'class' => '',
+                'require_settings' => true,
+            ),
+        );
+
+        return $triggers;
     }
 
 

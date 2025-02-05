@@ -173,6 +173,7 @@ class Assets {
 				'use_this_media_title' => esc_html__( 'Usar esta mídia', 'joinotify' ),
 				'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
 				'copy_group_id' => esc_html__( 'ID copiado!', 'joinotify' ),
+				'import_nonce' => wp_create_nonce('joinotify_import_workflow_nonce'),
 			));
 		}
 	}

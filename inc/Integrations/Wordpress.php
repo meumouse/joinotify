@@ -25,6 +25,9 @@ class Wordpress extends Integrations_Base {
      * @return void
      */
     public function __construct() {
+        // add triggers
+        add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+
         // add trigger tab
         add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
 
@@ -33,6 +36,49 @@ class Wordpress extends Integrations_Base {
 
         // add placeholders
         add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+    }
+
+
+    /**
+     * Add WordPress triggers
+     * 
+     * @since 1.1.0
+     * @param array $triggers | Current triggers
+     * @return array
+     */
+    public function add_triggers( $triggers ) {
+        $triggers['wordpress'] = array(
+            array(
+                'data_trigger' => 'user_register',
+                'title' => esc_html__( 'Novo registro de usuário', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um novo registro de usuário é recebido.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'wp_login',
+                'title' => esc_html__( 'Login do usuário', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um usuário fizer login no site.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'password_reset',
+                'title' => esc_html__( 'Recuperação de senha do usuário', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um usuário solicitar recuperação de senha no site.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'transition_post_status',
+                'title' => esc_html__( 'Novo post é publicado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um novo post é publicado no site.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+        );
+
+        return $triggers;
     }
 
 

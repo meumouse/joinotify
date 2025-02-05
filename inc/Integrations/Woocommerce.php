@@ -27,6 +27,9 @@ class Woocommerce extends Integrations_Base {
     public function __construct() {
         // check if woocommerce is active
         if ( class_exists('WooCommerce') ) {
+            // add triggers
+            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+
             // add trigger tab
             add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
 
@@ -42,6 +45,57 @@ class Woocommerce extends Integrations_Base {
             // add coupon action
             add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
         }
+    }
+
+
+    /**
+     * Add WooCommerce triggers
+     * 
+     * @since 1.1.0
+     * @param array $triggers | Current triggers
+     * @return array
+     */
+    public function add_triggers( $triggers ) {
+        $triggers['woocommerce'] = array(
+            array(
+                'data_trigger' => 'woocommerce_new_order',
+                'title' => esc_html__( 'Novo pedido', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um novo pedido é recebido no WooCommerce com qualquer status.', 'joinotify' ),
+                'require_settings' => true,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_checkout_order_processed',
+                'title' => esc_html__( 'Novo pedido (Processando)', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um novo pedido é recebido no WooCommerce com status processando.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_order_status_completed',
+                'title' => esc_html__( 'Pedido concluído', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um pedido tem o status alterado para concluído.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_order_fully_refunded',
+                'title' => esc_html__( 'Pedido totalmente reembolsado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um pedido é totalmente reembolsado.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_order_partially_refunded',
+                'title' => esc_html__( 'Pedido parcialmente reembolsado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um pedido é parcialmente reembolsado.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_order_status_changed',
+                'title' => esc_html__( 'Status de um pedido alterado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um pedido tem seu status alterado.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+        );
+
+        return $triggers;
     }
 
 
@@ -366,7 +420,6 @@ class Woocommerce extends Integrations_Base {
             'external_icon' => false,
             'has_settings' => true,
             'settings' => self::create_coupon_action_settings(),
-            'class' => 'locked-resource',
             'priority' => 60,
         );
 
@@ -381,8 +434,48 @@ class Woocommerce extends Integrations_Base {
      * @return string
      */
     public static function create_coupon_action_settings() {
-        ob_start();
+        ob_start(); ?>
 
-        return ob_get_clean();
+        <div class="coupon-action-group">
+            <div class="coupon-action-item">
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Gerar código do cupom automaticamente', 'joinotify' ) ?></span>
+                <input type="checkbox" class="toggle-switch" id="joinotify_generate_coupon_code">
+            </div>
+
+            <div class="coupon-action-item coupon-code-wrapper">
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Código do cupom', 'joinotify' ) ?></span>
+                <input type="text" id="joinotify_set_coupon_code" class="form-control" placeholder="<?php esc_attr_e( 'CUPOM_EXCLUSIVO', 'joinotify' ) ?>"/>
+            </div>
+
+            <div class="coupon-action-item">
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Descrição do cupom (opcional)', 'joinotify' ) ?></span>
+                <input type="text" id="joinotify_set_coupon_description" class="form-control" placeholder="<?php esc_attr_e( 'Cupom para recuperação de compras', 'joinotify' ) ?>"/>
+            </div>
+
+            <div class="coupon-action-item">
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Tipo e valor do desconto', 'joinotify' ) ?></span>
+                
+                <div class="input-group">
+                    <select id="joinotify_coupon_discount_type" class="form-select">
+                        <option value="fixed_cart"><?php esc_html_e( 'Desconto fixo', 'joinotify' ) ?></option>
+                        <option value="percent"><?php esc_html_e( 'Percentual', 'joinotify' ) ?></option>
+                    </select>
+
+                    <input type="text" id="joinotify_set_discount_value" class="form-control" placeholder="<?php esc_attr_e( 'Valor do desconto', 'joinotify' ) ?>"/>
+                </div>
+            </div>
+
+            <div class="coupon-action-item">
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Permitir frete grátis', 'joinotify' ) ?></span>
+                <input type="checkbox" id="joinotify_coupon_allow_free_shipping" class="toggle-switch">
+            </div>
+
+            <div class="coupon-action-item">
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Data de expiração', 'joinotify' ) ?></span>
+                <input type="text" id="joinotify_coupon_expires_date" class="form-control dateselect">
+            </div>
+        </div>
+
+        <?php return ob_get_clean();
     }
 }

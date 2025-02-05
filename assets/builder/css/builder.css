@@ -581,7 +581,7 @@ label.custom-file-label:hover {
     padding: 2rem 0;
     text-align: center;
     width: 100%;
-    height: 150px;
+    height: 15rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1905,10 +1905,6 @@ textarea.edit-whatsapp-message-text {
     height: 25rem;
 }
 
-#joinotify_set_snippet_php {
-    min-height: 25rem !important;
-}
-
 .CodeMirror {
     border-radius: 0.5rem 0.5rem 0 0;
 }
@@ -1943,4 +1939,12 @@ textarea.edit-whatsapp-message-text {
 
 #offcanvas_snippet_php .offcanvas-body {
     padding-bottom: 0 !important;
+}
+
+.coupon-action-group .coupon-action-item {
+    margin-bottom: 1.5rem;
+}
+
+.coupon-action-group .coupon-action-item:last-child {
+    margin-bottom: 0;
 }

@@ -27,6 +27,9 @@ class Flexify_Checkout extends Integrations_Base {
     public function __construct() {
         // check if Flexify Checkout is active
         if ( class_exists('\MeuMouse\Flexify_Checkout\Flexify_Checkout') ) {
+            // add triggers
+            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+
             // add trigger tab
             add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
 
@@ -36,6 +39,49 @@ class Flexify_Checkout extends Integrations_Base {
             // add placeholders
         //    add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
         }
+    }
+
+
+    /**
+     * Add Flexify Checkout triggers
+     * 
+     * @since 1.1.0
+     * @param array $triggers | Current triggers
+     * @return array
+     */
+    public function add_triggers( $triggers ) {
+        $triggers['flexify_checkout'] = array(
+            array(
+                'data_trigger' => 'flexify_checkout_cart_abandonment',
+                'title' => esc_html__( 'Abandono do carrinho', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário abandona o carrinho.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'flexify_checkout_entry_step_1',
+                'title' => esc_html__( 'Ao entrar na etapa 1', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 1 da finalização de compras.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'flexify_checkout_entry_step_2',
+                'title' => esc_html__( 'Ao entrar na etapa 2', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 2 da finalização de compras.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'flexify_checkout_entry_step_3',
+                'title' => esc_html__( 'Ao entrar na etapa 3', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 3 da finalização de compras.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => false,
+            ),
+        );
+
+        return $triggers;
     }
 
 

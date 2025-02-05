@@ -156,7 +156,7 @@ class Components {
 
                 // display modal settings for condition action
                 if ( $value['action'] === 'condition' ) {
-                    $html .= '<div class="modal fade" id="edit_condition_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_condition_'. esc_attr( $action_id ) .'_label" aria-hidden="true">';
+                    $html .= '<div class="modal fade" id="edit_condition_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_condition_'. esc_attr( $action_id ) .'_label">';
                         $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
@@ -177,7 +177,7 @@ class Components {
                         $html .= '</div>';
                     $html .= '</div>';
                 } elseif ( $value['action'] !== 'condition' && $value['action'] !== 'stop_funnel' ) {
-                    $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action_id ) .'_label" aria-hidden="true">';
+                    $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action_id ) .'_label">';
                         $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
@@ -264,7 +264,7 @@ class Components {
 
                     // display modal settings for condition action
                     if ( $condition_data['data']['action'] !== 'stop_funnel' ) {
-                        $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label" aria-hidden="true">';
+                        $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">';
                             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
@@ -493,6 +493,10 @@ class Components {
                 $html .= '</div>'; 
 
                 break;
+            case 'snippet_php':
+                $html .= '<textarea class="form-control joinotify-code-editor set-new-code-snippet-php"></textarea>';
+
+                break;
         }
 
         return $html;
@@ -543,7 +547,7 @@ class Components {
                     $html .= '</div>';
 
                     if ( $trigger['require_settings'] !== false ) {
-                        $html .= '<div class="modal fade" id="edit_trigger_'. esc_attr( $trigger_id ) .'" tabindex="-1" aria-labelledby="edit_trigger_'. esc_attr( $trigger_id ) .'_label" aria-hidden="true">';
+                        $html .= '<div class="modal fade" id="edit_trigger_'. esc_attr( $trigger_id ) .'" tabindex="-1" aria-labelledby="edit_trigger_'. esc_attr( $trigger_id ) .'_label">';
                             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
@@ -974,7 +978,7 @@ class Components {
         $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         if ( strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) !== false ) : ?>
-            <div class="modal fade" id="edit_workflow_title" tabindex="-1" aria-labelledby="edit_workflow_title_label" aria-hidden="true">
+            <div class="modal fade" id="edit_workflow_title" tabindex="-1" aria-labelledby="edit_workflow_title_label">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header border-bottom-0">
@@ -1004,13 +1008,7 @@ class Components {
      * @return void
      */
     public static function fetch_all_groups_modal_trigger() {
-        ob_start(); ?>
-
-        <div class="my-3">
-            <button id="joinotify_fetch_all_groups" class="btn btn-outline-secondary d-block w-100" role="button" data-bs-toggle="modal" data-bs-target="#joinotify_fetch_all_groups_container"><?php esc_html_e( 'Obter informações de grupos', 'joinotify' ) ?></button>
-        </div>
-
-        <?php return ob_get_clean();
+        return '<button id="joinotify_fetch_all_groups" class="btn btn-outline-secondary d-block w-100 my-3" role="button" data-bs-toggle="modal" data-bs-target="#joinotify_fetch_all_groups_container">'. esc_html__( 'Obter informações de grupos', 'joinotify' ) .'</button>';
     }
 
 
@@ -1024,7 +1022,7 @@ class Components {
         $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         if ( strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) !== false ) : ?>
-            <div class="modal fade" id="joinotify_fetch_all_groups_container" tabindex="-1" aria-labelledby="joinotify_fetch_all_groups_label" aria-hidden="true">
+            <div class="modal fade" id="joinotify_fetch_all_groups_container" tabindex="-1" aria-labelledby="joinotify_fetch_all_groups_label">
                 <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">

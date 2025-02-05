@@ -9,6 +9,7 @@ defined('ABSPATH') || exit;
  * Class to make requests to a remote server to get plugin versions and updates
  * 
  * @since 1.0.0
+ * @version 1.1.0
  * @package MeuMouse.com
  */
 class Updater {
@@ -25,10 +26,11 @@ class Updater {
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function __construct() {
-        if ( defined('JOINOTIFY_DEV_MODE') ) {
+        if ( defined('JOINOTIFY_DEV_MODE') && JOINOTIFY_DEV_MODE === true ) {
             add_filter( 'https_ssl_verify', '__return_false' );
             add_filter( 'https_local_ssl_verify', '__return_false' );
             add_filter( 'http_request_host_is_external', '__return_true' );
@@ -98,6 +100,7 @@ class Updater {
      * Get plugin info
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @param array|object $response | Response from request update
      * @param string $action | API action to perform: 'query_plugins', 'plugin_information', 'hot_tags' or 'hot_categories'
      * @param array|object $args | (optional) Array or object of arguments to serialize for the Plugin Info API
@@ -130,7 +133,6 @@ class Updater {
         $response->requires = $remote->requires;
         $response->author = $remote->author;
         $response->author_profile = $remote->author_profile;
-        $response->donate_link = $remote->donate_link;
         $response->homepage = $remote->homepage;
         $response->download_link = $remote->download_url;
         $response->trunk = $remote->download_url;
@@ -273,5 +275,3 @@ class Updater {
         }
     }
 }
-
-new Updater();

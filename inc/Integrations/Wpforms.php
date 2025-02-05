@@ -27,6 +27,9 @@ class Wpforms extends Integrations_Base {
     public function __construct() {
         // check if WPForms is active
         if ( function_exists('wpforms') ) {
+            // add triggers
+            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+
             // add trigger tab
             add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
 
@@ -36,6 +39,35 @@ class Wpforms extends Integrations_Base {
             // add placeholders
             add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
         }
+    }
+
+
+    /**
+     * Add WPForms triggers
+     * 
+     * @since 1.1.0
+     * @param array $triggers | Current triggers
+     * @return array
+     */
+    public function add_triggers( $triggers ) {
+        $triggers['wpforms'] = array(
+            array(
+                'data_trigger' => 'wpforms_process_complete',
+                'title' => esc_html__( 'Formulário é enviado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um formulário do WPForms é enviado.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => true,
+            ),
+            array(
+                'data_trigger' => 'wpforms_paypal_standard_process_complete',
+                'title' => esc_html__( 'Pagamento processado pelo PayPal', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um formulário de pagamento do WPForms é processado usando PayPal.', 'joinotify' ),
+                'class' => 'locked',
+                'require_settings' => true,
+            ),
+        );
+
+        return $triggers;
     }
 
 

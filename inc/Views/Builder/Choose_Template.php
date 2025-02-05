@@ -61,7 +61,7 @@ defined('ABSPATH') || exit; ?>
 
     <!-- IMPORT TEMPLATE CONTAINER -->
     <div id="joinotify_import_template_container" class="choose-template-container slide-animation slide-right-animation">
-        <div class="card p-0">
+        <div class="card p-0 m-0">
             <div class="card-header border-bottom-0 px-4 pt-5">
                 <h3 class="title fs-5"><?php esc_html_e( 'Importar modelo', 'joinotify' ) ?></h3>
                 <span class="text-muted fs-lg"><?php esc_html_e( 'Envie seu arquivo .json para importar o modelo da automação de mensagens.', 'joinotify' ) ?></span>
@@ -79,7 +79,7 @@ defined('ABSPATH') || exit; ?>
                     <div class="drag-and-drop-file">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="upload_template_file" name="upload_template_file" hidden>
-                            <label class="custom-file-label mb-4" for="upload_template_file"><?php esc_html_e( 'Ou clique para procurar seu arquivo', 'joinotify' ); ?></label>
+                            <label class="custom-file-label" for="upload_template_file"><?php esc_html_e( 'Ou clique para procurar seu arquivo', 'joinotify' ); ?></label>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@ defined('ABSPATH') || exit; ?>
 
             <div class="card-footer d-flex justify-content-between align-items-center p-4">
                 <button type="button" id="joinotify_cancel_import_template" class="btn btn-outline-secondary"><?php esc_html_e( 'Cancelar', 'joinotify' ) ?></button>
-                <button type="button" id="joinotify_send_import_files" class="btn btn-primary"><?php esc_html_e( 'Importar', 'joinotify' ) ?></button>
+                <button type="button" id="joinotify_send_import_files" class="btn btn-primary" disabled><?php esc_html_e( 'Importar', 'joinotify' ) ?></button>
             </div>
         </div>
     </div>
