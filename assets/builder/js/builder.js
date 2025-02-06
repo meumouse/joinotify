@@ -1775,4 +1775,71 @@
 			});
 		}, 500);
 	});
+
+
+	/**
+	 * Save trigger settings
+	 * 
+	 * @since 1.1.0
+	 * @package MeuMouse.com
+	 */
+	jQuery(document).ready( function($) {
+		$(document).on('click', '.save-trigger-settings', function(e) {
+			e.preventDefault();
+
+			var btn = $(this);
+			var btn_width = btn.width();
+			var btn_height = btn.height();
+			var btn_html = btn.html();
+			var get_trigger = btn.data('trigger');
+			var get_trigger_id = btn.data('trigger-id');
+			var trigger_data = {};
+
+			// collect specific trigger settings data
+			if ( get_trigger === 'woocommerce_order_status_changed' ) {
+				trigger_data = {
+					order_status: $('.modal.show').find('.set-trigger-settings.order-status').val(),
+				};
+			}
+
+			// keep original width and height
+			btn.width(btn_width);
+			btn.height(btn_height);
+
+			// send request
+			$.ajax({
+				url: joinotify_builder_params.ajax_url,
+				method: 'POST',
+				data: {
+					action: 'joinotify_save_trigger_settings',
+					post_id: get_param_by_name('id'),
+					trigger_id: get_trigger_id,
+					settings: JSON.stringify(trigger_data),
+				},
+				beforeSend: function() {
+					btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+				},
+				success: function(response) {
+					if ( joinotify_builder_params.debug_mode ) {
+						console.log(response);
+					}
+
+					try {
+						if ( response.status === 'success' ) {
+							$('.modal.show').find('.btn-close').click(); // close modal
+
+							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+						} else {
+							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+						}
+					} catch (error) {
+						console.log(error);
+					}
+				},
+				complete: function() {
+					btn.prop('disabled', false).html(btn_html);
+				},
+			});
+		});
+	});
 })(jQuery);

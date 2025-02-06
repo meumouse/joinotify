@@ -600,12 +600,12 @@ class Components {
         $html = '';
 
         if ( $trigger === 'woocommerce_order_status_changed' ) {
-            $current_status = isset( $trigger_data['order_status'] ) ? $trigger_data['order_status'] : null;
+            $current_status = isset( $trigger_data['settings']['order_status'] ) ? $trigger_data['settings']['order_status'] : null;
 
             $html .= '<div class="joinotify-get-order-status-trigger">';
                 $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Status do pedido', 'joinotify' ) .'</span>';
                 
-                $html .= '<select name="woocommerce_order_status" class="form-select get-trigger-order-status">';
+                $html .= '<select name="woocommerce_order_status" class="form-select set-trigger-settings order-status">';
                     foreach ( wc_get_order_statuses() as $status_key => $status_label ) {
                         $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
                     }

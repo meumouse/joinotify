@@ -173,6 +173,7 @@ class Admin {
             'send_text_proxy_api_route' => 'send-message/text',
             'send_media_proxy_api_route' => 'send-message/media',
             'enable_debug_mode' => 'no',
+            'enable_auto_updates' => 'no',
         ));
     }
 

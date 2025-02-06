@@ -137,6 +137,9 @@ class Ajax {
 
         // save action edition from workflow builder
         add_action( 'wp_ajax_joinotify_save_action_edition', array( $this, 'save_action_edit_callback' ) );
+
+        // save trigger settings
+        add_action( 'wp_ajax_joinotify_save_trigger_settings', array( $this, 'save_trigger_settings_callback' ) );
     }
 
 
@@ -1996,6 +1999,76 @@ class Ajax {
                 }
     
                 // send json to frontend
+                wp_send_json( $response );
+            }
+        }
+    }
+
+
+    /**
+     * Save trigger settings on AJAX callback
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public function save_trigger_settings_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_save_trigger_settings' ) {
+            $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
+            $trigger_id = isset( $_POST['trigger_id'] ) ? sanitize_text_field( $_POST['trigger_id'] ) : '';
+            $trigger_settings = isset( $_POST['settings'] ) ? json_decode( stripslashes( $_POST['settings'] ), true ) : array();
+
+            // check post type
+            if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
+                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+
+                // if empty workflow content, initialize empty array
+                if ( empty( $workflow_content ) ) {
+                    $workflow_content = array();
+                }
+
+                // find action inside workflow
+                $updated = false;
+
+                // iterate for each workflow content
+                foreach ( $workflow_content as &$item ) {
+                    if ( Triggers::update_trigger_settings_by_id( $item, $trigger_id, $trigger_settings ) ) {
+                        $updated = true;
+
+                        break;
+                    }
+                }
+
+                // action updated successfully
+                if ( $updated ) {
+                    $updated_workflow = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
+
+                    if ( $updated_workflow ) {
+                        $response = array(
+                            'status' => 'success',
+                            'toast_header_title' => esc_html__( 'Acionamento atualizado', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'O acionamento foi atualizado com sucesso!', 'joinotify' ),
+                        );
+                    } else {
+                        $response = array(
+                            'status' => 'error',
+                            'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'Não foi possível atualizar o acionamento.', 'joinotify' ),
+                        );
+
+                        if ( JOINOTIFY_DEBUG_MODE ) {
+                            $response['debug'] = array(
+                                'update_post_meta' => $updated_workflow,
+                            );
+                        }
+                    }
+                } else {
+                    $response = array(
+                        'status' => 'error',
+                        'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'Não foi possível encontrar o acionamento para atualizar.', 'joinotify' ),
+                    );
+                }
+
                 wp_send_json( $response );
             }
         }

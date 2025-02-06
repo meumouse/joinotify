@@ -158,4 +158,39 @@ class Triggers {
     
         return false; // none settings pending found
     }
+
+
+    /**
+     * Update a trigger inside workflow by ID
+     *
+     * @since 1.1.0
+     * @param array &$workflow_item | Reference the item from workflow
+     * @param string $trigger_id | Trigger ID for update
+     * @param array $trigger_settings | New data for the trigger settings
+     * @return bool return true if trigger is updated, false otherwise
+     */
+    public static function update_trigger_settings_by_id( &$workflow_item, $trigger_id, $trigger_settings ) {
+        if ( isset( $workflow_item['id'] ) && $workflow_item['id'] === $trigger_id ) {
+            // ensure "settings" key exists
+            if ( ! isset( $workflow_item['data']['settings'] ) || ! is_array( $workflow_item['data']['settings'] ) ) {
+                $workflow_item['data']['settings'] = array();
+            }
+
+            // merge new settings into existing settings
+            $workflow_item['data']['settings'] = array_merge( $workflow_item['data']['settings'], $trigger_settings );
+
+            return true;
+        }
+
+        // if has children items, find recursive
+        if ( isset( $workflow_item['children'] ) && is_array( $workflow_item['children'] ) ) {
+            foreach ( $workflow_item['children'] as &$child ) {
+                if ( self::update_trigger_settings_by_id( $child, $trigger_id, $trigger_settings ) ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
