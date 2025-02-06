@@ -111,4 +111,51 @@ class Triggers {
 
         return array_column( $get_array, 'data_trigger' );
     }
+
+
+    /**
+     * Check if workflow trigger requires settings
+     * 
+     * @since 1.1.0
+     * @param int $post_id | Post ID
+     * @return bool
+     */
+    public static function trigger_requires_settings( $post_id ) {
+        // check post type
+        if ( get_post_type( $post_id ) !== 'joinotify-workflow' ) {
+            return false;
+        }
+    
+        // get all registered triggers
+        $all_triggers = self::get_all_triggers();
+
+        // get workflow content
+        $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+    
+        if ( ! is_array( $workflow_data ) ) {
+            return false;
+        }
+
+        // iterate for each workflow data
+        foreach ( $workflow_data as $item ) {
+            if ( isset( $item['type'] ) && $item['type'] === 'trigger' && isset( $item['data']['trigger'] ) ) {
+                $trigger_key = $item['data']['trigger'];
+    
+                // iterate for each triggers categories
+                foreach ( $all_triggers as $category => $triggers ) {
+                    foreach ( $triggers as $trigger ) {
+                        if ( isset( $trigger['data_trigger'] ) && $trigger['data_trigger'] === $trigger_key ) {
+                            if ( ! empty( $trigger['require_settings'] ) ) {
+                                if ( ! isset( $item['data']['settings'] ) || empty( $item['data']['settings'] ) ) {
+                                    return true; // requires settings
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+        return false; // none settings pending found
+    }
 }

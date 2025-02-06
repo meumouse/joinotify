@@ -154,4 +154,53 @@ class Utils {
             'wpforms' => esc_html__( 'WPForms', 'joinotify' ),
         ));
     }
+
+
+    /**
+     * Helper function to find the action or trigger by ID
+     * Searches recursively in the entire workflow array
+     * 
+     * @since 1.1.0
+     * @param array $workflow_content | Workflow content
+     * @param string $item_id | Trigger or action ID
+     * @return array
+     */
+    public static function find_workflow_item_by_id( $workflow_content, $item_id ) {
+        foreach ( $workflow_content as $item ) {
+            if ( isset( $item['id'] ) && $item['id'] === $item_id ) {
+                return $item;
+            }
+
+            // verifica se há children
+            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
+                // caso a ação seja uma condição com 'action_true' e 'action_false'
+                if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' ) {
+                    if ( isset( $item['children']['action_true'] ) ) {
+                        $found = self::find_workflow_item_by_id( $item['children']['action_true'], $item_id );
+                        
+                        if ( $found ) {
+                            return $found;
+                        }
+                    }
+
+                    if ( isset( $item['children']['action_false'] ) ) {
+                        $found = self::find_workflow_item_by_id( $item['children']['action_false'], $item_id );
+                        
+                        if ( $found ) {
+                            return $found;
+                        }
+                    }
+                } else {
+                    // caso normal, apenas um array de ações filhas
+                    $found = self::find_workflow_item_by_id( $item['children'], $item_id );
+
+                    if ( $found ) {
+                        return $found;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
 }

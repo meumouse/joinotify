@@ -3,12 +3,12 @@
 /**
  * Plugin Name: 			Joinotify
  * Description: 			Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.
- * Plugin URI: 				https://meumouse.com/plugins/joinotify/
+ * Plugin URI: 			https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
- * Author URI: 				https://meumouse.com/
+ * Author URI: 			https://meumouse.com/
  * Version: 				1.1.0
  * Requires PHP: 			7.4
- * Tested up to:      		6.7.1
+ * Tested up to:      	6.7.1
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
  * License: 				GPL2

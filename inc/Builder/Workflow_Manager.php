@@ -136,8 +136,12 @@ class Workflow_Manager {
             // Iterate for each workflow content and generate HTML
             foreach ( $workflow_data as $workflow ) {
                 if ( isset( $workflow['type'] ) && $workflow['type'] === 'trigger' ) {
-                    $trigger_id = isset( $workflow['id'] ) ? $workflow['id'] : '';
-                    $workflow_html[] = Builder_Components::get_trigger_html( $workflow['data']['context'], $workflow['data']['trigger'], $trigger_id );
+                    $trigger_details = array();
+                    $trigger_details['trigger_id'] = isset( $workflow['id'] ) ? $workflow['id'] : '';
+                    $trigger_details['context'] = isset( $workflow['data']['context'] ) ? $workflow['data']['context'] : '';
+                    $trigger_details['data_trigger'] = isset( $workflow['data']['trigger'] ) ? $workflow['data']['trigger'] : '';
+
+                    $workflow_html[] = Builder_Components::get_trigger_html( $post_id, $trigger_details );
                 } elseif ( isset( $workflow['type'] ) && strpos( $workflow['type'], 'connector' ) !== false ) {
                     $workflow_html[] = Builder_Components::get_workflow_connector( $post_id, $workflow['type'], $workflow );
                 } elseif ( isset( $workflow['type'] ) && $workflow['type'] === 'action' ) {

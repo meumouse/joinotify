@@ -14,6 +14,7 @@ use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 use MeuMouse\Joinotify\Builder\Messages;
 use MeuMouse\Joinotify\Builder\Utils;
 use MeuMouse\Joinotify\Builder\Actions;
+use MeuMouse\Joinotify\Builder\Triggers;
 
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\API\Workflow_Templates;
@@ -554,6 +555,7 @@ class Ajax {
      * Create workflow on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function create_workflow_callback() {
@@ -605,6 +607,24 @@ class Ajax {
                         'toast_header_title' => __('Fluxo atualizado com sucesso', 'joinotify'),
                         'toast_body_title' => __('Acionamento e fluxo atualizados com sucesso!', 'joinotify'),
                     );
+
+                    // get updated post meta data
+                    $workflow_content_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+
+                    if ( is_array( $workflow_content_data ) ) {
+                        foreach ( $workflow_content_data as $item ) {
+                            if ( isset( $item['type'] ) && $item['type'] === 'trigger' ) {
+                                $trigger_id = $item['id'];
+
+                                break;
+                            }
+                        }
+                    }
+
+                    // check if trigger requires settings
+                    if ( Triggers::trigger_requires_settings( $post_id ) ) {
+                        $response['active_settings_modal'] = '#edit_trigger_' . $trigger_id;
+                    }
     
                     $action_conditions = Conditions::get_conditions_by_trigger( $trigger );
                     $response['condition_selectors'] = Builder_Components::render_condition_selectors( $action_conditions );
@@ -649,10 +669,28 @@ class Ajax {
                         'toast_header_title' => __('Fluxo criado com sucesso', 'joinotify'),
                         'toast_body_title' => __('Acionamento e fluxo criados com sucesso!', 'joinotify'),
                     );
+
+                    // Retrieve existing workflow content
+                    $workflow_content = get_post_meta( $new_post_id, 'joinotify_workflow_content', true );
+
+                    if ( is_array( $workflow_content ) ) {
+                        foreach ( $workflow_content as $item ) {
+                            if ( isset( $item['type'] ) && $item['type'] === 'trigger' ) {
+                                $trigger_id = $item['id'];
+
+                                break;
+                            }
+                        }
+                    }
+
+                    // check if trigger requires settings
+                    if ( Triggers::trigger_requires_settings( $new_post_id ) ) {
+                        $response['active_settings_modal'] = '#edit_trigger_' . $trigger_id;
+                    }
     
                     $action_conditions = Conditions::get_conditions_by_trigger( $trigger );
                     $response['condition_selectors'] = Builder_Components::render_condition_selectors( $action_conditions );
-                    $response['placeholders_list'] = Builder_Components::render_placeholders_list( $post_id );
+                    $response['placeholders_list'] = Builder_Components::render_placeholders_list( $new_post_id );
                     $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
                     $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
@@ -681,13 +719,14 @@ class Ajax {
      * Load workflow data on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function load_workflow_data_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_load_workflow_data' ) {
             $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
-            $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
-
+            
+            // check post type
             if ( get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 $response = array(
                     'status' => 'success',
@@ -699,8 +738,13 @@ class Ajax {
                     'has_action' => Utils::check_workflow_content( $post_id, 'action' ),
                 );
 
+                // get workflow content
+                $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+
                 foreach ( $workflow_data as $workflow ) {
                     if ( isset( $workflow['type'] ) && $workflow['type'] === 'trigger' ) {
+                        $trigger_id = $workflow['id'];
+
                         if ( isset( $workflow['data']['context'], $workflow['data']['trigger'] ) ) {
                             $action_conditions = Conditions::get_conditions_by_trigger( $workflow['data']['trigger'] );
                             $response['condition_selectors'] = Builder_Components::render_condition_selectors( $action_conditions );
@@ -709,6 +753,11 @@ class Ajax {
                             $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
                         }
                     }
+                }
+
+                // check if trigger requires settings
+                if ( Triggers::trigger_requires_settings( $post_id ) ) {
+                    $response['active_settings_modal'] = '#edit_trigger_' . $trigger_id;
                 }
 
                 if ( JOINOTIFY_DEBUG_MODE ) {

@@ -437,6 +437,17 @@
 							// add trigger on funnel
 							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 
+							// check if has trigger settings
+							setTimeout( function() {
+								if ( response.active_settings_modal ) {
+									let modal = response.active_settings_modal;
+									let detached_modal = $(modal).detach();
+	
+									$('#wpcontent').prepend(detached_modal);
+									$(modal).modal('show'); // display modal
+								}
+							}, 1000);
+
 							// set workflow content is ready
 							$(document).trigger('workflowReady');
 
@@ -1015,96 +1026,105 @@
 
         if (id) {
             $.ajax({
-                url: joinotify_builder_params.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'joinotify_load_workflow_data',
-                    post_id: id,
-                },
-                beforeSend: function() {
-                    $('.joinotify-loader-container').removeClass('d-none');
-                },
-                success: function(response) {
-					if ( joinotify_builder_params.debug_mode ) {
-						console.log(response);
-					}
-					
-					try {
-						if (response.status === 'success') {
-							$('#joinotify_choose_template_container').removeClass('active');
-							$('#joinotify_builder_navbar').addClass('active');
-
-							if (response.has_trigger) {
-								$('#joinotify_triggers_group').removeClass('active');
-								$('#joinotify_triggers_content').removeClass('active');
-							} else {
-								$('#joinotify_triggers_group').addClass('active');
-								$('#joinotify_triggers_content').addClass('active');
-							}
-
-							if (response.has_action) {
-								$('#joinotify_builder_run_test').prop('disabled', false);
-							} else {
-								$('#joinotify_builder_run_test').prop('disabled', true);
-							}
-							
-							$('#offcanvas_condition').find('.offcanvas-body').html(response.condition_selectors);
-							$('#joinotify_actions_wrapper').html(response.sidebar_actions);
-							$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.fetch_groups_trigger);
-							$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.placeholders_list);
-							$('#offcanvas_send_whatsapp_message_media').find('.offcanvas-body').append(response.fetch_groups_trigger);
-							$('#send_whatsapp_message_media').find('.offcanvas-body').append(response.placeholders_list);
-							$('#add_action_condition').prop('disabled', true);
-							$('#joinotify_workflow_title').text(response.workflow_title);
-							$('#joinotify_edit_workflow_title').val(response.workflow_title);
-							$('#joinotify_set_workflow_name').val(response.workflow_title);
-
-							// update browser tab title
-							document.title = response.workflow_title;
-
-							$('#joinotify_workflow_header_title_container').append(response.display_workflow_status);
-							$('#joinotify_builder_funnel .funnel-trigger-group').prepend(response.workflow_data);
-							$('#joinotify_workflow_status_switch').prop('disabled', false);
-
-							if ( 'publish' === response.workflow_status ) {
-								$('#joinotify_workflow_status_switch').prop('checked', true);
-								$('#joinotify_workflow_status_title').text(joinotify_builder_params.status_active);
-							}
-
-							// workflow content
-							$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
-							
-							// set workflow content is ready
-							$(document).trigger('workflowReady');
-
-							// add "active" class for trigger item on workflow content
-							if ( $('.funnel-trigger-item').length > 0 ) {
-								$('.funnel-trigger-item').each( function() {
-									var data_context = $(this).data('context');
-									var data_trigger = $(this).data('trigger');
-	
-									// find matching trigger
-									var matching_trigger_item = $('.trigger-item[data-context="' + data_context + '"][data-trigger="' + data_trigger + '"]');
-									
-									if (matching_trigger_item.length > 0) {
-										matching_trigger_item.addClass('active');
-									}
-								});
-							}
-						} else {
-							display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+					url: joinotify_builder_params.ajax_url,
+					type: 'POST',
+					data: {
+						action: 'joinotify_load_workflow_data',
+						post_id: id,
+					},
+					beforeSend: function() {
+						$('.joinotify-loader-container').removeClass('d-none');
+					},
+					success: function(response) {
+						if ( joinotify_builder_params.debug_mode ) {
+							console.log(response);
 						}
-					} catch (error) {
-						console.log(error);
-					}
-                },
-				complete: function() {
-					$('.joinotify-loader-container').addClass('d-none');
-					adjust_condition_container_height();
-				},
-                error: function(xhr, status, error) {
-                    console.error('Error on AJAX request:', xhr.responseText);
-                }
+						
+						try {
+							if (response.status === 'success') {
+								$('#joinotify_choose_template_container').removeClass('active');
+								$('#joinotify_builder_navbar').addClass('active');
+
+								if (response.has_trigger) {
+									$('#joinotify_triggers_group').removeClass('active');
+									$('#joinotify_triggers_content').removeClass('active');
+								} else {
+									$('#joinotify_triggers_group').addClass('active');
+									$('#joinotify_triggers_content').addClass('active');
+								}
+
+								if (response.has_action) {
+									$('#joinotify_builder_run_test').prop('disabled', false);
+								} else {
+									$('#joinotify_builder_run_test').prop('disabled', true);
+								}
+								
+								$('#offcanvas_condition').find('.offcanvas-body').html(response.condition_selectors);
+								$('#joinotify_actions_wrapper').html(response.sidebar_actions);
+								$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.fetch_groups_trigger);
+								$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.placeholders_list);
+								$('#offcanvas_send_whatsapp_message_media').find('.offcanvas-body').append(response.fetch_groups_trigger);
+								$('#send_whatsapp_message_media').find('.offcanvas-body').append(response.placeholders_list);
+								$('#add_action_condition').prop('disabled', true);
+								$('#joinotify_workflow_title').text(response.workflow_title);
+								$('#joinotify_edit_workflow_title').val(response.workflow_title);
+								$('#joinotify_set_workflow_name').val(response.workflow_title);
+
+								// update browser tab title
+								document.title = response.workflow_title;
+
+								$('#joinotify_workflow_header_title_container').append(response.display_workflow_status);
+								$('#joinotify_builder_funnel .funnel-trigger-group').prepend(response.workflow_data);
+								$('#joinotify_workflow_status_switch').prop('disabled', false);
+
+								if ( 'publish' === response.workflow_status ) {
+									$('#joinotify_workflow_status_switch').prop('checked', true);
+									$('#joinotify_workflow_status_title').text(joinotify_builder_params.status_active);
+								}
+
+								// workflow content
+								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+
+								// check if has trigger settings
+								if ( response.active_settings_modal ) {
+									let modal = response.active_settings_modal;
+									let detached_modal = $(modal).detach();
+
+									$('#wpcontent').prepend(detached_modal);
+									$(modal).modal('show'); // display modal
+								}
+								
+								// set workflow content is ready
+								$(document).trigger('workflowReady');
+
+								// add "active" class for trigger item on workflow content
+								if ( $('.funnel-trigger-item').length > 0 ) {
+									$('.funnel-trigger-item').each( function() {
+										var data_context = $(this).data('context');
+										var data_trigger = $(this).data('trigger');
+		
+										// find matching trigger
+										var matching_trigger_item = $('.trigger-item[data-context="' + data_context + '"][data-trigger="' + data_trigger + '"]');
+										
+										if (matching_trigger_item.length > 0) {
+											matching_trigger_item.addClass('active');
+										}
+									});
+								}
+							} else {
+								display_toast('error', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
+							}
+						} catch (error) {
+							console.log(error);
+						}
+					},
+					complete: function() {
+						$('.joinotify-loader-container').addClass('d-none');
+						adjust_condition_container_height();
+					},
+					error: function(xhr, status, error) {
+						console.error('Error on AJAX request:', xhr.responseText);
+					},
             });
         }
 	});

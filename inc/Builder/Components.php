@@ -326,7 +326,7 @@ class Components {
 
         // get workflow content from post id
         $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
-        $current_action = Actions::find_action_by_id( $workflow_content, $action_id );
+        $current_action = Utils::find_workflow_item_by_id( $workflow_content, $action_id );
         $action_data = isset( $current_action['data'] ) ? $current_action['data'] : array();
 
         switch ( $action ) {
@@ -507,12 +507,15 @@ class Components {
      * Get trigger HTML based on context and data_trigger
      * 
      * @since 1.0.0
-     * @param string $context | Context name (woocommerce, elementor, etc.)
-     * @param string $data_trigger | Trigger name (ex: 'order_completed')
-     * @param string $trigger_id | Trigger ID
+     * @version 1.1.0
+     * @param int $post_id | Post ID
+     * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return mixed | return the HTML of the trigger or false if not found
      */
-    public static function get_trigger_html( $context, $data_trigger, $trigger_id = '' ) {
+    public static function get_trigger_html( $post_id, $trigger_details ) {
+        $context = $trigger_details['context'];
+        $data_trigger = $trigger_details['data_trigger'];
+        $trigger_id = $trigger_details['trigger_id'];
         $trigger = Triggers::get_trigger( $context, $data_trigger );
 
         // check if has trigger
@@ -556,12 +559,12 @@ class Components {
                                     $html .= '</div>';
 
                                     $html .= '<div class="modal-body px-4 py-3 my-3">';
-                                        
+                                        $html .= self::required_settings_for_trigger( $post_id, $trigger_details );
                                     $html .= '</div>';
 
                                     $html .= '<div class="modal-footer px-4 py-3">';
                                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                        $html .= '<button type="button" class="btn btn-primary save-trigger-settings m-0" data-trigger-id="'. esc_attr( $trigger_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
+                                        $html .= '<button type="button" class="btn btn-primary save-trigger-settings m-0" data-trigger="'. esc_attr( $data_trigger ) .'" data-trigger-id="'. esc_attr( $trigger_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                                     $html .= '</div>';
                                 $html .= '</div>';
                             $html .= '</div>';
@@ -574,6 +577,43 @@ class Components {
         }
 
         return false;
+    }
+
+
+    /**
+     * Render required settings for specific triggers
+     * 
+     * @since 1.1.0
+     * @param int $post_id | Post ID
+     * @param array $trigger_details | Trigger details (context name, trigger name, etc)
+     * @return string
+     */
+    public static function required_settings_for_trigger( $post_id, $trigger_details ) {
+        $trigger_id = $trigger_details['trigger_id'];
+        $trigger = $trigger_details['data_trigger'];
+
+        // get workflow content from post id
+        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $current_trigger = Utils::find_workflow_item_by_id( $workflow_content, $trigger_id );
+        $trigger_data = isset( $current_trigger['data'] ) ? $current_trigger['data'] : array();
+
+        $html = '';
+
+        if ( $trigger === 'woocommerce_order_status_changed' ) {
+            $current_status = isset( $trigger_data['order_status'] ) ? $trigger_data['order_status'] : null;
+
+            $html .= '<div class="joinotify-get-order-status-trigger">';
+                $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Status do pedido', 'joinotify' ) .'</span>';
+                
+                $html .= '<select name="woocommerce_order_status" class="form-select get-trigger-order-status">';
+                    foreach ( wc_get_order_statuses() as $status_key => $status_label ) {
+                        $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
+                    }
+                $html .= '</select>';
+            $html .= '</div>';
+        }
+
+        return $html;
     }
 
 

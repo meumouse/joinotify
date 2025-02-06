@@ -61,7 +61,7 @@ class Woocommerce extends Integrations_Base {
                 'data_trigger' => 'woocommerce_new_order',
                 'title' => esc_html__( 'Novo pedido', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um novo pedido é recebido no WooCommerce com qualquer status.', 'joinotify' ),
-                'require_settings' => true,
+                'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_checkout_order_processed',
@@ -91,7 +91,7 @@ class Woocommerce extends Integrations_Base {
                 'data_trigger' => 'woocommerce_order_status_changed',
                 'title' => esc_html__( 'Status de um pedido alterado', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um pedido tem seu status alterado.', 'joinotify' ),
-                'require_settings' => false,
+                'require_settings' => true,
             ),
         );
 

@@ -93,55 +93,6 @@ class Actions {
 
 
     /**
-     * Helper function to find the action by ID
-     * Searches recursively in the entire workflow array
-     * 
-     * @since 1.1.0
-     * @param array $workflow_content | Workflow content
-     * @param string $action_id | Action ID
-     * @return array
-     */
-    public static function find_action_by_id( $workflow_content, $action_id ) {
-        foreach ( $workflow_content as $item ) {
-            if ( isset( $item['id'] ) && $item['id'] === $action_id ) {
-                return $item;
-            }
-
-            // verifica se há children
-            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
-                // caso a ação seja uma condição com 'action_true' e 'action_false'
-                if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' ) {
-                    if ( isset( $item['children']['action_true'] ) ) {
-                        $found = self::find_action_by_id( $item['children']['action_true'], $action_id );
-                        
-                        if ( $found ) {
-                            return $found;
-                        }
-                    }
-
-                    if ( isset( $item['children']['action_false'] ) ) {
-                        $found = self::find_action_by_id( $item['children']['action_false'], $action_id );
-                        
-                        if ( $found ) {
-                            return $found;
-                        }
-                    }
-                } else {
-                    // caso normal, apenas um array de ações filhas
-                    $found = self::find_action_by_id( $item['children'], $action_id );
-
-                    if ( $found ) {
-                        return $found;
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
-
-    /**
      * Recursive function to delete an action by ID
      * 
      * @since 1.1.0
