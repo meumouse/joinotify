@@ -2,18 +2,28 @@
 
 namespace MeuMouse\Flexify_Checkout\Core;
 
+use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Core\Logger;
+
+use WP_Upgrader;
+use Plugin_Upgrader;
+use WP_Ajax_Upgrader_Skin;
+use WP_Error;
+use WP_Filesystem_Direct;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
 /**
- * Class to make requests to a remote server to get plugin versions and updates
- * 
+ * Class for handling plugin updates
+ *
  * @since 1.0.0
  * @version 1.1.0
  * @package MeuMouse.com
  */
 class Updater {
 
+    public $update_checker_file = 'https://raw.githubusercontent.com/meumouse/joinotify/refs/heads/main/dist/update-checker.json';
     public $plugin_slug;
     public $version;
     public $cache_key;
@@ -21,10 +31,12 @@ class Updater {
     public $cache_allowed;
     public $time_cache;
     public $update_available;
+    public $download_url;
+
 
     /**
      * Construct function
-     * 
+     *
      * @since 1.0.0
      * @version 1.1.0
      * @return void
@@ -46,8 +58,14 @@ class Updater {
         add_filter( 'plugins_api', array( $this, 'plugin_info' ), 20, 3 );
         add_filter( 'site_transient_update_plugins', array( $this, 'update_plugin' ) );
         add_action( 'upgrader_process_complete', array( $this, 'purge_cache' ), 10, 2 );
-        add_filter( 'plugin_row_meta', array( $this, 'add_check_updates_link'), 10, 2 );
+        add_filter( 'plugin_row_meta', array( $this, 'add_check_updates_link' ), 10, 2 );
         add_filter( 'all_admin_notices', array( $this, 'check_manual_update_query_arg' ) );
+
+        if ( Admin::get_setting( 'enable_auto_updates' ) === 'yes' ) {
+            add_filter( 'auto_update_plugin', array( $this, 'enable_auto_update' ), 10, 2 );
+            add_action( 'init', array( $this, 'schedule_auto_update' ) );
+            add_action( 'joinotify_auto_update_event', array( $this, 'auto_update_plugin' ) );
+        }
     }
 
 
@@ -55,6 +73,7 @@ class Updater {
      * Request on remote server
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return array
      */
     public function request() {
@@ -64,7 +83,7 @@ class Updater {
             $remote = get_transient( $this->cache_data_base_key );
     
             if ( false === $remote ) {
-                $url = 'https://raw.githubusercontent.com/meumouse/joinotify/refs/heads/main/dist/update-checker.json';
+                $url = $this->update_checker_file;
                 $params = array(
                     'timeout' => 10,
                     'headers' => array(
@@ -157,71 +176,36 @@ class Updater {
 
 
     /**
-     * Update plugin
-     * 
+     * Update plugin details in the WordPress update system
+     *
      * @since 1.0.0
-     * @param array|object $transient | Transient object
+     * @param object $transient
      * @return object
      */
     public function update_plugin( $transient ) {
         if ( empty( $transient->checked ) ) {
             return $transient;
         }
-    
-        $cached_data = $this->request();
-    
-        if ( $cached_data && version_compare( $this->version, $cached_data->version, '<' ) && version_compare( $cached_data->requires, get_bloginfo( 'version' ), '<=' ) && version_compare( $cached_data->requires_php, PHP_VERSION, '<' ) ) {
-            $this->update_available = $cached_data;
 
+        // get request data
+        $cached_data = $this->request();
+
+        if ( $cached_data && isset( $cached_data->version ) && version_compare( $this->version, $cached_data->version, '<' ) ) {
+            $this->update_available = $cached_data;
+    
             $response = new \stdClass();
             $response->slug = $this->plugin_slug;
             $response->plugin = "{$this->plugin_slug}/{$this->plugin_slug}.php";
             $response->new_version = $cached_data->version;
             $response->tested = $cached_data->tested;
             $response->package = $cached_data->download_url;
+    
             $transient->response[$response->plugin] = $response;
         }
     
         return $transient;
-    }      
-
-
-    /**
-     * Purge cache on update plugin
-     * 
-     * @since 1.0.0
-     * @param $upgrader | WP_Upgrader instance
-     * @param array $options | Array of bulk item update data
-     * @see https://developer.wordpress.org/reference/hooks/upgrader_process_complete/
-     * @return void
-     */
-    public function purge_cache( $upgrader, $options ) {
-        if ( $this->cache_allowed && 'update' === $options['action'] && 'plugin' === $options['type'] ) {
-            delete_transient('joinotify_api_request_cache');
-            delete_transient('joinotify_api_response_cache');
-            delete_transient( $this->cache_key );
-            delete_transient( $this->cache_data_base_key );
-        }
     }
 
-
-    /**
-     * Add check updates link in the plugin_row_meta
-     * 
-     * @since 1.0.0
-     * @param string $plugin_meta | An array of the plugin’s metadata, including the version, author, author URI, and plugin URI
-     * @param string $plugin_file | Path to the plugin file relative to the plugins directory
-     * @return array
-     */
-    public function add_check_updates_link( $plugin_meta, $plugin_file ) {
-        if ( $plugin_file === $this->plugin_slug . '/' . $this->plugin_slug . '.php' ) {
-            $check_updates_link = '<a href="' . esc_url( add_query_arg( 'joinotify_check_updates', '1' ) ) . '">' . esc_html__( 'Verificar atualizações', 'joinotify' ) . '</a>';
-            $plugin_meta['joinotify_check_updates'] = $check_updates_link;
-        }
-        
-        return $plugin_meta;
-    }
-    
 
     /**
      * Check manual updates
@@ -274,4 +258,156 @@ class Updater {
             }
         }
     }
+
+
+    /**
+     * Purge cache on update plugin
+     * 
+     * @since 1.0.0
+     * @param $upgrader | WP_Upgrader instance
+     * @param array $options | Array of bulk item update data
+     * @see https://developer.wordpress.org/reference/hooks/upgrader_process_complete/
+     * @return void
+     */
+    public function purge_cache( $upgrader, $options ) {
+        if ( $this->cache_allowed && 'update' === $options['action'] && 'plugin' === $options['type'] ) {
+            delete_transient('joinotify_api_request_cache');
+            delete_transient('joinotify_api_response_cache');
+            delete_transient( $this->cache_key );
+            delete_transient( $this->cache_data_base_key );
+        }
+    }
+
+
+    /**
+     * Add check updates link in the plugin_row_meta
+     * 
+     * @since 1.0.0
+     * @param string $plugin_meta | An array of the plugin’s metadata, including the version, author, author URI, and plugin URI
+     * @param string $plugin_file | Path to the plugin file relative to the plugins directory
+     * @return array
+     */
+    public function add_check_updates_link( $plugin_meta, $plugin_file ) {
+        if ( $plugin_file === $this->plugin_slug . '/' . $this->plugin_slug . '.php' ) {
+            $check_updates_link = '<a href="' . esc_url( add_query_arg( 'joinotify_check_updates', '1' ) ) . '">' . esc_html__( 'Verificar atualizações', 'joinotify' ) . '</a>';
+            $plugin_meta['joinotify_check_updates'] = $check_updates_link;
+        }
+        
+        return $plugin_meta;
+    }
+
+
+    /**
+     * Download and extract plugin ZIP file
+     *
+     * @since 1.1.0
+     * @param string $download_url | Plugin link for download RAW
+     * @return bool
+     */
+    private function download_and_extract( $download_url ) {
+        global $wp_filesystem;
+
+        if ( empty( $wp_filesystem ) ) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+
+        $temp_file = download_url( $download_url );
+
+        if ( is_wp_error( $temp_file ) ) {
+            error_log( '[AUTO UPDATE] Falha ao baixar plugin: ' . $temp_file->get_error_message() );
+            return false;
+        }
+
+        $plugin_dir = WP_PLUGIN_DIR . '/' . $this->plugin_slug;
+
+        if ( $wp_filesystem->is_dir( $plugin_dir ) ) {
+            $wp_filesystem->delete( $plugin_dir, true );
+        }
+
+        $unzip_result = unzip_file( $temp_file, WP_PLUGIN_DIR );
+
+        unlink( $temp_file ); // remove temp file
+
+        if ( is_wp_error( $unzip_result ) ) {
+            error_log( '[AUTO UPDATE] Error on extract plugin: ' . $unzip_result->get_error_message() );
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Enable auto-update only for this plugin
+     *
+     * @since 1.1.0
+     * @param bool $update | Whether to enable automatic update
+     * @param object $item | The plugin object being checked
+     * @return bool
+     */
+    public function enable_auto_update( $update, $item ) {
+        if ( isset( $item->plugin ) && $item->plugin === 'joinotify/joinotify.php' ) {
+            return true; // enable only joinotify
+        }
+
+        return $update;
+    }
+
+
+    /**
+     * Perform automatic update
+     *
+     * @since 1.1.0
+     * @return void
+     */
+    public function auto_update_plugin() {
+        delete_transient('joinotify_api_request_cache');
+        delete_transient('joinotify_api_response_cache');
+        delete_transient( $this->cache_key );
+        delete_transient( $this->cache_data_base_key );
+
+        $update_data = $this->request();
+
+        if ( ! $update_data || ! isset( $update_data->download_url ) || version_compare( $this->version, $update_data->version, '>=' ) ) {
+            return;
+        }
+
+        error_log( '[AUTO UPDATE] Starting Joinotify update.' );
+
+        $download_url = esc_url_raw( $update_data->download_url );
+
+        error_log( "[AUTO UPDATE] Downloading update from remote repository." );
+
+        if ( ! $this->download_and_extract( $download_url ) ) {
+            error_log( '[AUTO UPDATE] Falha na extração do plugin Joinotify.' );
+            return;
+        }
+
+        activate_plugin("{$this->plugin_slug}/{$this->plugin_slug}.php");
+
+        error_log( "[AUTO UPDATE] Joinotify plugin updated to version {$update_data->version}" );
+
+        // Check and remove .maintenance file to avoid maintenance screen
+        $maintenance_file = ABSPATH . '.maintenance';
+
+        if ( file_exists( $maintenance_file ) ) {
+            unlink( $maintenance_file );
+        }
+    }
+
+
+    /**
+     * Schedule automatic update event
+     *
+     * @since 1.1.0
+     * @return void
+     */
+    public function schedule_auto_update() {
+        if ( ! wp_next_scheduled('joinotify_auto_update_event') ) {
+            wp_schedule_event( time(), 'daily', 'joinotify_auto_update_event' );
+        }
+    }
 }
+
+new Updater();
