@@ -138,8 +138,9 @@ class Assets {
 			wp_enqueue_script( 'bootstrap-datepicker', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js', array('jquery'), '1.9.0' );
 			wp_enqueue_script( 'bootstrap-datepicker-translate-pt-br', JOINOTIFY_ASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js', array('jquery'), JOINOTIFY_VERSION );
 
-			// add picmo emojis
-			wp_enqueue_script_module( 'picmo-popup', JOINOTIFY_ASSETS . 'vendor/picmo/popup.js', array(), JOINOTIFY_VERSION );
+			// EmojioneArea library
+			wp_enqueue_style( 'joinotify-emojionearea-styles', 'https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css', array(), '3.4.1' );
+			wp_enqueue_script( 'joinotify-emojionearea-scripts', 'https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.js', array('jquery'), '3.4.1' );
 
 			// codemirror library
 			wp_enqueue_style( 'joinotify-codemirror-styles', JOINOTIFY_ASSETS . 'vendor/codemirror/lib/codemirror.css', array(), '5.65.18' );
@@ -174,6 +175,22 @@ class Assets {
 				'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
 				'copy_group_id' => esc_html__( 'ID copiado!', 'joinotify' ),
 				'import_nonce' => wp_create_nonce('joinotify_import_workflow_nonce'),
+				'emoji_picker_i18n' => array(
+					'placeholder' => esc_html__( 'Pesquisar', 'joinotify' ),
+					'button_title' => esc_html__( 'Use a tecla TAB para inserir um emoji rapidamente', 'joinotify' ),
+					'filters' => array(
+						'tones_title' => esc_html__( 'Diversidade', 'joinotify' ),
+						'recent_title' => esc_html__( 'Recentes', 'joinotify' ),
+						'smileys_people_title' => esc_html__( 'Sorrisos e Pessoas', 'joinotify' ),
+						'animals_nature_title' => esc_html__( 'Animais e Natureza', 'joinotify' ),
+						'food_drink_title' => esc_html__( 'Comidas e Bebidas', 'joinotify' ),
+						'activity_title' => esc_html__( 'Atividades', 'joinotify' ),
+						'travel_places_title' => esc_html__( 'Viajens e Lugares', 'joinotify' ),
+						'objects_title' => esc_html__( 'Objetos', 'joinotify' ),
+						'symbols_title' => esc_html__( 'Símbolos', 'joinotify' ),
+						'flags_title' => esc_html__( 'Bandeiras', 'joinotify' ),
+					),
+				),
 			));
 		}
 	}

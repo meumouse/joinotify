@@ -1842,4 +1842,56 @@
 			});
 		});
 	});
+
+
+	/**
+	 * Emoji picker
+	 * 
+	 * @since 1.1.0
+	 * @package MeuMouse.com
+	 */
+	jQuery(document).on('workflowReady', function() {
+		var i18n = joinotify_builder_params.emoji_picker_i18n;
+
+		$('.add-emoji-picker').emojioneArea({
+			tones: true,
+			hidePickerOnBlur: true,
+			recentEmojis: true,
+			pickerPosition: 'bottom',
+			searchPlaceholder: i18n.placeholder,
+			buttonTitle:i18n.button_title,
+			filters: {
+				tones: {
+					title: i18n.filters.tones_title,
+				},
+				recent: {
+					title: i18n.filters.recent_title,
+				},
+				smileys_people: {
+					title: i18n.filters.smileys_people_title,
+				},
+				animals_nature: {
+					title: i18n.filters.animals_nature_title,
+				},
+				food_drink: {
+					title: i18n.filters.food_drink_title,
+				},
+				activity: {
+					title: i18n.filters.activity_title,
+				},
+				travel_places: {
+					title: i18n.filters.travel_places_title,
+				},
+				objects: {
+					title: i18n.filters.objects_title,
+				},
+				symbols: {
+					title: i18n.filters.symbols_title,
+				},
+				flags: {
+					title: i18n.filters.flags_title,
+				},
+		  	},
+	  	});
+	});
 })(jQuery);

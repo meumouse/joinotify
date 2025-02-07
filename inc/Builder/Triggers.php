@@ -2,8 +2,6 @@
 
 namespace MeuMouse\Joinotify\Builder;
 
-use MeuMouse\Joinotify\Core\Logger;
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 

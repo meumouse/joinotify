@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Builder;
 
-use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 use MeuMouse\Joinotify\Builder\Messages;
 

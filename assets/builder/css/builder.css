@@ -1948,3 +1948,13 @@ textarea.edit-whatsapp-message-text {
 .coupon-action-group .coupon-action-item:last-child {
     margin-bottom: 0;
 }
+
+.add-emoji-picker.focused {
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, 0.25) !important; 
+}
+
+.emojionearea .emojionearea-button {
+    right: 0.5rem;
+    top: 0.5rem;
+}
