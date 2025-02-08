@@ -148,9 +148,10 @@ class Controller {
 
 
     /**
-     * Send a text message on WhatsApp
+     * Send a text message on WhatsApp from Proxy API
      *
      * @since 1.0.0
+     * @version 1.1.0
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -158,7 +159,8 @@ class Controller {
         $sender = $request->get_param('sender');
         $receiver = $request->get_param('receiver');
         $message = $request->get_param('message');
-        $response_code = self::send_message_text( $sender, $receiver, $message );
+        $delay = $request->get_param('delay');
+        $response_code = self::send_message_text( $sender, $receiver, $message, $delay );
 
         if ( 201 === $response_code ) {
             return new WP_REST_Response( array(
@@ -175,9 +177,10 @@ class Controller {
 
 
     /**
-     * Envia uma mensagem de mídia no WhatsApp
+     * Send message media on WhatsApp from Proxy API
      *
      * @since 1.0.0
+     * @version 1.1.0
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -186,7 +189,8 @@ class Controller {
         $receiver = $request->get_param('receiver');
         $media_type = $request->get_param('media_type');
         $media_url = $request->get_param('media_url');
-        $response_code = self::send_message_media( $sender, $receiver, $media_type, $media_url );
+        $delay = $request->get_param('delay');
+        $response_code = self::send_message_media( $sender, $receiver, $media_type, $media_url, $delay );
 
         if ( 201 === $response_code ) {
             return new \WP_REST_Response( array(
@@ -312,9 +316,10 @@ class Controller {
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $message | Message text for send
+     * @param int $timestamp_delay | Delay in miliseconds for send message
      * @return int
      */
-    public static function send_message_text( $sender, $receiver, $message ) {
+    public static function send_message_text( $sender, $receiver, $message, $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/' . $sender;
 
@@ -330,6 +335,7 @@ class Controller {
             'number' => preg_replace( '/\D/', '', $receiver ),
             'linkPreview' => $link_preview,
             'text' => $message,
+            'delay' => $timestamp_delay,
         ));
 
         if ( ! License::is_valid() ) {
@@ -369,9 +375,10 @@ class Controller {
      * @param string $receiver | Phone number for receive message
      * @param string $media_type | Media type (image, audio, video or document)
      * @param string $media | Media URL
+     * @param int $timestamp_delay | Delay in miliseconds for send message
      * @return int
      */
-    public static function send_message_media( $sender, $receiver, $media_type, $media ) {
+    public static function send_message_media( $sender, $receiver, $media_type, $media, $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendMedia/' . $sender;
 
@@ -379,6 +386,7 @@ class Controller {
             'number' => preg_replace( '/\D/', '', $receiver ),
             'mediatype' => $media_type,
             'media' => $media,
+            'delay' => $timestamp_delay,
         ));
 
         // check request content

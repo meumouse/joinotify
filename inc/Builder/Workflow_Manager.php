@@ -88,7 +88,7 @@ class Workflow_Manager {
                     'parent_id' => $data['id'],
                 );
             } elseif ( isset( $data['type'] ) && $data['type'] === 'action' ) {
-                if ( $data['data']['action'] === 'condition' ) {
+                if ( isset( $data['data']['action'] ) && $data['data']['action'] === 'condition' ) {
                     $new_workflow_data[] = array(
                         'type' => 'connector_condition',
                         'parent_id' => $data['id'],
@@ -100,7 +100,7 @@ class Workflow_Manager {
                         'type' => 'connector',
                         'parent_id' => $data['id'],
                     );
-                } elseif ( $data['data']['action'] !== 'stop_funnel' ) {
+                } elseif ( ! isset( $data['data']['action'] ) || isset( $data['data']['action'] ) && $data['data']['action'] !== 'stop_funnel' ) {
                     $new_workflow_data[] = array(
                         'type' => 'connector_add',
                         'parent_id' => $data['id'],

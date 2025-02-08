@@ -1258,10 +1258,10 @@
 	 * @package MeuMouse.com
 	 */
 	jQuery(document).ready( function($) {
-		$(document).on('input change blur', '.set-whatsapp-message-text', function() {
+		$(document).on('input change blur change', '.set-whatsapp-message-text', function() {
 			var input = $(this);
 			var text = input.val();
-			var preview_message = $(this).closest('.input-group').siblings('.preview-whatsapp-message-sender');
+			var preview_message = $(this).parent('div').siblings('.preview-whatsapp-message-sender');
 
 			// replace \n for <br> break row HTML element
 			text = text.replace(/\n/g, '<br>');
@@ -1384,16 +1384,20 @@
 	 * Open WordPress midia library popup on click
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 */
 	jQuery(document).ready( function($) {
 		var file_frame;
 	
-		$('#joinotify_set_url_media').on('click', function(e) {
+		$(document).on('click', '.set-media-url', function(e) {
 			e.preventDefault();
+
+			var btn = $(this);
 	
 			// If the media frame already exists, reopen it
 			if (file_frame) {
 				file_frame.open();
+
 				return;
 			}
 	
@@ -1409,10 +1413,10 @@
 			// When an image is selected, execute the callback function
 			file_frame.on('select', function() {
 				var attachment = file_frame.state().get('selection').first().toJSON();
-				var imageUrl = attachment.url;
+				var image_url = attachment.url;
 			
 				// Update the input value with the URL of the selected image
-				$('#joinotify_get_url_media').val(imageUrl).trigger('change'); // Force change
+				btn.siblings('.get-media-url').val(image_url).trigger('change'); // Force change
 			});
 
 			file_frame.open();
@@ -1676,7 +1680,7 @@
 							$('.modal.show').find('.btn-close').click(); // close modal
 
 							// set workflow content is ready
-							$(document).trigger('workflowReady');
+						//	$(document).trigger('workflowReady');
 
 							display_toast('success', response.toast_header_title, response.toast_body_title, $('#joinotify-automations-builder'));
 						} else {
