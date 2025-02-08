@@ -170,6 +170,7 @@
 	 * Prevent reload page for Bootstrap modals and move for prepend #wpcontent for prevent z-index bug
 	 * 
 	 * @since 1.0.0
+	 * @version 1.1.0
 	 */
 	jQuery(document).ready( function($) {
 		$(document).on('click', 'button[data-bs-toggle="modal"], a[data-bs-toggle="modal"]', function(e) {
@@ -179,10 +180,6 @@
 			let detached_modal = $(target_modal).detach();
 
 			$('#wpcontent').prepend(detached_modal);
-
-			// initialize Tooltips inside modals
-			var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-			var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 		});
 	});
 
@@ -757,7 +754,7 @@
 					data: {
 						action: 'snippet_php',
 						title: $('.offcanvas.show').find('.offcanvas-title').text(),
-						snippet_php: $('#joinotify_set_snippet_php').val(),
+						snippet_php: $('.offcanvas.show').find('.joinotify-code-editor').val(),
 					},
 				};
 			}
@@ -1648,6 +1645,24 @@
 						},*/
 					},
 				};
+			} else if ( get_action === 'snippet_php' ) {
+				action_data = {
+					data: {
+						action: 'snippet_php',
+						data: {
+							snippet_php: $('.modal.show').find('.joinotify-code-editor').val(),
+						}
+					}
+				}
+			} else if ( get-action_data === 'create_coupon' ) {
+				action_data = {
+					data: {
+						action: 'create_coupon',
+						data: {
+							
+						}
+					}
+				}
 			}
 
 			// display action data on debug mode
@@ -1704,81 +1719,94 @@
 	 * @since 1.1.0
 	 * @package MeuMouse.com
 	 */
-	jQuery(document).on('workflowReady', function() {
-		let textarea = document.querySelector('.joinotify-code-editor');
-		// initialize CodeMirror
-		var editor = CodeMirror.fromTextArea( textarea, {
-			mode: 'application/x-httpd-php',
-			theme: 'dracula',
-			lineNumbers: true,
-			styleActiveLine: true,
-			matchBrackets: true,
-			autoCloseBrackets: true,
-			indentUnit: 4,
-			tabSize: 4,
-	  	});
+	jQuery(document).on('workflowReady', function () {
+		$('.joinotify-code-editor').each( function() {
+			let textarea = this;
 
-		// set first line as <?php, only empty
-		if ( editor.getValue().trim() === '' ) {
-			editor.setValue('<?php\n\n');
-	  	}
-
-		// update textarea when there are changes in code editor
-		editor.on('change', function() {
-			textarea.value = editor.getValue();
-	  	});
-
-		// wait codemirror is ready
-		setTimeout( function() {
-			$('.joinotify-code-editor').siblings('.CodeMirror').after(`<div class="joinotify-resize-code-area">
-				<svg class="icon-sm icon-dark opacity-75" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
-			</div>`);
-
-			// change height from Codemirror
-			$('.joinotify-resize-code-area').each( function() {
-				let isResizing = false;
-				let startY = 0;
-				let startHeight = 0;
-				let codeMirrorElement = $(this).siblings('.CodeMirror');
-	
-				if (codeMirrorElement.length === 0) {
-					console.warn('Code area not found');
-					
-					return;
-				}
-	
-				// on move mouse down
-				$(this).on('mousedown', function(e) {
-					e.preventDefault();
-					isResizing = true;
-					startY = e.clientY;
-					startHeight = codeMirrorElement.outerHeight();
-	
-					$(document).on('mousemove', handleResize);
-					$(document).on('mouseup', stopResize);
+			if ( ! textarea.classList.contains('CodeMirror') ) {
+				let editor = CodeMirror.fromTextArea( textarea, {
+					mode: 'application/x-httpd-php',
+					theme: 'dracula',
+					lineNumbers: true,
+					matchBrackets: true,
+					autoCloseBrackets: true,
+					indentUnit: 4,
+					tabSize: 4,
 				});
-	
-				function handleResize(e) {
-					if ( ! isResizing) {
-						return;
+
+				textarea.dataset.editor = editor;
+
+				// set PHP open tag on first line if empty textarea
+				if ( editor.getValue().trim() === '' ) {
+					editor.setValue('<?php\n\n');
+				}
+
+				// update the textarea when has changes on editor
+				editor.on('change', function() {
+					textarea.value = editor.getValue();
+				});
+
+				// wait CodeMirror is ready before add resize element
+				setTimeout( function() {
+					let codemirror_element = $(textarea).next('.CodeMirror');
+
+					if ( codemirror_element.length > 0 ) {
+						let resize_handle = $(`<div class="joinotify-resize-code-area"><svg class="icon-sm icon-dark opacity-75" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg></div>`);
+
+						codemirror_element.after(resize_handle);
+
+						let is_resizing = false;
+						let startY = 0;
+						let startHeight = 0;
+
+						resize_handle.on('mousedown', function(e) {
+							e.preventDefault();
+							is_resizing = true;
+							startY = e.clientY;
+							startHeight = codemirror_element.outerHeight();
+
+							$(document).on('mousemove', handle_resize);
+							$(document).on('mouseup', stop_resize);
+						});
+
+						/**
+						 * Handle resize CodeMirror height
+						 * 
+						 * @since 1.1.0
+						 * @param {object} e | Event object 
+						 * @returns void
+						 */
+						function handle_resize(e) {
+							if (!is_resizing) return;
+
+							let diffY = e.clientY - startY;
+							let newHeight = startHeight + diffY;
+
+							if (newHeight < 100) newHeight = 100; // Altura mínima
+							codemirror_element.css('height', newHeight + 'px');
+							codemirror_element.find('.CodeMirror-scroll').css('height', newHeight + 'px');
+						}
+
+						/**
+						 * Stop resize CodeMirror height
+						 * 
+						 * @since 1.1.0
+						 * @returns void
+						 */
+						function stop_resize() {
+							is_resizing = false;
+
+							$(document).off('mousemove', handle_resize);
+							$(document).off('mouseup', stop_resize);
+						}
+					} else {
+						console.warn('CodeMirror element not found for textarea:', textarea);
 					}
-
-					let diffY = e.clientY - startY;
-					let newHeight = startHeight + diffY;
-
-					if (newHeight < 100) newHeight = 100; // min height
-					codeMirrorElement.css('height', newHeight + 'px');
-					codeMirrorElement.find('.CodeMirror-scroll').css('height', newHeight + 'px'); // set height on inside editor
-				}
-	
-				function stopResize() {
-					isResizing = false;
-					$(document).off('mousemove', handleResize);
-					$(document).off('mouseup', stopResize);
-				}
-			});
-		}, 500);
-	});
+				}, 300);
+			}
+		});
+  	});
+  
 
 
 	/**

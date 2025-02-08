@@ -31,13 +31,13 @@ class Flexify_Checkout extends Integrations_Base {
             add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
 
             // add trigger tab
-            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
+            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 30 );
 
             // add trigger content
             add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
 
             // add placeholders
-        //    add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
         }
     }
 
@@ -123,18 +123,20 @@ class Flexify_Checkout extends Integrations_Base {
      */
     public function add_placeholders( $placeholders ) {
         if ( class_exists('Module_Inter_Bank') ) {
+            $trigger_names = Triggers::get_trigger_names('flexify_checkout');
+
             $placeholders['flexify_checkout'] = array(
-                '{{ flexify_checkout_pix_copia_cola }}' => array(
-                    'triggers' => Triggers::get_trigger_names('flexify_checkout'),
-                    'description' => esc_html__( 'Para recuperar o código Pix Copia e Cola do pedido. Através da integração do banco Inter', 'joinotify' ),
+                '{{ fc_pix_copia_cola }}' => array(
+                    'triggers' => $trigger_names,
+                    'description' => esc_html__( 'Para recuperar o código Pix Copia e Cola do pedido. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
                         'production' => '',
                         'sandbox' => '',
                     ),
                 ),
                 '{{ fc_pix_expiration_time }}' => array(
-                    'triggers' => Triggers::get_trigger_names('flexify_checkout'),
-                    'description' => esc_html__( 'Para recuperar o código Pix Copia e Cola da integração banco Inter com Flexify Checkout', 'joinotify' ),
+                    'triggers' => $trigger_names,
+                    'description' => esc_html__( 'Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
                         'production' => '',
                         'sandbox' => '',

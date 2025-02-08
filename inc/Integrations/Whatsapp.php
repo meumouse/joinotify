@@ -85,10 +85,8 @@ class Whatsapp extends Integrations_Base {
 
         <div class="preview-whatsapp-message-sender"></div>
 
-        <div class="input-group mb-4">
-            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Remetente', 'joinotify' ) ?>">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.712 13.288a.999.999 0 0 0-1.414 0l-1.594 1.594c-.739-.22-2.118-.72-2.992-1.594s-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a.999.999 0 0 0-1.414 0L2.586 6c-.38.38-.594.902-.586 1.435.023 1.424.4 6.37 4.298 10.268S15.142 21.977 16.566 22h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-3.999-4zM16.585 20c-1.248-.021-5.518-.356-8.873-3.712C4.346 12.922 4.02 8.637 4 7.414l2.005-2.005 2.586 2.586-1.293 1.293a1 1 0 0 0-.272.912c.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.993.993 0 0 0 .912-.271l1.293-1.293 2.586 2.586L16.585 20z"></path><path d="m16.795 5.791-4.497 4.497 1.414 1.414 4.497-4.497L21.005 10V2.995H14z"></path></svg>    
-            </span>
+        <div class="mb-4">
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Remetente', 'joinotify' ); ?></span>
             
             <select id="joinotify_get_whatsapp_phone_sender" class="form-select">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
@@ -97,10 +95,8 @@ class Whatsapp extends Integrations_Base {
             </select>
         </div>
 
-        <div class="input-group mb-4">
-            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Destinatário', 'joinotify' ) ?>">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.712 13.288a.999.999 0 0 0-1.414 0l-1.597 1.596c-.824-.245-2.166-.771-2.99-1.596-.874-.874-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a1.03 1.03 0 0 0-1.414 0l-2.709 2.71c-.382.38-.597.904-.588 1.437.022 1.423.396 6.367 4.297 10.268C10.195 21.6 15.142 21.977 16.566 22h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-3.999-4zM16.585 20c-1.248-.021-5.518-.356-8.874-3.712C4.343 12.92 4.019 8.636 4 7.414l2.004-2.005L8.59 7.995 7.297 9.288c-.238.238-.34.582-.271.912.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.994.994 0 0 0 .912-.271l1.293-1.293 2.586 2.586L16.585 20z"></path><path d="M15.795 6.791 13.005 4v6.995H20l-2.791-2.79 4.503-4.503-1.414-1.414z"></path></svg>
-            </span>
+        <div class="mb-4">
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Destinatário', 'joinotify' ); ?></span>
 
             <input id="joinotify_get_whatsapp_number_msg_text" type="text" class="form-control" value="" placeholder="<?php esc_attr_e( '+5541987111527', 'joinotify' ) ?>"/>
         </div>
@@ -125,10 +121,8 @@ class Whatsapp extends Integrations_Base {
 
         <div class="preview-whatsapp-message-sender media"></div>
 
-        <div class="input-group mb-3">
-            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Remetente', 'joinotify' ) ?>">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.712 13.288a.999.999 0 0 0-1.414 0l-1.594 1.594c-.739-.22-2.118-.72-2.992-1.594s-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a.999.999 0 0 0-1.414 0L2.586 6c-.38.38-.594.902-.586 1.435.023 1.424.4 6.37 4.298 10.268S15.142 21.977 16.566 22h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-3.999-4zM16.585 20c-1.248-.021-5.518-.356-8.873-3.712C4.346 12.922 4.02 8.637 4 7.414l2.005-2.005 2.586 2.586-1.293 1.293a1 1 0 0 0-.272.912c.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.993.993 0 0 0 .912-.271l1.293-1.293 2.586 2.586L16.585 20z"></path><path d="m16.795 5.791-4.497 4.497 1.414 1.414 4.497-4.497L21.005 10V2.995H14z"></path></svg>    
-            </span>
+        <div class="mb-4">
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Remetente', 'joinotify' ); ?></span>
 
             <select id="joinotify_get_whatsapp_phone_sender_media" class="form-select">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
@@ -137,15 +131,13 @@ class Whatsapp extends Integrations_Base {
             </select>
         </div>
 
-        <div class="input-group mb-3">
-            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Destinatário', 'joinotify' ) ?>">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.712 13.288a.999.999 0 0 0-1.414 0l-1.597 1.596c-.824-.245-2.166-.771-2.99-1.596-.874-.874-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a1.03 1.03 0 0 0-1.414 0l-2.709 2.71c-.382.38-.597.904-.588 1.437.022 1.423.396 6.367 4.297 10.268C10.195 21.6 15.142 21.977 16.566 22h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-3.999-4zM16.585 20c-1.248-.021-5.518-.356-8.874-3.712C4.343 12.92 4.019 8.636 4 7.414l2.004-2.005L8.59 7.995 7.297 9.288c-.238.238-.34.582-.271.912.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.994.994 0 0 0 .912-.271l1.293-1.293 2.586 2.586L16.585 20z"></path><path d="M15.795 6.791 13.005 4v6.995H20l-2.791-2.79 4.503-4.503-1.414-1.414z"></path></svg>
-            </span>
+        <div class="mb-4">
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Destinatário', 'joinotify' ); ?></span>
 
             <input id="joinotify_get_whatsapp_number_msg_media" type="text" class="form-control" value="" placeholder="<?php esc_attr_e( '+5541987111527', 'joinotify' ) ?>"/>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-4">
             <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Tipo de mídia', 'joinotify' ) ?></span>
 
             <select id="joinotify_get_media_type" class="form-select">

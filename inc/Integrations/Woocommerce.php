@@ -31,7 +31,7 @@ class Woocommerce extends Integrations_Base {
             add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
 
             // add trigger tab
-            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
+            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 20 );
 
             // add trigger content
             add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );

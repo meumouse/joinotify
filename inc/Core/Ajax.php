@@ -957,14 +957,19 @@ class Ajax {
                         break; // Stop the loop after finding and updating the action
                     }
                 }
-    
+
                 // If the action was not found, add it as new at the top level
                 if ( $updated === false ) {
                     $workflow_content[] = $new_action;
                 }
+
+                // filter invalid actions (data = null)
+                $workflow_content = array_filter( $workflow_content, function( $action ) {
+                    return isset( $action['data'] ) && $action['data'] !== null;
+                });
     
                 // Update workflow content
-                $result = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
+                $result = update_post_meta( $post_id, 'joinotify_workflow_content', array_values( $workflow_content ) );
     
                 // Check if post has been updated successfully
                 if ( $result ) {
