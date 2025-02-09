@@ -37,12 +37,13 @@ class Init {
      */
     public static function instance_classes() {
         $classes = apply_filters( 'Joinotify/Init/Instance_Classes', array(
+            '\MeuMouse\Joinotify\Core\Logger',
+            '\MeuMouse\Joinotify\API\License',
             '\MeuMouse\Joinotify\Admin\Admin',
             '\MeuMouse\Joinotify\Core\Debug',
-            '\MeuMouse\Joinotify\Core\License',
             '\MeuMouse\Joinotify\Core\Assets',
             '\MeuMouse\Joinotify\Core\Ajax',
-            '\MeuMouse\Joinotify\Core\Logger',
+            '\MeuMouse\Joinotify\Cron\Schedule',
             '\MeuMouse\Joinotify\Builder\Workflow_Manager',
             '\MeuMouse\Joinotify\Integrations\Whatsapp',
             '\MeuMouse\Joinotify\Integrations\Wordpress',
@@ -55,7 +56,6 @@ class Init {
             '\MeuMouse\Joinotify\Validations\Media_Types',
             '\MeuMouse\Joinotify\API\Controller',
             '\MeuMouse\Joinotify\Core\Workflow_Processor',
-            '\MeuMouse\Joinotify\Cron\Schedule',
         	'\MeuMouse\Joinotify\Core\Updater',
         ));
 

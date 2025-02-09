@@ -44,6 +44,18 @@ defined('ABSPATH') || exit; ?>
 			</td>
 		</tr>
 
+		<tr>
+			<th>
+				<?php esc_html_e( 'Ativar atualizações automáticas', 'joinotify' ); ?>
+				<span class="joinotify-description"><?php esc_html_e( 'Ative essa opção para que o plugin Joinotify seja atualizado automaticamente sempre que possível.', 'joinotify' ); ?></span>
+			</th>
+			<td>
+				<div class="form-check form-switch">
+					<input type="checkbox" class="toggle-switch" id="enable_auto_updates" name="enable_auto_updates" value="yes" <?php checked( Admin::get_setting('enable_auto_updates') === 'yes' ); ?> />
+				</div>
+			</td>
+		</tr>
+
 		<tr class="container-separator"></tr>
 
 		<tr>

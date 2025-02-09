@@ -23,7 +23,7 @@ class Schedule {
      * @return void
      */
     public function __construct() {
-        add_action( 'joinotify_schedule_actions_event', array( '\MeuMouse\Joinotify\Core\Workflow_Processor', 'process_scheduled_action' ), 10, 3 );        
+        add_action( 'joinotify_schedule_actions_event', array( '\MeuMouse\Joinotify\Core\Workflow_Processor', 'process_scheduled_action' ), 10, 3 );
     }
 
 

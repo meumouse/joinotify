@@ -164,6 +164,7 @@ class Ajax {
                 'enable_wordpress_integration',
                 'enable_debug_mode',
                 'enable_proxy_api',
+                'enable_auto_updates',
             ));
 
             foreach ( $switch_options as $switch ) {

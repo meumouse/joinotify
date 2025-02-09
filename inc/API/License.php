@@ -28,7 +28,7 @@ class License {
     private $clube_m_product_base = 'clube-m';
     private $clube_m_product_key = 'B729F2659393EE27';
 
-    private $server_host = 'https://api.meumouse.com/wp-json/license/';
+    public static $server_host = 'https://api.meumouse.com/wp-json/license/';
     private $plugin_file;
     private $version = JOINOTIFY_VERSION;
     private $is_theme = false;
@@ -40,6 +40,7 @@ class License {
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @param string $plugin_base_file
      * @return void
      */
@@ -64,6 +65,9 @@ class License {
         if ( strpos( $dir,'wp-content/themes' ) !== FALSE ) {
             $this->is_theme = true;
         }
+
+        // deactive license on expire time
+        add_action( 'joinotify_check_license_expires_event', array( __CLASS__, 'check_license_expires_time' ) );
     }
 
 
@@ -321,7 +325,7 @@ class License {
             $response->msg = __( 'Resposta vazia.', 'joinotify' );
             $response->is_request_error = false;
             $final_data = wp_json_encode( $data );
-            $url = rtrim( $this->server_host, '/' ) . "/" . ltrim( $relative_url, '/' );
+            $url = rtrim( self::$server_host, '/' ) . "/" . ltrim( $relative_url, '/' );
     
             if ( ! empty( $this->product_key ) ) {
                 $final_data = $this->encrypt( $final_data );
@@ -681,6 +685,9 @@ class License {
                         $serialObj = $this->decrypt( $response->data, $param->domain );
                         $licenseObj = maybe_unserialize( $serialObj );
                         update_option( 'joinotify_license_response_object', $licenseObj );
+
+                        // schedule event for check expiration license time
+                        self::schedule_license_expiration_check();
     
                         if ( $licenseObj->is_valid ) {
                             $response_object = new \stdClass();
@@ -764,6 +771,46 @@ class License {
         }
 
         return false;
+    }
+
+
+    /**
+     * Get license expires time
+     * 
+     * @since 1.1.0
+     * @param string $license_key | License key
+     * @return array
+     */
+    public static function get_expires_time( $license_key ) {
+        $api_url = self::$server_host . 'license/view';
+
+        $response = wp_remote_post( $api_url, array(
+            'headers' => array(
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ),
+            'body' => array(
+                'api_key' => '41391199-FE02BDAA-3E8E3920-CDACDE2F',
+                'license_code' => $license_key
+            ),
+            'timeout' => 10,
+        ));
+
+        if ( is_wp_error( $response ) ) {
+            Logger::register_log( 'Error getting license expiration time: ' . $response->get_error_message(), 'ERROR' );
+
+            return false;
+        }
+
+        $response_body = wp_remote_retrieve_body( $response );
+        $decoded_response = json_decode( $response_body, true );
+
+        // check if response is valid
+        if ( ! is_array( $decoded_response ) || empty( $decoded_response['data']['expiry_time'] ) ) {
+            Logger::register_log( 'Invalid response from license API: ' . print_r( $decoded_response, true ), 'ERROR' );
+            return false;
+        }
+
+        return $decoded_response['data']['expiry_time'];
     }
 
 
@@ -890,5 +937,66 @@ class License {
         }
         
         return null;
+    }
+
+
+    /**
+     * Check expiration license on schedule event
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public static function schedule_license_expiration_check( $expiration_timestamp = 0 ) {
+        // Cancel any previous bookings to avoid duplication
+        wp_clear_scheduled_hook('joinotify_check_license_expires_event');
+
+        if ( $expiration_timestamp > 0 ) {
+            if ( $expiration_timestamp > time() ) {
+                // Add 24h to timestamp
+                $expiration_timestamp += DAY_IN_SECONDS;
+
+                // Schedule event to expire at exactly the right time
+                wp_schedule_single_event( $expiration_timestamp, 'joinotify_check_license_expires_event' );
+            }
+        } else {
+            $object_query = get_option('joinotify_license_response_object');
+    
+            if ( is_object( $object_query ) && ! empty( $object_query->expire_date ) ) {
+                $expiration_timestamp = strtotime( $object_query->expire_date );
+        
+                if ( $expiration_timestamp > time() ) {
+                    // Add 24h to timestamp
+                    $expiration_timestamp += DAY_IN_SECONDS;
+    
+                    // Schedule event to expire at exactly the right time
+                    wp_schedule_single_event( $expiration_timestamp, 'joinotify_check_license_expires_event' );
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Deactivate license on scheduled event
+     * 
+     * @since 1.1.0
+     * @return void
+     */
+    public static function check_license_expires_time() {
+        $license_key = get_option('joinotify_license_key');
+        $api_expiry_time = self::get_expires_time( $license_key );
+
+        if ( $api_expiry_time ) {
+            $expiration_timestamp = strtotime( $api_expiry_time );
+
+            // license expired
+            if ( $expiration_timestamp < time() ) {
+                $message = '';
+
+                self::deactive_license( JOINOTIFY_FILE, $message );
+            } else {
+                self::schedule_license_expiration_check( $expiration_timestamp );
+            }
+        }
     }
 }
