@@ -140,6 +140,9 @@ class Ajax {
 
         // save trigger settings
         add_action( 'wp_ajax_joinotify_save_trigger_settings', array( $this, 'save_trigger_settings_callback' ) );
+
+        // search woocommerce products
+        add_action( 'wp_ajax_joinotify_get_woo_products', array( $this, 'get_woo_products_callback' ) );
     }
 
 
@@ -2079,4 +2082,53 @@ class Ajax {
             }
         }
     }
+
+
+    /**
+	 * Get WooCommerce products in AJAX callback
+	 * 
+	 * @since 1.1.0
+	 * @return void
+	 */
+	public function get_woo_products_callback() {
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_woo_products' ) {
+			$search_query = sanitize_text_field( $_POST['search_query'] );
+			
+			$args = array(
+				'post_type' => array(
+                    'product',
+                    'product_variation',
+                ),
+				'status' => 'publish',
+				'posts_per_page' => -1, // Return all results
+				's' => $search_query,
+			);
+			
+			$products = new \WP_Query( $args );
+
+            $results = '<span class="fs-md text-muted mb-2 ms-2 d-block">' . esc_html__( 'Resultados:', 'joinotify' ) . '</span>';
+            $results .= '<ul class="list-group search-products-results">';
+			
+			if ( $products->have_posts() ) {
+				while ( $products->have_posts() ) {
+					$products->the_post();
+
+					$results .= '<li class="list-group-item product-item" data-product-id="' . get_the_ID() . '">' . get_the_title() . '</li>';
+				}
+
+                $results .= '</ul>';
+			} else {
+				$results = esc_html__( 'Nenhum produto encontrado.', 'joinotify' );
+			}
+			
+			wp_reset_postdata();
+
+            $response = array(
+                'status' => 'success',
+                'results_html' => $results,
+            );
+
+            wp_send_json( $response );
+		}
+	}
 }

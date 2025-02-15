@@ -50,7 +50,7 @@ class Actions {
                 'has_settings' => true,
                 'settings' => '',
                 'priority' => 20,
-                'is_expansible' => false,
+                'is_expansible' => true,
             ),
             array(
                 'action' => 'stop_funnel',

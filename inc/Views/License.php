@@ -59,7 +59,6 @@ defined('ABSPATH') || exit; ?>
                 <tr>
                     <td class="d-flex align-items-center">
                         <button type="submit" id="joinotify_deactive_license" class="btn btn-sm btn-primary" name="joinotify_deactive_license"><?php esc_html_e( 'Desativar licença', 'joinotify' ); ?></button>
-                        <button class="btn btn-sm btn-outline-primary ms-3" id="joinotify_clear_activation_cache"><?php esc_html_e( 'Limpar cache de ativação', 'joinotify' ); ?></button>
                     </td>
                 </tr>
             <?php else : ?>

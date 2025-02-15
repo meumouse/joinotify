@@ -1379,12 +1379,6 @@ input.toggle-switch.status:checked {
     color: var(--joinotify-primary);
 }
 
-.form-select:focus {
-    border-color: var(--joinotify-primary) !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
 .preview-whatsapp-message-sender {
     background-color: #ddffe4;
     color: #212529;
@@ -1688,6 +1682,10 @@ input.toggle-switch.status:checked {
 }
 
 .condition-item.active {
+    background-color: var(--joinotify-primary);
+}
+
+.condition-item.active:hover {
     background-color: var(--joinotify-primary-hover);
 }
 
@@ -1985,4 +1983,39 @@ textarea.edit-whatsapp-message-text {
 .emojionearea .emojionearea-editor {
     padding: 0 !important;
     font-size: 1rem !important;
+}
+
+.search-products-wrapper {
+    position: relative;
+}
+
+.specific-search-spinner {
+    position: absolute;
+    width: 1.325rem;
+    height: 1.325rem;
+    right: 1rem;
+    z-index: 9;
+    top: 2.5rem;
+    border-width: 2px;
+}
+
+.product-item {
+    width: 100%;
+    border: 1px solid #d7dde2;
+    margin-bottom: 0;
+    padding: 0.625rem 1rem;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.product-item:hover {
+    cursor: pointer;
+    background-color: #F8F9FA;
+}
+
+.product-item.active {
+    background-color: var(--joinotify-primary);
+}
+
+.product-item.active:hover {
+    background-color: var(--joinotify-primary-hover);
 }

@@ -68,6 +68,11 @@ class License {
 
         // deactive license on expire time
         add_action( 'joinotify_check_license_expires_event', array( __CLASS__, 'check_license_expires_time' ) );
+
+        // register schedule event first time
+        if ( ! get_option('joinotify_schedule_expiration_check_runned') ) {
+            add_action( 'admin_init', array( __CLASS__, 'schedule_license_expiration_check' ) );
+        }
     }
 
 
@@ -524,11 +529,22 @@ class License {
      * Remove response base option
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return string
      */
     public function remove_response_base() {
         $key = $this->get_key_name();
         $is_deleted = delete_option( $key );
+
+        update_option( 'joinotify_license_status', 'invalid' );
+        delete_option('joinotify_license_key');
+        delete_option('joinotify_license_response_object');
+        delete_option('joinotify_alternative_license');
+        delete_option('joinotify_temp_license_key');
+        delete_option('joinotify_alternative_license_activation');
+        delete_transient('joinotify_api_request_cache');
+        delete_transient('joinotify_api_response_cache');
+        delete_transient('joinotify_license_status_cached');
 
         foreach ( self::$_onDeleteLicense as $func ) {
             if ( is_callable( $func ) ) {
@@ -973,6 +989,9 @@ class License {
                 }
             }
         }
+
+        // register runned event
+        update_option( 'joinotify_schedule_expiration_check_runned', true );
     }
 
 

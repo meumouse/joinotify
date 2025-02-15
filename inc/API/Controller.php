@@ -25,12 +25,23 @@ defined('ABSPATH') || exit;
 class Controller {
 
     /**
+     * WhatsApp API key
+     * 
+     * @since 1.1.0
+     * @return string
+     */
+    private static $whatsapp_api_key;
+
+    /**
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function __construct() {
+        self::$whatsapp_api_key = Helpers::whatsapp_api_key();
+
         if ( Admin::get_setting('enable_proxy_api') === 'yes' && License::is_valid() ) {
             add_action( 'rest_api_init', array( $this, 'register_routes' ) );
         }
@@ -345,7 +356,7 @@ class Controller {
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => Helpers::whatsapp_api_key(),
+                'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
             'timeout' => 10,
@@ -404,7 +415,7 @@ class Controller {
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => Helpers::whatsapp_api_key(),
+                'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
             'timeout' => 10,
@@ -447,7 +458,7 @@ class Controller {
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => Helpers::whatsapp_api_key(),
+                'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
             'timeout' => 10,
@@ -487,7 +498,7 @@ class Controller {
         $response = wp_remote_get( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => Helpers::whatsapp_api_key(),
+                'apikey' => self::$whatsapp_api_key,
             ),
             'timeout' => 10,
         ));
@@ -495,6 +506,8 @@ class Controller {
         if ( is_wp_error( $response ) ) {
             Logger::register_log( $response, 'ERROR' );
         }
+
+        error_log( 'fetch_all_groups() response: ' . print_r( $response, true ) );
 
         $response_body = wp_remote_retrieve_body( $response );
 

@@ -161,7 +161,7 @@ class Components {
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
                                     $html .= '<h3 class="modal-title fs-5" id="edit_condition_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar condição', 'joinotify' ) .'</h3>';
-                                    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="'. esc_attr__( 'Fechar', 'joinotify' ) .'"></button>';
+                                    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                                 $html .= '</div>';
 
                                 $html .= '<div class="modal-body px-4 py-3 my-3">';
@@ -182,7 +182,7 @@ class Components {
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
                                     $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
-                                    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="'. esc_attr__( 'Fechar', 'joinotify' ) .'"></button>';
+                                    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                                 $html .= '</div>';
 
                                 $html .= '<div class="modal-body px-4 py-3 my-3">';
@@ -269,7 +269,7 @@ class Components {
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
                                         $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
-                                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="'. esc_attr__( 'Fechar', 'joinotify' ) .'"></button>';
+                                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                                     $html .= '</div>';
 
                                     $html .= '<div class="modal-body px-4 py-3 my-3">';
@@ -546,7 +546,7 @@ class Components {
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
                                         $html .= '<h3 class="modal-title fs-5" id="edit_trigger_'. esc_attr( $trigger_id ) .'_label">'. esc_html__( 'Configurar acionamento', 'joinotify' ) .'</h3>';
-                                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="'. esc_attr__( 'Fechar', 'joinotify' ) .'"></button>';
+                                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                                     $html .= '</div>';
 
                                     $html .= '<div class="modal-body px-4 py-3 my-3">';
@@ -834,9 +834,11 @@ class Components {
 
                 break;
             case 'products_purchased':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 search-products-wrapper">';
                     $html .= '<label for="products_purchased" class="form-label">' . esc_html__('Produtos adquiridos:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="products_purchased" name="condition[products_purchased]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'ID dos produtos separados por vírgula', 'joinotify' ) .'">';
+                    $html .= '<input type="text" id="products_purchased" name="condition[products_purchased]" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
+                    
+                    $html .= '<div class="list-group search-products-results-wrapper mt-3"></div>';
                 $html .= '</div>';
 
                 break;
@@ -883,9 +885,9 @@ class Components {
 
                 break;
             case 'items_in_cart':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 search-products-wrapper">';
                     $html .= '<label for="items_in_cart" class="form-label">' . esc_html__('Produtos no carrinho:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="items_in_cart" name="condition[items_in_cart]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'ID dos produtos no carrinho separados por vírgula', 'joinotify' ) .'">';
+                    $html .= '<input type="text" id="items_in_cart" name="condition[items_in_cart]" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -1204,7 +1206,7 @@ class Components {
                     </div>
 
                     <div class="offcanvas-footer p-4 d-flex justify-content-end">
-                        <button id="add_action_<?php esc_attr_e( $action['action'] ) ?>" class="btn btn-primary add-funnel-action"><?php esc_html_e( 'Adicionar ação', 'joinotify' ) ?></button>
+                        <button id="add_action_<?php esc_attr_e( $action['action'] ) ?>" class="btn btn-primary add-funnel-action" disabled data-action="<?php esc_attr_e( $action['action'] ) ?>"><?php esc_html_e( 'Adicionar ação', 'joinotify' ) ?></button>
                     </div>
                 </div>
             </div>

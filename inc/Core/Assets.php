@@ -49,7 +49,20 @@ class Assets {
 		$min_file = JOINOTIFY_DEBUG_MODE ? '' : '.min';
 
 		if ( joinotify_check_admin_page('joinotify-settings') ) {
-			wp_enqueue_script( 'joinotify-scripts', JOINOTIFY_ASSETS . 'admin/js/joinotify-scripts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+			// check if Flexify Dashboard is active for prevent duplicate Bootstrap files
+			if ( ! class_exists('Flexify_Dashboard') ) {
+				wp_enqueue_style( 'bootstrap-grid', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-grid.min.css', array(), '5.3.3' );
+				wp_enqueue_style( 'bootstrap-utilities', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
+			}
+
+			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+
+			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+
+			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/settings'. $min_file .'.css', array(), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-scripts', JOINOTIFY_ASSETS . 'admin/js/settings'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			// settings params
 			wp_localize_script( 'joinotify-scripts', 'joinotify_params', array(
@@ -59,19 +72,6 @@ class Assets {
 				'resend_otp_button' => __( 'Reenviar código', 'joinotify' ),
 				'confirm_clear_debug_logs' => __( 'Tem certeza que deseja limpar os registros de depuração?', 'joinotify' ),
 			));
-
-			// check if Flexify Dashboard is active for prevent duplicate Bootstrap files
-			if ( ! class_exists('Flexify_Dashboard') ) {
-				wp_enqueue_style( 'bootstrap-grid', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-grid.min.css', array(), '5.3.3' );
-				wp_enqueue_style( 'bootstrap-utilities', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
-			}
-
-			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/joinotify-styles'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-
-			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 		}
 	}
 
@@ -86,7 +86,21 @@ class Assets {
 		$min_file = JOINOTIFY_DEBUG_MODE ? '' : '.min';
 
 		if ( joinotify_check_admin_page('joinotify-license') ) {
-			wp_enqueue_script( 'joinotify-license-scripts', JOINOTIFY_ASSETS . 'admin/js/joinotify-license'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+			// check if Flexify Dashboard is active for prevent duplicate Bootstrap files
+			if ( ! class_exists('Flexify_Dashboard') ) {
+				wp_enqueue_style( 'bootstrap-grid', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-grid.min.css', array(), '5.3.3' );
+				wp_enqueue_style( 'bootstrap-utilities', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
+			}
+
+			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/joinotify-styles'. $min_file .'.css', array(), JOINOTIFY_VERSION );
+			
+			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+
+			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
+
+			wp_enqueue_script( 'joinotify-license-scripts', JOINOTIFY_ASSETS . 'admin/js/license'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			// license page params
 			wp_localize_script( 'joinotify-license-scripts', 'joinotify_license_params', array(
@@ -95,19 +109,6 @@ class Assets {
 				'close_notice_aria_label' => __( 'Fechar', 'joinotify' ),
 				'confirm_deactivate_license' => __( 'Tem certeza que deseja desativar sua licença?', 'joinotify' ),
 			));
-
-			// check if Flexify Dashboard is active for prevent duplicate Bootstrap files
-			if ( ! class_exists('Flexify_Dashboard') ) {
-				wp_enqueue_style( 'bootstrap-grid', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-grid.min.css', array(), '5.3.3' );
-				wp_enqueue_style( 'bootstrap-utilities', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
-			}
-
-			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/joinotify-styles'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-
-			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 		}
 	}
 
@@ -131,7 +132,6 @@ class Assets {
 			}
 
 			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			// bootstrap datepicker library
 			wp_enqueue_style( 'bootstrap-datepicker-styles', JOINOTIFY_ASSETS . 'vendor/bootstrap-datepicker/bootstrap-datepicker'. $min_file .'.css', array(), JOINOTIFY_VERSION );
@@ -159,7 +159,7 @@ class Assets {
 
 			// builder main
 			wp_enqueue_style( 'joinotify-builder-styles', JOINOTIFY_ASSETS . 'builder/css/builder'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-builder-scripts', JOINOTIFY_ASSETS . 'builder/js/builder'. $min_file .'.js', array('jquery', 'media-upload'), JOINOTIFY_VERSION );
+			wp_enqueue_script( 'joinotify-builder-scripts', JOINOTIFY_ASSETS . 'builder/js/builder'. $min_file .'.js', array('jquery', 'media-upload'), JOINOTIFY_VERSION, true );
 
 			// builder params
 			wp_localize_script( 'joinotify-builder-scripts', 'joinotify_builder_params', array(
