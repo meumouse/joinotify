@@ -52,43 +52,6 @@ class Components {
 
 
     /**
-     * Display OTP input for validation
-     * 
-     * @since 1.0.0
-     * @param string $phone | Phone number
-     * @return string
-     */
-    public static function otp_input_code( $phone ) {
-        ob_start();
-
-        if ( isset( $phone ) ) : ?>
-            <div class="d-grid align-items-center justify-content-center p-4 validate-otp-code" data-phone="<?php echo esc_attr( $phone ) ?>">
-                <div class="d-grid align-items-center justify-content-center justify-items-center mb-4">
-                    <h3 class="fs-5 mb-3"><?php esc_html_e( 'Verifique seu WhatsApp', 'joinotify' ) ?></h3>
-                    <span class="fs-base text-muted mb-2"><?php esc_html_e( 'Informe o código de 4 dígitos que foi enviado para', 'joinotify' ) ?></span>
-                    <span class="fw-semibold fs-base"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></span>
-                </div>
-
-                <div class="d-flex align-items-center justify-content-center mb-4 otp-input-group">
-                    <input type="text" maxlenght="1" class="otp-input-item me-3"/>
-                    <input type="text" maxlenght="1" class="otp-input-item me-3"/>
-                    <input type="text" maxlenght="1" class="otp-input-item me-3"/>
-                    <input type="text" maxlenght="1" class="otp-input-item"/>
-                </div>
-
-                <div class="d-flex align-items-center justify-content-center resend-otp">
-                    <span class="fs-base text-muted me-1"><?php esc_html_e( 'Reenvie o código em', 'joinotify' ) ?></span>
-                    <span class="fw-semibold fs-base me-1 countdown-otp-resend"></span>
-                    <span class="fs-base fw-semibold"><?php esc_html_e( 'segundos', 'joinotify' ) ?></span>
-                </div>
-            </div>
-        <?php endif;
-
-        return ob_get_clean();
-    }
-
-
-    /**
      * Display action HTML
      * 
      * @since 1.0.0
@@ -1005,12 +968,11 @@ class Components {
      * Add modal content for edit workflow title
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public static function workflow_title_modal_content() {
-        $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        if ( strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) !== false ) : ?>
+        if ( joinotify_check_admin_page('joinotify-workflows-builder') ) : ?>
             <div class="modal fade" id="edit_workflow_title" tabindex="-1" aria-labelledby="edit_workflow_title_label">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -1052,9 +1014,7 @@ class Components {
      * @return void
      */
     public static function fetch_all_groups_modal_content() {
-        $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        if ( strpos( $current_url, 'admin.php?page=joinotify-workflows-builder' ) !== false ) : ?>
+        if ( joinotify_check_admin_page('joinotify-workflows-builder') ) : ?>
             <div class="modal fade" id="joinotify_fetch_all_groups_container" tabindex="-1" aria-labelledby="joinotify_fetch_all_groups_label">
                 <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
                     <div class="modal-content">
@@ -1108,7 +1068,7 @@ class Components {
                 </div>
             </div>
 
-            <div class="wait-date-container">
+            <div class="wait-date-container d-none">
                 <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Esperar até', 'joinotify' ) ?></span>
                 
                 <div class="input-group">

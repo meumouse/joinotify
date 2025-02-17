@@ -8,7 +8,7 @@
  * Author URI: 			https://meumouse.com/
  * Version: 				1.1.0
  * Requires PHP: 			7.4
- * Tested up to:      	6.7.1
+ * Tested up to:      	6.7.2
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
  * License: 				GPL2
@@ -95,7 +95,6 @@ if ( ! class_exists('Joinotify') ) {
 			$this->setup_constants();
 	
 			load_plugin_textdomain( 'joinotify', false, dirname( JOINOTIFY_BASENAME ) . '/languages/' );
-			add_action( 'before_woocommerce_init', array( $this, 'hpos_compatibility' ) );
 			add_filter( 'plugin_action_links_' . JOINOTIFY_BASENAME, array( $this, 'add_action_plugin_links' ), 10, 4 );
 			add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
 
@@ -104,22 +103,6 @@ if ( ! class_exists('Joinotify') ) {
 
 			// load instancer class
 			new \MeuMouse\Joinotify\Core\Init;
-		}
-
-
-		/**
-		 * Setup WooCommerce High-Performance Order Storage (HPOS) compatibility
-		 * 
-		 * @since 1.0.0
-		 * @return void
-		 */
-		public function hpos_compatibility() {
-			if ( defined('WC_VERSION') && version_compare( WC_VERSION, '7.1', '>' ) ) {
-				if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-						'custom_order_tables', JOINOTIFY_FILE, true );
-				}
-			}
 		}
 
 

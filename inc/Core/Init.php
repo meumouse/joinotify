@@ -40,6 +40,7 @@ class Init {
             '\MeuMouse\Joinotify\Core\Logger',
             '\MeuMouse\Joinotify\API\License',
             '\MeuMouse\Joinotify\Admin\Admin',
+            '\MeuMouse\Joinotify\Core\Compatibility',
             '\MeuMouse\Joinotify\Core\Debug',
             '\MeuMouse\Joinotify\Core\Assets',
             '\MeuMouse\Joinotify\Core\Ajax',

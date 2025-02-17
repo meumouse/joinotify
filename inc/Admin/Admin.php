@@ -278,12 +278,7 @@ class Admin {
         $tabs = Admin_Components::get_settings_tabs();
 
         foreach ( $tabs as $tab ) {
-            printf(
-                '<a href="#%1$s" class="nav-tab">%2$s %3$s</a>',
-                esc_attr( $tab['id'] ),
-                $tab['icon'],
-                $tab['label']
-            );
+            printf( '<a href="#%1$s" class="nav-tab">%2$s %3$s</a>', esc_attr( $tab['id'] ), $tab['icon'], $tab['label'] );
         }
     }
 }

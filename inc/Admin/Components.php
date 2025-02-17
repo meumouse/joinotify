@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Admin;
 
+use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 
 // Exit if accessed directly.
@@ -45,6 +46,44 @@ class Components {
             <div class="alert alert-info d-flex align-items-center w-fit">
                 <svg class="icon icon-lg me-2 icon-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
                 <?php esc_html_e( 'Nenhum remetente disponível para uso', 'joinotify' ); ?>
+            </div>
+        <?php endif;
+
+        return ob_get_clean();
+    }
+
+
+    /**
+     * Display OTP input for validation
+     * 
+     * @since 1.0.0
+     * @version 1.1.0
+     * @param string $phone | Phone number
+     * @return string
+     */
+    public static function otp_input_code( $phone ) {
+        ob_start();
+
+        if ( isset( $phone ) ) : ?>
+            <div class="d-grid align-items-center justify-content-center p-4 validate-otp-code" data-phone="<?php echo esc_attr( $phone ) ?>">
+                <div class="d-grid align-items-center justify-content-center justify-items-center mb-4">
+                    <h3 class="fs-5 mb-3"><?php esc_html_e( 'Verifique seu WhatsApp', 'joinotify' ) ?></h3>
+                    <span class="fs-base text-muted mb-2"><?php esc_html_e( 'Informe o código de 4 dígitos que foi enviado para', 'joinotify' ) ?></span>
+                    <span class="fw-semibold fs-base"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></span>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-center mb-4 otp-input-group">
+                    <input type="text" maxlenght="1" class="otp-input-item me-3"/>
+                    <input type="text" maxlenght="1" class="otp-input-item me-3"/>
+                    <input type="text" maxlenght="1" class="otp-input-item me-3"/>
+                    <input type="text" maxlenght="1" class="otp-input-item"/>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-center resend-otp">
+                    <span class="fs-base text-muted me-1"><?php esc_html_e( 'Reenvie o código em', 'joinotify' ) ?></span>
+                    <span class="fw-semibold fs-base me-1 countdown-otp-resend"></span>
+                    <span class="fs-base fw-semibold"><?php esc_html_e( 'segundos', 'joinotify' ) ?></span>
+                </div>
             </div>
         <?php endif;
 

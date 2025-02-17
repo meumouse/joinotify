@@ -2,8 +2,8 @@
 
 namespace MeuMouse\Joinotify\API;
 
-use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\API\License;
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -137,28 +137,6 @@ class Controller {
 
 
     /**
-     * Get endpoint for Proxy API send text message
-     * 
-     * @since 1.1.0
-     * @return string
-     */
-    public static function text_message_proxy_endpoint() {
-        return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_text_proxy_api_route');
-    }
-
-
-    /**
-     * Get endpoint for Proxy API send media message
-     * 
-     * @since 1.1.0
-     * @return string
-     */
-    public static function media_message_proxy_endpoint() {
-        return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_media_proxy_api_route');
-    }
-
-
-    /**
      * Send a text message on WhatsApp from Proxy API
      *
      * @since 1.0.0
@@ -238,9 +216,9 @@ class Controller {
 
         $response_body = wp_remote_retrieve_body( $response );
 
-        // record the response body for debug
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( $response_body );
+        // Check response body
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'get_numbers() response body: ' . print_r( $response_body, true ) );
         }
 
         return json_decode( $response_body, true );
@@ -268,9 +246,9 @@ class Controller {
 
         $response_body = wp_remote_retrieve_body( $response );
 
-        // record the response body for debug
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "get_connection_state() response body: " . $response_body );
+        // Check response body
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'get_connection_state() response body: ' . print_r( $response_body, true ) );
         }
 
         $phone_status = json_decode( $response_body, true );
@@ -311,8 +289,9 @@ class Controller {
             $receiver = $country_code . $receiver;
         }
 
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "prepare_receiver() receiver finished: " . $receiver );
+        // Check receiver phone number
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'prepare_receiver() receiver finished: ' . print_r( $receiver, true ) );
         }
     
         return $receiver;
@@ -368,9 +347,9 @@ class Controller {
 
         $response_body = wp_remote_retrieve_body( $response );
 
-        // record the response body for debug
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "send_message_text() response body: " . $response_body );
+        // Check response body
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'send_message_text() response body: ' . print_r( $response_body, true ) );
         }
 
         return wp_remote_retrieve_response_code( $response );
@@ -400,14 +379,6 @@ class Controller {
             'delay' => $timestamp_delay,
         ));
 
-        // check request content
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "send_message_media() sender: " . $sender );
-            Logger::register_log( "send_message_media() receiver: " . $receiver );
-            Logger::register_log( "send_message_media() media_type: " . $media_type );
-            Logger::register_log( "send_message_media() media: " . $media );
-        }
-
         if ( ! License::is_valid() ) {
             return;
         }
@@ -427,9 +398,9 @@ class Controller {
 
         $response_body = wp_remote_retrieve_body( $response );
 
-        // record the response body for debug
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "send_message_media() response body: " . $response_body );
+        // Check response body
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'send_message_media() response body: ' . print_r( $response_body, true ) );
         }
 
         return wp_remote_retrieve_response_code( $response );
@@ -463,6 +434,11 @@ class Controller {
             'body' => $payload,
             'timeout' => 10,
         ));
+
+        // Check if the response is an error
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'send_validation_otp() response: ' . print_r( $response, true ) );
+        }
 
         if ( is_wp_error( $response ) ) {
             Logger::register_log( $response, 'ERROR' );
@@ -507,7 +483,10 @@ class Controller {
             Logger::register_log( $response, 'ERROR' );
         }
 
-        error_log( 'fetch_all_groups() response: ' . print_r( $response, true ) );
+        // Check if the response is an error
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'fetch_all_groups() response: ' . print_r( $response, true ) );
+        }
 
         $response_body = wp_remote_retrieve_body( $response );
 

@@ -48,101 +48,43 @@ class Ajax {
      * @return void
      */
     public function __construct() {
-        // save admin options
-		add_action( 'wp_ajax_joinotify_save_options', array( $this, 'admin_save_options_callback' ) );
+        $ajax_actions = array(
+            'joinotify_save_options' => 'admin_save_options_callback',
+            'joinotify_active_license' => 'active_license_callback',
+            'joinotify_alternative_activation_license' => 'alternative_active_license_callback',
+            'joinotify_deactive_license' => 'deactive_license_callback',
+            'joinotify_get_templates_count' => 'get_templates_count_callback',
+            'joinotify_import_workflow_templates' => 'import_workflow_templates_callback',
+            'joinotify_create_workflow' => 'create_workflow_callback',
+            'joinotify_load_workflow_data' => 'load_workflow_data_callback',
+            'joinotify_update_workflow_status' => 'update_workflow_status_callback',
+            'joinotify_add_workflow_action' => 'add_workflow_action_callback',
+            'joinotify_update_workflow_title' => 'update_workflow_title_callback',
+            'joinotify_delete_workflow_action' => 'delete_workflow_action_callback',
+            'joinotify_delete_trigger' => 'delete_trigger_callback',
+            'joinotify_export_workflow' => 'export_workflow_callback',
+            'joinotify_get_phone_numbers' => 'get_phone_numbers_callback',
+            'joinotify_register_phone_sender' => 'register_phone_sender_callback',
+            'joinotify_validate_otp' => 'validate_otp_callback',
+            'joinotify_remove_phone_sender' => 'remove_phone_sender_callback',
+            'joinotify_run_workflow_test' => 'run_workflow_test_callback',
+            'joinotify_reset_plugin_action' => 'reset_plugin_callback',
+            'joinotify_toggle_post_status' => 'toggle_post_status_callback',
+            'joinotify_send_message_test' => 'send_message_test_callback',
+            'joinotify_get_debug_logs' => 'get_debug_logs_callback',
+            'joinotify_clear_debug_logs' => 'clear_debug_logs_callback',
+            'joinotify_download_debug_logs' => 'download_debug_logs_callback',
+            'joinotify_force_download' => 'force_download_debug_logs',
+            'joinotify_dismiss_placeholders_tip' => 'dismiss_placeholders_tip_callback',
+            'joinotify_fetch_all_groups' => 'fetch_all_groups_callback',
+            'joinotify_save_action_edition' => 'save_action_edit_callback',
+            'joinotify_save_trigger_settings' => 'save_trigger_settings_callback',
+            'joinotify_get_woo_products' => 'get_woo_products_callback',
+        );
 
-        // active license process
-		add_action( 'wp_ajax_joinotify_active_license', array( $this, 'active_license_callback' ) );
-
-        // alternative active license process
-		add_action( 'wp_ajax_joinotify_alternative_activation_license', array( $this, 'alternative_active_license_callback' ) );
-
-        // deactive license process
-        add_action( 'wp_ajax_joinotify_deactive_license', array( $this, 'deactive_license_callback' ) );
-
-        // get templates count
-        add_action( 'wp_ajax_joinotify_get_templates_count', array( $this, 'get_templates_count_callback' ) );
-
-        // get workflow templates
-    //    add_action( 'wp_ajax_joinotify_get_workflow_templates', array( $this, 'get_workflow_templates_callback' ) );
-
-        // import workflow template
-        add_action( 'wp_ajax_joinotify_import_workflow_templates', array( $this, 'import_workflow_templates_callback' ) );
-
-        // add init trigger
-        add_action( 'wp_ajax_joinotify_create_workflow', array( $this, 'create_workflow_callback' ) );
-
-        // load workflow data
-        add_action( 'wp_ajax_joinotify_load_workflow_data', array( $this, 'load_workflow_data_callback' ) );
-
-        // update workflow status
-        add_action( 'wp_ajax_joinotify_update_workflow_status', array( $this, 'update_workflow_status_callback' ) );
-
-        // add workflow action
-        add_action( 'wp_ajax_joinotify_add_workflow_action', array( $this, 'add_workflow_action_callback' ) );
-
-        // add workflow action
-        add_action( 'wp_ajax_joinotify_update_workflow_title', array( $this, 'update_workflow_title_callback' ) );
-
-        // Delete workflow action
-        add_action( 'wp_ajax_joinotify_delete_workflow_action', array( $this, 'delete_workflow_action_callback' ) );
-
-        // Add new action to handle the delete trigger via AJAX
-        add_action( 'wp_ajax_joinotify_delete_trigger', array( $this, 'delete_trigger_callback' ) );
-
-        // export workflow action
-        add_action( 'wp_ajax_joinotify_export_workflow', array( $this,  'export_workflow_callback' ) );
-
-        // export workflow action
-        add_action( 'wp_ajax_joinotify_get_phone_numbers', array( $this,  'get_phone_numbers_callback' ) );
-
-        // register sender action
-        add_action( 'wp_ajax_joinotify_register_phone_sender', array( $this,  'register_phone_sender_callback' ) );
-
-        // validate otp
-        add_action( 'wp_ajax_joinotify_validate_otp', array( $this, 'validate_otp_callback' ) );
-
-        // remove phone sender
-        add_action( 'wp_ajax_joinotify_remove_phone_sender', array( $this, 'remove_phone_sender_callback' ) );
-
-        // run workflow test
-        add_action( 'wp_ajax_joinotify_run_workflow_test', array( $this, 'run_workflow_test_callback' ) );
-
-        // reset settings to default
-		add_action( 'wp_ajax_joinotify_reset_plugin_action', array( $this, 'reset_plugin_callback' ) );
-
-        // change workflow status on workflows table
-        add_action( 'wp_ajax_joinotify_toggle_post_status', array( $this, 'toggle_post_status_callback' ) );
-
-        // send message test for admin panel
-        add_action( 'wp_ajax_joinotify_send_message_test', array( $this, 'send_message_test_callback' ) );
-
-        // get debug logs
-        add_action( 'wp_ajax_joinotify_get_debug_logs', array( $this, 'get_debug_logs_callback' ) );
-
-        // clear debug logs
-        add_action( 'wp_ajax_joinotify_clear_debug_logs', array( $this, 'clear_debug_logs_callback' ) );
-
-        // download debug logs
-        add_action( 'wp_ajax_joinotify_download_debug_logs', array( $this, 'download_debug_logs_callback' ) );
-
-        // force download log file
-        add_action( 'wp_ajax_joinotify_force_download', array( $this, 'force_download_debug_logs' ) );
-
-        // dismiss placeholders tip
-        add_action( 'wp_ajax_joinotify_dismiss_placeholders_tip', array( $this, 'dismiss_placeholders_tip_callback' ) );
-
-        // fetch all groups
-        add_action( 'wp_ajax_joinotify_fetch_all_groups', array( $this, 'fetch_all_groups_callback' ) );
-
-        // save action edition from workflow builder
-        add_action( 'wp_ajax_joinotify_save_action_edition', array( $this, 'save_action_edit_callback' ) );
-
-        // save trigger settings
-        add_action( 'wp_ajax_joinotify_save_trigger_settings', array( $this, 'save_trigger_settings_callback' ) );
-
-        // search woocommerce products
-        add_action( 'wp_ajax_joinotify_get_woo_products', array( $this, 'get_woo_products_callback' ) );
+        foreach ( $ajax_actions as $action => $callback ) {
+            add_action( "wp_ajax_$action", array( $this, $callback ) );
+        }
     }
 
 
@@ -1368,6 +1310,7 @@ class Ajax {
      * Register phone sender on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function register_phone_sender_callback() {
@@ -1379,7 +1322,7 @@ class Ajax {
             if ( $get_otp ) {
                 $response = array(
                     'status' => 'success',
-                    'otp_input_component' => Builder_Components::otp_input_code( $phone ),
+                    'otp_input_component' => Settings_Components::otp_input_code( $phone ),
                 );
             } else {
                 $response = array(

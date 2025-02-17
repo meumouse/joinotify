@@ -1,6 +1,7 @@
 <?php
 
 use MeuMouse\Joinotify\API\Controller;
+use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
@@ -52,4 +53,37 @@ function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type,
    $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $delay );
 
    return $response;
+}
+
+
+/**
+ * Get endpoint for Proxy API send text message
+ * 
+ * @since 1.1.0
+ * @return string
+ */
+function joinotify_proxy_api_text_message_text_endpoint() {
+   return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_text_proxy_api_route');
+}
+
+
+/**
+ * Get endpoint for Proxy API send media message
+ * 
+ * @since 1.1.0
+ * @return string
+ */
+function joinotify_proxy_api_media_message_text_endpoint() {
+   return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_media_proxy_api_route');
+}
+
+
+/**
+ * Get Proxy API key
+ * 
+ * @since 1.1.0
+ * @return string
+ */
+function joinotify_get_proxy_api_key() {
+   return Admin::get_setting('proxy_api_key');
 }
