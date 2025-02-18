@@ -156,6 +156,7 @@ class Assets {
 			wp_enqueue_script( 'joinotify-codemirror-activeline-addon', JOINOTIFY_ASSETS . 'vendor/codemirror/addon/selection/active-line.js', array(),  '5.65.18' );
 			wp_enqueue_script( 'joinotify-codemirror-matchtags-addon', JOINOTIFY_ASSETS . 'vendor/codemirror/addon/edit/matchtags.js', array(),  '5.65.18' );
 			wp_enqueue_script( 'joinotify-codemirror-closebrackets-addon', JOINOTIFY_ASSETS . 'vendor/codemirror/addon/edit/closebrackets.js', array(),  '5.65.18' );
+			wp_enqueue_script( 'joinotify-codemirror-autorefresh-addon', JOINOTIFY_ASSETS . 'vendor/codemirror/addon/display/autorefresh.js', array(),  '5.65.18' );
 
 			// builder main
 			wp_enqueue_style( 'joinotify-builder-styles', JOINOTIFY_ASSETS . 'builder/css/builder'. $min_file .'.css', array(), JOINOTIFY_VERSION );

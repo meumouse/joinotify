@@ -141,7 +141,7 @@ class Components {
                     $html .= '</div>';
                 } elseif ( $value['action'] !== 'condition' && $value['action'] !== 'stop_funnel' ) {
                     $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action_id ) .'_label">';
-                        $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
+                        $html .= '<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">';
                             $html .= '<div class="modal-content">';
                                 $html .= '<div class="modal-header px-4">';
                                     $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
@@ -448,7 +448,7 @@ class Components {
             case 'snippet_php':
                 $snippet_php = $action_data['snippet_php'] ?? '';
 
-                $html .= '<textarea class="form-control joinotify-code-editor set-new-code-snippet-php">'. $snippet_php .'</textarea>';
+                $html .= '<textarea class="form-control joinotify-code-editor required-setting set-new-code-snippet-php">'. $snippet_php .'</textarea>';
 
                 break;
         }
@@ -1045,6 +1045,7 @@ class Components {
         if ( Schedule::is_wp_cron_active() ) : ?>
             <div class="mb-4">
                 <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Selecione o tipo de atraso da próxima ação', 'joinotify' ) ?></span>
+                
                 <select class="form-select set-time-delay-type">
                     <option value="period"><?php esc_html_e( 'Esperar tempo', 'joinotify' ) ?></option>
                     <option value="date"><?php esc_html_e( 'Esperar até uma data', 'joinotify' ) ?></option>
@@ -1055,7 +1056,8 @@ class Components {
                 <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Esperar por', 'joinotify' ) ?></span>
                 
                 <div class="input-group">
-                    <input type="number" class="form-control get-wait-value" /> 
+                    <input type="number" class="form-control get-wait-value"/>
+
                     <select class="form-select get-wait-period">
                         <option value="seconds"><?php esc_html_e( 'Segundo (s)', 'joinotify' ) ?></option>
                         <option value="minute"><?php esc_html_e( 'Minuto (s)', 'joinotify' ) ?></option>
@@ -1094,7 +1096,17 @@ class Components {
      * @return string
      */
     public static function snippet_php_action_settings() {
-        return '<textarea id="joinotify_set_snippet_php" name="joinotify_set_snippet_php" class="form-control joinotify-code-editor"></textarea>';
+        ob_start(); ?>
+
+        <div class="alert alert-warning alert-dismissible fade show mb-4">
+            <svg class="icon icon-lg me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#664d03" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#664d03" d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
+            <?php echo __( '<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros no site.', 'joinotify' ) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <textarea id="joinotify_set_snippet_php" name="joinotify_set_snippet_php" class="form-control joinotify-code-editor required-setting"></textarea>
+
+        <?php return ob_get_clean();
     }
 
 

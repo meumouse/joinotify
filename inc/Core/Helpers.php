@@ -18,6 +18,8 @@ class Helpers {
     /**
      * Format time unit with singular/plural
      * 
+     * @since 1.0.0
+     * @version 1.1.0
      * @param string $time_unit
      * @param bool $plural
      * @return string
@@ -26,7 +28,7 @@ class Helpers {
         $units = apply_filters( 'Joinotify/Helpers/Format_Time_Unit', array(
             'seconds' => $plural ? __( 'segundos', 'joinotify' ) : __( 'segundo', 'joinotify' ),
             'minute' => $plural ? __( 'minutos', 'joinotify' ) : __( 'minuto', 'joinotify' ),
-            'hour' => $plural ? __( 'horas', 'joinotify' ) : __( 'hora', 'joinotify' ),
+            'hours' => $plural ? __( 'horas', 'joinotify' ) : __( 'hora', 'joinotify' ),
             'day' => $plural ? __( 'dias', 'joinotify' ) : __( 'dia', 'joinotify' ),
             'week' => $plural ? __( 'semanas', 'joinotify' ) : __( 'semana', 'joinotify' ),
             'month' => $plural ? __( 'meses', 'joinotify' ) : __( 'mês', 'joinotify' ),

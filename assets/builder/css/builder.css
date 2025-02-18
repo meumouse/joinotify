@@ -1831,8 +1831,8 @@ input.toggle-switch.status:checked {
     }
 }
 
-.wp-core-ui select:focus {
-    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+select:focus {
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important;
 }
 
 .form-label {

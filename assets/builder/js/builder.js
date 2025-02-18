@@ -63,6 +63,7 @@
 			this.triggerTabs();
 			this.loadWorkflowData();
 			this.onWorkflowReady();
+			this.onUpdatedWorkflow();
 			this.fetchWorkflowTemplates();
 			this.uploadWorkflowTemplates();
 		},
@@ -102,6 +103,20 @@
 		},
 
 		/**
+		 * Run functions on workflow updated
+		 * 
+		 * @since 1.1.0
+		 */
+		onUpdatedWorkflow: function() {
+			// on workflow updated event
+			$(document).on('updatedWorkflow', function() {
+				Builder.changeVisibilityForElements();
+				Builder.codeEditor();
+				Builder.correctTriggerSettingsModal();
+			});
+		},
+
+		/**
 		 * Select trigger on tabs
 		 * 
 		 * @since 1.0.0
@@ -110,7 +125,7 @@
 		triggerTabs: function() {
 			$(document).ready( function() {
 				// Activate first builder tab on load page
-				setTimeout( function() {
+				setTimeout(() => {
 					$('.joinotify-triggers-tab-wrapper a.nav-tab').first().click();
 				}, 500);
 			});
@@ -246,13 +261,18 @@
 			$('.condition-settings-item.active').removeClass('active');
 			$('.joinotify_condition_node_point').removeClass('active');
 
+			// reset condition selectors
 			$('.get-condition-type').each( function() {
 				$(this).find('option:first').attr('selected','selected');
 			});
 
+			// reset condition values
 			$('.get-condition-value').each( function() {
 				$(this).find('option:first').attr('selected','selected') || $(this).val('');
 			});
+
+			// clear code editor
+			$('#joinotify_set_snippet_php').val('');
 		},
 
 		/**
@@ -345,7 +365,7 @@
 									Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
 
 									// redirect for edition of imported workflow
-									setTimeout( function() {
+									setTimeout(() => {
 										window.location.href = response.redirect;
 									}, 1000);
 								} else {
@@ -494,12 +514,12 @@
 			$('#joinotify-automations-builder').prepend(toast_html);
 
 			// fadeout after 3 seconds
-			setTimeout( function() {
+			setTimeout(() => {
 				jQuery('#' + toast_id).fadeOut('fast');
 			}, 3000);
 
 			// remove toast after 3,5 seconds
-			setTimeout( function() {
+			setTimeout(() => {
 				jQuery('#' + toast_id).remove();
 			}, 3500);
 		},
@@ -508,6 +528,7 @@
 		 * Initialize Bootstrap components
 		 * 
 		 * @since 1.0.0
+		 * @version 1.1.0
 		 */
 		initBootstrapComponents: function() {
 			// init tooltips
@@ -631,10 +652,6 @@
 				// Insert the element after #wpadminbar
 				element.insertAfter('#wpadminbar');
 			});
-
-			if ( Builder.getParamByName('id') === null ) {
-				$('.joinotify-loader-container').addClass('d-none');
-			}
 		},
 
 		/**
@@ -666,21 +683,20 @@
 				wrapper.css('height', wrapper_height);
 			});
 		},
-	
+
 		/**
-		 * Add trigger element
+		 * Enable add trigger button
 		 * 
 		 * @since 1.0.0
 		 * @version 1.1.0
-		 * @package MeuMouse.com
 		 */
-		addTrigger: function() {
-			// set default workflow name
-			$('#joinotify_set_workflow_name').val(joinotify_builder_params.default_workflow_name);
-
-			var get_title = $('#joinotify_set_workflow_name').val();
-			var post_id = Builder.getParamByName('id');
-
+		enableAddTriggerButton: function() {
+			/**
+			 * Check if workflow name and trigger are filled
+			 * 
+			 * @since 1.0.0
+			 * @version 1.1.0
+			 */
 			function check_requirements() {
 				let name = $('#joinotify_set_workflow_name').val();
 				let trigger = $('.trigger-item.active').data('trigger');
@@ -705,6 +721,23 @@
 
 				check_requirements();
 			});
+		},
+	
+		/**
+		 * Add trigger element
+		 * 
+		 * @since 1.0.0
+		 * @version 1.1.0
+		 * @package MeuMouse.com
+		 */
+		addTrigger: function() {
+			Builder.enableAddTriggerButton();
+
+			// set default workflow name
+			$('#joinotify_set_workflow_name').val(joinotify_builder_params.default_workflow_name);
+
+			var get_title = $('#joinotify_set_workflow_name').val();
+			var post_id = Builder.getParamByName('id');
 
 			// Proceed to builder funnel
 			$(document).on('click', '#joinotify_proceed_step_funnel', function(e) {
@@ -762,7 +795,7 @@
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 
 								// check if has trigger settings
-								setTimeout( function() {
+								setTimeout(() => {
 									if (response.active_settings_modal) {
 										let modal = response.active_settings_modal;
 										let detached_modal = $(modal).detach();
@@ -801,7 +834,7 @@
 				e.preventDefault();
 
 				// get confirmation
-				if (!confirm(params.confirm_exclude_trigger)) {
+				if ( ! confirm( params.confirm_exclude_trigger ) ) {
 					return;
 				}
 
@@ -827,23 +860,20 @@
 						try {
 							if (response.status === 'success') {
 								if (response.has_trigger) {
-										$('#joinotify_builder_run_test').prop('disabled', false);
+									$('#joinotify_builder_run_test').prop('disabled', false);
 								} else {
-										$('#joinotify_triggers_group').addClass('active');
-										$('#joinotify_triggers_content').addClass('active');
-										$('#joinotify_builder_run_test').prop('disabled', true);
+									$('#joinotify_triggers_group').addClass('active');
+									$('#joinotify_triggers_content').addClass('active');
+									$('#joinotify_builder_run_test').prop('disabled', true);
 
-										// reset triggers selection
-										setTimeout( function() {
-											$('.trigger-item').removeClass('active');
-											$('.joinotify-triggers-tab-wrapper a.nav-tab').first().click();
-										}, 500);
+									// reset triggers selection
+									setTimeout(() => {
+										$('.trigger-item').removeClass('active');
+										$('.joinotify-triggers-tab-wrapper a.nav-tab').first().click();
+									}, 500);
 								}
 
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
-
-								// set workflow content is ready
-								$(document).trigger('workflowReady');
 
 								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
 							} else {
@@ -854,10 +884,58 @@
 						}
 					},
 					complete: function() {
-							trigger.prop('disabled', false);
-							trigger.closest('.funnel-trigger-item').removeClass('placeholder-wave removing-trigger');
+						trigger.prop('disabled', false);
+						trigger.closest('.funnel-trigger-item').removeClass('placeholder-wave removing-trigger');
 					},
 				});
+			});
+		},
+
+		/**
+		 * Check requirements for enable add action button
+		 * 
+		 * @since 1.1.0
+		 */
+		enableAddActionButton: function() {
+			var btn = $('.add-funnel-action');
+
+			/**
+			 * Validate if required settings are valid
+			 * 
+			 * @since 1.1.0
+			 * @returns boolean
+			 */
+			function validateRequiredSettings() {
+				let is_valid = false;
+
+				// find each required setting inside offcanvas
+				$('.offcanvas.show .required-setting').each( function() {
+					const element = $(this);
+		
+					if ( element.is('input') || element.is('textarea') ) {
+						// check if input is empty
+						if ( element.val().trim() !== '' ) {
+							is_valid = true;
+						}
+					} else if ( element.is('select') ) {
+						//check if selected option is none
+						if ( element.val() !== 'none' ) {
+							is_valid = true;
+						}
+					}
+				});
+		
+				// enable button if required settings are valid
+				if ( is_valid ) {
+					btn.prop('disabled', false);
+				} else {
+					btn.prop('disabled', true);
+				}
+			}
+
+			// validate required settings on change event
+			$(document).on('change input blur', '.required-setting', function() {
+				validateRequiredSettings();
 			});
 		},
 
@@ -868,6 +946,9 @@
 		 * @version 1.1.0
 		 */
 		addAction: function() {
+			Builder.selectCondition();
+			Builder.enableAddActionButton();
+
 			// add action on workflow
 			$(document).on('click', '.add-funnel-action', function(e) {
 				e.preventDefault();
@@ -1008,12 +1089,12 @@
 								// replace with new content updated
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 
-								// set workflow content is ready
-								$(document).trigger('workflowReady');
+								// fire updated workflow event
+								$(document).trigger('updatedWorkflow');
 
-								displayToast('success', response.toast_header_title, response.toast_body_title);
+								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
 							} else {
-								displayToast('error', response.toast_header_title, response.toast_body_title);
+								Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
 							}
 						} catch (error) {
 							console.log(error);
@@ -1022,7 +1103,7 @@
 					complete: function() {
 						Builder.adjustHeightCondition();
 
-						btn.prop('disabled', false).html(btn_state.html);
+						btn.html(btn_state.html);
 						$('#joinotify_actions_group').removeClass('active');
 						$('.condition-item.active').removeClass('active');
 						$('#add_action_condition').prop('disabled', true);
@@ -1030,11 +1111,8 @@
 					},
 				});
 			});
-
-			// select condition
-			Builder.selectCondition();
 		},
-	
+
 		/**
 		 * Remove action
 		 * 
@@ -1079,8 +1157,8 @@
 
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 
-								// set workflow content is ready
-								$(document).trigger('workflowReady');
+								// fire updated workflow event
+								$(document).trigger('updatedWorkflow');
 
 								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
 							} else {
@@ -1224,11 +1302,11 @@
 
 									// check if has trigger settings
 									if (response.active_settings_modal) {
-											let modal = response.active_settings_modal;
-											let detached_modal = $(modal).detach();
+										let modal = response.active_settings_modal;
+										let detached_modal = $(modal).detach();
 
-											$('#wpcontent').prepend(detached_modal);
-											$(modal).modal('show'); // display modal
+										$('#wpcontent').prepend(detached_modal);
+										$(modal).modal('show'); // display modal
 									}
 
 									// set workflow content is ready
@@ -1236,17 +1314,17 @@
 
 									// add "active" class for trigger item on workflow content
 									if ( $('.funnel-trigger-item').length > 0 ) {
-											$('.funnel-trigger-item').each( function() {
-												var data_context = $(this).data('context');
-												var data_trigger = $(this).data('trigger');
+										$('.funnel-trigger-item').each( function() {
+											var data_context = $(this).data('context');
+											var data_trigger = $(this).data('trigger');
 
-												// find matching trigger
-												var matching_trigger_item = $('.trigger-item[data-context="' + data_context + '"][data-trigger="' + data_trigger + '"]');
+											// find matching trigger
+											var matching_trigger_item = $('.trigger-item[data-context="' + data_context + '"][data-trigger="' + data_trigger + '"]');
 
-												if (matching_trigger_item.length > 0) {
-													matching_trigger_item.addClass('active');
-												}
-											});
+											if (matching_trigger_item.length > 0) {
+												matching_trigger_item.addClass('active');
+											}
+										});
 									}
 								} else {
 									Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
@@ -1341,17 +1419,23 @@
 				var selected_option = select.val();
 
 				select.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', selected_option !== 'period');
+				select.parent('div').siblings('.wait-time-period-container').find('.get-wait-value').toggleClass('required-setting', selected_option === 'period');
 				select.parent('div').siblings('.wait-date-container').toggleClass('d-none', selected_option !== 'date');
+				select.parent('div').siblings('.wait-date-container').find('.get-date-value').toggleClass('required-setting', selected_option === 'date');
 			});
 
-			// initialize visibility on load components
-			$('.set-time-delay-type').each( function() {
-				var select = $(this);
-				var selected_option = select.val();
-
-				select.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', selected_option !== 'period');
-				select.parent('div').siblings('.wait-date-container').toggleClass('d-none', selected_option !== 'date');
-			});
+			// wait 500 miliseconds after ready DOM
+			setTimeout(() => {
+				$('.set-time-delay-type').each( function() {
+					var select = $(this);
+					var selected_option = select.val();
+	
+					select.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', selected_option !== 'period');
+					select.parent('div').siblings('.wait-time-period-container').find('.get-wait-value').toggleClass('required-setting', selected_option === 'period');
+					select.parent('div').siblings('.wait-date-container').toggleClass('d-none', selected_option !== 'date');
+					select.parent('div').siblings('.wait-date-container').find('.get-date-value').toggleClass('required-setting', selected_option === 'date');
+				});
+			}, 500);
 		},
 		
 		/**
@@ -1435,7 +1519,7 @@
 			document.body.appendChild(a);
 			a.click();
 	
-			setTimeout( function() {
+			setTimeout(() => {
 				document.body.removeChild(a);
 				window.URL.revokeObjectURL(url);  
 			}, 0); 
@@ -1507,12 +1591,12 @@
 
 				btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 
-				setTimeout( function() {
+				setTimeout(() => {
 					btn.prop('disabled', false).html(button_state.html);
 				}, 1000);
 
 				if ( template_type === 'scratch' ) {
-						setTimeout( function() {
+						setTimeout(() => {
 							$('#joinotify_start_choose_container').removeClass('active');
 							$('#joinotify_choose_template_container').removeClass('active');
 							$('#joinotify_triggers_group').addClass('active');
@@ -1520,7 +1604,7 @@
 							$('#joinotify_builder_navbar').addClass('active');
 						}, 1000);
 				} else if ( template_type === 'template' ) {
-						setTimeout( function() {
+						setTimeout(() => {
 							$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
 							$('#joinotify_template_library_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
 						}, 1000);
@@ -1551,7 +1635,7 @@
 							},
 						});
 				} else if ( template_type === 'import' ) {
-						setTimeout( function() {
+						setTimeout(() => {
 							$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
 							$('#joinotify_import_template_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
 						}, 1000);
@@ -1706,11 +1790,11 @@
 				e.preventDefault();
 
 				// check if content has been loaded
-				if ($('#joinotify_fetch_all_groups_container').hasClass('content-loaded')) {
+				if ( $('#joinotify_fetch_all_groups_container').hasClass('content-loaded') ) {
 					return;
 				}
 
-				// make request
+				// send request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -1719,8 +1803,8 @@
 						sender: $('#joinotify_get_whatsapp_phone_sender').val(),
 					},
 					success: function(response) {
-						if (params.debug_mode) {
-								console.log(response);
+						if ( params.debug_mode ) {
+							console.log(response);
 						}
 
 						try {
@@ -1746,20 +1830,20 @@
 				var group_id = group_item.data('group-id');
 
 				// copy id event
-				navigator.clipboard.writeText(group_id).then(function() {
+				navigator.clipboard.writeText(group_id).then( function() {
 					group_item.append(`<div class="confirm-copy-ui active">
-								<svg class="icon icon-lg icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#22c55e" d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg>
-								<span>${params.copy_group_id}</span>
+						<svg class="icon icon-lg icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg>
+						<span>${params.copy_group_id}</span>
 					</div>`);
 
-					setTimeout( function() {
+					setTimeout(() => {
 						group_item.find('.confirm-copy-ui').removeClass('active');
 					}, 800);
 
-					setTimeout( function() {
+					setTimeout(() => {
 						group_item.find('.confirm-copy-ui').remove();
 					}, 1000);
-				}).catch(function(error) {
+				}).catch( function(error) {
 					console.error('Error on copy group ID: ' + error);
 				});
 			});
@@ -1771,12 +1855,16 @@
 		 * @since 1.1.0
 		 */
 		saveActionSettings: function() {
+			var action_data = {};
+
+			// save action on click button
 			$(document).on('click', '.save-action-edit', function(e) {
 				e.preventDefault();
 
 				var btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
-				var action_data = {};
+				var get_action = btn.data('action');
+				var get_action_id = btn.data('action-id');
 
 				// collect specific action data
 				if ( get_action === 'time_delay' ) {
@@ -1860,7 +1948,7 @@
 					data: {
 						action: 'joinotify_save_action_edition',
 						post_id: Builder.getParamByName('id'),
-						action_id: Builder.getActionID,
+						action_id: get_action_id,
 						new_action_data: JSON.stringify(action_data),
 					},
 					beforeSend: function() {
@@ -1876,9 +1964,6 @@
 								// update workflow content
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
 								$('.modal.show').find('.btn-close').click(); // close modal
-
-								// set workflow content is ready
-								// $(document).trigger('workflowReady');
 
 								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
 							} else {
@@ -1903,9 +1988,10 @@
 		codeEditor: function() {
 			$('.joinotify-code-editor').each( function() {
 				let textarea = this;
-
-				if ( ! textarea.classList.contains('CodeMirror') ) {
-					let editor = CodeMirror.fromTextArea(textarea, {
+				
+				// check if editor is already initialized
+				if ( ! $(textarea).hasClass('initiliazed-editor') ) {
+					var editor = CodeMirror.fromTextArea(textarea, {
 						mode: 'application/x-httpd-php',
 						theme: 'dracula',
 						lineNumbers: true,
@@ -1913,25 +1999,31 @@
 						autoCloseBrackets: true,
 						indentUnit: 4,
 						tabSize: 4,
+						autoRefresh: true,
 					});
 
-					textarea.dataset.editor = editor;
+					// add class to textarea to prevent multiple initialization
+					$(textarea).addClass('initiliazed-editor').focus();
 
 					// set PHP open tag on first line if empty textarea
-					if (editor.getValue().trim() === '') {
+					if ( editor.getValue().trim() === '' ) {
 						editor.setValue('<?php\n\n');
+					} else {
+						// Load existing content into CodeMirror
+						editor.setValue(textarea.value);
 					}
 
 					// update the textarea when has changes on editor
 					editor.on('change', function() {
 						textarea.value = editor.getValue();
+						$(textarea).trigger('change');
 					});
 
 					// wait CodeMirror is ready before add resize element
-					setTimeout( function() {
+					setTimeout(() => {
 						let codemirror_element = $(textarea).next('.CodeMirror');
 
-						if (codemirror_element.length > 0) {
+						if ( codemirror_element.length > 0 ) {
 							let resize_handle = $(`<div class="joinotify-resize-code-area"><svg class="icon-sm icon-dark opacity-75" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg></div>`);
 
 							codemirror_element.after(resize_handle);
@@ -1940,6 +2032,12 @@
 							let startY = 0;
 							let startHeight = 0;
 
+							/**
+							 * Handle resize CodeMirror height
+							 * 
+							 * @since 1.1.0
+							 * @param {object} e | Event object
+							 */
 							resize_handle.on('mousedown', function(e) {
 								e.preventDefault();
 								is_resizing = true;
@@ -1958,12 +2056,12 @@
 							 * @returns void
 							 */
 							function handle_resize(e) {
-								if (!is_resizing) return;
+								if ( ! is_resizing ) return;
 
 								let diffY = e.clientY - startY;
 								let newHeight = startHeight + diffY;
 
-								if (newHeight < 100) newHeight = 100; // Minimum height
+								if ( newHeight < 100 ) newHeight = 100; // Minimum height
 								codemirror_element.css('height', newHeight + 'px');
 								codemirror_element.find('.CodeMirror-scroll').css('height', newHeight + 'px');
 							}
