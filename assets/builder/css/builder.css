@@ -218,16 +218,14 @@
 }
 
 @media screen and (min-width: 992px) and (max-width: 1368px) {
-    .navbar {
+    .builder-navbar,
+    .navbar,
+    .static-logo {
         height: 4rem;
     }
 
-    .static-logo {
-        height: 2rem;
-    }
-
     .static-logo .navbar-logo {
-        width: 2rem;
+        width: 1.825rem;
     }
 
     #joinotify_triggers_group {
@@ -252,6 +250,34 @@
 
     #joinotify_set_workflow_name {
         padding: 0.625rem 1rem !important;
+    }
+
+    #joinotify_workflow_status_switch {
+        height: 1.625rem;
+        width: 3.225rem;
+    }
+    
+    .offcanvas,
+    .offcanvas-lg,
+    .offcanvas-md,
+    .offcanvas-sm,
+    .offcanvas-xl,
+    .offcanvas-xxl {
+        margin-top: calc(4rem + 32px) !important;
+    }
+
+    #joinotify_actions_group,
+    #joinotify_builder_funnel,
+    #joinotify_triggers_group {
+        margin-top: calc(3rem + 32px) !important;
+    }
+
+    #joinotify_actions_group {
+        padding: 2.5rem 1.725rem !important;
+    }
+
+    .modal-dialog-scrollable {
+        top: 1rem;
     }
 }
 
@@ -737,8 +763,7 @@ label.custom-file-label:hover {
 }
 
 input.form-control:focus {
-    border-color: rgba(var(--joinotify-primary-rgb), 0.65) !important;
-    box-shadow: 0 0.325rem 0.5rem rgba(var(--joinotify-primary-rgb), 0.1) !important;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, 0.25) !important;
     outline: none !important;
 }
 
@@ -1660,7 +1685,7 @@ input.toggle-switch.status:checked {
     width: 100%;
     border: 1px solid #d7dde2;
     border-radius: 0.5rem;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.225rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1840,8 +1865,9 @@ select:focus {
     margin-bottom: 0.3125rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #0b0f19;
+    color: #495057;
     margin-left: 0.875rem;
+    width: fit-content;
 }
 
 #joinotify_get_whatsapp_message_text {
@@ -2018,4 +2044,9 @@ textarea.edit-whatsapp-message-text {
 
 .product-item.active:hover {
     background-color: var(--joinotify-primary-hover);
+}
+
+.preview-whatsapp-message-sender .emojioneemoji {
+    width: 1.125rem;
+    height: 1.125rem;
 }

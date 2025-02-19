@@ -100,18 +100,10 @@ class Ajax {
             // Convert serialized data into an array
             parse_str( $_POST['form_data'], $form_data );
 
-            $switch_options = apply_filters( 'Joinotify/Admin/Ajax/Save_Options', array(
-                'enable_whatsapp_integration',
-                'enable_woocommerce_integration',
-                'enable_elementor_integration',
-                'enable_wpforms_integration',
-                'enable_flexify_checkout_integration',
-                'enable_wordpress_integration',
-                'enable_debug_mode',
-                'enable_proxy_api',
-                'enable_auto_updates',
-            ));
+            // get dynamic switch options
+            $switch_options = apply_filters( 'Joinotify/Admin/Ajax/Save_Options', Helpers::get_switch_options() );
 
+            // iterate for each switch options
             foreach ( $switch_options as $switch ) {
                 $options[$switch] = isset( $form_data[$switch] ) ? 'yes' : 'no';
             }

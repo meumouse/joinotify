@@ -21,7 +21,7 @@ defined('ABSPATH') || exit; ?>
 
         <div class="form-check form-switch me-4 d-flex justify-content-center mb-0 w-fit">
             <span id="joinotify_workflow_status_title" class="fs-sm fw-semibold me-2"><?php esc_html_e( 'Inativo', 'joinotify' ) ?></span>
-            <input type="checkbox" class="toggle-switch status" id="joinotify_workflow_status_switch" name="joinotify_workflow_status_switch" disabled value="yes" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Status da automação', 'joinotify' ) ?>"/>
+            <input type="checkbox" class="toggle-switch status" id="joinotify_workflow_status_switch" name="joinotify_workflow_status_switch" disabled value="yes" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Status do fluxo', 'joinotify' ) ?>"/>
         </div>
 
         <div class="btn-group me-3">

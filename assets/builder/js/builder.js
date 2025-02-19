@@ -59,6 +59,7 @@
 				$('.joinotify-loader-container').addClass('d-none');
 			}
 
+			this.addTrigger();
 			this.workflowSteps();
 			this.triggerTabs();
 			this.loadWorkflowData();
@@ -76,7 +77,6 @@
 		onWorkflowReady: function() {
 			// on workflow ready event
 			$(document).on('workflowReady', function() {
-				Builder.addTrigger();
 				Builder.removeTrigger();
 				Builder.saveTriggerSettings();
 				Builder.sidebarActions();
@@ -99,6 +99,7 @@
 				Builder.exportWorkflow();
 				Builder.openMediaLibrary();
 				Builder.runTestWorkflow();
+				Builder.validateInputCurrency();
 			});
 		},
 
@@ -113,6 +114,7 @@
 				Builder.changeVisibilityForElements();
 				Builder.codeEditor();
 				Builder.correctTriggerSettingsModal();
+				Builder.validateInputCurrency();
 			});
 		},
 
@@ -228,18 +230,32 @@
 		 */
 		selectCondition: function() {
 			$(document).on('click', '.condition-item', function() {
-				var condition = $(this).data('condition');
+				var selected_condition = $(this).data('condition');
 	
 				$('.condition-item').removeClass('active');
 				$('.condition-settings-item').removeClass('active');
 				$(this).toggleClass('active');
-				$('.condition-settings-item[data-condition="'+ condition +'"]').addClass('active');
+				$('.condition-settings-item[data-condition="'+ selected_condition +'"]').addClass('active');
 	
+				// enable add action button if has condition item selected
 				if ( $('.condition-item').hasClass('active') ) {
 					$('#add_action_condition').prop('disabled', false);
 				} else {
 					$('#add_action_condition').prop('disabled', true);
 				}
+
+				// remove class for all required settings
+				$('.condition-settings-item .required-setting').removeClass('required-setting');
+
+				// enable required settings
+				$('.condition-settings-item[data-condition="' + selected_condition + '"]').find('select, input, textarea').each( function() {
+					// Verifica se o elemento originalmente possuía a classe "required-setting"
+					if ( $(this).attr('data-original-required') === 'true' ) {
+						$(this).addClass('required-setting');
+					}
+				});
+
+				Builder.enableAddActionButton();
 			});
 		},
 
@@ -685,6 +701,49 @@
 		},
 
 		/**
+		 * Validate format currency on input
+		 * 
+		 * @since 1.1.0
+		 */
+		validateInputCurrency: function() {
+			$(document).on('input', '.format-currency', function() {
+				let input = $(this);
+				let value = input.val();
+	
+				// remove all non-numeric characters except commas
+				value = value.replace(/[^0-9,]/g, '');
+	
+				// replace multiple commas and keep only one as the decimal separator
+				let parts = value.split(',');
+
+				if ( parts.length > 2 ) {
+					value = parts[0] + ',' + parts.slice(1).join('');
+				}
+	
+				// remove zeros on the left, but keep at least one zero
+				value = value.replace(/^0+(?=\d)/, '');
+	
+				// if has decimal separator, format thousands correctly
+				let int_part = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+				let decimal_part = parts[1] !== undefined ? ',' + parts[1] : '';
+				let formatted_value = int_part + decimal_part;
+	
+				// update the input with the formatted value
+				input.val(formatted_value);
+			});
+	  
+			// lock invalid characters on keypress
+			$(document).on('keypress', '.format-currency', function(e) {
+				let char = String.fromCharCode(e.which);
+				
+				// allow only numbers and comma for decimal separator
+				if ( !/[0-9,]/.test(char) ) {
+					e.preventDefault();
+				}
+			});
+	  	},
+
+		/**
 		 * Enable add trigger button
 		 * 
 		 * @since 1.0.0
@@ -776,8 +835,8 @@
 									$('#joinotify_workflow_status').replaceWith(response.workflow_status);
 								}
 
-								$('#offcanvas_condition').find('.offcanvas-body').html(response.condition_selectors);
 								$('#joinotify_actions_wrapper').html(response.sidebar_actions);
+								$('#offcanvas_condition').find('.offcanvas-body').html(response.condition_selectors);
 								$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.fetch_groups_trigger);
 								$('#offcanvas_send_whatsapp_message_text').find('.offcanvas-body').append(response.placeholders_list);
 								$('#offcanvas_send_whatsapp_message_media').find('.offcanvas-body').append(response.fetch_groups_trigger);
@@ -897,7 +956,19 @@
 		 * @since 1.1.0
 		 */
 		enableAddActionButton: function() {
-			var btn = $('.add-funnel-action');
+			var btn = '';
+
+			// get add action button
+			$(document).on('click', '.action-item', function() {
+				setTimeout(() => {
+					btn = $('.offcanvas.show').find('.add-funnel-action');
+				}, 500);
+			});
+
+			// save required settings prop on elements for retrieve it later
+			$('.condition-settings-item .required-setting').each( function() {
+				$(this).attr('data-original-required', 'true');
+		  	});
 
 			/**
 			 * Validate if required settings are valid
@@ -906,7 +977,7 @@
 			 * @returns boolean
 			 */
 			function validateRequiredSettings() {
-				let is_valid = false;
+				let is_valid = true;
 
 				// find each required setting inside offcanvas
 				$('.offcanvas.show .required-setting').each( function() {
@@ -914,29 +985,41 @@
 		
 					if ( element.is('input') || element.is('textarea') ) {
 						// check if input is empty
-						if ( element.val().trim() !== '' ) {
-							is_valid = true;
+						if ( element.val().trim() === '' ) {
+							is_valid = false;
 						}
 					} else if ( element.is('select') ) {
 						//check if selected option is none
-						if ( element.val() !== 'none' ) {
-							is_valid = true;
+						if ( element.val() === 'none' ) {
+							is_valid = false;
 						}
 					}
 				});
 		
 				// enable button if required settings are valid
 				if ( is_valid ) {
-					btn.prop('disabled', false);
+					$(btn).prop('disabled', false);
 				} else {
-					btn.prop('disabled', true);
+					$(btn).prop('disabled', true);
 				}
 			}
 
 			// validate required settings on change event
-			$(document).on('change input blur', '.required-setting', function() {
+			$(document).on('change input blur keyup', '.required-setting', function() {
 				validateRequiredSettings();
 			});
+
+			// validate required settings on click toggle switch
+			$(document).on('click', '.validate-required-settings, .condition-item', function() {
+				setTimeout( () => {
+					validateRequiredSettings();
+				}, 10);
+			});
+
+			// enable stop actions button
+			setTimeout(() => {
+				$('#add_action_stop_funnel').prop('disabled', false);
+			}, 500);
 		},
 
 		/**
@@ -1076,6 +1159,9 @@
 							if ( response.status === 'success' ) {
 								// close active offcanvas
 								$('.offcanvas.show').removeClass('show');
+
+								// disable button for require new validation
+								btn.prop('disabled', true);
 
 								// reset options
 								Builder.resetActionSettings();
@@ -1290,8 +1376,8 @@
 									$('#joinotify_workflow_status_switch').prop('disabled', false);
 
 									if ('publish' === response.workflow_status) {
-											$('#joinotify_workflow_status_switch').prop('checked', true);
-											$('#joinotify_workflow_status_title').text(params.status_active);
+										$('#joinotify_workflow_status_switch').prop('checked', true);
+										$('#joinotify_workflow_status_title').text(params.status_active);
 									}
 
 									// workflow content
@@ -1404,15 +1490,14 @@
 				});
 			});
 		},
-	
+
 		/**
-		 * Change visibility for elements
+		 * Change visibility for time delay action settings
 		 * 
 		 * @since 1.0.0
 		 * @version 1.1.0
-		 * @package MeuMouse.com
 		 */
-		changeVisibilityForElements: function() {
+		changeVisibilityForTimeDelay: function() {
 			// change visibility for time delay action
 			$(document).on('change', '.set-time-delay-type', function() {
 				var select = $(this);
@@ -1429,13 +1514,88 @@
 				$('.set-time-delay-type').each( function() {
 					var select = $(this);
 					var selected_option = select.val();
-	
+
 					select.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', selected_option !== 'period');
 					select.parent('div').siblings('.wait-time-period-container').find('.get-wait-value').toggleClass('required-setting', selected_option === 'period');
 					select.parent('div').siblings('.wait-date-container').toggleClass('d-none', selected_option !== 'date');
 					select.parent('div').siblings('.wait-date-container').find('.get-date-value').toggleClass('required-setting', selected_option === 'date');
 				});
 			}, 500);
+		},
+
+		/**
+		 * Change visibility for coupon code action settings
+		 * 
+		 * @since 1.1.0
+		 */
+		changeVisibilityForCouponCode: function() {
+			/**
+			 * Toggle coupon code settings
+			 * 
+			 * @since 1.1.0
+			 * @param {Object} toggle | Input toggle switch
+			 */
+			function toggleCouponCodeSettings( toggle ) {
+				var checked = toggle.prop('checked');
+
+				// hidden set coupon code input or set class to required
+				$(toggle).parent('div').siblings('.coupon-code-wrapper').toggleClass('d-none', checked).find('.set-coupon-code').toggleClass('required-setting', ! checked);
+			}
+
+			// listen change event
+			$(document).on('change', '.generate-coupon-code', function() {
+				var toggle = $(this);
+
+				toggleCouponCodeSettings( toggle );
+			});
+
+			// hidden default container option from coupon time delay
+			setTimeout(() => {
+				$('#offcanvas_create_coupon').find('.wait-time-period-container').addClass('d-none');
+				$('#offcanvas_create_coupon').find('.get-wait-value').removeClass('required-setting');
+			}, 600);
+
+			/**
+			 * Toggle expires coupon code settings
+			 * 
+			 * @since 1.1.0
+			 * @param {Object} toggle | Input toggle switch
+			 */
+			function toggleExpiresCoupon( toggle ) {
+				var checked = toggle.prop('checked');
+				var select = toggle.parent('div').siblings('.select-time-delay-container').find('.set-time-delay-type');
+
+				// hidden time delay components if not checked
+				$(toggle).parent('div').siblings('.select-time-delay-container').toggleClass('d-none', ! checked);
+
+				// check if select time delay type is period or date on toggle switch
+				if ( select.val() === 'period' ) {
+					$(toggle).parent('div').siblings('.wait-time-period-container').toggleClass('d-none', ! checked);
+					$(toggle).parent('div').siblings('.wait-time-period-container').find('.get-wait-value').toggleClass('required-setting', checked);
+				} else if ( select.val() === 'date' ) {
+					$(toggle).parent('div').siblings('.wait-date-container').toggleClass('d-none', ! checked);
+					$(toggle).parent('div').siblings('.wait-date-container').find('.get-date-value').toggleClass('required-setting', checked);
+				}
+			}
+
+			// listen change event
+			$(document).on('change', '.set-expires-coupon', function() {
+				var toggle = $(this);
+
+				toggleExpiresCoupon( toggle );
+			});
+		},
+	
+		/**
+		 * Change visibility for elements
+		 * 
+		 * @since 1.0.0
+		 * @version 1.1.0
+		 * @package MeuMouse.com
+		 */
+		changeVisibilityForElements: function() {
+			Builder.changeVisibilityForTimeDelay();
+			Builder.changeVisibilityForCouponCode();
 		},
 		
 		/**
@@ -1481,7 +1641,7 @@
 		 * @package MeuMouse.com
 		 */
 		whatsappMessagePreview: function() {
-			$(document).on('input change blur change', '.set-whatsapp-message-text', function() {
+			$(document).on('input change blur change keyup', '.set-whatsapp-message-text', function() {
 				var input = $(this);
 				var text = input.val();
 				var preview_message = $(this).parent('div').siblings('.preview-whatsapp-message-sender');
@@ -1538,6 +1698,7 @@
 
 				var post_id = Builder.getParamByName('id');
 
+				// send ajax request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -2103,9 +2264,13 @@
 				var trigger_data = {};
 
 				// collect specific trigger settings data
-				if (get_trigger === 'woocommerce_order_status_changed') {
+				if ( get_trigger === 'woocommerce_order_status_changed' ) {
 					trigger_data = {
 						order_status: $('.modal.show').find('.set-trigger-settings.order-status').val(),
+					};
+				} else if ( get_trigger === 'wpforms_process_complete' || get_trigger === 'wpforms_paypal_standard_process_complete' ) {
+					trigger_data = {
+						form_id: $('.modal.show').find('.set-trigger-settings.wpforms-form-id').val(),
 					};
 				}
 
@@ -2196,6 +2361,13 @@
 					},
 				},
 			});
+
+			// Update the textarea on keyup event in the emojionearea editor
+			$(document).on('keyup change', '.emojionearea-editor', function() {
+				var content = $(this).html();
+
+				$(this).closest('.add-emoji-picker').val(content); // Update the textarea with the current content
+		  	});
 		},
 
 		/**

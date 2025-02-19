@@ -52,28 +52,24 @@ class Wordpress extends Integrations_Base {
                 'data_trigger' => 'user_register',
                 'title' => esc_html__( 'Novo registro de usuário', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um novo registro de usuário é recebido.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'wp_login',
                 'title' => esc_html__( 'Login do usuário', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um usuário fizer login no site.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'password_reset',
                 'title' => esc_html__( 'Recuperação de senha do usuário', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um usuário solicitar recuperação de senha no site.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'transition_post_status',
                 'title' => esc_html__( 'Novo post é publicado', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um novo post é publicado no site.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
         );

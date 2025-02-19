@@ -43,7 +43,9 @@ class Woocommerce extends Integrations_Base {
             add_action( 'Joinotify/Settings/Tabs/Integrations/Woocommerce', array( $this, 'add_modal_settings' ) );
 
             // add coupon action
-            add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
+            if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
+                add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
+            }
         }
     }
 
@@ -385,13 +387,23 @@ class Woocommerce extends Integrations_Base {
                 <div class="joinotify-popup-content">
                     <div class="joinotify-popup-header">
                         <h5 class="joinotify-popup-title"><?php esc_html_e( 'Configurações da integração com WooCommerce', 'joinotify' ); ?></h5>
-                        <button id="woocommerce_settings_container" class="btn-close fs-lg" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ); ?>"></button>
+                        <button id="woocommerce_settings_close" class="btn-close fs-lg" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ); ?>"></button>
                     </div>
 
                     <div class="joinotify-popup-body my-3">
                         <table class="popup-table">
                             <tbody>
-
+                                <tr>
+                                    <th>
+                                        <?php esc_html_e( 'Ativar ação Cupom de desconto', 'joinotify' ); ?>
+                                        <span class="joinotify-description"><?php esc_html_e( 'Ative essa opção para adicionar a ação Cupom de desconto em fluxos do WooCommerce.', 'joinotify' ); ?></span>
+                                    </th>
+                                    <td class="d-flex align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input type="checkbox" class="toggle-switch" id="enable_create_coupon_action" name="enable_create_coupon_action" value="yes" <?php checked( Admin::get_setting('enable_create_coupon_action') === 'yes' ); ?> />
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -437,42 +449,78 @@ class Woocommerce extends Integrations_Base {
         ob_start(); ?>
 
         <div class="coupon-action-group">
-            <div class="coupon-action-item">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Gerar código do cupom automaticamente', 'joinotify' ) ?></span>
-                <input type="checkbox" class="toggle-switch" id="joinotify_generate_coupon_code">
+            <div class="coupon-action-item d-flex align-items-center">
+                <label class="form-label me-3" for="joinotify_generate_coupon_code"><?php esc_html_e( 'Gerar cupom automaticamente', 'joinotify' ) ?></label>
+                <input type="checkbox" id="joinotify_generate_coupon_code" class="toggle-switch generate-coupon-code validate-required-settings">
             </div>
 
             <div class="coupon-action-item coupon-code-wrapper">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Código do cupom', 'joinotify' ) ?></span>
-                <input type="text" id="joinotify_set_coupon_code" class="form-control" placeholder="<?php esc_attr_e( 'CUPOM_EXCLUSIVO', 'joinotify' ) ?>"/>
+                <label class="form-label" for="joinotify_set_coupon_code"><?php esc_html_e( 'Código do cupom: *', 'joinotify' ) ?></label>
+                <input type="text" id="joinotify_set_coupon_code" class="form-control set-coupon-code required-setting" placeholder="<?php esc_attr_e( 'CUPOM_EXCLUSIVO', 'joinotify' ) ?>"/>
             </div>
 
             <div class="coupon-action-item">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Descrição do cupom (opcional)', 'joinotify' ) ?></span>
-                <input type="text" id="joinotify_set_coupon_description" class="form-control" placeholder="<?php esc_attr_e( 'Cupom para recuperação de compras', 'joinotify' ) ?>"/>
+                <label class="form-label" for="joinotify_set_coupon_description"><?php esc_html_e( 'Descrição do cupom (opcional)', 'joinotify' ) ?></label>
+                <input type="text" id="joinotify_set_coupon_description" class="form-control set-coupon-description" placeholder="<?php esc_attr_e( 'Cupom para recuperação de compras', 'joinotify' ) ?>"/>
             </div>
 
             <div class="coupon-action-item">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Tipo e valor do desconto', 'joinotify' ) ?></span>
+                <label class="form-label" for="joinotify_coupon_discount_type"><?php esc_html_e( 'Tipo e valor do desconto: *', 'joinotify' ) ?></label>
                 
                 <div class="input-group">
-                    <select id="joinotify_coupon_discount_type" class="form-select">
+                    <select id="joinotify_coupon_discount_type" class="form-select set-coupon-discount-type">
                         <option value="fixed_cart"><?php esc_html_e( 'Desconto fixo', 'joinotify' ) ?></option>
                         <option value="percent"><?php esc_html_e( 'Percentual', 'joinotify' ) ?></option>
                     </select>
 
-                    <input type="text" id="joinotify_set_discount_value" class="form-control" placeholder="<?php esc_attr_e( 'Valor do desconto', 'joinotify' ) ?>"/>
+                    <input type="text" id="joinotify_set_discount_value" class="form-control set-coupon-discount-value required-setting" placeholder="<?php esc_attr_e( 'Valor do desconto', 'joinotify' ) ?>"/>
                 </div>
             </div>
 
-            <div class="coupon-action-item">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Permitir frete grátis', 'joinotify' ) ?></span>
-                <input type="checkbox" id="joinotify_coupon_allow_free_shipping" class="toggle-switch">
+            <div class="coupon-action-item d-flex align-items-center">
+                <label class="form-label me-3" for="joinotify_coupon_allow_free_shipping"><?php esc_html_e( 'Permitir frete grátis', 'joinotify' ) ?></label>
+                <input type="checkbox" id="joinotify_coupon_allow_free_shipping" class="toggle-switch allow-free-shipping">
             </div>
 
-            <div class="coupon-action-item">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Data de expiração', 'joinotify' ) ?></span>
-                <input type="text" id="joinotify_coupon_expires_date" class="form-control dateselect">
+            <div class="coupon-action-item d-flex align-items-center">
+                <label class="form-label me-3" for="joinotify_coupon_set_expires"><?php esc_html_e( 'Definir expiração do cupom', 'joinotify' ) ?></label>
+                <input type="checkbox" id="joinotify_coupon_set_expires" class="toggle-switch set-expires-coupon validate-required-settings">
+            </div>
+
+            <div class="coupon-action-item select-time-delay-container d-none">
+                <label class="form-label" for="set-time-delay-type"><?php esc_html_e( 'Selecione o tipo de expiração', 'joinotify' ) ?></label>
+                
+                <select class="form-select set-time-delay-type">
+                    <option value="period"><?php esc_html_e( 'Esperar tempo', 'joinotify' ) ?></option>
+                    <option value="date"><?php esc_html_e( 'Esperar até uma data', 'joinotify' ) ?></option>
+                </select>
+            </div>
+
+            <div class="coupon-action-item wait-date-container d-none">
+                <label class="form-label"><?php esc_html_e( 'Esperar até', 'joinotify' ) ?></label>
+                
+                <div class="input-group">
+                    <input type="text" class="form-control dateselect get-date-value" placeholder="<?php esc_attr_e( 'Selecione uma data', 'joinotify' ) ?>"/>
+                    <input type="time" class="form-control get-time-value"/>
+                </div>
+            </div>
+
+            <div class="coupon-action-item wait-time-period-container d-none">
+                <label class="form-label"><?php esc_html_e( 'Esperar por', 'joinotify' ) ?></label>
+                
+                <div class="input-group">
+                    <input type="number" class="form-control get-wait-value"/>
+
+                    <select class="form-select get-wait-period">
+                        <option value="seconds"><?php esc_html_e( 'Segundo (s)', 'joinotify' ) ?></option>
+                        <option value="minute"><?php esc_html_e( 'Minuto (s)', 'joinotify' ) ?></option>
+                        <option value="hours"><?php esc_html_e( 'Hora (s)', 'joinotify' ) ?></option>
+                        <option value="day"><?php esc_html_e( 'Dia (s)', 'joinotify' ) ?></option>
+                        <option value="week"><?php esc_html_e( 'Semana (s)', 'joinotify' ) ?></option>
+                        <option value="month"><?php esc_html_e( 'Mês (es)', 'joinotify' ) ?></option>
+                        <option value="year"><?php esc_html_e( 'Ano (s)', 'joinotify' ) ?></option>
+                    </select>
+                </div>
             </div>
         </div>
 

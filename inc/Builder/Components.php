@@ -331,7 +331,7 @@ class Components {
                     
                     $html .= '<div class="input-group">';
                         $html .= '<input type="text" class="form-control dateselect get-date-value" value="'. $date_value .'" placeholder="'. esc_attr__( 'Selecione uma data', 'joinotify' ) .'"/>';
-                        $html .= '<input type="text" class="form-control get-time-value" value="'. $time_value .'" placeholder="'. esc_attr__( 'Digite um horário (Opcional)', 'joinotify' ) .'" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="'. esc_attr__( 'Informe um horário no formato H:i - 20:03', 'joinotify' ) .'"/>';
+                        $html .= '<input type="time" class="form-control get-time-value" value="'. $time_value .'" placeholder="'. esc_attr__( 'Digite um horário (Opcional)', 'joinotify' ) .'" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="'. esc_attr__( 'Informe um horário no formato H:i - 20:03', 'joinotify' ) .'"/>';
                     $html .= '</div>';
                 $html .= '</div>';
 
@@ -557,11 +557,27 @@ class Components {
             $current_status = isset( $trigger_data['settings']['order_status'] ) ? $trigger_data['settings']['order_status'] : null;
 
             $html .= '<div class="joinotify-get-order-status-trigger">';
-                $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Status do pedido', 'joinotify' ) .'</span>';
+                $html .= '<label class="form-label" for="woocommerce_order_status">'. esc_html__( 'Status do pedido', 'joinotify' ) .'</label>';
                 
-                $html .= '<select name="woocommerce_order_status" class="form-select set-trigger-settings order-status">';
+                $html .= '<select id="woocommerce_order_status" class="form-select set-trigger-settings order-status">';
                     foreach ( wc_get_order_statuses() as $status_key => $status_label ) {
                         $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
+                    }
+                $html .= '</select>';
+            $html .= '</div>';
+        } elseif ( $trigger === 'wpforms_process_complete' || $trigger === 'wpforms_paypal_standard_process_complete' ) {
+            $current_form_id = isset( $trigger_data['settings']['form_id'] ) ? $trigger_data['settings']['form_id'] : null;
+
+            $html .= '<div class="joinotify-get-form-id-trigger">';
+                $html .= '<label class="form-label" for="get_wpforms_form_id">'. esc_html__( 'Formulário do WPForms: *', 'joinotify' ) .'</label>';
+
+                $html .= '<select id="get_wpforms_form_id" class="form-select set-trigger-settings wpforms-form-id required-setting">';
+                    $html .= '<option value="none">'. esc_html__( 'Selecione um formulário', 'joinotify' ) .'</option>';
+                    
+                    $forms = \MeuMouse\Joinotify\Integrations\Wpforms::get_all_wpforms_forms();
+
+                    foreach ( $forms as $form ) {
+                        $html .= '<option value="'. esc_attr( $form['ID'] ) .'" '. selected( $current_form_id, $form['ID'], false ) .'>'. esc_html( $form['title'] ) .'</option>';
                     }
                 $html .= '</select>';
             $html .= '</div>';
@@ -703,6 +719,7 @@ class Components {
      * Render condition settings for specific action
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @param string $condition | Condition key
      * @return string HTML of rendered condition settings
      */
@@ -718,8 +735,8 @@ class Components {
                 $roles = $wp_roles->get_names();
 
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_role" class="form-label">' . esc_html__('Função do usuário:', 'joinotify') . '</label>';
-                    $html .= '<select id="user_role" name="condition[user_role]" class="form-control get-condition-value">';
+                    $html .= '<label for="user_role" class="form-label">' . esc_html__('Função do usuário: *', 'joinotify') . '</label>';
+                    $html .= '<select id="user_role" name="condition[user_role]" class="form-control get-condition-value required-setting">';
                 
                     foreach ( $roles as $role_key => $role_name ) {
                         $translated_role_name = translate_user_role( $role_name );
@@ -732,20 +749,20 @@ class Components {
                 break;            
             case 'user_meta':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_meta" class="form-label">' . esc_html__('Metadados do usuário:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="user_meta" name="condition[user_meta][user_metadata]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Nome do metadado', 'joinotify' ) .'">';
+                    $html .= '<label for="user_meta" class="form-label">' . esc_html__('Metadados do usuário: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" id="user_meta" name="condition[user_meta][user_metadata]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Nome do metadado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_meta" class="form-label">' . esc_html__('Valor do metadado:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="user_meta" name="condition[user_meta][value_metadata]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor do metadado', 'joinotify' ) .'">';
+                    $html .= '<label for="user_meta" class="form-label">' . esc_html__('Valor do metadado: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" id="user_meta" name="condition[user_meta][value_metadata]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do metadado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'user_last_login':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_last_login" class="form-label">' . esc_html__('Tempo desde o último login:', 'joinotify') . '</label>';
-                    $html .= '<input type="number" id="user_last_login" name="condition[user_last_login]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Número de horas', 'joinotify' ) .'">';
+                    $html .= '<label for="user_last_login" class="form-label">' . esc_html__('Tempo desde o último login: *', 'joinotify') . '</label>';
+                    $html .= '<input type="number" id="user_last_login" name="condition[user_last_login]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Número de horas', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -753,8 +770,8 @@ class Components {
                 $html .= '<div class="mb-4">';
                     // Retrieves all registered post types
                     $post_types = get_post_types( array( 'public' => true ), 'objects' );
-                    $html .= '<label for="post_type" class="form-label">' . esc_html__('Tipo de post:', 'joinotify') . '</label>';
-                    $html .= '<select id="post_type" name="condition[post_type]" class="form-control get-condition-value">';
+                    $html .= '<label for="post_type" class="form-label">' . esc_html__('Tipo de post: *', 'joinotify') . '</label>';
+                    $html .= '<select id="post_type" name="condition[post_type]" class="form-control get-condition-value required-setting">';
                     
                     foreach ( $post_types as $post_type_key => $post_type_object ) {
                         $html .= '<option value="' . esc_attr( $post_type_key ) . '">' . esc_html( $post_type_object->labels->name ) . '</option>';
@@ -766,7 +783,7 @@ class Components {
                 break;
             case 'post_author':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="post_author" class="form-label">' . esc_html__('Autor do post:', 'joinotify') . '</label>';
+                    $html .= '<label for="post_author" class="form-label">' . esc_html__('Autor do post: *', 'joinotify') . '</label>';
                     $html .= '<input type="text" id="post_author" name="condition[post_author]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Nome do autor', 'joinotify' ) .'">';
                 $html .= '</div>';
 
@@ -777,8 +794,8 @@ class Components {
                     if ( function_exists('wc_get_order_statuses') ) {
                         $order_statuses = wc_get_order_statuses();
 
-                        $html .= '<label for="order_status" class="form-label">' . esc_html__('Status do pedido:', 'joinotify') . '</label>';
-                        $html .= '<select id="order_status" name="condition[order_status]" class="form-control get-condition-value">';
+                        $html .= '<label for="order_status" class="form-label">' . esc_html__('Status do pedido: *', 'joinotify') . '</label>';
+                        $html .= '<select id="order_status" name="condition[order_status]" class="form-control get-condition-value required-setting">';
                         
                         foreach ( $order_statuses as $status_key => $status_name ) {
                             $html .= '<option value="' . esc_attr( $status_key ) . '">' . esc_html( $status_name ) . '</option>';
@@ -791,8 +808,15 @@ class Components {
                 break;
             case 'order_total':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="order_total" class="form-label">' . esc_html__('Valor total do pedido:', 'joinotify') . '</label>';
-                    $html .= '<input type="number" id="order_total" name="condition[order_total]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor total do pedido', 'joinotify' ) .'">';
+                    $html .= '<label for="order_total" class="form-label">' . esc_html__('Valor total do pedido: *', 'joinotify') . '</label>';
+
+                    $html .= '<div class="input-group">';
+                        if ( function_exists('get_woocommerce_currency_symbol') ) {
+                            $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
+                        }
+                        
+                        $html .= '<input type="text" id="order_total" name="condition[order_total]" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor total do pedido', 'joinotify' ) .'">';
+                    $html .= '</div>';
                 $html .= '</div>';
 
                 break;
@@ -808,21 +832,29 @@ class Components {
             case 'customer_email':
                 $html .= '<div class="mb-4">';
                     $html .= '<label for="customer_email" class="form-label">' . esc_html__('E-mail do cliente:', 'joinotify') . '</label>';
-                    $html .= '<input type="email" id="customer_email" name="condition[customer_email]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
+                    $html .= '<input type="email" id="customer_email" name="condition[customer_email]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'refund_amount':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="refund_amount" class="form-label">' . esc_html__('Valor do reembolso:', 'joinotify') . '</label>';
-                    $html .= '<input type="number" id="refund_amount" name="condition[refund_amount]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
+                    $html .= '<label for="refund_amount" class="form-label">' . esc_html__('Valor do reembolso: *', 'joinotify') . '</label>';
+
+                    $html .= '<div class="input-group">';
+                        if ( function_exists('get_woocommerce_currency_symbol') ) {
+                                $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
+                        }
+                        
+                        $html .= '<input type="text" id="refund_amount" name="condition[refund_amount]" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
+                    $html .= '</div>';
                 $html .= '</div>';
 
                 break;
             case 'subscription_status':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="subscription_status" class="form-label">' . esc_html__('Status da assinatura:', 'joinotify') . '</label>';
-                    $html .= '<select id="subscription_status" name="condition[subscription_status]" class="form-control get-condition-value">';
+                    $html .= '<label for="subscription_status" class="form-label">' . esc_html__('Status da assinatura: *', 'joinotify') . '</label>';
+                    
+                    $html .= '<select id="subscription_status" name="condition[subscription_status]" class="form-control get-condition-value required-setting">';
                         $html .= '<option value="active">' . esc_html__( 'Ativa', 'joinotify' ) . '</option>';
                         $html .= '<option value="on-hold">' . esc_html__( 'Em espera', 'joinotify' ) . '</option>';
                         $html .= '<option value="cancelled">' . esc_html__( 'Cancelada', 'joinotify' ) . '</option>';
@@ -832,8 +864,8 @@ class Components {
                 break;
             case 'renewal_payment':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="renewal_payment" class="form-label">' . esc_html__('Pagamento da renovação:', 'joinotify') . '</label>';
-                    $html .= '<select id="renewal_payment" name="condition[renewal_payment]" class="form-control get-condition-value">';
+                    $html .= '<label for="renewal_payment" class="form-label">' . esc_html__('Pagamento da renovação: *', 'joinotify') . '</label>';
+                    $html .= '<select id="renewal_payment" name="condition[renewal_payment]" class="form-control get-condition-value required-setting">';
                         $html .= '<option value="yes">' . esc_html__( 'Sim', 'joinotify' ) . '</option>';
                         $html .= '<option value="no">' . esc_html__( 'Não', 'joinotify' ) . '</option>';
                     $html .= '</select>';
@@ -857,19 +889,19 @@ class Components {
             case 'form_id':
                 $html .= '<div class="mb-4">';
                     $html .= '<label for="form_id" class="form-label">' . esc_html__('ID do formulário:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="form_id" name="condition[form_id]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'ID do formulário', 'joinotify' ) .'">';
+                    $html .= '<input type="text" id="form_id" name="condition[form_id]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do formulário', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'field_value':
                 $html .= '<div class="mb-4">';
                     $html .= '<label for="field_value" class="form-label">' . esc_html__('Valor espefífico de um campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="field_value" name="condition[field_value]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
+                    $html .= '<input type="text" id="field_value" name="condition[field_value]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 $html .= '<div class="mb-4">';
                     $html .= '<label for="field_id" class="form-label">' . esc_html__('ID do campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="field_id" name="condition[field_id]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
+                    $html .= '<input type="text" id="field_id" name="condition[field_id]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -905,8 +937,9 @@ class Components {
 
         $html = '<div class="mb-4">';
             $html .= '<label class="form-label">'. esc_html__( 'Condição: *', 'joinotify' ) .'</label>';
-            $html .= '<select class="form-select get-condition-type">';
+            $html .= '<select class="form-select get-condition-type required-setting">';
                 $html .= '<option value="none">'. esc_html__( 'Selecione uma condição', 'joinotify' ) .'</option>';
+
                 $allowed_conditions = Conditions::check_condition_type( $condition );
 
                 foreach ( $condition_options as $option => $value ) {
@@ -1075,7 +1108,7 @@ class Components {
                 
                 <div class="input-group">
                     <input type="text" class="form-control dateselect get-date-value" placeholder="<?php esc_attr_e( 'Selecione uma data', 'joinotify' ) ?>"/>
-                    <input type="text" class="form-control get-time-value" placeholder="<?php esc_attr_e( 'Digite um horário (Opcional)', 'joinotify' ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Informe um horário no formato H:i - 20:03', 'joinotify' ) ?>"/>
+                    <input type="time" class="form-control get-time-value"/>
                 </div>
             </div>
         <?php else : ?>
@@ -1141,7 +1174,7 @@ class Components {
                 <!-- SIDEBAR SETTINGS -->
                 <div class="offcanvas offcanvas-end" data-action="<?php esc_attr_e( $action['action'] ) ?>" data-bs-scroll="false" data-bs-backdrop="false" tabindex="-1" id="offcanvas_<?php esc_attr_e( $action['action'] ) ?>" aria-labelledby="offcanvas_<?php esc_attr_e( $action['action'] ) ?>_label">
                     <!-- SIDEBAR ACTION SETTINGS START -->
-                    <div class="offcanvas-header p-4 mt-2 border-bottom justify-content-between">
+                    <div class="offcanvas-header px-4 py-lg-1 py-xxl-3 mt-2 border-bottom justify-content-between">
                         <div class="d-flex align-items-center">
                             <?php if ( ! $action['external_icon'] ) : ?>
                                 <div class="action-item-icon me-3"><?php echo $action['icon'] ?></div>
@@ -1177,7 +1210,7 @@ class Components {
                         <?php endif; ?>
                     </div>
 
-                    <div class="offcanvas-footer p-4 d-flex justify-content-end">
+                    <div class="offcanvas-footer px-4 py-lg-2 py-xxl-3 d-flex justify-content-end">
                         <button id="add_action_<?php esc_attr_e( $action['action'] ) ?>" class="btn btn-primary add-funnel-action" disabled data-action="<?php esc_attr_e( $action['action'] ) ?>"><?php esc_html_e( 'Adicionar ação', 'joinotify' ) ?></button>
                     </div>
                 </div>

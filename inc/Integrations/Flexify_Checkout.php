@@ -55,28 +55,24 @@ class Flexify_Checkout extends Integrations_Base {
                 'data_trigger' => 'flexify_checkout_cart_abandonment',
                 'title' => esc_html__( 'Abandono do carrinho', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário abandona o carrinho.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'flexify_checkout_entry_step_1',
                 'title' => esc_html__( 'Ao entrar na etapa 1', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 1 da finalização de compras.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'flexify_checkout_entry_step_2',
                 'title' => esc_html__( 'Ao entrar na etapa 2', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 2 da finalização de compras.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'flexify_checkout_entry_step_3',
                 'title' => esc_html__( 'Ao entrar na etapa 3', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 3 da finalização de compras.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => false,
             ),
         );

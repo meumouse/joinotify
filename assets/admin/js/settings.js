@@ -732,11 +732,13 @@
 		* Display WooCommerce integration settings
 		* 
 		* @since 1.1.0
-		* @package MeuMouse.com
 		*/
 		displayWooCommerceSettings: function() {
+			// change trigger modal visibility
+			visibility_controller( $('#enable_woocommerce_integration'), $('#woocommerce_settings_trigger') );
+
 			// display modal
-			display_popup( $('#woocommerce_settings_trigger'), $('#woocommerce_settings_container'), $('#woocommerce_settings_container') );
+			display_popup( $('#woocommerce_settings_trigger'), $('#woocommerce_settings_container'), $('#woocommerce_settings_close') );
 		}
 	};
 

@@ -134,4 +134,20 @@ class Helpers {
 
         return self::decrypt_data( $key, 'B729F2659393EE27' );
     }
+
+
+    /**
+     * Get switch options dynamically from default options
+     *
+     * @since 1.1.0
+     * @return array List of switch options keys
+     */
+    public static function get_switch_options() {
+        $default_options = Admin::set_default_options();
+        
+        // filter only the indices that have 'yes' or 'no' as value
+        return array_keys( array_filter( $default_options, function( $value ) {
+            return in_array( $value, ['yes', 'no'], true );
+        }));
+    }
 }

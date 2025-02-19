@@ -158,7 +158,7 @@ class Admin {
      * @version 1.1.0
      * @return array
      */
-    public function set_default_options() {
+    public static function set_default_options() {
         return apply_filters( 'Joinotify/Admin/Set_Default_Options', array(
             'enable_whatsapp_integration' => 'yes',
             'enable_woocommerce_integration' => 'yes',
@@ -174,6 +174,7 @@ class Admin {
             'send_media_proxy_api_route' => 'send-message/media',
             'enable_debug_mode' => 'no',
             'enable_auto_updates' => 'no',
+            'enable_create_coupon_action' => 'yes',
         ));
     }
 
@@ -183,10 +184,11 @@ class Admin {
      * or adds new items with default value to the option
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @return void
      */
     public function update_default_options() {
-        $get_options = $this->set_default_options();
+        $get_options = self::set_default_options();
         $default_options = get_option('joinotify_settings', array());
 
         if ( empty( $default_options ) ) {

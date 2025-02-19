@@ -55,14 +55,12 @@ class Wpforms extends Integrations_Base {
                 'data_trigger' => 'wpforms_process_complete',
                 'title' => esc_html__( 'Formulário é enviado', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um formulário do WPForms é enviado.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => true,
             ),
             array(
                 'data_trigger' => 'wpforms_paypal_standard_process_complete',
                 'title' => esc_html__( 'Pagamento processado pelo PayPal', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um formulário de pagamento do WPForms é processado usando PayPal.', 'joinotify' ),
-                'class' => 'locked',
                 'require_settings' => true,
             ),
         );

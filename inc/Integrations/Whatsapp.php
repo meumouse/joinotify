@@ -86,9 +86,9 @@ class Whatsapp extends Integrations_Base {
         <div class="preview-whatsapp-message-sender"></div>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Remetente', 'joinotify' ); ?></span>
+            <label class="form-label" for="joinotify_get_whatsapp_phone_sender"><?php esc_html_e( 'Remetente: *', 'joinotify' ); ?></label>
             
-            <select id="joinotify_get_whatsapp_phone_sender" class="form-select">
+            <select id="joinotify_get_whatsapp_phone_sender" class="form-select required-setting">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
                     <option value="<?php esc_attr_e( $phone ) ?>" class="get-sender-number"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></option>
                 <?php endforeach; ?>
@@ -96,14 +96,14 @@ class Whatsapp extends Integrations_Base {
         </div>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Destinatário', 'joinotify' ); ?></span>
+            <label class="form-label" for="joinotify_get_whatsapp_number_msg_text"><?php esc_html_e( 'Destinatário: *', 'joinotify' ); ?></label>
 
-            <input id="joinotify_get_whatsapp_number_msg_text" type="text" class="form-control" value="" placeholder="<?php esc_attr_e( '+5541987111527', 'joinotify' ) ?>"/>
+            <input id="joinotify_get_whatsapp_number_msg_text" type="text" class="form-control required-setting" value="" placeholder="<?php esc_attr_e( '+5541987111527', 'joinotify' ) ?>"/>
         </div>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Mensagem de texto', 'joinotify' ); ?></span>
-            <textarea type="text" id="joinotify_get_whatsapp_message_text" class="form-control add-emoji-picker set-whatsapp-message set-whatsapp-message-text" placeholder="<?php esc_attr_e( 'Mensagem', 'joinotify' ) ?>"></textarea>
+            <label class="form-label" for="joinotify_get_whatsapp_message_text"><?php esc_html_e( 'Mensagem de texto: *', 'joinotify' ); ?></label>
+            <textarea type="text" id="joinotify_get_whatsapp_message_text" class="form-control add-emoji-picker set-whatsapp-message set-whatsapp-message-text required-setting" placeholder="<?php esc_attr_e( 'Mensagem', 'joinotify' ) ?>"></textarea>
         </div>
 
         <?php return ob_get_clean();
@@ -122,9 +122,9 @@ class Whatsapp extends Integrations_Base {
         <div class="preview-whatsapp-message-sender media"></div>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Remetente', 'joinotify' ); ?></span>
+            <label class="form-label" for="joinotify_get_whatsapp_phone_sender_media"><?php esc_html_e( 'Remetente: *', 'joinotify' ); ?></label>
 
-            <select id="joinotify_get_whatsapp_phone_sender_media" class="form-select">
+            <select id="joinotify_get_whatsapp_phone_sender_media" class="form-select required-setting">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
                     <option value="<?php esc_attr_e( $phone ) ?>" class="get-sender-number"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></option>
                 <?php endforeach; ?>
@@ -132,15 +132,15 @@ class Whatsapp extends Integrations_Base {
         </div>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Destinatário', 'joinotify' ); ?></span>
+            <label class="form-label" for="joinotify_get_whatsapp_number_msg_media"><?php esc_html_e( 'Destinatário: *', 'joinotify' ); ?></label>
 
-            <input id="joinotify_get_whatsapp_number_msg_media" type="text" class="form-control" value="" placeholder="<?php esc_attr_e( '+5541987111527', 'joinotify' ) ?>"/>
+            <input id="joinotify_get_whatsapp_number_msg_media" type="text" class="form-control required-setting" value="" placeholder="<?php esc_attr_e( '+5541987111527', 'joinotify' ) ?>"/>
         </div>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Tipo de mídia', 'joinotify' ) ?></span>
+            <label class="form-label" for="joinotify_get_media_type"><?php esc_html_e( 'Tipo de mídia', 'joinotify' ) ?></label>
 
-            <select id="joinotify_get_media_type" class="form-select">
+            <select id="joinotify_get_media_type" class="form-select required-setting">
                 <?php foreach ( Media_Types::get_media_types() as $type => $value ) : ?>
                     <option value="<?php esc_attr_e( $type ) ?>"><?php esc_html_e( $value ) ?></option>
                 <?php endforeach; ?>
@@ -148,14 +148,14 @@ class Whatsapp extends Integrations_Base {
         </div>
 
         <div class="require-media-type-image mb-3">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Adicionar mídia', 'joinotify' ) ?></span>
+            <label class="form-label" for="joinotify_get_url_media"><?php esc_html_e( 'Adicionar mídia', 'joinotify' ) ?></label>
             
             <div class="input-group">
                 <button id="joinotify_set_url_media" class="set-media-url btn btn-icon btn-outline-secondary icon-translucent">
                     <svg class="icon icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 5h13v7h2V5c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h8v-2H4V5z"></path><path d="m8 11-3 4h11l-4-6-3 4z"></path><path d="M19 14h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path></svg>
                 </button>
 
-                <input type="text" id="joinotify_get_url_media" class="form-control get-media-url" placeholder="<?php esc_attr_e( 'URL da mídia', 'joinotify' ) ?>"/>
+                <input type="text" id="joinotify_get_url_media" class="form-control get-media-url required-setting" placeholder="<?php esc_attr_e( 'URL da mídia', 'joinotify' ) ?>"/>
             </div>
         </div>
 
