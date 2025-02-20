@@ -175,6 +175,7 @@ class Admin {
             'enable_debug_mode' => 'no',
             'enable_auto_updates' => 'no',
             'enable_create_coupon_action' => 'yes',
+            'create_coupon_prefix' => 'CUPOM_',
         ));
     }
 

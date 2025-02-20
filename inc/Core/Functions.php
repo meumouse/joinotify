@@ -49,7 +49,7 @@ function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $de
  * @param int $delay | Delay in miliseconds before send message
  * @return int
  */
-function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type, $media, $delay ) {
+function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type, $media, $delay = 0 ) {
    $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $delay );
 
    return $response;

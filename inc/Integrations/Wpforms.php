@@ -109,7 +109,7 @@ class Wpforms extends Integrations_Base {
             '{{ field_id=[FIELD_ID] }}' => array(
                 'triggers' => Triggers::get_trigger_names('wpforms'),
                 'description' => esc_html__( 'Para recuperar a informação de um campo do formulário do WPForms. Substitua FIELD_ID pelo id respectivo.', 'joinotify' ),
-                'replacement' => array(),
+                'replacement' => array(), // dynamic replacement is make on Placeholders::replace_placeholders()
             ),
         );
 
@@ -123,7 +123,7 @@ class Wpforms extends Integrations_Base {
      * @since 1.0.0
      * @return array
      */
-    public static function get_all_wpforms_forms() {
+    public static function get_forms() {
         // Initializes an empty array to store the forms
         $forms_list = array();
 

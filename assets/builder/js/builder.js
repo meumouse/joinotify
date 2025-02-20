@@ -84,6 +84,7 @@
 				Builder.removeAction();
 				Builder.saveActionSettings();
 				Builder.codeEditor();
+				Builder.codePreview();
 				Builder.correctTriggerSettingsModal();
 				Builder.emojiPicker();
 				Builder.dismissPlaceholdersTip();
@@ -113,8 +114,10 @@
 			$(document).on('updatedWorkflow', function() {
 				Builder.changeVisibilityForElements();
 				Builder.codeEditor();
+				Builder.codePreview();
 				Builder.correctTriggerSettingsModal();
 				Builder.validateInputCurrency();
+				Builder.emojiPicker();
 			});
 		},
 
@@ -266,29 +269,50 @@
 		 * @version 1.1.0
 		 */
 		resetActionSettings: function() {
-			$('.set-time-delay-type option:first').attr('selected','selected');
-			$('.get-wait-value').val('');
-			$('.get-wait-period option:first').attr('selected','selected');
-			$('.get-date-value').val('');
-			$('.get-time-value').val('');
-			$('#joinotify_get_whatsapp_message_text').val('').change();
-			$('#joinotify_get_url_media').val('');
-			$('.condition-item.active').removeClass('active');
-			$('.condition-settings-item.active').removeClass('active');
-			$('.joinotify_condition_node_point').removeClass('active');
+			var container = $('.offcanvas');
+
+			// time delay action and component
+			container.find('.set-time-delay-type option:first').attr('selected','selected');
+			container.find('.get-wait-value').val('');
+			container.find('.get-wait-period option:first').attr('selected','selected');
+			container.find('.get-date-value').val('');
+			container.find('.get-time-value').val('');
+
+			// whatsapp message action
+			container.find('.get-whatsapp-receiver').val('');
+			container.find('.get-whatsapp-media-url').val('');
+
+			// condition action
+			container.find('.condition-item.active').removeClass('active');
+			container.find('.condition-settings-item.active').removeClass('active');
+			container.find('.joinotify_condition_node_point').removeClass('active');
 
 			// reset condition selectors
-			$('.get-condition-type').each( function() {
+			container.find('.get-condition-type').each( function() {
 				$(this).find('option:first').attr('selected','selected');
 			});
 
 			// reset condition values
-			$('.get-condition-value').each( function() {
+			container.find('.get-condition-value').each( function() {
 				$(this).find('option:first').attr('selected','selected') || $(this).val('');
 			});
 
-			// clear code editor
-			$('#joinotify_set_snippet_php').val('');
+			// get CodeMirror instance
+			let code_editor = $('#offcanvas_snippet_php').find('.joinotify-code-editor').next('.CodeMirror').get(0).CodeMirror;
+
+			// set to default text on code editor
+			if (code_editor) {
+				code_editor.setValue("<?php\n\n");
+			}
+
+			// coupon code action
+			container.find('.generate-coupon-code').prop('checked', false);
+			container.find('.set-coupon-code').val('');
+			container.find('.set-coupon-description').val('');
+			container.find('.set-coupon-discount-type option:first').attr('selected','selected');
+			container.find('.set-coupon-discount-value').val('');
+			container.find('.allow-free-shipping').prop('checked', false);
+			container.find('.set-expires-coupon').prop('checked', false);
 		},
 
 		/**
@@ -1023,6 +1047,153 @@
 		},
 
 		/**
+		 * Returns the action_data object formatted based on the action type
+		 *
+		 * @since 1.1.0
+		 * @param {string} action_type - Action type
+		 * @param {string} context - DOM context to fetch data from (e.g. '.offcanvas.show' or '.modal.show')
+		 * @returns {object} action_data
+		 */
+		getActionData: function( action_type, context ) {
+			var action_data = {};
+			var container = $(context);
+			const condition_title = container.find('.offcanvas-title, .modal-title').text();
+
+			switch ( action_type ) {
+				case 'time_delay':
+						var delay_type = container.find('.set-time-delay-type, .set-time-delay-type-edit').val();
+
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'time_delay',
+								title: condition_title,
+								delay_type: delay_type,
+							},
+						};
+
+						if (delay_type === 'period') {
+							action_data.data.delay_value = container.find('.get-wait-value').val();
+							action_data.data.delay_period = container.find('.get-wait-period').val();
+						} else if (delay_type === 'date') {
+							action_data.data.date_value = container.find('.get-date-value').val();
+							action_data.data.time_value = container.find('.get-time-value').val();
+						}
+
+						break;
+				case 'send_whatsapp_message_text':
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'send_whatsapp_message_text',
+								title: condition_title,
+								sender: container.find('.get-whatsapp-phone-sender').val(),
+								receiver: container.find('.get-whatsapp-receiver').val(),
+								message: container.find('.set-whatsapp-message-text').val(),
+							},
+						};
+						
+						break;
+				case 'send_whatsapp_message_media':
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'send_whatsapp_message_media',
+								title: condition_title,
+								sender: container.find('.get-whatsapp-phone-sender').val(),
+								receiver: container.find('.get-whatsapp-receiver').val(),
+								media_type: container.find('.get-whatsapp-media-type').val(),
+								media_url: container.find('.get-whatsapp-media-url').val(),
+							},
+						};
+
+						break;
+				case 'condition':
+						let condition = container.find('.condition-item.active').data('condition');
+
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'condition',
+								condition: condition,
+								title: container.find('.condition-item.active .title').text(),
+								condition_content: {
+									condition: container.find('.condition-settings-item.active').data('condition'),
+									type: container.find('.condition-settings-item.active .get-condition-type option:selected').val(),
+									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text(),
+									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val(),
+									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val(),
+								},
+							},
+						};
+
+						// if condition is "products_purchased"
+						if (condition === 'products_purchased') {
+							action_data.data.condition_content.condition_content = {
+								products: Builder.purchasedProducts,
+							};
+						}
+
+						break;
+				case 'stop_funnel':
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'stop_funnel',
+							},
+						};
+
+						break;
+				case 'snippet_php':
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'snippet_php',
+								title: condition_title,
+								snippet_php: container.find('.joinotify-code-editor').val(),
+							},
+						};
+
+						break;
+				case 'create_coupon':
+						var delay_type = container.find('.set-time-delay-type').val();
+
+						action_data = {
+							type: 'action',
+							data: {
+								action: 'create_coupon',
+								title: condition_title,
+								settings: {
+									generate_coupon: container.find('.generate-coupon-code').prop('checked') ? 'yes' : 'no',
+									coupon_code: container.find('.set-coupon-code').val() || '',
+									coupon_description: container.find('.set-coupon-description').val(),
+									discount_type: container.find('.set-coupon-discount-type').val(),
+									coupon_amount: container.find('.set-coupon-discount-value').val(),
+									free_shipping: container.find('.allow-free-shipping').prop('checked') ? 'yes' : 'no',
+									coupon_expiry: container.find('.set-expires-coupon').prop('checked') ? 'yes' : 'no',
+									expiry_data: {
+										type: delay_type || '',
+									},
+								},
+							},
+						};
+
+						// add delay data on object
+						if (delay_type === 'period') {
+							action_data.data.settings.expiry_data.delay_value = container.find('.get-wait-value').val();
+							action_data.data.settings.expiry_data.delay_period = container.find('.get-wait-period').val();
+						} else if (delay_type === 'date') {
+							action_data.data.settings.expiry_data.date_value = container.find('.get-date-value').val();
+							action_data.data.settings.expiry_data.time_value = container.find('.get-time-value').val();
+						}
+
+						break;
+			}
+
+			return action_data;
+		},
+
+		/**
 		 * Add action
 		 * 
 		 * @since 1.0.0
@@ -1040,94 +1211,7 @@
 				var btn_state = Builder.keepButtonState(btn);
 				var post_id = Builder.getParamByName('id');
 				var action_type = btn.data('action');
-				var action_data = {};
-				const condition_title = $('.offcanvas.show').find('.offcanvas-title').text();
-
-				// collect specific action data
-				if ( action_type === 'time_delay' ) {
-					var delay_type = $('.set-time-delay-type').val();
-
-					action_data = {
-						type: 'action',
-						data: {
-							action: 'time_delay',
-							title: condition_title,
-							delay_type: delay_type,
-						},
-					};
-			
-					if (delay_type === 'period') {
-						action_data.data.delay_value = $('.get-wait-value').val();
-						action_data.data.delay_period = $('.get-wait-period').val();
-					} else if (delay_type === 'date') {
-						action_data.data.date_value = $('.get-date-value').val();
-						action_data.data.time_value = $('.get-time-value').val();
-					}
-				} else if ( action_type === 'send_whatsapp_message_text' ) {
-					action_data = {
-						type: 'action',
-						data: {
-							action: 'send_whatsapp_message_text',
-							title: condition_title,
-							sender: $('#joinotify_get_whatsapp_phone_sender').val(),
-							receiver: $('#joinotify_get_whatsapp_number_msg_text').val(),
-							message: $('#joinotify_get_whatsapp_message_text').val(),
-						},
-					};
-				} else if ( action_type === 'send_whatsapp_message_media' ) {
-					action_data = {
-						type: 'action',
-						data: {
-							action: 'send_whatsapp_message_media',
-							title: condition_title,
-							sender: $('#joinotify_get_whatsapp_phone_sender_media').val(),
-							receiver: $('#joinotify_get_whatsapp_number_msg_media').val(),
-							media_type: $('#joinotify_get_media_type').val(),
-							media_url: $('#joinotify_get_url_media').val(),
-						},
-					};
-				} else if ( action_type === 'condition' ) {
-					let condition = $('.condition-item.active').data('condition');
-
-					action_data = {
-						type: 'action',
-						data: {
-							action: 'condition',
-							condition: condition,
-							title: $('.condition-item.active').find('.title').text(),
-							condition_content: {
-								condition: $('.condition-settings-item.active').data('condition'),
-								type: $('.condition-settings-item.active').find('.get-condition-type option:selected').val(),
-								type_text: $('.condition-settings-item.active').find('.get-condition-type option:selected').text(),
-								value: $('.condition-settings-item.active').find('.get-condition-value option:selected').val() || $('.condition-settings-item.active').find('.get-condition-value').val(),
-								value_text: $('.condition-settings-item.active').find('.get-condition-value option:selected').text() || $('.condition-settings-item.active').find('.get-condition-value').val(),
-							},
-						},
-					};
-
-					// check if condition is products purchased
-					if ( condition === 'products_purchased' ) {
-						action_data.data.condition_content.condition_content = {
-							products: Builder.purchasedProducts,
-						};
-					}
-				} else if ( action_type === 'stop_funnel' ) {
-					action_data = {
-						type: 'action',
-						data: {
-							action: 'stop_funnel',
-						},
-					};
-				} else if ( action_type === 'snippet_php' ) {
-					action_data = {
-						type: 'action',
-						data: {
-							action: 'snippet_php',
-							title: condition_title,
-							snippet_php: $('.offcanvas.show').find('.joinotify-code-editor').val(),
-						},
-					};
-				}
+				var action_data = Builder.getActionData( action_type, '.offcanvas.show' );
 
 				// display action data on debug mode
 				if ( params.debug_mode ) {
@@ -1535,56 +1619,59 @@
 			 * @since 1.1.0
 			 * @param {Object} toggle | Input toggle switch
 			 */
-			function toggleCouponCodeSettings( toggle ) {
+			function toggleCouponCodeSettings(toggle) {
 				var checked = toggle.prop('checked');
-
-				// hidden set coupon code input or set class to required
-				$(toggle).parent('div').siblings('.coupon-code-wrapper').toggleClass('d-none', checked).find('.set-coupon-code').toggleClass('required-setting', ! checked);
+	
+				// Hide/show coupon code input & add/remove required class
+				toggle.parent('div').siblings('.coupon-code-wrapper').toggleClass('d-none', checked).find('.set-coupon-code').toggleClass('required-setting', ! checked);
 			}
-
-			// listen change event
-			$(document).on('change', '.generate-coupon-code', function() {
-				var toggle = $(this);
-
-				toggleCouponCodeSettings( toggle );
-			});
-
-			// hidden default container option from coupon time delay
-			setTimeout(() => {
-				$('#offcanvas_create_coupon').find('.wait-time-period-container').addClass('d-none');
-				$('#offcanvas_create_coupon').find('.get-wait-value').removeClass('required-setting');
-			}, 600);
-
+	  
 			/**
 			 * Toggle expires coupon code settings
 			 * 
 			 * @since 1.1.0
 			 * @param {Object} toggle | Input toggle switch
 			 */
-			function toggleExpiresCoupon( toggle ) {
+			function toggleExpiresCoupon(toggle) {
 				var checked = toggle.prop('checked');
 				var select = toggle.parent('div').siblings('.select-time-delay-container').find('.set-time-delay-type');
-
-				// hidden time delay components if not checked
-				$(toggle).parent('div').siblings('.select-time-delay-container').toggleClass('d-none', ! checked);
-
-				// check if select time delay type is period or date on toggle switch
+	
+				// Show/hide time delay options
+				toggle.parent('div').siblings('.select-time-delay-container').toggleClass('d-none', ! checked);
+	
 				if ( select.val() === 'period' ) {
-					$(toggle).parent('div').siblings('.wait-time-period-container').toggleClass('d-none', ! checked);
-					$(toggle).parent('div').siblings('.wait-time-period-container').find('.get-wait-value').toggleClass('required-setting', checked);
-				} else if ( select.val() === 'date' ) {
-					$(toggle).parent('div').siblings('.wait-date-container').toggleClass('d-none', ! checked);
-					$(toggle).parent('div').siblings('.wait-date-container').find('.get-date-value').toggleClass('required-setting', checked);
+					toggle.parent('div').siblings('.wait-time-period-container').toggleClass('d-none', ! checked).find('.get-wait-value').toggleClass('required-setting', checked);
+				} else if (select.val() === 'date') {
+					toggle.parent('div').siblings('.wait-date-container').toggleClass('d-none', ! checked).find('.get-date-value').toggleClass('required-setting', checked);
 				}
 			}
 
-			// listen change event
-			$(document).on('change', '.set-expires-coupon', function() {
-				var toggle = $(this);
-
-				toggleExpiresCoupon( toggle );
+			// Listen to change event for coupon code toggle
+			$(document).on('change', '.generate-coupon-code', function() {
+				toggleCouponCodeSettings( $(this) );
 			});
-		},
+	  
+			// Listen to change event for expiration toggle
+			$(document).on('change', '.set-expires-coupon', function() {
+				toggleExpiresCoupon( $(this) );
+			});
+	  
+			// Hide default container option from coupon time delay
+			setTimeout(() => {
+				$('#offcanvas_create_coupon').find('.wait-time-period-container').addClass('d-none');
+				$('#offcanvas_create_coupon').find('.get-wait-value').removeClass('required-setting');
+
+				// Apply settings on page load (for already checked elements)
+				$('.generate-coupon-code').each( function() {
+					toggleCouponCodeSettings( $(this) );
+				});
+		
+				$('.set-expires-coupon').each( function() {
+					toggleExpiresCoupon( $(this) );
+				});
+			}, 600);
+	  	},
+	  
 	
 		/**
 		 * Change visibility for elements
@@ -1961,7 +2048,7 @@
 					method: 'POST',
 					data: {
 						action: 'joinotify_fetch_all_groups',
-						sender: $('#joinotify_get_whatsapp_phone_sender').val(),
+						sender: $('.offcanvas.show').find('.get-whatsapp-phone-sender').val(),
 					},
 					success: function(response) {
 						if ( params.debug_mode ) {
@@ -2016,86 +2103,15 @@
 		 * @since 1.1.0
 		 */
 		saveActionSettings: function() {
-			var action_data = {};
-
 			// save action on click button
 			$(document).on('click', '.save-action-edit', function(e) {
 				e.preventDefault();
 
 				var btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
-				var get_action = btn.data('action');
+				var action_type = btn.data('action');
 				var get_action_id = btn.data('action-id');
-
-				// collect specific action data
-				if ( get_action === 'time_delay' ) {
-					var delay_type = $('.modal.show').find('.set-time-delay-type-edit').val();
-
-					action_data = {
-						action: 'time_delay',
-						data: {
-							delay_type: delay_type,
-						},
-					};
-		
-					if ( delay_type === 'period' ) {
-						action_data.data.delay_value = $('.modal.show').find('.get-wait-value').val();
-						action_data.data.delay_period = $('.modal.show').find('.get-wait-period').val();
-					} else if ( delay_type === 'date' ) {
-						action_data.data.date_value = $('.modal.show').find('.get-date-value').val();
-						action_data.data.time_value = $('.modal.show').find('.get-time-value').val();
-					}
-				} else if ( get_action === 'send_whatsapp_message_text' ) {
-					action_data = {
-						action: 'send_whatsapp_message_text',
-						data: {
-							sender: $('.modal.show').find('.get-phone-sender-edit').val(),
-							receiver: $('.modal.show').find('.get-whatsapp-number-edit').val(),
-							message: $('.modal.show').find('.edit-whatsapp-message-text').val(),
-						},
-					};
-				} else if ( get_action === 'send_whatsapp_message_media' ) {
-					action_data = {
-						action: 'send_whatsapp_message_media',
-						data: {
-							sender: $('.modal.show').find('.get-phone-sender-edit').val(),
-							receiver: $('.modal.show').find('.get-whatsapp-number-edit').val(),
-							media_type: $('.modal.show').find('.get-media-type-edit').val(),
-							media_url: $('.modal.show').find('.get-media-url-edit').val(),
-						},
-					};
-				} else if ( get_action === 'condition' ) {
-					action_data = {
-						data: {
-							action: 'condition',
-							// condition_content: {
-							//     condition: $('.condition-settings-item.active').data('condition'),
-							//     type: $('.condition-settings-item.active').find('.get-condition-type option:selected').val(),
-							//     type_text: $('.condition-settings-item.active').find('.get-condition-type option:selected').text(),
-							//     value: $('.condition-settings-item.active').find('.get-condition-value option:selected').val() || $('.condition-settings-item.active').find('.get-condition-value').val(),
-							//     value_text: $('.condition-settings-item.active').find('.get-condition-value option:selected').text() || $('.condition-settings-item.active').find('.get-condition-value').val(),
-							// },
-						},
-					};
-				} else if ( get_action === 'snippet_php' ) {
-					action_data = {
-						data: {
-							action: 'snippet_php',
-							data: {
-								snippet_php: $('.modal.show').find('.joinotify-code-editor').val(),
-							}
-						}
-					};
-				} else if ( get_action === 'create_coupon' ) {
-					action_data = {
-						data: {
-							action: 'create_coupon',
-							data: {
-								// Additional data for create_coupon
-							}
-						}
-					};
-				}
+				var action_data = Builder.getActionData( action_type, '.modal.show' );
 
 				// display action data on debug mode
 				if (params.debug_mode) {
@@ -2122,9 +2138,14 @@
 
 						try {
 							if (response.status === 'success') {
+								// close settings modal
+								$('.modal.show').find('.btn-close').click(); // close modal
+
 								// update workflow content
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
-								$('.modal.show').find('.btn-close').click(); // close modal
+
+								// fire updated workflow event
+								$(document).trigger('updatedWorkflow');
 
 								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
 							} else {
@@ -2147,12 +2168,13 @@
 		 * @since 1.1.0
 		 */
 		codeEditor: function() {
+			// initialize CodeMirror for each code editor
 			$('.joinotify-code-editor').each( function() {
 				let textarea = this;
 				
 				// check if editor is already initialized
 				if ( ! $(textarea).hasClass('initiliazed-editor') ) {
-					var editor = CodeMirror.fromTextArea(textarea, {
+					var editor = CodeMirror.fromTextArea( textarea, {
 						mode: 'application/x-httpd-php',
 						theme: 'dracula',
 						lineNumbers: true,
@@ -2164,7 +2186,7 @@
 					});
 
 					// add class to textarea to prevent multiple initialization
-					$(textarea).addClass('initiliazed-editor').focus();
+					$(textarea).addClass('initiliazed-editor');
 
 					// set PHP open tag on first line if empty textarea
 					if ( editor.getValue().trim() === '' ) {
@@ -2248,6 +2270,37 @@
 		},
 
 		/**
+		 * Initialize code preview on workflow
+		 * 
+		 * @since 1.1.0
+		 */
+		codePreview: function() {
+			// initialize CodeMirror for each code preview
+			$('.joinotify-code-preview').each( function() {
+				let textarea_preview = this;
+
+				let preview = CodeMirror.fromTextArea( textarea_preview, {
+					mode: 'application/x-httpd-php',
+					theme: 'dracula',
+					lineNumbers: true,
+					matchBrackets: true,
+					autoCloseBrackets: true,
+					indentUnit: 4,
+					tabSize: 4,
+					readOnly: 'nocursor',
+				});
+
+				// set initialized this code preview
+				$(textarea_preview).addClass('initiliazed-preview');
+
+				// adjust the height of the editor to fit the code
+				preview.setSize("100%", "auto");
+				
+				$(preview.getWrapperElement()).addClass('preview');
+			});
+		},
+
+		/**
 		 * Save trigger settings
 		 * 
 		 * @since 1.1.0
@@ -2320,47 +2373,56 @@
 		emojiPicker: function() {
 			var i18n = params.emoji_picker_i18n;
 
-			// initialize emoji picker
-			$('.add-emoji-picker').emojioneArea({
-				tones: true,
-				hidePickerOnBlur: true,
-				recentEmojis: true,
-				pickerPosition: 'bottom',
-				searchPlaceholder: i18n.placeholder,
-				buttonTitle: i18n.button_title,
-				filters: {
-					tones: {
-						title: i18n.filters.tones_title,
-					},
-					recent: {
-						title: i18n.filters.recent_title,
-					},
-					smileys_people: {
-						title: i18n.filters.smileys_people_title,
-					},
-					animals_nature: {
-						title: i18n.filters.animals_nature_title,
-					},
-					food_drink: {
-						title: i18n.filters.food_drink_title,
-					},
-					activity: {
-						title: i18n.filters.activity_title,
-					},
-					travel_places: {
-						title: i18n.filters.travel_places_title,
-					},
-					objects: {
-						title: i18n.filters.objects_title,
-					},
-					symbols: {
-						title: i18n.filters.symbols_title,
-					},
-					flags: {
-						title: i18n.filters.flags_title,
-					},
-				},
-			});
+			// check if emoji picker is already initialized
+			if ( ! $('.add-emoji-picker').hasClass('emoji-initialized') ) {
+				// wait DOM is ready for initialize	
+				setTimeout( () => {
+					// initialize emoji picker
+					$('.add-emoji-picker').emojioneArea({
+						tones: true,
+						hidePickerOnBlur: true,
+						recentEmojis: true,
+						pickerPosition: 'bottom',
+						searchPlaceholder: i18n.placeholder,
+						buttonTitle: i18n.button_title,
+						filters: {
+							tones: {
+								title: i18n.filters.tones_title,
+							},
+							recent: {
+								title: i18n.filters.recent_title,
+							},
+							smileys_people: {
+								title: i18n.filters.smileys_people_title,
+							},
+							animals_nature: {
+								title: i18n.filters.animals_nature_title,
+							},
+							food_drink: {
+								title: i18n.filters.food_drink_title,
+							},
+							activity: {
+								title: i18n.filters.activity_title,
+							},
+							travel_places: {
+								title: i18n.filters.travel_places_title,
+							},
+							objects: {
+								title: i18n.filters.objects_title,
+							},
+							symbols: {
+								title: i18n.filters.symbols_title,
+							},
+							flags: {
+								title: i18n.filters.flags_title,
+							},
+						},
+					});
+				}, 300);
+
+				// initialize emoji picker
+				$('.add-emoji-picker').addClass('emoji-initialized');
+			}
 
 			// Update the textarea on keyup event in the emojionearea editor
 			$(document).on('keyup change', '.emojionearea-editor', function() {

@@ -128,8 +128,9 @@ class Components {
                                 $html .= '</div>';
 
                                 $html .= '<div class="modal-body px-4 py-3 my-3">';
-                                    $get_condition = Utils::get_condition_item( $post_id, $action_id );
-                                    $html .= self::render_condition_settings( $get_condition );
+                                    $get_condition = Conditions::get_condition_content( $post_id, $action_id );
+
+                                    $html .= self::render_condition_settings( $get_condition['condition'], $get_condition );
                                 $html .= '</div>';
 
                                 $html .= '<div class="modal-footer px-4">';
@@ -294,80 +295,11 @@ class Components {
 
         switch ( $action ) {
             case 'time_delay':
-                $delay_type = isset( $action_data['delay_type'] ) ? esc_attr( $action_data['delay_type'] ) : 'period';
-
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Selecione o tipo de atraso da próxima ação', 'joinotify' ) .'</span>';
-                    
-                    $html .= '<select class="form-select set-time-delay-type set-time-delay-type-edit">';
-                        $html .= '<option value="period"'. selected( $delay_type, 'period', false ) .'>'. esc_html__( 'Esperar tempo', 'joinotify' ) .'</option>';
-                        $html .= '<option value="date"'. selected( $delay_type, 'date', false ) .'>'. esc_html__( 'Esperar até uma data', 'joinotify' ) .'</option>';
-                    $html .= '</select>';
-                $html .= '</div>';
-
-                $delay_value = $action_data['delay_value'] ?? '';
-                $delay_period = $action_data['delay_period'] ?? 'seconds';
-                $date_value = $action_data['date_value'] ?? '';
-                $time_value = $action_data['time_value'] ?? '';
-
-                // get timestamp for time delay
-                $html .= '<div class="wait-time-period-container">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Esperar por', 'joinotify' ) .'</span>';
-                    
-                    $html .= '<div class="input-group">';
-                        $html .= '<input type="number" class="form-control get-wait-value" value="'. $delay_value .'"/>';
-
-                        $html .= '<select class="form-select get-wait-period">';
-                            foreach ( self::get_time_delay_options() as $option => $title ) {
-                                $html .= '<option value="'. esc_attr( $option ) .'"'. selected( $delay_period, $option, false) .'>'. esc_html( $title ) .'</option>';
-                            }
-                        $html .= '</select>';
-                    $html .= '</div>';
-                $html .= '</div>';
-
-                // get date for time delay
-                $html .= '<div class="wait-date-container">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Esperar até', 'joinotify' ) .'</span>';
-                    
-                    $html .= '<div class="input-group">';
-                        $html .= '<input type="text" class="form-control dateselect get-date-value" value="'. $date_value .'" placeholder="'. esc_attr__( 'Selecione uma data', 'joinotify' ) .'"/>';
-                        $html .= '<input type="time" class="form-control get-time-value" value="'. $time_value .'" placeholder="'. esc_attr__( 'Digite um horário (Opcional)', 'joinotify' ) .'" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="'. esc_attr__( 'Informe um horário no formato H:i - 20:03', 'joinotify' ) .'"/>';
-                    $html .= '</div>';
-                $html .= '</div>';
+                $html .= self::time_delay_action( $action_data );
 
                 break;
             case 'send_whatsapp_message_text':
-                $sender = $action_data['sender'] ?? '';
-                $receiver = $action_data['receiver'] ?? '';
-                $message = $action_data['message'] ?? '';
-
-                $html .= '<div class="preview-whatsapp-message-sender active edit-action">'. nl2br( $message ) .'</div>';
-
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Remetente', 'joinotify' ) .'</span>';
-                            
-                    $html .= '<select class="form-select mw-100 get-phone-sender-edit">';
-                        foreach ( get_option('joinotify_get_phones_senders') as $phone ) {
-                            $html .= '<option value="'. esc_attr( $phone ) .'" '. selected( $sender, $phone, false ) .' class="get-sender-number">'. esc_html( Helpers::format_phone_number( $phone ) ) .'</option>';
-                        }
-                    $html .= '</select>';
-                $html .= '</div>';
-
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Destinatário', 'joinotify' ) .'</span>';
-
-                    $html .= '<input type="text" class="get-whatsapp-number-edit form-control" value="'. $receiver .'" placeholder="'. esc_attr__( '+5541987111527', 'joinotify' ) .'"/>';
-                $html .= '</div>';
-
-                // Estimate number of lines (counts how many line breaks there are)
-                $lines = substr_count( $message, "\n" ) + 1;
-                $line_height = 40; // px
-                $textarea_height = $lines * $line_height;
-
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Mensagem de texto', 'joinotify' ) .'</span>';
-                    $html .= '<textarea class="form-control add-emoji-picker set-whatsapp-message-text edit-whatsapp-message-text" placeholder="'. esc_attr__( 'Mensagem', 'joinotify' ) .'"  style="height: '. $textarea_height .'px;">'. $message .'</textarea>';
-                $html .= '</div>';
+                $html .= \MeuMouse\Joinotify\Integrations\Whatsapp::whatsapp_message_text_action( $action_data );
 
                 // placeholders helper
                 $html .= '<div class="accordion" id="whatsapp_msg_text_placeholder_accordion_edit">';
@@ -399,56 +331,15 @@ class Components {
 
                 break;
             case 'send_whatsapp_message_media':
-                $sender = $action_data['sender'] ?? '';
-                $receiver = $action_data['receiver'] ?? '';
-                $media_type = $action_data['media_type'] ?? '';
-                $media_url = $action_data['media_url'] ?? '';
-
-                $html .= '<div class="message-preview edit-action">' . Messages::build_whatsapp_media_message( $action_data ) . '</div>';
-
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Remetente', 'joinotify' ) .'</span>';
-
-                    $html .= '<select class="form-select get-phone-sender-edit">';
-                        foreach ( get_option('joinotify_get_phones_senders') as $phone ) {
-                            $html .= '<option value="'. esc_attr( $phone ) .'" '. selected( $sender, $phone, false ) .' class="get-sender-number">'. esc_html( Helpers::format_phone_number( $phone ) ) .'</option>';
-                        }
-                    $html .= '</select>';
-                $html .= '</div>';        
-                    
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Destinatário', 'joinotify' ) .'</span>';
-                        
-                    $html .= '<input type="text" class="form-control get-whatsapp-number-edit" value="'. $receiver .'" placeholder="'. esc_attr__( '+5541987111527', 'joinotify' ) .'"/>';
-                $html .= '</div>';
-                    
-                $html .= '<div class="mb-4">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Tipo de mídia', 'joinotify' ) .'</span>';
-                
-                    $html .= '<select class="form-select get-media-type-edit">';
-                        foreach ( Media_Types::get_media_types() as $type => $value ) {
-                            $html .= '<option value="'. esc_attr( $type ) .'" '. selected( $media_type, $type, false ) .'>'. esc_html( $value ) .'</option>';
-                        }
-                    $html .= '</select>'; 
-                $html .= '</div>';    
-                
-                $html .= '<div class="require-media-type-image mb-3">';
-                    $html .= '<span class="fs-md text-muted mb-2 ms-2 d-block">'. esc_html__( 'Adicionar mídia', 'joinotify' ) .'</span>';
-                    
-                    $html .= '<div class="input-group">';
-                        $html .= '<button class="btn btn-icon btn-outline-secondary icon-translucent set-media-url">';
-                            $html .= '<svg class="icon icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 5h13v7h2V5c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h8v-2H4V5z"></path><path d="m8 11-3 4h11l-4-6-3 4z"></path><path d="M19 14h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path></svg>';
-                        $html .= '</button>';    
-                        
-                        $html .= '<input type="text" class="form-control get-media-url" value="'. $media_url .'" placeholder="'. esc_attr__( 'URL da mídia', 'joinotify' ) .'"/>';
-                    $html .= '</div>';    
-                $html .= '</div>'; 
+                $html .= \MeuMouse\Joinotify\Integrations\Whatsapp::whatsapp_message_media_action( $action_data );
 
                 break;
             case 'snippet_php':
-                $snippet_php = $action_data['snippet_php'] ?? '';
+                $html .= self::snippet_php_action( $action_data );
 
-                $html .= '<textarea class="form-control joinotify-code-editor required-setting set-new-code-snippet-php">'. $snippet_php .'</textarea>';
+                break;
+            case 'create_coupon':
+                $html .= \MeuMouse\Joinotify\Integrations\Woocommerce::create_coupon_action( $action_data );
 
                 break;
         }
@@ -574,7 +465,8 @@ class Components {
                 $html .= '<select id="get_wpforms_form_id" class="form-select set-trigger-settings wpforms-form-id required-setting">';
                     $html .= '<option value="none">'. esc_html__( 'Selecione um formulário', 'joinotify' ) .'</option>';
                     
-                    $forms = \MeuMouse\Joinotify\Integrations\Wpforms::get_all_wpforms_forms();
+                    // get all wpforms forms
+                    $forms = \MeuMouse\Joinotify\Integrations\Wpforms::get_forms();
 
                     foreach ( $forms as $form ) {
                         $html .= '<option value="'. esc_attr( $form['ID'] ) .'" '. selected( $current_form_id, $form['ID'], false ) .'>'. esc_html( $form['title'] ) .'</option>';
@@ -628,7 +520,7 @@ class Components {
      * @return string
      */
     public static function build_condition_connector( $post_id, $action_id ) {
-        $condition_data = Utils::find_condition_by_id( $post_id, $action_id );
+        $condition_data = Conditions::find_condition_by_id( $post_id, $action_id );
 
         if ( empty( $condition_data ) ) {
             return '';
@@ -721,48 +613,58 @@ class Components {
      * @since 1.0.0
      * @version 1.1.0
      * @param string $condition | Condition key
+     * @param array $settings | Settings for condition
      * @return string HTML of rendered condition settings
      */
-    public static function render_condition_settings( $condition ) {
+    public static function render_condition_settings( $condition, $settings = array() ) {
         $html = '';
 
-        $html .= self::get_condition_options( $condition );
+        $condition_settings = $settings['type'] ?? '';
+
+        // add condition options
+        $html .= self::get_condition_options( $condition, $condition_settings );
 
         switch ( $condition ) {
             case 'user_role':
                 global $wp_roles;
             
                 $roles = $wp_roles->get_names();
+                $selected_role = $settings['user_role'] ?? '';
 
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_role" class="form-label">' . esc_html__('Função do usuário: *', 'joinotify') . '</label>';
-                    $html .= '<select id="user_role" name="condition[user_role]" class="form-control get-condition-value required-setting">';
+                    $html .= '<label class="form-label">' . esc_html__('Função do usuário: *', 'joinotify') . '</label>';
+                    $html .= '<select class="form-control get-condition-value required-setting">';
                 
                     foreach ( $roles as $role_key => $role_name ) {
                         $translated_role_name = translate_user_role( $role_name );
-                        $html .= '<option value="' . esc_attr( $role_key ) . '">' . esc_html( $translated_role_name ) . '</option>';
+                        $selected = selected( $selected_role, $role_key, false );
+
+                        $html .= '<option value="'. esc_attr( $role_key ) .'" '. $selected .'>'. esc_html( $translated_role_name ) .'</option>';
                     }
                 
                     $html .= '</select>';
                 $html .= '</div>';
 
-                break;            
+                break;
             case 'user_meta':
+                $user_metadata = $settings['user_meta']['user_metadata'] ?? '';
+                $value_metadata = $settings['user_meta']['value_metadata'] ?? '';
+
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_meta" class="form-label">' . esc_html__('Metadados do usuário: *', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="user_meta" name="condition[user_meta][user_metadata]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Nome do metadado', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Metadados do usuário: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $user_metadata ) .'" placeholder="'. esc_attr__( 'Nome do metadado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_meta" class="form-label">' . esc_html__('Valor do metadado: *', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="user_meta" name="condition[user_meta][value_metadata]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do metadado', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Valor do metadado: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $value_metadata ) .'" placeholder="'. esc_attr__( 'Valor do metadado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'user_last_login':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="user_last_login" class="form-label">' . esc_html__('Tempo desde o último login: *', 'joinotify') . '</label>';
-                    $html .= '<input type="number" id="user_last_login" name="condition[user_last_login]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Número de horas', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Tempo desde o último login: *', 'joinotify') . '</label>';
+                    $html .= '<input type="number" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Número de horas', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -770,21 +672,21 @@ class Components {
                 $html .= '<div class="mb-4">';
                     // Retrieves all registered post types
                     $post_types = get_post_types( array( 'public' => true ), 'objects' );
-                    $html .= '<label for="post_type" class="form-label">' . esc_html__('Tipo de post: *', 'joinotify') . '</label>';
-                    $html .= '<select id="post_type" name="condition[post_type]" class="form-control get-condition-value required-setting">';
-                    
-                    foreach ( $post_types as $post_type_key => $post_type_object ) {
-                        $html .= '<option value="' . esc_attr( $post_type_key ) . '">' . esc_html( $post_type_object->labels->name ) . '</option>';
-                    }
 
+                    $html .= '<label class="form-label">' . esc_html__('Tipo de post: *', 'joinotify') . '</label>';
+                    
+                    $html .= '<select class="form-control get-post-type get-condition-value required-setting">';
+                        foreach ( $post_types as $post_type_key => $post_type_object ) {
+                            $html .= '<option value="' . esc_attr( $post_type_key ) . '">' . esc_html( $post_type_object->labels->name ) . '</option>';
+                        }
                     $html .= '</select>';
                 $html .= '</div>';
 
                 break;
             case 'post_author':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="post_author" class="form-label">' . esc_html__('Autor do post: *', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="post_author" name="condition[post_author]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Nome do autor', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Autor do post: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value post-author" placeholder="'. esc_attr__( 'Nome do autor', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -793,37 +695,39 @@ class Components {
                     // Retrieves all WooCommerce order statuses
                     if ( function_exists('wc_get_order_statuses') ) {
                         $order_statuses = wc_get_order_statuses();
+                        $selected_status = $settings['order_status'] ?? '';
 
-                        $html .= '<label for="order_status" class="form-label">' . esc_html__('Status do pedido: *', 'joinotify') . '</label>';
-                        $html .= '<select id="order_status" name="condition[order_status]" class="form-control get-condition-value required-setting">';
+                        $html .= '<label class="form-label">' . esc_html__('Status do pedido: *', 'joinotify') . '</label>';
                         
-                        foreach ( $order_statuses as $status_key => $status_name ) {
-                            $html .= '<option value="' . esc_attr( $status_key ) . '">' . esc_html( $status_name ) . '</option>';
-                        }
-
+                        $html .= '<select class="form-control get-condition-value required-setting">';
+                            foreach ( $order_statuses as $status_key => $status_name ) {
+                                $html .= '<option value="' . esc_attr( $status_key ) . '" '. selected( $selected_status, $status_key, false ) .'>' . esc_html( $status_name ) . '</option>';
+                            }
                         $html .= '</select>';
                     }
                 $html .= '</div>';
 
                 break;
             case 'order_total':
+                $order_total = $settings['value'] ?? '';
+
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="order_total" class="form-label">' . esc_html__('Valor total do pedido: *', 'joinotify') . '</label>';
+                    $html .= '<label class="form-label">' . esc_html__('Valor total do pedido: *', 'joinotify') . '</label>';
 
                     $html .= '<div class="input-group">';
                         if ( function_exists('get_woocommerce_currency_symbol') ) {
                             $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
                         }
-                        
-                        $html .= '<input type="text" id="order_total" name="condition[order_total]" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor total do pedido', 'joinotify' ) .'">';
+
+                        $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" value="'. esc_attr( $order_total ) .'" placeholder="'. esc_attr__( 'Valor total do pedido', 'joinotify' ) .'">';
                     $html .= '</div>';
                 $html .= '</div>';
 
                 break;
             case 'products_purchased':
                 $html .= '<div class="mb-4 search-products-wrapper">';
-                    $html .= '<label for="products_purchased" class="form-label">' . esc_html__('Produtos adquiridos:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="products_purchased" name="condition[products_purchased]" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Produtos adquiridos:', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
                     
                     $html .= '<div class="list-group search-products-results-wrapper mt-3"></div>';
                 $html .= '</div>';
@@ -831,30 +735,30 @@ class Components {
                 break;
             case 'customer_email':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="customer_email" class="form-label">' . esc_html__('E-mail do cliente:', 'joinotify') . '</label>';
-                    $html .= '<input type="email" id="customer_email" name="condition[customer_email]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('E-mail do cliente:', 'joinotify') . '</label>';
+                    $html .= '<input type="email" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'refund_amount':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="refund_amount" class="form-label">' . esc_html__('Valor do reembolso: *', 'joinotify') . '</label>';
+                    $html .= '<label class="form-label">' . esc_html__('Valor do reembolso: *', 'joinotify') . '</label>';
 
                     $html .= '<div class="input-group">';
                         if ( function_exists('get_woocommerce_currency_symbol') ) {
                                 $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
                         }
                         
-                        $html .= '<input type="text" id="refund_amount" name="condition[refund_amount]" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
+                        $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
                     $html .= '</div>';
                 $html .= '</div>';
 
                 break;
             case 'subscription_status':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="subscription_status" class="form-label">' . esc_html__('Status da assinatura: *', 'joinotify') . '</label>';
+                    $html .= '<label class="form-label">' . esc_html__('Status da assinatura: *', 'joinotify') . '</label>';
                     
-                    $html .= '<select id="subscription_status" name="condition[subscription_status]" class="form-control get-condition-value required-setting">';
+                    $html .= '<select class="form-control get-condition-value required-setting">';
                         $html .= '<option value="active">' . esc_html__( 'Ativa', 'joinotify' ) . '</option>';
                         $html .= '<option value="on-hold">' . esc_html__( 'Em espera', 'joinotify' ) . '</option>';
                         $html .= '<option value="cancelled">' . esc_html__( 'Cancelada', 'joinotify' ) . '</option>';
@@ -864,8 +768,9 @@ class Components {
                 break;
             case 'renewal_payment':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="renewal_payment" class="form-label">' . esc_html__('Pagamento da renovação: *', 'joinotify') . '</label>';
-                    $html .= '<select id="renewal_payment" name="condition[renewal_payment]" class="form-control get-condition-value required-setting">';
+                    $html .= '<label class="form-label">' . esc_html__('Pagamento da renovação: *', 'joinotify') . '</label>';
+                    
+                    $html .= '<select class="form-control get-condition-value required-setting">';
                         $html .= '<option value="yes">' . esc_html__( 'Sim', 'joinotify' ) . '</option>';
                         $html .= '<option value="no">' . esc_html__( 'Não', 'joinotify' ) . '</option>';
                     $html .= '</select>';
@@ -874,34 +779,34 @@ class Components {
                 break;
             case 'cart_total':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="cart_total" class="form-label">' . esc_html__('Valor total do carrinho:', 'joinotify') . '</label>';
-                    $html .= '<input type="number" id="cart_total" name="condition[cart_total]" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor total do carrinho', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Valor total do carrinho:', 'joinotify') . '</label>';
+                    $html .= '<input type="number" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor total do carrinho', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'items_in_cart':
                 $html .= '<div class="mb-4 search-products-wrapper">';
-                    $html .= '<label for="items_in_cart" class="form-label">' . esc_html__('Produtos no carrinho:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="items_in_cart" name="condition[items_in_cart]" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Produtos no carrinho:', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'form_id':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="form_id" class="form-label">' . esc_html__('ID do formulário:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="form_id" name="condition[form_id]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do formulário', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('ID do formulário:', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do formulário', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'field_value':
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="field_value" class="form-label">' . esc_html__('Valor espefífico de um campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="field_value" name="condition[field_value]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('Valor espefífico de um campo:', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 $html .= '<div class="mb-4">';
-                    $html .= '<label for="field_id" class="form-label">' . esc_html__('ID do campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" id="field_id" name="condition[field_id]" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
+                    $html .= '<label class="form-label">' . esc_html__('ID do campo:', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -919,9 +824,12 @@ class Components {
      * Get condition options
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @param string $condition | Condition key
+     * @param string $condition_value | Condition value
+     * @return string
      */
-    public static function get_condition_options( $condition ) {
+    public static function get_condition_options( $condition, $condition_value = '' ) {
         $condition_options = array(
             'is' => esc_html__( 'É', 'joinotify' ),
             'is_not' => esc_html__( 'Não é', 'joinotify' ),
@@ -944,7 +852,7 @@ class Components {
 
                 foreach ( $condition_options as $option => $value ) {
                     if ( in_array( $option, $allowed_conditions ) ) {
-                        $html .= '<option value="'. esc_attr( $option ) .'">'. $value .'</option>';
+                        $html .= '<option value="'. esc_attr( $option ) .'" '. selected( $option, $condition_value, false ) .'>'. $value .'</option>';
                     }
                 }
             $html .= '</select>';
@@ -1070,9 +978,10 @@ class Components {
      * Render time delay settings on sidebar action
      * 
      * @since 1.1.0
+     * @param array $settings | Current settings
      * @return string
      */
-    public static function time_delay_action_settings() {
+    public static function time_delay_action( $settings = array() ) {
         ob_start();
 
         if ( Schedule::is_wp_cron_active() ) : ?>
@@ -1080,8 +989,8 @@ class Components {
                 <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Selecione o tipo de atraso da próxima ação', 'joinotify' ) ?></span>
                 
                 <select class="form-select set-time-delay-type">
-                    <option value="period"><?php esc_html_e( 'Esperar tempo', 'joinotify' ) ?></option>
-                    <option value="date"><?php esc_html_e( 'Esperar até uma data', 'joinotify' ) ?></option>
+                    <option value="period" <?php selected( $settings['delay_type'] ?? '', 'period' ) ?>><?php esc_html_e( 'Esperar tempo', 'joinotify' ) ?></option>
+                    <option value="date" <?php selected( $settings['delay_type'] ?? '', 'date' ) ?>><?php esc_html_e( 'Esperar até uma data', 'joinotify' ) ?></option>
                 </select>
             </div>
 
@@ -1089,16 +998,12 @@ class Components {
                 <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Esperar por', 'joinotify' ) ?></span>
                 
                 <div class="input-group">
-                    <input type="number" class="form-control get-wait-value"/>
+                    <input type="number" class="form-control get-wait-value" value="<?php echo $settings['delay_value'] ?? '' ?>"/>
 
                     <select class="form-select get-wait-period">
-                        <option value="seconds"><?php esc_html_e( 'Segundo (s)', 'joinotify' ) ?></option>
-                        <option value="minute"><?php esc_html_e( 'Minuto (s)', 'joinotify' ) ?></option>
-                        <option value="hours"><?php esc_html_e( 'Hora (s)', 'joinotify' ) ?></option>
-                        <option value="day"><?php esc_html_e( 'Dia (s)', 'joinotify' ) ?></option>
-                        <option value="week"><?php esc_html_e( 'Semana (s)', 'joinotify' ) ?></option>
-                        <option value="month"><?php esc_html_e( 'Mês (es)', 'joinotify' ) ?></option>
-                        <option value="year"><?php esc_html_e( 'Ano (s)', 'joinotify' ) ?></option>
+                        <?php foreach ( self::get_time_delay_options() as $option => $title ) : ?>
+                            <option value="<?php esc_attr_e( $option ) ?>" <?php selected( $settings['delay_period'] ?? '', $option ) ?>><?php esc_html_e( $title ) ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -1107,8 +1012,8 @@ class Components {
                 <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Esperar até', 'joinotify' ) ?></span>
                 
                 <div class="input-group">
-                    <input type="text" class="form-control dateselect get-date-value" placeholder="<?php esc_attr_e( 'Selecione uma data', 'joinotify' ) ?>"/>
-                    <input type="time" class="form-control get-time-value"/>
+                    <input type="text" class="form-control dateselect get-date-value" value="<?php echo $settings['date_value'] ?? '' ?>" placeholder="<?php esc_attr_e( 'Selecione uma data', 'joinotify' ) ?>"/>
+                    <input type="time" class="form-control get-time-value" value="<?php echo $settings['time_value'] ?? '' ?>"/>
                 </div>
             </div>
         <?php else : ?>
@@ -1123,21 +1028,25 @@ class Components {
 
 
     /**
-     * Render snippet php settings on sidebar action
+     * Render Snippet PHP component
      * 
      * @since 1.1.0
+     * @param array $settings | Current settings
      * @return string
      */
-    public static function snippet_php_action_settings() {
-        ob_start(); ?>
+    public static function snippet_php_action( $settings = array() ) {
+        ob_start();
 
-        <div class="alert alert-warning alert-dismissible fade show mb-4">
-            <svg class="icon icon-lg me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#664d03" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#664d03" d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
-            <?php echo __( '<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros no site.', 'joinotify' ) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+        // display alert on sidebar, because is calling without settings param
+        if ( empty( $settings ) ) : ?>
+            <div class="alert alert-warning alert-dismissible fade show mb-4">
+                <svg class="icon icon-lg me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#664d03" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#664d03" d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
+                <?php echo __( '<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros no site.', 'joinotify' ) ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
 
-        <textarea id="joinotify_set_snippet_php" name="joinotify_set_snippet_php" class="form-control joinotify-code-editor required-setting"></textarea>
+        <textarea class="form-control joinotify-code-editor required-setting"><?php echo $settings['snippet_php'] ?? ''; ?></textarea>
 
         <?php return ob_get_clean();
     }

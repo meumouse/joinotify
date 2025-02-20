@@ -77,7 +77,7 @@ class Ajax {
             'joinotify_force_download' => 'force_download_debug_logs',
             'joinotify_dismiss_placeholders_tip' => 'dismiss_placeholders_tip_callback',
             'joinotify_fetch_all_groups' => 'fetch_all_groups_callback',
-            'joinotify_save_action_edition' => 'save_action_edit_callback',
+            'joinotify_save_action_edition' => 'save_action_settings_callback',
             'joinotify_save_trigger_settings' => 'save_trigger_settings_callback',
             'joinotify_get_woo_products' => 'get_woo_products_callback',
         );
@@ -810,15 +810,18 @@ class Ajax {
                         'message' => isset( $workflow_action['data']['message'] ) ? $workflow_action['data']['message'] : ''
                     )
                 );
+
+                // build workflow description
+                $build_description = Messages::build_workflow_action_description( $workflow_action );
     
                 if ( isset( $workflow_action['data']['action'] ) ) {
                     if ( $workflow_action['data']['action'] === 'condition' ) {
-                        $new_action['data']['description'] = Messages::build_workflow_action_message( $workflow_action );
+                        $new_action['data']['description'] = $build_description;
                         $new_action['data']['condition_content']['condition'] = isset( $workflow_action['data']['condition_content']['condition'] ) ? $workflow_action['data']['condition_content']['condition'] : '';
                         $new_action['data']['condition_content']['type'] = isset( $workflow_action['data']['condition_content']['type'] ) ? $workflow_action['data']['condition_content']['type'] : '';
                         $new_action['data']['condition_content']['value'] = isset( $workflow_action['data']['condition_content']['value'] ) ? $workflow_action['data']['condition_content']['value'] : '';
                     } elseif ( $workflow_action['data']['action'] === 'time_delay' ) {
-                        $new_action['data']['description'] = Messages::build_workflow_action_message( $workflow_action );
+                        $new_action['data']['description'] = $build_description;
                         $new_action['data']['delay_type'] = isset( $workflow_action['data']['delay_type'] ) ? $workflow_action['data']['delay_type'] : '';
                         $new_action['data']['delay_value'] = isset( $workflow_action['data']['delay_value'] ) ? $workflow_action['data']['delay_value'] : '';
                         $new_action['data']['delay_period'] = isset( $workflow_action['data']['delay_period'] ) ? $workflow_action['data']['delay_period'] : '';
@@ -847,18 +850,36 @@ class Ajax {
                             }
                         }
                     } elseif ( $workflow_action['data']['action'] === 'send_whatsapp_message_text' ) {
-                        $new_action['data']['description'] = Messages::build_workflow_action_message( $workflow_action );
+                        $new_action['data']['description'] = $build_description;
                         $new_action['data']['message'] = isset( $workflow_action['data']['message'] ) ? $workflow_action['data']['message'] : '';
                         $new_action['data']['sender'] = isset( $workflow_action['data']['sender'] ) ? $workflow_action['data']['sender'] : '';
                         $new_action['data']['receiver'] = isset( $workflow_action['data']['receiver'] ) ? $workflow_action['data']['receiver'] : '';
                     } elseif ( $workflow_action['data']['action'] === 'send_whatsapp_message_media' ) {
-                        $new_action['data']['description'] = Messages::build_workflow_action_message( $workflow_action );
+                        $new_action['data']['description'] = $build_description;
                         $new_action['data']['sender'] = isset( $workflow_action['data']['sender'] ) ? $workflow_action['data']['sender'] : '';
                         $new_action['data']['receiver'] = isset( $workflow_action['data']['receiver'] ) ? $workflow_action['data']['receiver'] : '';
                         $new_action['data']['media_url'] = isset( $workflow_action['data']['media_url'] ) ? $workflow_action['data']['media_url'] : '';
                         $new_action['data']['media_type'] = isset( $workflow_action['data']['media_type'] ) ? $workflow_action['data']['media_type'] : '';
                     } elseif ( $workflow_action['data']['action'] === 'snippet_php' ) {
+                        $new_action['data']['description'] = $build_description;
                         $new_action['data']['snippet_php'] = isset( $workflow_action['data']['snippet_php'] ) ? $workflow_action['data']['snippet_php'] : '';
+                    } elseif ( $workflow_action['data']['action'] === 'create_coupon' ) {
+                        $new_action['data']['description'] = $build_description;
+                        $new_action['data']['settings']['generate_coupon'] = isset( $workflow_action['data']['settings']['generate_coupon'] ) ? $workflow_action['data']['settings']['generate_coupon'] : '';
+                        $new_action['data']['settings']['coupon_code'] = isset( $workflow_action['data']['settings']['coupon_code'] ) ? $workflow_action['data']['settings']['coupon_code'] : '';
+                        $new_action['data']['settings']['coupon_description'] = isset( $workflow_action['data']['settings']['coupon_description'] ) ? $workflow_action['data']['settings']['coupon_description'] : '';
+                        $new_action['data']['settings']['discount_type'] = isset( $workflow_action['data']['settings']['discount_type'] ) ? $workflow_action['data']['settings']['discount_type'] : '';
+                        $new_action['data']['settings']['coupon_amount'] = isset( $workflow_action['data']['settings']['coupon_amount'] ) ? $workflow_action['data']['settings']['coupon_amount'] : '';
+                        $new_action['data']['settings']['free_shipping'] = isset( $workflow_action['data']['settings']['free_shipping'] ) ? $workflow_action['data']['settings']['free_shipping'] : '';
+                        $new_action['data']['settings']['coupon_expiry'] = isset( $workflow_action['data']['settings']['coupon_expiry'] ) ? $workflow_action['data']['settings']['coupon_expiry'] : '';
+                        
+                        $new_action['data']['settings']['expiry_data'] = array(
+                            'type' => isset( $workflow_action['data']['settings']['expiry_data']['type'] ) ? $workflow_action['data']['settings']['expiry_data']['type'] : '',
+                            'delay_value' => isset( $workflow_action['data']['settings']['expiry_data']['delay_value'] ) ? $workflow_action['data']['settings']['expiry_data']['delay_value'] : '',
+                            'delay_period' => isset( $workflow_action['data']['settings']['expiry_data']['delay_period'] ) ? $workflow_action['data']['settings']['expiry_data']['delay_period'] : '',
+                            'date_value' => isset( $workflow_action['data']['settings']['expiry_data']['date_value'] ) ? $workflow_action['data']['settings']['expiry_data']['date_value'] : '',
+                            'time_value' => isset( $workflow_action['data']['settings']['expiry_data']['time_value'] ) ? $workflow_action['data']['settings']['expiry_data']['time_value'] : '',
+                        );
                     }
                 }
     
@@ -1882,7 +1903,7 @@ class Ajax {
      * @since 1.1.0
      * @return void
      */
-    public function save_action_edit_callback() {
+    public function save_action_settings_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_save_action_edition' ) {
             $post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( $_POST['post_id'] ) : '';
             $action_id = isset( $_POST['action_id'] ) ? sanitize_text_field( $_POST['action_id'] ) : '';

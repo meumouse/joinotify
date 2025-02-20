@@ -739,6 +739,9 @@
 
 			// display modal
 			display_popup( $('#woocommerce_settings_trigger'), $('#woocommerce_settings_container'), $('#woocommerce_settings_close') );
+
+			// change visibility for prefix dynamic coupons
+			visibility_controller( $('#enable_create_coupon_action'), $('.create-coupon-wrapper') );
 		}
 	};
 

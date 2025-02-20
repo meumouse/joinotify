@@ -1929,8 +1929,16 @@ textarea.edit-whatsapp-message-text {
     height: 25rem;
 }
 
-.CodeMirror {
+.CodeMirror:not(.preview) {
     border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.CodeMirror.preview {
+    border-radius: 0.5rem;
+    width: calc(100% - 1rem) !important;
+    max-width: 900px;
+    float: left;
+    margin-top: 1rem;
 }
 
 .CodeMirror pre.CodeMirror-line,
@@ -1971,6 +1979,10 @@ textarea.edit-whatsapp-message-text {
 
 .coupon-action-group .coupon-action-item:last-child {
     margin-bottom: 0;
+}
+
+.action-item-body {
+    width: 100%;
 }
 
 .add-emoji-picker.focused {

@@ -99,7 +99,7 @@ class Placeholders {
             }
         }
 
-        // replace for checkout placeholders {{ wc_checkout_field=[] }}
+        // replace for checkout placeholders {{ wc_checkout_field=[FIELD_ID] }}
         $message = preg_replace_callback('/\{\{\s*wc_checkout_field=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $context ) {
             $field_id = $matches[1];
 
@@ -111,6 +111,13 @@ class Placeholders {
                 if ( $order ) {
                     // Retrieves the value of the specific field. Assuming it is a custom field stored as meta
                     $field_value = $order->get_meta( $field_id );
+
+                    // If the value is empty, check standard WooCommerce fields
+                    if ( empty( $field_value ) ) {
+                        if ( method_exists( $order, "get_{$field_id}" ) ) {
+                            $field_value = call_user_func( array( $order, "get_{$field_id}" ) );
+                        }
+                    }
 
                     // Checks if field value is found
                     if ( ! empty( $field_value ) ) {
