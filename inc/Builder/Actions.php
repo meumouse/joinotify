@@ -124,13 +124,6 @@ class Actions {
      * @return bool return true if action is updated, false otherwise
      */
     public static function update_action_by_id( &$workflow_item, $action_id, $new_action_data ) {
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( 'function update_action_by_id() called' );
-            error_log( 'workflow_item: ' . print_r( $workflow_item, true ) );
-            error_log( 'action_id: ' . $action_id );
-            error_log( 'new_action_data: ' . print_r( $new_action_data, true ) );
-        }
-
         if ( isset( $workflow_item['id'] ) && $workflow_item['id'] === $action_id ) {
             // update only necessary data keeping the original structure
             $workflow_item['data'] = array_merge( $workflow_item['data'], $new_action_data['data'] );

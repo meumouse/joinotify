@@ -3,9 +3,10 @@
 namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Core\Schedule;
+use MeuMouse\Joinotify\Integrations\Whatsapp;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
-use MeuMouse\Joinotify\Core\Schedule;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -531,6 +532,18 @@ class Woocommerce extends Integrations_Base {
                     </select>
                 </div>
             </div>
+
+            <div class="border-bottom divider my-5"></div>
+
+            <div class="coupon-action-item">
+                <?php echo Whatsapp::whatsapp_message_text_action( $settings['settings']['message'] ?? array() ); ?>
+            </div>
+
+            <div class="border-top divider mt-5 pt-4 coupon-placeholders">
+                <label class="form-label"><?php esc_html_e( 'Variáveis de texto:', 'joinotify' ) ?></label>
+
+                <?php echo Builder_Components::render_coupon_placeholders(); ?>
+            </div>
         </div>
 
         <?php return ob_get_clean();
@@ -546,6 +559,8 @@ class Woocommerce extends Integrations_Base {
      */
     public static function generate_wc_coupon( $coupon_data ) {
         if ( empty( $coupon_data ) || ! isset( $coupon_data['discount_type'], $coupon_data['coupon_amount'] ) ) {
+            error_log( 'Coupon data is empty or missing required fields.' );
+
             return new \WP_Error( 'missing_data', __( 'Dados insuficientes para criar o cupom.', 'joinotify' ) );
         }
 
@@ -559,6 +574,8 @@ class Woocommerce extends Integrations_Base {
 
         // check if coupon already exists
         if ( get_page_by_title( $coupon_code, OBJECT, 'shop_coupon' ) ) {
+            error_log( 'Coupon already exists.' );
+
             return new \WP_Error( 'duplicate_coupon', __( 'O cupom já existe.', 'joinotify' ) );
         }
 

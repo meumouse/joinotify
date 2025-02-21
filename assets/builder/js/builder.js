@@ -829,6 +829,7 @@
 				var btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 
+				// send request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -1173,6 +1174,11 @@
 									coupon_expiry: container.find('.set-expires-coupon').prop('checked') ? 'yes' : 'no',
 									expiry_data: {
 										type: delay_type || '',
+									},
+									message: {
+										sender: container.find('.get-whatsapp-phone-sender').val(),
+										receiver: container.find('.get-whatsapp-receiver').val(),
+										message: container.find('.set-whatsapp-message-text').val(),
 									},
 								},
 							},
@@ -2418,7 +2424,7 @@
 							},
 						},
 					});
-				}, 300);
+				}, 600);
 
 				// initialize emoji picker
 				$('.add-emoji-picker').addClass('emoji-initialized');

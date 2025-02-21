@@ -97,7 +97,7 @@ class Whatsapp extends Integrations_Base {
             </div>
         <?php endif; ?>
 
-        <div class="preview-whatsapp-message-sender <?php ! empty( $message ) ? 'active' : ''; ?>"><?php echo nl2br( $message ) ?></div>
+        <div class="preview-whatsapp-message-sender <?php echo ( ! empty( $message ) ) ? 'active' : ''; ?>"><?php echo nl2br( $message ) ?></div>
 
         <div class="mb-4">
             <label class="form-label" for="get-whatsapp-phone-sender"><?php esc_html_e( 'Remetente: *', 'joinotify' ); ?></label>
@@ -140,7 +140,7 @@ class Whatsapp extends Integrations_Base {
         $media_type = $settings['media_type'] ?? '';
         $media_url = $settings['media_url'] ?? ''; ?>
 
-        <div class="preview-whatsapp-message-sender media <?php ! empty( $media_url ) ? 'active' : ''; ?>"><?php echo Messages::build_whatsapp_media_description( $settings ) ?></div>
+        <div class="preview-whatsapp-message-sender media <?php echo ( ! empty( $media_url ) ) ? 'active' : ''; ?>"><?php echo Messages::build_whatsapp_media_description( $settings ) ?></div>
 
         <div class="mb-4">
             <label class="form-label" for="get-whatsapp-phone-sender"><?php esc_html_e( 'Remetente: *', 'joinotify' ); ?></label>

@@ -286,12 +286,11 @@ class Components {
      * @return string
      */
     public static function get_action_settings( $post_id, $action, $action_id ) {
-        $html = '';
-
         // get workflow content from post id
         $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
         $current_action = Utils::find_workflow_item_by_id( $workflow_content, $action_id );
         $action_data = isset( $current_action['data'] ) ? $current_action['data'] : array();
+        $html = '';
 
         switch ( $action ) {
             case 'time_delay':
@@ -302,32 +301,7 @@ class Components {
                 $html .= \MeuMouse\Joinotify\Integrations\Whatsapp::whatsapp_message_text_action( $action_data );
 
                 // placeholders helper
-                $html .= '<div class="accordion" id="whatsapp_msg_text_placeholder_accordion_edit">';
-                    $html .= '<div class="accordion-item">';
-                        $html .= '<h2 class="accordion-header fw-normal">';
-                            $html .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#whatsapp_msg_text_placeholder_collapse_edit" aria-expanded="true" aria-controls="collapseText">'. esc_html__( 'Variáveis de texto', 'joinotify' ) .'</button>';
-                        $html .= '</h2>';
-
-                        $html .= '<div id="whatsapp_msg_text_placeholder_collapse_edit" class="accordion-collapse collapse" data-bs-parent="#whatsapp_msg_text_placeholder_accordion_edit">';
-                            $html .= '<div class="accordion-body">';
-                                $html .= '<div class="mt-3 placeholders-list">';
-                                    $trigger = Triggers::get_trigger_from_post( $post_id );
-                                    $integration = Utils::get_context_from_post( $post_id );
-
-                                    // get filtered placeholders
-                                    $placeholders = Placeholders::get_placeholders_list( $integration, $trigger );
-
-                                    foreach( $placeholders as $placeholder => $value ) {
-                                        $html .= '<div class="d-grid mb-3">';
-                                            $html .= '<span class="fs-sm fs-italic"><code>'. esc_html( $placeholder ) .'</code></span>';
-                                            $html .= '<span class="fs-sm mt-1">'. esc_html( $value['description'] ) .'</span>';
-                                        $html .= '</div>';
-                                    }
-                                $html .= '</div>';
-                            $html .= '</div>';
-                        $html .= '</div>';
-                    $html .= '</div>';
-                $html .= '</div>';
+                $html .= self::render_placeholders_list( $post_id );
 
                 break;
             case 'send_whatsapp_message_media':
@@ -746,7 +720,7 @@ class Components {
 
                     $html .= '<div class="input-group">';
                         if ( function_exists('get_woocommerce_currency_symbol') ) {
-                                $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
+                            $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
                         }
                         
                         $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
@@ -1127,5 +1101,26 @@ class Components {
         <?php endforeach;
 
         return ob_get_clean();
+    }
+
+
+    /**
+     * Render  the coupon placeholders
+     * 
+     * @since 1.1.0
+     * @return string
+     */
+    public static function render_coupon_placeholders() {
+        $placeholders = Placeholders::get_coupon_placeholders();
+
+        // iterate for each placeholder
+        foreach( $placeholders as $placeholder => $value ) {
+            $html .= '<div class="d-grid mb-3">';
+                $html .= '<span class="fs-sm fs-italic"><code>'. esc_html( $placeholder ) .'</code></span>';
+                $html .= '<span class="fs-sm mt-1">'. esc_html( $value['description'] ) .'</span>';
+            $html .= '</div>';
+        }
+
+        return $html;
     }
 }

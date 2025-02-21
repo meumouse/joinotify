@@ -62,6 +62,7 @@ class Wpforms extends Integrations_Base {
                 'title' => esc_html__( 'Pagamento processado pelo PayPal', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um formulário de pagamento do WPForms é processado usando PayPal.', 'joinotify' ),
                 'require_settings' => true,
+                'class' => 'locked',
             ),
         );
 

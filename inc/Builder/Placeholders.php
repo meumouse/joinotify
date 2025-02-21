@@ -74,18 +74,28 @@ class Placeholders {
         $message = preg_replace_callback('/\{\{\s*field_id=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $context ) {
             $field_id = $matches[1];
 
-            if ( isset( $context['fields'][$field_id] ) ) {
-                return $context['fields'][$field_id];
+            // check integration
+            if ( $context['integration'] === 'wpforms' ) {
+                if ( isset( $context['fields'][$field_id]['value'] ) ) {
+                    return $context['fields'][$field_id]['value'];
+                }
+            } else {
+                if ( isset( $context['fields'][$field_id] ) ) {
+                    return $context['fields'][$field_id];
+                }
             }
 
             return $matches[0]; // if the field is not found, returns the original placeholder
         }, $message);
 
-        // Now handles static placeholders
+        // handles static placeholders
         $integration = isset( $context['integration'] ) ? $context['integration'] : '';
         $trigger = isset( $context['trigger'] ) ? $context['trigger'] : '';
-        $placeholders = self::get_placeholders_list( $integration, $trigger, $context );
 
+        // get placeholders based on trigger and context
+        $placeholders = self::get_placeholders_list( $integration, $trigger, $context );
+        
+        // iterate for each placeholder
         foreach ( $placeholders as $placeholder => $details ) {
             if ( isset( $details['replacement'][ $mode ] ) ) {
                 $replacement = $details['replacement'][ $mode ];
@@ -130,5 +140,42 @@ class Placeholders {
         }, $message );
 
         return $message;
+    }
+
+
+    /**
+     * Get the list of placeholders for the coupon
+     * 
+     * @since 1.1.0
+     * @param array $settings | The settings for the coupon
+     * @return array The list of placeholders
+     */
+    public static function get_coupon_placeholders( $settings = array() ) {
+
+
+        $placeholders = apply_filters( 'Joinotify/Builder/Components/Coupon_Placeholders', array(
+            '{{ joinotify_coupon_code }}' => array(
+                'description' => esc_html__( 'Para recuperar o código do cupom de desconto.', 'joinotify' ),
+                'replacement' => '',
+            ),
+            '{{ joinotify_coupon_description }}' => array(
+                'description' => esc_html__( 'Para recuperar a descrição do cupom de desconto.', 'joinotify' ),
+                'replacement' => '',
+            ),
+            '{{ joinotify_coupon_discount_type }}' => array(
+                'description' => esc_html__( 'Para recuperar o tipo de desconto do cupom.', 'joinotify' ),
+                'replacement' => '',
+            ),
+            '{{ joinotify_coupon_discount_value }}' => array(
+                'description' => esc_html__( 'Para recuperar o valor do cupom de desconto.', 'joinotify' ),
+                'replacement' => '',
+            ),
+            '{{ joinotify_coupon_expires }}' => array(
+                'description' => esc_html__( 'Para recuperar a expiração do cupom de desconto.', 'joinotify' ),
+                'replacement' => '',
+            ),
+        ));
+
+        return $placeholders;
     }
 }

@@ -259,17 +259,4 @@ class Messages {
         // build element preview
         return '<textarea class="joinotify-code-preview">'. esc_textarea( $formatted_code ) .'</textarea>';
     }
-
-
-    /**
-     * 
-     */
-    public static function discount_coupon_message_template() {
-        /**
-         * 
-         */
-        $template = apply_filters( 'Joinotify/Builder/Messages/Coupon_Message_Template', '' );
-
-        return $template;
-    }
 }

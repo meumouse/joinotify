@@ -8,6 +8,8 @@ use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Validations\Conditions;
+use MeuMouse\Joinotify\Integrations\Woocommerce;
+
 use WC_Order;
 
 /**
@@ -52,6 +54,15 @@ class Workflow_Processor {
         if ( defined('ELEMENTOR_PATH') && Admin::get_setting('enable_elementor_integration') === 'yes' ) {
             // when a Elementor form receive a new record
             add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
+        }
+
+        // fire hooks if WPForms is active
+        if ( function_exists('wpforms') && Admin::get_setting('enable_wpforms_integration') === 'yes' ) {
+            // when a WPForms form receive a new record
+            add_action( 'wpforms_process_complete', array( $this, 'process_workflow_wpforms_form' ), 10, 4 );
+
+            // when a WPForms form paypal payment is fired
+            add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
         }
     }
 
@@ -245,8 +256,8 @@ class Workflow_Processor {
 
         if ( JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function process_workflows() fired' );
-            Logger::register_log( 'Param $hook: ' . print_r( $hook, true ) );
-            Logger::register_log( 'Param $context: ' . print_r( $context, true ) );
+            Logger::register_log( 'hook: ' . print_r( $hook, true ) );
+            Logger::register_log( 'content: ' . print_r( $context, true ) );
         }
 
         if ( empty( $workflows ) ) {
@@ -284,14 +295,12 @@ class Workflow_Processor {
 
         if ( $context['integration'] === 'woocommerce' ) {
             $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], true );
-        } else {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['id'], true );
         }
 
         // Remove triggers from flow content
         $workflow_actions = array_values( array_filter( $workflow_content, function ( $item ) {
             return isset( $item['type'] ) && $item['type'] !== 'trigger';
-        } ) );
+        }));
 
         if ( empty( $state ) || ! is_array( $state ) ) {
             $state = array(
@@ -318,8 +327,6 @@ class Workflow_Processor {
                 // Update state in the database
                 if ( $context['integration'] === 'woocommerce' ) {
                     update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], $state );
-                } else {
-                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['id'], $state );
                 }
 
                 // Break after time delay action
@@ -344,6 +351,7 @@ class Workflow_Processor {
     public static function handle_action( $action, $post_id, $context ) {
         $action_data = $action['data'];
 
+        // debug params
         if ( JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function handle_action() fired' );
             Logger::register_log( 'Param $action: ' . print_r( $action, true ) );
@@ -351,62 +359,45 @@ class Workflow_Processor {
             Logger::register_log( 'Param $context: ' . print_r( $context, true ) );
         }
 
-        if ( $action_data['action'] === 'time_delay' ) {
-            Schedule::schedule_actions( $post_id, $context, $action_data['delay_timestamp'], $action );
+        // check action type
+        switch ( $action_data['action'] ) {
+            case 'time_delay':
+                Schedule::schedule_actions( $post_id, $context, $action_data['delay_timestamp'], $action );
 
-            return true;
+                return true;
+            case 'condition':
+                $get_condition = $action_data['condition_content']['condition'] ?? '';
+                $condition_type = $action_data['condition_content']['type'] ?? '';
+                $condition_value = $action_data['condition_content']['value'] ?? '';
+
+                $compare_value = Conditions::get_compare_value( $get_condition, $context );
+                $condition_met = Conditions::check_condition( $condition_type, $condition_value, $compare_value );
+                $next_actions = $condition_met ? $action['children']['action_true'] ?? array() : $action['children']['action_false'] ?? array();
+                
+                foreach ( $next_actions as $child_action ) {
+                    self::handle_action( $child_action, $post_id, $context );
+                }
+                
+                return true;
+            case 'send_whatsapp_message_text':
+                self::send_whatsapp_message_text( $action_data, $context );
+
+                return true;
+            case 'send_whatsapp_message_media':
+                self::send_whatsapp_message_media( $action_data, $context );
+
+                return true;
+            case 'create_coupon':
+                self::execute_wc_coupon_action( $action_data, $context );
+
+                return true;
+
+            case 'snippet_php':
+                // return boolean
+                return self::execute_snippet_php( $action_data['snippet_php'] );
         }
 
-        if ( $action_data['action'] === 'condition' ) {
-            $get_condition = $action_data['condition_content']['condition'] ?? '';
-            $condition_type = $action_data['condition_content']['type'] ?? '';
-            $condition_value = $action_data['condition_content']['value'] ?? '';
-
-            $compare_value = Conditions::get_compare_value( $get_condition, $context );
-            $condition_met = Conditions::check_condition( $condition_type, $condition_value, $compare_value );
-            $next_actions = $condition_met ? $action['children']['action_true'] ?? array() : $action['children']['action_false'] ?? array();
-            
-            foreach ( $next_actions as $child_action ) {
-                self::handle_action( $child_action, $post_id, $context );
-            }
-            
-            return true;
-        }
-
-        self::execute_action( $action_data, $context );
-
-        return true;
-    }
-
-
-    /**
-     * Execute specific action
-     *
-     * @since 1.0.0
-     * @version 1.1.0
-     * @param array $action_data | Workflow data
-     * @param array $context | Context data
-     * @return void
-     */
-    public static function execute_action( $action_data, $context ) {
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( 'Function execute_action() fired' );
-            Logger::register_log( 'Param $action_data: ' . print_r( $action_data, true ) );
-            Logger::register_log( 'Param $context: ' . print_r( $context, true ) );
-        }
-
-        if ( isset( $action_data['action'] ) ) {
-            switch ( $action_data['action'] ) {
-                case 'send_whatsapp_message_text':
-                    self::send_whatsapp_message_text( $action_data, $context );
-
-                    break;
-                case 'send_whatsapp_message_media':
-                    self::send_whatsapp_message_media( $action_data, $context );
-
-                    break;
-            }
-        }
+        return false;
     }
 
 
@@ -423,8 +414,6 @@ class Workflow_Processor {
     public static function process_scheduled_action( $post_id, $context, $action_data ) {
         if ( $context['integration'] === 'woocommerce' ) {
             $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], true );
-        } else {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['id'], true );
         }
     
         if ( ! is_array( $state ) ) {
@@ -434,8 +423,10 @@ class Workflow_Processor {
             );
         }
     
+        // get workflow content
         $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
     
+        // stop process if workflow content is empty
         if ( empty( $workflow_content ) || ! is_array( $workflow_content ) ) {
             return;
         }
@@ -454,8 +445,10 @@ class Workflow_Processor {
                 continue;
             }
     
+            // check if action is time delay
             if ( $action['data']['action'] === 'time_delay' ) {
                 Schedule::schedule_actions( $post_id, $context, $action['data']['delay_timestamp'], $action );
+
                 break;
             }
     
@@ -465,8 +458,6 @@ class Workflow_Processor {
     
                 if ( $context['integration'] === 'woocommerce' ) {
                     update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], $state );
-                } else {
-                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['id'], $state );
                 }
             }
         }
@@ -487,6 +478,8 @@ class Workflow_Processor {
         $receiver = Controller::prepare_receiver( $action_data['receiver'], $context );
         $message = Placeholders::replace_placeholders( $action_data['message'], $context );
         $response = Controller::send_message_text( $sender, $receiver, $message );
+
+        error_log( 'send_whatsapp_message_text() $message: ' . print_r( $message, true ) );
 
         if ( JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {
@@ -521,5 +514,139 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send message. Response: " . print_r( $response, true ), 'ERROR' );
             }
         }
+    }
+
+
+    /**
+     * Execute a PHP snippet from a workflow action
+     *
+     * @since 1.1.0
+     * @param string $snippet_php | PHP Code to execute
+     * @return bool Returns true if executed successfully
+     */
+    public static function execute_snippet_php( $snippet_php ) {
+        if ( empty( $snippet_php ) ) {
+            Logger::register_log( 'Empty PHP snippet, skipping execution.', 'WARNING' );
+
+            return false;
+        }
+
+        // remove the `<?php` tag if it exists
+        $snippet_php = preg_replace( '/^\s*<\?php\s*/', '', $snippet_php );
+
+        // block execution of dangerous functions
+        $blocked_functions = array( 'exec', 'shell_exec', 'system', 'passthru', 'proc_open', 'eval', 'popen', 'dl', 'file_get_contents' );
+
+        foreach ( $blocked_functions as $function ) {
+            if ( stripos( $snippet_php, $function . '(' ) !== false ) {
+                Logger::register_log( "Attempt to execute blocked function: $function", 'ERROR' );
+
+                return false;
+            }
+        }
+
+        // register log before execution for debugging
+        if ( JOINOTIFY_DEBUG_MODE ) {
+            Logger::register_log( "Running PHP Snippet: \n" . $snippet_php );
+        }
+
+        try {
+            // create a safe execution environment
+            ob_start();
+            eval( $snippet_php ); // execute the snippet
+            // get the output buffer contents
+            $output = ob_get_clean();
+
+            // result execution log
+            if ( JOINOTIFY_DEBUG_MODE ) {
+                Logger::register_log( "PHP Snippet result: \n" . print_r( $output, true ) );
+            }
+
+            return true;
+        } catch ( \Throwable $e ) {
+            Logger::register_log( "Error executing PHP snippet: " . $e->getMessage(), 'ERROR' );
+
+            return false;
+        }
+    }
+
+
+    /**
+     * Execute create WooCommerce coupon action
+     * 
+     * @since 1.1.0
+     * @param array $action_data | Action data
+     * @param array $context | Context data
+     * @return void
+     */
+    public static function execute_wc_coupon_action( $action_data, $context ) {
+        $create_coupon = Woocommerce::generate_wc_coupon( $action_data['settings'] );
+
+        if ( JOINOTIFY_DEBUG_MODE ) {
+            if ( $create_coupon > 0 ) {
+                Logger::register_log( "Coupon created successfully." );
+            } else {
+                Logger::register_log( "Failed to create coupon.", 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * This will fire at the very end of a (successful) form entry on WPForms
+     *
+     * @since 1.1.0
+     * @param array $fields | Sanitized entry field values/properties
+     * @param array $entry | Original $_POST global
+     * @param array $form_data | Form data and settings
+     * @param int $entry_id | Entry ID Will return 0 if entry storage is disabled or using WPForms Lite
+     * @return void
+     * 
+     * @link  https://wpforms.com/developers/wpforms_process_complete/
+     */
+    public function process_workflow_wpforms_form( $fields, $entry, $form_data, $entry_id ) {
+        $context = array(
+            'type' => 'trigger',
+            'integration' => 'wpforms',
+            'id' => absint( $form_data['id'] ),
+            'fields' => $fields,
+            'entry' => $entry,
+            'form_data' => $form_data,
+            'entry_id' => $entry_id,
+        );
+
+        self::process_workflows( 'wpforms_process_complete', $context );
+    }
+
+
+    /**
+     * Fires when PayPal payment status notifies the site
+     *
+     * @since 1.1.0
+     * @param array $fields | Sanitized entry field values/properties
+     * @param array $form_data | Form data and settings
+     * @param int $payment_id | PayPal Payment ID
+     * @param array $data | PayPal Web Accept Data
+     * @return void
+     * 
+     * @link  https://wpforms.com/developers/wpforms_paypal_standard_process_complete/
+     */
+    public function process_workflow_wpforms_paypal( $fields, $form_data, $payment_id, $data ) {
+        // Check if the payment status is not completed
+        if ( empty( $data['payment_status'] ) || strtolower( $data['payment_status'] ) !== 'completed' ) {
+            return;
+        }
+
+        $context = array(
+            'type' => 'trigger',
+            'integration' => 'wpforms',
+            'id' => absint( $form_data['id'] ),
+            'fields' => $fields,
+            'entry' => $entry,
+            'form_data' => $form_data,
+            'entry_id' => $entry_id,
+        );
+
+        self::process_workflows( 'wpforms_paypal_standard_process_complete', $context );
     }
 }

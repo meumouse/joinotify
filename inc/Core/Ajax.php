@@ -865,6 +865,8 @@ class Ajax {
                         $new_action['data']['snippet_php'] = isset( $workflow_action['data']['snippet_php'] ) ? $workflow_action['data']['snippet_php'] : '';
                     } elseif ( $workflow_action['data']['action'] === 'create_coupon' ) {
                         $new_action['data']['description'] = $build_description;
+
+                        // coupon settings
                         $new_action['data']['settings']['generate_coupon'] = isset( $workflow_action['data']['settings']['generate_coupon'] ) ? $workflow_action['data']['settings']['generate_coupon'] : '';
                         $new_action['data']['settings']['coupon_code'] = isset( $workflow_action['data']['settings']['coupon_code'] ) ? $workflow_action['data']['settings']['coupon_code'] : '';
                         $new_action['data']['settings']['coupon_description'] = isset( $workflow_action['data']['settings']['coupon_description'] ) ? $workflow_action['data']['settings']['coupon_description'] : '';
@@ -873,12 +875,20 @@ class Ajax {
                         $new_action['data']['settings']['free_shipping'] = isset( $workflow_action['data']['settings']['free_shipping'] ) ? $workflow_action['data']['settings']['free_shipping'] : '';
                         $new_action['data']['settings']['coupon_expiry'] = isset( $workflow_action['data']['settings']['coupon_expiry'] ) ? $workflow_action['data']['settings']['coupon_expiry'] : '';
                         
+                        // expiry data for coupon
                         $new_action['data']['settings']['expiry_data'] = array(
                             'type' => isset( $workflow_action['data']['settings']['expiry_data']['type'] ) ? $workflow_action['data']['settings']['expiry_data']['type'] : '',
                             'delay_value' => isset( $workflow_action['data']['settings']['expiry_data']['delay_value'] ) ? $workflow_action['data']['settings']['expiry_data']['delay_value'] : '',
                             'delay_period' => isset( $workflow_action['data']['settings']['expiry_data']['delay_period'] ) ? $workflow_action['data']['settings']['expiry_data']['delay_period'] : '',
                             'date_value' => isset( $workflow_action['data']['settings']['expiry_data']['date_value'] ) ? $workflow_action['data']['settings']['expiry_data']['date_value'] : '',
                             'time_value' => isset( $workflow_action['data']['settings']['expiry_data']['time_value'] ) ? $workflow_action['data']['settings']['expiry_data']['time_value'] : '',
+                        );
+
+                        // message text for coupon
+                        $new_action['data']['settings']['message'] = array(
+                            'message' => isset( $workflow_action['data']['settings']['message']['message'] ) ? $workflow_action['data']['settings']['message']['message'] : '',
+                            'sender' => isset( $workflow_action['data']['settings']['message']['sender'] ) ? $workflow_action['data']['settings']['message']['sender'] : '',
+                            'receiver' => isset( $workflow_action['data']['settings']['message']['receiver'] ) ? $workflow_action['data']['settings']['message']['receiver'] : '',
                         );
                     }
                 }
