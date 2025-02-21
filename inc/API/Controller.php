@@ -370,6 +370,14 @@ class Controller {
      */
     public static function send_message_media( $sender, $receiver, $media_type, $media, $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
+
+        // Chek if media type is audio and change request url
+        if ( $media_type === 'audio' ) {
+            self::send_whatsapp_audio( $sender, $receiver, $media, $timestamp_delay );
+
+            return;
+        }
+
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendMedia/' . $sender;
 
         $payload = wp_json_encode( array(
@@ -401,6 +409,64 @@ class Controller {
         // Check response body
         if ( JOINOTIFY_DEV_MODE ) {
             error_log( 'send_message_media() response body: ' . print_r( $response_body, true ) );
+        }
+
+        return wp_remote_retrieve_response_code( $response );
+    }
+
+
+    /**
+     * Send messsage audio on WhatsApp
+     * 
+     * @since 1.1.0
+     * @param string $sender | Instance phone number
+     * @param string $receiver | Phone number for receive message
+     * @param string $audio | Audio URL
+     * @param int $timestamp_delay | Delay in miliseconds for send message
+     * @return int
+     */
+    public static function send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay = 0 ) {
+        $sender = preg_replace( '/\D/', '', $sender );
+        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendWhatsAppAudio/' . $sender;
+
+        /**
+         * Filter for encoding audio
+         * 
+         * @since 1.1.0
+         * @return bool
+         */
+        $encoding = apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true );
+
+        $payload = wp_json_encode( array(
+            'number' => preg_replace( '/\D/', '', $receiver ),
+            'audio' => $audio,
+            'delay' => $timestamp_delay,
+            'encoding' => $encoding,
+        ));
+
+        if ( ! License::is_valid() ) {
+            return;
+        }
+
+        // send request
+        $response = wp_remote_post( $api_url, array(
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'apikey' => self::$whatsapp_api_key,
+            ),
+            'body' => $payload,
+            'timeout' => 10,
+        ));
+
+        if ( is_wp_error( $response ) ) {
+            Logger::register_log( $response, 'ERROR' );
+        }
+
+        $response_body = wp_remote_retrieve_body( $response );
+
+        // Check response body
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'send_whatsapp_audio() response body: ' . print_r( $response_body, true ) );
         }
 
         return wp_remote_retrieve_response_code( $response );

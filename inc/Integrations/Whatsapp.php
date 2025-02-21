@@ -104,7 +104,7 @@ class Whatsapp extends Integrations_Base {
             
             <select class="form-select get-whatsapp-phone-sender required-setting">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
-                    <option value="<?php esc_attr_e( $phone ) ?>" <?php selected( $sender, $phone ) ?> class="get-sender-number"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></option>
+                    <option value="<?php esc_attr_e( $phone ) ?>" <?php selected( $sender, $phone, true ) ?> class="get-sender-number"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -163,7 +163,7 @@ class Whatsapp extends Integrations_Base {
 
             <select class="form-select get-whatsapp-media-type required-setting">
                 <?php foreach ( Media_Types::get_media_types() as $type => $value ) : ?>
-                    <option value="<?php esc_attr_e( $type ) ?>" <?php selected( $media_type, $type ) ?>><?php esc_html_e( $value ) ?></option>
+                    <option value="<?php esc_attr_e( $type ) ?>" <?php selected( $media_type, $type, true ) ?>><?php esc_html_e( $value ) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

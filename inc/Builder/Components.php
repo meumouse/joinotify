@@ -1113,6 +1113,8 @@ class Components {
     public static function render_coupon_placeholders() {
         $placeholders = Placeholders::get_coupon_placeholders();
 
+        $html = '';
+
         // iterate for each placeholder
         foreach( $placeholders as $placeholder => $value ) {
             $html .= '<div class="d-grid mb-3">';

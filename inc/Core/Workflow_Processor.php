@@ -293,8 +293,24 @@ class Workflow_Processor {
             Logger::register_log( 'Param $context: ' . print_r( $context, true ) );
         }
 
-        if ( $context['integration'] === 'woocommerce' ) {
+        // get integration
+        $integration = $context['integration'];
+
+        // get trigger data
+        $trigger_data = array_filter( $workflow_content, function ( $item ) {
+            return isset( $item['type'] ) && $item['type'] === 'trigger';
+        });
+
+        // get first array item
+        $trigger_data = reset( $trigger_data );
+
+        if ( $integration === 'woocommerce' ) {
             $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], true );
+        } elseif ( $integration === 'wpforms' ) {
+            // check wpforms form id
+            if ( $context['id'] !== absint( $trigger_data['data']['settings']['form_id'] ) ) {
+                return;
+            }
         }
 
         // Remove triggers from flow content
@@ -318,13 +334,17 @@ class Workflow_Processor {
                 continue;
             }
     
-            // Executa a ação
+            // execute actions
             if ( self::handle_action( $action, $post_id, $context ) ) {
                 $state['processed_actions'][] = $action_id;
+
+                // remove action from pending actions
                 unset( $state['pending_actions'][$index] );
+
+                // reindex array
                 $state['pending_actions'] = array_values( $state['pending_actions'] );
 
-                // Update state in the database
+                // Update state in the database for woocommerce orders
                 if ( $context['integration'] === 'woocommerce' ) {
                     update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], $state );
                 }
@@ -503,8 +523,8 @@ class Workflow_Processor {
     public static function send_whatsapp_message_media( $action_data, $context ) {
         $sender = $action_data['sender'];
         $receiver = Controller::prepare_receiver( $action_data['receiver'], $context );
-        $media_type = $action_data['data']['media_type'];
-        $media = $action_data['data']['media_url'];
+        $media_type = $action_data['media_type'];
+        $media = $action_data['media_url'];
         $response = Controller::send_message_media( $sender, $receiver, $media_type, $media );
 
         if ( JOINOTIFY_DEBUG_MODE ) {
