@@ -106,8 +106,7 @@ class Messages {
         $condition_value = isset( $data['condition_content']['value_text'] ) ? $data['condition_content']['value_text'] : '';
 
         $description = '<div class="condition-description">';
-            $description .= sprintf( __( '%s %s:' ), $title, mb_strtolower( $condition_text, 'UTF-8' ) );
-            // ADICIONAR NOVA LINHA COM CADA ITEM DE CONDIÇÃO
+            $description .= sprintf( __( '%s %s: %s' ), $title, mb_strtolower( $condition_text, 'UTF-8' ), $condition_value );
         $description .= '</div>';
 
         return $description;

@@ -56,6 +56,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'title' => esc_html__( 'Abandono do carrinho', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário abandona o carrinho.', 'joinotify' ),
                 'require_settings' => false,
+                'class' => 'locked',
             ),
             array(
                 'data_trigger' => 'flexify_checkout_entry_step_1',

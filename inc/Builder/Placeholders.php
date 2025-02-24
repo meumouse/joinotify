@@ -65,23 +65,23 @@ class Placeholders {
      * @since 1.0.0
      * @version 1.1.0
      * @param string $message | The message containing placeholders
-     * @param array $context | The placeholder context with array data
+     * @param array $payload | The placeholder context with array data
      * @param string $mode | Mode ('sandbox' or 'production')
      * @return string The message with placeholders replaced
      */
-    public static function replace_placeholders( $message, $context = array(), $mode = 'production' ) {
+    public static function replace_placeholders( $message, $payload = array(), $mode = 'production' ) {
         // First, replace field placeholders dynamically
-        $message = preg_replace_callback('/\{\{\s*field_id=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $context ) {
+        $message = preg_replace_callback('/\{\{\s*field_id=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
             $field_id = $matches[1];
 
             // check integration
-            if ( $context['integration'] === 'wpforms' ) {
-                if ( isset( $context['fields'][$field_id]['value'] ) ) {
-                    return $context['fields'][$field_id]['value'];
+            if ( $payload['integration'] === 'wpforms' ) {
+                if ( isset( $payload['fields'][$field_id]['value'] ) ) {
+                    return $payload['fields'][$field_id]['value'];
                 }
             } else {
-                if ( isset( $context['fields'][$field_id] ) ) {
-                    return $context['fields'][$field_id];
+                if ( isset( $payload['fields'][$field_id] ) ) {
+                    return $payload['fields'][$field_id];
                 }
             }
 
@@ -89,11 +89,11 @@ class Placeholders {
         }, $message);
 
         // handles static placeholders
-        $integration = isset( $context['integration'] ) ? $context['integration'] : '';
-        $trigger = isset( $context['trigger'] ) ? $context['trigger'] : '';
+        $integration = isset( $payload['integration'] ) ? $payload['integration'] : '';
+        $trigger = isset( $payload['trigger'] ) ? $payload['trigger'] : '';
 
         // get placeholders based on trigger and context
-        $placeholders = self::get_placeholders_list( $integration, $trigger, $context );
+        $placeholders = self::get_placeholders_list( $integration, $trigger, $payload );
         
         // iterate for each placeholder
         foreach ( $placeholders as $placeholder => $details ) {
@@ -102,7 +102,7 @@ class Placeholders {
 
                 // if the replacement is a callback function, execute it
                 if ( is_callable( $replacement ) ) {
-                    $replacement = call_user_func( $replacement, $context );
+                    $replacement = call_user_func( $replacement, $payload );
                 }
 
                 $message = str_replace( $placeholder, $replacement, $message );
@@ -110,12 +110,12 @@ class Placeholders {
         }
 
         // replace for checkout placeholders {{ wc_checkout_field=[FIELD_ID] }}
-        $message = preg_replace_callback('/\{\{\s*wc_checkout_field=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $context ) {
+        $message = preg_replace_callback('/\{\{\s*wc_checkout_field=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
             $field_id = $matches[1];
 
             // check if 'order_id' has on context array
-            if ( isset( $context['order_id'] ) ) {
-                $order_id = $context['order_id'];
+            if ( isset( $payload['order_id'] ) ) {
+                $order_id = $payload['order_id'];
                 $order = wc_get_order( $order_id );
 
                 if ( $order ) {
@@ -140,42 +140,5 @@ class Placeholders {
         }, $message );
 
         return $message;
-    }
-
-
-    /**
-     * Get the list of placeholders for the coupon
-     * 
-     * @since 1.1.0
-     * @param array $settings | The settings for the coupon
-     * @return array The list of placeholders
-     */
-    public static function get_coupon_placeholders( $settings = array() ) {
-
-
-        $placeholders = apply_filters( 'Joinotify/Builder/Components/Coupon_Placeholders', array(
-            '{{ joinotify_coupon_code }}' => array(
-                'description' => esc_html__( 'Para recuperar o código do cupom de desconto.', 'joinotify' ),
-                'replacement' => '',
-            ),
-            '{{ joinotify_coupon_description }}' => array(
-                'description' => esc_html__( 'Para recuperar a descrição do cupom de desconto.', 'joinotify' ),
-                'replacement' => '',
-            ),
-            '{{ joinotify_coupon_discount_type }}' => array(
-                'description' => esc_html__( 'Para recuperar o tipo de desconto do cupom.', 'joinotify' ),
-                'replacement' => '',
-            ),
-            '{{ joinotify_coupon_discount_value }}' => array(
-                'description' => esc_html__( 'Para recuperar o valor do cupom de desconto.', 'joinotify' ),
-                'replacement' => '',
-            ),
-            '{{ joinotify_coupon_expires }}' => array(
-                'description' => esc_html__( 'Para recuperar a expiração do cupom de desconto.', 'joinotify' ),
-                'replacement' => '',
-            ),
-        ));
-
-        return $placeholders;
     }
 }

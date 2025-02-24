@@ -29,25 +29,40 @@ class Workflow_Processor {
      * @return void
      */
     public function __construct() {
+        // fire hooks if WordPress is active
+        if ( Admin::get_setting('enable_wordpress_integration') === 'yes' ) {
+            // on user register
+            add_action( 'user_register', array( $this, 'process_workflow_user_register' ), 10, 2 );
+
+            // on user login
+            add_action( 'wp_login', array( $this, 'process_workflow_user_login' ), 10, 2 );
+
+            // on password reset
+            add_action( 'password_reset', array( $this, 'process_workflow_password_reset' ), 10, 2 );
+
+            // on change post status
+            add_action( 'transition_post_status', array( $this, 'process_workflow_change_post_status' ), 10, 3 );
+        }
+
         // fire hooks if WooCommerce is active
         if ( class_exists('WooCommerce') && Admin::get_setting('enable_woocommerce_integration') === 'yes' ) {
             // on receive new order
-            add_action( 'woocommerce_new_order', array( $this, 'process_workflow_on_new_order' ), 10, 1 );
+            add_action( 'woocommerce_new_order', array( $this, 'process_workflow_on_new_order' ), 10, 2 );
 
             // when order is processing
-            add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_order_processed' ), 10, 1 );
+            add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_order_processed' ), 10, 3 );
 
             // when order is completed
-            add_action( 'woocommerce_order_status_completed', array( $this, 'process_workflow_order_completed' ), 10, 1 );
+            add_action( 'woocommerce_order_status_completed', array( $this, 'process_workflow_order_completed' ), 10, 3 );
 
             // when a order is fully refunded
-            add_action( 'woocommerce_order_fully_refunded', array( $this, 'process_workflow_order_fully_refunded' ), 10, 1 );
+            add_action( 'woocommerce_order_fully_refunded', array( $this, 'process_workflow_order_fully_refunded' ), 10, 2 );
 
             // when a order is partially refunded
-            add_action( 'woocommerce_order_partially_refunded', array( $this, 'process_workflow_order_partially_refunded' ), 10, 1 );
+            add_action( 'woocommerce_order_partially_refunded', array( $this, 'process_workflow_order_partially_refunded' ), 10, 2 );
             
             // when a order has status changed
-            add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 1 );
+            add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 3 );
         }
 
         // fire hook if Elementor is active
@@ -62,7 +77,7 @@ class Workflow_Processor {
             add_action( 'wpforms_process_complete', array( $this, 'process_workflow_wpforms_form' ), 10, 4 );
 
             // when a WPForms form paypal payment is fired
-            add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
+        //    add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
         }
     }
 
@@ -94,21 +109,111 @@ class Workflow_Processor {
 
 
     /**
+     * Processs workflow content on user register
+     * 
+     * @since 1.1.0
+     * @param int $user_id | User ID
+     * @param array $userdata | User data
+     * @return void
+     */
+    public function process_workflow_user_register( $user_id, $userdata ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'user_register',
+            'integration' => 'wordpress',
+            'user_id' => $user_id,
+            'user_data' => $userdata,
+        );
+
+        self::process_workflows( 'user_register', $payload );
+    }
+
+
+    /**
+     * Processs workflow content on user login
+     * 
+     * @since 1.1.0
+     * @param string $user_login | User login
+     * @param object $user | User object
+     * @return void
+     */
+    public function process_workflow_user_login( $user_login, $user ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'user_login',
+            'integration' => 'wordpress',
+            'user_id' => $user->ID,
+            'user_data' => $user,
+        );
+
+        self::process_workflows( 'user_login', $payload );
+    }
+
+
+    /**
+     * Processs workflow content on password reset
+     * 
+     * @since 1.1.0
+     * @param object $user | User object
+     * @param string $new_pass | New password
+     * @return void
+     */
+    public function process_workflow_password_reset( $user, $new_pass ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'password_reset',
+            'integration' => 'wordpress',
+            'user_id' => $user->ID,
+            'user_data' => $user,
+        );
+
+        self::process_workflows( 'password_reset', $payload );
+    }
+
+
+    /**
+     * Process workflow content on post status changed
+     * 
+     * @since 1.1.0
+     * @param string $new_status | New post status
+     * @param string $old_status | Old post status
+     * @param object $post | Post object
+     * @return void
+     */
+    public function process_workflow_change_post_status( $new_status, $old_status, $post ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'change_post_status',
+            'integration' => 'wordpress',
+            'post_id' => $post->ID,
+            'post_type' => $post->post_type,
+            'post_status' => $new_status,
+            'old_post_status' => $old_status,
+        );
+
+        self::process_workflows( 'change_post_status', $payload );
+    }
+
+
+    /**
      * Process workflow on receive new order on WooCommerce
      * 
      * @since 1.0.0
      * @version 1.1.0
      * @param int $order_id  | Order ID
+     * @param object $order | Order object
      * @return void
      */
-    public function process_workflow_on_new_order( $order_id ) {
-        $context = array(
+    public function process_workflow_on_new_order( $order_id, $order ) {
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'woocommerce_new_order',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
+            'order_data' => $order,
         );
 
-        self::process_workflows( 'woocommerce_new_order', $context );
+        self::process_workflows( 'woocommerce_new_order', $payload );
     }
 
 
@@ -118,16 +223,21 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param int $order_id  | Order ID
+     * @param array $posted_data | User submitted checkout data
+     * @param object $order | Order object
      * @return void
      */
-    public function process_workflow_order_processed( $order_id ) {
-        $context = array(
+    public function process_workflow_order_processed( $order_id, $posted_data, $order ) {
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'woocommerce_checkout_order_processed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
+            'posted_data' => $posted_data,
+            'order_data' => $order,
         );
 
-        self::process_workflows( 'woocommerce_checkout_order_processed', $context );
+        self::process_workflows( 'woocommerce_checkout_order_processed', $payload );
     }
 
 
@@ -137,16 +247,21 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param int $order_id  | Order ID
+     * @param object $order | Order object
+     * @param array $status_transition | Status transition
      * @return void
      */
-    public function process_workflow_order_completed( $order_id ) {
-        $context = array(
+    public function process_workflow_order_completed( $order_id, $order, $status_transition ) {
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'woocommerce_order_status_completed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
+            'order_data' => $order,
+            'status_transition' => $status_transition,
         );
 
-        self::process_workflows( 'woocommerce_order_status_completed', $context );
+        self::process_workflows( 'woocommerce_order_status_completed', $payload );
     }
 
 
@@ -156,16 +271,19 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param int $order_id  | Order ID
+     * @param int $refund_id | Refund ID
      * @return void
      */
-    public function process_workflow_order_fully_refunded( $order_id ) {
-        $context = array(
+    public function process_workflow_order_fully_refunded( $order_id, $refund_id ) {
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'woocommerce_order_fully_refunded',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
+            'refund_id' => $refund_id,
         );
 
-        self::process_workflows( 'woocommerce_order_fully_refunded', $context );
+        self::process_workflows( 'woocommerce_order_fully_refunded', $payload );
     }
 
 
@@ -174,17 +292,20 @@ class Workflow_Processor {
      * 
      * @since 1.0.0
      * @version 1.1.0
+     * @param bool $is_partially_refunded | Is partially refunded
      * @param int $order_id  | Order ID
      * @return void
      */
-    public function process_workflow_order_partially_refunded( $order_id ) {
-        $context = array(
+    public function process_workflow_order_partially_refunded( $is_partially_refunded, $order_id ) {
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'woocommerce_order_partially_refunded',
             'integration' => 'woocommerce',
+            'is_partially_refunded' => $is_partially_refunded,
             'order_id' => $order_id,
         );
 
-        self::process_workflows( 'woocommerce_order_partially_refunded', $context );
+        self::process_workflows( 'woocommerce_order_partially_refunded', $payload );
     }
     
 
@@ -194,16 +315,21 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param int $order_id  | Order ID
+     * @param string $old_status | Old status
+     * @param string $new_status | New status
      * @return void
      */
-    public function process_workflow_order_status_changed( $order_id ) {
-        $context = array(
+    public function process_workflow_order_status_changed( $order_id, $old_status, $new_status ) {
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'woocommerce_order_status_changed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
+            'old_status' => $old_status,
+            'new_status' => $new_status,
         );
 
-        self::process_workflows( 'woocommerce_order_status_changed', $context );
+        self::process_workflows( 'woocommerce_order_status_changed', $payload );
     }
 
 
@@ -231,14 +357,17 @@ class Workflow_Processor {
             Logger::register_log( 'Function process_workflow_elementor_form() fired' );
         }
     
-        $context = array(
+        $payload = array(
             'integration' => 'elementor',
+            'hook' => 'elementor_pro/forms/new_record',
             'type' => 'trigger',
-            'id' => uniqid('elementor_form_'),
+            'id' => $form_id,
             'fields' => $fields,
+            'record' => $record,
+            'handler' => $handler,
         );
     
-        self::process_workflows( 'elementor_pro/forms/new_record', $context );
+        self::process_workflows( 'elementor_pro/forms/new_record', $payload );
     }
 
 
@@ -248,16 +377,16 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param string $hook | Hook for call actions
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return void
      */
-    public static function process_workflows( $hook, $context ) {
+    public static function process_workflows( $hook, $payload ) {
         $workflows = self::get_workflows_by_hook( $hook );
 
         if ( JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function process_workflows() fired' );
             Logger::register_log( 'hook: ' . print_r( $hook, true ) );
-            Logger::register_log( 'content: ' . print_r( $context, true ) );
+            Logger::register_log( 'content: ' . print_r( $payload, true ) );
         }
 
         if ( empty( $workflows ) ) {
@@ -269,7 +398,8 @@ class Workflow_Processor {
 
             if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
                 $post_id = $workflow->ID; // for get workflow content
-                self::process_workflow_content( $workflow_content, $post_id, $context );
+
+                self::process_workflow_content( $workflow_content, $post_id, $payload );
             }
         }
     }
@@ -282,19 +412,20 @@ class Workflow_Processor {
      * @version 1.1.0
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return void
      */
-    public static function process_workflow_content( $workflow_content, $post_id, $context ) {
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( 'Function process_workflow_content() fired' );
-            Logger::register_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
-            Logger::register_log( 'Param $post_id: ' . print_r( $post_id, true ) );
-            Logger::register_log( 'Param $context: ' . print_r( $context, true ) );
-        }
+    public static function process_workflow_content( $workflow_content, $post_id, $payload ) {
+        /*
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'Function process_workflow_content() fired' );
+            error_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
+            error_log( 'Param $post_id: ' . print_r( $post_id, true ) );
+            error_log( 'Param $payload: ' . print_r( $payload, true ) );
+        }*/
 
         // get integration
-        $integration = $context['integration'];
+        $integration = $payload['integration'];
 
         // get trigger data
         $trigger_data = array_filter( $workflow_content, function ( $item ) {
@@ -305,10 +436,22 @@ class Workflow_Processor {
         $trigger_data = reset( $trigger_data );
 
         if ( $integration === 'woocommerce' ) {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], true );
+            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
+            $order = wc_get_order( $payload['order_id'] );
+            $order_status = str_replace( 'wc-', '', $order->get_status() ); // remove prefix "wc-"
+            
+            // check order status
+            if ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
+                // remove prefix "wc-" fron workflow trigger settings
+                $trigger_order_status = str_replace( 'wc-', '', $trigger_data['data']['settings']['order_status'] );
+
+                if ( $trigger_order_status !== $order_status ) {
+                    return;
+                }
+            }
         } elseif ( $integration === 'wpforms' ) {
             // check wpforms form id
-            if ( $context['id'] !== absint( $trigger_data['data']['settings']['form_id'] ) ) {
+            if ( $payload['id'] !== absint( $trigger_data['data']['settings']['form_id'] ) ) {
                 return;
             }
         }
@@ -335,7 +478,7 @@ class Workflow_Processor {
             }
     
             // execute actions
-            if ( self::handle_action( $action, $post_id, $context ) ) {
+            if ( self::handle_action( $action, $post_id, $payload ) ) {
                 $state['processed_actions'][] = $action_id;
 
                 // remove action from pending actions
@@ -345,8 +488,8 @@ class Workflow_Processor {
                 $state['pending_actions'] = array_values( $state['pending_actions'] );
 
                 // Update state in the database for woocommerce orders
-                if ( $context['integration'] === 'woocommerce' ) {
-                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], $state );
+                if ( $payload['integration'] === 'woocommerce' ) {
+                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
                 }
 
                 // Break after time delay action
@@ -365,59 +508,77 @@ class Workflow_Processor {
      * @version 1.1.0
      * @param array $action | Workflow actions array
      * @param int $post_id | Post ID
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return bool
      */
-    public static function handle_action( $action, $post_id, $context ) {
-        $action_data = $action['data'];
+    public static function handle_action( $action, $post_id, $event_data ) {
+        $action_data = $action['data'] ?? [];
+    
+        if ( empty( $action_data['action'] ) ) {
+            return false;
+        }
+    
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Handling action: " . print_r( $action, true ) );
+        }
+    
+        /**
+         * Filter to add custom actions
+         * 
+         * @since 1.1.0
+         * @param array $actions | Array of actions
+         * @return array
+         */
+        $actions = apply_filters( 'Joinotify/Workflow_Processor/Handle_Actions', array(
+            'time_delay' => fn() => Schedule::schedule_actions( $post_id, $event_data, $action_data['delay_timestamp'], $action ),
+            'condition' => fn() => self::process_condition_action( $action, $post_id, $event_data ),
+            'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data ),
+            'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data ),
+            'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
+            'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
+        ));
+    
+        return isset( $actions[ $action_data['action'] ] ) ? $actions[ $action_data['action'] ]() : false;
+    }
+    
+    
+    /**
+     * Processes a conditional action within a workflow
+     *
+     * @since 1.1.0
+     * @param array $action | Condition action data
+     * @param int $post_id | Workflow post ID
+     * @param array $event_data | Event context data
+     * @return bool Returns true if the action is processed successfully
+     */
+    public static function process_condition_action( $action, $post_id, $event_data ) {
+        $action_data = $action['data'] ?? array();
 
-        // debug params
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( 'Function handle_action() fired' );
-            Logger::register_log( 'Param $action: ' . print_r( $action, true ) );
-            Logger::register_log( 'Param $post_id: ' . print_r( $post_id, true ) );
-            Logger::register_log( 'Param $context: ' . print_r( $context, true ) );
+        // Ensure that condition content exists
+        if ( empty( $action_data['condition_content'] ) ) {
+            return false;
         }
 
-        // check action type
-        switch ( $action_data['action'] ) {
-            case 'time_delay':
-                Schedule::schedule_actions( $post_id, $context, $action_data['delay_timestamp'], $action );
+        // Extract condition details
+        $get_condition = $action_data['condition_content']['condition'] ?? '';
+        $condition_type = $action_data['condition_content']['type'] ?? '';
+        $condition_value = $action_data['condition_content']['value'] ?? '';
 
-                return true;
-            case 'condition':
-                $get_condition = $action_data['condition_content']['condition'] ?? '';
-                $condition_type = $action_data['condition_content']['type'] ?? '';
-                $condition_value = $action_data['condition_content']['value'] ?? '';
+        // Retrieve the comparison value based on the event data
+        $compare_value = Conditions::get_compare_value( $get_condition, $event_data );
 
-                $compare_value = Conditions::get_compare_value( $get_condition, $context );
-                $condition_met = Conditions::check_condition( $condition_type, $condition_value, $compare_value );
-                $next_actions = $condition_met ? $action['children']['action_true'] ?? array() : $action['children']['action_false'] ?? array();
-                
-                foreach ( $next_actions as $child_action ) {
-                    self::handle_action( $child_action, $post_id, $context );
-                }
-                
-                return true;
-            case 'send_whatsapp_message_text':
-                self::send_whatsapp_message_text( $action_data, $context );
+        // Check if the condition is met
+        $condition_met = Conditions::check_condition( $condition_type, $condition_value, $compare_value );
 
-                return true;
-            case 'send_whatsapp_message_media':
-                self::send_whatsapp_message_media( $action_data, $context );
+        // Determine the next actions based on whether the condition is met
+        $next_actions = $condition_met ? ( $action['children']['action_true'] ?? [] ) : ( $action['children']['action_false'] ?? array() );
 
-                return true;
-            case 'create_coupon':
-                self::execute_wc_coupon_action( $action_data, $context );
-
-                return true;
-
-            case 'snippet_php':
-                // return boolean
-                return self::execute_snippet_php( $action_data['snippet_php'] );
+        // Process the resulting actions based on the condition outcome
+        foreach ( $next_actions as $child_action ) {
+            self::handle_action( $child_action, $post_id, $event_data );
         }
 
-        return false;
+        return true;
     }
 
 
@@ -427,13 +588,13 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param int $post_id | Workflow ID
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @param array $action_data | Action data
      * @return void
      */
-    public static function process_scheduled_action( $post_id, $context, $action_data ) {
-        if ( $context['integration'] === 'woocommerce' ) {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], true );
+    public static function process_scheduled_action( $post_id, $payload, $action_data ) {
+        if ( $payload['integration'] === 'woocommerce' ) {
+            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
         }
     
         if ( ! is_array( $state ) ) {
@@ -467,17 +628,17 @@ class Workflow_Processor {
     
             // check if action is time delay
             if ( $action['data']['action'] === 'time_delay' ) {
-                Schedule::schedule_actions( $post_id, $context, $action['data']['delay_timestamp'], $action );
+                Schedule::schedule_actions( $post_id, $payload, $action['data']['delay_timestamp'], $action );
 
                 break;
             }
     
-            if ( self::handle_action( $action, $post_id, $context ) ) {
+            if ( self::handle_action( $action, $post_id, $payload ) ) {
                 // Mark as processed
                 $state['processed_actions'][] = $action_id;
     
-                if ( $context['integration'] === 'woocommerce' ) {
-                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $context['order_id'], $state );
+                if ( $payload['integration'] === 'woocommerce' ) {
+                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
                 }
             }
         }
@@ -490,16 +651,16 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param array $action_data | Action data
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return void
      */
-    public static function send_whatsapp_message_text( $action_data, $context ) {
+    public static function send_whatsapp_message_text( $action_data, $payload ) {
         $sender = $action_data['sender'];
-        $receiver = Controller::prepare_receiver( $action_data['receiver'], $context );
-        $message = Placeholders::replace_placeholders( $action_data['message'], $context );
-        $response = Controller::send_message_text( $sender, $receiver, $message );
+        $receiver = Controller::prepare_receiver( $action_data['receiver'], $payload );
+        $message = Placeholders::replace_placeholders( $action_data['message'], $payload );
 
-        error_log( 'send_whatsapp_message_text() $message: ' . print_r( $message, true ) );
+        // send message
+        $response = Controller::send_message_text( $sender, $receiver, $message );
 
         if ( JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {
@@ -517,14 +678,16 @@ class Workflow_Processor {
      * @since 1.0.0
      * @version 1.1.0
      * @param array $action_data | Action data
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return void
      */
-    public static function send_whatsapp_message_media( $action_data, $context ) {
+    public static function send_whatsapp_message_media( $action_data, $payload ) {
         $sender = $action_data['sender'];
-        $receiver = Controller::prepare_receiver( $action_data['receiver'], $context );
+        $receiver = Controller::prepare_receiver( $action_data['receiver'], $payload );
         $media_type = $action_data['media_type'];
         $media = $action_data['media_url'];
+
+        // send message
         $response = Controller::send_message_media( $sender, $receiver, $media_type, $media );
 
         if ( JOINOTIFY_DEBUG_MODE ) {
@@ -542,9 +705,10 @@ class Workflow_Processor {
      *
      * @since 1.1.0
      * @param string $snippet_php | PHP Code to execute
+     * @param array $payload | Payload data
      * @return bool Returns true if executed successfully
      */
-    public static function execute_snippet_php( $snippet_php ) {
+    public static function execute_snippet_php( $snippet_php, $payload ) {
         if ( empty( $snippet_php ) ) {
             Logger::register_log( 'Empty PHP snippet, skipping execution.', 'WARNING' );
 
@@ -596,14 +760,19 @@ class Workflow_Processor {
      * 
      * @since 1.1.0
      * @param array $action_data | Action data
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return void
      */
-    public static function execute_wc_coupon_action( $action_data, $context ) {
+    public static function execute_wc_coupon_action( $action_data, $payload ) {
         $create_coupon = Woocommerce::generate_wc_coupon( $action_data['settings'] );
+        $payload['settings'] = $action_data['settings'];
+        $payload['settings']['coupon_code'] = $create_coupon['coupon_code'];
+
+        // send message
+        $send_message = self::send_whatsapp_message_text( $action_data['settings']['message'], $payload );
 
         if ( JOINOTIFY_DEBUG_MODE ) {
-            if ( $create_coupon > 0 ) {
+            if ( $create_coupon['coupon_id'] > 0 ) {
                 Logger::register_log( "Coupon created successfully." );
             } else {
                 Logger::register_log( "Failed to create coupon.", 'ERROR' );
@@ -625,8 +794,9 @@ class Workflow_Processor {
      * @link  https://wpforms.com/developers/wpforms_process_complete/
      */
     public function process_workflow_wpforms_form( $fields, $entry, $form_data, $entry_id ) {
-        $context = array(
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'wpforms_process_complete',
             'integration' => 'wpforms',
             'id' => absint( $form_data['id'] ),
             'fields' => $fields,
@@ -635,7 +805,7 @@ class Workflow_Processor {
             'entry_id' => $entry_id,
         );
 
-        self::process_workflows( 'wpforms_process_complete', $context );
+        self::process_workflows( 'wpforms_process_complete', $payload );
     }
 
 
@@ -657,8 +827,9 @@ class Workflow_Processor {
             return;
         }
 
-        $context = array(
+        $payload = array(
             'type' => 'trigger',
+            'hook' => 'wpforms_paypal_standard_process_complete',
             'integration' => 'wpforms',
             'id' => absint( $form_data['id'] ),
             'fields' => $fields,
@@ -667,6 +838,6 @@ class Workflow_Processor {
             'entry_id' => $entry_id,
         );
 
-        self::process_workflows( 'wpforms_paypal_standard_process_complete', $context );
+        self::process_workflows( 'wpforms_paypal_standard_process_complete', $payload );
     }
 }

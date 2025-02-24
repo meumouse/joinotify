@@ -142,7 +142,7 @@ if ( ! class_exists('Joinotify') ) {
 			$this->define( 'JOINOTIFY_API_BASE_URL', 'https://whatsapp-api.meumouse.com' );
 			$this->define( 'JOINOTIFY_SLUG', self::$slug );
 			$this->define( 'JOINOTIFY_VERSION', self::$version );
-			$this->define( 'JOINOTIFY_DEV_MODE', true );
+			$this->define( 'JOINOTIFY_DEV_MODE', false );
 		}
 
 

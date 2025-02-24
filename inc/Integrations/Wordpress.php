@@ -68,8 +68,8 @@ class Wordpress extends Integrations_Base {
             ),
             array(
                 'data_trigger' => 'transition_post_status',
-                'title' => esc_html__( 'Novo post é publicado', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando um novo post é publicado no site.', 'joinotify' ),
+                'title' => esc_html__( 'Post tem status alterado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um post tem o status alterado no site.', 'joinotify' ),
                 'require_settings' => false,
             ),
         );

@@ -15,6 +15,10 @@ use MeuMouse\Joinotify\Builder\Actions;
 
 use MeuMouse\Joinotify\Cron\Schedule;
 
+use MeuMouse\Joinotify\Integrations\Woocommerce;
+use MeuMouse\Joinotify\Integrations\Whatsapp;
+
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -298,14 +302,14 @@ class Components {
 
                 break;
             case 'send_whatsapp_message_text':
-                $html .= \MeuMouse\Joinotify\Integrations\Whatsapp::whatsapp_message_text_action( $action_data );
+                $html .= Whatsapp::whatsapp_message_text_action( $action_data );
 
                 // placeholders helper
                 $html .= self::render_placeholders_list( $post_id );
 
                 break;
             case 'send_whatsapp_message_media':
-                $html .= \MeuMouse\Joinotify\Integrations\Whatsapp::whatsapp_message_media_action( $action_data );
+                $html .= Whatsapp::whatsapp_message_media_action( $action_data );
 
                 break;
             case 'snippet_php':
@@ -313,7 +317,7 @@ class Components {
 
                 break;
             case 'create_coupon':
-                $html .= \MeuMouse\Joinotify\Integrations\Woocommerce::create_coupon_action( $action_data );
+                $html .= Woocommerce::create_coupon_action( $action_data, $post_id );
 
                 break;
         }
@@ -345,30 +349,21 @@ class Components {
                     $html .= '<span class="description">'. esc_html( $trigger['description'] ) .'</span>';
                 $html .= '</div>';
 
-                $html .= '<div class="btn-group">';
-                    $html .= '<div class="funnel-trigger-cta icon-translucent btn p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"><svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></div>';
-                
-                    $html .= '<div class="funnel-trigger-details">';
-                        $html .= '<ul class="dropdown-menu builder-dropdown shadow-sm">';
-                            $html .= '<li class="d-flex align-items-center mb-0">';
-                                $html .= '<a id="exclude_trigger_'. esc_attr( $trigger['data_trigger'] ) .'" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 exclude-trigger" data-trigger-id="'. esc_attr( $trigger_id ) .'" href="#">';
-                                    $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z"></path></svg>';
-                                    $html .= esc_html__( 'Excluir acionamento', 'joinotify' );
-                                $html .= '</a>';
-                            $html .= '</li>';
-
-                            if ( $trigger['require_settings'] !== false ) {
+                if ( $trigger['require_settings'] !== false ) {
+                    $html .= '<div class="btn-group">';
+                        $html .= '<div class="funnel-trigger-cta icon-translucent btn p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"><svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></div>';
+                    
+                        $html .= '<div class="funnel-trigger-details">';
+                            $html .= '<ul class="dropdown-menu builder-dropdown shadow-sm">';
                                 $html .= '<li class="d-flex align-items-center mb-0">';
                                     $html .= '<a id="edit_trigger_'. esc_attr( $trigger_id ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-trigger" href="#" data-bs-toggle="modal" data-bs-target="#edit_trigger_'. esc_attr( $trigger_id ) .'">';
                                         $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.045 7.401c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.378-.378-.88-.586-1.414-.586s-1.036.208-1.413.585L4 13.585V18h4.413L19.045 7.401zm-3-3 1.587 1.585-1.59 1.584-1.586-1.585 1.589-1.584zM6 16v-1.585l7.04-7.018 1.586 1.586L7.587 16H6zm-2 4h16v2H4z"></path></svg>';
                                         $html .= esc_html__( 'Configurações', 'joinotify' );
                                     $html .= '</a>';
                                 $html .= '</li>';
-                            }
-                        $html .= '</ul>';
-                    $html .= '</div>';
+                            $html .= '</ul>';
+                        $html .= '</div>';
 
-                    if ( $trigger['require_settings'] !== false ) {
                         $html .= '<div class="modal fade" id="edit_trigger_'. esc_attr( $trigger_id ) .'" tabindex="-1" aria-labelledby="edit_trigger_'. esc_attr( $trigger_id ) .'_label">';
                             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
@@ -388,8 +383,8 @@ class Components {
                                 $html .= '</div>';
                             $html .= '</div>';
                         $html .= '</div>';
-                    }
-                $html .= '</div>';
+                    $html .= '</div>';
+                }
             $html .= '</div>';
 
             return $html;
@@ -425,6 +420,8 @@ class Components {
                 $html .= '<label class="form-label" for="woocommerce_order_status">'. esc_html__( 'Status do pedido', 'joinotify' ) .'</label>';
                 
                 $html .= '<select id="woocommerce_order_status" class="form-select set-trigger-settings order-status">';
+                    $html .= '<option value="none">' . esc_html__( 'Selecione um status', 'joinotify' ) . '</option>';
+                    
                     foreach ( wc_get_order_statuses() as $status_key => $status_label ) {
                         $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
                     }
@@ -560,13 +557,14 @@ class Components {
      * Render condition selectors for condition builder offcanvas
      * 
      * @since 1.0.0
+     * @version 1.1.0
      * @param array $conditions | Condition key
      * @return string
      */
     public static function render_condition_selectors( $conditions ) {
         $html = '<div class="condition-group">';
             foreach ( $conditions as $condition => $value ) {
-                $html .= '<div class="condition-item" data-condition="'. esc_attr( $condition ) .'">';
+                $html .= '<div class="condition-item ' . ( $condition === 'no_action' ? 'locked' : '' ) . '" data-condition="'. esc_attr( $condition ) .'">';
                     $html .= '<span class="title">'. esc_html( $value['title'] ) .'</span>';
                     $html .= '<span class="description">'. esc_html( $value['description'] ) .'</span>';
                 $html .= '</div>';
@@ -575,7 +573,7 @@ class Components {
                     $html .= self::render_condition_settings( $condition );
                 $html .= '</div>';
             }
-        $html .= '<div>';
+        $html .= '</div>';
 
         return $html;
     }
@@ -592,8 +590,8 @@ class Components {
      */
     public static function render_condition_settings( $condition, $settings = array() ) {
         $html = '';
-
         $condition_settings = $settings['type'] ?? '';
+        $condition_value = $settings['value'] ?? '';
 
         // add condition options
         $html .= self::get_condition_options( $condition, $condition_settings );
@@ -603,7 +601,6 @@ class Components {
                 global $wp_roles;
             
                 $roles = $wp_roles->get_names();
-                $selected_role = $settings['user_role'] ?? '';
 
                 $html .= '<div class="mb-4">';
                     $html .= '<label class="form-label">' . esc_html__('Função do usuário: *', 'joinotify') . '</label>';
@@ -611,9 +608,8 @@ class Components {
                 
                     foreach ( $roles as $role_key => $role_name ) {
                         $translated_role_name = translate_user_role( $role_name );
-                        $selected = selected( $selected_role, $role_key, false );
 
-                        $html .= '<option value="'. esc_attr( $role_key ) .'" '. $selected .'>'. esc_html( $translated_role_name ) .'</option>';
+                        $html .= '<option value="'. esc_attr( $role_key ) .'" '. selected( $condition_value, $role_key, false ) .'>'. esc_html( $translated_role_name ) .'</option>';
                     }
                 
                     $html .= '</select>';
@@ -635,13 +631,6 @@ class Components {
                 $html .= '</div>';
 
                 break;
-            case 'user_last_login':
-                $html .= '<div class="mb-4">';
-                    $html .= '<label class="form-label">' . esc_html__('Tempo desde o último login: *', 'joinotify') . '</label>';
-                    $html .= '<input type="number" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Número de horas', 'joinotify' ) .'">';
-                $html .= '</div>';
-
-                break;
             case 'post_type':
                 $html .= '<div class="mb-4">';
                     // Retrieves all registered post types
@@ -650,8 +639,10 @@ class Components {
                     $html .= '<label class="form-label">' . esc_html__('Tipo de post: *', 'joinotify') . '</label>';
                     
                     $html .= '<select class="form-control get-post-type get-condition-value required-setting">';
+                        $html .= '<option value="none">' . esc_html__( 'Selecione um tipo de post', 'joinotify' ) . '</option>';
+
                         foreach ( $post_types as $post_type_key => $post_type_object ) {
-                            $html .= '<option value="' . esc_attr( $post_type_key ) . '">' . esc_html( $post_type_object->labels->name ) . '</option>';
+                            $html .= '<option value="' . esc_attr( $post_type_key ) . '" '. selected( $condition_value, $post_type_key, false ) .'>' . esc_html( $post_type_object->labels->name ) . '</option>';
                         }
                     $html .= '</select>';
                 $html .= '</div>';
@@ -669,13 +660,14 @@ class Components {
                     // Retrieves all WooCommerce order statuses
                     if ( function_exists('wc_get_order_statuses') ) {
                         $order_statuses = wc_get_order_statuses();
-                        $selected_status = $settings['order_status'] ?? '';
 
                         $html .= '<label class="form-label">' . esc_html__('Status do pedido: *', 'joinotify') . '</label>';
                         
                         $html .= '<select class="form-control get-condition-value required-setting">';
+                            $html .= '<option value="none">' . esc_html__( 'Selecione um status', 'joinotify' ) . '</option>';
+
                             foreach ( $order_statuses as $status_key => $status_name ) {
-                                $html .= '<option value="' . esc_attr( $status_key ) . '" '. selected( $selected_status, $status_key, false ) .'>' . esc_html( $status_name ) . '</option>';
+                                $html .= '<option value="' . esc_attr( $status_key ) . '" '. selected( $condition_value, $status_key, false ) .'>' . esc_html( $status_name ) . '</option>';
                             }
                         $html .= '</select>';
                     }
@@ -683,8 +675,6 @@ class Components {
 
                 break;
             case 'order_total':
-                $order_total = $settings['value'] ?? '';
-
                 $html .= '<div class="mb-4">';
                     $html .= '<label class="form-label">' . esc_html__('Valor total do pedido: *', 'joinotify') . '</label>';
 
@@ -693,7 +683,7 @@ class Components {
                             $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
                         }
 
-                        $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" value="'. esc_attr( $order_total ) .'" placeholder="'. esc_attr__( 'Valor total do pedido', 'joinotify' ) .'">';
+                        $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'Valor total do pedido', 'joinotify' ) .'">';
                     $html .= '</div>';
                 $html .= '</div>';
 
@@ -710,7 +700,7 @@ class Components {
             case 'customer_email':
                 $html .= '<div class="mb-4">';
                     $html .= '<label class="form-label">' . esc_html__('E-mail do cliente:', 'joinotify') . '</label>';
-                    $html .= '<input type="email" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
+                    $html .= '<input type="email" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -723,7 +713,7 @@ class Components {
                             $html .= '<span class="input-group-text">'. get_woocommerce_currency_symbol() .'</span>';
                         }
                         
-                        $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
+                        $html .= '<input type="text" class="form-control get-condition-value format-currency required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'Valor do reembolso', 'joinotify' ) .'">';
                     $html .= '</div>';
                 $html .= '</div>';
 
@@ -733,9 +723,9 @@ class Components {
                     $html .= '<label class="form-label">' . esc_html__('Status da assinatura: *', 'joinotify') . '</label>';
                     
                     $html .= '<select class="form-control get-condition-value required-setting">';
-                        $html .= '<option value="active">' . esc_html__( 'Ativa', 'joinotify' ) . '</option>';
-                        $html .= '<option value="on-hold">' . esc_html__( 'Em espera', 'joinotify' ) . '</option>';
-                        $html .= '<option value="cancelled">' . esc_html__( 'Cancelada', 'joinotify' ) . '</option>';
+                        $html .= '<option value="active" '. selected( $condition_value, 'active', false ) .'>' . esc_html__( 'Ativa', 'joinotify' ) . '</option>';
+                        $html .= '<option value="on-hold" '. selected( $condition_value, 'on-hold', false ) .'>' . esc_html__( 'Em espera', 'joinotify' ) . '</option>';
+                        $html .= '<option value="cancelled" '. selected( $condition_value, 'cancelled', false ) .'>' . esc_html__( 'Cancelada', 'joinotify' ) . '</option>';
                     $html .= '</select>';
                 $html .= '</div>';
 
@@ -745,8 +735,8 @@ class Components {
                     $html .= '<label class="form-label">' . esc_html__('Pagamento da renovação: *', 'joinotify') . '</label>';
                     
                     $html .= '<select class="form-control get-condition-value required-setting">';
-                        $html .= '<option value="yes">' . esc_html__( 'Sim', 'joinotify' ) . '</option>';
-                        $html .= '<option value="no">' . esc_html__( 'Não', 'joinotify' ) . '</option>';
+                        $html .= '<option value="yes" '. selected( $condition_value, 'yes', false ) .'>' . esc_html__( 'Sim', 'joinotify' ) . '</option>';
+                        $html .= '<option value="no" '. selected( $condition_value, 'no', false ) .'>' . esc_html__( 'Não', 'joinotify' ) . '</option>';
                     $html .= '</select>';
                 $html .= '</div>';
 
@@ -754,7 +744,7 @@ class Components {
             case 'cart_total':
                 $html .= '<div class="mb-4">';
                     $html .= '<label class="form-label">' . esc_html__('Valor total do carrinho:', 'joinotify') . '</label>';
-                    $html .= '<input type="number" class="form-control get-condition-value" placeholder="'. esc_attr__( 'Valor total do carrinho', 'joinotify' ) .'">';
+                    $html .= '<input type="number" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'Valor total do carrinho', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -762,13 +752,6 @@ class Components {
                 $html .= '<div class="mb-4 search-products-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Produtos no carrinho:', 'joinotify') . '</label>';
                     $html .= '<input type="text" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
-                $html .= '</div>';
-
-                break;
-            case 'form_id':
-                $html .= '<div class="mb-4">';
-                    $html .= '<label class="form-label">' . esc_html__('ID do formulário:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do formulário', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
@@ -844,7 +827,7 @@ class Components {
      * @param int $post_id | Post ID
      * @return string
      */
-    public static function render_placeholders_list( $post_id ) {
+    public static function render_placeholders_list( $post_id = 0 ) {
         $accordion_id = uniqid('whatsapp_msg_text_placeholder_');
         $accordion_container_id = uniqid('whatsapp_msg_text_placeholder_collapse_');
 
@@ -863,6 +846,7 @@ class Components {
                             // get filtered placeholders
                             $placeholders = Placeholders::get_placeholders_list( $integration, $trigger );
 
+                            // iterate over placeholders
                             foreach( $placeholders as $placeholder => $value ) {
                                 $html .= '<div class="d-grid mb-3">';
                                     $html .= '<span class="fs-sm fs-italic"><code>'. esc_html( $placeholder ) .'</code></span>';
@@ -1105,13 +1089,31 @@ class Components {
 
 
     /**
+     * Render the condition products
+     * 
+     * @since 1.1.0
+     * @param array $settings | The condition settings
+     * @return string
+     */
+    public static function render_condition_products( $settings = array() ) {
+        $html = '<ul class="list-group search-products-results">';
+            foreach( $settings['products'] as $product ) {
+                $html .= '<li class="list-group-item product-item" data-product-id="' . get_the_ID() . '">' . get_the_title() . '</li>';
+            }
+        $html .= '</ul>';
+
+        return $html;
+    }
+
+
+    /**
      * Render  the coupon placeholders
      * 
      * @since 1.1.0
      * @return string
      */
     public static function render_coupon_placeholders() {
-        $placeholders = Placeholders::get_coupon_placeholders();
+        $placeholders = Woocommerce::get_coupon_placeholders();
 
         $html = '';
 

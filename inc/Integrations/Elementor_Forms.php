@@ -260,17 +260,17 @@ class Elementor_Forms extends Action_Base {
 		$sender = $settings['joinotify_sender'] ?? '';
 		$receiver = Controller::prepare_receiver( $fields[ $settings['joinotify_receiver'] ] ?? '' );
 
-		$context = array(
+		$payload = array(
 			'type' => 'elementor',
 			'id' => $settings['joinotify_form_id'],
 			'fields' => $fields,
 		);
 
 		if ( JOINOTIFY_DEBUG_MODE ) {
-			Logger::register_log( "context on Elementor form: " . print_r( $context, true ) );
+			Logger::register_log( "context on Elementor form: " . print_r( $payload, true ) );
 		}
 
-		$text_msg = Placeholders::replace_placeholders( $settings['joinotify_send_text_message'] ?? '', $context );
+		$text_msg = Placeholders::replace_placeholders( $settings['joinotify_send_text_message'] ?? '', $payload );
 		$send_text = $settings['joinotify_send_text'] ?? 'no';
 		$send_media = $settings['joinotify_send_media_message'] ?? 'no';
 	

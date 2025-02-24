@@ -63,10 +63,10 @@
 			this.workflowSteps();
 			this.triggerTabs();
 			this.loadWorkflowData();
-			this.onWorkflowReady();
-			this.onUpdatedWorkflow();
 			this.fetchWorkflowTemplates();
 			this.uploadWorkflowTemplates();
+			this.onWorkflowReady();
+			this.onUpdatedWorkflow();
 		},
 
 		/**
@@ -77,7 +77,6 @@
 		onWorkflowReady: function() {
 			// on workflow ready event
 			$(document).on('workflowReady', function() {
-				Builder.removeTrigger();
 				Builder.saveTriggerSettings();
 				Builder.sidebarActions();
 				Builder.addAction();
@@ -774,6 +773,9 @@
 		 * @version 1.1.0
 		 */
 		enableAddTriggerButton: function() {
+			// set default workflow name
+			$('#joinotify_set_workflow_name').val(params.default_workflow_name);
+			
 			/**
 			 * Check if workflow name and trigger are filled
 			 * 
@@ -794,6 +796,8 @@
 
 			// check add trigger requirements on change or input trigger name
 			$(document).on('change input', '#joinotify_set_workflow_name', function() {
+				let value = $(this).val();
+
 				check_requirements();
 			});
 
@@ -815,17 +819,13 @@
 		 */
 		addTrigger: function() {
 			Builder.enableAddTriggerButton();
-
-			// set default workflow name
-			$('#joinotify_set_workflow_name').val(joinotify_builder_params.default_workflow_name);
-
-			var get_title = $('#joinotify_set_workflow_name').val();
-			var post_id = Builder.getParamByName('id');
-
+			
 			// Proceed to builder funnel
 			$(document).on('click', '#joinotify_proceed_step_funnel', function(e) {
 				e.preventDefault();
 
+				var get_title = $('#joinotify_set_workflow_name').val();
+				var post_id = Builder.getParamByName('id');
 				var btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 
@@ -871,6 +871,7 @@
 								$('#joinotify_triggers_content').removeClass('active');
 								$('#joinotify_workflow_status_switch').prop('disabled', false);
 								$('#joinotify_workflow_title').text(get_title);
+								$('#joinotify_edit_workflow_title').val(get_title);
 
 								// update browser tab title
 								document.title = get_title;
@@ -902,74 +903,6 @@
 					},
 					complete: function() {
 						btn.prop('disabled', false).html(button_state.html);
-					},
-				});
-			});
-		},
-	
-		/**
-		 * Remove trigger action
-		 * 
-		 * @since 1.0.0
-		 * @version 1.1.0
-		 */
-		removeTrigger: function() {
-			$(document).on('click', '.exclude-trigger', function(e) {
-				e.preventDefault();
-
-				// get confirmation
-				if ( ! confirm( params.confirm_exclude_trigger ) ) {
-					return;
-				}
-
-				var trigger = $(this);
-
-				$.ajax({
-					url: params.ajax_url,
-					method: 'POST',
-					data: {
-						action: 'joinotify_delete_trigger',
-						post_id: Builder.getParamByName('id'),
-						trigger_id: trigger.data('trigger-id'),
-					},
-					beforeSend: function() {
-						trigger.prop('disabled', true);
-						trigger.closest('.funnel-trigger-item').addClass('placeholder-wave removing-trigger');
-					},
-					success: function(response) {
-						if (params.debug_mode) {
-							console.log(response);
-						}
-
-						try {
-							if (response.status === 'success') {
-								if (response.has_trigger) {
-									$('#joinotify_builder_run_test').prop('disabled', false);
-								} else {
-									$('#joinotify_triggers_group').addClass('active');
-									$('#joinotify_triggers_content').addClass('active');
-									$('#joinotify_builder_run_test').prop('disabled', true);
-
-									// reset triggers selection
-									setTimeout(() => {
-										$('.trigger-item').removeClass('active');
-										$('.joinotify-triggers-tab-wrapper a.nav-tab').first().click();
-									}, 500);
-								}
-
-								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
-
-								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
-							} else {
-								Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
-							}
-						} catch (error) {
-							console.log(error);
-						}
-					},
-					complete: function() {
-						trigger.prop('disabled', false);
-						trigger.closest('.funnel-trigger-item').removeClass('placeholder-wave removing-trigger');
 					},
 				});
 			});
@@ -1058,7 +991,7 @@
 		getActionData: function( action_type, context ) {
 			var action_data = {};
 			var container = $(context);
-			const condition_title = container.find('.offcanvas-title, .modal-title').text();
+			const action_title = container.find('.offcanvas-title, .modal-title').text();
 
 			switch ( action_type ) {
 				case 'time_delay':
@@ -1068,7 +1001,7 @@
 							type: 'action',
 							data: {
 								action: 'time_delay',
-								title: condition_title,
+								title: action_title,
 								delay_type: delay_type,
 							},
 						};
@@ -1087,7 +1020,7 @@
 							type: 'action',
 							data: {
 								action: 'send_whatsapp_message_text',
-								title: condition_title,
+								title: action_title,
 								sender: container.find('.get-whatsapp-phone-sender').val(),
 								receiver: container.find('.get-whatsapp-receiver').val(),
 								message: container.find('.set-whatsapp-message-text').val(),
@@ -1100,7 +1033,7 @@
 							type: 'action',
 							data: {
 								action: 'send_whatsapp_message_media',
-								title: condition_title,
+								title: action_title,
 								sender: container.find('.get-whatsapp-phone-sender').val(),
 								receiver: container.find('.get-whatsapp-receiver').val(),
 								media_type: container.find('.get-whatsapp-media-type').val(),
@@ -1150,7 +1083,7 @@
 							type: 'action',
 							data: {
 								action: 'snippet_php',
-								title: condition_title,
+								title: action_title,
 								snippet_php: container.find('.joinotify-code-editor').val(),
 							},
 						};
@@ -1163,7 +1096,7 @@
 							type: 'action',
 							data: {
 								action: 'create_coupon',
-								title: condition_title,
+								title: action_title,
 								settings: {
 									generate_coupon: container.find('.generate-coupon-code').prop('checked') ? 'yes' : 'no',
 									coupon_code: container.find('.set-coupon-code').val() || '',

@@ -542,7 +542,7 @@ class Controller {
                 'Content-Type' => 'application/json',
                 'apikey' => self::$whatsapp_api_key,
             ),
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         if ( is_wp_error( $response ) ) {

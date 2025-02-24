@@ -84,10 +84,11 @@ class Workflow_Manager {
             // Add connectors appropriately
             if ( isset( $data['type'] ) && $data['type'] === 'trigger' ) {
                 $new_workflow_data[] = array(
-                    'type' => ($key + 1 < $total_items) ? 'connector' : 'connector_add',
+                    'type' => ( $key + 1 < $total_items ) ? 'connector' : 'connector_add',
                     'parent_id' => $data['id'],
                 );
             } elseif ( isset( $data['type'] ) && $data['type'] === 'action' ) {
+                // add condition connector
                 if ( isset( $data['data']['action'] ) && $data['data']['action'] === 'condition' ) {
                     $new_workflow_data[] = array(
                         'type' => 'connector_condition',
@@ -95,6 +96,7 @@ class Workflow_Manager {
                     );
                 }
 
+                // Check is next item is action and add connector
                 if ( isset( $workflow_data[$key + 1] ) && $workflow_data[$key + 1]['type'] === 'action' ) {
                     $new_workflow_data[] = array(
                         'type' => 'connector',

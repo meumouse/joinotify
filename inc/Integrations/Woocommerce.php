@@ -3,9 +3,10 @@
 namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Core\Schedule;
+use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Integrations\Whatsapp;
 use MeuMouse\Joinotify\Builder\Triggers;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 
 // Exit if accessed directly.
@@ -138,14 +139,15 @@ class Woocommerce extends Integrations_Base {
      * @since 1.0.0
      * @version 1.1.0
      * @param array $placeholders | Current placeholders
-     * @param array $context | Context data
+     * @param array $payload | Payload data
      * @return array
      */
-    public function add_placeholders( $placeholders, $context ) {
-        $order = isset( $context['order_id'] ) ? wc_get_order( $context['order_id'] ) : null;
+    public function add_placeholders( $placeholders, $payload ) {
+        $order = isset( $payload['order_id'] ) ? wc_get_order( $payload['order_id'] ) : null;
         $current_user = wp_get_current_user();
         $trigger_names = Triggers::get_trigger_names('woocommerce');
     
+        // add woocommerce placeholders
         $placeholders['woocommerce'] = array(
             '{{ wc_billing_first_name }}' => array(
                 'triggers' => $trigger_names,
@@ -313,6 +315,24 @@ class Woocommerce extends Integrations_Base {
                 'replacement' => array(), // dynamic replacement is make on Placeholders::replace_placeholders()
             ),
         );
+
+        // check if the payload has a 'settings' key
+        if ( isset( $payload['settings'] ) ) {
+            $coupon_settings = $payload['settings'];
+            $coupon_placeholders = self::get_coupon_placeholders( $coupon_settings );
+    
+            // iterate over the coupon placeholders and add them to the placeholders array
+            foreach ( $coupon_placeholders as $placeholder_key => $placeholder_data ) {
+                $placeholders['woocommerce'][$placeholder_key] = array(
+                    'triggers' => $trigger_names,
+                    'description' => $placeholder_data['description'],
+                    'replacement' => array(
+                        'production' => $placeholder_data['replacement'],
+                        'sandbox' => $placeholder_data['replacement'],
+                    ),
+                );
+            }
+        }
 
         return $placeholders;
     }
@@ -541,7 +561,6 @@ class Woocommerce extends Integrations_Base {
 
             <div class="border-top divider mt-5 pt-4 coupon-placeholders">
                 <label class="form-label"><?php esc_html_e( 'Variáveis de texto:', 'joinotify' ) ?></label>
-
                 <?php echo Builder_Components::render_coupon_placeholders(); ?>
             </div>
         </div>
@@ -621,6 +640,87 @@ class Woocommerce extends Integrations_Base {
         // save coupon
         $coupon->save();
 
-        return $coupon->get_id();
+        return array(
+            'coupon_id' => $coupon->get_id(),
+            'coupon_code' => $coupon_code,
+        );
+    }
+
+
+    /**
+     * Get the list of placeholders for the coupon
+     * 
+     * @since 1.1.0
+     * @param array $settings | The settings for the coupon
+     * @return array The list of placeholders
+     */
+    public static function get_coupon_placeholders( $settings = array() ) {
+        // get coupon code
+        $coupon_code = isset( $settings['coupon_code'] ) ? $settings['coupon_code'] : '';
+        $formatted_discount = '';
+        $formatted_expires = '';
+
+        // format the discount amount
+        if ( isset( $settings['discount_type'] ) && $settings['discount_type'] === 'percent' ) {
+            $discount_amount = isset( $settings['coupon_amount'] ) ? $settings['coupon_amount'] : '0';
+
+            $formatted_discount = sprintf( __( '%s%%', 'joinotify' ), $discount_amount );
+        } elseif ( isset( $settings['discount_type'] ) && $settings['discount_type'] === 'fixed_cart' ) {
+            $discount = floatval( $settings['coupon_amount'] );
+            $formatted_discount = wc_price( $discount );
+        }
+
+        // add coupon expires replacement
+        if ( isset( $settings['coupon_expiry'] ) && $settings['coupon_expiry'] === 'yes' ) {
+            if ( $settings['expiry_data']['type'] === 'period' ) {
+                $time_value = $settings['expiry_data']['delay_value'] ?? '';
+                $time_unit = $settings['expiry_data']['delay_period'] ?? '';
+
+                // Format time unit: singular/plural
+                $formatted_time = ( $time_value > 1 ) ? Helpers::format_time_unit( $time_unit, true ) : Helpers::format_time_unit( $time_unit, false );
+                $formatted_expires = sprintf( esc_html__( 'Expira em %s %s', 'joinotify' ), $time_value, $formatted_time );
+            } elseif ( $settings['expiry_data']['type'] === 'date' ) {
+                $date_value = $settings['expiry_data']['date_value'] ?? '';
+                $time_value = $settings['expiry_data']['time_value'] ?? '';
+
+                if ( ! empty( $time_value ) ) {
+                    $formatted_expires = sprintf( esc_html__( 'Expira em %s - %s', 'joinotify' ), $date_value, $time_value );
+                } else {
+                    $formatted_expires = sprintf( esc_html__( 'Expira em %s', 'joinotify' ), $date_value );
+                }
+            }
+        } else {
+            $formatted_expires = esc_html__( 'Cupom não expira', 'joinotify' );
+        }
+
+        // add coupon placeholders on array
+        $placeholders = apply_filters( 'Joinotify/Builder/Components/Coupon_Placeholders', array(
+            '{{ joinotify_coupon_code }}' => array(
+                'description' => esc_html__( 'Para recuperar o código do cupom de desconto.', 'joinotify' ),
+                'replacement' => $coupon_code,
+            ),
+            '{{ joinotify_coupon_description }}' => array(
+                'description' => esc_html__( 'Para recuperar a descrição do cupom de desconto.', 'joinotify' ),
+                'replacement' => isset( $settings['coupon_description'] ) ? $settings['coupon_description'] : '',
+            ),
+            '{{ joinotify_coupon_discount_type }}' => array(
+                'description' => esc_html__( 'Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou Valor fixo.', 'joinotify' ),
+                'replacement' => isset( $settings['discount_type'] ) && $settings['discount_type'] === 'percent' ? esc_html__( 'Percentual', 'joinotify' ) : esc_html__( 'Valor fixo', 'joinotify' ),
+            ),
+            '{{ joinotify_coupon_discount_value }}' => array(
+                'description' => esc_html__( 'Para recuperar o valor do cupom de desconto.', 'joinotify' ),
+                'replacement' => isset( $settings['coupon_amount'] ) ? $settings['coupon_amount'] : '',
+            ),
+            '{{ joinotify_coupon_discount_formatted }}' => array(
+                'description' => esc_html__( 'Para recuperar o valor do cupom de desconto formatado com símbolo de moeda ou percentual. Exemplo: 10%.', 'joinotify' ),
+                'replacement' => $formatted_discount,
+            ),
+            '{{ joinotify_coupon_expires }}' => array(
+                'description' => esc_html__( 'Para recuperar a expiração do cupom de desconto. Exemplo: Expira em 1 hora.', 'joinotify' ),
+                'replacement' => $formatted_expires,
+            ),
+        ));
+
+        return $placeholders;
     }
 }

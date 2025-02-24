@@ -61,7 +61,6 @@ class Ajax {
             'joinotify_add_workflow_action' => 'add_workflow_action_callback',
             'joinotify_update_workflow_title' => 'update_workflow_title_callback',
             'joinotify_delete_workflow_action' => 'delete_workflow_action_callback',
-            'joinotify_delete_trigger' => 'delete_trigger_callback',
             'joinotify_export_workflow' => 'export_workflow_callback',
             'joinotify_get_phone_numbers' => 'get_phone_numbers_callback',
             'joinotify_register_phone_sender' => 'register_phone_sender_callback',
@@ -1096,75 +1095,6 @@ class Ajax {
             wp_send_json( $response );
         }
     }    
-
-
-    /**
-     * Delete trigger on AJAX callback
-     * 
-     * @since 1.0.0
-     * @version 1.1.0
-     * @return void
-     */
-    public function delete_trigger_callback() {
-        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_delete_trigger' ) {
-            $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
-            $trigger_id = isset( $_POST['trigger_id'] ) ? sanitize_text_field( $_POST['trigger_id'] ) : '';
-    
-            if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
-                // Retrieve the current workflow content
-                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
-    
-                if ( ! empty( $workflow_content ) ) {
-                    // Remove the trigger using delete_item_recursive
-                    $workflow_content = Actions::delete_item_recursive( $workflow_content, $trigger_id );
-    
-                    // Reindex the array to maintain consistent indexes
-                    $workflow_content = array_values( $workflow_content );
-    
-                    // Update the workflow content
-                    $result = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
-    
-                    if ( $result ) {
-                        $response = array(
-                            'status' => 'success',
-                            'workflow_content' => Workflow_Manager::get_workflow_content( $post_id ),
-                            'has_trigger' => Utils::check_workflow_content( $post_id, 'trigger' ),
-                            'toast_header_title' => __('Acionamento removido com sucesso', 'joinotify'),
-                            'toast_body_title' => __('O acionamento foi removido do fluxo com sucesso!', 'joinotify'),
-                        );
-                    } else {
-                        $response = array(
-                            'status' => 'error',
-                            'toast_header_title' => __('Erro ao atualizar o fluxo', 'joinotify'),
-                            'toast_body_title' => __('Não foi possível atualizar o fluxo após a exclusão do acionamento.', 'joinotify'),
-                        );
-
-                        if ( JOINOTIFY_DEBUG_MODE ) {
-                            $response['debug'] = array(
-                                'trigger_id' => $trigger_id,
-                                'workflow_content' => $workflow_content,
-                            );
-                        }
-                    }
-                } else {
-                    $response = array(
-                        'status' => 'error',
-                        'toast_header_title' => __('Fluxo vazio', 'joinotify'),
-                        'toast_body_title' => __('Não há acionamentos para remover no fluxo.', 'joinotify'),
-                    );
-                }
-            } else {
-                $response = array(
-                    'status' => 'error',
-                    'toast_header_title' => __('Dados inválidos', 'joinotify'),
-                    'toast_body_title' => __('Os dados fornecidos são inválidos ou o fluxo não foi encontrado.', 'joinotify'),
-                );
-            }
-    
-            // Send response for frontend
-            wp_send_json( $response );
-        }
-    }
 
 
     /**
