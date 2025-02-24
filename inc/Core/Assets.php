@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Load assets class
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.1.2
  * @package MeuMouse.com
  */
 class Assets {
@@ -80,6 +80,7 @@ class Assets {
 	 * Enqueue assets on license page
 	 * 
 	 * @since 1.1.0
+	 * @version 1.1.2
 	 * @return void
 	 */
 	public function license_assets() {
@@ -91,8 +92,6 @@ class Assets {
 				wp_enqueue_style( 'bootstrap-grid', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-grid.min.css', array(), '5.3.3' );
 				wp_enqueue_style( 'bootstrap-utilities', JOINOTIFY_ASSETS . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
 			}
-
-			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/joinotify-styles'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			
 			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
@@ -100,6 +99,7 @@ class Assets {
 			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
+			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/settings'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-license-scripts', JOINOTIFY_ASSETS . 'admin/js/license'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			// license page params
