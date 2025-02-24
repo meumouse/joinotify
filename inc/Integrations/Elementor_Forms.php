@@ -20,10 +20,16 @@ use Elementor\Controls_Manager;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+// check if Elementor Pro is installed
+if ( ! class_exists('ElementorPro\Modules\Forms\Classes\Action_Base') ) {
+	return;
+}
+
 /**
  * Add integration with Elementor Forms
  * 
  * @since 1.1.0
+ * @version 1.1.1
  * @package MeuMouse.com
  */
 class Elementor_Forms extends Action_Base {
