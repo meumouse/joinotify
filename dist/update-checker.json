@@ -3,18 +3,18 @@
   "slug": "joinotify",
   "author": "<a href='https://meumouse.com'>MeuMouse.com</a>",
   "author_profile": "https://profiles.wordpress.org/meumouse",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "download_url": "https://github.com/meumouse/joinotify/raw/refs/heads/main/dist/joinotify.zip",
   "requires": "5.6",
   "tested": "6.7.1",
   "requires_php": "7.4",
   "added": "2024-11-20 12:00:00",
-  "last_updated": "2024-12-05 11:18:00",
+  "last_updated": "2025-02-24 00:08:00",
   "homepage": "https://meumouse.com/plugins/joinotify/",
   "sections": {
     "description": "Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.",
     "installation": "Instalação:<br><br><strong>Instalação via painel de administração:</strong><br>Você pode instalar um plugin WordPress de duas maneiras: via o painel de administração do WordPress ou via FTP. Aqui estão as etapas para ambos os métodos:<br><ol><li>Acesse o painel de administração do seu site WordPress.</li><li>Vá para “Plugins” e clique em “Adicionar Novo”.</li><li>Digite o nome do plugin que você deseja instalar na barra de pesquisa ou carregue o arquivo ZIP do plugin baixado.</li><li>Clique em “Instalar Agora” e espere até que o plugin seja instalado.</li><li>Clique em “Ativar Plugin”.</li></ol><br><strong>Instalação via FTP:</strong><br><ol><li>Baixe o arquivo ZIP do plugin que você deseja instalar.</li><li>Descompacte o arquivo ZIP em seu computador.</li><li>Conecte-se ao seu servidor via FTP.</li><li>Navegue até a pasta “wp-content/plugins”.</li><li>Envie a pasta do plugin descompactada para a pasta “plugins” no seu servidor.</li><li>Acesse o painel de administração do seu site WordPress.</li><li>Vá para “Plugins” e clique em “Plugins Instalados”.</li><li>Localize o plugin que você acabou de instalar e clique em “Ativar”.</li></ol><br>Após seguir essas etapas, o plugin deve estar instalado e funcionando corretamente em seu site WordPress.",
-    "changelog": ""
+    "changelog": "<ul><li><strong>Versão 1.1.0 (24/02/2024)</strong></li><li>Correção de bugs</li><li>Otimizações</li><li>Recurso adicionado: Ativar modo depuração</li><li>Recurso adicionado: Integração com formulários do Elementor</li><li>Recurso removido: Variáveis de texto {{ br }} e {{ phone }}</li><li>Recurso removido: Atualização de configurações automáticas</li><li>Recurso adicionado: Variáveis de texto {{ wc_billing_first_name }}, {{ wc_billing_last_name }}, {{ wc_billing_email }}, {{ wc_billing_phone }}, {{ wc_shipping_phone }}, {{ wc_order_status }}, {{ wc_billing_full_address }}, {{ wc_shipping_full_address }}, {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, {{ wc_coupon_codes }}, {{ wc_payment_method_title }}, {{ wc_shipping_address }}, {{ wc_checkout_field=[FIELD_ID] }}</li><li>Recurso adicionado: Ativar atualizações automáticas</li><li>Recurso adicionado: Ação \"Snippet PHP\" no construtor de fluxos</li><li>Recurso adicionado: Ação \"Cupom de desconto\" no construtor de fluxos para integração com WooCommerce</li><li>Recurso adicionado: Obter informações de grupos do WhatsApp</li><li>Recurso modificado: Alteração da biblioteca de emojis (Picmo -> EmojioneArea)</li></ul>"
   },
   "banners": {
     "low": "",
