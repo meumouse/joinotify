@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "9e7395ae6528c152d37696eeb1cc780d",
     "packages": [
         {
             "name": "giggsey/libphonenumber-for-php",
             "version": "8.13.55",
-            "version_normalized": "8.13.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
@@ -34,14 +39,12 @@
                 "symfony/console": "^v5.2",
                 "symfony/var-exporter": "^5.2"
             },
-            "time": "2025-02-14T08:14:08+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "8.x-dev"
                 }
             },
-            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "libphonenumber\\": "src/"
@@ -78,12 +81,11 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "install-path": "../giggsey/libphonenumber-for-php"
+            "time": "2025-02-14T08:14:08+00:00"
         },
         {
             "name": "giggsey/locale",
             "version": "2.7.0",
-            "version_normalized": "2.7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/Locale.git",
@@ -113,9 +115,7 @@
                 "symfony/process": "^5.0|^6.0",
                 "symfony/var-exporter": "^5.2|^6.0"
             },
-            "time": "2024-11-04T11:18:07+00:00",
             "type": "library",
-            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Giggsey\\Locale\\": "src/"
@@ -137,12 +137,11 @@
                 "issues": "https://github.com/giggsey/Locale/issues",
                 "source": "https://github.com/giggsey/Locale/tree/2.7.0"
             },
-            "install-path": "../giggsey/locale"
+            "time": "2024-11-04T11:18:07+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
             "version": "v1.31.0",
-            "version_normalized": "1.31.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -163,7 +162,6 @@
             "suggest": {
                 "ext-mbstring": "For best performance"
             },
-            "time": "2024-09-09T11:45:10+00:00",
             "type": "library",
             "extra": {
                 "thanks": {
@@ -171,7 +169,6 @@
                     "name": "symfony/polyfill"
                 }
             },
-            "installation-source": "source",
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -220,9 +217,18 @@
                     "type": "tidelift"
                 }
             ],
-            "install-path": "../symfony/polyfill-mbstring"
+            "time": "2024-09-09T11:45:10+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">= 7.4"
+    },
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

@@ -6,17 +6,45 @@ namespace Composer\Autoload;
 
 class ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe
 {
+    public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'l' => 
+        array (
+            'libphonenumber\\' => 15,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+        ),
         'M' => 
         array (
             'MeuMouse\\Joinotify\\' => 19,
         ),
+        'G' => 
+        array (
+            'Giggsey\\Locale\\' => 15,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'libphonenumber\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/giggsey/libphonenumber-for-php/src',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
         'MeuMouse\\Joinotify\\' => 
         array (
             0 => __DIR__ . '/../..' . '/inc',
+        ),
+        'Giggsey\\Locale\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/giggsey/locale/src',
         ),
     );
 

@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Debug class
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Debug {
@@ -38,6 +38,7 @@ class Debug {
      * Add styles and scripts for debug
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function debug_mode() {

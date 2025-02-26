@@ -649,14 +649,14 @@ class Workflow_Processor {
      * Send message text on WhatsApp
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void
      */
     public static function send_whatsapp_message_text( $action_data, $payload ) {
         $sender = $action_data['sender'];
-        $receiver = Controller::prepare_receiver( $action_data['receiver'], $payload );
+        $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
         $message = Placeholders::replace_placeholders( $action_data['message'], $payload );
 
         // send message
@@ -676,14 +676,14 @@ class Workflow_Processor {
      * Executes a WhatsApp message action
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void
      */
     public static function send_whatsapp_message_media( $action_data, $payload ) {
         $sender = $action_data['sender'];
-        $receiver = Controller::prepare_receiver( $action_data['receiver'], $payload );
+        $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
         $media_type = $action_data['media_type'];
         $media = $action_data['media_url'];
 

@@ -269,36 +269,6 @@ class Controller {
 
 
     /**
-     * Prepare the receiver phone number with the correct format
-     * 
-     * @since 1.0.0
-     * @version 1.1.0
-     * @param string $receiver |  Receiver phone
-     * @return string
-     */
-    public static function prepare_receiver( $receiver, $context = array() ) {
-        // First, we replace all placeholders, including {{ field_id=[...] }}
-        $receiver = Placeholders::replace_placeholders( $receiver, $context );
-    
-        // Keep only digits in the number
-        $receiver = preg_replace( '/\D/', '', $receiver );
-        $country_code = Admin::get_setting('joinotify_default_country_code');
-    
-        // add country code if needed
-        if ( preg_match( '/^\d{10,11}$/', $receiver ) && strpos( $receiver, $country_code ) !== 0 ) {
-            $receiver = $country_code . $receiver;
-        }
-
-        // Check receiver phone number
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( 'prepare_receiver() receiver finished: ' . print_r( $receiver, true ) );
-        }
-    
-        return $receiver;
-    }
-
-
-    /**
      * Send messsage text on WhatsApp
      * 
      * @since 1.0.0
