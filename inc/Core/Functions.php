@@ -2,6 +2,8 @@
 
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Builder\Placeholders;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
@@ -95,25 +97,37 @@ function joinotify_get_proxy_api_key() {
  * @since 1.0.0
  * @version 1.2.0
  * @param string $receiver |  Receiver phone
+ * @param array $payload | Payload for replace placeholders
  * @return string
  */
-function joinotify_prepare_receiver( $receiver, $context = array() ) {
-	// First, we replace all placeholders, including {{ field_id=[...] }}
-	$receiver = Placeholders::replace_placeholders( $receiver, $context );
+function joinotify_prepare_receiver( $receiver, $payload = array() ) {
+	// First, we replace all placeholders
+	$receiver = Placeholders::replace_placeholders( $receiver, $payload );
 
 	// Keep only digits in the number
-	$receiver = preg_replace( '/\D/', '', $receiver );
-	$country_code = Admin::get_setting('joinotify_default_country_code');
-
-	// add country code if needed
-	if ( preg_match( '/^\d{10,11}$/', $receiver ) && strpos( $receiver, $country_code ) !== 0 ) {
-		$receiver = $country_code . $receiver;
-	}
+	$format_phone  = Helpers::validate_and_format_phone( $receiver );
+	$phone = preg_replace( '/\D/', '', $format_phone ); // Remove all non-digit characters
 
 	// Check receiver phone number
 	if ( JOINOTIFY_DEV_MODE ) {
-		error_log( 'joinotify_prepare_receiver() receiver finished: ' . print_r( $receiver, true ) );
+		error_log( 'joinotify_prepare_receiver() receiver finished: ' . print_r( $phone, true ) );
 	}
 
-	return $receiver;
+	return $phone;
+}
+
+
+/**
+ * Replace placeholders in message
+ * 
+ * @since 1.2.0
+ * @param string $message | Message text
+ * @param array $payload | Payload for replace placeholders
+ * @return string
+ */
+function joinotify_prepare_message( $message, $payload = array() ) {
+	// First, we replace all placeholders
+	$message = Placeholders::replace_placeholders( $message, $payload );
+
+	return $message;
 }

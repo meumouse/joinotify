@@ -33,7 +33,7 @@ class Components {
                 <?php foreach ( $phones_senders as $phone ) : ?>
                     <li class="list-group-item d-flex align-items-center py-3 fs-base" data-phone="<?php echo esc_attr( $phone ); ?>">
                         <div class="me-auto">
-                            <?php echo esc_html( Helpers::format_phone_number( $phone ) ); ?>
+                            <?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ); ?>
                         </div>
 
                         <?php echo self::display_state_connection( $phone ); ?>
@@ -69,7 +69,7 @@ class Components {
                 <div class="d-grid align-items-center justify-content-center justify-items-center mb-4">
                     <h3 class="fs-5 mb-3"><?php esc_html_e( 'Verifique seu WhatsApp', 'joinotify' ) ?></h3>
                     <span class="fs-base text-muted mb-2"><?php esc_html_e( 'Informe o código de 4 dígitos que foi enviado para', 'joinotify' ) ?></span>
-                    <span class="fw-semibold fs-base"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></span>
+                    <span class="fw-semibold fs-base"><?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ) ?></span>
                 </div>
 
                 <div class="d-flex align-items-center justify-content-center mb-4 otp-input-group">

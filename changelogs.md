@@ -1,3 +1,9 @@
+Versão 1.2.0 (28/02/2025)
+* Correção de bugs
+* Otimizações
+* Recurso adicionado: Biblioteca "giggsey/libphonenumber-for-php" para formatação e validação de telefones em formato internacional
+* Recurso removido: Variável de texto {{ post_id }}
+
 Versão 1.1.2 (24/02/2025)
 * Correção de bugs
 

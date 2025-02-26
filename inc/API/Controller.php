@@ -19,7 +19,7 @@ defined('ABSPATH') || exit;
  * Controller for API requests
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Controller {
@@ -272,7 +272,7 @@ class Controller {
      * Send messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $message | Message text for send
@@ -292,7 +292,7 @@ class Controller {
         $link_preview = apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true );
 
         $payload = wp_json_encode( array(
-            'number' => preg_replace( '/\D/', '', $receiver ),
+            'number' => joinotify_prepare_receiver( $receiver ),
             'linkPreview' => $link_preview,
             'text' => $message,
             'delay' => $timestamp_delay,
@@ -308,6 +308,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
+            'blocking' => false,
             'timeout' => 10,
         ));
 
@@ -330,7 +331,7 @@ class Controller {
      * Send messsage media on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $media_type | Media type (image, audio, video or document)
@@ -351,7 +352,7 @@ class Controller {
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendMedia/' . $sender;
 
         $payload = wp_json_encode( array(
-            'number' => preg_replace( '/\D/', '', $receiver ),
+            'number' => joinotify_prepare_receiver( $receiver ),
             'mediatype' => $media_type,
             'media' => $media,
             'delay' => $timestamp_delay,
@@ -367,6 +368,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
+            'blocking' => false,
             'timeout' => 10,
         ));
 
@@ -389,6 +391,7 @@ class Controller {
      * Send messsage audio on WhatsApp
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $audio | Audio URL
@@ -408,7 +411,7 @@ class Controller {
         $encoding = apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true );
 
         $payload = wp_json_encode( array(
-            'number' => preg_replace( '/\D/', '', $receiver ),
+            'number' => joinotify_prepare_receiver( $receiver ),
             'audio' => $audio,
             'delay' => $timestamp_delay,
             'encoding' => $encoding,
@@ -425,6 +428,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
+            'blocking' => false,
             'timeout' => 10,
         ));
 
@@ -468,6 +472,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
+            'blocking' => false,
             'timeout' => 10,
         ));
 

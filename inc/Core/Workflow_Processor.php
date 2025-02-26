@@ -6,7 +6,6 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\Cron\Schedule;
-use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 
@@ -375,7 +374,7 @@ class Workflow_Processor {
      * Process workflow for each called hook
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $hook | Hook for call actions
      * @param array $payload | Payload data
      * @return void
@@ -383,16 +382,27 @@ class Workflow_Processor {
     public static function process_workflows( $hook, $payload ) {
         $workflows = self::get_workflows_by_hook( $hook );
 
+        /**
+         * Process workflows hook
+         * 
+         * @since 1.2.0
+         * @param string $hook | Hook for call actions
+         * @param array $payload | Payload data
+         * @param array $workflows | Array of workflows
+         */
+        do_action( 'Joinotify/Workflow_Processor/Process_Workflows', $hook, $payload, $workflows );
+
         if ( JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function process_workflows() fired' );
             Logger::register_log( 'hook: ' . print_r( $hook, true ) );
-            Logger::register_log( 'content: ' . print_r( $payload, true ) );
+            Logger::register_log( 'payload: ' . print_r( $payload, true ) );
         }
 
         if ( empty( $workflows ) ) {
             return;
         }
 
+        // loop through workflows
         foreach ( $workflows as $workflow ) {
             $workflow_content = get_post_meta( $workflow->ID, 'joinotify_workflow_content', true );
 
@@ -423,6 +433,16 @@ class Workflow_Processor {
             error_log( 'Param $post_id: ' . print_r( $post_id, true ) );
             error_log( 'Param $payload: ' . print_r( $payload, true ) );
         }*/
+
+        /**
+         * Before process Joinotify workflows
+         * 
+         * @since 1.2.0
+         * @param array $workflow_content | Workflow content
+         * @param int $post_id | Post ID
+         * @param array $payload | Payload data
+         */
+        do_action( 'Joinotify/Workflow_Processor/Process_Workflow_Content', $workflow_content, $post_id, $payload );
 
         // get integration
         $integration = $payload['integration'];
@@ -657,7 +677,7 @@ class Workflow_Processor {
     public static function send_whatsapp_message_text( $action_data, $payload ) {
         $sender = $action_data['sender'];
         $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
-        $message = Placeholders::replace_placeholders( $action_data['message'], $payload );
+        $message = joinotify_prepare_message( $action_data['message'], $payload );
 
         // send message
         $response = Controller::send_message_text( $sender, $receiver, $message );

@@ -1240,7 +1240,7 @@ class Ajax {
                     }
     
                     $html .= '<li class="list-group-item d-flex align-items-center justify-content-between py-3" data-phone="'. esc_attr( $value['phone'] ) .'">';
-                    $html .= '<span class="fs-base">'. Helpers::format_phone_number( $value['phone'] ) .'</span>';
+                    $html .= '<span class="fs-base">'. Helpers::validate_and_format_phone( $value['phone'] ) .'</span>';
                     $html .= '<button class="btn btn-sm btn-outline-primary register-sender" data-phone="'. esc_attr( $value['phone'] ) .'">'. esc_html__( 'Cadastrar remetente', 'joinotify' ) .'</button>';
                     $html .= '</li>';
                 }

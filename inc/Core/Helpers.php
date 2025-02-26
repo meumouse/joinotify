@@ -4,6 +4,10 @@ namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
 
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\NumberParseException;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -11,6 +15,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Helpers {
@@ -40,33 +45,53 @@ class Helpers {
 
 
     /**
-     * Format phone number
+     * Validate and format a phone number, adding the default country code if missing.
      * 
      * @since 1.0.0
-     * @param string $phone | Full phone number
-     * @return string Formatted phone number
+     * @version 1.2.0
+     * @param string $phone | Raw phone number
+     * @return string Formatted phone number with country code
      */
-    public static function format_phone_number( $phone ) {
-        // check if country code is 55 (Brasil)
-        if ( strpos( $phone, '55' ) === 0 ) {
-            $phone = substr( $phone, 2 ); // remove DDI
+    public static function validate_and_format_phone( $phone ) {
+        // Get the default country code from admin settings (e.g., "BR" for Brazil)
+        $default_country_code = Admin::get_setting('joinotify_default_country_code');
 
-            // extract DDD
-            $ddd = substr( $phone, 0, 2 );
-            $number = substr( $phone, 2 );
+        // Ensure country code is uppercase (as required by libphonenumber)
+        $default_country_code = strtoupper( $default_country_code );
 
-            // count phone number
-            if ( strlen( $number ) === 9 ) {
-                $formatted_number = sprintf( '+55 (%s) %s-%s', $ddd, substr( $number, 0, 5 ), substr( $number, 5 ) );
-            } else {
-                $formatted_number = sprintf( '+55 (%s) %s-%s', $ddd, substr( $number, 0, 4 ), substr( $number, 4 ) );
+        // Instance of the phone number utility class
+        $phoneUtil = PhoneNumberUtil::getInstance();
+
+        try {
+            // Try parsing the phone number as an international number
+            $numberProto = $phoneUtil->parse( $phone, null );
+
+            // If the number already has a valid country code, format and return it in INTERNATIONAL format
+            if ( $numberProto->hasCountryCode() ) {
+                return $phoneUtil->format( $numberProto, PhoneNumberFormat::INTERNATIONAL );
             }
-
-            return $formatted_number;
+        } catch ( NumberParseException $e ) {
+            // If parsing fails, assume the number is missing a country code
         }
 
-        // Returns the original number if it is not a Brazilian IDD
-        return $phone;
+        // Remove all non-numeric characters
+        $phone = preg_replace('/\D/', '', $phone);
+
+        // Check if the number starts with the default country code
+        if ( ! preg_match( '/^' . preg_quote( $default_country_code ) . '/', $phone ) ) {
+            $phone = $default_country_code . $phone;
+        }
+
+        try {
+            // Parse again, now with the country code added
+            $numberProto = $phoneUtil->parse('+' . $phone, null);
+
+            // Return the formatted phone number in INTERNATIONAL format
+            return $phoneUtil->format( $numberProto, PhoneNumberFormat::INTERNATIONAL );
+        } catch ( NumberParseException $e ) {
+            // If parsing fails again, return the original phone number
+            return $phone;
+        }
     }
 
     

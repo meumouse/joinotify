@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WordPress hooks
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Wordpress extends Integrations_Base {
@@ -110,6 +110,7 @@ class Wordpress extends Integrations_Base {
      * Add WordPress placeholders on workflow builder
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param array $placeholders | Current placeholders
      * @return array
      */
@@ -163,14 +164,6 @@ class Wordpress extends Integrations_Base {
                 'replacement' => array(
                     'production' => date( get_option('date_format') ),
                     'sandbox' => date( get_option('date_format') ),
-                ),
-            ),
-            '{{ post_id }}' => array(
-                'triggers' => array(), // is global
-                'description' => esc_html__( 'Para recuperar o ID do post', 'joinotify' ),
-                'replacement' => array(
-                    'production' => get_the_ID(),
-                    'sandbox' => esc_html__( '12345', 'joinotify' ),
                 ),
             ),
         );

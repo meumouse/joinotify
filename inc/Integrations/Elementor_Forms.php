@@ -105,7 +105,7 @@ class Elementor_Forms extends Action_Base {
 
         if ( $phones = get_option('joinotify_get_phones_senders') ) {
             foreach ( $phones as $phone ) {
-                $formatted_phone = Helpers::format_phone_number( $phone );
+                $formatted_phone = Helpers::validate_and_format_phone( $phone );
                 $phone_options[ esc_attr( $phone ) ] = esc_html( $formatted_phone );
             }
         }
