@@ -32,13 +32,13 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
-Versão 1.1.2 (24/02/2024)
+Versão 1.1.2 (24/02/2025)
 * Correção de bugs
 
-Versão 1.1.1 (24/02/2024)
+Versão 1.1.1 (24/02/2025)
 * Correção de bugs
 
-Versão 1.1.0 (24/02/2024)
+Versão 1.1.0 (24/02/2025)
 * Correção de bugs
 * Otimizações
 * Recurso adicionado: Ativar modo depuração

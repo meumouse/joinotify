@@ -28,7 +28,7 @@ function joinotify_check_admin_page( $admin_page ) {
  * @param string $sender | Instance phone number
  * @param string $receiver | Phone number for receive message
  * @param string $message | Message text for send
- * @param int $delay | Delay in miliseconds before send message
+ * @param int $delay | Delay in seconds before send message
  * @return int
  */
 function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $delay = 0 ) {

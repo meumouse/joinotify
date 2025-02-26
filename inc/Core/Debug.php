@@ -58,10 +58,6 @@ class Debug {
             height: calc(100% - 6rem);
         }
 
-        #joinotify-automations-builder {
-            z-index: 1089 !important;
-        }
-
         .offcanvas,
         .offcanvas-lg,
         .offcanvas-md,

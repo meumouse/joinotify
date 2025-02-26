@@ -737,7 +737,10 @@ class Workflow_Processor {
         try {
             // create a safe execution environment
             ob_start();
-            eval( $snippet_php ); // execute the snippet
+
+            // execute the snippet
+            eval( $snippet_php );
+            
             // get the output buffer contents
             $output = ob_get_clean();
 
