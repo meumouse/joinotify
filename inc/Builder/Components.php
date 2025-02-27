@@ -241,12 +241,12 @@ class Components {
                                     $html .= '</div>';
 
                                     $html .= '<div class="modal-body px-4 py-3 my-3">';
-                                        $html .= self::get_action_settings( $post_id, $condition_data['data']['action'] );
+                                        $html .= self::get_action_settings( $post_id, $condition_data['data']['action'], $condition_data['id'] );
                                     $html .= '</div>';
 
                                     $html .= '<div class="modal-footer px-4">';
                                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $condition_data['data']['action'] ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
+                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $condition_data['data']['action'] ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                                     $html .= '</div>';
                                 $html .= '</div>';
                             $html .= '</div>';
@@ -289,7 +289,7 @@ class Components {
      * @param string $action_id | Action ID
      * @return string
      */
-    public static function get_action_settings( $post_id, $action, $action_id ) {
+    public static function get_action_settings( $post_id, $action, $action_id = '' ) {
         // get workflow content from post id
         $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
         $current_action = Utils::find_workflow_item_by_id( $workflow_content, $action_id );
@@ -583,7 +583,7 @@ class Components {
      * Render condition settings for specific action
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $condition | Condition key
      * @param array $settings | Settings for condition
      * @return string HTML of rendered condition settings
@@ -602,7 +602,7 @@ class Components {
             
                 $roles = $wp_roles->get_names();
 
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 user-role-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Função do usuário: *', 'joinotify') . '</label>';
                     $html .= '<select class="form-control get-condition-value required-setting">';
                 
@@ -617,22 +617,19 @@ class Components {
 
                 break;
             case 'user_meta':
-                $user_metadata = $settings['user_meta']['user_metadata'] ?? '';
-                $value_metadata = $settings['user_meta']['value_metadata'] ?? '';
-
-                $html .= '<div class="mb-4">';
-                    $html .= '<label class="form-label">' . esc_html__('Metadados do usuário: *', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $user_metadata ) .'" placeholder="'. esc_attr__( 'Nome do metadado', 'joinotify' ) .'">';
+                $html .= '<div class="mb-4 meta-key-wrapper">';
+                    $html .= '<label class="form-label">' . esc_html__('Chave: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $settings['meta_key'] ?? '' ) .'" placeholder="'. esc_attr__( 'Chave do meta dado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
-                $html .= '<div class="mb-4">';
-                    $html .= '<label class="form-label">' . esc_html__('Valor do metadado: *', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $value_metadata ) .'" placeholder="'. esc_attr__( 'Valor do metadado', 'joinotify' ) .'">';
+                $html .= '<div class="mb-4 meta-value-wrapper">';
+                    $html .= '<label class="form-label">' . esc_html__('Valor: *', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'Valor do meta dado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'post_type':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 post-type-wrapper">';
                     // Retrieves all registered post types
                     $post_types = get_post_types( array( 'public' => true ), 'objects' );
 
@@ -649,14 +646,14 @@ class Components {
 
                 break;
             case 'post_author':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 post-author-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Autor do post: *', 'joinotify') . '</label>';
                     $html .= '<input type="text" class="form-control get-condition-value post-author" placeholder="'. esc_attr__( 'Nome do autor', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'order_status':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 order-status-wrapper">';
                     // Retrieves all WooCommerce order statuses
                     if ( function_exists('wc_get_order_statuses') ) {
                         $order_statuses = wc_get_order_statuses();
@@ -675,7 +672,7 @@ class Components {
 
                 break;
             case 'order_total':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 order-total-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Valor total do pedido: *', 'joinotify') . '</label>';
 
                     $html .= '<div class="input-group">';
@@ -691,21 +688,63 @@ class Components {
             case 'products_purchased':
                 $html .= '<div class="mb-4 search-products-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Produtos adquiridos:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value search-products" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
-                    
-                    $html .= '<div class="list-group search-products-results-wrapper mt-3"></div>';
+
+                    // create a JSON with the selected products
+                    $selected_products = isset( $settings['products'] ) ? json_encode( $settings['products'] ) : '[]';
+
+                    $html .= '<select class="get-condition-value search-products" multiple data-selected-products="'. esc_attr( $selected_products ) .'" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
+                        if ( isset( $settings['products'] ) && is_array( $settings['products'] ) ) {
+                            foreach ( $settings['products'] as $product ) {
+                                $html .= '<option value="'. esc_attr( $product['id'] ) .'">'. esc_html( $product['title'] ) .'</option>';
+                            }
+                        }
+                    $html .= '</select>';
+                $html .= '</div>';
+
+                break;
+            case 'payment_method':
+                $html .= '<div class="mb-4 payment-method-wrapper">';;
+                    // Retrieves all WooCommerce payment gateways
+                    if ( function_exists('WC') ) {
+                        $html .= '<label class="form-label">' . esc_html__('Método de pagamento: *', 'joinotify') . '</label>';
+
+                        $html .= '<select class="form-control get-condition-value required-setting">';
+                            $html .= '<option value="none">' . esc_html__( 'Selecione um método de pagamento', 'joinotify' ) . '</option>';
+                            
+                            foreach ( WC()->payment_gateways->payment_gateways() as $payment_gateway_key => $payment_gateway_object ) {
+                                $html .= '<option value="' . esc_attr( $payment_gateway_key ) . '" '. selected( $condition_value, $payment_gateway_key, false ) .'>' . esc_html( $payment_gateway_object->title ) . '</option>';
+                            }
+                        $html .= '</select>';
+                    }
+                $html .= '</div>';
+
+                break;
+            case 'shipping_method':
+                $html .= '<div class="mb-4 shipping-method-wrapper">';
+                    // Retrieves all WooCommerce shipping methods
+                    if ( function_exists('WC') ) {
+                        $html .= '<label class="form-label">' . esc_html__('Método de entrega: *', 'joinotify') . '</label>';
+
+                        $html .= '<select class="form-control get-condition-value required-setting">';
+                            $html .= '<option value="none">' . esc_html__( 'Selecione um método de entrega', 'joinotify' ) . '</option>';
+
+                            foreach ( WC()->shipping->get_shipping_methods() as $shipping_method_key => $shipping_method_object ) {
+                                $html .= '<option value="' . esc_attr( $shipping_method_key ) . '" '. selected( $condition_value, $shipping_method_key, false ) .'>' . esc_html( $shipping_method_object->title ) . '</option>';
+                            }
+                        $html .= '</select>';
+                    }
                 $html .= '</div>';
 
                 break;
             case 'customer_email':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 customer-email-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('E-mail do cliente:', 'joinotify') . '</label>';
                     $html .= '<input type="email" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'E-mail do cliente', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;
             case 'refund_amount':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 refund-amount-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Valor do reembolso: *', 'joinotify') . '</label>';
 
                     $html .= '<div class="input-group">';
@@ -719,7 +758,7 @@ class Components {
 
                 break;
             case 'subscription_status':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 subscription-status-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Status da assinatura: *', 'joinotify') . '</label>';
                     
                     $html .= '<select class="form-control get-condition-value required-setting">';
@@ -731,7 +770,7 @@ class Components {
 
                 break;
             case 'renewal_payment':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 renewal-payment-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Pagamento da renovação: *', 'joinotify') . '</label>';
                     
                     $html .= '<select class="form-control get-condition-value required-setting">';
@@ -742,7 +781,7 @@ class Components {
 
                 break;
             case 'cart_total':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 cart-total-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Valor total do carrinho:', 'joinotify') . '</label>';
                     $html .= '<input type="number" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'Valor total do carrinho', 'joinotify' ) .'">';
                 $html .= '</div>';
@@ -756,12 +795,12 @@ class Components {
 
                 break;
             case 'field_value':
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 field-value-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Valor espefífico de um campo:', 'joinotify') . '</label>';
                     $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
-                $html .= '<div class="mb-4">';
+                $html .= '<div class="mb-4 field-id-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('ID do campo:', 'joinotify') . '</label>';
                     $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
@@ -781,7 +820,7 @@ class Components {
      * Get condition options
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $condition | Condition key
      * @param string $condition_value | Condition value
      * @return string
@@ -796,7 +835,7 @@ class Components {
             'not_contain' => esc_html__( 'Não contém', 'joinotify' ),
             'start_with' => esc_html__( 'Começa com', 'joinotify' ),
             'finish_with' => esc_html__( 'Termina com', 'joinotify' ),
-            'bigger_then' => esc_html__( 'Maior que', 'joinotify' ),
+            'bigger_than' => esc_html__( 'Maior que', 'joinotify' ),
             'less_than' => esc_html__( 'Menor que', 'joinotify' ),
         );
 

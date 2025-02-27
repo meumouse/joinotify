@@ -76,7 +76,7 @@ class Workflow_Processor {
             add_action( 'wpforms_process_complete', array( $this, 'process_workflow_wpforms_form' ), 10, 4 );
 
             // when a WPForms form paypal payment is fired
-        //    add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
+            add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
         }
     }
 
@@ -566,12 +566,13 @@ class Workflow_Processor {
      * Processes a conditional action within a workflow
      *
      * @since 1.1.0
+     * @version 1.2.0
      * @param array $action | Condition action data
      * @param int $post_id | Workflow post ID
-     * @param array $event_data | Event context data
+     * @param array $payload | Payload context data
      * @return bool Returns true if the action is processed successfully
      */
-    public static function process_condition_action( $action, $post_id, $event_data ) {
+    public static function process_condition_action( $action, $post_id, $payload ) {
         $action_data = $action['data'] ?? array();
 
         // Ensure that condition content exists
@@ -584,18 +585,33 @@ class Workflow_Processor {
         $condition_type = $action_data['condition_content']['type'] ?? '';
         $condition_value = $action_data['condition_content']['value'] ?? '';
 
+        // get meta key for user meta condition
+        if ( $get_condition === 'user_meta' ) {
+            $payload['condition_content']['meta_key'] = $action_data['condition_content']['meta_key'] ?? '';
+        }
+
         // Retrieve the comparison value based on the event data
-        $compare_value = Conditions::get_compare_value( $get_condition, $event_data );
+        $compare_value = Conditions::get_compare_value( $get_condition, $payload );
 
         // Check if the condition is met
-        $condition_met = Conditions::check_condition( $condition_type, $condition_value, $compare_value );
+        $condition_met = Conditions::check_condition( $condition_type, $compare_value, $condition_value );
 
         // Determine the next actions based on whether the condition is met
-        $next_actions = $condition_met ? ( $action['children']['action_true'] ?? [] ) : ( $action['children']['action_false'] ?? array() );
+        $next_actions = $condition_met ? ( $action['children']['action_true'] ?? array() ) : ( $action['children']['action_false'] ?? array() );
+
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Processing condition action: " . print_r( $action, true ) );
+            error_log( "Condition content: " . print_r( $action_data['condition_content'], true ) );
+            error_log( "Condition type: " . print_r( $condition_type, true ) );
+            error_log( "Condition value: " . print_r( $condition_value, true ) );
+            error_log( "Compare value: " . print_r( $compare_value, true ) );
+            error_log( "Condition met: " . print_r( $condition_met, true ) );
+            error_log( "Next actions: " . print_r( $next_actions, true ) );
+        }
 
         // Process the resulting actions based on the condition outcome
         foreach ( $next_actions as $child_action ) {
-            self::handle_action( $child_action, $post_id, $event_data );
+            self::handle_action( $child_action, $post_id, $payload );
         }
 
         return true;

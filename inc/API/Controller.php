@@ -229,7 +229,7 @@ class Controller {
      * Get connection state of an instance
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $phone | Phone number
      * @return array|WP_Error Response from API or WP_Error on failure
      */
@@ -258,6 +258,10 @@ class Controller {
                 $status = 'connected';
             } elseif ( $phone_status['connection'] === 'disconnected' ) {
                 $status = 'disconnected';
+            }
+
+            if ( JOINOTIFY_DEBUG_MODE ) {
+                Logger::register_log( "Connection state for $phone is $status", 'INFO' );
             }
 
             update_option( 'joinotify_status_connection_'. $phone, $status );
@@ -458,7 +462,7 @@ class Controller {
      */
     public static function send_validation_otp( $phone, $otp ) {
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/meumouse';
-        $message = sprintf( __( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
+        $message = sprintf( esc_html__( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
 
         $payload = wp_json_encode( array(
             'number' => $phone,

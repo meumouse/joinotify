@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Load assets class
  *
  * @since 1.0.0
- * @version 1.1.2
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Assets {
@@ -117,6 +117,7 @@ class Assets {
 	 * Enqueue scripts on builder page
 	 * 
 	 * @since 1.1.0
+	 * @version 1.2.0
 	 * @return void
 	 */
 	public function builder_assets() {
@@ -158,6 +159,11 @@ class Assets {
 			wp_enqueue_script( 'joinotify-codemirror-closebrackets-addon', JOINOTIFY_ASSETS . 'vendor/codemirror/addon/edit/closebrackets.js', array(),  '5.65.18' );
 			wp_enqueue_script( 'joinotify-codemirror-autorefresh-addon', JOINOTIFY_ASSETS . 'vendor/codemirror/addon/display/autorefresh.js', array(),  '5.65.18' );
 
+			// Selectize library
+			wp_enqueue_style( 'joinotify-selectize-styles', JOINOTIFY_ASSETS . 'vendor/selectize/css/selectize.bootstrap5.css', array(), '0.15.2' );
+			wp_enqueue_script( 'joinotify-selectize-scripts', JOINOTIFY_ASSETS . 'vendor/selectize/js/selectize'. $min_file .'.js', array('jquery'), '0.15.2' );
+		//	wp_enqueue_script( 'joinotify-selectize-remove-button-plugin', JOINOTIFY_ASSETS . 'vendor/selectize/plugins/remove_button/plugin.js', array('jquery'), '0.15.2' );
+
 			// builder main
 			wp_enqueue_style( 'joinotify-builder-styles', JOINOTIFY_ASSETS . 'builder/css/builder'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-builder-scripts', JOINOTIFY_ASSETS . 'builder/js/builder'. $min_file .'.js', array('jquery', 'media-upload'), JOINOTIFY_VERSION, true );
@@ -165,31 +171,33 @@ class Assets {
 			// builder params
 			wp_localize_script( 'joinotify-builder-scripts', 'joinotify_builder_params', array(
 				'debug_mode' => JOINOTIFY_DEBUG_MODE,
+				'dev_mode' => JOINOTIFY_DEV_MODE,
 				'ajax_url' => admin_url('admin-ajax.php'),
-				'status_active' => esc_html__( 'Ativo', 'joinotify' ),
-				'arial_label_toasts' => esc_html__( 'Fechar', 'joinotify' ),
-				'confirm_exclude_action' => esc_html__( 'Tem certeza que deseja excluir esta ação?', 'joinotify' ),
-				'confirm_exclude_trigger' => esc_html__( 'Tem certeza que deseja excluir este acionamento?', 'joinotify' ),
-				'export_nonce' => wp_create_nonce('joinotify_export_workflow_nonce'),
-				'set_media_title' => esc_html__( 'Escolher mídia', 'joinotify' ),
-				'use_this_media_title' => esc_html__( 'Usar esta mídia', 'joinotify' ),
-				'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
-				'copy_group_id' => esc_html__( 'ID copiado!', 'joinotify' ),
 				'import_nonce' => wp_create_nonce('joinotify_import_workflow_nonce'),
-				'emoji_picker_i18n' => array(
-					'placeholder' => esc_html__( 'Pesquisar', 'joinotify' ),
-					'button_title' => esc_html__( 'Use a tecla TAB para inserir um emoji rapidamente', 'joinotify' ),
-					'filters' => array(
-						'tones_title' => esc_html__( 'Diversidade', 'joinotify' ),
-						'recent_title' => esc_html__( 'Recentes', 'joinotify' ),
-						'smileys_people_title' => esc_html__( 'Sorrisos e Pessoas', 'joinotify' ),
-						'animals_nature_title' => esc_html__( 'Animais e Natureza', 'joinotify' ),
-						'food_drink_title' => esc_html__( 'Comidas e Bebidas', 'joinotify' ),
-						'activity_title' => esc_html__( 'Atividades', 'joinotify' ),
-						'travel_places_title' => esc_html__( 'Viajens e Lugares', 'joinotify' ),
-						'objects_title' => esc_html__( 'Objetos', 'joinotify' ),
-						'symbols_title' => esc_html__( 'Símbolos', 'joinotify' ),
-						'flags_title' => esc_html__( 'Bandeiras', 'joinotify' ),
+				'export_nonce' => wp_create_nonce('joinotify_export_workflow_nonce'),
+				'i18n' => array(
+					'status_active' => esc_html__( 'Ativo', 'joinotify' ),
+					'confirm_exclude_action' => esc_html__( 'Tem certeza que deseja excluir esta ação?', 'joinotify' ),
+					'set_media_title' => esc_html__( 'Escolher mídia', 'joinotify' ),
+					'use_this_media_title' => esc_html__( 'Usar esta mídia', 'joinotify' ),
+					'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
+					'copy_group_id' => esc_html__( 'ID copiado!', 'joinotify' ),
+					'remove_product_selectize' => esc_html__( 'Remover', 'joinotify' ),
+					'emoji_picker' => array(
+						'placeholder' => esc_html__( 'Pesquisar', 'joinotify' ),
+						'button_title' => esc_html__( 'Use a tecla TAB para inserir um emoji rapidamente', 'joinotify' ),
+						'filters' => array(
+							'tones_title' => esc_html__( 'Diversidade', 'joinotify' ),
+							'recent_title' => esc_html__( 'Recentes', 'joinotify' ),
+							'smileys_people_title' => esc_html__( 'Sorrisos e Pessoas', 'joinotify' ),
+							'animals_nature_title' => esc_html__( 'Animais e Natureza', 'joinotify' ),
+							'food_drink_title' => esc_html__( 'Comidas e Bebidas', 'joinotify' ),
+							'activity_title' => esc_html__( 'Atividades', 'joinotify' ),
+							'travel_places_title' => esc_html__( 'Viajens e Lugares', 'joinotify' ),
+							'objects_title' => esc_html__( 'Objetos', 'joinotify' ),
+							'symbols_title' => esc_html__( 'Símbolos', 'joinotify' ),
+							'flags_title' => esc_html__( 'Bandeiras', 'joinotify' ),
+						),
 					),
 				),
 			));

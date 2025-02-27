@@ -26,7 +26,7 @@ defined('ABSPATH') || exit; ?>
     </div>
 
     <div class="mt-5">
-        <div class="d-flex align-items-center mb-5">
+        <div class="d-flex align-items-center">
             <button id="joinotify_add_new_phone_trigger" class="btn btn-primary"><?php esc_html_e( 'Adicionar novo telefone', 'joinotify' ); ?></button>
             
             <div id="joinotify_add_new_phone_container" class="joinotify-popup-container">

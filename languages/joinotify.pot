@@ -1861,7 +1861,7 @@ msgid "Metadados do usuário: *"
 msgstr ""
 
 #: inc/Validations/Conditions.php:34 inc/Validations/Conditions.php:46
-msgid "Metadados específicos do usuário"
+msgid "Meta dados do usuário"
 msgstr ""
 
 #. Author of the plugin

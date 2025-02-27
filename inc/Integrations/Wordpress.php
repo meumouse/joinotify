@@ -21,7 +21,7 @@ class Wordpress extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -36,6 +36,9 @@ class Wordpress extends Integrations_Base {
 
         // add placeholders
         add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+
+        // add conditions
+        add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
     }
 
 
@@ -169,5 +172,52 @@ class Wordpress extends Integrations_Base {
         );
 
         return $placeholders;
+    }
+
+
+    /**
+     * Add conditions for WordPress triggers
+     * 
+     * @since 1.2.0
+     * @param array $conditions | Current conditions
+     * @return array
+     */
+    public function add_conditions( $conditions ) {
+        $wordpress_conditions = array(
+            'user_register' => array(
+                'user_role' => array(
+                    'title' => __( 'Função do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar a função do usuário que disparou o acionamento.', 'joinotify' ),
+                ),
+                'user_meta' => array(
+                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados específicos do usuário que disparou o acionamento.', 'joinotify' ),
+                ),
+            ),
+            'wp_login' => array(
+                'user_role' => array(
+                    'title' => __( 'Função do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar a função do usuário que fez o login.', 'joinotify' ),
+                ),
+                'user_meta' => array(
+                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
+                ),
+            ),
+            'password_reset' => array(
+                'user_meta' => array(
+                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
+                ),
+            ),
+            'transition_post_status' => array(
+                'post_type' => array(
+                    'title' => __( 'Tipo de post', 'joinotify' ),
+                    'description' => __( 'Permite verificar o tipo de post que foi publicado.', 'joinotify' ),
+                ),
+            ),
+        );
+
+        return array_merge( $conditions, $wordpress_conditions );
     }
 }

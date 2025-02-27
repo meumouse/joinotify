@@ -32,7 +32,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Ajax {
@@ -778,7 +778,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -819,6 +819,27 @@ class Ajax {
                         $new_action['data']['condition_content']['condition'] = isset( $workflow_action['data']['condition_content']['condition'] ) ? $workflow_action['data']['condition_content']['condition'] : '';
                         $new_action['data']['condition_content']['type'] = isset( $workflow_action['data']['condition_content']['type'] ) ? $workflow_action['data']['condition_content']['type'] : '';
                         $new_action['data']['condition_content']['value'] = isset( $workflow_action['data']['condition_content']['value'] ) ? $workflow_action['data']['condition_content']['value'] : '';
+
+                        // check condition type
+                        if ( isset( $workflow_action['data']['condition_content']['condition'] ) ) {
+                            // condition is user_meta
+                            if ( $workflow_action['data']['condition_content']['condition'] === 'user_meta' ) {
+                                $new_action['data']['condition_content']['meta_key'] = isset( $workflow_action['data']['condition_content']['meta_key'] ) ? $workflow_action['data']['condition_content']['meta_key'] : '';
+                            } elseif ( $workflow_action['data']['condition_content']['condition'] === 'products_purchased' ) {
+                                $condition_products = array();
+
+                                if ( isset( $workflow_action['data']['condition_content']['products'] ) ) {
+                                    foreach ( $workflow_action['data']['condition_content']['products'] as $product ) {
+                                        $condition_products[] = array(
+                                            'id' => intval( $product['id'] ) ?? '',
+                                            'title' => sanitize_text_field( $product['title'] ) ?? '',
+                                        );
+                                    }
+                                }
+
+                                $new_action['data']['condition_content']['products'] = $condition_products;
+                            }
+                        }
                     } elseif ( $workflow_action['data']['action'] === 'time_delay' ) {
                         $new_action['data']['description'] = $build_description;
                         $new_action['data']['delay_type'] = isset( $workflow_action['data']['delay_type'] ) ? $workflow_action['data']['delay_type'] : '';
@@ -1984,6 +2005,7 @@ class Ajax {
 	 * Get WooCommerce products in AJAX callback
 	 * 
 	 * @since 1.1.0
+     * @version 1.2.0
 	 * @return void
 	 */
 	public function get_woo_products_callback() {
@@ -2001,30 +2023,22 @@ class Ajax {
 			);
 			
 			$products = new \WP_Query( $args );
+            $results = array();
 
-            $results = '<span class="fs-md text-muted mb-2 ms-2 d-block">' . esc_html__( 'Resultados:', 'joinotify' ) . '</span>';
-            $results .= '<ul class="list-group search-products-results">';
-			
-			if ( $products->have_posts() ) {
-				while ( $products->have_posts() ) {
-					$products->the_post();
+            if ( $products->have_posts() ) {
+                while ( $products->have_posts() ) {
+                    $products->the_post();
 
-					$results .= '<li class="list-group-item product-item" data-product-id="' . get_the_ID() . '">' . get_the_title() . '</li>';
-				}
-
-                $results .= '</ul>';
-			} else {
-				$results = esc_html__( 'Nenhum produto encontrado.', 'joinotify' );
-			}
-			
-			wp_reset_postdata();
-
-            $response = array(
-                'status' => 'success',
-                'results_html' => $results,
-            );
-
-            wp_send_json( $response );
+                    $results[] = array(
+                        'id' => get_the_ID(),
+                        'product_title' => html_entity_decode( get_the_title(), ENT_QUOTES, 'UTF-8' ), // Decode HTML entities
+                    );
+                }
+            }
+    
+            wp_reset_postdata();
+    
+            wp_send_json( $results );
 		}
 	}
 }

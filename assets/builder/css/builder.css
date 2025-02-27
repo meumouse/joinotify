@@ -739,6 +739,7 @@ label.custom-file-label:hover {
 .form-control {
     width: 100%;
     min-height: 2rem !important;
+    max-width: -webkit-fill-available !important;
     padding: 0.825rem 1rem !important;
     font-size: 1rem;
     font-weight: 400;
@@ -2049,7 +2050,7 @@ textarea.edit-whatsapp-message-text {
     height: 1.325rem;
     right: 1rem;
     z-index: 9;
-    top: 2.5rem;
+    top: 1.5rem;
     border-width: 2px;
 }
 
@@ -2077,4 +2078,8 @@ textarea.edit-whatsapp-message-text {
 .preview-whatsapp-message-sender .emojioneemoji {
     width: 1.125rem;
     height: 1.125rem;
+}
+
+.search-products .selectize-input > input {
+    padding: 0.825rem 1rem !important;
 }

@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with Elementor
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Elementor extends Integrations_Base {
@@ -21,7 +21,7 @@ class Elementor extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -37,6 +37,9 @@ class Elementor extends Integrations_Base {
 
             // add placeholders
             add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+
+            // add conditions
+            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
         }
     }
 
@@ -108,5 +111,30 @@ class Elementor extends Integrations_Base {
         );
 
         return $placeholders;
+    }
+
+
+    /**
+     * Add conditions for Elementor triggers
+     * 
+     * @since 1.2.0
+     * @param array $conditions | Current conditions
+     * @return array
+     */
+    public function add_conditions( $conditions ) {
+        $elementor_conditions = array(
+            'elementor_pro/forms/new_record' => array(
+                'field_value' => array(
+                    'title' => __( 'Valores específicos dos campos do formulário', 'joinotify' ),
+                    'description' => __( 'Permite verificar valores específicos dos campos do formulário enviado.', 'joinotify' ),
+                ),
+                'user_meta' => array(
+                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
+                ),
+            ),
+        );
+
+        return array_merge( $conditions, $elementor_conditions );
     }
 }

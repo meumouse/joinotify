@@ -2,7 +2,11 @@ Versão 1.2.0 (28/02/2025)
 * Correção de bugs
 * Otimizações
 * Recurso adicionado: Biblioteca "giggsey/libphonenumber-for-php" para formatação e validação de telefones em formato internacional
+* Recurso adicionado: Biblioteca "Selectize" para multi seleção de elementos
 * Recurso removido: Variável de texto {{ post_id }}
+* Recurso adicionado: Condições "Método de pagamento" e "Método de entrega"
+* Recurso adicionado: Acionamentos: "Pagamento processado pelo PayPal"
+* Recurso adicionado: Classe "Routines" para execução de rotinas
 
 Versão 1.1.2 (24/02/2025)
 * Correção de bugs

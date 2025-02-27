@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Flexify_Checkout extends Integrations_Base {
@@ -21,7 +21,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -38,6 +38,9 @@ class Flexify_Checkout extends Integrations_Base {
 
             // add placeholders
             add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+
+            // add conditions
+            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
         }
     }
 
@@ -143,5 +146,34 @@ class Flexify_Checkout extends Integrations_Base {
         }
 
         return $placeholders;
+    }
+
+
+    /**
+     * Add conditions for Flexify Checkout triggers
+     * 
+     * @since 1.2.0
+     * @param array $conditions | Current conditions
+     * @return array
+     */
+    public function add_conditions( $conditions ) {
+        $fc_conditions = array(
+            'flexify_checkout_cart_abandoned' => array(
+                'cart_total' => array(
+                    'title' => __( 'Valor total do carrinho', 'joinotify' ),
+                    'description' => __( 'Permite verificar o valor total do carrinho abandonado.', 'joinotify' ),
+                ),
+                'items_in_cart' => array(
+                    'title' => __( 'Itens no carrinho', 'joinotify' ),
+                    'description' => __( 'Permite verificar os itens presentes no carrinho abandonado.', 'joinotify' ),
+                ),
+                'user_meta' => array(
+                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
+                ),
+            ),
+        );
+
+        return array_merge( $conditions, $fc_conditions );
     }
 }
