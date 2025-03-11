@@ -2,7 +2,9 @@
 
 namespace MeuMouse\Joinotify\Cron;
 
-use MeuMouse\Joinotify\Controller;
+use MeuMouse\Joinotify\API\Controller;
+use MeuMouse\Flexify_Checkout\Core\Updater;
+use MeuMouse\Joinotify\Admin\Admin;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -22,16 +24,47 @@ class Routines {
 	 * @return void
 	 */
 	public function __construct() {
-		// register routine
+		// register custom schedule
 		add_filter( 'cron_schedules', array( __CLASS__, 'register_custom_schedules' ) );
 
-		// schedule connection check
-		add_action( 'wp', array( __CLASS__, 'schedule_connection_check' ) );
+		// Schedule the cron event if not already scheduled
+		if ( ! wp_next_scheduled('joinotify_check_phone_connection_event') ) {
+            wp_schedule_event( time(), 'six_hours', 'joinotify_check_phone_connection_event' );
+        }
+
+		// make request
+		add_action( 'joinotify_check_phone_connection_event', array( __CLASS__, 'check_phone_connection' ) );
+
+        // Schedule the cron event if not already scheduled
+        if ( ! wp_next_scheduled('joinotify_check_plugin_updates_event') ) {
+            wp_schedule_event( time(), 'daily', 'joinotify_check_plugin_updates_event' );
+        }
+
+        add_action( 'joinotify_check_plugin_updates_event', array( __CLASS__, 'check_plugin_updates' ) );
+
+        // enable auto updates
+        if ( Admin::get_setting('enable_auto_updates') === 'yes' ) {
+            // Schedule the cron event if not already scheduled
+            if ( ! wp_next_scheduled('joinotify_auto_update_event') ) {
+                wp_schedule_event( time(), 'daily', 'joinotify_auto_update_event' );
+            }
+
+            // auto update plugin action
+            add_action( 'joinotify_auto_update_event', array( '\MeuMouse\Flexify_Checkout\Core\Updater', 'auto_update_plugin' ) );
+        }
+
+        // schedule daily updates
+        if ( ! wp_next_scheduled('joinotify_check_daily_update') ) {
+            wp_schedule_event( time(), 'daily', 'joinotify_check_daily_update' );
+        }
+
+        // check daily updates
+        add_action( 'joinotify_check_daily_update', array( '\MeuMouse\Flexify_Checkout\Core\Updater', 'check_daily_update' ) );
 	}
 
 
 	/**
-     * Register the custom schedule interval.
+     * Register the custom schedule interval
      *
      * @since 1.2.0
      * @param array $schedules | Existing WordPress schedules
@@ -43,20 +76,12 @@ class Routines {
             'display' => __( 'A cada 6 horas', 'joinotify' ),
         );
 
+        $schedules['daily'] = array(
+            'interval' => DAY_IN_SECONDS,
+            'display' => __( 'Diariamente', 'joinotify' ),
+        );
+
         return $schedules;
-    }
-
-
-	/**
-     * Schedule the cron event if not already scheduled
-     *
-     * @since 1.2.0
-	 * @return void
-     */
-    public static function schedule_connection_check() {
-        if ( ! wp_next_scheduled('joinotify_check_phone_connection_event') ) {
-            wp_schedule_event( time(), 'six_hours', 'joinotify_check_phone_connection_event' );
-        }
     }
 
 
@@ -76,5 +101,17 @@ class Routines {
         foreach ( $phones as $phone ) {
             Controller::get_connection_state( $phone );
         }
+    }
+
+
+    /**
+     * Check for plugin updates daily
+     *
+     * @since 1.2.0
+	 * @return void
+     */
+    public static function check_plugin_updates() {
+        $updater = new Updater();
+        $updater->update_plugin( get_site_transient( 'update_plugins' ) );
     }
 }

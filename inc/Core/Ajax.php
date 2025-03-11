@@ -2,9 +2,6 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-use MeuMouse\Joinotify\Core\Helpers;
-use MeuMouse\Joinotify\Core\Logger;
-
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Components as Settings_Components;
 
@@ -1293,6 +1290,8 @@ class Ajax {
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
             $get_otp = Otp_Validation::generate_and_send_otp( $phone );
 
+            error_log( 'OTP: ' . print_r( $get_otp, true ) );
+
             if ( $get_otp ) {
                 $response = array(
                     'status' => 'success',
@@ -1316,6 +1315,7 @@ class Ajax {
      * Callback to validate OTP
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function validate_otp_callback() {
@@ -1365,7 +1365,7 @@ class Ajax {
                     'status' => 'success',
                     'toast_header_title' => __( 'Verificação bem-sucedida', 'joinotify' ),
                     'toast_body_title' => __( 'Seu WhatsApp foi verificado com sucesso!', 'joinotify' ),
-                    'current_phone_senders' => Settings_Builder_Components::current_phones_senders(),
+                    'current_phone_senders' => Settings_Components::current_phones_senders(),
                 );
             } else {
                 // If OTP is invalid or expired, send an error response
@@ -1386,6 +1386,7 @@ class Ajax {
      * Callback to remove a phone sender
      *
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function remove_phone_sender_callback() {
@@ -1421,7 +1422,7 @@ class Ajax {
                         'status' => 'success',
                         'toast_header_title' => __( 'Remetente removido', 'joinotify' ),
                         'toast_body_title' => __( 'O telefone remetente foi removido com sucesso!', 'joinotify' ),
-                        'updated_list_html' => Settings_Builder_Components::current_phones_senders(),
+                        'updated_list_html' => Settings_Components::current_phones_senders(),
                     );
 
                     wp_send_json( $response );

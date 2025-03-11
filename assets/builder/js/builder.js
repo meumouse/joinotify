@@ -1074,6 +1074,12 @@
 							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
 								action_data.data.condition_content.value = '';
 							}
+						} else if ( condition === 'field_value' ) {
+							action_data.data.condition_content.field_id = container.find('.field-id-wrapper').children('.get-condition-value').val();
+
+							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
+								action_data.data.condition_content.value = '';
+							}
 						}
 
 						break;
@@ -1636,9 +1642,9 @@
 
 				// check select value
 				if ( select_value === 'empty' || select_value === 'not_empty' ) {
-					select.parent('div').siblings('.meta-value-wrapper').addClass('d-none').children('.get-condition-value').removeClass('required-setting');
+					select.parent('div').siblings('.meta-value-wrapper, .field-value-wrapper').addClass('d-none').children('.get-condition-value').removeClass('required-setting');
 				} else {
-					select.parent('div').siblings('.meta-value-wrapper').removeClass('d-none').children('.get-condition-value').addClass('required-setting');
+					select.parent('div').siblings('.meta-value-wrapper, .field-value-wrapper').removeClass('d-none').children('.get-condition-value').addClass('required-setting');
 				}
 			}
 

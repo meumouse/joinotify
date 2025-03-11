@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Validations\Conditions;

@@ -167,8 +167,8 @@ class Wpforms extends Integrations_Base {
         // Define reusable conditions
         $common_conditions = array(
             'field_value' => array(
-                'title' => __( 'Valores específicos dos campos do formulário', 'joinotify' ),
-                'description' => __( 'Permite verificar valores específicos dos campos do formulário enviado.', 'joinotify' ),
+                'title' => __( 'Valor de um campo do formulário', 'joinotify' ),
+                'description' => __( 'Permite verificar um valor específico de um campo do formulário enviado.', 'joinotify' ),
             ),
             'user_meta' => array(
                 'title' => __( 'Meta dados do usuário', 'joinotify' ),

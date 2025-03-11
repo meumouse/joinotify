@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Builder;
 
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
-use MeuMouse\Joinotify\Builder\Messages;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,6 +11,7 @@ defined('ABSPATH') || exit;
  * This class handles with actions functions
  * 
  * @since 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Actions {

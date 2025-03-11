@@ -3,18 +3,9 @@
 namespace MeuMouse\Joinotify\Builder;
 
 use MeuMouse\Joinotify\Core\Helpers;
-
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Validations\Media_Types;
-
-use MeuMouse\Joinotify\Builder\Core;
-use MeuMouse\Joinotify\Builder\Placeholders;
-use MeuMouse\Joinotify\Builder\Utils;
-use MeuMouse\Joinotify\Builder\Triggers;
-use MeuMouse\Joinotify\Builder\Actions;
-
 use MeuMouse\Joinotify\Cron\Schedule;
-
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 use MeuMouse\Joinotify\Integrations\Whatsapp;
 
@@ -26,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions for display components on workflow builder
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Components {
@@ -289,7 +280,7 @@ class Components {
      * @param string $action_id | Action ID
      * @return string
      */
-    public static function get_action_settings( $post_id, $action, $action_id = '' ) {
+    public static function get_action_settings( $post_id, $action, $action_id ) {
         // get workflow content from post id
         $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
         $current_action = Utils::find_workflow_item_by_id( $workflow_content, $action_id );
@@ -685,6 +676,9 @@ class Components {
                 $html .= '</div>';
 
                 break;
+            case 'order_paid':
+                
+                break;
             case 'products_purchased':
                 $html .= '<div class="mb-4 search-products-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Produtos adquiridos:', 'joinotify') . '</label>';
@@ -729,7 +723,7 @@ class Components {
                             $html .= '<option value="none">' . esc_html__( 'Selecione um método de entrega', 'joinotify' ) . '</option>';
 
                             foreach ( WC()->shipping->get_shipping_methods() as $shipping_method_key => $shipping_method_object ) {
-                                $html .= '<option value="' . esc_attr( $shipping_method_key ) . '" '. selected( $condition_value, $shipping_method_key, false ) .'>' . esc_html( $shipping_method_object->title ) . '</option>';
+                                $html .= '<option value="' . esc_attr( $shipping_method_key ) . '" '. selected( $condition_value, $shipping_method_key, false ) .'>' . esc_html( $shipping_method_object->method_title ) . '</option>';
                             }
                         $html .= '</select>';
                     }
@@ -795,14 +789,14 @@ class Components {
 
                 break;
             case 'field_value':
-                $html .= '<div class="mb-4 field-value-wrapper">';
-                    $html .= '<label class="form-label">' . esc_html__('Valor espefífico de um campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
-                $html .= '</div>';
-
                 $html .= '<div class="mb-4 field-id-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('ID do campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $settings['field_id'] ?? '' ) .'" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
+                $html .= '</div>';
+
+                $html .= '<div class="mb-4 field-value-wrapper">';
+                    $html .= '<label class="form-label">' . esc_html__('Valor do campo:', 'joinotify') . '</label>';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_value ) .'" placeholder="'. esc_attr__( 'Valor do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 break;

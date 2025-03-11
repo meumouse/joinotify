@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * This class manages the builder placeholders
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Placeholders {
@@ -63,7 +63,7 @@ class Placeholders {
      * Replace placeholders with actual values in the message
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $message | The message containing placeholders
      * @param array $payload | The placeholder context with array data
      * @param string $mode | Mode ('sandbox' or 'production')
@@ -138,6 +138,48 @@ class Placeholders {
 
             return $matches[0]; // returns the original placeholder if not found
         }, $message );
+
+        // Replace for user meta placeholders {{ user_meta[META_KEY] }}
+        $message = preg_replace_callback('/\{\{\s*user_meta\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
+            $meta_key = $matches[1];
+
+            // Check if 'user_id' exists in payload
+            if ( isset( $payload['user_id'] ) ) {
+                $user_id = $payload['user_id'];
+            } elseif ( isset( $payload['order_id'] ) ) {
+                // Get order object
+                $order = wc_get_order( $payload['order_id'] );
+                
+                if ( $order ) {
+                    $billing_email = $order->get_billing_email();
+
+                    if ( ! empty( $billing_email ) ) {
+                        $user = get_user_by( 'email', $billing_email );
+                        
+                        if ( $user ) {
+                            $user_id = $user->ID;
+                        }
+                    }
+                }
+            }
+
+            // If no user ID was found, use the current logged-in user
+            if ( empty( $user_id ) ) {
+                $user_id = get_current_user_id();
+            }
+
+            // Retrieve the user meta
+            $meta_value = get_user_meta( $user_id, $meta_key, true );
+
+            // If the meta key has a value, return it
+            if ( ! empty( $meta_value ) ) {
+                return is_array( $meta_value ) ? implode(', ', $meta_value) : $meta_value;
+            }
+
+            // if not found, returns the original placeholder
+            return $matches[0];
+
+        }, $message);
 
         return $message;
     }

@@ -3,7 +3,6 @@
 namespace MeuMouse\Flexify_Checkout\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Core\Logger;
 
 use WP_Upgrader;
 use Plugin_Upgrader;
@@ -18,7 +17,7 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Updater {
@@ -38,7 +37,7 @@ class Updater {
      * Construct function
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -61,11 +60,13 @@ class Updater {
         add_filter( 'plugin_row_meta', array( $this, 'add_check_updates_link' ), 10, 2 );
         add_filter( 'all_admin_notices', array( $this, 'check_manual_update_query_arg' ) );
 
-        if ( Admin::get_setting( 'enable_auto_updates' ) === 'yes' ) {
+        // enable auto updates
+        if ( Admin::get_setting('enable_auto_updates') === 'yes' ) {
             add_filter( 'auto_update_plugin', array( $this, 'enable_auto_update' ), 10, 2 );
-            add_action( 'init', array( $this, 'schedule_auto_update' ) );
-            add_action( 'joinotify_auto_update_event', array( $this, 'auto_update_plugin' ) );
         }
+
+        // display new update on plugins list
+        add_action( 'admin_notices', array( $this, 'admin_update_notice' ) );
     }
 
 
@@ -361,7 +362,7 @@ class Updater {
      * @since 1.1.0
      * @return void
      */
-    public function auto_update_plugin() {
+    public static function auto_update_plugin() {
         delete_transient('joinotify_api_request_cache');
         delete_transient('joinotify_api_response_cache');
         delete_transient( $this->cache_key );
@@ -398,15 +399,53 @@ class Updater {
 
 
     /**
-     * Schedule automatic update event
+     * Check if has a new update one time per day
      *
-     * @since 1.1.0
+     * @since 1.2.0
      * @return void
      */
-    public function schedule_auto_update() {
-        if ( ! wp_next_scheduled('joinotify_auto_update_event') ) {
-            wp_schedule_event( time(), 'daily', 'joinotify_auto_update_event' );
+    public static function check_daily_update() {
+        delete_transient( 'joinotify_check_updates' );
+        delete_transient( 'joinotify_remote_data' );
+
+        $updater = new self();
+        $remote_data = $updater->request();
+
+        if ( ! $remote_data ) {
+            return;
         }
+
+        // compare versions
+        $current_version = $updater->version;
+        $latest_version = $remote_data->version;
+
+        if ( version_compare( $current_version, $latest_version, '<' ) ) {
+            // storage the information in the database for later display
+            update_option( 'joinotify_update_available', $latest_version );
+        } else {
+            // remove option if it's already updated
+            delete_option('joinotify_update_available');
+        }
+    }
+
+
+    /**
+     * Display update notice in the admin panel
+     *
+     * @since 1.2.0
+     * @return void
+     */
+    public function admin_update_notice() {
+        $latest_version = get_option('joinotify_update_available');
+
+        if ( ! $latest_version ) {
+            return;
+        }
+
+        $update_url = admin_url('plugins.php');
+        $message = sprintf( __( 'Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href="%s">Atualize agora</a>.', 'joinotify' ), esc_html( $latest_version ), esc_url( $update_url ) );
+
+        echo '<div class="notice notice-success is-dismissible"><p>' . $message . '</p></div>';
     }
 }
 

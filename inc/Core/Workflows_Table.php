@@ -15,6 +15,7 @@ if ( ! class_exists('WP_List_Table') ) {
  * Workflows table class
  * 
  * @since 1.0.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Workflows_Table extends WP_List_Table {
@@ -268,12 +269,13 @@ class Workflows_Table extends WP_List_Table {
      * Prepare items for display on the table
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function prepare_items() {
         $this->process_bulk_action();
 
-        $per_page = 10;
+        $per_page = 20;
         $current_page  = $this->get_pagenum();
         $post_status = isset( $_GET['post_status'] ) ? $_GET['post_status'] : 'publish';
 

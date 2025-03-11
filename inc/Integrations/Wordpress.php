@@ -169,6 +169,11 @@ class Wordpress extends Integrations_Base {
                     'sandbox' => date( get_option('date_format') ),
                 ),
             ),
+            '{{ user_meta[META_KEY] }}' => array(
+                'triggers' => array(), // is global
+                'description' => esc_html__( 'Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que deseja recuperar o valor. Exemplo: billing_phone', 'joinotify' ),
+                'replacement' => array(),
+            ),
         );
 
         return $placeholders;
