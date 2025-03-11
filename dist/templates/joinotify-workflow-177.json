@@ -1,0 +1,56 @@
+{
+  "plugin_version": "1.2.0",
+  "post": {
+    "type": "joinotify-workflow",
+    "title": "Minha automação #713560",
+    "date": "2025-03-10 09:39:59",
+    "status": "publish",
+    "modified": "2025-03-10 09:39:59",
+    "category": "wordpress"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_67cedcf3804ab",
+      "type": "trigger",
+      "data": {
+        "title": "Minha automação #713560",
+        "description": "",
+        "trigger": "user_register",
+        "context": "wordpress"
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_67cedd075465c",
+      "type": "action",
+      "data": {
+        "title": "Função do usuário",
+        "description": "<div class=\"condition-description\">Função do usuário não é: Administrador</div>",
+        "action": "condition",
+        "condition_content": {
+          "condition": "user_role",
+          "type": "is_not",
+          "value": "administrator"
+        }
+      },
+      "children": {
+        "action_true": [
+          {
+            "id": "joinotify_action_67cedd9114f68",
+            "type": "action",
+            "data": {
+              "title": "WhatsApp: Mensagem de texto",
+              "description": "Olá <span class=\"builder-placeholder\">{{ first_name }}</span>! Seja bem vindo à MeuMouse.com! 🤗💙<br><br>Acesse sua conta pelo link:<br>https://meumouse.com/minha-conta<br><br>Para acompanhar pedidos, baixar seus produtos digitais e mais!",
+              "action": "send_whatsapp_message_text",
+              "message": "Olá {{ first_name }}! Seja bem vindo à MeuMouse.com! 🤗💙\n\nAcesse sua conta pelo link:\nhttps://meumouse.com/minha-conta\n\nPara acompanhar pedidos, baixar seus produtos digitais e mais!",
+              "sender": "5541995532165",
+              "receiver": "{{ user_meta[‘billing_phone’] }}"
+            },
+            "children": []
+          }
+        ],
+        "action_false": []
+      }
+    }
+  ]
+}
