@@ -1,23 +1,15 @@
 <?php
 
 use MeuMouse\Joinotify\Admin\Components as Admin_Components;
-
 use MeuMouse\Joinotify\Validations\Conditions;
 
-$payload = array(
-    'order_id' => 96,
-//    'meta_key' => 'last_login',
-);
-
-$get_condition = 'order_total';
-$condition_type = 'finish_with';
-$condition_value = '00';
-
-$compare_value = Conditions::get_compare_value( $get_condition, $payload );
-$condition_met = Conditions::check_condition( $condition_type, $compare_value, $condition_value );
-
-var_dump( $compare_value );
-var_dump( $condition_met );
+/**
+ * Template file for display settings
+ * 
+ * @since 1.0.0
+ * @version 1.2.0
+ * @package MeuMouse.com
+ */
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>

@@ -2092,8 +2092,42 @@
 		 * Save action settings
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		saveActionSettings: function() {
+			// check action on display modal
+			$(document).on('shown.bs.modal', '.modal.show', function() {
+				var modal = $(this);
+				var action_type = modal.find('.save-action-edit').data('action');
+				var initial_data = Builder.getActionData(action_type, modal);
+				
+				// storage initial data in the modal itself
+				modal.data('initial_data', JSON.stringify(initial_data));
+			
+				let save_button = modal.find('.save-action-edit');
+
+				// disable button if action is snippet php
+				if ( save_button.data('action') === 'snippet_php' ) {
+					save_button.prop('disabled', true);
+				}
+			});
+			
+			// check changes in inputs inside the modal
+			$(document).on('input change', '.modal.show :input', function() {
+				var modal = $(this).closest('.modal.show');
+				var action_type = modal.find('.save-action-edit').data('action');
+				var current_data = Builder.getActionData(action_type, modal);
+			
+				// compare the current data with the initial data
+				var is_changed = JSON.stringify(current_data) !== modal.data('initial_data');
+				let save_button = modal.find('.save-action-edit');
+
+				if ( save_button.data('action') === 'snippet_php' ) {
+					// active or disable button based on the change
+					save_button.prop('disabled', ! is_changed);
+				}
+			});
+			
 			// save action on click button
 			$(document).on('click', '.save-action-edit', function(e) {
 				e.preventDefault();
@@ -2157,6 +2191,7 @@
 		 * Initialize code editor
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		codeEditor: function() {
 			// initialize CodeMirror for each code editor
@@ -2189,7 +2224,12 @@
 
 					// update the textarea when has changes on editor
 					editor.on('change', function() {
-						textarea.value = editor.getValue();
+						let value = editor.getValue();
+						
+						// ensures that backslashes are correctly escaped
+						value = value.replace(/\\/g, '\\\\');
+					
+						textarea.value = value;
 						$(textarea).trigger('change');
 					});
 

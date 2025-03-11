@@ -47,7 +47,7 @@ class Components {
 
 
     /**
-     * Display action HTML
+     * Display workflow action component
      * 
      * @since 1.0.0
      * @version 1.1.0
@@ -55,10 +55,11 @@ class Components {
      * @param array $action_details | Action details array (action name, description, id, etc)
      * @return string
      */
-    public static function get_action_html( $post_id, $action_details ) {
+    public static function workflow_action_component( $post_id, $action_details ) {
         foreach ( Actions::get_all_actions() as $action => $value ) {
             $action_id = $action_details['id'];
 
+            // skip if is not action
             if ( $action_details['action_name'] !== $value['action'] ) {
                 continue;
             }
@@ -164,16 +165,17 @@ class Components {
 
 
     /**
-     * Display action condition HTML
+     * Display action condition component for condition children actions
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @param int $post_id | Post ID
      * @param array $condition_data | Condition data
      * @param string $title | (Optional) Action title
      * @param string $description | (Optional) Action description
      * @return string
      */
-    public static function get_action_condition_html( $post_id, $condition_data, $title = '', $description = '' ) {
+    public static function workflow_action_children_component( $post_id, $condition_data, $title = '', $description = '' ) {
         $html = '';
 
         foreach ( $condition_data as $action ) {
@@ -188,6 +190,11 @@ class Components {
                             $html .= '<h4 class="title">'. $title .'</h4>';
                         } else {
                             $html .= '<h4 class="title">'. $action_value['title'] .'</h4>';
+                        }
+
+                        if ( $action_value['action'] === 'send_whatsapp_message_text' || $action_value['action'] === 'send_whatsapp_message_media' ) {
+                            $html .= '<span class="text-muted fs-xs sender d-block">'. sprintf( __( 'Remetente: %s', 'joinotify' ), $condition_data['data']['sender'] ) .'</span>';
+                            $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'Destinatário: %s', 'joinotify' ), $condition_data['data']['receiver'] ) .'</span>';
                         }
                         
                         if ( ! empty( $description ) ) {
@@ -326,7 +333,7 @@ class Components {
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return mixed | return the HTML of the trigger or false if not found
      */
-    public static function get_trigger_html( $post_id, $trigger_details ) {
+    public static function workflow_trigger_component( $post_id, $trigger_details ) {
         $context = $trigger_details['context'];
         $data_trigger = $trigger_details['data_trigger'];
         $trigger_id = $trigger_details['trigger_id'];
@@ -450,7 +457,7 @@ class Components {
      * @param array $workflow_data | Workflow array data
      * @return string
      */
-    public static function get_workflow_connector( $post_id, $type, $workflow_data ) {
+    public static function workflow_connector_component( $post_id, $type, $workflow_data ) {
         $html = '';
 
         if ( $type === 'connector_add' ) {
@@ -501,7 +508,7 @@ class Components {
                                 $action_false_title = isset( $false_action['data']['title'] ) ? $false_action['data']['title'] : '';
                                 $action_false_description = isset( $false_action['data']['description'] ) ? $false_action['data']['description'] : '';
 
-                                $html .= self::get_action_condition_html( $post_id, $false_action, $action_false_title, $action_false_description );
+                                $html .= self::workflow_action_children_component( $post_id, $false_action, $action_false_title, $action_false_description );
                             }
                         }
     
@@ -524,7 +531,7 @@ class Components {
                                 $action_true_title = isset( $true_action['data']['title'] ) ? $true_action['data']['title'] : '';
                                 $action_true_description = isset( $true_action['data']['description'] ) ? $true_action['data']['description'] : '';
 
-                                $html .= self::get_action_condition_html( $post_id, $true_action, $action_true_title, $action_true_description );
+                                $html .= self::workflow_action_children_component( $post_id, $true_action, $action_true_title, $action_true_description );
                             }
                         }
     
@@ -677,7 +684,7 @@ class Components {
 
                 break;
             case 'order_paid':
-                
+
                 break;
             case 'products_purchased':
                 $html .= '<div class="mb-4 search-products-wrapper">';
