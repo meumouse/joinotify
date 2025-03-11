@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Cron;
 
 use MeuMouse\Joinotify\API\Controller;
+use MeuMouse\Joinotify\API\Workflow_Templates;
 use MeuMouse\Flexify_Checkout\Core\Updater;
 use MeuMouse\Joinotify\Admin\Admin;
 
@@ -40,7 +41,7 @@ class Routines {
             wp_schedule_event( time(), 'daily', 'joinotify_check_plugin_updates_event' );
         }
 
-        add_action( 'joinotify_check_plugin_updates_event', array( __CLASS__, 'check_plugin_updates' ) );
+        add_action( 'joinotify_check_plugin_updates_event', array( '\MeuMouse\Flexify_Checkout\Core\Updater', 'check_daily_updates' ) );
 
         // enable auto updates
         if ( Admin::get_setting('enable_auto_updates') === 'yes' ) {
@@ -59,7 +60,14 @@ class Routines {
         }
 
         // check daily updates
-        add_action( 'joinotify_check_daily_update', array( '\MeuMouse\Flexify_Checkout\Core\Updater', 'check_daily_update' ) );
+        add_action( 'joinotify_check_daily_update', array( '\MeuMouse\Flexify_Checkout\Core\Updater', 'check_daily_updates' ) );
+
+        // Schedule the cron event for get templates count
+        if ( ! wp_next_scheduled('joinotify_update_templates_count') ) {
+            wp_schedule_event( time(), 'daily', 'joinotify_update_templates_count' );
+        }
+
+        add_action( 'joinotify_update_templates_count', array( $this, 'fetch_templates_count' ) );
 	}
 
 
@@ -105,13 +113,17 @@ class Routines {
 
 
     /**
-     * Check for plugin updates daily
-     *
+     * Fetch templates count from Joinotify repository
+     * 
      * @since 1.2.0
-	 * @return void
+     * @return void
      */
-    public static function check_plugin_updates() {
-        $updater = new Updater();
-        $updater->update_plugin( get_site_transient( 'update_plugins' ) );
+    public function fetch_templates_count() {
+        // get templates count
+        $template_count = Workflow_Templates::get_templates_count( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
+
+        if ( $template_count !== null ) {
+            update_option( 'joinotify_get_templates_count', $template_count );
+        }
     }
 }

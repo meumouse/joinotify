@@ -64,7 +64,6 @@
 			this.workflowSteps();
 			this.triggerTabs();
 			this.loadWorkflowData();
-			this.fetchWorkflowTemplates();
 			this.uploadWorkflowTemplates();
 			this.onWorkflowReady();
 			this.onUpdatedWorkflow();
@@ -586,59 +585,6 @@
 
 				$('#wpcontent').prepend(detached_modal);
 			});
-		},
-
-		/**
-		 * Fetch workflows templates
-		 * 
-		 * @since 1.0.0
-		 * @version 1.1.0
-		 * @package MeuMouse.com
-		 */
-		fetchWorkflowTemplates: function() {
-			// get parameter id from URL
-			var id = Builder.getParamByName('id');
-
-			// Make the AJAX request to get the number of templates
-			if ( ! id ) {
-				$.ajax({
-					url: params.ajax_url,
-					method: 'POST',
-					data: {
-						action: 'joinotify_get_templates_count',
-						template: 'template',
-					},
-					success: function(response) {
-						if (params.debug_mode) {
-							console.log(response);
-						}
-
-						if (response.status === 'success') {
-							var template_count = response.template_count;
-
-							// Get the container element
-							var templates_group = $('.joinotify-templates-group');
-
-							// Clear any existing content
-							templates_group.empty();
-
-							// Loop over the number of templates and create placeholder elements
-							for (var i = 0; i < template_count; i++) {
-								templates_group.append('<div class="template-item placeholder-content"></div>');
-							}
-
-							$('#joinotify_template_library_container').addClass('templates-counted');
-						} else {
-							// Handle error
-							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
-						}
-					},
-					error: function(xhr, status, error) {
-						// Handle AJAX error
-						console.error('AJAX Error:', error);
-					},
-				});
-			}
 		},
 
 		/**
@@ -1816,7 +1762,7 @@
 		 * Activate workflow steps
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		workflowSteps: function() {
 			// choose workflow template
@@ -1834,26 +1780,28 @@
 				}, 1000);
 
 				if ( template_type === 'scratch' ) {
-						setTimeout(() => {
-							$('#joinotify_start_choose_container').removeClass('active');
-							$('#joinotify_choose_template_container').removeClass('active');
-							$('#joinotify_triggers_group').addClass('active');
-							$('#joinotify_triggers_content').addClass('active');
-							$('#joinotify_builder_navbar').addClass('active');
-						}, 1000);
+					setTimeout(() => {
+						$('#joinotify_start_choose_container').removeClass('active');
+						$('#joinotify_choose_template_container').removeClass('active');
+						$('#joinotify_triggers_group').addClass('active');
+						$('#joinotify_triggers_content').addClass('active');
+						$('#joinotify_builder_navbar').addClass('active');
+					}, 1000);
 				} else if ( template_type === 'template' ) {
-						setTimeout(() => {
-							$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
-							$('#joinotify_template_library_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
-						}, 1000);
+					let templates_container = $('#joinotify_template_library_container');
 
+					setTimeout(() => {
+						$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
+						templates_container.addClass('active slide-left-animation').removeClass('slide-right-animation');
+					}, 1000);
+
+					if ( ! templates_container.hasClass('templates-loaded') ) {
 						// get templates
 						$.ajax({
 							url: params.ajax_url,
 							method: 'POST',
 							data: {
 								action: 'joinotify_get_workflow_templates',
-								template: template_type,
 							},
 							success: function(response) {
 								if (params.debug_mode) {
@@ -1863,7 +1811,7 @@
 								try {
 									if (response.status === 'success') {
 										$('.joinotify-templates-group').html(response.template_html);
-										$('#joinotify_template_library_container').addClass('templates-loaded').removeClass('templates-counted');
+										templates_container.addClass('templates-loaded').removeClass('templates-counted');
 									} else {
 										Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
 									}
@@ -1871,12 +1819,16 @@
 									console.log(error);
 								}
 							},
+							error: function(error) {
+								console.error(error);
+							},
 						});
+					}
 				} else if ( template_type === 'import' ) {
-						setTimeout(() => {
-							$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
-							$('#joinotify_import_template_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
-						}, 1000);
+					setTimeout(() => {
+						$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
+						$('#joinotify_import_template_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
+					}, 1000);
 				}
 			});
 
@@ -1887,6 +1839,7 @@
 				$('#joinotify_triggers_group').removeClass('active');
 				$('#joinotify_triggers_content').removeClass('active');
 				$('#joinotify_builder_navbar').removeClass('active');
+				$('#joinotify_template_library_container').removeClass('active');
 				$('#joinotify_choose_template_container').addClass('active');
 				$('#joinotify_start_choose_container').addClass('active');
 			});
@@ -1985,6 +1938,9 @@
 					complete: function() {
 						btn.prop('disabled', false).html(button_state.html);
 					},
+					error: function(error) {
+						console.error(error);
+					},
 				});
 			});
 		},
@@ -2058,7 +2014,7 @@
 						}
 					},
 					error: function(error) {
-						console.log(error);
+						console.error(error);
 					},
 				});
 			});

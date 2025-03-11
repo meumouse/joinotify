@@ -404,7 +404,7 @@ class Updater {
      * @since 1.2.0
      * @return void
      */
-    public static function check_daily_update() {
+    public static function check_daily_updates() {
         delete_transient( 'joinotify_check_updates' );
         delete_transient( 'joinotify_remote_data' );
 

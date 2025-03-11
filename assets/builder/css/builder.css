@@ -2083,3 +2083,19 @@ textarea.edit-whatsapp-message-text {
 .search-products .selectize-input > input {
     padding: 0.825rem 1rem !important;
 }
+
+#joinotify_template_library_container {
+    width: 95%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.search-workflows-wrapper {
+    width: 50rem;
+}
+
+#joinotify_filter_library_categories {
+    max-width: 20rem !important;
+}

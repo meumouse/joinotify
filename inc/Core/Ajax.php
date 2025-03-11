@@ -41,7 +41,7 @@ class Ajax {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -50,7 +50,6 @@ class Ajax {
             'joinotify_active_license' => 'active_license_callback',
             'joinotify_alternative_activation_license' => 'alternative_active_license_callback',
             'joinotify_deactive_license' => 'deactive_license_callback',
-            'joinotify_get_templates_count' => 'get_templates_count_callback',
             'joinotify_import_workflow_templates' => 'import_workflow_templates_callback',
             'joinotify_create_workflow' => 'create_workflow_callback',
             'joinotify_load_workflow_data' => 'load_workflow_data_callback',
@@ -76,6 +75,7 @@ class Ajax {
             'joinotify_save_action_edition' => 'save_action_settings_callback',
             'joinotify_save_trigger_settings' => 'save_trigger_settings_callback',
             'joinotify_get_woo_products' => 'get_woo_products_callback',
+            'get_workflow_templates_callback' => 'joinotify_get_workflow_templates',
         );
 
         foreach ( $ajax_actions as $action => $callback ) {
@@ -344,54 +344,45 @@ class Ajax {
     /**
      * Get workflow templates on AJAX callback
      * 
-     * @since 1.0.0
+     * @since 1.2.0
      * @return void
      */
     public function get_workflow_templates_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_workflow_templates' ) {
-            $template_type = isset( $_POST['template'] ) ? sanitize_text_field( $_POST['template'] ) : '';
+            $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
         
-            if ( $template_type === 'template' ) {
-                $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
-        
-                if ( ! empty( $templates ) ) {
-                    $template_html = '';
+            if ( ! empty( $templates ) ) {
+                $template_html = '';
+
+                // iterate over the templates and generate HTML
+                foreach ( $templates as $filename => $content ) {
+                    $decoded_content = json_decode( $content, true );
     
-                    foreach ( $templates as $filename => $content ) {
-                        $decoded_content = json_decode( $content, true );
-        
-                        if ( $decoded_content !== null ) {
-                            $title = isset( $decoded_content['post']['title'] ) ? esc_html( $decoded_content['post']['title'] ) : esc_html( $filename );
-                            $category = isset( $decoded_content['post']['category'] ) ? esc_attr( $decoded_content['post']['category'] ) : '';
-        
-                            $template_html .= '<div class="template-item" data-category="' . $category . '">';
-                                $template_html .= '<div class="template-item-header mb-3">';
-                                    $template_html .= '<h4 class="title">' . $title . '</h4>';
-                                $template_html .= '</div>';
-                                $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center download-template" data-file="' . esc_attr( $filename ) . '">';
-                                    $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
-                                    $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
-                                $template_html .= '</button>';
+                    if ( $decoded_content !== null ) {
+                        $title = isset( $decoded_content['post']['title'] ) ? esc_html( $decoded_content['post']['title'] ) : esc_html( $filename );
+                        $category = isset( $decoded_content['post']['category'] ) ? esc_attr( $decoded_content['post']['category'] ) : '';
+    
+                        $template_html .= '<div class="template-item" data-category="' . $category . '">';
+                            $template_html .= '<div class="template-item-header mb-3">';
+                                $template_html .= '<h4 class="title">' . $title . '</h4>';
                             $template_html .= '</div>';
-                        }
+                            $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center download-template" data-file="' . esc_attr( $filename ) . '">';
+                                $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
+                                $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
+                            $template_html .= '</button>';
+                        $template_html .= '</div>';
                     }
-        
-                    $response = array(
-                        'status' => 'success',
-                        'template_html' => $template_html,
-                    );
-                } else {
-                    $response = array(
-                        'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Não foi possível carregar os modelos.', 'joinotify' ),
-                    );
                 }
+    
+                $response = array(
+                    'status' => 'success',
+                    'template_html' => $template_html,
+                );
             } else {
                 $response = array(
                     'status' => 'error',
                     'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Tipo de template inválido.', 'joinotify' ),
+                    'toast_body_title' => __( 'Não foi possível carregar os modelos.', 'joinotify' ),
                 );
             }
 
@@ -1170,47 +1161,6 @@ class Ajax {
 
         // send response for frontend
         wp_send_json( $response );
-    }
-
-
-    /**
-     * Get templates library on AJAX callback
-     * 
-     * @since 1.0.0
-     * @version 1.1.0
-     * @return void
-     */
-    public function get_templates_count_callback() {
-        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_templates_count' ) {
-            $template_type = isset( $_POST['template'] ) ? sanitize_text_field( $_POST['template'] ) : '';
-        
-            if ( $template_type === 'template' ) {
-                // Get the number of templates
-                $template_count = Workflow_Templates::get_templates_count( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
-        
-                if ( $template_count !== null ) {
-                    $response = array(
-                        'status' => 'success',
-                        'template_count' => $template_count,
-                    );
-                } else {
-                    $response = array(
-                        'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Não foi possível obter a quantidade de templates.', 'joinotify' ),
-                    );
-                }
-            } else {
-                $response = array(
-                    'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Tipo de template inválido.', 'joinotify' ),
-                );
-            }
-        
-            // send response for frontend
-            wp_send_json( $response );
-        }
     }
 
 

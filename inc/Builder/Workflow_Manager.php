@@ -13,6 +13,7 @@ defined('ABSPATH') || exit;
  * This class manages the workflow functions
  * 
  * @since 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Workflow_Manager {

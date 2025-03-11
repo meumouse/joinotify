@@ -32,7 +32,7 @@ defined('ABSPATH') || exit; ?>
                 <?php endforeach; ?>
             </div>
 
-            <a class="btn btn-link text-dark d-flex align-items-center justify-content-center mt-3 pt-4 w-fit m-auto" href="<?php echo esc_url( admin_url('admin.php?page=joinotify') ) ?>">
+            <a class="btn btn-link text-dark d-flex align-items-center justify-content-center mt-3 pt-4 w-fit m-auto" href="<?php echo esc_url( admin_url('admin.php?page=joinotify-workflows') ) ?>">
                 <svg class="icon icon-lg icon-dark me-2" xmlns="http://www.w3.org/2000/svg"><path d="M16 13v-2H7V8l-5 4 5 4v-3z"></path><path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path></svg>
                 <?php esc_html_e( 'Voltar para o painel', 'joinotify' ) ?>
             </a>
@@ -41,9 +41,9 @@ defined('ABSPATH') || exit; ?>
 
     <!-- CHOOSE TEMPLATE LIBRARY -->
     <div id="joinotify_template_library_container" class="choose-template-container slide-animation slide-right-animation">
-        <div class="mb-4">
+        <div class="mb-4 search-workflows-wrapper">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="<?php esc_attr_e( 'Pesquisar por fluxos', 'joinotify' ) ?>">
+                <input type="text" class="form-control search-workflows" placeholder="<?php esc_attr_e( 'Pesquisar por fluxos', 'joinotify' ) ?>">
                 
                 <select id="joinotify_filter_library_categories" class="form-select">
                     <option value="all"><?php esc_html_e( 'Todos os fluxos', 'joinotify' ) ?></option>    
@@ -55,8 +55,16 @@ defined('ABSPATH') || exit; ?>
             </div>
         </div>
 
-        <!-- DISPLAY JSON TEMPLATES ON RESPONSE REQUEST -->
-        <div class="joinotify-templates-group"></div>
+        <div class="joinotify-templates-group mb-5">
+            <?php for ( $i = 0; $i < get_option('joinotify_get_templates_count') ?? 0; $i++ ) : ?>
+                <div class="template-item placeholder-content"></div>
+            <?php endfor; ?>
+        </div>
+
+        <button type="button" class="return-to-start btn btn-link text-dark d-flex align-items-center p-0 fs-lg">
+            <svg class="icon icon-xg icon-dark me-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5303 5.46967C10.8232 5.76256 10.8232 6.23744 10.5303 6.53033L5.81066 11.25H20C20.4142 11.25 20.75 11.5858 20.75 12C20.75 12.4142 20.4142 12.75 20 12.75H5.81066L10.5303 17.4697C10.8232 17.7626 10.8232 18.2374 10.5303 18.5303C10.2374 18.8232 9.76256 18.8232 9.46967 18.5303L3.46967 12.5303C3.17678 12.2374 3.17678 11.7626 3.46967 11.4697L9.46967 5.46967C9.76256 5.17678 10.2374 5.17678 10.5303 5.46967Z"></path> </g></svg>
+            <?php esc_html_e( 'Voltar', 'joinotify' ) ?>
+        </button>
     </div>
 
     <!-- IMPORT TEMPLATE CONTAINER -->
