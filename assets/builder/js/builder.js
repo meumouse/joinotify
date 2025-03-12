@@ -62,6 +62,8 @@
 
 			this.addTrigger();
 			this.workflowSteps();
+			this.downloadTemplates();
+			this.filterWorkflowTemplates();
 			this.triggerTabs();
 			this.loadWorkflowData();
 			this.uploadWorkflowTemplates();
@@ -320,7 +322,7 @@
 		 * Upload templates
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		uploadWorkflowTemplates: function() {
 			// Add event handlers for dragover and dragleave
@@ -345,7 +347,7 @@
 			$('#upload_template_file').on('change', function(e) {
 				var file = e.target.files[0];
 
-				Builder.importWorkflow( file, $(this).parents('.dropzone-license') );
+				Builder.importWorkflow( file, $(this).parents('.dropzone') );
 			});
 		},
 
@@ -353,7 +355,7 @@
 		 * Import workflow file
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 * @param {string} file | File
 		 * @param {string} dropzone | Dropzone div
 		 * @returns void
@@ -364,11 +366,11 @@
 				var formData = new FormData();
 
 				formData.append('action', 'joinotify_import_workflow_templates');
-				formData.append('security', params.import_nonce);
+				formData.append('security', params.nonces.import_nonce);
 				formData.append('file', file);
 
 				if (filename) {
-					dropzone.children('.file-list').removeClass('d-none').text(filename);
+					dropzone.find('.file-list').removeClass('d-none').text(filename);
 				}
 
 				dropzone.addClass('file-processing');
@@ -381,6 +383,7 @@
 					var btn = $(this);
 					var button_state = Builder.keepButtonState(btn);
 
+					// send ajax request
 					$.ajax({
 						url: params.ajax_url,
 						type: 'POST',
@@ -414,7 +417,7 @@
 									dropzone.children('.drag-text').removeClass('d-none');
 									dropzone.children('.drag-and-drop-file').removeClass('d-none');
 									dropzone.children('.upload-license-key').removeClass('d-none');
-									dropzone.children('.file-list').addClass('d-none');
+									dropzone.find('.file-list').addClass('d-none');
 
 									// error response
 									Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
@@ -1712,7 +1715,7 @@
 		 * Export workflow file action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 * @package MeuMouse.com
 		 */
 		exportWorkflow: function() {
@@ -1728,7 +1731,7 @@
 					data: {
 						action: 'joinotify_export_workflow',
 						post_id: post_id,
-						security: params.export_nonce,
+						security: params.nonces.export_nonce,
 					},
 					dataType: 'json',
 					beforeSend: function() {
@@ -1850,6 +1853,114 @@
 
 				$('#joinotify_import_template_container').removeClass('active');
 				$('#joinotify_start_choose_container').addClass('active');
+			});
+		},
+
+		/**
+		 * Download workflow templates
+		 * 
+		 * @since 1.2.0
+		 */
+		downloadTemplates: function() {
+			$(document).on('click', '.download-template', function(e) {
+				e.preventDefault();
+			
+				let btn = $(this);
+				let button_state = Builder.keepButtonState(btn);
+				let file = btn.data('file');
+			
+				btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+			
+				// send ajax request
+				$.ajax({
+					url: params.ajax_url,
+					method: 'POST',
+					data: {
+						action: 'joinotify_download_workflow_template',
+						security: params.nonces.import_nonce,
+						file: file,
+					},
+					success: function(response) {
+						if (params.debug_mode) {
+							console.log(response);
+						}
+
+						btn.html(button_state.html);
+			
+						if (response.status === 'success') {
+							// disable all template item buttons
+							$('.download-template').each( function() {
+								$(this).prop('disabled', true);
+							});
+
+							Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+
+							// redirect to workflow builder
+							window.location.href = response.redirect;
+						} else {
+							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+						}
+					},
+					error: function(error) {
+						console.error(error);
+
+						btn.prop('disabled', false).html(button_state.html);
+					},
+				});
+			});
+		},
+
+		/**
+		 * Search and filter workflow templates
+		 * 
+		 * @since 1.2.0
+		 */
+		filterWorkflowTemplates: function() {
+			let search_input = $('#joinotify_search_workflows');
+			let category_select = $('#joinotify_filter_library_categories');
+		
+			/**
+			 * Filter templates based on search query and category
+			 * 
+			 * @since 1.2.0
+			 */
+			function filter_templates() {
+				let search_query = search_input.val().toLowerCase().trim();
+				let selected_category = category_select.val();
+				let visible_count = 0; // counter for visible templates
+		
+				$('.joinotify-templates-group .template-item').each( function() {
+					let template = $(this);
+					let template_title = template.find('.title').text().toLowerCase();
+					let template_category = template.data('category');
+		
+					let matches_search = search_query === '' || template_title.includes(search_query);
+					let matches_category = selected_category === 'all' || template_category === selected_category;
+		
+					if ( matches_search && matches_category ) {
+						template.removeClass('d-none');
+						visible_count++;
+					} else {
+						template.addClass('d-none');
+					}
+				});
+		
+				// remove previous message and add new if necessary
+				$('.no-templates-message').remove();
+				
+				if ( visible_count === 0 ) {
+					$('.joinotify-templates-group').append(`<div class="no-templates-message text-center text-muted mt-4">${params.i18n.not_templates_found}</div>`);
+				}
+			}
+		
+			// Filter on input search
+			search_input.on('input', function() {
+				filter_templates();
+			});
+		
+			// Filter on change category
+			category_select.on('change', function() {
+				filter_templates();
 			});
 		},
 	

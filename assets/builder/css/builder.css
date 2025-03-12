@@ -1655,9 +1655,9 @@ input.toggle-switch.status:checked {
 }
 
 .template-item {
-    width: 17rem;
+    width: 20rem;
     height: 10rem;
-    margin: 0.625rem;
+    margin: 1rem;
 }
 
 .template-item:not(.placeholder-content) {

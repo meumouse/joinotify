@@ -244,7 +244,7 @@ class Components {
 
                                     $html .= '<div class="modal-footer px-4">';
                                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $condition_data['data']['action'] ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
+                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $condition_data['id'] ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                                     $html .= '</div>';
                                 $html .= '</div>';
                             $html .= '</div>';

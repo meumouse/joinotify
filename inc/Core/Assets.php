@@ -173,8 +173,10 @@ class Assets {
 				'debug_mode' => JOINOTIFY_DEBUG_MODE,
 				'dev_mode' => JOINOTIFY_DEV_MODE,
 				'ajax_url' => admin_url('admin-ajax.php'),
-				'import_nonce' => wp_create_nonce('joinotify_import_workflow_nonce'),
-				'export_nonce' => wp_create_nonce('joinotify_export_workflow_nonce'),
+				'nonces' => array(
+					'import_nonce' => wp_create_nonce('joinotify_import_workflow_nonce'),
+					'export_nonce' => wp_create_nonce('joinotify_export_workflow_nonce'),
+				),
 				'i18n' => array(
 					'status_active' => esc_html__( 'Ativo', 'joinotify' ),
 					'confirm_exclude_action' => esc_html__( 'Tem certeza que deseja excluir esta ação?', 'joinotify' ),
@@ -183,6 +185,7 @@ class Assets {
 					'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
 					'copy_group_id' => esc_html__( 'ID copiado!', 'joinotify' ),
 					'remove_product_selectize' => esc_html__( 'Remover', 'joinotify' ),
+					'not_templates_found' => esc_html__( 'Nenhum fluxo encontrado.', 'joinotify' ),
 					'emoji_picker' => array(
 						'placeholder' => esc_html__( 'Pesquisar', 'joinotify' ),
 						'button_title' => esc_html__( 'Use a tecla TAB para inserir um emoji rapidamente', 'joinotify' ),

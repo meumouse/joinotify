@@ -75,7 +75,8 @@ class Ajax {
             'joinotify_save_action_edition' => 'save_action_settings_callback',
             'joinotify_save_trigger_settings' => 'save_trigger_settings_callback',
             'joinotify_get_woo_products' => 'get_woo_products_callback',
-            'get_workflow_templates_callback' => 'joinotify_get_workflow_templates',
+            'joinotify_get_workflow_templates' => 'get_workflow_templates_callback',
+            'joinotify_download_workflow_template' => 'download_workflow_template_callback',
         );
 
         foreach ( $ajax_actions as $action => $callback ) {
@@ -350,7 +351,7 @@ class Ajax {
     public function get_workflow_templates_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_workflow_templates' ) {
             $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
-        
+
             if ( ! empty( $templates ) ) {
                 $template_html = '';
 
@@ -366,7 +367,7 @@ class Ajax {
                             $template_html .= '<div class="template-item-header mb-3">';
                                 $template_html .= '<h4 class="title">' . $title . '</h4>';
                             $template_html .= '</div>';
-                            $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center download-template" data-file="' . esc_attr( $filename ) . '">';
+                            $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center download-template" data-file="' . esc_attr( $filename ) . '">';
                                 $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
                                 $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
                             $template_html .= '</button>';
@@ -1992,4 +1993,73 @@ class Ajax {
             wp_send_json( $results );
 		}
 	}
+
+
+    /**
+     * Import workflow template from repository via AJAX
+     *
+     * @since 1.2.0
+     * @return void
+     */
+    public function download_workflow_template_callback() {
+        check_ajax_referer('joinotify_import_workflow_nonce', 'security');
+
+        if ( ! isset( $_POST['file'] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao importar', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'Nenhum arquivo foi especificado.', 'joinotify' ),
+            ));
+        }
+
+        $filename = sanitize_text_field( $_POST['file'] );
+        $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
+
+        if ( ! isset( $templates[ $filename ] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao importar', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O template selecionado não foi encontrado.', 'joinotify' ),
+            ));
+        }
+
+        $file_contents = $templates[ $filename ];
+        $workflow_data = json_decode( $file_contents, true );
+
+        if ( ! $workflow_data || ! isset( $workflow_data['post'] ) || ! isset( $workflow_data['workflow_content'] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Arquivo inválido', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O JSON do modelo não é válido.', 'joinotify' ),
+            ));
+        }
+
+        $post_data = array(
+            'post_title' => sanitize_text_field( $workflow_data['post']['title'] ),
+            'post_status' => 'draft',
+            'post_type' => 'joinotify-workflow',
+            'post_content' => '',
+        );
+
+        $post_id = wp_insert_post( $post_data );
+
+        if ( is_wp_error( $post_id ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao criar fluxo', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'Ocorreu um erro ao criar o fluxo.', 'joinotify' ),
+            ));
+        }
+
+        update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_data['workflow_content'] );
+
+        $redirect_url = admin_url("admin.php?page=joinotify-workflows-builder&id={$post_id}");
+
+        wp_send_json( array(
+            'status' => 'success',
+            'redirect' => $redirect_url,
+            'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
+            'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+        ));
+    }
 }

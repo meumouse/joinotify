@@ -42,8 +42,11 @@ defined('ABSPATH') || exit; ?>
     <!-- CHOOSE TEMPLATE LIBRARY -->
     <div id="joinotify_template_library_container" class="choose-template-container slide-animation slide-right-animation">
         <div class="mb-4 search-workflows-wrapper">
+            <h3 class="title d-flex align-items-center justify-content-center"><?php esc_html_e( 'Comece a automatizar seu site a partir de um modelo', 'joinotify' ) ?></h3>
+            <span class="d-flex align-items-center justify-content-center mb-5 text-muted"><?php esc_html_e( 'Procure por categorias ou nomes.', 'joinotify' ) ?></span>
+
             <div class="input-group">
-                <input type="text" class="form-control search-workflows" placeholder="<?php esc_attr_e( 'Pesquisar por fluxos', 'joinotify' ) ?>">
+                <input id="joinotify_search_workflows" type="text" class="form-control" placeholder="<?php esc_attr_e( 'Pesquisar por fluxos', 'joinotify' ) ?>">
                 
                 <select id="joinotify_filter_library_categories" class="form-select">
                     <option value="all"><?php esc_html_e( 'Todos os fluxos', 'joinotify' ) ?></option>    
