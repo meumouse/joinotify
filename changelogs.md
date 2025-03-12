@@ -4,7 +4,7 @@ Versão 1.2.0 (12/03/2025)
 * Recurso adicionado: Biblioteca "giggsey/libphonenumber-for-php" para formatação e validação de telefones em formato internacional
 * Recurso adicionado: Biblioteca "Selectize" para multi seleção de elementos
 * Recurso removido: Variável de texto {{ post_id }}
-* Recurso adicionado: Condições "Método de pagamento" e "Método de entrega"
+* Recurso adicionado: Condições "Método de pagamento", "Método de entrega" e "Pedido pago"
 * Recurso adicionado: Acionamentos: "Pagamento processado pelo PayPal"
 * Recurso adicionado: Classe "Routines" para execução de rotinas; E adicionado rotina de verificação de conexão do telefones e atualizações
 

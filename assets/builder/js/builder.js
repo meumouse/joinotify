@@ -118,6 +118,7 @@
 				Builder.codeEditor();
 				Builder.codePreview();
 				Builder.correctTriggerSettingsModal();
+				Builder.adjustHeightCondition();
 				Builder.validateInputCurrency();
 				Builder.emojiPicker();
 				Builder.searchWooProducts();
@@ -755,6 +756,10 @@
 
 			// Select trigger event
 			$(document).on('click', '.trigger-item', function() {
+				if ( $(this).hasClass('require-plugins') ) {
+					return;
+				}
+
 				$('.trigger-item').removeClass('active');
 				$(this).toggleClass('active');
 

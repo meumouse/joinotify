@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Abstract base class for integrations
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 abstract class Integrations_Base {
@@ -111,6 +111,7 @@ abstract class Integrations_Base {
      * Render the trigger content
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param string $slug | Slug da integração (eg: 'wordpress')
      * @return void
      */
@@ -118,12 +119,20 @@ abstract class Integrations_Base {
         if ( Admin::get_setting("enable_{$slug}_integration") === 'yes' ) : ?>
             <div id="<?php echo esc_attr( $slug ); ?>" class="nav-content triggers-group">
                 <?php foreach ( Triggers::get_triggers_by_context( $slug ) as $trigger ) : ?>
-                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?>" data-context="<?php echo esc_attr( $slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
+                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?> <?php echo esc_attr( isset( $trigger['require_plugins'] ) ? 'require-plugins' : '' ); ?>" data-context="<?php echo esc_attr( $slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
                         <h4 class="title"><?php echo esc_html( $trigger['title'] ); ?></h4>
                         <span class="description"><?php echo esc_html( $trigger['description'] ); ?></span>
 
                         <?php if ( isset( $trigger['class'] ) && $trigger['class'] === 'locked' ) : ?>
                             <span class="fs-sm mt-3"><?php esc_html_e( 'Este recurso será liberado em breve', 'joinotify' ); ?></span>
+                        <?php endif; ?>
+
+                        <?php if ( isset( $trigger['require_plugins'] ) && $trigger['require_plugins'] === true ) : ?>
+                            <span class="fs-sm my-3"><?php esc_html_e( 'Este acionamento depende de um plugin', 'joinotify' ); ?></span>
+
+                            <?php foreach ( $trigger['plugins'] as $plugin => $item ) : ?>
+                                <button class="btn btn-sm btn-outline-secondary install-required-plugin mb-2" data-download-url="<?php echo esc_attr( $item['download_url'] ) ?>" data-required-plugin="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Instalar plugin', 'joinotify' ) ?></button>
+                            <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>

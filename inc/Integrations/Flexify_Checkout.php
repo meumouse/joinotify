@@ -49,17 +49,25 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout triggers
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param array $triggers | Current triggers
      * @return array
      */
     public function add_triggers( $triggers ) {
         $triggers['flexify_checkout'] = array(
             array(
-                'data_trigger' => 'flexify_checkout_cart_abandonment',
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
                 'title' => esc_html__( 'Abandono do carrinho', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário abandona o carrinho.', 'joinotify' ),
                 'require_settings' => false,
-                'class' => 'locked',
+                'require_plugins' => true,
+                'plugins' => array(
+                    array(
+                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
+                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
+                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
+                    ),
+                ),
             ),
             array(
                 'data_trigger' => 'flexify_checkout_entry_step_1',

@@ -3,6 +3,14 @@
 use MeuMouse\Joinotify\Builder\Workflow_Manager;
 use MeuMouse\Joinotify\Builder\Utils;
 
+/**
+ * This template is displayed on first screen from Joinotify builder
+ * 
+ * @since 1.0.0
+ * @version 1.2.0
+ * @package MeuMouse.com
+ */
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 

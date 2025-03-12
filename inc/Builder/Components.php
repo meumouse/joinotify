@@ -418,7 +418,7 @@ class Components {
                 $html .= '<label class="form-label" for="woocommerce_order_status">'. esc_html__( 'Status do pedido', 'joinotify' ) .'</label>';
                 
                 $html .= '<select id="woocommerce_order_status" class="form-select set-trigger-settings order-status">';
-                    $html .= '<option value="none">' . esc_html__( 'Selecione um status', 'joinotify' ) . '</option>';
+                    $html .= '<option value="none">' . esc_html__( 'Qualquer status', 'joinotify' ) . '</option>';
                     
                     foreach ( wc_get_order_statuses() as $status_key => $status_label ) {
                         $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';

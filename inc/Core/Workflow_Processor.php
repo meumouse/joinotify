@@ -14,7 +14,7 @@ use WC_Order;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Workflow_Processor {
@@ -23,7 +23,7 @@ class Workflow_Processor {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -61,6 +61,26 @@ class Workflow_Processor {
             
             // when a order has status changed
             add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 3 );
+
+            if ( class_exists('WC_Subscriptions') ) {
+                // fire when a subscription is created
+                add_action( 'woocommerce_checkout_subscription_created', array( $this, 'process_workflow_subscription_created' ), 10, 3 );
+
+                // fire when a subscription status is active
+                add_action( 'woocommerce_subscription_status_active', array( $this, 'process_workflow_subscription_status_active' ), 10, 3 );
+
+                // fire when a subscription payment is complete
+                add_action( 'woocommerce_subscription_payment_complete', array( $this, 'process_workflow_subscription_payment_complete', 10, 1 ) );
+
+                // fire when a subscription payment is failed
+                add_action( 'woocommerce_subscription_payment_failed', array( $this, 'process_workflow_subscription_payment_failed', 10, 2 ) );
+
+                // fire when a subscription status is expired
+                add_action( 'woocommerce_subscription_status_expired', array(  $this, 'process_workflow_subscription_status_expired' ), 10, 1 );
+
+                // fire when a subscription status is cancelled
+                add_action( 'woocommerce_subscription_status_cancelled', array( $this, 'process_workflow_subscription_status_cancelled' ), 10, 1 );
+            }
         }
 
         // fire hook if Elementor is active
@@ -110,6 +130,7 @@ class Workflow_Processor {
      * Processs workflow content on user register
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param int $user_id | User ID
      * @param array $userdata | User data
      * @return void
@@ -123,7 +144,7 @@ class Workflow_Processor {
             'user_data' => $userdata,
         );
 
-        self::process_workflows( 'user_register', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -131,6 +152,7 @@ class Workflow_Processor {
      * Processs workflow content on user login
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param string $user_login | User login
      * @param object $user | User object
      * @return void
@@ -144,7 +166,7 @@ class Workflow_Processor {
             'user_data' => $user,
         );
 
-        self::process_workflows( 'user_login', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -152,6 +174,7 @@ class Workflow_Processor {
      * Processs workflow content on password reset
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param object $user | User object
      * @param string $new_pass | New password
      * @return void
@@ -165,7 +188,7 @@ class Workflow_Processor {
             'user_data' => $user,
         );
 
-        self::process_workflows( 'password_reset', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -173,6 +196,7 @@ class Workflow_Processor {
      * Process workflow content on post status changed
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param string $new_status | New post status
      * @param string $old_status | Old post status
      * @param object $post | Post object
@@ -189,7 +213,7 @@ class Workflow_Processor {
             'old_post_status' => $old_status,
         );
 
-        self::process_workflows( 'change_post_status', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -197,7 +221,7 @@ class Workflow_Processor {
      * Process workflow on receive new order on WooCommerce
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @return void
@@ -211,7 +235,7 @@ class Workflow_Processor {
             'order_data' => $order,
         );
 
-        self::process_workflows( 'woocommerce_new_order', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -219,7 +243,7 @@ class Workflow_Processor {
      * Process workflow when order status is processing
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param int $order_id  | Order ID
      * @param array $posted_data | User submitted checkout data
      * @param object $order | Order object
@@ -235,7 +259,7 @@ class Workflow_Processor {
             'order_data' => $order,
         );
 
-        self::process_workflows( 'woocommerce_checkout_order_processed', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -243,7 +267,7 @@ class Workflow_Processor {
      * Process workflow when order status is complete
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition
@@ -259,7 +283,7 @@ class Workflow_Processor {
             'status_transition' => $status_transition,
         );
 
-        self::process_workflows( 'woocommerce_order_status_completed', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -267,7 +291,7 @@ class Workflow_Processor {
      * Process workflow when order is fully refunded
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param int $order_id  | Order ID
      * @param int $refund_id | Refund ID
      * @return void
@@ -281,7 +305,7 @@ class Workflow_Processor {
             'refund_id' => $refund_id,
         );
 
-        self::process_workflows( 'woocommerce_order_fully_refunded', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -289,7 +313,7 @@ class Workflow_Processor {
      * Process workflow when order is partially refunded
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param bool $is_partially_refunded | Is partially refunded
      * @param int $order_id  | Order ID
      * @return void
@@ -303,7 +327,7 @@ class Workflow_Processor {
             'order_id' => $order_id,
         );
 
-        self::process_workflows( 'woocommerce_order_partially_refunded', $payload );
+        self::process_workflows( $payload );
     }
     
 
@@ -311,7 +335,7 @@ class Workflow_Processor {
      * Process workflow when order has status changed
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param int $order_id  | Order ID
      * @param string $old_status | Old status
      * @param string $new_status | New status
@@ -327,7 +351,7 @@ class Workflow_Processor {
             'new_status' => $new_status,
         );
 
-        self::process_workflows( 'woocommerce_order_status_changed', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -335,6 +359,7 @@ class Workflow_Processor {
      * Process workflow content on Elementor form submission
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param object $record | The record submitted
      * @return void
      */
@@ -365,7 +390,7 @@ class Workflow_Processor {
             'handler' => $handler,
         );
     
-        self::process_workflows( 'elementor_pro/forms/new_record', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -374,11 +399,11 @@ class Workflow_Processor {
      * 
      * @since 1.0.0
      * @version 1.2.0
-     * @param string $hook | Hook for call actions
      * @param array $payload | Payload data
      * @return void
      */
-    public static function process_workflows( $hook, $payload ) {
+    public static function process_workflows( $payload ) {
+        $hook = $payload['hook'];
         $workflows = self::get_workflows_by_hook( $hook );
 
         /**
@@ -823,6 +848,7 @@ class Workflow_Processor {
      * This will fire at the very end of a (successful) form entry on WPForms
      *
      * @since 1.1.0
+     * @version 1.2.0
      * @param array $fields | Sanitized entry field values/properties
      * @param array $entry | Original $_POST global
      * @param array $form_data | Form data and settings
@@ -843,7 +869,7 @@ class Workflow_Processor {
             'entry_id' => $entry_id,
         );
 
-        self::process_workflows( 'wpforms_process_complete', $payload );
+        self::process_workflows( $payload );
     }
 
 
@@ -851,6 +877,7 @@ class Workflow_Processor {
      * Fires when PayPal payment status notifies the site
      *
      * @since 1.1.0
+     * @version 1.2.0
      * @param array $fields | Sanitized entry field values/properties
      * @param array $form_data | Form data and settings
      * @param int $payment_id | PayPal Payment ID
@@ -876,6 +903,136 @@ class Workflow_Processor {
             'entry_id' => $entry_id,
         );
 
-        self::process_workflows( 'wpforms_paypal_standard_process_complete', $payload );
+        self::process_workflows( $payload );
+    }
+
+    
+    /**
+     * Process workflow when subscription is created
+     * 
+     * @since 1.2.0
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @param object|WC_Order $order | A WC_Order instance representing the order for which subscriptions have been created
+     * @param object|WC_Cart $recurring_cart | A WC_Cart instance representing the cart which stores the data used for creating this subscription
+     */
+    public function process_workflow_subscription_created( $subscription, $order, $recurring_cart ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_checkout_subscription_created',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+            'order' => $order,
+            'order_id' => $order->get_id(),
+            'recurring_cart' => $recurring_cart,
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when subscription is activated
+     * 
+     * @since 1.2.0
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @param string $new_status | The new status of the subscription
+     * @param string $old_status | The old status of the subscription
+     * @return void
+     */
+    public function process_workflow_subscription_status_active( $subscription, $new_status, $old_status ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_status_active',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+            'new_status' => $new_status,
+            'old_status' => $old_status,
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when subscription payment is complete
+     * 
+     * @since 1.2.0
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @return void
+     */
+    public function process_workflow_subscription_payment_complete( $subscription ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_payment_complete',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when subscription payment is failed
+     * 
+     * @since 1.2.0
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @param string $new_status | The new status of the subscription
+     * @return void
+     */
+    public function process_workflow_subscription_payment_failed( $subscription, $new_status ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_payment_failed',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+            'new_status' => $new_status,
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when subscription status is expired
+     * 
+     * @since 1.2.0
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @return void
+     */
+    public function process_workflow_subscription_status_expired( $subscription ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_status_expired',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when subscription status is cancelled
+     * 
+     * @since 1.2.0
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @return void
+     */
+    public function process_workflow_subscription_status_cancelled( $subscription ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_status_cancelled',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+        );
+
+        self::process_workflows( $payload );
     }
 }
