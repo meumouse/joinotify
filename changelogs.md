@@ -1,3 +1,4 @@
+
 Versão 1.2.0 (12/03/2025)
 * Correção de bugs
 * Otimizações
