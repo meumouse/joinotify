@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
@@ -732,6 +732,7 @@ class Woocommerce extends Integrations_Base {
      * Add conditions for WooCommerce triggers
      * 
      * @since 1.2.0
+     * @version 1.2.2
      * @param array $conditions | Current conditions
      * @return array
      */

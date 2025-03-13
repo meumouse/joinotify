@@ -1198,9 +1198,11 @@
 		 * Remove action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 */
 		removeAction: function() {
+			let removing_actions = [];
+
 			$(document).on('click', '.exclude-action', function(e) {
 				e.preventDefault();
 
@@ -1210,7 +1212,16 @@
 				}
 
 				var action = $(this);
+				let action_id = action.data('action-id');
+        		let action_element = $('.funnel-action-item[data-action-id="' + action_id + '"]');
 
+				// add action to removal list
+				removing_actions.push(action_id);
+
+				// add classes to keep animation
+				action_element.addClass('placeholder-wave removing-action');
+
+				// send ajax request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -1231,12 +1242,17 @@
 						try {
 							if (response.status === 'success') {
 								if (response.has_action) {
-										$('#joinotify_builder_run_test').prop('disabled', false);
+									$('#joinotify_builder_run_test').prop('disabled', false);
 								} else {
-										$('#joinotify_builder_run_test').prop('disabled', true);
+									$('#joinotify_builder_run_test').prop('disabled', true);
 								}
 
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+
+								// add add on actions after request response
+								removing_actions.forEach(id => {
+									$('.funnel-action-item[data-action-id="' + id + '"]').addClass('placeholder-wave removing-action');
+								});
 
 								// fire updated workflow event
 								$(document).trigger('updatedWorkflow');
@@ -1250,9 +1266,15 @@
 						}
 					},
 					complete: function() {
+						// remove actions from array after confirmation of removal
+						removing_actions = removing_actions.filter(id => id !== action_id);
+		
+						// remove classes after confirmation of removal
+						if ( ! removing_actions.includes(action_id) ) {
+							action_element.removeClass('placeholder-wave removing-action');
+						}
+		
 						action.prop('disabled', false);
-						action.closest('.funnel-action-item').removeClass('placeholder-wave removing-action');
-
 						Builder.adjustHeightCondition();
 					},
 				});
