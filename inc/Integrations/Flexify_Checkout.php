@@ -4,7 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
-use MeuMouse\Joinotify\Core\Workflow_Processor;
+use MeuMouse\Joinotify\Core\Workflow_Background_Process;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -308,7 +308,14 @@ class Flexify_Checkout extends Integrations_Base {
             'cart_id' => $cart_id,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -328,7 +335,14 @@ class Flexify_Checkout extends Integrations_Base {
             'cart_id' => $cart_id,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -350,7 +364,14 @@ class Flexify_Checkout extends Integrations_Base {
             'order_id' => $order_id,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -370,6 +391,13 @@ class Flexify_Checkout extends Integrations_Base {
             'cart_id' => $cart_id,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 }

@@ -4,7 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
-use MeuMouse\Joinotify\Core\Workflow_Processor;
+use MeuMouse\Joinotify\Core\Workflow_Background_Process;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -261,7 +261,14 @@ class Wordpress extends Integrations_Base {
             'user_data' => $userdata,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -283,7 +290,14 @@ class Wordpress extends Integrations_Base {
             'user_data' => $user,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -305,7 +319,14 @@ class Wordpress extends Integrations_Base {
             'user_data' => $user,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -330,6 +351,13 @@ class Wordpress extends Integrations_Base {
             'old_post_status' => $old_status,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 }

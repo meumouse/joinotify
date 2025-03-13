@@ -10,6 +10,9 @@ use MeuMouse\Joinotify\Integrations\Woocommerce;
 
 use WC_Order;
 
+// Exit if accessed directly.
+defined('ABSPATH') || exit;
+
 /**
  * Process workflow content and send messages on fire hooks
  * 

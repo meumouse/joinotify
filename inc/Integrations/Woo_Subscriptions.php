@@ -3,7 +3,7 @@
 namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Core\Workflow_Processor;
+use MeuMouse\Joinotify\Core\Workflow_Background_Process;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -128,7 +128,14 @@ class Woo_Subscriptions extends Integrations_Base {
             'recurring_cart' => $recurring_cart,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -153,7 +160,14 @@ class Woo_Subscriptions extends Integrations_Base {
             'old_status' => $old_status,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -174,7 +188,14 @@ class Woo_Subscriptions extends Integrations_Base {
             'subscription_id' => $subscription->get_id(),
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -197,7 +218,14 @@ class Woo_Subscriptions extends Integrations_Base {
             'new_status' => $new_status,
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -218,7 +246,14 @@ class Woo_Subscriptions extends Integrations_Base {
             'subscription_id' => $subscription->get_id(),
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 
 
@@ -239,6 +274,13 @@ class Woo_Subscriptions extends Integrations_Base {
             'subscription_id' => $subscription->get_id(),
         );
 
-        Workflow_Processor::process_workflows( $payload );
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 }
