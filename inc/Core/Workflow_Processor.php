@@ -574,9 +574,14 @@ class Workflow_Processor {
      * @return bool
      */
     public static function handle_action( $action, $post_id, $event_data ) {
-        $action_data = $action['data'] ?? [];
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Handling action: " . print_r( $action, true ) );
+        }
+
+        $action_data = $action['data'] ?? array();
     
         if ( empty( $action_data['action'] ) ) {
+            error_log( "Action type is empty, skipping." );
             return false;
         }
     
@@ -600,7 +605,12 @@ class Workflow_Processor {
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
         ));
     
-        return isset( $actions[ $action_data['action'] ] ) ? $actions[ $action_data['action'] ]() : false;
+        if ( ! isset( $actions[ $action_data['action'] ] ) ) {
+            error_log( "Action not found in the list: " . $action_data['action'] );
+            return false;
+        }
+    
+        return $actions[ $action_data['action'] ]();
     }
     
     
@@ -615,6 +625,12 @@ class Workflow_Processor {
      * @return bool Returns true if the action is processed successfully
      */
     public static function process_condition_action( $action, $post_id, $payload ) {
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Processing condition action: " . print_r( $action, true ) );
+            error_log( "Post ID: " . print_r( $post_id, true ) );
+            error_log( "Payload: " . print_r( $payload, true ) );
+        }
+
         $action_data = $action['data'] ?? array();
 
         // Ensure that condition content exists
@@ -642,7 +658,6 @@ class Workflow_Processor {
         $next_actions = $condition_met ? ( $action['children']['action_true'] ?? array() ) : ( $action['children']['action_false'] ?? array() );
 
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Processing condition action: " . print_r( $action, true ) );
             error_log( "Condition content: " . print_r( $action_data['condition_content'], true ) );
             error_log( "Condition type: " . print_r( $condition_type, true ) );
             error_log( "Condition value: " . print_r( $condition_value, true ) );

@@ -1399,25 +1399,33 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function run_workflow_test_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_run_workflow_test' ) {
             $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
     
+            // check post type
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
                 $receiver = Admin::get_setting('test_number_phone');
-    
+
                 if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
                     $all_actions = Actions::extract_all_actions( $workflow_content );
                     
+                    // iterate for each action
                     foreach ( $all_actions as $item ) {
                         if ( isset( $item['type'] ) && $item['type'] === 'action' ) {
+                            // whatsapp message text
                             if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_text' ) {
+                                $payload = array(
+                                    'integration' => $workflow_content[0]['data']['context'],
+                                    'trigger' => $workflow_content[0]['data']['trigger'],
+                                );
+
                                 $sender = $item['data']['sender'];
-                                $message = Placeholders::replace_placeholders( $item['data']['message'], 0, 'sandbox' );
+                                $message = Placeholders::replace_placeholders( $item['data']['message'], $payload, 'sandbox' );
                                 $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
     
                                 if ( 201 !== $send_message_text ) {
@@ -1429,6 +1437,7 @@ class Ajax {
                                 }
                             }
     
+                            // whatsapp message media
                             if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_media' ) {
                                 $sender = $item['data']['sender'];
                                 $media_type = $item['data']['media_type'];

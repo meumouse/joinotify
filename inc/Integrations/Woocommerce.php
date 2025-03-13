@@ -140,7 +140,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.2
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -260,32 +260,32 @@ class Woocommerce extends Integrations_Base {
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total() : '',
-                    'sandbox' => wc_price( 150 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 150 ) ),
                 ),
             ),
             '{{ wc_total_discount }}' => array(
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total de desconto do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total_discount() : '',
-                    'sandbox' => wc_price( 20 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total_discount() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 20 ) ),
                 ),
             ),
             '{{ wc_total_tax }}' => array(
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total de impostos do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total_tax() : '',
-                    'sandbox' => wc_price( 15 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total_tax() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 15 ) ),
                 ),
             ),
             '{{ wc_total_refunded }}' => array(
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total reembolsado do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total_refunded() : '',
-                    'sandbox' => wc_price( 10 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total_refunded() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 10 ) ),
                 ),
             ),
             '{{ wc_coupon_codes }}' => array(
@@ -782,7 +782,7 @@ class Woocommerce extends Integrations_Base {
     
         // Define triggers and their associated conditions
         $woocommerce_conditions = array(
-            'woocommerce_new_order' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_new_order' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
             'woocommerce_checkout_order_processed' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
             'woocommerce_order_status_completed' => array( 'customer_email', 'order_total', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta' ),
             'woocommerce_order_status_changed' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),

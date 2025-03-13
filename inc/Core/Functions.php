@@ -131,3 +131,17 @@ function joinotify_prepare_message( $message, $payload = array() ) {
 
 	return $message;
 }
+
+
+/**
+ * Sanitize HTML content to plain text
+ *
+ * Removes HTML tags and decodes HTML entities, returning a clean text output.
+ *
+ * @since 1.2.2
+ * @param string $content | Input text with potential HTML formatting
+ * @return string Cleaned plain text
+ */
+function joinotify_format_plain_text( $content ) {
+	return html_entity_decode( strip_tags( $content ) );
+} 

@@ -1,3 +1,9 @@
+Versão 1.2.2 (14/03/2025)
+* Correção de bugs:
+     - Variáveis de texto em acionamentos para WooCommerce em modo testes não estavam sendo substituídas corretamente.
+* Otimizações
+* Recurso modificado: Variáveis de texto {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, agora retornam valores com símbolo de moeda formatados.
+
 Versão 1.2.0 (12/03/2025)
 * Correção de bugs
 * Otimizações
