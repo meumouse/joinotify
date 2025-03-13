@@ -7,6 +7,7 @@ Versão 1.2.0 (12/03/2025)
 * Recurso adicionado: Condições "Método de pagamento", "Método de entrega" e "Pedido pago"
 * Recurso adicionado: Acionamentos: "Pagamento processado pelo PayPal"
 * Recurso adicionado: Classe "Routines" para execução de rotinas; E adicionado rotina de verificação de conexão do telefones e atualizações
+* Recurso adicionado: Variáveis de texto {{ fc_inter_pix_copia_cola }}, {{ fc_inter_pix_expiration_time }}, {{ fc_inter_bank_slip_url }} e {{ fcrc_recovery_link }}
 
 Versão 1.1.2 (24/02/2025)
 * Correção de bugs
