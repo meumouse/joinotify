@@ -115,7 +115,7 @@ class Conditions {
             'items_in_cart'         => $context instanceof \WC_Cart ? count( $context->get_cart() ) : null,
             'payment_method'        => $context instanceof \WC_Order ? $context->get_payment_method() : null,
             'shipping_method'       => $context instanceof \WC_Order ? $context->get_shipping_method() : null,
-            'field_value'           => isset( $context->fields ) ? $context->fields : null,
+        //    'field_value'           => isset( $context->fields ) ? $context->fields : null,
             'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
         ));
     

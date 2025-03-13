@@ -350,6 +350,7 @@ class Ajax {
      * Get workflow templates on AJAX callback
      * 
      * @since 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function get_workflow_templates_callback() {
@@ -387,7 +388,7 @@ class Ajax {
                 $response = array(
                     'status' => 'error',
                     'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível carregar os modelos.', 'joinotify' ),
+                    'toast_body_title' => __( 'Nenhum modelo de fluxo disponível. Volte mais tarde.', 'joinotify' ),
                 );
             }
 
@@ -480,6 +481,7 @@ class Ajax {
             'redirect' => $redirect_url,
             'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
             'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+            'dropfile_message' => esc_html__('Arquivo enviado com sucesso!', 'joinotify' ),
         ));
     }
 

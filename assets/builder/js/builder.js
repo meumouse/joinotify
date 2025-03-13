@@ -360,7 +360,7 @@
 		 * Import workflow file
 		 * 
 		 * @since 1.0.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 * @param {string} file | File
 		 * @param {string} dropzone | Dropzone div
 		 * @returns void
@@ -405,6 +405,7 @@
 
 							try {
 								if (response.status === 'success') {
+									btn.prop('disabled', true);
 									dropzone.addClass('file-uploaded').removeClass('file-processing');
 									dropzone.children('.spinner-border').remove();
 									dropzone.append('<div class="upload-notice d-flex flex-column align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#22c55e" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#22c55e" d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg><span>' + response.dropfile_message + '</span></div>');

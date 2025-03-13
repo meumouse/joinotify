@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with Elementor
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Elementor extends Integrations_Base {
@@ -21,7 +22,7 @@ class Elementor extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
@@ -40,6 +41,12 @@ class Elementor extends Integrations_Base {
 
             // add conditions
             add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+
+            // fire hook if Elementor is active
+            if ( Admin::get_setting('enable_elementor_integration') === 'yes' ) {
+                // when a Elementor form receive a new record
+                add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
+            }
         }
     }
 
@@ -136,5 +143,44 @@ class Elementor extends Integrations_Base {
         );
 
         return array_merge( $conditions, $elementor_conditions );
+    }
+
+
+    /**
+     * Process workflow content on Elementor form submission
+     * 
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param object $record | The record submitted
+     * @return void
+     */
+    public function process_workflow_elementor_form( $record, $handler ) {
+        // get form records
+        $form_settings = $record->get('form_settings');
+        $form_id = isset( $form_settings['form_id'] ) ? $form_settings['form_id'] : '';
+
+        // get form fields
+        $raw_fields = $record->get('fields');
+        $fields = array();
+
+        foreach ( $raw_fields as $id => $field ) {
+            $fields[$id] = $field['value'];
+        }
+
+        if ( JOINOTIFY_DEBUG_MODE ) {
+            Logger::register_log( 'Function process_workflow_elementor_form() fired' );
+        }
+    
+        $payload = array(
+            'integration' => 'elementor',
+            'hook' => 'elementor_pro/forms/new_record',
+            'type' => 'trigger',
+            'id' => $form_id,
+            'fields' => $fields,
+            'record' => $record,
+            'handler' => $handler,
+        );
+    
+        Workflow_Processor::process_workflows( $payload );
     }
 }

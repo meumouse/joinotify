@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
  * Class for initialize classes
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Init {
@@ -32,7 +32,7 @@ class Init {
      * Instance classes after load Composer
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public static function instance_classes() {
@@ -57,7 +57,6 @@ class Init {
             '\MeuMouse\Joinotify\Integrations\Wpforms',
             '\MeuMouse\Joinotify\Validations\Media_Types',
             '\MeuMouse\Joinotify\API\Controller',
-            '\MeuMouse\Joinotify\Core\Workflow_Processor',
         	'\MeuMouse\Joinotify\Core\Updater',
         ));
 

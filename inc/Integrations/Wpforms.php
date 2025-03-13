@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with WPForms plugin
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Wpforms extends Integrations_Base {
@@ -21,7 +22,7 @@ class Wpforms extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
@@ -41,6 +42,15 @@ class Wpforms extends Integrations_Base {
 
             // add conditions
             add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+
+            // fire hooks if WPForms is active
+            if ( Admin::get_setting('enable_wpforms_integration') === 'yes' ) {
+                // when a WPForms form receive a new record
+                add_action( 'wpforms_process_complete', array( $this, 'process_workflow_wpforms_form' ), 10, 4 );
+
+                // when a WPForms form paypal payment is fired
+                add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
+            }
         }
     }
 
@@ -192,5 +202,68 @@ class Wpforms extends Integrations_Base {
         }
     
         return array_merge( $conditions, $formatted_conditions );
+    }
+
+
+    /**
+     * This will fire at the very end of a (successful) form entry on WPForms
+     *
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param array $fields | Sanitized entry field values/properties
+     * @param array $entry | Original $_POST global
+     * @param array $form_data | Form data and settings
+     * @param int $entry_id | Entry ID Will return 0 if entry storage is disabled or using WPForms Lite
+     * @return void
+     * 
+     * @link  https://wpforms.com/developers/wpforms_process_complete/
+     */
+    public function process_workflow_wpforms_form( $fields, $entry, $form_data, $entry_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'wpforms_process_complete',
+            'integration' => 'wpforms',
+            'id' => absint( $form_data['id'] ),
+            'fields' => $fields,
+            'entry' => $entry,
+            'form_data' => $form_data,
+            'entry_id' => $entry_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Fires when PayPal payment status notifies the site
+     *
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param array $fields | Sanitized entry field values/properties
+     * @param array $form_data | Form data and settings
+     * @param int $payment_id | PayPal Payment ID
+     * @param array $data | PayPal Web Accept Data
+     * @return void
+     * 
+     * @link  https://wpforms.com/developers/wpforms_paypal_standard_process_complete/
+     */
+    public function process_workflow_wpforms_paypal( $fields, $form_data, $payment_id, $data ) {
+        // Check if the payment status is not completed
+        if ( empty( $data['payment_status'] ) || strtolower( $data['payment_status'] ) !== 'completed' ) {
+            return;
+        }
+
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'wpforms_paypal_standard_process_complete',
+            'integration' => 'wpforms',
+            'id' => absint( $form_data['id'] ),
+            'fields' => $fields,
+            'entry' => $entry,
+            'form_data' => $form_data,
+            'entry_id' => $entry_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
     }
 }

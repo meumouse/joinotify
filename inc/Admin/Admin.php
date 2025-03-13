@@ -137,9 +137,21 @@ class Admin {
      * Display table with all workflows
      * 
      * @since 1.0.0
+     * @version 1.2.2
      * @return void
      */
     public function all_workflows_page() {
+        $screen = get_current_screen();
+
+        add_screen_option(
+            'per_page',
+            array(
+                'label' => __( 'Fluxos por página', 'joinotify' ),
+                'default' => 20,
+                'option' => 'joinotify_workflows_per_page',
+            )
+        );
+
         $workflows_table = new \MeuMouse\Joinotify\Core\Workflows_Table();
         $workflows_table->prepare_items();
 
