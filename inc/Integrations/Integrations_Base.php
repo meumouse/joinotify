@@ -118,8 +118,12 @@ abstract class Integrations_Base {
     protected function render_integration_trigger_content( $slug ) {
         if ( Admin::get_setting("enable_{$slug}_integration") === 'yes' ) : ?>
             <div id="<?php echo esc_attr( $slug ); ?>" class="nav-content triggers-group">
-                <?php foreach ( Triggers::get_triggers_by_context( $slug ) as $trigger ) : ?>
-                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?> <?php echo esc_attr( isset( $trigger['require_plugins'] ) ? 'require-plugins' : '' ); ?>" data-context="<?php echo esc_attr( $slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
+                <?php foreach ( Triggers::get_triggers_by_context( $slug ) as $trigger ) :
+                    // disable trigger if plugin is not active or not installed
+                    $disable_select_trigger = isset( $trigger['require_plugins'] ) && array_key_exists( $trigger['plugins'][0]['slug'], get_plugins() ) && ! is_plugin_active( $trigger['plugins'][0]['slug'] )
+                    || isset( $trigger['require_plugins'] ) && ! array_key_exists( $trigger['plugins'][0]['slug'], get_plugins() ); ?>
+
+                    <div class="trigger-item <?php echo esc_attr( isset( $trigger['class'] ) ? $trigger['class'] : '' ); ?> <?php echo esc_attr( $disable_select_trigger  ? 'require-plugins' : '' ); ?>" data-context="<?php echo esc_attr( $slug ); ?>" data-trigger="<?php echo esc_attr( $trigger['data_trigger'] ); ?>">
                         <h4 class="title"><?php echo esc_html( $trigger['title'] ); ?></h4>
                         <span class="description"><?php echo esc_html( $trigger['description'] ); ?></span>
 
@@ -127,11 +131,18 @@ abstract class Integrations_Base {
                             <span class="fs-sm mt-3"><?php esc_html_e( 'Este recurso será liberado em breve', 'joinotify' ); ?></span>
                         <?php endif; ?>
 
+                        <!-- Install trigger dependencies -->
                         <?php if ( isset( $trigger['require_plugins'] ) && $trigger['require_plugins'] === true ) : ?>
-                            <span class="fs-sm my-3"><?php esc_html_e( 'Este acionamento depende de um plugin', 'joinotify' ); ?></span>
-
                             <?php foreach ( $trigger['plugins'] as $plugin => $item ) : ?>
-                                <button class="btn btn-sm btn-outline-secondary install-required-plugin mb-2" data-download-url="<?php echo esc_attr( $item['download_url'] ) ?>" data-required-plugin="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Instalar plugin', 'joinotify' ) ?></button>
+                                <?php if ( array_key_exists( $item['slug'], get_plugins() ) && ! is_plugin_active( $item['slug'] ) ) : ?>
+                                    <span class="fs-sm my-3"><?php esc_html_e( 'Este acionamento depende de um plugin', 'joinotify' ); ?></span>
+
+                                    <button class="btn btn-sm btn-outline-secondary activate-plugin mb-2" data-plugin-slug="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Ativar plugin', 'joinotify' ) ?></button>
+                                <?php elseif ( ! array_key_exists( $item['slug'], get_plugins() ) ) : ?>
+                                    <span class="fs-sm my-3"><?php esc_html_e( 'Este acionamento depende de um plugin', 'joinotify' ); ?></span>
+
+                                    <button class="btn btn-sm btn-outline-secondary install-required-plugin mb-2" data-download-url="<?php echo esc_attr( $item['download_url'] ) ?>" data-required-plugin="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Instalar plugin', 'joinotify' ) ?></button>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>

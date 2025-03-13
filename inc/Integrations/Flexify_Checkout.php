@@ -37,10 +37,14 @@ class Flexify_Checkout extends Integrations_Base {
             add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
 
             // add placeholders
-            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 2 );
 
             // add conditions
             add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+
+            if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
+                add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
+            }
         }
     }
 
@@ -56,9 +60,51 @@ class Flexify_Checkout extends Integrations_Base {
     public function add_triggers( $triggers ) {
         $triggers['flexify_checkout'] = array(
             array(
-                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
                 'title' => esc_html__( 'Abandono do carrinho', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando o usuário abandona o carrinho.', 'joinotify' ),
+                'require_settings' => false,
+                'require_plugins' => true,
+                'plugins' => array(
+                    array(
+                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
+                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
+                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
+                    ),
+                ),
+            ),
+            array(
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
+                'title' => esc_html__( 'Carrinho abandonado é recuperado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um carrinho abandonado é recuperado.', 'joinotify' ),
+                'require_settings' => false,
+                'require_plugins' => true,
+                'plugins' => array(
+                    array(
+                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
+                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
+                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
+                    ),
+                ),
+            ),
+            array(
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
+                'title' => esc_html__( 'Abandono do pedido', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um pedido é abandonado.', 'joinotify' ),
+                'require_settings' => false,
+                'require_plugins' => true,
+                'plugins' => array(
+                    array(
+                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
+                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
+                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
+                    ),
+                ),
+            ),
+            array(
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Lost',
+                'title' => esc_html__( 'Carrinho perdido', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um carrinho é considerado perdido.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -125,29 +171,71 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param array $placeholders | Current placeholders
+     * @param array $payload | Payload data
      * @return array
      */
-    public function add_placeholders( $placeholders ) {
-        if ( class_exists('Module_Inter_Bank') ) {
-            $trigger_names = Triggers::get_trigger_names('flexify_checkout');
+    public function add_placeholders( $placeholders, $payload ) {
+        $order = isset( $payload['order_id'] ) ? wc_get_order( $payload['order_id'] ) : null;
+        $trigger_names = Triggers::get_trigger_names('woocommerce');
 
-            $placeholders['flexify_checkout'] = array(
-                '{{ fc_pix_copia_cola }}' => array(
+        // if Inter bank addon is active
+        if ( class_exists('Module_Inter_Bank') ) {
+            $inter_placeholders = array(
+                '{{ fc_inter_pix_copia_cola }}' => array(
                     'triggers' => $trigger_names,
                     'description' => esc_html__( 'Para recuperar o código Pix Copia e Cola do pedido. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
-                        'production' => '',
-                        'sandbox' => '',
+                        'production' => isset( $order ) ? $order->get_meta('inter_pix_payload') : '',
+                        'sandbox' => '00020126330014BR.GOV.BCB.PIX0114+5581999999999520400005303986540540.005802BR5925_MEUMOUSE.COM_6008BRASIL62070503***6304ABCD',
                     ),
                 ),
-                '{{ fc_pix_expiration_time }}' => array(
+                '{{ fc_inter_pix_expiration_time }}' => array(
                     'triggers' => $trigger_names,
                     'description' => esc_html__( 'Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
-                        'production' => '',
-                        'sandbox' => '',
+                        'production' => isset( $order ) ? sprintf( esc_html__( '%s minutos', 'joinotify' ), $order->get_meta('inter_pix_expires_in') ) : '',
+                        'sandbox' => esc_html__( '30 minutos', 'joinotify' ),
+                    ),
+                ),
+                '{{ fc_inter_bank_slip_url }}' => array(
+                    'triggers' => $trigger_names,
+                    'description' => esc_html__( 'Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => isset( $order ) ? $order->get_meta('inter_boleto_url') : '',
+                        'sandbox' => esc_html__( '30 minutos', 'joinotify' ),
+                    ),
+                ),
+            );
+            
+            // add inter placeholders to woocommerce
+            foreach ( $inter_placeholders as $placeholder_key => $placeholder_data ) {
+                $placeholders['woocommerce'][$placeholder_key] = array(
+                    'triggers' => $trigger_names,
+                    'description' => $placeholder_data['description'],
+                    'replacement' => array(
+                        'production' => $placeholder_data['replacement']['production'],
+                        'sandbox' => $placeholder_data['replacement']['sandbox'],
+                    ),
+                );
+            }
+        }
+
+        // if Recovery Carts addon is active
+        if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+            $placeholders['flexify_checkout'] = array(
+                '{{ fcrc_recovery_link }}' => array(
+                    'triggers' => array(
+                        'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
+                        'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
+                        'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
+                        'Flexify_Checkout/Recovery_Carts/Cart_Lost',
+                    ),
+                    'description' => esc_html__( 'Link de recuperação do carrinho abandonado. Através da integração Flexify Checkout - Recuperação de carrinhos abandonados.', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Core') ? \MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers::generate_recovery_cart_link( $payload['cart_id'] ) : '',
+                        'sandbox' => wc_get_checkout_url() . '?recovery_cart=10905',
                     ),
                 ),
             );
@@ -166,7 +254,7 @@ class Flexify_Checkout extends Integrations_Base {
      */
     public function add_conditions( $conditions ) {
         $fc_conditions = array(
-            'flexify_checkout_cart_abandoned' => array(
+            'Flexify_Checkout/Recovery_Carts/Cart_Abandoned' => array(
                 'cart_total' => array(
                     'title' => __( 'Valor total do carrinho', 'joinotify' ),
                     'description' => __( 'Permite verificar o valor total do carrinho abandonado.', 'joinotify' ),
@@ -179,9 +267,39 @@ class Flexify_Checkout extends Integrations_Base {
                     'title' => __( 'Meta dados do usuário', 'joinotify' ),
                     'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
                 ),
+                'cart_recovered' => array(
+                    'title' => __( 'Carrinho recuperado', 'joinotify' ),
+                    'description' => __( 'Permite verificar se o carrinho abandonado foi recuperado.', 'joinotify' ),
+                ),
             ),
         );
 
         return array_merge( $conditions, $fc_conditions );
+    }
+
+
+    /**
+     * Add coupon action in sidebar list on builder
+     * 
+     * @since 1.2.0
+     * @param array $actions | Current actions
+     * @return array
+     */
+    public function add_coupon_action( $actions ) {
+        $actions[] = array(
+            'action' => 'create_coupon',
+            'title' => esc_html__( 'Cupom de desconto', 'joinotify' ),
+            'description' => esc_html__( 'Envie um cupom de desconto para seu usuário através de mensagem de texto do WhatsApp.', 'joinotify' ),
+            'context' => array(
+                'woocommerce',
+            ),
+            'icon' => '<svg class="icon icon-lg icon-dark coupon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 6.75L4.5 6H20.25L21 6.75V10.7812H20.25C19.5769 10.7812 19.0312 11.3269 19.0312 12C19.0312 12.6731 19.5769 13.2188 20.25 13.2188H21V17.25L20.25 18L4.5 18L3.75 17.25V13.2188H4.5C5.1731 13.2188 5.71875 12.6731 5.71875 12C5.71875 11.3269 5.1731 10.7812 4.5 10.7812H3.75V6.75ZM5.25 7.5V9.38602C6.38677 9.71157 7.21875 10.7586 7.21875 12C7.21875 13.2414 6.38677 14.2884 5.25 14.614V16.5L9 16.5L9 7.5H5.25ZM10.5 7.5V16.5L19.5 16.5V14.614C18.3632 14.2884 17.5312 13.2414 17.5312 12C17.5312 10.7586 18.3632 9.71157 19.5 9.38602V7.5H10.5Z"></path></g></svg>',
+            'external_icon' => false,
+            'has_settings' => true,
+            'settings' => Woocommerce::create_coupon_action(),
+            'priority' => 60,
+        );
+
+        return $actions;
     }
 }

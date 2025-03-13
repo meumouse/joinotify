@@ -70,6 +70,7 @@ class ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe
         'MeuMouse\\Joinotify\\Core\\Helpers' => __DIR__ . '/../..' . '/inc/Core/Helpers.php',
         'MeuMouse\\Joinotify\\Core\\Init' => __DIR__ . '/../..' . '/inc/Core/Init.php',
         'MeuMouse\\Joinotify\\Core\\Logger' => __DIR__ . '/../..' . '/inc/Core/Logger.php',
+        'MeuMouse\\Joinotify\\Core\\Modules' => __DIR__ . '/../..' . '/inc/Core/Modules.php',
         'MeuMouse\\Joinotify\\Core\\Workflow_Processor' => __DIR__ . '/../..' . '/inc/Core/Workflow_Processor.php',
         'MeuMouse\\Joinotify\\Core\\Workflows_Table' => __DIR__ . '/../..' . '/inc/Core/Workflows_Table.php',
         'MeuMouse\\Joinotify\\Cron\\Routines' => __DIR__ . '/../..' . '/inc/Cron/Routines.php',

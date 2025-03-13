@@ -153,4 +153,34 @@ class Actions {
     
         return false;
     }
+
+
+    /**
+     * Extract all actions from workflow content
+     * 
+     * @since 1.2.0
+     * @param array $workflow_content | Workflow content array
+     * @return array | Array of actions
+     */
+    public static function extract_all_actions( $workflow_content ) {
+        $actions = array();
+    
+        foreach ( $workflow_content as $item ) {
+            if ( $item['type'] === 'action' ) {
+                $actions[] = $item;
+            }
+    
+            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
+                foreach ( $item['children'] as $child_group ) {
+                    foreach ( $child_group as $child_action ) {
+                        if ( $child_action['type'] === 'action' ) {
+                            $actions[] = $child_action;
+                        }
+                    }
+                }
+            }
+        }
+    
+        return $actions;
+    }
 }

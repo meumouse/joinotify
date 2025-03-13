@@ -2107,3 +2107,8 @@ textarea.edit-whatsapp-message-text {
 #joinotify_filter_library_categories {
     max-width: 20rem !important;
 }
+
+.btn.install-required-plugin,
+.btn.activate-plugin {
+    pointer-events: all;
+}

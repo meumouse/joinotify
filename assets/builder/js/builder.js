@@ -53,6 +53,7 @@
 		 * Init
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		init: function() {
 			// hide builder loader
@@ -69,6 +70,9 @@
 			this.uploadWorkflowTemplates();
 			this.onWorkflowReady();
 			this.onUpdatedWorkflow();
+			this.initBootstrapComponents();
+			this.installModule();
+			this.activeModule();
 		},
 
 		/**
@@ -2635,6 +2639,105 @@
 					});
 				});
 			}, 500);
+		},
+
+		/**
+		 * Install external plugins
+		 * 
+		 * @since 1.2.0
+		 */
+		installModule: function() {
+			$('.install-required-plugin').on('click', function(e) {
+				e.preventDefault();
+		
+				let btn = $(this);
+				var button_state = Builder.keepButtonState(btn);
+				let plugin_url = btn.data('download-url');
+				let plugin_slug = btn.data('required-plugin');
+
+				// send ajax request
+				$.ajax({
+					type: 'POST',
+					url: params.ajax_url,
+					data: {
+						action: 'joinotify_install_modules',
+						plugin_url: plugin_url,
+						plugin_slug: plugin_slug,
+					},
+					beforeSend: function() {
+						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+					},
+					success: function(response) {
+						if (response.status === 'success') {
+							btn.removeClass('btn-primary').addClass('btn-success');
+							btn.html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>');
+		
+							Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+		
+							setTimeout( function() {
+								location.reload();
+							}, 1000);
+						} else {
+							btn.html(button_state.html);
+		
+							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+						}
+						
+						btn.prop('disabled', false);
+					},
+					error: function(response) {
+						btn.prop('disabled', false).html(button_state.html);
+						alert('Error installing the plugin: ' + response.responseText);
+					},
+				});
+			});
+		},
+
+		/**
+		 * Activate plugin when installed
+		 * 
+		 * @since 1.2.0
+		 */
+		activeModule: function() {
+			$('.activate-plugin').on('click', function(e) {
+				e.preventDefault();
+		
+				let btn = $(this);
+				var button_state = Builder.keepButtonState(btn);
+				let plugin_slug = btn.data('plugin-slug');
+
+				// send ajax request
+				$.ajax({
+					type: 'POST',
+					url: params.ajax_url,
+					data: {
+						action: 'joinotify_activate_plugin',
+						plugin_slug: plugin_slug,
+					},
+					beforeSend: function() {
+						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+					},
+					success: function(response) {
+						if (response.status === 'success') {
+							btn.removeClass('btn-primary').addClass('btn-success');
+							btn.html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>');
+		
+							Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+							
+							location.reload();
+						} else {
+							btn.html(button_state.html);
+		
+							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+						}
+					},
+					error: function(error) {
+						btn.html(button_state.html);
+						
+						console.error(error);
+					},
+				});
+			});
 		},
 	};
 

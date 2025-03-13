@@ -97,6 +97,24 @@ class Workflow_Processor {
             // when a WPForms form paypal payment is fired
             add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
         }
+
+        // fire hooks if Flexify Checkout is active
+        if ( class_exists('\MeuMouse\Flexify_Checkout\Flexify_Checkout') ) {
+            // check if Flexify Checkout extension addon is active
+            if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+                // when a order is abandoned
+                add_action( 'Flexify_Checkout/Recovery_Carts/Order_Abandoned', array( $this, 'process_workflow_order_abandoned' ), 10, 2 );
+
+                // when a cart is abandoned
+                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned', array( $this, 'process_workflow_cart_abandoned' ), 10, 1 );
+
+                // when a cart is recovered
+                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Recovered', array( $this, 'process_workflow_cart_recovered' ), 10, 2 );
+
+                // when a cart is lost
+                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Lost', array( $this, 'process_workflow_cart_lost' ), 10, 1 );
+            }
+        }
     }
 
 
@@ -443,20 +461,19 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
      * @return void
      */
     public static function process_workflow_content( $workflow_content, $post_id, $payload ) {
-        /*
         if ( JOINOTIFY_DEV_MODE ) {
             error_log( 'Function process_workflow_content() fired' );
             error_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
             error_log( 'Param $post_id: ' . print_r( $post_id, true ) );
             error_log( 'Param $payload: ' . print_r( $payload, true ) );
-        }*/
+        }
 
         /**
          * Before process Joinotify workflows
@@ -489,7 +506,8 @@ class Workflow_Processor {
                 // remove prefix "wc-" fron workflow trigger settings
                 $trigger_order_status = str_replace( 'wc-', '', $trigger_data['data']['settings']['order_status'] );
 
-                if ( $trigger_order_status !== $order_status ) {
+                // check order status only if is setted different of "none" => all statuses
+                if ( $trigger_order_status !== 'none' && $trigger_order_status !== $order_status ) {
                     return;
                 }
             }
@@ -1031,6 +1049,86 @@ class Workflow_Processor {
             'integration' => 'woocommerce',
             'subscription' => $subscription,
             'subscription_id' => $subscription->get_id(),
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a order is abandoned
+     * 
+     * @since 1.2.0
+     * @param int $order_id | The abandoned order ID
+     * @param int $cart_id | The abandoned cart ID
+     * @return void
+     */
+    public function process_workflow_order_abandoned( $order_id, $cart_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
+            'integration' => 'flexify_checkout',
+            'order_id' => $order_id,
+            'cart_id' => $cart_id,
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a cart is abandoned
+     * 
+     * @since 1.2.0
+     * @param int $cart_id | The abandoned cart ID
+     * @return void
+     */
+    public function process_workflow_cart_abandoned( $cart_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a cart is recovered
+     * 
+     * @since 1.2.0
+     * @param int $cart_id | The recovered cart ID
+     * @param int $order_id | The order ID
+     * @return void
+     */
+    public function process_workflow_cart_recovered( $cart_id, $order_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+            'order_id' => $order_id,
+        );
+
+        self::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a cart is lost
+     * 
+     * @since 1.2.0
+     * @param int $cart_id | The recovered cart ID
+     * @return void
+     */
+    public function process_workflow_cart_lost( $cart_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Lost',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
         );
 
         self::process_workflows( $payload );

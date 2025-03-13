@@ -27,6 +27,7 @@ return array(
     'MeuMouse\\Joinotify\\Core\\Helpers' => $baseDir . '/inc/Core/Helpers.php',
     'MeuMouse\\Joinotify\\Core\\Init' => $baseDir . '/inc/Core/Init.php',
     'MeuMouse\\Joinotify\\Core\\Logger' => $baseDir . '/inc/Core/Logger.php',
+    'MeuMouse\\Joinotify\\Core\\Modules' => $baseDir . '/inc/Core/Modules.php',
     'MeuMouse\\Joinotify\\Core\\Workflow_Processor' => $baseDir . '/inc/Core/Workflow_Processor.php',
     'MeuMouse\\Joinotify\\Core\\Workflows_Table' => $baseDir . '/inc/Core/Workflows_Table.php',
     'MeuMouse\\Joinotify\\Cron\\Routines' => $baseDir . '/inc/Cron/Routines.php',

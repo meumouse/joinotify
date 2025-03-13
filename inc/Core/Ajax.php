@@ -22,6 +22,8 @@ use MeuMouse\Joinotify\Validations\Conditions;
 
 use MeuMouse\Joinotify\Cron\Schedule;
 
+use WP_Error;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -77,6 +79,8 @@ class Ajax {
             'joinotify_get_woo_products' => 'get_woo_products_callback',
             'joinotify_get_workflow_templates' => 'get_workflow_templates_callback',
             'joinotify_download_workflow_template' => 'download_workflow_template_callback',
+            'joinotify_install_modules' => 'install_modules_ajax_callback',
+            'joinotify_activate_plugin' => 'activate_plugin_callback',
         );
 
         foreach ( $ajax_actions as $action => $callback ) {
@@ -1395,73 +1399,65 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function run_workflow_test_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_run_workflow_test' ) {
             $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
-
+    
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
                 $receiver = Admin::get_setting('test_number_phone');
-
+    
                 if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
-                    foreach ( $workflow_content as $item ) {
-                        if ( isset( $item['type'] ) && $item['type'] === 'action' && isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_text' ) {
-                            $sender = $item['data']['sender'];
-                            $message = Placeholders::replace_placeholders( $item['data']['message'], 0, 'sandbox' );
-                            $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
-
-                            if ( 201 === $send_message_text ) {
-                                continue; // Continue to the next action if the message is successfully sent
-                            } else {
-                                $response = array(
-                                    'status' => 'error',
-                                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                                    'toast_body_title' => __( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
-                                );
-
-                                wp_send_json( $response );
+                    $all_actions = Actions::extract_all_actions( $workflow_content );
+                    
+                    foreach ( $all_actions as $item ) {
+                        if ( isset( $item['type'] ) && $item['type'] === 'action' ) {
+                            if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_text' ) {
+                                $sender = $item['data']['sender'];
+                                $message = Placeholders::replace_placeholders( $item['data']['message'], 0, 'sandbox' );
+                                $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
+    
+                                if ( 201 !== $send_message_text ) {
+                                    wp_send_json([
+                                        'status' => 'error',
+                                        'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
+                                        'toast_body_title' => __( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
+                                    ]);
+                                }
                             }
-                        }
-
-                        if ( isset( $item['type'] ) && $item['type'] === 'action' && isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_media' ) {
-                            $sender = $item['data']['sender'];
-                            $media_type = $item['data']['media_type'];
-                            $media = $item['data']['media_url'];
-                            $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
-
-                            if ( 201 === $send_message_media ) {
-                                continue; // Continue to the next action if the message is successfully sent
-                            } else {
-                                $response = array(
-                                    'status' => 'error',
-                                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                                    'toast_body_title' => __( 'Não foi possível enviar uma ou mais mensages de teste.', 'joinotify' ),
-                                );
-
-                                wp_send_json( $response );
+    
+                            if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_media' ) {
+                                $sender = $item['data']['sender'];
+                                $media_type = $item['data']['media_type'];
+                                $media = $item['data']['media_url'];
+                                $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
+    
+                                if ( 201 !== $send_message_media ) {
+                                    wp_send_json([
+                                        'status' => 'error',
+                                        'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
+                                        'toast_body_title' => __( 'Não foi possível enviar uma ou mais mensagens de teste.', 'joinotify' ),
+                                    ]);
+                                }
                             }
                         }
                     }
-
-                    // If all messages were sent successfully
-                    $response = array(
+                    
+                    wp_send_json([
                         'status' => 'success',
                         'toast_header_title' => __( 'Mensagens enviadas', 'joinotify' ),
                         'toast_body_title' => __( 'Todas as mensagens de teste foram enviadas com sucesso!', 'joinotify' ),
-                    );
-
-                    wp_send_json( $response );
+                    ]);
                 }
-
-                $response = array(
+    
+                wp_send_json([
                     'status' => 'error',
                     'toast_header_title' => __( 'Erro na execução do fluxo', 'joinotify' ),
                     'toast_body_title' => __( 'Não foi possível processar o conteúdo do fluxo.', 'joinotify' ),
-                );
-
-                wp_send_json( $response );
+                ]);
             }
         }
     }
@@ -2061,5 +2057,92 @@ class Ajax {
             'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
             'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
         ));
+    }
+
+
+    /**
+     * Handle AJAX request to install external plugins
+     * 
+     * @since 1.2.0
+     * @return void
+     */
+    public function install_modules_ajax_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_install_modules' ) {
+            $plugin_slug = sanitize_text_field( $_POST['plugin_slug'] );
+            $plugin_zip = esc_url_raw( $_POST['plugin_url'] );
+
+            // Capture any output to avoid HTML mixed with JSON
+            ob_start();
+
+            // Check if the plugin is already installed
+            if ( Modules::is_plugin_installed( $plugin_slug ) ) {
+                // If the plugin is installed, try to update it
+                $installed = Modules::upgrade_plugin( $plugin_slug );
+            } else {
+                // If the plugin is not installed, try to install it
+                $installed = Modules::install_plugin( $plugin_zip );
+            }
+
+            // Clear any output to avoid HTML mixed with JSON
+            ob_end_clean();
+
+            if ( ! is_wp_error( $installed ) && $installed ) {
+                $plugin_file = WP_PLUGIN_DIR . '/' . $plugin_slug;
+                $activate = activate_plugin( $plugin_file );
+            
+                if ( ! is_wp_error( $activate ) ) {
+                    $response = array(
+                        'status'  => 'success',
+                        'toast_header_title' => esc_html__( 'Plugin instalado e ativado.', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'Plugin instalado e ativado com sucesso.', 'joinotify' ),
+                    );
+                } else {
+                    $response = array(
+                        'status'  => 'error',
+                        'toast_header_title' => esc_html__( 'Falha ao ativar o plugin.', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'O plugin foi instalado, mas não pôde ser ativado.', 'joinotify' ),
+                    );
+                }
+            } else {
+                $response = array(
+                    'status'  => 'error',
+                    'toast_header_title' => esc_html__( 'Falha ao instalar/atualizar o plugin.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'Ocorreu um erro ao tentar instalar ou atualizar o plugin.', 'joinotify' ),
+                );
+            }
+
+            // Send JSON response
+            wp_send_json( $response );
+        }
+    }
+
+
+    /**
+     * Activate plugin when is installed
+     * 
+     * @since 1.2.0
+     * @return void
+     */
+    public function activate_plugin_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_activate_plugin' ) {
+            $plugin_slug = sanitize_text_field( $_POST['plugin_slug'] );
+            $activate = activate_plugin( $plugin_slug );
+    
+            if ( is_wp_error( $activate ) ) {
+                $response = array(
+                    'status'  => 'error',
+                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'flexify-checkout-for-woocommerce' ),
+                    'toast_body_title' => $activate->get_error_message(),
+                );
+            } else {
+                $response = array(
+                    'status'  => 'success',
+                    'toast_header_title' => esc_html__( 'Plugin ativado com sucesso.', 'flexify-checkout-for-woocommerce' ),
+                    'toast_body_title' => esc_html__( 'Novo recurso adicionado!', 'flexify-checkout-for-woocommerce' ),
+                );
+            }
+
+            wp_send_json( $response );
+        }
     }
 }

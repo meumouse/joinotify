@@ -66,6 +66,7 @@ class Conditions {
             'cart_total'          => array( 'bigger_than', 'less_than' ),
             'items_in_cart'       => array( 'bigger_than', 'less_than', 'is', 'is_not' ),
             'field_value'         => array( 'contains', 'not_contain', 'is', 'is_not', 'empty', 'not_empty' ),
+            'cart_recovered'      => array( 'is', 'is_not' ),
         ));
     
         return isset( $allowed_conditions_map[ $condition_type ] ) ? $allowed_conditions_map[ $condition_type ] : array();
@@ -115,6 +116,7 @@ class Conditions {
             'payment_method'        => $context instanceof \WC_Order ? $context->get_payment_method() : null,
             'shipping_method'       => $context instanceof \WC_Order ? $context->get_shipping_method() : null,
             'field_value'           => isset( $context->fields ) ? $context->fields : null,
+            'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
         ));
     
         return $value_map[$condition_type] ?? null;
