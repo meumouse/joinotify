@@ -77,7 +77,7 @@
 
 #joinotify-automations-builder {
     position: fixed;
-    z-index: 99999;
+    z-index: 999;
     top: 0;
     left: 0;
     width: 100%;
@@ -739,6 +739,7 @@ label.custom-file-label:hover {
 .form-control {
     width: 100%;
     min-height: 2rem !important;
+    max-width: -webkit-fill-available !important;
     padding: 0.825rem 1rem !important;
     font-size: 1rem;
     font-weight: 400;
@@ -955,7 +956,7 @@ input.form-control:disabled {
     box-shadow: 0 0.325rem 0.5rem rgba(var(--joinotify-primary-rgb), 0.1);
 }
 
-.trigger-item.active {
+.trigger-item.active:not(.require-plugins, .locked) {
     background-color: var(--joinotify-primary);
 }
 
@@ -973,6 +974,10 @@ input.form-control:disabled {
 
 .trigger-item.locked {
     opacity: 0.5;
+}
+
+.trigger-item.locked,
+.trigger-item.require-plugins {
     pointer-events: none;
 }
 
@@ -1654,9 +1659,9 @@ input.toggle-switch.status:checked {
 }
 
 .template-item {
-    width: 17rem;
+    width: 20rem;
     height: 10rem;
-    margin: 0.625rem;
+    margin: 1rem;
 }
 
 .template-item:not(.placeholder-content) {
@@ -1846,7 +1851,7 @@ input.toggle-switch.status:checked {
     margin-top: 7rem;
     padding: 1rem;
     background-color: #fff;
-    width: 27rem;
+    width: 33vw;
     border: 2px solid var(--joinotify-dark-600);
     border-radius: 0.5rem;
     transition: margin-left 0.3s ease-in-out;
@@ -1870,6 +1875,10 @@ input.toggle-switch.status:checked {
     #joinotify_builder_funnel.waiting-select-action .add_condition_inside_node_point.condition_true {
         margin-left: -7rem;
     }
+}
+
+.joinotify_builder_funnel.waiting-select-action .add_condition_inside_node_point {
+    width: 30vw;
 }
 
 select:focus {
@@ -2049,7 +2058,7 @@ textarea.edit-whatsapp-message-text {
     height: 1.325rem;
     right: 1rem;
     z-index: 9;
-    top: 2.5rem;
+    top: 1.5rem;
     border-width: 2px;
 }
 
@@ -2077,4 +2086,29 @@ textarea.edit-whatsapp-message-text {
 .preview-whatsapp-message-sender .emojioneemoji {
     width: 1.125rem;
     height: 1.125rem;
+}
+
+.search-products .selectize-input > input {
+    padding: 0.825rem 1rem !important;
+}
+
+#joinotify_template_library_container {
+    width: 95%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.search-workflows-wrapper {
+    width: 50rem;
+}
+
+#joinotify_filter_library_categories {
+    max-width: 20rem !important;
+}
+
+.btn.install-required-plugin,
+.btn.activate-plugin {
+    pointer-events: all;
 }

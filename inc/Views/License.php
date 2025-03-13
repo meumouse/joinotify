@@ -2,6 +2,14 @@
 
 use MeuMouse\Joinotify\API\License;
 
+/**
+ * Template file for display license page
+ * 
+ * @since 1.0.0
+ * @version 1.2.0
+ * @package MeuMouse.com
+ */
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 

@@ -2,9 +2,6 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-use MeuMouse\Joinotify\Core\Helpers;
-use MeuMouse\Joinotify\Core\Logger;
-
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Components as Settings_Components;
 
@@ -25,6 +22,8 @@ use MeuMouse\Joinotify\Validations\Conditions;
 
 use MeuMouse\Joinotify\Cron\Schedule;
 
+use WP_Error;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -32,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Ajax {
@@ -44,7 +43,7 @@ class Ajax {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -53,7 +52,6 @@ class Ajax {
             'joinotify_active_license' => 'active_license_callback',
             'joinotify_alternative_activation_license' => 'alternative_active_license_callback',
             'joinotify_deactive_license' => 'deactive_license_callback',
-            'joinotify_get_templates_count' => 'get_templates_count_callback',
             'joinotify_import_workflow_templates' => 'import_workflow_templates_callback',
             'joinotify_create_workflow' => 'create_workflow_callback',
             'joinotify_load_workflow_data' => 'load_workflow_data_callback',
@@ -79,6 +77,10 @@ class Ajax {
             'joinotify_save_action_edition' => 'save_action_settings_callback',
             'joinotify_save_trigger_settings' => 'save_trigger_settings_callback',
             'joinotify_get_woo_products' => 'get_woo_products_callback',
+            'joinotify_get_workflow_templates' => 'get_workflow_templates_callback',
+            'joinotify_download_workflow_template' => 'download_workflow_template_callback',
+            'joinotify_install_modules' => 'install_modules_ajax_callback',
+            'joinotify_activate_plugin' => 'activate_plugin_callback',
         );
 
         foreach ( $ajax_actions as $action => $callback ) {
@@ -347,54 +349,45 @@ class Ajax {
     /**
      * Get workflow templates on AJAX callback
      * 
-     * @since 1.0.0
+     * @since 1.2.0
      * @return void
      */
     public function get_workflow_templates_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_workflow_templates' ) {
-            $template_type = isset( $_POST['template'] ) ? sanitize_text_field( $_POST['template'] ) : '';
-        
-            if ( $template_type === 'template' ) {
-                $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
-        
-                if ( ! empty( $templates ) ) {
-                    $template_html = '';
+            $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
+
+            if ( ! empty( $templates ) ) {
+                $template_html = '';
+
+                // iterate over the templates and generate HTML
+                foreach ( $templates as $filename => $content ) {
+                    $decoded_content = json_decode( $content, true );
     
-                    foreach ( $templates as $filename => $content ) {
-                        $decoded_content = json_decode( $content, true );
-        
-                        if ( $decoded_content !== null ) {
-                            $title = isset( $decoded_content['post']['title'] ) ? esc_html( $decoded_content['post']['title'] ) : esc_html( $filename );
-                            $category = isset( $decoded_content['post']['category'] ) ? esc_attr( $decoded_content['post']['category'] ) : '';
-        
-                            $template_html .= '<div class="template-item" data-category="' . $category . '">';
-                                $template_html .= '<div class="template-item-header mb-3">';
-                                    $template_html .= '<h4 class="title">' . $title . '</h4>';
-                                $template_html .= '</div>';
-                                $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center download-template" data-file="' . esc_attr( $filename ) . '">';
-                                    $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
-                                    $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
-                                $template_html .= '</button>';
+                    if ( $decoded_content !== null ) {
+                        $title = isset( $decoded_content['post']['title'] ) ? esc_html( $decoded_content['post']['title'] ) : esc_html( $filename );
+                        $category = isset( $decoded_content['post']['category'] ) ? esc_attr( $decoded_content['post']['category'] ) : '';
+    
+                        $template_html .= '<div class="template-item" data-category="' . $category . '">';
+                            $template_html .= '<div class="template-item-header mb-3">';
+                                $template_html .= '<h4 class="title">' . $title . '</h4>';
                             $template_html .= '</div>';
-                        }
+                            $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center download-template" data-file="' . esc_attr( $filename ) . '">';
+                                $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
+                                $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
+                            $template_html .= '</button>';
+                        $template_html .= '</div>';
                     }
-        
-                    $response = array(
-                        'status' => 'success',
-                        'template_html' => $template_html,
-                    );
-                } else {
-                    $response = array(
-                        'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Não foi possível carregar os modelos.', 'joinotify' ),
-                    );
                 }
+    
+                $response = array(
+                    'status' => 'success',
+                    'template_html' => $template_html,
+                );
             } else {
                 $response = array(
                     'status' => 'error',
                     'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Tipo de template inválido.', 'joinotify' ),
+                    'toast_body_title' => __( 'Não foi possível carregar os modelos.', 'joinotify' ),
                 );
             }
 
@@ -778,7 +771,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -819,6 +812,27 @@ class Ajax {
                         $new_action['data']['condition_content']['condition'] = isset( $workflow_action['data']['condition_content']['condition'] ) ? $workflow_action['data']['condition_content']['condition'] : '';
                         $new_action['data']['condition_content']['type'] = isset( $workflow_action['data']['condition_content']['type'] ) ? $workflow_action['data']['condition_content']['type'] : '';
                         $new_action['data']['condition_content']['value'] = isset( $workflow_action['data']['condition_content']['value'] ) ? $workflow_action['data']['condition_content']['value'] : '';
+
+                        // check condition type
+                        if ( isset( $workflow_action['data']['condition_content']['condition'] ) ) {
+                            // condition is user_meta
+                            if ( $workflow_action['data']['condition_content']['condition'] === 'user_meta' ) {
+                                $new_action['data']['condition_content']['meta_key'] = isset( $workflow_action['data']['condition_content']['meta_key'] ) ? $workflow_action['data']['condition_content']['meta_key'] : '';
+                            } elseif ( $workflow_action['data']['condition_content']['condition'] === 'products_purchased' ) {
+                                $condition_products = array();
+
+                                if ( isset( $workflow_action['data']['condition_content']['products'] ) ) {
+                                    foreach ( $workflow_action['data']['condition_content']['products'] as $product ) {
+                                        $condition_products[] = array(
+                                            'id' => intval( $product['id'] ) ?? '',
+                                            'title' => sanitize_text_field( $product['title'] ) ?? '',
+                                        );
+                                    }
+                                }
+
+                                $new_action['data']['condition_content']['products'] = $condition_products;
+                            }
+                        }
                     } elseif ( $workflow_action['data']['action'] === 'time_delay' ) {
                         $new_action['data']['description'] = $build_description;
                         $new_action['data']['delay_type'] = isset( $workflow_action['data']['delay_type'] ) ? $workflow_action['data']['delay_type'] : '';
@@ -1156,47 +1170,6 @@ class Ajax {
 
 
     /**
-     * Get templates library on AJAX callback
-     * 
-     * @since 1.0.0
-     * @version 1.1.0
-     * @return void
-     */
-    public function get_templates_count_callback() {
-        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_get_templates_count' ) {
-            $template_type = isset( $_POST['template'] ) ? sanitize_text_field( $_POST['template'] ) : '';
-        
-            if ( $template_type === 'template' ) {
-                // Get the number of templates
-                $template_count = Workflow_Templates::get_templates_count( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
-        
-                if ( $template_count !== null ) {
-                    $response = array(
-                        'status' => 'success',
-                        'template_count' => $template_count,
-                    );
-                } else {
-                    $response = array(
-                        'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Não foi possível obter a quantidade de templates.', 'joinotify' ),
-                    );
-                }
-            } else {
-                $response = array(
-                    'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Tipo de template inválido.', 'joinotify' ),
-                );
-            }
-        
-            // send response for frontend
-            wp_send_json( $response );
-        }
-    }
-
-
-    /**
      * Get phones senders on AJAX callback
      * 
      * @since 1.0.0
@@ -1240,7 +1213,7 @@ class Ajax {
                     }
     
                     $html .= '<li class="list-group-item d-flex align-items-center justify-content-between py-3" data-phone="'. esc_attr( $value['phone'] ) .'">';
-                    $html .= '<span class="fs-base">'. Helpers::format_phone_number( $value['phone'] ) .'</span>';
+                    $html .= '<span class="fs-base">'. Helpers::validate_and_format_phone( $value['phone'] ) .'</span>';
                     $html .= '<button class="btn btn-sm btn-outline-primary register-sender" data-phone="'. esc_attr( $value['phone'] ) .'">'. esc_html__( 'Cadastrar remetente', 'joinotify' ) .'</button>';
                     $html .= '</li>';
                 }
@@ -1272,6 +1245,8 @@ class Ajax {
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
             $get_otp = Otp_Validation::generate_and_send_otp( $phone );
 
+            error_log( 'OTP: ' . print_r( $get_otp, true ) );
+
             if ( $get_otp ) {
                 $response = array(
                     'status' => 'success',
@@ -1295,6 +1270,7 @@ class Ajax {
      * Callback to validate OTP
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function validate_otp_callback() {
@@ -1344,7 +1320,7 @@ class Ajax {
                     'status' => 'success',
                     'toast_header_title' => __( 'Verificação bem-sucedida', 'joinotify' ),
                     'toast_body_title' => __( 'Seu WhatsApp foi verificado com sucesso!', 'joinotify' ),
-                    'current_phone_senders' => Settings_Builder_Components::current_phones_senders(),
+                    'current_phone_senders' => Settings_Components::current_phones_senders(),
                 );
             } else {
                 // If OTP is invalid or expired, send an error response
@@ -1365,6 +1341,7 @@ class Ajax {
      * Callback to remove a phone sender
      *
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function remove_phone_sender_callback() {
@@ -1400,7 +1377,7 @@ class Ajax {
                         'status' => 'success',
                         'toast_header_title' => __( 'Remetente removido', 'joinotify' ),
                         'toast_body_title' => __( 'O telefone remetente foi removido com sucesso!', 'joinotify' ),
-                        'updated_list_html' => Settings_Builder_Components::current_phones_senders(),
+                        'updated_list_html' => Settings_Components::current_phones_senders(),
                     );
 
                     wp_send_json( $response );
@@ -1422,73 +1399,65 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.2.0
      * @return void
      */
     public function run_workflow_test_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_run_workflow_test' ) {
             $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
-
+    
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
                 $receiver = Admin::get_setting('test_number_phone');
-
+    
                 if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
-                    foreach ( $workflow_content as $item ) {
-                        if ( isset( $item['type'] ) && $item['type'] === 'action' && isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_text' ) {
-                            $sender = $item['data']['sender'];
-                            $message = Placeholders::replace_placeholders( $item['data']['message'], 0, 'sandbox' );
-                            $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
-
-                            if ( 201 === $send_message_text ) {
-                                continue; // Continue to the next action if the message is successfully sent
-                            } else {
-                                $response = array(
-                                    'status' => 'error',
-                                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                                    'toast_body_title' => __( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
-                                );
-
-                                wp_send_json( $response );
+                    $all_actions = Actions::extract_all_actions( $workflow_content );
+                    
+                    foreach ( $all_actions as $item ) {
+                        if ( isset( $item['type'] ) && $item['type'] === 'action' ) {
+                            if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_text' ) {
+                                $sender = $item['data']['sender'];
+                                $message = Placeholders::replace_placeholders( $item['data']['message'], 0, 'sandbox' );
+                                $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
+    
+                                if ( 201 !== $send_message_text ) {
+                                    wp_send_json([
+                                        'status' => 'error',
+                                        'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
+                                        'toast_body_title' => __( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
+                                    ]);
+                                }
                             }
-                        }
-
-                        if ( isset( $item['type'] ) && $item['type'] === 'action' && isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_media' ) {
-                            $sender = $item['data']['sender'];
-                            $media_type = $item['data']['media_type'];
-                            $media = $item['data']['media_url'];
-                            $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
-
-                            if ( 201 === $send_message_media ) {
-                                continue; // Continue to the next action if the message is successfully sent
-                            } else {
-                                $response = array(
-                                    'status' => 'error',
-                                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                                    'toast_body_title' => __( 'Não foi possível enviar uma ou mais mensages de teste.', 'joinotify' ),
-                                );
-
-                                wp_send_json( $response );
+    
+                            if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_media' ) {
+                                $sender = $item['data']['sender'];
+                                $media_type = $item['data']['media_type'];
+                                $media = $item['data']['media_url'];
+                                $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
+    
+                                if ( 201 !== $send_message_media ) {
+                                    wp_send_json([
+                                        'status' => 'error',
+                                        'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
+                                        'toast_body_title' => __( 'Não foi possível enviar uma ou mais mensagens de teste.', 'joinotify' ),
+                                    ]);
+                                }
                             }
                         }
                     }
-
-                    // If all messages were sent successfully
-                    $response = array(
+                    
+                    wp_send_json([
                         'status' => 'success',
                         'toast_header_title' => __( 'Mensagens enviadas', 'joinotify' ),
                         'toast_body_title' => __( 'Todas as mensagens de teste foram enviadas com sucesso!', 'joinotify' ),
-                    );
-
-                    wp_send_json( $response );
+                    ]);
                 }
-
-                $response = array(
+    
+                wp_send_json([
                     'status' => 'error',
                     'toast_header_title' => __( 'Erro na execução do fluxo', 'joinotify' ),
                     'toast_body_title' => __( 'Não foi possível processar o conteúdo do fluxo.', 'joinotify' ),
-                );
-
-                wp_send_json( $response );
+                ]);
             }
         }
     }
@@ -1984,6 +1953,7 @@ class Ajax {
 	 * Get WooCommerce products in AJAX callback
 	 * 
 	 * @since 1.1.0
+     * @version 1.2.0
 	 * @return void
 	 */
 	public function get_woo_products_callback() {
@@ -2001,30 +1971,178 @@ class Ajax {
 			);
 			
 			$products = new \WP_Query( $args );
+            $results = array();
 
-            $results = '<span class="fs-md text-muted mb-2 ms-2 d-block">' . esc_html__( 'Resultados:', 'joinotify' ) . '</span>';
-            $results .= '<ul class="list-group search-products-results">';
-			
-			if ( $products->have_posts() ) {
-				while ( $products->have_posts() ) {
-					$products->the_post();
+            if ( $products->have_posts() ) {
+                while ( $products->have_posts() ) {
+                    $products->the_post();
 
-					$results .= '<li class="list-group-item product-item" data-product-id="' . get_the_ID() . '">' . get_the_title() . '</li>';
-				}
-
-                $results .= '</ul>';
-			} else {
-				$results = esc_html__( 'Nenhum produto encontrado.', 'joinotify' );
-			}
-			
-			wp_reset_postdata();
-
-            $response = array(
-                'status' => 'success',
-                'results_html' => $results,
-            );
-
-            wp_send_json( $response );
+                    $results[] = array(
+                        'id' => get_the_ID(),
+                        'product_title' => html_entity_decode( get_the_title(), ENT_QUOTES, 'UTF-8' ), // Decode HTML entities
+                    );
+                }
+            }
+    
+            wp_reset_postdata();
+    
+            wp_send_json( $results );
 		}
 	}
+
+
+    /**
+     * Import workflow template from repository via AJAX
+     *
+     * @since 1.2.0
+     * @return void
+     */
+    public function download_workflow_template_callback() {
+        check_ajax_referer('joinotify_import_workflow_nonce', 'security');
+
+        if ( ! isset( $_POST['file'] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao importar', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'Nenhum arquivo foi especificado.', 'joinotify' ),
+            ));
+        }
+
+        $filename = sanitize_text_field( $_POST['file'] );
+        $templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
+
+        if ( ! isset( $templates[ $filename ] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao importar', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O template selecionado não foi encontrado.', 'joinotify' ),
+            ));
+        }
+
+        $file_contents = $templates[ $filename ];
+        $workflow_data = json_decode( $file_contents, true );
+
+        if ( ! $workflow_data || ! isset( $workflow_data['post'] ) || ! isset( $workflow_data['workflow_content'] ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Arquivo inválido', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O JSON do modelo não é válido.', 'joinotify' ),
+            ));
+        }
+
+        $post_data = array(
+            'post_title' => sanitize_text_field( $workflow_data['post']['title'] ),
+            'post_status' => 'draft',
+            'post_type' => 'joinotify-workflow',
+            'post_content' => '',
+        );
+
+        $post_id = wp_insert_post( $post_data );
+
+        if ( is_wp_error( $post_id ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Erro ao criar fluxo', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'Ocorreu um erro ao criar o fluxo.', 'joinotify' ),
+            ));
+        }
+
+        update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_data['workflow_content'] );
+
+        $redirect_url = admin_url("admin.php?page=joinotify-workflows-builder&id={$post_id}");
+
+        wp_send_json( array(
+            'status' => 'success',
+            'redirect' => $redirect_url,
+            'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
+            'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+        ));
+    }
+
+
+    /**
+     * Handle AJAX request to install external plugins
+     * 
+     * @since 1.2.0
+     * @return void
+     */
+    public function install_modules_ajax_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_install_modules' ) {
+            $plugin_slug = sanitize_text_field( $_POST['plugin_slug'] );
+            $plugin_zip = esc_url_raw( $_POST['plugin_url'] );
+
+            // Capture any output to avoid HTML mixed with JSON
+            ob_start();
+
+            // Check if the plugin is already installed
+            if ( Modules::is_plugin_installed( $plugin_slug ) ) {
+                // If the plugin is installed, try to update it
+                $installed = Modules::upgrade_plugin( $plugin_slug );
+            } else {
+                // If the plugin is not installed, try to install it
+                $installed = Modules::install_plugin( $plugin_zip );
+            }
+
+            // Clear any output to avoid HTML mixed with JSON
+            ob_end_clean();
+
+            if ( ! is_wp_error( $installed ) && $installed ) {
+                $plugin_file = WP_PLUGIN_DIR . '/' . $plugin_slug;
+                $activate = activate_plugin( $plugin_file );
+            
+                if ( ! is_wp_error( $activate ) ) {
+                    $response = array(
+                        'status'  => 'success',
+                        'toast_header_title' => esc_html__( 'Plugin instalado e ativado.', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'Plugin instalado e ativado com sucesso.', 'joinotify' ),
+                    );
+                } else {
+                    $response = array(
+                        'status'  => 'error',
+                        'toast_header_title' => esc_html__( 'Falha ao ativar o plugin.', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'O plugin foi instalado, mas não pôde ser ativado.', 'joinotify' ),
+                    );
+                }
+            } else {
+                $response = array(
+                    'status'  => 'error',
+                    'toast_header_title' => esc_html__( 'Falha ao instalar/atualizar o plugin.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'Ocorreu um erro ao tentar instalar ou atualizar o plugin.', 'joinotify' ),
+                );
+            }
+
+            // Send JSON response
+            wp_send_json( $response );
+        }
+    }
+
+
+    /**
+     * Activate plugin when is installed
+     * 
+     * @since 1.2.0
+     * @return void
+     */
+    public function activate_plugin_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_activate_plugin' ) {
+            $plugin_slug = sanitize_text_field( $_POST['plugin_slug'] );
+            $activate = activate_plugin( $plugin_slug );
+    
+            if ( is_wp_error( $activate ) ) {
+                $response = array(
+                    'status'  => 'error',
+                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'flexify-checkout-for-woocommerce' ),
+                    'toast_body_title' => $activate->get_error_message(),
+                );
+            } else {
+                $response = array(
+                    'status'  => 'success',
+                    'toast_header_title' => esc_html__( 'Plugin ativado com sucesso.', 'flexify-checkout-for-woocommerce' ),
+                    'toast_body_title' => esc_html__( 'Novo recurso adicionado!', 'flexify-checkout-for-woocommerce' ),
+                );
+            }
+
+            wp_send_json( $response );
+        }
+    }
 }

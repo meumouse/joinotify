@@ -2,6 +2,14 @@
 
 use MeuMouse\Joinotify\Admin\Admin;
 
+/**
+ * Template file for load builder files
+ * 
+ * @since 1.0.0
+ * @version 1.2.0
+ * @package MeuMouse.com
+ */
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 
@@ -19,10 +27,3 @@ defined('ABSPATH') || exit; ?>
         include_once JOINOTIFY_INC . 'Views/Builder/' . $file;
     endforeach; ?>
 </div>
-
-<?php if ( Admin::get_setting('enable_visual_tour') === 'yes' ) : ?>
-    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
-
-    <?php wp_enqueue_script( 'joinotify-driverjs-init', JOINOTIFY_ASSETS . 'vendor/driverjs/init-driverjs.js', array('jquery'), JOINOTIFY_VERSION ); ?>
-<?php endif; ?>

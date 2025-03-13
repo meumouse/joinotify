@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WPForms plugin
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Wpforms extends Integrations_Base {
@@ -21,7 +21,7 @@ class Wpforms extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -38,6 +38,9 @@ class Wpforms extends Integrations_Base {
 
             // add placeholders
             add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+
+            // add conditions
+            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
         }
     }
 
@@ -46,6 +49,7 @@ class Wpforms extends Integrations_Base {
      * Add WPForms triggers
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -62,7 +66,6 @@ class Wpforms extends Integrations_Base {
                 'title' => esc_html__( 'Pagamento processado pelo PayPal', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um formulário de pagamento do WPForms é processado usando PayPal.', 'joinotify' ),
                 'require_settings' => true,
-                'class' => 'locked',
             ),
         );
 
@@ -150,5 +153,44 @@ class Wpforms extends Integrations_Base {
         }
     
         return $forms_list;
+    }
+
+
+    /**
+     * Add conditions for WPForms triggers
+     * 
+     * @since 1.2.0
+     * @param array $conditions | Current conditions
+     * @return array
+     */
+    public function add_conditions( $conditions ) {
+        // Define reusable conditions
+        $common_conditions = array(
+            'field_value' => array(
+                'title' => __( 'Valor de um campo do formulário', 'joinotify' ),
+                'description' => __( 'Permite verificar um valor específico de um campo do formulário enviado.', 'joinotify' ),
+            ),
+            'user_meta' => array(
+                'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                'description' => __( 'Permite verificar metadados específicos do usuário.', 'joinotify' ),
+            ),
+        );
+    
+        // Define triggers and their associated conditions
+        $wpforms_conditions = array(
+            'wpforms_process_complete' => array( 'field_value', 'user_meta' ),
+            'wpforms_paypal_standard_process_complete' => array( 'field_value', 'user_meta' ),
+        );
+    
+        // Build the final conditions array dynamically
+        $formatted_conditions = array();
+        
+        foreach ( $wpforms_conditions as $trigger => $keys ) {
+            foreach ( $keys as $key ) {
+                $formatted_conditions[ $trigger ][ $key ] = $common_conditions[ $key ];
+            }
+        }
+    
+        return array_merge( $conditions, $formatted_conditions );
     }
 }

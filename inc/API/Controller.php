@@ -5,7 +5,6 @@ namespace MeuMouse\Joinotify\API;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
-use MeuMouse\Joinotify\API\License;
 use MeuMouse\Joinotify\Builder\Placeholders;
 
 use WP_REST_Controller;
@@ -19,7 +18,7 @@ defined('ABSPATH') || exit;
  * Controller for API requests
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Controller {
@@ -140,7 +139,7 @@ class Controller {
      * Send a text message on WhatsApp from Proxy API
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -149,6 +148,7 @@ class Controller {
         $receiver = $request->get_param('receiver');
         $message = $request->get_param('message');
         $delay = $request->get_param('delay');
+        $delay = is_numeric( $delay ) ? (int) $delay : 0;
         $response_code = self::send_message_text( $sender, $receiver, $message, $delay );
 
         if ( 201 === $response_code ) {
@@ -169,7 +169,7 @@ class Controller {
      * Send message media on WhatsApp from Proxy API
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -179,6 +179,7 @@ class Controller {
         $media_type = $request->get_param('media_type');
         $media_url = $request->get_param('media_url');
         $delay = $request->get_param('delay');
+        $delay = is_numeric( $delay ) ? (int) $delay : 0;
         $response_code = self::send_message_media( $sender, $receiver, $media_type, $media_url, $delay );
 
         if ( 201 === $response_code ) {
@@ -229,7 +230,7 @@ class Controller {
      * Get connection state of an instance
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $phone | Phone number
      * @return array|WP_Error Response from API or WP_Error on failure
      */
@@ -260,6 +261,10 @@ class Controller {
                 $status = 'disconnected';
             }
 
+            if ( JOINOTIFY_DEBUG_MODE ) {
+                Logger::register_log( "Connection state for $phone is $status", 'INFO' );
+            }
+
             update_option( 'joinotify_status_connection_'. $phone, $status );
         }
 
@@ -269,40 +274,10 @@ class Controller {
 
 
     /**
-     * Prepare the receiver phone number with the correct format
-     * 
-     * @since 1.0.0
-     * @version 1.1.0
-     * @param string $receiver |  Receiver phone
-     * @return string
-     */
-    public static function prepare_receiver( $receiver, $context = array() ) {
-        // First, we replace all placeholders, including {{ field_id=[...] }}
-        $receiver = Placeholders::replace_placeholders( $receiver, $context );
-    
-        // Keep only digits in the number
-        $receiver = preg_replace( '/\D/', '', $receiver );
-        $country_code = Admin::get_setting('joinotify_default_country_code');
-    
-        // add country code if needed
-        if ( preg_match( '/^\d{10,11}$/', $receiver ) && strpos( $receiver, $country_code ) !== 0 ) {
-            $receiver = $country_code . $receiver;
-        }
-
-        // Check receiver phone number
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( 'prepare_receiver() receiver finished: ' . print_r( $receiver, true ) );
-        }
-    
-        return $receiver;
-    }
-
-
-    /**
      * Send messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $message | Message text for send
@@ -322,7 +297,7 @@ class Controller {
         $link_preview = apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true );
 
         $payload = wp_json_encode( array(
-            'number' => preg_replace( '/\D/', '', $receiver ),
+            'number' => joinotify_prepare_receiver( $receiver ),
             'linkPreview' => $link_preview,
             'text' => $message,
             'delay' => $timestamp_delay,
@@ -360,7 +335,7 @@ class Controller {
      * Send messsage media on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $media_type | Media type (image, audio, video or document)
@@ -381,7 +356,7 @@ class Controller {
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendMedia/' . $sender;
 
         $payload = wp_json_encode( array(
-            'number' => preg_replace( '/\D/', '', $receiver ),
+            'number' => joinotify_prepare_receiver( $receiver ),
             'mediatype' => $media_type,
             'media' => $media,
             'delay' => $timestamp_delay,
@@ -419,6 +394,7 @@ class Controller {
      * Send messsage audio on WhatsApp
      * 
      * @since 1.1.0
+     * @version 1.2.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $audio | Audio URL
@@ -438,7 +414,7 @@ class Controller {
         $encoding = apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true );
 
         $payload = wp_json_encode( array(
-            'number' => preg_replace( '/\D/', '', $receiver ),
+            'number' => joinotify_prepare_receiver( $receiver ),
             'audio' => $audio,
             'delay' => $timestamp_delay,
             'encoding' => $encoding,
@@ -477,27 +453,25 @@ class Controller {
      * Send OTP messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $phone | Phone number
      * @param string $otp | OTP code
      * @return int
      */
     public static function send_validation_otp( $phone, $otp ) {
         $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/meumouse';
-        $message = sprintf( __( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
-
-        $payload = wp_json_encode( array(
-            'number' => $phone,
-            'linkPreview' => false,
-            'text' => $message,
-        ));
+        $message = sprintf( esc_html__( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
 
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
                 'apikey' => self::$whatsapp_api_key,
             ),
-            'body' => $payload,
+            'body' => wp_json_encode( array(
+                'number' => joinotify_prepare_receiver( $phone ),
+                'linkPreview' => false,
+                'text' => $message,
+            )),
             'timeout' => 10,
         ));
 

@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Builder;
 
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
-use MeuMouse\Joinotify\Builder\Messages;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,6 +11,7 @@ defined('ABSPATH') || exit;
  * This class handles with actions functions
  * 
  * @since 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Actions {
@@ -118,6 +118,7 @@ class Actions {
      * Update a action inside workflow by ID
      *
      * @since 1.1.0
+     * @version 1.2.0
      * @param array &$workflow_item | Reference the item from workflow
      * @param string $action_id | Action ID for update
      * @param array $new_action_data | New data action
@@ -125,26 +126,61 @@ class Actions {
      */
     public static function update_action_by_id( &$workflow_item, $action_id, $new_action_data ) {
         if ( isset( $workflow_item['id'] ) && $workflow_item['id'] === $action_id ) {
-            // update only necessary data keeping the original structure
+            // update only the necessary data keeping the original structure
             $workflow_item['data'] = array_merge( $workflow_item['data'], $new_action_data['data'] );
-
+    
             // update action description
             if ( isset( $workflow_item['data']['action'] ) ) {
                 $workflow_item['data']['description'] = Messages::build_workflow_action_description( $workflow_item );
             }
-
+    
             return true;
         }
-
-        // if has children items, find recursive
+    
+        // if there is children, loop recursively
         if ( isset( $workflow_item['children'] ) && is_array( $workflow_item['children'] ) ) {
-            foreach ( $workflow_item['children'] as &$child ) {
-                if ( self::update_action_by_id( $child, $action_id, $new_action_data ) ) {
-                    return true;
+            foreach ( $workflow_item['children'] as $key => &$child_group ) {
+                // if is an array of actions (ex: action_true, action_false), loop each action inside it
+                if ( is_array( $child_group ) ) {
+                    foreach ( $child_group as &$child ) {
+                        if ( self::update_action_by_id( $child, $action_id, $new_action_data ) ) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
-
+    
         return false;
+    }
+
+
+    /**
+     * Extract all actions from workflow content
+     * 
+     * @since 1.2.0
+     * @param array $workflow_content | Workflow content array
+     * @return array | Array of actions
+     */
+    public static function extract_all_actions( $workflow_content ) {
+        $actions = array();
+    
+        foreach ( $workflow_content as $item ) {
+            if ( $item['type'] === 'action' ) {
+                $actions[] = $item;
+            }
+    
+            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
+                foreach ( $item['children'] as $child_group ) {
+                    foreach ( $child_group as $child_action ) {
+                        if ( $child_action['type'] === 'action' ) {
+                            $actions[] = $child_action;
+                        }
+                    }
+                }
+            }
+        }
+    
+        return $actions;
     }
 }

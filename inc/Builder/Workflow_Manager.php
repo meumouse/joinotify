@@ -13,6 +13,7 @@ defined('ABSPATH') || exit;
  * This class manages the workflow functions
  * 
  * @since 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Workflow_Manager {
@@ -143,9 +144,10 @@ class Workflow_Manager {
                     $trigger_details['context'] = isset( $workflow['data']['context'] ) ? $workflow['data']['context'] : '';
                     $trigger_details['data_trigger'] = isset( $workflow['data']['trigger'] ) ? $workflow['data']['trigger'] : '';
 
-                    $workflow_html[] = Builder_Components::get_trigger_html( $post_id, $trigger_details );
+                    // get trigger content html
+                    $workflow_html[] = Builder_Components::workflow_trigger_component( $post_id, $trigger_details );
                 } elseif ( isset( $workflow['type'] ) && strpos( $workflow['type'], 'connector' ) !== false ) {
-                    $workflow_html[] = Builder_Components::get_workflow_connector( $post_id, $workflow['type'], $workflow );
+                    $workflow_html[] = Builder_Components::workflow_connector_component( $post_id, $workflow['type'], $workflow );
                 } elseif ( isset( $workflow['type'] ) && $workflow['type'] === 'action' ) {
                     $action_details = array();
                     $action_details['id'] = isset( $workflow['id'] ) ? $workflow['id'] : '';
@@ -154,7 +156,8 @@ class Workflow_Manager {
                     $action_details['sender'] = isset( $workflow['data']['sender'] ) ? $workflow['data']['sender'] : '';
                     $action_details['receiver'] = isset( $workflow['data']['receiver'] ) ? $workflow['data']['receiver'] : '';
                     
-                    $workflow_html[] = Builder_Components::get_action_html( $post_id, $action_details );
+                    // get action content html
+                    $workflow_html[] = Builder_Components::workflow_action_component( $post_id, $action_details );
                 }
             }
     

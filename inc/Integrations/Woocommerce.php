@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
@@ -25,7 +25,7 @@ class Woocommerce extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.0
      * @return void
      */
     public function __construct() {
@@ -50,6 +50,9 @@ class Woocommerce extends Integrations_Base {
             if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
                 add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
             }
+
+            // add conditions
+            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
         }
     }
 
@@ -722,5 +725,81 @@ class Woocommerce extends Integrations_Base {
         ));
 
         return $placeholders;
+    }
+
+
+    /**
+     * Add conditions for WooCommerce triggers
+     * 
+     * @since 1.2.0
+     * @param array $conditions | Current conditions
+     * @return array
+     */
+    public function add_conditions( $conditions ) {
+        // Define reusable conditions
+        $common_conditions = array(
+            'order_status' => array(
+                'title' => __( 'Status do pedido', 'joinotify' ),
+                'description' => __( 'Permite verificar o status do pedido.', 'joinotify' ),
+            ),
+            'order_total' => array(
+                'title' => __( 'Valor total do pedido', 'joinotify' ),
+                'description' => __( 'Permite verificar o valor total do pedido.', 'joinotify' ),
+            ),
+            'order_paid' => array(
+                'title' => __( 'Pedido pago', 'joinotify' ),
+                'description' => __( 'Permite verificar se o pedido foi pago.', 'joinotify' ),
+            ),
+            'products_purchased' => array(
+                'title' => __( 'Produtos adquiridos', 'joinotify' ),
+                'description' => __( 'Permite verificar os produtos adquiridos no pedido.', 'joinotify' ),
+            ),
+            'payment_method' => array(
+                'title' => __( 'Forma de pagamento', 'joinotify' ),
+                'description' => __( 'Permite verificar a forma de pagamento do pedido.', 'joinotify' ),
+            ),
+            'shipping_method' => array(
+                'title' => __( 'Forma de entrega', 'joinotify' ),
+                'description' => __( 'Permite verificar a forma de entrega do pedido.', 'joinotify' ),
+            ),
+            'user_meta' => array(
+                'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                'description' => __( 'Permite verificar metadados específicos do usuário.', 'joinotify' ),
+            ),
+            'customer_email' => array(
+                'title' => __( 'E-mail do cliente', 'joinotify' ),
+                'description' => __( 'Permite verificar o e-mail do cliente que realizou o pedido.', 'joinotify' ),
+            ),
+            'refund_amount' => array(
+                'title' => __( 'Valor do reembolso', 'joinotify' ),
+                'description' => __( 'Permite verificar o valor do reembolso do pedido.', 'joinotify' ),
+            ),
+            'subscription_status' => array(
+                'title' => __( 'Status da assinatura', 'joinotify' ),
+                'description' => __( 'Permite verificar o status da assinatura criada.', 'joinotify' ),
+            ),
+        );
+    
+        // Define triggers and their associated conditions
+        $woocommerce_conditions = array(
+            'woocommerce_new_order' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_checkout_order_processed' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_order_status_completed' => array( 'customer_email', 'order_total', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta' ),
+            'woocommerce_order_status_changed' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_order_partially_refunded' => array( 'refund_amount', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_order_fully_refunded' => array( 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_checkout_subscription_created' => array( 'order_paid', 'subscription_status', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+        );
+    
+        // Build the final conditions array dynamically
+        $formatted_conditions = array();
+        
+        foreach ( $woocommerce_conditions as $trigger => $keys ) {
+            foreach ( $keys as $key ) {
+                $formatted_conditions[ $trigger ][ $key ] = $common_conditions[ $key ];
+            }
+        }
+    
+        return array_merge( $conditions, $formatted_conditions );
     }
 }

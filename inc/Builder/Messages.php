@@ -32,7 +32,7 @@ class Messages {
 
                 break;
             case 'condition':
-                $message = self::build_condition_description( $workflow_action['data'] );
+                $message = self::build_condition_description( $workflow_action );
 
                 break;
             case 'send_whatsapp_message_text':
@@ -96,14 +96,14 @@ class Messages {
      * Build a message for condition actions
      * 
      * @since 1.0.0
-     * @version 1.1.0
-     * @param array $data | Message data
+     * @version 1.2.0
+     * @param array $condition | Condition data
      * @return string
      */
-    public static function build_condition_description( $data ) {
-        $title = isset( $data['title'] ) ? $data['title'] : '';
-        $condition_text = isset( $data['condition_content']['type_text'] ) ? $data['condition_content']['type_text'] : '';
-        $condition_value = isset( $data['condition_content']['value_text'] ) ? $data['condition_content']['value_text'] : '';
+    public static function build_condition_description( $condition ) {
+        $title = $condition['data']['title'] ?? '';
+        $condition_text = $condition['data']['condition_content']['type_text'] ?? '';
+        $condition_value = $condition['data']['condition_content']['value_text'] ?? '';
 
         $description = '<div class="condition-description">';
             $description .= sprintf( __( '%s %s: %s' ), $title, mb_strtolower( $condition_text, 'UTF-8' ), $condition_value );

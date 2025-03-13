@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
  * Get workflow templates for import on builder
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.0
  * @package MeuMouse.com
  */
 class Workflow_Templates {
@@ -71,7 +71,7 @@ class Workflow_Templates {
      * Get list of JSON template file names on Joinotify repository without downloading the content
      *
      * @since 1.0.1
-     * @version 1.1.0
+     * @version 1.2.0
      * @param string $owner | The repository owner
      * @param string $repository | The repository name
      * @param string $path | Path for repository
@@ -81,14 +81,6 @@ class Workflow_Templates {
      * @return array An array of file names of the JSON templates
      */
     public static function get_templates_list( $owner, $repository, $path, $ref = 'main', $token = null ) {
-        $transient_key = 'joinotify_templates_list_' . md5( $owner . $repository . $path . $ref );
-    
-        $cached_list = get_transient( $transient_key );
-    
-        if ( false !== $cached_list ) {
-            return $cached_list;
-        }
-    
         $api_url = "https://api.github.com/repos/$owner/$repository/contents/$path?ref=$ref";
     
         $ch = curl_init( $api_url );
@@ -120,9 +112,7 @@ class Workflow_Templates {
                 $template_files[] = $item['name'];
             }
         }
-    
-        set_transient( $transient_key, $template_files, DAY_IN_SECONDS );
-    
+
         return $template_files;
     }
 

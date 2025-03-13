@@ -1,7 +1,7 @@
 <?php
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Admin\Components;
+use MeuMouse\Joinotify\Admin\Components as Admin_Components;
 use MeuMouse\Joinotify\Core\Helpers;
 
 // Exit if accessed directly.
@@ -22,7 +22,7 @@ defined('ABSPATH') || exit; ?>
     <h3 class="mb-3"><?php esc_html_e( 'Remetentes cadastrados', 'joinotify' ); ?></h3>
 
     <div id="joinotify_current_phones_senders">
-        <?php echo Components::current_phones_senders(); ?>
+        <?php echo Admin_Components::current_phones_senders(); ?>
     </div>
 
     <div class="mt-5">
@@ -59,7 +59,7 @@ defined('ABSPATH') || exit; ?>
                                 <label for="joinotify_select_sender_test" class="form-label"><?php esc_html_e( 'Escolha um remetente:', 'joinotify' ); ?></label>
                                 <select id="joinotify_select_sender_test" class="form-select form-select-lg mw-100">
                                     <?php foreach ( $phones_senders as $phone ) : ?>
-                                        <option value="<?php esc_attr_e( $phone ) ?>" class="get-sender-number"><?php echo esc_html( Helpers::format_phone_number( $phone ) ) ?></option>
+                                        <option value="<?php esc_attr_e( $phone ) ?>" class="get-sender-number"><?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

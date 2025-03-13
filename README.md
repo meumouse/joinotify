@@ -32,13 +32,24 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
-Versão 1.1.2 (24/02/2024)
+Versão 1.2.0 (12/03/2025)
+* Correção de bugs
+* Otimizações
+* Recurso adicionado: Biblioteca "giggsey/libphonenumber-for-php" para formatação e validação de telefones em formato internacional
+* Recurso adicionado: Biblioteca "Selectize" para multi seleção de elementos
+* Recurso removido: Variável de texto {{ post_id }}
+* Recurso adicionado: Condições "Método de pagamento", "Método de entrega" e "Pedido pago"
+* Recurso adicionado: Acionamentos: "Pagamento processado pelo PayPal"
+* Recurso adicionado: Classe "Routines" para execução de rotinas; E adicionado rotina de verificação de conexão do telefones e atualizações
+* Recurso adicionado: Variáveis de texto {{ fc_inter_pix_copia_cola }}, {{ fc_inter_pix_expiration_time }}, {{ fc_inter_bank_slip_url }} e {{ fcrc_recovery_link }}
+
+Versão 1.1.2 (24/02/2025)
 * Correção de bugs
 
-Versão 1.1.1 (24/02/2024)
+Versão 1.1.1 (24/02/2025)
 * Correção de bugs
 
-Versão 1.1.0 (24/02/2024)
+Versão 1.1.0 (24/02/2025)
 * Correção de bugs
 * Otimizações
 * Recurso adicionado: Ativar modo depuração

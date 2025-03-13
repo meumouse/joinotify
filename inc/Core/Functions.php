@@ -2,6 +2,8 @@
 
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Builder\Placeholders;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
@@ -28,7 +30,7 @@ function joinotify_check_admin_page( $admin_page ) {
  * @param string $sender | Instance phone number
  * @param string $receiver | Phone number for receive message
  * @param string $message | Message text for send
- * @param int $delay | Delay in miliseconds before send message
+ * @param int $delay | Delay in seconds before send message
  * @return int
  */
 function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $delay = 0 ) {
@@ -86,4 +88,46 @@ function joinotify_proxy_api_media_message_text_endpoint() {
  */
 function joinotify_get_proxy_api_key() {
    return Admin::get_setting('proxy_api_key');
+}
+
+
+/**
+ * Prepare the receiver phone number with the correct format
+ * 
+ * @since 1.0.0
+ * @version 1.2.0
+ * @param string $receiver |  Receiver phone
+ * @param array $payload | Payload for replace placeholders
+ * @return string
+ */
+function joinotify_prepare_receiver( $receiver, $payload = array() ) {
+	// First, we replace all placeholders
+	$receiver = Placeholders::replace_placeholders( $receiver, $payload );
+
+	// Keep only digits in the number
+	$format_phone  = Helpers::validate_and_format_phone( $receiver );
+	$phone = preg_replace( '/\D/', '', $format_phone ); // Remove all non-digit characters
+
+	// Check receiver phone number
+	if ( JOINOTIFY_DEV_MODE ) {
+		error_log( 'joinotify_prepare_receiver() receiver finished: ' . print_r( $phone, true ) );
+	}
+
+	return $phone;
+}
+
+
+/**
+ * Replace placeholders in message
+ * 
+ * @since 1.2.0
+ * @param string $message | Message text
+ * @param array $payload | Payload for replace placeholders
+ * @return string
+ */
+function joinotify_prepare_message( $message, $payload = array() ) {
+	// First, we replace all placeholders
+	$message = Placeholders::replace_placeholders( $message, $payload );
+
+	return $message;
 }

@@ -12,6 +12,7 @@
 	 * Joinotify builder object variable
 	 * 
 	 * @since 1.1.0
+	 * @version 1.2.0
 	 * @package MeuMouse.com
 	 */
 	const Builder = {
@@ -52,6 +53,7 @@
 		 * Init
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		init: function() {
 			// hide builder loader
@@ -61,12 +63,16 @@
 
 			this.addTrigger();
 			this.workflowSteps();
+			this.downloadTemplates();
+			this.filterWorkflowTemplates();
 			this.triggerTabs();
 			this.loadWorkflowData();
-			this.fetchWorkflowTemplates();
 			this.uploadWorkflowTemplates();
 			this.onWorkflowReady();
 			this.onUpdatedWorkflow();
+			this.initBootstrapComponents();
+			this.installModule();
+			this.activeModule();
 		},
 
 		/**
@@ -107,6 +113,7 @@
 		 * Run functions on workflow updated
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		onUpdatedWorkflow: function() {
 			// on workflow updated event
@@ -115,8 +122,10 @@
 				Builder.codeEditor();
 				Builder.codePreview();
 				Builder.correctTriggerSettingsModal();
+				Builder.adjustHeightCondition();
 				Builder.validateInputCurrency();
 				Builder.emojiPicker();
+				Builder.searchWooProducts();
 			});
 		},
 
@@ -318,7 +327,7 @@
 		 * Upload templates
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		uploadWorkflowTemplates: function() {
 			// Add event handlers for dragover and dragleave
@@ -343,7 +352,7 @@
 			$('#upload_template_file').on('change', function(e) {
 				var file = e.target.files[0];
 
-				Builder.importWorkflow( file, $(this).parents('.dropzone-license') );
+				Builder.importWorkflow( file, $(this).parents('.dropzone') );
 			});
 		},
 
@@ -351,7 +360,7 @@
 		 * Import workflow file
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 * @param {string} file | File
 		 * @param {string} dropzone | Dropzone div
 		 * @returns void
@@ -362,11 +371,11 @@
 				var formData = new FormData();
 
 				formData.append('action', 'joinotify_import_workflow_templates');
-				formData.append('security', params.import_nonce);
+				formData.append('security', params.nonces.import_nonce);
 				formData.append('file', file);
 
 				if (filename) {
-					dropzone.children('.file-list').removeClass('d-none').text(filename);
+					dropzone.find('.file-list').removeClass('d-none').text(filename);
 				}
 
 				dropzone.addClass('file-processing');
@@ -379,6 +388,7 @@
 					var btn = $(this);
 					var button_state = Builder.keepButtonState(btn);
 
+					// send ajax request
 					$.ajax({
 						url: params.ajax_url,
 						type: 'POST',
@@ -412,7 +422,7 @@
 									dropzone.children('.drag-text').removeClass('d-none');
 									dropzone.children('.drag-and-drop-file').removeClass('d-none');
 									dropzone.children('.upload-license-key').removeClass('d-none');
-									dropzone.children('.file-list').addClass('d-none');
+									dropzone.find('.file-list').addClass('d-none');
 
 									// error response
 									Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
@@ -586,59 +596,6 @@
 		},
 
 		/**
-		 * Fetch workflows templates
-		 * 
-		 * @since 1.0.0
-		 * @version 1.1.0
-		 * @package MeuMouse.com
-		 */
-		fetchWorkflowTemplates: function() {
-			// get parameter id from URL
-			var id = Builder.getParamByName('id');
-
-			// Make the AJAX request to get the number of templates
-			if ( ! id ) {
-				$.ajax({
-					url: params.ajax_url,
-					method: 'POST',
-					data: {
-						action: 'joinotify_get_templates_count',
-						template: 'template',
-					},
-					success: function(response) {
-						if (params.debug_mode) {
-							console.log(response);
-						}
-
-						if (response.status === 'success') {
-							var template_count = response.template_count;
-
-							// Get the container element
-							var templates_group = $('.joinotify-templates-group');
-
-							// Clear any existing content
-							templates_group.empty();
-
-							// Loop over the number of templates and create placeholder elements
-							for (var i = 0; i < template_count; i++) {
-								templates_group.append('<div class="template-item placeholder-content"></div>');
-							}
-
-							$('#joinotify_template_library_container').addClass('templates-counted');
-						} else {
-							// Handle error
-							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
-						}
-					},
-					error: function(xhr, status, error) {
-						// Handle AJAX error
-						console.error('AJAX Error:', error);
-					},
-				});
-			}
-		},
-
-		/**
 		 * Get URL parameter by name
 		 * 
 		 * @since 1.0.0
@@ -770,11 +727,11 @@
 		 * Enable add trigger button
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		enableAddTriggerButton: function() {
 			// set default workflow name
-			$('#joinotify_set_workflow_name').val(params.default_workflow_name);
+			$('#joinotify_set_workflow_name').val(params.i18n.default_workflow_name);
 			
 			/**
 			 * Check if workflow name and trigger are filled
@@ -803,6 +760,10 @@
 
 			// Select trigger event
 			$(document).on('click', '.trigger-item', function() {
+				if ( $(this).hasClass('require-plugins') ) {
+					return;
+				}
+
 				$('.trigger-item').removeClass('active');
 				$(this).toggleClass('active');
 
@@ -1044,6 +1005,7 @@
 						break;
 				case 'condition':
 						let condition = container.find('.condition-item.active').data('condition');
+						let condition_type = container.find('.condition-settings-item.active .get-condition-type option:selected').val();
 
 						action_data = {
 							type: 'action',
@@ -1053,7 +1015,7 @@
 								title: container.find('.condition-item.active .title').text(),
 								condition_content: {
 									condition: container.find('.condition-settings-item.active').data('condition'),
-									type: container.find('.condition-settings-item.active .get-condition-type option:selected').val(),
+									type: condition_type,
 									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text(),
 									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val(),
 									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val(),
@@ -1061,11 +1023,21 @@
 							},
 						};
 
-						// if condition is "products_purchased"
-						if (condition === 'products_purchased') {
-							action_data.data.condition_content.condition_content = {
-								products: Builder.purchasedProducts,
-							};
+						if ( condition === 'products_purchased' ) {
+							action_data.data.condition_content.products = Builder.purchasedProducts;
+							action_data.data.condition_content.value = '';
+						} else if ( condition === 'user_meta' ) {
+							action_data.data.condition_content.meta_key = container.find('.meta-key-wrapper').children('.get-condition-value').val();
+
+							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
+								action_data.data.condition_content.value = '';
+							}
+						} else if ( condition === 'field_value' ) {
+							action_data.data.condition_content.field_id = container.find('.field-id-wrapper').children('.get-condition-value').val();
+
+							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
+								action_data.data.condition_content.value = '';
+							}
 						}
 
 						break;
@@ -1226,14 +1198,14 @@
 		 * Remove action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		removeAction: function() {
 			$(document).on('click', '.exclude-action', function(e) {
 				e.preventDefault();
 
 				// get confirmation
-				if ( ! confirm(params.confirm_exclude_action) ) {
+				if ( ! confirm(params.i18n.confirm_exclude_action) ) {
 					return;
 				}
 
@@ -1339,7 +1311,7 @@
 		 * Load workflow data
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 * @package MeuMouse.com
 		 */
 		loadWorkflowData: function() {
@@ -1400,7 +1372,7 @@
 
 									if ('publish' === response.workflow_status) {
 										$('#joinotify_workflow_status_switch').prop('checked', true);
-										$('#joinotify_workflow_status_title').text(params.status_active);
+										$('#joinotify_workflow_status_title').text(params.i18n.status_active);
 									}
 
 									// workflow content
@@ -1610,18 +1582,55 @@
 				});
 			}, 600);
 	  	},
-	  
+
+		/**
+		 * Change visibility for conditions settings
+		 * 
+		 * @since 1.2.0
+		 */
+		changeVisibilityForConditions: function() {
+			/**
+			 * Toggle conditions settings
+			 * 
+			 * @since 1.2.0
+			 * @param {Object} select | Input select
+			 */
+			function toggleConditionsSettings(select) {
+				var select_value = select.val();
+
+				// check select value
+				if ( select_value === 'empty' || select_value === 'not_empty' ) {
+					select.parent('div').siblings('.meta-value-wrapper, .field-value-wrapper').addClass('d-none').children('.get-condition-value').removeClass('required-setting');
+				} else {
+					select.parent('div').siblings('.meta-value-wrapper, .field-value-wrapper').removeClass('d-none').children('.get-condition-value').addClass('required-setting');
+				}
+			}
+
+
+			// hide input condition value when is selected "empty" and "not empty"
+			$(document).on('change', '.get-condition-type', function() {
+				toggleConditionsSettings( $(this) );
+			});
+
+			// hide elements on page load
+			setTimeout(() => {
+				$('.get-condition-type').each( function() {
+					toggleConditionsSettings( $(this) );
+				});
+			}, 600);
+		},
 	
 		/**
 		 * Change visibility for elements
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 * @package MeuMouse.com
 		 */
 		changeVisibilityForElements: function() {
 			Builder.changeVisibilityForTimeDelay();
 			Builder.changeVisibilityForCouponCode();
+			Builder.changeVisibilityForConditions();
 		},
 		
 		/**
@@ -1715,7 +1724,7 @@
 		 * Export workflow file action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 * @package MeuMouse.com
 		 */
 		exportWorkflow: function() {
@@ -1731,7 +1740,7 @@
 					data: {
 						action: 'joinotify_export_workflow',
 						post_id: post_id,
-						security: params.export_nonce,
+						security: params.nonces.export_nonce,
 					},
 					dataType: 'json',
 					beforeSend: function() {
@@ -1765,7 +1774,7 @@
 		 * Activate workflow steps
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		workflowSteps: function() {
 			// choose workflow template
@@ -1783,26 +1792,28 @@
 				}, 1000);
 
 				if ( template_type === 'scratch' ) {
-						setTimeout(() => {
-							$('#joinotify_start_choose_container').removeClass('active');
-							$('#joinotify_choose_template_container').removeClass('active');
-							$('#joinotify_triggers_group').addClass('active');
-							$('#joinotify_triggers_content').addClass('active');
-							$('#joinotify_builder_navbar').addClass('active');
-						}, 1000);
+					setTimeout(() => {
+						$('#joinotify_start_choose_container').removeClass('active');
+						$('#joinotify_choose_template_container').removeClass('active');
+						$('#joinotify_triggers_group').addClass('active');
+						$('#joinotify_triggers_content').addClass('active');
+						$('#joinotify_builder_navbar').addClass('active');
+					}, 1000);
 				} else if ( template_type === 'template' ) {
-						setTimeout(() => {
-							$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
-							$('#joinotify_template_library_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
-						}, 1000);
+					let templates_container = $('#joinotify_template_library_container');
 
+					setTimeout(() => {
+						$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
+						templates_container.addClass('active slide-left-animation').removeClass('slide-right-animation');
+					}, 1000);
+
+					if ( ! templates_container.hasClass('templates-loaded') ) {
 						// get templates
 						$.ajax({
 							url: params.ajax_url,
 							method: 'POST',
 							data: {
 								action: 'joinotify_get_workflow_templates',
-								template: template_type,
 							},
 							success: function(response) {
 								if (params.debug_mode) {
@@ -1812,7 +1823,7 @@
 								try {
 									if (response.status === 'success') {
 										$('.joinotify-templates-group').html(response.template_html);
-										$('#joinotify_template_library_container').addClass('templates-loaded').removeClass('templates-counted');
+										templates_container.addClass('templates-loaded').removeClass('templates-counted');
 									} else {
 										Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
 									}
@@ -1820,12 +1831,16 @@
 									console.log(error);
 								}
 							},
+							error: function(error) {
+								console.error(error);
+							},
 						});
+					}
 				} else if ( template_type === 'import' ) {
-						setTimeout(() => {
-							$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
-							$('#joinotify_import_template_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
-						}, 1000);
+					setTimeout(() => {
+						$('#joinotify_start_choose_container').removeClass('active slide-left-animation').addClass('slide-right-animation');
+						$('#joinotify_import_template_container').addClass('active slide-left-animation').removeClass('slide-right-animation');
+					}, 1000);
 				}
 			});
 
@@ -1836,6 +1851,7 @@
 				$('#joinotify_triggers_group').removeClass('active');
 				$('#joinotify_triggers_content').removeClass('active');
 				$('#joinotify_builder_navbar').removeClass('active');
+				$('#joinotify_template_library_container').removeClass('active');
 				$('#joinotify_choose_template_container').addClass('active');
 				$('#joinotify_start_choose_container').addClass('active');
 			});
@@ -1848,12 +1864,120 @@
 				$('#joinotify_start_choose_container').addClass('active');
 			});
 		},
+
+		/**
+		 * Download workflow templates
+		 * 
+		 * @since 1.2.0
+		 */
+		downloadTemplates: function() {
+			$(document).on('click', '.download-template', function(e) {
+				e.preventDefault();
+			
+				let btn = $(this);
+				let button_state = Builder.keepButtonState(btn);
+				let file = btn.data('file');
+			
+				btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+			
+				// send ajax request
+				$.ajax({
+					url: params.ajax_url,
+					method: 'POST',
+					data: {
+						action: 'joinotify_download_workflow_template',
+						security: params.nonces.import_nonce,
+						file: file,
+					},
+					success: function(response) {
+						if (params.debug_mode) {
+							console.log(response);
+						}
+
+						btn.html(button_state.html);
+			
+						if (response.status === 'success') {
+							// disable all template item buttons
+							$('.download-template').each( function() {
+								$(this).prop('disabled', true);
+							});
+
+							Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+
+							// redirect to workflow builder
+							window.location.href = response.redirect;
+						} else {
+							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+						}
+					},
+					error: function(error) {
+						console.error(error);
+
+						btn.prop('disabled', false).html(button_state.html);
+					},
+				});
+			});
+		},
+
+		/**
+		 * Search and filter workflow templates
+		 * 
+		 * @since 1.2.0
+		 */
+		filterWorkflowTemplates: function() {
+			let search_input = $('#joinotify_search_workflows');
+			let category_select = $('#joinotify_filter_library_categories');
+		
+			/**
+			 * Filter templates based on search query and category
+			 * 
+			 * @since 1.2.0
+			 */
+			function filter_templates() {
+				let search_query = search_input.val().toLowerCase().trim();
+				let selected_category = category_select.val();
+				let visible_count = 0; // counter for visible templates
+		
+				$('.joinotify-templates-group .template-item').each( function() {
+					let template = $(this);
+					let template_title = template.find('.title').text().toLowerCase();
+					let template_category = template.data('category');
+		
+					let matches_search = search_query === '' || template_title.includes(search_query);
+					let matches_category = selected_category === 'all' || template_category === selected_category;
+		
+					if ( matches_search && matches_category ) {
+						template.removeClass('d-none');
+						visible_count++;
+					} else {
+						template.addClass('d-none');
+					}
+				});
+		
+				// remove previous message and add new if necessary
+				$('.no-templates-message').remove();
+				
+				if ( visible_count === 0 ) {
+					$('.joinotify-templates-group').append(`<div class="no-templates-message text-center text-muted mt-4">${params.i18n.not_templates_found}</div>`);
+				}
+			}
+		
+			// Filter on input search
+			search_input.on('input', function() {
+				filter_templates();
+			});
+		
+			// Filter on change category
+			category_select.on('change', function() {
+				filter_templates();
+			});
+		},
 	
 		/**
 		 * Open WordPress media library popup on click
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.0
 		 */
 		openMediaLibrary: function() {
 			var file_frame;
@@ -1872,9 +1996,9 @@
 
 				// create media frame
 				file_frame = wp.media.frames.file_frame = wp.media({
-					title: params.set_media_title,
+					title: params.i18n.set_media_title,
 					button: {
-						text: params.use_this_media_title,
+						text: params.i18n.use_this_media_title,
 					},
 					multiple: false,
 				});
@@ -1934,6 +2058,9 @@
 					complete: function() {
 						btn.prop('disabled', false).html(button_state.html);
 					},
+					error: function(error) {
+						console.error(error);
+					},
 				});
 			});
 		},
@@ -1970,6 +2097,7 @@
 		 * Fetch all groups information
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		fetchAllGroups: function() {
 			// get groups details on open modal
@@ -2006,7 +2134,7 @@
 						}
 					},
 					error: function(error) {
-						console.log(error);
+						console.error(error);
 					},
 				});
 			});
@@ -2020,7 +2148,7 @@
 				navigator.clipboard.writeText(group_id).then( function() {
 					group_item.append(`<div class="confirm-copy-ui active">
 						<svg class="icon icon-lg icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg>
-						<span>${params.copy_group_id}</span>
+						<span>${params.i18n.copy_group_id}</span>
 					</div>`);
 
 					setTimeout(() => {
@@ -2040,8 +2168,42 @@
 		 * Save action settings
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		saveActionSettings: function() {
+			// check action on display modal
+			$(document).on('shown.bs.modal', '.modal.show', function() {
+				var modal = $(this);
+				var action_type = modal.find('.save-action-edit').data('action');
+				var initial_data = Builder.getActionData(action_type, modal);
+				
+				// storage initial data in the modal itself
+				modal.data('initial_data', JSON.stringify(initial_data));
+			
+				let save_button = modal.find('.save-action-edit');
+
+				// disable button if action is snippet php
+				if ( save_button.data('action') === 'snippet_php' ) {
+					save_button.prop('disabled', true);
+				}
+			});
+			
+			// check changes in inputs inside the modal
+			$(document).on('input change', '.modal.show :input', function() {
+				var modal = $(this).closest('.modal.show');
+				var action_type = modal.find('.save-action-edit').data('action');
+				var current_data = Builder.getActionData(action_type, modal);
+			
+				// compare the current data with the initial data
+				var is_changed = JSON.stringify(current_data) !== modal.data('initial_data');
+				let save_button = modal.find('.save-action-edit');
+
+				if ( save_button.data('action') === 'snippet_php' ) {
+					// active or disable button based on the change
+					save_button.prop('disabled', ! is_changed);
+				}
+			});
+			
 			// save action on click button
 			$(document).on('click', '.save-action-edit', function(e) {
 				e.preventDefault();
@@ -2105,6 +2267,7 @@
 		 * Initialize code editor
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 */
 		codeEditor: function() {
 			// initialize CodeMirror for each code editor
@@ -2137,7 +2300,12 @@
 
 					// update the textarea when has changes on editor
 					editor.on('change', function() {
-						textarea.value = editor.getValue();
+						let value = editor.getValue();
+						
+						// ensures that backslashes are correctly escaped
+						value = value.replace(/\\/g, '\\\\');
+					
+						textarea.value = value;
 						$(textarea).trigger('change');
 					});
 
@@ -2310,7 +2478,7 @@
 		 * @package MeuMouse.com
 		 */
 		emojiPicker: function() {
-			var i18n = params.emoji_picker_i18n;
+			var i18n = params.i18n.emoji_picker;
 
 			// check if emoji picker is already initialized
 			if ( ! $('.add-emoji-picker').hasClass('emoji-initialized') ) {
@@ -2375,69 +2543,200 @@
 		 * Search WooCommerce products
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.0
 		 * @package MeuMouse.com
 		 */
 		searchWooProducts: function() {
-			var spinner = false;
+			setTimeout(() => {
+				$('.search-products').each( function() {
+					let select_products_element = $(this);
+            		let select_products = JSON.parse(select_products_element.attr('data-selected-products') || '[]');
 
-			// on search input keyup
-			$(document).on('keyup', '.search-products', function() {
-				let input = $(this);
-				let input_search = input.val().trim();
-				let results_container = $('.search-products-results-wrapper');
-
-				// check if input has more than 3 characters
-				if (input_search.length >= 3) {
-					if ( ! spinner ) {
-						spinner = true;
-
-						input.after('<i class="spinner-border specific-search-spinner"></i>');
-					}
-
-					// send request
-					$.ajax({
-						url: params.ajax_url,
-						type: 'POST',
-						data: {
-							action: 'joinotify_get_woo_products',
-							search_query: input_search,
+					// initialize selectize
+					let product_select = select_products_element.selectize({
+						plugins: {
+							remove_button: {
+								title: params.i18n.remove_product_selectize,
+							}
 						},
-						success: function(response) {
-							$('.specific-search-spinner').remove();
-							spinner = false;
+						delimiter: ',',
+						persist: false,
+						valueField: 'id',
+						labelField: 'product_title',
+						searchField: 'product_title',
+						create: false,
+						maxItems: null, // allow multiple selection
+						options: select_products, // load saved products
+						items: select_products.map( p => p.id ), // set saved products as selected
+						render: {
+							option: function(data, escape) {
+								return `<div class="option" data-value="${escape(data.id)}">${escape(data.product_title)}</div>`;
+							},
+						},
+						load: function(query, callback) {
+							if (query.length < 3) return callback(); // Require at least 3 characters
 							
-							results_container.html(response.results_html);
-
-							// retrieve the IDs of the selected products and add the "active" class
-							Builder.purchasedProducts.forEach( function(product_id) {
-                        results_container.find('.list-group-item.product-item[data-product-id="' + product_id + '"]').addClass('active');
-                    });
-						},
-						error: function(xhr, status, error) {
-							console.error('Error on search request:', error);
+							let selectize = this;
+							
+							// Show loading indicator
+							selectize.$wrapper.append('<span class="spinner-border spinner-border-sm specific-search-spinner"></span>');
+							selectize.$wrapper.addClass('loading');
+			
+							$.ajax({
+								url: params.ajax_url,
+								type: 'POST',
+								dataType: 'json',
+								data: {
+									action: 'joinotify_get_woo_products',
+									search_query: query,
+								},
+								success: function(response) {
+									selectize.$wrapper.find('.specific-search-spinner').remove();
+									selectize.$wrapper.removeClass('loading');
+	
+									callback(response);
+								},
+								error: function() {
+									selectize.$wrapper.find('.specific-search-spinner').remove();
+									selectize.$wrapper.removeClass('loading');
+									
+									callback();
+								},
+							});
 						}
 					});
-				} else {
-					results_container.html('');
-				}
-			});
+			
+					// Get Selectize instance
+					let selectize_instance = product_select[0].selectize;
+			
+					// Handle item selection (only add to purchasedProducts when clicked)
+					selectize_instance.on('item_add', function(value, data) {
+						let product_id = parseInt(value);
+						let product_data = selectize_instance.options[product_id];
+    					let product_title = product_data ? product_data.product_title : '';
+			
+						// Ensure unique addition in object format { id: title }
+						if ( ! Builder.purchasedProducts.some( p => p.id === product_id ) ) {
+							Builder.purchasedProducts.push({ id: product_id, title: product_title });
+						}
+	
+						// display the updated array on development mode
+						if ( params.dev_mode ) {
+							console.log(Builder.purchasedProducts);
+						}
+					});
+			
+					// Handle item removal
+					selectize_instance.on('item_remove', function(value) {
+						let product_id = parseInt(value);
+	
+						Builder.purchasedProducts = Builder.purchasedProducts.filter( p => p.id !== product_id );
+	
+						// display the updated array on development mode
+						if ( params.dev_mode ) {
+							console.log(Builder.purchasedProducts);
+						}
+					});
+				});
+			}, 500);
+		},
 
-			// add products to array
-			$(document).on('click', '.list-group-item.product-item', function () {
-				let product_id = $(this).data('product-id');
-	
-				// toggle class from product item
-				$(this).toggleClass('active');
-	
-				if ( $(this).hasClass('active') ) {
-					// Add product ID to the array if it's not already present
-					if ( ! Builder.purchasedProducts.includes(product_id) ) {
-						Builder.purchasedProducts.push(product_id);
-					}
-				} else {
-					// remove the product from the array
-					Builder.purchasedProducts = Builder.purchasedProducts.filter(id => id !== product_id);
-				}
+		/**
+		 * Install external plugins
+		 * 
+		 * @since 1.2.0
+		 */
+		installModule: function() {
+			$('.install-required-plugin').on('click', function(e) {
+				e.preventDefault();
+		
+				let btn = $(this);
+				var button_state = Builder.keepButtonState(btn);
+				let plugin_url = btn.data('download-url');
+				let plugin_slug = btn.data('required-plugin');
+
+				// send ajax request
+				$.ajax({
+					type: 'POST',
+					url: params.ajax_url,
+					data: {
+						action: 'joinotify_install_modules',
+						plugin_url: plugin_url,
+						plugin_slug: plugin_slug,
+					},
+					beforeSend: function() {
+						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+					},
+					success: function(response) {
+						if (response.status === 'success') {
+							btn.removeClass('btn-primary').addClass('btn-success');
+							btn.html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>');
+		
+							Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+		
+							setTimeout( function() {
+								location.reload();
+							}, 1000);
+						} else {
+							btn.html(button_state.html);
+		
+							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+						}
+						
+						btn.prop('disabled', false);
+					},
+					error: function(response) {
+						btn.prop('disabled', false).html(button_state.html);
+						alert('Error installing the plugin: ' + response.responseText);
+					},
+				});
+			});
+		},
+
+		/**
+		 * Activate plugin when installed
+		 * 
+		 * @since 1.2.0
+		 */
+		activeModule: function() {
+			$('.activate-plugin').on('click', function(e) {
+				e.preventDefault();
+		
+				let btn = $(this);
+				var button_state = Builder.keepButtonState(btn);
+				let plugin_slug = btn.data('plugin-slug');
+
+				// send ajax request
+				$.ajax({
+					type: 'POST',
+					url: params.ajax_url,
+					data: {
+						action: 'joinotify_activate_plugin',
+						plugin_slug: plugin_slug,
+					},
+					beforeSend: function() {
+						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+					},
+					success: function(response) {
+						if (response.status === 'success') {
+							btn.removeClass('btn-primary').addClass('btn-success');
+							btn.html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path></svg>');
+		
+							Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+							
+							location.reload();
+						} else {
+							btn.html(button_state.html);
+		
+							Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+						}
+					},
+					error: function(error) {
+						btn.html(button_state.html);
+						
+						console.error(error);
+					},
+				});
 			});
 		},
 	};
