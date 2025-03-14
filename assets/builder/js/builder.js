@@ -50,6 +50,13 @@
 		getActionID: '',
 
 		/**
+		 * Get next action ID
+		 * 
+		 * @since 1.2.2
+		 */
+		nextActionID: '',
+
+		/**
 		 * Init
 		 * 
 		 * @since 1.1.0
@@ -176,62 +183,6 @@
 				html: btn_html,
 			};
 	  	},
-
-		/**
-		 * Expand and collapse sidebar actions
-		 * 
-		 * @since 1.1.0
-		 */
-		expandSidebar: function() {
-			// expand actions sidebar
-			$(document).on('click', '.expand-offcanvas', function(e) {
-				e.preventDefault();
-
-				// add collapse icon
-				$(this).addClass('d-none');
-				$(this).siblings('.collapse-offcanvas').removeClass('d-none');
-				$('.offcanvas.show').addClass('offcanvas-expanded');
-				$('#joinotify_builder_funnel').addClass('offcanvas-expanded');
-			});
-
-			// collapse actions sidebar
-			$(document).on('click', '.btn-close[data-bs-dismiss="offcanvas"], .collapse-offcanvas', function() {
-				// add expand icon
-				$(this).siblings('.expand-offcanvas').removeClass('d-none');
-				$(this).siblings('.collapse-offcanvas').addClass('d-none');
-				$(this).closest('.collapse-offcanvas').addClass('d-none');
-				$('.offcanvas.offcanvas-expanded').removeClass('offcanvas-expanded');
-				$('#joinotify_builder_funnel').removeClass('offcanvas-expanded');
-			});
-		},
-
-		/**
-		 * Close sidebar actions
-		 * 
-		 * @since 1.0.0
-		 * @version 1.1.0
-		 */
-		closeSidebar: function() {
-			// on close main sidebar actions
-			$(document).on('click', '#joinotify_close_actions_group', function(e) {
-				e.preventDefault();
-	
-				let container_actions = $('#joinotify_actions_group');
-	
-				container_actions.removeClass('active');
-				$('.joinotify_condition_node_point').removeClass('active');
-				$('.plusminus.active').removeClass('active');
-	
-				if ( container_actions.hasClass('active') ) {
-					$('#joinotify_builder_funnel').addClass('waiting-select-action');
-				} else {
-					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
-	
-					Builder.isConditionAction = false;
-					$('.action-item.locked').removeClass('locked');
-				}
-			});
-		},
 
 		/**
 		 * Select condition action
@@ -462,7 +413,7 @@
 		 * Open sidebar actions
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.2
 		 */
 		openSidebar: function() {
 			const container_actions = $('#joinotify_actions_group');
@@ -470,7 +421,22 @@
 			// on click on plus icon
 			$(document).on('click', '.funnel_add_action', function() {
 				let btn = $(this);
+
+				btn.toggleClass('waiting-action');
+
+				// reset next action variable
+				Builder.nextActionID = '';
+
+				// check if the action is being added between existing actions
+				if ( btn.hasClass('between-action-connector') ) {
+					let next_action = btn.closest('.funnel_block_item_connector').nextAll('.funnel-action-item').first();
+					
+					if (next_action.length) {
+						Builder.nextActionID = next_action.data('action-id'); // get next action id
+					}
+				}
 	
+				// add condition type on variable
 				Builder.conditionType = btn.data('condition');
 	
 				// when click on add action inside condition
@@ -478,7 +444,7 @@
 					if ( ! container_actions.hasClass('active') ) {
 						container_actions.addClass('active');
 						$('#joinotify_builder_funnel').addClass('waiting-select-action');
-						$('.funnel_add_action').children('.plusminus').addClass('active');
+						btn.find('.plusminus').addClass('active');
 					}
 	
 					Builder.isConditionAction = true;
@@ -500,16 +466,76 @@
 					// manipulate width from builder funnel
 					if ( container_actions.hasClass('active') ) {
 						$('#joinotify_builder_funnel').addClass('waiting-select-action');
-						$('.funnel_add_action').children('.plusminus').addClass('active');
+						btn.find('.plusminus').addClass('active');
 					} else {
 						$('#joinotify_builder_funnel').removeClass('waiting-select-action');
-						$('.funnel_add_action').children('.plusminus').removeClass('active');
+						btn.find('.plusminus').removeClass('active');
 						$('.joinotify_condition_node_point').removeClass('active');
 	
 						Builder.isConditionAction = false;
 						$('.action-item.locked').removeClass('locked');
 					}
 				}
+			});
+		},
+
+		/**
+		 * Close sidebar actions
+		 * 
+		 * @since 1.0.0
+		 * @version 1.2.2
+		 */
+		closeSidebar: function() {
+			// on close main sidebar actions
+			$(document).on('click', '#joinotify_close_actions_group', function(e) {
+				e.preventDefault();
+	
+				let container_actions = $('#joinotify_actions_group');
+	
+				container_actions.removeClass('active');
+				$('.joinotify_condition_node_point').removeClass('active');
+				$('.plusminus.active').removeClass('active');
+				$('.funnel_add_action.waiting-action').removeClass('waiting-action');
+
+				// clear next action ID
+				Builder.nextActionID = '';
+	
+				if ( container_actions.hasClass('active') ) {
+					$('#joinotify_builder_funnel').addClass('waiting-select-action');
+				} else {
+					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
+	
+					Builder.isConditionAction = false;
+					$('.action-item.locked').removeClass('locked');
+				}
+			});
+		},
+
+		/**
+		 * Expand and collapse sidebar actions
+		 * 
+		 * @since 1.1.0
+		 */
+		expandSidebar: function() {
+			// expand actions sidebar
+			$(document).on('click', '.expand-offcanvas', function(e) {
+				e.preventDefault();
+
+				// add collapse icon
+				$(this).addClass('d-none');
+				$(this).siblings('.collapse-offcanvas').removeClass('d-none');
+				$('.offcanvas.show').addClass('offcanvas-expanded');
+				$('#joinotify_builder_funnel').addClass('offcanvas-expanded');
+			});
+
+			// collapse actions sidebar
+			$(document).on('click', '.btn-close[data-bs-dismiss="offcanvas"], .collapse-offcanvas', function() {
+				// add expand icon
+				$(this).siblings('.expand-offcanvas').removeClass('d-none');
+				$(this).siblings('.collapse-offcanvas').addClass('d-none');
+				$(this).closest('.collapse-offcanvas').addClass('d-none');
+				$('.offcanvas.offcanvas-expanded').removeClass('offcanvas-expanded');
+				$('#joinotify_builder_funnel').removeClass('offcanvas-expanded');
 			});
 		},
 
@@ -1109,7 +1135,7 @@
 		 * Add action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.2
 		 */
 		addAction: function() {
 			Builder.selectCondition();
@@ -1141,6 +1167,7 @@
 						action_condition: Builder.isConditionAction,
 						action_id: Builder.getActionID,
 						condition_action: Builder.conditionType,
+						next_action_id: Builder.nextActionID,
 						workflow_action: JSON.stringify(action_data),
 					},
 					beforeSend: function() {
@@ -1254,6 +1281,9 @@
 								removing_actions.forEach(id => {
 									$('.funnel-action-item[data-action-id="' + id + '"]').addClass('placeholder-wave removing-action');
 								});
+
+								// clear variable
+								Builder.nextActionID = '';
 
 								// fire updated workflow event
 								$(document).trigger('updatedWorkflow');
@@ -2199,6 +2229,8 @@
 				var modal = $(this);
 				var action_type = modal.find('.save-action-edit').data('action');
 				var initial_data = Builder.getActionData(action_type, modal);
+
+				console.log(initial_data);
 				
 				// storage initial data in the modal itself
 				modal.data('initial_data', JSON.stringify(initial_data));

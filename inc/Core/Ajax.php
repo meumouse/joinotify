@@ -773,7 +773,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -782,7 +782,8 @@ class Ajax {
             $current_action_id = isset( $_POST['action_id'] ) ? sanitize_text_field( $_POST['action_id'] ) : '';
             $condition_action = isset( $_POST['condition_action'] ) ? sanitize_text_field( $_POST['condition_action'] ) : '';
             $workflow_action = isset( $_POST['workflow_action'] ) ? json_decode( stripslashes( $_POST['workflow_action'] ), true ) : array();
-    
+            $next_action_id = isset( $_POST['next_action_id'] ) ? sanitize_text_field( $_POST['next_action_id'] ) : '';
+
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 // Retrieve workflow content
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
@@ -939,6 +940,16 @@ class Ajax {
                         $updated = true;
     
                         break; // Stop the loop after finding and updating the action
+                    }
+                }
+
+                // Insert action before the given next_action_id
+                foreach ( $workflow_content as $index => &$existing_action ) {
+                    if ( isset( $existing_action['id'] ) && $existing_action['id'] === $next_action_id ) {
+                        array_splice( $workflow_content, $index, 0, array( $new_action ) ); // insert before the ID of the next action
+                        $updated = true;
+                        
+                        break;
                     }
                 }
 

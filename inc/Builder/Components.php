@@ -452,6 +452,7 @@ class Components {
      * Get workflow connector between actions and steps
      * 
      * @since 1.0.0
+     * @version 1.2.2
      * @param int $post_id | Post ID
      * @param string $type | Connector type
      * @param array $workflow_data | Workflow array data
@@ -469,10 +470,17 @@ class Components {
             $html .= '</div>';
         } elseif ( $type === 'connector' ) {
             $html .= '<div class="funnel_block_item_connector">';
-                $html .= '<div class="timeline"></div>';
+                $html .= '<div class="funnel_block_item_add">';
+                    $html .= '<div class="funnel_add_action_wrapper between_actions funnel_show_plus">';
+                        $html .= '<div class="funnel_add_action between-action-connector">';
+                            $html .= '<div class="plusminus"></div>';
+                        $html .= '</div>';
+                    $html .= '</div>';
+                $html .= '</div>';
             $html .= '</div>';
         } elseif ( $type === 'connector_condition' ) {
             $action_id = isset( $workflow_data['parent_id'] ) ? $workflow_data['parent_id'] : '';
+
             $html .= self::build_condition_connector( $post_id, $action_id );
         }
 
