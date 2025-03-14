@@ -4,7 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
-use MeuMouse\Joinotify\Core\Workflow_Background_Process;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -230,14 +230,7 @@ class Wpforms extends Integrations_Base {
             'entry_id' => $entry_id,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -271,13 +264,6 @@ class Wpforms extends Integrations_Base {
             'entry_id' => $entry_id,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 }

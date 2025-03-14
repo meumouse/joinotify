@@ -7,7 +7,7 @@ use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
-use MeuMouse\Joinotify\Core\Workflow_Background_Process;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -844,14 +844,7 @@ class Woocommerce extends Integrations_Base {
             'order_data' => $order,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -875,14 +868,7 @@ class Woocommerce extends Integrations_Base {
             'order_data' => $order,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -906,14 +892,7 @@ class Woocommerce extends Integrations_Base {
             'status_transition' => $status_transition,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -935,14 +914,7 @@ class Woocommerce extends Integrations_Base {
             'refund_id' => $refund_id,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -964,14 +936,7 @@ class Woocommerce extends Integrations_Base {
             'order_id' => $order_id,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
     
 
@@ -995,13 +960,6 @@ class Woocommerce extends Integrations_Base {
             'new_status' => $new_status,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 }
