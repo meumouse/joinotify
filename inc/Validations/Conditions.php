@@ -77,19 +77,29 @@ class Conditions {
      * Gets comparison value based on condition type and context
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param string $condition_type | Condition type (e.g. 'order_total', 'user_role')
      * @param array $payload | Payload data
      * @return mixed Returns the value for comparison or null if not found
      */
     public static function get_compare_value( $condition_type, $payload ) {
         $context = null;
+        $field_value = null;
     
         // Get object context based on condition type
         if ( isset( $payload['order_id'] ) ) {
             $context = wc_get_order( $payload['order_id'] );
         } elseif ( isset( $payload['user_id'] ) ) {
             $context = get_userdata( $payload['user_id'] );
+        }
+
+        // check integration
+        if ( isset( $payload['integration'] ) ) {
+            if ( $payload['integration'] === 'wpforms' ) {
+                $field_value = isset( $payload['fields'][$field_id]['value'] ) ? $payload['fields'][$field_id]['value'] : null;
+            } elseif ( $payload['integration'] === 'elementor' ) {
+                $field_value = isset( $payload['fields'][$field_id] ) ? $payload['fields'][$field_id] : null;
+            }
         }
     
         // Ensure $context is valid before accessing its properties
@@ -115,7 +125,7 @@ class Conditions {
             'items_in_cart'         => $context instanceof \WC_Cart ? count( $context->get_cart() ) : null,
             'payment_method'        => $context instanceof \WC_Order ? $context->get_payment_method() : null,
             'shipping_method'       => $context instanceof \WC_Order ? $context->get_shipping_method() : null,
-        //    'field_value'           => isset( $context->fields ) ? $context->fields : null,
+            'field_value'           => $field_value,
             'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
         ));
     
@@ -210,7 +220,7 @@ class Conditions {
                 if ( isset( $item['type'] ) && $item['type'] === 'action' && isset( $item['id'] ) && $item['id'] === $action_id ) {
                     // Checks if the item has a condition
                     if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' && isset( $item['data']['condition_content'] ) ) {
-                        return $item['data']['condition_content'];
+                        return $item['data'];
                     }
                 }
             }

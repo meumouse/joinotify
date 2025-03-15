@@ -421,8 +421,24 @@
 			// on click on plus icon
 			$(document).on('click', '.funnel_add_action', function() {
 				let btn = $(this);
+				let is_already_active = btn.hasClass('waiting-action');
 
-				btn.toggleClass('waiting-action');
+				// reset state for others buttons before activate new
+				$('.funnel_add_action').not(btn).removeClass('waiting-action').find('.plusminus').removeClass('active');
+
+				// toggle class only if the same button is clicked again
+				if ( is_already_active ) {
+					btn.removeClass('waiting-action');
+					btn.find('.plusminus').removeClass('active');
+					container_actions.removeClass('active'); // close the sidebar if the same button is clicked again
+					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
+
+					return; // exit to function to prevent execution for remaining code
+				}
+
+				// activate the clicked button
+				btn.addClass('waiting-action');
+				btn.find('.plusminus').addClass('active');
 
 				// reset next action variable
 				Builder.nextActionID = '';
@@ -431,7 +447,7 @@
 				if ( btn.hasClass('between-action-connector') ) {
 					let next_action = btn.closest('.funnel_block_item_connector').nextAll('.funnel-action-item').first();
 					
-					if (next_action.length) {
+					if ( next_action.length ) {
 						Builder.nextActionID = next_action.data('action-id'); // get next action id
 					}
 				}
@@ -444,7 +460,6 @@
 					if ( ! container_actions.hasClass('active') ) {
 						container_actions.addClass('active');
 						$('#joinotify_builder_funnel').addClass('waiting-select-action');
-						btn.find('.plusminus').addClass('active');
 					}
 	
 					Builder.isConditionAction = true;
@@ -455,26 +470,14 @@
 					$('.action-item[data-action="time_delay"]').addClass('locked');
 					$('.action-item[data-action="condition"]').addClass('locked');
 				} else {
-					container_actions.toggleClass('active');
+					container_actions.addClass('active');
 					Builder.isConditionAction = false;
 					Builder.getActionID = '';
 	
 					$('.joinotify_condition_node_point').removeClass('active');
 					$('.action-item[data-action="time_delay"]').removeClass('locked');
 					$('.action-item[data-action="condition"]').removeClass('locked');
-	
-					// manipulate width from builder funnel
-					if ( container_actions.hasClass('active') ) {
-						$('#joinotify_builder_funnel').addClass('waiting-select-action');
-						btn.find('.plusminus').addClass('active');
-					} else {
-						$('#joinotify_builder_funnel').removeClass('waiting-select-action');
-						btn.find('.plusminus').removeClass('active');
-						$('.joinotify_condition_node_point').removeClass('active');
-	
-						Builder.isConditionAction = false;
-						$('.action-item.locked').removeClass('locked');
-					}
+					$('#joinotify_builder_funnel').addClass('waiting-select-action');
 				}
 			});
 		},
@@ -972,6 +975,7 @@
 		 * Returns the action_data object formatted based on the action type
 		 *
 		 * @since 1.1.0
+		 * @version 1.2.2
 		 * @param {string} action_type - Action type
 		 * @param {string} context - DOM context to fetch data from (e.g. '.offcanvas.show' or '.modal.show')
 		 * @returns {object} action_data
@@ -1031,21 +1035,20 @@
 
 						break;
 				case 'condition':
-						let condition = container.find('.condition-item.active').data('condition');
-						let condition_type = container.find('.condition-settings-item.active .get-condition-type option:selected').val();
+						let condition = container.find('.condition-item.active').data('condition') || container.find('.get-condition').val();
+						let condition_type = container.find('.condition-settings-item.active .get-condition-type option:selected').val() || container.find('.get-condition-type option:selected').val();
 
 						action_data = {
 							type: 'action',
 							data: {
 								action: 'condition',
-								condition: condition,
-								title: container.find('.condition-item.active .title').text(),
+								title: container.find('.condition-item.active .title').text() || container.find('.get-condition-title').val(),
 								condition_content: {
-									condition: container.find('.condition-settings-item.active').data('condition'),
+									condition: condition,
 									type: condition_type,
-									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text(),
-									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val(),
-									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val(),
+									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text() || container.find('.get-condition-type option:selected').text(),
+									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value').val(),
+									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value').text(),
 								},
 							},
 						};

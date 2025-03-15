@@ -1506,6 +1506,8 @@ input.toggle-switch.status:checked {
 
 .funnel-action-item.condition .description {
     font-weight: 400;
+    margin-top: 2rem;
+    display: inline-block;
 }
 
 .help-center-btn {
@@ -2133,4 +2135,9 @@ textarea.edit-whatsapp-message-text {
 .btn.install-required-plugin,
 .btn.activate-plugin {
     pointer-events: all;
+}
+
+.joinotify_condition_node_point .sender,
+.joinotify_condition_node_point .receiver {
+    font-weight: 400;
 }

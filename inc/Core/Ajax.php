@@ -814,7 +814,9 @@ class Ajax {
                         $new_action['data']['description'] = $build_description;
                         $new_action['data']['condition_content']['condition'] = isset( $workflow_action['data']['condition_content']['condition'] ) ? $workflow_action['data']['condition_content']['condition'] : '';
                         $new_action['data']['condition_content']['type'] = isset( $workflow_action['data']['condition_content']['type'] ) ? $workflow_action['data']['condition_content']['type'] : '';
+                        $new_action['data']['condition_content']['type_text'] = isset( $workflow_action['data']['condition_content']['type_text'] ) ? $workflow_action['data']['condition_content']['type_text'] : '';
                         $new_action['data']['condition_content']['value'] = isset( $workflow_action['data']['condition_content']['value'] ) ? $workflow_action['data']['condition_content']['value'] : '';
+                        $new_action['data']['condition_content']['value_text'] = isset( $workflow_action['data']['condition_content']['value_text'] ) ? $workflow_action['data']['condition_content']['value_text'] : '';
 
                         // check condition type
                         if ( isset( $workflow_action['data']['condition_content']['condition'] ) ) {
@@ -834,6 +836,8 @@ class Ajax {
                                 }
 
                                 $new_action['data']['condition_content']['products'] = $condition_products;
+                            } elseif (  $workflow_action['data']['condition_content']['condition'] === 'field_value' ) {
+                                $new_action['data']['condition_content']['field_id'] = isset( $workflow_action['data']['condition_content']['field_id'] ) ? $workflow_action['data']['condition_content']['field_id'] : '';
                             }
                         }
                     } elseif ( $workflow_action['data']['action'] === 'time_delay' ) {

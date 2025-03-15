@@ -96,17 +96,34 @@ class Messages {
      * Build a message for condition actions
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param array $condition | Condition data
      * @return string
      */
     public static function build_condition_description( $condition ) {
-        $title = $condition['data']['title'] ?? '';
-        $condition_text = $condition['data']['condition_content']['type_text'] ?? '';
-        $condition_value = $condition['data']['condition_content']['value_text'] ?? '';
+        $condition_data = $condition['data'];
+        $condition_content = $condition_data['condition_content'];
+        $condition_type = $condition_content['condition'];
 
+        // open condition description message
         $description = '<div class="condition-description">';
-            $description .= sprintf( __( '%s %s: %s' ), $title, mb_strtolower( $condition_text, 'UTF-8' ), $condition_value );
+            if ( $condition_type === 'products_purchased' ) {
+                foreach ( $condition_content['products'] as $product ) {
+                    $description .= $product['title'];
+                }
+            } elseif ( $condition_type === 'order_paid' ) {
+                $description .= esc_html__( 'Verificar se o pedido foi pago', 'joinotify' );
+            } elseif ( $condition_type === 'field_value' ) {
+                if ( $condition_type === 'empty' ) {
+                    $description .= sprintf( esc_html__( 'Campo com ID %s é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
+                } elseif ( $condition_type === 'not_empty' ) {
+                    $description .= sprintf( esc_html__( 'Campo com ID %s não é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
+                } else {
+                    $description .= sprintf( __( '%s %s: %s' ), $condition_data['type_text'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
+                }
+            } else {
+                $description .= sprintf( __( '%s %s: %s' ), $condition_data['title'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
+            }
         $description .= '</div>';
 
         return $description;

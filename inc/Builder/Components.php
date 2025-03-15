@@ -50,7 +50,7 @@ class Components {
      * Display workflow action component
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.2
      * @param int $post_id | Post ID
      * @param array $action_details | Action details array (action name, description, id, etc)
      * @return string
@@ -67,8 +67,13 @@ class Components {
             $html = '<div class="funnel-action-item" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $action_details['id'] ) .'">';
                 $html .= '<div class="action-item-body">';
                     // action title
-                    $html .= '<h4 class="title">'. $value['title'] .'</h4>';
+                    if ( isset( $action_details['title'] ) && ! empty( $action_details['title'] ) && $action_details['type'] === 'condition' ) {
+                        $html .= '<h4 class="title">'. sprintf( esc_html__( 'Condição: %s', 'joinotify' ), $action_details['title'] ) .'</h4>';
+                    } else {
+                        $html .= '<h4 class="title">'. $value['title'] .'</h4>';
+                    }
 
+                    // message sender and receiver details
                     if ( $value['action'] === 'send_whatsapp_message_text' || $value['action'] === 'send_whatsapp_message_media' ) {
                         $html .= '<span class="text-muted fs-xs sender d-block">'. sprintf( __( 'Remetente: %s', 'joinotify' ), $action_details['sender'] ) .'</span>';
                         $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'Destinatário: %s', 'joinotify' ), $action_details['receiver'] ) .'</span>';
@@ -126,7 +131,7 @@ class Components {
                                 $html .= '<div class="modal-body px-4 py-3 my-3">';
                                     $get_condition = Conditions::get_condition_content( $post_id, $action_id );
 
-                                    $html .= self::render_condition_settings( $get_condition['condition'], $get_condition );
+                                    $html .= self::render_condition_settings( $get_condition['condition_content']['condition'], $get_condition );
                                 $html .= '</div>';
 
                                 $html .= '<div class="modal-footer px-4">';
@@ -596,8 +601,13 @@ class Components {
      */
     public static function render_condition_settings( $condition, $settings = array() ) {
         $html = '';
-        $condition_settings = $settings['type'] ?? '';
-        $condition_value = $settings['value'] ?? '';
+
+        $condition_content = $settings['condition_content'] ?? array();
+        $condition_settings = $condition_content['type'] ?? '';
+        $condition_value = $condition_content['value'] ?? '';
+
+        $html .= '<input type="hidden" class="get-condition-title" value="'. esc_attr( $settings['title'] ?? '' ) .'"/>';
+        $html .= '<input type="hidden" class="get-condition" value="'. esc_attr( $condition_content['condition'] ?? '' ) .'"/>';
 
         // add condition options
         $html .= self::get_condition_options( $condition, $condition_settings );
@@ -625,7 +635,7 @@ class Components {
             case 'user_meta':
                 $html .= '<div class="mb-4 meta-key-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('Chave: *', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $settings['meta_key'] ?? '' ) .'" placeholder="'. esc_attr__( 'Chave do meta dado', 'joinotify' ) .'">';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_content['meta_key'] ?? '' ) .'" placeholder="'. esc_attr__( 'Chave do meta dado', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 $html .= '<div class="mb-4 meta-value-wrapper">';
@@ -699,11 +709,11 @@ class Components {
                     $html .= '<label class="form-label">' . esc_html__('Produtos adquiridos:', 'joinotify') . '</label>';
 
                     // create a JSON with the selected products
-                    $selected_products = isset( $settings['products'] ) ? json_encode( $settings['products'] ) : '[]';
+                    $selected_products = isset( $condition_content['products'] ) ? json_encode( $condition_content['products'] ) : '[]';
 
                     $html .= '<select class="get-condition-value search-products" multiple data-selected-products="'. esc_attr( $selected_products ) .'" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
-                        if ( isset( $settings['products'] ) && is_array( $settings['products'] ) ) {
-                            foreach ( $settings['products'] as $product ) {
+                        if ( isset( $condition_content['products'] ) && is_array( $condition_content['products'] ) ) {
+                            foreach ( $condition_content['products'] as $product ) {
                                 $html .= '<option value="'. esc_attr( $product['id'] ) .'">'. esc_html( $product['title'] ) .'</option>';
                             }
                         }
@@ -806,7 +816,7 @@ class Components {
             case 'field_value':
                 $html .= '<div class="mb-4 field-id-wrapper">';
                     $html .= '<label class="form-label">' . esc_html__('ID do campo:', 'joinotify') . '</label>';
-                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $settings['field_id'] ?? '' ) .'" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
+                    $html .= '<input type="text" class="form-control get-condition-value required-setting" value="'. esc_attr( $condition_content['field_id'] ?? '' ) .'" placeholder="'. esc_attr__( 'ID do campo', 'joinotify' ) .'">';
                 $html .= '</div>';
 
                 $html .= '<div class="mb-4 field-value-wrapper">';
