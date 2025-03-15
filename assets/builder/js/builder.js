@@ -86,6 +86,7 @@
 		 * Run functions on workflow ready
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.2
 		 */
 		onWorkflowReady: function() {
 			// on workflow ready event
@@ -113,6 +114,7 @@
 				Builder.openMediaLibrary();
 				Builder.runTestWorkflow();
 				Builder.validateInputCurrency();
+				Builder.updateMediaPreview();
 			});
 		},
 
@@ -120,7 +122,7 @@
 		 * Run functions on workflow updated
 		 * 
 		 * @since 1.1.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 */
 		onUpdatedWorkflow: function() {
 			// on workflow updated event
@@ -133,6 +135,7 @@
 				Builder.validateInputCurrency();
 				Builder.emojiPicker();
 				Builder.searchWooProducts();
+				Builder.updateMediaPreview();
 			});
 		},
 
@@ -432,6 +435,7 @@
 					btn.find('.plusminus').removeClass('active');
 					container_actions.removeClass('active'); // close the sidebar if the same button is clicked again
 					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
+					$('.joinotify_condition_node_point').removeClass('active');
 
 					return; // exit to function to prevent execution for remaining code
 				}
@@ -2795,6 +2799,52 @@
 						console.error(error);
 					},
 				});
+			});
+		},
+
+		/**
+		 * Update media preview for WhatsApp media messages
+		 * 
+		 * @since 1.2.2
+		 */
+		updateMediaPreview: function() {
+			/**
+			 * Render media preview component
+			 * 
+			 * @since 1.2.2
+			 * @param {string} media_type | Media stype
+			 * @param {string} media_url | Media URL
+			 * @return {string} | Media preview component
+			 */
+			function media_preview_component( media_type, media_url ) {
+				switch ( media_type ) {
+					case 'image':
+						return `<img class="funnel-media image" src="${media_url}">`;
+					case 'video':
+						return `<video class="funnel-media video" controls width="250"><source src="${media_url}"/></video>`;
+					case 'document':
+						return `<embed class="funnel-media document" src="${media_url}" frameborder="0" allowfullscreen>`;
+					case 'audio':
+						return `<audio class="funnel-media audio" controls><source src="${media_url}"></audio>`;
+				}
+			}
+
+			// update media preview on change media type
+			$(document).on('change input', '.modal.show .get-whatsapp-media-type', function() {
+				let media_url = $('.modal.show').find('.get-whatsapp-media-url').val();
+				let media_type = $(this).val();
+				let preview = media_preview_component( media_type, media_url );
+
+				$('.modal.show').find('.preview-whatsapp-message-sender').html(preview);
+			});
+
+			// update media preview on change media url
+			$(document).on('change input', '.modal.show .get-whatsapp-media-url', function() {
+				let media_url = $(this).val();
+				let media_type = $('.modal.show').find('.get-whatsapp-media-type').val();
+				let preview = media_preview_component( media_type, media_url );
+
+				$('.modal.show').find('.preview-whatsapp-message-sender').html(preview);
 			});
 		},
 	};
