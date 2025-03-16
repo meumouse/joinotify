@@ -254,7 +254,7 @@ class Workflow_Processor {
      * Processes a conditional action within a workflow
      *
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param array $action | Condition action data
      * @param int $post_id | Workflow post ID
      * @param array $payload | Payload context data
@@ -282,6 +282,8 @@ class Workflow_Processor {
         // get meta key for user meta condition
         if ( $get_condition === 'user_meta' ) {
             $payload['condition_content']['meta_key'] = $action_data['condition_content']['meta_key'] ?? '';
+        } elseif ( $get_condition === 'field_value' ) {
+            $payload['condition_content']['field_id'] = $action_data['condition_content']['field_id'] ?? '';
         }
 
         // Retrieve the comparison value based on the event data

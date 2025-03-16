@@ -85,7 +85,9 @@ class Conditions {
     public static function get_compare_value( $condition_type, $payload ) {
         $context = null;
         $field_value = null;
-    
+        $condition_content = $payload['condition_content'];
+        $field_id = $condition_content['field_id'] ?? '';
+
         // Get object context based on condition type
         if ( isset( $payload['order_id'] ) ) {
             $context = wc_get_order( $payload['order_id'] );
@@ -102,15 +104,10 @@ class Conditions {
             }
         }
     
-        // Ensure $context is valid before accessing its properties
-        if ( ! $context ) {
-            return null;
-        }
-    
         // Map condition types to their respective value retrieval methods
         $value_map = apply_filters( 'Joinotify/Conditions/Get_Compare_Value', array(
             'user_role'             => $context instanceof \WP_User ? ( $context->roles[0] ?? null ) : null,
-            'user_meta'             => $context instanceof \WP_User ? get_user_meta( $payload['user_id'], $payload['meta_key'], true ) : null,
+            'user_meta'             => $context instanceof \WP_User ? get_user_meta( $payload['user_id'], $condition_content['meta_key'] ?? '', true ) : null,
             'user_last_login'       => $context instanceof \WP_User ? get_user_meta( $payload['user_id'], 'last_login', true ) : null,
             'post_type'             => is_object( $context ) ? get_post_type( $payload['post_type'] ?? '' ) : null,
             'post_author'           => is_object( $context ) && isset( $context->post_author ) ? get_the_author_meta( 'ID', $context->post_author ) : null,

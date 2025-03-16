@@ -103,23 +103,36 @@ class Messages {
     public static function build_condition_description( $condition ) {
         $condition_data = $condition['data'];
         $condition_content = $condition_data['condition_content'];
-        $condition_type = $condition_content['condition'];
+        $condition_type = $condition_content['type'];
+        $get_condition = $condition_content['condition'];
 
         // open condition description message
         $description = '<div class="condition-description">';
-            if ( $condition_type === 'products_purchased' ) {
-                foreach ( $condition_content['products'] as $product ) {
-                    $description .= $product['title'];
-                }
-            } elseif ( $condition_type === 'order_paid' ) {
-                $description .= esc_html__( 'Verificar se o pedido foi pago', 'joinotify' );
-            } elseif ( $condition_type === 'field_value' ) {
+            if ( $get_condition === 'products_purchased' ) {
+                $product_titles = array_map( function( $product ) {
+                    return $product['title'];
+                }, $condition_content['products'] );
+            
+                $description = sprintf( '%s: %s', $condition_content['type_text'], implode( ', ', $product_titles ) );
+            } elseif ( $get_condition === 'order_paid' ) {
+                $description .= $condition_type === 'is' ? esc_html__( 'Verificar se o pedido foi pago', 'joinotify' ) : esc_html__( 'Verificar se o pedido não foi pago', 'joinotify' );
+            } elseif ( $get_condition === 'order_total' ) {
+                $description .= $condition_type === 'bigger_than' ? sprintf( __( 'Maior que <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_plain_text( wc_price( (float) $condition_content['value'] ?? '' ) ) ) : sprintf( __( 'Menor que <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_plain_text( wc_price( (float) $condition_content['value'] ?? '' ) ) );
+            } elseif ( $get_condition === 'field_value' ) {
                 if ( $condition_type === 'empty' ) {
-                    $description .= sprintf( esc_html__( 'Campo com ID %s é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
+                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
                 } elseif ( $condition_type === 'not_empty' ) {
-                    $description .= sprintf( esc_html__( 'Campo com ID %s não é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
+                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> não é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
                 } else {
-                    $description .= sprintf( __( '%s %s: %s' ), $condition_data['type_text'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
+                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> %s: <span class="builder-placeholder">%s</span>', 'joinotify' ), $condition_content['field_id'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
+                }
+            } elseif ( $get_condition === 'user_meta' ) {
+                if ( $condition_type === 'empty' ) {
+                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> é vazio', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
+                } elseif ( $condition_type === 'not_empty' ) {
+                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> não é vazio', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
+                } else {
+                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> %s: %s' ), $condition_content['meta_key'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
                 }
             } else {
                 $description .= sprintf( __( '%s %s: %s' ), $condition_data['title'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
@@ -134,31 +147,37 @@ class Messages {
      * Build a message for WhatsApp text actions
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.2
      * @param array $data | Message data
      * @return string
      */
     public static function build_whatsapp_text_description( $data ) {
         $message = isset( $data['message'] ) ? $data['message'] : '';
 
-        // If the text literally contains \n
-        $message = str_replace( "\n", '<br>', $message );
+        // apply WhatsApp formatting before adding line breaks
+        $message = preg_replace([
+            '/```([^`]+)```/', // Monospace
+            '/(?<!\S)\*\*([^\s*][^*]+?[^\s*])\*\*(?!\S)/', // **Bold**
+            '/(?<!\S)\*([^\s*][^*]+?[^\s*])\*(?!\S)/', // *Bold*
+            '/(?<!\S)_([^\s_][^_]+?[^\s_])_(?!\S)/', // _Italic_
+            '/(?<!\S)~([^\s~][^~]+?[^\s~])~(?!\S)/', // ~Strikethrough~
+        ], [
+            '<span style="font-family: monospace;">$1</span>', // ```monospace```
+            '<span style="font-weight: bold;">$1</span>', // **Bold**
+            '<span style="font-weight: bold;">$1</span>', // *Bold*
+            '<span style="font-style: italic;">$1</span>', // _Italic_
+            '<span style="text-decoration: line-through;">$1</span>', // ~Strikethrough~
+        ], $message);
 
-        $message = str_replace( '\n', '<br>', $message );
+        // replace line breaks
+        $message = str_replace(["\n", '\n', '{{ br }}'], '<br>', $message);
 
-        // Replace {{ br }} to break line HTML component
-        $message = str_replace( '{{ br }}', '<br>', $message );
+        // process placeholders
+        $message = preg_replace_callback('/\{\{\s*(.*?)\s*\}\}/', function( $matches ) {
+            return '<span class="builder-placeholder">{{ '. $matches[1] .' }}</span>';
+        }, $message);
 
-        // Regular expression to match variables like {{ variable_name }}
-        $pattern = '/\{\{\s*(.*?)\s*\}\}/';
-
-        // Callback function to wrap variables in the desired HTML
-        $replacement = function( $matches ) {
-            return '<span class="builder-placeholder">{{ ' . $matches[1] . ' }}</span>';
-        };
-
-        // Assign the processed message
-        return preg_replace_callback( $pattern, $replacement, $message );
+        return $message;
     }
 
 

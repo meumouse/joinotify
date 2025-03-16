@@ -58,38 +58,40 @@ class Components {
     public static function workflow_action_component( $post_id, $action_details ) {
         foreach ( Actions::get_all_actions() as $action => $value ) {
             $action_id = $action_details['id'];
-
-            // skip if is not action
+    
+            // Skip if it's not the correct action
             if ( $action_details['action_name'] !== $value['action'] ) {
                 continue;
             }
-
+    
             $html = '<div class="funnel-action-item" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $action_details['id'] ) .'">';
                 $html .= '<div class="action-item-body">';
-                    // action title
+    
+                    // Action title
                     if ( isset( $action_details['title'] ) && ! empty( $action_details['title'] ) && $action_details['type'] === 'condition' ) {
                         $html .= '<h4 class="title">'. sprintf( esc_html__( 'Condição: %s', 'joinotify' ), $action_details['title'] ) .'</h4>';
                     } else {
                         $html .= '<h4 class="title">'. $value['title'] .'</h4>';
                     }
-
-                    // message sender and receiver details
+    
+                    // Message sender and receiver details
                     if ( $value['action'] === 'send_whatsapp_message_text' || $value['action'] === 'send_whatsapp_message_media' ) {
                         $html .= '<span class="text-muted fs-xs sender d-block">'. sprintf( __( 'Remetente: %s', 'joinotify' ), $action_details['sender'] ) .'</span>';
                         $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'Destinatário: %s', 'joinotify' ), $action_details['receiver'] ) .'</span>';
                     }
-
-                    // action description funnel
+    
+                    // Action description
                     if ( empty( $action_details['description'] ) ) {
                         $html .= '<span class="description">'. $value['description'] .'</span>';
                     } else {
                         $html .= '<span class="description">'. $action_details['description'] .'</span>';
                     }
                 $html .= '</div>';
-
+    
+                // Button group
                 $html .= '<div class="btn-group">';
                     $html .= '<div class="funnel-action-cta icon-translucent btn p-0 border-0" data-bs-toggle="dropdown" aria-expanded="false"><svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></div>';
-                
+                    
                     $html .= '<div class="funnel-action-details">';
                         $html .= '<ul class="dropdown-menu builder-dropdown shadow-sm">';
                             $html .= '<li class="d-flex align-items-center mb-0">';
@@ -116,56 +118,86 @@ class Components {
                             }
                         $html .= '</ul>';
                     $html .= '</div>';
-                $html .= '</div>';
-
-                // display modal settings for condition action
+                $html .= '</div>'; // Closing .btn-group
+    
+                // Display modal settings for condition action
                 if ( $value['action'] === 'condition' ) {
-                    $html .= '<div class="modal fade" id="edit_condition_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_condition_'. esc_attr( $action_id ) .'_label">';
-                        $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
-                            $html .= '<div class="modal-content">';
-                                $html .= '<div class="modal-header px-4">';
-                                    $html .= '<h3 class="modal-title fs-5" id="edit_condition_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar condição', 'joinotify' ) .'</h3>';
-                                    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-                                $html .= '</div>';
-
-                                $html .= '<div class="modal-body px-4 py-3 my-3">';
-                                    $get_condition = Conditions::get_condition_content( $post_id, $action_id );
-
-                                    $html .= self::render_condition_settings( $get_condition['condition_content']['condition'], $get_condition );
-                                $html .= '</div>';
-
-                                $html .= '<div class="modal-footer px-4">';
-                                    $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                    $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
-                                $html .= '</div>';
-                            $html .= '</div>';
-                        $html .= '</div>';
-                    $html .= '</div>';
+                    $html .= self::render_condition_modal( $post_id, $action_id );
                 } elseif ( $value['action'] !== 'condition' && $value['action'] !== 'stop_funnel' ) {
-                    $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action_id ) .'_label">';
-                        $html .= '<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">';
-                            $html .= '<div class="modal-content">';
-                                $html .= '<div class="modal-header px-4">';
-                                    $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action_id ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
-                                    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-                                $html .= '</div>';
-
-                                $html .= '<div class="modal-body px-4 py-3 my-3">';
-                                    $html .= self::get_action_settings( $post_id, $value['action'], $action_id );
-                                $html .= '</div>';
-
-                                $html .= '<div class="modal-footer px-4">';
-                                    $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                    $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $value['action'] ) .'" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
-                                $html .= '</div>';
-                            $html .= '</div>';
-                        $html .= '</div>';
-                    $html .= '</div>';
+                    $html .= self::render_action_modal( $post_id, $value['action'], $action_id );
                 }
-            $html .= '</div>';
-
+            $html .= '</div>'; // Closing .funnel-action-item
+    
             return $html;
         }
+    }
+    
+    
+    /**
+     * Render modal for condition settings
+     * 
+     * @since 1.2.2
+     * @param int $post_id | Post id
+     * @param int $action_id | Action ID
+     * @return string $html | HTML code
+     */
+    public static function render_condition_modal( $post_id, $action_id ) {
+        $html = '<div class="modal fade" id="edit_condition_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_condition_'. esc_attr( $action_id ) .'_label">';
+            $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
+                $html .= '<div class="modal-content">';
+                    $html .= '<div class="modal-header px-4">';
+                        $html .= '<h3 class="modal-title fs-5">'. esc_html__( 'Configurar condição', 'joinotify' ) .'</h3>';
+                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+                    $html .= '</div>';
+
+                    $html .= '<div class="modal-body px-4 py-3 my-3">';
+                        $get_condition = Conditions::get_condition_content( $post_id, $action_id );
+                        $html .= self::render_condition_settings( $get_condition['condition_content']['condition'], $get_condition );
+                    $html .= '</div>';
+
+                    $html .= '<div class="modal-footer px-4">';
+                        $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
+                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="condition" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
+                    $html .= '</div>';
+                $html .= '</div>';
+            $html .= '</div>';
+        $html .= '</div>';
+    
+        return $html;
+    }
+
+    
+    /**
+     * Render modal for action settings
+     * 
+     * @since 1.2.2
+     * @param int $post_id | Post ID
+     * @param string $action | Action type
+     * @param int $action_id | Action ID
+     * @return string $html | HTML string
+     */
+    public static function render_action_modal( $post_id, $action, $action_id ) {
+        $html = '<div class="modal fade" id="edit_action_'. esc_attr( $action_id ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action_id ) .'_label">';
+            $html .= '<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">';
+                $html .= '<div class="modal-content">';
+                    $html .= '<div class="modal-header px-4">';
+                        $html .= '<h3 class="modal-title fs-5">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
+                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+                    $html .= '</div>';
+
+                    $html .= '<div class="modal-body px-4 py-3 my-3">';
+                        $html .= self::get_action_settings( $post_id, $action, $action_id );
+                    $html .= '</div>';
+
+                    $html .= '<div class="modal-footer px-4">';
+                        $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
+                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action ) .'" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
+                    $html .= '</div>';
+                $html .= '</div>';
+            $html .= '</div>';
+        $html .= '</div>';
+    
+        return $html;
     }
 
 

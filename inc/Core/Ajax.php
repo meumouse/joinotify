@@ -3,7 +3,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Admin\Components as Settings_Components;
+use MeuMouse\Joinotify\Admin\Components as Admin_Components;
 
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Builder\Workflow_Manager;
@@ -1267,7 +1267,7 @@ class Ajax {
             if ( $get_otp ) {
                 $response = array(
                     'status' => 'success',
-                    'otp_input_component' => Settings_Components::otp_input_code( $phone ),
+                    'otp_input_component' => Admin_Components::otp_input_code( $phone ),
                 );
             } else {
                 $response = array(
@@ -1337,7 +1337,7 @@ class Ajax {
                     'status' => 'success',
                     'toast_header_title' => __( 'Verificação bem-sucedida', 'joinotify' ),
                     'toast_body_title' => __( 'Seu WhatsApp foi verificado com sucesso!', 'joinotify' ),
-                    'current_phone_senders' => Settings_Components::current_phones_senders(),
+                    'current_phone_senders' => Admin_Components::current_phones_senders(),
                 );
             } else {
                 // If OTP is invalid or expired, send an error response
@@ -1394,7 +1394,7 @@ class Ajax {
                         'status' => 'success',
                         'toast_header_title' => __( 'Remetente removido', 'joinotify' ),
                         'toast_body_title' => __( 'O telefone remetente foi removido com sucesso!', 'joinotify' ),
-                        'updated_list_html' => Settings_Components::current_phones_senders(),
+                        'updated_list_html' => Admin_Components::current_phones_senders(),
                     );
 
                     wp_send_json( $response );

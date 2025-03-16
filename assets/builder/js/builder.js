@@ -989,6 +989,7 @@
 			var container = $(context);
 			const action_title = container.find('.offcanvas-title, .modal-title').text();
 
+			// check action type
 			switch ( action_type ) {
 				case 'time_delay':
 						var delay_type = container.find('.set-time-delay-type, .set-time-delay-type-edit').val();
@@ -1052,7 +1053,7 @@
 									type: condition_type,
 									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text() || container.find('.get-condition-type option:selected').text(),
 									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value').val(),
-									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value').text(),
+									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value option:selected').text() || container.find('.get-condition-value').text() || container.find('.get-condition-value').val(),
 								},
 							},
 						};
@@ -1065,12 +1066,18 @@
 
 							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
 								action_data.data.condition_content.value = '';
+							} else {
+								action_data.data.condition_content.value = container.find('.condition-settings-item.active .meta-value-wrapper .get-condition-value').val() || container.find('.meta-value-wrapper').children('.get-condition-value').val();
+								action_data.data.condition_content.value_text = container.find('.condition-settings-item.active .meta-value-wrapper .get-condition-value').val() || container.find('.meta-value-wrapper').children('.get-condition-value').val();
 							}
 						} else if ( condition === 'field_value' ) {
-							action_data.data.condition_content.field_id = container.find('.field-id-wrapper').children('.get-condition-value').val();
+							action_data.data.condition_content.field_id = container.find('.condition-settings-item.active .field-id-wrapper .get-condition-value').val() || container.find('.field-id-wrapper').children('.get-condition-value').val();
 
 							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
 								action_data.data.condition_content.value = '';
+							} else {
+								action_data.data.condition_content.value = container.find('.condition-settings-item.active .field-value-wrapper .get-condition-value').val() || container.find('.field-value-wrapper').children('.get-condition-value').val();
+								action_data.data.condition_content.value_text = container.find('.condition-settings-item.active .field-value-wrapper .get-condition-value').val() || container.find('.field-value-wrapper').children('.get-condition-value').val();
 							}
 						}
 
@@ -1727,28 +1734,50 @@
 				}
 			});
 		},
-	
+
+		/**
+		 * Format WhatsApp message text with proper styling
+		 * 
+		 * @since 1.2.2
+		 * @param {string} text The input message text
+		 * @return {string} The formatted text with HTML tags
+		 */
+		formatWhatsAppText: function(text) {
+			// Apply text formatting rules before processing line breaks
+			text = text
+				.replace(/```([^`]+)```/g, '<span style="font-family: monospace;">$1</span>') // Monospace
+				.replace(/(?<=\s|^)\*\*([^\s*][^*]+?[^\s*])\*\*(?=\s|$)/g, '<span style="font-weight: bold;">$1</span>') // Bold (**text**)
+				.replace(/(?<=\s|^)\*([^\s*][^*]+?[^\s*])\*(?=\s|$)/g, '<span style="font-weight: bold;">$1</span>') // Bold (*text*)
+				.replace(/(?<=\s|^)_([^\s_][^_]+?[^\s_])_(?=\s|$)/g, '<span style="font-style: italic;">$1</span>') // Italic (_text_)
+				.replace(/(?<=\s|^)~([^\s~][^~]+?[^\s~])~(?=\s|$)/g, '<span style="text-decoration: line-through;">$1</span>'); // Strikethrough (~text~)
+		
+			// Now replace new lines with <br> elements
+			text = text.replace(/\n/g, '<br>');
+		
+			// Replace {{ br }} with <br> elements (for manual break rows)
+			text = text.replace(/{{ br }}/g, '<br>');
+		
+			return text;
+		},
+
 		/**
 		 * Display WhatsApp message preview
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.2
 		 * @package MeuMouse.com
 		 */
 		whatsappMessagePreview: function() {
-			$(document).on('input change blur change keyup', '.set-whatsapp-message-text', function() {
+			$(document).on('input change blur keyup', '.set-whatsapp-message-text', function() {
 				var input = $(this);
 				var text = input.val();
 				var preview_message = $(this).parent('div').siblings('.preview-whatsapp-message-sender');
 
-				// replace \n for <br> break row HTML element
-				text = text.replace(/\n/g, '<br>');
+				// Apply formatting function
+				var formatted_text = Builder.formatWhatsAppText(text);
 
-				// replace {{ br }} for break row HTML element
-				text = text.replace(/{{ br }}/g, '<br>');
-	
-				if (text.trim() !== '') {
-					preview_message.addClass('active').html(text);
+				if ( formatted_text.trim() !== '' ) {
+					preview_message.addClass('active').html(formatted_text);
 				} else {
 					preview_message.removeClass('active').html('');
 				}
@@ -2812,7 +2841,7 @@
 			 * Render media preview component
 			 * 
 			 * @since 1.2.2
-			 * @param {string} media_type | Media stype
+			 * @param {string} media_type | Media type (image, video, document, audio)
 			 * @param {string} media_url | Media URL
 			 * @return {string} | Media preview component
 			 */
