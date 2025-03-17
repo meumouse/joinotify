@@ -626,7 +626,7 @@ class Components {
      * Render condition settings for specific action
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param string $condition | Condition key
      * @param array $settings | Settings for condition
      * @return string HTML of rendered condition settings
@@ -743,7 +743,7 @@ class Components {
                     // create a JSON with the selected products
                     $selected_products = isset( $condition_content['products'] ) ? json_encode( $condition_content['products'] ) : '[]';
 
-                    $html .= '<select class="get-condition-value search-products" multiple data-selected-products="'. esc_attr( $selected_products ) .'" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
+                    $html .= '<select class="get-condition-value search-products required-setting" multiple data-selected-products="'. esc_attr( $selected_products ) .'" placeholder="'. esc_attr__( 'Pesquise os produtos que deseja incluir', 'joinotify' ) .'">';
                         if ( isset( $condition_content['products'] ) && is_array( $condition_content['products'] ) ) {
                             foreach ( $condition_content['products'] as $product ) {
                                 $html .= '<option value="'. esc_attr( $product['id'] ) .'">'. esc_html( $product['title'] ) .'</option>';

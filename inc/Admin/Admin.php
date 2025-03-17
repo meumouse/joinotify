@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Admin actions class
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Admin {
@@ -167,7 +167,7 @@ class Admin {
      * Set default options
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.2
      * @return array
      */
     public static function set_default_options() {
@@ -188,6 +188,7 @@ class Admin {
             'enable_auto_updates' => 'no',
             'enable_create_coupon_action' => 'yes',
             'create_coupon_prefix' => 'CUPOM_',
+            'enable_ignore_processed_actions' => 'yes',
         ));
     }
 

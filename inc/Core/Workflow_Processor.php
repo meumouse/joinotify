@@ -97,20 +97,19 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
      * @return void
      */
     public static function process_workflow_content( $workflow_content, $post_id, $payload ) {
-        /*
         if ( JOINOTIFY_DEV_MODE ) {
             error_log( 'Function process_workflow_content() fired' );
             error_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
             error_log( 'Param $post_id: ' . print_r( $post_id, true ) );
             error_log( 'Param $payload: ' . print_r( $payload, true ) );
-        }*/
+        }
 
         /**
          * Before process Joinotify workflows
@@ -134,7 +133,10 @@ class Workflow_Processor {
         $trigger_data = reset( $trigger_data );
 
         if ( $integration === 'woocommerce' ) {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
+            if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' ) {
+                $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
+            }
+
             $order = wc_get_order( $payload['order_id'] );
             $order_status = str_replace( 'wc-', '', $order->get_status() ); // remove prefix "wc-"
             
@@ -172,7 +174,7 @@ class Workflow_Processor {
             $action_id = $action['id'] ?? null;
 
             // Ignore trigger or already processed actions
-            if ( in_array( $action_id, $state['processed_actions'], true ) ) {
+            if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' && in_array( $action_id, $state['processed_actions'], true ) ) {
                 continue;
             }
     
@@ -278,8 +280,14 @@ class Workflow_Processor {
         // Extract condition details
         $get_condition = $action_data['condition_content']['condition'] ?? '';
         $condition_type = $action_data['condition_content']['type'] ?? '';
-        $condition_value = $action_data['condition_content']['value'] ?? '';
         $payload['condition_content'] = $action_data['condition_content'] ?? array();
+        $condition_value = '';
+
+        if ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
+            $condition_value = str_replace( 'wc-', '', $action_data['condition_content']['value'] );
+        } else {
+            $condition_value = $action_data['condition_content']['value'] ?? '';
+        }
 
         // get meta key for user meta condition
         if ( $get_condition === 'user_meta' ) {
@@ -292,7 +300,7 @@ class Workflow_Processor {
         $compare_value = Conditions::get_compare_value( $get_condition, $payload );
 
         // Check if the condition is met
-        $condition_met = Conditions::check_condition( $condition_type, $compare_value, $condition_value );
+        $condition_met = Conditions::check_condition( $condition_type, $compare_value, $condition_value, $payload );
 
         // Determine the next actions based on whether the condition is met
         $next_actions = $condition_met ? ( $action['children']['action_true'] ?? array() ) : ( $action['children']['action_false'] ?? array() );

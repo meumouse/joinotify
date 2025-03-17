@@ -144,4 +144,4 @@ function joinotify_prepare_message( $message, $payload = array() ) {
  */
 function joinotify_format_plain_text( $content ) {
 	return html_entity_decode( strip_tags( $content ) );
-} 
+}

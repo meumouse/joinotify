@@ -2284,7 +2284,7 @@
 				var action_type = modal.find('.save-action-edit').data('action');
 				var initial_data = Builder.getActionData(action_type, modal);
 			
-				if ( params.debug_mode ) {
+				if ( params.dev_mode ) {
 					console.log('Pre populated data: ', initial_data);
 				}
 			
