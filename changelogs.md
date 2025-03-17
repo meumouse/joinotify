@@ -1,3 +1,4 @@
+
 Versão 1.2.2 (17/03/2025)
 * Correção de bugs:
      - Variáveis de texto em acionamentos para WooCommerce em modo testes não estavam sendo substituídas corretamente.
