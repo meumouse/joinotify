@@ -104,12 +104,13 @@ class Workflow_Processor {
      * @return void
      */
     public static function process_workflow_content( $workflow_content, $post_id, $payload ) {
+        /*
         if ( JOINOTIFY_DEV_MODE ) {
             error_log( 'Function process_workflow_content() fired' );
             error_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
             error_log( 'Param $post_id: ' . print_r( $post_id, true ) );
             error_log( 'Param $payload: ' . print_r( $payload, true ) );
-        }
+        }*/
 
         /**
          * Before process Joinotify workflows
@@ -278,6 +279,7 @@ class Workflow_Processor {
         $get_condition = $action_data['condition_content']['condition'] ?? '';
         $condition_type = $action_data['condition_content']['type'] ?? '';
         $condition_value = $action_data['condition_content']['value'] ?? '';
+        $payload['condition_content'] = $action_data['condition_content'] ?? array();
 
         // get meta key for user meta condition
         if ( $get_condition === 'user_meta' ) {

@@ -11,6 +11,7 @@ defined('ABSPATH') || exit;
  * This class provides functions for handling messages from workflow builder
  * 
  * @since 1.1.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Messages {
@@ -113,7 +114,7 @@ class Messages {
                     return $product['title'];
                 }, $condition_content['products'] );
             
-                $description = sprintf( '%s: %s', $condition_content['type_text'], implode( ', ', $product_titles ) );
+                $description .= sprintf( '%s: %s', $condition_content['type_text'], implode( ', ', $product_titles ) );
             } elseif ( $get_condition === 'order_paid' ) {
                 $description .= $condition_type === 'is' ? esc_html__( 'Verificar se o pedido foi pago', 'joinotify' ) : esc_html__( 'Verificar se o pedido não foi pago', 'joinotify' );
             } elseif ( $get_condition === 'order_total' ) {

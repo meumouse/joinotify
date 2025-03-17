@@ -2114,6 +2114,7 @@ textarea.edit-whatsapp-message-text {
 
 .search-products .selectize-input > input {
     padding: 0.825rem 1rem !important;
+    width: auto !important;
 }
 
 #joinotify_template_library_container {

@@ -83,6 +83,12 @@ class Conditions {
      * @return mixed Returns the value for comparison or null if not found
      */
     public static function get_compare_value( $condition_type, $payload ) {
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( 'get_compare_value() function called' );
+            error_log( 'Condition type: ' . print_r( $condition_type, true ) );
+            error_log( 'Payload: ' . print_r( $payload, true ) );
+        }
+
         $context = null;
         $field_value = null;
         $condition_content = $payload['condition_content'];
@@ -93,6 +99,9 @@ class Conditions {
             $context = wc_get_order( $payload['order_id'] );
         } elseif ( isset( $payload['user_id'] ) ) {
             $context = get_userdata( $payload['user_id'] );
+        } elseif ( isset( $condition_content['condition'] ) && $condition_content['condition'] === 'user_meta' && ! isset( $payload['user_id'] ) ) {
+            $context = get_userdata( get_current_user_id() );
+            $payload['user_id'] = get_current_user_id();
         }
 
         // check integration
@@ -102,6 +111,11 @@ class Conditions {
             } elseif ( $payload['integration'] === 'elementor' ) {
                 $field_value = isset( $payload['fields'][$field_id] ) ? $payload['fields'][$field_id] : null;
             }
+        }
+
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Payload from get_compare_value() : " . print_r( $payload, true ) );
+            error_log( "Context from get_compare_value() : " . print_r( $context, true ) );
         }
     
         // Map condition types to their respective value retrieval methods
@@ -124,7 +138,7 @@ class Conditions {
             'shipping_method'       => $context instanceof \WC_Order ? $context->get_shipping_method() : null,
             'field_value'           => $field_value,
             'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
-        ));
+        ), $condition_type, $payload );
     
         return $value_map[$condition_type] ?? null;
     }

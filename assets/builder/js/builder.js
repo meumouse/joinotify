@@ -1058,8 +1058,26 @@
 							},
 						};
 
+						// check purchased products condition
 						if ( condition === 'products_purchased' ) {
-							action_data.data.condition_content.products = Builder.purchasedProducts;
+							let selected_products_element = $('.search-products');
+							let selected_products = [];
+						
+							if ( selected_products_element.length ) {
+								let data_selected_products = selected_products_element.attr('data-selected-products');
+						
+								try {
+									selected_products = JSON.parse( data_selected_products );
+								} catch (error) {
+									console.error('Error parsing data-selected-products:', error);
+								}
+							}
+						
+							// ensures that the products are preserved when reopening
+							action_data.data.condition_content.products = action_data.data.condition_content.products?.length
+								? action_data.data.condition_content.products
+								: ( Builder.purchasedProducts && Builder.purchasedProducts.length ? Builder.purchasedProducts : selected_products );
+						
 							action_data.data.condition_content.value = '';
 						} else if ( condition === 'user_meta' ) {
 							action_data.data.condition_content.meta_key = container.find('.meta-key-wrapper').children('.get-condition-value').val();
@@ -2257,7 +2275,7 @@
 		 * Save action settings
 		 * 
 		 * @since 1.1.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 */
 		saveActionSettings: function() {
 			// check action on display modal
@@ -2265,19 +2283,113 @@
 				var modal = $(this);
 				var action_type = modal.find('.save-action-edit').data('action');
 				var initial_data = Builder.getActionData(action_type, modal);
-
-				console.log(initial_data);
-				
-				// storage initial data in the modal itself
+			
+				if ( params.debug_mode ) {
+					console.log('Pre populated data: ', initial_data);
+				}
+			
+				// Store initial data in the modal itself
 				modal.data('initial_data', JSON.stringify(initial_data));
 			
+				let select_element = modal.find('.search-products');
+			
+				if ( modal.find('.save-action-edit').data('action') === 'condition' && modal.find('.get-condition').val() === 'products_purchased' ) {
+			
+					// Get the JSON saved in the data-selected-products attribute
+					let selected_json = select_element.attr('data-selected-products');
+					let selected_products = [];
+			
+					try {
+						selected_products = selected_json ? JSON.parse(selected_json) : [];
+					} catch (e) {
+						console.error('Error parsing data-selected-products:', e);
+					}
+			
+					// Map product IDs to an array of strings
+					let selected_ids = selected_products.map(product => product.id.toString());
+			
+					// Check if Selectize is already initialized
+					if ( ! select_element[0].selectize ) {
+						// Initialize Selectize only if it hasn't been instantiated yet
+						select_element.selectize({
+							plugins: {
+								remove_button: {
+									title: params.i18n.remove_product_selectize,
+								},
+							},
+							delimiter: ',',
+							persist: false,
+							maxItems: null, // Allow multiple selection
+							valueField: 'id',
+							labelField: 'product_title',
+							searchField: ['product_title'],
+							options: selected_products, // Load selected products as options
+							create: false,
+							render: {
+								option: function(data, escape) {
+									return `<div class="option" data-value="${escape(data.id)}">${escape(data.product_title)}</div>`;
+								},
+							},
+							load: function(query, callback) {
+								if (query.length < 3) return callback(); // Require at least 3 characters
+			
+								let selectize = this;
+			
+								// Show loading indicator
+								selectize.$wrapper.append('<span class="spinner-border spinner-border-sm specific-search-spinner"></span>');
+								selectize.$wrapper.addClass('loading');
+			
+								$.ajax({
+									url: params.ajax_url,
+									type: 'POST',
+									dataType: 'json',
+									data: {
+										action: 'joinotify_get_woo_products',
+										search_query: query,
+									},
+									success: function(response) {
+										selectize.$wrapper.find('.specific-search-spinner').remove();
+										selectize.$wrapper.removeClass('loading');
+			
+										callback(response);
+									},
+									error: function() {
+										selectize.$wrapper.find('.specific-search-spinner').remove();
+										selectize.$wrapper.removeClass('loading');
+			
+										callback();
+									},
+								});
+							},
+						});
+					}
+			
+					// Get the Selectize instance after initialization
+					let selectize_instance = select_element[0].selectize;
+			
+					if (selectize_instance) {
+						selectize_instance.clearOptions();
+			
+						// Add options if they don't already exist
+						selected_products.forEach(product => {
+							if ( ! selectize_instance.options[product.id] ) {
+								selectize_instance.addOption({ id: product.id, product_title: product.title });
+							}
+						});
+			
+						// Set selected values
+						selectize_instance.setValue(selected_ids);
+						selectize_instance.refreshOptions(false);
+					}
+				}
+			
 				let save_button = modal.find('.save-action-edit');
-
-				// disable button if action is snippet php
-				if ( save_button.data('action') === 'snippet_php' ) {
+			
+				// Disable button if action is 'snippet_php'
+				if (save_button.data('action') === 'snippet_php') {
 					save_button.prop('disabled', true);
 				}
-			});
+			});			
 			
 			// check changes in inputs inside the modal
 			$(document).on('input change', '.modal.show :input', function() {
@@ -2634,16 +2746,47 @@
 		 * Search WooCommerce products
 		 * 
 		 * @since 1.1.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 * @package MeuMouse.com
 		 */
 		searchWooProducts: function() {
 			setTimeout(() => {
 				$('.search-products').each( function() {
 					let select_products_element = $(this);
-            		let select_products = JSON.parse(select_products_element.attr('data-selected-products') || '[]');
+		
+					// Retrieve saved products from data-selected-products attribute
+					let selected_products_json = select_products_element.attr('data-selected-products');
+					let selected_products = [];
+		
+					try {
+						selected_products = selected_products_json ? JSON.parse(selected_products_json) : [];
+					} catch (error) {
+						console.error('Error parsing data-selected-products:', error);
+					}
+		
+					// Extract product IDs for selection
+					let selected_product_ids = selected_products.map(p => p.id.toString());
+		
+					// Check if Selectize is already initialized
+					if ( select_products_element[0].selectize ) {
+						let selectize_instance = select_products_element[0].selectize;
 
-					// initialize selectize
+						selectize_instance.destroy();
+						selectize_instance.clearOptions();
+		
+						// Ensure saved products are added as options
+						selected_products.forEach( product => {
+							if ( ! selectize_instance.options[product.id] ) {
+								selectize_instance.addOption({ id: product.id, product_title: product.title });
+							}
+						});
+		
+						// Ensure that values are correctly selected
+						selectize_instance.setValue(selected_product_ids);
+						selectize_instance.refreshOptions();
+					}
+		
+					// Initialize Selectize
 					let product_select = select_products_element.selectize({
 						plugins: {
 							remove_button: {
@@ -2656,9 +2799,9 @@
 						labelField: 'product_title',
 						searchField: 'product_title',
 						create: false,
-						maxItems: null, // allow multiple selection
-						options: select_products, // load saved products
-						items: select_products.map( p => p.id ), // set saved products as selected
+						maxItems: null, // Allow multiple selection
+						options: selected_products, // Load saved products
+						items: selected_product_ids, // Set saved products as selected
 						render: {
 							option: function(data, escape) {
 								return `<div class="option" data-value="${escape(data.id)}">${escape(data.product_title)}</div>`;
@@ -2666,13 +2809,13 @@
 						},
 						load: function(query, callback) {
 							if (query.length < 3) return callback(); // Require at least 3 characters
-							
+		
 							let selectize = this;
-							
+		
 							// Show loading indicator
 							selectize.$wrapper.append('<span class="spinner-border spinner-border-sm specific-search-spinner"></span>');
 							selectize.$wrapper.addClass('loading');
-			
+		
 							$.ajax({
 								url: params.ajax_url,
 								type: 'POST',
@@ -2684,50 +2827,61 @@
 								success: function(response) {
 									selectize.$wrapper.find('.specific-search-spinner').remove();
 									selectize.$wrapper.removeClass('loading');
-	
+		
 									callback(response);
 								},
 								error: function() {
 									selectize.$wrapper.find('.specific-search-spinner').remove();
 									selectize.$wrapper.removeClass('loading');
-									
+		
 									callback();
 								},
 							});
-						}
+						},
 					});
-			
-					// Get Selectize instance
+		
 					let selectize_instance = product_select[0].selectize;
-			
-					// Handle item selection (only add to purchasedProducts when clicked)
-					selectize_instance.on('item_add', function(value, data) {
+		
+					// Handle item selection (add to purchasedProducts when clicked)
+					selectize_instance.on('item_add', function(value) {
 						let product_id = parseInt(value);
 						let product_data = selectize_instance.options[product_id];
-    					let product_title = product_data ? product_data.product_title : '';
-			
+						let product_title = product_data ? product_data.product_title : '';
+		
 						// Ensure unique addition in object format { id: title }
-						if ( ! Builder.purchasedProducts.some( p => p.id === product_id ) ) {
+						if (!Builder.purchasedProducts.some(p => p.id === product_id)) {
 							Builder.purchasedProducts.push({ id: product_id, title: product_title });
 						}
-	
-						// display the updated array on development mode
-						if ( params.dev_mode ) {
+		
+						// Update data-selected-products attribute
+						select_products_element.attr('data-selected-products', JSON.stringify(Builder.purchasedProducts));
+		
+						// Display the updated array in development mode
+						if (params.dev_mode) {
 							console.log(Builder.purchasedProducts);
 						}
 					});
-			
+		
 					// Handle item removal
 					selectize_instance.on('item_remove', function(value) {
 						let product_id = parseInt(value);
-	
-						Builder.purchasedProducts = Builder.purchasedProducts.filter( p => p.id !== product_id );
-	
-						// display the updated array on development mode
-						if ( params.dev_mode ) {
+		
+						Builder.purchasedProducts = Builder.purchasedProducts.filter(p => p.id !== product_id);
+		
+						// Update data-selected-products attribute
+						select_products_element.attr('data-selected-products', JSON.stringify(Builder.purchasedProducts));
+		
+						// Display the updated array in development mode
+						if (params.dev_mode) {
 							console.log(Builder.purchasedProducts);
 						}
 					});
+		
+					// Force setValue after initialization
+					setTimeout(() => {
+						selectize_instance.setValue(selected_product_ids);
+						selectize_instance.refreshOptions();
+					}, 200);
 				});
 			}, 500);
 		},
