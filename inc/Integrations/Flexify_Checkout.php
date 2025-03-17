@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Flexify_Checkout extends Integrations_Base {
@@ -21,7 +22,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
@@ -42,8 +43,19 @@ class Flexify_Checkout extends Integrations_Base {
             // add conditions
             add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
 
-            if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
-                add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
+            // check if Flexify Checkout extension addon is active
+            if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+                // when a order is abandoned
+                add_action( 'Flexify_Checkout/Recovery_Carts/Order_Abandoned', array( $this, 'process_workflow_order_abandoned' ), 10, 2 );
+
+                // when a cart is abandoned
+                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned', array( $this, 'process_workflow_cart_abandoned' ), 10, 1 );
+
+                // when a cart is recovered
+                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Recovered', array( $this, 'process_workflow_cart_recovered' ), 10, 2 );
+
+                // when a cart is lost
+                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Lost', array( $this, 'process_workflow_cart_lost' ), 10, 1 );
             }
         }
     }
@@ -279,27 +291,85 @@ class Flexify_Checkout extends Integrations_Base {
 
 
     /**
-     * Add coupon action in sidebar list on builder
+     * Process workflow when a order is abandoned
      * 
      * @since 1.2.0
-     * @param array $actions | Current actions
-     * @return array
+     * @version 1.2.2
+     * @param int $order_id | The abandoned order ID
+     * @param int $cart_id | The abandoned cart ID
+     * @return void
      */
-    public function add_coupon_action( $actions ) {
-        $actions[] = array(
-            'action' => 'create_coupon',
-            'title' => esc_html__( 'Cupom de desconto', 'joinotify' ),
-            'description' => esc_html__( 'Envie um cupom de desconto para seu usuário através de mensagem de texto do WhatsApp.', 'joinotify' ),
-            'context' => array(
-                'woocommerce',
-            ),
-            'icon' => '<svg class="icon icon-lg icon-dark coupon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 6.75L4.5 6H20.25L21 6.75V10.7812H20.25C19.5769 10.7812 19.0312 11.3269 19.0312 12C19.0312 12.6731 19.5769 13.2188 20.25 13.2188H21V17.25L20.25 18L4.5 18L3.75 17.25V13.2188H4.5C5.1731 13.2188 5.71875 12.6731 5.71875 12C5.71875 11.3269 5.1731 10.7812 4.5 10.7812H3.75V6.75ZM5.25 7.5V9.38602C6.38677 9.71157 7.21875 10.7586 7.21875 12C7.21875 13.2414 6.38677 14.2884 5.25 14.614V16.5L9 16.5L9 7.5H5.25ZM10.5 7.5V16.5L19.5 16.5V14.614C18.3632 14.2884 17.5312 13.2414 17.5312 12C17.5312 10.7586 18.3632 9.71157 19.5 9.38602V7.5H10.5Z"></path></g></svg>',
-            'external_icon' => false,
-            'has_settings' => true,
-            'settings' => Woocommerce::create_coupon_action(),
-            'priority' => 60,
+    public function process_workflow_order_abandoned( $order_id, $cart_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
+            'integration' => 'flexify_checkout',
+            'order_id' => $order_id,
+            'cart_id' => $cart_id,
         );
 
-        return $actions;
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a cart is abandoned
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param int $cart_id | The abandoned cart ID
+     * @return void
+     */
+    public function process_workflow_cart_abandoned( $cart_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a cart is recovered
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param int $cart_id | The recovered cart ID
+     * @param int $order_id | The order ID
+     * @return void
+     */
+    public function process_workflow_cart_recovered( $cart_id, $order_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+            'order_id' => $order_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a cart is lost
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param int $cart_id | The recovered cart ID
+     * @return void
+     */
+    public function process_workflow_cart_lost( $cart_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Lost',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
     }
 }

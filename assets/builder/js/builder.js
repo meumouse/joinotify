@@ -50,6 +50,13 @@
 		getActionID: '',
 
 		/**
+		 * Get next action ID
+		 * 
+		 * @since 1.2.2
+		 */
+		nextActionID: '',
+
+		/**
 		 * Init
 		 * 
 		 * @since 1.1.0
@@ -79,6 +86,7 @@
 		 * Run functions on workflow ready
 		 * 
 		 * @since 1.1.0
+		 * @version 1.2.2
 		 */
 		onWorkflowReady: function() {
 			// on workflow ready event
@@ -106,6 +114,7 @@
 				Builder.openMediaLibrary();
 				Builder.runTestWorkflow();
 				Builder.validateInputCurrency();
+				Builder.updateMediaPreview();
 			});
 		},
 
@@ -113,7 +122,7 @@
 		 * Run functions on workflow updated
 		 * 
 		 * @since 1.1.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 */
 		onUpdatedWorkflow: function() {
 			// on workflow updated event
@@ -126,6 +135,7 @@
 				Builder.validateInputCurrency();
 				Builder.emojiPicker();
 				Builder.searchWooProducts();
+				Builder.updateMediaPreview();
 			});
 		},
 
@@ -176,62 +186,6 @@
 				html: btn_html,
 			};
 	  	},
-
-		/**
-		 * Expand and collapse sidebar actions
-		 * 
-		 * @since 1.1.0
-		 */
-		expandSidebar: function() {
-			// expand actions sidebar
-			$(document).on('click', '.expand-offcanvas', function(e) {
-				e.preventDefault();
-
-				// add collapse icon
-				$(this).addClass('d-none');
-				$(this).siblings('.collapse-offcanvas').removeClass('d-none');
-				$('.offcanvas.show').addClass('offcanvas-expanded');
-				$('#joinotify_builder_funnel').addClass('offcanvas-expanded');
-			});
-
-			// collapse actions sidebar
-			$(document).on('click', '.btn-close[data-bs-dismiss="offcanvas"], .collapse-offcanvas', function() {
-				// add expand icon
-				$(this).siblings('.expand-offcanvas').removeClass('d-none');
-				$(this).siblings('.collapse-offcanvas').addClass('d-none');
-				$(this).closest('.collapse-offcanvas').addClass('d-none');
-				$('.offcanvas.offcanvas-expanded').removeClass('offcanvas-expanded');
-				$('#joinotify_builder_funnel').removeClass('offcanvas-expanded');
-			});
-		},
-
-		/**
-		 * Close sidebar actions
-		 * 
-		 * @since 1.0.0
-		 * @version 1.1.0
-		 */
-		closeSidebar: function() {
-			// on close main sidebar actions
-			$(document).on('click', '#joinotify_close_actions_group', function(e) {
-				e.preventDefault();
-	
-				let container_actions = $('#joinotify_actions_group');
-	
-				container_actions.removeClass('active');
-				$('.joinotify_condition_node_point').removeClass('active');
-				$('.plusminus.active').removeClass('active');
-	
-				if ( container_actions.hasClass('active') ) {
-					$('#joinotify_builder_funnel').addClass('waiting-select-action');
-				} else {
-					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
-	
-					Builder.isConditionAction = false;
-					$('.action-item.locked').removeClass('locked');
-				}
-			});
-		},
 
 		/**
 		 * Select condition action
@@ -360,7 +314,7 @@
 		 * Import workflow file
 		 * 
 		 * @since 1.0.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 * @param {string} file | File
 		 * @param {string} dropzone | Dropzone div
 		 * @returns void
@@ -405,6 +359,7 @@
 
 							try {
 								if (response.status === 'success') {
+									btn.prop('disabled', true);
 									dropzone.addClass('file-uploaded').removeClass('file-processing');
 									dropzone.children('.spinner-border').remove();
 									dropzone.append('<div class="upload-notice d-flex flex-column align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#22c55e" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#22c55e" d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg><span>' + response.dropfile_message + '</span></div>');
@@ -461,7 +416,7 @@
 		 * Open sidebar actions
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.2
 		 */
 		openSidebar: function() {
 			const container_actions = $('#joinotify_actions_group');
@@ -469,7 +424,39 @@
 			// on click on plus icon
 			$(document).on('click', '.funnel_add_action', function() {
 				let btn = $(this);
+				let is_already_active = btn.hasClass('waiting-action');
+
+				// reset state for others buttons before activate new
+				$('.funnel_add_action').not(btn).removeClass('waiting-action').find('.plusminus').removeClass('active');
+
+				// toggle class only if the same button is clicked again
+				if ( is_already_active ) {
+					btn.removeClass('waiting-action');
+					btn.find('.plusminus').removeClass('active');
+					container_actions.removeClass('active'); // close the sidebar if the same button is clicked again
+					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
+					$('.joinotify_condition_node_point').removeClass('active');
+
+					return; // exit to function to prevent execution for remaining code
+				}
+
+				// activate the clicked button
+				btn.addClass('waiting-action');
+				btn.find('.plusminus').addClass('active');
+
+				// reset next action variable
+				Builder.nextActionID = '';
+
+				// check if the action is being added between existing actions
+				if ( btn.hasClass('between-action-connector') ) {
+					let next_action = btn.closest('.funnel_block_item_connector').nextAll('.funnel-action-item').first();
+					
+					if ( next_action.length ) {
+						Builder.nextActionID = next_action.data('action-id'); // get next action id
+					}
+				}
 	
+				// add condition type on variable
 				Builder.conditionType = btn.data('condition');
 	
 				// when click on add action inside condition
@@ -477,7 +464,6 @@
 					if ( ! container_actions.hasClass('active') ) {
 						container_actions.addClass('active');
 						$('#joinotify_builder_funnel').addClass('waiting-select-action');
-						$('.funnel_add_action').children('.plusminus').addClass('active');
 					}
 	
 					Builder.isConditionAction = true;
@@ -488,27 +474,75 @@
 					$('.action-item[data-action="time_delay"]').addClass('locked');
 					$('.action-item[data-action="condition"]').addClass('locked');
 				} else {
-					container_actions.toggleClass('active');
+					container_actions.addClass('active');
 					Builder.isConditionAction = false;
 					Builder.getActionID = '';
 	
 					$('.joinotify_condition_node_point').removeClass('active');
 					$('.action-item[data-action="time_delay"]').removeClass('locked');
 					$('.action-item[data-action="condition"]').removeClass('locked');
-	
-					// manipulate width from builder funnel
-					if ( container_actions.hasClass('active') ) {
-						$('#joinotify_builder_funnel').addClass('waiting-select-action');
-						$('.funnel_add_action').children('.plusminus').addClass('active');
-					} else {
-						$('#joinotify_builder_funnel').removeClass('waiting-select-action');
-						$('.funnel_add_action').children('.plusminus').removeClass('active');
-						$('.joinotify_condition_node_point').removeClass('active');
-	
-						Builder.isConditionAction = false;
-						$('.action-item.locked').removeClass('locked');
-					}
+					$('#joinotify_builder_funnel').addClass('waiting-select-action');
 				}
+			});
+		},
+
+		/**
+		 * Close sidebar actions
+		 * 
+		 * @since 1.0.0
+		 * @version 1.2.2
+		 */
+		closeSidebar: function() {
+			// on close main sidebar actions
+			$(document).on('click', '#joinotify_close_actions_group', function(e) {
+				e.preventDefault();
+	
+				let container_actions = $('#joinotify_actions_group');
+	
+				container_actions.removeClass('active');
+				$('.joinotify_condition_node_point').removeClass('active');
+				$('.plusminus.active').removeClass('active');
+				$('.funnel_add_action.waiting-action').removeClass('waiting-action');
+
+				// clear next action ID
+				Builder.nextActionID = '';
+	
+				if ( container_actions.hasClass('active') ) {
+					$('#joinotify_builder_funnel').addClass('waiting-select-action');
+				} else {
+					$('#joinotify_builder_funnel').removeClass('waiting-select-action');
+	
+					Builder.isConditionAction = false;
+					$('.action-item.locked').removeClass('locked');
+				}
+			});
+		},
+
+		/**
+		 * Expand and collapse sidebar actions
+		 * 
+		 * @since 1.1.0
+		 */
+		expandSidebar: function() {
+			// expand actions sidebar
+			$(document).on('click', '.expand-offcanvas', function(e) {
+				e.preventDefault();
+
+				// add collapse icon
+				$(this).addClass('d-none');
+				$(this).siblings('.collapse-offcanvas').removeClass('d-none');
+				$('.offcanvas.show').addClass('offcanvas-expanded');
+				$('#joinotify_builder_funnel').addClass('offcanvas-expanded');
+			});
+
+			// collapse actions sidebar
+			$(document).on('click', '.btn-close[data-bs-dismiss="offcanvas"], .collapse-offcanvas', function() {
+				// add expand icon
+				$(this).siblings('.expand-offcanvas').removeClass('d-none');
+				$(this).siblings('.collapse-offcanvas').addClass('d-none');
+				$(this).closest('.collapse-offcanvas').addClass('d-none');
+				$('.offcanvas.offcanvas-expanded').removeClass('offcanvas-expanded');
+				$('#joinotify_builder_funnel').removeClass('offcanvas-expanded');
 			});
 		},
 
@@ -945,6 +979,7 @@
 		 * Returns the action_data object formatted based on the action type
 		 *
 		 * @since 1.1.0
+		 * @version 1.2.2
 		 * @param {string} action_type - Action type
 		 * @param {string} context - DOM context to fetch data from (e.g. '.offcanvas.show' or '.modal.show')
 		 * @returns {object} action_data
@@ -954,6 +989,7 @@
 			var container = $(context);
 			const action_title = container.find('.offcanvas-title, .modal-title').text();
 
+			// check action type
 			switch ( action_type ) {
 				case 'time_delay':
 						var delay_type = container.find('.set-time-delay-type, .set-time-delay-type-edit').val();
@@ -1004,39 +1040,62 @@
 
 						break;
 				case 'condition':
-						let condition = container.find('.condition-item.active').data('condition');
-						let condition_type = container.find('.condition-settings-item.active .get-condition-type option:selected').val();
+						let condition = container.find('.condition-item.active').data('condition') || container.find('.get-condition').val();
+						let condition_type = container.find('.condition-settings-item.active .get-condition-type option:selected').val() || container.find('.get-condition-type option:selected').val();
 
 						action_data = {
 							type: 'action',
 							data: {
 								action: 'condition',
-								condition: condition,
-								title: container.find('.condition-item.active .title').text(),
+								title: container.find('.condition-item.active .title').text() || container.find('.get-condition-title').val(),
 								condition_content: {
-									condition: container.find('.condition-settings-item.active').data('condition'),
+									condition: condition,
 									type: condition_type,
-									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text(),
-									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val(),
-									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val(),
+									type_text: container.find('.condition-settings-item.active .get-condition-type option:selected').text() || container.find('.get-condition-type option:selected').text(),
+									value: container.find('.condition-settings-item.active .get-condition-value option:selected').val() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value').val(),
+									value_text: container.find('.condition-settings-item.active .get-condition-value option:selected').text() || container.find('.condition-settings-item.active .get-condition-value').val() || container.find('.get-condition-value option:selected').text() || container.find('.get-condition-value').text() || container.find('.get-condition-value').val(),
 								},
 							},
 						};
 
+						// check purchased products condition
 						if ( condition === 'products_purchased' ) {
-							action_data.data.condition_content.products = Builder.purchasedProducts;
+							let selected_products_element = $('.search-products');
+							let selected_products = [];
+						
+							if ( selected_products_element.length ) {
+								let data_selected_products = selected_products_element.attr('data-selected-products');
+						
+								try {
+									selected_products = JSON.parse( data_selected_products );
+								} catch (error) {
+									console.error('Error parsing data-selected-products:', error);
+								}
+							}
+						
+							// ensures that the products are preserved when reopening
+							action_data.data.condition_content.products = action_data.data.condition_content.products?.length
+								? action_data.data.condition_content.products
+								: ( Builder.purchasedProducts && Builder.purchasedProducts.length ? Builder.purchasedProducts : selected_products );
+						
 							action_data.data.condition_content.value = '';
 						} else if ( condition === 'user_meta' ) {
 							action_data.data.condition_content.meta_key = container.find('.meta-key-wrapper').children('.get-condition-value').val();
 
 							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
 								action_data.data.condition_content.value = '';
+							} else {
+								action_data.data.condition_content.value = container.find('.condition-settings-item.active .meta-value-wrapper .get-condition-value').val() || container.find('.meta-value-wrapper').children('.get-condition-value').val();
+								action_data.data.condition_content.value_text = container.find('.condition-settings-item.active .meta-value-wrapper .get-condition-value').val() || container.find('.meta-value-wrapper').children('.get-condition-value').val();
 							}
 						} else if ( condition === 'field_value' ) {
-							action_data.data.condition_content.field_id = container.find('.field-id-wrapper').children('.get-condition-value').val();
+							action_data.data.condition_content.field_id = container.find('.condition-settings-item.active .field-id-wrapper .get-condition-value').val() || container.find('.field-id-wrapper').children('.get-condition-value').val();
 
 							if ( condition_type === 'empty' || condition_type === 'not_empty' ) {
 								action_data.data.condition_content.value = '';
+							} else {
+								action_data.data.condition_content.value = container.find('.condition-settings-item.active .field-value-wrapper .get-condition-value').val() || container.find('.field-value-wrapper').children('.get-condition-value').val();
+								action_data.data.condition_content.value_text = container.find('.condition-settings-item.active .field-value-wrapper .get-condition-value').val() || container.find('.field-value-wrapper').children('.get-condition-value').val();
 							}
 						}
 
@@ -1108,7 +1167,7 @@
 		 * Add action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.2
 		 */
 		addAction: function() {
 			Builder.selectCondition();
@@ -1140,6 +1199,7 @@
 						action_condition: Builder.isConditionAction,
 						action_id: Builder.getActionID,
 						condition_action: Builder.conditionType,
+						next_action_id: Builder.nextActionID,
 						workflow_action: JSON.stringify(action_data),
 					},
 					beforeSend: function() {
@@ -1198,9 +1258,11 @@
 		 * Remove action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 */
 		removeAction: function() {
+			let removing_actions = [];
+
 			$(document).on('click', '.exclude-action', function(e) {
 				e.preventDefault();
 
@@ -1210,7 +1272,16 @@
 				}
 
 				var action = $(this);
+				let action_id = action.data('action-id');
+        		let action_element = $('.funnel-action-item[data-action-id="' + action_id + '"]');
 
+				// add action to removal list
+				removing_actions.push(action_id);
+
+				// add classes to keep animation
+				action_element.addClass('placeholder-wave removing-action');
+
+				// send ajax request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -1231,12 +1302,20 @@
 						try {
 							if (response.status === 'success') {
 								if (response.has_action) {
-										$('#joinotify_builder_run_test').prop('disabled', false);
+									$('#joinotify_builder_run_test').prop('disabled', false);
 								} else {
-										$('#joinotify_builder_run_test').prop('disabled', true);
+									$('#joinotify_builder_run_test').prop('disabled', true);
 								}
 
 								$('#joinotify_builder_funnel').children('.funnel-trigger-group').html(response.workflow_content);
+
+								// add add on actions after request response
+								removing_actions.forEach(id => {
+									$('.funnel-action-item[data-action-id="' + id + '"]').addClass('placeholder-wave removing-action');
+								});
+
+								// clear variable
+								Builder.nextActionID = '';
 
 								// fire updated workflow event
 								$(document).trigger('updatedWorkflow');
@@ -1250,9 +1329,15 @@
 						}
 					},
 					complete: function() {
+						// remove actions from array after confirmation of removal
+						removing_actions = removing_actions.filter(id => id !== action_id);
+		
+						// remove classes after confirmation of removal
+						if ( ! removing_actions.includes(action_id) ) {
+							action_element.removeClass('placeholder-wave removing-action');
+						}
+		
 						action.prop('disabled', false);
-						action.closest('.funnel-action-item').removeClass('placeholder-wave removing-action');
-
 						Builder.adjustHeightCondition();
 					},
 				});
@@ -1667,28 +1752,50 @@
 				}
 			});
 		},
-	
+
+		/**
+		 * Format WhatsApp message text with proper styling
+		 * 
+		 * @since 1.2.2
+		 * @param {string} text The input message text
+		 * @return {string} The formatted text with HTML tags
+		 */
+		formatWhatsAppText: function(text) {
+			// Apply text formatting rules before processing line breaks
+			text = text
+				.replace(/```([^`]+)```/g, '<span style="font-family: monospace;">$1</span>') // Monospace
+				.replace(/(?<=\s|^)\*\*([^\s*][^*]+?[^\s*])\*\*(?=\s|$)/g, '<span style="font-weight: bold;">$1</span>') // Bold (**text**)
+				.replace(/(?<=\s|^)\*([^\s*][^*]+?[^\s*])\*(?=\s|$)/g, '<span style="font-weight: bold;">$1</span>') // Bold (*text*)
+				.replace(/(?<=\s|^)_([^\s_][^_]+?[^\s_])_(?=\s|$)/g, '<span style="font-style: italic;">$1</span>') // Italic (_text_)
+				.replace(/(?<=\s|^)~([^\s~][^~]+?[^\s~])~(?=\s|$)/g, '<span style="text-decoration: line-through;">$1</span>'); // Strikethrough (~text~)
+		
+			// Now replace new lines with <br> elements
+			text = text.replace(/\n/g, '<br>');
+		
+			// Replace {{ br }} with <br> elements (for manual break rows)
+			text = text.replace(/{{ br }}/g, '<br>');
+		
+			return text;
+		},
+
 		/**
 		 * Display WhatsApp message preview
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.2.2
 		 * @package MeuMouse.com
 		 */
 		whatsappMessagePreview: function() {
-			$(document).on('input change blur change keyup', '.set-whatsapp-message-text', function() {
+			$(document).on('input change blur keyup', '.set-whatsapp-message-text', function() {
 				var input = $(this);
 				var text = input.val();
 				var preview_message = $(this).parent('div').siblings('.preview-whatsapp-message-sender');
 
-				// replace \n for <br> break row HTML element
-				text = text.replace(/\n/g, '<br>');
+				// Apply formatting function
+				var formatted_text = Builder.formatWhatsAppText(text);
 
-				// replace {{ br }} for break row HTML element
-				text = text.replace(/{{ br }}/g, '<br>');
-	
-				if (text.trim() !== '') {
-					preview_message.addClass('active').html(text);
+				if ( formatted_text.trim() !== '' ) {
+					preview_message.addClass('active').html(formatted_text);
 				} else {
 					preview_message.removeClass('active').html('');
 				}
@@ -2168,7 +2275,7 @@
 		 * Save action settings
 		 * 
 		 * @since 1.1.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 */
 		saveActionSettings: function() {
 			// check action on display modal
@@ -2176,17 +2283,113 @@
 				var modal = $(this);
 				var action_type = modal.find('.save-action-edit').data('action');
 				var initial_data = Builder.getActionData(action_type, modal);
-				
-				// storage initial data in the modal itself
+			
+				if ( params.dev_mode ) {
+					console.log('Pre populated data: ', initial_data);
+				}
+			
+				// Store initial data in the modal itself
 				modal.data('initial_data', JSON.stringify(initial_data));
 			
+				let select_element = modal.find('.search-products');
+			
+				if ( modal.find('.save-action-edit').data('action') === 'condition' && modal.find('.get-condition').val() === 'products_purchased' ) {
+			
+					// Get the JSON saved in the data-selected-products attribute
+					let selected_json = select_element.attr('data-selected-products');
+					let selected_products = [];
+			
+					try {
+						selected_products = selected_json ? JSON.parse(selected_json) : [];
+					} catch (e) {
+						console.error('Error parsing data-selected-products:', e);
+					}
+			
+					// Map product IDs to an array of strings
+					let selected_ids = selected_products.map(product => product.id.toString());
+			
+					// Check if Selectize is already initialized
+					if ( ! select_element[0].selectize ) {
+						// Initialize Selectize only if it hasn't been instantiated yet
+						select_element.selectize({
+							plugins: {
+								remove_button: {
+									title: params.i18n.remove_product_selectize,
+								},
+							},
+							delimiter: ',',
+							persist: false,
+							maxItems: null, // Allow multiple selection
+							valueField: 'id',
+							labelField: 'product_title',
+							searchField: ['product_title'],
+							options: selected_products, // Load selected products as options
+							create: false,
+							render: {
+								option: function(data, escape) {
+									return `<div class="option" data-value="${escape(data.id)}">${escape(data.product_title)}</div>`;
+								},
+							},
+							load: function(query, callback) {
+								if (query.length < 3) return callback(); // Require at least 3 characters
+			
+								let selectize = this;
+			
+								// Show loading indicator
+								selectize.$wrapper.append('<span class="spinner-border spinner-border-sm specific-search-spinner"></span>');
+								selectize.$wrapper.addClass('loading');
+			
+								$.ajax({
+									url: params.ajax_url,
+									type: 'POST',
+									dataType: 'json',
+									data: {
+										action: 'joinotify_get_woo_products',
+										search_query: query,
+									},
+									success: function(response) {
+										selectize.$wrapper.find('.specific-search-spinner').remove();
+										selectize.$wrapper.removeClass('loading');
+			
+										callback(response);
+									},
+									error: function() {
+										selectize.$wrapper.find('.specific-search-spinner').remove();
+										selectize.$wrapper.removeClass('loading');
+			
+										callback();
+									},
+								});
+							},
+						});
+					}
+			
+					// Get the Selectize instance after initialization
+					let selectize_instance = select_element[0].selectize;
+			
+					if (selectize_instance) {
+						selectize_instance.clearOptions();
+			
+						// Add options if they don't already exist
+						selected_products.forEach(product => {
+							if ( ! selectize_instance.options[product.id] ) {
+								selectize_instance.addOption({ id: product.id, product_title: product.title });
+							}
+						});
+			
+						// Set selected values
+						selectize_instance.setValue(selected_ids);
+						selectize_instance.refreshOptions(false);
+					}
+				}
+			
 				let save_button = modal.find('.save-action-edit');
-
-				// disable button if action is snippet php
-				if ( save_button.data('action') === 'snippet_php' ) {
+			
+				// Disable button if action is 'snippet_php'
+				if (save_button.data('action') === 'snippet_php') {
 					save_button.prop('disabled', true);
 				}
-			});
+			});			
 			
 			// check changes in inputs inside the modal
 			$(document).on('input change', '.modal.show :input', function() {
@@ -2543,16 +2746,47 @@
 		 * Search WooCommerce products
 		 * 
 		 * @since 1.1.0
-		 * @version 1.2.0
+		 * @version 1.2.2
 		 * @package MeuMouse.com
 		 */
 		searchWooProducts: function() {
 			setTimeout(() => {
 				$('.search-products').each( function() {
 					let select_products_element = $(this);
-            		let select_products = JSON.parse(select_products_element.attr('data-selected-products') || '[]');
+		
+					// Retrieve saved products from data-selected-products attribute
+					let selected_products_json = select_products_element.attr('data-selected-products');
+					let selected_products = [];
+		
+					try {
+						selected_products = selected_products_json ? JSON.parse(selected_products_json) : [];
+					} catch (error) {
+						console.error('Error parsing data-selected-products:', error);
+					}
+		
+					// Extract product IDs for selection
+					let selected_product_ids = selected_products.map(p => p.id.toString());
+		
+					// Check if Selectize is already initialized
+					if ( select_products_element[0].selectize ) {
+						let selectize_instance = select_products_element[0].selectize;
 
-					// initialize selectize
+						selectize_instance.destroy();
+						selectize_instance.clearOptions();
+		
+						// Ensure saved products are added as options
+						selected_products.forEach( product => {
+							if ( ! selectize_instance.options[product.id] ) {
+								selectize_instance.addOption({ id: product.id, product_title: product.title });
+							}
+						});
+		
+						// Ensure that values are correctly selected
+						selectize_instance.setValue(selected_product_ids);
+						selectize_instance.refreshOptions();
+					}
+		
+					// Initialize Selectize
 					let product_select = select_products_element.selectize({
 						plugins: {
 							remove_button: {
@@ -2565,9 +2799,9 @@
 						labelField: 'product_title',
 						searchField: 'product_title',
 						create: false,
-						maxItems: null, // allow multiple selection
-						options: select_products, // load saved products
-						items: select_products.map( p => p.id ), // set saved products as selected
+						maxItems: null, // Allow multiple selection
+						options: selected_products, // Load saved products
+						items: selected_product_ids, // Set saved products as selected
 						render: {
 							option: function(data, escape) {
 								return `<div class="option" data-value="${escape(data.id)}">${escape(data.product_title)}</div>`;
@@ -2575,13 +2809,13 @@
 						},
 						load: function(query, callback) {
 							if (query.length < 3) return callback(); // Require at least 3 characters
-							
+		
 							let selectize = this;
-							
+		
 							// Show loading indicator
 							selectize.$wrapper.append('<span class="spinner-border spinner-border-sm specific-search-spinner"></span>');
 							selectize.$wrapper.addClass('loading');
-			
+		
 							$.ajax({
 								url: params.ajax_url,
 								type: 'POST',
@@ -2593,50 +2827,61 @@
 								success: function(response) {
 									selectize.$wrapper.find('.specific-search-spinner').remove();
 									selectize.$wrapper.removeClass('loading');
-	
+		
 									callback(response);
 								},
 								error: function() {
 									selectize.$wrapper.find('.specific-search-spinner').remove();
 									selectize.$wrapper.removeClass('loading');
-									
+		
 									callback();
 								},
 							});
-						}
+						},
 					});
-			
-					// Get Selectize instance
+		
 					let selectize_instance = product_select[0].selectize;
-			
-					// Handle item selection (only add to purchasedProducts when clicked)
-					selectize_instance.on('item_add', function(value, data) {
+		
+					// Handle item selection (add to purchasedProducts when clicked)
+					selectize_instance.on('item_add', function(value) {
 						let product_id = parseInt(value);
 						let product_data = selectize_instance.options[product_id];
-    					let product_title = product_data ? product_data.product_title : '';
-			
+						let product_title = product_data ? product_data.product_title : '';
+		
 						// Ensure unique addition in object format { id: title }
-						if ( ! Builder.purchasedProducts.some( p => p.id === product_id ) ) {
+						if (!Builder.purchasedProducts.some(p => p.id === product_id)) {
 							Builder.purchasedProducts.push({ id: product_id, title: product_title });
 						}
-	
-						// display the updated array on development mode
-						if ( params.dev_mode ) {
+		
+						// Update data-selected-products attribute
+						select_products_element.attr('data-selected-products', JSON.stringify(Builder.purchasedProducts));
+		
+						// Display the updated array in development mode
+						if (params.dev_mode) {
 							console.log(Builder.purchasedProducts);
 						}
 					});
-			
+		
 					// Handle item removal
 					selectize_instance.on('item_remove', function(value) {
 						let product_id = parseInt(value);
-	
-						Builder.purchasedProducts = Builder.purchasedProducts.filter( p => p.id !== product_id );
-	
-						// display the updated array on development mode
-						if ( params.dev_mode ) {
+		
+						Builder.purchasedProducts = Builder.purchasedProducts.filter(p => p.id !== product_id);
+		
+						// Update data-selected-products attribute
+						select_products_element.attr('data-selected-products', JSON.stringify(Builder.purchasedProducts));
+		
+						// Display the updated array in development mode
+						if (params.dev_mode) {
 							console.log(Builder.purchasedProducts);
 						}
 					});
+		
+					// Force setValue after initialization
+					setTimeout(() => {
+						selectize_instance.setValue(selected_product_ids);
+						selectize_instance.refreshOptions();
+					}, 200);
 				});
 			}, 500);
 		},
@@ -2737,6 +2982,52 @@
 						console.error(error);
 					},
 				});
+			});
+		},
+
+		/**
+		 * Update media preview for WhatsApp media messages
+		 * 
+		 * @since 1.2.2
+		 */
+		updateMediaPreview: function() {
+			/**
+			 * Render media preview component
+			 * 
+			 * @since 1.2.2
+			 * @param {string} media_type | Media type (image, video, document, audio)
+			 * @param {string} media_url | Media URL
+			 * @return {string} | Media preview component
+			 */
+			function media_preview_component( media_type, media_url ) {
+				switch ( media_type ) {
+					case 'image':
+						return `<img class="funnel-media image" src="${media_url}">`;
+					case 'video':
+						return `<video class="funnel-media video" controls width="250"><source src="${media_url}"/></video>`;
+					case 'document':
+						return `<embed class="funnel-media document" src="${media_url}" frameborder="0" allowfullscreen>`;
+					case 'audio':
+						return `<audio class="funnel-media audio" controls><source src="${media_url}"></audio>`;
+				}
+			}
+
+			// update media preview on change media type
+			$(document).on('change input', '.modal.show .get-whatsapp-media-type', function() {
+				let media_url = $('.modal.show').find('.get-whatsapp-media-url').val();
+				let media_type = $(this).val();
+				let preview = media_preview_component( media_type, media_url );
+
+				$('.modal.show').find('.preview-whatsapp-message-sender').html(preview);
+			});
+
+			// update media preview on change media url
+			$(document).on('change input', '.modal.show .get-whatsapp-media-url', function() {
+				let media_url = $(this).val();
+				let media_type = $('.modal.show').find('.get-whatsapp-media-type').val();
+				let preview = media_preview_component( media_type, media_url );
+
+				$('.modal.show').find('.preview-whatsapp-message-sender').html(preview);
 			});
 		},
 	};

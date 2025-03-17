@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Schedule messages for a future time or date
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Schedule {
@@ -20,10 +20,15 @@ class Schedule {
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
+        // process scheduled actions
         add_action( 'joinotify_schedule_actions_event', array( '\MeuMouse\Joinotify\Core\Workflow_Processor', 'process_scheduled_action' ), 10, 3 );
+
+        // update coupon expiration
+        add_action( 'joinotify_update_coupon_expiration', array( $this, 'update_coupon_expiration' ), 10, 1 );
     }
 
 
@@ -143,6 +148,31 @@ class Schedule {
                 return $delay_value * 31536000; // Approximate: 365 days
             default:
                 return $delay_value; // Default is seconds
+        }
+    }
+
+
+    /**
+     * Update the coupon expiration date to the previous day after expiration
+     *
+     * @since 1.2.2
+     * @param int $coupon_id | The WooCommerce coupon ID
+     * @return void
+     */
+    public function update_coupon_expiration( $coupon_id ) {
+        if ( ! $coupon_id ) {
+            return;
+        }
+    
+        $coupon = new \WC_Coupon( $coupon_id );
+    
+        // Set expiration to the previous day
+        $new_expiry_date = strtotime('yesterday');
+        $coupon->set_date_expires( $new_expiry_date );
+        $coupon->save();
+    
+        if (  JOINOTIFY_DEV_MODE ) {
+            error_log( "Coupon {$coupon_id} expiration updated to previous day" );
         }
     }
 }

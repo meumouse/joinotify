@@ -120,7 +120,7 @@ class Workflow_Manager {
      * Get workflow content HTML
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.2
      * @param int $post_id | Post ID
      * @return mixed|array|false
      */
@@ -150,6 +150,8 @@ class Workflow_Manager {
                     $workflow_html[] = Builder_Components::workflow_connector_component( $post_id, $workflow['type'], $workflow );
                 } elseif ( isset( $workflow['type'] ) && $workflow['type'] === 'action' ) {
                     $action_details = array();
+                    $action_details['type'] = isset( $workflow['data']['action'] ) ? $workflow['data']['action'] : '';
+                    $action_details['title'] = isset( $workflow['data']['title'] ) ? $workflow['data']['title'] : '';
                     $action_details['id'] = isset( $workflow['id'] ) ? $workflow['id'] : '';
                     $action_details['action_name'] = isset( $workflow['data']['action'] ) ? $workflow['data']['action'] : '';
                     $action_details['description'] = isset( $workflow['data']['description'] ) ? $workflow['data']['description'] : '';

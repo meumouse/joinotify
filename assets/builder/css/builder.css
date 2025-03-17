@@ -1239,10 +1239,32 @@ input.toggle-switch.status:checked {
     width: 2px;
 }
 
-.funnel_block_item_connector {
+.funnel_block_item_add .between_actions.funnel_show_plus:after {
+    background: var(--joinotify-dark-600);
+    content: "";
+    height: 2rem;
+    position: absolute;
     z-index: -1;
-    position: relative;
-    margin-bottom: 3.225rem;
+    right: 50%;
+    width: 2px;
+}
+
+.funnel_block_item_connector {
+    margin-bottom: 1.5rem;
+}
+
+.funnel_add_action.waiting-action {
+    animation: pulse-animation 2s infinite;
+    box-shadow: 0px 0px 1px 1px rgb(0 0 0 / 10%);
+}
+
+@keyframes pulse-animation {
+    0% {
+      box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+    }
 }
 
 .joinotify-popover {
@@ -1484,6 +1506,8 @@ input.toggle-switch.status:checked {
 
 .funnel-action-item.condition .description {
     font-weight: 400;
+    margin-top: 2rem;
+    display: inline-block;
 }
 
 .help-center-btn {
@@ -2090,6 +2114,7 @@ textarea.edit-whatsapp-message-text {
 
 .search-products .selectize-input > input {
     padding: 0.825rem 1rem !important;
+    width: auto !important;
 }
 
 #joinotify_template_library_container {
@@ -2111,4 +2136,9 @@ textarea.edit-whatsapp-message-text {
 .btn.install-required-plugin,
 .btn.activate-plugin {
     pointer-events: all;
+}
+
+.joinotify_condition_node_point .sender,
+.joinotify_condition_node_point .receiver {
+    font-weight: 400;
 }

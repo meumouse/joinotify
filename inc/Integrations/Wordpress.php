@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with WordPress hooks
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Wordpress extends Integrations_Base {
@@ -21,7 +22,7 @@ class Wordpress extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
@@ -39,6 +40,21 @@ class Wordpress extends Integrations_Base {
 
         // add conditions
         add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+
+        // fire hooks if WordPress is active
+        if ( Admin::get_setting('enable_wordpress_integration') === 'yes' ) {
+            // on user register
+            add_action( 'user_register', array( $this, 'process_workflow_user_register' ), 10, 2 );
+
+            // on user login
+            add_action( 'wp_login', array( $this, 'process_workflow_user_login' ), 10, 2 );
+
+            // on password reset
+            add_action( 'password_reset', array( $this, 'process_workflow_password_reset' ), 10, 2 );
+
+            // on change post status
+            add_action( 'transition_post_status', array( $this, 'process_workflow_change_post_status' ), 10, 3 );
+        }
     }
 
 
@@ -224,5 +240,96 @@ class Wordpress extends Integrations_Base {
         );
 
         return array_merge( $conditions, $wordpress_conditions );
+    }
+
+
+    /**
+     * Processs workflow content on user register
+     * 
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param int $user_id | User ID
+     * @param array $userdata | User data
+     * @return void
+     */
+    public function process_workflow_user_register( $user_id, $userdata ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'user_register',
+            'integration' => 'wordpress',
+            'user_id' => $user_id,
+            'user_data' => $userdata,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Processs workflow content on user login
+     * 
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param string $user_login | User login
+     * @param object $user | User object
+     * @return void
+     */
+    public function process_workflow_user_login( $user_login, $user ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'user_login',
+            'integration' => 'wordpress',
+            'user_id' => $user->ID,
+            'user_data' => $user,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Processs workflow content on password reset
+     * 
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param object $user | User object
+     * @param string $new_pass | New password
+     * @return void
+     */
+    public function process_workflow_password_reset( $user, $new_pass ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'password_reset',
+            'integration' => 'wordpress',
+            'user_id' => $user->ID,
+            'user_data' => $user,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow content on post status changed
+     * 
+     * @since 1.1.0
+     * @version 1.2.2
+     * @param string $new_status | New post status
+     * @param string $old_status | Old post status
+     * @param object $post | Post object
+     * @return void
+     */
+    public function process_workflow_change_post_status( $new_status, $old_status, $post ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'change_post_status',
+            'integration' => 'wordpress',
+            'post_id' => $post->ID,
+            'post_type' => $post->post_type,
+            'post_status' => $new_status,
+            'old_post_status' => $old_status,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
     }
 }

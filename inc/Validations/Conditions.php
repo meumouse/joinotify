@@ -77,47 +77,62 @@ class Conditions {
      * Gets comparison value based on condition type and context
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param string $condition_type | Condition type (e.g. 'order_total', 'user_role')
      * @param array $payload | Payload data
      * @return mixed Returns the value for comparison or null if not found
      */
     public static function get_compare_value( $condition_type, $payload ) {
         $context = null;
-    
+        $field_value = null;
+        $condition_content = $payload['condition_content'];
+        $field_id = $condition_content['field_id'] ?? '';
+
         // Get object context based on condition type
         if ( isset( $payload['order_id'] ) ) {
             $context = wc_get_order( $payload['order_id'] );
         } elseif ( isset( $payload['user_id'] ) ) {
             $context = get_userdata( $payload['user_id'] );
+        } elseif ( isset( $condition_content['condition'] ) && $condition_content['condition'] === 'user_meta' && ! isset( $payload['user_id'] ) ) {
+            $context = get_userdata( get_current_user_id() );
+            $payload['user_id'] = get_current_user_id();
         }
-    
-        // Ensure $context is valid before accessing its properties
-        if ( ! $context ) {
-            return null;
+
+        // check integration
+        if ( isset( $payload['integration'] ) ) {
+            if ( $payload['integration'] === 'wpforms' ) {
+                $field_value = isset( $payload['fields'][$field_id]['value'] ) ? $payload['fields'][$field_id]['value'] : null;
+            } elseif ( $payload['integration'] === 'elementor' ) {
+                $field_value = isset( $payload['fields'][$field_id] ) ? $payload['fields'][$field_id] : null;
+            }
+        }
+
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Payload from get_compare_value() : " . print_r( $payload, true ) );
+            error_log( "Context from get_compare_value() : " . print_r( $context, true ) );
         }
     
         // Map condition types to their respective value retrieval methods
         $value_map = apply_filters( 'Joinotify/Conditions/Get_Compare_Value', array(
             'user_role'             => $context instanceof \WP_User ? ( $context->roles[0] ?? null ) : null,
-            'user_meta'             => $context instanceof \WP_User ? get_user_meta( $payload['user_id'], $payload['meta_key'], true ) : null,
+            'user_meta'             => $context instanceof \WP_User ? get_user_meta( $payload['user_id'], $condition_content['meta_key'] ?? '', true ) : null,
             'user_last_login'       => $context instanceof \WP_User ? get_user_meta( $payload['user_id'], 'last_login', true ) : null,
             'post_type'             => is_object( $context ) ? get_post_type( $payload['post_type'] ?? '' ) : null,
             'post_author'           => is_object( $context ) && isset( $context->post_author ) ? get_the_author_meta( 'ID', $context->post_author ) : null,
             'order_status'          => $context instanceof \WC_Order ? $context->get_status() : null,
             'order_total'           => $context instanceof \WC_Order ? $context->get_total() : null,
             'order_paid'            => $context instanceof \WC_Order ? $context->is_paid() : null,
-            'products_purchased'    => $context instanceof \WC_Order ? array_map( fn( $item ) => $item->get_product_id(), $context->get_items() ) : null,
+            'products_purchased'    => $context instanceof \WC_Order ? array_values( array_map( fn( $item ) => $item->get_product_id(), $context->get_items('line_item') ) ) : null,
             'customer_email'        => $context instanceof \WC_Order ? $context->get_billing_email() : null,
-            'refund_amount'         => $context instanceof \WC_Order ? $context->get_total_refunded() : null,
+            'refund_amount'         => $context instanceof \WC_Order_Refund ? abs( $context->get_amount() ) : ( $context instanceof \WC_Order ? $context->get_total_refunded() : null ),
             'subscription_status'   => $context instanceof \WC_Subscription ? $context->get_status() : null,
             'cart_total'            => $context instanceof \WC_Cart ? $context->get_cart_contents_total() : null,
             'items_in_cart'         => $context instanceof \WC_Cart ? count( $context->get_cart() ) : null,
             'payment_method'        => $context instanceof \WC_Order ? $context->get_payment_method() : null,
-            'shipping_method'       => $context instanceof \WC_Order ? $context->get_shipping_method() : null,
-            'field_value'           => isset( $context->fields ) ? $context->fields : null,
+            'shipping_method'       => $context instanceof \WC_Order ? ( count( $context->get_items('shipping') ) === 1 ? explode( ":", reset( $context->get_items('shipping') )->get_method_id() )[0] : array_values( array_map( fn( $method ) => explode( ":", $method->get_method_id() )[0], $context->get_items('shipping') ) ) ) : null,
+            'field_value'           => $field_value,
             'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
-        ));
+        ), $condition_type, $payload );
     
         return $value_map[$condition_type] ?? null;
     }
@@ -127,13 +142,42 @@ class Conditions {
      * Check condition
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param string $condition | Condition type
      * @param mixed $value | Value for check
      * @param mixed $value_compare | Optional value for compare with $value
+     * @param array $payload | Optional payload for check
      * @return bool
      */
-    public static function check_condition( $condition, $value, $value_compare = '' ) {
+    public static function check_condition( $condition, $value, $value_compare = '', $payload = array() ) {
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Checking condition: {$condition}" );
+            error_log( "Value: " . print_r( $value, true ) );
+            error_log( "Value Compare: " . print_r( $value_compare, true ) );
+            error_log( "Payload: " . print_r( $payload, true ) );
+        }
+    
+        // If it is the "products_purchased" condition, check within the products array
+        if ( isset( $payload['condition_content']['condition'] ) && $payload['condition_content']['condition'] === 'products_purchased' ) {
+            $expected_products = $payload['condition_content']['products'] ?? array(); // Expected products
+            $expected_product_ids = array_column( $expected_products, 'id' ); // Extract only product IDs
+    
+            if ( JOINOTIFY_DEV_MODE ) {
+                error_log( "Expected Product IDs: " . print_r( $expected_product_ids, true ) );
+                error_log( "Purchased Products: " . print_r( $value, true ) );
+            }
+    
+            // Condition check
+            switch ( $condition ) {
+                case 'contains':
+                    return ! empty( array_intersect( (array) $value, $expected_product_ids ) ); // At least one ID must be present
+    
+                case 'not_contain':
+                    return empty( array_intersect( (array) $value, $expected_product_ids ) ); // No ID should be present
+            }
+        }
+    
+        // Standard cases for other conditions
         switch ( $condition ) {
             case 'is':
                 return $value === $value_compare;
@@ -210,7 +254,7 @@ class Conditions {
                 if ( isset( $item['type'] ) && $item['type'] === 'action' && isset( $item['id'] ) && $item['id'] === $action_id ) {
                     // Checks if the item has a condition
                     if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' && isset( $item['data']['condition_content'] ) ) {
-                        return $item['data']['condition_content'];
+                        return $item['data'];
                     }
                 }
             }

@@ -2,6 +2,9 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
+use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -9,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce Subscriptions plugin
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Woo_Subscriptions extends Integrations_Base {
@@ -18,12 +21,34 @@ class Woo_Subscriptions extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
         // check if WooCommerce Subscriptions is active
         if ( class_exists('WC_Subscriptions') ) {
             add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_subscription_triggers' ), 10, 1 );
+
+            // fire hooks if WooCommerce is active
+            if ( Admin::get_setting('enable_woocommerce_integration') === 'yes' ) {
+                // fire when a subscription is created
+                add_action( 'woocommerce_checkout_subscription_created', array( $this, 'process_workflow_subscription_created' ), 10, 3 );
+
+                // fire when a subscription status is active
+                add_action( 'woocommerce_subscription_status_active', array( $this, 'process_workflow_subscription_status_active' ), 10, 3 );
+
+                // fire when a subscription payment is complete
+                add_action( 'woocommerce_subscription_payment_complete', array( $this, 'process_workflow_subscription_payment_complete', 10, 1 ) );
+
+                // fire when a subscription payment is failed
+                add_action( 'woocommerce_subscription_payment_failed', array( $this, 'process_workflow_subscription_payment_failed', 10, 2 ) );
+
+                // fire when a subscription status is expired
+                add_action( 'woocommerce_subscription_status_expired', array(  $this, 'process_workflow_subscription_status_expired' ), 10, 1 );
+
+                // fire when a subscription status is cancelled
+                add_action( 'woocommerce_subscription_status_cancelled', array( $this, 'process_workflow_subscription_status_cancelled' ), 10, 1 );
+            }
         }
     }
 
@@ -79,5 +104,183 @@ class Woo_Subscriptions extends Integrations_Base {
         $triggers['woocommerce'] = array_merge( $triggers['woocommerce'], $new_triggers );
 
         return $triggers;
+    }
+
+
+    /**
+     * Process workflow when subscription is created
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @param object|WC_Order $order | A WC_Order instance representing the order for which subscriptions have been created
+     * @param object|WC_Cart $recurring_cart | A WC_Cart instance representing the cart which stores the data used for creating this subscription
+     */
+    public function process_workflow_subscription_created( $subscription, $order, $recurring_cart ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_checkout_subscription_created',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+            'order' => $order,
+            'order_id' => $order->get_id(),
+            'recurring_cart' => $recurring_cart,
+        );
+
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
+    }
+
+
+    /**
+     * Process workflow when subscription is activated
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @param string $new_status | The new status of the subscription
+     * @param string $old_status | The old status of the subscription
+     * @return void
+     */
+    public function process_workflow_subscription_status_active( $subscription, $new_status, $old_status ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_status_active',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+            'new_status' => $new_status,
+            'old_status' => $old_status,
+        );
+
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
+    }
+
+
+    /**
+     * Process workflow when subscription payment is complete
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @return void
+     */
+    public function process_workflow_subscription_payment_complete( $subscription ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_payment_complete',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+        );
+
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
+    }
+
+
+    /**
+     * Process workflow when subscription payment is failed
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @param string $new_status | The new status of the subscription
+     * @return void
+     */
+    public function process_workflow_subscription_payment_failed( $subscription, $new_status ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_payment_failed',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+            'new_status' => $new_status,
+        );
+
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
+    }
+
+
+    /**
+     * Process workflow when subscription status is expired
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @return void
+     */
+    public function process_workflow_subscription_status_expired( $subscription ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_status_expired',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+        );
+
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
+    }
+
+
+    /**
+     * Process workflow when subscription status is cancelled
+     * 
+     * @since 1.2.0
+     * @version 1.2.2
+     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
+     * @return void
+     */
+    public function process_workflow_subscription_status_cancelled( $subscription ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_subscription_status_cancelled',
+            'integration' => 'woocommerce',
+            'subscription' => $subscription,
+            'subscription_id' => $subscription->get_id(),
+        );
+
+        // instance background process
+        $background_process = new Workflow_Background_Process();
+        
+        // add to queue
+        $background_process->push_to_queue( $payload );
+
+        // initialize process in background
+        $background_process->save()->dispatch();
     }
 }

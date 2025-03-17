@@ -3,7 +3,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Admin\Components as Settings_Components;
+use MeuMouse\Joinotify\Admin\Components as Admin_Components;
 
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Builder\Workflow_Manager;
@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Ajax {
@@ -350,6 +350,7 @@ class Ajax {
      * Get workflow templates on AJAX callback
      * 
      * @since 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function get_workflow_templates_callback() {
@@ -387,7 +388,7 @@ class Ajax {
                 $response = array(
                     'status' => 'error',
                     'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível carregar os modelos.', 'joinotify' ),
+                    'toast_body_title' => __( 'Nenhum modelo de fluxo disponível. Volte mais tarde.', 'joinotify' ),
                 );
             }
 
@@ -480,6 +481,7 @@ class Ajax {
             'redirect' => $redirect_url,
             'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
             'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+            'dropfile_message' => esc_html__('Arquivo enviado com sucesso!', 'joinotify' ),
         ));
     }
 
@@ -771,7 +773,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -780,7 +782,8 @@ class Ajax {
             $current_action_id = isset( $_POST['action_id'] ) ? sanitize_text_field( $_POST['action_id'] ) : '';
             $condition_action = isset( $_POST['condition_action'] ) ? sanitize_text_field( $_POST['condition_action'] ) : '';
             $workflow_action = isset( $_POST['workflow_action'] ) ? json_decode( stripslashes( $_POST['workflow_action'] ), true ) : array();
-    
+            $next_action_id = isset( $_POST['next_action_id'] ) ? sanitize_text_field( $_POST['next_action_id'] ) : '';
+
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 // Retrieve workflow content
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
@@ -811,7 +814,9 @@ class Ajax {
                         $new_action['data']['description'] = $build_description;
                         $new_action['data']['condition_content']['condition'] = isset( $workflow_action['data']['condition_content']['condition'] ) ? $workflow_action['data']['condition_content']['condition'] : '';
                         $new_action['data']['condition_content']['type'] = isset( $workflow_action['data']['condition_content']['type'] ) ? $workflow_action['data']['condition_content']['type'] : '';
+                        $new_action['data']['condition_content']['type_text'] = isset( $workflow_action['data']['condition_content']['type_text'] ) ? $workflow_action['data']['condition_content']['type_text'] : '';
                         $new_action['data']['condition_content']['value'] = isset( $workflow_action['data']['condition_content']['value'] ) ? $workflow_action['data']['condition_content']['value'] : '';
+                        $new_action['data']['condition_content']['value_text'] = isset( $workflow_action['data']['condition_content']['value_text'] ) ? $workflow_action['data']['condition_content']['value_text'] : '';
 
                         // check condition type
                         if ( isset( $workflow_action['data']['condition_content']['condition'] ) ) {
@@ -831,6 +836,8 @@ class Ajax {
                                 }
 
                                 $new_action['data']['condition_content']['products'] = $condition_products;
+                            } elseif (  $workflow_action['data']['condition_content']['condition'] === 'field_value' ) {
+                                $new_action['data']['condition_content']['field_id'] = isset( $workflow_action['data']['condition_content']['field_id'] ) ? $workflow_action['data']['condition_content']['field_id'] : '';
                             }
                         }
                     } elseif ( $workflow_action['data']['action'] === 'time_delay' ) {
@@ -937,6 +944,16 @@ class Ajax {
                         $updated = true;
     
                         break; // Stop the loop after finding and updating the action
+                    }
+                }
+
+                // Insert action before the given next_action_id
+                foreach ( $workflow_content as $index => &$existing_action ) {
+                    if ( isset( $existing_action['id'] ) && $existing_action['id'] === $next_action_id ) {
+                        array_splice( $workflow_content, $index, 0, array( $new_action ) ); // insert before the ID of the next action
+                        $updated = true;
+                        
+                        break;
                     }
                 }
 
@@ -1250,7 +1267,7 @@ class Ajax {
             if ( $get_otp ) {
                 $response = array(
                     'status' => 'success',
-                    'otp_input_component' => Settings_Components::otp_input_code( $phone ),
+                    'otp_input_component' => Admin_Components::otp_input_code( $phone ),
                 );
             } else {
                 $response = array(
@@ -1320,7 +1337,7 @@ class Ajax {
                     'status' => 'success',
                     'toast_header_title' => __( 'Verificação bem-sucedida', 'joinotify' ),
                     'toast_body_title' => __( 'Seu WhatsApp foi verificado com sucesso!', 'joinotify' ),
-                    'current_phone_senders' => Settings_Components::current_phones_senders(),
+                    'current_phone_senders' => Admin_Components::current_phones_senders(),
                 );
             } else {
                 // If OTP is invalid or expired, send an error response
@@ -1377,7 +1394,7 @@ class Ajax {
                         'status' => 'success',
                         'toast_header_title' => __( 'Remetente removido', 'joinotify' ),
                         'toast_body_title' => __( 'O telefone remetente foi removido com sucesso!', 'joinotify' ),
-                        'updated_list_html' => Settings_Components::current_phones_senders(),
+                        'updated_list_html' => Admin_Components::current_phones_senders(),
                     );
 
                     wp_send_json( $response );
@@ -1399,25 +1416,33 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function run_workflow_test_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_run_workflow_test' ) {
             $post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : null;
     
+            // check post type
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
                 $receiver = Admin::get_setting('test_number_phone');
-    
+
                 if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
                     $all_actions = Actions::extract_all_actions( $workflow_content );
                     
+                    // iterate for each action
                     foreach ( $all_actions as $item ) {
                         if ( isset( $item['type'] ) && $item['type'] === 'action' ) {
+                            // whatsapp message text
                             if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_text' ) {
+                                $payload = array(
+                                    'integration' => $workflow_content[0]['data']['context'],
+                                    'trigger' => $workflow_content[0]['data']['trigger'],
+                                );
+
                                 $sender = $item['data']['sender'];
-                                $message = Placeholders::replace_placeholders( $item['data']['message'], 0, 'sandbox' );
+                                $message = Placeholders::replace_placeholders( $item['data']['message'], $payload, 'sandbox' );
                                 $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
     
                                 if ( 201 !== $send_message_text ) {
@@ -1429,6 +1454,7 @@ class Ajax {
                                 }
                             }
     
+                            // whatsapp message media
                             if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'send_whatsapp_message_media' ) {
                                 $sender = $item['data']['sender'];
                                 $media_type = $item['data']['media_type'];

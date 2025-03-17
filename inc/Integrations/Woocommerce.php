@@ -4,10 +4,10 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Cron\Schedule;
-use MeuMouse\Joinotify\Integrations\Whatsapp;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
@@ -25,7 +25,7 @@ class Woocommerce extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @return void
      */
     public function __construct() {
@@ -53,6 +53,28 @@ class Woocommerce extends Integrations_Base {
 
             // add conditions
             add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+
+            // fire hooks if WooCommerce is active
+            if ( Admin::get_setting('enable_woocommerce_integration') === 'yes' ) {
+                // on receive new order
+                // before hook used is "woocommerce_new_order", but products isent received
+                add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_on_new_order' ), 10, 2 );
+
+                // when order is processing
+                add_action( 'woocommerce_order_status_processing', array( $this, 'process_workflow_order_processed' ), 10, 3 );
+
+                // when order is completed
+                add_action( 'woocommerce_order_status_completed', array( $this, 'process_workflow_order_completed' ), 10, 3 );
+
+                // when a order is fully refunded
+                add_action( 'woocommerce_order_fully_refunded', array( $this, 'process_workflow_order_fully_refunded' ), 10, 2 );
+
+                // when a order is partially refunded
+                add_action( 'woocommerce_order_partially_refunded', array( $this, 'process_workflow_order_partially_refunded' ), 10, 2 );
+                
+                // when a order has status changed
+                add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 3 );
+            }
         }
     }
 
@@ -140,7 +162,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.2.2
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -149,6 +171,11 @@ class Woocommerce extends Integrations_Base {
         $order = isset( $payload['order_id'] ) ? wc_get_order( $payload['order_id'] ) : null;
         $current_user = wp_get_current_user();
         $trigger_names = Triggers::get_trigger_names('woocommerce');
+
+        // if is refund, get parent order
+        if ( $order instanceof \WC_Order_Refund ) {
+            $order = wc_get_order( $order->get_parent_id() ); 
+        }
     
         // add woocommerce placeholders
         $placeholders['woocommerce'] = array(
@@ -260,32 +287,32 @@ class Woocommerce extends Integrations_Base {
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total() : '',
-                    'sandbox' => wc_price( 150 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 150 ) ),
                 ),
             ),
             '{{ wc_total_discount }}' => array(
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total de desconto do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total_discount() : '',
-                    'sandbox' => wc_price( 20 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total_discount() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 20 ) ),
                 ),
             ),
             '{{ wc_total_tax }}' => array(
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total de impostos do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total_tax() : '',
-                    'sandbox' => wc_price( 15 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total_tax() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 15 ) ),
                 ),
             ),
             '{{ wc_total_refunded }}' => array(
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o valor total reembolsado do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_total_refunded() : '',
-                    'sandbox' => wc_price( 10 ),
+                    'production' => $order ? joinotify_format_plain_text( $order->get_total_refunded() ) : '',
+                    'sandbox' => joinotify_format_plain_text( wc_price( 10 ) ),
                 ),
             ),
             '{{ wc_coupon_codes }}' => array(
@@ -345,6 +372,7 @@ class Woocommerce extends Integrations_Base {
      * Returns the items purchased in the order formatted
      *
      * @since 1.0.0
+     * @version 1.2.2
      * @param \WC_Order $order | The object of the request
      * @return string Items formatted on separate lines
      */
@@ -362,12 +390,7 @@ class Woocommerce extends Integrations_Base {
                 $variation_details = ' (' . implode( ', ', $variation_attributes ) . ')';
             }
 
-            $purchased_items[] = sprintf(
-                '%dx - %s%s',
-                $item->get_quantity(),
-                $product_name,
-                $variation_details
-            );
+            $purchased_items[] = sprintf( '%dx - %s%s', $item->get_quantity(), $product_name, $variation_details );
         }
 
         return ! empty( $purchased_items ) ? implode( "\n", $purchased_items ) : esc_html__( 'Nenhum item adquirido.', 'joinotify' );
@@ -403,6 +426,7 @@ class Woocommerce extends Integrations_Base {
      * Add modal settings for WooCommerce
      * 
      * @since 1.1.0
+     * @version 1.2.2
      * @return void
      */
     public function add_modal_settings() {
@@ -438,6 +462,18 @@ class Woocommerce extends Integrations_Base {
                                     </th>
                                     <td>
                                         <input type="text" class="form-control" name="create_coupon_prefix" id="create_coupon_prefix" value="<?php echo Admin::get_setting('create_coupon_prefix') ?>" placeholder="<?php esc_attr_e( 'CUPOM_', 'joinotify' ) ?>"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <?php esc_html_e( 'Ignorar ações já processadas no fluxo', 'joinotify' ); ?>
+                                        <span class="joinotify-description"><?php esc_html_e( 'Ative essa opção para que ações já previamente processadas sejam ignoradas quando o mesmo acionamento ocorrer. Esta opções é útil quando ações agendadas estão sendo disparadas novamente.', 'joinotify' ); ?></span>
+                                    </th>
+                                    <td class="d-flex align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input type="checkbox" class="toggle-switch" id="enable_ignore_processed_actions" name="enable_ignore_processed_actions" value="yes" <?php checked( Admin::get_setting('enable_ignore_processed_actions') === 'yes' ); ?> />
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -576,6 +612,7 @@ class Woocommerce extends Integrations_Base {
      * Generate WooCommerce discount coupon
      *
      * @since 1.1.0
+     * @version 1.2.2
      * @param array $coupon_data | Coupon settings data
      * @return mixed int|WP_Error Coupon ID or error
      */
@@ -586,53 +623,73 @@ class Woocommerce extends Integrations_Base {
             return new \WP_Error( 'missing_data', __( 'Dados insuficientes para criar o cupom.', 'joinotify' ) );
         }
 
-        // get prefix
+        // Get prefix
         $coupon_prefix = Admin::get_setting('create_coupon_prefix');
 
-        // set coupon code
+        // Set coupon code
         $coupon_code = ( isset( $coupon_data['generate_coupon'] ) && $coupon_data['generate_coupon'] === 'yes' )
             ? $coupon_prefix . strtoupper( wp_generate_password( 6, false ) )
             : $coupon_data['coupon_code'];
 
-        // check if coupon already exists
-        if ( get_page_by_title( $coupon_code, OBJECT, 'shop_coupon' ) ) {
-            error_log( 'Coupon already exists.' );
+        // Check if coupon already exists
+        $query = new \WP_Query( array(
+            'post_type' => 'shop_coupon',
+            'title' => $coupon_code,
+            'post_status' => 'publish',
+            'posts_per_page' => 1,
+            'fields' => 'ids',
+        ));
 
+        if ( $query->have_posts() ) {
+            error_log( 'Coupon already exists.' );
+            
             return new \WP_Error( 'duplicate_coupon', __( 'O cupom já existe.', 'joinotify' ) );
         }
 
-        // create coupon
+        // reset query
+        wp_reset_postdata();
+
+        // Create coupon
         $coupon = new \WC_Coupon();
         $coupon->set_code( $coupon_code );
         $coupon->set_description( isset( $coupon_data['coupon_description'] ) ? $coupon_data['coupon_description'] : '' );
 
-        // general settings
-        $coupon->set_discount_type( $coupon_data['discount_type'] ); // discount type (fixed_cart, percent, fixed_product)
-        $coupon->set_amount( floatval( $coupon_data['coupon_amount'] ) ); // discount value
+        // General settings
+        $coupon->set_discount_type( $coupon_data['discount_type'] ); // Discount type (fixed_cart, percent, fixed_product)
+        $coupon->set_amount( floatval( $coupon_data['coupon_amount'] ) ); // Discount value
         $coupon->set_free_shipping( isset( $coupon_data['free_shipping'] ) && $coupon_data['free_shipping'] === 'yes' );
 
-        // set coupon expiration
-        if ( isset( $coupon_data['coupon_expiry'] ) && $coupon_data['coupon_expiry'] === 'yes' ) {
-            $expiry_date = null;
+        // Set coupon expiration
+        $original_expiry_date = null;
+        $expiry_date = null;
 
+        if ( isset( $coupon_data['coupon_expiry'] ) && $coupon_data['coupon_expiry'] === 'yes' ) {
             if ( isset( $coupon_data['expiry_data']['type'] ) ) {
                 if ( $coupon_data['expiry_data']['type'] === 'date' ) {
-                    // specific date
+                    // Specific date
                     $date = $coupon_data['expiry_data']['date_value'];
                     $time = $coupon_data['expiry_data']['time_value'];
 
                     if ( ! empty( $date ) ) {
-                        $expiry_date = ! empty( $time ) ? strtotime( $date . ' ' . $time ) : strtotime( $date );
+                        $original_expiry_date = ! empty( $time ) ? strtotime( $date . ' ' . $time ) : strtotime( $date );
                     }
                 } elseif ( $coupon_data['expiry_data']['type'] === 'period' ) {
-                    // delay expiration
+                    // Delay expiration
                     $delay_value = isset( $coupon_data['expiry_data']['delay_value'] ) ? intval( $coupon_data['expiry_data']['delay_value'] ) : 0;
                     $delay_period = isset( $coupon_data['expiry_data']['delay_period'] ) ? $coupon_data['expiry_data']['delay_period'] : '';
                     
                     if ( $delay_value > 0 && ! empty( $delay_period ) ) {
-                        $expiry_date = time() + Schedule::get_delay_timestamp( $delay_value, $delay_period );
+                        $original_expiry_date = time() + Schedule::get_delay_timestamp( $delay_value, $delay_period );
                     }
                 }
+            }
+
+            // Define o expiry_date como a data original primeiro
+            $expiry_date = $original_expiry_date;
+
+            // Se a expiração for menor que 24 horas, ajusta para o início do próximo dia (23:59:59)
+            if ( $expiry_date && ( $expiry_date - time() ) < DAY_IN_SECONDS ) {
+                $expiry_date = strtotime( 'tomorrow 23:59:59' ); // Fim do dia seguinte
             }
 
             if ( $expiry_date ) {
@@ -640,8 +697,13 @@ class Woocommerce extends Integrations_Base {
             }
         }
 
-        // save coupon
+        // Save coupon
         $coupon->save();
+
+        // Schedule an event to update expiration to the previous day usando a **data original**
+        if ( ! empty( $original_expiry_date ) ) {
+            wp_schedule_single_event( $original_expiry_date, 'joinotify_update_coupon_expiration', array( $coupon->get_id() ) );
+        }
 
         return array(
             'coupon_id' => $coupon->get_id(),
@@ -732,6 +794,7 @@ class Woocommerce extends Integrations_Base {
      * Add conditions for WooCommerce triggers
      * 
      * @since 1.2.0
+     * @version 1.2.2
      * @param array $conditions | Current conditions
      * @return array
      */
@@ -782,7 +845,7 @@ class Woocommerce extends Integrations_Base {
     
         // Define triggers and their associated conditions
         $woocommerce_conditions = array(
-            'woocommerce_new_order' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_new_order' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
             'woocommerce_checkout_order_processed' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
             'woocommerce_order_status_completed' => array( 'customer_email', 'order_total', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta' ),
             'woocommerce_order_status_changed' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
@@ -801,5 +864,144 @@ class Woocommerce extends Integrations_Base {
         }
     
         return array_merge( $conditions, $formatted_conditions );
+    }
+
+
+    /**
+     * Process workflow on receive new order on WooCommerce
+     * 
+     * @since 1.0.0
+     * @version 1.2.2
+     * @param int $order_id  | Order ID
+     * @param object $order | Order object
+     * @return void
+     */
+    public function process_workflow_on_new_order( $order_id, $order ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_new_order',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+            'order_data' => $order,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when order status is processing
+     * 
+     * @since 1.0.0
+     * @version 1.2.2
+     * @param int $order_id  | Order ID
+     * @param object $order | Order object
+     * @param array $status_transition | Status transition data
+     * @see https://woocommerce.github.io/code-reference/files/woocommerce-includes-class-wc-order.html#source-view.411
+     * @return void
+     */
+    public function process_workflow_order_processed( $order_id, $order, $status_transition ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_checkout_order_processed',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+            'order' => $order,
+            'status_transition' => $status_transition,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when order status is complete
+     * 
+     * @since 1.0.0
+     * @version 1.2.2
+     * @param int $order_id  | Order ID
+     * @param object $order | Order object
+     * @param array $status_transition | Status transition
+     * @return void
+     */
+    public function process_workflow_order_completed( $order_id, $order, $status_transition ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_order_status_completed',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+            'order_data' => $order,
+            'status_transition' => $status_transition,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when order is fully refunded
+     * 
+     * @since 1.0.0
+     * @version 1.2.2
+     * @param int $order_id  | Order ID
+     * @param int $refund_id | Refund ID
+     * @return void
+     */
+    public function process_workflow_order_fully_refunded( $order_id, $refund_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_order_fully_refunded',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+            'refund_id' => $refund_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when order is partially refunded
+     * 
+     * @since 1.0.0
+     * @version 1.2.2
+     * @param bool $is_partially_refunded | Is partially refunded
+     * @param int $order_id  | Order ID
+     * @return void
+     */
+    public function process_workflow_order_partially_refunded( $is_partially_refunded, $order_id ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_order_partially_refunded',
+            'integration' => 'woocommerce',
+            'is_partially_refunded' => $is_partially_refunded,
+            'order_id' => $order_id,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+    
+
+    /**
+     * Process workflow when order has status changed
+     * 
+     * @since 1.0.0
+     * @version 1.2.2
+     * @param int $order_id  | Order ID
+     * @param string $old_status | Old status
+     * @param string $new_status | New status
+     * @return void
+     */
+    public function process_workflow_order_status_changed( $order_id, $old_status, $new_status ) {
+        $payload = array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_order_status_changed',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+            'old_status' => $old_status,
+            'new_status' => $new_status,
+        );
+
+        Workflow_Processor::process_workflows( $payload );
     }
 }

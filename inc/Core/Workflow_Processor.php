@@ -10,113 +10,17 @@ use MeuMouse\Joinotify\Integrations\Woocommerce;
 
 use WC_Order;
 
+// Exit if accessed directly.
+defined('ABSPATH') || exit;
+
 /**
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.2
  * @package MeuMouse.com
  */
 class Workflow_Processor {
-
-    /**
-     * Construct function
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @return void
-     */
-    public function __construct() {
-        // fire hooks if WordPress is active
-        if ( Admin::get_setting('enable_wordpress_integration') === 'yes' ) {
-            // on user register
-            add_action( 'user_register', array( $this, 'process_workflow_user_register' ), 10, 2 );
-
-            // on user login
-            add_action( 'wp_login', array( $this, 'process_workflow_user_login' ), 10, 2 );
-
-            // on password reset
-            add_action( 'password_reset', array( $this, 'process_workflow_password_reset' ), 10, 2 );
-
-            // on change post status
-            add_action( 'transition_post_status', array( $this, 'process_workflow_change_post_status' ), 10, 3 );
-        }
-
-        // fire hooks if WooCommerce is active
-        if ( class_exists('WooCommerce') && Admin::get_setting('enable_woocommerce_integration') === 'yes' ) {
-            // on receive new order
-            add_action( 'woocommerce_new_order', array( $this, 'process_workflow_on_new_order' ), 10, 2 );
-
-            // when order is processing
-            add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_order_processed' ), 10, 3 );
-
-            // when order is completed
-            add_action( 'woocommerce_order_status_completed', array( $this, 'process_workflow_order_completed' ), 10, 3 );
-
-            // when a order is fully refunded
-            add_action( 'woocommerce_order_fully_refunded', array( $this, 'process_workflow_order_fully_refunded' ), 10, 2 );
-
-            // when a order is partially refunded
-            add_action( 'woocommerce_order_partially_refunded', array( $this, 'process_workflow_order_partially_refunded' ), 10, 2 );
-            
-            // when a order has status changed
-            add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 3 );
-
-            if ( class_exists('WC_Subscriptions') ) {
-                // fire when a subscription is created
-                add_action( 'woocommerce_checkout_subscription_created', array( $this, 'process_workflow_subscription_created' ), 10, 3 );
-
-                // fire when a subscription status is active
-                add_action( 'woocommerce_subscription_status_active', array( $this, 'process_workflow_subscription_status_active' ), 10, 3 );
-
-                // fire when a subscription payment is complete
-                add_action( 'woocommerce_subscription_payment_complete', array( $this, 'process_workflow_subscription_payment_complete', 10, 1 ) );
-
-                // fire when a subscription payment is failed
-                add_action( 'woocommerce_subscription_payment_failed', array( $this, 'process_workflow_subscription_payment_failed', 10, 2 ) );
-
-                // fire when a subscription status is expired
-                add_action( 'woocommerce_subscription_status_expired', array(  $this, 'process_workflow_subscription_status_expired' ), 10, 1 );
-
-                // fire when a subscription status is cancelled
-                add_action( 'woocommerce_subscription_status_cancelled', array( $this, 'process_workflow_subscription_status_cancelled' ), 10, 1 );
-            }
-        }
-
-        // fire hook if Elementor is active
-        if ( defined('ELEMENTOR_PATH') && Admin::get_setting('enable_elementor_integration') === 'yes' ) {
-            // when a Elementor form receive a new record
-            add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
-        }
-
-        // fire hooks if WPForms is active
-        if ( function_exists('wpforms') && Admin::get_setting('enable_wpforms_integration') === 'yes' ) {
-            // when a WPForms form receive a new record
-            add_action( 'wpforms_process_complete', array( $this, 'process_workflow_wpforms_form' ), 10, 4 );
-
-            // when a WPForms form paypal payment is fired
-            add_action( 'wpforms_paypal_standard_process_complete', array( $this, 'process_workflow_wpforms_paypal' ), 10, 4 );
-        }
-
-        // fire hooks if Flexify Checkout is active
-        if ( class_exists('\MeuMouse\Flexify_Checkout\Flexify_Checkout') ) {
-            // check if Flexify Checkout extension addon is active
-            if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
-                // when a order is abandoned
-                add_action( 'Flexify_Checkout/Recovery_Carts/Order_Abandoned', array( $this, 'process_workflow_order_abandoned' ), 10, 2 );
-
-                // when a cart is abandoned
-                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned', array( $this, 'process_workflow_cart_abandoned' ), 10, 1 );
-
-                // when a cart is recovered
-                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Recovered', array( $this, 'process_workflow_cart_recovered' ), 10, 2 );
-
-                // when a cart is lost
-                add_action( 'Flexify_Checkout/Recovery_Carts/Cart_Lost', array( $this, 'process_workflow_cart_lost' ), 10, 1 );
-            }
-        }
-    }
-
 
     /**
      * Returns published posts that have a specific hook in the content
@@ -141,274 +45,6 @@ class Workflow_Processor {
 
         // Returns the posts found
         return get_posts( $args );
-    }
-
-
-    /**
-     * Processs workflow content on user register
-     * 
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param int $user_id | User ID
-     * @param array $userdata | User data
-     * @return void
-     */
-    public function process_workflow_user_register( $user_id, $userdata ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'user_register',
-            'integration' => 'wordpress',
-            'user_id' => $user_id,
-            'user_data' => $userdata,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Processs workflow content on user login
-     * 
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param string $user_login | User login
-     * @param object $user | User object
-     * @return void
-     */
-    public function process_workflow_user_login( $user_login, $user ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'user_login',
-            'integration' => 'wordpress',
-            'user_id' => $user->ID,
-            'user_data' => $user,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Processs workflow content on password reset
-     * 
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param object $user | User object
-     * @param string $new_pass | New password
-     * @return void
-     */
-    public function process_workflow_password_reset( $user, $new_pass ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'password_reset',
-            'integration' => 'wordpress',
-            'user_id' => $user->ID,
-            'user_data' => $user,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow content on post status changed
-     * 
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param string $new_status | New post status
-     * @param string $old_status | Old post status
-     * @param object $post | Post object
-     * @return void
-     */
-    public function process_workflow_change_post_status( $new_status, $old_status, $post ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'change_post_status',
-            'integration' => 'wordpress',
-            'post_id' => $post->ID,
-            'post_type' => $post->post_type,
-            'post_status' => $new_status,
-            'old_post_status' => $old_status,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow on receive new order on WooCommerce
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @param int $order_id  | Order ID
-     * @param object $order | Order object
-     * @return void
-     */
-    public function process_workflow_on_new_order( $order_id, $order ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_new_order',
-            'integration' => 'woocommerce',
-            'order_id' => $order_id,
-            'order_data' => $order,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when order status is processing
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @param int $order_id  | Order ID
-     * @param array $posted_data | User submitted checkout data
-     * @param object $order | Order object
-     * @return void
-     */
-    public function process_workflow_order_processed( $order_id, $posted_data, $order ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_checkout_order_processed',
-            'integration' => 'woocommerce',
-            'order_id' => $order_id,
-            'posted_data' => $posted_data,
-            'order_data' => $order,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when order status is complete
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @param int $order_id  | Order ID
-     * @param object $order | Order object
-     * @param array $status_transition | Status transition
-     * @return void
-     */
-    public function process_workflow_order_completed( $order_id, $order, $status_transition ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_order_status_completed',
-            'integration' => 'woocommerce',
-            'order_id' => $order_id,
-            'order_data' => $order,
-            'status_transition' => $status_transition,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when order is fully refunded
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @param int $order_id  | Order ID
-     * @param int $refund_id | Refund ID
-     * @return void
-     */
-    public function process_workflow_order_fully_refunded( $order_id, $refund_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_order_fully_refunded',
-            'integration' => 'woocommerce',
-            'order_id' => $order_id,
-            'refund_id' => $refund_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when order is partially refunded
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @param bool $is_partially_refunded | Is partially refunded
-     * @param int $order_id  | Order ID
-     * @return void
-     */
-    public function process_workflow_order_partially_refunded( $is_partially_refunded, $order_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_order_partially_refunded',
-            'integration' => 'woocommerce',
-            'is_partially_refunded' => $is_partially_refunded,
-            'order_id' => $order_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-    
-
-    /**
-     * Process workflow when order has status changed
-     * 
-     * @since 1.0.0
-     * @version 1.2.0
-     * @param int $order_id  | Order ID
-     * @param string $old_status | Old status
-     * @param string $new_status | New status
-     * @return void
-     */
-    public function process_workflow_order_status_changed( $order_id, $old_status, $new_status ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_order_status_changed',
-            'integration' => 'woocommerce',
-            'order_id' => $order_id,
-            'old_status' => $old_status,
-            'new_status' => $new_status,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow content on Elementor form submission
-     * 
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param object $record | The record submitted
-     * @return void
-     */
-    public function process_workflow_elementor_form( $record, $handler ) {
-        // get form records
-        $form_settings = $record->get('form_settings');
-        $form_id = isset( $form_settings['form_id'] ) ? $form_settings['form_id'] : '';
-
-        // get form fields
-        $raw_fields = $record->get('fields');
-        $fields = array();
-
-        foreach ( $raw_fields as $id => $field ) {
-            $fields[$id] = $field['value'];
-        }
-
-        if ( JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( 'Function process_workflow_elementor_form() fired' );
-        }
-    
-        $payload = array(
-            'integration' => 'elementor',
-            'hook' => 'elementor_pro/forms/new_record',
-            'type' => 'trigger',
-            'id' => $form_id,
-            'fields' => $fields,
-            'record' => $record,
-            'handler' => $handler,
-        );
-    
-        self::process_workflows( $payload );
     }
 
 
@@ -461,7 +97,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -497,7 +133,10 @@ class Workflow_Processor {
         $trigger_data = reset( $trigger_data );
 
         if ( $integration === 'woocommerce' ) {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
+            if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' ) {
+                $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
+            }
+
             $order = wc_get_order( $payload['order_id'] );
             $order_status = str_replace( 'wc-', '', $order->get_status() ); // remove prefix "wc-"
             
@@ -535,7 +174,7 @@ class Workflow_Processor {
             $action_id = $action['id'] ?? null;
 
             // Ignore trigger or already processed actions
-            if ( in_array( $action_id, $state['processed_actions'], true ) ) {
+            if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' && in_array( $action_id, $state['processed_actions'], true ) ) {
                 continue;
             }
     
@@ -574,9 +213,14 @@ class Workflow_Processor {
      * @return bool
      */
     public static function handle_action( $action, $post_id, $event_data ) {
-        $action_data = $action['data'] ?? [];
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Handling action: " . print_r( $action, true ) );
+        }
+
+        $action_data = $action['data'] ?? array();
     
         if ( empty( $action_data['action'] ) ) {
+            error_log( "Action type is empty, skipping." );
             return false;
         }
     
@@ -600,7 +244,12 @@ class Workflow_Processor {
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
         ));
     
-        return isset( $actions[ $action_data['action'] ] ) ? $actions[ $action_data['action'] ]() : false;
+        if ( ! isset( $actions[ $action_data['action'] ] ) ) {
+            error_log( "Action not found in the list: " . $action_data['action'] );
+            return false;
+        }
+    
+        return $actions[ $action_data['action'] ]();
     }
     
     
@@ -608,13 +257,19 @@ class Workflow_Processor {
      * Processes a conditional action within a workflow
      *
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.2.2
      * @param array $action | Condition action data
      * @param int $post_id | Workflow post ID
      * @param array $payload | Payload context data
      * @return bool Returns true if the action is processed successfully
      */
     public static function process_condition_action( $action, $post_id, $payload ) {
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Processing condition action: " . print_r( $action, true ) );
+            error_log( "Post ID: " . print_r( $post_id, true ) );
+            error_log( "Payload: " . print_r( $payload, true ) );
+        }
+
         $action_data = $action['data'] ?? array();
 
         // Ensure that condition content exists
@@ -625,24 +280,32 @@ class Workflow_Processor {
         // Extract condition details
         $get_condition = $action_data['condition_content']['condition'] ?? '';
         $condition_type = $action_data['condition_content']['type'] ?? '';
-        $condition_value = $action_data['condition_content']['value'] ?? '';
+        $payload['condition_content'] = $action_data['condition_content'] ?? array();
+        $condition_value = '';
+
+        if ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
+            $condition_value = str_replace( 'wc-', '', $action_data['condition_content']['value'] );
+        } else {
+            $condition_value = $action_data['condition_content']['value'] ?? '';
+        }
 
         // get meta key for user meta condition
         if ( $get_condition === 'user_meta' ) {
             $payload['condition_content']['meta_key'] = $action_data['condition_content']['meta_key'] ?? '';
+        } elseif ( $get_condition === 'field_value' ) {
+            $payload['condition_content']['field_id'] = $action_data['condition_content']['field_id'] ?? '';
         }
 
         // Retrieve the comparison value based on the event data
         $compare_value = Conditions::get_compare_value( $get_condition, $payload );
 
         // Check if the condition is met
-        $condition_met = Conditions::check_condition( $condition_type, $compare_value, $condition_value );
+        $condition_met = Conditions::check_condition( $condition_type, $compare_value, $condition_value, $payload );
 
         // Determine the next actions based on whether the condition is met
         $next_actions = $condition_met ? ( $action['children']['action_true'] ?? array() ) : ( $action['children']['action_false'] ?? array() );
 
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Processing condition action: " . print_r( $action, true ) );
             error_log( "Condition content: " . print_r( $action_data['condition_content'], true ) );
             error_log( "Condition type: " . print_r( $condition_type, true ) );
             error_log( "Condition value: " . print_r( $condition_value, true ) );
@@ -859,278 +522,5 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to create coupon.", 'ERROR' );
             }
         }
-    }
-
-
-    /**
-     * This will fire at the very end of a (successful) form entry on WPForms
-     *
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param array $fields | Sanitized entry field values/properties
-     * @param array $entry | Original $_POST global
-     * @param array $form_data | Form data and settings
-     * @param int $entry_id | Entry ID Will return 0 if entry storage is disabled or using WPForms Lite
-     * @return void
-     * 
-     * @link  https://wpforms.com/developers/wpforms_process_complete/
-     */
-    public function process_workflow_wpforms_form( $fields, $entry, $form_data, $entry_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'wpforms_process_complete',
-            'integration' => 'wpforms',
-            'id' => absint( $form_data['id'] ),
-            'fields' => $fields,
-            'entry' => $entry,
-            'form_data' => $form_data,
-            'entry_id' => $entry_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Fires when PayPal payment status notifies the site
-     *
-     * @since 1.1.0
-     * @version 1.2.0
-     * @param array $fields | Sanitized entry field values/properties
-     * @param array $form_data | Form data and settings
-     * @param int $payment_id | PayPal Payment ID
-     * @param array $data | PayPal Web Accept Data
-     * @return void
-     * 
-     * @link  https://wpforms.com/developers/wpforms_paypal_standard_process_complete/
-     */
-    public function process_workflow_wpforms_paypal( $fields, $form_data, $payment_id, $data ) {
-        // Check if the payment status is not completed
-        if ( empty( $data['payment_status'] ) || strtolower( $data['payment_status'] ) !== 'completed' ) {
-            return;
-        }
-
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'wpforms_paypal_standard_process_complete',
-            'integration' => 'wpforms',
-            'id' => absint( $form_data['id'] ),
-            'fields' => $fields,
-            'entry' => $entry,
-            'form_data' => $form_data,
-            'entry_id' => $entry_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-    
-    /**
-     * Process workflow when subscription is created
-     * 
-     * @since 1.2.0
-     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @param object|WC_Order $order | A WC_Order instance representing the order for which subscriptions have been created
-     * @param object|WC_Cart $recurring_cart | A WC_Cart instance representing the cart which stores the data used for creating this subscription
-     */
-    public function process_workflow_subscription_created( $subscription, $order, $recurring_cart ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_checkout_subscription_created',
-            'integration' => 'woocommerce',
-            'subscription' => $subscription,
-            'subscription_id' => $subscription->get_id(),
-            'order' => $order,
-            'order_id' => $order->get_id(),
-            'recurring_cart' => $recurring_cart,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when subscription is activated
-     * 
-     * @since 1.2.0
-     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @param string $new_status | The new status of the subscription
-     * @param string $old_status | The old status of the subscription
-     * @return void
-     */
-    public function process_workflow_subscription_status_active( $subscription, $new_status, $old_status ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_status_active',
-            'integration' => 'woocommerce',
-            'subscription' => $subscription,
-            'subscription_id' => $subscription->get_id(),
-            'new_status' => $new_status,
-            'old_status' => $old_status,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when subscription payment is complete
-     * 
-     * @since 1.2.0
-     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @return void
-     */
-    public function process_workflow_subscription_payment_complete( $subscription ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_payment_complete',
-            'integration' => 'woocommerce',
-            'subscription' => $subscription,
-            'subscription_id' => $subscription->get_id(),
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when subscription payment is failed
-     * 
-     * @since 1.2.0
-     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @param string $new_status | The new status of the subscription
-     * @return void
-     */
-    public function process_workflow_subscription_payment_failed( $subscription, $new_status ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_payment_failed',
-            'integration' => 'woocommerce',
-            'subscription' => $subscription,
-            'subscription_id' => $subscription->get_id(),
-            'new_status' => $new_status,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when subscription status is expired
-     * 
-     * @since 1.2.0
-     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @return void
-     */
-    public function process_workflow_subscription_status_expired( $subscription ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_status_expired',
-            'integration' => 'woocommerce',
-            'subscription' => $subscription,
-            'subscription_id' => $subscription->get_id(),
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when subscription status is cancelled
-     * 
-     * @since 1.2.0
-     * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @return void
-     */
-    public function process_workflow_subscription_status_cancelled( $subscription ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_status_cancelled',
-            'integration' => 'woocommerce',
-            'subscription' => $subscription,
-            'subscription_id' => $subscription->get_id(),
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when a order is abandoned
-     * 
-     * @since 1.2.0
-     * @param int $order_id | The abandoned order ID
-     * @param int $cart_id | The abandoned cart ID
-     * @return void
-     */
-    public function process_workflow_order_abandoned( $order_id, $cart_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
-            'integration' => 'flexify_checkout',
-            'order_id' => $order_id,
-            'cart_id' => $cart_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when a cart is abandoned
-     * 
-     * @since 1.2.0
-     * @param int $cart_id | The abandoned cart ID
-     * @return void
-     */
-    public function process_workflow_cart_abandoned( $cart_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
-            'integration' => 'flexify_checkout',
-            'cart_id' => $cart_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when a cart is recovered
-     * 
-     * @since 1.2.0
-     * @param int $cart_id | The recovered cart ID
-     * @param int $order_id | The order ID
-     * @return void
-     */
-    public function process_workflow_cart_recovered( $cart_id, $order_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
-            'integration' => 'flexify_checkout',
-            'cart_id' => $cart_id,
-            'order_id' => $order_id,
-        );
-
-        self::process_workflows( $payload );
-    }
-
-
-    /**
-     * Process workflow when a cart is lost
-     * 
-     * @since 1.2.0
-     * @param int $cart_id | The recovered cart ID
-     * @return void
-     */
-    public function process_workflow_cart_lost( $cart_id ) {
-        $payload = array(
-            'type' => 'trigger',
-            'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Lost',
-            'integration' => 'flexify_checkout',
-            'cart_id' => $cart_id,
-        );
-
-        self::process_workflows( $payload );
     }
 }
