@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
  * Conditions class
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.2.5
  * @package MeuMouse.com
  */
 class Conditions {
@@ -77,7 +77,7 @@ class Conditions {
      * Gets comparison value based on condition type and context
      *
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param string $condition_type | Condition type (e.g. 'order_total', 'user_role')
      * @param array $payload | Payload data
      * @return mixed Returns the value for comparison or null if not found
@@ -111,6 +111,8 @@ class Conditions {
             error_log( "Payload from get_compare_value() : " . print_r( $payload, true ) );
             error_log( "Context from get_compare_value() : " . print_r( $context, true ) );
         }
+
+        $shipping_items = $context instanceof \WC_Order ? $context->get_items('shipping') : array();
     
         // Map condition types to their respective value retrieval methods
         $value_map = apply_filters( 'Joinotify/Conditions/Get_Compare_Value', array(
@@ -129,7 +131,7 @@ class Conditions {
             'cart_total'            => $context instanceof \WC_Cart ? $context->get_cart_contents_total() : null,
             'items_in_cart'         => $context instanceof \WC_Cart ? count( $context->get_cart() ) : null,
             'payment_method'        => $context instanceof \WC_Order ? $context->get_payment_method() : null,
-            'shipping_method'       => $context instanceof \WC_Order ? ( count( $context->get_items('shipping') ) === 1 ? explode( ":", reset( $context->get_items('shipping') )->get_method_id() )[0] : array_values( array_map( fn( $method ) => explode( ":", $method->get_method_id() )[0], $context->get_items('shipping') ) ) ) : null,
+            'shipping_method'       => ! empty( $shipping_items ) ? ( count( $shipping_items ) === 1 ? ( $first_item = reset( $shipping_items ) ) ? explode( ":", $first_item->get_method_id() )[0] : null : array_values( array_map( fn( $method ) => explode( ":", $method->get_method_id() )[0], $shipping_items ) ) ) : null,
             'field_value'           => $field_value,
             'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
         ), $condition_type, $payload );
