@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce Subscriptions plugin
  * 
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.2.5
  * @package MeuMouse.com
  */
 class Woo_Subscriptions extends Integrations_Base {
@@ -35,7 +35,7 @@ class Woo_Subscriptions extends Integrations_Base {
                 add_action( 'woocommerce_checkout_subscription_created', array( $this, 'process_workflow_subscription_created' ), 10, 3 );
 
                 // fire when a subscription status is active
-                add_action( 'woocommerce_subscription_status_active', array( $this, 'process_workflow_subscription_status_active' ), 10, 3 );
+                add_action( 'woocommerce_subscription_status_active', array( $this, 'process_workflow_subscription_status_active' ), 10, 1 );
 
                 // fire when a subscription payment is complete
                 add_action( 'woocommerce_subscription_payment_complete', array( $this, 'process_workflow_subscription_payment_complete', 10, 1 ) );
@@ -111,7 +111,7 @@ class Woo_Subscriptions extends Integrations_Base {
      * Process workflow when subscription is created
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
      * @param object|WC_Order $order | A WC_Order instance representing the order for which subscriptions have been created
      * @param object|WC_Cart $recurring_cart | A WC_Cart instance representing the cart which stores the data used for creating this subscription
@@ -128,14 +128,7 @@ class Woo_Subscriptions extends Integrations_Base {
             'recurring_cart' => $recurring_cart,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -143,31 +136,20 @@ class Woo_Subscriptions extends Integrations_Base {
      * Process workflow when subscription is activated
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
-     * @param string $new_status | The new status of the subscription
-     * @param string $old_status | The old status of the subscription
      * @return void
      */
-    public function process_workflow_subscription_status_active( $subscription, $new_status, $old_status ) {
+    public function process_workflow_subscription_status_active( $subscription ) {
         $payload = array(
             'type' => 'trigger',
             'hook' => 'woocommerce_subscription_status_active',
             'integration' => 'woocommerce',
             'subscription' => $subscription,
             'subscription_id' => $subscription->get_id(),
-            'new_status' => $new_status,
-            'old_status' => $old_status,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -175,7 +157,7 @@ class Woo_Subscriptions extends Integrations_Base {
      * Process workflow when subscription payment is complete
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
      * @return void
      */
@@ -188,14 +170,7 @@ class Woo_Subscriptions extends Integrations_Base {
             'subscription_id' => $subscription->get_id(),
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -203,7 +178,7 @@ class Woo_Subscriptions extends Integrations_Base {
      * Process workflow when subscription payment is failed
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
      * @param string $new_status | The new status of the subscription
      * @return void
@@ -218,14 +193,7 @@ class Woo_Subscriptions extends Integrations_Base {
             'new_status' => $new_status,
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -233,7 +201,7 @@ class Woo_Subscriptions extends Integrations_Base {
      * Process workflow when subscription status is expired
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
      * @return void
      */
@@ -246,14 +214,7 @@ class Woo_Subscriptions extends Integrations_Base {
             'subscription_id' => $subscription->get_id(),
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
@@ -261,7 +222,7 @@ class Woo_Subscriptions extends Integrations_Base {
      * Process workflow when subscription status is cancelled
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.2.5
      * @param object|WC_Subscription $subscription | A WC_Subscription instance representing the subscription just created on checkout
      * @return void
      */
@@ -274,13 +235,6 @@ class Woo_Subscriptions extends Integrations_Base {
             'subscription_id' => $subscription->get_id(),
         );
 
-        // instance background process
-        $background_process = new Workflow_Background_Process();
-        
-        // add to queue
-        $background_process->push_to_queue( $payload );
-
-        // initialize process in background
-        $background_process->save()->dispatch();
+        Workflow_Processor::process_workflows( $payload );
     }
 }
