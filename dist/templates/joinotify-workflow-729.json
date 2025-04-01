@@ -1,0 +1,50 @@
+{
+  "plugin_version": "1.2.5",
+  "post": {
+    "type": "joinotify-workflow",
+    "title": "Enviar mensagem quando status do pedido for alterado para concluído",
+    "date": "2025-04-01 08:23:36",
+    "status": "draft",
+    "modified": "2025-04-01 08:23:36",
+    "category": "woocommerce"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_67ebcc9750386",
+      "type": "trigger",
+      "data": {
+        "title": "Enviar mensagem quando status do pedido for alterado para concluído",
+        "description": "",
+        "trigger": "woocommerce_order_status_completed",
+        "context": "woocommerce"
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_67ebcde565344",
+      "type": "action",
+      "data": {
+        "title": "WhatsApp: Mensagem de texto",
+        "description": "Pedido concluído com sucesso, <span class=\"builder-placeholder\">{{ wc_billing_first_name }}</span>! 🎉<br><br>Agradecemos por comprar com a gente na <span class=\"builder-placeholder\">{{ site_name }}</span> 💙<br>Seu pedido foi finalizado e está a caminho (ou já chegou até você!).<br><br>Esperamos que aproveite muito! Qualquer dúvida ou necessidade, é só responder por aqui — vamos adorar te ajudar 😊<br><br>Até a próxima!<br>Equipe <span class=\"builder-placeholder\">{{ site_name }}</span>",
+        "action": "send_whatsapp_message_text",
+        "message": "Pedido concluído com sucesso, {{ wc_billing_first_name }}! 🎉\n\nAgradecemos por comprar com a gente na {{ site_name }} 💙\nSeu pedido foi finalizado e está a caminho (ou já chegou até você!).\n\nEsperamos que aproveite muito! Qualquer dúvida ou necessidade, é só responder por aqui — vamos adorar te ajudar 😊\n\nAté a próxima!\nEquipe {{ site_name }}",
+        "sender": "",
+        "receiver": "{{ wc_billing_phone }}"
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_67ebce8d5771a",
+      "type": "action",
+      "data": {
+        "title": "WhatsApp: Mensagem de texto",
+        "description": "<span class=\"builder-placeholder\">{{ wc_billing_first_name }}</span>, podemos te pedir um favor rapidinho?<br><br>Se a sua experiência com a <span class=\"builder-placeholder\">{{ site_name }}</span> foi positiva, que tal deixar uma avaliação no Google? <span style=\"font-weight: bold;\">Isso nos ajuda MUITO</span> a continuar crescendo e atendendo cada vez melhor 💙<br><br>Leva só 1 minuto do seu tempo!<br><br>É só clicar aqui:<br><span style=\"font-weight: bold;\">ADICIONE SEU LINK DE AVALIAÇÃO DO GOOGLE AQUI</span><br><br>A sua opinião faz toda a diferença pra gente!",
+        "action": "send_whatsapp_message_text",
+        "message": "{{ wc_billing_first_name }}, podemos te pedir um favor rapidinho?\n\nSe a sua experiência com a {{ site_name }} foi positiva, que tal deixar uma avaliação no Google? *Isso nos ajuda MUITO* a continuar crescendo e atendendo cada vez melhor 💙\n\nLeva só 1 minuto do seu tempo!\n\nÉ só clicar aqui:\n*ADICIONE SEU LINK DE AVALIAÇÃO DO GOOGLE AQUI*\n\nA sua opinião faz toda a diferença pra gente!",
+        "sender": "",
+        "receiver": "{{ wc_billing_phone }}"
+      },
+      "children": []
+    }
+  ]
+}
