@@ -1,0 +1,88 @@
+{
+  "plugin_version": "1.2.5",
+  "post": {
+    "type": "joinotify-workflow",
+    "title": "Enviar mensagem ao receber novo pedido",
+    "date": "2025-04-01 08:03:15",
+    "status": "draft",
+    "modified": "2025-04-01 08:03:15",
+    "category": "woocommerce"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_67ebc7f3c371d",
+      "type": "trigger",
+      "data": {
+        "title": "Enviar mensagem ao receber novo pedido",
+        "description": "",
+        "trigger": "woocommerce_new_order",
+        "context": "woocommerce"
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_67ebc97c1031f",
+      "type": "action",
+      "data": {
+        "title": "Tempo de espera",
+        "description": "Esperar por 5 minutos",
+        "action": "time_delay",
+        "delay_type": "period",
+        "delay_value": "5",
+        "delay_period": "minute",
+        "date_value": "",
+        "time_value": "",
+        "delay_timestamp": 300
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_67ebc98df1339",
+      "type": "action",
+      "data": {
+        "title": "Pedido pago",
+        "description": "<div class=\"condition-description\">Verificar se o pedido foi pago</div>",
+        "action": "condition",
+        "condition_content": {
+          "condition": "order_paid",
+          "type": "is",
+          "type_text": "É",
+          "value": "",
+          "value_text": "Selecione um método de pagamentoSelecione um método de entrega"
+        }
+      },
+      "children": {
+        "action_true": [
+          {
+            "id": "joinotify_action_67ebc9ae78a54",
+            "type": "action",
+            "data": {
+              "title": "WhatsApp: Mensagem de texto",
+              "description": "📦 Oba! Seu pedido <span style=\"font-weight: bold;\">#<span class=\"builder-placeholder\">{{ wc_order_number }}</span></span> foi recebido com sucesso, <span class=\"builder-placeholder\">{{ wc_billing_first_name }}</span>!<br><br>Agradecemos pela sua compra na <span class=\"builder-placeholder\">{{ site_name }}</span><br><br><span style=\"font-weight: bold;\">Detalhes do pedido:</span><br><br><span style=\"font-weight: bold;\">Produtos:</span> <span class=\"builder-placeholder\">{{ wc_purchased_items }}</span><br><br><span style=\"font-weight: bold;\">Endereço de entrega:</span> <span class=\"builder-placeholder\">{{ wc_shipping_full_address }}</span><br><br><span style=\"font-weight: bold;\">Forma de pagamento:</span> <span class=\"builder-placeholder\">{{ wc_payment_method_title }}</span><br><br>Agora é só aguardar: estamos preparando tudo com carinho pra você.<br><br>Assim que o envio for feito, te avisamos por aqui mesmo.<br>Se tiver qualquer dúvida, é só responder esta mensagem.<br><br>Obrigado por confiar na gente! 💙<br>Equipe <span class=\"builder-placeholder\">{{ site_name }}</span>",
+              "action": "send_whatsapp_message_text",
+              "message": "📦 Oba! Seu pedido *#{{ wc_order_number }}* foi recebido com sucesso, {{ wc_billing_first_name }}!\n\nAgradecemos pela sua compra na {{ site_name }}\n\n*Detalhes do pedido:*\n\n*Produtos:* {{ wc_purchased_items }}\n\n*Endereço de entrega:* {{ wc_shipping_full_address }}\n\n*Forma de pagamento:* {{ wc_payment_method_title }}\n\nAgora é só aguardar: estamos preparando tudo com carinho pra você.\n\nAssim que o envio for feito, te avisamos por aqui mesmo.\nSe tiver qualquer dúvida, é só responder esta mensagem.\n\nObrigado por confiar na gente! 💙\nEquipe {{ site_name }}",
+              "sender": "",
+              "receiver": "{{ wc_billing_phone }}"
+            },
+            "children": []
+          }
+        ],
+        "action_false": [
+          {
+            "id": "joinotify_action_67ebca8a12692",
+            "type": "action",
+            "data": {
+              "title": "WhatsApp: Mensagem de texto",
+              "description": "Oi, <span class=\"builder-placeholder\">{{ wc_billing_first_name }}</span>! Recebemos seu pedido #<span class=\"builder-placeholder\">{{ wc_order_number }}</span>, mas ainda estamos aguardando o pagamento 💳<br><br>Pra facilitar, aqui está o link pra você finalizar o pagamento agora mesmo:<br><span class=\"builder-placeholder\">{{ wc_payment_url }}</span><br><br>Assim que o pagamento for confirmado, daremos início à separação e envio do seu pedido.<br><br>Se tiver alguma dúvida ou precisar de ajuda para finalizar o pagamento, é só responder por aqui mesmo!<br><br>Fique tranquilo(a), reservamos os itens pra você por 1 hora! 😉<br><br>Abraços,<br>Equipe <span class=\"builder-placeholder\">{{ site_name }}</span>",
+              "action": "send_whatsapp_message_text",
+              "message": "Oi, {{ wc_billing_first_name }}! Recebemos seu pedido #{{ wc_order_number }}, mas ainda estamos aguardando o pagamento 💳\n\nPra facilitar, aqui está o link pra você finalizar o pagamento agora mesmo:\n{{ wc_payment_url }}\n\nAssim que o pagamento for confirmado, daremos início à separação e envio do seu pedido.\n\nSe tiver alguma dúvida ou precisar de ajuda para finalizar o pagamento, é só responder por aqui mesmo!\n\nFique tranquilo(a), reservamos os itens pra você por 1 hora! 😉\n\nAbraços,\nEquipe {{ site_name }}",
+              "sender": "",
+              "receiver": "{{ wc_billing_phone }}"
+            },
+            "children": []
+          }
+        ]
+      }
+    }
+  ]
+}
