@@ -57,7 +57,7 @@
 		nextActionID: '',
 
 		/**
-		 * Init
+		 * Initialize builder
 		 * 
 		 * @since 1.1.0
 		 * @version 1.2.0
@@ -339,7 +339,7 @@
 				$('#joinotify_send_import_files').on('click', function(e) {
 					e.preventDefault();
 
-					var btn = $(this);
+					let btn = $(this);
 					var button_state = Builder.keepButtonState(btn);
 
 					// send ajax request
@@ -821,7 +821,7 @@
 
 				var get_title = $('#joinotify_set_workflow_name').val();
 				var post_id = Builder.getParamByName('id');
-				var btn = $(this);
+				let btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 
 				// send request
@@ -1177,7 +1177,7 @@
 			$(document).on('click', '.add-funnel-action', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 				var btn_state = Builder.keepButtonState(btn);
 				var post_id = Builder.getParamByName('id');
 				var action_type = btn.data('action');
@@ -1353,7 +1353,7 @@
 		 */
 		changeWorkflowStatus: function() {
 			$(document).on('click', '#joinotify_workflow_status_switch', function() {
-				var btn = $(this);
+				let btn = $(this);
 
 				// send ajax request
 				$.ajax({
@@ -1522,7 +1522,7 @@
 			$(document).on('click', '#joinotify_update_workflow_title', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 
 				// send ajax request
@@ -1888,7 +1888,7 @@
 			$(document).on('click', '.choose-template', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 				var template_type = btn.data('template');
 
@@ -2093,7 +2093,7 @@
 			$(document).on('click', '.set-media-url', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 
 				// If the media frame already exists, reopen it
 				if (file_frame) {
@@ -2133,7 +2133,7 @@
 			$(document).on('click', '#joinotify_builder_run_test', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 
 				// send ajax request
@@ -2411,7 +2411,7 @@
 			$(document).on('click', '.save-action-edit', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 				var action_type = btn.data('action');
 				var get_action_id = btn.data('action-id');
@@ -2620,7 +2620,7 @@
 			$(document).on('click', '.save-trigger-settings', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
+				let btn = $(this);
 				var button_state = Builder.keepButtonState(btn);
 				var get_trigger = btn.data('trigger');
 				var get_trigger_id = btn.data('trigger-id');

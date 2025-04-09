@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Load assets class
  *
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Assets {
@@ -42,7 +42,7 @@ class Assets {
 	 * Enqueue scripts on settings page
 	 * 
 	 * @since 1.0.0
-	 * @version 1.1.0
+	 * @version 1.3.0
 	 * @return void
 	 */
 	public function settings_assets() {
@@ -56,10 +56,6 @@ class Assets {
 			}
 
 			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-
-			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/settings'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-scripts', JOINOTIFY_ASSETS . 'admin/js/settings'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
@@ -80,7 +76,7 @@ class Assets {
 	 * Enqueue assets on license page
 	 * 
 	 * @since 1.1.0
-	 * @version 1.1.2
+	 * @version 1.3.0
 	 * @return void
 	 */
 	public function license_assets() {
@@ -94,10 +90,6 @@ class Assets {
 			}
 			
 			wp_enqueue_script( 'joinotify-visibility-controller', JOINOTIFY_ASSETS . 'modules/visibility-controller/visibility-controller'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-
-			wp_enqueue_style( 'joinotify-modal-styles', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.css', array(), JOINOTIFY_VERSION );
-			wp_enqueue_script( 'joinotify-modal', JOINOTIFY_ASSETS . 'modules/modal/modal'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 
 			wp_enqueue_style( 'joinotify-styles', JOINOTIFY_ASSETS . 'admin/css/settings'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-license-scripts', JOINOTIFY_ASSETS . 'admin/js/license'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
@@ -212,14 +204,13 @@ class Assets {
 	 * Enqueue scripts on workflows table page
 	 * 
 	 * @since 1.1.0
+	 * @version 1.3.0
 	 * @return void
 	 */
 	public function workflows_table_assets() {
 		$min_file = JOINOTIFY_DEBUG_MODE ? '' : '.min';
 
 		if ( joinotify_check_admin_page('joinotify-workflows') && ! joinotify_check_admin_page('joinotify-workflows-builder') ) {
-			wp_enqueue_script( 'joinotify-toasts', JOINOTIFY_ASSETS . 'modules/toasts/toasts'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
-
 			wp_enqueue_style( 'joinotify-workflows-table-styles', JOINOTIFY_ASSETS . 'admin/css/workflows-table'. $min_file .'.css', array(), JOINOTIFY_VERSION );
 			wp_enqueue_script( 'joinotify-workflows-table-scripts', JOINOTIFY_ASSETS . 'admin/js/workflows-table'. $min_file .'.js', array('jquery'), JOINOTIFY_VERSION );
 

@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Ajax {
@@ -43,7 +43,7 @@ class Ajax {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @return void
      */
     public function __construct() {
@@ -81,6 +81,7 @@ class Ajax {
             'joinotify_download_workflow_template' => 'download_workflow_template_callback',
             'joinotify_install_modules' => 'install_modules_ajax_callback',
             'joinotify_activate_plugin' => 'activate_plugin_callback',
+            'joinotify_check_instance_connection' => 'check_instance_connection_callback',
         );
 
         foreach ( $ajax_actions as $action => $callback ) {
@@ -2157,14 +2158,48 @@ class Ajax {
             if ( is_wp_error( $activate ) ) {
                 $response = array(
                     'status'  => 'error',
-                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'flexify-checkout-for-woocommerce' ),
+                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'joinotify' ),
                     'toast_body_title' => $activate->get_error_message(),
                 );
             } else {
                 $response = array(
                     'status'  => 'success',
-                    'toast_header_title' => esc_html__( 'Plugin ativado com sucesso.', 'flexify-checkout-for-woocommerce' ),
-                    'toast_body_title' => esc_html__( 'Novo recurso adicionado!', 'flexify-checkout-for-woocommerce' ),
+                    'toast_header_title' => esc_html__( 'Plugin ativado com sucesso.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'Novo recurso adicionado!', 'joinotify' ),
+                );
+            }
+
+            wp_send_json( $response );
+        }
+    }
+
+
+    /**
+     * Check connection state for instance on AJAX callback
+     * 
+     * @since 1.3.0
+     * @return void
+     */
+    public function check_instance_connection_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_check_instance_connection' ) {
+            $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
+            $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
+            $get_state = Controller::get_connection_state( $phone );
+    
+            // check response
+            if ( isset( $get_state['connection'] ) && $get_state['connection'] === 'connected' ) {
+                $response = array(
+                    'status'  => 'success',
+                    'toast_header_title' => esc_html__( 'Conexão estabelecida.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'O telefone está conectado!', 'joinotify' ),
+                    'display_state_component' => Admin_Components::display_state_connection( $phone ),
+                );
+            } else {
+                $response = array(
+                    'status'  => 'error',
+                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'O telefone está desconectado.', 'joinotify' ),
+                    'display_state_component' => Admin_Components::display_state_connection( $phone ),
                 );
             }
 
