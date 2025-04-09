@@ -3,7 +3,7 @@
         'name' => 'meumouse/joinotify',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '54e073b2c8784afa099b18314eda0ed6dfb564ce',
+        'reference' => '15f42f02018f3949d4bb13a1d75d77301be63262',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -37,7 +37,7 @@
         'meumouse/joinotify' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '54e073b2c8784afa099b18314eda0ed6dfb564ce',
+            'reference' => '15f42f02018f3949d4bb13a1d75d77301be63262',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

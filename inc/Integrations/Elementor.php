@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Integrations;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
+use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -13,7 +14,7 @@ defined('ABSPATH') || exit;
  * Add integration with Elementor
  * 
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Elementor extends Integrations_Base {

@@ -1,3 +1,7 @@
+Versão 1.3.0 (11/04/2025)
+* Correção de bugs
+* Otimizações
+
 Versão 1.2.5 (24/03/2025)
 * Correção de bugs
      - Correção na chamada de ganchos da integração Woo Subscriptions

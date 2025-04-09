@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * Controller for API requests
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Controller {
@@ -51,10 +51,13 @@ class Controller {
      * Records the routes of API endpoints
      * 
      * @since 1.0.0
+     * @version 1.3.0
      * @return void
      */
     public function register_routes() {
-        register_rest_route( 'joinotify/v1/', Admin::get_setting('send_text_proxy_api_route'), array(
+        $send_text_endpoint = '/'. Admin::get_setting('send_text_proxy_api_route');
+
+        register_rest_route( 'joinotify/v1', $send_text_endpoint, array(
             'methods' => 'POST',
             'callback' => array( $this, 'send_text_message' ),
             'permission_callback' => array( $this, 'validate_api_key' ),
@@ -74,7 +77,9 @@ class Controller {
             ),
         ));
 
-        register_rest_route( 'joinotify/v1/', Admin::get_setting('send_media_proxy_api_route'), array(
+        $send_media_endpoint = '/'. Admin::get_setting('send_media_proxy_api_route');
+
+        register_rest_route( 'joinotify/v1', $send_media_endpoint, array(
             'methods' => 'POST',
             'callback' => array( $this, 'send_media_message' ),
             'permission_callback' => array( $this, 'validate_api_key' ),
@@ -200,7 +205,7 @@ class Controller {
      * Get numbers registered on slots
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @return array
      */
     public static function get_numbers() {
@@ -208,7 +213,7 @@ class Controller {
         $api_url = 'https://joinotify-slots-manager.meumouse.com/slots/get-all-phones/' . $license;
 
         $response = wp_remote_get( $api_url, array(
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         if ( is_wp_error( $response ) ) {
@@ -230,7 +235,7 @@ class Controller {
      * Get connection state of an instance
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param string $phone | Phone number
      * @return array|WP_Error Response from API or WP_Error on failure
      */
@@ -238,7 +243,7 @@ class Controller {
         $api_url = 'https://joinotify-slots-manager.meumouse.com/slots/check-phone-connection/' . $phone;
 
         $response = wp_remote_get( $api_url, array(
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         if ( is_wp_error( $response ) ) {
@@ -277,7 +282,7 @@ class Controller {
      * Send messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $message | Message text for send
@@ -313,7 +318,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         if ( is_wp_error( $response ) ) {
@@ -335,7 +340,7 @@ class Controller {
      * Send messsage media on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $media_type | Media type (image, audio, video or document)
@@ -372,7 +377,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         if ( is_wp_error( $response ) ) {
@@ -394,7 +399,7 @@ class Controller {
      * Send messsage audio on WhatsApp
      * 
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $audio | Audio URL
@@ -431,7 +436,7 @@ class Controller {
                 'apikey' => self::$whatsapp_api_key,
             ),
             'body' => $payload,
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         if ( is_wp_error( $response ) ) {
@@ -453,7 +458,7 @@ class Controller {
      * Send OTP messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param string $phone | Phone number
      * @param string $otp | OTP code
      * @return int
@@ -472,7 +477,7 @@ class Controller {
                 'linkPreview' => false,
                 'text' => $message,
             )),
-            'timeout' => 10,
+            'timeout' => 30,
         ));
 
         // Check if the response is an error
