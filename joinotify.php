@@ -8,7 +8,7 @@
  * Author URI: 				https://meumouse.com/
  * Version: 				1.3.0
  * Requires PHP: 			7.4
- * Tested up to:      		6.7.2
+ * Tested up to:      		6.8
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
  * License: 				GPL2
@@ -83,6 +83,7 @@ if ( ! class_exists('Joinotify') ) {
 		 * Check requeriments and load plugin
 		 * 
 		 * @since 1.0.0
+		 * @version 1.3.0
 		 * @return void
 		 */
 		public function init() {
@@ -92,12 +93,9 @@ if ( ! class_exists('Joinotify') ) {
 				return;
 			}
 
-			$this->setup_constants();
+			// define constants
+			self::setup_constants();
 	
-			load_plugin_textdomain( 'joinotify', false, dirname( JOINOTIFY_BASENAME ) . '/languages/' );
-			add_filter( 'plugin_action_links_' . JOINOTIFY_BASENAME, array( $this, 'add_action_plugin_links' ), 10, 4 );
-			add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
-
 			// load Composer
 			require_once JOINOTIFY_DIR . 'vendor/autoload.php';
 
@@ -125,38 +123,36 @@ if ( ! class_exists('Joinotify') ) {
 		 * Setup plugin constants
 		 *
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.3.0
 		 * @return void
 		 */
-		public function setup_constants() {
-			$this->define( 'JOINOTIFY_BASENAME', plugin_basename( __FILE__ ) );
-			$this->define( 'JOINOTIFY_DIR', plugin_dir_path( __FILE__ ) );
-			$this->define( 'JOINOTIFY_INC', JOINOTIFY_DIR . 'inc/' );
-			$this->define( 'JOINOTIFY_URL', plugin_dir_url( __FILE__ ) );
-			$this->define( 'JOINOTIFY_ASSETS', JOINOTIFY_URL . 'assets/' );
-			$this->define( 'JOINOTIFY_FILE', __FILE__ );
-			$this->define( 'JOINOTIFY_ABSPATH', dirname( JOINOTIFY_FILE ) . '/' );
-			$this->define( 'JOINOTIFY_ADMIN_EMAIL', get_option('admin_email') );
-			$this->define( 'JOINOTIFY_DOCS_URL', 'https://ajuda.meumouse.com/docs/joinotify/overview' );
-			$this->define( 'JOINOTIFY_REGISTER_PHONE_URL', 'https://meumouse.com/minha-conta/joinotify-slots/' );
-			$this->define( 'JOINOTIFY_API_BASE_URL', 'https://whatsapp-api.meumouse.com' );
-			$this->define( 'JOINOTIFY_SLUG', self::$slug );
-			$this->define( 'JOINOTIFY_VERSION', self::$version );
-			$this->define( 'JOINOTIFY_DEV_MODE', true );
-		}
-
-
-		/**
-		 * Define constant if not already set
-		 *
-		 * @since 1.0.0
-		 * @param string $name | Constant name
-		 * @param string|bool $value Constant value
-		 * @return void
-		 */
-		private function define( $name, $value ) {
-			if ( ! defined( $name ) ) {
-				define( $name, $value );
+		public static function setup_constants() {
+			$base_file = __FILE__;
+			$base_dir = plugin_dir_path( $base_file );
+			$base_url = plugin_dir_url( $base_file );
+		
+			$constants = array(
+				'JOINOTIFY_BASENAME' => plugin_basename( $base_file ),
+				'JOINOTIFY_FILE' => $base_file,
+				'JOINOTIFY_DIR' => $base_dir,
+				'JOINOTIFY_INC' => $base_dir . 'inc/',
+				'JOINOTIFY_URL' => $base_url,
+				'JOINOTIFY_ASSETS' => $base_url . 'assets/',
+				'JOINOTIFY_ABSPATH' => dirname( $base_file ) . '/',
+				'JOINOTIFY_ADMIN_EMAIL' => get_option( 'admin_email' ),
+				'JOINOTIFY_DOCS_URL' => 'https://ajuda.meumouse.com/docs/joinotify/overview',
+				'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
+				'JOINOTIFY_API_BASE_URL' => 'https://whatsapp-api.meumouse.com',
+				'JOINOTIFY_SLUG' => self::$slug,
+				'JOINOTIFY_VERSION' => self::$version,
+				'JOINOTIFY_DEV_MODE' => true,
+			);
+		
+			// Iterate and define each constant if not already defined
+			foreach ( $constants as $key => $value ) {
+				if ( ! defined( $key ) ) {
+					define( $key, $value );
+				}
 			}
 		}
 
@@ -172,52 +168,6 @@ if ( ! class_exists('Joinotify') ) {
 			$message = __( '<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'joinotify' );
 
 			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
-		}
-
-
-		/**
-		 * Plugin action links
-		 * 
-		 * @since 1.0.0
-		 * @version 1.0.5
-		 * @param array $action_links | Default plugin action links
-		 * @return array
-		 */
-		public function add_action_plugin_links( $action_links ) {
-        	if ( get_option('joinotify_license_status') !== 'valid' ) {
-				$plugins_links = array(
-					'<a href="' . admin_url('admin.php?page=joinotify-license') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
-				);
-			} else {
-				$plugins_links = array(
-					'<a href="' . admin_url('admin.php?page=joinotify-settings') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
-				);
-			}
-
-			return array_merge( $plugins_links, $action_links );
-		}
-
-
-		/**
-		 * Add meta links on plugin
-		 * 
-		 * @since 1.0.0
-		 * @param string $plugin_meta | An array of the plugin’s metadata, including the version, author, author URI, and plugin URI
-		 * @param string $plugin_file | Path to the plugin file relative to the plugins directory
-		 * @param array $plugin_data | An array of plugin data
-		 * @param string $status | Status filter currently applied to the plugin list
-		 * @return string
-		 */
-		public function add_row_meta_links( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-			if ( strpos( $plugin_file, JOINOTIFY_BASENAME ) !== false ) {
-				$new_links = array(
-					'docs' => '<a href="'. esc_attr( JOINOTIFY_DOCS_URL ) .'" target="_blank">'. __( 'Documentação', 'joinotify' ) .'</a>',
-				);
-				
-				$plugin_meta = array_merge( $plugin_meta, $new_links );
-			}
-		
-			return $plugin_meta;
 		}
 
 
