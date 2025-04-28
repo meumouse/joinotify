@@ -158,7 +158,6 @@ class Assets {
 			// Selectize library
 			wp_enqueue_style( 'joinotify-selectize-styles', $this->assets_url . 'vendor/selectize/css/selectize.bootstrap5.css', array(), '0.15.2' );
 			wp_enqueue_script( 'joinotify-selectize-scripts', $this->assets_url . 'vendor/selectize/js/selectize'. $this->min_file .'.js', array('jquery'), '0.15.2' );
-		//	wp_enqueue_script( 'joinotify-selectize-remove-button-plugin', $this->assets_url . 'vendor/selectize/plugins/remove_button/plugin.js', array('jquery'), '0.15.2' );
 
 			// builder main
 			wp_enqueue_style( 'joinotify-builder-styles', $this->assets_url . 'builder/css/builder'. $this->min_file .'.css', array(), $this->version );

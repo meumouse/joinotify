@@ -60,10 +60,11 @@ class Controller {
      * @since 1.3.0
      * @param string $route | Partial route
      * @param string $endpoint | Endpoint
+     * @param string $query_param | Optional partial route
      * @return string
      */
-    public static function get_api_url( $route, $endpoint ) {
-        return self::$base_url . $route . $endpoint;
+    public static function get_api_url( $route, $endpoint, $query_param = '' ) {
+        return self::$base_url . $route . $endpoint . $query_param;
     }
 
 
@@ -284,6 +285,8 @@ class Controller {
                 $status = 'connected';
             } elseif ( $phone_status['connection'] === 'disconnected' ) {
                 $status = 'disconnected';
+
+                self::notify_disconnected_phone( $phone );
             }
 
             if ( self::$debug_mode ) {
@@ -526,7 +529,8 @@ class Controller {
      * @return int
      */
     public static function send_validation_otp( $phone, $otp ) {
-        $api_url = $this->api_url . '/message/sendText/meumouse';
+        // get endpoint for send message text
+        $api_url = self::get_api_url( '/message/sendText/', 'meumouse' );
         $message = sprintf( esc_html__( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
 
         // send request
@@ -562,6 +566,7 @@ class Controller {
      * Get all groups
      * 
      * @since 1.1.0
+     * @version 1.3.0
      * @param string $sender | Instance phone number
      */
     public static function fetch_all_groups( $sender ) {
@@ -577,8 +582,10 @@ class Controller {
         $get_participants = filter_var( $get_participants, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false';
 
         $sender = preg_replace( '/\D/', '', $sender );
-        $api_url = $this->api_url . '/group/fetchAllGroups/' . $sender . '?getParticipants=' . $get_participants;
+        $query_param = '?getParticipants=' . $get_participants;
+        $api_url = self::get_api_url( '/group/fetchAllGroups/', $sender, $param );
 
+        // send request
         $response = wp_remote_get( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
@@ -604,5 +611,47 @@ class Controller {
         }
 
         return json_decode( $response_body, true );
+    }
+
+
+    /**
+     * Notify user when phone is disconnected
+     * 
+     * @since 1.3.0
+     * @param string $phone | Phone number
+     * @param string $otp | OTP code
+     * @return int
+     */
+    public static function notify_disconnected_phone( $phone ) {
+        // get endpoint for send message text
+        $api_url = self::get_api_url( '/message/sendText/', 'meumouse' );
+        $message = sprintf( esc_html__( 'Seu telefone %s está atualmente desconectado. Notificação enviada do site: %s', 'joinotify' ), $phone, License::get_domain() );
+
+        // send request
+        $response = wp_remote_post( $api_url, array(
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'apikey' => self::$api_key,
+            ),
+            'body' => wp_json_encode( array(
+                'number' => joinotify_prepare_receiver( $phone ),
+                'linkPreview' => false,
+                'text' => $message,
+            )),
+            'timeout' => 30,
+        ));
+
+        // Check if the response is an error
+        if ( self::$dev_mode ) {
+            error_log( 'notify_disconnected_phone() response: ' . print_r( $response, true ) );
+        }
+
+        if ( is_wp_error( $response ) ) {
+            Logger::register_log( $response, 'ERROR' );
+        }
+
+        $response_body = wp_remote_retrieve_body( $response );
+
+        return wp_remote_retrieve_response_code( $response );
     }
 }
