@@ -1417,7 +1417,7 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @return void
      */
     public function run_workflow_test_callback() {
@@ -1447,6 +1447,9 @@ class Ajax {
                                 $send_message_text = Controller::send_message_text( $sender, $receiver, $message );
     
                                 if ( 201 !== $send_message_text ) {
+                                    // check connection state and notify user if disconnected
+                                    Controller::get_connection_state( $sender );
+
                                     wp_send_json([
                                         'status' => 'error',
                                         'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
@@ -1463,6 +1466,9 @@ class Ajax {
                                 $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
     
                                 if ( 201 !== $send_message_media ) {
+                                    // check connection state and notify user if disconnected
+                                    Controller::get_connection_state( $sender );
+
                                     wp_send_json([
                                         'status' => 'error',
                                         'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
@@ -1582,6 +1588,7 @@ class Ajax {
      * Send message test on admin panel for AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.3.0
      * @return void
      */
     public function send_message_test_callback() {
@@ -1598,6 +1605,9 @@ class Ajax {
                     'toast_body_title' => __( 'A mensagem teste foi enviada com sucesso!', 'joinotify' ),
                 );
             } else {
+                // check connection state and notify user if disconnected
+                Controller::get_connection_state( $sender );
+
                 $response = array(
                     'status' => 'error',
                     'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),

@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Workflow_Processor {
@@ -390,7 +390,7 @@ class Workflow_Processor {
      * Send message text on WhatsApp
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void
@@ -403,6 +403,11 @@ class Workflow_Processor {
         // send message
         $response = Controller::send_message_text( $sender, $receiver, $message );
 
+        if ( 201 !== $response ) {
+            // check connection state and notify user if disconnected
+            Controller::get_connection_state( $sender );
+        }
+        
         if ( JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
@@ -417,7 +422,7 @@ class Workflow_Processor {
      * Executes a WhatsApp message action
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void
@@ -430,6 +435,11 @@ class Workflow_Processor {
 
         // send message
         $response = Controller::send_message_media( $sender, $receiver, $media_type, $media );
+
+        if ( 201 !== $response ) {
+            // check connection state and notify user if disconnected
+            Controller::get_connection_state( $sender );
+        }
 
         if ( JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {
