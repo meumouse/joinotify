@@ -1,6 +1,6 @@
 <?php
 
-namespace MeuMouse\Flexify_Checkout\Core;
+namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
 
@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Updater {
@@ -448,5 +448,3 @@ class Updater {
         echo '<div class="notice notice-success is-dismissible"><p>' . $message . '</p></div>';
     }
 }
-
-new Updater();

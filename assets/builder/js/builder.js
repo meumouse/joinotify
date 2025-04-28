@@ -5,8 +5,9 @@
 	 * Builder params
 	 * 
 	 * @since 1.1.0
+	 * @version 1.3.0
 	 */
-	const params = joinotify_builder_params;
+	const params = window.joinotify_builder_params || {};
 	
 	/**
 	 * Joinotify builder object variable
@@ -55,89 +56,6 @@
 		 * @since 1.2.2
 		 */
 		nextActionID: '',
-
-		/**
-		 * Initialize builder
-		 * 
-		 * @since 1.1.0
-		 * @version 1.2.0
-		 */
-		init: function() {
-			// hide builder loader
-			if ( Builder.getParamByName('id') === null ) {
-				$('.joinotify-loader-container').addClass('d-none');
-			}
-
-			this.addTrigger();
-			this.workflowSteps();
-			this.downloadTemplates();
-			this.filterWorkflowTemplates();
-			this.triggerTabs();
-			this.loadWorkflowData();
-			this.uploadWorkflowTemplates();
-			this.onWorkflowReady();
-			this.onUpdatedWorkflow();
-			this.initBootstrapComponents();
-			this.installModule();
-			this.activeModule();
-		},
-
-		/**
-		 * Run functions on workflow ready
-		 * 
-		 * @since 1.1.0
-		 * @version 1.2.2
-		 */
-		onWorkflowReady: function() {
-			// on workflow ready event
-			$(document).on('workflowReady', function() {
-				Builder.saveTriggerSettings();
-				Builder.sidebarActions();
-				Builder.addAction();
-				Builder.removeAction();
-				Builder.saveActionSettings();
-				Builder.codeEditor();
-				Builder.codePreview();
-				Builder.correctTriggerSettingsModal();
-				Builder.emojiPicker();
-				Builder.dismissPlaceholdersTip();
-				Builder.fetchAllGroups();
-				Builder.searchWooProducts();
-				Builder.changeWorkflowStatus();
-				Builder.updateWorkflowTitle();
-				Builder.initBootstrapComponents();
-				Builder.adjustHeightCondition();
-				Builder.changeVisibilityForElements();
-				Builder.initDatePicker();
-				Builder.whatsappMessagePreview();
-				Builder.exportWorkflow();
-				Builder.openMediaLibrary();
-				Builder.runTestWorkflow();
-				Builder.validateInputCurrency();
-				Builder.updateMediaPreview();
-			});
-		},
-
-		/**
-		 * Run functions on workflow updated
-		 * 
-		 * @since 1.1.0
-		 * @version 1.2.2
-		 */
-		onUpdatedWorkflow: function() {
-			// on workflow updated event
-			$(document).on('updatedWorkflow', function() {
-				Builder.changeVisibilityForElements();
-				Builder.codeEditor();
-				Builder.codePreview();
-				Builder.correctTriggerSettingsModal();
-				Builder.adjustHeightCondition();
-				Builder.validateInputCurrency();
-				Builder.emojiPicker();
-				Builder.searchWooProducts();
-				Builder.updateMediaPreview();
-			});
-		},
 
 		/**
 		 * Select trigger on tabs
@@ -3028,6 +2946,111 @@
 				let preview = media_preview_component( media_type, media_url );
 
 				$('.modal.show').find('.preview-whatsapp-message-sender').html(preview);
+			});
+		},
+
+		/**
+		 * Show toast when connection is offline
+		 * 
+		 * @since 1.3.0
+		 */
+		detectOfflineConnection: function() {
+			function showOfflineToast() {
+				Builder.displayToast( 'warning', params.i18n.offline_toast_header, params.i18n.offline_toast_body );
+			}
+
+			function updateStatus() {
+				if ( ! navigator.onLine ) {
+					showOfflineToast();
+				}
+			}
+
+			updateStatus();
+			window.addEventListener('online', updateStatus);
+			window.addEventListener('offline', updateStatus);
+		},
+
+		/**
+		 * Initialize builder
+		 * 
+		 * @since 1.1.0
+		 * @version 1.3.0
+		 */
+		init: function() {
+			// hide builder loader
+			if ( Builder.getParamByName('id') === null ) {
+				$('.joinotify-loader-container').addClass('d-none');
+			}
+
+			this.addTrigger();
+			this.workflowSteps();
+			this.downloadTemplates();
+			this.filterWorkflowTemplates();
+			this.triggerTabs();
+			this.loadWorkflowData();
+			this.uploadWorkflowTemplates();
+			this.onWorkflowReady();
+			this.onUpdatedWorkflow();
+			this.initBootstrapComponents();
+			this.installModule();
+			this.activeModule();
+			this.detectOfflineConnection();
+		},
+
+		/**
+		 * Run functions on workflow ready
+		 * 
+		 * @since 1.1.0
+		 * @version 1.3.0
+		 */
+		onWorkflowReady: function() {
+			// on workflow ready event
+			$(document).on('workflowReady', function() {
+				Builder.saveTriggerSettings();
+				Builder.sidebarActions();
+				Builder.addAction();
+				Builder.removeAction();
+				Builder.saveActionSettings();
+				Builder.codeEditor();
+				Builder.codePreview();
+				Builder.correctTriggerSettingsModal();
+				Builder.emojiPicker();
+				Builder.dismissPlaceholdersTip();
+				Builder.fetchAllGroups();
+				Builder.searchWooProducts();
+				Builder.changeWorkflowStatus();
+				Builder.updateWorkflowTitle();
+				Builder.initBootstrapComponents();
+				Builder.adjustHeightCondition();
+				Builder.changeVisibilityForElements();
+				Builder.initDatePicker();
+				Builder.whatsappMessagePreview();
+				Builder.exportWorkflow();
+				Builder.openMediaLibrary();
+				Builder.runTestWorkflow();
+				Builder.validateInputCurrency();
+				Builder.updateMediaPreview();
+			});
+		},
+
+		/**
+		 * Run functions on workflow updated
+		 * 
+		 * @since 1.1.0
+		 * @version 1.2.2
+		 */
+		onUpdatedWorkflow: function() {
+			// on workflow updated event
+			$(document).on('updatedWorkflow', function() {
+				Builder.changeVisibilityForElements();
+				Builder.codeEditor();
+				Builder.codePreview();
+				Builder.correctTriggerSettingsModal();
+				Builder.adjustHeightCondition();
+				Builder.validateInputCurrency();
+				Builder.emojiPicker();
+				Builder.searchWooProducts();
+				Builder.updateMediaPreview();
 			});
 		},
 	};

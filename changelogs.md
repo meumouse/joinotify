@@ -1,6 +1,7 @@
-Versão 1.3.0 (11/04/2025)
+Versão 1.3.0 (22/04/2025)
 * Correção de bugs
 * Otimizações
+* Correção de segurança se remetente está registrado no site
 
 Versão 1.2.5 (24/03/2025)
 * Correção de bugs

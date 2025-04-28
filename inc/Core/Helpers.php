@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Helpers {
@@ -174,5 +174,19 @@ class Helpers {
         return array_keys( array_filter( $default_options, function( $value ) {
             return in_array( $value, ['yes', 'no'], true );
         }));
+    }
+
+
+    /**
+     * Check if the sender is allowed to send messages
+     * 
+     * @since 1.3.0
+     * @param string $sender | Sender phone number
+     * @return bool
+     */
+    public static function allowed_sender( $sender ) {
+        $current_senders = get_option( 'joinotify_get_phones_senders', array() );
+
+        return in_array( $sender, $current_senders );
     }
 }

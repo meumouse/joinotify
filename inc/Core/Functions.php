@@ -145,3 +145,19 @@ function joinotify_prepare_message( $message, $payload = array() ) {
 function joinotify_format_plain_text( $content ) {
 	return html_entity_decode( strip_tags( $content ) );
 }
+
+
+/**
+ * Get first sender phone number
+ *
+ * @since 1.3.0
+ * @return string|array
+ */
+function joinotify_get_first_sender() {
+	$current_senders = get_option( 'joinotify_get_phones_senders', array() );
+
+	// remove empty entries and reindex
+	$current_senders = array_values( array_filter( $current_senders ) );
+
+	return $current_senders[0];
+}

@@ -29,21 +29,41 @@ class Controller {
      * @since 1.1.0
      * @return string
      */
-    private static $whatsapp_api_key;
+    private static $api_key;
+
+    public static $debug_mode;
+    public static $dev_mode;
+    public static $base_url;
 
     /**
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @return void
      */
     public function __construct() {
-        self::$whatsapp_api_key = Helpers::whatsapp_api_key();
+        self::$api_key = Helpers::whatsapp_api_key();
+        self::$debug_mode = JOINOTIFY_DEBUG_MODE;
+        self::$dev_mode = JOINOTIFY_DEV_MODE;
+        self::$base_url = JOINOTIFY_API_BASE_URL;
 
         if ( Admin::get_setting('enable_proxy_api') === 'yes' && License::is_valid() ) {
             add_action( 'rest_api_init', array( $this, 'register_routes' ) );
         }
+    }
+
+
+    /**
+     * Get full API URL
+     * 
+     * @since 1.3.0
+     * @param string $route | Partial route
+     * @param string $endpoint | Endpoint
+     * @return string
+     */
+    public static function get_api_url( $route, $endpoint ) {
+        return self::$base_url . $route . $endpoint;
     }
 
 
@@ -223,7 +243,7 @@ class Controller {
         $response_body = wp_remote_retrieve_body( $response );
 
         // Check response body
-        if ( JOINOTIFY_DEV_MODE ) {
+        if ( self::$dev_mode ) {
             error_log( 'get_numbers() response body: ' . print_r( $response_body, true ) );
         }
 
@@ -253,7 +273,7 @@ class Controller {
         $response_body = wp_remote_retrieve_body( $response );
 
         // Check response body
-        if ( JOINOTIFY_DEV_MODE ) {
+        if ( self::$dev_mode ) {
             error_log( 'get_connection_state() response body: ' . print_r( $response_body, true ) );
         }
 
@@ -266,7 +286,7 @@ class Controller {
                 $status = 'disconnected';
             }
 
-            if ( JOINOTIFY_DEBUG_MODE ) {
+            if ( self::$debug_mode ) {
                 Logger::register_log( "Connection state for $phone is $status", 'INFO' );
             }
 
@@ -291,7 +311,15 @@ class Controller {
      */
     public static function send_message_text( $sender, $receiver, $message, $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
-        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/' . $sender;
+        
+        // check if sender is registered
+        if ( ! Helpers::allowed_sender( $sender ) ) {
+            if ( self::$debug_mode ) {
+                Logger::register_log( "Message not sent. Sender's phone number not registered.", 'INFO' );
+            }
+
+            return;
+        }
 
         /**
          * Link preview for text messages
@@ -309,13 +337,21 @@ class Controller {
         ));
 
         if ( ! License::is_valid() ) {
+            if ( self::$debug_mode ) {
+                Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
+            }
+
             return;
         }
 
+        // get endpoint for send message text
+        $api_url = self::get_api_url( '/message/sendText/', $sender );
+
+        // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$whatsapp_api_key,
+                'apikey' => self::$api_key,
             ),
             'body' => $payload,
             'timeout' => 30,
@@ -328,8 +364,8 @@ class Controller {
         $response_body = wp_remote_retrieve_body( $response );
 
         // Check response body
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( 'send_message_text() response body: ' . print_r( $response_body, true ) );
+        if ( self::$debug_mode ) {
+            Logger::register_log( "send_message_text() response body: " . print_r( $response_body, true ) );
         }
 
         return wp_remote_retrieve_response_code( $response );
@@ -351,6 +387,15 @@ class Controller {
     public static function send_message_media( $sender, $receiver, $media_type, $media, $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
 
+        // check if sender is registered
+        if ( ! Helpers::allowed_sender( $sender ) ) {
+            if ( self::$debug_mode ) {
+                Logger::register_log( "Message not sent. Sender's phone number not registered.", 'INFO' );
+            }
+
+            return;
+        }
+
         // Chek if media type is audio and change request url
         if ( $media_type === 'audio' ) {
             self::send_whatsapp_audio( $sender, $receiver, $media, $timestamp_delay );
@@ -358,25 +403,29 @@ class Controller {
             return;
         }
 
-        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendMedia/' . $sender;
-
-        $payload = wp_json_encode( array(
-            'number' => joinotify_prepare_receiver( $receiver ),
-            'mediatype' => $media_type,
-            'media' => $media,
-            'delay' => $timestamp_delay,
-        ));
-
         if ( ! License::is_valid() ) {
+            if ( self::$debug_mode ) {
+                Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
+            }
+
             return;
         }
 
+        // get endpoint for send message media
+        $api_url = self::get_api_url( '/message/sendMedia/', $sender );
+
+        // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$whatsapp_api_key,
+                'apikey' => self::$api_key,
             ),
-            'body' => $payload,
+            'body' => wp_json_encode( array(
+                'number' => joinotify_prepare_receiver( $receiver ),
+                'mediatype' => $media_type,
+                'media' => $media,
+                'delay' => $timestamp_delay,
+            )),
             'timeout' => 30,
         ));
 
@@ -387,8 +436,8 @@ class Controller {
         $response_body = wp_remote_retrieve_body( $response );
 
         // Check response body
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( 'send_message_media() response body: ' . print_r( $response_body, true ) );
+        if ( self::$debug_mode ) {
+            Logger::register_log( "send_message_media() response body: " . $response_body );
         }
 
         return wp_remote_retrieve_response_code( $response );
@@ -408,7 +457,15 @@ class Controller {
      */
     public static function send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
-        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendWhatsAppAudio/' . $sender;
+
+        // check if sender is registered
+        if ( ! Helpers::allowed_sender( $sender ) ) {
+            if ( self::$debug_mode ) {
+                Logger::register_log( "Message not sent. Sender's phone number not registered.", 'INFO' );
+            }
+
+            return;
+        }
 
         /**
          * Filter for encoding audio
@@ -418,24 +475,29 @@ class Controller {
          */
         $encoding = apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true );
 
-        $payload = wp_json_encode( array(
-            'number' => joinotify_prepare_receiver( $receiver ),
-            'audio' => $audio,
-            'delay' => $timestamp_delay,
-            'encoding' => $encoding,
-        ));
-
         if ( ! License::is_valid() ) {
+            if ( self::$debug_mode ) {
+                Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
+            }
+
             return;
         }
+
+        // get endpoint for send message audio
+        $api_url = self::get_api_url( '/message/sendWhatsAppAudio/', $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$whatsapp_api_key,
+                'apikey' => self::$api_key,
             ),
-            'body' => $payload,
+            'body' => wp_json_encode( array(
+                'number' => joinotify_prepare_receiver( $receiver ),
+                'audio' => $audio,
+                'delay' => $timestamp_delay,
+                'encoding' => $encoding,
+            )),
             'timeout' => 30,
         ));
 
@@ -446,7 +508,7 @@ class Controller {
         $response_body = wp_remote_retrieve_body( $response );
 
         // Check response body
-        if ( JOINOTIFY_DEV_MODE ) {
+        if ( self::$dev_mode ) {
             error_log( 'send_whatsapp_audio() response body: ' . print_r( $response_body, true ) );
         }
 
@@ -464,13 +526,14 @@ class Controller {
      * @return int
      */
     public static function send_validation_otp( $phone, $otp ) {
-        $api_url = JOINOTIFY_API_BASE_URL . '/message/sendText/meumouse';
+        $api_url = $this->api_url . '/message/sendText/meumouse';
         $message = sprintf( esc_html__( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
 
+        // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$whatsapp_api_key,
+                'apikey' => self::$api_key,
             ),
             'body' => wp_json_encode( array(
                 'number' => joinotify_prepare_receiver( $phone ),
@@ -481,7 +544,7 @@ class Controller {
         ));
 
         // Check if the response is an error
-        if ( JOINOTIFY_DEV_MODE ) {
+        if ( self::$dev_mode ) {
             error_log( 'send_validation_otp() response: ' . print_r( $response, true ) );
         }
 
@@ -514,12 +577,12 @@ class Controller {
         $get_participants = filter_var( $get_participants, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false';
 
         $sender = preg_replace( '/\D/', '', $sender );
-        $api_url = JOINOTIFY_API_BASE_URL . '/group/fetchAllGroups/' . $sender . '?getParticipants=' . $get_participants;
+        $api_url = $this->api_url . '/group/fetchAllGroups/' . $sender . '?getParticipants=' . $get_participants;
 
         $response = wp_remote_get( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$whatsapp_api_key,
+                'apikey' => self::$api_key,
             ),
             'timeout' => 30,
         ));
@@ -529,14 +592,14 @@ class Controller {
         }
 
         // Check if the response is an error
-        if ( JOINOTIFY_DEV_MODE ) {
+        if ( self::$dev_mode ) {
             error_log( 'fetch_all_groups() response: ' . print_r( $response, true ) );
         }
 
         $response_body = wp_remote_retrieve_body( $response );
 
         // record the response body for debug
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( self::$debug_mode ) {
             Logger::register_log( "fetch_all_groups() response body: " . $response_body );
         }
 

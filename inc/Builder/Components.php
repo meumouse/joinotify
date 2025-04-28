@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions for display components on workflow builder
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Components {
@@ -1216,5 +1216,27 @@ class Components {
         }
 
         return $html;
+    }
+
+
+    /**
+     * Render dynamic placeholder action
+     * 
+     * @since 1.3.0
+     * @param array $settings | The action settings
+     * @return string
+     */
+    public static function dynamic_placeholder_action( $settings = array() ) {
+        ob_start(); ?>
+
+        <div class="mb-4">
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Nome da variável de texto', 'joinotify' ) ?></span>
+            
+            <input type="text" class="form-control required-setting get-dynamic-placeholder-text" value="<?php echo $settings['dynamic_placeholder'] ?? ''; ?>" placeholder="<?php esc_attr_e( 'nome_da_variavel', 'joinotify' ) ?>" />>">
+        </div>
+
+        <textarea class="form-control joinotify-code-editor required-setting"><?php echo $settings['snippet_php'] ?? ''; ?></textarea>
+
+        <?php return ob_get_clean();
     }
 }
