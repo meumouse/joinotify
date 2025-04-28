@@ -197,7 +197,7 @@ class Admin {
      * @return mixed | string or false
      */
     public static function get_setting( $key ) {
-        $options = get_option('joinotify_settings', array());
+        $options = get_option( 'joinotify_settings', array() );
 
         // check if array key exists and return key
         if ( isset( $options[$key] ) ) {
