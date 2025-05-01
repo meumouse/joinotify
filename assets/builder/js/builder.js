@@ -2977,6 +2977,8 @@
 		 * @version 1.3.0
 		 */
 		init: function() {
+			$('body').addClass('joinotify-builder-workflows');
+
 			// hide builder loader
 			if ( Builder.getParamByName('id') === null ) {
 				$('.joinotify-loader-container').addClass('d-none');

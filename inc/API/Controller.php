@@ -619,13 +619,14 @@ class Controller {
      * 
      * @since 1.3.0
      * @param string $phone | Phone number
-     * @param string $otp | OTP code
      * @return int
      */
     public static function notify_disconnected_phone( $phone ) {
         // get endpoint for send message text
         $api_url = self::get_api_url( '/message/sendText/', 'meumouse' );
         $message = sprintf( esc_html__( 'Seu telefone %s está atualmente desconectado. Notificação enviada do site: %s', 'joinotify' ), $phone, License::get_domain() );
+        $message .= "\n\n";
+        $message .= sprintf( esc_html__( "Faça a conexão do seu telefone em: %s", 'joinotify' ), JOINOTIFY_REGISTER_PHONE_URL );
 
         // send request
         $response = wp_remote_post( $api_url, array(

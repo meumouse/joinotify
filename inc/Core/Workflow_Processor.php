@@ -206,7 +206,7 @@ class Workflow_Processor {
      * Handle with workflow actions
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @param array $action | Workflow actions array
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -242,6 +242,7 @@ class Workflow_Processor {
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
+            'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
         ));
     
         if ( ! isset( $actions[ $action_data['action'] ] ) ) {
@@ -532,5 +533,18 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to create coupon.", 'ERROR' );
             }
         }
+    }
+
+
+    /**
+     * Execute dynamic placeholder action
+     * 
+     * @since 1.3.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @return void
+     */
+    public static function execute_dynamic_placeholder( $action_data, $payload ) {
+
     }
 }

@@ -1,5 +1,4 @@
 ( function($) {
-
     "use strict";
 
     /**
@@ -9,28 +8,6 @@
      * @package MeuMouse.com
      */
     var WorkflowsTable = {
-        toastId: null,
-
-        /**
-         * Hide toasts
-         * 
-         * @since 1.1.0
-         */
-        hideToasts: function() {
-            this.toastId = $('.toast.show').attr('id');
-
-            if ( ! this.toastId ) {
-                return;
-            }
-        
-            // hide with fade out effect
-            $('#' + WorkflowsTable.toastId).fadeOut('fast');
-        
-            // remove toast from HTML after 500 miliseconds
-            setTimeout( function() {
-                $('#' + WorkflowsTable.toastId).remove();
-            }, 500);
-        },
 
         /**
          * Display custom toasts
@@ -39,7 +16,6 @@
          * @param {string} type | Toast type (success, danger...)
          * @param {string} header_title | Header title for toast
          * @param {string} body_title | Body title for toast
-         * @package MeuMouse.com
          */
         displayToast: function( type, header_title, body_title ) {
             var toast_class = '';
@@ -66,10 +42,10 @@
             }
 
             // generate uniq id for toast
-            var toast_id = 'toast-' + Math.random().toString(36).substr(2, 9);
+            let toast_id = 'toast-' + Math.random().toString(36).substr(2, 9);
 
             // build toast HTML
-            var toast_html = `<div id="${toast_id}" class="toast ${toast_class} show">
+            let toast_html = `<div id="${toast_id}" class="toast ${toast_class} show">
                 <div class="toast-header ${header_class}">
                     ${icon}
                     <span class="me-auto">${header_title}</span>
@@ -90,6 +66,23 @@
             setTimeout( function() {
                 jQuery('#' + toast_id).remove();
             }, 3500);
+
+            // hide toast on click
+            $(document).on('click', '.hide-toast', function() {
+                let get_toast_id = $('.toast.show').attr('id');
+
+                if ( ! get_toast_id ) {
+                    return;
+                }
+            
+                // hide with fade out effect
+                $('#' + get_toast_id).fadeOut('fast');
+            
+                // remove toast from HTML after 500 miliseconds
+                setTimeout( function() {
+                    $('#' + get_toast_id).remove();
+                }, 500); 
+            });
         },
 
         /**
@@ -133,16 +126,17 @@
             });
         },
 
-        // Public API
+        /**
+         * Initialize the module
+         * 
+         * @since 1.1.0
+         * @version 1.3.0
+         */
         init: function() {
-            $(document).ready( function() {
-                $(document).on('click', '.hide-toast', function() {
-                    WorkflowsTable.hideToasts();
-                });
+            $('body').addClass('joinotify-workflows-table');
 
-                WorkflowsTable.changePostStatus();
-            });
-        }
+            WorkflowsTable.changePostStatus();
+        },
     };
 
     // Initialize the module

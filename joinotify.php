@@ -11,7 +11,9 @@
  * Tested up to:      		6.8
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
- * License: 				GPL2
+ * 
+ * @copyright 				2025 MeuMouse.com
+ * @license Proprietary - See license.md for details
  */
 
 namespace MeuMouse\Joinotify;

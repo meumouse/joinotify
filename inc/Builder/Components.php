@@ -1232,10 +1232,14 @@ class Components {
         <div class="mb-4">
             <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Nome da variável de texto', 'joinotify' ) ?></span>
             
-            <input type="text" class="form-control required-setting get-dynamic-placeholder-text" value="<?php echo $settings['dynamic_placeholder'] ?? ''; ?>" placeholder="<?php esc_attr_e( 'nome_da_variavel', 'joinotify' ) ?>" />>">
+            <input type="text" class="form-control required-setting get-dynamic-placeholder-text" value="<?php echo $settings['dynamic_placeholder'] ?? ''; ?>" placeholder="<?php esc_attr_e( 'nome_da_variavel', 'joinotify' ) ?>"/>
         </div>
 
-        <textarea class="form-control joinotify-code-editor required-setting"><?php echo $settings['snippet_php'] ?? ''; ?></textarea>
+        <div>
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Valor da variável', 'joinotify' ) ?></span>
+
+            <textarea class="form-control joinotify-code-editor required-setting"><?php echo $settings['snippet_php'] ?? ''; ?></textarea>
+        </div>
 
         <?php return ob_get_clean();
     }
