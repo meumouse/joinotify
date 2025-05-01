@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * This class manages the workflow functions
  * 
  * @since 1.1.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Workflow_Manager {
@@ -22,7 +22,7 @@ class Workflow_Manager {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @return void
      */
     public function __construct() {
@@ -31,6 +31,9 @@ class Workflow_Manager {
 
         // add modal content for fetch all groups
         add_action( 'in_admin_header', array( 'MeuMouse\Joinotify\Builder\Components', 'fetch_all_groups_modal_content' ) );
+
+        // load builder files
+        add_action( 'Joinotify/Admin/Builder_Page', array( $this, 'load_builder_files' ) );
     }
 
 
@@ -210,5 +213,31 @@ class Workflow_Manager {
         }
 
         return $base_structure;
+    }
+
+
+    /**
+     * Loader builder files
+     * 
+     * @since 1.3.0
+     * @return void
+     */
+    public function load_builder_files() {
+        ?>
+        <div id="joinotify-automations-builder" class="wrapper canvas-dot">
+            <?php $builder_files = apply_filters( 'Joinotify/Builder/Load_Files', array(
+                'Loader.php',
+                'Navbar.php',
+                'Triggers.php',
+                'Actions.php',
+                'Funnel.php',
+                'Choose_Template.php',
+            ));
+
+            foreach ( $builder_files as $file ) :
+                include_once JOINOTIFY_INC . 'Views/Builder/' . $file;
+            endforeach; ?>
+        </div>
+        <?php
     }
 }

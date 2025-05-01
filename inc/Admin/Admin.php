@@ -104,10 +104,16 @@ class Admin {
      * Render new automations page builder
      * 
      * @since 1.0.0
+     * @version 1.3.0
      * @return void
      */
     public function render_builder_page() {
-        include JOINOTIFY_INC . 'Views/Builder_Wrapper.php';
+        /**
+         * Render the content page
+         * 
+         * @since 1.3.0
+         */
+        do_action('Joinotify/Admin/Builder_Page');
     }
 
     
