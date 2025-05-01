@@ -1847,6 +1847,7 @@ class Ajax {
      * Save edition from action on workflow builder on AJAX callback
      * 
      * @since 1.1.0
+     * @version 1.3.0
      * @return void
      */
     public function save_action_settings_callback() {
@@ -1857,6 +1858,30 @@ class Ajax {
 
             // check post id and post type
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
+                if ( isset( $new_action_data['data']['action'] ) && $new_action_data['data']['action'] === 'time_delay' ) {
+                    $delay_type = $new_action_data['data']['delay_type'] ?? 'period';
+
+                    if ( $delay_type === 'period' ) {
+                        $delay_value = (int) ( $new_action_data['data']['delay_value'] ?? 0 );
+                        $delay_period = $new_action_data['data']['delay_period'] ?? 'seconds';
+
+                        $new_action_data['data']['delay_timestamp'] = Schedule::get_delay_timestamp( $delay_value, $delay_period );
+                    } elseif ( $delay_type === 'date' ) {
+                        // Calculate timestamp from given date and time
+                        $date_value = $new_action_data['data']['date_value'] ?? '';
+                        $time_value = $new_action_data['data']['time_value'] ?? '00:00';
+
+                        if ( ! empty( $date_value ) ) {
+                            $datetime = $date_value . ' ' . $time_value;
+                            $timestamp = strtotime( $datetime );
+
+                            if ( $timestamp ) {
+                                $new_action_data['data']['delay_timestamp'] = $timestamp;
+                            }
+                        }
+                    }
+                }
+
                 // retrieve workflow content
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
     
