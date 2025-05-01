@@ -205,7 +205,7 @@ class Components {
      * Display action condition component for condition children actions
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.0
      * @param int $post_id | Post ID
      * @param array $condition_data | Condition data
      * @param string $title | (Optional) Action title
@@ -247,7 +247,7 @@ class Components {
                         $html .= '<div class="funnel-action-details">';
                             $html .= '<ul class="dropdown-menu builder-dropdown shadow-sm">';
                                 $html .= '<li class="d-flex align-items-center mb-0">';
-                                    $html .= '<a id="exclude_action_'. esc_attr( $condition_data['data']['action'] ) .'" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 exclude-action" data-action-id="'. esc_attr( $action ) .'" href="#">';
+                                    $html .= '<a id="exclude_action_'. esc_attr( $action ) .'" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 exclude-action" data-action-id="'. esc_attr( $action ) .'" href="#">';
                                         $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z"></path></svg>';
                                         $html .= esc_html__( 'Excluir ação', 'joinotify' );
                                     $html .= '</a>';
@@ -255,7 +255,7 @@ class Components {
 
                                 if ( $condition_data['data']['action'] !== 'stop_funnel' ) {
                                     $html .= '<li class="d-flex align-items-center mb-0">';
-                                        $html .= '<a id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-action" href="#" data-bs-toggle="modal" data-bs-target="#edit_action_'. esc_attr( $condition_data['data']['action'] ) .'" data-action-id="'. esc_attr( $action ) .'">';
+                                        $html .= '<a id="edit_action_'. esc_attr( $action ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-action" href="#" data-bs-toggle="modal" data-bs-target="#edit_action_'. esc_attr( $action ) .'" data-action-id="'. esc_attr( $action ) .'">';
                                             $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.045 7.401c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.378-.378-.88-.586-1.414-.586s-1.036.208-1.413.585L4 13.585V18h4.413L19.045 7.401zm-3-3 1.587 1.585-1.59 1.584-1.586-1.585 1.589-1.584zM6 16v-1.585l7.04-7.018 1.586 1.586L7.587 16H6zm-2 4h16v2H4z"></path></svg>';
                                             $html .= esc_html__( 'Editar ação', 'joinotify' );
                                         $html .= '</a>';
@@ -267,11 +267,11 @@ class Components {
 
                     // display modal settings for condition action
                     if ( $condition_data['data']['action'] !== 'stop_funnel' ) {
-                        $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">';
+                        $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">';
                             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
-                                        $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
+                                        $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
                                         $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                                     $html .= '</div>';
 
