@@ -178,7 +178,7 @@ class Elementor extends Integrations_Base {
      * Process workflow content on Elementor form submission
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param object $record | The record submitted
      * @return void
      */
@@ -199,7 +199,13 @@ class Elementor extends Integrations_Base {
             Logger::register_log( 'Function process_workflow_elementor_form() fired' );
         }
     
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Elementor/Forms/New_Record', array(
             'integration' => 'elementor',
             'hook' => 'elementor_pro/forms/new_record',
             'type' => 'trigger',
@@ -207,7 +213,7 @@ class Elementor extends Integrations_Base {
             'fields' => $fields,
             'record' => $record,
             'handler' => $handler,
-        );
+        ));
     
         Workflow_Processor::process_workflows( $payload );
     }

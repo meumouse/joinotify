@@ -321,19 +321,25 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a order is abandoned
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $order_id | The abandoned order ID
      * @param int $cart_id | The abandoned cart ID
      * @return void
      */
     public function process_workflow_order_abandoned( $order_id, $cart_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Flexify_Checkout/Recovery_Carts/Order_Abandoned', array(
             'type' => 'trigger',
             'hook' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
             'integration' => 'flexify_checkout',
             'order_id' => $order_id,
             'cart_id' => $cart_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -343,17 +349,23 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a cart is abandoned
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $cart_id | The abandoned cart ID
      * @return void
      */
     public function process_workflow_cart_abandoned( $cart_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Flexify_Checkout/Recovery_Carts/Cart_Abandoned', array(
             'type' => 'trigger',
             'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
             'integration' => 'flexify_checkout',
             'cart_id' => $cart_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -363,19 +375,25 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a cart is recovered
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $cart_id | The recovered cart ID
      * @param int $order_id | The order ID
      * @return void
      */
     public function process_workflow_cart_recovered( $cart_id, $order_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Flexify_Checkout/Recovery_Carts/Cart_Recovered', array(
             'type' => 'trigger',
             'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
             'integration' => 'flexify_checkout',
             'cart_id' => $cart_id,
             'order_id' => $order_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -385,17 +403,23 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a cart is lost
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $cart_id | The recovered cart ID
      * @return void
      */
     public function process_workflow_cart_lost( $cart_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Flexify_Checkout/Recovery_Carts/Cart_Lost', array(
             'type' => 'trigger',
             'hook' => 'Flexify_Checkout/Recovery_Carts/Cart_Lost',
             'integration' => 'flexify_checkout',
             'cart_id' => $cart_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }

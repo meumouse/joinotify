@@ -39,6 +39,7 @@ class Default_Options {
             'enable_create_coupon_action' => 'yes',
             'create_coupon_prefix' => 'CUPOM_',
             'enable_ignore_processed_actions' => 'yes',
+            'enable_developer_integration' => 'yes',
         ));
     }
 }

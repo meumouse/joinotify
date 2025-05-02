@@ -270,19 +270,25 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on user register
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $user_id | User ID
      * @param array $userdata | User data
      * @return void
      */
     public function process_workflow_user_register( $user_id, $userdata ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/User_Register', array(
             'type' => 'trigger',
             'hook' => 'user_register',
             'integration' => 'wordpress',
             'user_id' => $user_id,
             'user_data' => $userdata,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -292,19 +298,25 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on user login
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param string $user_login | User login
      * @param object $user | User object
      * @return void
      */
     public function process_workflow_user_login( $user_login, $user ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/User_Login', array(
             'type' => 'trigger',
             'hook' => 'user_login',
             'integration' => 'wordpress',
             'user_id' => $user->ID,
             'user_data' => $user,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -314,19 +326,25 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on password reset
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param object $user | User object
      * @param string $new_pass | New password
      * @return void
      */
     public function process_workflow_password_reset( $user, $new_pass ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/Password_Reset', array(
             'type' => 'trigger',
             'hook' => 'password_reset',
             'integration' => 'wordpress',
             'user_id' => $user->ID,
             'user_data' => $user,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -336,14 +354,20 @@ class Wordpress extends Integrations_Base {
      * Process workflow content on post status changed
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param string $new_status | New post status
      * @param string $old_status | Old post status
      * @param object $post | Post object
      * @return void
      */
     public function process_workflow_change_post_status( $new_status, $old_status, $post ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/Change_Post_Status', array(
             'type' => 'trigger',
             'hook' => 'change_post_status',
             'integration' => 'wordpress',
@@ -351,7 +375,7 @@ class Wordpress extends Integrations_Base {
             'post_type' => $post->post_type,
             'post_status' => $new_status,
             'old_post_status' => $old_status,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }

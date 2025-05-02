@@ -136,8 +136,8 @@ class Assets {
 			wp_enqueue_script( 'bootstrap-datepicker-translate-pt-br', $this->assets_url . 'vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js', array('jquery'), $this->version );
 
 			// EmojioneArea library
-			wp_enqueue_style( 'joinotify-emojionearea-styles', 'https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css', array(), '3.4.1' );
-			wp_enqueue_script( 'joinotify-emojionearea-scripts', 'https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.js', array('jquery'), '3.4.1' );
+			wp_enqueue_style( 'joinotify-emojionearea-styles', $this->assets_url . 'vendor/emojionearea/emojionearea'. $this->min_file .'.css', array(), '3.4.1' );
+			wp_enqueue_script( 'joinotify-emojionearea-scripts', $this->assets_url . 'vendor/emojionearea/emojionearea'. $this->min_file .'.js', array('jquery'), '3.4.1' );
 
 			// codemirror library
 			wp_enqueue_style( 'joinotify-codemirror-styles', $this->assets_url . 'vendor/codemirror/lib/codemirror.css', array(), '5.65.18' );

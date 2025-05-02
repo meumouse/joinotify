@@ -864,7 +864,6 @@
 				e.preventDefault();
 
 				let btn = $(this);
-				let btn_state = Settings.keepButtonState(btn);
 
 				// send AJAX request
 				$.ajax({
@@ -875,7 +874,7 @@
 						phone: btn.data('phone'),
 					},
 					beforeSend: function() {
-						btn.addClass('animate-loader');
+						btn.prop('disabled', true).addClass('animate-loader');
 					},
 					success: function(response) {
 						if (params.dev_mode) {
@@ -888,8 +887,8 @@
 								btn.siblings('.phone-status').replaceWith(response.display_state_component);
 							}
 
-							if (response.status === 'success') {
-								btn.removeClass('animate-loader');
+							if ( response.status === 'success' ) {
+								btn.prop('disabled', false).removeClass('animate-loader');
 
 								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 							} else {
@@ -900,11 +899,12 @@
 						}
 					},
 					error: function(xhr, status, error) {
+						btn.prop('disabled', false).removeClass('animate-loader');
+
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_state.html);
-						btn.removeClass('animate-loader');
+						btn.prop('disabled', false).removeClass('animate-loader');
 					},
 				});
 			});

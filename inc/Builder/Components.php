@@ -267,7 +267,7 @@ class Components {
 
                     // display modal settings for condition action
                     if ( $condition_data['data']['action'] !== 'stop_funnel' ) {
-                        $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $condition_data['data']['action'] ) .'_label">';
+                        $html .= '<div class="modal fade" id="edit_action_'. esc_attr( $action ) .'" tabindex="-1" aria-labelledby="edit_action_'. esc_attr( $action ) .'_label">';
                             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
@@ -281,7 +281,7 @@ class Components {
 
                                     $html .= '<div class="modal-footer px-4">';
                                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $condition_data['id'] ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
+                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $action ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                                     $html .= '</div>';
                                 $html .= '</div>';
                             $html .= '</div>';

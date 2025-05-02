@@ -237,7 +237,7 @@ class Wpforms extends Integrations_Base {
      * This will fire at the very end of a (successful) form entry on WPForms
      *
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param array $fields | Sanitized entry field values/properties
      * @param array $entry | Original $_POST global
      * @param array $form_data | Form data and settings
@@ -247,7 +247,13 @@ class Wpforms extends Integrations_Base {
      * @link  https://wpforms.com/developers/wpforms_process_complete/
      */
     public function process_workflow_wpforms_form( $fields, $entry, $form_data, $entry_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wpforms/Process_Complete', array(
             'type' => 'trigger',
             'hook' => 'wpforms_process_complete',
             'integration' => 'wpforms',
@@ -256,7 +262,7 @@ class Wpforms extends Integrations_Base {
             'entry' => $entry,
             'form_data' => $form_data,
             'entry_id' => $entry_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -266,7 +272,7 @@ class Wpforms extends Integrations_Base {
      * Fires when PayPal payment status notifies the site
      *
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param array $fields | Sanitized entry field values/properties
      * @param array $form_data | Form data and settings
      * @param int $payment_id | PayPal Payment ID
@@ -281,7 +287,13 @@ class Wpforms extends Integrations_Base {
             return;
         }
 
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wpforms/Paypal_Standard_Process_Complete', array(
             'type' => 'trigger',
             'hook' => 'wpforms_paypal_standard_process_complete',
             'integration' => 'wpforms',
@@ -290,7 +302,7 @@ class Wpforms extends Integrations_Base {
             'entry' => $entry,
             'form_data' => $form_data,
             'entry_id' => $entry_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
