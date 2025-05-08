@@ -24,16 +24,36 @@ defined('ABSPATH') || exit;
 class Controller {
 
     /**
-     * WhatsApp API key
+     * Check debug mode
      * 
-     * @since 1.1.0
+     * @since 1.3.0
+     * @return bool
+     */
+    public static $debug_mode;
+
+    /**
+     * Check development mode
+     * 
+     * @since 1.3.0
+     * @return bool
+     */
+    public static $dev_mode;
+
+    /**
+     * Get base API URL
+     * 
+     * @since 1.3.0
      * @return string
      */
-    private static $api_key;
+    public static $base_api_url;
 
-    public static $debug_mode;
-    public static $dev_mode;
-    public static $base_url;
+    /**
+     * Get base API key
+     * 
+     * @since 1.3.0
+     * @return string
+     */
+    public static $base_api_key;
 
     /**
      * Construct function
@@ -43,28 +63,14 @@ class Controller {
      * @return void
      */
     public function __construct() {
-        self::$api_key = Helpers::whatsapp_api_key();
         self::$debug_mode = JOINOTIFY_DEBUG_MODE;
         self::$dev_mode = JOINOTIFY_DEV_MODE;
-        self::$base_url = JOINOTIFY_API_BASE_URL;
+        self::$base_api_url = JOINOTIFY_API_BASE_URL;
+        self::$base_api_key = Helpers::slots_manager_api_key();
 
         if ( Admin::get_setting('enable_proxy_api') === 'yes' && License::is_valid() ) {
             add_action( 'rest_api_init', array( $this, 'register_routes' ) );
         }
-    }
-
-
-    /**
-     * Get full API URL
-     * 
-     * @since 1.3.0
-     * @param string $route | Partial route
-     * @param string $endpoint | Endpoint
-     * @param string $query_param | Optional partial route
-     * @return string
-     */
-    public static function get_api_url( $route, $endpoint, $query_param = '' ) {
-        return self::$base_url . $route . $endpoint . $query_param;
     }
 
 
@@ -85,15 +91,15 @@ class Controller {
             'args' => array(
                 'sender' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
                 'receiver' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
                 'message' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
             ),
         ));
@@ -107,19 +113,19 @@ class Controller {
             'args' => array(
                 'sender' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
                 'receiver' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
                 'media_type' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
                 'media_url' => array(
                     'required' => true,
-                    'validate_callback' => array( $this, 'validate_string' ),
+                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
                 ),
             ),
         ));
@@ -150,14 +156,79 @@ class Controller {
 
 
     /**
-     * Validate if the given parameter is a string
-     *
-     * @since 1.0.0
-     * @param mixed $param
-     * @return bool
+     * Get full API URL
+     * 
+     * @since 1.3.0
+     * @param string $route | Partial route
+     * @param string $endpoint | Endpoint
+     * @param string $query_param | Optional partial route
+     * @return string
      */
-    public function validate_string( $param ) {
-        return is_string( $param );
+    public static function get_api_url( $route, $endpoint, $query_param = '' ) {
+        return self::$base_api_url . $route . $endpoint . $query_param;
+    }
+
+
+    /**
+     * Get server details from phone number (with 1 week cache)
+     * 
+     * @since 1.3.0
+     * @param string $phone | Phone number
+     * @return string|WP_Error | Server URL or WP_Error on failure
+     */
+    public static function get_server_details( $phone ) {
+        $cache_key = 'joinotify_server_details_' . md5( $phone );
+        $cached = get_transient( $cache_key );
+
+        if ( false !== $cached ) {
+            return $cached;
+        }
+
+        // get api url from slots manager api
+        $api_url = self::get_api_url( '/servers', '/get-server-by-phone/', $phone );
+
+        // send request
+        $response = wp_remote_get( $api_url, array(
+            'headers' => array(
+                'Content-Type' => 'application/json',
+                'apikey' => self::$base_api_key,
+            ),
+            'timeout' => 30,
+        ));
+
+        if ( is_wp_error( $response ) ) {
+            error_log( print_r( $response, true ) );
+            return $response;
+        }
+
+        $response_body = wp_remote_retrieve_body( $response );
+
+        if ( self::$debug_mode ) {
+            error_log( "get_server_details() response: " . $response_body );
+        }
+
+        $data = json_decode( $response_body, true );
+
+        // set response cahce for 1 week
+        set_transient( $cache_key, $data, WEEK_IN_SECONDS );
+
+        return $data;
+    }
+
+
+    /**
+     * Get instance route URL for registered server
+     * 
+     * @since 1.3.0
+     * @param string $route | API route
+     * @param string $phone | Instance phone number
+     * @return string
+     */
+    public static function get_instance_route_url( $route, $phone ) {
+        $server_details = self::get_server_details( $phone );
+        $base_api_url = $server_details['server']['link'] ?? '';
+        
+        return $base_api_url . $route . $phone;
     }
 
 
@@ -230,8 +301,8 @@ class Controller {
      * @return array
      */
     public static function get_numbers() {
-        $license = get_option('joinotify_license_key') ?: '';
-        $api_url = 'https://joinotify-slots-manager.meumouse.com/slots/get-all-phones/' . $license;
+        $license = get_option('joinotify_license_key') ?? '';
+        $api_url = self::get_api_url( '/slots', '/get-all-phones/', $license );
 
         $response = wp_remote_get( $api_url, array(
             'timeout' => 30,
@@ -292,9 +363,13 @@ class Controller {
             if ( self::$debug_mode ) {
                 Logger::register_log( "Connection state for $phone is $status", 'INFO' );
             }
+        } else {
+            $status = 'disconnected';
 
-            update_option( 'joinotify_status_connection_'. $phone, $status );
+            self::notify_disconnected_phone( $phone );
         }
+
+        update_option( 'joinotify_status_connection_'. $phone, $status );
 
         // retrieve the response body that associative array
         return $phone_status;
@@ -324,21 +399,6 @@ class Controller {
             return;
         }
 
-        /**
-         * Link preview for text messages
-         * 
-         * @since 1.1.0
-         * @return bool
-         */
-        $link_preview = apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true );
-
-        $payload = wp_json_encode( array(
-            'number' => joinotify_prepare_receiver( $receiver ),
-            'linkPreview' => $link_preview,
-            'text' => $message,
-            'delay' => $timestamp_delay,
-        ));
-
         if ( ! License::is_valid() ) {
             if ( self::$debug_mode ) {
                 Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
@@ -348,15 +408,21 @@ class Controller {
         }
 
         // get endpoint for send message text
-        $api_url = self::get_api_url( '/message/sendText/', $sender );
+        $api_url = self::get_instance_route_url( '/message/sendText/', $sender );
+        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$api_key,
+                'apikey' => $server_details['server']['token'] ?? '',
             ),
-            'body' => $payload,
+            'body' => wp_json_encode( array(
+                'number' => joinotify_prepare_receiver( $receiver ),
+                'linkPreview' => apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true ),
+                'text' => $message,
+                'delay' => $timestamp_delay,
+            )),
             'timeout' => 30,
         ));
 
@@ -415,13 +481,14 @@ class Controller {
         }
 
         // get endpoint for send message media
-        $api_url = self::get_api_url( '/message/sendMedia/', $sender );
+        $api_url = self::get_instance_route_url( '/message/sendMedia/', $sender );
+        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$api_key,
+                'apikey' => $server_details['server']['token'] ?? '',
             ),
             'body' => wp_json_encode( array(
                 'number' => joinotify_prepare_receiver( $receiver ),
@@ -470,14 +537,6 @@ class Controller {
             return;
         }
 
-        /**
-         * Filter for encoding audio
-         * 
-         * @since 1.1.0
-         * @return bool
-         */
-        $encoding = apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true );
-
         if ( ! License::is_valid() ) {
             if ( self::$debug_mode ) {
                 Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
@@ -487,19 +546,20 @@ class Controller {
         }
 
         // get endpoint for send message audio
-        $api_url = self::get_api_url( '/message/sendWhatsAppAudio/', $sender );
+        $api_url = self::get_instance_route_url( '/message/sendWhatsAppAudio/', $sender );
+        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$api_key,
+                'apikey' => $server_details['server']['token'] ?? '',
             ),
             'body' => wp_json_encode( array(
                 'number' => joinotify_prepare_receiver( $receiver ),
                 'audio' => $audio,
                 'delay' => $timestamp_delay,
-                'encoding' => $encoding,
+                'encoding' => apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true ),
             )),
             'timeout' => 30,
         ));
@@ -529,20 +589,16 @@ class Controller {
      * @return int
      */
     public static function send_validation_otp( $phone, $otp ) {
-        // get endpoint for send message text
-        $api_url = self::get_api_url( '/message/sendText/', 'meumouse' );
-        $message = sprintf( esc_html__( 'Seu código de verificação do Joinotify é: %s', 'joinotify' ), $otp );
+        $api_url = self::get_api_url( '/utils', '/send-otp-message' );
 
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$api_key,
             ),
             'body' => wp_json_encode( array(
-                'number' => joinotify_prepare_receiver( $phone ),
-                'linkPreview' => false,
-                'text' => $message,
+                'phone' => joinotify_prepare_receiver( $phone ),
+                'code' => $otp,
             )),
             'timeout' => 30,
         ));
@@ -583,13 +639,14 @@ class Controller {
 
         $sender = preg_replace( '/\D/', '', $sender );
         $query_param = '?getParticipants=' . $get_participants;
-        $api_url = self::get_api_url( '/group/fetchAllGroups/', $sender, $param );
+        $api_url = self::get_instance_route_url( '/group/fetchAllGroups/', $sender . $query_param );
+        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_get( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$api_key,
+                'apikey' => $server_details['server']['token'] ?? '',
             ),
             'timeout' => 30,
         ));
@@ -622,22 +679,16 @@ class Controller {
      * @return int
      */
     public static function notify_disconnected_phone( $phone ) {
-        // get endpoint for send message text
-        $api_url = self::get_api_url( '/message/sendText/', 'meumouse' );
-        $message = sprintf( esc_html__( 'Seu telefone %s está atualmente desconectado. Notificação enviada do site: %s', 'joinotify' ), $phone, License::get_domain() );
-        $message .= "\n\n";
-        $message .= sprintf( esc_html__( "Faça a conexão do seu telefone em: %s", 'joinotify' ), JOINOTIFY_REGISTER_PHONE_URL );
+        $api_url = self::get_api_url( '/utils', '/notify-disconnected-phone' );
 
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
-                'apikey' => self::$api_key,
             ),
             'body' => wp_json_encode( array(
-                'number' => joinotify_prepare_receiver( $phone ),
-                'linkPreview' => false,
-                'text' => $message,
+                'phone' => joinotify_prepare_receiver( $phone ),
+                'site' => License::get_domain(),
             )),
             'timeout' => 30,
         ));

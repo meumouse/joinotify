@@ -396,7 +396,7 @@
 					method: 'POST',
 					data: {
 						action: 'joinotify_register_phone_sender',
-						phone: get_phone,
+						phone: btn.data('phone'),
 					},
 					beforeSend: function() {
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
@@ -864,6 +864,7 @@
 				e.preventDefault();
 
 				let btn = $(this);
+				let get_phone = btn.data('phone');
 
 				// send AJAX request
 				$.ajax({
@@ -871,7 +872,7 @@
 					method: 'POST',
 					data: {
 						action: 'joinotify_check_instance_connection',
-						phone: btn.data('phone'),
+						phone: get_phone,
 					},
 					beforeSend: function() {
 						btn.prop('disabled', true).addClass('animate-loader');
@@ -884,7 +885,7 @@
 						try {
 							// update element
 							if ( response.display_state_component ) {
-								btn.siblings('.phone-status').replaceWith(response.display_state_component);
+								$(`.list-group-item[data-phone="${get_phone}"]`).find('.phone-status').replaceWith(response.display_state_component);
 							}
 
 							if ( response.status === 'success' ) {

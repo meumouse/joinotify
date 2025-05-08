@@ -144,7 +144,7 @@ if ( ! class_exists('Joinotify') ) {
 				'JOINOTIFY_ADMIN_EMAIL' => get_option( 'admin_email' ),
 				'JOINOTIFY_DOCS_URL' => 'https://ajuda.meumouse.com/docs/joinotify/overview',
 				'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
-				'JOINOTIFY_API_BASE_URL' => 'https://whatsapp-api.meumouse.com',
+				'JOINOTIFY_API_BASE_URL' => 'https://slots-manager.joinotify.com',
 				'JOINOTIFY_SLUG' => self::$slug,
 				'JOINOTIFY_VERSION' => self::$version,
 				'JOINOTIFY_DEV_MODE' => true,

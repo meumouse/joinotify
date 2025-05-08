@@ -1229,16 +1229,18 @@ class Components {
     public static function dynamic_placeholder_action( $settings = array() ) {
         ob_start(); ?>
 
+        <button type="submit" id="joinotify_listen_hook" class="btn btn-outline-secondary" role="button" data-trigger="" data-bs-toggle="modal" data-bs-target="#edit_workflow_title"><?php esc_html_e( 'Obter dados de amostra', 'joinotify' ) ?></button>
+
         <div class="mb-4">
             <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Nome da variável de texto', 'joinotify' ) ?></span>
             
-            <input type="text" class="form-control required-setting get-dynamic-placeholder-text" value="<?php echo $settings['dynamic_placeholder'] ?? ''; ?>" placeholder="<?php esc_attr_e( 'nome_da_variavel', 'joinotify' ) ?>"/>
+            <input type="text" class="form-control required-setting get-dynamic-placeholder-text" value="<?php echo $settings['dynamic_placeholder_text'] ?? ''; ?>" placeholder="<?php esc_attr_e( 'nome_da_variavel', 'joinotify' ) ?>"/>
         </div>
 
         <div>
             <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Valor da variável', 'joinotify' ) ?></span>
 
-            <textarea class="form-control joinotify-code-editor required-setting"><?php echo $settings['snippet_php'] ?? ''; ?></textarea>
+            <input type="text" class="form-control required-setting get-dynamic-placeholder-value" value="<?php echo $settings['dynamic_placeholder_value'] ?? ''; ?>" placeholder="<?php esc_attr_e( '$object->item', 'joinotify' ) ?>"/>
         </div>
 
         <?php return ob_get_clean();
