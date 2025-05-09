@@ -332,8 +332,9 @@ class Controller {
      * @return array|WP_Error Response from API or WP_Error on failure
      */
     public static function get_connection_state( $phone ) {
-        $api_url = 'https://joinotify-slots-manager.meumouse.com/slots/check-phone-connection/' . $phone;
+        $api_url = self::get_api_url( '/slots', '/check-phone-connection/', $phone );
 
+        // send request
         $response = wp_remote_get( $api_url, array(
             'timeout' => 30,
         ));

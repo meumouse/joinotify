@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Schedule messages for a future time or date
  * 
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Schedule {
@@ -20,12 +20,12 @@ class Schedule {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @return void
      */
     public function __construct() {
         // process scheduled actions
-        add_action( 'joinotify_schedule_actions_event', array( '\MeuMouse\Joinotify\Core\Workflow_Processor', 'process_scheduled_action' ), 10, 3 );
+        add_action( 'joinotify_scheduled_actions_event', array( '\MeuMouse\Joinotify\Core\Workflow_Processor', 'process_scheduled_action' ), 10, 3 );
 
         // update coupon expiration
         add_action( 'joinotify_update_coupon_expiration', array( $this, 'update_coupon_expiration' ), 10, 1 );
@@ -64,7 +64,7 @@ class Schedule {
      * Schedule a message for a future time or date
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @param string $post_id | Post ID
      * @param array $context | Context data
      * @param string $delay_time | Time to delay in seconds
@@ -73,11 +73,12 @@ class Schedule {
      */
     public static function schedule_actions( $post_id, $context, $delay_time, $action_data ) {
         $timestamp = time() + $delay_time;
-        $hook = 'joinotify_schedule_actions_event';
+        $hook = 'joinotify_scheduled_actions_event';
         $args = array(
             'post_id' => $post_id,
             'context' => $context,
             'action_data' => $action_data,
+            'unique_key' => $action_data['id'] ?? uniqid('action_', true),
         );
 
         // prevent duplicate events

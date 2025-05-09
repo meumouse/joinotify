@@ -75,6 +75,7 @@ class Actions {
                 'priority' => 55,
                 'is_expansible' => true,
             ),
+            /*
             array(
                 'action' => 'dynamic_placeholder',
                 'title' => esc_html__( 'Variável de texto dinâmica', 'joinotify' ),
@@ -86,7 +87,7 @@ class Actions {
                 'settings' => Builder_Components::dynamic_placeholder_action(),
                 'priority' => 51,
                 'is_expansible' => true,
-            ),
+            ),*/
         ));
 
         // if empty context argument, return all the registered actions

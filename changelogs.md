@@ -1,7 +1,8 @@
-Versão 1.3.0 (30/04/2025)
+Versão 1.3.0 (08/05/2025)
 * Correção de bugs
 * Otimizações
 * Correção de segurança se remetente está registrado no site
+* Mudança na API de envio de mensagens via WhatsApp
 
 Versão 1.2.5 (24/03/2025)
 * Correção de bugs

@@ -1254,7 +1254,7 @@ class Ajax {
      * Register phone sender on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @return void
      */
     public function register_phone_sender_callback() {
@@ -1262,8 +1262,6 @@ class Ajax {
             $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
             $get_otp = Otp_Validation::generate_and_send_otp( $phone );
-
-            error_log( 'OTP: ' . print_r( $get_otp, true ) );
 
             if ( $get_otp ) {
                 $response = array(

@@ -97,7 +97,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -193,8 +193,16 @@ class Workflow_Processor {
                     update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
                 }
 
-                // Break after time delay action
                 if ( $action['data']['action'] === 'time_delay' ) {
+                    $next_actions = array_slice( $state['pending_actions'], $index + 1 );
+                    
+                    if ( ! empty( $next_actions ) ) {
+                        $action['data']['next_actions'] = $next_actions;
+                
+                        // Atualiza a ação dentro do fluxo para incluir as ações subsequentes
+                        Schedule::schedule_actions( $post_id, $payload, $action['data']['delay_timestamp'], $action );
+                    }
+                
                     break;
                 }
             }
@@ -242,7 +250,7 @@ class Workflow_Processor {
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
-            'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
+        //    'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
         ));
     
         if ( ! isset( $actions[ $action_data['action'] ] ) ) {
@@ -328,7 +336,7 @@ class Workflow_Processor {
      * Process scheduled actions
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @param int $post_id | Workflow ID
      * @param array $payload | Payload data
      * @param array $action_data | Action data
@@ -342,46 +350,38 @@ class Workflow_Processor {
         if ( ! is_array( $state ) ) {
             $state = array(
                 'processed_actions' => array(),
-                'pending_actions' => array(),
+                'pending_actions'   => array(),
             );
         }
     
-        // get workflow content
-        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $action_id = $action_data['id'] ?? null;
     
-        // stop process if workflow content is empty
-        if ( empty( $workflow_content ) || ! is_array( $workflow_content ) ) {
+        // Skip if already processed
+        if ( $action_id && in_array( $action_id, $state['processed_actions'], true ) ) {
             return;
         }
     
-        // Remove triggers from flow content
-        $workflow_actions = array_values( array_filter( $workflow_content, function ( $item ) {
-            return isset( $item['type'] ) && $item['type'] !== 'trigger';
-        } ) );
+        // Executa o próprio time_delay
+        if ( self::handle_action( $action_data, $post_id, $payload ) ) {
+            // Marca como processado
+            $state['processed_actions'][] = $action_id;
     
-        // Iterate over all actions in the flow and process any that are not completed
-        foreach ( $workflow_actions as $action ) {
-            $action_id = $action['id'] ?? null;
+            // Processa ações subsequentes, se existirem
+            if ( isset( $action_data['data']['next_actions'] ) && is_array( $action_data['data']['next_actions'] ) ) {
+                foreach ( $action_data['data']['next_actions'] as $next_action ) {
+                    self::handle_action( $next_action, $post_id, $payload );
     
-            // Ignore already processed actions
-            if ( $action_id && in_array( $action_id, $state['processed_actions'], true ) ) {
-                continue;
-            }
+                    $next_id = $next_action['id'] ?? null;
     
-            // check if action is time delay
-            if ( $action['data']['action'] === 'time_delay' ) {
-                Schedule::schedule_actions( $post_id, $payload, $action['data']['delay_timestamp'], $action );
-
-                break;
-            }
-    
-            if ( self::handle_action( $action, $post_id, $payload ) ) {
-                // Mark as processed
-                $state['processed_actions'][] = $action_id;
-    
-                if ( $payload['integration'] === 'woocommerce' ) {
-                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
+                    if ( $next_id ) {
+                        $state['processed_actions'][] = $next_id;
+                    }
                 }
+            }
+    
+            // Atualiza o estado no banco
+            if ( $payload['integration'] === 'woocommerce' ) {
+                update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
             }
         }
     }

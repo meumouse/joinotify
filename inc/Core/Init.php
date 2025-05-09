@@ -60,7 +60,7 @@ class Init {
             '\MeuMouse\Joinotify\Integrations\Elementor_Forms',
             '\MeuMouse\Joinotify\Integrations\Wpforms',
             '\MeuMouse\Joinotify\Integrations\OpenAI',
-            '\MeuMouse\Joinotify\Integrations\Developer_Mode',
+        //    '\MeuMouse\Joinotify\Integrations\Developer_Mode',
             '\MeuMouse\Joinotify\Validations\Media_Types',
             '\MeuMouse\Joinotify\API\Controller',
         	'\MeuMouse\Joinotify\Core\Updater',
