@@ -284,6 +284,8 @@ defined('ABSPATH') || exit; ?>
 			</td>
 		</tr>
 
+		<tr class="container-separator"></tr>
+
 		<tr>
 			<td>
 				<button id="joinotify_reset_settings_trigger" class="btn btn-sm btn-outline-warning d-flex align-items-center">
@@ -296,12 +298,15 @@ defined('ABSPATH') || exit; ?>
 						<div class="joinotify-popup-header border-bottom-0 justify-content-end">
 							<button id="joinotify_reset_settings_close" class="btn-close" aria-label="<?php esc_html( 'Fechar', 'joinotify' ); ?>"></button>
 						</div>
+						
 						<div class="joinotify-popup-body">
 							<div class="d-flex flex-column align-items-center p-4">
 								<div class="btn-icon rounded-circle p-2 mb-3 bg-translucent-danger">
 									<svg class="icon icon-lg icon-danger" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM12 20c-4.411 0-8-3.589-8-8s3.567-8 7.953-8C16.391 4 20 7.589 20 12s-3.589 8-8 8z"></path><path d="M11 7h2v7h-2zm0 8h2v2h-2z"></path></svg>
 								</div>
+
 								<h5 class="joinotify-popup-title text-center"><?php esc_html_e('Atenção! Você realmente deseja redefinir as configurações?', 'joinotify' ); ?></h5>
+								
 								<span class="title-hightlight bg-danger mt-2 mb-3"></span>
 								<span class="text-muted fs-lg p-3"><?php esc_html_e( 'Ao redefinir as configurações do plugin, todas opções serão removidas, voltando ao estado original. Sua licença não será removida.', 'joinotify' ) ?></span>
 							</div>
@@ -313,11 +318,7 @@ defined('ABSPATH') || exit; ?>
 					</div>
 				</div>
 			</td>
-		</tr>
 
-		<tr class="container-separator"></tr>
-
-		<tr>
 			<td>
 				<a class="btn btn-sm btn-outline-danger d-flex align-items-center" target="_blank" href="https://meumouse.com/reportar-problemas/?wpf9053_2=<?php echo urlencode( JOINOTIFY_ADMIN_EMAIL ); ?>&wpf9053_9=<?php echo urlencode( License::is_valid() ? 'Sim' : 'Não' ) ?>&wpf9053_7=<?php echo urlencode( License::get_domain() ) ?>&wpf9053_6=<?php echo urlencode( wp_get_theme()->get('Name') ) ?>"><?php esc_html_e( 'Reportar problemas', 'joinotify' ); ?></a>
 			</td>

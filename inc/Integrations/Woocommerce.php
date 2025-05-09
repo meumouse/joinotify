@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
@@ -25,10 +25,13 @@ class Woocommerce extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @return void
      */
     public function __construct() {
+        // add integration on settings
+        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 20, 1 );
+        
         // check if woocommerce is active
         if ( class_exists('WooCommerce') ) {
             // add triggers
@@ -76,6 +79,30 @@ class Woocommerce extends Integrations_Base {
                 add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 3 );
             }
         }
+    }
+
+
+    /**
+     * Add integration item on settings
+     * 
+     * @since 1.3.0
+     * @param array $integrations | Current integrations
+     * @return array
+     */
+    public function add_integration_item( $integrations ) {
+        $integrations['woocommerce'] = array(
+            'title' => esc_html__('WooCommerce', 'joinotify'),
+            'description' => esc_html__('Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação de pedidos não pagos. Mantenha seus clientes atualizados.', 'joinotify'),
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1052 1052"><defs><style>.cls-1{fill:#873eff;}.cls-2,.cls-3{fill:#fff;}.cls-3{fill-rule:evenodd;}</style></defs><circle class="cls-1" cx="526" cy="526" r="526"/><path class="cls-2" d="M201.11,657.84c26.54,0,47.83-13.1,63.89-43.25l35.71-66.84v56.68c0,33.42,21.63,53.41,55.05,53.41,26.21,0,45.54-11.47,64.21-43.25l82.24-138.92c18-30.47,5.25-53.41-34.4-53.41-21.3,0-35.06,6.89-47.51,30.15L363.62,558.89V464.2c0-28.17-13.43-41.94-38.33-41.94-19.66,0-35.39,8.52-47.51,32.11L224.37,558.89v-93.7c0-30.15-12.45-42.93-42.59-42.93h-61.6c-23.26,0-35.06,10.82-35.06,30.8s12.45,31.46,35.06,31.46h25.23V604.11C145.41,637.85,168,657.84,201.11,657.84Z" transform="translate(-14 -14)"/><path class="cls-3" d="M622.48,422.26c-67.17,0-118.61,50.13-118.61,118s51.77,117.62,118.61,117.62,117.95-50.13,118.27-117.62C740.75,472.39,689.31,422.26,622.48,422.26Zm0,163.17c-25.23,0-42.6-19-42.6-45.21s17.37-45.55,42.6-45.55,42.59,19.34,42.59,45.55S648,585.43,622.48,585.43Z" transform="translate(-14 -14)"/><path class="cls-3" d="M757.44,540.22c0-67.83,51.44-118,118.28-118S994,472.72,994,540.22,942.56,657.84,875.72,657.84,757.44,608,757.44,540.22Zm76,0c0,26.21,16.7,45.21,42.26,45.21,25.23,0,42.59-19,42.59-45.21S901,494.67,875.72,494.67,833.46,514,833.46,540.22Z" transform="translate(-14 -14)"/></svg>',
+            'setting_key' => 'enable_woocommerce_integration',
+            'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Woocommerce',
+            'is_plugin' => true,
+            'plugin_active' => array(
+                'woocommerce/woocommerce.php',
+            ),
+        );
+
+        return $integrations;
     }
 
 
@@ -871,19 +898,25 @@ class Woocommerce extends Integrations_Base {
      * Process workflow on receive new order on WooCommerce
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @return void
      */
     public function process_workflow_on_new_order( $order_id, $order ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/New_Order', array(
             'type' => 'trigger',
             'hook' => 'woocommerce_new_order',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
             'order_data' => $order,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -893,7 +926,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is processing
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition data
@@ -901,14 +934,20 @@ class Woocommerce extends Integrations_Base {
      * @return void
      */
     public function process_workflow_order_processed( $order_id, $order, $status_transition ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed', array(
             'type' => 'trigger',
             'hook' => 'woocommerce_checkout_order_processed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
             'order' => $order,
             'status_transition' => $status_transition,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -918,21 +957,27 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is complete
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition
      * @return void
      */
     public function process_workflow_order_completed( $order_id, $order, $status_transition ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Order_Status_Completed', array(
             'type' => 'trigger',
             'hook' => 'woocommerce_order_status_completed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
             'order_data' => $order,
             'status_transition' => $status_transition,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -942,19 +987,25 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is fully refunded
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $order_id  | Order ID
      * @param int $refund_id | Refund ID
      * @return void
      */
     public function process_workflow_order_fully_refunded( $order_id, $refund_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Order_Fully_Refunded', array(
             'type' => 'trigger',
             'hook' => 'woocommerce_order_fully_refunded',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
             'refund_id' => $refund_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -964,19 +1015,25 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is partially refunded
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param bool $is_partially_refunded | Is partially refunded
      * @param int $order_id  | Order ID
      * @return void
      */
     public function process_workflow_order_partially_refunded( $is_partially_refunded, $order_id ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Order_Partially_Refunded', array(
             'type' => 'trigger',
             'hook' => 'woocommerce_order_partially_refunded',
             'integration' => 'woocommerce',
             'is_partially_refunded' => $is_partially_refunded,
             'order_id' => $order_id,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }
@@ -986,21 +1043,27 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order has status changed
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.0
      * @param int $order_id  | Order ID
      * @param string $old_status | Old status
      * @param string $new_status | New status
      * @return void
      */
     public function process_workflow_order_status_changed( $order_id, $old_status, $new_status ) {
-        $payload = array(
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Order_Status_Changed', array(
             'type' => 'trigger',
             'hook' => 'woocommerce_order_status_changed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
             'old_status' => $old_status,
             'new_status' => $new_status,
-        );
+        ));
 
         Workflow_Processor::process_workflows( $payload );
     }

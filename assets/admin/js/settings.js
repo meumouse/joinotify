@@ -5,30 +5,20 @@
 	 * Joinotify settings params
 	 * 
 	 * @since 1.1.0
+	 * @version 1.3.0
 	 * @return Object
 	 */
-	const params = joinotify_params;
+	const params = window.joinotify_params || {};
 
 	/**
 	 * Joinotify settings object variable
 	 * 
 	 * @since 1.1.0
+	 * @version 1.3.0
 	 * @package MeuMouse.com
 	 */
-	const Settings = {
-		init: function() {
-			this.activateTabs();
-			this.hideToasts();
-			this.saveOptions();
-			this.getPhoneNumbers();
-			this.removePhoneSender();
-			this.resetSettings();
-			this.sendMessageTest();
-			this.proxyApiSettings();
-			this.handleDebugLogs();
-			this.displayWooCommerceSettings();
-		},
-
+	var Settings = {
+		
 		/**
 		 * Activate tabs and save on Cookies
 		 * 
@@ -88,28 +78,136 @@
 		},
 
 		/**
+		 * Function for display popups based on Bootstrap
+		 * 
+		 * @since 1.3.0
+		 * @param {string} trigger | Trigger for display popup
+		 * @param {string} container | Container for display content
+		 * @param {string} close | Close button popup
+		 * @package MeuMouse.com
+		 */
+		displayPopup: function(trigger, container, close) {
+			// open modal on click to trigger
+			trigger.on('click', function(e) {
+				e.preventDefault();
+
+				container.addClass('show');
+			});
+
+			// close modal on click outside container
+			container.on('click', function(e) {
+				if (e.target === this) {
+					jQuery(this).removeClass('show');
+				}
+			});
+
+			// close modal on click close button
+			close.on('click', function(e) {
+				e.preventDefault();
+				
+				container.removeClass('show');
+			});
+		},
+
+		/**
+         * Display custom toasts
+         * 
+         * @since 1.3.0
+         * @param {string} type | Toast type (success, danger...)
+         * @param {string} header_title | Header title for toast
+         * @param {string} body_title | Body title for toast
+         * @package MeuMouse.com
+         */
+        displayToast: function( type, header_title, body_title ) {
+            var toast_class = '';
+            var header_class = '';
+            var icon = '';
+
+            if ( type === 'success' ) {
+                toast_class = 'toast-success';
+                header_class = 'bg-success text-white';
+                icon = '<svg class="icon icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414z"></path></svg>'
+            } else if ( type === 'error' ) {
+                toast_class = 'toast-danger';
+                header_class = 'bg-danger text-white';
+                icon = '<svg class="icon icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>';
+            } else if ( type === 'warning' ) {
+                toast_class = 'toast-warning';
+                header_class = 'bg-warning text-white';
+                icon = '<svg class="icon icon-white me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>';
+            } else {
+                // if unknown type, use default values
+                toast_class = 'toast-secondary';
+                header_class = 'bg-secondary text-white';
+                icon = '';
+            }
+
+            // generate uniq id for toast
+            var toast_id = 'toast-' + Math.random().toString(36).substr(2, 9);
+
+            // build toast HTML
+            var toast_html = `<div id="${toast_id}" class="toast ${toast_class} show">
+                <div class="toast-header ${header_class}">
+                    ${icon}
+                    <span class="me-auto">${header_title}</span>
+                    <button class="btn-close btn-close-white ms-2 hide-toast" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">${body_title}</div>
+            </div>`;
+
+            // add toast on builder DOM
+            $('.joinotify-wrapper').prepend(toast_html);
+
+            // fadeout after 3 seconds
+            setTimeout( function() {
+                jQuery('#' + toast_id).fadeOut('fast');
+            }, 3000);
+
+            // remove toast after 3,5 seconds
+            setTimeout( function() {
+                jQuery('#' + toast_id).remove();
+            }, 3500);
+        },
+
+		/**
+		 * Keep button width and height state
+		 * 
+		 * @since 1.3.0
+		 * @param {object} btn | Button object
+		 * @returns {object}
+		 */
+		keepButtonState: function(btn) {
+			var btn_width = btn.width();
+			var btn_height = btn.height();
+			var btn_html = btn.html();
+	  
+			// keep original width and height
+			btn.width(btn_width);
+			btn.height(btn_height);
+	  
+			return {
+				width: btn_width,
+				height: btn_height,
+				html: btn_html,
+			};
+	  	},
+
+		/**
 		 * Save options in AJAX
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
-		 * @package MeuMouse.com
+		 * @version 1.3.0
 		 */
 		saveOptions: function() {
 			let settings_form = $('form[name="joinotify-options-form"]');
 			let original_values = settings_form.serialize();
-			var notification_delay;
 
 			// save options on click button
 			$('#joinotify_save_options').on('click', function(e) {
 				e.preventDefault();
 				
 				let btn = $(this);
-				let btn_html = btn.html();
-				let btn_width = btn.width();
-				let btn_height = btn.height();
-
-				btn.width(btn_width);
-				btn.height(btn_height);
+				let btn_state = Settings.keepButtonState(btn);
 
 				// send request
 				$.ajax({
@@ -123,24 +221,15 @@
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
 						try {
 							if (response.status === 'success') {
 								original_values = settings_form.serialize();
-								display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
 
-								if (notification_delay) {
-									clearTimeout(notification_delay);
-								}
-
-								notification_delay = setTimeout(function() {
-									$('.toast-save-options').fadeOut('fast', function() {
-											$('.toast-save-options').remove();
-									});
-								}, 3000);
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -150,7 +239,7 @@
 						console.error('AJAX Error:', textStatus, errorThrown);
 					},
 					complete: function() {
-						btn.html(btn_html);
+						btn.html(btn_state.html);
 					},
 				});
 			});
@@ -169,11 +258,11 @@
 		 * Get phone numbers
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.3.0
 		 */
 		getPhoneNumbers: function() {
 			// display modal
-			display_popup( $('#joinotify_add_new_phone_trigger'), $('#joinotify_add_new_phone_container'), $('#joinotify_add_new_phone_close') );
+			Settings.displayPopup( $('#joinotify_add_new_phone_trigger'), $('#joinotify_add_new_phone_container'), $('#joinotify_add_new_phone_close') );
 
 			// send request on click button
 			$(document).on('click', '#joinotify_add_new_phone_trigger', function() {
@@ -188,7 +277,7 @@
 					},
 					success: function(response) {
 						if (params.debug_mode) {
-								console.log(response);
+							console.log(response);
 						}
 
 						try {
@@ -222,7 +311,7 @@
 
 					if (time_left <= 0) {
 						clearInterval(countdown_interval);
-						$('#joinotify_add_new_phone_container').find('.resend-otp').html('<button class="btn btn-sm btn-outline-primary request-new-otp" data-phone="' + phone + '">' + params.resend_otp_button + '</button>');
+						$('#joinotify_add_new_phone_container').find('.resend-otp').html('<button class="btn btn-sm btn-outline-primary request-new-otp" data-phone="' + phone + '">' + params.i18n.resend_otp_button + '</button>');
 					}
 				}, 1000);
 			}
@@ -276,7 +365,7 @@
 						$('.validate-otp-code').prepend('<div class="validating-otp-loader"><span class="spinner-border"></span></div>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
@@ -284,9 +373,9 @@
 							$('#joinotify_current_phones_senders').html(response.current_phone_senders);
 							$('#joinotify_add_new_phone_container').removeClass('show');
 
-							display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+							Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 						} else {
-							display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+							Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 						}
 					},
 					error: function(xhr, status, error) {
@@ -298,27 +387,22 @@
 			$(document).on('click', '.register-sender, .request-new-otp', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
-				var btn_width = btn.width();
-				var btn_height = btn.height();
-				var btn_html = btn.html();
-				var get_phone = btn.data('phone');
+				let btn = $(this);
+				var btn_state = Settings.keepButtonState(btn);
 
-				btn.width(btn_width);
-				btn.height(btn_height);
-
+				// send request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
 					data: {
 						action: 'joinotify_register_phone_sender',
-						phone: get_phone,
+						phone: btn.data('phone'),
 					},
 					beforeSend: function() {
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
@@ -328,7 +412,7 @@
 								start_otp_countdown();
 								handle_otp_input();
 							} else {
-								display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -338,7 +422,7 @@
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_html);
+						btn.prop('disabled', false).html(btn_state.html);
 					},
 				});
 			});
@@ -354,11 +438,11 @@
 			$(document).on('click', '.remove-phone-sender', function(e) {
 				e.preventDefault();
 
-				if ( ! confirm(params.confirm_remove_sender) ) {
+				if ( ! confirm( params.i18n.confirm_remove_sender ) ) {
 					return;
 				}
 
-				var btn = $(this);
+				let btn = $(this);
 				var btn_width = btn.width();
 				var btn_height = btn.height();
 				var btn_html = btn.html();
@@ -379,16 +463,16 @@
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
 						try {
 							if (response.status === 'success') {
 								$('#joinotify_current_phones_senders').find('.joinotify-phone-list').html(response.updated_list_html);
-								display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 							} else {
-								display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -398,7 +482,7 @@
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_html);
+						btn.prop('disabled', false).html(btn_state.html);
 					},
 				});
 			});
@@ -408,23 +492,18 @@
 		 * Reset plugin settings
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.3.0
 		 */
 		resetSettings: function() {
 			// display reset modal
-			display_popup( $('#joinotify_reset_settings_trigger'), $('#joinotify_reset_settings_container'), $('#joinotify_reset_settings_close') );
+			Settings.displayPopup( $('#joinotify_reset_settings_trigger'), $('#joinotify_reset_settings_container'), $('#joinotify_reset_settings_close') );
 				
 			// Reset plugin settings
 			$(document).on('click', '#confirm_reset_settings', function(e) {
 				e.preventDefault();
 				
 				let btn = $(this);
-				let btn_html = btn.html();
-				let btn_width = btn.width();
-				let btn_height = btn.height();
-
-				btn.width(btn_width);
-				btn.height(btn_height);
+				let btn_state = Settings.keepButtonState(btn);
 
 				// send request
 				$.ajax({
@@ -440,9 +519,9 @@
 						try {
 							if (response.status === 'success') {
 								$('#joinotify_reset_settings_container').removeClass('show');
-								display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 							} else {
-								display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -452,7 +531,7 @@
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_html);
+						btn.prop('disabled', false).html(btn_state.html);
 					},
 				});
 			});
@@ -462,11 +541,11 @@
 		 * Send message test
 		 * 
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.3.0
 		 */
 		sendMessageTest: function() {
 			// display modal
-			display_popup( $('#joinotify_send_message_test_trigger'), $('#joinotify_send_message_test_container'), $('#joinotify_send_message_test_close') );
+			Settings.displayPopup( $('#joinotify_send_message_test_trigger'), $('#joinotify_send_message_test_container'), $('#joinotify_send_message_test_close') );
 
 			var get_receiver = $('#joinotify_get_phone_receive_test');
 			var get_message = $('#joinotify_get_test_message');
@@ -489,13 +568,9 @@
 				e.preventDefault();
 				
 				let btn = $(this);
-				let btn_html = btn.html();
-				let btn_width = btn.width();
-				let btn_height = btn.height();
+				let btn_state = Settings.keepButtonState(btn);
 
-				btn.width(btn_width);
-				btn.height(btn_height);
-
+				// send request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -509,7 +584,7 @@
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
@@ -518,9 +593,9 @@
 								$(get_message).val('').change();
 								$('#joinotify_send_message_test_container').removeClass('show');
 								
-								display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 							} else {
-								display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -530,40 +605,83 @@
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_html);
+						btn.prop('disabled', false).html(btn_state.html);
 					},
 				});
 			});
 		},
 
 		/**
+		 * Change container visibility
+		 * 
+		 * @since 1.0.0
+		 * @version 1.3.0
+		 * @param {string} method | Activation element selector
+		 * @param {string} container | Container selector
+		 * @pacakge MeuMouse.com
+		 */
+		containerVisibility: function(method, container) {
+			let checked = $(method).prop('checked');
+
+			$(container).toggleClass('d-none', ! checked);
+		},
+
+		/**
+		 * Update visibility state on click
+		 * 
+		 * @since 1.0.0
+		 * @version 1.3.0
+		 * @param {string} toggle | Activation element selector
+		 * @param {string} container | Container selector
+		 * @package MeuMouse.com
+		 */
+		visibilityController: function(toggle, container) {
+			Settings.containerVisibility(toggle, container);
+
+			// change visibility state on click
+			$(toggle).click( function() {
+				Settings.containerVisibility(toggle, container);
+			});
+		},
+
+		/**
+		 * Generate random API key
+		 * 
+		 * @since 1.0.0
+		 * @version 1.3.0
+		 * @param {int} length | Key length
+		 * @return {string} | API key
+		 */
+		generateRandomKey: function(length) {
+			const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			let api_key = '';
+
+			for ( let i = 0; i < length; i++ ) {
+				api_key += characters.charAt(Math.floor(Math.random() * characters.length));
+			}
+
+			return api_key;
+		},
+
+		/**
 		 * Proxy API settings
 		 * 
 		 * @since 1.0.0
+		 * @version 1.3.0
 		 */
 		proxyApiSettings: function() {
 			// change trigger modal visibility
-			visibility_controller( $('#enable_proxy_api'), $('.require-proxy-api') );
+			Settings.visibilityController( $('#enable_proxy_api'), $('.require-proxy-api') );
 
 			// display modal
-			display_popup( $('#proxy_api_settings_trigger'), $('#proxy_api_settings_container'), $('#proxy_api_settings_close') );
+			Settings.displayPopup( $('#proxy_api_settings_trigger'), $('#proxy_api_settings_container'), $('#proxy_api_settings_close') );
 
 			// generate API key on click button
 			$('#joinotify_generate_proxy_api_key').on('click', function(e) {
 				e.preventDefault();
 				
-				function generate_api_key(length) {
-					const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-					let api_key = '';
+				const api_key = Settings.generateRandomKey(32);
 
-					for (let i = 0; i < length; i++) {
-						api_key += characters.charAt(Math.floor(Math.random() * characters.length));
-					}
-
-					return api_key;
-				}
-
-				const api_key = generate_api_key(32);
 				$('#proxy_api_key').val(api_key).change();
 			});
 		},
@@ -575,14 +693,16 @@
 		 */
 		handleDebugLogs: function() {
 			// change trigger modal visibility
-			visibility_controller( $('#enable_debug_mode'), $('.require-debug-mode') );
+			Settings.visibilityController( $('#enable_debug_mode'), $('.require-debug-mode') );
 
 			// display modal
-			display_popup( $('#joinotify_get_debug_details_trigger'), $('#joinotify_get_debug_details_container'), $('#joinotify_get_debug_details_close') );
+			Settings.displayPopup( $('#joinotify_get_debug_details_trigger'), $('#joinotify_get_debug_details_container'), $('#joinotify_get_debug_details_close') );
 
+			// open debug logs
 			$('#joinotify_get_debug_details_trigger').on('click', function(e) {
 				e.preventDefault();
 
+				// send request
 				$.ajax({
 					url: params.ajax_url,
 					method: 'POST',
@@ -590,7 +710,7 @@
 						action: 'joinotify_get_debug_logs',
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
@@ -601,7 +721,7 @@
 								$('#joinotify_download_log_file').prop('disabled', false);
 							} else {
 								$('#joinotify_get_debug_details_container').find('.joinotify-popup-body').html(`<div class="alert alert-info">${response.toast_body_title}</div>`);
-								display_toast('warning', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'warning', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -625,17 +745,12 @@
 			$('#joinotify_clear_log_file').on('click', function(e) {
 				e.preventDefault();
 
-				if ( ! confirm(params.confirm_clear_debug_logs) ) {
+				if ( ! confirm( params.i18n.confirm_clear_debug_logs ) ) {
 					return;
 				}
 
-				var btn = $(this);
-				var btn_width = btn.width();
-				var btn_height = btn.height();
-				var btn_html = btn.html();
-
-				btn.width(btn_width);
-				btn.height(btn_height);
+				let btn = $(this);
+				let btn_state = Settings.keepButtonState(btn);
 
 				// send AJAX request
 				$.ajax({
@@ -648,16 +763,16 @@
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
 						try {
 							if (response.status === 'success') {
 								$('#joinotify_get_debug_details_container').removeClass('show').find('.joinotify-popup-body').html('<div class="placeholder-content" style="width: 100%; height: 10rem;"></div>');
-								display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 							} else {
-								display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -667,7 +782,7 @@
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_html);
+						btn.prop('disabled', false).html(btn_state.html);
 					},
 				});
 			});
@@ -676,13 +791,8 @@
 			$('#joinotify_download_log_file').on('click', function(e) {
 				e.preventDefault();
 
-				var btn = $(this);
-				var btn_width = btn.width();
-				var btn_height = btn.height();
-				var btn_html = btn.html();
-
-				btn.width(btn_width);
-				btn.height(btn_height);
+				let btn = $(this);
+				let btn_state = Settings.keepButtonState(btn);
 
 				// send AJAX request
 				$.ajax({
@@ -695,14 +805,14 @@
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
-						if (params.debug_mode) {
+						if (params.dev_mode) {
 							console.log(response);
 						}
 
 						try {
 							if (response.status === 'success') {
 								$('#joinotify_get_debug_details_container').removeClass('show');
-								display_toast('success', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
 
 								const download_url = response.download_url;
 								const a = document.createElement('a');
@@ -712,7 +822,7 @@
 								a.click();
 								document.body.removeChild(a);
 							} else {
-								display_toast('error', response.toast_header_title, response.toast_body_title, $('.joinotify-wrapper'));
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
 							console.log(error);
@@ -722,7 +832,7 @@
 						console.error('Error on AJAX request:', xhr.responseText);
 					},
 					complete: function() {
-						btn.prop('disabled', false).html(btn_html);
+						btn.prop('disabled', false).html(btn_state.html);
 					},
 				});
 			});
@@ -735,14 +845,113 @@
 		*/
 		displayWooCommerceSettings: function() {
 			// change trigger modal visibility
-			visibility_controller( $('#enable_woocommerce_integration'), $('#woocommerce_settings_trigger') );
+			Settings.visibilityController( $('#enable_woocommerce_integration'), $('#woocommerce_settings_trigger') );
 
 			// display modal
-			display_popup( $('#woocommerce_settings_trigger'), $('#woocommerce_settings_container'), $('#woocommerce_settings_close') );
+			Settings.displayPopup( $('#woocommerce_settings_trigger'), $('#woocommerce_settings_container'), $('#woocommerce_settings_close') );
 
 			// change visibility for prefix dynamic coupons
-			visibility_controller( $('#enable_create_coupon_action'), $('.create-coupon-wrapper') );
-		}
+			Settings.visibilityController( $('#enable_create_coupon_action'), $('.create-coupon-wrapper') );
+		},
+
+		/**
+		 * Check instance connection
+		 * 
+		 * @since 1.3.0
+		 */
+		checkConnection: function() {
+			$(document).on('click', '.check-instance-connection', function(e) {
+				e.preventDefault();
+
+				let btn = $(this);
+				let get_phone = btn.data('phone');
+
+				// send AJAX request
+				$.ajax({
+					url: params.ajax_url,
+					method: 'POST',
+					data: {
+						action: 'joinotify_check_instance_connection',
+						phone: get_phone,
+					},
+					beforeSend: function() {
+						btn.prop('disabled', true).addClass('animate-loader');
+					},
+					success: function(response) {
+						if (params.dev_mode) {
+							console.log(response);
+						}
+
+						try {
+							// update element
+							if ( response.display_state_component ) {
+								$(`.list-group-item[data-phone="${get_phone}"]`).find('.phone-status').replaceWith(response.display_state_component);
+							}
+
+							if ( response.status === 'success' ) {
+								btn.prop('disabled', false).removeClass('animate-loader');
+
+								Settings.displayToast( 'success', response.toast_header_title, response.toast_body_title );
+							} else {
+								Settings.displayToast( 'error', response.toast_header_title, response.toast_body_title );
+							}
+						} catch (error) {
+							console.log(error);
+						}
+					},
+					error: function(xhr, status, error) {
+						btn.prop('disabled', false).removeClass('animate-loader');
+
+						console.error('Error on AJAX request:', xhr.responseText);
+					},
+					complete: function() {
+						btn.prop('disabled', false).removeClass('animate-loader');
+					},
+				});
+			});
+		},
+
+		/**
+		 * Show toast when connection is offline
+		 * 
+		 * @since 1.3.0
+		 */
+		detectOfflineConnection: function() {
+			function showOfflineToast() {
+				Settings.displayToast( 'warning', params.i18n.offline_toast_header, params.i18n.offline_toast_body );
+			}
+
+			function updateStatus() {
+				if ( ! navigator.onLine ) {
+					showOfflineToast();
+				}
+			}
+
+			updateStatus();
+			window.addEventListener('online', updateStatus);
+			window.addEventListener('offline', updateStatus);
+		},
+
+		/**
+		 * Initialize settings
+		 * 
+		 * @since 1.0.0
+		 * @version 1.3.0
+		 */
+		init: function() {
+			this.activateTabs();
+			this.hideToasts();
+			this.saveOptions();
+			this.getPhoneNumbers();
+			this.removePhoneSender();
+			this.resetSettings();
+			this.sendMessageTest();
+			this.proxyApiSettings();
+			this.handleDebugLogs();
+			this.displayWooCommerceSettings();
+			this.checkConnection();
+			this.detectOfflineConnection();
+		},
 	};
 
 	// Initialize the Settings object on ready event

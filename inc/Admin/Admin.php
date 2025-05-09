@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Admin actions class
  * 
  * @since 1.0.0
- * @version 1.2.2
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Admin {
@@ -104,10 +104,16 @@ class Admin {
      * Render new automations page builder
      * 
      * @since 1.0.0
+     * @version 1.3.0
      * @return void
      */
     public function render_builder_page() {
-        include JOINOTIFY_INC . 'Views/Builder_Wrapper.php';
+        /**
+         * Render the content page
+         * 
+         * @since 1.3.0
+         */
+        do_action('Joinotify/Admin/Builder_Page');
     }
 
     
@@ -164,45 +170,15 @@ class Admin {
 
 
     /**
-     * Set default options
-     * 
-     * @since 1.0.0
-     * @version 1.2.2
-     * @return array
-     */
-    public static function set_default_options() {
-        return apply_filters( 'Joinotify/Admin/Set_Default_Options', array(
-            'enable_whatsapp_integration' => 'yes',
-            'enable_woocommerce_integration' => 'yes',
-            'enable_elementor_integration' => 'yes',
-            'enable_wpforms_integration' => 'yes',
-            'enable_flexify_checkout_integration' => 'yes',
-            'enable_wordpress_integration' => 'yes',
-            'joinotify_default_country_code' => '55',
-            'test_number_phone' => '',
-            'enable_proxy_api' => 'yes',
-            'proxy_api_key' => '',
-            'send_text_proxy_api_route' => 'send-message/text',
-            'send_media_proxy_api_route' => 'send-message/media',
-            'enable_debug_mode' => 'no',
-            'enable_auto_updates' => 'no',
-            'enable_create_coupon_action' => 'yes',
-            'create_coupon_prefix' => 'CUPOM_',
-            'enable_ignore_processed_actions' => 'yes',
-        ));
-    }
-
-
-    /**
      * Gets the items from the array and inserts them into the option if it is empty,
      * or adds new items with default value to the option
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.3.0
      * @return void
      */
     public function update_default_options() {
-        $get_options = self::set_default_options();
+        $get_options = Default_Options::set_default_options();
         $default_options = get_option('joinotify_settings', array());
 
         if ( empty( $default_options ) ) {
@@ -227,7 +203,7 @@ class Admin {
      * @return mixed | string or false
      */
     public static function get_setting( $key ) {
-        $options = get_option('joinotify_settings', array());
+        $options = get_option( 'joinotify_settings', array() );
 
         // check if array key exists and return key
         if ( isset( $options[$key] ) ) {

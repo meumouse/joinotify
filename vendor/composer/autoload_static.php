@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe
+class ComposerStaticInit9e7395ae6528c152d37696eeb1cc780d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -56,6 +56,7 @@ class ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe
         'MeuMouse\\Joinotify\\API\\Workflow_Templates' => __DIR__ . '/../..' . '/inc/API/Workflow_Templates.php',
         'MeuMouse\\Joinotify\\Admin\\Admin' => __DIR__ . '/../..' . '/inc/Admin/Admin.php',
         'MeuMouse\\Joinotify\\Admin\\Components' => __DIR__ . '/../..' . '/inc/Admin/Components.php',
+        'MeuMouse\\Joinotify\\Admin\\Default_Options' => __DIR__ . '/../..' . '/inc/Admin/Default_Options.php',
         'MeuMouse\\Joinotify\\Builder\\Actions' => __DIR__ . '/../..' . '/inc/Builder/Actions.php',
         'MeuMouse\\Joinotify\\Builder\\Components' => __DIR__ . '/../..' . '/inc/Builder/Components.php',
         'MeuMouse\\Joinotify\\Builder\\Messages' => __DIR__ . '/../..' . '/inc/Builder/Messages.php',
@@ -71,14 +72,17 @@ class ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe
         'MeuMouse\\Joinotify\\Core\\Init' => __DIR__ . '/../..' . '/inc/Core/Init.php',
         'MeuMouse\\Joinotify\\Core\\Logger' => __DIR__ . '/../..' . '/inc/Core/Logger.php',
         'MeuMouse\\Joinotify\\Core\\Modules' => __DIR__ . '/../..' . '/inc/Core/Modules.php',
+        'MeuMouse\\Joinotify\\Core\\Updater' => __DIR__ . '/../..' . '/inc/Core/Updater.php',
         'MeuMouse\\Joinotify\\Core\\Workflow_Processor' => __DIR__ . '/../..' . '/inc/Core/Workflow_Processor.php',
         'MeuMouse\\Joinotify\\Core\\Workflows_Table' => __DIR__ . '/../..' . '/inc/Core/Workflows_Table.php',
         'MeuMouse\\Joinotify\\Cron\\Routines' => __DIR__ . '/../..' . '/inc/Cron/Routines.php',
         'MeuMouse\\Joinotify\\Cron\\Schedule' => __DIR__ . '/../..' . '/inc/Cron/Schedule.php',
+        'MeuMouse\\Joinotify\\Integrations\\Developer_Mode' => __DIR__ . '/../..' . '/inc/Integrations/Developer_Mode.php',
         'MeuMouse\\Joinotify\\Integrations\\Elementor' => __DIR__ . '/../..' . '/inc/Integrations/Elementor.php',
         'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms' => __DIR__ . '/../..' . '/inc/Integrations/Elementor_Forms.php',
         'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout' => __DIR__ . '/../..' . '/inc/Integrations/Flexify_Checkout.php',
         'MeuMouse\\Joinotify\\Integrations\\Integrations_Base' => __DIR__ . '/../..' . '/inc/Integrations/Integrations_Base.php',
+        'MeuMouse\\Joinotify\\Integrations\\OpenAI' => __DIR__ . '/../..' . '/inc/Integrations/OpenAI.php',
         'MeuMouse\\Joinotify\\Integrations\\Whatsapp' => __DIR__ . '/../..' . '/inc/Integrations/Whatsapp.php',
         'MeuMouse\\Joinotify\\Integrations\\Woo_Subscriptions' => __DIR__ . '/../..' . '/inc/Integrations/Woo_Subscriptions.php',
         'MeuMouse\\Joinotify\\Integrations\\Woocommerce' => __DIR__ . '/../..' . '/inc/Integrations/Woocommerce.php',
@@ -135,9 +139,9 @@ class ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita0174a33ad5d0d88029f690f1cb56efe::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9e7395ae6528c152d37696eeb1cc780d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9e7395ae6528c152d37696eeb1cc780d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9e7395ae6528c152d37696eeb1cc780d::$classMap;
 
         }, null, ClassLoader::class);
     }

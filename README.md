@@ -2,9 +2,13 @@
 
 Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.
 
+---
+
 #### Propriedade intelectual:
 O software Joinotify ® é uma propriedade registrada da MEUMOUSE.COM® – SOLUÇÕES DIGITAIS LTDA, em conformidade com o §2°, art. 2° da Lei 9.609, de 19 de Fevereiro de 1998.
 É expressamente proibido a distribuição ou cópia ilegal deste software, sujeita a penalidades conforme as leis de direitos autorais vigentes.
+
+---
 
 ### Instalação:
 
@@ -30,7 +34,15 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 * Localize o plugin que você acabou de instalar e clique em “Ativar”.
 * Após seguir essas etapas, o plugin deve estar instalado e funcionando corretamente em seu site WordPress.
 
+---
+
 ### Registro de alterações (Changelogs):
+
+Versão 1.3.0 (08/05/2025)
+* Correção de bugs
+* Otimizações
+* Correção de segurança se remetente está registrado no site
+* Mudança na API de envio de mensagens via WhatsApp
 
 Versão 1.2.5 (24/03/2025)
 * Correção de bugs

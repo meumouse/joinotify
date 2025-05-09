@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.0
  * @package MeuMouse.com
  */
 class Helpers {
@@ -149,13 +149,13 @@ class Helpers {
 
 
     /**
-     * API key for requests for WhatsApp API
+     * API key for requests on Slots Manager API
      * 
-     * @since 1.0.0
+     * @since 1.3.0
      * @return string
      */
-    public static function whatsapp_api_key() {
-        $key = 'Q600ZcRqVNBXFwoKZvuV3EhBU3M0Tml2d2NQS0VpdEsrQXBPVzdaNWRhaHAyV2o4cWplaVNIckVydDBLOHlrTkRGVDRvdGFwbkdxUlRTYk8=';
+    public static function slots_manager_api_key() {
+        $key = 'F5clS9xxRMwaDveTH4fS/WxnNVVBRVpHUnI3OTdvRlFpL0lZaGhBN2s2RDlRMDdkYmgrWnVZMnMxTXg2d1d5SkVkN3pEWndmeTg4d2ZMb1A=';
 
         return self::decrypt_data( $key, 'B729F2659393EE27' );
     }
@@ -174,5 +174,32 @@ class Helpers {
         return array_keys( array_filter( $default_options, function( $value ) {
             return in_array( $value, ['yes', 'no'], true );
         }));
+    }
+
+
+    /**
+     * Check if the sender is allowed to send messages
+     * 
+     * @since 1.3.0
+     * @param string $sender | Sender phone number
+     * @return bool
+     */
+    public static function allowed_sender( $sender ) {
+        $current_senders = get_option( 'joinotify_get_phones_senders', array() );
+
+        return in_array( $sender, $current_senders );
+    }
+
+
+    /**
+     * Validate if the given parameter is a string
+     *
+     * @since 1.0.0
+     * @version 1.3.0
+     * @param mixed $param
+     * @return bool
+     */
+    public function validate_string( $param ) {
+        return is_string( $param );
     }
 }

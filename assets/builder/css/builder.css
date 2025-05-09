@@ -726,7 +726,7 @@ label.custom-file-label:hover {
     border-bottom-right-radius: 0 !important;
 }
 
-.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-fcw-tooltip):not(.valid-feedback):not(.invalid-fcw-tooltip):not(.invalid-feedback) {
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-joinotify-tooltip):not(.valid-feedback):not(.invalid-joinotify-tooltip):not(.invalid-feedback) {
     margin-left: -1px !important;
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;

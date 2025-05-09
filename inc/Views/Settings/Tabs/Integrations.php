@@ -46,9 +46,13 @@ endif; ?>
                         <span class="alert alert-info mb-3"><?php esc_html_e( 'Este plugin precisa estar instalado e ativo para ativar esta integração.', 'joinotify' ); ?></span>
                     <?php endif; ?>
                     
-                    <div class="form-check form-switch w-100 d-flex justify-content-center">
-                        <input type="checkbox" class="toggle-switch" id="enable_<?php echo esc_attr( $key ); ?>_integration" name="enable_<?php echo esc_attr( $key ); ?>_integration" value="yes"<?php checked( Admin::get_setting( $value['setting_key'] ) === 'yes' ); ?> <?php echo ! $is_plugin_active ? 'disabled' : ''; ?> />
-                    </div>
+                    <?php if ( isset( $value['comming_soon'] ) && $value['comming_soon'] ) : ?>
+                        <span class="badge bg-translucent-primary rounded-pill fs-sm py-2 px-3"><?php esc_html_e( 'Em breve', 'joinotify' ); ?></span>
+                    <?php elseif ( isset( $value['setting_key'] ) ) : ?>
+                        <div class="form-check form-switch w-100 d-flex justify-content-center">
+                            <input type="checkbox" class="toggle-switch" id="enable_<?php echo esc_attr( $key ); ?>_integration" name="enable_<?php echo esc_attr( $key ); ?>_integration" value="yes"<?php checked( Admin::get_setting( $value['setting_key'] ) === 'yes' ); ?> <?php echo ! $is_plugin_active ? 'disabled' : ''; ?> />
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <?php
