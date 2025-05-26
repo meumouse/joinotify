@@ -1749,14 +1749,14 @@
 		 * Export workflow file action
 		 * 
 		 * @since 1.0.0
-		 * @version 1.2.0
+		 * @version 1.3.1
 		 * @package MeuMouse.com
 		 */
 		exportWorkflow: function() {
 			$('#joinotify_export_workflow').on('click', function(e) {
 				e.preventDefault();
 
-				var post_id = Builder.getParamByName('id');
+				const post_id = Builder.getParamByName('id');
 
 				// send ajax request
 				$.ajax({
@@ -1776,16 +1776,16 @@
 					},
 					success: function(response) {
 						try {
-							if (response.status === 'success') {
-								var filename = 'joinotify-workflow-' + post_id + '.json';
-								Builder.downloadData(JSON.stringify(response.export_data, null, 2), filename, 'application/json');
+							if ( response.status === 'success' ) {
+								var filename = `joinotify-workflow-${post_id}.json`;
 
-								Builder.displayToast('success', response.toast_header_title, response.toast_body_title);
+								Builder.downloadData( JSON.stringify( response.export_data, null, 2 ), filename, 'application/json' );
+								Builder.displayToast( 'success', response.toast_header_title, response.toast_body_title);
 							} else {
-								Builder.displayToast('error', response.toast_header_title, response.toast_body_title);
+								Builder.displayToast( 'error', response.toast_header_title, response.toast_body_title );
 							}
 						} catch (error) {
-							console.log(error);
+							console.error(error);
 						}
 					},
 					error: function(xhr, status, error) {

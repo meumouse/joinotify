@@ -361,12 +361,12 @@ class Workflow_Processor {
             return;
         }
     
-        // Executa o próprio time_delay
+        // execute self time delay
         if ( self::handle_action( $action_data, $post_id, $payload ) ) {
-            // Marca como processado
+            // set with processed action
             $state['processed_actions'][] = $action_id;
     
-            // Processa ações subsequentes, se existirem
+            // process next actions, if exists
             if ( isset( $action_data['data']['next_actions'] ) && is_array( $action_data['data']['next_actions'] ) ) {
                 foreach ( $action_data['data']['next_actions'] as $next_action ) {
                     self::handle_action( $next_action, $post_id, $payload );
@@ -379,7 +379,6 @@ class Workflow_Processor {
                 }
             }
     
-            // Atualiza o estado no banco
             if ( $payload['integration'] === 'woocommerce' ) {
                 update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
             }
