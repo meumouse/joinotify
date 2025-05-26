@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Joinotify\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-20 14:05+0000\n"
-"PO-Revision-Date: 2025-05-09 02:03+0000\n"
+"PO-Revision-Date: 2025-05-26 16:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: inc/Builder/Components.php:1243
 msgid "$object->item"
-msgstr ""
+msgstr "$object->item"
 
 #: inc/Integrations/Flexify_Checkout.php:237
 #, php-format
@@ -274,7 +274,7 @@ msgstr "Aruba"
 
 #: inc/Core/Assets.php:75 inc/Core/Assets.php:201
 msgid "As alterações não serão salvas."
-msgstr ""
+msgstr "Los cambios no se guardarán."
 
 #: inc/Integrations/Woo_Subscriptions.php:98
 msgid "Assinatura tem status alterado para cancelado"
@@ -376,6 +376,8 @@ msgid ""
 "Aumente a satisfação do seu cliente automatizando o envio de mensagens via "
 "WhatsApp com o Joinotify."
 msgstr ""
+"Aumente la satisfacción de sus clientes automatizando el envío de mensajes "
+"vía WhatsApp con Joinotify."
 
 #: inc/Views/License.php:22 inc/Views/Settings.php:23
 msgid ""
@@ -719,6 +721,8 @@ msgid ""
 "Crie mensagens dinâmicas para suas automações de uma forma simples e direta "
 "usando ChatGPT."
 msgstr ""
+"Crea mensajes dinámicos para tus automatizaciones de forma sencilla y "
+"directa utilizando ChatGPT."
 
 #: inc/Builder/Workflow_Manager.php:57
 msgid "Crie seu fluxo de automação a partir de um modelo de sua escolha"
@@ -967,7 +971,7 @@ msgstr "Elementor"
 
 #: inc/Views/Settings/Tabs/Integrations.php:50
 msgid "Em breve"
-msgstr ""
+msgstr "Dentro de poco"
 
 #: inc/Builder/Components.php:817
 msgid "Em espera"
@@ -1558,11 +1562,11 @@ msgstr "horas"
 
 #. Author URI of the plugin
 msgid "https://meumouse.com/"
-msgstr ""
+msgstr "https://meumouse.com/"
 
 #. URI of the plugin
 msgid "https://meumouse.com/plugins/joinotify/"
-msgstr ""
+msgstr "https://meumouse.com/plugins/joinotify/"
 
 #: inc/Validations/Country_Codes.php:33
 msgid "Hungary"
@@ -1969,7 +1973,7 @@ msgstr "Modo de depuración de WordPress:"
 
 #: inc/Integrations/Developer_Mode.php:39
 msgid "Modo desenvolvedor"
-msgstr ""
+msgstr "Modo desarrollador"
 
 #: inc/Validations/Country_Codes.php:140
 msgid "Moldova"
@@ -2109,7 +2113,7 @@ msgstr "Nombre"
 
 #: inc/Builder/Components.php:1235
 msgid "Nome da variável de texto"
-msgstr ""
+msgstr "Nombre de la variable de texto"
 
 #: inc/Builder/Components.php:699
 msgid "Nome do autor"
@@ -2117,7 +2121,7 @@ msgstr "Nombre del autor"
 
 #: inc/Builder/Components.php:1237
 msgid "nome_da_variavel"
-msgstr ""
+msgstr "nombre_de_variable"
 
 #: inc/Validations/Country_Codes.php:178
 msgid "Norfolk Island"
@@ -2221,7 +2225,7 @@ msgstr "Objetos"
 
 #: inc/Builder/Components.php:1232
 msgid "Obter dados de amostra"
-msgstr ""
+msgstr "Obtener datos de muestra"
 
 #: inc/Builder/Components.php:995 inc/Builder/Components.php:1011
 msgid "Obter informações de grupos"
@@ -2253,11 +2257,11 @@ msgstr "Omán"
 
 #: inc/Integrations/OpenAI.php:37
 msgid "OpenAI"
-msgstr ""
+msgstr "OpenAI"
 
 #: inc/Core/Assets.php:74 inc/Core/Assets.php:200
 msgid "Ops! Não há conexão com a internet"
-msgstr ""
+msgstr "¡Ups! No hay conexión a internet"
 
 #: inc/Views/License.php:98 inc/Views/Builder/Choose_Template.php:101
 msgid "Ou clique para procurar seu arquivo"
@@ -3326,7 +3330,7 @@ msgstr "Uzbekistán"
 
 #: inc/Builder/Components.php:1241
 msgid "Valor da variável"
-msgstr ""
+msgstr "Valor variable"
 
 #: inc/Integrations/Elementor.php:163 inc/Integrations/Wpforms.php:208
 msgid "Valor de um campo do formulário"
@@ -3446,7 +3450,7 @@ msgstr "Verificar actualizaciones"
 
 #: inc/Admin/Components.php:39
 msgid "Verificar conexão"
-msgstr ""
+msgstr "Comprobar la conexión"
 
 #: inc/Builder/Messages.php:119
 msgid "Verificar se o pedido foi pago"
