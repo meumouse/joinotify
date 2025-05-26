@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Schedule messages for a future time or date
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.1
  * @package MeuMouse.com
  */
 class Schedule {
@@ -64,27 +64,35 @@ class Schedule {
      * Schedule a message for a future time or date
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.1
      * @param string $post_id | Post ID
      * @param array $context | Context data
      * @param string $delay_time | Time to delay in seconds
      * @param array $action_data | Actions for execute
-     * @return void
+     * @return bool
      */
     public static function schedule_actions( $post_id, $context, $delay_time, $action_data ) {
         $timestamp = time() + $delay_time;
         $hook = 'joinotify_scheduled_actions_event';
+
+        // Cron args
         $args = array(
             'post_id' => $post_id,
             'context' => $context,
-            'action_data' => $action_data,
-            'unique_key' => $action_data['id'] ?? uniqid('action_', true),
+            'action_data' => $action_data, // next actions
+            'unique_key' => $action_data['id'] ?? uniqid( 'action_', true ),
         );
 
-        // prevent duplicate events
-        if ( ! wp_next_scheduled( $hook, $args ) ) {
-            wp_schedule_single_event( $timestamp, $hook, $args );
+        // clear Cron ghost
+        if ( function_exists('wp_clear_scheduled_hook') ) {
+            wp_clear_scheduled_hook( $hook, $args );
+        } else {
+            if ( $existing = wp_next_scheduled( $hook, $args ) ) {
+                wp_unschedule_event( $existing, $hook, $args );
+            }
         }
+
+        return (bool) wp_schedule_single_event( $timestamp, $hook, $args );
     }
 
 

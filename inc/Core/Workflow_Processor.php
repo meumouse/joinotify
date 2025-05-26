@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.1
  * @package MeuMouse.com
  */
 class Workflow_Processor {
@@ -97,7 +97,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.1
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -172,38 +172,40 @@ class Workflow_Processor {
         // Processes pending actions
         foreach ( $state['pending_actions'] as $index => $action ) {
             $action_id = $action['id'] ?? null;
+            $action_data = $action['data'] ?? array();
 
-            // Ignore trigger or already processed actions
-            if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' && in_array( $action_id, $state['processed_actions'], true ) ) {
+            // Ignore trigger or already processed actions for woocommerce hooks
+            if ( $integration === 'woocommerce' && Admin::get_setting('enable_ignore_processed_actions') === 'yes' && in_array( $action_id, $state['processed_actions'], true ) ) {
                 continue;
             }
+
+            if ( $action_data['action'] === 'time_delay' ) {
+                // Collect all actions after this delay
+                $next_actions = array_slice( $state['pending_actions'], $index + 1 );
+                $action['data']['next_actions'] = $next_actions;
+
+                // Schedule the cron event with next_actions in payload
+                Schedule::schedule_actions( $post_id, $payload, $action_data['delay_timestamp'], $action );
+
+                // Mark this delay as processed and replace pending with next_actions
+                $state['processed_actions'][] = $action_id;
+                $state['pending_actions'] = $next_actions;
+
+                break;
+            }
     
-            // execute actions
+            // For all non-delay actions, execute immediately
             if ( self::handle_action( $action, $post_id, $payload ) ) {
+                // Mark as processed
                 $state['processed_actions'][] = $action_id;
 
-                // remove action from pending actions
+                // Remove from pending and reindex
                 unset( $state['pending_actions'][$index] );
-
-                // reindex array
                 $state['pending_actions'] = array_values( $state['pending_actions'] );
 
-                // Update state in the database for woocommerce orders
+                // Update state in the database for woocommerce hooks
                 if ( $payload['integration'] === 'woocommerce' ) {
                     update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
-                }
-
-                if ( $action['data']['action'] === 'time_delay' ) {
-                    $next_actions = array_slice( $state['pending_actions'], $index + 1 );
-                    
-                    if ( ! empty( $next_actions ) ) {
-                        $action['data']['next_actions'] = $next_actions;
-                
-                        // Atualiza a ação dentro do fluxo para incluir as ações subsequentes
-                        Schedule::schedule_actions( $post_id, $payload, $action['data']['delay_timestamp'], $action );
-                    }
-                
-                    break;
                 }
             }
         }
@@ -214,50 +216,46 @@ class Workflow_Processor {
      * Handle with workflow actions
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.1
      * @param array $action | Workflow actions array
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
      * @return bool
      */
     public static function handle_action( $action, $post_id, $event_data ) {
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Handling action: " . print_r( $action, true ) );
-        }
-
         $action_data = $action['data'] ?? array();
-    
+
         if ( empty( $action_data['action'] ) ) {
-            error_log( "Action type is empty, skipping." );
             return false;
         }
-    
-        if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Handling action: " . print_r( $action, true ) );
+
+        // process time delay action before all the actions 
+        if ( $action_data['action'] === 'time_delay' ) {
+            // schedule the Cron, with next_actions array and return bool
+            return Schedule::schedule_actions( $post_id, $event_data, $action_data['delay_timestamp'], $action );
         }
-    
+
         /**
-         * Filter to add custom actions
+         * Filter for enqueue function callback for each action
          * 
-         * @since 1.1.0
-         * @param array $actions | Array of actions
-         * @return array
+         * @since 1.0.0
+         * @param array $actions
          */
         $actions = apply_filters( 'Joinotify/Workflow_Processor/Handle_Actions', array(
-            'time_delay' => fn() => Schedule::schedule_actions( $post_id, $event_data, $action_data['delay_timestamp'], $action ),
             'condition' => fn() => self::process_condition_action( $action, $post_id, $event_data ),
             'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data ),
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
-        //    'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
+        //  'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
         ));
-    
+
+        // check if is action
         if ( ! isset( $actions[ $action_data['action'] ] ) ) {
-            error_log( "Action not found in the list: " . $action_data['action'] );
             return false;
         }
-    
+
+        // return action function processed
         return $actions[ $action_data['action'] ]();
     }
     
@@ -336,52 +334,70 @@ class Workflow_Processor {
      * Process scheduled actions
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.1
      * @param int $post_id | Workflow ID
      * @param array $payload | Payload data
      * @param array $action_data | Action data
      * @return void
      */
     public static function process_scheduled_action( $post_id, $payload, $action_data ) {
+        // get saved state for woocommerce hooks
         if ( $payload['integration'] === 'woocommerce' ) {
-            $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
+            $meta_key = 'joinotify_workflow_state_' . $payload['order_id'];
+            $state = get_post_meta( $post_id, $meta_key, true );
+        } else {
+            $state = array();
         }
-    
+
         if ( ! is_array( $state ) ) {
             $state = array(
                 'processed_actions' => array(),
-                'pending_actions'   => array(),
+                'pending_actions' => array(),
             );
         }
-    
+
         $action_id = $action_data['id'] ?? null;
-    
-        // Skip if already processed
+
+        // if has processed, then stop
         if ( $action_id && in_array( $action_id, $state['processed_actions'], true ) ) {
             return;
         }
-    
-        // execute self time delay
-        if ( self::handle_action( $action_data, $post_id, $payload ) ) {
-            // set with processed action
+
+        // set this delay as processed
+        if ( $action_id ) {
             $state['processed_actions'][] = $action_id;
-    
-            // process next actions, if exists
-            if ( isset( $action_data['data']['next_actions'] ) && is_array( $action_data['data']['next_actions'] ) ) {
-                foreach ( $action_data['data']['next_actions'] as $next_action ) {
-                    self::handle_action( $next_action, $post_id, $payload );
-    
-                    $next_id = $next_action['id'] ?? null;
-    
-                    if ( $next_id ) {
-                        $state['processed_actions'][] = $next_id;
-                    }
+        }
+
+        // execute next actions
+        $next_actions = $action_data['data']['next_actions'] ?? array();
+
+        // loop for each next actions
+        foreach ( $next_actions as $idx => $next_action ) {
+            $next_id = $next_action['id'] ?? null;
+            $next_type = $next_action['data']['action'] ?? '';
+
+            if ( $next_type === 'time_delay' ) {
+                // reschedule next delays, including only actions after this
+                $remaining = array_slice( $next_actions, $idx + 1 );
+                $next_action['data']['next_actions'] = $remaining;
+
+                Schedule::schedule_actions( $post_id, $payload, $next_action['data']['delay_timestamp'], $next_action );
+
+                // stop process loop, next actions be are processed on next cron event
+                break;
+            } else {
+                // execute action right now
+                self::handle_action( $next_action, $post_id, $payload );
+
+                if ( $next_id ) {
+                    $state['processed_actions'][] = $next_id;
                 }
             }
-    
-            if ( $payload['integration'] === 'woocommerce' ) {
-                update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
-            }
+        }
+
+        // save state for woocommerce hooks
+        if ( isset( $meta_key ) ) {
+            update_post_meta( $post_id, $meta_key, $state );
         }
     }
 
