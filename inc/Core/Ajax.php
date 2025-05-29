@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.2
  * @package MeuMouse.com
  */
 class Ajax {
@@ -1415,7 +1415,7 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.2
      * @return void
      */
     public function run_workflow_test_callback() {
@@ -1426,6 +1426,17 @@ class Ajax {
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
                 $receiver = Admin::get_setting('test_number_phone');
+
+                // check if test receiver is empty
+                if ( empty( $receiver ) ) {
+                    wp_send_json([
+                        'status' => 'error',
+                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
+                        'toast_body_title' => __( 'Nenhum telefone para testes registrado.', 'joinotify' ),
+                    ]);
+
+                    return;
+                }
 
                 if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
                     $all_actions = Actions::extract_all_actions( $workflow_content );
@@ -2055,6 +2066,7 @@ class Ajax {
      * Import workflow template from repository via AJAX
      *
      * @since 1.2.0
+     * @version 1.3.2
      * @return void
      */
     public function download_workflow_template_callback() {
@@ -2107,8 +2119,14 @@ class Ajax {
             ));
         }
 
+        // check if has empty sender on workflow content
+        if ( ! empty( $workflow_data['workflow_content'] ) && is_array( $workflow_data['workflow_content'] ) ) {
+            Actions::fill_sender_recursive( $workflow_data['workflow_content'] );
+        }
+
         update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_data['workflow_content'] );
 
+        // build redirect url
         $redirect_url = admin_url("admin.php?page=joinotify-workflows-builder&id={$post_id}");
 
         wp_send_json( array(
