@@ -403,6 +403,7 @@ class Ajax {
      * Import workflow templates on AJAX callback
      * 
      * @since 1.1.0
+     * @version 1.3.2
      * @return void
      */
     public function import_workflow_templates_callback() {
@@ -469,6 +470,11 @@ class Ajax {
                 'toast_header_title' => esc_html__( 'Erro ao criar fluxo', 'joinotify' ),
                 'toast_body_title' => esc_html__( 'Ocorreu um erro ao criar o fluxo no banco de dados.', 'joinotify' ),
             ));
+        }
+
+        // check if has empty sender on workflow content
+        if ( ! empty( $workflow_data['workflow_content'] ) && is_array( $workflow_data['workflow_content'] ) ) {
+            Actions::fill_sender_recursive( $workflow_data['workflow_content'] );
         }
 
         // update workflow data on post metadata
