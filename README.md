@@ -38,6 +38,12 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.2 (29/05/2025)
+* Correção de bugs
+     - Método set_default_options() indefinido na classe Helpers na linha 171
+* Otimizações
+     - Preencher o remetente ao importar um fluxo
+
 Versão 1.3.1 (26/05/2025)
 * Correção de bugs
      - Ação de Tempo de espera

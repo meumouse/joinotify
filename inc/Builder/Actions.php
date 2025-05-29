@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * This class handles with actions functions
  * 
  * @since 1.1.0
- * @version 1.2.0
+ * @version 1.3.2
  * @package MeuMouse.com
  */
 class Actions {
@@ -195,5 +195,45 @@ class Actions {
         }
     
         return $actions;
+    }
+
+
+    /**
+     * Fill the sender data for all actions recursively
+     *
+     * @since 1.3.2
+     * @param array $items
+     * @return void
+     */
+    public static function fill_sender_recursive( &$items ) {
+        /**
+         * Filter actions that should have sender auto-filled on import
+         * 
+         * @since 1.3.2
+         * @param array $actions List of action slugs that require sender
+         * @return array
+         */
+        $check_actions = apply_filters( 'Joinotify/Download_Template/Fill_Sender_Actions', array( 'send_whatsapp_message_text', 'send_whatsapp_message_media', 'create_coupon' ) );
+
+        foreach ( $items as &$item ) {
+            if ( isset( $item['type'], $item['data'] ) && $item['type'] === 'action' && isset( $item['data']['action'] ) && in_array( $item['data']['action'], $check_actions, true ) && empty( $item['data']['sender'] ) ) {
+                $item['data']['sender'] = joinotify_get_first_sender();
+            }
+
+            // process recursively if there are children
+            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
+                foreach ( $item['children'] as &$child_branch ) {
+                    if ( is_array( $child_branch ) ) {
+                        self::fill_sender_recursive( $child_branch );
+                    }
+                }
+
+                // best practice to unset the reference
+                unset( $child_branch );
+            }
+        }
+
+        // best practice to unset the reference
+        unset( $item );
     }
 }

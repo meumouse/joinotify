@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Admin\Default_Options;
 
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
@@ -15,7 +16,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.2
  * @package MeuMouse.com
  */
 class Helpers {
@@ -165,10 +166,11 @@ class Helpers {
      * Get switch options dynamically from default options
      *
      * @since 1.1.0
+     * @version 1.3.2
      * @return array List of switch options keys
      */
     public static function get_switch_options() {
-        $default_options = Admin::set_default_options();
+        $default_options = Default_Options::set_default_options();
         
         // filter only the indices that have 'yes' or 'no' as value
         return array_keys( array_filter( $default_options, function( $value ) {
