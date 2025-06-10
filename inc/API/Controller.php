@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * Controller for API requests
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.3
  * @package MeuMouse.com
  */
 class Controller {
@@ -676,10 +676,16 @@ class Controller {
      * Notify user when phone is disconnected
      * 
      * @since 1.3.0
+     * @version 1.3.3
      * @param string $phone | Phone number
      * @return int
      */
     public static function notify_disconnected_phone( $phone ) {
+        // check if the notification is enabled
+        if ( Admin::get_setting('enable_send_disconnect_notifications') !== 'yes' ) {
+            return;
+        }
+
         $api_url = self::get_api_url( '/utils', '/notify-disconnected-phone' );
 
         // send request

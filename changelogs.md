@@ -1,3 +1,12 @@
+Versão 1.3.3 (10/06/2025)
+* Recurso adicionado: Receber avisos quando WhatsApp estiver desconectado
+* Recurso removido: Ao entrar na etapa 1 da integração Flexify Checkout
+* Recurso removido: Ao entrar na etapa 2 da integração Flexify Checkout
+* Recurso removido: Ao entrar na etapa 3 da integração Flexify Checkout
+* Recurso adicionado: Variáveis de texto: {{ fcrc_first_name }}, {{ fcrc_last_name }}, {{ fcrc_phone }}, {{ fcrc_email }}, {{ fcrc_cart_total }} (Flexify Checkout - Recuperação de carrinhos abandonados)
+* Recurso adicionado: Acionamento: Coleta de lead via modal (Flexify Checkout - Recuperação de carrinhos abandonados)
+* Recurso adicionado: Acionamento: Coleta de lead via checkout (Flexify Checkout - Recuperação de carrinhos abandonados)
+
 Versão 1.3.2 (29/05/2025)
 * Correção de bugs
      - Método set_default_options() indefinido na classe Helpers na linha 171

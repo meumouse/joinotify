@@ -2142,3 +2142,7 @@ textarea.edit-whatsapp-message-text {
 .joinotify_condition_node_point .receiver {
     font-weight: 400;
 }
+
+#flexify-dashboard-navbar {
+    display: none;
+}
