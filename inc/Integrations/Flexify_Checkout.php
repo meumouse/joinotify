@@ -22,7 +22,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.3
      * @return void
      */
     public function __construct() {
@@ -48,6 +48,12 @@ class Flexify_Checkout extends Integrations_Base {
 
             // check if Flexify Checkout extension addon is active
             if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+                // when a lead is collected on product modal
+                add_action( 'Flexify_Checkout/Recovery_Carts/Lead_Collected', array( $this, 'process_workflow_lead_collected_via_modal' ), 10, 2 );
+
+                // when a lead is collected on checkout
+                add_action( 'Flexify_Checkout/Recovery_Carts/Checkout_Lead_Collected', array( $this, 'process_workflow_lead_collected_via_checkout' ), 10, 2 );
+                
                 // when a order is abandoned
                 add_action( 'Flexify_Checkout/Recovery_Carts/Order_Abandoned', array( $this, 'process_workflow_order_abandoned' ), 10, 2 );
 
@@ -97,7 +103,33 @@ class Flexify_Checkout extends Integrations_Base {
      * @return array
      */
     public function add_triggers( $triggers ) {
+        $fcrc_plugin = array(
+            'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
+            'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
+            'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
+        );
+
         $triggers['flexify_checkout'] = array(
+            array(
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Lead_Collected',
+                'title' => esc_html__( 'Coleta de lead via modal', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário fornece seus dados de contato via modal.', 'joinotify' ),
+                'require_settings' => false,
+                'require_plugins' => true,
+                'plugins' => array(
+                    $fcrc_plugin,
+                ),
+            ),
+            array(
+                'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Checkout_Lead_Collected',
+                'title' => esc_html__( 'Coleta de lead via checkout', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário fornece seus dados de contato pelo checkout.', 'joinotify' ),
+                'require_settings' => false,
+                'require_plugins' => true,
+                'plugins' => array(
+                    $fcrc_plugin,
+                ),
+            ),
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
                 'title' => esc_html__( 'Abandono do carrinho', 'joinotify' ),
@@ -105,11 +137,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
-                    array(
-                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
-                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
-                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
-                    ),
+                    $fcrc_plugin,
                 ),
             ),
             array(
@@ -119,11 +147,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
-                    array(
-                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
-                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
-                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
-                    ),
+                    $fcrc_plugin,
                 ),
             ),
             array(
@@ -133,11 +157,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
-                    array(
-                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
-                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
-                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
-                    ),
+                    $fcrc_plugin,
                 ),
             ),
             array(
@@ -147,11 +167,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
-                    array(
-                        'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
-                        'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
-                        'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
-                    ),
+                    $fcrc_plugin,
                 ),
             ),
         );
@@ -192,7 +208,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.3
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -245,18 +261,66 @@ class Flexify_Checkout extends Integrations_Base {
 
         // if Recovery Carts addon is active
         if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+            // set triggers for filter
+            $fcrc_triggers = array(
+                'Flexify_Checkout/Recovery_Carts/Lead_Collected',
+                'Flexify_Checkout/Recovery_Carts/Checkout_Lead_Collected',
+                'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
+                'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
+                'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
+                'Flexify_Checkout/Recovery_Carts/Cart_Lost',
+            );
+
+            // get cart id
+            $cart_id = $payload['cart_id'];
+
             $placeholders['flexify_checkout'] = array(
-                '{{ fcrc_recovery_link }}' => array(
-                    'triggers' => array(
-                        'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
-                        'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
-                        'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
-                        'Flexify_Checkout/Recovery_Carts/Cart_Lost',
-                    ),
-                    'description' => esc_html__( 'Link de recuperação do carrinho abandonado. Através da integração Flexify Checkout - Recuperação de carrinhos abandonados.', 'joinotify' ),
+                '{{ fcrc_first_name }}' => array(
+                    'triggers' => $fcrc_triggers,
+                    'description' => esc_html__( 'Para recuperar o nome do contato do carrinho.', 'joinotify' ),
                     'replacement' => array(
-                        'production' => class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Core') ? \MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers::generate_recovery_cart_link( $payload['cart_id'] ) : '',
+                        'production' => get_post_meta( $cart_id, '_fcrc_first_name', true ) ?? '',
+                        'sandbox' => esc_html__( 'João', 'joinotify' ),
+                    ),
+                ),
+                '{{ fcrc_last_name }}' => array(
+                    'triggers' => $fcrc_triggers,
+                    'description' => esc_html__( 'Para recuperar o sobrenome do contato do carrinho.', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => get_post_meta( $cart_id, '_fcrc_last_name', true ) ?? '',
+                        'sandbox' => esc_html__( 'da Silva', 'joinotify' ),
+                    ),
+                ),
+                '{{ fcrc_phone }}' => array(
+                    'triggers' => $fcrc_triggers,
+                    'description' => esc_html__( 'Para recuperar o telefone de contato do carrinho.', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => get_post_meta( $cart_id, '_fcrc_cart_phone', true ) ?? '',
+                        'sandbox' => esc_html__( '41912345678', 'joinotify' ),
+                    ),
+                ),
+                '{{ fcrc_email }}' => array(
+                    'triggers' => $fcrc_triggers,
+                    'description' => esc_html__( 'Para recuperar o e-mail de contato do carrinho.', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => get_post_meta( $cart_id, '_fcrc_cart_email', true ) ?? '',
+                        'sandbox' => esc_html__( 'joaodasilva@email.com', 'joinotify' ),
+                    ),
+                ),
+                '{{ fcrc_recovery_link }}' => array(
+                    'triggers' => $fcrc_triggers,
+                    'description' => esc_html__( 'Link de recuperação do carrinho abandonado.', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Core') ? \MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers::generate_recovery_cart_link( $cart_id ) : '',
                         'sandbox' => wc_get_checkout_url() . '?recovery_cart=10905',
+                    ),
+                ),
+                '{{ fcrc_cart_total }}' => array(
+                    'triggers' => $fcrc_triggers,
+                    'description' => esc_html__( 'Para recuperar o valor total do carrinho.', 'joinotify' ),
+                    'replacement' => array(
+                        'production' => get_post_meta( $cart_id, '_fcrc_cart_total', true ) ?? '',
+                        'sandbox' => 150.25,
                     ),
                 ),
             );
@@ -296,6 +360,60 @@ class Flexify_Checkout extends Integrations_Base {
         );
 
         return array_merge( $conditions, $fc_conditions );
+    }
+
+
+    /**
+     * Process workflow when a lead is collected via modal
+     * 
+     * @since 1.3.3
+     * @param int $cart_id | Created cart ID
+     * @param array $user_data | User data
+     * @return void
+     */
+    public function process_workflow_lead_collected_via_modal( $cart_id, $user_data ) {
+        /**
+         * Filter the payload before processing workflows
+         * 
+         * @since 1.3.3
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Flexify_Checkout/Recovery_Carts/Lead_Collected', array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Lead_Collected',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+            'user_data' => $user_data,
+        ));
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when a lead is collected via modal
+     * 
+     * @since 1.3.3
+     * @param int $cart_id | Created cart ID
+     * @param array $user_data | User data
+     * @return void
+     */
+    public function process_workflow_lead_collected_via_checkout( $cart_id, $user_data ) {
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 1.3.3
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Flexify_Checkout/Recovery_Carts/Checkout_Lead_Collected', array(
+            'type' => 'trigger',
+            'hook' => 'Flexify_Checkout/Recovery_Carts/Checkout_Lead_Collected',
+            'integration' => 'flexify_checkout',
+            'cart_id' => $cart_id,
+            'user_data' => $user_data,
+        ));
+
+        Workflow_Processor::process_workflows( $payload );
     }
 
 
