@@ -17,18 +17,18 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.3
  * @package MeuMouse.com
  */
 class Updater {
 
     public $update_checker_file = 'https://raw.githubusercontent.com/meumouse/joinotify/refs/heads/main/dist/update-checker.json';
-    public $plugin_slug;
-    public $version;
-    public $cache_key;
-    public $cache_data_base_key;
-    public $cache_allowed;
-    public $time_cache;
+    public $plugin_slug = JOINOTIFY_SLUG;
+    public $version = JOINOTIFY_VERSION;
+    public $cache_key = 'joinotify_check_updates';
+    public $cache_data_base_key = 'joinotify_remote_data';
+    public $cache_allowed = true;
+    public $time_cache = DAY_IN_SECONDS;
     public $update_available;
     public $download_url;
 
@@ -37,7 +37,7 @@ class Updater {
      * Construct function
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.3
      * @return void
      */
     public function __construct() {
@@ -46,13 +46,6 @@ class Updater {
             add_filter( 'https_local_ssl_verify', '__return_false' );
             add_filter( 'http_request_host_is_external', '__return_true' );
         }
-
-        $this->plugin_slug = JOINOTIFY_SLUG;
-        $this->version = JOINOTIFY_VERSION;
-        $this->cache_key = 'joinotify_check_updates';
-        $this->cache_data_base_key = 'joinotify_remote_data';
-        $this->cache_allowed = true;
-        $this->time_cache = DAY_IN_SECONDS;
 
         add_filter( 'plugins_api', array( $this, 'plugin_info' ), 20, 3 );
         add_filter( 'site_transient_update_plugins', array( $this, 'update_plugin' ) );
@@ -433,17 +426,35 @@ class Updater {
      * Display update notice in the admin panel
      *
      * @since 1.2.0
+     * @version 1.3.3
      * @return void
      */
     public function admin_update_notice() {
         $latest_version = get_option('joinotify_update_available');
+        $current_version = $this->version;
 
-        if ( ! $latest_version ) {
+        // check if update is available
+        if ( ! $latest_version || version_compare( $current_version, $latest_version, '>=' ) ) {
             return;
         }
 
-        $update_url = admin_url('plugins.php');
-        $message = sprintf( __( 'Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href="%s">Atualize agora</a>.', 'joinotify' ), esc_html( $latest_version ), esc_url( $update_url ) );
+        $plugin_file = 'joinotify/joinotify.php';
+        $nonce = wp_create_nonce( 'upgrade-plugin_' . $plugin_file );
+
+        $update_url = add_query_arg(
+            array(
+                'action' => 'upgrade-plugin',
+                'plugin' => $plugin_file,
+                '_wpnonce' => $nonce,
+            ),
+            admin_url('update.php')
+        );
+
+        $message = sprintf(
+            __( 'Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href="%s">Atualize agora</a>.', 'joinotify' ),
+            esc_html( $latest_version ),
+            esc_url( $update_url )
+        );
 
         echo '<div class="notice notice-success is-dismissible"><p>' . $message . '</p></div>';
     }

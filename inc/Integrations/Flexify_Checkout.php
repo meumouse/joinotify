@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.3
  * @package MeuMouse.com
  */
 class Flexify_Checkout extends Integrations_Base {
@@ -92,7 +92,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout triggers
      * 
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.3.3
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -153,24 +153,6 @@ class Flexify_Checkout extends Integrations_Base {
                         'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
                     ),
                 ),
-            ),
-            array(
-                'data_trigger' => 'flexify_checkout_entry_step_1',
-                'title' => esc_html__( 'Ao entrar na etapa 1', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 1 da finalização de compras.', 'joinotify' ),
-                'require_settings' => false,
-            ),
-            array(
-                'data_trigger' => 'flexify_checkout_entry_step_2',
-                'title' => esc_html__( 'Ao entrar na etapa 2', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 2 da finalização de compras.', 'joinotify' ),
-                'require_settings' => false,
-            ),
-            array(
-                'data_trigger' => 'flexify_checkout_entry_step_3',
-                'title' => esc_html__( 'Ao entrar na etapa 3', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando o usuário entra na etapa 3 da finalização de compras.', 'joinotify' ),
-                'require_settings' => false,
             ),
         );
 

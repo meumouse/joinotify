@@ -1,5 +1,8 @@
 Versão 1.3.3 (10/06/2025)
 * Recurso adicionado: Receber avisos quando WhatsApp estiver desconectado
+* Recurso removido: Ao entrar na etapa 1 da integração Flexify Checkout
+* Recurso removido: Ao entrar na etapa 2 da integração Flexify Checkout
+* Recurso removido: Ao entrar na etapa 3 da integração Flexify Checkout
 
 Versão 1.3.2 (29/05/2025)
 * Correção de bugs
