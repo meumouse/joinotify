@@ -73,6 +73,18 @@ defined('ABSPATH') || exit; ?>
                     </div>
                 </td>
             </tr>
+
+            <tr>
+                <th>
+                    <?php esc_html_e( 'Receber avisos quando WhatsApp estiver desconectado', 'joinotify' ); ?>
+                    <span class="joinotify-description"><?php esc_html_e( 'Ative essa opção para enviar uma notificação ao remetente quando a conexão não for estabelecida.', 'joinotify' ); ?></span>
+                </th>
+                <td class="d-flex align-items-center">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="toggle-switch" id="enable_send_disconnect_notifications" name="enable_send_disconnect_notifications" value="yes" <?php checked( Admin::get_setting('enable_send_disconnect_notifications') === 'yes' ); ?> />
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

@@ -6,14 +6,14 @@
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				1.3.2
+ * Version: 				1.3.3
  * Requires PHP: 			7.4
  * Tested up to:      		6.8.1
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
  * 
  * @copyright 				2025 MeuMouse.com
- * @license Proprietary - See license.md for details
+ * @license 				Proprietary - See license.md for details
  */
 
 namespace MeuMouse\Joinotify;
@@ -53,13 +53,13 @@ if ( ! class_exists('Joinotify') ) {
 		 * @var string
 		 * @since 1.0.0
 		 */
-		public static $version = '1.3.2';
+		public static $version = '1.3.3';
 
 		/**
 		 * Constructor function
 		 *
 		 * @since 1.0.0
-		 * @version 1.1.0
+		 * @version 1.3.3
 		 * @return void
 		 */
 		public function __construct() {
@@ -70,6 +70,7 @@ if ( ! class_exists('Joinotify') ) {
 			 */
 			do_action('before_joinotify_init');
 
+			// initialize classes
 			add_action( 'plugins_loaded', array( $this, 'init' ), 99 );
 
 			/**
@@ -99,7 +100,7 @@ if ( ! class_exists('Joinotify') ) {
 			self::setup_constants();
 	
 			// load Composer
-			require_once JOINOTIFY_DIR . 'vendor/autoload.php';
+			require_once ( JOINOTIFY_DIR . 'vendor/autoload.php' );
 
 			// load instancer class
 			new \MeuMouse\Joinotify\Core\Init;

@@ -1,3 +1,6 @@
+Versão 1.3.3 (10/06/2025)
+* Recurso adicionado: Receber avisos quando WhatsApp estiver desconectado
+
 Versão 1.3.2 (29/05/2025)
 * Correção de bugs
      - Método set_default_options() indefinido na classe Helpers na linha 171

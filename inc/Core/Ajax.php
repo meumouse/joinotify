@@ -257,13 +257,8 @@ class Ajax {
                 wp_send_json( $response );
             }
 
-            $allowed_products = array(
-                '8', // Joinotify product ID
-                '7', // Clube M product ID
-            );
-
             // stop if product license is not same this product
-            if ( ! in_array( $license_data_array->selected_product, $allowed_products ) ) {
+            if ( ! in_array( $license_data_array->selected_product, array( '7', '8' ) ) ) {
                 $response = array(
                     'status' => 'error',
                     'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
