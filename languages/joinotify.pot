@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Joinotify\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 16:10+0000\n"
+"POT-Creation-Date: 2025-06-10 19:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "$object->item"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:237
+#: inc/Integrations/Flexify_Checkout.php:235
 #, php-format
 msgid "%s minutos"
 msgstr ""
@@ -55,9 +55,13 @@ msgstr ""
 msgid "1x - Óculos de sol com proteção UV (Produto exemplo)"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:238
-#: inc/Integrations/Flexify_Checkout.php:246
+#: inc/Integrations/Flexify_Checkout.php:236
+#: inc/Integrations/Flexify_Checkout.php:244
 msgid "30 minutos"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:299
+msgid "41912345678"
 msgstr ""
 
 #: inc/Integrations/Whatsapp.php:140 inc/Integrations/Whatsapp.php:183
@@ -91,7 +95,7 @@ msgid ""
 "data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>"
 msgstr ""
 
-#: joinotify.php:170
+#: joinotify.php:171
 msgid ""
 "<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o "
 "suporte da sua hospedagem para realizar a atualização."
@@ -111,7 +115,7 @@ msgid ""
 "Tempo de espera."
 msgstr ""
 
-#: inc/Core/Updater.php:247
+#: inc/Core/Updater.php:240
 msgid "A versão do plugin <strong>Joinotify</strong> é a mais recente."
 msgstr ""
 
@@ -119,11 +123,11 @@ msgstr ""
 msgid "A versão mínima exigida do PHP é 7.2"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:103
+#: inc/Integrations/Flexify_Checkout.php:135
 msgid "Abandono do carrinho"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:131
+#: inc/Integrations/Flexify_Checkout.php:155
 msgid "Abandono do pedido"
 msgstr ""
 
@@ -205,7 +209,7 @@ msgstr ""
 msgid "Animais e Natureza"
 msgstr ""
 
-#: inc/Core/Helpers.php:40
+#: inc/Core/Helpers.php:41
 msgid "ano"
 msgstr ""
 
@@ -213,20 +217,8 @@ msgstr ""
 msgid "Ano (s)"
 msgstr ""
 
-#: inc/Core/Helpers.php:40
+#: inc/Core/Helpers.php:41
 msgid "anos"
-msgstr ""
-
-#: inc/Integrations/Flexify_Checkout.php:159
-msgid "Ao entrar na etapa 1"
-msgstr ""
-
-#: inc/Integrations/Flexify_Checkout.php:165
-msgid "Ao entrar na etapa 2"
-msgstr ""
-
-#: inc/Integrations/Flexify_Checkout.php:171
-msgid "Ao entrar na etapa 3"
 msgstr ""
 
 #: inc/Views/Settings/Tabs/About.php:311
@@ -320,6 +312,12 @@ msgstr ""
 msgid ""
 "Ative essa opção para ativar o modo depuração para verificar mensagens de "
 "erros e informações relevantes."
+msgstr ""
+
+#: inc/Views/Settings/Tabs/General.php:80
+msgid ""
+"Ative essa opção para enviar uma notificação ao remetente quando a conexão "
+"não for estabelecida."
 msgstr ""
 
 #: inc/Integrations/Woocommerce.php:498
@@ -497,15 +495,15 @@ msgstr ""
 msgid "Cape Verde"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:117
+#: inc/Integrations/Flexify_Checkout.php:145
 msgid "Carrinho abandonado é recuperado"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:145
+#: inc/Integrations/Flexify_Checkout.php:165
 msgid "Carrinho perdido"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:310
+#: inc/Integrations/Flexify_Checkout.php:356
 msgid "Carrinho recuperado"
 msgstr ""
 
@@ -518,7 +516,7 @@ msgid "Central African Republic"
 msgstr ""
 
 #: inc/Views/License.php:23 inc/Views/Settings.php:24
-#: inc/Views/Builder/Navbar.php:60
+#: inc/Views/Builder/Navbar.php:69
 msgid "Central de ajuda"
 msgstr ""
 
@@ -557,6 +555,14 @@ msgstr ""
 #: inc/Views/Builder/Choose_Template.php:22
 msgid ""
 "Clique no botão do modelo de sua preferência para iniciar a criação do fluxo."
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:125
+msgid "Coleta de lead via checkout"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:115
+msgid "Coleta de lead via modal"
 msgstr ""
 
 #: inc/Validations/Country_Codes.php:50
@@ -676,6 +682,10 @@ msgstr ""
 msgid "Criar do zero"
 msgstr ""
 
+#: inc/Views/Builder/Navbar.php:54
+msgid "Criar um novo fluxo"
+msgstr ""
+
 #: inc/Integrations/OpenAI.php:38
 msgid ""
 "Crie mensagens dinâmicas para suas automações de uma forma simples e direta "
@@ -760,6 +770,7 @@ msgstr ""
 msgid "Código padrão do país"
 msgstr ""
 
+#: inc/Integrations/Flexify_Checkout.php:291
 #: inc/Integrations/Woocommerce.php:222 inc/Integrations/Wordpress.php:176
 msgid "da Silva"
 msgstr ""
@@ -834,7 +845,7 @@ msgstr ""
 msgid "Destinatário: *"
 msgstr ""
 
-#: inc/Core/Helpers.php:37
+#: inc/Core/Helpers.php:38
 msgid "dia"
 msgstr ""
 
@@ -846,7 +857,7 @@ msgstr ""
 msgid "Diariamente"
 msgstr ""
 
-#: inc/Core/Helpers.php:37
+#: inc/Core/Helpers.php:38
 msgid "dias"
 msgstr ""
 
@@ -1068,34 +1079,28 @@ msgstr ""
 msgid "Este acionamento é disparado quando o prazo de um assinatura expirou."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:104
+#: inc/Integrations/Flexify_Checkout.php:136
 msgid "Este acionamento é disparado quando o usuário abandona o carrinho."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:160
+#: inc/Integrations/Flexify_Checkout.php:126
 msgid ""
-"Este acionamento é disparado quando o usuário entra na etapa 1 da "
-"finalização de compras."
+"Este acionamento é disparado quando o usuário fornece seus dados de contato "
+"pelo checkout."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:166
+#: inc/Integrations/Flexify_Checkout.php:116
 msgid ""
-"Este acionamento é disparado quando o usuário entra na etapa 2 da "
-"finalização de compras."
+"Este acionamento é disparado quando o usuário fornece seus dados de contato "
+"via modal."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:172
-msgid ""
-"Este acionamento é disparado quando o usuário entra na etapa 3 da "
-"finalização de compras."
-msgstr ""
-
-#: inc/Integrations/Flexify_Checkout.php:118
+#: inc/Integrations/Flexify_Checkout.php:146
 msgid ""
 "Este acionamento é disparado quando um carrinho abandonado é recuperado."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:146
+#: inc/Integrations/Flexify_Checkout.php:166
 msgid "Este acionamento é disparado quando um carrinho é considerado perdido."
 msgstr ""
 
@@ -1141,7 +1146,7 @@ msgstr ""
 msgid "Este acionamento é disparado quando um pedido tem seu status alterado."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:132
+#: inc/Integrations/Flexify_Checkout.php:156
 msgid "Este acionamento é disparado quando um pedido é abandonado."
 msgstr ""
 
@@ -1293,18 +1298,15 @@ msgstr ""
 msgid "Finland"
 msgstr ""
 
-#: inc/Builder/Utils.php:97 inc/Integrations/Flexify_Checkout.php:190
+#: inc/Builder/Utils.php:97 inc/Integrations/Flexify_Checkout.php:188
 msgid "Flexify Checkout"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:109
-#: inc/Integrations/Flexify_Checkout.php:123
-#: inc/Integrations/Flexify_Checkout.php:137
-#: inc/Integrations/Flexify_Checkout.php:151
+#: inc/Integrations/Flexify_Checkout.php:107
 msgid "Flexify Checkout - Recuperação de carrinhos abandonados"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:76
+#: inc/Integrations/Flexify_Checkout.php:82
 msgid "Flexify Checkout para WooCommerce"
 msgstr ""
 
@@ -1466,7 +1468,7 @@ msgstr ""
 msgid "Hong Kong"
 msgstr ""
 
-#: inc/Core/Helpers.php:36
+#: inc/Core/Helpers.php:37
 msgid "hora"
 msgstr ""
 
@@ -1474,7 +1476,7 @@ msgstr ""
 msgid "Hora (s)"
 msgstr ""
 
-#: inc/Core/Helpers.php:36
+#: inc/Core/Helpers.php:37
 msgid "horas"
 msgstr ""
 
@@ -1620,7 +1622,7 @@ msgstr ""
 msgid "Italy"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:302
+#: inc/Integrations/Flexify_Checkout.php:348
 msgid "Itens no carrinho"
 msgstr ""
 
@@ -1630,6 +1632,10 @@ msgstr ""
 
 #: inc/Validations/Country_Codes.php:59
 msgid "Japan"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:307
+msgid "joaodasilva@email.com"
 msgstr ""
 
 #. label
@@ -1644,6 +1650,7 @@ msgstr ""
 msgid "Jordan"
 msgstr ""
 
+#: inc/Integrations/Flexify_Checkout.php:283
 #: inc/Integrations/Woocommerce.php:214 inc/Integrations/Wordpress.php:168
 msgid "João"
 msgstr ""
@@ -1727,10 +1734,8 @@ msgstr ""
 msgid "Limpar registros"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:274
-msgid ""
-"Link de recuperação do carrinho abandonado. Através da integração Flexify "
-"Checkout - Recuperação de carrinhos abandonados."
+#: inc/Integrations/Flexify_Checkout.php:312
+msgid "Link de recuperação do carrinho abandonado."
 msgstr ""
 
 #: inc/Validations/Country_Codes.php:137
@@ -1835,11 +1840,11 @@ msgstr ""
 msgid "Mensagem de texto: *"
 msgstr ""
 
-#: inc/Core/Helpers.php:39
+#: inc/Core/Helpers.php:40
 msgid "meses"
 msgstr ""
 
-#: inc/Integrations/Elementor.php:167 inc/Integrations/Flexify_Checkout.php:306
+#: inc/Integrations/Elementor.php:167 inc/Integrations/Flexify_Checkout.php:352
 #: inc/Integrations/Woocommerce.php:856 inc/Integrations/Wordpress.php:237
 #: inc/Integrations/Wordpress.php:247 inc/Integrations/Wordpress.php:253
 #: inc/Integrations/Wpforms.php:212
@@ -1863,7 +1868,7 @@ msgstr ""
 msgid "Minha automação de mensagens"
 msgstr ""
 
-#: inc/Core/Helpers.php:35
+#: inc/Core/Helpers.php:36
 msgid "minuto"
 msgstr ""
 
@@ -1871,7 +1876,7 @@ msgstr ""
 msgid "Minuto (s)"
 msgstr ""
 
-#: inc/Core/Helpers.php:35
+#: inc/Core/Helpers.php:36
 msgid "minutos"
 msgstr ""
 
@@ -1923,7 +1928,7 @@ msgstr ""
 msgid "Método de pagamento: *"
 msgstr ""
 
-#: inc/Core/Helpers.php:39
+#: inc/Core/Helpers.php:40
 msgid "mês"
 msgstr ""
 
@@ -2107,7 +2112,7 @@ msgstr ""
 msgid "Não foi possível recuperar o sobrenome do usuário"
 msgstr ""
 
-#: inc/Core/Updater.php:254
+#: inc/Core/Updater.php:247
 msgid ""
 "Não foi possível verificar atualizações para o plugin <strong>Joinotify."
 "</strong>"
@@ -2252,10 +2257,14 @@ msgstr ""
 msgid "Para recuperar o código do cupom de desconto."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:227
+#: inc/Integrations/Flexify_Checkout.php:225
 msgid ""
 "Para recuperar o código Pix Copia e Cola do pedido. Através da integração "
 "Flexify Checkout - Inter addon"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:304
+msgid "Para recuperar o e-mail de contato do carrinho."
 msgstr ""
 
 #: inc/Integrations/Woocommerce.php:227
@@ -2277,6 +2286,10 @@ msgstr ""
 
 #: inc/Integrations/Woocommerce.php:363
 msgid "Para recuperar o endereço de entrega do pedido do WooCommerce"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:280
+msgid "Para recuperar o nome do contato do carrinho."
 msgstr ""
 
 #: inc/Integrations/Wordpress.php:197
@@ -2302,6 +2315,10 @@ msgid ""
 "Para recuperar o sobrenome de faturamento do cliente no pedido do WooCommerce"
 msgstr ""
 
+#: inc/Integrations/Flexify_Checkout.php:288
+msgid "Para recuperar o sobrenome do contato do carrinho."
+msgstr ""
+
 #: inc/Integrations/Wordpress.php:173
 msgid "Para recuperar o sobrenome do usuário"
 msgstr ""
@@ -2314,6 +2331,10 @@ msgstr ""
 msgid "Para recuperar o símbolo de moeda do pedido"
 msgstr ""
 
+#: inc/Integrations/Flexify_Checkout.php:296
+msgid "Para recuperar o telefone de contato do carrinho."
+msgstr ""
+
 #: inc/Integrations/Woocommerce.php:243
 msgid "Para recuperar o telefone de entrega do pedido do WooCommerce"
 msgstr ""
@@ -2322,8 +2343,8 @@ msgstr ""
 msgid "Para recuperar o telefone de faturamento do pedido do WooCommerce"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:235
-#: inc/Integrations/Flexify_Checkout.php:243
+#: inc/Integrations/Flexify_Checkout.php:233
+#: inc/Integrations/Flexify_Checkout.php:241
 msgid ""
 "Para recuperar o tempo de expiração do Pix Copia e Cola. Através da "
 "integração Flexify Checkout - Inter addon"
@@ -2362,6 +2383,10 @@ msgstr ""
 
 #: inc/Integrations/Woocommerce.php:331
 msgid "Para recuperar o valor total de impostos do pedido do WooCommerce"
+msgstr ""
+
+#: inc/Integrations/Flexify_Checkout.php:320
+msgid "Para recuperar o valor total do carrinho."
 msgstr ""
 
 #: inc/Integrations/Woocommerce.php:315
@@ -2441,7 +2466,7 @@ msgid ""
 "acionamento."
 msgstr ""
 
-#: inc/Integrations/Elementor.php:168 inc/Integrations/Flexify_Checkout.php:307
+#: inc/Integrations/Elementor.php:168 inc/Integrations/Flexify_Checkout.php:353
 #: inc/Integrations/Wordpress.php:248 inc/Integrations/Wordpress.php:254
 msgid ""
 "Permite verificar metadados específicos do usuário que solicitou a "
@@ -2472,7 +2497,7 @@ msgstr ""
 msgid "Permite verificar o valor do reembolso do pedido."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:299
+#: inc/Integrations/Flexify_Checkout.php:345
 msgid "Permite verificar o valor total do carrinho abandonado."
 msgstr ""
 
@@ -2480,7 +2505,7 @@ msgstr ""
 msgid "Permite verificar o valor total do pedido."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:303
+#: inc/Integrations/Flexify_Checkout.php:349
 msgid "Permite verificar os itens presentes no carrinho abandonado."
 msgstr ""
 
@@ -2488,7 +2513,7 @@ msgstr ""
 msgid "Permite verificar os produtos adquiridos no pedido."
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:311
+#: inc/Integrations/Flexify_Checkout.php:357
 msgid "Permite verificar se o carrinho abandonado foi recuperado."
 msgstr ""
 
@@ -2599,6 +2624,10 @@ msgstr ""
 msgid "Rascunhos"
 msgstr ""
 
+#: inc/Views/Settings/Tabs/General.php:79
+msgid "Receber avisos quando WhatsApp estiver desconectado"
+msgstr ""
+
 #: inc/Core/Assets.php:189
 msgid "Recentes"
 msgstr ""
@@ -2607,7 +2636,7 @@ msgstr ""
 msgid "Recuperação de senha do usuário"
 msgstr ""
 
-#: inc/Integrations/Flexify_Checkout.php:77
+#: inc/Integrations/Flexify_Checkout.php:83
 msgid ""
 "Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a "
 "finalização de compras, garantindo mais conversões."
@@ -2753,7 +2782,7 @@ msgstr ""
 msgid "Saudi Arabia"
 msgstr ""
 
-#: inc/Core/Helpers.php:34
+#: inc/Core/Helpers.php:35
 msgid "segundo"
 msgstr ""
 
@@ -2761,7 +2790,7 @@ msgstr ""
 msgid "Segundo (s)"
 msgstr ""
 
-#: inc/Admin/Components.php:87 inc/Core/Helpers.php:34
+#: inc/Admin/Components.php:87 inc/Core/Helpers.php:35
 msgid "segundos"
 msgstr ""
 
@@ -2817,7 +2846,7 @@ msgstr ""
 msgid "Selecione uma ou mais ações para o fluxo da automação."
 msgstr ""
 
-#: inc/Core/Helpers.php:38
+#: inc/Core/Helpers.php:39
 msgid "semana"
 msgstr ""
 
@@ -2825,7 +2854,7 @@ msgstr ""
 msgid "Semana (s)"
 msgstr ""
 
-#: inc/Core/Helpers.php:38
+#: inc/Core/Helpers.php:39
 msgid "semanas"
 msgstr ""
 
@@ -3098,7 +3127,7 @@ msgstr ""
 msgid "Tonga"
 msgstr ""
 
-#: joinotify.php:183 joinotify.php:194
+#: joinotify.php:184 joinotify.php:195
 msgid "Trapaceando?"
 msgstr ""
 
@@ -3130,14 +3159,14 @@ msgstr ""
 msgid "Ukraine"
 msgstr ""
 
-#: inc/Core/Updater.php:446
+#: inc/Core/Updater.php:454
 #, php-format
 msgid ""
 "Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. "
 "<a href=\"%s\">Atualize agora</a>."
 msgstr ""
 
-#: inc/Core/Updater.php:233
+#: inc/Core/Updater.php:226
 msgid "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
 msgstr ""
 
@@ -3235,7 +3264,7 @@ msgstr ""
 msgid "Valor mínimo recomendado é 64M"
 msgstr ""
 
-#: inc/Builder/Components.php:837 inc/Integrations/Flexify_Checkout.php:298
+#: inc/Builder/Components.php:837 inc/Integrations/Flexify_Checkout.php:344
 msgid "Valor total do carrinho"
 msgstr ""
 
@@ -3299,7 +3328,7 @@ msgstr ""
 msgid "Verdadeiro"
 msgstr ""
 
-#: inc/Core/Updater.php:293
+#: inc/Core/Updater.php:286
 msgid "Verificar atualizações"
 msgstr ""
 
@@ -3355,7 +3384,7 @@ msgstr ""
 msgid "Voltar"
 msgstr ""
 
-#: inc/Views/Builder/Choose_Template.php:45 inc/Views/Builder/Navbar.php:54
+#: inc/Views/Builder/Choose_Template.php:45 inc/Views/Builder/Navbar.php:63
 msgid "Voltar para o painel"
 msgstr ""
 
