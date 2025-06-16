@@ -56,6 +56,18 @@ defined('ABSPATH') || exit; ?>
 			</td>
 		</tr>
 
+		<tr>
+			<th>
+				<?php esc_html_e( 'Mostrar notificações de atualização de versão', 'joinotify' ); ?>
+				<span class="joinotify-description"><?php esc_html_e( 'Ative essa opção para que você seja avisado sempre que houver uma nova atualização disponível.', 'joinotify' ); ?></span>
+			</th>
+			<td>
+				<div class="form-check form-switch">
+					<input type="checkbox" class="toggle-switch" id="enable_update_notice" name="enable_update_notice" value="yes" <?php checked( Admin::get_setting('enable_update_notice') === 'yes' ); ?> />
+				</div>
+			</td>
+		</tr>
+
 		<tr class="container-separator"></tr>
 
 		<tr>

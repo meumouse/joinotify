@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.3.3
+ * @version 1.3.4
  * @package MeuMouse.com
  */
 class Updater {
@@ -37,7 +37,7 @@ class Updater {
      * Construct function
      *
      * @since 1.0.0
-     * @version 1.3.3
+     * @version 1.3.4
      * @return void
      */
     public function __construct() {
@@ -59,7 +59,9 @@ class Updater {
         }
 
         // display new update on plugins list
-        add_action( 'admin_notices', array( $this, 'admin_update_notice' ) );
+        if ( Admin::get_setting('enable_update_notice') === 'yes' ) {
+            add_action( 'admin_notices', array( $this, 'admin_update_notice' ) );
+        }
     }
 
 
@@ -398,8 +400,8 @@ class Updater {
      * @return void
      */
     public static function check_daily_updates() {
-        delete_transient( 'joinotify_check_updates' );
-        delete_transient( 'joinotify_remote_data' );
+        delete_transient('joinotify_check_updates');
+        delete_transient('joinotify_remote_data');
 
         $updater = new self();
         $remote_data = $updater->request();
