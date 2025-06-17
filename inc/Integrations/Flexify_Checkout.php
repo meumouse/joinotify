@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.3.3
+ * @version 1.3.4
  * @package MeuMouse.com
  */
 class Flexify_Checkout extends Integrations_Base {
@@ -208,7 +208,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.3.3
+     * @version 1.3.4
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -311,7 +311,7 @@ class Flexify_Checkout extends Integrations_Base {
                     'triggers' => $fcrc_triggers,
                     'description' => esc_html__( 'Link de recuperação do carrinho abandonado.', 'joinotify' ),
                     'replacement' => array(
-                        'production' => class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Core') ? \MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers::generate_recovery_cart_link( $cart_id ) : '',
+                        'production' => class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers') ? \MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers::generate_recovery_cart_link( $cart_id ) : '',
                         'sandbox' => wc_get_checkout_url() . '?recovery_cart=10905',
                     ),
                 ),
