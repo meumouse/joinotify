@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Debug class
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.4
  * @package MeuMouse.com
  */
 class Debug {
@@ -38,7 +38,7 @@ class Debug {
      * Add styles and scripts for debug
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.3.4
      * @return void
      */
     public function debug_mode() {
@@ -56,7 +56,6 @@ class Debug {
         #joinotify_builder_funnel,
         #joinotify_triggers_group {
             margin-top: calc(5rem + 32px);
-            height: calc(100% - 6rem);
         }
 
         .offcanvas,
@@ -75,6 +74,11 @@ class Debug {
 
         #joinotify_builder_funnel {
             height: calc(100% - 8rem);
+        }
+
+        body.admin-bar #joinotify_choose_template_container {
+            height: calc(100% - 32px);
+            margin-top: 32px;
         }
 
 		<?php $css = ob_get_clean();

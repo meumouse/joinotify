@@ -4,7 +4,7 @@
 defined('ABSPATH') || exit; ?>
 
 <div id="joinotify_actions_group" class="">
-    <div class="actions-header mb-5">
+    <div class="actions-header mb-lg-3 mb-xxl-5">
         <div class="d-flex justify-content-between">
             <div>
                 <h2 class="sidebar-title fs-5"><?php esc_html_e( 'Adicionar uma ação', 'joinotify' ) ?></h2>

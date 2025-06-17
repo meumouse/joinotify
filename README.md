@@ -38,6 +38,13 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.4 (16/06/2025)
+* Correção de bugs
+     - Link de recuperação do carrinho é vazio (Flexify Checkout - Recuperação de carrinhos abandonados)
+* Otimizações
+     - Melhorias na responsividade em desktop
+* Recurso adicionado: Mostrar notificações de atualização de versão
+
 Versão 1.3.3 (10/06/2025)
 * Recurso adicionado: Receber avisos quando WhatsApp estiver desconectado
 * Recurso removido: Ao entrar na etapa 1 da integração Flexify Checkout
