@@ -230,14 +230,10 @@
 
     #joinotify_triggers_group {
         margin-top: 4rem !important;
-        width: 18rem !important;
     }
 
     .triggers-content-container {
-        width: calc(100% - 32rem) !important;
-        max-height: calc(100% - 14rem) !important;
-        left: 24rem !important;
-        top: 6rem !important;
+        top: 5rem !important;
     }
 
     .trigger-item {
@@ -615,6 +611,12 @@ label.custom-file-label:hover {
     transition: color .2s ease-in-out, border-color .2s ease-in-out, background-color .2s ease-in-out;
 }
 
+@media screen and (max-width: 1368px) {
+    .dropzone {
+        height: 12rem;
+    }
+}
+
 .dropzone.file-active {
     border-color: var(--joinotify-primary);
     background-color: rgba(var(--joinotify-primary-rgb), 0.15);
@@ -884,7 +886,7 @@ input.form-control:disabled {
 
 .triggers-content-container {
     width: calc(100% - 23rem);
-    min-height: 20rem;
+    min-height: calc(100% - 4rem);
     max-height: calc(100% - 13rem);
     padding: 3rem;
     left: 23rem;
@@ -896,6 +898,12 @@ input.form-control:disabled {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+@media screen and (min-width: 1400px) {
+    .triggers-content-container {
+        min-height: calc(100% - 7rem);
+    }
 }
 
 .triggers-content-wrapper.active .triggers-content-container {
@@ -1624,6 +1632,7 @@ input.toggle-switch.status:checked {
 }
 
 .choose-template-container {
+    height: 100dvh;
     opacity: 0;
     visibility: hidden;
     position: absolute;
@@ -1642,6 +1651,12 @@ input.toggle-switch.status:checked {
 .choose-template-container .title {
     font-size: 1.625rem;
     color: #495057;
+}
+
+#joinotify_import_template_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .placeholder-content {
@@ -1677,15 +1692,22 @@ input.toggle-switch.status:checked {
     display: flex;
     max-width: 900px;
     flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
     justify-content: center;
+    overflow: auto;
+    max-height: 45vh;
+    align-items: flex-start;
 }
 
 .template-item {
     width: 20rem;
     height: 10rem;
     margin: 1rem;
+}
+
+@media screen and (max-width: 1368px) {
+    .template-item {
+        width: 15rem;
+    }
 }
 
 .template-item:not(.placeholder-content) {
@@ -1699,7 +1721,7 @@ input.toggle-switch.status:checked {
 }
 
 .template-item-header .title {
-    font-size: 1.225rem;
+    font-size: 1.125rem;
 }
 
 .modal-backdrop {
@@ -2119,6 +2141,7 @@ textarea.edit-whatsapp-message-text {
 
 #joinotify_template_library_container {
     width: 95%;
+    height: 85vh;
     display: grid;
     align-items: center;
     justify-content: center;
