@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.3.4
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Flexify_Checkout extends Integrations_Base {
@@ -208,7 +208,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.3.4
+     * @version 1.3.5
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
