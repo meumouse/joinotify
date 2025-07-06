@@ -272,7 +272,7 @@ class Flexify_Checkout extends Integrations_Base {
             );
 
             // get cart id
-            $cart_id = $payload['cart_id'];
+            $cart_id = isset( $payload['cart_id'] ) ? $payload['cart_id'] : null;
 
             $placeholders['flexify_checkout'] = array(
                 '{{ fcrc_first_name }}' => array(
