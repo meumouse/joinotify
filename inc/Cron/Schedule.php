@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Cron;
 
+use MeuMouse\Joinotify\Core\Helpers;
+
 use WP_Cron;
 
 // Exit if accessed directly.
@@ -11,7 +13,7 @@ defined('ABSPATH') || exit;
  * Schedule messages for a future time or date
  * 
  * @since 1.0.0
- * @version 1.3.1
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Schedule {
@@ -64,7 +66,7 @@ class Schedule {
      * Schedule a message for a future time or date
      * 
      * @since 1.0.0
-     * @version 1.3.1
+     * @version 1.3.5
      * @param string $post_id | Post ID
      * @param array $context | Context data
      * @param string $delay_time | Time to delay in seconds
@@ -72,6 +74,9 @@ class Schedule {
      * @return bool
      */
     public static function schedule_actions( $post_id, $context, $delay_time, $action_data ) {
+        // clean all that object from context payload
+        $context = Helpers::strip_objects( $context );
+
         $timestamp = time() + $delay_time;
         $hook = 'joinotify_scheduled_actions_event';
 
@@ -165,6 +170,7 @@ class Schedule {
      * Update the coupon expiration date to the previous day after expiration
      *
      * @since 1.2.2
+     * @version 1.3.5
      * @param int $coupon_id | The WooCommerce coupon ID
      * @return void
      */
@@ -175,13 +181,11 @@ class Schedule {
     
         $coupon = new \WC_Coupon( $coupon_id );
     
-        // Set expiration to the previous day
-        $new_expiry_date = strtotime('yesterday');
-        $coupon->set_date_expires( $new_expiry_date );
-        $coupon->save();
-    
-        if (  JOINOTIFY_DEV_MODE ) {
-            error_log( "Coupon {$coupon_id} expiration updated to previous day" );
+        // remove coupon
+        wp_delete_post( $coupon_id, true );
+
+        if ( JOINOTIFY_DEV_MODE ) {
+            error_log( "Coupon {$coupon_id} deleted upon expiration" );
         }
     }
 }

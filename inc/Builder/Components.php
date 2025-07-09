@@ -433,6 +433,7 @@ class Components {
      * Render required settings for specific triggers
      * 
      * @since 1.1.0
+     * @version 1.3.5
      * @param int $post_id | Post ID
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return string

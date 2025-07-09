@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.3.2
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Helpers {
@@ -203,5 +203,34 @@ class Helpers {
      */
     public function validate_string( $param ) {
         return is_string( $param );
+    }
+
+
+    /**
+     * Remove recursively any object from an array
+     *
+     * @param mixed $data | Data to be cleaned
+     * @return mixed
+     */
+    public static function strip_objects( $data ) {
+        if ( is_array( $data ) ) {
+            $clean = array();
+
+            foreach ( $data as $key => $value ) {
+                if ( is_object( $value ) ) {
+                    // skip objects
+                    continue;
+                } elseif ( is_array( $value ) ) {
+                    // recursively for sub-arrays
+                    $clean[ $key ] = self::strip_objects( $value );
+                } else {
+                    $clean[ $key ] = $value;
+                }
+            }
+            return $clean;
+        }
+
+        // is not array, return as is (scalar, null, etc)
+        return $data;
     }
 }
