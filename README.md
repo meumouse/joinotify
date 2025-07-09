@@ -38,6 +38,11 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.5 (09/07/2025)
+* Correção de bugs
+     - Erro fatal ao alterar status de pedido: Uncaught Error: Class name must be a valid object or a string in /woocommerce/src/Internal/DataStores/Orders/OrdersTableDataStore.php:1524
+* Recurso adicionado: Validação de status do post no acionamento "Post tem status alterado"
+
 Versão 1.3.4 (16/06/2025)
 * Correção de bugs
      - Link de recuperação do carrinho é vazio (Flexify Checkout - Recuperação de carrinhos abandonados)

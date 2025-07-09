@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Joinotify\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-20 14:05+0000\n"
-"PO-Revision-Date: 2025-06-10 19:34+0000\n"
+"PO-Revision-Date: 2025-07-09 19:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Loco-Version: 2.6.12; wp-6.7\n"
 "X-Domain: joinotify"
 
-#: inc/Builder/Components.php:1243
+#: inc/Builder/Components.php:1258
 msgid "$object->item"
 msgstr "$object->item"
 
@@ -78,7 +78,7 @@ msgstr "<span class=\"builder-placeholder\">%s</span> no está vacío"
 msgid "<span class=\"builder-placeholder\">%s</span> é vazio"
 msgstr "<span class=\"builder-placeholder\">%s</span> está vacío"
 
-#: inc/Builder/Components.php:1092
+#: inc/Builder/Components.php:1107
 msgid ""
 "<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros "
 "no site."
@@ -118,7 +118,7 @@ msgstr "Cada 6 horas"
 msgid "A extensão cURL está faltando."
 msgstr "Falta la extensión cURL."
 
-#: inc/Builder/Components.php:1070
+#: inc/Builder/Components.php:1085
 msgid ""
 "A função WP-CRON está desabilitada neste site. Ative-o para usar a ação "
 "Tempo de espera."
@@ -126,11 +126,11 @@ msgstr ""
 "La función WP-CRON está deshabilitada en este sitio. Actívala para usar la "
 "acción Tiempo de espera."
 
-#: inc/Core/Updater.php:240
+#: inc/Core/Updater.php:242
 msgid "A versão do plugin <strong>Joinotify</strong> é a mais recente."
 msgstr "La versión del plugin <strong>Joinotify</strong> es la más reciente."
 
-#: inc/Views/Settings/Tabs/About.php:93
+#: inc/Views/Settings/Tabs/About.php:105
 msgid "A versão mínima exigida do PHP é 7.2"
 msgstr "La versión mínima requerida de PHP es 7.2"
 
@@ -147,8 +147,8 @@ msgctxt "add new on admin bar"
 msgid "Fluxo"
 msgstr "Flujo"
 
-#: inc/Builder/Components.php:563 inc/Builder/Components.php:586
-#: inc/Builder/Components.php:1171
+#: inc/Builder/Components.php:578 inc/Builder/Components.php:601
+#: inc/Builder/Components.php:1186
 msgid "Adicionar ação"
 msgstr "Añadir acción"
 
@@ -236,7 +236,7 @@ msgstr "Año(s)"
 msgid "anos"
 msgstr "años"
 
-#: inc/Views/Settings/Tabs/About.php:311
+#: inc/Views/Settings/Tabs/About.php:323
 msgid ""
 "Ao redefinir as configurações do plugin, todas opções serão removidas, "
 "voltando ao estado original. Sua licença não será removida."
@@ -281,11 +281,11 @@ msgstr "La suscripción está activada"
 msgid "Assinatura: Clube M - %s"
 msgstr "Suscripción: Club M - %s"
 
-#: inc/Views/Settings/Tabs/About.php:308
+#: inc/Views/Settings/Tabs/About.php:320
 msgid "Atenção! Você realmente deseja redefinir as configurações?"
 msgstr "¡Atención! ¿Realmente deseas restablecer la configuración?"
 
-#: inc/Builder/Components.php:816
+#: inc/Builder/Components.php:831
 msgid "Ativa"
 msgstr "Activa"
 
@@ -363,13 +363,23 @@ msgstr ""
 "Activa esta opción para que el plugin Joinotify se actualice automáticamente "
 "siempre que sea posible."
 
+#: inc/Views/Settings/Tabs/About.php:62
+msgid ""
+"Ative essa opção para que você seja avisado sempre que houver uma nova "
+"atualização disponível."
+msgstr ""
+
 #: inc/Core/Assets.php:193
 msgid "Atividades"
 msgstr "Actividades"
 
-#: inc/Core/Assets.php:176 inc/Views/Settings/Tabs/About.php:75
+#: inc/Core/Assets.php:176 inc/Views/Settings/Tabs/About.php:87
 msgid "Ativo"
 msgstr "Activo"
+
+#: inc/Core/Workflows_Table.php:56
+msgid "Ativos"
+msgstr ""
 
 #. Description of the plugin
 msgid ""
@@ -409,7 +419,7 @@ msgid ""
 "Automatize o envio de mensagens em acionamentos de eventos no WordPress."
 msgstr "Automatiza el envío de mensajes en eventos de activación en WordPress."
 
-#: inc/Builder/Components.php:698
+#: inc/Builder/Components.php:713
 msgid "Autor do post: *"
 msgstr "Autor del post: *"
 
@@ -521,13 +531,13 @@ msgstr "Campo con ID <span class=\"builder-placeholder\">%s</span> está vacío"
 msgid "Canada"
 msgstr "Canadá"
 
-#: inc/Builder/Components.php:818
+#: inc/Builder/Components.php:833
 msgid "Cancelada"
 msgstr "Cancelada"
 
 #: inc/Builder/Components.php:159 inc/Builder/Components.php:193
 #: inc/Builder/Components.php:283 inc/Builder/Components.php:415
-#: inc/Builder/Components.php:978 inc/Views/Builder/Choose_Template.php:108
+#: inc/Builder/Components.php:993 inc/Views/Builder/Choose_Template.php:108
 msgid "Cancelar"
 msgstr "Cancelar"
 
@@ -572,11 +582,11 @@ msgstr "Clave de API inválida o ausente."
 msgid "Chave de API:"
 msgstr "Clave de API:"
 
-#: inc/Builder/Components.php:670
+#: inc/Builder/Components.php:685
 msgid "Chave do meta dado"
 msgstr "Clave del meta dato"
 
-#: inc/Builder/Components.php:669
+#: inc/Builder/Components.php:684
 msgid "Chave: *"
 msgstr "Clave: *"
 
@@ -615,7 +625,7 @@ msgstr "Colombia"
 msgid "Comece a automatizar seu site a partir de um modelo"
 msgstr "Comienza a automatizar tu sitio a partir de un modelo"
 
-#: inc/Builder/Components.php:887
+#: inc/Builder/Components.php:902
 msgid "Começa com"
 msgstr "Comienza con"
 
@@ -656,7 +666,7 @@ msgstr "Condición"
 msgid "Condição: %s"
 msgstr "Condición: %s"
 
-#: inc/Builder/Components.php:894
+#: inc/Builder/Components.php:909
 msgid "Condição: *"
 msgstr "Condición: *"
 
@@ -700,7 +710,7 @@ msgstr "Configuraciones de la integración con WooCommerce"
 msgid "Continuar"
 msgstr "Continuar"
 
-#: inc/Builder/Components.php:885
+#: inc/Builder/Components.php:900
 msgid "Contém"
 msgstr "Contiene"
 
@@ -712,7 +722,7 @@ msgstr "Islas Cook"
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: inc/Core/Workflows_Table.php:93
+#: inc/Core/Workflows_Table.php:96
 msgid "Criado"
 msgstr "Creado"
 
@@ -815,7 +825,7 @@ msgid "Código padrão do país"
 msgstr "Código predeterminado del país"
 
 #: inc/Integrations/Flexify_Checkout.php:291
-#: inc/Integrations/Woocommerce.php:222 inc/Integrations/Wordpress.php:176
+#: inc/Integrations/Woocommerce.php:222 inc/Integrations/Wordpress.php:177
 msgid "da Silva"
 msgstr "da Silva"
 
@@ -831,10 +841,6 @@ msgstr "Datos inválidos."
 msgid "Defina um nome para este fluxo"
 msgstr "Define un nombre para este flujo"
 
-#: inc/Core/Workflows_Table.php:211
-msgid "Definir como rascunho"
-msgstr "Definir como borrador"
-
 #: inc/Integrations/Woocommerce.php:586
 msgid "Definir expiração do cupom"
 msgstr "Definir expiración del cupón"
@@ -847,7 +853,7 @@ msgstr "República Democrática del Congo"
 msgid "Denmark"
 msgstr "Dinamarca"
 
-#: inc/Views/Settings/Tabs/About.php:75
+#: inc/Views/Settings/Tabs/About.php:87
 msgid "Desativado"
 msgstr "Desactivado"
 
@@ -876,7 +882,7 @@ msgstr "Descripción del cupón (opcional)"
 msgid "Descrição."
 msgstr "Descripción."
 
-#: inc/Views/Settings/Tabs/About.php:274
+#: inc/Views/Settings/Tabs/About.php:286
 msgid "Desligado"
 msgstr "Apagado"
 
@@ -925,7 +931,7 @@ msgstr "Documentación"
 msgid "Documento"
 msgstr "Documento"
 
-#: inc/Views/Settings/Tabs/About.php:104
+#: inc/Views/Settings/Tabs/About.php:116
 msgid "DOMDocument:"
 msgstr "DOMDocument:"
 
@@ -933,11 +939,11 @@ msgstr "DOMDocument:"
 msgid "Dutch Caribbean"
 msgstr "Caribe Neerlandés"
 
-#: inc/Builder/Components.php:793 inc/Integrations/Woocommerce.php:860
+#: inc/Builder/Components.php:808 inc/Integrations/Woocommerce.php:860
 msgid "E-mail do cliente"
 msgstr "Correo electrónico del cliente"
 
-#: inc/Builder/Components.php:792
+#: inc/Builder/Components.php:807
 msgid "E-mail do cliente:"
 msgstr "Correo electrónico del cliente:"
 
@@ -949,7 +955,7 @@ msgstr "Timor Oriental"
 msgid "Ecuador"
 msgstr "Ecuador"
 
-#: inc/Core/Workflows_Table.php:141
+#: inc/Core/Workflows_Table.php:144
 msgid "Editar"
 msgstr "Editar"
 
@@ -965,7 +971,7 @@ msgstr "Editar condición"
 msgid "Editar fluxo"
 msgstr "Editar flujo"
 
-#: inc/Builder/Components.php:969 inc/Views/Builder/Navbar.php:36
+#: inc/Builder/Components.php:984 inc/Views/Builder/Navbar.php:36
 msgid "Editar título do fluxo"
 msgstr "Editar título del flujo"
 
@@ -986,7 +992,7 @@ msgstr "Elementor"
 msgid "Em breve"
 msgstr "Dentro de poco"
 
-#: inc/Builder/Components.php:817
+#: inc/Builder/Components.php:832
 msgid "Em espera"
 msgstr "En espera"
 
@@ -1077,7 +1083,7 @@ msgstr "Elige un remitente:"
 msgid "Escolher mídia"
 msgstr "Elegir medio"
 
-#: inc/Builder/Components.php:1060 inc/Integrations/Woocommerce.php:600
+#: inc/Builder/Components.php:1075 inc/Integrations/Woocommerce.php:600
 msgid "Esperar até"
 msgstr "Esperar hasta"
 
@@ -1091,11 +1097,11 @@ msgstr "Esperar hasta %s"
 msgid "Esperar até %s - %s"
 msgstr "Esperar hasta %s - %s"
 
-#: inc/Builder/Components.php:1041 inc/Integrations/Woocommerce.php:595
+#: inc/Builder/Components.php:1056 inc/Integrations/Woocommerce.php:595
 msgid "Esperar até uma data"
 msgstr "Esperar hasta una fecha"
 
-#: inc/Builder/Components.php:1046 inc/Integrations/Woocommerce.php:609
+#: inc/Builder/Components.php:1061 inc/Integrations/Woocommerce.php:609
 msgid "Esperar por"
 msgstr "Esperar por"
 
@@ -1104,7 +1110,7 @@ msgstr "Esperar por"
 msgid "Esperar por %s %s"
 msgstr "Esperar por %s %s"
 
-#: inc/Builder/Components.php:1040 inc/Integrations/Woocommerce.php:594
+#: inc/Builder/Components.php:1055 inc/Integrations/Woocommerce.php:594
 msgid "Esperar tempo"
 msgstr "Esperar tiempo"
 
@@ -1112,7 +1118,7 @@ msgstr "Esperar tiempo"
 msgid "Essa opção controla o prefixo do cupom criado automaticamente."
 msgstr "Esta opción controla el prefijo del cupón creado automáticamente."
 
-#: inc/Builder/Components.php:1165
+#: inc/Builder/Components.php:1180
 msgid "Esta ação não necessita de configurações auxiliares."
 msgstr "Esta acción no requiere configuraciones adicionales."
 
@@ -1196,7 +1202,7 @@ msgstr ""
 "Este activador se dispara cuando se recibe un nuevo pedido en WooCommerce "
 "con estado procesando."
 
-#: inc/Integrations/Wordpress.php:96
+#: inc/Integrations/Wordpress.php:97
 msgid ""
 "Este acionamento é disparado quando um novo registro de usuário é recebido."
 msgstr ""
@@ -1228,18 +1234,18 @@ msgstr ""
 msgid "Este acionamento é disparado quando um pedido é totalmente reembolsado."
 msgstr "Este activador se dispara cuando un pedido es reembolsado totalmente."
 
-#: inc/Integrations/Wordpress.php:114
+#: inc/Integrations/Wordpress.php:115
 msgid ""
 "Este acionamento é disparado quando um post tem o status alterado no site."
 msgstr ""
 "Este activador se dispara cuando un post tiene su estado cambiado en el "
 "sitio."
 
-#: inc/Integrations/Wordpress.php:102
+#: inc/Integrations/Wordpress.php:103
 msgid "Este acionamento é disparado quando um usuário fizer login no site."
 msgstr "Este activador se dispara cuando un usuario inicia sesión en el sitio."
 
-#: inc/Integrations/Wordpress.php:108
+#: inc/Integrations/Wordpress.php:109
 msgid ""
 "Este acionamento é disparado quando um usuário solicitar recuperação de "
 "senha no site."
@@ -1305,11 +1311,11 @@ msgstr "Etiopía"
 msgid "Excluir ação"
 msgstr "Eliminar acción"
 
-#: inc/Core/Workflows_Table.php:128 inc/Core/Workflows_Table.php:204
+#: inc/Core/Workflows_Table.php:131 inc/Core/Workflows_Table.php:208
 msgid "Excluir permanentemente"
 msgstr "Eliminar permanentemente"
 
-#: inc/Builder/Components.php:1145
+#: inc/Builder/Components.php:1160
 msgid "Expandir"
 msgstr "Expandir"
 
@@ -1332,11 +1338,11 @@ msgstr "Expira en %s - %s"
 msgid "Exportar fluxo"
 msgstr "Exportar flujo"
 
-#: inc/Views/Settings/Tabs/About.php:120
+#: inc/Views/Settings/Tabs/About.php:132
 msgid "Extensão cURL:"
 msgstr "Extensión cURL:"
 
-#: inc/Views/Settings/Tabs/About.php:139
+#: inc/Views/Settings/Tabs/About.php:151
 msgid "Extensão OpenSSL:"
 msgstr "Extensión OpenSSL:"
 
@@ -1352,7 +1358,7 @@ msgstr "Error al enviar mensaje de texto."
 msgid "Falkland Islands (Malvinas)"
 msgstr "Islas Malvinas (Falkland)"
 
-#: inc/Builder/Components.php:547
+#: inc/Builder/Components.php:562
 msgid "Falso"
 msgstr "Falso"
 
@@ -1360,8 +1366,8 @@ msgstr "Falso"
 msgid "Faroe Islands"
 msgstr "Islas Feroe"
 
-#: inc/Builder/Components.php:970 inc/Builder/Components.php:1012
-#: inc/Builder/Components.php:1154 inc/Core/Assets.php:108
+#: inc/Builder/Components.php:985 inc/Builder/Components.php:1027
+#: inc/Builder/Components.php:1169 inc/Core/Assets.php:108
 #: inc/Integrations/Whatsapp.php:121 inc/Integrations/Woocommerce.php:467
 #: inc/Views/Settings/Tabs/About.php:29 inc/Views/Settings/Tabs/General.php:49
 #: inc/Views/Settings/Tabs/Phones.php:36 inc/Views/Settings/Tabs/Phones.php:54
@@ -1429,7 +1435,7 @@ msgstr "Forma de entrega"
 msgid "Forma de pagamento"
 msgstr "Forma de pago"
 
-#: inc/Builder/Components.php:469
+#: inc/Builder/Components.php:470
 msgid "Formulário do WPForms: *"
 msgstr "Formulario de WPForms: *"
 
@@ -1454,15 +1460,15 @@ msgstr "Polinesia Francesa"
 msgid "Frete grátis: %s"
 msgstr "Envío gratis: %s"
 
-#: inc/Integrations/Wordpress.php:233 inc/Integrations/Wordpress.php:243
+#: inc/Integrations/Wordpress.php:234 inc/Integrations/Wordpress.php:244
 msgid "Função do usuário"
 msgstr "Función del usuario"
 
-#: inc/Builder/Components.php:654
+#: inc/Builder/Components.php:669
 msgid "Função do usuário: *"
 msgstr "Función del usuario: *"
 
-#: inc/Views/Settings/Tabs/About.php:270
+#: inc/Views/Settings/Tabs/About.php:282
 msgid "Função PHP \"file_get_content\":"
 msgstr "Función PHP \"file_get_content\":"
 
@@ -1582,7 +1588,7 @@ msgstr "Islandia"
 msgid "ID copiado!"
 msgstr "¡ID copiado!"
 
-#: inc/Builder/Components.php:851
+#: inc/Builder/Components.php:866
 msgid "ID do campo"
 msgstr "ID del campo"
 
@@ -1590,7 +1596,7 @@ msgstr "ID del campo"
 msgid "ID do campo de destinatário"
 msgstr "ID del campo de destinatario"
 
-#: inc/Builder/Components.php:850
+#: inc/Builder/Components.php:865
 msgid "ID do campo:"
 msgstr "ID del campo:"
 
@@ -1625,6 +1631,10 @@ msgstr "Importar un modelo"
 #: inc/Views/Builder/Navbar.php:23
 msgid "Inativo"
 msgstr "Inactivo"
+
+#: inc/Core/Workflows_Table.php:61
+msgid "Inativos"
+msgstr ""
 
 #: inc/Validations/Country_Codes.php:64
 msgid "India"
@@ -1741,7 +1751,7 @@ msgid "Jordan"
 msgstr "Jordania"
 
 #: inc/Integrations/Flexify_Checkout.php:283
-#: inc/Integrations/Woocommerce.php:214 inc/Integrations/Wordpress.php:168
+#: inc/Integrations/Woocommerce.php:214 inc/Integrations/Wordpress.php:169
 msgid "João"
 msgstr "Juan"
 
@@ -1808,15 +1818,15 @@ msgstr "Licencia expirada"
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
-#: inc/Views/Settings/Tabs/About.php:278
+#: inc/Views/Settings/Tabs/About.php:290
 msgid "Ligado"
 msgstr "Encendido"
 
-#: inc/Views/Settings/Tabs/About.php:228
+#: inc/Views/Settings/Tabs/About.php:240
 msgid "Limite de memória do PHP:"
 msgstr "Límite de memoria de PHP:"
 
-#: inc/Views/Settings/Tabs/About.php:184
+#: inc/Views/Settings/Tabs/About.php:196
 msgid "Limite de tempo do PHP:"
 msgstr "Límite de tiempo de PHP:"
 
@@ -1832,11 +1842,11 @@ msgstr "Enlace de recuperación de carrito abandonado."
 msgid "Lithuania"
 msgstr "Lituania"
 
-#: inc/Core/Workflows_Table.php:64
+#: inc/Core/Workflows_Table.php:66
 msgid "Lixeira"
 msgstr "Papelera"
 
-#: inc/Integrations/Wordpress.php:101
+#: inc/Integrations/Wordpress.php:102
 msgid "Login do usuário"
 msgstr "Inicio de sesión del usuario"
 
@@ -1852,7 +1862,7 @@ msgstr "Macao"
 msgid "Madagascar"
 msgstr "Madagascar"
 
-#: inc/Builder/Components.php:889
+#: inc/Builder/Components.php:904
 msgid "Maior que"
 msgstr "Mayor que"
 
@@ -1881,6 +1891,14 @@ msgstr "Malí"
 msgid "Malta"
 msgstr "Malta"
 
+#: inc/Core/Workflows_Table.php:214
+msgid "Marcar como ativo"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:215
+msgid "Marcar como inativo"
+msgstr ""
+
 #: inc/Validations/Country_Codes.php:197
 msgid "Marshall Islands"
 msgstr "Islas Marshall"
@@ -1901,7 +1919,7 @@ msgstr "Mauricio"
 msgid "Mayotte"
 msgstr "Mayotte"
 
-#: inc/Builder/Components.php:890
+#: inc/Builder/Components.php:905
 msgid "Menor que"
 msgstr "Menor que"
 
@@ -1935,8 +1953,8 @@ msgid "meses"
 msgstr "meses"
 
 #: inc/Integrations/Elementor.php:167 inc/Integrations/Flexify_Checkout.php:352
-#: inc/Integrations/Woocommerce.php:856 inc/Integrations/Wordpress.php:237
-#: inc/Integrations/Wordpress.php:247 inc/Integrations/Wordpress.php:253
+#: inc/Integrations/Woocommerce.php:856 inc/Integrations/Wordpress.php:238
+#: inc/Integrations/Wordpress.php:248 inc/Integrations/Wordpress.php:254
 #: inc/Integrations/Wpforms.php:212
 msgid "Meta dados do usuário"
 msgstr "Metadatos del usuario"
@@ -1970,7 +1988,7 @@ msgstr "Minuto(s)"
 msgid "minutos"
 msgstr "minutos"
 
-#: inc/Views/Settings/Tabs/About.php:74
+#: inc/Views/Settings/Tabs/About.php:86
 msgid "Modo de depuração do WordPress:"
 msgstr "Modo de depuración de WordPress:"
 
@@ -1998,7 +2016,11 @@ msgstr "Montenegro"
 msgid "Morocco"
 msgstr "Marruecos"
 
-#: inc/Core/Workflows_Table.php:146 inc/Core/Workflows_Table.php:209
+#: inc/Views/Settings/Tabs/About.php:61
+msgid "Mostrar notificações de atualização de versão"
+msgstr ""
+
+#: inc/Core/Workflows_Table.php:149 inc/Core/Workflows_Table.php:213
 msgid "Mover para lixeira"
 msgstr "Mover a la papelera"
 
@@ -2010,11 +2032,11 @@ msgstr "Mozambique"
 msgid "Myanmar"
 msgstr "Myanmar"
 
-#: inc/Builder/Components.php:777
+#: inc/Builder/Components.php:792
 msgid "Método de entrega: *"
 msgstr "Método de entrega: *"
 
-#: inc/Builder/Components.php:760
+#: inc/Builder/Components.php:775
 msgid "Método de pagamento: *"
 msgstr "Método de pago: *"
 
@@ -2070,7 +2092,7 @@ msgstr "Ninguna condición disponible para esta acción"
 msgid "Nenhuma condição foi definida para esta ação."
 msgstr "Ninguna condición fue definida para esta acción."
 
-#: inc/Builder/Components.php:861
+#: inc/Builder/Components.php:876
 msgid "Nenhuma configuração disponível para esta condição"
 msgstr "Ninguna configuración disponible para esta condición"
 
@@ -2110,19 +2132,19 @@ msgstr "Nigeria"
 msgid "Niue"
 msgstr "Niue"
 
-#: inc/Core/Workflows_Table.php:92
+#: inc/Core/Workflows_Table.php:95
 msgid "Nome"
 msgstr "Nombre"
 
-#: inc/Builder/Components.php:1235
+#: inc/Builder/Components.php:1250
 msgid "Nome da variável de texto"
 msgstr "Nombre de la variable de texto"
 
-#: inc/Builder/Components.php:699
+#: inc/Builder/Components.php:714
 msgid "Nome do autor"
 msgstr "Nombre del autor"
 
-#: inc/Builder/Components.php:1237
+#: inc/Builder/Components.php:1252
 msgid "nome_da_variavel"
 msgstr "nombre_de_variable"
 
@@ -2162,7 +2184,7 @@ msgstr "Nuevo pedido"
 msgid "Novo pedido (Processando)"
 msgstr "Nuevo pedido (Procesando)"
 
-#: inc/Integrations/Wordpress.php:95
+#: inc/Integrations/Wordpress.php:96
 msgid "Novo registro de usuário"
 msgstr "Nuevo registro de usuario"
 
@@ -2170,15 +2192,15 @@ msgstr "Nuevo registro de usuario"
 msgid "Nunca expira"
 msgstr "Nunca expira"
 
-#: inc/Builder/Components.php:829 inc/Builder/Messages.php:230
+#: inc/Builder/Components.php:844 inc/Builder/Messages.php:230
 #: inc/Builder/Messages.php:231 inc/Integrations/Elementor_Forms.php:153
 #: inc/Integrations/Elementor_Forms.php:196
-#: inc/Views/Settings/Tabs/About.php:71 inc/Views/Settings/Tabs/About.php:109
-#: inc/Views/Settings/Tabs/About.php:125 inc/Views/Settings/Tabs/About.php:144
+#: inc/Views/Settings/Tabs/About.php:83 inc/Views/Settings/Tabs/About.php:121
+#: inc/Views/Settings/Tabs/About.php:137 inc/Views/Settings/Tabs/About.php:156
 msgid "Não"
 msgstr "No"
 
-#: inc/Builder/Components.php:886
+#: inc/Builder/Components.php:901
 msgid "Não contém"
 msgstr "No contiene"
 
@@ -2186,23 +2208,23 @@ msgstr "No contiene"
 msgid "Não disponível"
 msgstr "No disponible"
 
-#: inc/Builder/Components.php:884
+#: inc/Builder/Components.php:899
 msgid "Não está vazio"
 msgstr "No está vacío"
 
-#: inc/Integrations/Wordpress.php:183
+#: inc/Integrations/Wordpress.php:184
 msgid "Não foi possível recuperar o e-mail do usuário"
 msgstr "No se pudo recuperar el correo electrónico del usuario"
 
-#: inc/Integrations/Wordpress.php:167
+#: inc/Integrations/Wordpress.php:168
 msgid "Não foi possível recuperar o nome do usuário"
 msgstr "No se pudo recuperar el nombre del usuario"
 
-#: inc/Integrations/Wordpress.php:175
+#: inc/Integrations/Wordpress.php:176
 msgid "Não foi possível recuperar o sobrenome do usuário"
 msgstr "No se pudo recuperar el apellido del usuario"
 
-#: inc/Core/Updater.php:247
+#: inc/Core/Updater.php:249
 msgid ""
 "Não foi possível verificar atualizações para o plugin <strong>Joinotify."
 "</strong>"
@@ -2210,7 +2232,7 @@ msgstr ""
 "No se pudo verificar actualizaciones para el plugin <strong>Joinotify."
 "</strong>"
 
-#: inc/Builder/Components.php:882
+#: inc/Builder/Components.php:897
 msgid "Não é"
 msgstr "No es"
 
@@ -2226,11 +2248,11 @@ msgstr "El nombre servirá para control interno de este flujo"
 msgid "Objetos"
 msgstr "Objetos"
 
-#: inc/Builder/Components.php:1232
+#: inc/Builder/Components.php:1247
 msgid "Obter dados de amostra"
 msgstr "Obtener datos de muestra"
 
-#: inc/Builder/Components.php:995 inc/Builder/Components.php:1011
+#: inc/Builder/Components.php:1010 inc/Builder/Components.php:1026
 msgid "Obter informações de grupos"
 msgstr "Obtener información de grupos"
 
@@ -2278,7 +2300,7 @@ msgstr "El pago de la renovación falló"
 msgid "Pagamento da renovação recebido"
 msgstr "Pago de la renovación recibido"
 
-#: inc/Builder/Components.php:825
+#: inc/Builder/Components.php:840
 msgid "Pagamento da renovação: *"
 msgstr "Pago de la renovación: *"
 
@@ -2306,7 +2328,7 @@ msgstr "Panamá"
 msgid "Papua New Guinea"
 msgstr "Papúa Nueva Guinea"
 
-#: inc/Integrations/Wordpress.php:205
+#: inc/Integrations/Wordpress.php:206
 msgid "Para recuperar a data atual"
 msgstr "Para recuperar la fecha actual"
 
@@ -2345,7 +2367,7 @@ msgstr ""
 msgid "Para recuperar a URL de pagamento do pedido"
 msgstr "Para recuperar la URL de pago del pedido"
 
-#: inc/Integrations/Wordpress.php:189
+#: inc/Integrations/Wordpress.php:190
 msgid "Para recuperar a URL do site"
 msgstr "Para recuperar la URL del sitio"
 
@@ -2380,7 +2402,7 @@ msgstr ""
 "Para recuperar el correo electrónico de facturación del cliente en el pedido "
 "de WooCommerce"
 
-#: inc/Integrations/Wordpress.php:181
+#: inc/Integrations/Wordpress.php:182
 msgid "Para recuperar o e-mail do usuário"
 msgstr "Para recuperar el correo electrónico del usuario"
 
@@ -2400,7 +2422,7 @@ msgstr "Para recuperar la dirección de entrega del pedido de WooCommerce"
 msgid "Para recuperar o nome do contato do carrinho."
 msgstr "Para recuperar el nombre de contacto del carrito."
 
-#: inc/Integrations/Wordpress.php:197
+#: inc/Integrations/Wordpress.php:198
 msgid "Para recuperar o nome do site"
 msgstr "Para recuperar el nombre del sitio"
 
@@ -2416,7 +2438,7 @@ msgstr ""
 "Para recuperar el primer nombre de facturación del cliente en el pedido de "
 "WooCommerce"
 
-#: inc/Integrations/Wordpress.php:165
+#: inc/Integrations/Wordpress.php:166
 msgid "Para recuperar o primeiro nome do usuário"
 msgstr "Para recuperar el primer nombre del usuario"
 
@@ -2431,7 +2453,7 @@ msgstr ""
 msgid "Para recuperar o sobrenome do contato do carrinho."
 msgstr "Para recuperar el apellido del contacto del carrito."
 
-#: inc/Integrations/Wordpress.php:173
+#: inc/Integrations/Wordpress.php:174
 msgid "Para recuperar o sobrenome do usuário"
 msgstr "Para recuperar el apellido del usuario"
 
@@ -2523,7 +2545,7 @@ msgid "Para recuperar os códigos de cupom utilizados no pedido do WooCommerce"
 msgstr ""
 "Para recuperar los códigos de cupón utilizados en el pedido de WooCommerce"
 
-#: inc/Integrations/Wordpress.php:213
+#: inc/Integrations/Wordpress.php:214
 msgid ""
 "Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que "
 "deseja recuperar o valor. Exemplo: billing_phone"
@@ -2576,15 +2598,15 @@ msgstr "Permite verificar la forma de entrega del pedido."
 msgid "Permite verificar a forma de pagamento do pedido."
 msgstr "Permite verificar la forma de pago del pedido."
 
-#: inc/Integrations/Wordpress.php:234
+#: inc/Integrations/Wordpress.php:235
 msgid "Permite verificar a função do usuário que disparou o acionamento."
 msgstr "Permite verificar la función del usuario que activó el disparador."
 
-#: inc/Integrations/Wordpress.php:244
+#: inc/Integrations/Wordpress.php:245
 msgid "Permite verificar a função do usuário que fez o login."
 msgstr "Permite verificar la función del usuario que inició sesión."
 
-#: inc/Integrations/Wordpress.php:238
+#: inc/Integrations/Wordpress.php:239
 msgid ""
 "Permite verificar metadados específicos do usuário que disparou o "
 "acionamento."
@@ -2592,7 +2614,7 @@ msgstr ""
 "Permite verificar metadatos específicos del usuario que activó el disparador."
 
 #: inc/Integrations/Elementor.php:168 inc/Integrations/Flexify_Checkout.php:353
-#: inc/Integrations/Wordpress.php:248 inc/Integrations/Wordpress.php:254
+#: inc/Integrations/Wordpress.php:249 inc/Integrations/Wordpress.php:255
 msgid ""
 "Permite verificar metadados específicos do usuário que solicitou a "
 "redefinição de senha."
@@ -2617,7 +2639,7 @@ msgstr "Permite verificar el estado de la suscripción creada."
 msgid "Permite verificar o status do pedido."
 msgstr "Permite verificar el estado del pedido."
 
-#: inc/Integrations/Wordpress.php:260
+#: inc/Integrations/Wordpress.php:261
 msgid "Permite verificar o tipo de post que foi publicado."
 msgstr "Permite verificar el tipo de publicación que fue publicada."
 
@@ -2675,7 +2697,7 @@ msgstr "Buscar flujos"
 msgid "Pesquisar por fluxos"
 msgstr "Buscar por flujos"
 
-#: inc/Builder/Components.php:746 inc/Builder/Components.php:844
+#: inc/Builder/Components.php:761 inc/Builder/Components.php:859
 msgid "Pesquise os produtos que deseja incluir"
 msgstr "Busque los productos que desea incluir"
 
@@ -2683,7 +2705,7 @@ msgstr "Busque los productos que desea incluir"
 msgid "Philippines"
 msgstr "Filipinas"
 
-#: inc/Views/Settings/Tabs/About.php:78
+#: inc/Views/Settings/Tabs/About.php:90
 msgid "Plugin"
 msgstr "Plugin"
 
@@ -2695,7 +2717,7 @@ msgstr "Polonia"
 msgid "Portugal"
 msgstr "Portugal"
 
-#: inc/Integrations/Wordpress.php:113
+#: inc/Integrations/Wordpress.php:114
 msgid "Post tem status alterado"
 msgstr "La publicación tiene el estado cambiado"
 
@@ -2721,37 +2743,25 @@ msgstr "Busque por categorías o nombres."
 msgid "Produtos adquiridos"
 msgstr "Productos adquiridos"
 
-#: inc/Builder/Components.php:741
+#: inc/Builder/Components.php:756
 msgid "Produtos adquiridos:"
 msgstr "Productos adquiridos:"
 
-#: inc/Builder/Components.php:843
+#: inc/Builder/Components.php:858
 msgid "Produtos no carrinho:"
 msgstr "Productos en el carrito:"
-
-#: inc/Core/Workflows_Table.php:54
-msgid "Publicados"
-msgstr "Publicados"
-
-#: inc/Core/Workflows_Table.php:210
-msgid "Publicar"
-msgstr "Publicar"
 
 #: inc/Validations/Country_Codes.php:218
 msgid "Qatar"
 msgstr "Catar"
 
-#: inc/Builder/Components.php:458
+#: inc/Builder/Components.php:459 inc/Builder/Components.php:490
 msgid "Qualquer status"
 msgstr "Cualquier estado"
 
-#: inc/Core/Workflows_Table.php:155
+#: inc/Core/Workflows_Table.php:158
 msgid "Rascunho"
 msgstr "Borrador"
-
-#: inc/Core/Workflows_Table.php:59
-msgid "Rascunhos"
-msgstr "Borradores"
 
 #: inc/Views/Settings/Tabs/General.php:79
 msgid "Receber avisos quando WhatsApp estiver desconectado"
@@ -2761,7 +2771,7 @@ msgstr "Recibir notificaciones cuando WhatsApp esté desconectado"
 msgid "Recentes"
 msgstr "Recientes"
 
-#: inc/Integrations/Wordpress.php:107
+#: inc/Integrations/Wordpress.php:108
 msgid "Recuperação de senha do usuário"
 msgstr "Recuperación de contraseña del usuario"
 
@@ -2773,7 +2783,7 @@ msgstr ""
 "Recupere ventas no finalizadas, envíe el código Pix en WhatsApp y optimice "
 "la finalización de compras, garantizando más conversiones."
 
-#: inc/Views/Settings/Tabs/About.php:293
+#: inc/Views/Settings/Tabs/About.php:305
 msgid "Redefinir configurações"
 msgstr "Restablecer configuraciones"
 
@@ -2814,7 +2824,7 @@ msgstr "Eliminar"
 msgid "Renovação da assinatura expirou"
 msgstr "La renovación de la suscripción ha expirado"
 
-#: inc/Views/Settings/Tabs/About.php:323
+#: inc/Views/Settings/Tabs/About.php:335
 msgid "Reportar problemas"
 msgstr "Reportar problemas"
 
@@ -2830,11 +2840,11 @@ msgstr "Respuesta desconocida"
 msgid "Resposta vazia."
 msgstr "Respuesta vacía."
 
-#: inc/Core/Workflows_Table.php:133 inc/Core/Workflows_Table.php:205
+#: inc/Core/Workflows_Table.php:136 inc/Core/Workflows_Table.php:209
 msgid "Restaurar"
 msgstr "Restaurar"
 
-#: inc/Builder/Components.php:1149
+#: inc/Builder/Components.php:1164
 msgid "Retrair"
 msgstr "Retraer"
 
@@ -2899,7 +2909,7 @@ msgstr "San Pedro y Miquelón"
 
 #: inc/Builder/Components.php:160 inc/Builder/Components.php:194
 #: inc/Builder/Components.php:284 inc/Builder/Components.php:416
-#: inc/Builder/Components.php:979 inc/Views/Settings.php:61
+#: inc/Builder/Components.php:994 inc/Views/Settings.php:61
 msgid "Salvar alterações"
 msgstr "Guardar cambios"
 
@@ -2927,7 +2937,7 @@ msgstr "Segundo(s)"
 msgid "segundos"
 msgstr "segundos"
 
-#: inc/Builder/Components.php:1037
+#: inc/Builder/Components.php:1052
 msgid "Selecione o tipo de atraso da próxima ação"
 msgstr "Seleccione el tipo de retraso de la próxima acción"
 
@@ -2935,15 +2945,15 @@ msgstr "Seleccione el tipo de retraso de la próxima acción"
 msgid "Selecione o tipo de expiração"
 msgstr "Seleccione el tipo de expiración"
 
-#: inc/Builder/Components.php:472
+#: inc/Builder/Components.php:473
 msgid "Selecione um formulário"
 msgstr "Seleccione un formulario"
 
-#: inc/Builder/Components.php:780
+#: inc/Builder/Components.php:795
 msgid "Selecione um método de entrega"
 msgstr "Seleccione un método de entrega"
 
-#: inc/Builder/Components.php:763
+#: inc/Builder/Components.php:778
 msgid "Selecione um método de pagamento"
 msgstr "Seleccione un método de pago"
 
@@ -2956,19 +2966,19 @@ msgstr ""
 "predeterminado del país se usará cuando no sea posible obtener el código de "
 "país del teléfono."
 
-#: inc/Builder/Components.php:712
+#: inc/Builder/Components.php:727
 msgid "Selecione um status"
 msgstr "Seleccione un estado"
 
-#: inc/Builder/Components.php:687
+#: inc/Builder/Components.php:702
 msgid "Selecione um tipo de post"
 msgstr "Seleccione un tipo de publicación"
 
-#: inc/Builder/Components.php:896
+#: inc/Builder/Components.php:911
 msgid "Selecione uma condição"
 msgstr "Seleccione una condición"
 
-#: inc/Builder/Components.php:1063 inc/Integrations/Woocommerce.php:603
+#: inc/Builder/Components.php:1078 inc/Integrations/Woocommerce.php:603
 msgid "Selecione uma data"
 msgstr "Seleccione una fecha"
 
@@ -3012,7 +3022,7 @@ msgstr "Senegal"
 msgid "Serbia"
 msgstr "Serbia"
 
-#: inc/Views/Settings/Tabs/About.php:83
+#: inc/Views/Settings/Tabs/About.php:95
 msgid "Servidor"
 msgstr "Servidor"
 
@@ -3024,15 +3034,15 @@ msgstr "Seychelles"
 msgid "Sierra Leone"
 msgstr "Sierra Leona"
 
-#: inc/Builder/Components.php:828 inc/Builder/Messages.php:230
+#: inc/Builder/Components.php:843 inc/Builder/Messages.php:230
 #: inc/Builder/Messages.php:231 inc/Integrations/Elementor_Forms.php:152
 #: inc/Integrations/Elementor_Forms.php:195
-#: inc/Views/Settings/Tabs/About.php:71 inc/Views/Settings/Tabs/About.php:113
-#: inc/Views/Settings/Tabs/About.php:129 inc/Views/Settings/Tabs/About.php:148
+#: inc/Views/Settings/Tabs/About.php:83 inc/Views/Settings/Tabs/About.php:125
+#: inc/Views/Settings/Tabs/About.php:141 inc/Views/Settings/Tabs/About.php:160
 msgid "Sim"
 msgstr "Sí"
 
-#: inc/Views/Settings/Tabs/About.php:315
+#: inc/Views/Settings/Tabs/About.php:327
 msgid "Sim, desejo redefinir"
 msgstr "Sí, deseo restablecer"
 
@@ -3088,7 +3098,7 @@ msgstr "España"
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
 
-#: inc/Core/Workflows_Table.php:94
+#: inc/Core/Workflows_Table.php:97
 msgid "Status"
 msgstr "Estado"
 
@@ -3096,7 +3106,7 @@ msgstr "Estado"
 msgid "Status da assinatura"
 msgstr "Estado de la suscripción"
 
-#: inc/Builder/Components.php:813
+#: inc/Builder/Components.php:828
 msgid "Status da assinatura: *"
 msgstr "Estado de la suscripción: *"
 
@@ -3112,15 +3122,19 @@ msgstr "Estado de un pedido cambiado"
 msgid "Status do fluxo"
 msgstr "Estado del flujo"
 
-#: inc/Builder/Components.php:455 inc/Integrations/Woocommerce.php:832
+#: inc/Builder/Components.php:456 inc/Integrations/Woocommerce.php:832
 msgid "Status do pedido"
 msgstr "Estado del pedido"
 
-#: inc/Builder/Components.php:709
+#: inc/Builder/Components.php:724
 msgid "Status do pedido: *"
 msgstr "Estado del pedido: *"
 
-#: inc/Views/Settings/Tabs/About.php:63
+#: inc/Builder/Components.php:487
+msgid "Status do post"
+msgstr ""
+
+#: inc/Views/Settings/Tabs/About.php:75
 msgid "Status do sistema:"
 msgstr "Estado del sistema:"
 
@@ -3168,11 +3182,11 @@ msgstr "Taiwán"
 msgid "Tajikistan"
 msgstr "Tayikistán"
 
-#: inc/Views/Settings/Tabs/About.php:162
+#: inc/Views/Settings/Tabs/About.php:174
 msgid "Tamanho máximo da postagem do PHP:"
 msgstr "Tamaño máximo de publicación de PHP:"
 
-#: inc/Views/Settings/Tabs/About.php:250
+#: inc/Views/Settings/Tabs/About.php:262
 msgid "Tamanho máximo de envio do PHP:"
 msgstr "Tamaño máximo de envío de PHP:"
 
@@ -3208,7 +3222,7 @@ msgstr "¿Está seguro de que desea eliminar este remitente?"
 msgid "Tempo de espera"
 msgstr "Tiempo de espera"
 
-#: inc/Builder/Components.php:888
+#: inc/Builder/Components.php:903
 msgid "Termina com"
 msgstr "Termina con"
 
@@ -3229,11 +3243,11 @@ msgstr "Tipo de medio"
 msgid "Tipo de mídia: *"
 msgstr "Tipo de medio: *"
 
-#: inc/Integrations/Wordpress.php:259
+#: inc/Integrations/Wordpress.php:260
 msgid "Tipo de post"
 msgstr "Tipo de publicación"
 
-#: inc/Builder/Components.php:684
+#: inc/Builder/Components.php:699
 msgid "Tipo de post: *"
 msgstr "Tipo de publicación: *"
 
@@ -3285,7 +3299,7 @@ msgstr "Turkmenistán"
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
-#: inc/Builder/Components.php:974
+#: inc/Builder/Components.php:989
 msgid "Título do seu fluxo"
 msgstr "Título de su flujo"
 
@@ -3297,7 +3311,7 @@ msgstr "Uganda"
 msgid "Ukraine"
 msgstr "Ucrania"
 
-#: inc/Core/Updater.php:454
+#: inc/Core/Updater.php:456
 #, php-format
 msgid ""
 "Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. "
@@ -3306,7 +3320,7 @@ msgstr ""
 "Una nueva versión del plugin <strong>Joinotify</strong> (%s) está disponible."
 " <a href=\"%s\">Actualice ahora</a>."
 
-#: inc/Core/Updater.php:226
+#: inc/Core/Updater.php:228
 msgid "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
 msgstr ""
 "Una nueva versión del plugin <strong>Joinotify</strong> está disponible."
@@ -3347,7 +3361,7 @@ msgstr ""
 "Use el mayor servicio de mensajes del mundo para notificar a su cliente en "
 "eventos de su sitio."
 
-#: inc/Integrations/Woocommerce.php:230 inc/Integrations/Wordpress.php:184
+#: inc/Integrations/Woocommerce.php:230 inc/Integrations/Wordpress.php:185
 msgid "usuario@exemplo.com"
 msgstr "usuario@ejemplo.com"
 
@@ -3355,7 +3369,7 @@ msgstr "usuario@ejemplo.com"
 msgid "Uzbekistan"
 msgstr "Uzbekistán"
 
-#: inc/Builder/Components.php:1241
+#: inc/Builder/Components.php:1256
 msgid "Valor da variável"
 msgstr "Valor variable"
 
@@ -3363,11 +3377,11 @@ msgstr "Valor variable"
 msgid "Valor de um campo do formulário"
 msgstr "Valor de un campo del formulario"
 
-#: inc/Builder/Components.php:856
+#: inc/Builder/Components.php:871
 msgid "Valor do campo"
 msgstr "Valor del campo"
 
-#: inc/Builder/Components.php:855
+#: inc/Builder/Components.php:870
 msgid "Valor do campo:"
 msgstr "Valor del campo:"
 
@@ -3375,15 +3389,15 @@ msgstr "Valor del campo:"
 msgid "Valor do desconto"
 msgstr "Valor del descuento"
 
-#: inc/Builder/Components.php:675
+#: inc/Builder/Components.php:690
 msgid "Valor do meta dado"
 msgstr "Valor del metadato"
 
-#: inc/Builder/Components.php:806 inc/Integrations/Woocommerce.php:864
+#: inc/Builder/Components.php:821 inc/Integrations/Woocommerce.php:864
 msgid "Valor do reembolso"
 msgstr "Valor del reembolso"
 
-#: inc/Builder/Components.php:799
+#: inc/Builder/Components.php:814
 msgid "Valor do reembolso: *"
 msgstr "Valor del reembolso: *"
 
@@ -3391,39 +3405,39 @@ msgstr "Valor del reembolso: *"
 msgid "Valor fixo"
 msgstr "Valor fijo"
 
-#: inc/Views/Settings/Tabs/About.php:215
+#: inc/Views/Settings/Tabs/About.php:227
 msgid "Valor mínimo recomendado é 10000"
 msgstr "El valor mínimo recomendado es 10000"
 
-#: inc/Views/Settings/Tabs/About.php:237
+#: inc/Views/Settings/Tabs/About.php:249
 msgid "Valor mínimo recomendado é 128M"
 msgstr "El valor mínimo recomendado es 128M"
 
-#: inc/Views/Settings/Tabs/About.php:193
+#: inc/Views/Settings/Tabs/About.php:205
 msgid "Valor mínimo recomendado é 180"
 msgstr "El valor mínimo recomendado es 180"
 
-#: inc/Views/Settings/Tabs/About.php:171 inc/Views/Settings/Tabs/About.php:259
+#: inc/Views/Settings/Tabs/About.php:183 inc/Views/Settings/Tabs/About.php:271
 msgid "Valor mínimo recomendado é 64M"
 msgstr "El valor mínimo recomendado es 64M"
 
-#: inc/Builder/Components.php:837 inc/Integrations/Flexify_Checkout.php:344
+#: inc/Builder/Components.php:852 inc/Integrations/Flexify_Checkout.php:344
 msgid "Valor total do carrinho"
 msgstr "Valor total del carrito"
 
-#: inc/Builder/Components.php:836
+#: inc/Builder/Components.php:851
 msgid "Valor total do carrinho:"
 msgstr "Valor total del carrito:"
 
-#: inc/Builder/Components.php:731 inc/Integrations/Woocommerce.php:836
+#: inc/Builder/Components.php:746 inc/Integrations/Woocommerce.php:836
 msgid "Valor total do pedido"
 msgstr "Valor total del pedido"
 
-#: inc/Builder/Components.php:724
+#: inc/Builder/Components.php:739
 msgid "Valor total do pedido: *"
 msgstr "Valor total del pedido: *"
 
-#: inc/Builder/Components.php:674
+#: inc/Builder/Components.php:689
 msgid "Valor: *"
 msgstr "Valor: *"
 
@@ -3431,7 +3445,7 @@ msgstr "Valor: *"
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
-#: inc/Builder/Components.php:927
+#: inc/Builder/Components.php:942
 msgid "Variáveis de texto"
 msgstr "Variables de texto"
 
@@ -3443,7 +3457,7 @@ msgstr "variables de texto"
 msgid "Variáveis de texto:"
 msgstr "Variables de texto:"
 
-#: inc/Views/Settings/Tabs/About.php:206
+#: inc/Views/Settings/Tabs/About.php:218
 msgid "Variáveis máximas de entrada do PHP:"
 msgstr "Variables máximas de entrada de PHP:"
 
@@ -3451,7 +3465,7 @@ msgstr "Variables máximas de entrada de PHP:"
 msgid "Vatican City"
 msgstr "Ciudad del Vaticano"
 
-#: inc/Builder/Components.php:883
+#: inc/Builder/Components.php:898
 msgid "Vazio"
 msgstr "Vacío"
 
@@ -3467,11 +3481,11 @@ msgstr "Ver flujo"
 msgid "Ver registros de depuração"
 msgstr "Ver registros de depuración"
 
-#: inc/Builder/Components.php:570
+#: inc/Builder/Components.php:585
 msgid "Verdadeiro"
 msgstr "Verdadero"
 
-#: inc/Core/Updater.php:286
+#: inc/Core/Updater.php:288
 msgid "Verificar atualizações"
 msgstr "Verificar actualizaciones"
 
@@ -3491,21 +3505,21 @@ msgstr "Verificar si el pedido no fue pagado"
 msgid "Verifique seu WhatsApp"
 msgstr "Verifique su WhatsApp"
 
-#: inc/Views/Settings/Tabs/About.php:132
+#: inc/Views/Settings/Tabs/About.php:144
 #, php-format
 msgid "Versão %s"
 msgstr "Versión %s"
 
-#: inc/Views/Settings/Tabs/About.php:80
+#: inc/Views/Settings/Tabs/About.php:92
 #, php-format
 msgid "Versão do Joinotify: %s"
 msgstr "Versión de Joinotify: %s"
 
-#: inc/Views/Settings/Tabs/About.php:85
+#: inc/Views/Settings/Tabs/About.php:97
 msgid "Versão do PHP:"
 msgstr "Versión de PHP:"
 
-#: inc/Views/Settings/Tabs/About.php:66
+#: inc/Views/Settings/Tabs/About.php:78
 msgid "Versão do WordPress:"
 msgstr "Versión de WordPress:"
 
@@ -3567,11 +3581,11 @@ msgid "WooCommerce"
 msgstr "WooCommerce"
 
 #: inc/Builder/Utils.php:95 inc/Integrations/Wordpress.php:73
-#: inc/Integrations/Wordpress.php:132 inc/Views/Settings/Tabs/About.php:64
+#: inc/Integrations/Wordpress.php:133 inc/Views/Settings/Tabs/About.php:76
 msgid "WordPress"
 msgstr "WordPress"
 
-#: inc/Views/Settings/Tabs/About.php:70
+#: inc/Views/Settings/Tabs/About.php:82
 msgid "WordPress Multisite:"
 msgstr "WordPress Multisitio:"
 
@@ -3600,6 +3614,6 @@ msgstr "Audio"
 msgid "Åland Islands"
 msgstr "Islas Åland"
 
-#: inc/Builder/Components.php:881
+#: inc/Builder/Components.php:896
 msgid "É"
 msgstr "Es"

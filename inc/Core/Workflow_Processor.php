@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.3.1
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Workflow_Processor {
