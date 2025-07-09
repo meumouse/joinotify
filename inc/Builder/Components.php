@@ -480,6 +480,20 @@ class Components {
                     }
                 $html .= '</select>';
             $html .= '</div>';
+        } elseif ( $trigger === 'transition_post_status' ) {
+            $current_status = isset( $trigger_data['settings']['post_status'] ) ? $trigger_data['settings']['post_status'] : null;
+
+            $html .= '<div class="joinotify-get-post-status-trigger">';
+                $html .= '<label class="form-label" for="wp_post_status">'. esc_html__( 'Status do post', 'joinotify' ) .'</label>';
+                
+                $html .= '<select id="wp_post_status" class="form-select set-trigger-settings post-status">';
+                    $html .= '<option value="none">' . esc_html__( 'Qualquer status', 'joinotify' ) . '</option>';
+                    
+                    foreach ( get_post_statuses() as $status_key => $status_label ) {
+                        $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
+                    }
+                $html .= '</select>';
+            $html .= '</div>';
         }
 
         return $html;

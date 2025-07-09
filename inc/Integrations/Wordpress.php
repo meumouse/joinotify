@@ -85,6 +85,7 @@ class Wordpress extends Integrations_Base {
      * Add WordPress triggers
      * 
      * @since 1.1.0
+     * @version 1.3.5
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -367,7 +368,7 @@ class Wordpress extends Integrations_Base {
          */
         $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/Change_Post_Status', array(
             'type' => 'trigger',
-            'hook' => 'change_post_status',
+            'hook' => 'transition_post_status',
             'integration' => 'wordpress',
             'post_id' => $post->ID,
             'post_type' => $post->post_type,

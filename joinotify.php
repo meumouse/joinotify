@@ -142,7 +142,7 @@ if ( ! class_exists('Joinotify') ) {
 				'JOINOTIFY_URL' => $base_url,
 				'JOINOTIFY_ASSETS' => $base_url . 'assets/',
 				'JOINOTIFY_ABSPATH' => dirname( $base_file ) . '/',
-				'JOINOTIFY_ADMIN_EMAIL' => get_option( 'admin_email' ),
+				'JOINOTIFY_ADMIN_EMAIL' => get_option('admin_email'),
 				'JOINOTIFY_DOCS_URL' => 'https://ajuda.meumouse.com/docs/joinotify/overview',
 				'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
 				'JOINOTIFY_API_BASE_URL' => 'https://slots-manager.joinotify.com',

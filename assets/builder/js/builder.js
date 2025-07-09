@@ -2532,6 +2532,7 @@
 		 * Save trigger settings
 		 * 
 		 * @since 1.1.0
+		 * @version 1.3.5
 		 * @package MeuMouse.com
 		 */
 		saveTriggerSettings: function() {
@@ -2553,6 +2554,10 @@
 					trigger_data = {
 						form_id: $('.modal.show').find('.set-trigger-settings.wpforms-form-id').val(),
 					};
+				} else if ( get_trigger === 'change_post_status' || get_trigger === 'transition_post_status' ) {
+					trigger_data = {
+						post_status: $('.modal.show').find('.set-trigger-settings.post-status').val(),
+					};
 				}
 
 				// send request
@@ -2563,7 +2568,7 @@
 						action: 'joinotify_save_trigger_settings',
 						post_id: Builder.getParamByName('id'),
 						trigger_id: get_trigger_id,
-						settings: JSON.stringify(trigger_data),
+						settings: JSON.stringify( trigger_data ),
 					},
 					beforeSend: function() {
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
