@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
@@ -25,7 +25,7 @@ class Woocommerce extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.5
      * @return void
      */
     public function __construct() {
@@ -61,7 +61,7 @@ class Woocommerce extends Integrations_Base {
             if ( Admin::get_setting('enable_woocommerce_integration') === 'yes' ) {
                 // on receive new order
                 // before hook used is "woocommerce_new_order", but products isent received
-                add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_on_new_order' ), 10, 2 );
+                add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_on_new_order' ), 10, 1 );
 
                 // when order is processing
                 add_action( 'woocommerce_order_status_processing', array( $this, 'process_workflow_order_processed' ), 10, 3 );
@@ -898,12 +898,11 @@ class Woocommerce extends Integrations_Base {
      * Process workflow on receive new order on WooCommerce
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.5
      * @param int $order_id  | Order ID
-     * @param object $order | Order object
      * @return void
      */
-    public function process_workflow_on_new_order( $order_id, $order ) {
+    public function process_workflow_on_new_order( $order_id ) {
         /**
          * Filter the payload before processing workflows
          * 
@@ -915,7 +914,6 @@ class Woocommerce extends Integrations_Base {
             'hook' => 'woocommerce_new_order',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
-            'order_data' => $order,
         ));
 
         Workflow_Processor::process_workflows( $payload );
@@ -926,7 +924,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is processing
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.5
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition data
@@ -945,7 +943,6 @@ class Woocommerce extends Integrations_Base {
             'hook' => 'woocommerce_checkout_order_processed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
-            'order' => $order,
             'status_transition' => $status_transition,
         ));
 
@@ -957,7 +954,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is complete
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.3.5
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition
@@ -975,7 +972,6 @@ class Woocommerce extends Integrations_Base {
             'hook' => 'woocommerce_order_status_completed',
             'integration' => 'woocommerce',
             'order_id' => $order_id,
-            'order_data' => $order,
             'status_transition' => $status_transition,
         ));
 
