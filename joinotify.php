@@ -6,7 +6,7 @@
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				1.3.4
+ * Version: 				1.3.5
  * Requires PHP: 			7.4
  * Tested up to:      		6.8.1
  * Text Domain: 			joinotify
@@ -53,7 +53,7 @@ if ( ! class_exists('Joinotify') ) {
 		 * @var string
 		 * @since 1.0.0
 		 */
-		public static $version = '1.3.4';
+		public static $version = '1.3.5';
 
 		/**
 		 * Constructor function
@@ -142,7 +142,7 @@ if ( ! class_exists('Joinotify') ) {
 				'JOINOTIFY_URL' => $base_url,
 				'JOINOTIFY_ASSETS' => $base_url . 'assets/',
 				'JOINOTIFY_ABSPATH' => dirname( $base_file ) . '/',
-				'JOINOTIFY_ADMIN_EMAIL' => get_option( 'admin_email' ),
+				'JOINOTIFY_ADMIN_EMAIL' => get_option('admin_email'),
 				'JOINOTIFY_DOCS_URL' => 'https://ajuda.meumouse.com/docs/joinotify/overview',
 				'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
 				'JOINOTIFY_API_BASE_URL' => 'https://slots-manager.joinotify.com',

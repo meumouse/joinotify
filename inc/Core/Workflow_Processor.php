@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.3.1
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Workflow_Processor {
@@ -97,7 +97,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.3.1
+     * @version 1.3.5
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -122,7 +122,7 @@ class Workflow_Processor {
         do_action( 'Joinotify/Workflow_Processor/Process_Workflow_Content', $workflow_content, $post_id, $payload );
 
         // get integration
-        $integration = $payload['integration'];
+        $integration = $payload['integration'] ?? '';
 
         // get trigger data
         $trigger_data = array_filter( $workflow_content, function ( $item ) {
@@ -132,6 +132,7 @@ class Workflow_Processor {
         // get first array item
         $trigger_data = reset( $trigger_data );
 
+        // check restrictions for woocommerce integration
         if ( $integration === 'woocommerce' ) {
             if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' ) {
                 $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
@@ -150,10 +151,26 @@ class Workflow_Processor {
                     return;
                 }
             }
-        } elseif ( $integration === 'wpforms' ) {
+        }
+        
+        // check restrictions for wpforms integration
+        if ( $integration === 'wpforms' ) {
             // check wpforms form id
             if ( $payload['id'] !== absint( $trigger_data['data']['settings']['form_id'] ) ) {
                 return;
+            }
+        }
+
+        // check restrictions for wordpress integration
+        if ( $integration === 'wordpress' ) {
+            // hook fired on change post status
+            if ( isset( $payload['hook'] ) && $payload['hook'] === 'change_post_status' && isset( $payload['post_id'] ) && get_post_type( $payload['post_id'] ) === 'post' ) {
+                $trigger_post_status = $trigger_data['data']['settings']['post_status'];
+
+                // check wordpress post status
+                if ( $trigger_post_status !== 'none' && $payload['post_status'] !== $trigger_post_status ) {
+                    return;
+                }
             }
         }
 

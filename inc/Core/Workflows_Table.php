@@ -15,7 +15,7 @@ if ( ! class_exists('WP_List_Table') ) {
  * Workflows table class
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Workflows_Table extends WP_List_Table {
@@ -39,6 +39,8 @@ class Workflows_Table extends WP_List_Table {
      * Display navigation tabs for different post statuses with post count
      * 
      * @since 1.0.0
+     * @version 1.3.5
+     * @return void
      */
     public function display_navigation_tabs() {
         global $wpdb;
@@ -51,12 +53,12 @@ class Workflows_Table extends WP_List_Table {
 
         <ul class="subsubsub">
             <li><a href="<?php echo admin_url('admin.php?page=joinotify-workflows&post_status=publish'); ?>" class="<?php echo ($tab == 'publish') ? 'current' : ''; ?>">
-                <?php _e('Publicados', 'joinotify'); ?>
+                <?php _e('Ativos', 'joinotify'); ?>
                 <span class="count">(<?php echo $counts->publish; ?>)</span>
             </a> | </li>
             
             <li><a href="<?php echo admin_url('admin.php?page=joinotify-workflows&post_status=draft'); ?>" class="<?php echo ($tab == 'draft') ? 'current' : ''; ?>">
-                <?php _e('Rascunhos', 'joinotify'); ?>
+                <?php _e('Inativos', 'joinotify'); ?>
                 <span class="count">(<?php echo $counts->draft; ?>)</span>
             </a> | </li>
             
@@ -73,6 +75,7 @@ class Workflows_Table extends WP_List_Table {
      * Render the navigation tabs and the table
      * 
      * @since 1.0.0
+     * @return void
      */
     public function display() {
         $this->display_navigation_tabs();
@@ -194,6 +197,7 @@ class Workflows_Table extends WP_List_Table {
      * Set bulk actions
      * 
      * @since 1.0.0
+     * @version 1.3.5
      * @return array
      */
     public function get_bulk_actions() {
@@ -207,8 +211,8 @@ class Workflows_Table extends WP_List_Table {
         } else {
             $actions = array(
                 'trash' => __( 'Mover para lixeira', 'joinotify' ),
-                'publish' => __( 'Publicar', 'joinotify' ),
-                'draft' => __( 'Definir como rascunho', 'joinotify' ),
+                'publish' => __( 'Marcar como ativo', 'joinotify' ),
+                'draft' => __( 'Marcar como inativo', 'joinotify' ),
             );
         }
         

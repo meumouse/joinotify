@@ -433,6 +433,7 @@ class Components {
      * Render required settings for specific triggers
      * 
      * @since 1.1.0
+     * @version 1.3.5
      * @param int $post_id | Post ID
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return string
@@ -476,6 +477,20 @@ class Components {
 
                     foreach ( $forms as $form ) {
                         $html .= '<option value="'. esc_attr( $form['ID'] ) .'" '. selected( $current_form_id, $form['ID'], false ) .'>'. esc_html( $form['title'] ) .'</option>';
+                    }
+                $html .= '</select>';
+            $html .= '</div>';
+        } elseif ( $trigger === 'transition_post_status' ) {
+            $current_status = isset( $trigger_data['settings']['post_status'] ) ? $trigger_data['settings']['post_status'] : null;
+
+            $html .= '<div class="joinotify-get-post-status-trigger">';
+                $html .= '<label class="form-label" for="wp_post_status">'. esc_html__( 'Status do post', 'joinotify' ) .'</label>';
+                
+                $html .= '<select id="wp_post_status" class="form-select set-trigger-settings post-status">';
+                    $html .= '<option value="none">' . esc_html__( 'Qualquer status', 'joinotify' ) . '</option>';
+                    
+                    foreach ( get_post_statuses() as $status_key => $status_label ) {
+                        $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
                     }
                 $html .= '</select>';
             $html .= '</div>';

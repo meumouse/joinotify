@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with WordPress hooks
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.5
  * @package MeuMouse.com
  */
 class Wordpress extends Integrations_Base {
@@ -85,6 +85,7 @@ class Wordpress extends Integrations_Base {
      * Add WordPress triggers
      * 
      * @since 1.1.0
+     * @version 1.3.5
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -112,7 +113,7 @@ class Wordpress extends Integrations_Base {
                 'data_trigger' => 'transition_post_status',
                 'title' => esc_html__( 'Post tem status alterado', 'joinotify' ),
                 'description' => esc_html__( 'Este acionamento é disparado quando um post tem o status alterado no site.', 'joinotify' ),
-                'require_settings' => false,
+                'require_settings' => true,
             ),
         );
 
@@ -298,7 +299,7 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on user login
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.3.5
      * @param string $user_login | User login
      * @param object $user | User object
      * @return void
@@ -315,7 +316,6 @@ class Wordpress extends Integrations_Base {
             'hook' => 'user_login',
             'integration' => 'wordpress',
             'user_id' => $user->ID,
-            'user_data' => $user,
         ));
 
         Workflow_Processor::process_workflows( $payload );
@@ -326,7 +326,7 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on password reset
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.3.5
      * @param object $user | User object
      * @param string $new_pass | New password
      * @return void
@@ -343,7 +343,6 @@ class Wordpress extends Integrations_Base {
             'hook' => 'password_reset',
             'integration' => 'wordpress',
             'user_id' => $user->ID,
-            'user_data' => $user,
         ));
 
         Workflow_Processor::process_workflows( $payload );
@@ -369,7 +368,7 @@ class Wordpress extends Integrations_Base {
          */
         $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/Change_Post_Status', array(
             'type' => 'trigger',
-            'hook' => 'change_post_status',
+            'hook' => 'transition_post_status',
             'integration' => 'wordpress',
             'post_id' => $post->ID,
             'post_type' => $post->post_type,
