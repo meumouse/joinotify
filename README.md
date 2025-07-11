@@ -38,6 +38,11 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.6 (11/07/2025)
+* Correção de bugs
+     - Prioridade e argumentos da função add_action() na classe Woo_Subscriptions informados fora do array de callback
+     - Falha na verificação de status de pagamento de pedidos
+
 Versão 1.3.5 (09/07/2025)
 * Correção de bugs
      - Erro fatal ao alterar status de pedido: Uncaught Error: Class name must be a valid object or a string in /woocommerce/src/Internal/DataStores/Orders/OrdersTableDataStore.php:1524
