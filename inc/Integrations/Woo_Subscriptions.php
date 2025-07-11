@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce Subscriptions plugin
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.3.6
  * @package MeuMouse.com
  */
 class Woo_Subscriptions extends Integrations_Base {
@@ -21,7 +21,7 @@ class Woo_Subscriptions extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.3.6
      * @return void
      */
     public function __construct() {
@@ -38,10 +38,10 @@ class Woo_Subscriptions extends Integrations_Base {
                 add_action( 'woocommerce_subscription_status_active', array( $this, 'process_workflow_subscription_status_active' ), 10, 1 );
 
                 // fire when a subscription payment is complete
-                add_action( 'woocommerce_subscription_payment_complete', array( $this, 'process_workflow_subscription_payment_complete', 10, 1 ) );
+                add_action( 'woocommerce_subscription_payment_complete', array( $this, 'process_workflow_subscription_payment_complete' ), 10, 1 );
 
                 // fire when a subscription payment is failed
-                add_action( 'woocommerce_subscription_payment_failed', array( $this, 'process_workflow_subscription_payment_failed', 10, 2 ) );
+                add_action( 'woocommerce_subscription_payment_failed', array( $this, 'process_workflow_subscription_payment_failed' ), 10, 2 );
 
                 // fire when a subscription status is expired
                 add_action( 'woocommerce_subscription_status_expired', array(  $this, 'process_workflow_subscription_status_expired' ), 10, 1 );
