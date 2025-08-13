@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Admin actions class
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.7
  * @package MeuMouse.com
  */
 class Admin {
@@ -43,6 +43,7 @@ class Admin {
      * Add admin menu
      * 
      * @since 1.0.0
+     * @version 1.3.7
      * @return void
      */
     public function add_admin_menu() {
@@ -97,6 +98,18 @@ class Admin {
             'joinotify-license', // page slug
             array( $this, 'render_license_page' ) // callback
         );
+
+        // prevent uncaught error when accessing the builder page
+        if ( isset( $_GET['page'] ) && $_GET['page'] === 'joinotify-workflows-builder' ) {
+            add_submenu_page(
+                null, // ghost slug (no menu item)
+                esc_html__( 'Editar fluxo', 'joinotify' ),
+                esc_html__( 'Editar fluxo', 'joinotify' ),
+                'manage_options', // user capabilities
+                'joinotify-workflows-builder', // page slug
+                array( $this, 'render_builder_page' ) // callback
+            );
+        }
     }
 
 
@@ -108,6 +121,10 @@ class Admin {
      * @return void
      */
     public function render_builder_page() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'Você não tem permissão para acessar esta página.', 'joinotify' ) );
+        }
+
         /**
          * Render the content page
          * 
@@ -243,10 +260,19 @@ class Admin {
             'description'        => __( 'Descrição.', 'joinotify' ),
             'public'             => true,
             'publicly_queryable' => true,
-            'show_ui'            => false,
+            'show_ui'            => true,
             'show_in_menu'       => false,
             'query_var'          => true,
             'capability_type'    => 'post',
+            'capabilities'       => array(
+                'edit_post'           => 'manage_options',
+                'read_post'           => 'manage_options',
+                'delete_post'         => 'manage_options',
+                'edit_posts'          => 'manage_options',
+                'edit_others_posts'   => 'manage_options',
+                'publish_posts'       => 'manage_options',
+                'read_private_posts'  => 'manage_options',
+            ),
             'rewrite'            => array( 'slug' => '/workflows', 'with_front' => false ),
             'has_archive'        => true,
             'hierarchical'       => false,
