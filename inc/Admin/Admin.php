@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Admin actions class
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.3.7
  * @package MeuMouse.com
  */
 class Admin {
@@ -43,6 +43,7 @@ class Admin {
      * Add admin menu
      * 
      * @since 1.0.0
+     * @version 1.3.7
      * @return void
      */
     public function add_admin_menu() {

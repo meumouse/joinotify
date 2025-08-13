@@ -38,6 +38,10 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.3.7 (13/08/2025)
+* Correção de bugs
+     - Incapacidade de editar fluxos com plugin Academy LMS e similares
+
 Versão 1.3.6 (11/07/2025)
 * Correção de bugs
      - Prioridade e argumentos da função add_action() na classe Woo_Subscriptions informados fora do array de callback
