@@ -272,6 +272,15 @@ class Wordpress extends Integrations_Base {
             ),
         );
 
+        $placeholders['wordpress']['{{ post_featured_image }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar a URL da imagem destacada do post', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? get_the_post_thumbnail_url( $post, 'full' ) : '',
+                'sandbox' => trailingslashit( get_site_url() ) . 'wp-content/uploads/example.jpg',
+            ),
+        );
+
         return $placeholders;
     }
 
