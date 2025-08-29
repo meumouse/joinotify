@@ -6,8 +6,8 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
-use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
+use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
@@ -354,7 +354,14 @@ class Woocommerce extends Integrations_Base {
                 'triggers' => $trigger_names,
                 'description' => esc_html__( 'Para recuperar o título do método de pagamento do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_payment_method_title() : '',
+                    'production' => $order ? (function ( $order ) {
+                        $id = $order->get_payment_method();
+                        $gateways = WC()->payment_gateways()->payment_gateways();
+                        
+                        return isset( $gateways[ $id ] )
+                            ? joinotify_format_plain_text( $gateways[ $id ]->get_title() )
+                            : '';
+                    })( $order ) : '',
                     'sandbox' => esc_html__( 'Cartão de crédito', 'joinotify' ),
                 ),
             ),
