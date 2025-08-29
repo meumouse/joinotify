@@ -1,6 +1,7 @@
 Versão 1.4.0 (29/08/2025)
 * Otimizações
-* Recurso adicionado: Legenda para mensagens de mídia do WhatsApp 
+* Recurso adicionado: Legenda para mensagens de mídia do WhatsApp
+* Recurso adicionado Variáveis de texto {{ post_title }}, {{ post_date }}, {{ post_content }}, {{ post_link }}, {{ post_tags }} e {{ post_categories }}
 
 Versão 1.3.7 (13/08/2025)
 * Correção de bugs

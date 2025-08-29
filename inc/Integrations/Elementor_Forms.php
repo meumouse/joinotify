@@ -29,7 +29,7 @@ if ( ! class_exists('ElementorPro\Modules\Forms\Classes\Action_Base') ) {
  * Add integration with Elementor Forms
  * 
  * @since 1.1.0
- * @version 1.1.1
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Elementor_Forms extends Action_Base {
@@ -87,6 +87,7 @@ class Elementor_Forms extends Action_Base {
 	 * Register action controls
 	 *
 	 * @since 1.1.0
+	 * @version 1.4.0
 	 * @access public
 	 * @param \Elementor\Widget_Base $widget
 	 */
@@ -229,6 +230,26 @@ class Elementor_Forms extends Action_Base {
 			]
 		);
 
+		$widget->add_control(
+			'joinotify_media_caption',
+			[
+				'label' => esc_html__( 'Legenda da mídia', 'joinotify' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'rows' => 5,
+				'description' => esc_html__( 'Adicione uma legenda para acompanhar a mídia enviada. Suporta variáveis de texto (placeholders).', 'joinotify' ),
+				'placeholder' => esc_html__( 'Olá {{ field_id=[nome] }}, veja esse arquivo!', 'joinotify' ),
+				'condition' => [
+					'joinotify_send_media_message' => 'yes',
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
+				],
+			]
+		);
+
 		$widget->end_controls_section();
 	}
 
@@ -237,6 +258,7 @@ class Elementor_Forms extends Action_Base {
 	 * Run action
 	 *
 	 * @since 1.1.0
+	 * @version 1.4.0
 	 * @param object $record | Form object class
 	 * @param \ElementorPro\Modules\Forms\Classes\Ajax_Handler $ajax_handler
 	 * @return void
@@ -300,15 +322,19 @@ class Elementor_Forms extends Action_Base {
 		if ( $send_media === 'yes' ) {
 			$media_type = $settings['joinotidy_media_type'] ?? 'image';
 			$media_url = $settings['joinotify_media_url']['url'] ?? '';
-	
+			$caption = $settings['joinotify_media_caption'] ?? '';
+			$caption = Placeholders::replace_placeholders( $caption, $payload );
+
 			if ( ! empty( $media_url ) ) {
 				if ( JOINOTIFY_DEBUG_MODE ) {
 					Logger::register_log( "media type on Elementor form: " . $media_type );
 					Logger::register_log( "media url on Elementor form: " . $media_url );
+					Logger::register_log( "media caption on Elementor form: " . $caption );
 				}
 
-				Controller::send_message_media( $sender, $receiver, $media_type, $media_url );
-			}
+				// Aqui já suporta legenda
+				Controller::send_message_media( $sender, $receiver, $media_type, $media_url, $caption );
+}
 		}
 	}
 
@@ -317,6 +343,7 @@ class Elementor_Forms extends Action_Base {
 	 * On export
 	 *
 	 * @since 1.1.0
+	 * @version 1.4.0
 	 * @param array $element | Elements from form
 	 * @return array
 	 */
@@ -330,6 +357,7 @@ class Elementor_Forms extends Action_Base {
 			$element['joinotify_send_media_message'],
 			$element['joinotidy_media_type'],
 			$element['joinotify_media_url'],
+			$element['joinotify_media_caption'],
 		);
 
 		return $element;

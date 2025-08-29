@@ -882,6 +882,7 @@ class Ajax {
                         $new_action['data']['receiver'] = isset( $workflow_action['data']['receiver'] ) ? $workflow_action['data']['receiver'] : '';
                         $new_action['data']['media_url'] = isset( $workflow_action['data']['media_url'] ) ? $workflow_action['data']['media_url'] : '';
                         $new_action['data']['media_type'] = isset( $workflow_action['data']['media_type'] ) ? $workflow_action['data']['media_type'] : '';
+                        $new_action['data']['caption'] = isset( $workflow_action['data']['caption'] ) ? $workflow_action['data']['caption'] : '';
                     } elseif ( $workflow_action['data']['action'] === 'snippet_php' ) {
                         $new_action['data']['description'] = $build_description;
                         $new_action['data']['snippet_php'] = isset( $workflow_action['data']['snippet_php'] ) ? $workflow_action['data']['snippet_php'] : '';
@@ -1473,7 +1474,8 @@ class Ajax {
                                 $sender = $item['data']['sender'];
                                 $media_type = $item['data']['media_type'];
                                 $media = $item['data']['media_url'];
-                                $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
+                                $caption = $item['data']['caption'] ?? '';
+                                $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
     
                                 if ( 201 !== $send_message_media ) {
                                     // check connection state and notify user if disconnected

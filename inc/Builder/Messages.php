@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * This class provides functions for handling messages from workflow builder
  * 
  * @since 1.1.0
- * @version 1.2.2
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Messages {
@@ -186,33 +186,42 @@ class Messages {
      * Build a message for WhatsApp media actions
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.0
      * @param array $data | Message data
      * @return string
      */
     public static function build_whatsapp_media_description( $data ) {
         $media_type = isset( $data['media_type'] ) ? $data['media_type'] : '';
         $media = isset( $data['media_url'] ) ? $data['media_url'] : '';
+        $caption = $data['caption'] ?? '';
+
+        $message = '';
 
         // check media type
         switch ( $media_type ) {
             case 'image':
-                return '<img class="funnel-media image" src="'. esc_url( $media ) .'">';
+                $message = '<img class="funnel-media image" src="'. esc_url( $media ) .'">';
 
                 break;
             case 'video':
-                return '<video class="funnel-media video" controls width="250"><source src="'. esc_url( $media ) .'"/></video>';
+                $message = '<video class="funnel-media video" controls width="250"><source src="'. esc_url( $media ) .'"/></video>';
 
                 break;
             case 'document':
-                return '<embed class="funnel-media document" src="'. esc_url( $media ) .'" frameborder="0" allowfullscreen>';
+                $message = '<embed class="funnel-media document" src="'. esc_url( $media ) .'" frameborder="0" allowfullscreen>';
 
                 break;
             case 'audio':
-                return '<audio class="funnel-media audio" controls><source src="'. esc_url( $media ) .'"></audio>';
+                $message = '<audio class="funnel-media audio" controls><source src="'. esc_url( $media ) .'"></audio>';
 
                 break;
         }
+
+        if ( $caption !== '' ) {
+            $message .= '<p class="funnel-media-caption">'. esc_html( $caption ) .'</p>';
+        }
+
+        return $message;
     }
 
 
