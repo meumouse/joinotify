@@ -2,8 +2,6 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-use WP_List_Table;
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -11,11 +9,13 @@ if ( ! class_exists('WP_List_Table') ) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
+use WP_List_Table;
+
 /**
  * Workflows table class
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Workflows_Table extends WP_List_Table {

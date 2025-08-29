@@ -953,6 +953,7 @@
 								receiver: container.find('.get-whatsapp-receiver').val(),
 								media_type: container.find('.get-whatsapp-media-type').val(),
 								media_url: container.find('.get-whatsapp-media-url').val(),
+								caption: container.find('.set-whatsapp-message-caption').val(),
 							},
 						};
 
