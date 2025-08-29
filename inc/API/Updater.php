@@ -1,6 +1,6 @@
 <?php
 
-namespace MeuMouse\Joinotify\Core;
+namespace MeuMouse\Joinotify\API;
 
 use MeuMouse\Joinotify\Admin\Admin;
 
@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.3.4
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Updater {
