@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with WordPress hooks
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Wordpress extends Integrations_Base {
@@ -22,7 +22,7 @@ class Wordpress extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.0
      * @return void
      */
     public function __construct() {
@@ -39,7 +39,7 @@ class Wordpress extends Integrations_Base {
         add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
 
         // add placeholders
-        add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+        add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 2 );
 
         // add conditions
         add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
@@ -153,12 +153,13 @@ class Wordpress extends Integrations_Base {
      * Add WordPress placeholders on workflow builder
      * 
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.4.0
      * @param array $placeholders | Current placeholders
      * @return array
      */
-    public function add_placeholders( $placeholders ) {
+    public function add_placeholders( $placeholders, $payload = array() ) {
         $current_user = wp_get_current_user();
+        $post = isset( $payload['post_id'] ) ? get_post( $payload['post_id'] ) : null;
         
         $placeholders['wordpress'] = array(
             '{{ first_name }}' => array(
@@ -213,6 +214,61 @@ class Wordpress extends Integrations_Base {
                 'triggers' => array(), // is global
                 'description' => esc_html__( 'Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que deseja recuperar o valor. Exemplo: billing_phone', 'joinotify' ),
                 'replacement' => array(),
+            ),
+        );
+
+        // placeholders for posts
+        $placeholders['wordpress']['{{ post_title }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar o título do post', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? $post->post_title : '',
+                'sandbox' => esc_html__( 'Título de exemplo do post', 'joinotify' ),
+            ),
+        );
+
+        $placeholders['wordpress']['{{ post_date }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar a data de publicação do post', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? get_the_date( get_option( 'date_format' ), $post ) : '',
+                'sandbox' => date( get_option('date_format') ),
+            ),
+        );
+
+        $placeholders['wordpress']['{{ post_content }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar o conteúdo do post (somente texto)', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? joinotify_format_plain_text( $post->post_content ) : '',
+                'sandbox' => esc_html__( 'Conteúdo de exemplo do post', 'joinotify' ),
+            ),
+        );
+
+        $placeholders['wordpress']['{{ post_link }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar o link do post', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? get_permalink( $post ) : '',
+                'sandbox' => trailingslashit( get_site_url() ) . 'exemplo-de-post',
+            ),
+        );
+
+        $placeholders['wordpress']['{{ post_tags }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar as tags do post, separadas por vírgula', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? implode( ', ', wp_get_post_terms( $post->ID, 'post_tag', array( 'fields' => 'names' ) ) ) : '',
+                'sandbox' => esc_html__( 'tag1, tag2', 'joinotify' ),
+            ),
+        );
+
+        $placeholders['wordpress']['{{ post_categories }}'] = array(
+            'triggers' => array( 'transition_post_status' ),
+            'description' => esc_html__( 'Para recuperar as categorias do post, separadas por vírgula', 'joinotify' ),
+            'replacement' => array(
+                'production' => $post ? implode( ', ', wp_get_post_terms( $post->ID, 'category', array( 'fields' => 'names' ) ) ) : '',
+                'sandbox' => esc_html__( 'Categoria 1, Categoria 2', 'joinotify' ),
             ),
         );
 

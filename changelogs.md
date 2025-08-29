@@ -1,3 +1,7 @@
+Versão 1.4.0 (29/08/2025)
+* Otimizações
+* Recurso adicionado: Legenda para mensagens de mídia do WhatsApp 
+
 Versão 1.3.7 (13/08/2025)
 * Correção de bugs
      - Incapacidade de editar fluxos com plugin Academy LMS e similares
