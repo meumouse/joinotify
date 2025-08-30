@@ -8,8 +8,6 @@ use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 
-use WC_Order;
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -17,7 +15,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Workflow_Processor {
@@ -97,7 +95,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.0
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -121,7 +119,7 @@ class Workflow_Processor {
          */
         do_action( 'Joinotify/Workflow_Processor/Process_Workflow_Content', $workflow_content, $post_id, $payload );
 
-        // get integration
+        $state = null;
         $integration = $payload['integration'] ?? '';
 
         // get trigger data
@@ -139,6 +137,11 @@ class Workflow_Processor {
             }
 
             $order = wc_get_order( $payload['order_id'] );
+
+            if ( ! $order ) {
+                return;
+            }
+
             $order_status = str_replace( 'wc-', '', $order->get_status() ); // remove prefix "wc-"
             
             // check order status
@@ -163,11 +166,12 @@ class Workflow_Processor {
 
         // check restrictions for wordpress integration
         if ( $integration === 'wordpress' ) {
-            // hook fired on change post status
-            if ( isset( $payload['hook'] ) && $payload['hook'] === 'change_post_status' && isset( $payload['post_id'] ) && get_post_type( $payload['post_id'] ) === 'post' ) {
+            if ( isset( $payload['hook'], $payload['post_id'], $payload['post_status'], $trigger_data['data']['settings']['post_status'] ) 
+                && ( $payload['hook'] === 'change_post_status' || $payload['hook'] === 'transition_post_status' ) 
+                && get_post_type( $payload['post_id'] ) === 'post' 
+            ) {
                 $trigger_post_status = $trigger_data['data']['settings']['post_status'];
 
-                // check wordpress post status
                 if ( $trigger_post_status !== 'none' && $payload['post_status'] !== $trigger_post_status ) {
                     return;
                 }
@@ -455,7 +459,7 @@ class Workflow_Processor {
      * Executes a WhatsApp message action
      *
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void
@@ -465,9 +469,10 @@ class Workflow_Processor {
         $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
         $media_type = $action_data['media_type'];
         $media = $action_data['media_url'];
+        $caption = joinotify_prepare_message( $action_data['caption'] ?? '', $payload );
 
         // send message
-        $response = Controller::send_message_media( $sender, $receiver, $media_type, $media );
+        $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
 
         if ( 201 !== $response ) {
             // check connection state and notify user if disconnected
@@ -523,7 +528,7 @@ class Workflow_Processor {
             ob_start();
 
             // execute the snippet
-            eval( $snippet_php );
+            eval( $snippet_php ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.eval
             
             // get the output buffer contents
             $output = ob_get_clean();

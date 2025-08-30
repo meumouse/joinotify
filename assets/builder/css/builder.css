@@ -1583,6 +1583,7 @@ input.toggle-switch.status:checked {
     background-color: transparent;
     width: auto;
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
 }
 
@@ -2172,4 +2173,8 @@ textarea.edit-whatsapp-message-text {
 
 #flexify-dashboard-navbar {
     display: none;
+}
+
+.funnel-media-caption {
+    margin-top: 1rem;
 }

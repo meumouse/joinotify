@@ -275,9 +275,10 @@ class Controller {
         $receiver = $request->get_param('receiver');
         $media_type = $request->get_param('media_type');
         $media_url = $request->get_param('media_url');
+        $caption = $request->get_param('caption');
         $delay = $request->get_param('delay');
         $delay = is_numeric( $delay ) ? (int) $delay : 0;
-        $response_code = self::send_message_media( $sender, $receiver, $media_type, $media_url, $delay );
+        $response_code = self::send_message_media( $sender, $receiver, $media_type, $media_url, $caption, $delay );
 
         if ( 201 === $response_code ) {
             return new \WP_REST_Response( array(
@@ -446,15 +447,16 @@ class Controller {
      * Send messsage media on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.0
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $media_type | Media type (image, audio, video or document)
      * @param string $media | Media URL
-     * @param int $timestamp_delay | Delay in miliseconds for send message
+     * @param string $caption | Media caption (optional)
+     * @param int $timestamp_delay | Delay in miliseconds for send message (optional)
      * @return int
      */
-    public static function send_message_media( $sender, $receiver, $media_type, $media, $timestamp_delay = 0 ) {
+    public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0 ) {
         $sender = preg_replace( '/\D/', '', $sender );
 
         // check if sender is registered
@@ -494,6 +496,7 @@ class Controller {
             'body' => wp_json_encode( array(
                 'number' => joinotify_prepare_receiver( $receiver ),
                 'mediatype' => $media_type,
+                'caption' => $caption,
                 'media' => $media,
                 'delay' => $timestamp_delay,
             )),

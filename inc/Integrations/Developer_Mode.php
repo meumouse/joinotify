@@ -21,10 +21,10 @@ class Developer_Mode extends Integrations_Base {
      */
     public function __construct() {
         // add trigger tab
-        add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 80 );
+    //    add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 80 );
 
         // add trigger content
-        add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
+    //    add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
     }
 
 

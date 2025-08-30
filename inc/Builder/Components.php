@@ -318,7 +318,7 @@ class Components {
      * Get each action settings
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.0
      * @param int $post_id | Post ID
      * @param string $action | Action name
      * @param string $action_id | Action ID
@@ -345,6 +345,9 @@ class Components {
                 break;
             case 'send_whatsapp_message_media':
                 $html .= Whatsapp::whatsapp_message_media_action( $action_data );
+
+                // placeholders helper
+                $html .= self::render_placeholders_list( $post_id );
 
                 break;
             case 'snippet_php':

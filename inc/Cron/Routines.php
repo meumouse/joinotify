@@ -4,7 +4,7 @@ namespace MeuMouse\Joinotify\Cron;
 
 use MeuMouse\Joinotify\API\Controller;
 use MeuMouse\Joinotify\API\Workflow_Templates;
-use MeuMouse\Joinotify\Core\Updater;
+use MeuMouse\Joinotify\API\Updater;
 use MeuMouse\Joinotify\Admin\Admin;
 
 // Exit if accessed directly.
@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * Class for handle with Cron routines
  * 
  * @since 1.2.0
- * @version 1.3.0
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Routines {
@@ -23,7 +23,7 @@ class Routines {
 	 * Construct function
 	 *
 	 * @since 1.2.0
-     * @version 1.3.0
+     * @version 1.4.0
 	 * @return void
 	 */
 	public function __construct() {
@@ -43,7 +43,7 @@ class Routines {
             wp_schedule_event( time(), 'daily', 'joinotify_check_plugin_updates_event' );
         }
 
-        add_action( 'joinotify_check_plugin_updates_event', array( '\MeuMouse\Joinotify\Core\Updater', 'check_daily_updates' ) );
+        add_action( 'joinotify_check_plugin_updates_event', array( '\MeuMouse\Joinotify\API\Updater', 'check_daily_updates' ) );
 
         // enable auto updates
         if ( Admin::get_setting('enable_auto_updates') === 'yes' ) {
@@ -53,7 +53,7 @@ class Routines {
             }
 
             // auto update plugin action
-            add_action( 'joinotify_auto_update_event', array( '\MeuMouse\Joinotify\Core\Updater', 'auto_update_plugin' ) );
+            add_action( 'joinotify_auto_update_event', array( '\MeuMouse\Joinotify\API\Updater', 'auto_update_plugin' ) );
         }
 
         // schedule daily updates
@@ -62,7 +62,7 @@ class Routines {
         }
 
         // check daily updates
-        add_action( 'joinotify_check_daily_update', array( '\MeuMouse\Joinotify\Core\Updater', 'check_daily_updates' ) );
+        add_action( 'joinotify_check_daily_update', array( '\MeuMouse\Joinotify\API\Updater', 'check_daily_updates' ) );
 
         // Schedule the cron event for get templates count
         if ( ! wp_next_scheduled('joinotify_update_templates_count') ) {

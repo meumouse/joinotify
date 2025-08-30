@@ -13,13 +13,14 @@ defined('ABSPATH') || exit;
  * Check admin page from partial URL
  * 
  * @since 1.1.0
+ * @version 1.4.0
  * @param $admin_page | Page string for check from admin.php?page=
  * @return bool
  */
 function joinotify_check_admin_page( $admin_page ) {
    $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-   return strpos( $current_url, "admin.php?page=$admin_page" );
+   return strpos( $current_url, "admin.php?page=$admin_page" ) !== false;
 }
 
 
@@ -44,6 +45,7 @@ function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $de
  * Send message media on WhatsApp
  * 
  * @since 1.1.0
+ * @version 1.4.0
  * @param string $sender | Instance phone number
  * @param string $receiver | Phone number for receive message
  * @param string $media_type | Media type (image, audio, video or document)
@@ -51,8 +53,8 @@ function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $de
  * @param int $delay | Delay in miliseconds before send message
  * @return int
  */
-function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type, $media, $delay = 0 ) {
-   $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $delay );
+function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type, $media, $caption = '', $delay = 0 ) {
+   $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption, $delay );
 
    return $response;
 }
@@ -151,13 +153,18 @@ function joinotify_format_plain_text( $content ) {
  * Get first sender phone number
  *
  * @since 1.3.0
- * @return string|array
+ * @version 1.4.0
+ * @return string|null
  */
 function joinotify_get_first_sender() {
 	$current_senders = get_option( 'joinotify_get_phones_senders', array() );
 
 	// remove empty entries and reindex
 	$current_senders = array_values( array_filter( $current_senders ) );
+
+	if ( empty( $current_senders ) ) {
+		return null;
+	}
 
 	return $current_senders[0];
 }

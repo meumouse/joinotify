@@ -38,6 +38,11 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.4.0 (29/08/2025)
+* Otimizações
+* Recurso adicionado: Legenda para mensagens de mídia do WhatsApp
+* Recurso adicionado Variáveis de texto {{ post_title }}, {{ post_date }}, {{ post_content }}, {{ post_link }}, {{ post_tags }}, {{ post_categories }} e {{ post_featured_image }}
+
 Versão 1.3.7 (13/08/2025)
 * Correção de bugs
      - Incapacidade de editar fluxos com plugin Academy LMS e similares

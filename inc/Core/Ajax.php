@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.3.2
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Ajax {
@@ -882,6 +882,7 @@ class Ajax {
                         $new_action['data']['receiver'] = isset( $workflow_action['data']['receiver'] ) ? $workflow_action['data']['receiver'] : '';
                         $new_action['data']['media_url'] = isset( $workflow_action['data']['media_url'] ) ? $workflow_action['data']['media_url'] : '';
                         $new_action['data']['media_type'] = isset( $workflow_action['data']['media_type'] ) ? $workflow_action['data']['media_type'] : '';
+                        $new_action['data']['caption'] = isset( $workflow_action['data']['caption'] ) ? $workflow_action['data']['caption'] : '';
                     } elseif ( $workflow_action['data']['action'] === 'snippet_php' ) {
                         $new_action['data']['description'] = $build_description;
                         $new_action['data']['snippet_php'] = isset( $workflow_action['data']['snippet_php'] ) ? $workflow_action['data']['snippet_php'] : '';
@@ -1416,7 +1417,7 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.3.2
+     * @version 1.4.0
      * @return void
      */
     public function run_workflow_test_callback() {
@@ -1473,7 +1474,8 @@ class Ajax {
                                 $sender = $item['data']['sender'];
                                 $media_type = $item['data']['media_type'];
                                 $media = $item['data']['media_url'];
-                                $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media );
+                                $caption = Placeholders::replace_placeholders( $item['data']['caption'] ?? '', $payload, 'sandbox' );
+                                $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
     
                                 if ( 201 !== $send_message_media ) {
                                     // check connection state and notify user if disconnected

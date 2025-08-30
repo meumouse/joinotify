@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * Add integration with WhatsApp
  * 
  * @since 1.1.0
- * @version 1.3.0
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Whatsapp extends Integrations_Base {
@@ -61,6 +61,7 @@ class Whatsapp extends Integrations_Base {
      * Add WhatsApp messages actions in sidebar list on builder
      * 
      * @since 1.1.0
+     * @version 1.4.0
      * @param array $actions | Current actions
      * @return array
      */
@@ -88,7 +89,7 @@ class Whatsapp extends Integrations_Base {
             'has_settings' => true,
             'settings' => self::whatsapp_message_media_action(),
             'priority' => 50,
-            'is_expansible' => false,
+            'is_expansible' => true,
         );
 
         return $actions;
@@ -154,6 +155,7 @@ class Whatsapp extends Integrations_Base {
      * Render WhatsApp message media component
      * 
      * @since 1.1.0
+     * @version 1.4.0
      * @param array $settings | Current settings
      * @return string
      */
@@ -163,7 +165,13 @@ class Whatsapp extends Integrations_Base {
         $sender = $settings['sender'] ?? '';
         $receiver = $settings['receiver'] ?? '';
         $media_type = $settings['media_type'] ?? '';
-        $media_url = $settings['media_url'] ?? ''; ?>
+        $media_url = $settings['media_url'] ?? '';
+        $caption = $settings['caption'] ?? '';
+
+        // Estimate number of lines (counts how many line breaks there are)
+        $lines = substr_count( $caption, "\n" ) + 1;
+        $line_height = 40; // px
+        $textarea_height = $lines * $line_height; ?>
 
         <div class="preview-whatsapp-message-sender media <?php echo $media_type ?> <?php echo ( ! empty( $media_url ) ) ? 'active' : ''; ?>"><?php echo Messages::build_whatsapp_media_description( $settings ) ?></div>
 
@@ -193,7 +201,7 @@ class Whatsapp extends Integrations_Base {
             </select>
         </div>
 
-        <div class="require-media-type-image">
+        <div class="require-media-type-image mb-4">
             <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Adicionar mídia: *', 'joinotify' ) ?></label>
             
             <div class="input-group">
@@ -203,6 +211,12 @@ class Whatsapp extends Integrations_Base {
 
                 <input type="text" class="form-control get-media-url get-whatsapp-media-url required-setting" value="<?php echo $media_url ?>" placeholder="<?php esc_attr_e( 'URL da mídia', 'joinotify' ) ?>"/>
             </div>
+        </div>
+
+        <div class="require-media-type-image mb-4">
+            <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Legenda:', 'joinotify' ) ?></label>
+            
+            <textarea type="text" class="form-control add-emoji-picker set-whatsapp-message-caption" placeholder="<?php esc_attr_e( 'Legenda da mídia', 'joinotify' ) ?>" style="height: <?php echo $textarea_height; ?>px;"><?php echo $caption ?></textarea>
         </div>
 
         <?php return ob_get_clean();

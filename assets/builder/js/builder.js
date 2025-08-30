@@ -953,6 +953,7 @@
 								receiver: container.find('.get-whatsapp-receiver').val(),
 								media_type: container.find('.get-whatsapp-media-type').val(),
 								media_url: container.find('.get-whatsapp-media-url').val(),
+								caption: container.find('.set-whatsapp-message-caption').val(),
 							},
 						};
 
@@ -2601,68 +2602,74 @@
 		 * Emoji picker
 		 * 
 		 * @since 1.1.0
+		 * @version 1.4.0
 		 * @package MeuMouse.com
 		 */
 		emojiPicker: function() {
 			var i18n = params.i18n.emoji_picker;
 
-			// check if emoji picker is already initialized
-			if ( ! $('.add-emoji-picker').hasClass('emoji-initialized') ) {
-				// wait DOM is ready for initialize	
-				setTimeout( () => {
-					// initialize emoji picker
-					$('.add-emoji-picker').emojioneArea({
-						tones: true,
-						hidePickerOnBlur: true,
-						recentEmojis: true,
-						pickerPosition: 'bottom',
-						searchPlaceholder: i18n.placeholder,
-						buttonTitle: i18n.button_title,
-						filters: {
-							tones: {
-								title: i18n.filters.tones_title,
-							},
-							recent: {
-								title: i18n.filters.recent_title,
-							},
-							smileys_people: {
-								title: i18n.filters.smileys_people_title,
-							},
-							animals_nature: {
-								title: i18n.filters.animals_nature_title,
-							},
-							food_drink: {
-								title: i18n.filters.food_drink_title,
-							},
-							activity: {
-								title: i18n.filters.activity_title,
-							},
-							travel_places: {
-								title: i18n.filters.travel_places_title,
-							},
-							objects: {
-								title: i18n.filters.objects_title,
-							},
-							symbols: {
-								title: i18n.filters.symbols_title,
-							},
-							flags: {
-								title: i18n.filters.flags_title,
-							},
-						},
-					});
-				}, 600);
+			$('.add-emoji-picker').each( function() {
+				// check if emoji picker is already initialized
+				if ( ! $(this).hasClass('emoji-initialized') ) {
+					var el = $(this);
 
-				// initialize emoji picker
-				$('.add-emoji-picker').addClass('emoji-initialized');
-			}
+					// wait DOM is ready for initialize	
+					setTimeout( () => {
+						el.emojioneArea({
+							tones: true,
+							hidePickerOnBlur: true,
+							recentEmojis: true,
+							pickerPosition: 'bottom',
+							searchPlaceholder: i18n.placeholder,
+							buttonTitle: i18n.button_title,
+							filters: {
+								tones: {
+									title: i18n.filters.tones_title,
+								},
+								recent: {
+									title: i18n.filters.recent_title,
+								},
+								smileys_people: {
+									title: i18n.filters.smileys_people_title,
+								},
+								animals_nature: {
+									title: i18n.filters.animals_nature_title,
+								},
+								food_drink: {
+									title: i18n.filters.food_drink_title,
+								},
+								activity: {
+									title: i18n.filters.activity_title,
+								},
+								travel_places: {
+									title: i18n.filters.travel_places_title,
+								},
+								objects: {
+									title: i18n.filters.objects_title,
+								},
+								symbols: {
+									title: i18n.filters.symbols_title,
+								},
+								flags: {
+									title: i18n.filters.flags_title,
+								},
+							},
+						});
+					}, 600);
+
+					// add class to prevent multiple initialization
+					el.addClass('emoji-initialized');
+				}
+			});
+
+			$(document).off('keyup change', '.emojionearea-editor');
 
 			// Update the textarea on keyup event in the emojionearea editor
 			$(document).on('keyup change', '.emojionearea-editor', function() {
 				var content = $(this).html();
 
 				$(this).closest('.add-emoji-picker').val(content); // Update the textarea with the current content
-		  	});
+			});
 		},
 
 		/**
