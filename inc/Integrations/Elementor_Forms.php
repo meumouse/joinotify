@@ -3,15 +3,10 @@
 namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
-
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
-
 use MeuMouse\Joinotify\Builder\Core;
-use MeuMouse\Joinotify\Builder\Placeholders;
-
 use MeuMouse\Joinotify\API\Controller;
-
 use MeuMouse\Joinotify\Validations\Media_Types;
 
 use ElementorPro\Modules\Forms\Classes\Action_Base;
@@ -298,7 +293,7 @@ class Elementor_Forms extends Action_Base {
 			Logger::register_log( "context on Elementor form: " . print_r( $payload, true ) );
 		}
 
-		$text_msg = Placeholders::replace_placeholders( $settings['joinotify_send_text_message'] ?? '', $payload );
+		$text_msg = joinotify_prepare_message( $settings['joinotify_send_text_message'] ?? '', $payload );
 		$send_text = $settings['joinotify_send_text'] ?? 'no';
 		$send_media = $settings['joinotify_send_media_message'] ?? 'no';
 	
@@ -322,8 +317,7 @@ class Elementor_Forms extends Action_Base {
 		if ( $send_media === 'yes' ) {
 			$media_type = $settings['joinotidy_media_type'] ?? 'image';
 			$media_url = $settings['joinotify_media_url']['url'] ?? '';
-			$caption = $settings['joinotify_media_caption'] ?? '';
-			$caption = Placeholders::replace_placeholders( $caption, $payload );
+			$caption = joinotify_prepare_message( $settings['joinotify_media_caption'] ?? '', $payload );
 
 			if ( ! empty( $media_url ) ) {
 				if ( JOINOTIFY_DEBUG_MODE ) {

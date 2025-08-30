@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.3.2
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Ajax {
@@ -1417,7 +1417,7 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.3.2
+     * @version 1.4.0
      * @return void
      */
     public function run_workflow_test_callback() {
@@ -1474,7 +1474,7 @@ class Ajax {
                                 $sender = $item['data']['sender'];
                                 $media_type = $item['data']['media_type'];
                                 $media = $item['data']['media_url'];
-                                $caption = $item['data']['caption'] ?? '';
+                                $caption = Placeholders::replace_placeholders( $item['data']['caption'] ?? '', $payload, 'sandbox' );
                                 $send_message_media = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
     
                                 if ( 201 !== $send_message_media ) {

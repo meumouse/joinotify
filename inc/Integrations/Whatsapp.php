@@ -213,7 +213,7 @@ class Whatsapp extends Integrations_Base {
             </div>
         </div>
 
-        <div class="require-media-type-image">
+        <div class="require-media-type-image mb-4">
             <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Legenda:', 'joinotify' ) ?></label>
             
             <textarea type="text" class="form-control add-emoji-picker set-whatsapp-message-caption" placeholder="<?php esc_attr_e( 'Legenda da mídia', 'joinotify' ) ?>" style="height: <?php echo $textarea_height; ?>px;"><?php echo $caption ?></textarea>

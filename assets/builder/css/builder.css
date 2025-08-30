@@ -2173,3 +2173,7 @@ textarea.edit-whatsapp-message-text {
 #flexify-dashboard-navbar {
     display: none;
 }
+
+.funnel-media-caption {
+    margin-top: 1rem;
+}
