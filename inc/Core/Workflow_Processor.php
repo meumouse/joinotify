@@ -119,7 +119,7 @@ class Workflow_Processor {
          */
         do_action( 'Joinotify/Workflow_Processor/Process_Workflow_Content', $workflow_content, $post_id, $payload );
 
-        // get integration
+        $state = null;
         $integration = $payload['integration'] ?? '';
 
         // get trigger data
@@ -137,6 +137,11 @@ class Workflow_Processor {
             }
 
             $order = wc_get_order( $payload['order_id'] );
+
+            if ( ! $order ) {
+                return;
+            }
+
             $order_status = str_replace( 'wc-', '', $order->get_status() ); // remove prefix "wc-"
             
             // check order status
@@ -523,7 +528,7 @@ class Workflow_Processor {
             ob_start();
 
             // execute the snippet
-            eval( $snippet_php );
+            eval( $snippet_php ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.eval
             
             // get the output buffer contents
             $output = ob_get_clean();

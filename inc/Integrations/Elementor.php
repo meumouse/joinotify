@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * Add integration with Elementor
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.4.0
  * @package MeuMouse.com
  */
 class Elementor extends Integrations_Base {
@@ -23,14 +23,14 @@ class Elementor extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.0
      * @return void
      */
     public function __construct() {
         // add integration on settings
         add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 50, 1 );
         
-        if ( defined('ELEMENTOR_PATH') ) {
+        if ( class_exists('\Elementor\Plugin') ) {
             // add triggers
             add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
 

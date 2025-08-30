@@ -1583,6 +1583,7 @@ input.toggle-switch.status:checked {
     background-color: transparent;
     width: auto;
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
 }
 

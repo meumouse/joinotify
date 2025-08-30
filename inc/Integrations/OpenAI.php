@@ -21,7 +21,7 @@ class OpenAI extends Integrations_Base {
      */
     public function __construct() {
         // add integration on settings
-        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 40, 1 );
+    //    add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 40, 1 );
     }
 
 
