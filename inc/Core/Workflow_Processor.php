@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.1
  * @package MeuMouse.com
  */
 class Workflow_Processor {
@@ -95,7 +95,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.1
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -164,7 +164,6 @@ class Workflow_Processor {
             }
         }
 
-        // check restrictions for wordpress integration
         if ( $integration === 'wordpress' ) {
             if ( isset( $payload['hook'], $payload['post_id'], $payload['post_status'], $trigger_data['data']['settings']['post_status'] ) 
                 && ( $payload['hook'] === 'change_post_status' || $payload['hook'] === 'transition_post_status' ) 

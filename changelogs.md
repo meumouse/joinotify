@@ -1,3 +1,6 @@
+Versão 1.4.1 (28/10/2025)
+* Alteração na API de consulta de atualizações
+
 Versão 1.4.0 (29/08/2025)
 * Otimizações
 * Recurso adicionado: Legenda para mensagens de mídia do WhatsApp
