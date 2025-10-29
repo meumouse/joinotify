@@ -17,12 +17,12 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.1
  * @package MeuMouse.com
  */
 class Updater {
 
-    public $update_checker_file = 'https://raw.githubusercontent.com/meumouse/joinotify/refs/heads/main/dist/update-checker.json';
+    public $update_checker_file = 'https://packages.meumouse.com/v1/updates/joinotify';
     public $plugin_slug = JOINOTIFY_SLUG;
     public $version = JOINOTIFY_VERSION;
     public $cache_key = 'joinotify_check_updates';
