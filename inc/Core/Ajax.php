@@ -2239,9 +2239,12 @@ class Ajax {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_check_instance_connection' ) {
             $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
-            $get_state = Controller::get_connection_state( $phone );
             $cache_key = 'joinotify_server_details_' . md5( $phone );
-            $cached = delete_transient( $cache_key );
+
+            // delete server details cache
+            delete_transient( $cache_key );
+
+            $get_state = Controller::get_connection_state( $phone );
     
             // check response
             if ( isset( $get_state['connection'] ) && $get_state['connection'] === 'connected' ) {

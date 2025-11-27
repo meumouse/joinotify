@@ -137,10 +137,13 @@ class Controller {
      *
      * @since 1.0.0
      * @version 1.4.2
-     * @param mixed $param
-     * @return bool
+     * @param mixed            $param  The value to validate.
+     * @param WP_REST_Request $request Optional. The REST request object.
+     * @param string          $key     Optional. Parameter name.
+     *
+     * @return bool True if the parameter is a string, false otherwise.
      */
-    protected function validate_string( $param ) {
+    public function validate_string( $param, WP_REST_Request $request = null, $key = '' ) {
         return is_string( $param );
     }
 
