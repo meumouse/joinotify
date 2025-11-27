@@ -67,6 +67,7 @@ class ComposerStaticInit9e7395ae6528c152d37696eeb1cc780d
         'MeuMouse\\Joinotify\\Builder\\Workflow_Manager' => __DIR__ . '/../..' . '/inc/Builder/Workflow_Manager.php',
         'MeuMouse\\Joinotify\\Core\\Ajax' => __DIR__ . '/../..' . '/inc/Core/Ajax.php',
         'MeuMouse\\Joinotify\\Core\\Assets' => __DIR__ . '/../..' . '/inc/Core/Assets.php',
+        'MeuMouse\\Joinotify\\Core\\Cache' => __DIR__ . '/../..' . '/inc/Core/Cache.php',
         'MeuMouse\\Joinotify\\Core\\Compatibility' => __DIR__ . '/../..' . '/inc/Core/Compatibility.php',
         'MeuMouse\\Joinotify\\Core\\Debug' => __DIR__ . '/../..' . '/inc/Core/Debug.php',
         'MeuMouse\\Joinotify\\Core\\Helpers' => __DIR__ . '/../..' . '/inc/Core/Helpers.php',

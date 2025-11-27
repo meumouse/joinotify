@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * Controller for API requests
  * 
  * @since 1.0.0
- * @version 1.3.3
+ * @version 1.4.2
  * @package MeuMouse.com
  */
 class Controller {
@@ -59,13 +59,13 @@ class Controller {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.2
      * @return void
      */
     public function __construct() {
-        self::$debug_mode = JOINOTIFY_DEBUG_MODE;
-        self::$dev_mode = JOINOTIFY_DEV_MODE;
-        self::$base_api_url = JOINOTIFY_API_BASE_URL;
+        self::$debug_mode = defined('JOINOTIFY_DEBUG_MODE') ? JOINOTIFY_DEBUG_MODE : false;
+        self::$dev_mode = defined('JOINOTIFY_DEV_MODE') ? JOINOTIFY_DEV_MODE : false;
+        self::$base_api_url = defined('JOINOTIFY_API_BASE_URL') ? JOINOTIFY_API_BASE_URL : '';
         self::$base_api_key = Helpers::slots_manager_api_key();
 
         if ( Admin::get_setting('enable_proxy_api') === 'yes' && License::is_valid() ) {
@@ -78,7 +78,7 @@ class Controller {
      * Records the routes of API endpoints
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.2
      * @return void
      */
     public function register_routes() {
@@ -91,15 +91,15 @@ class Controller {
             'args' => array(
                 'sender' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
                 'receiver' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
                 'message' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
             ),
         ));
@@ -113,22 +113,38 @@ class Controller {
             'args' => array(
                 'sender' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
                 'receiver' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
                 'media_type' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
                 'media_url' => array(
                     'required' => true,
-                    'validate_callback' => array( 'MeuMouse\Joinotify\Core\Helpers', 'validate_string' ),
+                    'validate_callback' => array( $this, 'validate_string' ),
                 ),
             ),
         ));
+    }
+
+
+    /**
+     * Validate if the given parameter is a string
+     *
+     * @since 1.0.0
+     * @version 1.4.2
+     * @param mixed            $param  The value to validate.
+     * @param WP_REST_Request $request Optional. The REST request object.
+     * @param string          $key     Optional. Parameter name.
+     *
+     * @return bool True if the parameter is a string, false otherwise.
+     */
+    public function validate_string( $param, WP_REST_Request $request = null, $key = '' ) {
+        return is_string( $param );
     }
 
 

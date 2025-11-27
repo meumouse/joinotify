@@ -68,7 +68,7 @@ class Workflow_Processor {
          */
         do_action( 'Joinotify/Workflow_Processor/Process_Workflows', $hook, $payload, $workflows );
 
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function process_workflows() fired' );
             Logger::register_log( 'hook: ' . print_r( $hook, true ) );
             Logger::register_log( 'payload: ' . print_r( $payload, true ) );
@@ -444,7 +444,7 @@ class Workflow_Processor {
             Controller::get_connection_state( $sender );
         }
         
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
@@ -478,7 +478,7 @@ class Workflow_Processor {
             Controller::get_connection_state( $sender );
         }
 
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
@@ -518,7 +518,7 @@ class Workflow_Processor {
         }
 
         // register log before execution for debugging
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( "Running PHP Snippet: \n" . $snippet_php );
         }
 
@@ -533,7 +533,7 @@ class Workflow_Processor {
             $output = ob_get_clean();
 
             // result execution log
-            if ( JOINOTIFY_DEBUG_MODE ) {
+            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                 Logger::register_log( "PHP Snippet result: \n" . print_r( $output, true ) );
             }
 
@@ -562,7 +562,7 @@ class Workflow_Processor {
         // send message
         $send_message = self::send_whatsapp_message_text( $action_data['settings']['message'], $payload );
 
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             if ( $create_coupon['coupon_id'] > 0 ) {
                 Logger::register_log( "Coupon created successfully." );
             } else {

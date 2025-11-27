@@ -286,7 +286,7 @@ if ( class_exists('ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 				'fields' => $fields,
 			);
 
-			if ( JOINOTIFY_DEBUG_MODE ) {
+			if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
 				Logger::register_log( "context on Elementor form: " . print_r( $payload, true ) );
 			}
 
@@ -301,7 +301,7 @@ if ( class_exists('ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 		
 			// check if send message text is enabled
 			if ( $send_text === 'yes' && ! empty( $text_msg ) ) {
-				if ( JOINOTIFY_DEBUG_MODE ) {
+				if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
 					Logger::register_log( "sender on Elementor form: " . $sender );
 					Logger::register_log( "receiver on Elementor form: " . $receiver );
 					Logger::register_log( "text message on Elementor form: " . $text_msg );
@@ -317,7 +317,7 @@ if ( class_exists('ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 				$caption = joinotify_prepare_message( $settings['joinotify_media_caption'] ?? '', $payload );
 
 				if ( ! empty( $media_url ) ) {
-					if ( JOINOTIFY_DEBUG_MODE ) {
+					if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
 						Logger::register_log( "media type on Elementor form: " . $media_type );
 						Logger::register_log( "media url on Elementor form: " . $media_url );
 						Logger::register_log( "media caption on Elementor form: " . $caption );

@@ -16,20 +16,30 @@ defined('ABSPATH') || exit;
  */
 class Assets {
 
+	/**
+	 * Plugin assets URL
+	 * 
+	 * @since 1.0.0
+	 * @version 1.4.2
+	 * @return string
+	 */
 	public $assets_url = JOINOTIFY_ASSETS;
-	public $min_file = JOINOTIFY_DEBUG_MODE ? '' : '.min';
+	public $min_file;
 	public $version = JOINOTIFY_VERSION;
-	public $debug_mode = JOINOTIFY_DEBUG_MODE;
+	public $debug_mode;
 	public $dev_mode = JOINOTIFY_DEV_MODE;
 
 	/**
 	 * Construct function
 	 * 
 	 * @since 1.0.0
-	 * @version 1.1.0
+	 * @version 1.4.2
 	 * @return void
 	 */
 	public function __construct() {
+		$this->min_file = defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ? '' : '.min';
+		$this->debug_mode = defined('JOINOTIFY_DEBUG_MODE') ? JOINOTIFY_DEBUG_MODE : false;
+
 		// settings page scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'settings_assets' ) );
 

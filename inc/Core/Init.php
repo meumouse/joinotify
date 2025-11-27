@@ -9,26 +9,48 @@ defined('ABSPATH') || exit;
  * Initialize plugin classes
  * 
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.2
  * @package MeuMouse.com
  */
 class Init {
 
     /**
+     * Plugin directory
+     * 
+     * @since 1.4.2
+     * @return string
+     */
+    public $directory = JOINOTIFY_DIR;
+
+    /**
+     * Plugin basename
+     * 
+     * @since 1.0.0
+     * @version 1.4.2
+     */
+    public $basename = JOINOTIFY_BASENAME;
+
+    /**
      * Construct function
      * 
      * @since 1.0.0
+     * @version 1.4.2
      * @return void
      */
     public function __construct() {
-        load_plugin_textdomain( 'joinotify', false, dirname( JOINOTIFY_BASENAME ) . '/languages/' );
-        add_filter( 'plugin_action_links_' . JOINOTIFY_BASENAME, array( $this, 'add_action_plugin_links' ), 10, 4 );
-        add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
-
         // load plugin functions
         require_once JOINOTIFY_INC . 'Core/Functions.php';
 
-        self::instance_classes();
+        $this->instance_classes();
+
+        // load text domain
+        load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
+
+        // add settings link on plugins list
+        add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
+
+        // add docs link on plugins list
+        add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
     }
 
 
@@ -36,39 +58,81 @@ class Init {
      * Instance classes after load Composer
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.2
      * @return void
      */
-    public static function instance_classes() {
-        $classes = apply_filters( 'Joinotify/Init/Instance_Classes', array(
-            '\MeuMouse\Joinotify\Core\Logger',
-            '\MeuMouse\Joinotify\API\License',
-            '\MeuMouse\Joinotify\Admin\Admin',
-            '\MeuMouse\Joinotify\Core\Compatibility',
-            '\MeuMouse\Joinotify\Core\Debug',
-            '\MeuMouse\Joinotify\Core\Assets',
-            '\MeuMouse\Joinotify\Core\Ajax',
-            '\MeuMouse\Joinotify\Cron\Schedule',
-            '\MeuMouse\Joinotify\Cron\Routines',
-            '\MeuMouse\Joinotify\Builder\Workflow_Manager',
-            '\MeuMouse\Joinotify\Integrations\Whatsapp',
-            '\MeuMouse\Joinotify\Integrations\Wordpress',
-            '\MeuMouse\Joinotify\Integrations\Woocommerce',
-            '\MeuMouse\Joinotify\Integrations\Woo_Subscriptions',
-            '\MeuMouse\Joinotify\Integrations\Flexify_Checkout',
-            '\MeuMouse\Joinotify\Integrations\Elementor',
-            '\MeuMouse\Joinotify\Integrations\Elementor_Forms',
-            '\MeuMouse\Joinotify\Integrations\Wpforms',
-            '\MeuMouse\Joinotify\Integrations\OpenAI',
-        //    '\MeuMouse\Joinotify\Integrations\Developer_Mode',
-            '\MeuMouse\Joinotify\Validations\Media_Types',
-            '\MeuMouse\Joinotify\API\Controller',
-        	'\MeuMouse\Joinotify\Core\API',
-        ));
+    public function instance_classes() {
+        /**
+         * Filter to add new classes
+         * 
+         * @since 1.0.0
+         * @param array $classes | Array with classes to instance
+         */
+        $manual_classes = apply_filters( 'Joinotify/Init/Instance_Classes', array() );
 
-        foreach ( $classes as $class ) {
+        // iterate through manual classes and instance them
+        foreach ( $manual_classes as $class ) {
             if ( class_exists( $class ) ) {
-                new $class();
+                $instance = new $class();
+
+                if ( method_exists( $instance, 'init' ) ) {
+                    $instance->init();
+                }
+            }
+        }
+
+        // get classmap from Composer
+        $classmap = include_once $this->directory . 'vendor/composer/autoload_classmap.php';
+
+        // ensure classmap is an array
+        if ( ! is_array( $classmap ) ) {
+            $classmap = array();
+        }
+
+        // iterate through classmap and instance classes
+        foreach ( $classmap as $class => $path ) {
+            // skip classes not in the plugin namespace
+            if ( strpos( $class, 'MeuMouse\\Joinotify\\' ) !== 0 ) {
+                continue;
+            }
+
+            // skip the Init class to prevent duplicate instances
+            if ( strpos( $class, 'MeuMouse\\Joinotify\\Core\\Init' ) !== false ) {
+                continue;
+            }
+
+            // skip specific utility classes
+            if ( $class === 'Composer\\InstalledVersions' ) {
+                continue;
+            }
+
+            // check if class exists
+            if ( ! class_exists( $class ) ) {
+                continue;
+            }
+
+            // use ReflectionClass to check if class is instantiable
+            $reflection = new \ReflectionClass( $class );
+
+            // instance only if class is not abstract, trait or interface
+            if ( ! $reflection->isInstantiable() ) {
+                continue;
+            }
+
+            // check if class has a constructor
+            $constructor = $reflection->getConstructor();
+
+            // skip classes that require mandatory arguments in __construct
+            if ( $constructor && $constructor->getNumberOfRequiredParameters() > 0 ) {
+                continue;
+            }
+
+            // safe instance
+            $instance = new $class();
+
+            // this is useful for classes that need to run some initialization code
+            if ( method_exists( $instance, 'init' ) ) {
+                $instance->init();
             }
         }
     }

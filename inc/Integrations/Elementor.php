@@ -195,7 +195,7 @@ class Elementor extends Integrations_Base {
             $fields[$id] = $field['value'];
         }
 
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function process_workflow_elementor_form() fired' );
         }
     

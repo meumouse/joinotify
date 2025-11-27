@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.2
  * @package MeuMouse.com
  */
 class Ajax {
@@ -123,7 +123,7 @@ class Ajax {
                     'toast_body_title' => esc_html__( 'As configurações foram atualizadas!', 'joinotify' ),
                 );
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     $response['debug'] = array(
                         'options' => $updated_options,
                     );
@@ -568,7 +568,7 @@ class Ajax {
                     $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
                     $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'check_content' => get_post_meta( $post_id, 'joinotify_workflow_content', true ),
                         );
@@ -631,7 +631,7 @@ class Ajax {
                     $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
                     $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'check_content' => get_post_meta( $new_post_id, 'joinotify_workflow_content', true ),
                         );
@@ -697,7 +697,7 @@ class Ajax {
                     $response['active_settings_modal'] = '#edit_trigger_' . $trigger_id;
                 }
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     $response['debug'] = array(
                         'post_object' => get_post( $post_id ),
                         'post_meta' => $workflow_data,
@@ -983,7 +983,7 @@ class Ajax {
                         'toast_body_title' => __( 'Ação adicionada no fluxo com sucesso!', 'joinotify' ),
                     );
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'existing_content' => $workflow_content,
                             'action_id' => $current_action_id,
@@ -998,7 +998,7 @@ class Ajax {
                         'toast_body_title' => __( 'Ocorreu um erro ao adicionar ação no fluxo.', 'joinotify' ),
                     );
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'update_meta' => $result,
                             'workflow_action' => $workflow_action,
@@ -1104,7 +1104,7 @@ class Ajax {
                             'toast_body_title' => __( 'Não foi possível atualizar o fluxo após a exclusão da ação.', 'joinotify' ),
                         );
 
-                        if ( JOINOTIFY_DEBUG_MODE ) {
+                        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                             $response['debug'] = array(
                                 'action_id' => $action_id,
                             );
@@ -1288,7 +1288,7 @@ class Ajax {
      * Callback to validate OTP
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.2
      * @return void
      */
     public function validate_otp_callback() {
@@ -1327,6 +1327,14 @@ class Ajax {
                     $current_senders[] = $phone;
                 }
 
+                /**
+                 * Fired hook when phone is validated successfully
+                 * 
+                 * @since 1.4.2
+                 * @param string $phone | Validated phone number
+                 */
+                do_action( 'Joinotify/Validate_Phone/Success', $phone );
+
                 // Update the option with the new array of phone senders
                 update_option( 'joinotify_get_phones_senders', $current_senders );
 
@@ -1359,7 +1367,7 @@ class Ajax {
      * Callback to remove a phone sender
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.2
      * @return void
      */
     public function remove_phone_sender_callback() {
@@ -1390,6 +1398,14 @@ class Ajax {
 
                     // Update option without phone removed
                     update_option( 'joinotify_get_phones_senders', array_values( $phones_senders ) );
+
+                    /**
+                     * Fired hook when phone is removed successfully
+                     * 
+                     * @since 1.4.2
+                     * @param string $phone | Removed phone number
+                     */
+                    do_action( 'Joinotify/Remove_Phone/Success', $phone );
 
                     $response = array(
                         'status' => 'success',
@@ -1932,7 +1948,7 @@ class Ajax {
                             'toast_body_title' => esc_html__( 'Não foi possível atualizar a ação.', 'joinotify' ),
                         );
 
-                        if ( JOINOTIFY_DEBUG_MODE ) {
+                        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                             $response['debug'] = array(
                                 'update_post_meta' => $updated_workflow,
                             );
@@ -2003,7 +2019,7 @@ class Ajax {
                             'toast_body_title' => esc_html__( 'Não foi possível atualizar o acionamento.', 'joinotify' ),
                         );
 
-                        if ( JOINOTIFY_DEBUG_MODE ) {
+                        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                             $response['debug'] = array(
                                 'update_post_meta' => $updated_workflow,
                             );
@@ -2232,12 +2248,18 @@ class Ajax {
      * Check connection state for instance on AJAX callback
      * 
      * @since 1.3.0
+     * @version 1.4.2
      * @return void
      */
     public function check_instance_connection_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_check_instance_connection' ) {
             $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
+            $cache_key = 'joinotify_server_details_' . md5( $phone );
+
+            // delete server details cache
+            delete_transient( $cache_key );
+
             $get_state = Controller::get_connection_state( $phone );
     
             // check response

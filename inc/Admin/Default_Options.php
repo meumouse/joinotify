@@ -39,7 +39,7 @@ class Default_Options {
             'enable_auto_updates' => 'no',
             'enable_create_coupon_action' => 'yes',
             'create_coupon_prefix' => 'CUPOM_',
-            'enable_ignore_processed_actions' => 'yes',
+            'enable_ignore_processed_actions' => 'no',
             'enable_developer_integration' => 'yes',
             'enable_send_disconnect_notifications' => 'yes',
             'enable_update_notice' => 'yes',
