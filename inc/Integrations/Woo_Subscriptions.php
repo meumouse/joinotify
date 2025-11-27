@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce Subscriptions plugin
  * 
  * @since 1.0.0
- * @version 1.3.6
+ * @version 1.4.2
  * @package MeuMouse.com
  */
 class Woo_Subscriptions extends Integrations_Base {
@@ -21,13 +21,13 @@ class Woo_Subscriptions extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.6
+     * @version 1.4.2
      * @return void
      */
     public function __construct() {
         // check if WooCommerce Subscriptions is active
         if ( class_exists('WC_Subscriptions') ) {
-            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_subscription_triggers' ), 10, 1 );
+            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_subscription_triggers' ), 20, 1 );
 
             // fire hooks if WooCommerce is active
             if ( Admin::get_setting('enable_woocommerce_integration') === 'yes' ) {

@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.2
  * @package MeuMouse.com
  */
 class Ajax {
@@ -2232,6 +2232,7 @@ class Ajax {
      * Check connection state for instance on AJAX callback
      * 
      * @since 1.3.0
+     * @version 1.4.2
      * @return void
      */
     public function check_instance_connection_callback() {
@@ -2239,6 +2240,8 @@ class Ajax {
             $phone = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : '';
             $phone = preg_replace( '/\D/', '', $phone ); // allow only numbers
             $get_state = Controller::get_connection_state( $phone );
+            $cache_key = 'joinotify_server_details_' . md5( $phone );
+            $cached = delete_transient( $cache_key );
     
             // check response
             if ( isset( $get_state['connection'] ) && $get_state['connection'] === 'connected' ) {
