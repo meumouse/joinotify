@@ -148,7 +148,7 @@ if ( ! class_exists('Joinotify') ) {
 				'JOINOTIFY_API_BASE_URL' => 'https://slots-manager.joinotify.com',
 				'JOINOTIFY_SLUG' => self::$slug,
 				'JOINOTIFY_VERSION' => self::$version,
-				'JOINOTIFY_DEV_MODE' => true,
+				'JOINOTIFY_DEV_MODE' => false,
 			);
 		
 			// Iterate and define each constant if not already defined

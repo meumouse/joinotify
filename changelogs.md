@@ -1,3 +1,8 @@
+Versão 1.4.2 (27/11/2025)
+* Correção de bugs
+     - Erro na validação de string com Proxy API
+* Otimizações
+
 Versão 1.4.1 (28/10/2025)
 * Alteração na API de consulta de atualizações
 
