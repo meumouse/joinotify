@@ -123,7 +123,7 @@ class Ajax {
                     'toast_body_title' => esc_html__( 'As configurações foram atualizadas!', 'joinotify' ),
                 );
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     $response['debug'] = array(
                         'options' => $updated_options,
                     );
@@ -568,7 +568,7 @@ class Ajax {
                     $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
                     $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'check_content' => get_post_meta( $post_id, 'joinotify_workflow_content', true ),
                         );
@@ -631,7 +631,7 @@ class Ajax {
                     $response['sidebar_actions'] = Builder_Components::get_filtered_actions( $context );
                     $response['fetch_groups_trigger'] = Builder_Components::fetch_all_groups_modal_trigger();
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'check_content' => get_post_meta( $new_post_id, 'joinotify_workflow_content', true ),
                         );
@@ -697,7 +697,7 @@ class Ajax {
                     $response['active_settings_modal'] = '#edit_trigger_' . $trigger_id;
                 }
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     $response['debug'] = array(
                         'post_object' => get_post( $post_id ),
                         'post_meta' => $workflow_data,
@@ -983,7 +983,7 @@ class Ajax {
                         'toast_body_title' => __( 'Ação adicionada no fluxo com sucesso!', 'joinotify' ),
                     );
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'existing_content' => $workflow_content,
                             'action_id' => $current_action_id,
@@ -998,7 +998,7 @@ class Ajax {
                         'toast_body_title' => __( 'Ocorreu um erro ao adicionar ação no fluxo.', 'joinotify' ),
                     );
     
-                    if ( JOINOTIFY_DEBUG_MODE ) {
+                    if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
                             'update_meta' => $result,
                             'workflow_action' => $workflow_action,
@@ -1104,7 +1104,7 @@ class Ajax {
                             'toast_body_title' => __( 'Não foi possível atualizar o fluxo após a exclusão da ação.', 'joinotify' ),
                         );
 
-                        if ( JOINOTIFY_DEBUG_MODE ) {
+                        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                             $response['debug'] = array(
                                 'action_id' => $action_id,
                             );
@@ -1932,7 +1932,7 @@ class Ajax {
                             'toast_body_title' => esc_html__( 'Não foi possível atualizar a ação.', 'joinotify' ),
                         );
 
-                        if ( JOINOTIFY_DEBUG_MODE ) {
+                        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                             $response['debug'] = array(
                                 'update_post_meta' => $updated_workflow,
                             );
@@ -2003,7 +2003,7 @@ class Ajax {
                             'toast_body_title' => esc_html__( 'Não foi possível atualizar o acionamento.', 'joinotify' ),
                         );
 
-                        if ( JOINOTIFY_DEBUG_MODE ) {
+                        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                             $response['debug'] = array(
                                 'update_post_meta' => $updated_workflow,
                             );

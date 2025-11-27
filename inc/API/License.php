@@ -180,7 +180,7 @@ class License {
             $password = $this->product_key;
         }
 
-        if ( JOINOTIFY_DEBUG_MODE ) {
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'License API response encrypted: ' . print_r( $encrypted, true ) );
         }
 
@@ -192,7 +192,7 @@ class License {
             $plaintext = openssl_decrypt( base64_decode( $encrypted ), $method, $key, OPENSSL_RAW_DATA, $iv );
     
             if ( $plaintext === false ) {
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     Logger::register_log( 'License API - fail on decrypt: ' . print_r( $plaintext, true ), 'ERROR' );
                 }
 
@@ -201,7 +201,7 @@ class License {
     
             return substr( $plaintext, 2, -2 );
         } else {
-            if ( JOINOTIFY_DEBUG_MODE ) {
+            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                 Logger::register_log( 'License API - Entry for decrypt is not string : ' . print_r( $encrypted, true ), 'ERROR' );
             }
            
@@ -250,7 +250,7 @@ class License {
             $resbk = $response;
             $decrypted_response = $response;
 
-            if ( JOINOTIFY_DEBUG_MODE ) {
+            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                 Logger::register_log( 'License API - Process response : ' . print_r( $response, true ) );
             }
 
@@ -258,7 +258,7 @@ class License {
                 // Try to decrypt
                 $decrypted_response = $this->decrypt( $response );
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     Logger::register_log( 'License API - Decrypted response : ' . print_r( $decrypted_response, true ) );
                 }
 
@@ -283,7 +283,7 @@ class License {
             // Try decoding the JSON
             $decoded_response = json_decode( $decrypted_response );
 
-            if ( JOINOTIFY_DEBUG_MODE ) {
+            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                 Logger::register_log( 'License API - Response decoded : ' . print_r( $decoded_response, true ) );
             }
 
@@ -351,7 +351,7 @@ class License {
     
                 $server_response = wp_remote_post( $url, $request_params );
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     Logger::register_log( 'License API - Request response : ' . print_r( $server_response, true ) );
                 }
 
@@ -605,7 +605,7 @@ class License {
                 $response = $this->_request( 'product/deactive/' . $this->product_id, $param, $message );
                 update_option('joinotify_license_response_object', $response);
 
-                if ( JOINOTIFY_DEBUG_MODE ) {
+                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                     Logger::register_log( 'License API - Deactive response object : ' . print_r( $response, true ) );
                 }
 

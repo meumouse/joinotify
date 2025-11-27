@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.2
  * @package MeuMouse.com
  */
 class Helpers {
@@ -190,19 +190,6 @@ class Helpers {
         $current_senders = get_option( 'joinotify_get_phones_senders', array() );
 
         return in_array( $sender, $current_senders );
-    }
-
-
-    /**
-     * Validate if the given parameter is a string
-     *
-     * @since 1.0.0
-     * @version 1.3.0
-     * @param mixed $param
-     * @return bool
-     */
-    public function validate_string( $param ) {
-        return is_string( $param );
     }
 
 
