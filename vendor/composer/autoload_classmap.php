@@ -24,6 +24,7 @@ return array(
     'MeuMouse\\Joinotify\\Builder\\Workflow_Manager' => $baseDir . '/inc/Builder/Workflow_Manager.php',
     'MeuMouse\\Joinotify\\Core\\Ajax' => $baseDir . '/inc/Core/Ajax.php',
     'MeuMouse\\Joinotify\\Core\\Assets' => $baseDir . '/inc/Core/Assets.php',
+    'MeuMouse\\Joinotify\\Core\\Cache' => $baseDir . '/inc/Core/Cache.php',
     'MeuMouse\\Joinotify\\Core\\Compatibility' => $baseDir . '/inc/Core/Compatibility.php',
     'MeuMouse\\Joinotify\\Core\\Debug' => $baseDir . '/inc/Core/Debug.php',
     'MeuMouse\\Joinotify\\Core\\Helpers' => $baseDir . '/inc/Core/Helpers.php',

@@ -1288,7 +1288,7 @@ class Ajax {
      * Callback to validate OTP
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.2
      * @return void
      */
     public function validate_otp_callback() {
@@ -1327,6 +1327,14 @@ class Ajax {
                     $current_senders[] = $phone;
                 }
 
+                /**
+                 * Fired hook when phone is validated successfully
+                 * 
+                 * @since 1.4.2
+                 * @param string $phone | Validated phone number
+                 */
+                do_action( 'Joinotify/Validate_Phone/Success', $phone );
+
                 // Update the option with the new array of phone senders
                 update_option( 'joinotify_get_phones_senders', $current_senders );
 
@@ -1359,7 +1367,7 @@ class Ajax {
      * Callback to remove a phone sender
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.2
      * @return void
      */
     public function remove_phone_sender_callback() {
@@ -1390,6 +1398,14 @@ class Ajax {
 
                     // Update option without phone removed
                     update_option( 'joinotify_get_phones_senders', array_values( $phones_senders ) );
+
+                    /**
+                     * Fired hook when phone is removed successfully
+                     * 
+                     * @since 1.4.2
+                     * @param string $phone | Removed phone number
+                     */
+                    do_action( 'Joinotify/Remove_Phone/Success', $phone );
 
                     $response = array(
                         'status' => 'success',
