@@ -238,7 +238,7 @@ class Helpers {
             return $data;
         }
 
-        return is_string( $data ) ? wp_encode_emoji( $data ) : $data;
+        return is_string( $data ) ? self::encode_emoji( $data ) : $data;
     }
 
 
@@ -258,7 +258,7 @@ class Helpers {
             return $data;
         }
 
-        return is_string( $data ) ? wp_decode_emoji( $data ) : $data;
+        return is_string( $data ) ? self::decode_emoji( $data ) : $data;
     }
 
 
@@ -274,6 +274,63 @@ class Helpers {
         $prepared_content = self::encode_emoji_deep( $workflow_content );
 
         return update_post_meta( $post_id, 'joinotify_workflow_content', $prepared_content );
+    }
+
+
+    /**
+     * Encode emoji characters to HTML entities
+     *
+     * @since 1.4.3
+     * @param string $content | Text content
+     * @return string
+     */
+    public static function encode_emoji( $content ) {
+        if ( ! function_exists( '_wp_emoji_list' ) ) {
+            require_once ABSPATH . WPINC . '/formatting.php';
+        }
+        
+        $emoji = _wp_emoji_list( 'partials' );
+
+        foreach ( $emoji as $emojum ) {
+            $emoji_char = html_entity_decode( $emojum );
+            if ( str_contains( $content, $emoji_char ) ) {
+                $content = preg_replace( "/$emoji_char/", $emojum, $content );
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Decode emoji HTML entities back to characters
+     *
+     * @since 1.4.3
+     * @param string $content | Text content with HTML entities
+     * @return string
+     */
+    public static function decode_emoji( $content ) {
+        // Decode HTML entities (including emoji entities)
+        $decoded = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+        
+        // Additional check for any remaining numeric HTML entities
+        $decoded = preg_replace_callback(
+            '/&#(\d+);/',
+            function( $matches ) {
+                return chr( $matches[1] );
+            },
+            $decoded
+        );
+        
+        // Check for hex entities
+        $decoded = preg_replace_callback(
+            '/&#x([0-9A-F]+);/i',
+            function( $matches ) {
+                return chr( hexdec( $matches[1] ) );
+            },
+            $decoded
+        );
+        
+        return $decoded;
     }
 
 

@@ -2,6 +2,7 @@ Versão 1.4.3 (08/12/2025)
 * Correção de bugs
      - Verificar se o pedido foi pago
      - Criptografia de emojis em mensagens
+     - Contagem de posts na tabela Todos os fluxos
 
 Versão 1.4.2 (27/11/2025)
 * Correção de bugs
