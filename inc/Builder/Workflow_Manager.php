@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * This class manages the workflow functions
  * 
  * @since 1.1.0
- * @version 1.3.0
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Workflow_Manager {
@@ -123,13 +123,13 @@ class Workflow_Manager {
      * Get workflow content HTML
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @return mixed|array|false
      */
     public static function get_workflow_content( $post_id ) {
         if ( get_post_type( $post_id ) === 'joinotify-workflow' ) {
-            $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+            $workflow_content = Helpers::get_workflow_content_meta( $post_id );
             
             if ( empty( $workflow_content ) ) {
                 return false;

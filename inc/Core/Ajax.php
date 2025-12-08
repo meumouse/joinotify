@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.4.2
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Ajax {
@@ -398,7 +398,7 @@ class Ajax {
      * Import workflow templates on AJAX callback
      * 
      * @since 1.1.0
-     * @version 1.3.2
+     * @version 1.4.3
      * @return void
      */
     public function import_workflow_templates_callback() {
@@ -473,7 +473,7 @@ class Ajax {
         }
 
         // update workflow data on post metadata
-        update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_data['workflow_content'] );
+        Helpers::update_workflow_content_meta( $post_id, $workflow_data['workflow_content'] );
 
         // URL for edit workflow
         $redirect_url = admin_url("admin.php?page=joinotify-workflows-builder&id={$post_id}");
@@ -492,7 +492,7 @@ class Ajax {
      * Create workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.3
      * @return void
      */
     public function create_workflow_callback() {
@@ -522,7 +522,7 @@ class Ajax {
                 // post updated successful
                 if ( $update_result ) {
                     // Retrieve existing workflow content
-                    $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                    $workflow_content = Helpers::get_workflow_content_meta( $post_id );
     
                     // Remove existing trigger(s) from the workflow content
                     $workflow_content_updated = array_filter( $workflow_content, function( $item ) {
@@ -533,7 +533,7 @@ class Ajax {
                     array_unshift( $workflow_content_updated, $new_trigger );
     
                     // Update the post meta
-                    update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content_updated );
+                    Helpers::update_workflow_content_meta( $post_id, $workflow_content_updated );
     
                     $response = array(
                         'status' => 'success',
@@ -546,7 +546,7 @@ class Ajax {
                     );
 
                     // get updated post meta data
-                    $workflow_content_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                    $workflow_content_data = Helpers::get_workflow_content_meta( $post_id );
 
                     if ( is_array( $workflow_content_data ) ) {
                         foreach ( $workflow_content_data as $item ) {
@@ -570,7 +570,7 @@ class Ajax {
     
                     if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
-                            'check_content' => get_post_meta( $post_id, 'joinotify_workflow_content', true ),
+                            'check_content' => Helpers::get_workflow_content_meta( $post_id ),
                         );
                     }
                 } else {
@@ -589,7 +589,7 @@ class Ajax {
                     'post_type' => 'joinotify-workflow',
                     'post_status' => 'draft',
                     'meta_input' => array(
-                        'joinotify_workflow_content' => array( $new_trigger ),
+                        'joinotify_workflow_content' => Helpers::encode_emoji_deep( array( $new_trigger ) ),
                     ),
                 );
     
@@ -608,7 +608,7 @@ class Ajax {
                     );
 
                     // Retrieve existing workflow content
-                    $workflow_content = get_post_meta( $new_post_id, 'joinotify_workflow_content', true );
+                    $workflow_content = Helpers::get_workflow_content_meta( $new_post_id );
 
                     if ( is_array( $workflow_content ) ) {
                         foreach ( $workflow_content as $item ) {
@@ -633,7 +633,7 @@ class Ajax {
     
                     if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
                         $response['debug'] = array(
-                            'check_content' => get_post_meta( $new_post_id, 'joinotify_workflow_content', true ),
+                            'check_content' => Helpers::get_workflow_content_meta( $new_post_id ),
                         );
                     }
                 } else {
@@ -656,7 +656,7 @@ class Ajax {
      * Load workflow data on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.3
      * @return void
      */
     public function load_workflow_data_callback() {
@@ -676,7 +676,7 @@ class Ajax {
                 );
 
                 // get workflow content
-                $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                $workflow_data = Helpers::get_workflow_content_meta( $post_id );
 
                 foreach ( $workflow_data as $workflow ) {
                     if ( isset( $workflow['type'] ) && $workflow['type'] === 'trigger' ) {
@@ -775,7 +775,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.3
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -788,7 +788,7 @@ class Ajax {
 
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
                 // Retrieve workflow content
-                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                $workflow_content = Helpers::get_workflow_content_meta( $post_id );
     
                 // If empty workflow content, initialize empty array
                 if ( empty( $workflow_content ) ) {
@@ -971,7 +971,7 @@ class Ajax {
                 });
     
                 // Update workflow content
-                $result = update_post_meta( $post_id, 'joinotify_workflow_content', array_values( $workflow_content ) );
+                $result = Helpers::update_workflow_content_meta( $post_id, array_values( $workflow_content ) );
     
                 // Check if post has been updated successfully
                 if ( $result ) {
@@ -1004,7 +1004,7 @@ class Ajax {
                             'workflow_action' => $workflow_action,
                             'existing_content' => $workflow_content,
                             'post_object' => get_post( $post_id ),
-                            'post_meta' => get_post_meta( $post_id, 'joinotify_workflow_content' ),
+                            'post_meta' => Helpers::get_workflow_content_meta( $post_id ),
                         );
                     }
                 }
@@ -1068,6 +1068,7 @@ class Ajax {
      * Delete action from workflow via AJAX callback
      *
      * @since 1.0.0
+     * @version 1.4.3
      * @return void
      */
     public function delete_workflow_action_callback() {
@@ -1077,14 +1078,14 @@ class Ajax {
     
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' && $action_id ) {
                 // retrieve workflow content
-                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                $workflow_content = Helpers::get_workflow_content_meta( $post_id );
     
                 if ( ! empty( $workflow_content ) ) {
                     $workflow_content = Actions::delete_item_recursive( $workflow_content, $action_id );
     
                     // reindex the main array to prevent gaps in array keys
                     $workflow_content = array_values( $workflow_content );
-                    $result = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
+                    $result = Helpers::update_workflow_content_meta( $post_id, $workflow_content );
     
                     if ( $result ) {
                         $response = array(
@@ -1135,6 +1136,7 @@ class Ajax {
      * Export workflow on AJAX callback
      * 
      * @since 1.0.0
+     * @version 1.4.3
      * @return void
      */
     public function export_workflow_callback() {
@@ -1144,7 +1146,7 @@ class Ajax {
     
         if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
             $post = get_post( $post_id );
-            $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+            $workflow_data = Helpers::get_workflow_content_meta( $post_id );
             $category = '';
 
             // Check if workflow_data contains triggers and get the context
@@ -1433,7 +1435,7 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.3
      * @return void
      */
     public function run_workflow_test_callback() {
@@ -1442,7 +1444,7 @@ class Ajax {
     
             // check post type
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
-                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                $workflow_content = Helpers::get_workflow_content_meta( $post_id );
                 $receiver = Admin::get_setting('test_number_phone');
 
                 // check if test receiver is empty
@@ -1875,7 +1877,7 @@ class Ajax {
      * Save edition from action on workflow builder on AJAX callback
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.3
      * @return void
      */
     public function save_action_settings_callback() {
@@ -1911,7 +1913,7 @@ class Ajax {
                 }
 
                 // retrieve workflow content
-                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                $workflow_content = Helpers::get_workflow_content_meta( $post_id );
     
                 // if empty workflow content, initialize empty array
                 if ( empty( $workflow_content ) ) {
@@ -1932,7 +1934,7 @@ class Ajax {
 
                 // action updated successfully
                 if ( $updated ) {
-                    $updated_workflow = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
+                    $updated_workflow = Helpers::update_workflow_content_meta( $post_id, $workflow_content );
 
                     if ( $updated_workflow ) {
                         $response = array(
@@ -1973,6 +1975,7 @@ class Ajax {
      * Save trigger settings on AJAX callback
      * 
      * @since 1.1.0
+     * @version 1.4.3
      * @return void
      */
     public function save_trigger_settings_callback() {
@@ -1983,7 +1986,7 @@ class Ajax {
 
             // check post type
             if ( $post_id && get_post_type( $post_id ) === 'joinotify-workflow' ) {
-                $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+                $workflow_content = Helpers::get_workflow_content_meta( $post_id );
 
                 // if empty workflow content, initialize empty array
                 if ( empty( $workflow_content ) ) {
@@ -2004,7 +2007,7 @@ class Ajax {
 
                 // action updated successfully
                 if ( $updated ) {
-                    $updated_workflow = update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_content );
+                    $updated_workflow = Helpers::update_workflow_content_meta( $post_id, $workflow_content );
 
                     if ( $updated_workflow ) {
                         $response = array(
@@ -2085,7 +2088,7 @@ class Ajax {
      * Import workflow template from repository via AJAX
      *
      * @since 1.2.0
-     * @version 1.3.2
+     * @version 1.4.3
      * @return void
      */
     public function download_workflow_template_callback() {
@@ -2143,7 +2146,7 @@ class Ajax {
             Actions::fill_sender_recursive( $workflow_data['workflow_content'] );
         }
 
-        update_post_meta( $post_id, 'joinotify_workflow_content', $workflow_data['workflow_content'] );
+        Helpers::update_workflow_content_meta( $post_id, $workflow_data['workflow_content'] );
 
         // build redirect url
         $redirect_url = admin_url("admin.php?page=joinotify-workflows-builder&id={$post_id}");

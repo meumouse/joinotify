@@ -50,7 +50,7 @@ class Workflow_Processor {
      * Process workflow for each called hook
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.3
      * @param array $payload | Payload data
      * @return void
      */
@@ -80,7 +80,7 @@ class Workflow_Processor {
 
         // loop through workflows
         foreach ( $workflows as $workflow ) {
-            $workflow_content = get_post_meta( $workflow->ID, 'joinotify_workflow_content', true );
+            $workflow_content = Helpers::get_workflow_content_meta( $workflow->ID );
 
             if ( ! empty( $workflow_content ) && is_array( $workflow_content ) ) {
                 $post_id = $workflow->ID; // for get workflow content

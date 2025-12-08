@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Validations;
 
+use MeuMouse\Joinotify\Core\Helpers;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -220,13 +222,13 @@ class Conditions {
      * Find condition data by ID
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.3
      * @param array $workflow_data | Full workflow data array
      * @param string $condition_id | Condition ID to find
      * @return array|null
      */
     public static function find_condition_by_id( $post_id, $condition_id ) {
-        $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $workflow_data = Helpers::get_workflow_content_meta( $post_id );
 
         foreach ( $workflow_data as $data ) {
             if ( isset( $data['id'] ) && $data['id'] === $condition_id ) {
@@ -242,14 +244,14 @@ class Conditions {
      * Get condition content from action ID
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @param string $action_id | Action ID
      * @return string|null
      */
     public static function get_condition_content( $post_id, $action_id ) {
         if ( get_post_type( $post_id ) === 'joinotify-workflow' ) {
-            $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+            $workflow_data = Helpers::get_workflow_content_meta( $post_id );
             
             // Checks if the workflow_data array was provided correctly
             if ( ! is_array( $workflow_data ) ) {

@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.4.2
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Helpers {
@@ -219,5 +219,74 @@ class Helpers {
 
         // is not array, return as is (scalar, null, etc)
         return $data;
+    }
+
+
+    /**
+     * Encode emoji characters recursively to avoid database charset issues.
+     *
+     * @since 1.4.3
+     * @param mixed $data | Data to be encoded
+     * @return mixed
+     */
+    public static function encode_emoji_deep( $data ) {
+        if ( is_array( $data ) ) {
+            foreach ( $data as $key => $value ) {
+                $data[ $key ] = self::encode_emoji_deep( $value );
+            }
+
+            return $data;
+        }
+
+        return is_string( $data ) ? wp_encode_emoji( $data ) : $data;
+    }
+
+
+    /**
+     * Decode emoji entities recursively for rendering.
+     *
+     * @since 1.4.3
+     * @param mixed $data | Data to be decoded
+     * @return mixed
+     */
+    public static function decode_emoji_deep( $data ) {
+        if ( is_array( $data ) ) {
+            foreach ( $data as $key => $value ) {
+                $data[ $key ] = self::decode_emoji_deep( $value );
+            }
+
+            return $data;
+        }
+
+        return is_string( $data ) ? wp_decode_emoji( $data ) : $data;
+    }
+
+
+    /**
+     * Update workflow content metadata encoding emoji beforehand.
+     *
+     * @since 1.4.3
+     * @param int   $post_id | Post ID
+     * @param array $workflow_content | Workflow content data
+     * @return bool|int
+     */
+    public static function update_workflow_content_meta( $post_id, $workflow_content ) {
+        $prepared_content = self::encode_emoji_deep( $workflow_content );
+
+        return update_post_meta( $post_id, 'joinotify_workflow_content', $prepared_content );
+    }
+
+
+    /**
+     * Get workflow content metadata decoding emoji entities.
+     *
+     * @since 1.4.3
+     * @param int $post_id | Post ID
+     * @return mixed
+     */
+    public static function get_workflow_content_meta( $post_id ) {
+        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+
+        return self::decode_emoji_deep( $workflow_content );
     }
 }
