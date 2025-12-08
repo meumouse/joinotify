@@ -1,3 +1,7 @@
+Versão 1.4.3 (08/12/2025)
+* Correção de bugs
+     - Verificar se o pedido foi pago
+
 Versão 1.4.2 (27/11/2025)
 * Correção de bugs
      - Erro na validação de string com Proxy API
