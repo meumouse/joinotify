@@ -40,37 +40,68 @@ if ( is_admin() ) {
          * Display navigation tabs for different post statuses with post count
          * 
          * @since 1.0.0
-         * @version 1.3.5
+         * @version 1.4.3
          * @return void
          */
         public function display_navigation_tabs() {
             global $wpdb;
-        
-            // get count posts by statuses
-            $counts = wp_count_posts('joinotify-workflow');
-
-            $publish_count = $counts->publish ?? 0;
-            $draft_count = $counts->draft ?? 0;
-            $trash_count = $counts->trash ?? 0;
-        
-            // set default tab as "publish"
-            $tab = isset( $_GET['post_status'] ) ? $_GET['post_status'] : 'publish'; ?>
-
+    
+            $results = $wpdb->get_results($wpdb->prepare("
+                SELECT post_status, COUNT(*) as count 
+                FROM {$wpdb->posts} 
+                WHERE post_type = %s 
+                AND post_status IN ('publish', 'draft', 'trash')
+                GROUP BY post_status
+            ", 'joinotify-workflow'));
+            
+            $publish_count = 0;
+            $draft_count = 0;
+            $trash_count = 0;
+            
+            if ( ! empty( $results ) ) {
+                foreach ( $results as $row ) {
+                    switch ( $row->post_status ) {
+                        case 'publish':
+                            $publish_count = (int) $row->count;
+                            break;
+                        case 'draft':
+                            $draft_count = (int) $row->count;
+                            break;
+                        case 'trash':
+                            $trash_count = (int) $row->count;
+                            break;
+                    }
+                }
+            }
+            
+            // get current status from URL
+            $current_status = isset( $_GET['post_status'] ) ? sanitize_text_field( $_GET['post_status'] ) : 'publish';
+            $base_url = admin_url('admin.php?page=joinotify-workflows'); ?>
+            
             <ul class="subsubsub">
-                <li><a href="<?php echo admin_url('admin.php?page=joinotify-workflows&post_status=publish'); ?>" class="<?php echo ($tab == 'publish') ? 'current' : ''; ?>">
-                    <?php _e('Ativos', 'joinotify'); ?>
-                    <span class="count">(<?php echo $publish_count; ?>)</span>
-                </a> | </li>
+                <li>
+                    <a href="<?php echo esc_url( add_query_arg( 'post_status', 'publish', $base_url ) ); ?>" 
+                    class="<?php echo ( $current_status === 'publish' ) ? 'current' : ''; ?>">
+                        <?php esc_html_e('Ativos', 'joinotify'); ?>
+                        <span class="count">(<?php echo number_format_i18n( $publish_count ); ?>)</span>
+                    </a> | 
+                </li>
                 
-                <li><a href="<?php echo admin_url('admin.php?page=joinotify-workflows&post_status=draft'); ?>" class="<?php echo ($tab == 'draft') ? 'current' : ''; ?>">
-                    <?php _e('Inativos', 'joinotify'); ?>
-                    <span class="count">(<?php echo $draft_count; ?>)</span>
-                </a> | </li>
+                <li>
+                    <a href="<?php echo esc_url( add_query_arg( 'post_status', 'draft', $base_url ) ); ?>" 
+                    class="<?php echo ($current_status === 'draft') ? 'current' : ''; ?>">
+                        <?php esc_html_e('Inativos', 'joinotify'); ?>
+                        <span class="count">(<?php echo number_format_i18n( $draft_count ); ?>)</span>
+                    </a> | 
+                </li>
                 
-                <li><a href="<?php echo admin_url('admin.php?page=joinotify-workflows&post_status=trash'); ?>" class="<?php echo ($tab == 'trash') ? 'current' : ''; ?>">
-                    <?php _e('Lixeira', 'joinotify'); ?>
-                    <span class="count">(<?php echo $trash_count; ?>)</span>
-                </a></li>
+                <li>
+                    <a href="<?php echo esc_url( add_query_arg( 'post_status', 'trash', $base_url ) ); ?>" 
+                    class="<?php echo ( $current_status === 'trash' ) ? 'current' : ''; ?>">
+                        <?php esc_html_e('Lixeira', 'joinotify'); ?>
+                        <span class="count">(<?php echo number_format_i18n( $trash_count ); ?>)</span>
+                    </a>
+                </li>
             </ul>
             <?php
         }

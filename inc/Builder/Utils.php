@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Builder;
 
+use MeuMouse\Joinotify\Core\Helpers;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -9,6 +11,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions helpers and utils for builder core
  * 
  * @since 1.1.0
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Utils {
@@ -17,6 +20,7 @@ class Utils {
      * Get context from post
      * 
      * @since 1.1.0
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @return string
      */
@@ -27,7 +31,7 @@ class Utils {
         }
 
         // get workflow content
-        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $workflow_content = Helpers::get_workflow_content_meta( $post_id );
 
         if ( is_array( $workflow_content ) && ! empty( $workflow_content ) ) {
             // get first item from array
@@ -47,7 +51,7 @@ class Utils {
      * Check if the workflow content contains a specified type (trigger or action)
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @param string $type | Type to check for in the workflow content ('trigger' or 'action')
      * @return bool
@@ -64,7 +68,7 @@ class Utils {
         }
 
         // Retrieve the workflow content from the post meta
-        $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $workflow_data = Helpers::get_workflow_content_meta( $post_id );
 
         // If the workflow data is empty or not an array, return false
         if ( empty( $workflow_data ) || ! is_array( $workflow_data ) ) {

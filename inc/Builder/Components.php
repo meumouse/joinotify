@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions for display components on workflow builder
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Components {
@@ -318,7 +318,7 @@ class Components {
      * Get each action settings
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @param string $action | Action name
      * @param string $action_id | Action ID
@@ -326,7 +326,7 @@ class Components {
      */
     public static function get_action_settings( $post_id, $action, $action_id ) {
         // get workflow content from post id
-        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $workflow_content = Helpers::get_workflow_content_meta( $post_id );
         $current_action = Utils::find_workflow_item_by_id( $workflow_content, $action_id );
         $action_data = isset( $current_action['data'] ) ? $current_action['data'] : array();
         $html = '';
@@ -436,7 +436,7 @@ class Components {
      * Render required settings for specific triggers
      * 
      * @since 1.1.0
-     * @version 1.3.5
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return string
@@ -446,7 +446,7 @@ class Components {
         $trigger = $trigger_details['data_trigger'];
 
         // get workflow content from post id
-        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $workflow_content = Helpers::get_workflow_content_meta( $post_id );
         $current_trigger = Utils::find_workflow_item_by_id( $workflow_content, $trigger_id );
         $trigger_data = isset( $current_trigger['data'] ) ? $current_trigger['data'] : array();
 

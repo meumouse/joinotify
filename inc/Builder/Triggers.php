@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Builder;
 
+use MeuMouse\Joinotify\Core\Helpers;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -9,6 +11,7 @@ defined('ABSPATH') || exit;
  * This class handles with triggers functions
  * 
  * @since 1.1.0
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Triggers {
@@ -76,13 +79,13 @@ class Triggers {
      * Get trigger from a specific post ID
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @return array|null | Trigger data if found, or null if not
      */
     public static function get_trigger_from_post( $post_id ) {
         if ( get_post_type( $post_id ) === 'joinotify-workflow' ) {
-            $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+            $workflow_content = Helpers::get_workflow_content_meta( $post_id );
 
             if ( is_array( $workflow_content ) ) {
                 foreach ( $workflow_content as $item ) {
@@ -115,6 +118,7 @@ class Triggers {
      * Check if workflow trigger requires settings
      * 
      * @since 1.1.0
+     * @version 1.4.3
      * @param int $post_id | Post ID
      * @return bool
      */
@@ -128,7 +132,7 @@ class Triggers {
         $all_triggers = self::get_all_triggers();
 
         // get workflow content
-        $workflow_data = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+        $workflow_data = Helpers::get_workflow_content_meta( $post_id );
     
         if ( ! is_array( $workflow_data ) ) {
             return false;

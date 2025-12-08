@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.4.2
+ * @version 1.4.3
  * @package MeuMouse.com
  */
 class Helpers {
@@ -219,5 +219,131 @@ class Helpers {
 
         // is not array, return as is (scalar, null, etc)
         return $data;
+    }
+
+
+    /**
+     * Encode emoji characters recursively to avoid database charset issues.
+     *
+     * @since 1.4.3
+     * @param mixed $data | Data to be encoded
+     * @return mixed
+     */
+    public static function encode_emoji_deep( $data ) {
+        if ( is_array( $data ) ) {
+            foreach ( $data as $key => $value ) {
+                $data[ $key ] = self::encode_emoji_deep( $value );
+            }
+
+            return $data;
+        }
+
+        return is_string( $data ) ? self::encode_emoji( $data ) : $data;
+    }
+
+
+    /**
+     * Decode emoji entities recursively for rendering.
+     *
+     * @since 1.4.3
+     * @param mixed $data | Data to be decoded
+     * @return mixed
+     */
+    public static function decode_emoji_deep( $data ) {
+        if ( is_array( $data ) ) {
+            foreach ( $data as $key => $value ) {
+                $data[ $key ] = self::decode_emoji_deep( $value );
+            }
+
+            return $data;
+        }
+
+        return is_string( $data ) ? self::decode_emoji( $data ) : $data;
+    }
+
+
+    /**
+     * Update workflow content metadata encoding emoji beforehand.
+     *
+     * @since 1.4.3
+     * @param int   $post_id | Post ID
+     * @param array $workflow_content | Workflow content data
+     * @return bool|int
+     */
+    public static function update_workflow_content_meta( $post_id, $workflow_content ) {
+        $prepared_content = self::encode_emoji_deep( $workflow_content );
+
+        return update_post_meta( $post_id, 'joinotify_workflow_content', $prepared_content );
+    }
+
+
+    /**
+     * Encode emoji characters to HTML entities
+     *
+     * @since 1.4.3
+     * @param string $content | Text content
+     * @return string
+     */
+    public static function encode_emoji( $content ) {
+        if ( ! function_exists( '_wp_emoji_list' ) ) {
+            require_once ABSPATH . WPINC . '/formatting.php';
+        }
+        
+        $emoji = _wp_emoji_list( 'partials' );
+
+        foreach ( $emoji as $emojum ) {
+            $emoji_char = html_entity_decode( $emojum );
+            if ( str_contains( $content, $emoji_char ) ) {
+                $content = preg_replace( "/$emoji_char/", $emojum, $content );
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Decode emoji HTML entities back to characters
+     *
+     * @since 1.4.3
+     * @param string $content | Text content with HTML entities
+     * @return string
+     */
+    public static function decode_emoji( $content ) {
+        // Decode HTML entities (including emoji entities)
+        $decoded = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+        
+        // Additional check for any remaining numeric HTML entities
+        $decoded = preg_replace_callback(
+            '/&#(\d+);/',
+            function( $matches ) {
+                return chr( $matches[1] );
+            },
+            $decoded
+        );
+        
+        // Check for hex entities
+        $decoded = preg_replace_callback(
+            '/&#x([0-9A-F]+);/i',
+            function( $matches ) {
+                return chr( hexdec( $matches[1] ) );
+            },
+            $decoded
+        );
+        
+        return $decoded;
+    }
+
+
+    /**
+     * Get workflow content metadata decoding emoji entities.
+     *
+     * @since 1.4.3
+     * @param int $post_id | Post ID
+     * @return mixed
+     */
+    public static function get_workflow_content_meta( $post_id ) {
+        $workflow_content = get_post_meta( $post_id, 'joinotify_workflow_content', true );
+
+        return self::decode_emoji_deep( $workflow_content );
     }
 }
