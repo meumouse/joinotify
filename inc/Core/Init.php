@@ -152,6 +152,20 @@ class Init {
                 continue;
             }
 
+            if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
+                // check context
+                if ( wp_doing_ajax() || ! is_admin() ) {
+                    continue;
+                }
+                
+                $current_page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+                $plugin_pages = array( 'joinotify-workflows' );
+                
+                if ( ! in_array( $current_page, $plugin_pages ) && ! defined('DOING_AJAX') ) {
+                    continue;
+                }
+            }
+
             // Instance the class safely
             $this->safe_instance_class( $class );
         }
