@@ -29,9 +29,10 @@ if ( is_admin() ) {
          */
         public function __construct() {
             parent::__construct( array(
-                'singular' => __('Fluxo', 'joinotify'),
-                'plural' => __('Fluxos', 'joinotify'),
-                'ajax' => false,
+                'singular'  => __('Fluxo', 'joinotify'),
+                'plural'    => __('Fluxos', 'joinotify'),
+                'ajax'      => false,
+                'screen'    => 'joinotify_page_joinotify-workflows',
             ));
         }
 

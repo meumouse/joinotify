@@ -1,3 +1,7 @@
+Versão 1.4.4 (12/12/2025)
+* Otimizações
+     - Melhorias em segurança no instanciamento de classes
+
 Versão 1.4.3 (08/12/2025)
 * Correção de bugs
      - Verificar se o pedido foi pago

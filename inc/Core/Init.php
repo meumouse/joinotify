@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
  * Initialize plugin classes
  * 
  * @since 1.0.0
- * @version 1.4.2
+ * @version 1.4.4
  * @package MeuMouse.com
  */
 class Init {
@@ -31,6 +31,14 @@ class Init {
     public $basename = JOINOTIFY_BASENAME;
 
     /**
+     * Cache for instantiated classes to prevent duplicate instantiation
+     * 
+     * @since 1.4.3
+     * @var array
+     */
+    private $instantiated_classes = array();
+
+    /**
      * Construct function
      * 
      * @since 1.0.0
@@ -38,30 +46,53 @@ class Init {
      * @return void
      */
     public function __construct() {
-        // load plugin functions
+        // Load plugin functions
         require_once JOINOTIFY_INC . 'Core/Functions.php';
 
         $this->instance_classes();
 
-        // load text domain
+        // Load text domain
         load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
 
-        // add settings link on plugins list
+        // Add settings link on plugins list
         add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
 
-        // add docs link on plugins list
+        // Add docs link on plugins list
         add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
+
+        /**
+         * Fire hook after Joinotify initialize
+         * 
+         * @since 1.1.0
+         * @version 1.4.4
+         */
+        do_action('joinotify_init');
     }
 
 
     /**
-     * Instance classes after load Composer
+     * Instance classes after loading Composer
      * 
      * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.3
      * @return void
      */
     public function instance_classes() {
+        // Process manual classes from filter
+        $this->instance_manual_classes();
+        
+        // Process Composer autoloaded classes
+        $this->instance_composer_classes();
+    }
+
+
+    /**
+     * Process manual classes registered via filter
+     * 
+     * @since 1.4.3
+     * @return void
+     */
+    private function instance_manual_classes() {
         /**
          * Filter to add new classes
          * 
@@ -70,70 +101,147 @@ class Init {
          */
         $manual_classes = apply_filters( 'Joinotify/Init/Instance_Classes', array() );
 
-        // iterate through manual classes and instance them
+        // Validate that we have an array
+        if ( ! is_array( $manual_classes ) || empty( $manual_classes ) ) {
+            return;
+        }
+
+        // Iterate through manual classes and instance them safely
         foreach ( $manual_classes as $class ) {
-            if ( class_exists( $class ) ) {
-                $instance = new $class();
+            $this->safe_instance_class( $class );
+        }
+    }
 
-                if ( method_exists( $instance, 'init' ) ) {
-                    $instance->init();
-                }
-            }
+
+    /**
+     * Process Composer autoloaded classes
+     * 
+     * @since 1.4.3
+     * @return void
+     */
+    private function instance_composer_classes() {
+        // Get classmap from Composer
+        $classmap_path = $this->directory . 'vendor/composer/autoload_classmap.php';
+        
+        // Check if classmap file exists
+        if ( ! file_exists( $classmap_path ) || ! is_readable( $classmap_path ) ) {
+            return;
         }
 
-        // get classmap from Composer
-        $classmap = include_once $this->directory . 'vendor/composer/autoload_classmap.php';
+        $classmap = include_once $classmap_path;
 
-        // ensure classmap is an array
-        if ( ! is_array( $classmap ) ) {
-            $classmap = array();
+        // Ensure classmap is an array
+        if ( ! is_array( $classmap ) || empty( $classmap ) ) {
+            return;
         }
 
-        // iterate through classmap and instance classes
+        // Iterate through classmap and instance classes safely
         foreach ( $classmap as $class => $path ) {
-            // skip classes not in the plugin namespace
+            // Skip classes not in the plugin namespace
             if ( strpos( $class, 'MeuMouse\\Joinotify\\' ) !== 0 ) {
                 continue;
             }
 
-            // skip the Init class to prevent duplicate instances
+            // Skip the Init class to prevent duplicate instances
             if ( strpos( $class, 'MeuMouse\\Joinotify\\Core\\Init' ) !== false ) {
                 continue;
             }
 
-            // skip specific utility classes
+            // Skip specific utility classes
             if ( $class === 'Composer\\InstalledVersions' ) {
                 continue;
             }
 
-            // check if class exists
-            if ( ! class_exists( $class ) ) {
-                continue;
+            if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
+                // check context
+                if ( wp_doing_ajax() || ! is_admin() ) {
+                    continue;
+                }
+                
+                $current_page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+                $plugin_pages = array( 'joinotify-workflows' );
+                
+                if ( ! in_array( $current_page, $plugin_pages ) && ! defined('DOING_AJAX') ) {
+                    continue;
+                }
             }
 
-            // use ReflectionClass to check if class is instantiable
+            // Instance the class safely
+            $this->safe_instance_class( $class );
+        }
+    }
+
+
+    /**
+     * Safely instance a single class with validation
+     * 
+     * @since 1.4.3
+     * @param string $class Full class name with namespace
+     * @return mixed|null Returns the class instance or null on failure
+     */
+    private function safe_instance_class( $class ) {
+        // Validate class name
+        if ( ! is_string( $class ) || empty( trim( $class ) ) ) {
+            return null;
+        }
+
+        // Check if class has already been instantiated
+        if ( isset( $this->instantiated_classes[ $class ] ) ) {
+            return $this->instantiated_classes[ $class ];
+        }
+
+        // Check if class exists
+        if ( ! class_exists( $class ) ) {
+            // Optionally log missing class for debugging
+            // error_log( 'Joinotify: Class does not exist: ' . $class );
+            return null;
+        }
+
+        try {
+            // Use ReflectionClass for comprehensive validation
             $reflection = new \ReflectionClass( $class );
 
-            // instance only if class is not abstract, trait or interface
+            // Skip if class is not instantiable (abstract, trait, or interface)
             if ( ! $reflection->isInstantiable() ) {
-                continue;
+                return null;
             }
 
-            // check if class has a constructor
+            // Get constructor and check for required parameters
             $constructor = $reflection->getConstructor();
-
-            // skip classes that require mandatory arguments in __construct
+            
+            // Skip classes that require mandatory arguments in __construct
             if ( $constructor && $constructor->getNumberOfRequiredParameters() > 0 ) {
-                continue;
+                // Optionally log classes with required parameters for debugging
+                // error_log( 'Joinotify: Class requires constructor parameters: ' . $class );
+                return null;
             }
 
-            // safe instance
-            $instance = new $class();
+            // Create new instance with error handling
+            $instance = $reflection->newInstance();
 
-            // this is useful for classes that need to run some initialization code
+            // Store instance in cache
+            $this->instantiated_classes[ $class ] = $instance;
+
+            // Call init method if it exists
             if ( method_exists( $instance, 'init' ) ) {
-                $instance->init();
+                // Validate that init is a public method
+                $init_method = $reflection->getMethod('init');
+
+                if ( $init_method->isPublic() && ! $init_method->isStatic() ) {
+                    $instance->init();
+                }
             }
+
+            return $instance;
+
+        } catch ( \ReflectionException $e ) {
+            // Log reflection errors for debugging
+            // error_log( 'Joinotify: Reflection error for class ' . $class . ': ' . $e->getMessage() );
+            return null;
+        } catch ( \Exception $e ) {
+            // Catch any other exceptions during instantiation
+            // error_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
+            return null;
         }
     }
 
@@ -166,7 +274,7 @@ class Init {
      * 
      * @since 1.0.0
      * @version 1.3.0
-     * @param string $plugin_meta | An array of the plugin’s metadata, including the version, author, author URI, and plugin URI
+     * @param string $plugin_meta | An array of the plugin's metadata, including the version, author, author URI, and plugin URI
      * @param string $plugin_file | Path to the plugin file relative to the plugins directory
      * @param array $plugin_data | An array of plugin data
      * @param string $status | Status filter currently applied to the plugin list

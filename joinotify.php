@@ -6,7 +6,7 @@
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				1.4.3
+ * Version: 				1.4.4
  * Requires PHP: 			7.4
  * Tested up to:      		6.9
  * Text Domain: 			joinotify
@@ -53,13 +53,13 @@ if ( ! class_exists('Joinotify') ) {
 		 * @var string
 		 * @since 1.0.0
 		 */
-		public static $version = '1.4.3';
+		public static $version = '1.4.4';
 
 		/**
 		 * Constructor function
 		 *
 		 * @since 1.0.0
-		 * @version 1.4.2
+		 * @version 1.4.4
 		 * @return void
 		 */
 		public function __construct() {
@@ -72,13 +72,6 @@ if ( ! class_exists('Joinotify') ) {
 
 			// initialize classes
 			add_action( 'init', array( $this, 'init' ), 99 );
-
-			/**
-			 * Fire hook after Joinotify initialize
-			 * 
-			 * @since 1.1.0
-			 */
-			do_action('joinotify_init');
 		}
 		
 
