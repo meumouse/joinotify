@@ -1,4 +1,4 @@
-Versão 1.4.4 (10/12/2025)
+Versão 1.4.4 (12/12/2025)
 * Otimizações
      - Melhorias em segurança no instanciamento de classes
 
