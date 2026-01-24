@@ -16,7 +16,7 @@
  * @license 				Proprietary - See license.md for details
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 // Load Composer autoloader if available.
 $autoload = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';

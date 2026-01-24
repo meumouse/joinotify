@@ -6,7 +6,7 @@ use ReflectionException;
 use ReflectionClass;
 use Exception;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Initialize plugin classes
@@ -58,6 +58,19 @@ class Init {
 	 */
 	private $instantiated_classes = array();
 
+    /**
+     * Deferred classes: hook => class list.
+     *
+     * @since 1.4.5
+     * @var array
+     */
+    private $deferred_classes = array(
+        'elementor/init' => array(
+            'MeuMouse\\Joinotify\\Integrations\\Elementor',
+            'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms',
+        ),
+    );
+
 	/**
 	 * Construct function.
 	 * 
@@ -92,6 +105,7 @@ class Init {
 		$this->directory = JOINOTIFY_DIR;
 		$this->basename = JOINOTIFY_BASENAME;
 
+        $this->register_deferred_classes();
 		$this->instance_classes();
 
 		// Add settings link on plugins list.
@@ -101,7 +115,7 @@ class Init {
 		add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
 
         // load plugin text domain
-        add_action( 'init', array( $this, 'load_text_domain' ), 99 );
+        add_action( 'init', array( $this, 'load_text_domain' ) );
 
 		/**
 		 * Fire hook after Joinotify initialize.
@@ -211,10 +225,12 @@ class Init {
 	 * Process Composer autoloaded classes.
 	 * 
 	 * @since 1.4.3
+     * @version 1.4.5
 	 * @return void
 	 */
 	private function instance_composer_classes() {
 		$classmap_path = JOINOTIFY_DIR . 'vendor/composer/autoload_classmap.php';
+        $deferred = $this->get_deferred_class_list();
 
 		if ( ! file_exists( $classmap_path ) || ! is_readable( $classmap_path ) ) {
 			return;
@@ -234,6 +250,10 @@ class Init {
 			if ( $class === __CLASS__ ) {
 				continue;
 			}
+
+            if ( in_array( $class, $deferred, true ) ) {
+                continue;
+            }
 
 			if ( $class === 'Composer\\InstalledVersions' ) {
 				continue;
@@ -315,6 +335,86 @@ class Init {
 			return null;
 		}
 	}
+
+
+    /**
+     * Register deferred class instantiation by hook.
+     *
+     * @since 1.4.5
+     * @return void
+     */
+    private function register_deferred_classes() {
+        /**
+         * Allow third-parties to add deferred classes.
+         *
+         * Format:
+         * array(
+         *   'hook/name' => array( 'Full\\ClassName', ... ),
+         * )
+         *
+         * @since 1.4.5
+         */
+        $map = apply_filters( 'Joinotify/Init/Deferred_Classes', $this->deferred_classes );
+
+        if ( ! is_array( $map ) || empty( $map ) ) {
+            return;
+        }
+
+        foreach ( $map as $hook => $classes ) {
+            if ( ! is_string( $hook ) || empty( trim( $hook ) ) ) {
+                continue;
+            }
+
+            if ( ! is_array( $classes ) || empty( $classes ) ) {
+                continue;
+            }
+
+            $callback = function() use ( $classes ) {
+                foreach ( $classes as $class ) {
+                    $this->safe_instance_class( $class );
+                }
+            };
+
+            // If the hook already fired, instantiate immediately.
+            if ( did_action( $hook ) ) {
+                $callback();
+                continue;
+            }
+
+            add_action( $hook, $callback, 10, 0 );
+        }
+    }
+
+
+    /**
+     * Get a flat list of deferred classes.
+     *
+     * @since 1.4.5
+     * @return array
+     */
+    private function get_deferred_class_list() {
+        $map = apply_filters( 'Joinotify/Init/Deferred_Classes', $this->deferred_classes );
+
+        if ( ! is_array( $map ) || empty( $map ) ) {
+            return array();
+        }
+
+        $all = array();
+
+        foreach ( $map as $classes ) {
+            if ( ! is_array( $classes ) ) {
+                continue;
+            }
+
+            foreach ( $classes as $class ) {
+                if ( is_string( $class ) && ! empty( trim( $class ) ) ) {
+                    $all[] = $class;
+                }
+            }
+        }
+
+        return array_values( array_unique( $all ) );
+    }
 
 
 	/**
