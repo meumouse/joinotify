@@ -38,6 +38,10 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
+Versão 1.4.5 (21/01/2026)
+* Correção de bugs
+     - Erro fatal ao carregar página "Todos os fluxos": Call to undefined function convert_to_screen()
+
 Versão 1.4.4 (12/12/2025)
 * Otimizações
      - Melhorias em segurança no instanciamento de classes

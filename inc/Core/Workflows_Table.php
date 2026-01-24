@@ -9,6 +9,10 @@ if ( ! class_exists('WP_List_Table') ) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
+if ( ! function_exists('convert_to_screen') ) {
+    require_once ABSPATH . 'wp-admin/includes/template.php';
+}
+
 use WP_List_Table;
 
 if ( is_admin() ) {

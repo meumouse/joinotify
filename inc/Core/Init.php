@@ -2,293 +2,364 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-// Exit if accessed directly.
-defined('ABSPATH') || exit;
+use ReflectionException;
+use ReflectionClass;
+use Exception;
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Initialize plugin classes
  * 
  * @since 1.0.0
- * @version 1.4.4
+ * @version 1.4.5
  * @package MeuMouse.com
  */
 class Init {
 
-    /**
-     * Plugin directory
-     * 
-     * @since 1.4.2
-     * @return string
-     */
-    public $directory = JOINOTIFY_DIR;
+	/**
+	 * Plugin main file path.
+	 *
+	 * @since 1.4.5
+	 * @var string
+	 */
+	private $plugin_file;
 
     /**
-     * Plugin basename
+	 * Plugin version
+	 *
+	 * @since 1.4.5
+	 * @var string
+	 */
+	private $plugin_version;
+
+	/**
+	 * Plugin directory.
+	 * 
+	 * @since 1.4.2
+	 * @var string
+	 */
+	public $directory;
+
+	/**
+	 * Plugin basename.
+	 * 
+	 * @since 1.0.0
+	 * @version 1.4.5
+	 * @var string
+	 */
+	public $basename;
+
+	/**
+	 * Cache for instantiated classes to prevent duplicate instantiation.
+	 * 
+	 * @since 1.4.3
+	 * @var array
+	 */
+	private $instantiated_classes = array();
+
+	/**
+	 * Construct function.
+	 * 
+	 * @since 1.0.0
+	 * @version 1.4.5
+	 * @param string $plugin_file | Plugin main file path.
+     * @param string $plugin_version | Plugin version
+	 * @return void
+	 */
+	public function __construct( $plugin_file, $plugin_version ) {
+		$this->plugin_file = $plugin_file;
+        $this->plugin_version = $plugin_version;
+
+		/**
+		 * Fire hook before Joinotify initialize.
+		 * 
+		 * @since 1.1.0
+		 */
+		do_action('before_joinotify_init');
+
+        // Display notice if PHP version is below 7.4.
+		if ( version_compare( phpversion(), '7.4', '<' ) ) {
+			add_action( 'admin_notices', array( $this, 'php_version_notice' ) );
+			return;
+		}
+
+		$this->setup_constants();
+
+		// Now the plugin can safely load internal functions and instance classes.
+		require_once JOINOTIFY_INC . 'Core/Functions.php';
+
+		$this->directory = JOINOTIFY_DIR;
+		$this->basename = JOINOTIFY_BASENAME;
+
+		$this->instance_classes();
+
+		// Add settings link on plugins list.
+		add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
+
+		// Add docs link on plugins list.
+		add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
+
+        // load plugin text domain
+        add_action( 'init', array( $this, 'load_text_domain' ), 99 );
+
+		/**
+		 * Fire hook after Joinotify initialize.
+		 * 
+		 * @since 1.1.0
+		 * @version 1.4.4
+		 */
+		do_action('joinotify_init');
+	}
+
+
+    /**
+     * Load text domain after init hook
      * 
      * @since 1.0.0
-     * @version 1.4.2
-     */
-    public $basename = JOINOTIFY_BASENAME;
-
-    /**
-     * Cache for instantiated classes to prevent duplicate instantiation
-     * 
-     * @since 1.4.3
-     * @var array
-     */
-    private $instantiated_classes = array();
-
-    /**
-     * Construct function
-     * 
-     * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.5
      * @return void
      */
-    public function __construct() {
-        // Load plugin functions
-        require_once JOINOTIFY_INC . 'Core/Functions.php';
-
-        $this->instance_classes();
-
-        // Load text domain
+    public function load_text_domain() {
         load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
-
-        // Add settings link on plugins list
-        add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
-
-        // Add docs link on plugins list
-        add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
-
-        /**
-         * Fire hook after Joinotify initialize
-         * 
-         * @since 1.1.0
-         * @version 1.4.4
-         */
-        do_action('joinotify_init');
     }
 
 
-    /**
-     * Instance classes after loading Composer
-     * 
-     * @since 1.0.0
-     * @version 1.4.3
-     * @return void
-     */
-    public function instance_classes() {
-        // Process manual classes from filter
-        $this->instance_manual_classes();
-        
-        // Process Composer autoloaded classes
-        $this->instance_composer_classes();
-    }
+	/**
+	 * Setup plugin constants.
+	 *
+	 * @since 1.4.5
+	 * @return void
+	 */
+	private function setup_constants() {
+		$base_file = $this->plugin_file;
+		$base_dir = plugin_dir_path( $base_file );
+		$base_url = plugin_dir_url( $base_file );
+
+		$constants = array(
+			'JOINOTIFY_BASENAME'           => plugin_basename( $base_file ),
+			'JOINOTIFY_FILE'               => $base_file,
+			'JOINOTIFY_DIR'                => $base_dir,
+			'JOINOTIFY_INC'                => $base_dir . 'inc/',
+			'JOINOTIFY_URL'                => $base_url,
+			'JOINOTIFY_ASSETS'             => $base_url . 'assets/',
+			'JOINOTIFY_ABSPATH'            => dirname( $base_file ) . '/',
+			'JOINOTIFY_ADMIN_EMAIL'        => get_option('admin_email'),
+			'JOINOTIFY_DOCS_URL'           => 'https://ajuda.meumouse.com/docs/joinotify/overview',
+			'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
+			'JOINOTIFY_API_BASE_URL'       => 'https://slots-manager.joinotify.com',
+			'JOINOTIFY_SLUG'               => 'joinotify',
+			'JOINOTIFY_VERSION'            => $this->plugin_version,
+			'JOINOTIFY_DEV_MODE'           => false,
+		);
+
+		foreach ( $constants as $key => $value ) {
+			if ( ! defined( $key ) ) {
+				define( $key, $value );
+			}
+		}
+	}
 
 
-    /**
-     * Process manual classes registered via filter
-     * 
-     * @since 1.4.3
-     * @return void
-     */
-    private function instance_manual_classes() {
-        /**
-         * Filter to add new classes
-         * 
-         * @since 1.0.0
-         * @param array $classes | Array with classes to instance
-         */
-        $manual_classes = apply_filters( 'Joinotify/Init/Instance_Classes', array() );
+	/**
+	 * PHP version notice.
+	 * 
+	 * @since 1.0.0
+	 * @return void
+	 */
+	public function php_version_notice() {
+		$class = 'notice notice-error is-dismissible';
+		$message = __( '<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'joinotify' );
 
-        // Validate that we have an array
-        if ( ! is_array( $manual_classes ) || empty( $manual_classes ) ) {
-            return;
-        }
-
-        // Iterate through manual classes and instance them safely
-        foreach ( $manual_classes as $class ) {
-            $this->safe_instance_class( $class );
-        }
-    }
+		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+	}
 
 
-    /**
-     * Process Composer autoloaded classes
-     * 
-     * @since 1.4.3
-     * @return void
-     */
-    private function instance_composer_classes() {
-        // Get classmap from Composer
-        $classmap_path = $this->directory . 'vendor/composer/autoload_classmap.php';
-        
-        // Check if classmap file exists
-        if ( ! file_exists( $classmap_path ) || ! is_readable( $classmap_path ) ) {
-            return;
-        }
-
-        $classmap = include_once $classmap_path;
-
-        // Ensure classmap is an array
-        if ( ! is_array( $classmap ) || empty( $classmap ) ) {
-            return;
-        }
-
-        // Iterate through classmap and instance classes safely
-        foreach ( $classmap as $class => $path ) {
-            // Skip classes not in the plugin namespace
-            if ( strpos( $class, 'MeuMouse\\Joinotify\\' ) !== 0 ) {
-                continue;
-            }
-
-            // Skip the Init class to prevent duplicate instances
-            if ( strpos( $class, 'MeuMouse\\Joinotify\\Core\\Init' ) !== false ) {
-                continue;
-            }
-
-            // Skip specific utility classes
-            if ( $class === 'Composer\\InstalledVersions' ) {
-                continue;
-            }
-
-            if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
-                // check context
-                if ( wp_doing_ajax() || ! is_admin() ) {
-                    continue;
-                }
-                
-                $current_page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
-                $plugin_pages = array( 'joinotify-workflows' );
-                
-                if ( ! in_array( $current_page, $plugin_pages ) && ! defined('DOING_AJAX') ) {
-                    continue;
-                }
-            }
-
-            // Instance the class safely
-            $this->safe_instance_class( $class );
-        }
-    }
+	/**
+	 * Instance classes after loading Composer.
+	 * 
+	 * @since 1.0.0
+	 * @version 1.4.3
+	 * @return void
+	 */
+	public function instance_classes() {
+		$this->instance_manual_classes();
+		$this->instance_composer_classes();
+	}
 
 
-    /**
-     * Safely instance a single class with validation
-     * 
-     * @since 1.4.3
-     * @param string $class Full class name with namespace
-     * @return mixed|null Returns the class instance or null on failure
-     */
-    private function safe_instance_class( $class ) {
-        // Validate class name
-        if ( ! is_string( $class ) || empty( trim( $class ) ) ) {
-            return null;
-        }
+	/**
+	 * Process manual classes registered via filter.
+	 * 
+	 * @since 1.4.3
+	 * @return void
+	 */
+	private function instance_manual_classes() {
+		$manual_classes = apply_filters( 'Joinotify/Init/Instance_Classes', array() );
 
-        // Check if class has already been instantiated
-        if ( isset( $this->instantiated_classes[ $class ] ) ) {
-            return $this->instantiated_classes[ $class ];
-        }
+		if ( ! is_array( $manual_classes ) || empty( $manual_classes ) ) {
+			return;
+		}
 
-        // Check if class exists
-        if ( ! class_exists( $class ) ) {
-            // Optionally log missing class for debugging
-            // error_log( 'Joinotify: Class does not exist: ' . $class );
-            return null;
-        }
-
-        try {
-            // Use ReflectionClass for comprehensive validation
-            $reflection = new \ReflectionClass( $class );
-
-            // Skip if class is not instantiable (abstract, trait, or interface)
-            if ( ! $reflection->isInstantiable() ) {
-                return null;
-            }
-
-            // Get constructor and check for required parameters
-            $constructor = $reflection->getConstructor();
-            
-            // Skip classes that require mandatory arguments in __construct
-            if ( $constructor && $constructor->getNumberOfRequiredParameters() > 0 ) {
-                // Optionally log classes with required parameters for debugging
-                // error_log( 'Joinotify: Class requires constructor parameters: ' . $class );
-                return null;
-            }
-
-            // Create new instance with error handling
-            $instance = $reflection->newInstance();
-
-            // Store instance in cache
-            $this->instantiated_classes[ $class ] = $instance;
-
-            // Call init method if it exists
-            if ( method_exists( $instance, 'init' ) ) {
-                // Validate that init is a public method
-                $init_method = $reflection->getMethod('init');
-
-                if ( $init_method->isPublic() && ! $init_method->isStatic() ) {
-                    $instance->init();
-                }
-            }
-
-            return $instance;
-
-        } catch ( \ReflectionException $e ) {
-            // Log reflection errors for debugging
-            // error_log( 'Joinotify: Reflection error for class ' . $class . ': ' . $e->getMessage() );
-            return null;
-        } catch ( \Exception $e ) {
-            // Catch any other exceptions during instantiation
-            // error_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
-            return null;
-        }
-    }
+		foreach ( $manual_classes as $class ) {
+			$this->safe_instance_class( $class );
+		}
+	}
 
 
-    /**
-     * Plugin action links
-     * 
-     * @since 1.0.0
-     * @version 1.3.0
-     * @param array $action_links | Default plugin action links
-     * @return array
-     */
-    public function add_action_plugin_links( $action_links ) {
-        if ( get_option('joinotify_license_status') !== 'valid' ) {
-            $plugins_links = array(
-                '<a href="' . admin_url('admin.php?page=joinotify-license') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
-            );
-        } else {
-            $plugins_links = array(
-                '<a href="' . admin_url('admin.php?page=joinotify-settings') . '">'. __( 'Configurar', 'joinotify' ) .'</a>',
-            );
-        }
+	/**
+	 * Process Composer autoloaded classes.
+	 * 
+	 * @since 1.4.3
+	 * @return void
+	 */
+	private function instance_composer_classes() {
+		$classmap_path = JOINOTIFY_DIR . 'vendor/composer/autoload_classmap.php';
 
-        return array_merge( $plugins_links, $action_links );
-    }
+		if ( ! file_exists( $classmap_path ) || ! is_readable( $classmap_path ) ) {
+			return;
+		}
+
+		$classmap = include $classmap_path;
+
+		if ( ! is_array( $classmap ) || empty( $classmap ) ) {
+			return;
+		}
+
+		foreach ( $classmap as $class => $path ) {
+			if ( strpos( $class, 'MeuMouse\\Joinotify\\' ) !== 0 ) {
+				continue;
+			}
+
+			if ( $class === __CLASS__ ) {
+				continue;
+			}
+
+			if ( $class === 'Composer\\InstalledVersions' ) {
+				continue;
+			}
+
+			if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
+				if ( wp_doing_ajax() || ! is_admin() ) {
+					continue;
+				}
+
+				$current_page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+				$plugin_pages = array( 'joinotify-workflows' );
+
+				if ( ! in_array( $current_page, $plugin_pages, true ) && ! defined( 'DOING_AJAX' ) ) {
+					continue;
+				}
+			}
+
+			$this->safe_instance_class( $class );
+		}
+	}
 
 
-    /**
-     * Add meta links on plugin
-     * 
-     * @since 1.0.0
-     * @version 1.3.0
-     * @param string $plugin_meta | An array of the plugin's metadata, including the version, author, author URI, and plugin URI
-     * @param string $plugin_file | Path to the plugin file relative to the plugins directory
-     * @param array $plugin_data | An array of plugin data
-     * @param string $status | Status filter currently applied to the plugin list
-     * @return string
-     */
-    public function add_row_meta_links( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-        if ( strpos( $plugin_file, JOINOTIFY_BASENAME ) !== false ) {
-            $new_links = array(
-                'docs' => '<a href="'. esc_attr( JOINOTIFY_DOCS_URL ) .'" target="_blank">'. __( 'Documentação', 'joinotify' ) .'</a>',
-            );
-            
-            $plugin_meta = array_merge( $plugin_meta, $new_links );
-        }
-    
-        return $plugin_meta;
-    }
+	/**
+	 * Safely instance a single class with validation.
+	 * 
+	 * @since 1.4.3
+	 * @version 1.4.5
+	 * @param string $class Full class name with namespace.
+	 * @return mixed|null Returns the class instance or null on failure.
+	 */
+	private function safe_instance_class( $class ) {
+		if ( ! is_string( $class ) || empty( trim( $class ) ) ) {
+			return null;
+		}
+
+		if ( isset( $this->instantiated_classes[ $class ] ) ) {
+			return $this->instantiated_classes[ $class ];
+		}
+
+		if ( ! class_exists( $class ) ) {
+			error_log( 'Joinotify: Class does not exist: ' . $class );
+			return null;
+		}
+
+		try {
+			$reflection = new ReflectionClass( $class );
+
+			if ( ! $reflection->isInstantiable() ) {
+				return null;
+			}
+
+			$constructor = $reflection->getConstructor();
+
+			if ( $constructor && $constructor->getNumberOfRequiredParameters() > 0 ) {
+				error_log( 'Joinotify: Class requires constructor parameters: ' . $class );
+				return null;
+			}
+
+			$instance = $reflection->newInstance();
+
+			$this->instantiated_classes[ $class ] = $instance;
+
+			if ( method_exists( $instance, 'init' ) ) {
+				$init_method = $reflection->getMethod( 'init' );
+
+				if ( $init_method->isPublic() && ! $init_method->isStatic() ) {
+					$instance->init();
+				}
+			}
+
+			return $instance;
+
+		} catch ( ReflectionException $e ) {
+			error_log( 'Joinotify: Reflection error for class ' . $class . ': ' . $e->getMessage() );
+			return null;
+		} catch ( Exception $e ) {
+			error_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
+			return null;
+		}
+	}
+
+
+	/**
+	 * Plugin action links.
+	 * 
+	 * @since 1.0.0
+	 * @version 1.3.0
+	 * @param array $action_links Default plugin action links.
+	 * @return array
+	 */
+	public function add_action_plugin_links( $action_links ) {
+		if ( get_option( 'joinotify_license_status' ) !== 'valid' ) {
+			$plugins_links = array(
+				'<a href="' . admin_url( 'admin.php?page=joinotify-license' ) . '">' . __( 'Configurar', 'joinotify' ) . '</a>',
+			);
+		} else {
+			$plugins_links = array(
+				'<a href="' . admin_url( 'admin.php?page=joinotify-settings' ) . '">' . __( 'Configurar', 'joinotify' ) . '</a>',
+			);
+		}
+
+		return array_merge( $plugins_links, $action_links );
+	}
+
+
+	/**
+	 * Add meta links on plugin.
+	 * 
+	 * @since 1.0.0
+	 * @version 1.3.0
+	 * @param array  $plugin_meta An array of the plugin's metadata.
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status      Status filter currently applied to the plugin list.
+	 * @return array
+	 */
+	public function add_row_meta_links( $plugin_meta, $plugin_file, $plugin_data, $status ) {
+		if ( strpos( $plugin_file, JOINOTIFY_BASENAME ) !== false ) {
+			$new_links = array(
+				'docs' => '<a href="' . esc_attr( JOINOTIFY_DOCS_URL ) . '" target="_blank">' . __( 'Documentação', 'joinotify' ) . '</a>',
+			);
+
+			$plugin_meta = array_merge( $plugin_meta, $new_links );
+		}
+
+		return $plugin_meta;
+	}
 }
