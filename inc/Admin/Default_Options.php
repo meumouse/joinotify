@@ -9,8 +9,9 @@ defined('ABSPATH') || exit;
  * Set default options for plugin settings
  * 
  * @since 1.3.0
- * @version 1.3.4
- * @package MeuMouse.com
+ * @version 1.4.5
+ * @package MeuMouse\Joinotify\Admin
+ * @author MeuMouse.com
  */
 class Default_Options {
 
@@ -18,7 +19,7 @@ class Default_Options {
      * Set default options
      * 
      * @since 1.0.0
-     * @version 1.3.4
+     * @version 1.4.5
      * @return array
      */
     public static function set_default_options() {
@@ -43,6 +44,8 @@ class Default_Options {
             'enable_developer_integration' => 'yes',
             'enable_send_disconnect_notifications' => 'yes',
             'enable_update_notice' => 'yes',
+            'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
+            'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
         ));
     }
 }

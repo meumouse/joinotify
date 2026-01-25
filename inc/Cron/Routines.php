@@ -15,7 +15,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.2.0
  * @version 1.4.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Cron
+ * @author MeuMouse.com
  */
 class Routines {
 

@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
+use MeuMouse\Joinotify\Integrations\Integrations_Base;
+use MeuMouse\Joinotify\Integrations\Elementor_Forms;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
@@ -14,8 +16,9 @@ defined('ABSPATH') || exit;
  * Add integration with Elementor
  * 
  * @since 1.0.0
- * @version 1.4.0
- * @package MeuMouse.com
+ * @version 1.4.5
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Elementor extends Integrations_Base {
 
@@ -23,34 +26,32 @@ class Elementor extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.5
      * @return void
      */
     public function __construct() {
         // add integration on settings
         add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 50, 1 );
         
-        if ( class_exists('\Elementor\Plugin') ) {
-            // add triggers
-            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+        // add triggers
+        add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
 
-            // add trigger tab
-            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
+        // add trigger tab
+        add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 40 );
 
-            // add trigger content
-            add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
+        // add trigger content
+        add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
 
-            // add placeholders
-            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
+        // add placeholders
+        add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
 
-            // add conditions
-            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+        // add conditions
+        add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
 
-            // fire hook if Elementor is active
-            if ( Admin::get_setting('enable_elementor_integration') === 'yes' ) {
-                // when a Elementor form receive a new record
-                add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
-            }
+        if ( Admin::get_setting( 'enable_elementor_integration' ) === 'yes' ) {
+            add_action( 'elementor_pro/forms/actions/register', array( $this, 'register_form_actions' ), 10, 1 );
+
+            add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
         }
     }
 
@@ -171,6 +172,20 @@ class Elementor extends Integrations_Base {
         );
 
         return array_merge( $conditions, $elementor_conditions );
+    }
+
+
+    /**
+     * Register Joinotify action in Elementor Forms.
+     *
+     * @since 1.4.5
+     * @param object $form_actions | Elementor form actions registrar.
+     * @return void
+     */
+    public function register_form_actions( $form_actions ) {
+        if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
+            $form_actions->register( new Elementor_Forms() );
+        }
     }
 
 

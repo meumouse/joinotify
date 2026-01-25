@@ -23,6 +23,8 @@ use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Cron\Schedule;
 
 use WP_Error;
+use WP_Query;
+use stdClass;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -31,8 +33,9 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.4.3
- * @package MeuMouse.com
+ * @version 1.4.5
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Ajax {
 
@@ -43,7 +46,7 @@ class Ajax {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.5
      * @return void
      */
     public function __construct() {
@@ -82,6 +85,7 @@ class Ajax {
             'joinotify_install_modules' => 'install_modules_ajax_callback',
             'joinotify_activate_plugin' => 'activate_plugin_callback',
             'joinotify_check_instance_connection' => 'check_instance_connection_callback',
+            'joinotify_sync_license' => 'sync_license_callback',
         );
 
         foreach ( $ajax_actions as $action => $callback ) {
@@ -143,7 +147,7 @@ class Ajax {
      */
     public function active_license_callback() {
         if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_active_license' ) {
-            $this->response_obj = new \stdClass();
+            $this->response_obj = new stdClass();
             $message = '';
             $license_key = isset( $_POST['license_key'] ) ? sanitize_text_field( $_POST['license_key'] ) : '';
         
@@ -275,7 +279,7 @@ class Ajax {
                 delete_transient('joinotify_api_response_cache');
                 delete_transient('joinotify_license_status_cached');
 
-                $obj = new \stdClass();
+                $obj = new stdClass();
                 $obj->license_key = $license_data_array->license_code;
                 $obj->email = $license_data_array->user_email;
                 $obj->domain = $this_domain;
@@ -2063,7 +2067,7 @@ class Ajax {
 				's' => $search_query,
 			);
 			
-			$products = new \WP_Query( $args );
+			$products = new WP_Query( $args );
             $results = array();
 
             if ( $products->have_posts() ) {
@@ -2283,6 +2287,59 @@ class Ajax {
             }
 
             wp_send_json( $response );
+        }
+    }
+
+
+    /**
+     * Sync license information on AJAX callback
+     * 
+     * @since 1.4.5
+     * @return void
+     */
+    public function sync_license_callback() {
+        if ( isset( $_POST['action'] ) && $_POST['action'] === 'joinotify_sync_license' ) {
+            $this->response_obj = new stdClass();
+            $this->license_message = '';
+
+            $license_key = get_option( 'joinotify_license_key', '' );
+            $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
+
+            if ( empty( $license_key ) ) {
+                wp_send_json( array(
+                    'status' => 'error',
+                    'toast_header_title' => __( 'Licença não encontrada', 'joinotify' ),
+                    'toast_body_title' => __( 'Nenhuma licença foi encontrada para sincronizar.', 'joinotify' ),
+                ) );
+            }
+
+            // clear caches first (force refresh)
+            delete_transient('joinotify_api_request_cache');
+            delete_transient('joinotify_api_response_cache');
+            delete_transient('joinotify_license_status_cached');
+
+            // Force refresh on server and update options
+            if ( License::check_license( $license_key, $this->license_message, $this->response_obj, JOINOTIFY_FILE ) ) {
+                if ( $this->response_obj && ! empty( $this->response_obj->is_valid ) ) {
+                    update_option( 'joinotify_license_status', 'valid' );
+                    delete_option('joinotify_alternative_license_activation');
+                } else {
+                    update_option( 'joinotify_license_status', 'invalid' );
+                }
+
+                wp_send_json( array(
+                    'status' => 'success',
+                    'toast_header_title' => __( 'Licença sincronizada', 'joinotify' ),
+                    'toast_body_title' => __( 'As informações da sua licença foram atualizadas com sucesso.', 'joinotify' ),
+                ));
+            }
+
+            // fallback error
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
+                'toast_body_title' => ! empty( $this->license_message ) ? $this->license_message : __( 'Não foi possível sincronizar as informações da licença.', 'joinotify' ),
+            ));
         }
     }
 }

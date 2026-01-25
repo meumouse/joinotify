@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
  * Add developer mode features
  * 
  * @since 1.3.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Developer_Mode extends Integrations_Base {
 

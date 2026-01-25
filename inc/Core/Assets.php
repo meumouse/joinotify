@@ -11,8 +11,9 @@ defined('ABSPATH') || exit;
  * Load assets class
  *
  * @since 1.0.0
- * @version 1.3.0
- * @package MeuMouse.com
+ * @version 1.4.5
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Assets {
 
@@ -93,7 +94,7 @@ class Assets {
 	 * Enqueue assets on license page
 	 * 
 	 * @since 1.1.0
-	 * @version 1.3.0
+	 * @version 1.4.5
 	 * @return void
 	 */
 	public function license_assets() {
@@ -104,8 +105,6 @@ class Assets {
 				wp_enqueue_style( 'bootstrap-utilities', $this->assets_url . 'vendor/bootstrap/css/bootstrap-utilities.min.css', array(), '5.3.3' );
 			}
 			
-			wp_enqueue_script( 'joinotify-visibility-controller', $this->assets_url . 'modules/visibility-controller/visibility-controller'. $this->min_file .'.js', array('jquery'), $this->version );
-
 			wp_enqueue_style( 'joinotify-styles', $this->assets_url . 'admin/css/settings'. $this->min_file .'.css', array(), $this->version );
 			wp_enqueue_script( 'joinotify-license-scripts', $this->assets_url . 'admin/js/license'. $this->min_file .'.js', array('jquery'), $this->version );
 

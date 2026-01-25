@@ -10,7 +10,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.2.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\API
+ * @author MeuMouse.com
  */
 class Workflow_Templates {
 

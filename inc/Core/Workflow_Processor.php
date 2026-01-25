@@ -15,8 +15,9 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.4.1
- * @package MeuMouse.com
+ * @version 1.4.5
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Workflow_Processor {
 
@@ -95,7 +96,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.4.1
+     * @version 1.4.5
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -174,6 +175,14 @@ class Workflow_Processor {
                 if ( $trigger_post_status !== 'none' && $payload['post_status'] !== $trigger_post_status ) {
                     return;
                 }
+            }
+        }
+
+        if ( $integration === 'elementor' ) {
+            $trigger_form_id = $trigger_data['data']['settings']['form_id'] ?? '';
+
+            if ( empty( $trigger_form_id ) || (string) $payload['id'] !== (string) $trigger_form_id ) {
+                return;
             }
         }
 

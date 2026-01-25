@@ -9,6 +9,13 @@ use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
 use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 
+use WC_Session_Handler;
+use WC_Cart;
+use WC_Coupon;
+use WC_Customer;
+use WP_Error;
+use WP_Query;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -16,8 +23,9 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.4.0
- * @package MeuMouse.com
+ * @version 1.4.5
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Woocommerce extends Integrations_Base {
 
@@ -272,7 +280,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereço completo de faturamento do usuário', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço completo de faturamento do usuário (formato configurável nas opções do WooCommerce).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'billing' ) : '',
                     'sandbox' => esc_html__( 'Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)', 'joinotify' ),
@@ -280,7 +288,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_shipping_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereço completo de entrega do usuário', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço completo de entrega do usuário (formato configurável nas opções do WooCommerce).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'shipping' ) : '',
                     'sandbox' => esc_html__( 'Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)', 'joinotify' ),
@@ -435,20 +443,26 @@ class Woocommerce extends Integrations_Base {
      * Get the full address of the order
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.5
      * @param \WC_Order $order | WooCommerce Order object
      * @return string Full address as a formatted string
      */
     public static function get_full_address( $order, $type = 'billing' ) {
-        $format = '';
+        $format_setting = 'billing' === $type ? 'woocommerce_billing_full_address_format' : 'woocommerce_shipping_full_address_format';
+        $format = Admin::get_setting( $format_setting );
+        $address_data = self::get_address_data( $order, $type );
+
+        if ( ! empty( $format ) ) {
+            return trim( self::format_address_template( $format, $address_data, $order, $type ) );
+        }
 
         $address = array(
-            $order->{"get_{$type}_address_1"}(),
-            $order->{"get_{$type}_address_2"}(),
-            $order->{"get_{$type}_city"}(),
-            $order->{"get_{$type}_state"}(),
-            $order->{"get_{$type}_postcode"}(),
-            $order->{"get_{$type}_country"}(),
+            $address_data['address_1'],
+            $address_data['address_2'],
+            $address_data['city'],
+            $address_data['state'],
+            $address_data['postcode'],
+            $address_data['country'],
         );
 
         // Filter out empty values and join with a comma.
@@ -457,10 +471,140 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Get address data for placeholder replacement (with custom fields support)
+     *
+     * @since 1.4.5
+     * @param \WC_Order $order | WooCommerce Order object
+     * @param string   $type  | Address type (billing or shipping)
+     * @return array
+     */
+    protected static function get_address_data( $order, $type ) {
+        $data = array(
+            'first_name' => $order->{"get_{$type}_first_name"}(),
+            'last_name'  => $order->{"get_{$type}_last_name"}(),
+            'company'    => $order->{"get_{$type}_company"}(),
+            'address_1'  => $order->{"get_{$type}_address_1"}(),
+            'address_2'  => $order->{"get_{$type}_address_2"}(),
+            'city'       => $order->{"get_{$type}_city"}(),
+            'state'      => $order->{"get_{$type}_state"}(),
+            'postcode'   => $order->{"get_{$type}_postcode"}(),
+            'country'    => $order->{"get_{$type}_country"}(),
+        );
+
+        if ( 'billing' === $type ) {
+            $data['email'] = $order->get_billing_email();
+            $data['phone'] = $order->get_billing_phone();
+        }
+
+        if ( method_exists( $order, "get_{$type}_phone" ) ) {
+            $data['phone'] = $order->{"get_{$type}_phone"}();
+        }
+
+        // Include custom checkout fields (billing/shipping) as placeholders without prefix.
+        $fields = self::export_checkout_fields( $type );
+
+        if ( ! empty( $fields ) && is_array( $fields ) ) {
+            foreach ( $fields as $field_id => $field ) {
+                $placeholder_id = $field_id;
+
+                if ( 'billing' === $type && strpos( $field_id, 'billing_' ) === 0 ) {
+                    $placeholder_id = substr( $field_id, 8 );
+                } elseif ( 'shipping' === $type && strpos( $field_id, 'shipping_' ) === 0 ) {
+                    $placeholder_id = substr( $field_id, 9 );
+                }
+
+                // Don’t overwrite core keys already set.
+                if ( isset( $data[ $placeholder_id ] ) && $data[ $placeholder_id ] !== '' ) {
+                    continue;
+                }
+
+                $value = self::get_order_meta_fallback_value( $order, array(
+                    // Most common:
+                    "{$type}_{$placeholder_id}",      // billing_number
+                    "_{$type}_{$placeholder_id}",     // _billing_number
+                    $field_id,                        // billing_number (original)
+                    "_{$field_id}",                   // _billing_number
+                    $placeholder_id,                  // number
+                    "_{$placeholder_id}",             // _number
+                ) );
+
+                if ( $value !== '' ) {
+                    $data[ $placeholder_id ] = $value;
+                }
+            }
+        }
+
+        /**
+         * Filter address data before replace.
+         *
+         * @since 1.4.5
+         * @param array    $data
+         * @param \WC_Order $order
+         * @param string   $type
+         */
+        return apply_filters( 'Joinotify/WooCommerce/Address_Data', $data, $order, $type );
+    }
+
+
+    /**
+     * Get meta value trying multiple keys (supports underscore-meta, arrays, objects).
+     *
+     * @since 1.4.5
+     * @param \WC_Order $order | Order object
+     * @param array     $keys
+     * @return string
+     */
+    protected static function get_order_meta_fallback_value( $order, $keys = array() ) {
+        foreach ( (array) $keys as $meta_key ) {
+            if ( empty( $meta_key ) ) {
+                continue;
+            }
+
+            $value = $order->get_meta( $meta_key, true );
+
+            if ( is_array( $value ) ) {
+                $value = implode( ', ', array_filter( array_map( 'strval', $value ) ) );
+            } elseif ( is_object( $value ) ) {
+                $value = method_exists( $value, '__toString' ) ? (string) $value : '';
+            } else {
+                $value = (string) $value;
+            }
+
+            $value = trim( wp_strip_all_tags( $value ) );
+
+            if ( $value !== '' ) {
+                return $value;
+            }
+        }
+
+        return '';
+    }
+
+
+    /**
+     * Format address template with order data (now uses $address_data only).
+     *
+     * @since 1.4.5
+     * @param string    $format
+     * @param array     $address_data
+     * @param \WC_Order $order
+     * @param string    $type
+     * @return string
+     */
+    protected static function format_address_template( $format, $address_data, $order, $type ) {
+        return preg_replace_callback( '/\{\{\s*([a-zA-Z0-9_\-]+)\s*\}\}/', function( $matches ) use ( $address_data ) {
+            $key = $matches[1];
+
+            return isset( $address_data[ $key ] ) ? (string) $address_data[ $key ] : '';
+        }, $format );
+    }
+
+
+    /**
      * Add modal settings for WooCommerce
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.4.5
      * @return void
      */
     public function add_modal_settings() {
@@ -468,7 +612,7 @@ class Woocommerce extends Integrations_Base {
             <button id="woocommerce_settings_trigger" class="btn btn-outline-primary mb-5"><?php esc_html_e( 'Configurações', 'joinotify' ); ?></button>
 		
             <div id="woocommerce_settings_container" class="joinotify-popup-container">
-                <div class="joinotify-popup-content">
+                <div class="joinotify-popup-content popup-lg">
                     <div class="joinotify-popup-header">
                         <h5 class="joinotify-popup-title"><?php esc_html_e( 'Configurações da integração com WooCommerce', 'joinotify' ); ?></h5>
                         <button id="woocommerce_settings_close" class="btn-close fs-lg" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ); ?>"></button>
@@ -496,6 +640,42 @@ class Woocommerce extends Integrations_Base {
                                     </th>
                                     <td>
                                         <input type="text" class="form-control" name="create_coupon_prefix" id="create_coupon_prefix" value="<?php echo Admin::get_setting('create_coupon_prefix') ?>" placeholder="<?php esc_attr_e( 'CUPOM_', 'joinotify' ) ?>"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <?php esc_html_e( 'Formato do endereço completo (faturamento)', 'joinotify' ); ?>
+                                        <span class="joinotify-description mb-4"><?php esc_html_e( 'Personalize o texto usado na variável {{ wc_billing_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).', 'joinotify' ); ?></span>
+
+                                        <?php foreach ( self::get_checkout_placeholders_by_section('billing') as $field_id => $value ) : ?>
+                                            <div class="d-flex mb-1">
+                                                <span class="joinotify-description"><code><?php echo esc_html( $value['placeholder_html'] ); ?></code></span>
+                                                <span class="joinotify-description ms-2"><?php echo esc_html( $value['description'] ); ?></span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </th>
+                                    
+                                    <td>
+                                        <textarea class="form-control" name="woocommerce_billing_full_address_format" id="woocommerce_billing_full_address_format" rows="2" placeholder="<?php esc_attr_e( '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})', 'joinotify' ); ?>"><?php echo esc_textarea( Admin::get_setting('woocommerce_billing_full_address_format') ); ?></textarea>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <?php esc_html_e( 'Formato do endereço completo (entrega)', 'joinotify' ); ?>
+                                        <span class="joinotify-description mb-4"><?php esc_html_e( 'Personalize o texto usado na variável {{ wc_shipping_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).', 'joinotify' ); ?></span>
+
+                                        <?php foreach ( self::get_checkout_placeholders_by_section('shipping') as $field_id => $value ) : ?>
+                                            <div class="d-flex mb-1">
+                                                <span class="joinotify-description"><code><?php echo esc_html( $value['placeholder_html'] ); ?></code></span>
+                                                <span class="joinotify-description ms-2"><?php echo esc_html( $value['description'] ); ?></span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </th>
+
+                                    <td>
+                                        <textarea class="form-control" name="woocommerce_shipping_full_address_format" id="woocommerce_shipping_full_address_format" rows="2" placeholder="<?php esc_attr_e( '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})', 'joinotify' ); ?>"><?php echo esc_textarea( Admin::get_setting('woocommerce_shipping_full_address_format') ); ?></textarea>
                                     </td>
                                 </tr>
 
@@ -654,7 +834,7 @@ class Woocommerce extends Integrations_Base {
         if ( empty( $coupon_data ) || ! isset( $coupon_data['discount_type'], $coupon_data['coupon_amount'] ) ) {
             error_log( 'Coupon data is empty or missing required fields.' );
 
-            return new \WP_Error( 'missing_data', __( 'Dados insuficientes para criar o cupom.', 'joinotify' ) );
+            return new WP_Error( 'missing_data', __( 'Dados insuficientes para criar o cupom.', 'joinotify' ) );
         }
 
         // Get prefix
@@ -666,7 +846,7 @@ class Woocommerce extends Integrations_Base {
             : $coupon_data['coupon_code'];
 
         // Check if coupon already exists
-        $query = new \WP_Query( array(
+        $query = new WP_Query( array(
             'post_type' => 'shop_coupon',
             'title' => $coupon_code,
             'post_status' => 'publish',
@@ -677,14 +857,14 @@ class Woocommerce extends Integrations_Base {
         if ( $query->have_posts() ) {
             error_log( 'Coupon already exists.' );
             
-            return new \WP_Error( 'duplicate_coupon', __( 'O cupom já existe.', 'joinotify' ) );
+            return new WP_Error( 'duplicate_coupon', __( 'O cupom já existe.', 'joinotify' ) );
         }
 
         // reset query
         wp_reset_postdata();
 
         // Create coupon
-        $coupon = new \WC_Coupon();
+        $coupon = new WC_Coupon();
         $coupon->set_code( $coupon_code );
         $coupon->set_description( isset( $coupon_data['coupon_description'] ) ? $coupon_data['coupon_description'] : '' );
 
@@ -1070,4 +1250,158 @@ class Woocommerce extends Integrations_Base {
 
         Workflow_Processor::process_workflows( $payload );
     }
+
+
+    /**
+	 * Ensure WooCommerce checkout context (session/customer) for admin screens.
+	 *
+	 * @since 1.4.5
+	 * @return void
+	 */
+	public static function ensure_wc_checkout_context() {
+		if ( ! function_exists('WC') || ! WC() ) {
+			return;
+		}
+
+		// Ensure session.
+		if ( empty( WC()->session ) ) {
+			WC()->session = new WC_Session_Handler();
+			WC()->session->init();
+		}
+
+		// Ensure customer.
+		if ( empty( WC()->customer ) ) {
+			WC()->customer = new WC_Customer( get_current_user_id(), true );
+		}
+
+		// Ensure cart (optional but helps some setups).
+		if ( empty( WC()->cart ) ) {
+			WC()->cart = new WC_Cart();
+		}
+	}
+
+
+	/**
+	 * Get all checkout fields available (raw WooCommerce array).
+	 *
+	 * @since 1.4.5
+	 * @return array
+	 */
+	public static function get_checkout_fields_on_admin() {
+		if ( ! class_exists('WooCommerce') || ! function_exists('WC') || ! WC()->checkout ) {
+			return array();
+		}
+
+		self::ensure_wc_checkout_context();
+
+		return WC()->checkout->get_checkout_fields();
+	}
+    
+
+	/**
+	 * Export checkout fields grouped by section (billing/shipping).
+	 *
+	 * @since 1.4.5
+	 * @param string $section billing|shipping|all
+	 * @return array
+	 */
+	public static function export_checkout_fields( $section = 'all' ) {
+		$get_fields = self::get_checkout_fields_on_admin();
+
+		if ( empty( $get_fields ) ) {
+			return array(
+				'billing'  => array(),
+				'shipping' => array(),
+			);
+		}
+
+		$billing  = isset( $get_fields['billing'] ) ? $get_fields['billing'] : array();
+		$shipping = isset( $get_fields['shipping'] ) ? $get_fields['shipping'] : array();
+
+		$result = array(
+			'billing'  => $billing,
+			'shipping' => $shipping,
+		);
+
+		if ( 'billing' === $section ) {
+			$result = $billing;
+		} elseif ( 'shipping' === $section ) {
+			$result = $shipping;
+		}
+
+		/**
+		 * Filter exported checkout fields.
+		 *
+		 * @since 1.4.5
+		 * @param array  $result
+		 * @param string $section
+		 */
+		return apply_filters( 'Joinotify/WooCommerce/Export_Checkout_Fields', $result, $section );
+	}
+
+
+	/**
+	 * Get placeholders for checkout fields (billing/shipping separated).
+	 *
+	 * Ex:
+	 * - billing_first_name -> {{ billing_first_name }}
+	 * - shipping_address_1 -> {{ shipping_address_1 }}
+	 *
+	 * @since 1.4.5
+	 * @param string $section billing|shipping
+	 * @return array
+	 */
+	public static function get_checkout_placeholders_by_section( $section = 'billing' ) {
+		$fields = self::export_checkout_fields( $section );
+
+		if ( empty( $fields ) || ! is_array( $fields ) ) {
+			return array();
+		}
+
+		$placeholders = array();
+
+		foreach ( $fields as $field_id => $field ) {
+			// Remove prefix billing_ or shipping_ to show the "clean" placeholder id.
+			$placeholder_id = $field_id;
+
+			if ( 'billing' === $section && strpos( $field_id, 'billing_' ) === 0 ) {
+				$placeholder_id = substr( $field_id, 8 );
+			} elseif ( 'shipping' === $section && strpos( $field_id, 'shipping_' ) === 0 ) {
+				$placeholder_id = substr( $field_id, 9 );
+			}
+
+			$label = isset( $field['label'] ) ? $field['label'] : $field_id;
+
+			$placeholders[ $field_id ] = array(
+				'field_id'          => $field_id,
+				'placeholder_id'    => $placeholder_id,
+				'placeholder_html'  => sprintf( '{{ %s }}', $placeholder_id ),
+				'description'       => sprintf( __( 'Para recuperar o valor de %s', 'joinotify' ), $label ),
+				'section'           => $section,
+			);
+		}
+
+		/**
+		 * Filter placeholders list by section.
+		 *
+		 * @since 1.4.5
+		 * @param array  $placeholders
+		 * @param string $section
+		 */
+		return apply_filters( 'Joinotify/WooCommerce/Checkout_Field_Placeholders', $placeholders, $section );
+	}
+
+
+	/**
+	 * Convenience: get billing + shipping placeholders together (grouped).
+	 *
+	 * @since 1.4.5
+	 * @return array
+	 */
+	public static function get_checkout_placeholders_grouped() {
+		return array(
+			'billing'  => self::get_checkout_placeholders_by_section( 'billing' ),
+			'shipping' => self::get_checkout_placeholders_by_section( 'shipping' ),
+		);
+	}
 }

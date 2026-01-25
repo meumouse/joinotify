@@ -6,7 +6,8 @@ namespace MeuMouse\Joinotify\Core;
  * Compatibility class
  * 
  * @since 1.1.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Compatibility {
 

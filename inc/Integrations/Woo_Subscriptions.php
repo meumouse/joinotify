@@ -13,7 +13,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.4.2
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Woo_Subscriptions extends Integrations_Base {
 

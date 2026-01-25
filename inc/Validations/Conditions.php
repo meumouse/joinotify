@@ -12,7 +12,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.4.3
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Validations
+ * @author MeuMouse.com
  */
 class Conditions {
 

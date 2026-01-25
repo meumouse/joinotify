@@ -7,7 +7,8 @@ use MeuMouse\Joinotify\API\License;
  * 
  * @since 1.0.0
  * @version 1.2.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Views
+ * @author MeuMouse.com
  */
 
 // Exit if accessed directly.
@@ -67,6 +68,7 @@ defined('ABSPATH') || exit; ?>
                 <tr>
                     <td class="d-flex align-items-center">
                         <button type="submit" id="joinotify_deactive_license" class="btn btn-sm btn-primary" name="joinotify_deactive_license"><?php esc_html_e( 'Desativar licença', 'joinotify' ); ?></button>
+                        <button id="joinotify_sync_license" name="joinotify_sync_license" class="btn btn-sm btn-outline-primary ms-3"><?php esc_attr_e( 'Sincronizar licença', 'joinotify' ); ?></button>
                     </td>
                 </tr>
             <?php else : ?>

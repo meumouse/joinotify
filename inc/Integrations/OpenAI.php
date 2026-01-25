@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
  * Add integration with OpenAI
  * 
  * @since 1.3.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class OpenAI extends Integrations_Base {
 

@@ -14,7 +14,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.3.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Wpforms extends Integrations_Base {
 

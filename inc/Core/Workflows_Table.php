@@ -5,19 +5,22 @@ namespace MeuMouse\Joinotify\Core;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
-if ( ! class_exists('WP_List_Table') ) {
-    require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
-
 use WP_List_Table;
+use WP_Query;
 
 if ( is_admin() ) {
+
+    if ( ! class_exists('WP_List_Table') ) {
+        require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+    }
+
     /**
      * Workflows table class
      * 
      * @since 1.0.0
-     * @version 1.4.0
-     * @package MeuMouse.com
+     * @version 1.4.5
+     * @package MeuMouse\Joinotify\Core
+     * @author MeuMouse.com
      */
     class Workflows_Table extends WP_List_Table {
 
@@ -25,15 +28,11 @@ if ( is_admin() ) {
          * Construct function
          * 
          * @since 1.0.0
+         * @version 1.4.5
          * @return void
          */
         public function __construct() {
-            parent::__construct( array(
-                'singular'  => __('Fluxo', 'joinotify'),
-                'plural'    => __('Fluxos', 'joinotify'),
-                'ajax'      => false,
-                'screen'    => 'joinotify_page_joinotify-workflows',
-            ));
+            parent::__construct();
         }
 
 
@@ -334,7 +333,7 @@ if ( is_admin() ) {
                 $args['post_status'] = array('publish', 'draft', 'trash');
             }
 
-            $query = new \WP_Query( $args );
+            $query = new WP_Query( $args );
             $total_items = $query->found_posts;
             $this->items = $query->posts;
             $this->_column_headers = array( $this->get_columns(), array(), $this->get_sortable_columns() );

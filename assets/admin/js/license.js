@@ -201,6 +201,54 @@
 			});
 		},
 
+
+		/**
+		 * Sync license information (force refresh from server)
+		 * 
+		 * @since 1.4.5
+		 * @package MeuMouse.com
+		 */
+		syncLicense: function() {
+			$('#joinotify_sync_license').on('click', function(e) {
+				e.preventDefault();
+
+				let btn = $(this);
+				let btn_state = License.keepButtonState(btn);
+
+				$.ajax({
+					url: params.ajax_url,
+					method: 'POST',
+					data: {
+						action: 'joinotify_sync_license',
+					},
+					beforeSend: function() {
+						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+					},
+					success: function(response) {
+						try {
+							if (response.status === 'success') {
+								License.displayToast('success', response.toast_header_title, response.toast_body_title);
+
+								setTimeout( function() {
+									location.reload();
+								}, 1000);
+							} else {
+								License.displayToast('error', response.toast_header_title, response.toast_body_title);
+							}
+						} catch (error) {
+							console.log(error);
+						}
+					},
+					complete: function() {
+						btn.prop('disabled', false).html(btn_state.html);
+					},
+					error: function(xhr, status, error) {
+						alert('AJAX error: ' + error);
+					},
+				});
+			});
+		},
+
 		/**
 		 * Alternative activation license
 		 * 
@@ -306,10 +354,12 @@
 		 * Initialize functions
 		 * 
 		 * @since 1.1.0
+		 * @version 1.4.5
 		 */
 		init: function() {
 			this.activateLicense();
 			this.deactivateLicense();
+			this.syncLicense();
 			this.alternativeActivation();
 		},
 	};
