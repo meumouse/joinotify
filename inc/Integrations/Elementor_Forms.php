@@ -298,9 +298,8 @@ class Elementor_Forms extends Action_Base {
 					Logger::register_log( "media caption on Elementor form: " . $caption );
 				}
 
-				// Aqui já suporta legenda
 				Controller::send_message_media( $sender, $receiver, $media_type, $media_url, $caption );
-}
+			}
 		}
 	}
 

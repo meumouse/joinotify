@@ -32,21 +32,6 @@ class Elementor extends Integrations_Base {
         // add integration on settings
         add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 50, 1 );
         
-        // Elementor full loaded
-        add_action( 'elementor/init', array( $this, 'init_elementor' ) );
-
-        // Elementor Pro loaded
-        add_action( 'elementor_pro/init', array( $this, 'on_elementor_pro_init' ) );
-    }
-
-
-    /**
-     * Init hooks that depend on Elementor
-     * 
-     * @since 1.4.5
-     * @return void
-     */
-    public function init_elementor() {
         // add triggers
         add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
 
@@ -61,23 +46,12 @@ class Elementor extends Integrations_Base {
 
         // add conditions
         add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
-    }
 
+        if ( Admin::get_setting( 'enable_elementor_integration' ) === 'yes' ) {
+            add_action( 'elementor_pro/forms/actions/register', array( $this, 'register_form_actions' ), 10, 1 );
 
-    /**
-     * Fired when Elementor Pro is fully loaded.
-     *
-     * @since 1.4.5
-     * @return void
-     */
-    public function on_elementor_pro_init() {
-        if ( Admin::get_setting( 'enable_elementor_integration' ) !== 'yes' ) {
-            return;
+            add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
         }
-
-        add_action( 'elementor_pro/forms/actions/register', array( $this, 'register_form_actions' ), 10, 1 );
-
-        add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
     }
 
 
@@ -208,7 +182,6 @@ class Elementor extends Integrations_Base {
      * @return void
      */
     public function register_form_actions( $form_actions ) {
-        error_log('register_form_actions called');
         if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
             $form_actions->register( new Elementor_Forms() );
         }

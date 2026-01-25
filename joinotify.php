@@ -16,6 +16,8 @@
  * @license 				Proprietary - See license.md for details
  */
 
+use MeuMouse\Joinotify\Core\Init;
+
 defined('ABSPATH') || exit;
 
 // Load Composer autoloader if available.
@@ -28,4 +30,4 @@ if ( file_exists( $autoload ) ) {
 $plugin_version = '1.4.5';
 
 // Initialize the plugin
-new \MeuMouse\Joinotify\Core\Init( __FILE__, $plugin_version );
+new Init( __FILE__, $plugin_version );
