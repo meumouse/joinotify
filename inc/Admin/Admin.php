@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Admin;
 
 use MeuMouse\Joinotify\API\License;
 use MeuMouse\Joinotify\Admin\Components as Admin_Components;
+use MeuMouse\Joinotify\Core\Workflows_Table;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -12,7 +13,7 @@ defined('ABSPATH') || exit;
  * Admin actions class
  * 
  * @since 1.0.0
- * @version 1.3.7
+ * @version 1.4.5
  * @package MeuMouse\Joinotify\Admin
  * @author MeuMouse.com
  */
@@ -44,11 +45,11 @@ class Admin {
      * Add admin menu
      * 
      * @since 1.0.0
-     * @version 1.3.7
+     * @version 1.4.5
      * @return void
      */
     public function add_admin_menu() {
-        add_menu_page(
+        $hook = add_menu_page(
             esc_html__( 'Joinotify', 'joinotify' ), // label
             esc_html__( 'Joinotify', 'joinotify' ), // menu label
             'manage_options', // capatibilities
@@ -67,6 +68,9 @@ class Admin {
             'joinotify-workflows', // page slug (same as the main menu page)
             array( $this, 'all_workflows_page' ) // callback
         );
+
+        // Register screen options on proper load hook.
+        add_action( "load-{$hook}", array( $this, 'workflows_screen_options' ) );
 
         if ( License::is_valid() ) {
             // add new workflow
@@ -111,6 +115,21 @@ class Admin {
                 array( $this, 'render_builder_page' ) // callback
             );
         }
+    }
+
+
+    /**
+     * Register screen options for workflows list table.
+     *
+     * @since 1.4.5
+     * @return void
+     */
+    public function workflows_screen_options() {
+        add_screen_option( 'per_page', array(
+            'label'   => __( 'Fluxos por página', 'joinotify' ),
+            'default' => 20,
+            'option'  => 'joinotify_workflows_per_page',
+        ));
     }
 
 
@@ -161,22 +180,11 @@ class Admin {
      * Display table with all workflows
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.5
      * @return void
      */
     public function all_workflows_page() {
-        $screen = get_current_screen();
-
-        add_screen_option(
-            'per_page',
-            array(
-                'label' => __( 'Fluxos por página', 'joinotify' ),
-                'default' => 20,
-                'option' => 'joinotify_workflows_per_page',
-            )
-        );
-
-        $workflows_table = new \MeuMouse\Joinotify\Core\Workflows_Table();
+        $workflows_table = new Workflows_Table();
         $workflows_table->prepare_items();
 
         echo '<div class="wrap"><h1 class="wp-heading-inline">' . __('Gerenciar fluxos', 'joinotify') . '</h1>';

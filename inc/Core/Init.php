@@ -280,6 +280,11 @@ class Init {
 				}
 			}
 
+			// Avoid instantiating WP_List_Table classes during plugins_loaded.
+			if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
+				continue;
+			}
+
 			$this->safe_instance_class( $class );
 		}
 	}
