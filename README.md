@@ -38,9 +38,11 @@ Você pode instalar um plugin WordPress de duas maneiras: via o painel de admini
 
 ### Registro de alterações (Changelogs):
 
-Versão 1.4.5 (21/01/2026)
+Versão 1.4.5 (24/01/2026)
 * Correção de bugs
      - Erro fatal ao carregar página "Todos os fluxos": Call to undefined function convert_to_screen()
+* Otimizações
+* Recurso adicionado: WooCommerce -> Formato do endereço completo (faturamento e entrega)
 
 Versão 1.4.4 (12/12/2025)
 * Otimizações

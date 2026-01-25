@@ -263,23 +263,6 @@ class Init {
                 continue;
             }
 
-			if ( $class === 'Composer\\InstalledVersions' ) {
-				continue;
-			}
-
-			if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
-				if ( wp_doing_ajax() || ! is_admin() ) {
-					continue;
-				}
-
-				$current_page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
-				$plugin_pages = array( 'joinotify-workflows' );
-
-				if ( ! in_array( $current_page, $plugin_pages, true ) && ! defined( 'DOING_AJAX' ) ) {
-					continue;
-				}
-			}
-
 			// Avoid instantiating WP_List_Table classes during plugins_loaded.
 			if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
 				continue;

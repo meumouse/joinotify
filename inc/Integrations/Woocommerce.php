@@ -471,24 +471,24 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
-     * Get address data for placeholder replacement
+     * Get address data for placeholder replacement (with custom fields support)
      *
      * @since 1.4.5
      * @param \WC_Order $order | WooCommerce Order object
-     * @param string $type | Address type (billing or shipping)
+     * @param string   $type  | Address type (billing or shipping)
      * @return array
      */
     protected static function get_address_data( $order, $type ) {
         $data = array(
-            'first_name'    => $order->{"get_{$type}_first_name"}(),
-            'last_name'     => $order->{"get_{$type}_last_name"}(),
-            'company'       => $order->{"get_{$type}_company"}(),
-            'address_1'     => $order->{"get_{$type}_address_1"}(),
-            'address_2'     => $order->{"get_{$type}_address_2"}(),
-            'city'          => $order->{"get_{$type}_city"}(),
-            'state'         => $order->{"get_{$type}_state"}(),
-            'postcode'      => $order->{"get_{$type}_postcode"}(),
-            'country'       => $order->{"get_{$type}_country"}(),
+            'first_name' => $order->{"get_{$type}_first_name"}(),
+            'last_name'  => $order->{"get_{$type}_last_name"}(),
+            'company'    => $order->{"get_{$type}_company"}(),
+            'address_1'  => $order->{"get_{$type}_address_1"}(),
+            'address_2'  => $order->{"get_{$type}_address_2"}(),
+            'city'       => $order->{"get_{$type}_city"}(),
+            'state'      => $order->{"get_{$type}_state"}(),
+            'postcode'   => $order->{"get_{$type}_postcode"}(),
+            'country'    => $order->{"get_{$type}_country"}(),
         );
 
         if ( 'billing' === $type ) {
@@ -500,41 +500,102 @@ class Woocommerce extends Integrations_Base {
             $data['phone'] = $order->{"get_{$type}_phone"}();
         }
 
-        return $data;
+        // Include custom checkout fields (billing/shipping) as placeholders without prefix.
+        $fields = self::export_checkout_fields( $type );
+
+        if ( ! empty( $fields ) && is_array( $fields ) ) {
+            foreach ( $fields as $field_id => $field ) {
+                $placeholder_id = $field_id;
+
+                if ( 'billing' === $type && strpos( $field_id, 'billing_' ) === 0 ) {
+                    $placeholder_id = substr( $field_id, 8 );
+                } elseif ( 'shipping' === $type && strpos( $field_id, 'shipping_' ) === 0 ) {
+                    $placeholder_id = substr( $field_id, 9 );
+                }
+
+                // Don’t overwrite core keys already set.
+                if ( isset( $data[ $placeholder_id ] ) && $data[ $placeholder_id ] !== '' ) {
+                    continue;
+                }
+
+                $value = self::get_order_meta_fallback_value( $order, array(
+                    // Most common:
+                    "{$type}_{$placeholder_id}",      // billing_number
+                    "_{$type}_{$placeholder_id}",     // _billing_number
+                    $field_id,                        // billing_number (original)
+                    "_{$field_id}",                   // _billing_number
+                    $placeholder_id,                  // number
+                    "_{$placeholder_id}",             // _number
+                ) );
+
+                if ( $value !== '' ) {
+                    $data[ $placeholder_id ] = $value;
+                }
+            }
+        }
+
+        /**
+         * Filter address data before replace.
+         *
+         * @since 1.4.5
+         * @param array    $data
+         * @param \WC_Order $order
+         * @param string   $type
+         */
+        return apply_filters( 'Joinotify/WooCommerce/Address_Data', $data, $order, $type );
     }
 
 
     /**
-     * Format address template with order data
+     * Get meta value trying multiple keys (supports underscore-meta, arrays, objects).
      *
      * @since 1.4.5
-     * @param string $format | Format template
-     * @param array $address_data | Address data array
-     * @param \WC_Order $order | WooCommerce Order object
-     * @param string $type | Address type (billing or shipping)
+     * @param \WC_Order $order | Order object
+     * @param array     $keys
+     * @return string
+     */
+    protected static function get_order_meta_fallback_value( $order, $keys = array() ) {
+        foreach ( (array) $keys as $meta_key ) {
+            if ( empty( $meta_key ) ) {
+                continue;
+            }
+
+            $value = $order->get_meta( $meta_key, true );
+
+            if ( is_array( $value ) ) {
+                $value = implode( ', ', array_filter( array_map( 'strval', $value ) ) );
+            } elseif ( is_object( $value ) ) {
+                $value = method_exists( $value, '__toString' ) ? (string) $value : '';
+            } else {
+                $value = (string) $value;
+            }
+
+            $value = trim( wp_strip_all_tags( $value ) );
+
+            if ( $value !== '' ) {
+                return $value;
+            }
+        }
+
+        return '';
+    }
+
+
+    /**
+     * Format address template with order data (now uses $address_data only).
+     *
+     * @since 1.4.5
+     * @param string    $format
+     * @param array     $address_data
+     * @param \WC_Order $order
+     * @param string    $type
      * @return string
      */
     protected static function format_address_template( $format, $address_data, $order, $type ) {
-        return preg_replace_callback( '/\{\{\s*([a-zA-Z0-9_\-]+)\s*\}\}/', function( $matches ) use ( $address_data, $order, $type ) {
+        return preg_replace_callback( '/\{\{\s*([a-zA-Z0-9_\-]+)\s*\}\}/', function( $matches ) use ( $address_data ) {
             $key = $matches[1];
 
-            if ( isset( $address_data[ $key ] ) ) {
-                return $address_data[ $key ];
-            }
-
-            $prefixed_meta = $order->get_meta( "{$type}_{$key}" );
-
-            if ( ! empty( $prefixed_meta ) ) {
-                return $prefixed_meta;
-            }
-
-            $meta_value = $order->get_meta( $key );
-
-            if ( ! empty( $meta_value ) ) {
-                return $meta_value;
-            }
-
-            return '';
+            return isset( $address_data[ $key ] ) ? (string) $address_data[ $key ] : '';
         }, $format );
     }
 
