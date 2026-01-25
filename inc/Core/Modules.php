@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
  * Class for handle with install and upgrade plugins
  * 
  * @since 1.2.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Modules {
 

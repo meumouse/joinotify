@@ -15,7 +15,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.1.0
  * @version 1.4.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Whatsapp extends Integrations_Base {
 

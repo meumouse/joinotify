@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
  * Country codes class
  * 
  * @since 1.0.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Validations
+ * @author MeuMouse.com
  */
 class Country_Codes {
 

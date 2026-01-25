@@ -17,7 +17,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.4.5
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Elementor extends Integrations_Base {
 

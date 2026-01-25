@@ -14,7 +14,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.1.0
  * @version 1.4.3
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Builder
+ * @author MeuMouse.com
  */
 class Workflow_Manager {
 

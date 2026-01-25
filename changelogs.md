@@ -1,6 +1,7 @@
 Versão 1.4.5 (24/01/2026)
 * Correção de bugs
      - Erro fatal ao carregar página "Todos os fluxos": Call to undefined function convert_to_screen()
+* Otimizações
 
 Versão 1.4.4 (12/12/2025)
 * Otimizações

@@ -12,7 +12,8 @@ defined('ABSPATH') || exit;
  * Class for handle with settings components
  * 
  * @since 1.1.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Admin
+ * @author MeuMouse.com
  */
 class Components {
 

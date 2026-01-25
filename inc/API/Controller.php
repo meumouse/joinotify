@@ -19,7 +19,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.4.2
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\API
+ * @author MeuMouse.com
  */
 class Controller {
 

@@ -10,7 +10,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.3.0
  * @version 1.3.4
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Admin
+ * @author MeuMouse.com
  */
 class Default_Options {
 

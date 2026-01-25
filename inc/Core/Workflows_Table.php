@@ -16,12 +16,14 @@ if ( ! function_exists('convert_to_screen') ) {
 use WP_List_Table;
 
 if ( is_admin() ) {
+
     /**
      * Workflows table class
      * 
      * @since 1.0.0
      * @version 1.4.0
-     * @package MeuMouse.com
+     * @package MeuMouse\Joinotify\Core
+     * @author MeuMouse.com
      */
     class Workflows_Table extends WP_List_Table {
 

@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
  * Handle logs class
  * 
  * @since 1.1.0
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Logger {
 

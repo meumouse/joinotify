@@ -13,7 +13,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.4.5
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Init {
 
@@ -69,6 +70,13 @@ class Init {
             'MeuMouse\\Joinotify\\Integrations\\Elementor',
             'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms',
         ),
+		'woocommerce_loaded' => array(
+			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
+			'MeuMouse\\Joinotify\\Integrations\\Woo_Subscriptions',
+		),
+		'wpforms_loaded' => array(
+			'MeuMouse\\Joinotify\\Integrations\\Wpforms',
+		),
     );
 
 	/**

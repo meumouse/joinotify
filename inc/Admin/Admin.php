@@ -13,7 +13,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.3.7
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Admin
+ * @author MeuMouse.com
  */
 class Admin {
 

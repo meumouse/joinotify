@@ -14,7 +14,8 @@ defined('ABSPATH') || exit;
  * 
  * @since 1.0.0
  * @version 1.3.5
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Integrations
+ * @author MeuMouse.com
  */
 class Flexify_Checkout extends Integrations_Base {
 

@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
  * Cache control class
  * 
  * @since 1.4.2
- * @package MeuMouse.com
+ * @package MeuMouse\Joinotify\Core
+ * @author MeuMouse.com
  */
 class Cache {
 
