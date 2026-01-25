@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions for display components on workflow builder
  * 
  * @since 1.0.0
- * @version 1.4.3
+ * @version 1.4.5
  * @package MeuMouse.com
  */
 class Components {
@@ -436,7 +436,7 @@ class Components {
      * Render required settings for specific triggers
      * 
      * @since 1.1.0
-     * @version 1.4.3
+     * @version 1.4.5
      * @param int $post_id | Post ID
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return string
@@ -496,6 +496,14 @@ class Components {
                         $html .= '<option value="'. esc_attr( $status_key ) .'" '. selected( $current_status, $status_key, false) .'>'. esc_html( $status_label ) .'</option>';
                     }
                 $html .= '</select>';
+            $html .= '</div>';
+        } elseif ( $trigger === 'elementor_pro/forms/new_record' ) {
+            $current_form_id = isset( $trigger_data['settings']['form_id'] ) ? $trigger_data['settings']['form_id'] : '';
+
+            $html .= '<div class="joinotify-get-elementor-form-id-trigger">';
+                $html .= '<label class="form-label" for="get_elementor_form_id">'. esc_html__( 'Formulário do Elementor: *', 'joinotify' ) .'</label>';
+                $html .= '<input id="get_elementor_form_id" type="text" class="form-control set-trigger-settings elementor-form-id required-setting" placeholder="'. esc_attr__( 'Informe o ID do formulário', 'joinotify' ) .'" value="'. esc_attr( $current_form_id ) .'">';
+                $html .= '<div class="form-text">'. esc_html__( 'Use o ID informado em Informações adicionais do formulário do Elementor.', 'joinotify' ) .'</div>';
             $html .= '</div>';
         }
 

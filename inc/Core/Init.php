@@ -105,8 +105,7 @@ class Init {
 		$this->directory = JOINOTIFY_DIR;
 		$this->basename = JOINOTIFY_BASENAME;
 
-        $this->register_deferred_classes();
-		$this->instance_classes();
+        add_action( 'plugins_loaded', array( $this, 'instance_classes' ), 99 );
 
 		// Add settings link on plugins list.
 		add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
@@ -193,10 +192,11 @@ class Init {
 	 * Instance classes after loading Composer.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.3
+	 * @version 1.4.5
 	 * @return void
 	 */
 	public function instance_classes() {
+		$this->register_deferred_classes();
 		$this->instance_manual_classes();
 		$this->instance_composer_classes();
 	}

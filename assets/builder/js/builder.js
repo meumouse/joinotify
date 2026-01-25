@@ -2533,7 +2533,7 @@
 		 * Save trigger settings
 		 * 
 		 * @since 1.1.0
-		 * @version 1.3.5
+		 * @version 1.4.5
 		 * @package MeuMouse.com
 		 */
 		saveTriggerSettings: function() {
@@ -2558,6 +2558,10 @@
 				} else if ( get_trigger === 'change_post_status' || get_trigger === 'transition_post_status' ) {
 					trigger_data = {
 						post_status: $('.modal.show').find('.set-trigger-settings.post-status').val(),
+					};
+				} else if ( get_trigger === 'elementor_pro/forms/new_record' ) {
+					trigger_data = {
+						form_id: $('.modal.show').find('.set-trigger-settings.elementor-form-id').val(),
 					};
 				}
 
