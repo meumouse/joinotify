@@ -16,7 +16,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.5
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -273,7 +273,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereço completo de faturamento do usuário', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço completo de faturamento do usuário (formato configurável nas opções do WooCommerce).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'billing' ) : '',
                     'sandbox' => esc_html__( 'Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)', 'joinotify' ),
@@ -281,7 +281,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_shipping_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereço completo de entrega do usuário', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço completo de entrega do usuário (formato configurável nas opções do WooCommerce).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'shipping' ) : '',
                     'sandbox' => esc_html__( 'Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)', 'joinotify' ),
@@ -436,20 +436,26 @@ class Woocommerce extends Integrations_Base {
      * Get the full address of the order
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.5
      * @param \WC_Order $order | WooCommerce Order object
      * @return string Full address as a formatted string
      */
     public static function get_full_address( $order, $type = 'billing' ) {
-        $format = '';
+        $format_setting = 'billing' === $type ? 'woocommerce_billing_full_address_format' : 'woocommerce_shipping_full_address_format';
+        $format = Admin::get_setting( $format_setting );
+        $address_data = self::get_address_data( $order, $type );
+
+        if ( ! empty( $format ) ) {
+            return trim( self::format_address_template( $format, $address_data, $order, $type ) );
+        }
 
         $address = array(
-            $order->{"get_{$type}_address_1"}(),
-            $order->{"get_{$type}_address_2"}(),
-            $order->{"get_{$type}_city"}(),
-            $order->{"get_{$type}_state"}(),
-            $order->{"get_{$type}_postcode"}(),
-            $order->{"get_{$type}_country"}(),
+            $address_data['address_1'],
+            $address_data['address_2'],
+            $address_data['city'],
+            $address_data['state'],
+            $address_data['postcode'],
+            $address_data['country'],
         );
 
         // Filter out empty values and join with a comma.
@@ -458,10 +464,79 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Get address data for placeholder replacement
+     *
+     * @since 1.4.5
+     * @param \WC_Order $order | WooCommerce Order object
+     * @param string $type | Address type (billing or shipping)
+     * @return array
+     */
+    protected static function get_address_data( $order, $type ) {
+        $data = array(
+            'first_name'    => $order->{"get_{$type}_first_name"}(),
+            'last_name'     => $order->{"get_{$type}_last_name"}(),
+            'company'       => $order->{"get_{$type}_company"}(),
+            'address_1'     => $order->{"get_{$type}_address_1"}(),
+            'address_2'     => $order->{"get_{$type}_address_2"}(),
+            'city'          => $order->{"get_{$type}_city"}(),
+            'state'         => $order->{"get_{$type}_state"}(),
+            'postcode'      => $order->{"get_{$type}_postcode"}(),
+            'country'       => $order->{"get_{$type}_country"}(),
+        );
+
+        if ( 'billing' === $type ) {
+            $data['email'] = $order->get_billing_email();
+            $data['phone'] = $order->get_billing_phone();
+        }
+
+        if ( method_exists( $order, "get_{$type}_phone" ) ) {
+            $data['phone'] = $order->{"get_{$type}_phone"}();
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Format address template with order data
+     *
+     * @since 1.4.5
+     * @param string $format | Format template
+     * @param array $address_data | Address data array
+     * @param \WC_Order $order | WooCommerce Order object
+     * @param string $type | Address type (billing or shipping)
+     * @return string
+     */
+    protected static function format_address_template( $format, $address_data, $order, $type ) {
+        return preg_replace_callback( '/\{\{\s*([a-zA-Z0-9_\-]+)\s*\}\}/', function( $matches ) use ( $address_data, $order, $type ) {
+            $key = $matches[1];
+
+            if ( isset( $address_data[ $key ] ) ) {
+                return $address_data[ $key ];
+            }
+
+            $prefixed_meta = $order->get_meta( "{$type}_{$key}" );
+
+            if ( ! empty( $prefixed_meta ) ) {
+                return $prefixed_meta;
+            }
+
+            $meta_value = $order->get_meta( $key );
+
+            if ( ! empty( $meta_value ) ) {
+                return $meta_value;
+            }
+
+            return '';
+        }, $format );
+    }
+
+
+    /**
      * Add modal settings for WooCommerce
      * 
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.4.5
      * @return void
      */
     public function add_modal_settings() {
@@ -497,6 +572,26 @@ class Woocommerce extends Integrations_Base {
                                     </th>
                                     <td>
                                         <input type="text" class="form-control" name="create_coupon_prefix" id="create_coupon_prefix" value="<?php echo Admin::get_setting('create_coupon_prefix') ?>" placeholder="<?php esc_attr_e( 'CUPOM_', 'joinotify' ) ?>"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <?php esc_html_e( 'Formato do endereço completo (faturamento)', 'joinotify' ); ?>
+                                        <span class="joinotify-description"><?php esc_html_e( 'Personalize o texto usado na variável {{ wc_billing_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).', 'joinotify' ); ?></span>
+                                    </th>
+                                    <td>
+                                        <textarea class="form-control" name="woocommerce_billing_full_address_format" id="woocommerce_billing_full_address_format" rows="2" placeholder="<?php esc_attr_e( '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})', 'joinotify' ); ?>"><?php echo esc_textarea( Admin::get_setting('woocommerce_billing_full_address_format') ); ?></textarea>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <?php esc_html_e( 'Formato do endereço completo (entrega)', 'joinotify' ); ?>
+                                        <span class="joinotify-description"><?php esc_html_e( 'Personalize o texto usado na variável {{ wc_shipping_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).', 'joinotify' ); ?></span>
+                                    </th>
+                                    <td>
+                                        <textarea class="form-control" name="woocommerce_shipping_full_address_format" id="woocommerce_shipping_full_address_format" rows="2" placeholder="<?php esc_attr_e( '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})', 'joinotify' ); ?>"><?php echo esc_textarea( Admin::get_setting('woocommerce_shipping_full_address_format') ); ?></textarea>
                                     </td>
                                 </tr>
 
