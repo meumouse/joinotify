@@ -6,7 +6,7 @@
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				1.4.5
+ * Version: 				1.4.6
  * Requires PHP: 			7.4
  * Tested up to:      		6.9
  * Text Domain: 			joinotify
@@ -27,7 +27,7 @@ if ( file_exists( $autoload ) ) {
 	require_once $autoload;
 }
 
-$plugin_version = '1.4.5';
+$plugin_version = '1.4.6';
 
 // Initialize the plugin
 new Init( __FILE__, $plugin_version );
