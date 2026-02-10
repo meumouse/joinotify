@@ -15,6 +15,8 @@ return array(
     'MeuMouse\\Joinotify\\Admin\\Admin' => $baseDir . '/inc/Admin/Admin.php',
     'MeuMouse\\Joinotify\\Admin\\Components' => $baseDir . '/inc/Admin/Components.php',
     'MeuMouse\\Joinotify\\Admin\\Default_Options' => $baseDir . '/inc/Admin/Default_Options.php',
+    'MeuMouse\\Joinotify\\Admin\\Menu' => $baseDir . '/inc/Admin/Menu.php',
+    'MeuMouse\\Joinotify\\Admin\\Settings' => $baseDir . '/inc/Admin/Settings.php',
     'MeuMouse\\Joinotify\\Builder\\Actions' => $baseDir . '/inc/Builder/Actions.php',
     'MeuMouse\\Joinotify\\Builder\\Components' => $baseDir . '/inc/Builder/Components.php',
     'MeuMouse\\Joinotify\\Builder\\Messages' => $baseDir . '/inc/Builder/Messages.php',

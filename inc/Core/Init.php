@@ -77,53 +77,6 @@ class Init {
 
 
 	/**
-	 * Classes to be instantiated on 'init'.
-	 *
-	 * @since 1.4.6
-	 * @var array
-	 */
-	private $init_classes = array(
-		'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
-		'MeuMouse\\Joinotify\\Core\\Assets',
-		'MeuMouse\\Joinotify\\Core\\Ajax',
-		'MeuMouse\\Joinotify\\Core\\Compatibility',
-		'MeuMouse\\Joinotify\\API\\Controller',
-		'MeuMouse\\Joinotify\\API\\License',
-	);
-
-
-	/**
-	 * Classes to be instantiated on 'admin_init'.
-	 *
-	 * @since 1.4.6
-	 * @var array
-	 */
-	private $admin_init_classes = array(
-		'MeuMouse\\Joinotify\\Admin\\Admin',
-	);
-
-
-	/**
-	 * Classes to be instantiated on 'wp_loaded'.
-	 *
-	 * @since 1.4.6
-	 * @var array
-	 */
-	private $wp_loaded_classes = array(
-		'MeuMouse\\Joinotify\\Core\\Cache',
-		'MeuMouse\\Joinotify\\Core\\Debug',
-		'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
-		'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
-		'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
-		'MeuMouse\\Joinotify\\Integrations\\Elementor',
-		'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
-		'MeuMouse\\Joinotify\\Integrations\\Wpforms',
-		'MeuMouse\\Joinotify\\Integrations\\Wordpress',
-		'MeuMouse\\Joinotify\\API\\Updater',
-	);
-
-
-	/**
 	 * Construct function.
 	 * 
 	 * @since 1.0.0
@@ -253,7 +206,15 @@ class Init {
 	 * @return void
 	 */
 	public function instance_init_classes() {
-		$classes = apply_filters( 'Joinotify/Init/Init_Classes', $this->init_classes );
+		$classes = apply_filters( 'Joinotify/Init/Init_Classes', array(
+			'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
+			'MeuMouse\\Joinotify\\Core\\Assets',
+			'MeuMouse\\Joinotify\\Core\\Ajax',
+			'MeuMouse\\Joinotify\\Core\\Compatibility',
+			'MeuMouse\\Joinotify\\Admin\\Menu',
+			'MeuMouse\\Joinotify\\API\\Controller',
+			'MeuMouse\\Joinotify\\API\\License',
+		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;
@@ -272,7 +233,10 @@ class Init {
 	 * @return void
 	 */
 	public function instance_admin_init_classes() {
-		$classes = apply_filters( 'Joinotify/Init/Admin_Init_Classes', $this->admin_init_classes );
+		$classes = apply_filters( 'Joinotify/Init/Admin_Init_Classes', array(
+			'MeuMouse\\Joinotify\\Admin\\Admin',
+			'MeuMouse\\Joinotify\\Admin\\Settings',
+		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;
@@ -291,7 +255,19 @@ class Init {
 	 * @return void
 	 */
 	public function instance_wp_loaded_classes() {
-		$classes = apply_filters( 'Joinotify/Init/WP_Loaded_Classes', $this->wp_loaded_classes );
+		$classes = apply_filters( 'Joinotify/Init/WP_Loaded_Classes', array(
+			'MeuMouse\\Joinotify\\Core\\Cache',
+			'MeuMouse\\Joinotify\\Core\\Debug',
+			'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
+			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
+			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
+			'MeuMouse\\Joinotify\\Integrations\\Elementor',
+			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
+			'MeuMouse\\Joinotify\\Integrations\\Wpforms',
+			'MeuMouse\\Joinotify\\Integrations\\Wordpress',
+			'MeuMouse\\Joinotify\\API\\Updater',
+			'MeuMouse\\Joinotify\\Core\\Logger',
+		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;

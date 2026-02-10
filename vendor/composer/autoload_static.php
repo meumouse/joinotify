@@ -58,6 +58,8 @@ class ComposerStaticInit9e7395ae6528c152d37696eeb1cc780d
         'MeuMouse\\Joinotify\\Admin\\Admin' => __DIR__ . '/../..' . '/inc/Admin/Admin.php',
         'MeuMouse\\Joinotify\\Admin\\Components' => __DIR__ . '/../..' . '/inc/Admin/Components.php',
         'MeuMouse\\Joinotify\\Admin\\Default_Options' => __DIR__ . '/../..' . '/inc/Admin/Default_Options.php',
+        'MeuMouse\\Joinotify\\Admin\\Menu' => __DIR__ . '/../..' . '/inc/Admin/Menu.php',
+        'MeuMouse\\Joinotify\\Admin\\Settings' => __DIR__ . '/../..' . '/inc/Admin/Settings.php',
         'MeuMouse\\Joinotify\\Builder\\Actions' => __DIR__ . '/../..' . '/inc/Builder/Actions.php',
         'MeuMouse\\Joinotify\\Builder\\Components' => __DIR__ . '/../..' . '/inc/Builder/Components.php',
         'MeuMouse\\Joinotify\\Builder\\Messages' => __DIR__ . '/../..' . '/inc/Builder/Messages.php',
