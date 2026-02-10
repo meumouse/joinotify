@@ -1,3 +1,7 @@
+Versão 1.4.6 (09/02/2026)
+* Correção de bugs
+     - Erro fatal devido a falta da classe ElementorPro\Modules\Forms\Classes\Action_Base
+
 Versão 1.4.5 (24/01/2026)
 * Correção de bugs
      - Erro fatal ao carregar página "Todos os fluxos": Call to undefined function convert_to_screen()
