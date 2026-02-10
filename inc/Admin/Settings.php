@@ -6,7 +6,7 @@ namespace MeuMouse\Joinotify\Admin;
 defined('ABSPATH') || exit;
 
 /**
- * Register plugin menu
+ * Register plugin settings
  * 
  * @since 1.4.6
  * @package MeuMouse\Joinotify\Admin
@@ -21,6 +21,28 @@ class Settings {
      * @return string 
      */
     private $inc_directory = JOINOTIFY_INC;
+
+    /**
+	 * Plugin instance.
+	 *
+	 * @since 1.4.6
+	 * @var Settings
+	 */
+	private static $instance = null;
+
+    /**
+	 * Get class instance
+	 *
+	 * @since 1.4.6
+	 * @return Settings
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 
     /**
      * Construct function
@@ -42,7 +64,7 @@ class Settings {
      * @return void
      */
     public function render_settings_tabs() {
-        $tabs = self::get_settings_tabs();
+        $tabs = $this->register_settings_tabs();
 
         foreach ( $tabs as $tab ) {
             printf( '<a href="#%1$s" class="nav-tab">%2$s %3$s</a>', esc_attr( $tab['id'] ), $tab['icon'], $tab['label'] );
@@ -57,7 +79,7 @@ class Settings {
      * @version 1.4.6
      * @return array
      */
-    public static function get_settings_tabs() {
+    public function register_settings_tabs() {
         return apply_filters( 'Joinotify/Admin/Register_Settings_Tabs', array(
             'general' => array(
                 'id' => 'general',
