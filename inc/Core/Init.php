@@ -68,18 +68,10 @@ class Init {
 	 */
 	private $deferred_classes = array(
 		'elementor/init' => array(
-			'MeuMouse\\Joinotify\\Integrations\\Elementor',
 			'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms',
 		),
-	/*	'elementor_pro/forms/actions/register' => array(
-			
-		),*/
 		'woocommerce_loaded' => array(
-			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
 			'MeuMouse\\Joinotify\\Integrations\\Woo_Subscriptions',
-		),
-		'wpforms_loaded' => array(
-			'MeuMouse\\Joinotify\\Integrations\\Wpforms',
 		),
 	);
 
@@ -91,11 +83,23 @@ class Init {
 	 * @var array
 	 */
 	private $init_classes = array(
+		'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
 		'MeuMouse\\Joinotify\\Core\\Assets',
 		'MeuMouse\\Joinotify\\Core\\Ajax',
 		'MeuMouse\\Joinotify\\Core\\Compatibility',
 		'MeuMouse\\Joinotify\\API\\Controller',
 		'MeuMouse\\Joinotify\\API\\License',
+	);
+
+
+	/**
+	 * Classes to be instantiated on 'admin_init'.
+	 *
+	 * @since 1.4.6
+	 * @var array
+	 */
+	private $admin_init_classes = array(
+		'MeuMouse\\Joinotify\\Admin\\Admin',
 	);
 
 
@@ -106,9 +110,15 @@ class Init {
 	 * @var array
 	 */
 	private $wp_loaded_classes = array(
-		'MeuMouse\\Joinotify\\Admin\\Admin',
 		'MeuMouse\\Joinotify\\Core\\Cache',
 		'MeuMouse\\Joinotify\\Core\\Debug',
+		'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
+		'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
+		'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
+		'MeuMouse\\Joinotify\\Integrations\\Elementor',
+		'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
+		'MeuMouse\\Joinotify\\Integrations\\Wpforms',
+		'MeuMouse\\Joinotify\\Integrations\\Wordpress',
 		'MeuMouse\\Joinotify\\API\\Updater',
 	);
 
@@ -150,8 +160,9 @@ class Init {
 		// Register deferred instantiation ASAP.
 		$this->register_deferred_classes();
 
-		// Instance only the explicitly allowed classes (no classmap scan).
+		// Instance only the explicitly allowed classes
 		add_action( 'init', array( $this, 'instance_init_classes' ), 10 );
+		add_action( 'admin_init', array( $this, 'instance_admin_init_classes' ), 10 );
 		add_action( 'wp_loaded', array( $this, 'instance_wp_loaded_classes' ), 10 );
 
 		// Add settings link on plugins list.
@@ -243,6 +254,25 @@ class Init {
 	 */
 	public function instance_init_classes() {
 		$classes = apply_filters( 'Joinotify/Init/Init_Classes', $this->init_classes );
+
+		if ( ! is_array( $classes ) || empty( $classes ) ) {
+			return;
+		}
+
+		foreach ( $classes as $class ) {
+			$this->safe_instance_class( $class );
+		}
+	}
+
+
+	/**
+	 * Instance only the explicitly allowed classes on init.
+	 * 
+	 * @since 1.4.6
+	 * @return void
+	 */
+	public function instance_admin_init_classes() {
+		$classes = apply_filters( 'Joinotify/Init/Admin_Init_Classes', $this->admin_init_classes );
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;
