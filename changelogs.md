@@ -1,4 +1,5 @@
-Versão 1.4.6 (09/02/2026)
+Versão 1.4.6 (10/02/2026)
+* Otimizações
 * Correção de bugs
      - Erro fatal devido a falta da classe ElementorPro\Modules\Forms\Classes\Action_Base
 
