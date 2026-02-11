@@ -1694,25 +1694,18 @@ input.toggle-switch.status:checked {
 }
 
 .joinotify-templates-group {
-    display: flex;
-    max-width: 900px;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    max-width: 1024px;
     overflow: auto;
     max-height: 45vh;
-    align-items: flex-start;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    justify-content: center;
 }
 
 .template-item {
-    width: 20rem;
-    height: 10rem;
-    margin: 1rem;
-}
-
-@media screen and (max-width: 1368px) {
-    .template-item {
-        width: 15rem;
-    }
+    min-width: 20rem;
+    max-width: 25rem;
 }
 
 .template-item:not(.placeholder-content) {
@@ -2154,7 +2147,8 @@ textarea.edit-whatsapp-message-text {
 }
 
 .search-workflows-wrapper {
-    width: 50rem;
+    max-width: 1024px;
+    width: 100%;
 }
 
 #joinotify_filter_library_categories {

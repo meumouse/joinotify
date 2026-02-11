@@ -1,6 +1,6 @@
 <?php
 
-use MeuMouse\Joinotify\Admin\Components as Admin_Components;
+use MeuMouse\Joinotify\Admin\Settings;
 use MeuMouse\Joinotify\Validations\Conditions;
 
 /**
@@ -47,7 +47,7 @@ do_action('Joinotify/Admin/Display_Notices'); ?>
 
     <div class="joinotify-options-settings-container">
         <form method="post" class="joinotify-form" name="joinotify-options-form">
-            <?php $tabs = Admin_Components::get_settings_tabs();
+            <?php $tabs = Settings::get_instance()->register_settings_tabs();
 
             foreach ( $tabs as $tab ) :
                 if ( ! empty( $tab['file'] ) ) {

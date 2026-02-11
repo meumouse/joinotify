@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Initialize plugin classes
  * 
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.6
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -26,7 +26,7 @@ class Init {
 	 */
 	private $plugin_file;
 
-    /**
+	/**
 	 * Plugin version
 	 *
 	 * @since 1.4.5
@@ -59,38 +59,35 @@ class Init {
 	 */
 	private $instantiated_classes = array();
 
-    /**
-     * Deferred classes: hook => class list.
-     *
-     * @since 1.4.5
-     * @var array
-     */
-    private $deferred_classes = array(
-        'elementor/init' => array(
-            'MeuMouse\\Joinotify\\Integrations\\Elementor',
-            'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms',
-        ),
+	/**
+	 * Deferred classes: hook => class list.
+	 *
+	 * @since 1.4.5
+	 * @version 1.4.6
+	 * @var array
+	 */
+	private $deferred_classes = array(
+		'elementor/init' => array(
+			'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms',
+		),
 		'woocommerce_loaded' => array(
-			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
 			'MeuMouse\\Joinotify\\Integrations\\Woo_Subscriptions',
 		),
-		'wpforms_loaded' => array(
-			'MeuMouse\\Joinotify\\Integrations\\Wpforms',
-		),
-    );
+	);
+
 
 	/**
 	 * Construct function.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.5
+	 * @version 1.4.6
 	 * @param string $plugin_file | Plugin main file path.
-     * @param string $plugin_version | Plugin version
+	 * @param string $plugin_version | Plugin version.
 	 * @return void
 	 */
 	public function __construct( $plugin_file, $plugin_version ) {
 		$this->plugin_file = $plugin_file;
-        $this->plugin_version = $plugin_version;
+		$this->plugin_version = $plugin_version;
 
 		/**
 		 * Fire hook before Joinotify initialize.
@@ -99,7 +96,7 @@ class Init {
 		 */
 		do_action('before_joinotify_init');
 
-        // Display notice if PHP version is below 7.4.
+		// Display notice if PHP version is below 7.4.
 		if ( version_compare( phpversion(), '7.4', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'php_version_notice' ) );
 			return;
@@ -113,7 +110,13 @@ class Init {
 		$this->directory = JOINOTIFY_DIR;
 		$this->basename = JOINOTIFY_BASENAME;
 
-        add_action( 'plugins_loaded', array( $this, 'instance_classes' ), 99 );
+		// Register deferred instantiation ASAP.
+		$this->register_deferred_classes();
+
+		// Instance only the explicitly allowed classes
+		add_action( 'init', array( $this, 'instance_init_classes' ), 10 );
+		add_action( 'admin_init', array( $this, 'instance_admin_init_classes' ), 10 );
+		add_action( 'wp_loaded', array( $this, 'instance_wp_loaded_classes' ), 10 );
 
 		// Add settings link on plugins list.
 		add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
@@ -121,8 +124,8 @@ class Init {
 		// Add docs link on plugins list.
 		add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
 
-        // load plugin text domain
-        add_action( 'init', array( $this, 'load_text_domain' ) );
+		// Load plugin text domain.
+		add_action( 'init', array( $this, 'load_text_domain' ) );
 
 		/**
 		 * Fire hook after Joinotify initialize.
@@ -134,16 +137,16 @@ class Init {
 	}
 
 
-    /**
-     * Load text domain after init hook
-     * 
-     * @since 1.0.0
-     * @version 1.4.5
-     * @return void
-     */
-    public function load_text_domain() {
-        load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
-    }
+	/**
+	 * Load text domain after init hook.
+	 * 
+	 * @since 1.0.0
+	 * @version 1.4.5
+	 * @return void
+	 */
+	public function load_text_domain() {
+		load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
+	}
 
 
 	/**
@@ -165,7 +168,7 @@ class Init {
 			'JOINOTIFY_URL'                => $base_url,
 			'JOINOTIFY_ASSETS'             => $base_url . 'assets/',
 			'JOINOTIFY_ABSPATH'            => dirname( $base_file ) . '/',
-			'JOINOTIFY_ADMIN_EMAIL'        => get_option('admin_email'),
+			'JOINOTIFY_ADMIN_EMAIL'        => get_option( 'admin_email' ),
 			'JOINOTIFY_DOCS_URL'           => 'https://ajuda.meumouse.com/docs/joinotify/overview',
 			'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
 			'JOINOTIFY_API_BASE_URL'       => 'https://slots-manager.joinotify.com',
@@ -197,77 +200,80 @@ class Init {
 
 
 	/**
-	 * Instance classes after loading Composer.
+	 * Instance only the explicitly allowed classes on init.
 	 * 
-	 * @since 1.0.0
-	 * @version 1.4.5
+	 * @since 1.4.6
 	 * @return void
 	 */
-	public function instance_classes() {
-		$this->register_deferred_classes();
-		$this->instance_manual_classes();
-		$this->instance_composer_classes();
-	}
+	public function instance_init_classes() {
+		$classes = apply_filters( 'Joinotify/Init/Init_Classes', array(
+			'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
+			'MeuMouse\\Joinotify\\Core\\Assets',
+			'MeuMouse\\Joinotify\\Core\\Ajax',
+			'MeuMouse\\Joinotify\\Core\\Compatibility',
+			'MeuMouse\\Joinotify\\Admin\\Menu',
+			'MeuMouse\\Joinotify\\API\\Controller',
+			'MeuMouse\\Joinotify\\API\\License',
+		));
 
-
-	/**
-	 * Process manual classes registered via filter.
-	 * 
-	 * @since 1.4.3
-	 * @return void
-	 */
-	private function instance_manual_classes() {
-		$manual_classes = apply_filters( 'Joinotify/Init/Instance_Classes', array() );
-
-		if ( ! is_array( $manual_classes ) || empty( $manual_classes ) ) {
+		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;
 		}
 
-		foreach ( $manual_classes as $class ) {
+		foreach ( $classes as $class ) {
 			$this->safe_instance_class( $class );
 		}
 	}
 
 
 	/**
-	 * Process Composer autoloaded classes.
+	 * Instance only the explicitly allowed classes on init.
 	 * 
-	 * @since 1.4.3
-     * @version 1.4.5
+	 * @since 1.4.6
 	 * @return void
 	 */
-	private function instance_composer_classes() {
-		$classmap_path = JOINOTIFY_DIR . 'vendor/composer/autoload_classmap.php';
-        $deferred = $this->get_deferred_class_list();
+	public function instance_admin_init_classes() {
+		$classes = apply_filters( 'Joinotify/Init/Admin_Init_Classes', array(
+			'MeuMouse\\Joinotify\\Admin\\Admin',
+			'MeuMouse\\Joinotify\\Admin\\Settings',
+		));
 
-		if ( ! file_exists( $classmap_path ) || ! is_readable( $classmap_path ) ) {
+		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;
 		}
 
-		$classmap = include $classmap_path;
+		foreach ( $classes as $class ) {
+			$this->safe_instance_class( $class );
+		}
+	}
 
-		if ( ! is_array( $classmap ) || empty( $classmap ) ) {
+
+	/**
+	 * Instance only the explicitly allowed classes on wp_loaded.
+	 * 
+	 * @since 1.4.6
+	 * @return void
+	 */
+	public function instance_wp_loaded_classes() {
+		$classes = apply_filters( 'Joinotify/Init/WP_Loaded_Classes', array(
+			'MeuMouse\\Joinotify\\Core\\Cache',
+			'MeuMouse\\Joinotify\\Core\\Debug',
+			'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
+			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
+			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
+			'MeuMouse\\Joinotify\\Integrations\\Elementor',
+			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
+			'MeuMouse\\Joinotify\\Integrations\\Wpforms',
+			'MeuMouse\\Joinotify\\Integrations\\Wordpress',
+			'MeuMouse\\Joinotify\\API\\Updater',
+			'MeuMouse\\Joinotify\\Core\\Logger',
+		));
+
+		if ( ! is_array( $classes ) || empty( $classes ) ) {
 			return;
 		}
 
-		foreach ( $classmap as $class => $path ) {
-			if ( strpos( $class, 'MeuMouse\\Joinotify\\' ) !== 0 ) {
-				continue;
-			}
-
-			if ( $class === __CLASS__ ) {
-				continue;
-			}
-
-            if ( in_array( $class, $deferred, true ) ) {
-                continue;
-            }
-
-			// Avoid instantiating WP_List_Table classes during plugins_loaded.
-			if ( $class === 'MeuMouse\\Joinotify\\Core\\Workflows_Table' ) {
-				continue;
-			}
-
+		foreach ( $classes as $class ) {
 			$this->safe_instance_class( $class );
 		}
 	}
@@ -277,12 +283,17 @@ class Init {
 	 * Safely instance a single class with validation.
 	 * 
 	 * @since 1.4.3
-	 * @version 1.4.5
+	 * @version 1.4.6
 	 * @param string $class Full class name with namespace.
 	 * @return mixed|null Returns the class instance or null on failure.
 	 */
 	private function safe_instance_class( $class ) {
 		if ( ! is_string( $class ) || empty( trim( $class ) ) ) {
+			return null;
+		}
+
+		// Only allow Joinotify namespace classes.
+		if ( strpos( $class, 'MeuMouse\\Joinotify\\' ) !== 0 ) {
 			return null;
 		}
 
@@ -325,92 +336,65 @@ class Init {
 
 		} catch ( ReflectionException $e ) {
 			error_log( 'Joinotify: Reflection error for class ' . $class . ': ' . $e->getMessage() );
+			
 			return null;
 		} catch ( Exception $e ) {
 			error_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
+			
 			return null;
 		}
 	}
 
 
-    /**
-     * Register deferred class instantiation by hook.
-     *
-     * @since 1.4.5
-     * @return void
-     */
-    private function register_deferred_classes() {
-        /**
-         * Allow third-parties to add deferred classes.
-         *
-         * Format:
-         * array(
-         *   'hook/name' => array( 'Full\\ClassName', ... ),
-         * )
-         *
-         * @since 1.4.5
-         */
-        $map = apply_filters( 'Joinotify/Init/Deferred_Classes', $this->deferred_classes );
+	/**
+	 * Register deferred class instantiation by hook.
+	 *
+	 * @since 1.4.5
+	 * @version 1.4.6
+	 * @return void
+	 */
+	private function register_deferred_classes() {
+		/**
+		 * Allow third-parties to add deferred classes.
+		 *
+		 * Format:
+		 * array(
+		 *   'hook/name' => array( 'Full\\ClassName', ... ),
+		 * )
+		 *
+		 * @since 1.4.5
+		 */
+		$map = apply_filters( 'Joinotify/Init/Deferred_Classes', $this->deferred_classes );
 
-        if ( ! is_array( $map ) || empty( $map ) ) {
-            return;
-        }
+		if ( ! is_array( $map ) || empty( $map ) ) {
+			return;
+		}
 
-        foreach ( $map as $hook => $classes ) {
-            if ( ! is_string( $hook ) || empty( trim( $hook ) ) ) {
-                continue;
-            }
+		foreach ( $map as $hook => $classes ) {
+			if ( ! is_string( $hook ) || empty( trim( $hook ) ) ) {
+				continue;
+			}
 
-            if ( ! is_array( $classes ) || empty( $classes ) ) {
-                continue;
-            }
+			if ( ! is_array( $classes ) || empty( $classes ) ) {
+				continue;
+			}
 
-            $callback = function() use ( $classes ) {
-                foreach ( $classes as $class ) {
-                    $this->safe_instance_class( $class );
-                }
-            };
+			$callback = function() use ( $classes ) {
+				foreach ( $classes as $class ) {
+					$this->safe_instance_class( $class );
+				}
+			};
 
-            // If the hook already fired, instantiate immediately.
-            if ( did_action( $hook ) ) {
-                $callback();
-                continue;
-            }
+			// If the hook already fired, instantiate immediately.
+			if ( did_action( $hook ) ) {
+				$callback();
 
-            add_action( $hook, $callback, 10, 0 );
-        }
-    }
+				continue;
+			}
 
-
-    /**
-     * Get a flat list of deferred classes.
-     *
-     * @since 1.4.5
-     * @return array
-     */
-    private function get_deferred_class_list() {
-        $map = apply_filters( 'Joinotify/Init/Deferred_Classes', $this->deferred_classes );
-
-        if ( ! is_array( $map ) || empty( $map ) ) {
-            return array();
-        }
-
-        $all = array();
-
-        foreach ( $map as $classes ) {
-            if ( ! is_array( $classes ) ) {
-                continue;
-            }
-
-            foreach ( $classes as $class ) {
-                if ( is_string( $class ) && ! empty( trim( $class ) ) ) {
-                    $all[] = $class;
-                }
-            }
-        }
-
-        return array_values( array_unique( $all ) );
-    }
+			add_action( $hook, $callback, 10, 0 );
+		}
+	}
 
 
 	/**
@@ -422,7 +406,7 @@ class Init {
 	 * @return array
 	 */
 	public function add_action_plugin_links( $action_links ) {
-		if ( get_option( 'joinotify_license_status' ) !== 'valid' ) {
+		if ( get_option('joinotify_license_status') !== 'valid' ) {
 			$plugins_links = array(
 				'<a href="' . admin_url( 'admin.php?page=joinotify-license' ) . '">' . __( 'Configurar', 'joinotify' ) . '</a>',
 			);
@@ -448,7 +432,7 @@ class Init {
 	 * @return array
 	 */
 	public function add_row_meta_links( $plugin_meta, $plugin_file, $plugin_data, $status ) {
-		if ( strpos( $plugin_file, JOINOTIFY_BASENAME ) !== false ) {
+		if ( strpos( $plugin_file, $this->basename ) !== false ) {
 			$new_links = array(
 				'docs' => '<a href="' . esc_attr( JOINOTIFY_DOCS_URL ) . '" target="_blank">' . __( 'Documentação', 'joinotify' ) . '</a>',
 			);

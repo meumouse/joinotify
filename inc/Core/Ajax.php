@@ -33,7 +33,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.6
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -91,6 +91,49 @@ class Ajax {
         foreach ( $ajax_actions as $action => $callback ) {
             add_action( "wp_ajax_$action", array( $this, $callback ) );
         }
+    }
+
+
+    /**
+     * Get trigger context and key from template workflow content.
+     *
+     * @since 1.4.6
+     * @param array $workflow_content
+     * @return array{context:string,trigger:string}|null
+     */
+    private function get_template_trigger_data( $workflow_content ) {
+        if ( ! is_array( $workflow_content ) ) {
+            return null;
+        }
+
+        foreach ( $workflow_content as $item ) {
+            if ( isset( $item['type'] ) && $item['type'] === 'trigger' && isset( $item['data']['context'], $item['data']['trigger'] ) ) {
+                return array(
+                    'context' => sanitize_key( $item['data']['context'] ),
+                    'trigger' => sanitize_key( $item['data']['trigger'] ),
+                );
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Check if template trigger is currently available.
+     *
+     * @since 1.4.6
+     * @param array $workflow_data
+     * @return bool
+     */
+    private function is_template_trigger_available( $workflow_data ) {
+        $trigger_data = $this->get_template_trigger_data( $workflow_data['workflow_content'] ?? array() );
+
+        if ( ! $trigger_data ) {
+            return false;
+        }
+
+        return ! empty( Triggers::get_trigger( $trigger_data['context'], $trigger_data['trigger'] ) );
     }
 
 
@@ -350,7 +393,7 @@ class Ajax {
      * Get workflow templates on AJAX callback
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.4.6
      * @return void
      */
     public function get_workflow_templates_callback() {
@@ -367,12 +410,22 @@ class Ajax {
                     if ( $decoded_content !== null ) {
                         $title = isset( $decoded_content['post']['title'] ) ? esc_html( $decoded_content['post']['title'] ) : esc_html( $filename );
                         $category = isset( $decoded_content['post']['category'] ) ? esc_attr( $decoded_content['post']['category'] ) : '';
-    
+                        $trigger_data = $this->get_template_trigger_data( $decoded_content['workflow_content'] ?? array() );
+                        $integration_label = Utils::get_template_categories()[ $trigger_data['context'] ?? '' ] ?? ucfirst( (string) ( $trigger_data['context'] ?? '' ) );
+                        $trigger_label = $trigger_data ? ( Triggers::get_trigger( $trigger_data['context'], $trigger_data['trigger'] )['title'] ?? $trigger_data['trigger'] ) : esc_html__( 'Não identificado', 'joinotify' );
+                        $is_available = $this->is_template_trigger_available( $decoded_content );
+                        $button_classes = $is_available ? 'btn-outline-primary' : 'btn-outline-secondary';
+                        $button_disabled = $is_available ? '' : 'disabled';
+                        $button_title = $is_available ? '' : ' title="' . esc_attr__( 'Integração ou acionamento indisponível para este modelo.', 'joinotify' ) . '"';
+
                         $template_html .= '<div class="template-item" data-category="' . $category . '">';
                             $template_html .= '<div class="template-item-header mb-3">';
                                 $template_html .= '<h4 class="title">' . $title . '</h4>';
+                                $template_html .= '<span class="d-block text-muted fs-xs mb-1"><strong>' . esc_html__( 'Integração:', 'joinotify' ) . '</strong> ' . esc_html( $integration_label ) . '</span>';
+                                $template_html .= '<span class="d-block text-muted fs-xs"><strong>' . esc_html__( 'Acionamento:', 'joinotify' ) . '</strong> ' . esc_html( $trigger_label ) . '</span>';
                             $template_html .= '</div>';
-                            $template_html .= '<button class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center download-template" data-file="' . esc_attr( $filename ) . '">';
+
+                            $template_html .= '<button class="btn btn-sm ' . esc_attr( $button_classes ) . ' d-flex align-items-center justify-content-center download-template" data-file="' . esc_attr( $filename ) . '" ' . $button_disabled . $button_title . '>';
                                 $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
                                 $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
                             $template_html .= '</button>';
@@ -2092,7 +2145,7 @@ class Ajax {
      * Import workflow template from repository via AJAX
      *
      * @since 1.2.0
-     * @version 1.4.3
+     * @version 1.4.6
      * @return void
      */
     public function download_workflow_template_callback() {
@@ -2125,6 +2178,14 @@ class Ajax {
                 'status' => 'error',
                 'toast_header_title' => esc_html__( 'Arquivo inválido', 'joinotify' ),
                 'toast_body_title' => esc_html__( 'O JSON do modelo não é válido.', 'joinotify' ),
+            ));
+        }
+
+        if ( ! $this->is_template_trigger_available( $workflow_data ) ) {
+            wp_send_json( array(
+                'status' => 'error',
+                'toast_header_title' => esc_html__( 'Integração indisponível', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'A integração ou acionamento deste modelo não está disponível no momento.', 'joinotify' ),
             ));
         }
 

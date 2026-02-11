@@ -48,7 +48,7 @@ class Elementor extends Integrations_Base {
         // add conditions
         add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
 
-        if ( Admin::get_setting( 'enable_elementor_integration' ) === 'yes' ) {
+        if ( Admin::get_setting('enable_elementor_integration') === 'yes' ) {
             add_action( 'elementor_pro/forms/actions/register', array( $this, 'register_form_actions' ), 10, 1 );
 
             add_action( 'elementor_pro/forms/new_record', array( $this, 'process_workflow_elementor_form' ), 10, 2 );
