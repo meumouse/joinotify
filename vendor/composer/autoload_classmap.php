@@ -33,6 +33,7 @@ return array(
     'MeuMouse\\Joinotify\\Core\\Init' => $baseDir . '/inc/Core/Init.php',
     'MeuMouse\\Joinotify\\Core\\Logger' => $baseDir . '/inc/Core/Logger.php',
     'MeuMouse\\Joinotify\\Core\\Modules' => $baseDir . '/inc/Core/Modules.php',
+    'MeuMouse\\Joinotify\\Core\\Notification_Queue' => $baseDir . '/inc/Core/Notification_Queue.php',
     'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type' => $baseDir . '/inc/Core/Workflow_Post_Type.php',
     'MeuMouse\\Joinotify\\Core\\Workflow_Processor' => $baseDir . '/inc/Core/Workflow_Processor.php',
     'MeuMouse\\Joinotify\\Core\\Workflows_Table' => $baseDir . '/inc/Core/Workflows_Table.php',

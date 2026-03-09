@@ -505,7 +505,8 @@ class Woocommerce extends Integrations_Base {
 
         if ( ! empty( $fields ) && is_array( $fields ) ) {
             foreach ( $fields as $field_id => $field ) {
-                $placeholder_id = $field_id;
+                $field_id = is_string( $field_id ) ? $field_id : '';
+                $placeholder_id = is_string( $field_id ) ? $field_id : '';
 
                 if ( 'billing' === $type && strpos( $field_id, 'billing_' ) === 0 ) {
                     $placeholder_id = substr( $field_id, 8 );
@@ -521,11 +522,8 @@ class Woocommerce extends Integrations_Base {
                 $value = self::get_order_meta_fallback_value( $order, array(
                     // Most common:
                     "{$type}_{$placeholder_id}",      // billing_number
-                    "_{$type}_{$placeholder_id}",     // _billing_number
                     $field_id,                        // billing_number (original)
-                    "_{$field_id}",                   // _billing_number
-                    $placeholder_id,                  // number
-                    "_{$placeholder_id}",             // _number
+                    $placeholder_id                   // number
                 ) );
 
                 if ( $value !== '' ) {
@@ -547,7 +545,66 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
-     * Get meta value trying multiple keys (supports underscore-meta, arrays, objects).
+     * Get value for internal WooCommerce meta key using official order getters.
+     *
+     * @since 1.4.5
+     * @param \WC_Order $order | Order object
+     * @param string    $meta_key | Meta key
+     * @return string
+     */
+    protected static function get_internal_order_value_by_meta_key( $order, $meta_key ) {
+        $meta_key = (string) $meta_key;
+
+        $internal_map = array(
+            '_billing_first_name' => 'get_billing_first_name',
+            '_billing_last_name' => 'get_billing_last_name',
+            '_billing_company' => 'get_billing_company',
+            '_billing_address_1' => 'get_billing_address_1',
+            '_billing_address_2' => 'get_billing_address_2',
+            '_billing_city' => 'get_billing_city',
+            '_billing_state' => 'get_billing_state',
+            '_billing_postcode' => 'get_billing_postcode',
+            '_billing_country' => 'get_billing_country',
+            '_billing_email' => 'get_billing_email',
+            '_billing_phone' => 'get_billing_phone',
+            '_shipping_first_name' => 'get_shipping_first_name',
+            '_shipping_last_name' => 'get_shipping_last_name',
+            '_shipping_company' => 'get_shipping_company',
+            '_shipping_address_1' => 'get_shipping_address_1',
+            '_shipping_address_2' => 'get_shipping_address_2',
+            '_shipping_city' => 'get_shipping_city',
+            '_shipping_state' => 'get_shipping_state',
+            '_shipping_postcode' => 'get_shipping_postcode',
+            '_shipping_country' => 'get_shipping_country',
+            '_shipping_phone' => 'get_shipping_phone',
+        );
+
+        if ( ! isset( $internal_map[ $meta_key ] ) ) {
+            return '';
+        }
+
+        $getter = $internal_map[ $meta_key ];
+
+        if ( ! method_exists( $order, $getter ) ) {
+            return '';
+        }
+
+        $value = $order->{$getter}();
+
+        if ( is_array( $value ) ) {
+            $value = implode( ', ', array_filter( array_map( 'strval', $value ) ) );
+        } elseif ( is_object( $value ) ) {
+            $value = method_exists( $value, '__toString' ) ? (string) $value : '';
+        } else {
+            $value = (string) $value;
+        }
+
+        return trim( wp_strip_all_tags( $value ) );
+    }
+
+
+    /**
+     * Get meta value trying multiple keys (supports arrays and objects).
      *
      * @since 1.4.5
      * @param \WC_Order $order | Order object
@@ -560,19 +617,24 @@ class Woocommerce extends Integrations_Base {
                 continue;
             }
 
-            $value = $order->get_meta( $meta_key, true );
+            $meta_key = (string) $meta_key;
+            $value = self::get_internal_order_value_by_meta_key( $order, $meta_key );
 
-            if ( is_array( $value ) ) {
-                $value = implode( ', ', array_filter( array_map( 'strval', $value ) ) );
-            } elseif ( is_object( $value ) ) {
-                $value = method_exists( $value, '__toString' ) ? (string) $value : '';
-            } else {
-                $value = (string) $value;
+            if ( '' === $value ) {
+                $value = $order->get_meta( $meta_key, true );
+
+                if ( is_array( $value ) ) {
+                    $value = implode( ', ', array_filter( array_map( 'strval', $value ) ) );
+                } elseif ( is_object( $value ) ) {
+                    $value = method_exists( $value, '__toString' ) ? (string) $value : '';
+                } else {
+                    $value = (string) $value;
+                }
+
+                $value = trim( wp_strip_all_tags( $value ) );
             }
 
-            $value = trim( wp_strip_all_tags( $value ) );
-
-            if ( $value !== '' ) {
+            if ( '' !== $value ) {
                 return $value;
             }
         }

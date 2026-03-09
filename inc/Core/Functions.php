@@ -103,6 +103,7 @@ function joinotify_get_proxy_api_key() {
  * @return string
  */
 function joinotify_prepare_receiver( $receiver, $payload = array() ) {
+	$receiver = is_scalar( $receiver ) ? (string) $receiver : '';
 	// First, we replace all placeholders
 	$receiver = Placeholders::replace_placeholders( $receiver, $payload );
 
@@ -128,6 +129,7 @@ function joinotify_prepare_receiver( $receiver, $payload = array() ) {
  * @return string
  */
 function joinotify_prepare_message( $message, $payload = array() ) {
+	$message = is_scalar( $message ) ? (string) $message : '';
 	// First, we replace all placeholders
 	$message = Placeholders::replace_placeholders( $message, $payload );
 
@@ -145,6 +147,7 @@ function joinotify_prepare_message( $message, $payload = array() ) {
  * @return string Cleaned plain text
  */
 function joinotify_format_plain_text( $content ) {
+	$content = is_scalar( $content ) ? (string) $content : '';
 	return html_entity_decode( strip_tags( $content ) );
 }
 

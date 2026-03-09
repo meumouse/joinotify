@@ -1,3 +1,6 @@
+Versão 1.4.7 (10/03/2026)
+* Recurso adicionado: Fila para processamento de mensagens
+
 Versão 1.4.6 (10/02/2026)
 * Otimizações
 * Correção de bugs

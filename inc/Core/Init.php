@@ -214,6 +214,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Admin\\Menu',
 			'MeuMouse\\Joinotify\\API\\Controller',
 			'MeuMouse\\Joinotify\\API\\License',
+			'MeuMouse\\Joinotify\\Core\\Notification_Queue',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {

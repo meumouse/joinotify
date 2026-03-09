@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * This class manages the builder placeholders
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -29,6 +29,7 @@ class Placeholders {
      */
     public static function get_placeholders_list( $integration = '', $trigger = '', $context = array() ) {
         $placeholders = apply_filters( 'Joinotify/Builder/Placeholders_List', array(), $context );
+        $filtered_placeholders = array();
 
         // initialize the global placeholders (empty triggers array)
         foreach ( $placeholders as $group_key => $group_placeholders ) {
@@ -64,13 +65,15 @@ class Placeholders {
      * Replace placeholders with actual values in the message
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $message | The message containing placeholders
      * @param array $payload | The placeholder context with array data
      * @param string $mode | Mode ('sandbox' or 'production')
      * @return string The message with placeholders replaced
      */
     public static function replace_placeholders( $message, $payload = array(), $mode = 'production' ) {
+        $message = is_scalar( $message ) ? (string) $message : '';
+
         // First, replace field placeholders dynamically
         $message = preg_replace_callback('/\{\{\s*field_id=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
             $field_id = $matches[1];
@@ -113,6 +116,30 @@ class Placeholders {
         // replace for checkout placeholders {{ wc_checkout_field=[FIELD_ID] }}
         $message = preg_replace_callback('/\{\{\s*wc_checkout_field=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
             $field_id = $matches[1];
+            $field_id = is_string( $field_id ) ? $field_id : '';
+            $internal_map = array(
+                '_billing_first_name' => 'get_billing_first_name',
+                '_billing_last_name' => 'get_billing_last_name',
+                '_billing_company' => 'get_billing_company',
+                '_billing_address_1' => 'get_billing_address_1',
+                '_billing_address_2' => 'get_billing_address_2',
+                '_billing_city' => 'get_billing_city',
+                '_billing_state' => 'get_billing_state',
+                '_billing_postcode' => 'get_billing_postcode',
+                '_billing_country' => 'get_billing_country',
+                '_billing_email' => 'get_billing_email',
+                '_billing_phone' => 'get_billing_phone',
+                '_shipping_first_name' => 'get_shipping_first_name',
+                '_shipping_last_name' => 'get_shipping_last_name',
+                '_shipping_company' => 'get_shipping_company',
+                '_shipping_address_1' => 'get_shipping_address_1',
+                '_shipping_address_2' => 'get_shipping_address_2',
+                '_shipping_city' => 'get_shipping_city',
+                '_shipping_state' => 'get_shipping_state',
+                '_shipping_postcode' => 'get_shipping_postcode',
+                '_shipping_country' => 'get_shipping_country',
+                '_shipping_phone' => 'get_shipping_phone',
+            );
 
             // check if 'order_id' has on context array
             if ( isset( $payload['order_id'] ) ) {
@@ -121,7 +148,7 @@ class Placeholders {
 
                 if ( $order ) {
                     // Retrieves the value of the specific field. Assuming it is a custom field stored as meta
-                    $field_value = $order->get_meta( $field_id );
+                    $field_value = isset( $internal_map[ $field_id ] ) && method_exists( $order, $internal_map[ $field_id ] ) ? $order->{$internal_map[ $field_id ]}() : $order->get_meta( $field_id );
 
                     // If the value is empty, check standard WooCommerce fields
                     if ( empty( $field_value ) ) {

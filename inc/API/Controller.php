@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\API;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Builder\Placeholders;
 
 use WP_REST_Controller;
@@ -396,26 +397,74 @@ class Controller {
 
 
     /**
+     * Build normalized response details.
+     *
+     * @since 1.4.7
+     * @param int $response_code | HTTP response code.
+     * @param bool $success | Operation status.
+     * @param bool $retryable | If failure can be retried.
+     * @param string $error | Failure reason.
+     * @param bool $queued | If item was enqueued.
+     * @return array
+     */
+    private static function build_response_details( $response_code, $success, $retryable = false, $error = '', $queued = false ) {
+        return array(
+            'response_code' => (int) $response_code,
+            'success' => (bool) $success,
+            'retryable' => (bool) $retryable,
+            'error' => (string) $error,
+            'queued' => (bool) $queued,
+        );
+    }
+
+
+    /**
+     * Check if a response code should be retried.
+     *
+     * @since 1.4.7
+     * @param int $response_code | HTTP response code.
+     * @return bool
+     */
+    private static function should_retry_response_code( $response_code ) {
+        $response_code = (int) $response_code;
+
+        if ( 0 === $response_code ) {
+            return true;
+        }
+
+        if ( $response_code >= 500 ) {
+            return true;
+        }
+
+        return in_array( $response_code, array( 408, 409, 425, 429 ), true );
+    }
+
+
+    /**
      * Send messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $message | Message text for send
      * @param int $timestamp_delay | Delay in miliseconds for send message
-     * @return int
+     * @param bool $queue_on_failure | Enqueue retry item on failure
+     * @param bool $return_details | Return normalized details instead response code
+     * @return int|array
      */
-    public static function send_message_text( $sender, $receiver, $message, $timestamp_delay = 0 ) {
+    public static function send_message_text( $sender, $receiver, $message, $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
         $sender = preg_replace( '/\D/', '', $sender );
-        
+        $receiver = joinotify_prepare_receiver( $receiver );
+
         // check if sender is registered
         if ( ! Helpers::allowed_sender( $sender ) ) {
             if ( self::$debug_mode ) {
                 Logger::register_log( "Message not sent. Sender's phone number not registered.", 'INFO' );
             }
 
-            return;
+            $details = self::build_response_details( 0, false, false, 'invalid_sender' );
+            return $return_details ? $details : 0;
         }
 
         if ( ! License::is_valid() ) {
@@ -423,12 +472,41 @@ class Controller {
                 Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
             }
 
-            return;
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'text', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'message' => $message,
+                    'delay' => $timestamp_delay,
+                ), 'license_invalid' );
+            }
+
+            $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
+            return $return_details ? $details : 0;
+        }
+
+        $server_details = self::get_server_details( $sender );
+
+        if ( is_wp_error( $server_details ) ) {
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'text', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'message' => $message,
+                    'delay' => $timestamp_delay,
+                ), $server_details->get_error_message() );
+            }
+
+            $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
+            return $return_details ? $details : 0;
         }
 
         // get endpoint for send message text
         $api_url = self::get_instance_route_url( '/message/sendText/', $sender );
-        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
@@ -437,7 +515,7 @@ class Controller {
                 'apikey' => $server_details['server']['token'] ?? '',
             ),
             'body' => wp_json_encode( array(
-                'number' => joinotify_prepare_receiver( $receiver ),
+                'number' => $receiver,
                 'linkPreview' => apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true ),
                 'text' => $message,
                 'delay' => $timestamp_delay,
@@ -447,16 +525,46 @@ class Controller {
 
         if ( is_wp_error( $response ) ) {
             Logger::register_log( $response, 'ERROR' );
+
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'text', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'message' => $message,
+                    'delay' => $timestamp_delay,
+                ), $response->get_error_message() );
+            }
+
+            $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
+            return $return_details ? $details : 0;
         }
 
         $response_body = wp_remote_retrieve_body( $response );
+        $response_code = (int) wp_remote_retrieve_response_code( $response );
 
         // Check response body
         if ( self::$debug_mode ) {
-            Logger::register_log( "send_message_text() response body: " . print_r( $response_body, true ) );
+            Logger::register_log( 'send_message_text() response body: ' . print_r( $response_body, true ) );
         }
 
-        return wp_remote_retrieve_response_code( $response );
+        $success = ( 201 === $response_code );
+        $retryable = ( ! $success && self::should_retry_response_code( $response_code ) );
+        $queued = false;
+
+        if ( $queue_on_failure && $retryable ) {
+            $queued = (bool) Notification_Queue::enqueue( 'text', array(
+                'sender' => $sender,
+                'receiver' => $receiver,
+                'message' => $message,
+                'delay' => $timestamp_delay,
+            ), 'api_unavailable_' . $response_code );
+        }
+
+        $details = self::build_response_details( $response_code, $success, $retryable, $success ? '' : 'http_' . $response_code, $queued );
+
+        return $return_details ? $details : $response_code;
     }
 
 
@@ -464,17 +572,20 @@ class Controller {
      * Send messsage media on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $media_type | Media type (image, audio, video or document)
      * @param string $media | Media URL
      * @param string $caption | Media caption (optional)
      * @param int $timestamp_delay | Delay in miliseconds for send message (optional)
-     * @return int
+     * @param bool $queue_on_failure | Enqueue retry item on failure
+     * @param bool $return_details | Return normalized details instead response code
+     * @return int|array
      */
-    public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0 ) {
+    public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
         $sender = preg_replace( '/\D/', '', $sender );
+        $receiver = joinotify_prepare_receiver( $receiver );
 
         // check if sender is registered
         if ( ! Helpers::allowed_sender( $sender ) ) {
@@ -482,27 +593,59 @@ class Controller {
                 Logger::register_log( "Message not sent. Sender's phone number not registered.", 'INFO' );
             }
 
-            return;
+            $details = self::build_response_details( 0, false, false, 'invalid_sender' );
+            return $return_details ? $details : 0;
         }
 
         // Chek if media type is audio and change request url
         if ( $media_type === 'audio' ) {
-            self::send_whatsapp_audio( $sender, $receiver, $media, $timestamp_delay );
-
-            return;
+            return self::send_whatsapp_audio( $sender, $receiver, $media, $timestamp_delay, $queue_on_failure, $return_details );
         }
 
         if ( ! License::is_valid() ) {
             if ( self::$debug_mode ) {
-                Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
+                Logger::register_log( 'Stopping send message media because license is invalid', 'INFO' );
             }
 
-            return;
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'media', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'media_type' => $media_type,
+                    'media' => $media,
+                    'caption' => $caption,
+                    'delay' => $timestamp_delay,
+                ), 'license_invalid' );
+            }
+
+            $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
+            return $return_details ? $details : 0;
+        }
+
+        $server_details = self::get_server_details( $sender );
+
+        if ( is_wp_error( $server_details ) ) {
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'media', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'media_type' => $media_type,
+                    'media' => $media,
+                    'caption' => $caption,
+                    'delay' => $timestamp_delay,
+                ), $server_details->get_error_message() );
+            }
+
+            $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
+            return $return_details ? $details : 0;
         }
 
         // get endpoint for send message media
         $api_url = self::get_instance_route_url( '/message/sendMedia/', $sender );
-        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
@@ -511,7 +654,7 @@ class Controller {
                 'apikey' => $server_details['server']['token'] ?? '',
             ),
             'body' => wp_json_encode( array(
-                'number' => joinotify_prepare_receiver( $receiver ),
+                'number' => $receiver,
                 'mediatype' => $media_type,
                 'caption' => $caption,
                 'media' => $media,
@@ -522,16 +665,50 @@ class Controller {
 
         if ( is_wp_error( $response ) ) {
             Logger::register_log( $response, 'ERROR' );
+
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'media', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'media_type' => $media_type,
+                    'media' => $media,
+                    'caption' => $caption,
+                    'delay' => $timestamp_delay,
+                ), $response->get_error_message() );
+            }
+
+            $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
+            return $return_details ? $details : 0;
         }
 
         $response_body = wp_remote_retrieve_body( $response );
+        $response_code = (int) wp_remote_retrieve_response_code( $response );
 
         // Check response body
         if ( self::$debug_mode ) {
-            Logger::register_log( "send_message_media() response body: " . $response_body );
+            Logger::register_log( 'send_message_media() response body: ' . $response_body );
         }
 
-        return wp_remote_retrieve_response_code( $response );
+        $success = ( 201 === $response_code );
+        $retryable = ( ! $success && self::should_retry_response_code( $response_code ) );
+        $queued = false;
+
+        if ( $queue_on_failure && $retryable ) {
+            $queued = (bool) Notification_Queue::enqueue( 'media', array(
+                'sender' => $sender,
+                'receiver' => $receiver,
+                'media_type' => $media_type,
+                'media' => $media,
+                'caption' => $caption,
+                'delay' => $timestamp_delay,
+            ), 'api_unavailable_' . $response_code );
+        }
+
+        $details = self::build_response_details( $response_code, $success, $retryable, $success ? '' : 'http_' . $response_code, $queued );
+
+        return $return_details ? $details : $response_code;
     }
 
 
@@ -539,15 +716,18 @@ class Controller {
      * Send messsage audio on WhatsApp
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $sender | Instance phone number
      * @param string $receiver | Phone number for receive message
      * @param string $audio | Audio URL
      * @param int $timestamp_delay | Delay in miliseconds for send message
-     * @return int
+     * @param bool $queue_on_failure | Enqueue retry item on failure
+     * @param bool $return_details | Return normalized details instead response code
+     * @return int|array
      */
-    public static function send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay = 0 ) {
+    public static function send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
         $sender = preg_replace( '/\D/', '', $sender );
+        $receiver = joinotify_prepare_receiver( $receiver );
 
         // check if sender is registered
         if ( ! Helpers::allowed_sender( $sender ) ) {
@@ -555,20 +735,50 @@ class Controller {
                 Logger::register_log( "Message not sent. Sender's phone number not registered.", 'INFO' );
             }
 
-            return;
+            $details = self::build_response_details( 0, false, false, 'invalid_sender' );
+            return $return_details ? $details : 0;
         }
 
         if ( ! License::is_valid() ) {
             if ( self::$debug_mode ) {
-                Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
+                Logger::register_log( 'Stopping send message audio because license is invalid', 'INFO' );
             }
 
-            return;
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'audio', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'audio' => $audio,
+                    'delay' => $timestamp_delay,
+                ), 'license_invalid' );
+            }
+
+            $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
+            return $return_details ? $details : 0;
+        }
+
+        $server_details = self::get_server_details( $sender );
+
+        if ( is_wp_error( $server_details ) ) {
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'audio', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'audio' => $audio,
+                    'delay' => $timestamp_delay,
+                ), $server_details->get_error_message() );
+            }
+
+            $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
+            return $return_details ? $details : 0;
         }
 
         // get endpoint for send message audio
         $api_url = self::get_instance_route_url( '/message/sendWhatsAppAudio/', $sender );
-        $server_details = self::get_server_details( $sender );
 
         // send request
         $response = wp_remote_post( $api_url, array(
@@ -577,7 +787,7 @@ class Controller {
                 'apikey' => $server_details['server']['token'] ?? '',
             ),
             'body' => wp_json_encode( array(
-                'number' => joinotify_prepare_receiver( $receiver ),
+                'number' => $receiver,
                 'audio' => $audio,
                 'delay' => $timestamp_delay,
                 'encoding' => apply_filters( 'Joinotify/API/Send_Whatsapp_Audio/Encoding', true ),
@@ -587,19 +797,47 @@ class Controller {
 
         if ( is_wp_error( $response ) ) {
             Logger::register_log( $response, 'ERROR' );
+
+            $queued = false;
+
+            if ( $queue_on_failure ) {
+                $queued = (bool) Notification_Queue::enqueue( 'audio', array(
+                    'sender' => $sender,
+                    'receiver' => $receiver,
+                    'audio' => $audio,
+                    'delay' => $timestamp_delay,
+                ), $response->get_error_message() );
+            }
+
+            $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
+            return $return_details ? $details : 0;
         }
 
         $response_body = wp_remote_retrieve_body( $response );
+        $response_code = (int) wp_remote_retrieve_response_code( $response );
 
         // Check response body
         if ( self::$dev_mode ) {
             error_log( 'send_whatsapp_audio() response body: ' . print_r( $response_body, true ) );
         }
 
-        return wp_remote_retrieve_response_code( $response );
+        $success = ( 201 === $response_code );
+        $retryable = ( ! $success && self::should_retry_response_code( $response_code ) );
+        $queued = false;
+
+        if ( $queue_on_failure && $retryable ) {
+            $queued = (bool) Notification_Queue::enqueue( 'audio', array(
+                'sender' => $sender,
+                'receiver' => $receiver,
+                'audio' => $audio,
+                'delay' => $timestamp_delay,
+            ), 'api_unavailable_' . $response_code );
+        }
+
+        $details = self::build_response_details( $response_code, $success, $retryable, $success ? '' : 'http_' . $response_code, $queued );
+
+        return $return_details ? $details : $response_code;
     }
-
-
     /**
      * Send OTP messsage text on WhatsApp
      * 
