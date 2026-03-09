@@ -161,20 +161,20 @@ class Init {
 		$base_url = plugin_dir_url( $base_file );
 
 		$constants = array(
-			'JOINOTIFY_BASENAME'           => plugin_basename( $base_file ),
-			'JOINOTIFY_FILE'               => $base_file,
-			'JOINOTIFY_DIR'                => $base_dir,
-			'JOINOTIFY_INC'                => $base_dir . 'inc/',
-			'JOINOTIFY_URL'                => $base_url,
-			'JOINOTIFY_ASSETS'             => $base_url . 'assets/',
-			'JOINOTIFY_ABSPATH'            => dirname( $base_file ) . '/',
-			'JOINOTIFY_ADMIN_EMAIL'        => get_option( 'admin_email' ),
-			'JOINOTIFY_DOCS_URL'           => 'https://ajuda.meumouse.com/docs/joinotify/overview',
-			'JOINOTIFY_REGISTER_PHONE_URL' => 'https://meumouse.com/minha-conta/joinotify-slots/',
-			'JOINOTIFY_API_BASE_URL'       => 'https://slots-manager.joinotify.com',
-			'JOINOTIFY_SLUG'               => 'joinotify',
-			'JOINOTIFY_VERSION'            => $this->plugin_version,
-			'JOINOTIFY_DEV_MODE'           => false,
+			'JOINOTIFY_BASENAME'           	=> plugin_basename( $base_file ),
+			'JOINOTIFY_FILE'               	=> $base_file,
+			'JOINOTIFY_DIR'                	=> $base_dir,
+			'JOINOTIFY_INC'                	=> $base_dir . 'inc/',
+			'JOINOTIFY_URL'                	=> $base_url,
+			'JOINOTIFY_ASSETS'             	=> $base_url . 'assets/',
+			'JOINOTIFY_ABSPATH'            	=> dirname( $base_file ) . '/',
+			'JOINOTIFY_ADMIN_EMAIL'        	=> get_option('admin_email'),
+			'JOINOTIFY_DOCS_URL'           	=> 'https://ajuda.meumouse.com/docs/joinotify/overview',
+			'JOINOTIFY_REGISTER_PHONE_URL' 	=> 'https://meumouse.com/minha-conta/joinotify-slots/',
+			'JOINOTIFY_API_BASE_URL'       	=> 'https://slots-manager.joinotify.com',
+			'JOINOTIFY_SLUG'               	=> 'joinotify',
+			'JOINOTIFY_VERSION'            	=> $this->plugin_version,
+			'JOINOTIFY_DEV_MODE'          	=> true,
 		);
 
 		foreach ( $constants as $key => $value ) {
@@ -203,6 +203,7 @@ class Init {
 	 * Instance only the explicitly allowed classes on init.
 	 * 
 	 * @since 1.4.6
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function instance_init_classes() {
@@ -213,8 +214,8 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
 			'MeuMouse\\Joinotify\\Admin\\Menu',
 			'MeuMouse\\Joinotify\\API\\Controller',
-			'MeuMouse\\Joinotify\\API\\License',
 			'MeuMouse\\Joinotify\\Core\\Notification_Queue',
+			'MeuMouse\\Joinotify\\Core\\Debug',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
@@ -253,12 +254,12 @@ class Init {
 	 * Instance only the explicitly allowed classes on wp_loaded.
 	 * 
 	 * @since 1.4.6
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function instance_wp_loaded_classes() {
 		$classes = apply_filters( 'Joinotify/Init/WP_Loaded_Classes', array(
 			'MeuMouse\\Joinotify\\Core\\Cache',
-			'MeuMouse\\Joinotify\\Core\\Debug',
 			'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
 			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
 			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
@@ -268,6 +269,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Integrations\\Wordpress',
 			'MeuMouse\\Joinotify\\API\\Updater',
 			'MeuMouse\\Joinotify\\Core\\Logger',
+			'MeuMouse\\Joinotify\\API\\License',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {

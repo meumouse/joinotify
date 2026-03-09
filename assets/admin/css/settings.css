@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
     position: sticky;
     bottom: 0;
     inset-inline-start: 0;
-    padding: 2rem 3rem;
+    padding: 2rem 0;
     border-top: 1px solid rgba(0, 0, 0, .1);
     background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(5px);
@@ -69,7 +69,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 2rem 0;
+    padding: 3rem;
     border-radius: 1rem;
     margin-top: 2rem;
     height: 100%;
@@ -156,7 +156,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 table tr {
-    padding-left: 3rem;
     display: flex;
     align-items: center;
 }
@@ -206,6 +205,14 @@ table.insert-license tr {
 
 .nav-content.active {
     display: block;
+}
+
+#general.nav-content,
+#phones.nav-content,
+#integrations.nav-content,
+#about.nav-content {
+    padding-inline-start: 0 !important;
+    padding-left: 0 !important;
 }
 
 .joinotify-wrapper .last-row td {
@@ -1609,12 +1616,14 @@ code {
 }
 
 #integrations .cards-group .card {
-    max-width: 23rem;
+    max-width: 100%;
+    margin: 0;
 }
 
 #integrations .cards-group {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
 .integration-item img,
@@ -1641,9 +1650,15 @@ code {
     }
 }
 
-@media screen and (min-width: 992px) and (max-width: 1366px) {
-    #integrations .cards-group .card {
-        max-width: 21rem;
+@media screen and (min-width: 992px) and (max-width: 1399px) {
+    #integrations .cards-group {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    #integrations .cards-group {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 

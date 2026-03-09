@@ -7,7 +7,7 @@ use MeuMouse\Joinotify\Core\Helpers;
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>
 
-<div id="phones" class="nav-content ms-5 mt-4">
+<div id="phones" class="nav-content mt-4">
     <div class="mb-5">
         <div class="d-flex align-items-center">
             <div class="w-25 me-3">

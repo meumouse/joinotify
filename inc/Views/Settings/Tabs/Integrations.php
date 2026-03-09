@@ -11,7 +11,7 @@ if ( ! function_exists( 'is_plugin_active' ) ) :
 endif; ?>
 
 <div id="integrations" class="nav-content">
-    <div class="cards-group ps-5 mb-5">
+    <div class="cards-group">
         <?php foreach ( Integrations_Base::integration_tab_items() as $key => $value ) : ?>
             <?php
             // Check if item requires active plugin
@@ -31,7 +31,7 @@ endif; ?>
                 }
             endif; ?>
 
-            <div class="card text-center p-0 m-xxl-4 m-lg-3 integration-item">
+            <div class="card text-center p-0 integration-item">
                 <div class="card-header border-bottom">
                     <div class="px-4 py-3">
                         <?php echo $value['icon']; ?>
