@@ -2392,6 +2392,7 @@ class Ajax {
                     'status' => 'success',
                     'toast_header_title' => __( 'Licença sincronizada', 'joinotify' ),
                     'toast_body_title' => __( 'As informações da sua licença foram atualizadas com sucesso.', 'joinotify' ),
+                    'license_data' => $this->get_license_view_data(),
                 ));
             }
 
@@ -2402,5 +2403,55 @@ class Ajax {
                 'toast_body_title' => ! empty( $this->license_message ) ? $this->license_message : __( 'Não foi possível sincronizar as informações da licença.', 'joinotify' ),
             ));
         }
+    }
+
+    /**
+     * Build payload to refresh license fields in admin UI without page reload.
+     *
+     * @since 1.4.6
+     * @return array
+     */
+    private function get_license_view_data() {
+        $license_key = get_option( 'joinotify_license_key', '' );
+        $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
+        $is_valid = License::is_valid();
+
+        if ( $is_valid ) {
+            if ( strpos( $license_key, 'CM-' ) === 0 ) {
+                $subscription_label = sprintf( esc_html__( 'Assinatura: Clube M - %s', 'joinotify' ), License::license_title() );
+            } else {
+                $subscription_label = sprintf( esc_html__( 'Tipo da licença: %s', 'joinotify' ), License::license_title() );
+            }
+        } else {
+            $subscription_label = esc_html__( 'Tipo da licença: Não disponível', 'joinotify' );
+        }
+
+        return array(
+            'is_valid' => $is_valid,
+            'status_text' => $is_valid ? esc_html__( 'Válida', 'joinotify' ) : esc_html__( 'Inválida', 'joinotify' ),
+            'status_class' => $is_valid ? 'badge bg-translucent-success rounded-pill' : 'badge bg-translucent-danger rounded-pill',
+            'subscription_text' => $subscription_label,
+            'expire_text' => sprintf(
+                esc_html__( 'Licença expira em: %s', 'joinotify' ),
+                $is_valid ? License::license_expire() : esc_html__( 'Não disponível', 'joinotify' )
+            ),
+            'key_text' => esc_html__( 'Sua chave de licença:', 'joinotify' ) . ' ' . $this->mask_license_key( $license_key ),
+        );
+    }
+
+
+    /**
+     * Mask license key preserving beginning and end.
+     *
+     * @since 1.4.6
+     * @param string $license_key
+     * @return string
+     */
+    private function mask_license_key( $license_key ) {
+        if ( empty( $license_key ) ) {
+            return esc_html__( 'Não disponível', 'joinotify' );
+        }
+
+        return substr( $license_key, 0, 9 ) . 'XXXXXXXX-XXXXXXXX' . substr( $license_key, -9 );
     }
 }

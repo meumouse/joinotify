@@ -6,7 +6,7 @@ use MeuMouse\Joinotify\API\License;
  * Template file for display license page
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Views
  * @author MeuMouse.com
  */
@@ -25,7 +25,7 @@ defined('ABSPATH') || exit; ?>
     </p>
 </div>
 
-<div id="joinotify_license_area" class="bg-white p-5 ps-0 mt-5 rounded-4 me-3">
+<div id="joinotify_license_area" class="bg-white p-4 rounded-4 me-3">
     <table class="form-table">
         <tbody>
             <?php if ( License::is_valid() ) : ?>
@@ -33,13 +33,13 @@ defined('ABSPATH') || exit; ?>
                     <td class="d-grid">
                         <h3 class="mb-4"><?php esc_html_e( 'Informações sobre a licença:', 'joinotify' ); ?></h3>
 
-                        <span class="mb-2"><?php esc_html_e( 'Status da licença:', 'joinotify' ) ?>
+                        <span class="mb-2 joinotify-license-sync-field" data-license-field="status"><?php esc_html_e( 'Status da licenca:', 'joinotify' ) ?>
                             <?php if ( License::is_valid() ) : ?>
-                                <span class="badge bg-translucent-success rounded-pill"><?php _e(  'Válida', 'joinotify' );?></span>
+                                <span id="joinotify_license_status_badge" class="badge bg-translucent-success rounded-pill"><?php _e(  'Valida', 'joinotify' );?></span>
                             <?php elseif ( empty( get_option('joinotify_license_key') ) ) : ?>
-                                <span class="fs-sm"><?php _e(  'Nenhuma licença informada', 'joinotify' );?></span>
+                                <span id="joinotify_license_status_badge" class="fs-sm"><?php _e(  'Nenhuma licenca informada', 'joinotify' );?></span>
                             <?php else : ?>
-                                <span class="badge bg-translucent-danger rounded-pill"><?php _e(  'Inválida', 'joinotify' );?></span>
+                                <span id="joinotify_license_status_badge" class="badge bg-translucent-danger rounded-pill"><?php _e(  'Invalida', 'joinotify' );?></span>
                             <?php endif; ?>
                         </span>
 
@@ -47,14 +47,14 @@ defined('ABSPATH') || exit; ?>
                             $license_key = get_option('joinotify_license_key');
 
                             if ( strpos( $license_key, 'CM-' ) === 0 ) : ?>
-                                <span class="mb-2"><?php printf( esc_html__( 'Assinatura: Clube M - %s', 'joinotify' ), License::license_title() ) ?></span>
+                                <span id="joinotify_license_subscription" data-license-field="subscription" class="mb-2 joinotify-license-sync-field"><?php printf( esc_html__( 'Assinatura: Clube M - %s', 'joinotify' ), License::license_title() ) ?></span>
                             <?php else : ?>
-                                <span class="mb-2"><?php printf( esc_html__( 'Tipo da licença: %s', 'joinotify' ), License::license_title() ) ?></span>
+                                <span id="joinotify_license_subscription" data-license-field="subscription" class="mb-2 joinotify-license-sync-field"><?php printf( esc_html__( 'Tipo da licenca: %s', 'joinotify' ), License::license_title() ) ?></span>
                             <?php endif; ?>
 
-                            <span class="mb-2"><?php printf( esc_html__( 'Licença expira em: %s', 'joinotify' ), License::license_expire() ) ?></span>
+                            <span id="joinotify_license_expire" data-license-field="expire" class="mb-2 joinotify-license-sync-field"><?php printf( esc_html__( 'Licenca expira em: %s', 'joinotify' ), License::license_expire() ) ?></span>
                             
-                            <span class="mb-2"><?php esc_html_e( 'Sua chave de licença:', 'joinotify' ) ?>
+                            <span id="joinotify_license_key_masked" data-license-field="key" class="mb-2 joinotify-license-sync-field"><?php esc_html_e( 'Sua chave de licenca:', 'joinotify' ) ?>
                                 <?php if ( ! empty( $license_key ) ) :
                                     echo esc_attr( substr( $license_key, 0, 9 ) . "XXXXXXXX-XXXXXXXX" . substr( $license_key, -9 ) );
                                 else :

@@ -1927,3 +1927,30 @@ table.popup-table th {
         transform: rotate(-360deg);
     }
 }
+[data-license-field] {
+    position: relative;
+    transition: opacity .2s ease-in-out;
+}
+
+[data-license-field].is-loading {
+    color: transparent !important;
+    pointer-events: none;
+}
+
+[data-license-field].is-loading::after {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    left: 0;
+    width: min(100%, 16rem);
+    height: 1.1rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #eef2f6 25%, #dde5ee 37%, #eef2f6 63%);
+    background-size: 400% 100%;
+    animation: joinotify-license-skeleton 1.2s ease-in-out infinite;
+}
+
+@keyframes joinotify-license-skeleton {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+}

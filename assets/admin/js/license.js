@@ -202,7 +202,7 @@
 		},
 
 
-		/**
+				/**
 		 * Sync license information (force refresh from server)
 		 * 
 		 * @since 1.4.5
@@ -222,16 +222,14 @@
 						action: 'joinotify_sync_license',
 					},
 					beforeSend: function() {
+						License.setLicenseFieldsLoading(true);
 						btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 					},
 					success: function(response) {
 						try {
 							if (response.status === 'success') {
 								License.displayToast('success', response.toast_header_title, response.toast_body_title);
-
-								setTimeout( function() {
-									location.reload();
-								}, 1000);
+								License.updateLicenseFields(response.license_data || {});
 							} else {
 								License.displayToast('error', response.toast_header_title, response.toast_body_title);
 							}
@@ -240,6 +238,7 @@
 						}
 					},
 					complete: function() {
+						License.setLicenseFieldsLoading(false);
 						btn.prop('disabled', false).html(btn_state.html);
 					},
 					error: function(xhr, status, error) {
@@ -247,6 +246,46 @@
 					},
 				});
 			});
+		},
+
+		/**
+		 * Toggle loading skeleton state on license info fields
+		 *
+		 * @since 1.4.6
+		 * @param {boolean} is_loading
+		 */
+		setLicenseFieldsLoading: function(is_loading) {
+			$('[data-license-field]').toggleClass('is-loading', !!is_loading);
+		},
+
+		/**
+		 * Update license info fields using sync AJAX payload
+		 *
+		 * @since 1.4.6
+		 * @param {object} data
+		 */
+		updateLicenseFields: function(data) {
+			const status_badge = $('#joinotify_license_status_badge');
+			const subscription = $('#joinotify_license_subscription');
+			const expire = $('#joinotify_license_expire');
+			const key = $('#joinotify_license_key_masked');
+
+			if (status_badge.length && data.status_text) {
+				status_badge.attr('class', data.status_class || 'badge rounded-pill');
+				status_badge.text(data.status_text);
+			}
+
+			if (subscription.length && data.subscription_text) {
+				subscription.text(data.subscription_text);
+			}
+
+			if (expire.length && data.expire_text) {
+				expire.text(data.expire_text);
+			}
+
+			if (key.length && data.key_text) {
+				key.text(data.key_text);
+			}
 		},
 
 		/**

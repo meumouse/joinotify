@@ -543,6 +543,7 @@ class License {
         delete_option('joinotify_alternative_license');
         delete_option('joinotify_temp_license_key');
         delete_option('joinotify_alternative_license_activation');
+        delete_option('joinotify_license_expiration_failed_attempts');
         delete_transient('joinotify_api_request_cache');
         delete_transient('joinotify_api_response_cache');
         delete_transient('joinotify_license_status_cached');
@@ -997,6 +998,18 @@ class License {
 
 
     /**
+     * Schedule a new expiration check for the next day.
+     *
+     * @since 1.1.0
+     * @return void
+     */
+    private static function schedule_license_expiration_retry_for_next_day() {
+        wp_clear_scheduled_hook('joinotify_check_license_expires_event');
+        wp_schedule_single_event( time() + DAY_IN_SECONDS, 'joinotify_check_license_expires_event' );
+    }
+
+
+    /**
      * Deactivate license on scheduled event
      * 
      * @since 1.1.0
@@ -1004,18 +1017,56 @@ class License {
      */
     public static function check_license_expires_time() {
         $license_key = get_option('joinotify_license_key');
+
+        if ( empty( $license_key ) ) {
+            delete_option('joinotify_license_expiration_failed_attempts');
+
+            return;
+        }
+
         $api_expiry_time = self::get_expires_time( $license_key );
+        $failed_attempts = (int) get_option('joinotify_license_expiration_failed_attempts', 0);
+        $attempt_number = $failed_attempts + 1;
+
+        /**
+         * Fires whenever the scheduled license expiration validation runs.
+         *
+         * @since 1.1.0
+         * @param int $attempt_number Attempt number for expiration validation.
+         * @param string $license_key License key being checked.
+         * @param mixed $api_expiry_time Expiration value returned by API. Can be false on failure.
+         */
+        do_action( 'joinotify_license_expiration_check_attempt', $attempt_number, $license_key, $api_expiry_time );
 
         if ( $api_expiry_time ) {
             $expiration_timestamp = strtotime( $api_expiry_time );
 
             // license expired
             if ( $expiration_timestamp < time() ) {
+                update_option('joinotify_license_expiration_failed_attempts', $attempt_number);
+
+                if ( $attempt_number >= 3 ) {
+                    $message = '';
+
+                    self::deactive_license( JOINOTIFY_FILE, $message );
+                    delete_option('joinotify_license_expiration_failed_attempts');
+                } else {
+                    self::schedule_license_expiration_retry_for_next_day();
+                }
+            } else {
+                delete_option('joinotify_license_expiration_failed_attempts');
+                self::schedule_license_expiration_check( $expiration_timestamp );
+            }
+        } else {
+            update_option('joinotify_license_expiration_failed_attempts', $attempt_number);
+
+            if ( $attempt_number >= 3 ) {
                 $message = '';
 
                 self::deactive_license( JOINOTIFY_FILE, $message );
+                delete_option('joinotify_license_expiration_failed_attempts');
             } else {
-                self::schedule_license_expiration_check( $expiration_timestamp );
+                self::schedule_license_expiration_retry_for_next_day();
             }
         }
     }
