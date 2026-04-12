@@ -3,8 +3,39 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  html {
     color-scheme: light;
+    --joinotify-primary: #0088ff;
+    --joinotify-primary-0: #ffffff;
+    --joinotify-primary-50: #e4eef6;
+    --joinotify-primary-100: #d3e6f6;
+    --joinotify-primary-200: #b2d7f8;
+    --joinotify-primary-300: #90c8f9;
+    --joinotify-primary-400: #6fb9fa;
+    --joinotify-primary-500: #4daafc;
+    --joinotify-primary-600: #2c9bfd;
+    --joinotify-primary-700: #0a8cff;
+    --joinotify-primary-800: #0267bf;
+    --joinotify-primary-900: #053763;
+    --joinotify-primary-950: #072036;
+    --joinotify-shell-50: #f4f7fb;
+    --joinotify-shell-100: #e8eef8;
+    --joinotify-shell-200: #cddcf1;
+    --joinotify-shell-300: #a7c2e5;
+    --joinotify-shell-400: #7aa1d1;
+    --joinotify-shell-500: #4a78b4;
+    --joinotify-shell-600: #32558a;
+    --joinotify-shell-700: #27436b;
+    --joinotify-shell-800: #1f3656;
+    --joinotify-shell-900: #17253d;
+    --joinotify-ink: #102033;
+    --joinotify-success: #22c55e;
+    --joinotify-danger: #ef4444;
+    --joinotify-warning: #ffba08;
+    --joinotify-info: #0ea5e9;
+    --joinotify-dark: #212529;
+    --joinotify-panel: #ffffff;
+    --joinotify-muted: #6b7280;
   }
 
   html {
@@ -41,7 +72,7 @@
   }
 
   input:focus {
-    border-color: var(--color-primary-700) !important;
+    border-color: var(--joinotify-primary-700) !important;
     box-shadow: 0 0 0 4px rgb(228 238 246 / 1) !important;
   }
 }

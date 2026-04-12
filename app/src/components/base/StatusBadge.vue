@@ -1,9 +1,3 @@
-<template>
-  <span :class="badgeClass" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold">
-    {{ label }}
-  </span>
-</template>
-
 <script setup>
 import { computed } from 'vue';
 
@@ -28,3 +22,9 @@ const badgeClass = computed(() => {
   return tones[props.tone] || tones.neutral;
 });
 </script>
+
+<template>
+  <span :class="badgeClass" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold">
+    {{ label }}
+  </span>
+</template>

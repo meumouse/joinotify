@@ -1,3 +1,11 @@
+<script setup>
+defineProps({
+  title: { type: String, required: true },
+  description: { type: String, default: '' },
+  eyebrow: { type: String, default: '' },
+});
+</script>
+
 <template>
   <section class="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-soft backdrop-blur">
     <div class="mb-4 flex items-start justify-between gap-4">
@@ -21,11 +29,3 @@
     </div>
   </section>
 </template>
-
-<script setup>
-defineProps({
-  title: { type: String, required: true },
-  description: { type: String, default: '' },
-  eyebrow: { type: String, default: '' },
-});
-</script>

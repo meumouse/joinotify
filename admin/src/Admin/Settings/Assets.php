@@ -66,9 +66,15 @@ class Assets {
         wp_enqueue_script(
             'joinotify-settings-app',
             JOINOTIFY_ASSETS . 'admin/vue-settings/settings-app.js',
-            array(),
+            array( 'wp-i18n' ),
             filemtime( $script_path ),
             true
+        );
+
+        wp_set_script_translations(
+            'joinotify-settings-app',
+            'joinotify',
+            JOINOTIFY_DIR . 'languages'
         );
     }
 

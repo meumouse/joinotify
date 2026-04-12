@@ -1,13 +1,14 @@
 {
-  "name": "joinotify-settings-app",
+  "name": "joinotify-app",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.4.7",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
+    "@wordpress/i18n": "^6.16.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {

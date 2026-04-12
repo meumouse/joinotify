@@ -1,23 +1,3 @@
-<template>
-  <ToggleSwitch
-    v-if="field.type === 'toggle'"
-    v-model="model"
-    :name="name"
-    :aria-label="field.label"
-    size="md"
-    true-value="yes"
-    false-value="no"
-  />
-
-  <component
-    v-else
-    :is="fieldComponent"
-    v-model="model"
-    :field="field"
-    :name="name"
-  />
-</template>
-
 <script setup>
 import { computed } from 'vue';
 import ToggleSwitch from '../base/ToggleSwitch.vue';
@@ -48,3 +28,23 @@ const model = computed({
   set: (value) => emit('update:modelValue', value),
 });
 </script>
+
+<template>
+  <ToggleSwitch
+    v-if="field.type === 'toggle'"
+    v-model="model"
+    :name="name"
+    :aria-label="field.label"
+    size="md"
+    true-value="yes"
+    false-value="no"
+  />
+
+  <component
+    v-else
+    :is="fieldComponent"
+    v-model="model"
+    :field="field"
+    :name="name"
+  />
+</template>

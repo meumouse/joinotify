@@ -1,3 +1,13 @@
+<script setup>
+defineProps({
+  modelValue: { type: [String, Number], default: '' },
+  field: { type: Object, required: true },
+  name: { type: String, required: true },
+});
+
+defineEmits(['update:modelValue']);
+</script>
+
 <template>
   <div>
     <input
@@ -10,13 +20,3 @@
     />
   </div>
 </template>
-
-<script setup>
-defineProps({
-  modelValue: { type: [String, Number], default: '' },
-  field: { type: Object, required: true },
-  name: { type: String, required: true },
-});
-
-defineEmits(['update:modelValue']);
-</script>

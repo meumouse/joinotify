@@ -1,3 +1,15 @@
+<script setup>
+import FieldControl from './FieldControl.vue';
+
+defineProps({
+  modelValue: { type: [String, Number, Boolean], default: '' },
+  field: { type: Object, required: true },
+  name: { type: String, required: true },
+});
+
+defineEmits(['update:modelValue']);
+</script>
+
 <template>
   <div class="grid items-start gap-6 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)] lg:items-center">
     <div>
@@ -12,15 +24,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import FieldControl from './FieldControl.vue';
-
-defineProps({
-  modelValue: { type: [String, Number, Boolean], default: '' },
-  field: { type: Object, required: true },
-  name: { type: String, required: true },
-});
-
-defineEmits(['update:modelValue']);
-</script>

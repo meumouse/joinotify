@@ -1,3 +1,13 @@
+<script setup>
+defineProps({
+  modelValue: { type: [String, Number], default: '' },
+  field: { type: Object, required: true },
+  name: { type: String, required: true },
+});
+
+defineEmits(['update:modelValue']);
+</script>
+
 <template>
   <label class="block">
     <span class="text-sm font-medium text-ink">{{ field.label }}</span>
@@ -12,13 +22,3 @@
     />
   </label>
 </template>
-
-<script setup>
-defineProps({
-  modelValue: { type: [String, Number], default: '' },
-  field: { type: Object, required: true },
-  name: { type: String, required: true },
-});
-
-defineEmits(['update:modelValue']);
-</script>

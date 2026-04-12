@@ -1,10 +1,77 @@
+<script setup>
+import { computed, ref, watch } from 'vue';
+import { __, textDomain } from '../../lib/i18n';
+import ModalDialog from '../base/ModalDialog.vue';
+import SelectField from '../fields/SelectField.vue';
+import OtpField from '../fields/OtpField.vue';
+
+const props = defineProps({
+  modelValue: { type: String, default: '' },
+  candidates: { type: Array, default: () => [] },
+  senders: { type: Array, default: () => [] },
+});
+
+const emit = defineEmits(['update:modelValue', 'register', 'validate', 'test-message']);
+
+const registerOpen = ref(false);
+const registerStep = ref('select');
+const registerPhone = ref('');
+const otpDigits = ref(Array(4).fill(''));
+const otpComplete = ref(false);
+const defaultSender = computed(() => (props.senders[0] ? props.senders[0].phone : ''));
+
+watch(
+  () => props.candidates,
+  (value) => {
+    if (!registerPhone.value && value.length) {
+      registerPhone.value = value[0].phone;
+    }
+  },
+  { immediate: true }
+);
+
+watch(registerPhone, () => {
+  otpDigits.value = Array(4).fill('');
+  otpComplete.value = false;
+  registerStep.value = 'select';
+});
+
+watch(registerOpen, (open) => {
+  if (!open) {
+    registerStep.value = 'select';
+    otpDigits.value = Array(4).fill('');
+    otpComplete.value = false;
+  }
+});
+
+function sendOtp() {
+  if (!registerPhone.value) {
+    return;
+  }
+
+  emit('register', registerPhone.value);
+  registerStep.value = 'otp';
+}
+
+function validate() {
+  const otpCode = otpDigits.value.join('');
+
+  if (!registerPhone.value || !otpComplete.value || otpCode.length !== 4) {
+    return;
+  }
+
+  emit('validate', { phone: registerPhone.value, otp: otpCode });
+  registerOpen.value = false;
+}
+</script>
+
 <template>
   <div class="space-y-6">
     <div class="grid items-center gap-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)]">
       <div>
-        <h3 class="text-[15px] font-semibold text-slate-800">Telefone para testes</h3>
+        <h3 class="text-[15px] font-semibold text-slate-800">{{ __('Test phone number', textDomain) }}</h3>
         <p class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">
-          Informe um telefone para receber mensagens de teste para disparo no construtor. Use o formato internacional, informando apenas números.
+          {{ __('Enter a phone number to receive test messages from the builder. Use international format and numbers only.', textDomain) }}
         </p>
       </div>
 
@@ -13,7 +80,7 @@
           :value="modelValue"
           type="text"
           inputmode="numeric"
-          placeholder="5541987111527"
+          :placeholder="__('5541987111527', textDomain)"
           class="w-full rounded-[10px] border border-slate-200 bg-white px-4 py-3 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 md:min-w-[430px]"
           @input="$emit('update:modelValue', $event.target.value)"
         />
@@ -26,42 +93,63 @@
         class="rounded-[8px] bg-primary-700 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-800"
         @click="registerOpen = true"
       >
-        Adicionar novo telefone
+        {{ __('Add new phone', textDomain) }}
       </button>
       <button
         type="button"
         class="rounded-[8px] border border-primary-200 bg-white px-5 py-3 text-[14px] font-semibold text-primary-700 transition hover:bg-primary-50 disabled:cursor-not-allowed disabled:opacity-60"
         :disabled="!modelValue || !defaultSender"
-        @click="$emit('test-message', { sender: defaultSender, receiver: modelValue, message: testMessage })"
+        @click="$emit('test-message', { sender: defaultSender, receiver: modelValue, message: __('Hello, this is a test message.', textDomain) })"
       >
-        Enviar mensagem teste
+        {{ __('Send test message', textDomain) }}
       </button>
     </div>
 
     <ModalDialog
       :open="registerOpen"
-      title="Cadastrar novo telefone"
-      description="Selecione um telefone disponível, envie o código OTP e valide a conexão."
-      eyebrow="Telefones"
+      :title="__('Register new phone', textDomain)"
+      :description="registerStep === 'select' ? __('Step 1: Select an available phone.', textDomain) : __('Step 2: Enter the verification code.', textDomain)"
+      :eyebrow="__('Phones', textDomain)"
       @close="registerOpen = false"
     >
       <div class="space-y-4">
-        <SelectField
-          v-model="registerPhone"
-          :field="candidateField"
-          name="register-phone"
-        />
+        <div class="space-y-3">
+          <div>
+            <span class="text-sm font-medium text-ink">{{ __('Step 1: Select an available phone', textDomain) }}</span>
+          </div>
 
-        <label class="block">
-          <span class="text-sm font-medium text-ink">Código OTP</span>
-          <input
-            v-model="otpCode"
-            type="text"
-            inputmode="numeric"
-            placeholder="000000"
-            class="mt-3 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-shell-400 focus:ring-4 focus:ring-shell-100"
+          <SelectField
+            v-model="registerPhone"
+            :field="{
+              label: __('Candidate phone', textDomain),
+              description: __('Select an available phone for registration and validation.', textDomain),
+              placeholder: __('Select a phone', textDomain),
+              emptyLabel: __('No phone available', textDomain),
+              searchable: true,
+              options: candidates.map((item) => ({
+                value: item.phone,
+                label: item.formatted || item.phone,
+                meta: item.phone,
+              })),
+            }"
+            name="register-phone"
           />
-        </label>
+        </div>
+
+        <div v-if="registerStep === 'otp'" class="space-y-3">
+          <div>
+            <span class="text-sm font-medium text-ink">{{ __('Step 2: Enter the verification code', textDomain) }}</span>
+            <p class="mt-1 text-sm leading-6 text-muted">
+              {{ __('Enter the code received on the selected phone.', textDomain) }}
+            </p>
+          </div>
+
+          <OtpField
+            v-model:digits="otpDigits"
+            :length="4"
+            @complete="otpComplete = true"
+          />
+        </div>
 
         <div class="flex flex-wrap justify-end gap-3">
           <button
@@ -69,86 +157,28 @@
             class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
             @click="registerOpen = false"
           >
-            Cancelar
+            {{ __('Cancel', textDomain) }}
           </button>
           <button
+            v-if="registerStep === 'select'"
             type="button"
             class="rounded-full bg-shell-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-shell-700 disabled:cursor-not-allowed disabled:bg-slate-300"
             :disabled="!registerPhone"
             @click="sendOtp"
           >
-            Enviar OTP
+            {{ __('Register phone', textDomain) }}
           </button>
           <button
+            v-else
             type="button"
             class="rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-300"
-            :disabled="!registerPhone || !otpCode"
+            :disabled="!registerPhone || !otpComplete"
             @click="validate"
           >
-            Validar e salvar
+            {{ __('Validate and save', textDomain) }}
           </button>
         </div>
       </div>
     </ModalDialog>
   </div>
 </template>
-
-<script setup>
-import { computed, ref, watch } from 'vue';
-import ModalDialog from '../base/ModalDialog.vue';
-import SelectField from '../fields/SelectField.vue';
-
-const props = defineProps({
-  modelValue: { type: String, default: '' },
-  candidates: { type: Array, default: () => [] },
-  senders: { type: Array, default: () => [] },
-});
-
-const emit = defineEmits(['update:modelValue', 'register', 'validate', 'test-message']);
-
-const registerOpen = ref(false);
-const registerPhone = ref('');
-const otpCode = ref('');
-const defaultSender = computed(() => (props.senders[0] ? props.senders[0].phone : ''));
-const testMessage = ref('Olá, esta é uma mensagem de teste.');
-
-watch(
-  () => props.candidates,
-  (value) => {
-    if (!registerPhone.value && value.length) {
-      registerPhone.value = value[0].phone;
-    }
-  },
-  { immediate: true }
-);
-
-const candidateField = computed(() => ({
-  label: 'Telefone candidato',
-  description: 'Selecione um telefone disponível para cadastro e validação.',
-  placeholder: 'Selecione um telefone',
-  emptyLabel: 'Nenhum telefone disponível',
-  searchable: true,
-  options: props.candidates.map((item) => ({
-    value: item.phone,
-    label: item.formatted || item.phone,
-    meta: item.phone,
-  })),
-}));
-
-function sendOtp() {
-  if (!registerPhone.value) {
-    return;
-  }
-
-  emit('register', registerPhone.value);
-}
-
-function validate() {
-  if (!registerPhone.value || !otpCode.value) {
-    return;
-  }
-
-  emit('validate', { phone: registerPhone.value, otp: otpCode.value });
-  registerOpen.value = false;
-}
-</script>

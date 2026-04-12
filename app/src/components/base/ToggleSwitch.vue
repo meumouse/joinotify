@@ -1,3 +1,32 @@
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  modelValue: { type: [Boolean, String, Number], default: false },
+  trueValue: { type: [Boolean, String, Number], default: true },
+  falseValue: { type: [Boolean, String, Number], default: false },
+  label: { type: String, default: '' },
+  ariaLabel: { type: String, default: '' },
+  id: { type: String, default: '' },
+  name: { type: String, default: '' },
+  size: { type: String, default: 'sm' },
+  disabled: { type: Boolean, default: false },
+  required: { type: Boolean, default: false },
+  inputClass: { type: [String, Array, Object], default: '' },
+});
+
+const emit = defineEmits(['update:modelValue', 'change']);
+
+const inputId = computed(() => props.id || `toggle-${Math.random().toString(36).slice(2, 10)}`);
+const checked = computed(() => props.modelValue === props.trueValue);
+
+function handleChange(event) {
+  const nextValue = event.target.checked ? props.trueValue : props.falseValue;
+  emit('update:modelValue', nextValue);
+  emit('change', nextValue);
+}
+</script>
+
 <template>
   <div class="inline-flex items-center gap-3">
     <span v-if="label" class="text-[14px] font-medium text-slate-700">{{ label }}</span>
@@ -40,32 +69,3 @@
     </label>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue';
-
-const props = defineProps({
-  modelValue: { type: [Boolean, String, Number], default: false },
-  trueValue: { type: [Boolean, String, Number], default: true },
-  falseValue: { type: [Boolean, String, Number], default: false },
-  label: { type: String, default: '' },
-  ariaLabel: { type: String, default: '' },
-  id: { type: String, default: '' },
-  name: { type: String, default: '' },
-  size: { type: String, default: 'sm' },
-  disabled: { type: Boolean, default: false },
-  required: { type: Boolean, default: false },
-  inputClass: { type: [String, Array, Object], default: '' },
-});
-
-const emit = defineEmits(['update:modelValue', 'change']);
-
-const inputId = computed(() => props.id || `toggle-${Math.random().toString(36).slice(2, 10)}`);
-const checked = computed(() => props.modelValue === props.trueValue);
-
-function handleChange(event) {
-  const nextValue = event.target.checked ? props.trueValue : props.falseValue;
-  emit('update:modelValue', nextValue);
-  emit('change', nextValue);
-}
-</script>
