@@ -324,6 +324,7 @@ class Registry {
         return array(
             'senders' => $senders,
             'test_number_phone' => Admin::get_setting( 'test_number_phone' ),
+            'default_country_iso2' => self::get_default_country_iso2(),
             'sender_count' => count( $senders ),
         );
     }
@@ -544,6 +545,26 @@ class Registry {
         }
 
         return $options;
+    }
+
+
+    /**
+     * Convert the configured default dial code to an ISO2 country code.
+     *
+     * @return string
+     */
+    private static function get_default_country_iso2() {
+        $default_country_code = (string) Admin::get_setting( 'joinotify_default_country_code', '55' );
+        $countries = Country_Codes::get_country_codes_with_names();
+
+        if ( ! isset( $countries[ $default_country_code ] ) ) {
+            return 'us';
+        }
+
+        $country_data = $countries[ $default_country_code ];
+        $iso2 = array_key_first( $country_data );
+
+        return is_string( $iso2 ) && $iso2 ? strtolower( $iso2 ) : 'us';
     }
 
 

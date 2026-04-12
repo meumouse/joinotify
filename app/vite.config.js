@@ -6,17 +6,28 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: './',
   plugins: [vue()],
   build: {
-    outDir: resolve(__dirname, '../assets/admin/vue-settings'),
+    outDir: resolve(__dirname, '../dist'),
     emptyOutDir: true,
-    manifest: false,
+    manifest: true,
     rollupOptions: {
-      input: resolve(__dirname, 'src/main.js'),
+      input: {
+        settings: resolve(__dirname, 'src/entries/settings.js'),
+        license: resolve(__dirname, 'src/entries/license.js'),
+        builder: resolve(__dirname, 'src/entries/builder.js'),
+      },
       output: {
-        entryFileNames: 'settings-app.js',
+        entryFileNames: '[name]/app.js',
         chunkFileNames: 'chunks/[name]-[hash].js',
-        assetFileNames: '[name][extname]',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'styles/[name][extname]';
+          }
+
+          return 'assets/[name]-[hash][extname]';
+        },
       },
     },
   },

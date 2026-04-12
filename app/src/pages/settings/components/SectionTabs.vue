@@ -1,25 +1,13 @@
 <script setup>
+import AppIcon from '../../../components/icons/AppIcon.vue';
+import { getSettingsSectionIcon } from '../../../config/settingsSections';
+
 defineProps({
   sections: { type: Array, default: () => [] },
   activeSectionId: { type: String, default: '' },
 });
 
 defineEmits(['select']);
-
-function sectionTabIcon(id) {
-  const icons = {
-    general:
-      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h16M6 12h12M8 16h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
-    phones:
-      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3h10v18H7z" stroke="currentColor" stroke-width="2" /><path d="M9 18h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
-    integrations:
-      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v8m0 2v8M7 7l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    about:
-      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 10v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
-  };
-
-  return icons[id] || icons.general;
-}
 </script>
 
 <template>
@@ -32,7 +20,7 @@ function sectionTabIcon(id) {
       :class="activeSectionId === section.id ? 'bg-primary-700 text-white shadow-sm' : 'text-slate-600 hover:text-slate-800'"
       @click="$emit('select', section.id)"
     >
-      <span v-html="sectionTabIcon(section.id)"></span>
+      <AppIcon :name="getSettingsSectionIcon(section.id)" class="h-[22px] w-[22px] shrink-0" />
       <span>{{ section.title }}</span>
     </button>
   </nav>

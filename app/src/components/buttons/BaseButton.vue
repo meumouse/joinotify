@@ -1,9 +1,12 @@
 <script setup>
 import { computed } from 'vue';
+import AppIcon from '../icons/AppIcon.vue';
 
 const props = defineProps({
   title: { type: String, required: true },
   icon: { type: String, default: '' },
+  iconName: { type: String, default: '' },
+  iconClass: { type: String, default: '' },
   size: {
     type: String,
     default: 'md',
@@ -67,6 +70,7 @@ const spinnerClass = computed(() => {
       :class="spinnerClass"
       aria-hidden="true"
     />
+    <AppIcon v-else-if="iconName" :name="iconName" class="inline-flex shrink-0 leading-none" :class="iconClass" />
     <span v-else-if="icon" class="inline-flex shrink-0 leading-none" v-html="icon" />
     <span>{{ title }}</span>
   </button>

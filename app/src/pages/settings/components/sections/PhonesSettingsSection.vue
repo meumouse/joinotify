@@ -8,9 +8,11 @@ const props = defineProps({
   phoneCandidates: { type: Array, default: () => [] },
   phones: { type: Object, default: () => ({ senders: [], sender_count: 0 }) },
   refreshingSenderPhone: { type: String, default: '' },
+  defaultCountry: { type: String, default: 'us' },
+  sendTestMessage: { type: Function, default: null },
 });
 
-const emit = defineEmits(['update:modelValue', 'register', 'validate', 'test-message', 'remove', 'refresh']);
+const emit = defineEmits(['update:modelValue', 'register', 'validate', 'remove', 'refresh']);
 
 const model = computed({
   get: () => props.modelValue,
@@ -24,9 +26,10 @@ const model = computed({
       v-model="model"
       :candidates="phoneCandidates"
       :senders="phones.senders || []"
+      :default-country="defaultCountry"
+      :send-test-message="sendTestMessage"
       @register="$emit('register', $event)"
       @validate="$emit('validate', $event)"
-      @test-message="$emit('test-message', $event)"
     />
 
     <PhoneSenderList

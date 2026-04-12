@@ -4,6 +4,7 @@ import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 import TextField from './TextField.vue';
 import TextAreaField from './TextAreaField.vue';
 import SelectField from './SelectField.vue';
+import PhoneField from './PhoneField.vue';
 
 const props = defineProps({
   modelValue: { type: [String, Number, Boolean], default: '' },
@@ -18,6 +19,7 @@ const fieldComponent = computed(() => {
     text: TextField,
     textarea: TextAreaField,
     select: SelectField,
+    phone: PhoneField,
   };
 
   return map[props.field.type] || TextField;

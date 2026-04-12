@@ -1,0 +1,51 @@
+.joinotify-settings .joinotify-phone-field .iti {
+  width: 100%;
+  --iti-flag-height: 24px;
+  --iti-flag-width: 32px;
+  --iti-flag-sprite-width: 7808px;
+  --iti-flag-sprite-height: 24px;
+  --iti-spacer-horizontal: 10px;
+  --iti-border-width: 1px;
+  --iti-border-radius: 8px;
+}
+
+.joinotify-settings .joinotify-phone-field .iti__country-container {
+  padding: 4px;
+}
+
+.joinotify-settings .joinotify-phone-field .iti__selected-country {
+  min-width: 74px;
+}
+
+.joinotify-settings .joinotify-phone-field .iti__selected-country-primary {
+  padding: 0 10px;
+}
+
+.joinotify-settings .joinotify-phone-field .iti__flag {
+  background-image: var(--iti-path-flags-2x) !important;
+  background-position: calc(var(--iti-flag-offset) * 2) 0 !important;
+  background-size: var(--iti-flag-sprite-width) var(--iti-flag-sprite-height) !important;
+  border-radius: 0.25rem;
+}
+
+.joinotify-settings .joinotify-phone-field input.iti__tel-input,
+.joinotify-settings .joinotify-phone-field input.iti__tel-input[type='tel'],
+.joinotify-settings .joinotify-phone-field input.iti__tel-input[type='text'] {
+  min-height: 48px;
+  padding-left: 90px;
+  padding-right: 1rem;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5rem;
+}
+
+.joinotify-settings .joinotify-phone-field input.iti__tel-input:focus,
+.joinotify-settings .joinotify-phone-field input.iti__tel-input[type='tel']:focus,
+.joinotify-settings .joinotify-phone-field input.iti__tel-input[type='text']:focus {
+  border-color: var(--joinotify-primary-700);
+  box-shadow: 0 0 0 4px rgb(228 238 246 / 1);
+}
+
+.joinotify-settings .joinotify-phone-field .iti__country-list {
+  min-width: 280px;
+}

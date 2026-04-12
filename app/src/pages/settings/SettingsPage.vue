@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, reactive, ref } from 'vue';
+import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue, deepEqual } from '../../utils/object';
 import { generateHexToken } from '../../utils/random';
@@ -16,7 +16,6 @@ import IntegrationSettingsModal from './components/modals/IntegrationSettingsMod
 import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import DebugLogModal from './components/cards/DebugLogModal.vue';
-import LicensePage from '../license/LicensePage.vue';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -25,7 +24,6 @@ const props = defineProps({
 const docsUrl = props.bootstrap?.docs_url || props.bootstrap?.docs || 'https://ajuda.meumouse.com/docs/joinotify/overview';
 const api = createApiClient(props.bootstrap);
 const bootstrap = ref(cloneValue(props.bootstrap));
-const isLicensePage = computed(() => bootstrap.value.page === 'license');
 const settings = reactive({});
 const savedSettings = ref(cloneValue(props.bootstrap?.settings || {}));
 const phoneCandidates = ref([]);
@@ -33,13 +31,13 @@ const debugLogs = ref([]);
 const logsOpen = ref(false);
 const saving = ref(false);
 const refreshingSenderPhone = ref('');
-const activeSectionId = ref('general');
 const proxyConfigOpen = ref(false);
 const integrationConfigOpen = ref(false);
 const selectedIntegration = ref(null);
 const toasts = ref([]);
 const confirm = reactive({ open: false, title: '', description: '', action: null });
 const toastTimers = new Map();
+const activeSectionStorageKey = 'joinotify-settings-active-section';
 
 syncSettings(bootstrap.value.settings || {});
 
@@ -60,13 +58,27 @@ const proxyDefaults = {
   proxy_api_key: '',
 };
 
-if (sections.value.length && !sections.value.some((section) => section.id === activeSectionId.value)) {
-  activeSectionId.value = sections.value[0].id;
-}
+const activeSectionId = ref(getInitialActiveSectionId());
 
-if (!isLicensePage.value) {
-  loadPhoneCandidates();
-}
+watch(
+  sections,
+  (value) => {
+    if (!value.length) {
+      return;
+    }
+
+    if (!value.some((section) => section.id === activeSectionId.value)) {
+      activeSectionId.value = value[0].id;
+    }
+  },
+  { immediate: true }
+);
+
+watch(activeSectionId, (value) => {
+  persistActiveSectionId(value);
+});
+
+loadPhoneCandidates();
 
 
 
@@ -90,6 +102,38 @@ function fieldFor(key) {
 
 function filterFields(keys) {
   return keys.map((key) => fieldFor(key)).filter(Boolean);
+}
+
+function getInitialActiveSectionId() {
+  const fallback = (props.bootstrap?.schema || [])[0]?.id || 'general';
+
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+
+  const saved = window.localStorage.getItem(activeSectionStorageKey);
+
+  if (!saved) {
+    return fallback;
+  }
+
+  const schema = props.bootstrap?.schema || [];
+  const isValid = schema.some((section) => section.id === saved);
+
+  return isValid ? saved : fallback;
+}
+
+function persistActiveSectionId(sectionId) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  if (!sectionId) {
+    window.localStorage.removeItem(activeSectionStorageKey);
+    return;
+  }
+
+  window.localStorage.setItem(activeSectionStorageKey, sectionId);
 }
 
 function syncSettings(nextSettings) {
@@ -244,8 +288,10 @@ async function sendTestMessage(payload) {
   try {
     const response = await api.post('/admin/settings/phones/test-message', payload);
     toast(response.message || __('Message sent.', textDomain), 'success', __('Phones', textDomain));
+    return true;
   } catch (error) {
     toast(error.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
+    return false;
   }
 }
 
@@ -375,12 +421,8 @@ function canConfigureIntegration(integration) {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f3f3f5]">
-    <div v-if="isLicensePage" class="w-full">
-      <LicensePage :bootstrap="bootstrap" />
-    </div>
-
-    <div v-else class="w-full">
+  <div class="joinotify-settings min-h-screen bg-[#f3f3f5]">
+    <div class="w-full">
       <SettingsHeader :docs-url="docsUrl" />
 
       <SectionTabs
@@ -405,11 +447,12 @@ function canConfigureIntegration(integration) {
             :model-value="settings.test_number_phone"
             :phone-candidates="phoneCandidates"
             :phones="phones"
+            :default-country="phones.default_country_iso2"
             :refreshing-sender-phone="refreshingSenderPhone"
+            :send-test-message="sendTestMessage"
             @update:model-value="updateSetting('test_number_phone', $event)"
             @register="registerPhone"
             @validate="validateOtp"
-            @test-message="sendTestMessage"
             @remove="confirmRemoveSender"
             @refresh="refreshSenderConnection"
           />

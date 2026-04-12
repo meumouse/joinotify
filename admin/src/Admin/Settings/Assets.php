@@ -2,77 +2,75 @@
 
 namespace MeuMouse\Joinotify\Admin\Settings;
 
-defined('ABSPATH') || exit;
+use MeuMouse\Joinotify\Core\Scripts;
+
+defined( 'ABSPATH' ) || exit;
 
 /**
- * Load the Vue settings app when the build artifacts are available.
+ * Load the Vite-built admin app assets for Joinotify pages.
  */
 class Assets {
 
+    /**
+     * Page-to-entry map.
+     *
+     * @var array<string,string>
+     */
+    private $entries = array(
+        'joinotify-settings' => 'src/entries/settings.js',
+        'joinotify-license' => 'src/entries/license.js',
+        'joinotify-workflows-builder' => 'src/entries/builder.js',
+    );
+
+
     public function __construct() {
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
+        add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
     }
 
 
     /**
-     * Enqueue the Vue settings bundle or keep the legacy fallback.
+     * Enqueue the assets produced by Vite, falling back to the legacy shell
+     * when the manifest is unavailable.
      *
      * @return void
      */
     public function enqueue_assets() {
-        if ( ! $this->is_settings_page() ) {
+        $page = $this->get_current_page();
+
+        if ( empty( $page ) || ! isset( $this->entries[ $page ] ) ) {
             return;
         }
 
-		$script_path = JOINOTIFY_DIR . 'assets/admin/vue-settings/settings-app.js';
-		$style_dir = JOINOTIFY_DIR . 'assets/admin/vue-settings';
-		$main_style_path = $style_dir . '/main.css';
-		$style_files = glob( $style_dir . '/*.css' ) ?: array();
+        $assets = Scripts::get_entry_assets( $this->entries[ $page ] );
 
-        if ( ! file_exists( $script_path ) ) {
+        if ( empty( $assets['script'] ) ) {
             return;
         }
 
-        wp_dequeue_style( 'joinotify-styles' );
-        wp_dequeue_script( 'joinotify-scripts' );
-        wp_dequeue_style( 'bootstrap-grid' );
-        wp_dequeue_style( 'bootstrap-utilities' );
+        $this->dequeue_legacy_assets();
 
-        wp_deregister_style( 'joinotify-styles' );
-        wp_deregister_script( 'joinotify-scripts' );
+        foreach ( $assets['styles'] as $index => $style_url ) {
+            wp_enqueue_style(
+                'joinotify-vue-' . sanitize_key( $page ) . '-' . $index,
+                $style_url,
+                array(),
+                null
+            );
+        }
 
-		if ( file_exists( $main_style_path ) ) {
-			wp_enqueue_style(
-				'joinotify-settings-app-main',
-				JOINOTIFY_ASSETS . 'admin/vue-settings/main.css',
-				array(),
-				filemtime( $main_style_path )
-			);
-		}
-
-		foreach ( $style_files as $style_path ) {
-			if ( basename( $style_path ) === 'main.css' ) {
-				continue;
-			}
-
-			wp_enqueue_style(
-				'joinotify-settings-app-' . sanitize_title( basename( $style_path, '.css' ) ),
-				JOINOTIFY_ASSETS . 'admin/vue-settings/' . basename( $style_path ),
-				array(),
-				filemtime( $style_path )
-			);
-		}
+        $handle = $this->get_script_handle( $page );
 
         wp_enqueue_script(
-            'joinotify-settings-app',
-            JOINOTIFY_ASSETS . 'admin/vue-settings/settings-app.js',
+            $handle,
+            $assets['script'],
             array( 'wp-i18n' ),
-            filemtime( $script_path ),
+            null,
             true
         );
 
         wp_set_script_translations(
-            'joinotify-settings-app',
+            $handle,
             'joinotify',
             JOINOTIFY_DIR . 'languages'
         );
@@ -80,17 +78,80 @@ class Assets {
 
 
     /**
-     * Check if we are on the Joinotify settings page.
+     * Determine the current Joinotify page slug.
      *
-     * @return bool
+     * @return string
      */
-    private function is_settings_page() {
+    private function get_current_page() {
         if ( ! is_admin() || ! isset( $_GET['page'] ) ) {
-            return false;
+            return '';
         }
 
-        $page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+        return sanitize_text_field( wp_unslash( $_GET['page'] ) );
+    }
 
-        return in_array( $page, array( 'joinotify-settings', 'joinotify-license' ), true );
+
+    /**
+     * Remove the legacy asset handles when the Vite build is available.
+     *
+     * @return void
+     */
+    private function dequeue_legacy_assets() {
+        wp_dequeue_style( 'joinotify-styles' );
+        wp_dequeue_script( 'joinotify-scripts' );
+        wp_dequeue_style( 'bootstrap-grid' );
+        wp_dequeue_style( 'bootstrap-utilities' );
+
+        wp_deregister_style( 'joinotify-styles' );
+        wp_deregister_script( 'joinotify-scripts' );
+    }
+
+
+    /**
+     * Get a stable script handle for a page.
+     *
+     * @param string $page Admin page slug.
+     * @return string
+     */
+    private function get_script_handle( $page ) {
+        $handles = array(
+            'joinotify-settings' => 'joinotify-settings-app',
+            'joinotify-license' => 'joinotify-license-app',
+            'joinotify-workflows-builder' => 'joinotify-builder-app',
+        );
+
+        return isset( $handles[ $page ] ) ? $handles[ $page ] : 'joinotify-vite-app';
+    }
+
+
+    /**
+     * Mark Vite entry scripts as ES modules so browser import statements work.
+     *
+     * @param string $tag    Script tag HTML.
+     * @param string $handle Script handle.
+     * @param string $src    Script URL.
+     * @return string
+     */
+    public function add_module_type_attribute( $tag, $handle, $src ) {
+        $module_handles = array(
+            'joinotify-settings-app',
+            'joinotify-license-app',
+            'joinotify-builder-app',
+            'joinotify-vite-app',
+        );
+
+        if ( ! in_array( $handle, $module_handles, true ) ) {
+            return $tag;
+        }
+
+        if ( false !== strpos( $tag, 'type=' ) ) {
+            return $tag;
+        }
+
+        return sprintf(
+            '<script type="module" src="%s" id="%s-js"></script>' . "\n",
+            esc_url( $src ),
+            esc_attr( $handle )
+        );
     }
 }
