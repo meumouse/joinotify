@@ -1,4 +1,10 @@
 <?php
+/**
+ * Default_Options source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Admin;
 
@@ -9,7 +15,7 @@ defined('ABSPATH') || exit;
  * Set default options for plugin settings
  * 
  * @since 1.3.0
- * @version 1.4.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Admin
  * @author MeuMouse.com
  */
@@ -19,7 +25,7 @@ class Default_Options {
      * Set default options
      * 
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @return array
      */
     public static function set_default_options() {

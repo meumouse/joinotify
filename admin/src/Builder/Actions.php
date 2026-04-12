@@ -1,4 +1,10 @@
 <?php
+/**
+ * Actions source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class handles with actions functions
  * 
  * @since 1.1.0
- * @version 1.3.2
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -23,7 +29,7 @@ class Actions {
      * This function returns all actions for uses on connect triggers
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $context | Trigger context (eg: woocommerce)
      * @return array
      */
@@ -132,7 +138,7 @@ class Actions {
      * Update a action inside workflow by ID
      *
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param array &$workflow_item | Reference the item from workflow
      * @param string $action_id | Action ID for update
      * @param array $new_action_data | New data action

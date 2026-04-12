@@ -1,4 +1,10 @@
 <?php
+/**
+ * Elementor_Forms source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -21,7 +27,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 	 * Add integration with Elementor Forms
 	 * 
 	 * @since 1.1.0
-	 * @version 1.4.5
+	 * @version 1.4.7
 	 * @package MeuMouse\Joinotify\Integrations
 	 * @author MeuMouse.com
 	 */
@@ -55,7 +61,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 		 * Register action controls
 		 *
 		 * @since 1.1.0
-		 * @version 1.4.0
+		 * @version 1.4.7
 		 * @access public
 		 * @param \Elementor\Widget_Base $widget
 		 */
@@ -228,7 +234,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 		 * Run action
 		 *
 		 * @since 1.1.0
-		 * @version 1.4.0
+		 * @version 1.4.7
 		 * @param object $record | Form object class
 		 * @param \ElementorPro\Modules\Forms\Classes\Ajax_Handler $ajax_handler
 		 * @return void
@@ -311,7 +317,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 		 * On export
 		 *
 		 * @since 1.1.0
-		 * @version 1.4.5
+		 * @version 1.4.7
 		 * @param array $element | Elements from form
 		 * @return array
 		 */

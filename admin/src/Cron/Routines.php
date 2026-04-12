@@ -1,4 +1,10 @@
 <?php
+/**
+ * Routines source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Cron;
 
@@ -14,7 +20,7 @@ defined('ABSPATH') || exit;
  * Class for handle with Cron routines
  * 
  * @since 1.2.0
- * @version 1.4.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Cron
  * @author MeuMouse.com
  */
@@ -24,7 +30,7 @@ class Routines {
 	 * Construct function
 	 *
 	 * @since 1.2.0
-     * @version 1.4.0
+     * @version 1.4.7
 	 * @return void
 	 */
 	public function __construct() {

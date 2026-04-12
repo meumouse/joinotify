@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * Controller for API requests
  * 
  * @since 1.0.0
- * @version 1.4.2
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\API
  * @author MeuMouse.com
  */
@@ -56,7 +56,7 @@ class Controller {
      * Initialize runtime API flags and shared configuration.
      *
      * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -71,7 +71,7 @@ class Controller {
      * Records the routes of API endpoints
      * 
      * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.7
      * @return void
      */
     public function register_routes() {
@@ -129,7 +129,7 @@ class Controller {
      * Validate if the given parameter is a string
      *
      * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.7
      * @param mixed            $param  The value to validate.
      * @param WP_REST_Request $request Optional. The REST request object.
      * @param string          $key     Optional. Parameter name.
@@ -245,7 +245,7 @@ class Controller {
      * Send a text message on WhatsApp from Proxy API
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -275,7 +275,7 @@ class Controller {
      * Send message media on WhatsApp from Proxy API
      *
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -307,7 +307,7 @@ class Controller {
      * Get numbers registered on slots
      *
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return array
      */
     public static function get_numbers() {
@@ -337,7 +337,7 @@ class Controller {
      * Get connection state of an instance
      *
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $phone | Phone number
      * @return array|WP_Error Response from API or WP_Error on failure
      */
@@ -833,7 +833,7 @@ class Controller {
      * Send OTP messsage text on WhatsApp
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $phone | Phone number
      * @param string $otp | OTP code
      * @return int
@@ -872,7 +872,7 @@ class Controller {
      * Get all groups
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $sender | Instance phone number
      */
     public static function fetch_all_groups( $sender ) {
@@ -925,7 +925,7 @@ class Controller {
      * Notify user when phone is disconnected
      * 
      * @since 1.3.0
-     * @version 1.3.3
+     * @version 1.4.7
      * @param string $phone | Phone number
      * @return int
      */

@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * PhoneField.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import intlTelInput from 'intl-tel-input';
 import 'intl-tel-input/build/css/intlTelInput.css';

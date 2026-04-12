@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * LicensePage.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed, onBeforeUnmount, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue } from '../../utils/object';
@@ -27,19 +34,19 @@ const docsUrl = computed(() => props.bootstrap?.links?.docs_url || license.value
 const purchaseUrl = computed(() => license.value?.purchase_url || props.bootstrap?.links?.purchase_url || 'https://meumouse.com/plugins/joinotify/');
 const isActive = computed(() => Boolean(license.value?.is_valid));
 const statusTone = computed(() => license.value?.status_tone || (isActive.value ? 'success' : 'danger'));
-const cardTitle = computed(() => (isActive.value ? __('LicenÁa ativa', textDomain) : inactiveTitle.value));
+const cardTitle = computed(() => (isActive.value ? __('LicenÔøΩa ativa', textDomain) : inactiveTitle.value));
 const cardDescription = computed(() =>
   isActive.value
-    ? __('Confira os detalhes da sua licenÁa e sincronize quando necess·rio.', textDomain)
+    ? __('Confira os detalhes da sua licenÔøΩa e sincronize quando necessÔøΩrio.', textDomain)
     : inactiveSubtitle.value
 );
 const licenseField = computed(() => ({
-  label: __('CÛdigo da licenÁa', textDomain),
-  description: __('Cole o cÛdigo recebido apÛs a compra da licenÁa.', textDomain),
+  label: __('CÔøΩdigo da licenÔøΩa', textDomain),
+  description: __('Cole o cÔøΩdigo recebido apÔøΩs a compra da licenÔøΩa.', textDomain),
   placeholder: __('Ex.: CM-0000-0000-0000', textDomain),
 }));
-const inactiveTitle = computed(() => license.value?.title || __('Ative sua licenÁa', textDomain));
-const inactiveSubtitle = computed(() => license.value?.subtitle || __('Digite o cÛdigo da licenÁa para liberar os recursos premium.', textDomain));
+const inactiveTitle = computed(() => license.value?.title || __('Ative sua licenÔøΩa', textDomain));
+const inactiveSubtitle = computed(() => license.value?.subtitle || __('Digite o cÔøΩdigo da licenÔøΩa para liberar os recursos premium.', textDomain));
 const activeRows = computed(() => [
   {
     label: __('Status da licen√ßa', textDomain),

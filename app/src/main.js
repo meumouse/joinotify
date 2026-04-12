@@ -1,3 +1,9 @@
+/**
+ * Frontend application entry point.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { createApp } from 'vue';
 import App from './App.vue';
 import './styles/main.css';

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Updater source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Api;
 
@@ -17,7 +23,7 @@ defined('ABSPATH') || exit;
  * Class for handling plugin updates
  *
  * @since 1.0.0
- * @version 1.4.1
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\API
  * @author MeuMouse.com
  */
@@ -38,7 +44,7 @@ class Updater {
      * Construct function
      *
      * @since 1.0.0
-     * @version 1.3.4
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -70,7 +76,7 @@ class Updater {
      * Request on remote server
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return array
      */
     public function request() {
@@ -116,7 +122,7 @@ class Updater {
      * Get plugin info
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param array|object $response | Response from request update
      * @param string $action | API action to perform: 'query_plugins', 'plugin_information', 'hot_tags' or 'hot_categories'
      * @param array|object $args | (optional) Array or object of arguments to serialize for the Plugin Info API
@@ -429,7 +435,7 @@ class Updater {
      * Display update notice in the admin panel
      *
      * @since 1.2.0
-     * @version 1.3.3
+     * @version 1.4.7
      * @return void
      */
     public function admin_update_notice() {

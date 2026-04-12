@@ -1,4 +1,10 @@
 <?php
+/**
+ * Phone_Validate_Otp source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Rest;
 

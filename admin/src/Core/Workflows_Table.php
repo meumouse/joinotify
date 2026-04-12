@@ -1,4 +1,10 @@
 <?php
+/**
+ * Workflows_Table source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -18,7 +24,7 @@ if ( is_admin() ) {
      * Workflows table class
      * 
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @package MeuMouse\Joinotify\Core
      * @author MeuMouse.com
      */
@@ -28,7 +34,7 @@ if ( is_admin() ) {
          * Construct function
          * 
          * @since 1.0.0
-         * @version 1.4.5
+         * @version 1.4.7
          * @return void
          */
         public function __construct() {
@@ -40,7 +46,7 @@ if ( is_admin() ) {
          * Display navigation tabs for different post statuses with post count
          * 
          * @since 1.0.0
-         * @version 1.4.3
+         * @version 1.4.7
          * @return void
          */
         public function display_navigation_tabs() {
@@ -233,7 +239,7 @@ if ( is_admin() ) {
          * Set bulk actions
          * 
          * @since 1.0.0
-         * @version 1.3.5
+         * @version 1.4.7
          * @return array
          */
         public function get_bulk_actions() {
@@ -309,7 +315,7 @@ if ( is_admin() ) {
          * Prepare items for display on the table
          * 
          * @since 1.0.0
-         * @version 1.2.0
+         * @version 1.4.7
          * @return void
          */
         public function prepare_items() {

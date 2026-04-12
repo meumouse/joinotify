@@ -1,4 +1,10 @@
 <?php
+/**
+ * Settings source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 

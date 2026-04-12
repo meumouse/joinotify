@@ -1,4 +1,10 @@
 <?php
+/**
+ * Conditions source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Validations;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * Conditions class
  * 
  * @since 1.0.0
- * @version 1.4.3
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Validations
  * @author MeuMouse.com
  */
@@ -21,7 +27,7 @@ class Conditions {
      * Get conditions for specific trigger item on builder
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $trigger | Trigger item
      * @return array returns an array of conditions for the given action
      */
@@ -45,7 +51,7 @@ class Conditions {
      * Check condition type and return allowed conditions type for condition key
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $condition_type | Condition key
      * @return array
      */
@@ -80,7 +86,7 @@ class Conditions {
      * Gets comparison value based on condition type and context
      *
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param string $condition_type | Condition type (e.g. 'order_total', 'user_role')
      * @param array $payload | Payload data
      * @return mixed Returns the value for comparison or null if not found
@@ -147,7 +153,7 @@ class Conditions {
      * Check condition
      * 
      * @since 1.0.0
-     * @version 1.3.6
+     * @version 1.4.7
      * @param string $condition | Condition type
      * @param mixed $value | Value for check
      * @param mixed $value_compare | Optional value for compare with $value
@@ -223,7 +229,7 @@ class Conditions {
      * Find condition data by ID
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param array $workflow_data | Full workflow data array
      * @param string $condition_id | Condition ID to find
      * @return array|null
@@ -245,7 +251,7 @@ class Conditions {
      * Get condition content from action ID
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param string $action_id | Action ID
      * @return string|null

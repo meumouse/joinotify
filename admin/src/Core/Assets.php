@@ -1,4 +1,10 @@
 <?php
+/**
+ * Assets source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -9,7 +15,7 @@ defined('ABSPATH') || exit;
  * Load assets class
  *
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -19,7 +25,7 @@ class Assets {
 	 * Plugin assets URL
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.2
+	 * @version 1.4.7
 	 * @return string
 	 */
 	public $assets_url = JOINOTIFY_ASSETS;
@@ -32,7 +38,7 @@ class Assets {
 	 * Construct function
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.2
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function __construct() {
@@ -53,7 +59,7 @@ class Assets {
 	 * Enqueue assets on license page
 	 * 
 	 * @since 1.1.0
-	 * @version 1.4.5
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function license_assets() {
@@ -78,7 +84,7 @@ class Assets {
 	 * Enqueue scripts on builder page
 	 * 
 	 * @since 1.1.0
-	 * @version 1.3.0
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function builder_assets() {
@@ -169,7 +175,7 @@ class Assets {
 	 * Enqueue scripts on workflows table page
 	 * 
 	 * @since 1.1.0
-	 * @version 1.3.0
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function workflows_table_assets() {

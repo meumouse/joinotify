@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * OtpField.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { nextTick, ref } from 'vue';
 import { __, sprintf, textDomain } from '../../utils/i18n';
 

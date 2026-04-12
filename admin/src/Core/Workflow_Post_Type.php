@@ -1,4 +1,10 @@
 <?php
+/**
+ * Workflow_Post_Type source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -30,7 +36,7 @@ class Workflow_Post_Type {
      * Register "joinotify-workflow" post type
      * 
      * @since 1.0.0
-     * @version 1.4.6
+     * @version 1.4.7
      * @return void
      */
     public function register_joinotify_workflow_post_type() {

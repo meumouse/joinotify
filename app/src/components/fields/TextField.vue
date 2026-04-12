@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * TextField.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 defineProps({
   modelValue: { type: [String, Number], default: '' },
   field: { type: Object, required: true },

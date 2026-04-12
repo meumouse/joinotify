@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * GeneralSettingsSection.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { __, textDomain } from '../../../../utils/i18n';
 import FieldRow from '../../../../components/fields/FieldRow.vue';
 import FieldControl from '../../../../components/fields/FieldControl.vue';

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Workflow_Processor source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -15,7 +21,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -51,7 +57,7 @@ class Workflow_Processor {
      * Process workflow for each called hook
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param array $payload | Payload data
      * @return void
      */
@@ -96,7 +102,7 @@ class Workflow_Processor {
      * Process workflow content
      * 
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @param array $workflow_content | Workflow content
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -245,7 +251,7 @@ class Workflow_Processor {
      * Handle with workflow actions
      * 
      * @since 1.0.0
-     * @version 1.3.1
+     * @version 1.4.7
      * @param array $action | Workflow actions array
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -293,7 +299,7 @@ class Workflow_Processor {
      * Processes a conditional action within a workflow
      *
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param array $action | Condition action data
      * @param int $post_id | Workflow post ID
      * @param array $payload | Payload context data
@@ -363,7 +369,7 @@ class Workflow_Processor {
      * Process scheduled actions
      * 
      * @since 1.0.0
-     * @version 1.3.1
+     * @version 1.4.7
      * @param int $post_id | Workflow ID
      * @param array $payload | Payload data
      * @param array $action_data | Action data
@@ -435,7 +441,7 @@ class Workflow_Processor {
      * Send message text on WhatsApp
      *
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void
@@ -467,7 +473,7 @@ class Workflow_Processor {
      * Executes a WhatsApp message action
      *
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @return void

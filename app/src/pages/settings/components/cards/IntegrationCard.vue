@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * IntegrationCard.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed } from 'vue';
 import { __, sprintf, textDomain } from '../../../../utils/i18n';
 import ToggleSwitch from '../../../../components/toggles/ToggleSwitch.vue';

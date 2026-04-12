@@ -1,4 +1,10 @@
 <?php
+/**
+ * Menu source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Admin;
 
@@ -119,7 +125,7 @@ class Menu {
      * Render new automations page builder.
      *
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function render_builder_page() {
@@ -157,7 +163,7 @@ class Menu {
      * Display table with all workflows.
      *
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @return void
      */
     public function all_workflows_page() {

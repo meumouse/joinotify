@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * SystemStatusPanel.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Utils source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions helpers and utils for builder core
  * 
  * @since 1.1.0
- * @version 1.4.3
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -21,7 +27,7 @@ class Utils {
      * Get context from post
      * 
      * @since 1.1.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @return string
      */
@@ -52,7 +58,7 @@ class Utils {
      * Check if the workflow content contains a specified type (trigger or action)
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param string $type | Type to check for in the workflow content ('trigger' or 'action')
      * @return bool
@@ -92,7 +98,7 @@ class Utils {
      * Get template categories for choose template on builder
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return array
      */
     public static function get_template_categories() {

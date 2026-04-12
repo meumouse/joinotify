@@ -1,4 +1,10 @@
 <?php
+/**
+ * Admin source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Admin;
 
@@ -9,7 +15,7 @@ defined('ABSPATH') || exit;
  * Admin actions class
  * 
  * @since 1.0.0
- * @version 1.4.6
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Admin
  * @author MeuMouse.com
  */
@@ -19,7 +25,7 @@ class Admin {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.4.6
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -33,7 +39,7 @@ class Admin {
      * or adds new items with default value to the option
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function update_default_options() {

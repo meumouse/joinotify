@@ -1,4 +1,10 @@
 <?php
+/**
+ * Workflow_Manager source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -13,7 +19,7 @@ defined('ABSPATH') || exit;
  * This class manages the workflow functions
  * 
  * @since 1.1.0
- * @version 1.4.3
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -23,7 +29,7 @@ class Workflow_Manager {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -42,7 +48,7 @@ class Workflow_Manager {
      * Get start templates for initialize workflow builder
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return array
      */
     public static function get_start_templates() {
@@ -73,7 +79,7 @@ class Workflow_Manager {
      * Build workflow content array with connectors
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param array $workflow_data | Workflow content data
      * @return array
      */
@@ -124,7 +130,7 @@ class Workflow_Manager {
      * Get workflow content HTML
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @return mixed|array|false
      */
@@ -178,7 +184,7 @@ class Workflow_Manager {
      * Create workflow structure for saving options
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $type | The type of element (e.g., 'trigger', 'action', etc.)
      * @param array $data | Data specific to the element being created
      * @param array $children | Array of child elements, if any

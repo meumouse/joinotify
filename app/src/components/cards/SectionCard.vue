@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * SectionCard.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 defineProps({
   title: { type: String, required: true },
   description: { type: String, default: '' },

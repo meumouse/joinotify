@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * PhonesSettingsSection.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed } from 'vue';
 import PhoneActions from '../cards/PhoneActions.vue';
 import PhoneSenderList from '../cards/PhoneSenderList.vue';

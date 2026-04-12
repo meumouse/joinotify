@@ -1,4 +1,10 @@
 <?php
+/**
+ * Components source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -17,7 +23,7 @@ defined('ABSPATH') || exit;
  * This class manages the functions for display components on workflow builder
  * 
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -51,7 +57,7 @@ class Components {
      * Display workflow action component
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param array $action_details | Action details array (action name, description, id, etc)
      * @return string
@@ -206,7 +212,7 @@ class Components {
      * Display action condition component for condition children actions
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param array $condition_data | Condition data
      * @param string $title | (Optional) Action title
@@ -319,7 +325,7 @@ class Components {
      * Get each action settings
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param string $action | Action name
      * @param string $action_id | Action ID
@@ -369,7 +375,7 @@ class Components {
      * Get trigger HTML based on context and data_trigger
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return mixed | return the HTML of the trigger or false if not found
@@ -437,7 +443,7 @@ class Components {
      * Render required settings for specific triggers
      * 
      * @since 1.1.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param array $trigger_details | Trigger details (context name, trigger name, etc)
      * @return string
@@ -516,7 +522,7 @@ class Components {
      * Get workflow connector between actions and steps
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @param string $type | Connector type
      * @param array $workflow_data | Workflow array data
@@ -627,7 +633,7 @@ class Components {
      * Render condition selectors for condition builder offcanvas
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param array $conditions | Condition key
      * @return string
      */
@@ -653,7 +659,7 @@ class Components {
      * Render condition settings for specific action
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param string $condition | Condition key
      * @param array $settings | Settings for condition
      * @return string HTML of rendered condition settings
@@ -898,7 +904,7 @@ class Components {
      * Get condition options
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $condition | Condition key
      * @param string $condition_value | Condition value
      * @return string
@@ -940,7 +946,7 @@ class Components {
      * Render placeholders list for workflow trigger
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @return string
      */
@@ -984,7 +990,7 @@ class Components {
      * Add modal content for edit workflow title
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public static function workflow_title_modal_content() {

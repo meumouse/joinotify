@@ -1,4 +1,10 @@
 <?php
+/**
+ * Schedule source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Cron;
 
@@ -13,7 +19,7 @@ defined('ABSPATH') || exit;
  * Schedule messages for a future time or date
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Cron
  * @author MeuMouse.com
  */
@@ -23,7 +29,7 @@ class Schedule {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -67,7 +73,7 @@ class Schedule {
      * Schedule a message for a future time or date
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param string $post_id | Post ID
      * @param array $context | Context data
      * @param string $delay_time | Time to delay in seconds
@@ -171,7 +177,7 @@ class Schedule {
      * Update the coupon expiration date to the previous day after expiration
      *
      * @since 1.2.2
-     * @version 1.3.5
+     * @version 1.4.7
      * @param int $coupon_id | The WooCommerce coupon ID
      * @return void
      */

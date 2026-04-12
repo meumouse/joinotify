@@ -1,4 +1,10 @@
 <?php
+/**
+ * Wpforms source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -13,7 +19,7 @@ defined('ABSPATH') || exit;
  * Add integration with WPForms plugin
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -23,7 +29,7 @@ class Wpforms extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -88,7 +94,7 @@ class Wpforms extends Integrations_Base {
      * Add WPForms triggers
      * 
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -116,7 +122,7 @@ class Wpforms extends Integrations_Base {
      * Add WPForms triggers on sidebar
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_tab() {
@@ -132,7 +138,7 @@ class Wpforms extends Integrations_Base {
      * Add content tab
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_content() {
@@ -238,7 +244,7 @@ class Wpforms extends Integrations_Base {
      * This will fire at the very end of a (successful) form entry on WPForms
      *
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param array $fields | Sanitized entry field values/properties
      * @param array $entry | Original $_POST global
      * @param array $form_data | Form data and settings
@@ -273,7 +279,7 @@ class Wpforms extends Integrations_Base {
      * Fires when PayPal payment status notifies the site
      *
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param array $fields | Sanitized entry field values/properties
      * @param array $form_data | Form data and settings
      * @param int $payment_id | PayPal Payment ID

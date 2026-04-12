@@ -1,7 +1,24 @@
+/**
+ * Create a REST API client backed by the WordPress bootstrap payload.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ * @param {Object} bootstrap - Bootstrap data exposed by WordPress.
+ * @return {{request: Function, get: Function, post: Function}} API client helpers.
+ */
 export function createApiClient(bootstrap) {
   const root = bootstrap?.rest?.root || '';
   const nonce = bootstrap?.rest?.nonce || '';
 
+  /**
+   * Send a JSON request to the WordPress REST API.
+   *
+   * @since 1.4.7
+   * @version 1.4.7
+   * @param {string} path - Relative REST endpoint path.
+   * @param {Object} [options={}] - Request options.
+   * @return {Promise<Object>} Parsed JSON response.
+   */
   async function request(path, options = {}) {
     const url = new URL(path.replace(/^\//, ''), `${root}/`);
     const response = await fetch(url.toString(), {
@@ -33,9 +50,26 @@ export function createApiClient(bootstrap) {
   };
 }
 
+/**
+ * Create an AJAX client that posts to admin-ajax.php.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ * @param {Object} bootstrap - Bootstrap data exposed by WordPress.
+ * @return {{post: Function}} AJAX client helpers.
+ */
 export function createAjaxClient(bootstrap) {
   const ajaxUrl = bootstrap?.ajax?.url || globalThis?.ajaxurl || '/wp-admin/admin-ajax.php';
 
+  /**
+   * Send a form-encoded AJAX request.
+   *
+   * @since 1.4.7
+   * @version 1.4.7
+   * @param {string} action - WordPress AJAX action name.
+   * @param {Object} [body={}] - Additional form fields.
+   * @return {Promise<Object>} Parsed JSON response.
+   */
   async function request(action, body = {}) {
     const formData = new FormData();
     formData.append('action', action);

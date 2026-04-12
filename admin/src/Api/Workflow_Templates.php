@@ -1,4 +1,10 @@
 <?php
+/**
+ * Workflow_Templates source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Api;
 
@@ -9,7 +15,7 @@ defined('ABSPATH') || exit;
  * Get workflow templates for import on builder
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\API
  * @author MeuMouse.com
  */
@@ -72,7 +78,7 @@ class Workflow_Templates {
      * Get list of JSON template file names on Joinotify repository without downloading the content
      *
      * @since 1.0.1
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $owner | The repository owner
      * @param string $repository | The repository name
      * @param string $path | Path for repository
@@ -122,7 +128,7 @@ class Workflow_Templates {
      * Get the count of JSON templates available in the repository
      *
      * @since 1.0.1
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $owner | The repository owner
      * @param string $repository | The repository name
      * @param string $path | Path for repository

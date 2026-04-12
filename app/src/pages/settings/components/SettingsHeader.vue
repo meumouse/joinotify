@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * SettingsHeader.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { __, textDomain } from '../../../utils/i18n';
 import AppIcon from '../../../components/icons/AppIcon.vue';
 

@@ -1,3 +1,9 @@
+/**
+ * icons.js frontend source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 const stroke = (d, extra = {}) => ({
   tag: 'path',
   attrs: {

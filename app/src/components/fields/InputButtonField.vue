@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * InputButtonField.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed, useSlots } from 'vue';
 
 const props = defineProps({

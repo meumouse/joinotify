@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * Tooltip.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
 
 const props = defineProps({

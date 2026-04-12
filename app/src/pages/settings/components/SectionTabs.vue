@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * SectionTabs.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import AppIcon from '../../../components/icons/AppIcon.vue';
 import { getSettingsSectionIcon } from '../../../config/settingsSections';
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Flexify_Checkout source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -13,7 +19,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.3.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -23,7 +29,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.3
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -99,7 +105,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout triggers
      * 
      * @since 1.1.0
-     * @version 1.3.3
+     * @version 1.4.7
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -181,7 +187,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout triggers on sidebar
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_tab() {
@@ -197,7 +203,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add content tab
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_content() {
@@ -209,7 +215,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Add Flexify Checkout placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -422,7 +428,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a order is abandoned
      * 
      * @since 1.2.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $order_id | The abandoned order ID
      * @param int $cart_id | The abandoned cart ID
      * @return void
@@ -450,7 +456,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a cart is abandoned
      * 
      * @since 1.2.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $cart_id | The abandoned cart ID
      * @return void
      */
@@ -476,7 +482,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a cart is recovered
      * 
      * @since 1.2.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $cart_id | The recovered cart ID
      * @param int $order_id | The order ID
      * @return void
@@ -504,7 +510,7 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a cart is lost
      * 
      * @since 1.2.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $cart_id | The recovered cart ID
      * @return void
      */

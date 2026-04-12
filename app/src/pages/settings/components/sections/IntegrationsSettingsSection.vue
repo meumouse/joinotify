@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * IntegrationsSettingsSection.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import IntegrationCard from '../cards/IntegrationCard.vue';
 
 const props = defineProps({

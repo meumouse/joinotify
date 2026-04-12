@@ -1,4 +1,10 @@
 <?php
+/**
+ * Wordpress source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -13,7 +19,7 @@ defined('ABSPATH') || exit;
  * Add integration with WordPress hooks
  * 
  * @since 1.0.0
- * @version 1.4.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -23,7 +29,7 @@ class Wordpress extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -86,7 +92,7 @@ class Wordpress extends Integrations_Base {
      * Add WordPress triggers
      * 
      * @since 1.1.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -126,7 +132,7 @@ class Wordpress extends Integrations_Base {
      * Add WordPress triggers on sidebar
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_tab() {
@@ -142,7 +148,7 @@ class Wordpress extends Integrations_Base {
      * Add content tab
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_content() {
@@ -154,7 +160,7 @@ class Wordpress extends Integrations_Base {
      * Add WordPress placeholders on workflow builder
      * 
      * @since 1.1.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @param array $placeholders | Current placeholders
      * @return array
      */
@@ -337,7 +343,7 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on user register
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $user_id | User ID
      * @param array $userdata | User data
      * @return void
@@ -365,7 +371,7 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on user login
      * 
      * @since 1.1.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param string $user_login | User login
      * @param object $user | User object
      * @return void
@@ -392,7 +398,7 @@ class Wordpress extends Integrations_Base {
      * Processs workflow content on password reset
      * 
      * @since 1.1.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param object $user | User object
      * @param string $new_pass | New password
      * @return void
@@ -419,7 +425,7 @@ class Wordpress extends Integrations_Base {
      * Process workflow content on post status changed
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $new_status | New post status
      * @param string $old_status | Old post status
      * @param object $post | Post object

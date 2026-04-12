@@ -20,6 +20,13 @@ use MeuMouse\Joinotify\Core\Init;
 
 defined('ABSPATH') || exit;
 
+/**
+ * Main plugin bootstrap file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
+
 // Load Composer autoloader if available.
 $autoload = plugin_dir_path( __FILE__ ) . 'admin/vendor/autoload.php';
 

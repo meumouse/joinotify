@@ -1,4 +1,10 @@
 <?php
+/**
+ * Elementor source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -16,7 +22,7 @@ defined('ABSPATH') || exit;
  * Add integration with Elementor
  * 
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -26,7 +32,7 @@ class Elementor extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -106,7 +112,7 @@ class Elementor extends Integrations_Base {
      * Add Elementor triggers on sidebar
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_tab() {
@@ -122,7 +128,7 @@ class Elementor extends Integrations_Base {
      * Add content tab
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_content() {
@@ -193,7 +199,7 @@ class Elementor extends Integrations_Base {
      * Process workflow content on Elementor form submission
      * 
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param object $record | The record submitted
      * @return void
      */

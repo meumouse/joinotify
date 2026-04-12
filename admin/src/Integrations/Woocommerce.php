@@ -1,4 +1,10 @@
 <?php
+/**
+ * Woocommerce source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -23,7 +29,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.4.5
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -33,7 +39,7 @@ class Woocommerce extends Integrations_Base {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -169,7 +175,7 @@ class Woocommerce extends Integrations_Base {
      * Add Woocommerce triggers on sidebar
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_tab() {
@@ -185,7 +191,7 @@ class Woocommerce extends Integrations_Base {
      * Add content tab
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function add_triggers_content() {
@@ -197,7 +203,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -414,7 +420,7 @@ class Woocommerce extends Integrations_Base {
      * Returns the items purchased in the order formatted
      *
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param \WC_Order $order | The object of the request
      * @return string Items formatted on separate lines
      */
@@ -443,7 +449,7 @@ class Woocommerce extends Integrations_Base {
      * Get the full address of the order
      *
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @param \WC_Order $order | WooCommerce Order object
      * @return string Full address as a formatted string
      */
@@ -666,7 +672,7 @@ class Woocommerce extends Integrations_Base {
      * Add modal settings for WooCommerce
      * 
      * @since 1.1.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @return void
      */
     public function add_modal_settings() {
@@ -888,7 +894,7 @@ class Woocommerce extends Integrations_Base {
      * Generate WooCommerce discount coupon
      *
      * @since 1.1.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param array $coupon_data | Coupon settings data
      * @return mixed int|WP_Error Coupon ID or error
      */
@@ -1070,7 +1076,7 @@ class Woocommerce extends Integrations_Base {
      * Add conditions for WooCommerce triggers
      * 
      * @since 1.2.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param array $conditions | Current conditions
      * @return array
      */
@@ -1147,7 +1153,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow on receive new order on WooCommerce
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param int $order_id  | Order ID
      * @return void
      */
@@ -1173,7 +1179,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is processing
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition data
@@ -1203,7 +1209,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is complete
      * 
      * @since 1.0.0
-     * @version 1.3.5
+     * @version 1.4.7
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition
@@ -1232,7 +1238,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is fully refunded
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $order_id  | Order ID
      * @param int $refund_id | Refund ID
      * @return void
@@ -1260,7 +1266,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is partially refunded
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param bool $is_partially_refunded | Is partially refunded
      * @param int $order_id  | Order ID
      * @return void
@@ -1288,7 +1294,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order has status changed
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param int $order_id  | Order ID
      * @param string $old_status | Old status
      * @param string $new_status | New status

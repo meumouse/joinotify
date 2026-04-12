@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * SelectField.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 

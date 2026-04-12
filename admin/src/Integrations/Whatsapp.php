@@ -1,4 +1,10 @@
 <?php
+/**
+ * Whatsapp source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -14,7 +20,7 @@ defined('ABSPATH') || exit;
  * Add integration with WhatsApp
  * 
  * @since 1.1.0
- * @version 1.4.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -24,7 +30,7 @@ class Whatsapp extends Integrations_Base {
      * Construct function
      *
      * @since 1.1.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -62,7 +68,7 @@ class Whatsapp extends Integrations_Base {
      * Add WhatsApp messages actions in sidebar list on builder
      * 
      * @since 1.1.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @param array $actions | Current actions
      * @return array
      */
@@ -156,7 +162,7 @@ class Whatsapp extends Integrations_Base {
      * Render WhatsApp message media component
      * 
      * @since 1.1.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @param array $settings | Current settings
      * @return string
      */

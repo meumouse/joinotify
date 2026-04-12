@@ -1,4 +1,10 @@
 <?php
+/**
+ * Messages source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class provides functions for handling messages from workflow builder
  * 
  * @since 1.1.0
- * @version 1.4.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -21,7 +27,7 @@ class Messages {
      * Build the funnel action message based on workflow action type
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param array $workflow_action | Workflow action data
      * @return string
      */
@@ -63,7 +69,7 @@ class Messages {
      * Build a message for time delay actions
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param array $data | Message data
      * @return string
      */
@@ -98,7 +104,7 @@ class Messages {
      * Build a message for condition actions
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param array $condition | Condition data
      * @return string
      */
@@ -149,7 +155,7 @@ class Messages {
      * Build a message for WhatsApp text actions
      * 
      * @since 1.0.0
-     * @version 1.2.2
+     * @version 1.4.7
      * @param array $data | Message data
      * @return string
      */
@@ -187,7 +193,7 @@ class Messages {
      * Build a message for WhatsApp media actions
      * 
      * @since 1.0.0
-     * @version 1.4.0
+     * @version 1.4.7
      * @param array $data | Message data
      * @return string
      */

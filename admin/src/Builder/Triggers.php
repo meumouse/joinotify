@@ -1,4 +1,10 @@
 <?php
+/**
+ * Triggers source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * This class handles with triggers functions
  * 
  * @since 1.1.0
- * @version 1.4.3
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -24,7 +30,7 @@ class Triggers {
      * Triggers are filtered by 'apply_filters' to allow dynamic extensions.
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return array
      */
     public static function get_all_triggers() {
@@ -36,7 +42,7 @@ class Triggers {
      * Get triggers by context
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $context | Nome do contexto (woocommerce, elementor, etc.)
      * @return array | return triggers array from context
      */
@@ -57,7 +63,7 @@ class Triggers {
      * Get specific trigger based on context and data_trigger
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $context | Context name (woocommerce, elementor, etc.)
      * @param string $data_trigger | Trigger name (ex: 'order_completed')
      * @return array|null | return the trigger or null if not found
@@ -80,7 +86,7 @@ class Triggers {
      * Get trigger from a specific post ID
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @return array|null | Trigger data if found, or null if not
      */
@@ -119,7 +125,7 @@ class Triggers {
      * Check if workflow trigger requires settings
      * 
      * @since 1.1.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @param int $post_id | Post ID
      * @return bool
      */

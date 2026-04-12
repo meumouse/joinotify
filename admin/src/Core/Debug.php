@@ -1,4 +1,10 @@
 <?php
+/**
+ * Debug source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * Debug class
  * 
  * @since 1.0.0
- * @version 1.3.4
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -21,7 +27,7 @@ class Debug {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -39,7 +45,7 @@ class Debug {
      * Add styles and scripts for debug
      * 
      * @since 1.0.0
-     * @version 1.3.4
+     * @version 1.4.7
      * @return void
      */
     public function debug_mode() {

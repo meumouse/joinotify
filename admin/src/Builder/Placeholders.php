@@ -1,4 +1,10 @@
 <?php
+/**
+ * Placeholders source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -21,7 +27,7 @@ class Placeholders {
      * Get placeholders list based on context and trigger type
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $integration | Integration key
      * @param string $trigger | Trigger type to filter placeholders
      * @param array $context | Context data

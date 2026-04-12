@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * IntegrationSettingsModal.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { __, textDomain } from '../../../../utils/i18n';
 import ModalDialog from '../../../../components/modals/ModalDialog.vue';
 import FieldRow from '../../../../components/fields/FieldRow.vue';

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Actions source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit; ?>

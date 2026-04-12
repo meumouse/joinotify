@@ -1,4 +1,10 @@
 <?php
+/**
+ * License source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Api;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * Connect to license authentication server
  * 
  * @since 1.0.0
- * @version 1.1.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\API
  * @author MeuMouse.com
  */
@@ -41,7 +47,7 @@ class License {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $plugin_base_file
      * @return void
      */
@@ -171,7 +177,7 @@ class License {
      * Decrypt response
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $encrypted | Encrypted response
      * @param string $password | Product key
      * @return string
@@ -238,7 +244,7 @@ class License {
      * Processes the API response
      *
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $response | Raw API response
      * @return stdClass|mixed Object decoded from the JSON response or error object, if applicable.
      */
@@ -315,7 +321,7 @@ class License {
      * Request on API server
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $relative_url | API URL to concat
      * @param object $data | Object data to encode and add to body request
      * @param string $error | Error message
@@ -530,7 +536,7 @@ class License {
      * Remove response base option
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return string
      */
     public function remove_response_base() {
@@ -594,7 +600,7 @@ class License {
      * Deactive license process
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $message | Error message
      * @return bool
      */
@@ -865,7 +871,7 @@ class License {
     /**
      * Get license title
      * 
-     * @version 1.0.0
+     * @version 1.4.7
      * @return string
      */
     public static function license_title() {

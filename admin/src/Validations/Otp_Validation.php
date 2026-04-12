@@ -1,4 +1,10 @@
 <?php
+/**
+ * Otp_Validation source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Validations;
 
@@ -11,7 +17,7 @@ defined('ABSPATH') || exit;
  * Class for handler with OTP validations
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Validations
  * @author MeuMouse.com
  */
@@ -24,7 +30,7 @@ class Otp_Validation {
      * Generate OTP code, storage for future validation and send message via WhatsApp
      *
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @param string $phone | Phone number
      * @return bool Returns true if the OTP was generated and sent successfully, false otherwise.
      */

@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * App.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed } from 'vue';
 import SettingsPage from './pages/settings/SettingsPage.vue';
 import LicensePage from './pages/license/LicensePage.vue';

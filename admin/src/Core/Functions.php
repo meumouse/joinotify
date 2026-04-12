@@ -1,4 +1,10 @@
 <?php
+/**
+ * Functions source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Admin\Admin;
@@ -13,7 +19,7 @@ defined('ABSPATH') || exit;
  * Check admin page from partial URL
  * 
  * @since 1.1.0
- * @version 1.4.0
+ * @version 1.4.7
  * @param $admin_page | Page string for check from admin.php?page=
  * @return bool
  */
@@ -45,7 +51,7 @@ function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $de
  * Send message media on WhatsApp
  * 
  * @since 1.1.0
- * @version 1.4.0
+ * @version 1.4.7
  * @param string $sender | Instance phone number
  * @param string $receiver | Phone number for receive message
  * @param string $media_type | Media type (image, audio, video or document)
@@ -97,7 +103,7 @@ function joinotify_get_proxy_api_key() {
  * Prepare the receiver phone number with the correct format
  * 
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.4.7
  * @param string $receiver |  Receiver phone
  * @param array $payload | Payload for replace placeholders
  * @return string
@@ -156,7 +162,7 @@ function joinotify_format_plain_text( $content ) {
  * Get first sender phone number
  *
  * @since 1.3.0
- * @version 1.4.0
+ * @version 1.4.7
  * @return string|null
  */
 function joinotify_get_first_sender() {

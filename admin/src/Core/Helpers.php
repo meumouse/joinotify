@@ -1,4 +1,10 @@
 <?php
+/**
+ * Helpers source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -16,7 +22,7 @@ defined('ABSPATH') || exit;
  * Class to provide helper functions for general formatting and validation
  * 
  * @since 1.0.0
- * @version 1.4.3
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -26,7 +32,7 @@ class Helpers {
      * Format time unit with singular/plural
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $time_unit
      * @param bool $plural
      * @return string
@@ -50,7 +56,7 @@ class Helpers {
      * Validate and format a phone number, adding the default country code if missing.
      * 
      * @since 1.0.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $phone | Raw phone number
      * @return string Formatted phone number with country code
      */
@@ -167,7 +173,7 @@ class Helpers {
      * Get switch options dynamically from default options
      *
      * @since 1.1.0
-     * @version 1.3.2
+     * @version 1.4.7
      * @return array List of switch options keys
      */
     public static function get_switch_options() {

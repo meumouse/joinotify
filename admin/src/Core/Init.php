@@ -1,4 +1,10 @@
 <?php
+/**
+ * Init source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -12,7 +18,7 @@ defined('ABSPATH') || exit;
  * Initialize plugin classes
  * 
  * @since 1.0.0
- * @version 1.4.6
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -46,7 +52,7 @@ class Init {
 	 * Plugin basename.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.5
+	 * @version 1.4.7
 	 * @var string
 	 */
 	public $basename;
@@ -63,7 +69,7 @@ class Init {
 	 * Deferred classes: hook => class list.
 	 *
 	 * @since 1.4.5
-	 * @version 1.4.6
+	 * @version 1.4.7
 	 * @var array
 	 */
 	private $deferred_classes = array(
@@ -80,7 +86,7 @@ class Init {
 	 * Construct function.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.6
+	 * @version 1.4.7
 	 * @param string $plugin_file | Plugin main file path.
 	 * @param string $plugin_version | Plugin version.
 	 * @return void
@@ -131,7 +137,7 @@ class Init {
 		 * Fire hook after Joinotify initialize.
 		 * 
 		 * @since 1.1.0
-		 * @version 1.4.4
+		 * @version 1.4.7
 		 */
 		do_action('joinotify_init');
 	}
@@ -141,7 +147,7 @@ class Init {
 	 * Load text domain after init hook.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.5
+	 * @version 1.4.7
 	 * @return void
 	 */
 	public function load_text_domain() {
@@ -288,7 +294,7 @@ class Init {
 	 * Safely instance a single class with validation.
 	 * 
 	 * @since 1.4.3
-	 * @version 1.4.6
+	 * @version 1.4.7
 	 * @param string $class Full class name with namespace.
 	 * @return mixed|null Returns the class instance or null on failure.
 	 */
@@ -355,7 +361,7 @@ class Init {
 	 * Register deferred class instantiation by hook.
 	 *
 	 * @since 1.4.5
-	 * @version 1.4.6
+	 * @version 1.4.7
 	 * @return void
 	 */
 	private function register_deferred_classes() {
@@ -406,7 +412,7 @@ class Init {
 	 * Plugin action links.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.3.0
+	 * @version 1.4.7
 	 * @param array $action_links Default plugin action links.
 	 * @return array
 	 */
@@ -429,7 +435,7 @@ class Init {
 	 * Add meta links on plugin.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.3.0
+	 * @version 1.4.7
 	 * @param array  $plugin_meta An array of the plugin's metadata.
 	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
 	 * @param array  $plugin_data An array of plugin data.

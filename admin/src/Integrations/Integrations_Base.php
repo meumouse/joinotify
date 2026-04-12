@@ -1,4 +1,10 @@
 <?php
+/**
+ * Integrations_Base source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -12,7 +18,7 @@ defined('ABSPATH') || exit;
  * Abstract base class for integrations
  * 
  * @since 1.0.0
- * @version 1.3.0
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -22,7 +28,7 @@ abstract class Integrations_Base {
      * Add tab items on integration settings tab
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return array
      */
     public static function integration_tab_items() {
@@ -178,7 +184,7 @@ abstract class Integrations_Base {
      * Render the trigger content
      * 
      * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.4.7
      * @param string $slug | Slug da integração (eg: 'wordpress')
      * @return void
      */

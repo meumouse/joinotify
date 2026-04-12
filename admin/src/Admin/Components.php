@@ -1,4 +1,10 @@
 <?php
+/**
+ * Components source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Admin;
 
@@ -12,7 +18,7 @@ defined('ABSPATH') || exit;
  * Class for handle with settings components
  * 
  * @since 1.1.0
- * @version 1.4.6
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Admin
  * @author MeuMouse.com
  */
@@ -22,7 +28,7 @@ class Components {
      * Display current phones senders
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return string
      */
     public static function current_phones_senders() {
@@ -61,7 +67,7 @@ class Components {
      * Display OTP input for validation
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $phone | Phone number
      * @return string
      */
@@ -99,7 +105,7 @@ class Components {
      * Display badge for state connection
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @param string $phone | Phone number
      * @return string
      */

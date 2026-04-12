@@ -1,4 +1,10 @@
 <?php
+/**
+ * Ajax source file.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -33,7 +39,7 @@ defined('ABSPATH') || exit;
  * Handle AJAX callbacks
  *
  * @since 1.0.0
- * @version 1.4.6
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -46,7 +52,7 @@ class Ajax {
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.4.5
+     * @version 1.4.7
      * @return void
      */
     public function __construct() {
@@ -141,7 +147,7 @@ class Ajax {
      * Save options in AJAX
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function admin_save_options_callback() {
@@ -393,7 +399,7 @@ class Ajax {
      * Get workflow templates on AJAX callback
      * 
      * @since 1.2.0
-     * @version 1.4.6
+     * @version 1.4.7
      * @return void
      */
     public function get_workflow_templates_callback() {
@@ -455,7 +461,7 @@ class Ajax {
      * Import workflow templates on AJAX callback
      * 
      * @since 1.1.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function import_workflow_templates_callback() {
@@ -549,7 +555,7 @@ class Ajax {
      * Create workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function create_workflow_callback() {
@@ -713,7 +719,7 @@ class Ajax {
      * Load workflow data on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function load_workflow_data_callback() {
@@ -832,7 +838,7 @@ class Ajax {
      * Add action on workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function add_workflow_action_callback() {
@@ -1125,7 +1131,7 @@ class Ajax {
      * Delete action from workflow via AJAX callback
      *
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function delete_workflow_action_callback() {
@@ -1193,7 +1199,7 @@ class Ajax {
      * Export workflow on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function export_workflow_callback() {
@@ -1252,7 +1258,7 @@ class Ajax {
      * Get phones senders on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.0.2
+     * @version 1.4.7
      * @return void
      */
     public function get_phone_numbers_callback() {
@@ -1315,7 +1321,7 @@ class Ajax {
      * Register phone sender on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function register_phone_sender_callback() {
@@ -1347,7 +1353,7 @@ class Ajax {
      * Callback to validate OTP
      * 
      * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.7
      * @return void
      */
     public function validate_otp_callback() {
@@ -1426,7 +1432,7 @@ class Ajax {
      * Callback to remove a phone sender
      *
      * @since 1.0.0
-     * @version 1.4.2
+     * @version 1.4.7
      * @return void
      */
     public function remove_phone_sender_callback() {
@@ -1492,7 +1498,7 @@ class Ajax {
      * Send message test for workflow test on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function run_workflow_test_callback() {
@@ -1587,7 +1593,7 @@ class Ajax {
      * Reset plugin options to default on AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.1.0
+     * @version 1.4.7
      * @return void
      */
     public function reset_plugin_callback() {
@@ -1675,7 +1681,7 @@ class Ajax {
      * Send message test on admin panel for AJAX callback
      * 
      * @since 1.0.0
-     * @version 1.3.0
+     * @version 1.4.7
      * @return void
      */
     public function send_message_test_callback() {
@@ -1934,7 +1940,7 @@ class Ajax {
      * Save edition from action on workflow builder on AJAX callback
      * 
      * @since 1.1.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function save_action_settings_callback() {
@@ -2032,7 +2038,7 @@ class Ajax {
      * Save trigger settings on AJAX callback
      * 
      * @since 1.1.0
-     * @version 1.4.3
+     * @version 1.4.7
      * @return void
      */
     public function save_trigger_settings_callback() {
@@ -2103,7 +2109,7 @@ class Ajax {
 	 * Get WooCommerce products in AJAX callback
 	 * 
 	 * @since 1.1.0
-     * @version 1.2.0
+     * @version 1.4.7
 	 * @return void
 	 */
 	public function get_woo_products_callback() {
@@ -2145,7 +2151,7 @@ class Ajax {
      * Import workflow template from repository via AJAX
      *
      * @since 1.2.0
-     * @version 1.4.6
+     * @version 1.4.7
      * @return void
      */
     public function download_workflow_template_callback() {
@@ -2316,7 +2322,7 @@ class Ajax {
      * Check connection state for instance on AJAX callback
      * 
      * @since 1.3.0
-     * @version 1.4.2
+     * @version 1.4.7
      * @return void
      */
     public function check_instance_connection_callback() {

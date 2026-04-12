@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * FieldRenderer.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { computed } from 'vue';
 import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 import TextField from './TextField.vue';

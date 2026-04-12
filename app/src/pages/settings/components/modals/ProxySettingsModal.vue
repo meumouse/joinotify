@@ -1,4 +1,11 @@
 <script setup>
+
+/**
+ * ProxySettingsModal.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
 import { __, textDomain } from '../../../../utils/i18n';
 import ModalDialog from '../../../../components/modals/ModalDialog.vue';
 import Tooltip from '../../../../components/tooltips/Tooltip.vue';
