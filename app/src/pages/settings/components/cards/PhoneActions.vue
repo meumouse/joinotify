@@ -22,6 +22,7 @@ const props = defineProps({
   candidates: { type: Array, default: () => [] },
   senders: { type: Array, default: () => [] },
   defaultCountry: { type: String, default: 'us' },
+  locale: { type: String, default: 'en_US' },
   sendTestMessage: { type: Function, default: null },
 });
 
@@ -170,6 +171,7 @@ async function submitTestMessage() {
             placeholder: __('5541987111527', textDomain),
           }"
           :default-country="defaultCountry"
+          :locale="locale"
           :show-header="false"
           name="test-number-phone"
           @update:model-value="$emit('update:modelValue', $event)"
@@ -242,6 +244,7 @@ async function submitTestMessage() {
               placeholder: __('5541987111527', textDomain),
             }"
             :default-country="defaultCountry"
+            :locale="locale"
             :show-header="false"
             name="test-message-receiver"
           />
@@ -259,7 +262,7 @@ async function submitTestMessage() {
             v-model="testMessageBody"
             :field="{
               placeholder: __('Type your test message...', textDomain),
-              rows: 3,
+              rows: 2,
             }"
             name="test-message-body"
             :show-header="false"

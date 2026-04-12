@@ -221,7 +221,7 @@ onBeforeUnmount(() => {
             ref="searchEl"
             v-model="query"
             type="text"
-            class="w-full rounded-[8px] border border-slate-200 bg-slate-50 px-3 py-2 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100"
+            class="w-full rounded-[6px] border border-slate-200 bg-slate-50 px-3 py-2 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100"
             :placeholder="field.searchPlaceholder || __('Search...', textDomain)"
           />
         </div>

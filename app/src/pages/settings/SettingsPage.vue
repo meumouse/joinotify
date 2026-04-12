@@ -454,6 +454,7 @@ function canConfigureIntegration(integration) {
             :model-value="settings.test_number_phone"
             :phone-candidates="phoneCandidates"
             :phones="phones"
+            :locale="phones.locale"
             :default-country="phones.default_country_iso2"
             :refreshing-sender-phone="refreshingSenderPhone"
             :send-test-message="sendTestMessage"

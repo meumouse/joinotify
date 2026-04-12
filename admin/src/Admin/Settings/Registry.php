@@ -331,6 +331,7 @@ class Registry {
             'senders' => $senders,
             'test_number_phone' => Admin::get_setting( 'test_number_phone' ),
             'default_country_iso2' => self::get_default_country_iso2(),
+            'locale' => self::get_current_locale(),
             'sender_count' => count( $senders ),
         );
     }
@@ -571,6 +572,24 @@ class Registry {
         $iso2 = array_key_first( $country_data );
 
         return is_string( $iso2 ) && $iso2 ? strtolower( $iso2 ) : 'us';
+    }
+
+
+    /**
+     * Get the current WordPress locale used by the admin interface.
+     *
+     * @return string
+     */
+    private static function get_current_locale() {
+        if ( function_exists( 'determine_locale' ) ) {
+            return sanitize_text_field( determine_locale() );
+        }
+
+        if ( function_exists( 'get_locale' ) ) {
+            return sanitize_text_field( get_locale() );
+        }
+
+        return 'en_US';
     }
 
 

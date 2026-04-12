@@ -16,6 +16,7 @@ const props = defineProps({
   phones: { type: Object, default: () => ({ senders: [], sender_count: 0 }) },
   refreshingSenderPhone: { type: String, default: '' },
   defaultCountry: { type: String, default: 'us' },
+  locale: { type: String, default: 'en_US' },
   sendTestMessage: { type: Function, default: null },
 });
 
@@ -34,6 +35,7 @@ const model = computed({
       :candidates="phoneCandidates"
       :senders="phones.senders || []"
       :default-country="defaultCountry"
+      :locale="locale"
       :send-test-message="sendTestMessage"
       @register="$emit('register', $event)"
       @validate="$emit('validate', $event)"

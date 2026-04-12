@@ -19,6 +19,7 @@ const props = defineProps({
   name: { type: String, required: true },
   defaultCountry: { type: String, default: 'us' },
   showHeader: { type: Boolean, default: true },
+  locale: { type: String, default: 'en_US' },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -28,10 +29,103 @@ const iti = ref(null);
 const isSyncingFromModel = ref(false);
 let onCountryChange = null;
 
+const localeLoaders = {
+  ar: () => import('intl-tel-input/i18n/ar'),
+  bg: () => import('intl-tel-input/i18n/bg'),
+  bn: () => import('intl-tel-input/i18n/bn'),
+  bs: () => import('intl-tel-input/i18n/bs'),
+  ca: () => import('intl-tel-input/i18n/ca'),
+  cs: () => import('intl-tel-input/i18n/cs'),
+  da: () => import('intl-tel-input/i18n/da'),
+  de: () => import('intl-tel-input/i18n/de'),
+  ee: () => import('intl-tel-input/i18n/ee'),
+  el: () => import('intl-tel-input/i18n/el'),
+  en: () => import('intl-tel-input/i18n/en'),
+  es: () => import('intl-tel-input/i18n/es'),
+  fa: () => import('intl-tel-input/i18n/fa'),
+  fi: () => import('intl-tel-input/i18n/fi'),
+  fr: () => import('intl-tel-input/i18n/fr'),
+  hi: () => import('intl-tel-input/i18n/hi'),
+  hr: () => import('intl-tel-input/i18n/hr'),
+  hu: () => import('intl-tel-input/i18n/hu'),
+  id: () => import('intl-tel-input/i18n/id'),
+  it: () => import('intl-tel-input/i18n/it'),
+  ja: () => import('intl-tel-input/i18n/ja'),
+  ko: () => import('intl-tel-input/i18n/ko'),
+  lt: () => import('intl-tel-input/i18n/lt'),
+  mr: () => import('intl-tel-input/i18n/mr'),
+  nl: () => import('intl-tel-input/i18n/nl'),
+  no: () => import('intl-tel-input/i18n/no'),
+  pl: () => import('intl-tel-input/i18n/pl'),
+  pt: () => import('intl-tel-input/i18n/pt'),
+  ro: () => import('intl-tel-input/i18n/ro'),
+  ru: () => import('intl-tel-input/i18n/ru'),
+  sk: () => import('intl-tel-input/i18n/sk'),
+  sl: () => import('intl-tel-input/i18n/sl'),
+  sq: () => import('intl-tel-input/i18n/sq'),
+  sr: () => import('intl-tel-input/i18n/sr'),
+  sv: () => import('intl-tel-input/i18n/sv'),
+  te: () => import('intl-tel-input/i18n/te'),
+  th: () => import('intl-tel-input/i18n/th'),
+  tr: () => import('intl-tel-input/i18n/tr'),
+  uk: () => import('intl-tel-input/i18n/uk'),
+  ur: () => import('intl-tel-input/i18n/ur'),
+  uz: () => import('intl-tel-input/i18n/uz'),
+  vi: () => import('intl-tel-input/i18n/vi'),
+  zh: () => import('intl-tel-input/i18n/zh'),
+  'zh-hk': () => import('intl-tel-input/i18n/zh-hk'),
+};
+
 const fieldStyles = computed(() => ({
   '--iti-path-flags-1x': `url(${flags1xUrl})`,
   '--iti-path-flags-2x': `url(${flags2xUrl})`,
 }));
+
+function normalizeLocale(locale) {
+  if (!locale) {
+    return 'en';
+  }
+
+  return String(locale).trim().replace('_', '-').toLowerCase();
+}
+
+function toCountryNameLocale(locale) {
+  const normalized = String(locale || '').trim().replace('_', '-');
+
+  if (!normalized) {
+    return 'en';
+  }
+
+  const parts = normalized.split('-');
+
+  if (parts.length < 2) {
+    return parts[0].toLowerCase();
+  }
+
+  const [language, region, ...rest] = parts;
+  return [language.toLowerCase(), region.toUpperCase(), ...rest].join('-');
+}
+
+function getIntlTelInputLoader(locale) {
+  const normalized = normalizeLocale(locale);
+  const primary = normalized.split('-')[0];
+
+  if (localeLoaders[normalized]) {
+    return localeLoaders[normalized];
+  }
+
+  if (localeLoaders[primary]) {
+    return localeLoaders[primary];
+  }
+
+  return localeLoaders.en;
+}
+
+async function loadIntlTelInputTranslations(locale) {
+  const module = await getIntlTelInputLoader(locale)();
+
+  return module.default || module;
+}
 
 function getInitialNumber(value) {
   if (!value) {
@@ -67,27 +161,64 @@ onMounted(() => {
     return;
   }
 
-  iti.value = intlTelInput(inputEl.value, {
-    initialCountry: props.defaultCountry || 'us',
-    nationalMode: false,
-    autoPlaceholder: 'polite',
-    formatOnDisplay: true,
-    separateDialCode: false,
-    loadUtils: () => import('intl-tel-input/utils'),
-  });
+  loadIntlTelInputTranslations(props.locale)
+    .then((translations) => {
+      if (!inputEl.value) {
+        return;
+      }
 
-  applyModelValue(props.modelValue);
+        iti.value = intlTelInput(inputEl.value, {
+          initialCountry: props.defaultCountry || 'us',
+          nationalMode: false,
+          autoPlaceholder: 'polite',
+          formatOnDisplay: true,
+          separateDialCode: false,
+          countryNameLocale: toCountryNameLocale(props.locale),
+          i18n: translations,
+          loadUtils: () => import('intl-tel-input/utils'),
+        });
 
-  onCountryChange = () => {
-    if (isSyncingFromModel.value || !iti.value) {
-      return;
-    }
+      applyModelValue(props.modelValue);
 
-    const number = iti.value.getNumber();
-    emit('update:modelValue', number || inputEl.value.value.trim());
-  };
+      onCountryChange = () => {
+        if (isSyncingFromModel.value || !iti.value) {
+          return;
+        }
 
-  inputEl.value.addEventListener('countrychange', onCountryChange);
+        const number = iti.value.getNumber();
+        emit('update:modelValue', number || inputEl.value.value.trim());
+      };
+
+      inputEl.value.addEventListener('countrychange', onCountryChange);
+    })
+    .catch(() => {
+      if (!inputEl.value) {
+        return;
+      }
+
+        iti.value = intlTelInput(inputEl.value, {
+          initialCountry: props.defaultCountry || 'us',
+          nationalMode: false,
+          autoPlaceholder: 'polite',
+          formatOnDisplay: true,
+          separateDialCode: false,
+          countryNameLocale: toCountryNameLocale(props.locale),
+          loadUtils: () => import('intl-tel-input/utils'),
+        });
+
+      applyModelValue(props.modelValue);
+
+      onCountryChange = () => {
+        if (isSyncingFromModel.value || !iti.value) {
+          return;
+        }
+
+        const number = iti.value.getNumber();
+        emit('update:modelValue', number || inputEl.value.value.trim());
+      };
+
+      inputEl.value.addEventListener('countrychange', onCountryChange);
+    });
 });
 
 watch(

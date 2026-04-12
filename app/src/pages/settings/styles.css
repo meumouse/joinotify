@@ -38,11 +38,12 @@
 .joinotify-settings .joinotify-phone-field input.iti__tel-input[type='tel'],
 .joinotify-settings .joinotify-phone-field input.iti__tel-input[type='text'] {
   min-height: 48px;
-  padding-left: 90px;
+  padding-left: 65px !important;
   padding-right: 1rem;
   border-radius: 8px;
   font-size: 14px;
   line-height: 1.5rem;
+  height: 3rem !important;
 }
 
 .joinotify-settings .joinotify-phone-field input.iti__tel-input:focus,
@@ -54,4 +55,12 @@
 
 .joinotify-settings .joinotify-phone-field .iti__country-list {
   min-width: 280px;
+}
+
+.joinotify-settings .iti__search-input {
+  width: 100%;
+  border-width: 0 !important;
+  border-radius: 3px !important;
+  padding-left: 30px !important;
+  padding-right: 28px !important;
 }

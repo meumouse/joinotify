@@ -9,7 +9,7 @@
 import { __, textDomain } from '../../../../utils/i18n';
 import ModalDialog from '../../../../components/modals/ModalDialog.vue';
 import Tooltip from '../../../../components/tooltips/Tooltip.vue';
-import InputButtonField from '../../../../components/fields/InputButtonField.vue';
+import InputGroupField from '../../../../components/fields/InputGroupField.vue';
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -53,7 +53,7 @@ async function copyApiKey() {
           </p>
         </div>
 
-        <InputButtonField
+        <InputGroupField
           name="send_text_proxy_api_route"
           :model-value="settings.send_text_proxy_api_route"
           :placeholder="__('send-message/text', textDomain)"
@@ -87,7 +87,7 @@ async function copyApiKey() {
               </button>
             </Tooltip>
           </template>
-        </InputButtonField>
+        </InputGroupField>
       </div>
 
       <div class="grid gap-4 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
@@ -98,7 +98,7 @@ async function copyApiKey() {
           </p>
         </div>
 
-        <InputButtonField
+        <InputGroupField
           name="send_media_proxy_api_route"
           :model-value="settings.send_media_proxy_api_route"
           :placeholder="__('send-message/media', textDomain)"
@@ -132,7 +132,7 @@ async function copyApiKey() {
               </button>
             </Tooltip>
           </template>
-        </InputButtonField>
+        </InputGroupField>
       </div>
 
       <div class="grid gap-4 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
@@ -143,7 +143,7 @@ async function copyApiKey() {
           </p>
         </div>
 
-        <InputButtonField
+        <InputGroupField
           name="proxy_api_key"
           :model-value="settings.proxy_api_key"
           :placeholder="''"
@@ -204,7 +204,7 @@ async function copyApiKey() {
               </button>
             </Tooltip>
           </template>
-        </InputButtonField>
+        </InputGroupField>
       </div>
     </div>
   </ModalDialog>
