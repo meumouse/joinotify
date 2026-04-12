@@ -1,6 +1,6 @@
 <script setup>
 import { nextTick, ref } from 'vue';
-import { __, sprintf, textDomain } from '../../lib/i18n';
+import { __, sprintf, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
   digits: {

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { __, textDomain } from '../../lib/i18n';
+import { __, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },

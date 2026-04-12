@@ -1,5 +1,6 @@
-Versão 1.4.7 (10/03/2026)
+Versão 1.4.7 (12/04/2026)
 * Recurso adicionado: Fila para processamento de mensagens
+* Mudança de tecnologia do frontend para Vue.js, Vite e Tailwind CSS
 
 Versão 1.4.6 (10/02/2026)
 * Otimizações

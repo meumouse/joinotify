@@ -89,6 +89,8 @@ class Assets {
             return false;
         }
 
-        return 'joinotify-settings' === sanitize_text_field( wp_unslash( $_GET['page'] ) );
+        $page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+
+        return in_array( $page, array( 'joinotify-settings', 'joinotify-license' ), true );
     }
 }

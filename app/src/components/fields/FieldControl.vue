@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import ToggleSwitch from '../base/ToggleSwitch.vue';
+import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 import TextField from './TextField.vue';
 import TextAreaField from './TextAreaField.vue';
 import SelectField from './SelectField.vue';

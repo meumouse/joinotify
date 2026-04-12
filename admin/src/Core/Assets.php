@@ -2,8 +2,6 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-use MeuMouse\Joinotify\Admin\Admin;
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -41,9 +39,6 @@ class Assets {
 		$this->min_file = defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ? '' : '.min';
 		$this->debug_mode = defined('JOINOTIFY_DEBUG_MODE') ? JOINOTIFY_DEBUG_MODE : false;
 
-		// settings page scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'settings_assets' ) );
-
 		// license page scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'license_assets' ) );
 
@@ -53,43 +48,6 @@ class Assets {
 		// workflows table scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'workflows_table_assets' ) );
 	}
-
-
-	/**
-	 * Enqueue scripts on settings page
-	 * 
-	 * @since 1.0.0
-	 * @version 1.3.0
-	 * @return void
-	 */
-	public function settings_assets() {
-		if ( joinotify_check_admin_page('joinotify-settings') ) {
-			$vue_bundle = JOINOTIFY_DIR . 'assets/admin/vue-settings/settings-app.js';
-
-			// The Vue settings frontend replaces the legacy jQuery settings page.
-			if ( file_exists( $vue_bundle ) ) {
-				return;
-			}
-
-			wp_enqueue_style( 'joinotify-styles', $this->assets_url . 'admin/css/settings'. $this->min_file .'.css', array(), $this->version );
-			wp_enqueue_script( 'joinotify-scripts', $this->assets_url . 'admin/js/settings'. $this->min_file .'.js', array('jquery'), $this->version );
-
-			// settings params
-			wp_localize_script( 'joinotify-scripts', 'joinotify_params', array(
-				'debug_mode' => $this->debug_mode,
-				'dev_mode' => $this->dev_mode,
-				'ajax_url' => admin_url('admin-ajax.php'),
-				'i18n' => array(
-					'confirm_remove_sender' => __( 'Tem certeza que deseja remover este remetente?', 'joinotify' ),
-					'resend_otp_button' => __( 'Reenviar código', 'joinotify' ),
-					'confirm_clear_debug_logs' => __( 'Tem certeza que deseja limpar os registros de depuração?', 'joinotify' ),
-					'offline_toast_header' => esc_html__( 'Ops! Não há conexão com a internet', 'joinotify' ),
-                    'offline_toast_body' => esc_html__( 'As alterações não serão salvas.', 'joinotify' ),
-				),
-			));
-		}
-	}
-
 
 	/**
 	 * Enqueue assets on license page
@@ -110,12 +68,11 @@ class Assets {
 				'ajax_url' => admin_url('admin-ajax.php'),
 				'i18n' => array(
 					'close_notice_aria_label' => __( 'Fechar', 'joinotify' ),
-					'confirm_deactivate_license' => __( 'Tem certeza que deseja desativar sua licença?', 'joinotify' ),
+					'confirm_deactivate_license' => __( 'Tem certeza que deseja desativar sua licenÃ§a?', 'joinotify' ),
 				),
 			));
 		}
 	}
-
 
 	/**
 	 * Enqueue scripts on builder page
@@ -178,10 +135,10 @@ class Assets {
 				),
 				'i18n' => array(
 					'status_active' => esc_html__( 'Ativo', 'joinotify' ),
-					'confirm_exclude_action' => esc_html__( 'Tem certeza que deseja excluir esta ação?', 'joinotify' ),
-					'set_media_title' => esc_html__( 'Escolher mídia', 'joinotify' ),
-					'use_this_media_title' => esc_html__( 'Usar esta mídia', 'joinotify' ),
-					'default_workflow_name' => sprintf( __( 'Minha automação #%s', 'joinotify' ), random_int( 0, 999999 ) ),
+					'confirm_exclude_action' => esc_html__( 'Tem certeza que deseja excluir esta aÃ§Ã£o?', 'joinotify' ),
+					'set_media_title' => esc_html__( 'Escolher mÃ­dia', 'joinotify' ),
+					'use_this_media_title' => esc_html__( 'Usar esta mÃ­dia', 'joinotify' ),
+					'default_workflow_name' => sprintf( __( 'Minha automaÃ§Ã£o #%s', 'joinotify' ), random_int( 0, 999999 ) ),
 					'copy_group_id' => esc_html__( 'ID copiado!', 'joinotify' ),
 					'remove_product_selectize' => esc_html__( 'Remover', 'joinotify' ),
 					'not_templates_found' => esc_html__( 'Nenhum fluxo encontrado.', 'joinotify' ),
@@ -197,17 +154,16 @@ class Assets {
 							'activity_title' => esc_html__( 'Atividades', 'joinotify' ),
 							'travel_places_title' => esc_html__( 'Viajens e Lugares', 'joinotify' ),
 							'objects_title' => esc_html__( 'Objetos', 'joinotify' ),
-							'symbols_title' => esc_html__( 'Símbolos', 'joinotify' ),
+							'symbols_title' => esc_html__( 'SÃ­mbolos', 'joinotify' ),
 							'flags_title' => esc_html__( 'Bandeiras', 'joinotify' ),
 						),
 					),
-					'offline_toast_header' => esc_html__( 'Ops! Não há conexão com a internet', 'joinotify' ),
-                    'offline_toast_body' => esc_html__( 'As alterações não serão salvas.', 'joinotify' ),
+					'offline_toast_header' => esc_html__( 'Ops! NÃ£o hÃ¡ conexÃ£o com a internet', 'joinotify' ),
+                    'offline_toast_body' => esc_html__( 'As alteraÃ§Ãµes nÃ£o serÃ£o salvas.', 'joinotify' ),
 				),
 			));
 		}
 	}
-
 
 	/**
 	 * Enqueue scripts on workflows table page

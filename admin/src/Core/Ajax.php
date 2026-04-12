@@ -2411,7 +2411,7 @@ class Ajax {
      * @since 1.4.6
      * @return array
      */
-    private function get_license_view_data() {
+    public function get_license_view_data() {
         $license_key = get_option( 'joinotify_license_key', '' );
         $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
         $is_valid = License::is_valid();

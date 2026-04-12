@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Admin\Settings;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
+use MeuMouse\Joinotify\Api\License;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Validations\Country_Codes;
@@ -429,11 +430,17 @@ class Registry {
     public static function get_bootstrap_data() {
         return apply_filters( 'Joinotify/Admin/Settings/Bootstrap_Data', array(
             'version' => JOINOTIFY_VERSION,
+            'page' => 'settings',
             'settings' => self::get_settings(),
             'schema' => self::get_schema(),
             'integrations' => self::get_integration_cards(),
             'phones' => self::get_phone_state(),
             'system' => self::get_system_status(),
+            'license' => self::get_license_state(),
+            'links' => array(
+                'docs_url' => esc_url_raw( 'https://ajuda.meumouse.com/docs/joinotify/overview' ),
+                'purchase_url' => esc_url_raw( 'https://meumouse.com/plugins/joinotify/' ),
+            ),
             'permissions' => array(
                 'manage_options' => current_user_can( 'manage_options' ),
             ),
@@ -441,11 +448,78 @@ class Registry {
                 'root' => esc_url_raw( rest_url( 'joinotify/v1' ) ),
                 'nonce' => wp_create_nonce( 'wp_rest' ),
             ),
+            'contracts' => array(
+                'bootstrap_filter' => 'Joinotify/Admin/Settings/Bootstrap_Data',
+                'schema_filter' => 'Joinotify/Admin/Settings/Schema',
+                'integration_filter' => 'Joinotify/Settings/Tabs/Integrations',
+                'actions_filter' => 'Joinotify/Builder/Actions',
+                'triggers_filter' => 'Joinotify/Builder/Get_All_Triggers',
+            ),
             'i18n' => array(
                 'saved' => esc_html__( 'As configurações foram salvas.', 'joinotify' ),
                 'error' => esc_html__( 'Não foi possível concluir a operação.', 'joinotify' ),
             ),
         ) );
+    }
+
+
+    /**
+     * Build the license state payload used by the Vue license page.
+     *
+     * @return array<string,mixed>
+     */
+    public static function get_license_state() {
+        $license_key = get_option( 'joinotify_license_key', '' );
+        $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
+        $license_object = get_option( 'joinotify_license_response_object' );
+        $is_valid = License::is_valid();
+        $purchase_url = apply_filters( 'Joinotify/Admin/Settings/License_Purchase_Url', 'https://meumouse.com/plugins/joinotify/' );
+        $docs_url = apply_filters( 'Joinotify/Admin/Settings/License_Help_Url', 'https://ajuda.meumouse.com/docs/joinotify/overview' );
+
+        $subscription_label = $is_valid
+            ? ( strpos( $license_key, 'CM-' ) === 0
+                ? sprintf( esc_html__( 'Assinatura: Clube M - %s', 'joinotify' ), License::license_title() )
+                : sprintf( esc_html__( 'Assinatura: %s', 'joinotify' ), License::license_title() )
+            )
+            : esc_html__( 'Ative sua licença para liberar os recursos premium.', 'joinotify' );
+
+        $support_text = esc_html__( 'Não disponível', 'joinotify' );
+
+        if ( is_object( $license_object ) && ! empty( $license_object->support_end ) ) {
+            $support_text = is_string( $license_object->support_end )
+                ? sanitize_text_field( $license_object->support_end )
+                : esc_html__( 'Não disponível', 'joinotify' );
+        }
+
+        return array(
+            'is_valid' => $is_valid,
+            'status_label' => $is_valid ? esc_html__( 'Válida', 'joinotify' ) : esc_html__( 'Inválida', 'joinotify' ),
+            'status_tone' => $is_valid ? 'success' : 'danger',
+            'title' => $is_valid ? esc_html__( 'Licença ativa', 'joinotify' ) : esc_html__( 'Ative sua licença', 'joinotify' ),
+            'subtitle' => $is_valid
+                ? esc_html__( 'Sua instalação está liberada para uso completo.', 'joinotify' )
+                : esc_html__( 'Digite o código da licença para desbloquear os recursos premium.', 'joinotify' ),
+            'purchase_url' => esc_url_raw( $purchase_url ),
+            'docs_url' => esc_url_raw( $docs_url ),
+            'activate_action' => 'joinotify_active_license',
+            'deactivate_action' => 'joinotify_deactive_license',
+            'sync_action' => 'joinotify_sync_license',
+            'alternative_action' => 'joinotify_alternative_activation_license',
+            'license_key' => $license_key,
+            'license_key_masked' => self::mask_license_key( $license_key ),
+            'license_title' => $is_valid ? License::license_title() : esc_html__( 'Não disponível', 'joinotify' ),
+            'subscription_label' => $subscription_label,
+            'expire_label' => $is_valid
+                ? sprintf( esc_html__( 'Licença expira em: %s', 'joinotify' ), License::license_expire() )
+                : esc_html__( 'Licença expira em: Não disponível', 'joinotify' ),
+            'support_label' => $is_valid
+                ? sprintf( esc_html__( 'Suporte até: %s', 'joinotify' ), $support_text )
+                : esc_html__( 'Suporte até: Não disponível', 'joinotify' ),
+            'key_label' => esc_html__( 'Sua chave de licença:', 'joinotify' ) . ' ' . self::mask_license_key( $license_key ),
+            'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
+            'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
+            'support_renew_link' => is_object( $license_object ) && ! empty( $license_object->support_renew_link ) ? esc_url_raw( $license_object->support_renew_link ) : '',
+        );
     }
 
 
@@ -470,6 +544,23 @@ class Registry {
         }
 
         return $options;
+    }
+
+
+    /**
+     * Mask a license key preserving the beginning and end.
+     *
+     * @param string $license_key
+     * @return string
+     */
+    private static function mask_license_key( $license_key ) {
+        if ( empty( $license_key ) ) {
+            return esc_html__( 'Não disponível', 'joinotify' );
+        }
+
+        $license_key = sanitize_text_field( $license_key );
+
+        return substr( $license_key, 0, 9 ) . 'XXXXXXXX-XXXXXXXX' . substr( $license_key, -9 );
     }
 
 
