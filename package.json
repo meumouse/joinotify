@@ -1,0 +1,10 @@
+{
+	"name": "joinotify",
+	"private": true,
+	"version": "1.4.7",
+	"scripts": {
+		"build:app": "npm run build --prefix app",
+		"build:zip": "powershell -ExecutionPolicy Bypass -File scripts/build-plugin-zip.ps1",
+		"release": "npm run build:app && npm run build:zip"
+	}
+}

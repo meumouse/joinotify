@@ -1,0 +1,22 @@
+{
+    "name": "meumouse/joinotify",
+    "description": "Increase customer satisfaction by automating WhatsApp message delivery with Joinotify.",
+    "type": "wordpress-plugin",
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "MeuMouse.com",
+            "email": "contato@meumouse.com",
+            "homepage": "https://meumouse.com"
+        }
+    ],
+    "require": {
+        "php": ">= 7.4",
+        "giggsey/libphonenumber-for-php": "^8.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "MeuMouse\\Joinotify\\": "src/"
+        }
+    }
+}
