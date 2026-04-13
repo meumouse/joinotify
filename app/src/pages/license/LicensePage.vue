@@ -60,19 +60,19 @@ const activeRows = computed(() => [
   },
   {
     label: __('Subscription', textDomain),
-    value: normalizeValue(license.value?.subscription_label, ['Subscription:', 'Assinatura:', 'License type:', 'Tipo da licença:']),
+    value: normalizeValue(license.value?.subscription_label, ['Subscription:', 'License type:']),
   },
   {
     label: __('Expires on', textDomain),
-    value: normalizeValue(license.value?.expire_label, ['Expires on:', 'Licença expira em:']),
+    value: normalizeValue(license.value?.expire_label, ['Expires on:']),
   },
   {
     label: __('Support until', textDomain),
-    value: normalizeValue(license.value?.support_label, ['Support until:', 'Suporte até:']),
+    value: normalizeValue(license.value?.support_label, ['Support until:']),
   },
   {
     label: __('Your license key', textDomain),
-    value: normalizeValue(license.value?.key_label, ['Your license key:', 'Sua chave de licença:']),
+    value: normalizeValue(license.value?.key_label, ['Your license key:']),
   },
 ]);
 

@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: 			Joinotify
- * Description: 			Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.
+ * Description: 			Increase customer satisfaction by automating WhatsApp messaging with Joinotify.
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
@@ -19,13 +19,6 @@
 use MeuMouse\Joinotify\Core\Init;
 
 defined('ABSPATH') || exit;
-
-/**
- * Main plugin bootstrap file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 // Load Composer autoloader if available.
 $autoload = plugin_dir_path( __FILE__ ) . 'admin/vendor/autoload.php';

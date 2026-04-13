@@ -17,7 +17,7 @@ defineProps({
       <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
         <h1 class="text-2xl font-semibold text-ink">Workflows</h1>
         <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
-          Página reservada para a listagem e gerenciamento dos fluxos. O componente já fica pronto para receber a montagem futura.
+          Reserved page for listing and managing workflows. The component is ready for future implementation.
         </p>
       </section>
     </div>

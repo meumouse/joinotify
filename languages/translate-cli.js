@@ -10,7 +10,7 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const TEXT_DOMAIN = "joinotify-otp-login";
+const TEXT_DOMAIN = "joinotify";
 const POT_FILE = path.join(__dirname, `${TEXT_DOMAIN}.pot`);
 const BATCH_SIZE = 50;
 const DELAY_BETWEEN_BATCHES = 1000;

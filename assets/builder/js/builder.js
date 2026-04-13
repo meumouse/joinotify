@@ -1650,7 +1650,6 @@
 			$('.dateselect').datepicker({
 				format: 'dd/mm/yyyy',
 				todayHighlight: true,
-				language: 'pt-BR',
 			}).on('changeDate', function() {
 				$(this).datepicker('hide'); // close date picker on select date
 		  	});
@@ -1661,7 +1660,6 @@
 					$(this).datepicker({
 						format: 'dd/mm/yyyy',
 						todayHighlight: true,
-						language: 'pt-BR',
 					});
 				}
 

@@ -77,7 +77,7 @@ function toastProgressClass(tone) {
           <button
             type="button"
             class="ms-2 box-content flex h-4 w-4 shrink-0 items-center justify-center rounded border-0 bg-transparent p-[0.25rem] opacity-50 transition hover:opacity-75 focus:outline-none focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25"
-            :aria-label="__('Fechar', textDomain)"
+            :aria-label="__('Close', textDomain)"
             @click="$emit('dismiss', toast.id)"
           >
             <span class="inline-flex h-3 w-3" aria-hidden="true">
@@ -85,7 +85,7 @@ function toastProgressClass(tone) {
                 <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 1 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 1 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z" fill="currentColor"/>
               </svg>
             </span>
-            <span class="sr-only">{{ __('Fechar', textDomain) }}</span>
+            <span class="sr-only">{{ __('Close', textDomain) }}</span>
           </button>
         </header>
 

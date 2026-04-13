@@ -1,10 +1,4 @@
 <?php
-/**
- * Init source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -133,6 +127,9 @@ class Init {
 		// Load plugin text domain.
 		add_action( 'init', array( $this, 'load_text_domain' ) );
 
+		// Translate the plugin header metadata shown in the Plugins screen.
+		add_filter( 'all_plugins', array( $this, 'translate_plugin_header_data' ) );
+
 		/**
 		 * Fire hook after Joinotify initialize.
 		 * 
@@ -152,6 +149,29 @@ class Init {
 	 */
 	public function load_text_domain() {
 		load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
+	}
+
+
+	/**
+	 * Translate the plugin name and description shown in the Plugins screen.
+	 *
+	 * WordPress reads these values from the plugin header, but the header itself
+	 * cannot call translation functions. This filter injects translated values
+	 * at runtime so the strings can still be included in the manual string map.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,array<string,mixed>> $plugins All plugins indexed by basename.
+	 * @return array<string,array<string,mixed>> Filtered plugins list.
+	 */
+	public function translate_plugin_header_data( $plugins ) {
+		if ( ! isset( $plugins[ $this->basename ] ) || ! is_array( $plugins[ $this->basename ] ) ) {
+			return $plugins;
+		}
+
+		$plugins[ $this->basename ]['Name'] = __( 'Joinotify', 'joinotify' );
+		$plugins[ $this->basename ]['Description'] = __( 'Increase customer satisfaction by automating WhatsApp messaging with Joinotify.', 'joinotify' );
+
+		return $plugins;
 	}
 
 

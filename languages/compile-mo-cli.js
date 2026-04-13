@@ -22,12 +22,12 @@ function getPoFiles() {
   }
 
   if (selectedLangCode) {
-    return [path.join(__dirname, `joinotify-otp-login-${selectedLangCode}.po`)];
+    return [path.join(__dirname, `joinotify-${selectedLangCode}.po`)];
   }
 
   return fs
     .readdirSync(__dirname)
-    .filter((file) => file.endsWith(".po") && file !== "joinotify-otp-login.pot")
+    .filter((file) => file.endsWith(".po") && file !== "joinotify.pot")
     .map((file) => path.join(__dirname, file));
 }
 

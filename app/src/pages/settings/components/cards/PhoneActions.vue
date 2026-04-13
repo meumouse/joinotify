@@ -279,11 +279,11 @@ async function submitTestMessage() {
             :disabled="sendingTestMessage"
             @click="testMessageOpen = false"
           >
-            {{ __('Cancelar', textDomain) }}
+          {{ __('Cancel', textDomain) }}
           </button>
 
           <BaseButton
-            :title="__('Enviar', textDomain)"
+            :title="__('Send', textDomain)"
             color="primary"
             size="lg"
             :loading="sendingTestMessage"

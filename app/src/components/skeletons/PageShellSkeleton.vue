@@ -14,8 +14,8 @@ const props = defineProps({
 });
 
 const loadingLabel = {
-  settings: 'Carregando a interface de configurações...',
-  license: 'Carregando a interface de licenças...',
+  settings: 'Loading the settings interface...',
+  license: 'Loading the license interface...',
 };
 </script>
 
@@ -37,13 +37,13 @@ const loadingLabel = {
         <div class="px-10 py-12">
           <div class="rounded-[8px] border border-slate-200 bg-slate-50 px-6 py-10 text-center">
             <p class="text-sm font-semibold uppercase tracking-[0.18em] text-shell-500">
-              {{ variant === 'license' ? 'Licença' : 'Configurações' }}
+              {{ variant === 'license' ? 'License' : 'Settings' }}
             </p>
             <p class="mt-3 text-base font-medium text-slate-700">
               {{ loadingLabel[variant] || loadingLabel.settings }}
             </p>
             <p class="mt-2 text-sm text-slate-500">
-              Aguarde um momento enquanto carregamos os dados.
+              Please wait a moment while we load the data.
             </p>
           </div>
         </div>

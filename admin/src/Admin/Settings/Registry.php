@@ -620,14 +620,6 @@ class Registry {
      * @return string
      */
     private static function get_current_locale() {
-        if ( function_exists( 'determine_locale' ) ) {
-            return sanitize_text_field( determine_locale() );
-        }
-
-        if ( function_exists( 'get_locale' ) ) {
-            return sanitize_text_field( get_locale() );
-        }
-
         return 'en_US';
     }
 
