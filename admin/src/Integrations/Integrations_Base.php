@@ -270,6 +270,17 @@ abstract class Integrations_Base {
             $setting['component'] = sanitize_key( (string) $setting['component'] );
             $setting['component_props'] = is_array( $setting['component_props'] ) ? $setting['component_props'] : array();
             $setting['options'] = is_array( $setting['options'] ) ? array_values( $setting['options'] ) : array();
+
+            if ( 'input-group' === $setting['type'] || 'input-group' === $setting['component'] ) {
+                if ( empty( $setting['component_props']['items'] ) && ! empty( $setting['items'] ) && is_array( $setting['items'] ) ) {
+                    $setting['component_props']['items'] = self::normalize_input_group_items( $setting['items'] );
+                }
+
+                if ( empty( $setting['items'] ) && ! empty( $setting['component_props']['items'] ) && is_array( $setting['component_props']['items'] ) ) {
+                    $setting['items'] = self::normalize_input_group_items( $setting['component_props']['items'] );
+                }
+            }
+
             if ( empty( $setting['label'] ) ) {
                 if ( ! empty( $setting['name'] ) ) {
                     $setting['label'] = (string) $setting['name'];

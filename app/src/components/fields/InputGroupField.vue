@@ -7,6 +7,7 @@
  * @version 1.4.8
  */
 import { computed, useSlots } from 'vue';
+import SelectField from './SelectField.vue';
 
 const props = defineProps({
   modelValue: { type: [String, Number, Boolean, Object, Array], default: '' },
@@ -191,10 +192,6 @@ function itemControlClass(item, index) {
     'disabled:bg-slate-50',
   ];
 
-  if (normalizeItemType(item) === 'select') {
-    classes.push('appearance-none', 'pr-10');
-  }
-
   if (index === 0) {
     classes.push('rounded-l-[8px]');
   }
@@ -209,30 +206,48 @@ function itemControlClass(item, index) {
 function itemShellClass(item, index) {
   const base = [
     'flex',
-    'shrink-0',
+    'min-w-0',
     'items-stretch',
-    'border-r',
-    'border-slate-200',
+    'h-full',
     'bg-white',
+    'border',
+    'border-slate-200',
+    'transition',
+    'focus-within:z-30',
+    'focus-within:border-primary-700',
+    'focus-within:ring-4',
+    'focus-within:ring-primary-100',
   ];
 
+  if (index > 0) {
+    base.push('-ml-px');
+  }
+
   if (normalizeItemType(item) === 'button') {
-    base.push('p-0');
+    base.push('shrink-0', 'basis-auto');
   } else if (normalizeItemType(item) === 'addon') {
-    base.push('px-4', 'py-3', 'text-[14px]', 'font-medium', 'text-slate-500');
+    base.push('shrink-0', 'basis-auto', 'px-4', 'py-3', 'text-[14px]', 'font-medium', 'text-slate-500');
   } else {
-    base.push('min-w-[160px]');
+    base.push('flex-1', 'basis-0');
+  }
+
+  if (index === 0) {
+    base.push('rounded-l-lg');
   }
 
   if (index === compositeItems.value.length - 1) {
-    base.push('border-r-0');
+    base.push('rounded-r-lg');
   }
 
   return base.join(' ');
 }
 
 function itemWrapperClass(item) {
-  return [item?.class || item?.itemClass || ''].filter(Boolean).join(' ');
+  return [
+    item?.class || item?.itemClass || '',
+    'h-full',
+    normalizeItemType(item) === 'select' ? 'relative z-20 w-full overflow-visible' : '',
+  ].filter(Boolean).join(' ');
 }
 
 function itemWrapperStyle(item) {
@@ -242,6 +257,18 @@ function itemWrapperStyle(item) {
 
   return {
     flexBasis: item.width,
+  };
+}
+
+function buildSelectField(item, index) {
+  return {
+    ...item,
+    type: 'select',
+    options: Array.isArray(item.options) ? item.options : [],
+    placeholder: item.placeholder || '',
+    searchable: Boolean(item.searchable),
+    searchPlaceholder: item.searchPlaceholder || item.search_placeholder || '',
+    emptyLabel: item.emptyLabel || item.empty_label || '',
   };
 }
 </script>
@@ -298,7 +325,7 @@ function itemWrapperStyle(item) {
 
     <div
       v-else
-      class="joinotify-input-group mt-2 flex w-full flex-wrap overflow-hidden rounded-lg border border-slate-200 bg-white transition focus-within:border-primary-700 focus-within:ring-4 focus-within:ring-primary-100"
+      class="joinotify-input-group mt-2 flex w-full flex-nowrap overflow-visible bg-transparent transition"
       :class="[disabled ? 'bg-slate-50' : '', groupClass]"
     >
       <div
@@ -314,7 +341,7 @@ function itemWrapperStyle(item) {
         <button
           v-else-if="normalizeItemType(item) === 'button'"
           type="button"
-          class="inline-flex min-h-[48px] items-center justify-center border-0 border-l border-slate-200 bg-white px-4 text-[14px] font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-900 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+          class="inline-flex h-full min-h-[48px] w-full items-center justify-center border-0 rounded-none bg-white px-4 text-[14px] font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-900 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           :class="[item.class || item.buttonClass || '', addonClass]"
           :disabled="disabled || item.disabled"
           @click="handleButtonClick(item, index)"
@@ -322,23 +349,20 @@ function itemWrapperStyle(item) {
           {{ item.label || item.text || item.value || '' }}
         </button>
 
-        <select
+        <SelectField
           v-else-if="normalizeItemType(item) === 'select'"
           :name="item.name || normalizeItemKey(item, index)"
-          :value="readItemValue(item, index)"
+          :field="buildSelectField(item, index)"
+          :model-value="readItemValue(item, index)"
           :disabled="disabled || item.disabled"
-          class="joinotify-input-group__control min-w-0 flex-1 bg-transparent px-4 py-3 text-[14px] text-slate-700 outline-none placeholder:text-slate-400 disabled:cursor-not-allowed disabled:bg-slate-50"
-          :class="[itemControlClass(item, index), item.inputClass || '']"
-          @change="writeItemValue(item, index, $event.target.value)"
-        >
-          <option
-            v-for="option in Array.isArray(item.options) ? item.options : []"
-            :key="String(option.value)"
-            :value="option.value"
-          >
-            {{ option.label }}
-          </option>
-        </select>
+          :root-class="['w-full h-full', item.rootClass || item.wrapperClass || '']"
+          :embedded="true"
+          :button-class="[
+            item.buttonClass || item.selectButtonClass || '',
+          ]"
+          :dropdown-class="item.dropdownClass || item.selectDropdownClass || ''"
+          @update:model-value="writeItemValue(item, index, $event)"
+        />
 
         <input
           v-else
@@ -349,8 +373,8 @@ function itemWrapperStyle(item) {
           :disabled="disabled || item.disabled"
           :autocomplete="item.autocomplete || autocomplete"
           :inputmode="item.inputmode || undefined"
-          class="joinotify-input-group__control min-w-0 flex-1 bg-transparent px-4 py-3 text-[14px] text-slate-700 outline-none placeholder:text-slate-400 disabled:cursor-not-allowed disabled:bg-slate-50"
-          :class="[itemControlClass(item, index), item.inputClass || '']"
+          class="joinotify-input-group__control h-full min-w-0 flex-1 border-0 rounded-none bg-transparent px-4 py-3 text-[14px] text-slate-700 outline-none placeholder:text-slate-400 disabled:cursor-not-allowed disabled:bg-slate-50"
+          :class="[usesCompositeGroup ? '' : itemControlClass(item, index), item.inputClass || '']"
           @input="writeItemValue(item, index, $event.target.value)"
         />
       </div>

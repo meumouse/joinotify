@@ -65,6 +65,7 @@ function withCamelCaseAliases(value) {
 
 export function buildFieldProps(field, overrides = {}) {
   const componentProps = field?.component_props && typeof field.component_props === 'object' ? field.component_props : {};
+  const inputGroupItems = Array.isArray(field?.items) ? field.items : [];
   const settings = {
     label: field?.label || '',
     description: field?.description || '',
@@ -85,6 +86,7 @@ export function buildFieldProps(field, overrides = {}) {
     emptyLabel: field?.empty_label || field?.emptyLabel || '',
     prependText: field?.prepend_text || field?.prependText || '',
     appendText: field?.append_text || field?.appendText || '',
+    ...(inputGroupItems.length ? { items: inputGroupItems } : {}),
     ...componentProps,
     ...overrides,
   };

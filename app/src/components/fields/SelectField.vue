@@ -14,6 +14,10 @@ const props = defineProps({
   field: { type: Object, required: true },
   name: { type: String, required: true },
   disabled: { type: Boolean, default: false },
+  embedded: { type: Boolean, default: false },
+  buttonClass: { type: [String, Array, Object], default: '' },
+  dropdownClass: { type: [String, Array, Object], default: '' },
+  rootClass: { type: [String, Array, Object], default: '' },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -62,6 +66,20 @@ const selectedLabel = computed(() => {
 const buttonId = `${uid}-button`;
 const listboxId = `${uid}-listbox`;
 const listId = `${uid}-list`;
+const buttonBaseClass = computed(() => {
+  if (props.embedded) {
+    return 'border-0 bg-transparent rounded-none focus:border-transparent focus:ring-0';
+  }
+
+  return 'rounded-[8px] border border-slate-200 bg-white focus:border-primary-700 focus:ring-4 focus:ring-primary-100';
+});
+const buttonHoverClass = computed(() => {
+  if (props.embedded) {
+    return 'hover:bg-slate-50';
+  }
+
+  return 'hover:border-slate-300';
+});
 
 watch(isOpen, (value) => {
   if (value) {
@@ -176,13 +194,17 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="rootEl" class="relative">
+  <div ref="rootEl" class="relative h-full w-full" :class="rootClass">
     <button
       :id="buttonId"
       :name="name"
       type="button"
-      class="flex w-full items-center justify-between gap-3 rounded-[8px] border border-slate-200 bg-white px-4 py-3 text-left text-[14px] text-slate-700 outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-100 md:min-w-[330px]"
-      :class="disabled ? 'cursor-not-allowed bg-slate-50 text-slate-400' : 'hover:border-slate-300'"
+      class="flex h-full w-full min-w-0 items-center justify-between gap-3 px-4 py-3 text-left text-[14px] text-slate-700 outline-none transition"
+      :class="[
+        buttonBaseClass,
+        disabled ? 'cursor-not-allowed bg-slate-50 text-slate-400' : buttonHoverClass,
+        buttonClass,
+      ]"
       :aria-expanded="isOpen"
       :aria-haspopup="'listbox'"
       :aria-controls="listboxId"
@@ -215,6 +237,7 @@ onBeforeUnmount(() => {
         v-if="isOpen"
         :id="listboxId"
         class="absolute z-30 mt-2 w-full overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
+        :class="dropdownClass"
       >
         <div v-if="showSearch" class="border-b border-slate-100 p-2">
           <input
