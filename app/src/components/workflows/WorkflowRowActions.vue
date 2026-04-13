@@ -1,4 +1,6 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
+
 defineProps({
   workflow: { type: Object, required: true },
 });
@@ -14,7 +16,7 @@ defineEmits(['edit', 'trash', 'restore', 'deletePermanent']);
       class="font-medium text-ink transition hover:text-primary-800"
       @click="$emit('edit', workflow)"
     >
-      Edit
+      {{ __('Edit', textDomain) }}
     </button>
 
     <button
@@ -23,7 +25,7 @@ defineEmits(['edit', 'trash', 'restore', 'deletePermanent']);
       class="font-medium text-danger transition hover:text-danger/80"
       @click="$emit('trash', workflow)"
     >
-      Move to trash
+      {{ __('Move to trash', textDomain) }}
     </button>
 
     <button
@@ -32,7 +34,7 @@ defineEmits(['edit', 'trash', 'restore', 'deletePermanent']);
       class="font-medium text-primary-700 transition hover:text-primary-800"
       @click="$emit('restore', workflow)"
     >
-      Restore
+      {{ __('Restore', textDomain) }}
     </button>
 
     <button
@@ -41,7 +43,7 @@ defineEmits(['edit', 'trash', 'restore', 'deletePermanent']);
       class="font-medium text-danger transition hover:text-danger/80"
       @click="$emit('deletePermanent', workflow)"
     >
-      Delete permanently
+      {{ __('Delete permanently', textDomain) }}
     </button>
   </div>
 </template>

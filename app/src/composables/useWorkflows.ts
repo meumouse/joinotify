@@ -1,16 +1,17 @@
 import { computed, onMounted, ref, watch } from 'vue';
+import { __, textDomain } from '../utils/i18n';
 import { useBulkSelection } from './useBulkSelection';
 import { usePagination } from './usePagination';
 
 const BULK_ACTIONS_DEFAULT = [
-  { label: 'Move to trash', value: 'trash', destructive: true },
-  { label: 'Mark as active', value: 'publish' },
-  { label: 'Mark as inactive', value: 'draft' },
+  { label: __('Move to trash', textDomain), value: 'trash', destructive: true },
+  { label: __('Mark as active', textDomain), value: 'publish' },
+  { label: __('Mark as inactive', textDomain), value: 'draft' },
 ];
 
 const BULK_ACTIONS_TRASH = [
-  { label: 'Restore', value: 'restore' },
-  { label: 'Delete permanently', value: 'delete_permanently', destructive: true },
+  { label: __('Restore', textDomain), value: 'restore' },
+  { label: __('Delete permanently', textDomain), value: 'delete_permanently', destructive: true },
 ];
 
 const MOCK_WORKFLOWS = [
@@ -55,7 +56,7 @@ function normalizeStatus(status) {
 function normalizeWorkflow(workflow) {
   return {
     id: workflow.id,
-    name: workflow.name || 'Untitled workflow',
+    name: workflow.name || __('Untitled workflow', textDomain),
     created_at: workflow.created_at || '',
     status: normalizeStatus(workflow.status),
     edit_url: workflow.edit_url || 'admin.php?page=joinotify-workflows-builder',
@@ -118,24 +119,24 @@ export function useWorkflows(bootstrap = {}) {
   const totalSelected = computed(() => bulkSelection.selectedCount.value);
 
   const statusTabs = computed(() => [
-    { label: 'Active', value: 'publish', count: counts.value.publish },
-    { label: 'Inactive', value: 'draft', count: counts.value.draft },
-    { label: 'Trash', value: 'trash', count: counts.value.trash },
+    { label: __('Active', textDomain), value: 'publish', count: counts.value.publish },
+    { label: __('Inactive', textDomain), value: 'draft', count: counts.value.draft },
+    { label: __('Trash', textDomain), value: 'trash', count: counts.value.trash },
   ]);
 
   const bulkActionOptions = computed(() =>
     selectedStatus.value === 'trash' ? BULK_ACTIONS_TRASH : BULK_ACTIONS_DEFAULT
   );
 
-  const totalItemsText = computed(() => `${pagination.totalItems.value} workflows`);
+  const totalItemsText = computed(() => `${pagination.totalItems.value} ${__('workflows', textDomain)}`);
   const pageSummary = computed(() => {
     if (!pagination.totalItems.value) {
-      return '0 results';
+      return __('0 results', textDomain);
     }
 
     const start = (pagination.currentPage.value - 1) * pagination.perPage.value + 1;
     const end = Math.min(pagination.currentPage.value * pagination.perPage.value, pagination.totalItems.value);
-    return `${start}-${end} of ${pagination.totalItems.value}`;
+    return `${start}-${end} ${__('of', textDomain)} ${pagination.totalItems.value}`;
   });
 
   watch(selectedStatus, () => {
@@ -205,7 +206,7 @@ export function useWorkflows(bootstrap = {}) {
       await simulateLatency(280);
       setWorkflowStatus(id, nextStatus);
     } catch (taskError) {
-      error.value = taskError instanceof Error ? taskError.message : 'Could not update the status.';
+      error.value = taskError instanceof Error ? taskError.message : __('Could not update the status.', textDomain);
     } finally {
       const finishedLoadingIds = new Set(updateLoadingIds.value);
       finishedLoadingIds.delete(String(id));
@@ -260,7 +261,7 @@ export function useWorkflows(bootstrap = {}) {
 
       bulkSelection.clearSelection();
     } catch (taskError) {
-      error.value = taskError instanceof Error ? taskError.message : 'The bulk action failed.';
+      error.value = taskError instanceof Error ? taskError.message : __('The bulk action failed.', textDomain);
     } finally {
       bulkActionLoading.value = false;
     }

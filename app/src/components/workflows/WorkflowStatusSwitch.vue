@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 
 const props = defineProps({
@@ -22,7 +23,7 @@ const statusModel = computed({
   <div class="inline-flex items-center gap-2">
     <ToggleSwitch
       v-model="statusModel"
-      :aria-label="ariaLabel || 'Toggle workflow status'"
+      :aria-label="ariaLabel || __('Toggle workflow status', textDomain)"
       :disabled="disabled || loading"
       false-value="draft"
       size="md"

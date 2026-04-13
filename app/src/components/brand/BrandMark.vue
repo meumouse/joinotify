@@ -1,10 +1,11 @@
 <script setup>
 import { computed } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
-  alt: { type: String, default: 'Joinotify' },
+  alt: { type: String, default: () => __('Joinotify', textDomain) },
   size: { type: [String, Number], default: 'md' },
-  title: { type: String, default: '' },
+  title: { type: String, default: () => __('Joinotify', textDomain) },
   variant: {
     type: String,
     default: 'primary',

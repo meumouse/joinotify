@@ -1,5 +1,6 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 import { useWorkflows } from '../../composables/useWorkflows';
 import BaseButton from '../../components/buttons/button/BaseButton.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
@@ -58,6 +59,21 @@ const tablePagination = computed(() => ({
   total_items: pagination.totalItems.value,
   total_pages: pagination.totalPages.value,
 }));
+
+const pageTitle = computed(() => __('Manage workflows', textDomain));
+const pageDescription = computed(() =>
+  __('Browse, filter and manage workflows with bulk selection, pagination and quick status switching.', textDomain)
+);
+const addWorkflowLabel = computed(() => __('Add new workflow', textDomain));
+const searchPlaceholder = computed(() => __('Search workflows...', textDomain));
+const clearSearchLabel = computed(() => __('Clear search', textDomain));
+const retryLabel = computed(() => __('Try again', textDomain));
+const noWorkflowsTitle = computed(() => __('No workflows found', textDomain));
+const noWorkflowsDescription = computed(() =>
+  __('No workflows match the current filters. Create a new workflow or switch tabs to see other results.', textDomain)
+);
+const deleteConfirmLabel = computed(() => __('Delete', textDomain));
+const confirmLabel = computed(() => __('Confirm', textDomain));
 
 const wordpressDateFormat = computed(() => props.bootstrap?.date_format || 'F j, Y');
 const wordpressTimeFormat = computed(() => props.bootstrap?.time_format || 'g:i a');
@@ -195,8 +211,8 @@ function handleTrash(workflow) {
   confirmState.kind = 'single';
   confirmState.action = 'trash';
   confirmState.workflowId = String(workflow.id);
-  confirmState.title = 'Move to trash';
-  confirmState.description = `The workflow "${workflow.name}" will be moved to trash.`;
+  confirmState.title = __('Move to trash', textDomain);
+  confirmState.description = `${__('The workflow', textDomain)} "${workflow.name}" ${__('will be moved to trash.', textDomain)}`;
 }
 
 function handleRestore(workflow) {
@@ -208,8 +224,8 @@ function handleDeletePermanent(workflow) {
   confirmState.kind = 'single';
   confirmState.action = 'delete_permanently';
   confirmState.workflowId = String(workflow.id);
-  confirmState.title = 'Delete permanently';
-  confirmState.description = `The workflow "${workflow.name}" will be removed permanently.`;
+  confirmState.title = __('Delete permanently', textDomain);
+  confirmState.description = `${__('The workflow', textDomain)} "${workflow.name}" ${__('will be removed permanently.', textDomain)}`;
 }
 
 function handleToggleStatus(workflow, nextStatus) {
@@ -225,11 +241,11 @@ function handleToggleStatus(workflow, nextStatus) {
   <div class="joinotify-settings min-h-screen bg-[#f3f3f5] p-4">
     <div class="w-full">
       <PageHeader
-        action-label="Add new workflow"
+        :action-label="addWorkflowLabel"
         :action-href="createUrl"
-        :description="'Browse, filter and manage workflows with bulk selection, pagination and quick status switching.'"
+        :description="pageDescription"
         :loading="loading"
-        title="Manage workflows"
+        :title="pageTitle"
       />
 
       <div class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
@@ -242,8 +258,8 @@ function handleToggleStatus(workflow, nextStatus) {
 
           <WorkflowSearch
             :model-value="searchQuery"
-            clear-label="Clear search"
-            placeholder="Search workflows..."
+            :clear-label="clearSearchLabel"
+            :placeholder="searchPlaceholder"
             @clear="setSearchQuery('')"
             @update:modelValue="setSearchQuery"
           />
@@ -251,7 +267,7 @@ function handleToggleStatus(workflow, nextStatus) {
           <div v-if="error" class="rounded-[8px] border border-danger/20 bg-danger/10 px-4 py-3 text-sm text-danger">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p>{{ error }}</p>
-              <BaseButton title="Try again" variant="secondary" @click="reload" />
+              <BaseButton :title="retryLabel" variant="secondary" @click="reload" />
             </div>
           </div>
 
@@ -294,10 +310,10 @@ function handleToggleStatus(workflow, nextStatus) {
 
             <EmptyState
               v-else
-              action-href="admin.php?page=joinotify-workflows-builder"
-              action-label="Add new workflow"
-              description="No workflows match the current filters. Create a new workflow or switch tabs to see other results."
-              title="No workflows found"
+              :action-href="createUrl"
+              :action-label="addWorkflowLabel"
+              :description="noWorkflowsDescription"
+              :title="noWorkflowsTitle"
             />
 
             <TableToolbar
@@ -322,7 +338,7 @@ function handleToggleStatus(workflow, nextStatus) {
     </div>
 
     <ConfirmActionModal
-      :confirm-label="confirmState.action === 'delete_permanently' ? 'Delete' : 'Confirm'"
+      :confirm-label="confirmState.action === 'delete_permanently' ? deleteConfirmLabel : confirmLabel"
       :description="confirmState.description"
       :loading="bulkActionLoading"
       :open="confirmState.open"

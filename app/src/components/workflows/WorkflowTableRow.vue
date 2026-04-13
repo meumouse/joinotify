@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
 import WorkflowRowActions from './WorkflowRowActions.vue';
 import WorkflowStatusSwitch from './WorkflowStatusSwitch.vue';
@@ -15,9 +16,9 @@ const emit = defineEmits(['select', 'edit', 'trash', 'restore', 'deletePermanent
 
 const statusLabel = computed(() => {
   const labels = {
-    publish: 'Active',
-    draft: 'Inactive',
-    trash: 'In trash',
+    publish: __('Active', textDomain),
+    draft: __('Inactive', textDomain),
+    trash: __('In trash', textDomain),
   };
 
   return labels[props.workflow.status] || props.workflow.status;
@@ -29,7 +30,7 @@ const statusLabel = computed(() => {
     <td class="px-4 py-4">
       <BaseCheckbox
         :model-value="selected"
-        :aria-label="`Select ${workflow.name}`"
+        :aria-label="`${__('Select', textDomain)} ${workflow.name}`"
         :disabled="updating"
         @change="$emit('select', $event)"
       />
@@ -58,7 +59,7 @@ const statusLabel = computed(() => {
     <td class="px-4 py-4">
       <WorkflowStatusSwitch
         v-if="workflow.status !== 'trash'"
-        :aria-label="`Toggle status for ${workflow.name}`"
+        :aria-label="`${__('Toggle status for', textDomain)} ${workflow.name}`"
         :disabled="updating"
         :loading="updating"
         :model-value="workflow.status"

@@ -1,10 +1,11 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
 defineProps({
   open: { type: Boolean, default: false },
   title: { type: String, default: '' },
   description: { type: String, default: '' },
-  confirmLabel: { type: String, default: 'Confirm' },
-  cancelLabel: { type: String, default: 'Cancel' },
+  confirmLabel: { type: String, default: () => __('Confirm', textDomain) },
+  cancelLabel: { type: String, default: () => __('Cancel', textDomain) },
   loading: { type: Boolean, default: false },
 });
 

@@ -1,4 +1,5 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
 
 defineProps({
@@ -17,14 +18,14 @@ defineEmits(['toggleAll']);
         <BaseCheckbox
           :model-value="allSelected"
           :indeterminate="indeterminate"
-          aria-label="Select all visible workflows"
+          :aria-label="__('Select all visible workflows', textDomain)"
           :disabled="!selectable"
           @change="$emit('toggleAll', $event)"
         />
       </th>
-      <th class="px-4 py-3">Name</th>
-      <th class="px-4 py-3">Created</th>
-      <th class="px-4 py-3">Status</th>
+      <th class="px-4 py-3">{{ __('Name', textDomain) }}</th>
+      <th class="px-4 py-3">{{ __('Created', textDomain) }}</th>
+      <th class="px-4 py-3">{{ __('Status', textDomain) }}</th>
     </tr>
   </thead>
 </template>

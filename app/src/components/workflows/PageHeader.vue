@@ -1,4 +1,5 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../buttons/button/BaseButton.vue';
 import BrandMark from '../brand/BrandMark.vue';
 
@@ -15,7 +16,7 @@ defineProps({
 <template>
   <header class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
     <div class="space-y-2">
-      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-shell-500">Joinotify</p>
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-shell-500">{{ __('Joinotify', textDomain) }}</p>
       <div class="flex items-center gap-3">
         <BrandMark size="md" variant="primary" />
         <h1 class="text-3xl font-semibold tracking-tight text-ink">{{ title }}</h1>

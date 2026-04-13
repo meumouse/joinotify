@@ -1,10 +1,11 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../buttons/button/BaseButton.vue';
 
 defineProps({
-  title: { type: String, default: 'No workflows found' },
-  description: { type: String, default: 'Create a new workflow to start automating your processes.' },
-  actionLabel: { type: String, default: 'Add new workflow' },
+  title: { type: String, default: () => __('No workflows found', textDomain) },
+  description: { type: String, default: () => __('Create a new workflow to start automating your processes.', textDomain) },
+  actionLabel: { type: String, default: () => __('Add new workflow', textDomain) },
   actionHref: { type: String, default: '' },
 });
 </script>

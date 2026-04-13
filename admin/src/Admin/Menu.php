@@ -12,6 +12,7 @@ defined('ABSPATH') || exit;
  * Register plugin menu.
  *
  * @since 1.4.6
+ * @version 1.4.7
  * @package MeuMouse\Joinotify\Admin
  * @author MeuMouse.com
  */
@@ -48,8 +49,8 @@ class Menu {
 
         add_submenu_page(
             'joinotify-workflows',
-            esc_html__( 'Todos os fluxos', 'joinotify' ),
-            esc_html__( 'Todos os fluxos', 'joinotify' ),
+            esc_html__( 'All workflows', 'joinotify' ),
+            esc_html__( 'All workflows', 'joinotify' ),
             'manage_options',
             'joinotify-workflows',
             array( $this, 'all_workflows_page' )
@@ -58,8 +59,8 @@ class Menu {
         if ( License::is_valid() ) {
             add_submenu_page(
                 'joinotify-workflows',
-                esc_html__( 'Adicionar novo fluxo', 'joinotify' ),
-                esc_html__( 'Adicionar novo fluxo', 'joinotify' ),
+                esc_html__( 'Add new workflow', 'joinotify' ),
+                esc_html__( 'Add new workflow', 'joinotify' ),
                 'manage_options',
                 'joinotify-workflows-builder',
                 array( $this, 'render_builder_page' )
@@ -216,7 +217,7 @@ class Menu {
 
         return array(
             'page'         => 'workflows',
-            'title'        => __( 'Gerenciar fluxos', 'joinotify' ),
+            'title'        => __( 'Manage workflows', 'joinotify' ),
             'create_url'   => admin_url( 'admin.php?page=joinotify-workflows-builder' ),
             'active_status'=> $status,
             'date_format'  => get_option( 'date_format' ),

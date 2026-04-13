@@ -1,10 +1,11 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../buttons/button/BaseButton.vue';
 
 defineProps({
   modelValue: { type: String, default: '' },
-  placeholder: { type: String, default: 'Search workflows...' },
-  clearLabel: { type: String, default: 'Clear' },
+  placeholder: { type: String, default: () => __('Search workflows...', textDomain) },
+  clearLabel: { type: String, default: () => __('Clear', textDomain) },
 });
 
 defineEmits(['update:modelValue', 'clear']);

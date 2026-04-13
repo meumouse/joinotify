@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../buttons/button/BaseButton.vue';
 import SelectField from '../fields/SelectField.vue';
 
@@ -9,14 +10,14 @@ const props = defineProps({
   selectedCount: { type: Number, default: 0 },
   loading: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
-  placeholder: { type: String, default: 'Bulk actions' },
+  placeholder: { type: String, default: () => __('Bulk actions', textDomain) },
 });
 
 defineEmits(['update:modelValue', 'apply']);
 
 const field = computed(() => ({
-  label: 'Bulk actions',
-  placeholder: props.placeholder || 'Bulk actions',
+  label: __('Bulk actions', textDomain),
+  placeholder: props.placeholder || __('Bulk actions', textDomain),
   options: Array.isArray(props.options) ? props.options : [],
   searchable: false,
 }));
@@ -36,7 +37,7 @@ const field = computed(() => ({
     <BaseButton
       :disabled="disabled || !selectedCount || !modelValue"
       :loading="loading"
-      title="Apply"
+      :title="__('Apply', textDomain)"
       variant="secondary"
       @click="$emit('apply')"
     />
