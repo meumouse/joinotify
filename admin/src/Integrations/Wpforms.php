@@ -96,7 +96,7 @@ class Wpforms extends Integrations_Base {
         $triggers['wpforms'] = array(
             array(
                 'data_trigger' => 'wpforms_process_complete',
-                'title' => esc_html__( 'FormulÃ¡rio Ã© enviado', 'joinotify' ),
+                'title' => esc_html__( 'Form is sent', 'joinotify' ),
                 'description' => esc_html__( 'This trigger fires when a WPForms form is submitted.', 'joinotify' ),
                 'require_settings' => true,
             ),

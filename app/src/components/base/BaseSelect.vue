@@ -31,7 +31,7 @@ function handleChange(event) {
       :name="name"
       :value="modelValue"
       :disabled="disabled"
-      class="min-w-[14rem] rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-50"
+      class="min-w-[14rem] rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10 disabled:cursor-not-allowed disabled:bg-slate-50"
       @change="handleChange"
     >
       <option v-if="placeholder" value="">

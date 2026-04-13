@@ -40,7 +40,7 @@ function handleUpdateSetting(key, value) {
 </script>
 
 <template>
-  <div v-if="blockType === 'html'" class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-[14px] leading-6 text-slate-700">
+  <div v-if="blockType === 'html'" class="rounded-lg border border-slate-200 bg-slate-50 p-5 text-[14px] leading-6 text-slate-700">
     <div class="prose prose-slate max-w-none" v-html="block.html || block.content || ''" />
   </div>
 
@@ -54,7 +54,7 @@ function handleUpdateSetting(key, value) {
     @action="$emit('action', $event)"
   />
 
-  <div v-else class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+  <div v-else class="rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
     Custom block not available.
   </div>
 </template>

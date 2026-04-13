@@ -18,9 +18,28 @@ const props = defineProps({
 const emit = defineEmits(['toggle', 'configure']);
 
 const hasSettings = computed(() => Array.isArray(props.card.settings) ? props.card.settings.length > 0 : Array.isArray(props.card.fields) && props.card.fields.length > 0);
-const toggleDisabled = computed(() => Boolean(props.card.coming_soon || props.card.comming_soon) || (props.card.requires_plugin && !props.card.plugin_active));
+const isComingSoon = computed(() => Boolean(props.card.coming_soon || props.card.comming_soon));
+const requiresPlugin = computed(() => Boolean(props.card.requires_plugin && !props.card.plugin_active));
+const toggleDisabled = computed(() => isComingSoon.value || requiresPlugin.value);
 const configLabel = computed(() => props.card?.modal?.button_label || __('Configure', textDomain));
 const showConfigButton = computed(() => hasSettings.value && props.enabled && !toggleDisabled.value);
+const disabledNotice = computed(() => {
+  const message = String(props.card.disabled_message || '').trim();
+
+  if (message) {
+    return message;
+  }
+
+  if (requiresPlugin.value) {
+    return __('This integration depends on an installed and active plugin.', textDomain);
+  }
+
+  if (isComingSoon.value) {
+    return __('This integration will be available soon.', textDomain);
+  }
+
+  return '';
+});
 const enabledProxy = computed({
   get: () => props.enabled,
   set: () => {
@@ -53,18 +72,15 @@ const enabledProxy = computed({
       </p>
 
       <div class="mt-5 space-y-3 text-left">
-        <div
-          v-if="card.coming_soon || card.comming_soon"
-          class="rounded-lg border border-primary-100 bg-primary-50 px-4 py-3 text-[13px] font-medium text-primary-700"
-        >
+        <div v-if="isComingSoon" class="rounded-lg border border-primary-100 bg-primary-50 px-4 py-3 text-[13px] font-medium text-primary-700">
           {{ __('Coming soon', textDomain) }}
         </div>
 
         <div
-          v-if="card.coming_soon || card.comming_soon"
+          v-if="disabledNotice"
           class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-5 text-amber-800"
         >
-          {{ card.disabled_message || __('This integration depends on an installed and active plugin.', textDomain) }}
+          {{ disabledNotice }}
         </div>
 
         <div

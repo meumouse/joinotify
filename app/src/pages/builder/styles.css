@@ -1,0 +1,136 @@
+/*
+ * Builder-specific frontend stylesheet.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
+.joinotify-builder-page #adminmenumain,
+.joinotify-builder-page #wpfooter {
+	display: none !important;
+}
+
+.joinotify-builder-page:not(.joinotify-builder-page--debug) #wpadminbar {
+	display: none !important;
+}
+
+.d-block {
+	display: block;
+}
+
+.justify-content-center {
+	justify-content: center;
+}
+
+.position-absolute {
+	position: absolute;
+}
+
+.joinotify-loader-container {
+	position: relative;
+	width: 6rem;
+	height: 6rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--joinotify-success);
+}
+
+.joinotify-loader {
+	width: 6rem;
+	height: 6rem;
+	display: inline-block;
+	color: var(--joinotify-success);
+	-webkit-animation: transform-animation-circular 1.4s linear infinite;
+	animation: transform-animation-circular 1.4s linear infinite;
+}
+
+.circular-progress-animation {
+	stroke: currentColor;
+	stroke-dasharray: 80px, 200px;
+	stroke-dashoffset: 0;
+	stroke-width: 3px;
+	-webkit-animation: stroke-animation-circular 1.4s ease-in-out infinite;
+	animation: stroke-animation-circular 1.4s ease-in-out infinite;
+}
+
+@-webkit-keyframes stroke-animation-circular {
+	0% {
+		stroke-dasharray: 1px, 200px;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -15px;
+	}
+
+	100% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -125px;
+	}
+}
+
+@keyframes stroke-animation-circular {
+	0% {
+		stroke-dasharray: 1px, 200px;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -15px;
+	}
+
+	100% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -125px;
+	}
+}
+
+@keyframes transform-animation-circular {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes transform-animation-circular {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+#joinotify-builder-logo {
+	width: 2.825rem;
+}
+
+.joinotify-loader-container .circle-base {
+	position: absolute;
+	z-index: -1;
+	width: 6rem;
+}
+
+.joinotify-loader-container .circle-base circle {
+	stroke-width: 3px;
+	position: absolute;
+	stroke: #ced4da;
+}

@@ -136,7 +136,91 @@ abstract class Abstract_Assets {
      * @param array  $data Localization payload.
      * @return void
      */
-    protected function localize_script_asset( $handle, $object_name, $data ) {
-        wp_localize_script( $handle, $object_name, $data );
-    }
+	protected function localize_script_asset( $handle, $object_name, $data ) {
+		wp_localize_script( $handle, $object_name, $data );
+	}
+
+
+	/**
+	 * Read a Vite manifest file if it exists.
+	 *
+	 * @since 1.4.7
+	 * @param string $manifest_relative_path Relative path from the plugin root.
+	 * @return array<string,mixed>
+	 */
+	protected function get_vite_manifest( $manifest_relative_path ) {
+		$manifest_path = trailingslashit( defined( 'JOINOTIFY_DIR' ) ? JOINOTIFY_DIR : plugin_dir_path( JOINOTIFY_FILE ) ) . ltrim( $manifest_relative_path, '/' );
+
+		if ( ! file_exists( $manifest_path ) ) {
+			return array();
+		}
+
+		$contents = file_get_contents( $manifest_path );
+		$decoded = json_decode( (string) $contents, true );
+
+		return is_array( $decoded ) ? $decoded : array();
+	}
+
+
+	/**
+	 * Enqueue a Vite build entry, including its CSS assets.
+	 *
+	 * @since 1.4.7
+	 * @param string $handle Script handle.
+	 * @param string $entry_key Manifest entry key, for example `src/entries/builder.js`.
+	 * @param string $manifest_relative_path Relative path to the manifest file.
+	 * @param string $asset_root_relative_path Public asset root relative to the plugin root.
+	 * @return void
+	 */
+	protected function enqueue_vite_entry_asset( $handle, $entry_key, $manifest_relative_path = 'dist/.vite/manifest.json', $asset_root_relative_path = 'dist' ) {
+		$manifest = $this->get_vite_manifest( $manifest_relative_path );
+
+		if ( empty( $manifest[ $entry_key ] ) || ! is_array( $manifest[ $entry_key ] ) ) {
+			return;
+		}
+
+		$entry = $manifest[ $entry_key ];
+		$asset_root = trailingslashit( defined( 'JOINOTIFY_URL' ) ? JOINOTIFY_URL : plugin_dir_url( JOINOTIFY_FILE ) ) . trim( $asset_root_relative_path, '/' ) . '/';
+		$entry_file = $entry['file'] ?? '';
+
+		if ( $entry_file ) {
+			wp_enqueue_script(
+				$handle,
+				$asset_root . ltrim( $entry_file, '/' ),
+				array(),
+				$this->version,
+				true
+			);
+			wp_script_add_data( $handle, 'type', 'module' );
+		}
+
+		$css_files = array();
+
+		if ( ! empty( $entry['css'] ) && is_array( $entry['css'] ) ) {
+			$css_files = array_merge( $css_files, $entry['css'] );
+		}
+
+		if ( ! empty( $entry['imports'] ) && is_array( $entry['imports'] ) ) {
+			foreach ( $entry['imports'] as $import_key ) {
+				if ( empty( $manifest[ $import_key ] ) || ! is_array( $manifest[ $import_key ] ) ) {
+					continue;
+				}
+
+				if ( ! empty( $manifest[ $import_key ]['css'] ) && is_array( $manifest[ $import_key ]['css'] ) ) {
+					$css_files = array_merge( $css_files, $manifest[ $import_key ]['css'] );
+				}
+			}
+		}
+
+		$css_files = array_values( array_unique( array_filter( $css_files ) ) );
+
+		foreach ( $css_files as $index => $css_file ) {
+			wp_enqueue_style(
+				$handle . '-css-' . $index,
+				$asset_root . ltrim( $css_file, '/' ),
+				array(),
+				$this->version
+			);
+		}
+	}
 }

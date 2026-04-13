@@ -50,7 +50,7 @@ $integrations['minha_integracao'] = array(
         'button_label' => esc_html__( 'Configurar', 'joinotify-minha-integracao' ),
         'blocks' => array(
             MeuMouse\Joinotify\Integrations\Integrations_Base::modal_html_block(
-                '<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">Conteudo personalizado do modal.</div>'
+                '<div class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">Conteudo personalizado do modal.</div>'
             ),
         ),
     ),
@@ -216,7 +216,7 @@ Se voce precisar apenas inserir conteudo estatico, use um bloco HTML:
     'title' => esc_html__( 'Configuracoes do exemplo', 'joinotify-exemplo' ),
     'blocks' => array(
         MeuMouse\Joinotify\Integrations\Integrations_Base::modal_html_block(
-            '<div class="rounded-2xl border border-primary-100 bg-primary-50 p-4">Instrucoes ou conteudo personalizado.</div>'
+            '<div class="rounded-lg border border-primary-100 bg-primary-50 p-4">Instrucoes ou conteudo personalizado.</div>'
         ),
     ),
 ),
@@ -323,7 +323,7 @@ $integrations['otp_login'] = array(
         'button_label' => esc_html__( 'Abrir configuracoes', 'joinotify-otp-login' ),
         'blocks' => array(
             MeuMouse\Joinotify\Integrations\Integrations_Base::modal_html_block(
-                '<div class="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600">Use o template OTP para padronizar a mensagem enviada.</div>'
+                '<div class="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">Use o template OTP para padronizar a mensagem enviada.</div>'
             ),
         ),
     ),

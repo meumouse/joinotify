@@ -181,11 +181,11 @@ function openBulkConfirmation(action) {
     confirmState.open = true;
     confirmState.kind = 'bulk';
     confirmState.action = action;
-    confirmState.title = action === 'delete_permanently' ? 'Delete permanently' : 'Move to trash';
+    confirmState.title = action === 'delete_permanently' ? __('Delete permanently', textDomain) : __('Move to trash', textDomain);
     confirmState.description =
       action === 'delete_permanently'
-        ? 'The selected workflows will be removed permanently and this action cannot be undone.'
-        : 'The selected workflows will be moved to trash and can be restored later.';
+        ? __('The selected workflows will be removed permanently and this action cannot be undone.', textDomain)
+        : __('The selected workflows will be moved to trash and can be restored later.', textDomain);
     return;
   }
 

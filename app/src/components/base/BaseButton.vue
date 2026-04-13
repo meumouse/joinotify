@@ -20,7 +20,7 @@ const props = defineProps({
 const emit = defineEmits(['click']);
 
 const variantClasses = {
-  primary: 'bg-slate-900 text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/20',
+  primary: 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 focus-visible:ring-primary-700/20',
   secondary: 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-slate-200',
   ghost: 'bg-transparent text-slate-700 hover:bg-slate-100 focus-visible:ring-slate-200',
   danger: 'bg-rose-600 text-white shadow-sm hover:bg-rose-500 focus-visible:ring-rose-500/20',
@@ -50,7 +50,7 @@ function handleClick(event) {
     :type="href ? undefined : type"
     :aria-disabled="disabled || loading ? 'true' : undefined"
     :tabindex="disabled || loading ? -1 : undefined"
-    class="inline-flex items-center justify-center gap-2 rounded-xl font-medium outline-none transition focus-visible:ring-4"
+    class="inline-flex items-center justify-center gap-2 rounded-[8px] font-medium outline-none transition focus-visible:ring-4"
     :class="[
       sizeClasses[size],
       variantClasses[variant],

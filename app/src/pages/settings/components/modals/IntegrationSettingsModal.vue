@@ -131,7 +131,7 @@ const resolvedSizeClass = computed(() => {
         @action="$emit('action', $event)"
       />
     </div>
-    <div v-else class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+    <div v-else class="rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
       {{ __('This integration has no additional settings.', textDomain) }}
     </div>
   </ModalDialog>

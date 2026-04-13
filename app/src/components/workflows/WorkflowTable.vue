@@ -1,7 +1,10 @@
 <script setup>
+import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
 import WorkflowTableHeader from './WorkflowTableHeader.vue';
 import WorkflowTableRow from './WorkflowTableRow.vue';
+import WorkflowStatusSwitch from './WorkflowStatusSwitch.vue';
+import WorkflowRowActions from './WorkflowRowActions.vue';
 
 defineProps({
   workflows: { type: Array, default: () => [] },
@@ -52,7 +55,7 @@ defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent
         <summary class="flex cursor-pointer list-none items-center gap-3 outline-none">
           <BaseCheckbox
             :model-value="selectedIds.includes(String(workflow.id))"
-            :aria-label="`Select ${workflow.name}`"
+            :aria-label="`${__('Select', textDomain)} ${workflow.name}`"
             :disabled="loadingIds.includes(String(workflow.id))"
             @click.stop
             @change="$emit('select', workflow, $event)"
@@ -67,11 +70,11 @@ defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent
             v-if="workflow.status === 'trash'"
             class="inline-flex rounded-full bg-shell-50 px-3 py-1 text-xs font-semibold text-shell-500"
           >
-            In trash
+            {{ __('In trash', textDomain) }}
           </span>
           <WorkflowStatusSwitch
             v-else
-            :aria-label="`Toggle status for ${workflow.name}`"
+            :aria-label="`${__('Toggle status for', textDomain)} ${workflow.name}`"
             :disabled="loadingIds.includes(String(workflow.id))"
             :loading="loadingIds.includes(String(workflow.id))"
             :model-value="workflow.status"
@@ -82,7 +85,7 @@ defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent
 
         <div class="mt-4 space-y-3 border-t border-slate-200 pt-4">
           <div class="flex items-center justify-between text-sm text-shell-500">
-            <span>Created</span>
+            <span>{{ __('Created', textDomain) }}</span>
             <span class="font-medium text-ink">{{ formatDate(workflow.created_at) }}</span>
           </div>
           <WorkflowRowActions

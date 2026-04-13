@@ -223,22 +223,18 @@ class Workflow_Manager {
      * @since 1.3.0
      * @return void
      */
-    public function load_builder_files() {
-        ?>
+	public function load_builder_files() {
+		?>
         <div id="joinotify-automations-builder" class="wrapper canvas-dot">
-            <?php $builder_files = apply_filters( 'Joinotify/Builder/Load_Files', array(
-                'Loader.php',
-                'Navbar.php',
-                'Triggers.php',
-                'Actions.php',
-                'Funnel.php',
-                'Choose_Template.php',
+            <?php
+            $builder_files = apply_filters( 'Joinotify/Builder/Load_Files', array(
+                'Builder.php',
             ));
 
             foreach ( $builder_files as $file ) :
-                include_once JOINOTIFY_SRC . 'Views/Builder/' . $file;
+                include_once JOINOTIFY_SRC . 'Views/' . $file;
             endforeach; ?>
         </div>
         <?php
-    }
+	}
 }

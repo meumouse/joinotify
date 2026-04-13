@@ -5,6 +5,7 @@
  * @version 1.4.7
  */
 import '../styles/main.css';
+import '../pages/builder/styles.css';
 import BuilderPage from '../pages/builder/BuilderPage.vue';
 import { mountPage } from '../utils/bootstrap';
 

@@ -13,7 +13,7 @@ defineEmits(['reset', 'clear-logs']);
 </script>
 
 <template>
-  <div class="rounded-2xl border border-rose-200 bg-rose-50/80 p-4">
+  <div class="rounded-lg border border-rose-200 bg-rose-50/80 p-4">
     <div class="flex items-start justify-between gap-4">
       <div>
         <h3 class="text-base font-semibold text-rose-900">{{ __('Danger zone', textDomain) }}</h3>

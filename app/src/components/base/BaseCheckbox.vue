@@ -53,7 +53,7 @@ function handleChange(event) {
       >
       <span
         aria-hidden="true"
-        class="absolute inset-0 rounded-md border border-slate-300 bg-white transition peer-focus-visible:ring-4 peer-focus-visible:ring-slate-200 peer-checked:border-slate-900 peer-checked:bg-slate-900"
+        class="absolute inset-0 rounded-md border border-slate-300 bg-white transition peer-focus-visible:ring-4 peer-focus-visible:ring-primary-700/10 peer-checked:border-primary-700 peer-checked:bg-primary-700"
       />
       <svg
         aria-hidden="true"

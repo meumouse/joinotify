@@ -290,7 +290,7 @@ class Registry {
                 'comming_soon' => $coming_soon,
                 'modal' => $modal,
                 'disabled_message' => $requires_plugin && ! $plugin_active
-                    ? esc_html__( 'Este plugin precisa estar instalado e ativo para habilitar esta integraÃ§Ã£o.', 'joinotify' )
+                    ? esc_html__( 'This plugin needs to be installed and active to enable this integration.', 'joinotify' )
                     : '',
                 'fields' => $settings_fields,
                 'settings' => $settings_fields,
@@ -304,55 +304,7 @@ class Registry {
         return $cards;
     }
 
-
-    /**
-     * WooCommerce advanced settings rendered inside the integrations card.
-     *
-     * @since 1.4.7
-     * @return array<int,array<string,mixed>>
-     */
-    public static function get_woocommerce_advanced_fields() {
-        return array(
-            self::field_toggle(
-                'enable_create_coupon_action',
-                esc_html__( 'Activate discount coupon action', 'joinotify' ),
-                esc_html__( 'Adds the coupon action to WooCommerce workflows.', 'joinotify' )
-            ),
-            self::field_text(
-                'create_coupon_prefix',
-                esc_html__( 'Coupon prefix', 'joinotify' ),
-                esc_html__( 'Prefix used in the automatic creation of coupons.', 'joinotify' ),
-                array(
-                    'placeholder' => 'CUPOM_',
-                )
-            ),
-            self::field_textarea(
-                'woocommerce_billing_full_address_format',
-                esc_html__( 'Billing full address format', 'joinotify' ),
-                esc_html__( 'Defines the text used in the billing full address variable.', 'joinotify' ),
-                array(
-                    'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-                    'rows' => 3,
-                )
-            ),
-            self::field_textarea(
-                'woocommerce_shipping_full_address_format',
-                esc_html__( 'Shipping full address format', 'joinotify' ),
-                esc_html__( 'Defines the text used in the shipping full address variable.', 'joinotify' ),
-                array(
-                    'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-                    'rows' => 3,
-                )
-            ),
-            self::field_toggle(
-                'enable_ignore_processed_actions',
-                esc_html__( 'Ignore actions already processed.', 'joinotify' ),
-                esc_html__( 'It prevents the same action from being processed again when the trigger is repeated.', 'joinotify' )
-            ),
-        );
-    }
-
-
+    
     /**
      * Current sender list and supporting phone metadata.
      *

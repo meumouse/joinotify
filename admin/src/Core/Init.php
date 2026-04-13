@@ -239,6 +239,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Ajax',
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
 			'MeuMouse\\Joinotify\\Admin\\Menu',
+			'MeuMouse\\Joinotify\\Admin\\Builder\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Assets\\Core_Assets',
 			'MeuMouse\\Joinotify\\Assets\\Settings_Assets',
 			'MeuMouse\\Joinotify\\Api\\Controller',

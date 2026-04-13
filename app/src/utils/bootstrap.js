@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
 /**
  * Read bootstrap data from a mount element.
@@ -42,7 +43,11 @@ export function mountPage(mountId, component) {
 
   const bootstrap = readBootstrap(mountId);
 
-  return createApp(component, {
+  const app = createApp(component, {
     bootstrap,
-  }).mount(mount);
+  });
+
+  app.use(createPinia());
+
+  return app.mount(mount);
 }

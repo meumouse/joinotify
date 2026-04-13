@@ -6,7 +6,7 @@
  * @version 1.4.7
  */
 import { computed } from 'vue';
-import { __, textDomain } from '../../utils/i18n';
+import { __, sprintf, textDomain } from '../../utils/i18n';
 import { SHADE_STEPS, generatePalette, normalizeHex } from '../../utils/color';
 
 const props = defineProps({
@@ -126,7 +126,7 @@ function shadeValue(step) {
       </p>
     </div>
 
-    <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_1px_0_rgba(15,23,42,0.02)]">
+    <div class="grid gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-[0_1px_0_rgba(15,23,42,0.02)]">
       <div class="grid gap-3 sm:grid-cols-[92px_minmax(0,1fr)]">
         <div class="flex items-center gap-3 sm:flex-col sm:items-start sm:justify-center">
           <span class="text-sm font-medium text-slate-700">
@@ -186,7 +186,7 @@ function shadeValue(step) {
           class="grid grid-cols-[92px_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5"
         >
           <span class="text-sm font-medium text-slate-700">
-            {{ step === '0' ? __('Base', textDomain) : `Shade ${step}` }}
+            {{ step === '0' ? __('Base', textDomain) : sprintf(__('Shade %s', textDomain), step) }}
           </span>
 
           <div class="flex min-w-0 items-center gap-3">
@@ -195,7 +195,7 @@ function shadeValue(step) {
               class="relative h-9 w-9 shrink-0 rounded-lg border border-slate-200 shadow-sm transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
               type="button"
               :disabled="disabled"
-              :aria-label="step === '0' ? __('Pick base shade', textDomain) : `${__('Pick shade', textDomain)} ${step}`"
+              :aria-label="step === '0' ? __('Pick base shade', textDomain) : sprintf(__('Pick shade %s', textDomain), step)"
             >
               <input
                 :value="shadeValue(step)"
@@ -219,7 +219,7 @@ function shadeValue(step) {
             class="rounded-lg border border-transparent px-2 py-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
             type="button"
             :disabled="disabled || !currentPalette[step]"
-            :aria-label="step === '0' ? __('Reset base shade override', textDomain) : `${__('Clear shade', textDomain)} ${step}`"
+            :aria-label="step === '0' ? __('Reset base shade override', textDomain) : sprintf(__('Clear shade %s', textDomain), step)"
             @click="clearShade(step)"
           >
             <span aria-hidden="true">x</span>

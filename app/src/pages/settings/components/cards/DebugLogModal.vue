@@ -31,7 +31,7 @@ const formattedLogs = computed(() => props.logs.join('\n'));
     @close="$emit('close')"
   >
     <div class="space-y-4">
-      <div v-if="loading" class="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+      <div v-if="loading" class="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-5">
         <div class="joinotify-skeleton h-4 w-44 rounded-full" />
         <div class="joinotify-skeleton h-4 w-full rounded-full" />
         <div class="joinotify-skeleton h-4 w-11/12 rounded-full" />
@@ -40,11 +40,11 @@ const formattedLogs = computed(() => props.logs.join('\n'));
         <div class="joinotify-skeleton h-4 w-9/12 rounded-full" />
       </div>
 
-      <div v-else-if="!logs.length" class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-muted">
+      <div v-else-if="!logs.length" class="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-muted">
         {{ __('No logs available.', textDomain) }}
       </div>
 
-      <pre v-else class="max-h-[34rem] overflow-auto rounded-2xl bg-slate-950 p-4 text-sm leading-6 text-slate-100">{{ formattedLogs }}</pre>
+      <pre v-else class="max-h-[34rem] overflow-auto rounded-lg bg-slate-950 p-4 text-sm leading-6 text-slate-100">{{ formattedLogs }}</pre>
 
       <div class="flex items-center justify-end gap-3">
         <button
