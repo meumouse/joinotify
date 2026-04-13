@@ -8,7 +8,7 @@ defineEmits(['select']);
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-2 rounded-[8px] border border-slate-200 bg-white p-2 shadow-[0_1px_0_rgba(0,0,0,0.02)]">
+  <div class="flex flex-wrap gap-2">
     <button
       v-for="tab in tabs"
       :key="tab.value"

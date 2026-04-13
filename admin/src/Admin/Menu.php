@@ -219,6 +219,8 @@ class Menu {
             'title'        => __( 'Gerenciar fluxos', 'joinotify' ),
             'create_url'   => admin_url( 'admin.php?page=joinotify-workflows-builder' ),
             'active_status'=> $status,
+            'date_format'  => get_option( 'date_format' ),
+            'time_format'  => get_option( 'time_format' ),
             'loading_delay' => 350,
             'workflows'    => $workflows,
             'counts'       => array(

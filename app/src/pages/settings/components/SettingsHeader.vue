@@ -7,6 +7,7 @@
  * @version 1.4.7
  */
 import { __, textDomain } from '../../../utils/i18n';
+import BrandMark from '../../../components/brand/BrandMark.vue';
 
 defineProps({
   docsUrl: { type: String, required: true },
@@ -15,11 +16,7 @@ defineProps({
 
 <template>
   <header class="flex items-start gap-3">
-    <div class="mt-1 h-12 w-12 shrink-0">
-      <svg class="h-full w-full text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 703 882.5" fill="currentColor" aria-hidden="true">
-        <path d="M908.66,248V666a126.5,126.5,0,0,1-207.21,97.41l-16.7-16.7L434.08,496.07l-62-62a47.19,47.19,0,0,0-72,30.86V843.36a47.52,47.52,0,0,0,69.57,35.22l19.3-19.3,56-56,81.19-81.19,10.44-10.44a47.65,47.65,0,0,1,67.63,65.05l-13,13L428.84,952.12l-9.59,9.59a128,128,0,0,1-213.59-95.18V413.17a124.52,124.52,0,0,1,199.78-82.54l22.13,22.13L674.45,599.64l46.22,46.22,17,17a47.8,47.8,0,0,0,71-31.44V270.19a48.19,48.19,0,0,0-75-40.05L720.43,243.4l-68.09,68.09L575.7,388.13a48.39,48.39,0,0,1-67.43-67.93L680,148.46A136,136,0,0,1,908.66,248Z" transform="translate(-205.66 -112.03)" />
-      </svg>
-    </div>
+    <BrandMark class="mt-1" size="md" variant="primary" />
 
     <div class="pt-1">
       <h1 class="text-[26px] font-normal leading-9 text-slate-800">

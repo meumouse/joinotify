@@ -1,8 +1,9 @@
 <script setup>
+import { computed } from 'vue';
 import BaseButton from '../buttons/button/BaseButton.vue';
-import BaseSelect from '../buttons/select/BaseSelect.vue';
+import SelectField from '../fields/SelectField.vue';
 
-defineProps({
+const props = defineProps({
   modelValue: { type: String, default: '' },
   options: { type: Array, default: () => [] },
   selectedCount: { type: Number, default: 0 },
@@ -12,16 +13,22 @@ defineProps({
 });
 
 defineEmits(['update:modelValue', 'apply']);
+
+const field = computed(() => ({
+  label: 'Bulk actions',
+  placeholder: props.placeholder || 'Bulk actions',
+  options: Array.isArray(props.options) ? props.options : [],
+  searchable: false,
+}));
 </script>
 
 <template>
   <div class="flex flex-col gap-3 sm:flex-row sm:items-end">
-    <BaseSelect
+    <SelectField
+      :field="field"
       :model-value="modelValue"
-      :options="options"
-      :placeholder="placeholder"
+      name="bulk_action"
       :disabled="disabled"
-      label="Bulk actions"
       class="w-full"
       @update:modelValue="$emit('update:modelValue', $event)"
     />

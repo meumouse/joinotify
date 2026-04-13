@@ -11,7 +11,7 @@ defineEmits(['update:modelValue', 'clear']);
 </script>
 
 <template>
-  <div class="flex flex-col gap-3 rounded-[8px] border border-slate-200 bg-white p-4 shadow-[0_1px_0_rgba(0,0,0,0.02)] sm:flex-row sm:items-center">
+  <div class="flex gap-3 items-center my-4">
     <label class="flex-1">
       <span class="sr-only">{{ placeholder }}</span>
       <input

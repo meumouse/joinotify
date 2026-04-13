@@ -17,7 +17,7 @@ defineEmits(['update:bulkAction', 'applyBulkAction', 'first', 'previous', 'next'
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 rounded-[8px] border border-slate-200 bg-white p-4 shadow-[0_1px_0_rgba(0,0,0,0.02)] lg:flex-row lg:items-center lg:justify-between">
+  <div class="flex flex-col gap-4 my-4 lg:flex-row lg:items-center lg:justify-between">
     <BulkActions
       :disabled="bulkDisabled"
       :loading="loading"

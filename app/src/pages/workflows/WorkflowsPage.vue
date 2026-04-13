@@ -59,6 +59,64 @@ const tablePagination = computed(() => ({
   total_pages: pagination.totalPages.value,
 }));
 
+const wordpressDateFormat = computed(() => props.bootstrap?.date_format || 'F j, Y');
+const wordpressTimeFormat = computed(() => props.bootstrap?.time_format || 'g:i a');
+
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
+
+function formatWordPressPart(date, format) {
+  const monthNamesLong = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+  const monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const dayNamesLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const tokens = {
+    d: () => pad(date.getDate()),
+    D: () => dayNamesShort[date.getDay()],
+    j: () => String(date.getDate()),
+    l: () => dayNamesLong[date.getDay()],
+    F: () => monthNamesLong[date.getMonth()],
+    M: () => monthNamesShort[date.getMonth()],
+    m: () => pad(date.getMonth() + 1),
+    n: () => String(date.getMonth() + 1),
+    Y: () => String(date.getFullYear()),
+    y: () => String(date.getFullYear()).slice(-2),
+    H: () => pad(date.getHours()),
+    G: () => String(date.getHours()),
+    h: () => pad(((date.getHours() + 11) % 12) + 1),
+    g: () => String(((date.getHours() + 11) % 12) + 1),
+    i: () => pad(date.getMinutes()),
+    s: () => pad(date.getSeconds()),
+    a: () => (date.getHours() >= 12 ? 'pm' : 'am'),
+    A: () => (date.getHours() >= 12 ? 'PM' : 'AM'),
+  };
+
+  let escaping = false;
+  let output = '';
+
+  for (const character of String(format || '')) {
+    if (escaping) {
+      output += character;
+      escaping = false;
+      continue;
+    }
+
+    if (character === '\\') {
+      escaping = true;
+      continue;
+    }
+
+    output += tokens[character] ? tokens[character]() : character;
+  }
+
+  return output;
+}
+
 function formatDate(value) {
   if (!value) {
     return '-';
@@ -70,10 +128,10 @@ function formatDate(value) {
     return value;
   }
 
-  return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  }).format(parsed);
+  const date = formatWordPressPart(parsed, wordpressDateFormat.value);
+  const time = formatWordPressPart(parsed, wordpressTimeFormat.value);
+
+  return [date, time].filter(Boolean).join(' ').trim();
 }
 
 function resetConfirmation() {
@@ -164,7 +222,7 @@ function handleToggleStatus(workflow, nextStatus) {
 </script>
 
 <template>
-  <div class="joinotify-settings min-h-screen bg-[#f3f3f5] px-4 py-8 sm:px-6 lg:px-10">
+  <div class="joinotify-settings min-h-screen bg-[#f3f3f5] p-4">
     <div class="w-full">
       <PageHeader
         action-label="Add new workflow"
