@@ -36,6 +36,7 @@ const savedSettings = ref(cloneValue(props.bootstrap?.settings || {}));
 const phoneCandidates = ref([]);
 const debugLogs = ref([]);
 const logsOpen = ref(false);
+const logsLoading = ref(false);
 const saving = ref(false);
 const refreshingSenderPhone = ref('');
 const senderActionLoading = ref(false);
@@ -362,17 +363,31 @@ async function refreshSenderConnection(phone) {
   }
 }
 
-async function openLogs() {
+async function loadDebugLogs() {
+  logsLoading.value = true;
+
   try {
     const response = await api.get('/admin/settings/debug/logs');
     debugLogs.value = response.content || [];
-    logsOpen.value = true;
-    if (!debugLogs.value.length) {
+
+    if (logsOpen.value && !debugLogs.value.length) {
       toast(response.message || __('The debug log is empty.', textDomain), 'info', __('Logs', textDomain));
     }
   } catch (error) {
     toast(error.message || __('Could not open the logs.', textDomain), 'danger', __('Logs', textDomain));
+  } finally {
+    logsLoading.value = false;
   }
+}
+
+function openLogs() {
+  logsOpen.value = true;
+  debugLogs.value = [];
+  void loadDebugLogs();
+}
+
+function refreshLogs() {
+  void loadDebugLogs();
 }
 
 function confirmClearLogs() {
@@ -544,7 +559,9 @@ function canConfigureIntegration(integration) {
     <DebugLogModal
       :open="logsOpen"
       :logs="debugLogs"
+      :loading="logsLoading"
       @close="logsOpen = false"
+      @update-logs="refreshLogs"
       @clear="confirmClearLogs"
     />
 
