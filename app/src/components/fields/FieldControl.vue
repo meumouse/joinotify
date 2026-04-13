@@ -12,7 +12,7 @@ import TextField from './TextField.vue';
 import { buildFieldProps, resolveFieldComponent } from './fieldRegistry';
 
 const props = defineProps({
-  modelValue: { type: [String, Number, Boolean], default: '' },
+  modelValue: { type: [String, Number, Boolean, Object, Array], default: '' },
   field: { type: Object, required: true },
   name: { type: String, required: true },
 });

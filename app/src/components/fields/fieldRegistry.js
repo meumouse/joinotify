@@ -157,7 +157,7 @@ export function getRegisteredFieldComponents() {
 }
 
 export function getSupportedFieldTypes() {
-  return ['toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale'];
+  return ['toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale', 'input-group'];
 }
 
 export function getSupportedFieldComponents() {

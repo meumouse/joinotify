@@ -437,6 +437,109 @@ abstract class Integrations_Base {
 
 
     /**
+     * Build an input group field definition.
+     *
+     * The group stores a structured value and can render multiple controls in
+     * the same row, such as input + select + action button.
+     *
+     * @since 1.4.8
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<int,array<string,mixed>> $items
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function field_input_group( $key, $label, $description, $items = array(), $extra = array() ) {
+        $items = self::normalize_input_group_items( $items );
+        $component_props = isset( $extra['component_props'] ) && is_array( $extra['component_props'] ) ? $extra['component_props'] : array();
+        $default = array_key_exists( 'default', $extra ) ? $extra['default'] : self::infer_input_group_default_value( $items );
+
+        unset( $extra['component_props'] );
+
+        return self::build_field_definition( 'input-group', $key, $label, $description, array_merge( array(
+            'component' => 'input-group',
+            'component_props' => array_merge( array(
+                'items' => $items,
+            ), $component_props ),
+            'default' => $default,
+        ), $extra ) );
+    }
+
+
+    /**
+     * Build a single input-group item.
+     *
+     * @since 1.4.8
+     * @param string $type
+     * @param string $label
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function input_group_item( $type, $label = '', $extra = array() ) {
+        return array_merge( array(
+            'type' => self::normalize_input_group_item_type( $type ),
+            'label' => $label,
+        ), is_array( $extra ) ? $extra : array() );
+    }
+
+
+    /**
+     * Build an input-group text item.
+     *
+     * @since 1.4.8
+     * @param string $label
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function input_group_text_item( $label = '', $extra = array() ) {
+        return self::input_group_item( 'text', $label, $extra );
+    }
+
+
+    /**
+     * Build an input-group select item.
+     *
+     * @since 1.4.8
+     * @param string $label
+     * @param array<int,array<string,mixed>> $options
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function input_group_select_item( $label = '', $options = array(), $extra = array() ) {
+        return self::input_group_item( 'select', $label, array_merge( array(
+            'options' => is_array( $options ) ? $options : array(),
+        ), is_array( $extra ) ? $extra : array() ) );
+    }
+
+
+    /**
+     * Build an input-group button item.
+     *
+     * @since 1.4.8
+     * @param string $label
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function input_group_button_item( $label, $extra = array() ) {
+        return self::input_group_item( 'button', $label, $extra );
+    }
+
+
+    /**
+     * Build an input-group addon item.
+     *
+     * @since 1.4.8
+     * @param string $label
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function input_group_addon_item( $label, $extra = array() ) {
+        return self::input_group_item( 'addon', $label, $extra );
+    }
+
+
+    /**
      * Build a modal block that renders trusted HTML.
      *
      * @since 1.4.8
@@ -594,6 +697,10 @@ abstract class Integrations_Base {
                 'baseColor' => '#4f46e5',
                 'palette'   => array(),
             );
+        }
+
+        if ( 'input-group' === $type ) {
+            return array();
         }
 
         return '';
@@ -791,7 +898,7 @@ abstract class Integrations_Base {
             return 'text';
         }
 
-        return in_array( $type, array( 'toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale' ), true ) ? $type : 'text';
+        return in_array( $type, array( 'toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale', 'input-group' ), true ) ? $type : 'text';
     }
 
 
@@ -872,5 +979,171 @@ abstract class Integrations_Base {
         }
 
         return array_values( $normalized );
+    }
+
+
+    /**
+     * Normalize a declarative input group item.
+     *
+     * @since 1.4.8
+     * @param array<string,mixed> $item
+     * @param int $index
+     * @return array<string,mixed>
+     */
+    protected static function normalize_input_group_item( $item, $index ) {
+        $item = is_array( $item ) ? $item : array();
+        $type = self::normalize_input_group_item_type( $item['type'] ?? $item['kind'] ?? 'text' );
+
+        $item = wp_parse_args( $item, array(
+            'type' => $type,
+            'key' => '',
+            'name' => '',
+            'label' => '',
+            'text' => '',
+            'value' => '',
+            'default' => null,
+            'placeholder' => '',
+            'disabled' => false,
+            'options' => array(),
+            'class' => '',
+            'itemClass' => '',
+            'buttonClass' => '',
+            'inputClass' => '',
+            'width' => '',
+            'autocomplete' => 'off',
+            'inputmode' => '',
+            'action' => '',
+            'target' => '',
+            'source' => '',
+        ) );
+
+        $item['type'] = $type;
+        $item['key'] = sanitize_key( (string) ( $item['key'] ?: $item['name'] ) );
+        $item['name'] = sanitize_key( (string) $item['name'] );
+        $item['disabled'] = (bool) $item['disabled'];
+        $item['options'] = is_array( $item['options'] ) ? array_values( $item['options'] ) : array();
+        $item['class'] = is_string( $item['class'] ) ? $item['class'] : '';
+        $item['itemClass'] = is_string( $item['itemClass'] ) ? $item['itemClass'] : '';
+        $item['buttonClass'] = is_string( $item['buttonClass'] ) ? $item['buttonClass'] : '';
+        $item['inputClass'] = is_string( $item['inputClass'] ) ? $item['inputClass'] : '';
+        $item['width'] = is_string( $item['width'] ) ? $item['width'] : '';
+        $item['autocomplete'] = is_string( $item['autocomplete'] ) ? $item['autocomplete'] : 'off';
+        $item['inputmode'] = is_string( $item['inputmode'] ) ? $item['inputmode'] : '';
+        $item['action'] = is_string( $item['action'] ) ? sanitize_key( $item['action'] ) : '';
+        $item['target'] = is_string( $item['target'] ) ? sanitize_key( $item['target'] ) : '';
+        $item['source'] = is_string( $item['source'] ) ? sanitize_key( $item['source'] ) : '';
+
+        if ( empty( $item['key'] ) && ! in_array( $type, array( 'button', 'addon' ), true ) ) {
+            $item['key'] = 'input_group_item_' . $index;
+        }
+
+        if ( empty( $item['label'] ) && ! empty( $item['text'] ) ) {
+            $item['label'] = (string) $item['text'];
+        }
+
+        if ( 'select' === $type && null === $item['default'] && ! empty( $item['options'] ) && is_array( $item['options'] ) ) {
+            $first_option = $item['options'][0];
+            if ( is_array( $first_option ) && array_key_exists( 'value', $first_option ) ) {
+                $item['default'] = $first_option['value'];
+            }
+        }
+
+        if ( 'button' === $type ) {
+            $item['default'] = null;
+        } elseif ( null === $item['default'] && array_key_exists( 'value', $item ) && '' !== $item['value'] ) {
+            $item['default'] = $item['value'];
+        }
+
+        return $item;
+    }
+
+
+    /**
+     * Normalize the input-group item collection.
+     *
+     * @since 1.4.8
+     * @param array<int,array<string,mixed>|string> $items
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function normalize_input_group_items( $items ) {
+        if ( ! is_array( $items ) ) {
+            return array();
+        }
+
+        $normalized = array();
+
+        foreach ( $items as $index => $item ) {
+            if ( is_string( $item ) ) {
+                $normalized[] = self::input_group_addon_item( $item );
+                continue;
+            }
+
+            if ( ! is_array( $item ) ) {
+                continue;
+            }
+
+            $normalized[] = self::normalize_input_group_item( $item, (int) $index );
+        }
+
+        return array_values( $normalized );
+    }
+
+
+    /**
+     * Infer the default value for an input-group field.
+     *
+     * @since 1.4.8
+     * @param array<int,array<string,mixed>> $items
+     * @return array<string,mixed>
+     */
+    protected static function infer_input_group_default_value( $items ) {
+        $default = array();
+
+        foreach ( self::normalize_input_group_items( $items ) as $item ) {
+            $type = $item['type'] ?? 'text';
+            $key = $item['key'] ?? '';
+
+            if ( empty( $key ) || in_array( $type, array( 'button', 'addon' ), true ) ) {
+                continue;
+            }
+
+            if ( array_key_exists( 'default', $item ) && null !== $item['default'] ) {
+                $default[ $key ] = $item['default'];
+                continue;
+            }
+
+            if ( array_key_exists( 'value', $item ) && '' !== $item['value'] ) {
+                $default[ $key ] = $item['value'];
+                continue;
+            }
+
+            if ( 'select' === $type && ! empty( $item['options'] ) && is_array( $item['options'] ) ) {
+                $first_option = $item['options'][0];
+
+                if ( is_array( $first_option ) && array_key_exists( 'value', $first_option ) ) {
+                    $default[ $key ] = $first_option['value'];
+                }
+            }
+        }
+
+        return $default;
+    }
+
+
+    /**
+     * Normalize an input-group item type.
+     *
+     * @since 1.4.8
+     * @param string $type
+     * @return string
+     */
+    protected static function normalize_input_group_item_type( $type ) {
+        $type = sanitize_key( (string) $type );
+
+        if ( in_array( $type, array( 'text', 'input', 'select', 'button', 'addon' ), true ) ) {
+            return 'input' === $type ? 'text' : $type;
+        }
+
+        return 'text';
     }
 }

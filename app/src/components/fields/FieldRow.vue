@@ -26,7 +26,7 @@ defineEmits(['update:modelValue']);
       </p>
     </div>
 
-    <div class="lg:justify-self-start">
+    <div class="field-control">
       <FieldControl :field="field" :name="name" :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" />
     </div>
   </div>

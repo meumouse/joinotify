@@ -15,7 +15,7 @@ const props = defineProps({
   settings: { type: Object, default: () => ({}) },
 });
 
-const emit = defineEmits(['update-setting']);
+const emit = defineEmits(['update-setting', 'action']);
 
 const blockType = computed(() => String(props.block?.type || props.block?.kind || 'html').trim().toLowerCase());
 
@@ -51,6 +51,7 @@ function handleUpdateSetting(key, value) {
     :integration="integration"
     :settings="settings"
     :update-setting="handleUpdateSetting"
+    @action="$emit('action', $event)"
   />
 
   <div v-else class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">

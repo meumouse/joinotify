@@ -68,23 +68,75 @@ Os campos declarativos podem usar os tipos nativos abaixo:
 - `phone`
 - `color`
 - `color-scale`
+- `input-group`
 
 O sistema tambem aceita componentes customizados atraves do campo `component`.
+
+### `input-group`
+
+O tipo `input-group` serve para agrupar controles relacionados no mesmo bloco visual. Ele foi pensado para casos como:
+
+- `input + select`
+- `input + select + botao`
+- `input + botao`
+- `input + texto auxiliar`
+
+No backend, o grupo deve ser declarado com `Integrations_Base::field_input_group()`. Cada item do grupo pode ser criado com os helpers:
+
+- `input_group_text_item()`
+- `input_group_select_item()`
+- `input_group_button_item()`
+- `input_group_addon_item()`
+
+Exemplo:
+
+```php
+MeuMouse\Joinotify\Integrations\Integrations_Base::field_input_group(
+    'discount_rule',
+    esc_html__( 'Regra de desconto', 'joinotify-minha-integracao' ),
+    esc_html__( 'Escolha o tipo e informe o valor em um unico grupo.', 'joinotify-minha-integracao' ),
+    array(
+        MeuMouse\Joinotify\Integrations\Integrations_Base::input_group_select_item(
+            esc_html__( 'Tipo', 'joinotify-minha-integracao' ),
+            array(
+                array( 'value' => 'fixed', 'label' => esc_html__( 'Fixo', 'joinotify-minha-integracao' ) ),
+                array( 'value' => 'percent', 'label' => esc_html__( 'Percentual', 'joinotify-minha-integracao' ) ),
+            ),
+            array(
+                'key' => 'discount_type',
+                'default' => 'fixed',
+            )
+        ),
+        MeuMouse\Joinotify\Integrations\Integrations_Base::input_group_text_item(
+            esc_html__( 'Valor', 'joinotify-minha-integracao' ),
+            array(
+                'key' => 'discount_value',
+                'placeholder' => '10',
+                'inputmode' => 'numeric',
+                'default' => '',
+            )
+        ),
+        MeuMouse\Joinotify\Integrations\Integrations_Base::input_group_button_item(
+            esc_html__( 'Aplicar', 'joinotify-minha-integracao' ),
+            array(
+                'action' => 'copy',
+                'source' => 'discount_value',
+            )
+        ),
+    )
+);
+```
 
 ### Exemplo de campo com componente customizado
 
 ```php
 array(
     'type' => 'component',
-    'component' => 'input-group',
-    'key' => 'sender_name',
-    'label' => esc_html__( 'Nome do remetente', 'joinotify-minha-integracao' ),
-    'description' => esc_html__( 'Valor exibido no componente personalizado.', 'joinotify-minha-integracao' ),
+    'component' => 'otp',
+    'key' => 'otp_code',
+    'label' => esc_html__( 'Codigo OTP', 'joinotify-minha-integracao' ),
+    'description' => esc_html__( 'Componente customizado de OTP.', 'joinotify-minha-integracao' ),
     'default' => '',
-    'component_props' => array(
-        'placeholder' => esc_html__( 'Digite o nome', 'joinotify-minha-integracao' ),
-        'maxLength' => 60,
-    ),
 ),
 ```
 
@@ -101,6 +153,9 @@ Os blocos do modal aceitam dois formatos principais:
 
 - `type => 'html'` para HTML confiavel renderizado no modal
 - `type => 'component'` para um componente Vue registrado no frontend
+- `type => 'component'` continua sendo a forma de usar componentes customizados
+
+O `input-group` nao usa `type => 'component'`. Ele e um tipo nativo declarativo, com suporte a um conjunto de itens dentro do mesmo campo.
 
 O HTML e sanitizado no backend com `wp_kses_post()`. Use esse recurso para conteudo estatico, avisos, caixas de ajuda e estrutura adicional dentro do modal.
 

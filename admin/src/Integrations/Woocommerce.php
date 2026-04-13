@@ -54,9 +54,6 @@ class Woocommerce extends Integrations_Base {
             // add placeholders
             add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 2 );
 
-            // add settings modal on integrations admin page
-            add_action( 'Joinotify/Settings/Tabs/Integrations/Woocommerce', array( $this, 'add_modal_settings' ) );
-
             // add coupon action
             if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
                 add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
@@ -113,7 +110,7 @@ class Woocommerce extends Integrations_Base {
                 'settings' => self::get_integration_settings(),
                 'modal' => array(
                     'title' => esc_html__( 'WooCommerce settings', 'joinotify' ),
-                    'description' => esc_html__( 'Configure discount coupons and checkout field formatting.', 'joinotify' ),
+                    'description' => esc_html__( 'Configure discount coupons and checkout field formatting with the native integration fields.', 'joinotify' ),
                     'button_label' => esc_html__( 'Configure', 'joinotify' ),
                 ),
             )
@@ -134,12 +131,12 @@ class Woocommerce extends Integrations_Base {
             self::field_toggle(
                 'enable_create_coupon_action',
                 esc_html__( 'Activate discount coupon action', 'joinotify' ),
-                esc_html__( 'Adds the coupon action to WooCommerce workflows.', 'joinotify' )
+                esc_html__( 'Adds the coupon action to WooCommerce workflows so a workflow can create and send a discount coupon.', 'joinotify' )
             ),
             self::field_text(
                 'create_coupon_prefix',
                 esc_html__( 'Coupon prefix', 'joinotify' ),
-                esc_html__( 'Prefix used in the automatic creation of coupons.', 'joinotify' ),
+                esc_html__( 'Prefix used when Joinotify generates a coupon code automatically.', 'joinotify' ),
                 array(
                     'placeholder' => 'CUPOM_',
                 )
@@ -147,7 +144,7 @@ class Woocommerce extends Integrations_Base {
             self::field_textarea(
                 'woocommerce_billing_full_address_format',
                 esc_html__( 'Billing full address format', 'joinotify' ),
-                esc_html__( 'Defines the text used in the billing full address variable.', 'joinotify' ),
+                esc_html__( 'Defines the value used in the billing full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.', 'joinotify' ),
                 array(
                     'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
                     'rows' => 3,
@@ -156,7 +153,7 @@ class Woocommerce extends Integrations_Base {
             self::field_textarea(
                 'woocommerce_shipping_full_address_format',
                 esc_html__( 'Shipping full address format', 'joinotify' ),
-                esc_html__( 'Defines the text used in the shipping full address variable.', 'joinotify' ),
+                esc_html__( 'Defines the value used in the shipping full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.', 'joinotify' ),
                 array(
                     'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
                     'rows' => 3,
@@ -165,7 +162,7 @@ class Woocommerce extends Integrations_Base {
             self::field_toggle(
                 'enable_ignore_processed_actions',
                 esc_html__( 'Ignore actions already processed.', 'joinotify' ),
-                esc_html__( 'It prevents the same action from being processed again when the trigger is repeated.', 'joinotify' )
+                esc_html__( 'Prevents the same action from being processed again when the trigger is repeated.', 'joinotify' )
             ),
         );
     }
@@ -183,37 +180,37 @@ class Woocommerce extends Integrations_Base {
             array(
                 'data_trigger' => 'woocommerce_new_order',
                 'title' => esc_html__( 'New order', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um novo pedido Ã© recebido no WooCommerce com qualquer status.', 'joinotify' ),
+                'description' => esc_html__( 'This trigger is activated when a new order is received in WooCommerce with any status.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_checkout_order_processed',
-                'title' => esc_html__( 'New order (Processando)', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um novo pedido Ã© recebido no WooCommerce com status processando.', 'joinotify' ),
+                'title' => esc_html__( 'New order (Processing)', 'joinotify' ),
+                'description' => esc_html__( 'This trigger is activated when a new order is received in WooCommerce with a processing status.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_status_completed',
-                'title' => esc_html__( 'Pedido concluÃ­do', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um pedido tem o status alterado para concluÃ­do.', 'joinotify' ),
+                'title' => esc_html__( 'Order completed', 'joinotify' ),
+                'description' => esc_html__( "This action is triggered when an order's status is changed to completed.", 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_fully_refunded',
                 'title' => esc_html__( 'Order fully refunded', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um pedido Ã© totalmente reembolsado.', 'joinotify' ),
+                'description' => esc_html__( 'This action is triggered when an order is fully refunded.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_partially_refunded',
                 'title' => esc_html__( 'Order partially refunded', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um pedido Ã© parcialmente reembolsado.', 'joinotify' ),
+                'description' => esc_html__( 'This action is triggered when an order is partially refunded.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_status_changed',
                 'title' => esc_html__( 'Order status changed', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um pedido tem seu status alterado.', 'joinotify' ),
+                'description' => esc_html__( "This action is triggered when an order's status changes.", 'joinotify' ),
                 'require_settings' => true,
             ),
         );
@@ -720,105 +717,6 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
-     * Add modal settings for WooCommerce
-     * 
-     * @since 1.1.0
-     * @version 1.4.7
-     * @return void
-     */
-    public function add_modal_settings() {
-        if ( Admin::get_setting('enable_woocommerce_integration') === 'yes' ) : ?>
-            <button id="woocommerce_settings_trigger" class="btn btn-outline-primary mb-5"><?php esc_html_e( 'ConfiguraÃ§Ãµes', 'joinotify' ); ?></button>
-		
-            <div id="woocommerce_settings_container" class="joinotify-popup-container">
-                <div class="joinotify-popup-content popup-lg">
-                    <div class="joinotify-popup-header">
-                        <h5 class="joinotify-popup-title"><?php esc_html_e( 'ConfiguraÃ§Ãµes da integraÃ§Ã£o com WooCommerce', 'joinotify' ); ?></h5>
-                        <button id="woocommerce_settings_close" class="btn-close fs-lg" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ); ?>"></button>
-                    </div>
-
-                    <div class="joinotify-popup-body my-3">
-                        <table class="popup-table">
-                            <tbody>
-                                <tr>
-                                    <th>
-                                        <?php esc_html_e( 'Ativar aÃ§Ã£o Discount coupon', 'joinotify' ); ?>
-                                        <span class="joinotify-description"><?php esc_html_e( 'Ative essa opÃ§Ã£o para adicionar a aÃ§Ã£o Discount coupon em fluxos do WooCommerce.', 'joinotify' ); ?></span>
-                                    </th>
-                                    <td class="d-flex align-items-center">
-                                        <div class="form-check form-switch">
-                                            <input type="checkbox" class="toggle-switch" id="enable_create_coupon_action" name="enable_create_coupon_action" value="yes" <?php checked( Admin::get_setting('enable_create_coupon_action') === 'yes' ); ?> />
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr class="create-coupon-wrapper">
-                                    <th>
-                                        <?php esc_html_e( 'Prefixo para criaÃ§Ã£o de cupons', 'joinotify' ); ?>
-                                        <span class="joinotify-description"><?php esc_html_e( 'Essa opÃ§Ã£o controla o prefixo do cupom criado automaticamente.', 'joinotify' ); ?></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="form-control" name="create_coupon_prefix" id="create_coupon_prefix" value="<?php echo Admin::get_setting('create_coupon_prefix') ?>" placeholder="<?php esc_attr_e( 'CUPOM_', 'joinotify' ) ?>"/>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>
-                                        <?php esc_html_e( 'Formato do endereÃ§o completo (faturamento)', 'joinotify' ); ?>
-                                        <span class="joinotify-description mb-4"><?php esc_html_e( 'Personalize o texto usado na variÃ¡vel {{ wc_billing_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).', 'joinotify' ); ?></span>
-
-                                        <?php foreach ( self::get_checkout_placeholders_by_section('billing') as $field_id => $value ) : ?>
-                                            <div class="d-flex mb-1">
-                                                <span class="joinotify-description"><code><?php echo esc_html( $value['placeholder_html'] ); ?></code></span>
-                                                <span class="joinotify-description ms-2"><?php echo esc_html( $value['description'] ); ?></span>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </th>
-                                    
-                                    <td>
-                                        <textarea class="form-control" name="woocommerce_billing_full_address_format" id="woocommerce_billing_full_address_format" rows="2" placeholder="<?php esc_attr_e( '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})', 'joinotify' ); ?>"><?php echo esc_textarea( Admin::get_setting('woocommerce_billing_full_address_format') ); ?></textarea>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>
-                                        <?php esc_html_e( 'Formato do endereÃ§o completo (entrega)', 'joinotify' ); ?>
-                                        <span class="joinotify-description mb-4"><?php esc_html_e( 'Personalize o texto usado na variÃ¡vel {{ wc_shipping_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).', 'joinotify' ); ?></span>
-
-                                        <?php foreach ( self::get_checkout_placeholders_by_section('shipping') as $field_id => $value ) : ?>
-                                            <div class="d-flex mb-1">
-                                                <span class="joinotify-description"><code><?php echo esc_html( $value['placeholder_html'] ); ?></code></span>
-                                                <span class="joinotify-description ms-2"><?php echo esc_html( $value['description'] ); ?></span>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </th>
-
-                                    <td>
-                                        <textarea class="form-control" name="woocommerce_shipping_full_address_format" id="woocommerce_shipping_full_address_format" rows="2" placeholder="<?php esc_attr_e( '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})', 'joinotify' ); ?>"><?php echo esc_textarea( Admin::get_setting('woocommerce_shipping_full_address_format') ); ?></textarea>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>
-                                        <?php esc_html_e( 'Ignorar aÃ§Ãµes jÃ¡ processadas no fluxo', 'joinotify' ); ?>
-                                        <span class="joinotify-description"><?php esc_html_e( 'Ative essa opÃ§Ã£o para que aÃ§Ãµes jÃ¡ previamente processadas sejam ignoradas quando o mesmo acionamento ocorrer. Esta opÃ§Ãµes Ã© Ãºtil quando aÃ§Ãµes agendadas estÃ£o sendo disparadas novamente.', 'joinotify' ); ?></span>
-                                    </th>
-                                    <td class="d-flex align-items-center">
-                                        <div class="form-check form-switch">
-                                            <input type="checkbox" class="toggle-switch" id="enable_ignore_processed_actions" name="enable_ignore_processed_actions" value="yes" <?php checked( Admin::get_setting('enable_ignore_processed_actions') === 'yes' ); ?> />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        <?php endif;
-    }
-
-
-    /**
      * Add coupon action in sidebar list on builder
      * 
      * @since 1.1.0
@@ -829,7 +727,7 @@ class Woocommerce extends Integrations_Base {
         $actions[] = array(
             'action' => 'create_coupon',
             'title' => esc_html__( 'Discount coupon', 'joinotify' ),
-            'description' => esc_html__( 'Envie um cupom de desconto para seu usuÃ¡rio atravÃ©s de mensagem de texto do WhatsApp.', 'joinotify' ),
+            'description' => esc_html__( 'Send a discount coupon to your user via WhatsApp text message.', 'joinotify' ),
             'context' => array(
                 'woocommerce',
             ),

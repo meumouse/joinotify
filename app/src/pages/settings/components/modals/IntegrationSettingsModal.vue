@@ -26,7 +26,7 @@ const props = defineProps({
   modalSize: { type: String, default: 'medium' },
 });
 
-defineEmits(['close', 'update-setting']);
+defineEmits(['close', 'update-setting', 'action']);
 
 const modal = computed(() => props.integration?.modal || {});
 const fields = computed(() => props.integration?.settings || props.integration?.fields || []);
@@ -109,6 +109,7 @@ const resolvedSizeClass = computed(() => {
         :block="block"
         :integration="integration"
         :settings="settings"
+        @action="$emit('action', $event)"
       />
 
       <FieldRow
@@ -127,6 +128,7 @@ const resolvedSizeClass = computed(() => {
         :block="block"
         :integration="integration"
         :settings="settings"
+        @action="$emit('action', $event)"
       />
     </div>
     <div v-else class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">

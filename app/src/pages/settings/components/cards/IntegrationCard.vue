@@ -32,7 +32,7 @@ const enabledProxy = computed({
 </script>
 
 <template>
-  <div class="flex h-full flex-col rounded-[10px] border border-slate-200 bg-white">
+  <div class="flex h-full flex-col rounded-lg border border-slate-200 bg-white">
     <div class="flex min-h-[155px] items-center justify-center border-b border-slate-200 px-6 py-8">
       <div class="text-center">
         <div

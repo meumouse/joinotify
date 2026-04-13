@@ -634,7 +634,7 @@ class Registry {
      * @return array<int,string>
      */
     private static function get_supported_integration_field_types() {
-        return array( 'toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale' );
+        return array( 'toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale', 'input-group' );
     }
 
 
