@@ -10,7 +10,7 @@ namespace MeuMouse\Joinotify\Admin\Settings;
 
 use MeuMouse\Joinotify\Core\Scripts;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Load the Vite-built admin app assets for Joinotify pages.

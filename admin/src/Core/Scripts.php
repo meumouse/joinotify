@@ -8,7 +8,7 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Resolve Vite manifest assets for Joinotify admin pages.

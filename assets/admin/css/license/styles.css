@@ -1,0 +1,54 @@
+.joinotify-license-page {
+    --joinotify-license-bg: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    --joinotify-license-surface: #ffffff;
+    --joinotify-license-border: #dbe5ef;
+    --joinotify-license-text: #1f2937;
+    --joinotify-license-muted: #6b7280;
+    --joinotify-license-accent: #008aff;
+    --joinotify-license-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+.wrap.joinotify-settings-page.joinotify-license-page {
+    margin: 0;
+    padding: 24px 16px 32px;
+    background: var(--joinotify-license-bg);
+}
+
+.joinotify-license-page .joinotify-settings-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.joinotify-license-page .joinotify-settings-shell__content {
+    background: var(--joinotify-license-surface);
+    border: 1px solid var(--joinotify-license-border);
+    border-radius: 20px;
+    box-shadow: var(--joinotify-license-shadow);
+    padding: 32px;
+}
+
+.joinotify-license-page .joinotify-settings-app {
+    color: var(--joinotify-license-text);
+}
+
+.joinotify-license-page .skeleton-content {
+    border-radius: 16px;
+    background:
+        linear-gradient(90deg, rgba(0, 138, 255, 0.06), rgba(0, 138, 255, 0.12), rgba(0, 138, 255, 0.06)),
+        #f5f8fc;
+    background-size: 200% 100%;
+    animation: joinotify-license-pulse 1.4s ease-in-out infinite;
+}
+
+.joinotify-license-page .skeleton-content + .skeleton-content {
+    margin-top: 24px;
+}
+
+@keyframes joinotify-license-pulse {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}

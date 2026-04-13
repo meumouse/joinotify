@@ -45,6 +45,9 @@ class Assets {
 		$this->min_file = defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ? '' : '.min';
 		$this->debug_mode = defined('JOINOTIFY_DEBUG_MODE') ? JOINOTIFY_DEBUG_MODE : false;
 
+		// settings page styles and scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'settings_assets' ) );
+
 		// license page scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'license_assets' ) );
 
@@ -56,6 +59,19 @@ class Assets {
 	}
 
 	/**
+	 * Enqueue assets on settings page
+	 *
+	 * @since 1.4.7
+	 * @version 1.4.7
+	 * @return void
+	 */
+	public function settings_assets() {
+		if ( joinotify_check_admin_page('joinotify-settings') ) {
+			wp_enqueue_style( 'joinotify-styles', $this->assets_url . 'admin/css/settings'. $this->min_file .'.css', array(), $this->version );
+		}
+	}
+
+	/**
 	 * Enqueue assets on license page
 	 * 
 	 * @since 1.1.0
@@ -64,7 +80,6 @@ class Assets {
 	 */
 	public function license_assets() {
 		if ( joinotify_check_admin_page('joinotify-license') ) {
-			wp_enqueue_style( 'joinotify-styles', $this->assets_url . 'admin/css/settings'. $this->min_file .'.css', array(), $this->version );
 			wp_enqueue_script( 'joinotify-license-scripts', $this->assets_url . 'admin/js/license'. $this->min_file .'.js', array('jquery'), $this->version );
 
 			// license page params

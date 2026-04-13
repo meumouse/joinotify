@@ -155,6 +155,13 @@ class Menu {
      * @return void
      */
     public function render_license_page() {
+        wp_enqueue_style(
+            'joinotify-license-styles',
+            JOINOTIFY_URL . 'assets/admin/css/license/styles.css',
+            array(),
+            JOINOTIFY_VERSION
+        );
+
         include JOINOTIFY_SRC . 'Views/License.php';
     }
 

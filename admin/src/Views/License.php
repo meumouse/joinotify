@@ -1,4 +1,5 @@
 <?php
+
 /**
  * License source file.
  *
@@ -8,20 +9,15 @@
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 $bootstrap = Registry::get_bootstrap_data();
-$bootstrap['page'] = 'license';
-?>
+$bootstrap['page'] = 'license'; ?>
 
-<div class="wrap joinotify-settings-page">
-	<div class="joinotify-settings-shell">
-		<div class="joinotify-settings-shell__content">
-			<div id="joinotify-license-app" class="joinotify-settings-app" data-bootstrap="<?php echo esc_attr( wp_json_encode( $bootstrap ) ); ?>">
-				<div class="joinotify-settings-app__fallback">
-					<p><?php esc_html_e( 'Carregando a interface de licença...', 'joinotify' ); ?></p>
-				</div>
-			</div>
-		</div>
+<div class="wrap joinotify-license-page">
+	<div id="joinotify-license-app" class="joinotify-settings-app" data-bootstrap="<?php echo esc_attr( wp_json_encode( $bootstrap ) ); ?>">
+		<div class="skeleton-content" style="width: 950px; height: 100px;"></div>
+
+		<div class="skeleton-content" style="width: 100%; height: 550px; margin-top: 2rem;"></div>
 	</div>
 </div>
