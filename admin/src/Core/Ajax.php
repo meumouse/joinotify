@@ -9,6 +9,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Admin\Components as Admin_Components;
 
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -223,6 +224,7 @@ class Ajax {
                         'status' => 'success',
                         'toast_header_title' => __( 'Licença ativada com sucesso.', 'joinotify' ),
                         'toast_body_title' => __( 'Agora todos os recursos estão ativos!', 'joinotify' ),
+                        'license_data' => $this->get_license_view_data(),
                     );
                 }
             } else {
@@ -349,6 +351,7 @@ class Ajax {
                     'dropfile_message' => __( 'Arquivo enviado com sucesso.', 'joinotify' ),
                     'toast_header_title' => __( 'Licença ativada com sucesso.', 'joinotify' ),
                     'toast_body_title' => __( 'Agora todos os recursos estão ativos!', 'joinotify' ),
+                    'license_data' => $this->get_license_view_data(),
                 );
 
                 wp_send_json( $response );
@@ -2418,31 +2421,7 @@ class Ajax {
      * @return array
      */
     public function get_license_view_data() {
-        $license_key = get_option( 'joinotify_license_key', '' );
-        $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
-        $is_valid = License::is_valid();
-
-        if ( $is_valid ) {
-            if ( strpos( $license_key, 'CM-' ) === 0 ) {
-                $subscription_label = sprintf( esc_html__( 'Assinatura: Clube M - %s', 'joinotify' ), License::license_title() );
-            } else {
-                $subscription_label = sprintf( esc_html__( 'Tipo da licença: %s', 'joinotify' ), License::license_title() );
-            }
-        } else {
-            $subscription_label = esc_html__( 'Tipo da licença: Não disponível', 'joinotify' );
-        }
-
-        return array(
-            'is_valid' => $is_valid,
-            'status_text' => $is_valid ? esc_html__( 'Válida', 'joinotify' ) : esc_html__( 'Inválida', 'joinotify' ),
-            'status_class' => $is_valid ? 'badge bg-translucent-success rounded-pill' : 'badge bg-translucent-danger rounded-pill',
-            'subscription_text' => $subscription_label,
-            'expire_text' => sprintf(
-                esc_html__( 'Licença expira em: %s', 'joinotify' ),
-                $is_valid ? License::license_expire() : esc_html__( 'Não disponível', 'joinotify' )
-            ),
-            'key_text' => esc_html__( 'Sua chave de licença:', 'joinotify' ) . ' ' . $this->mask_license_key( $license_key ),
-        );
+        return Registry::get_license_state();
     }
 
 

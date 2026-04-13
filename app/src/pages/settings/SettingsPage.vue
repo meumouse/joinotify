@@ -6,7 +6,7 @@
  * @since 1.4.7
  * @version 1.4.7
  */
-import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue, deepEqual } from '../../utils/object';
 import { generateHexToken } from '../../utils/random';
@@ -38,17 +38,19 @@ const debugLogs = ref([]);
 const logsOpen = ref(false);
 const saving = ref(false);
 const refreshingSenderPhone = ref('');
+const senderActionLoading = ref(false);
 const proxyConfigOpen = ref(false);
 const integrationConfigOpen = ref(false);
 const selectedIntegration = ref(null);
 const toasts = ref([]);
 const confirm = reactive({ open: false, title: '', description: '', action: null });
+const isHydrated = ref(false);
 const toastTimers = new Map();
 const activeSectionStorageKey = 'joinotify-settings-active-section';
 
 syncSettings(bootstrap.value.settings || {});
 
-const sections = computed(() => bootstrap.value.schema || []);
+const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
 const system = computed(() => bootstrap.value.system || {});
@@ -74,8 +76,8 @@ watch(
       return;
     }
 
-    if (!value.some((section) => section.id === activeSectionId.value)) {
-      activeSectionId.value = value[0].id;
+    if (!value.some((section) => (section.section || section.id) === activeSectionId.value)) {
+      activeSectionId.value = value[0].section || value[0].id;
     }
   },
   { immediate: true }
@@ -86,6 +88,12 @@ watch(activeSectionId, (value) => {
 });
 
 loadPhoneCandidates();
+
+onMounted(() => {
+  window.setTimeout(() => {
+    isHydrated.value = true;
+  }, 300);
+});
 
 
 
@@ -112,7 +120,8 @@ function filterFields(keys) {
 }
 
 function getInitialActiveSectionId() {
-  const fallback = (props.bootstrap?.schema || [])[0]?.id || 'general';
+  const fallbackSection = (props.bootstrap?.section_tabs || [])[0];
+  const fallback = fallbackSection?.section || fallbackSection?.id || 'general';
 
   if (typeof window === 'undefined') {
     return fallback;
@@ -124,8 +133,8 @@ function getInitialActiveSectionId() {
     return fallback;
   }
 
-  const schema = props.bootstrap?.schema || [];
-  const isValid = schema.some((section) => section.id === saved);
+  const schema = props.bootstrap?.section_tabs || [];
+  const isValid = schema.some((section) => (section.section || section.id) === saved);
 
   return isValid ? saved : fallback;
 }
@@ -272,15 +281,21 @@ async function loadPhoneCandidates() {
 }
 
 async function registerPhone(phone) {
+  senderActionLoading.value = true;
+
   try {
     const response = await api.post('/admin/settings/phones/register', { phone });
     toast(response.message || __('Code sent successfully.', textDomain), 'success', __('Phones', textDomain));
   } catch (error) {
     toast(error.message || __('Failed to send OTP.', textDomain), 'danger', __('Phones', textDomain));
+  } finally {
+    senderActionLoading.value = false;
   }
 }
 
 async function validateOtp(payload) {
+  senderActionLoading.value = true;
+
   try {
     const response = await api.post('/admin/settings/phones/validate-otp', payload);
     syncPhones(response.phones || {});
@@ -288,6 +303,8 @@ async function validateOtp(payload) {
     toast(response.message || __('Phone validated.', textDomain), 'success', __('Phones', textDomain));
   } catch (error) {
     toast(error.message || __('Validation failed.', textDomain), 'danger', __('Phones', textDomain));
+  } finally {
+    senderActionLoading.value = false;
   }
 }
 
@@ -311,6 +328,8 @@ function confirmRemoveSender(phone) {
   confirm.title = __('Remove sender', textDomain);
   confirm.description = __('Are you sure you want to remove this sender?', textDomain);
   confirm.action = async () => {
+    senderActionLoading.value = true;
+
     try {
       const response = await api.post('/admin/settings/phones/remove', { phone });
       syncPhones(response.phones || {});
@@ -318,6 +337,8 @@ function confirmRemoveSender(phone) {
       toast(response.message || __('Sender removed.', textDomain), 'success', __('Phones', textDomain));
     } catch (error) {
       toast(error.message || __('Could not remove.', textDomain), 'danger', __('Phones', textDomain));
+    } finally {
+      senderActionLoading.value = false;
     }
   };
 }
@@ -404,11 +425,17 @@ function closeIntegrationConfig() {
 
 async function runConfirm() {
   const action = confirm.action;
-  cancelConfirm();
 
   if (typeof action === 'function') {
-    await action();
+    try {
+      await action();
+    } finally {
+      cancelConfirm();
+    }
+    return;
   }
+
+  cancelConfirm();
 }
 
 function cancelConfirm() {
@@ -457,6 +484,7 @@ function canConfigureIntegration(integration) {
             :locale="phones.locale"
             :default-country="phones.default_country_iso2"
             :refreshing-sender-phone="refreshingSenderPhone"
+            :sender-action-loading="senderActionLoading"
             :send-test-message="sendTestMessage"
             @update:model-value="updateSetting('test_number_phone', $event)"
             @register="registerPhone"
@@ -524,6 +552,7 @@ function canConfigureIntegration(integration) {
       :open="confirm.open"
       :title="confirm.title"
       :description="confirm.description"
+      :loading="senderActionLoading"
       @confirm="runConfirm"
       @cancel="cancelConfirm"
     />

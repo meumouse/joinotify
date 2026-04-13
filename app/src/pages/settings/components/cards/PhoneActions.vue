@@ -24,6 +24,7 @@ const props = defineProps({
   defaultCountry: { type: String, default: 'us' },
   locale: { type: String, default: 'en_US' },
   sendTestMessage: { type: Function, default: null },
+  senderActionLoading: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['update:modelValue', 'register', 'validate']);
@@ -182,9 +183,11 @@ async function submitTestMessage() {
     <div class="flex flex-wrap gap-3">
       <button
         type="button"
-        class="rounded-[8px] bg-primary-700 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-800"
+        class="inline-flex items-center justify-center gap-2 rounded-[8px] bg-primary-700 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-800 disabled:cursor-not-allowed disabled:opacity-70"
+        :disabled="senderActionLoading"
         @click="registerOpen = true"
       >
+        <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
         {{ __('Add new phone', textDomain) }}
       </button>
       <button
@@ -340,7 +343,8 @@ async function submitTestMessage() {
         <div class="flex flex-wrap justify-end gap-3">
           <button
             type="button"
-            class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+            :disabled="senderActionLoading"
             @click="registerOpen = false"
           >
             {{ __('Cancel', textDomain) }}
@@ -348,19 +352,21 @@ async function submitTestMessage() {
           <button
             v-if="registerStep === 'select'"
             type="button"
-            class="rounded-full bg-shell-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-shell-700 disabled:cursor-not-allowed disabled:bg-slate-300"
-            :disabled="!registerPhone"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-shell-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-shell-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+            :disabled="!registerPhone || senderActionLoading"
             @click="sendOtp"
           >
+            <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
             {{ __('Register phone', textDomain) }}
           </button>
           <button
             v-else
             type="button"
-            class="rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-300"
-            :disabled="!registerPhone || !otpComplete"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-300"
+            :disabled="!registerPhone || !otpComplete || senderActionLoading"
             @click="validate"
           >
+            <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
             {{ __('Validate and save', textDomain) }}
           </button>
         </div>

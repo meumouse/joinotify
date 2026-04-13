@@ -7,7 +7,6 @@
  * @version 1.4.7
  */
 import { __, textDomain } from '../../utils/i18n';
-import AppIcon from '../icons/AppIcon.vue';
 
 defineProps({
   toasts: {
@@ -18,12 +17,12 @@ defineProps({
 
 defineEmits(['dismiss']);
 
-function toastIconName(tone) {
+function toastIconSvg(tone) {
   const icons = {
-    success: 'toast-success',
-    warning: 'toast-warning',
-    error: 'toast-error',
-    info: 'toast-info',
+    success: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M9.999 13.587 7.7 11.292l-1.412 1.416 3.713 3.705 6.706-6.706-1.414-1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    warning: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 1.75 20h20.5L12 2zm0 4.65 6.06 10.65H5.94L12 6.65z" fill="currentColor"/><path d="M11 9h2v5h-2zm0 6h2v2h-2z" fill="currentColor"/></svg>',
+    error: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M11 11h2v6h-2zm0-4h2v2h-2z" fill="currentColor"/></svg>',
+    info: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M11 10h2v7h-2zm0-4h2v2h-2z" fill="currentColor"/></svg>',
   };
 
   return icons[tone] || icons.info;
@@ -73,7 +72,7 @@ function toastProgressClass(tone) {
         :class="[toastShellClass(toast.tone), toast.closing ? 'translate-y-1 opacity-0' : 'translate-y-0 opacity-100']"
       >
         <header class="flex items-center border-0 px-4 py-2 font-bold" :class="toastHeaderClass(toast.tone)">
-          <AppIcon :name="toastIconName(toast.tone)" class="me-2 h-5 w-5 shrink-0 text-current" />
+          <span class="me-2 inline-flex h-5 w-5 shrink-0 text-current" v-html="toastIconSvg(toast.tone)" />
           <span class="me-auto min-w-0 truncate">{{ toast.title }}</span>
           <button
             type="button"
@@ -81,7 +80,11 @@ function toastProgressClass(tone) {
             :aria-label="__('Fechar', textDomain)"
             @click="$emit('dismiss', toast.id)"
           >
-            <AppIcon name="close" class="h-3 w-3" />
+            <span class="inline-flex h-3 w-3" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+                <path d="M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 1 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 1 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z" fill="currentColor"/>
+              </svg>
+            </span>
             <span class="sr-only">{{ __('Fechar', textDomain) }}</span>
           </button>
         </header>

@@ -10,8 +10,9 @@ import { computed, onBeforeUnmount, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue } from '../../utils/object';
 import { createAjaxClient } from '../../utils/api';
+import SettingsHeader from '../settings/components/SettingsHeader.vue';
 import BaseButton from '../../components/buttons/BaseButton.vue';
-import SectionCard from '../../components/cards/SectionCard.vue';
+import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
 import StatusBadge from '../../components/cards/StatusBadge.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import TextField from '../../components/fields/TextField.vue';
@@ -29,41 +30,49 @@ const form = reactive({
 const toasts = ref([]);
 const toastTimers = new Map();
 const busyAction = ref('');
+const confirm = reactive({ open: false, title: '', description: '', loading: false, action: null });
 
-const docsUrl = computed(() => props.bootstrap?.links?.docs_url || license.value?.docs_url || 'https://ajuda.meumouse.com/docs/joinotify/overview');
-const purchaseUrl = computed(() => license.value?.purchase_url || props.bootstrap?.links?.purchase_url || 'https://meumouse.com/plugins/joinotify/');
+const docsUrl = computed(
+  () => props.bootstrap?.links?.docs_url || license.value?.docs_url || 'https://ajuda.meumouse.com/docs/joinotify/overview'
+);
+const purchaseUrl = computed(
+  () => license.value?.purchase_url || props.bootstrap?.links?.purchase_url || 'https://meumouse.com/plugins/joinotify/'
+);
 const isActive = computed(() => Boolean(license.value?.is_valid));
 const statusTone = computed(() => license.value?.status_tone || (isActive.value ? 'success' : 'danger'));
-const cardTitle = computed(() => (isActive.value ? __('Licen�a ativa', textDomain) : inactiveTitle.value));
-const cardDescription = computed(() =>
-  isActive.value
-    ? __('Confira os detalhes da sua licen�a e sincronize quando necess�rio.', textDomain)
-    : inactiveSubtitle.value
-);
+const statusLabel = computed(() => (isActive.value ? __('Valid', textDomain) : __('Invalid', textDomain)));
 const licenseField = computed(() => ({
-  label: __('C�digo da licen�a', textDomain),
-  description: __('Cole o c�digo recebido ap�s a compra da licen�a.', textDomain),
-  placeholder: __('Ex.: CM-0000-0000-0000', textDomain),
+  label: __('License key', textDomain),
+  description: __('Paste the code you received after purchase.', textDomain),
+  placeholder: __('Example: CM-0000-0000-0000', textDomain),
 }));
-const inactiveTitle = computed(() => license.value?.title || __('Ative sua licen�a', textDomain));
-const inactiveSubtitle = computed(() => license.value?.subtitle || __('Digite o c�digo da licen�a para liberar os recursos premium.', textDomain));
+const contentTitle = computed(() => (isActive.value ? __('License details', textDomain) : __('Activate license', textDomain)));
+const contentDescription = computed(() =>
+  isActive.value
+    ? __('Review your current license status and refresh it whenever needed.', textDomain)
+    : __('Enter your license key to unlock premium features.', textDomain)
+);
 const activeRows = computed(() => [
   {
-    label: __('Status da licença', textDomain),
-    value: license.value?.status_label || __('Inválida', textDomain),
+    label: __('License status', textDomain),
+    value: statusLabel.value,
     badge: true,
   },
   {
-    label: __('Assinatura', textDomain),
-    value: normalizeValue(license.value?.subscription_label, ['Assinatura:', 'Tipo da licença:']),
+    label: __('Subscription', textDomain),
+    value: normalizeValue(license.value?.subscription_label, ['Subscription:', 'Assinatura:', 'License type:', 'Tipo da licença:']),
   },
   {
-    label: __('Licença expira em', textDomain),
-    value: normalizeValue(license.value?.expire_label, ['Licença expira em:']),
+    label: __('Expires on', textDomain),
+    value: normalizeValue(license.value?.expire_label, ['Expires on:', 'Licença expira em:']),
   },
   {
-    label: __('Sua chave de licença', textDomain),
-    value: normalizeValue(license.value?.key_label, ['Sua chave de licença:']),
+    label: __('Support until', textDomain),
+    value: normalizeValue(license.value?.support_label, ['Support until:', 'Suporte até:']),
+  },
+  {
+    label: __('Your license key', textDomain),
+    value: normalizeValue(license.value?.key_label, ['Your license key:', 'Sua chave de licença:']),
   },
 ]);
 
@@ -71,20 +80,18 @@ if (!form.license_key && license.value?.license_key) {
   form.license_key = license.value.license_key;
 }
 
-
-
 function normalizeValue(value, prefixes = []) {
   if (!value) {
-    return __('Não disponível', textDomain);
+    return __('Not available', textDomain);
   }
 
   let normalized = String(value);
 
   prefixes.forEach((prefix) => {
-    normalized = normalized.replace(new RegExp(`^${escapeRegExp(prefix)}\\s*`), '');
+    normalized = normalized.replace(new RegExp(`^${escapeRegExp(prefix)}\\s*`, 'i'), '');
   });
 
-  return normalized.trim() || __('Não disponível', textDomain);
+  return normalized.trim() || __('Not available', textDomain);
 }
 
 function escapeRegExp(value) {
@@ -157,10 +164,14 @@ function dismissToast(id) {
 }
 
 function replaceLicenseData(nextLicense) {
-  license.value = { ...license.value, ...cloneValue(nextLicense || {}) };
+  const normalized = cloneValue(nextLicense || {});
+
+  license.value = normalized;
 
   if (typeof nextLicense?.license_key === 'string') {
     form.license_key = nextLicense.license_key;
+  } else if (typeof normalized.license_key === 'string') {
+    form.license_key = normalized.license_key;
   }
 }
 
@@ -168,16 +179,16 @@ function resetToInactiveState() {
   license.value = {
     ...initialLicense,
     is_valid: false,
-    status_label: __('Inválida', textDomain),
+    status_label: __('Invalid', textDomain),
     status_tone: 'danger',
-    title: __('Ative sua licença', textDomain),
-    subtitle: __('Digite o código da licença para liberar os recursos premium.', textDomain),
-    license_title: __('Não disponível', textDomain),
-    subscription_label: __('Ative sua licença para liberar os recursos premium.', textDomain),
-    expire_label: __('Licença expira em: Não disponível', textDomain),
-    support_label: __('Suporte até: Não disponível', textDomain),
-    key_label: __('Sua chave de licença: Não disponível', textDomain),
-    license_key_masked: __('Não disponível', textDomain),
+    title: __('Activate license', textDomain),
+    subtitle: __('Enter your license key to unlock premium features.', textDomain),
+    license_title: __('Not available', textDomain),
+    subscription_label: __('Activate your license to unlock premium features.', textDomain),
+    expire_label: __('Expires on: Not available', textDomain),
+    support_label: __('Support until: Not available', textDomain),
+    key_label: __('Your license key: Not available', textDomain),
+    license_key_masked: __('Not available', textDomain),
     license_key: '',
   };
   form.license_key = '';
@@ -187,7 +198,7 @@ async function activateLicense() {
   const licenseKey = form.license_key.trim();
 
   if (!licenseKey) {
-    pushToast(__('Digite o código da licença antes de ativar.', textDomain), 'warning', __('Licença', textDomain));
+    pushToast(__('Enter a license key before activating.', textDomain), 'warning', __('License', textDomain));
     return;
   }
 
@@ -198,10 +209,15 @@ async function activateLicense() {
       license_key: licenseKey,
     });
 
-    pushToast(response?.toast_body_title || __('Licença ativada com sucesso.', textDomain), 'success', response?.toast_header_title || __('Licença', textDomain));
-    await syncLicense(false);
+    if (response?.license_data) {
+      replaceLicenseData(response.license_data);
+      pushToast(__('License activated successfully.', textDomain), 'success', __('License', textDomain));
+    } else {
+      await syncLicense(false);
+      pushToast(__('License activated successfully.', textDomain), 'success', __('License', textDomain));
+    }
   } catch (error) {
-    pushToast(error.message || __('Não foi possível ativar a licença.', textDomain), 'error', __('Licença', textDomain));
+    pushToast(error.message || __('Could not activate the license.', textDomain), 'error', __('License', textDomain));
   } finally {
     busyAction.value = '';
   }
@@ -218,11 +234,11 @@ async function syncLicense(showToast = true) {
     }
 
     if (showToast) {
-      pushToast(response?.toast_body_title || __('As informações foram atualizadas com sucesso.', textDomain), 'info', response?.toast_header_title || __('Sincronização', textDomain));
+      pushToast(__('License information updated successfully.', textDomain), 'info', __('Sync', textDomain));
     }
   } catch (error) {
     if (showToast) {
-      pushToast(error.message || __('Não foi possível sincronizar a licença.', textDomain), 'error', __('Licença', textDomain));
+      pushToast(error.message || __('Could not sync the license.', textDomain), 'error', __('License', textDomain));
     }
   } finally {
     busyAction.value = '';
@@ -241,11 +257,45 @@ async function deactivateLicense() {
       resetToInactiveState();
     }
 
-    pushToast(response?.toast_body_title || __('A licença foi desativada.', textDomain), 'success', response?.toast_header_title || __('Licença', textDomain));
+    pushToast(__('License deactivated.', textDomain), 'success', __('License', textDomain));
   } catch (error) {
-    pushToast(error.message || __('Não foi possível desativar a licença.', textDomain), 'error', __('Licença', textDomain));
+    pushToast(error.message || __('Could not deactivate the license.', textDomain), 'error', __('License', textDomain));
   } finally {
     busyAction.value = '';
+  }
+}
+
+function confirmDeactivateLicense() {
+  confirm.open = true;
+  confirm.title = __('Deactivate license', textDomain);
+  confirm.description = __('Are you sure you want to deactivate this license? This will disable premium features.', textDomain);
+  confirm.action = async () => {
+    confirm.loading = true;
+
+    try {
+      await deactivateLicense();
+    } finally {
+      confirm.loading = false;
+      cancelConfirm();
+    }
+  };
+}
+
+function cancelConfirm() {
+  confirm.open = false;
+  confirm.title = '';
+  confirm.description = '';
+  confirm.action = null;
+  confirm.loading = false;
+}
+
+async function runConfirm() {
+  const action = confirm.action;
+
+  if (typeof action === 'function') {
+    await action();
+  } else {
+    cancelConfirm();
   }
 }
 
@@ -260,56 +310,44 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[linear-gradient(180deg,#f4f7fb_0%,#eef2f7_100%)] px-4 py-8 sm:px-6 lg:px-8">
-    <div class="mx-auto flex w-full max-w-[1240px] flex-col gap-6">
-      <header class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-        <div class="flex items-start gap-4">
-          <div class="mt-1 h-12 w-12 shrink-0 text-success">
-            <svg viewBox="0 0 703 882.5" class="h-full w-full" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path
-                d="M908.66,248V666a126.5,126.5,0,0,1-207.21,97.41l-16.7-16.7L434.08,496.07l-62-62a47.19,47.19,0,0,0-72,30.86V843.36a47.52,47.52,0,0,0,69.57,35.22l19.3-19.3,56-56,81.19-81.19,10.44-10.44a47.65,47.65,0,0,1,67.63,65.05l-13,13L428.84,952.12l-9.59,9.59a128,128,0,0,1-213.59-95.18V413.17a124.52,124.52,0,0,1,199.78-82.54l22.13,22.13L674.45,599.64l46.22,46.22,17,17a47.8,47.8,0,0,0,71-31.44V270.19a48.19,48.19,0,0,0-75-40.05L720.43,243.4l-68.09,68.09L575.7,388.13a48.39,48.39,0,0,1-67.43-67.93L680,148.46A136,136,0,0,1,908.66,248Z"
-                transform="translate(-205.66 -112.03)"
-                fill="currentColor"
+  <div class="joinotify-settings min-h-screen bg-[#f3f3f5]">
+    <div class="w-full">
+      <SettingsHeader :docs-url="docsUrl" />
+
+      <section class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
+        <div class="px-10 py-12">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div class="max-w-3xl">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-shell-500">
+                {{ __('License', textDomain) }}
+              </p>
+              <h2 class="mt-1 text-xl font-semibold text-ink">{{ contentTitle }}</h2>
+              <p class="mt-2 text-sm leading-6 text-muted">
+                {{ contentDescription }}
+              </p>
+            </div>
+
+            <div v-if="!isActive" class="lg:pt-1">
+              <BaseButton
+                :title="__('Buy license', textDomain)"
+                color="white"
+                size="lg"
+                @click="openPurchaseUrl"
               />
-            </svg>
+            </div>
           </div>
 
-          <div>
-            <h1 class="text-[26px] font-normal leading-9 text-slate-800">
-              {{ __('Joinotify: Automatize suas notificações. Simplifique sua comunicação.', textDomain) }}
-            </h1>
-            <p class="mt-5 max-w-[1180px] text-[16px] leading-6 text-slate-600">
-              {{ __('Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify. Se precisar de ajuda para configurar, acesse nossa ', textDomain) }}
-              <a class="font-semibold text-primary-700 underline underline-offset-4" :href="docsUrl" target="_blank" rel="noreferrer">
-                {{ __('Central de ajuda', textDomain) }}
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <div v-if="!isActive" class="lg:pt-1">
-          <BaseButton
-            :title="__('Comprar licença', textDomain)"
-            color="white"
-            size="lg"
-            @click="openPurchaseUrl"
-          />
-        </div>
-      </header>
-
-      <SectionCard :title="cardTitle" :description="cardDescription" eyebrow="Licença">
-        <div v-if="!isActive" class="space-y-6">
-          <div class="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)]">
-            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
+          <div v-if="!isActive" class="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)]">
+            <div class="rounded-[8px] border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
               <div class="mb-5 flex items-start justify-between gap-3">
                 <div>
-                  <h2 class="text-xl font-semibold text-ink">{{ __('Ativar licença', textDomain) }}</h2>
+                  <h3 class="text-lg font-semibold text-ink">{{ __('Activate license', textDomain) }}</h3>
                   <p class="mt-2 text-sm leading-6 text-muted">
-                    {{ __('Cole o código recebido após a compra e clique em ativar para liberar todos os recursos.', textDomain) }}
+                    {{ __('Paste the license key you received after purchase and click Activate to unlock all features.', textDomain) }}
                   </p>
                 </div>
 
-                <StatusBadge :label="license.status_label || __('Inválida', textDomain)" :tone="statusTone" />
+                <StatusBadge :label="statusLabel" :tone="statusTone" />
               </div>
 
               <div class="space-y-5">
@@ -321,109 +359,124 @@ onBeforeUnmount(() => {
 
                 <div class="flex flex-wrap items-center gap-3">
                   <BaseButton
-                    :title="__('Ativar licença', textDomain)"
+                    :title="__('Activate license', textDomain)"
                     :loading="busyAction === 'activate'"
                     :disabled="busyAction === 'sync' || busyAction === 'deactivate'"
                     @click="activateLicense"
                   />
                   <BaseButton
-                    :title="__('Sincronizar licença', textDomain)"
-                    color="white"
-                    :loading="busyAction === 'sync'"
-                    :disabled="busyAction === 'activate' || busyAction === 'deactivate'"
-                    @click="syncLicense"
+                    :title="__('Buy license', textDomain)"
+                    color="success"
+                    @click="openPurchaseUrl"
                   />
                 </div>
               </div>
             </div>
 
-            <div class="rounded-2xl border border-dashed border-slate-300 bg-white/70 p-6">
+            <div class="rounded-[8px] border border-dashed border-slate-300 bg-slate-50 p-6">
               <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
-                {{ __('O que você desbloqueia', textDomain) }}
+                {{ __('What you unlock', textDomain) }}
               </p>
               <h3 class="mt-2 text-lg font-semibold text-ink">
-                {{ __('Ative a licença para liberar os recursos premium do plugin.', textDomain) }}
+                {{ __('Activate the license to unlock Joinotify premium features.', textDomain) }}
               </h3>
 
               <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-600">
                 <li class="flex gap-3">
                   <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary-700" />
-                  <span>{{ __('Atualizações automáticas e sincronização da licença', textDomain) }}</span>
+                  <span>{{ __('Automatic updates and license synchronization', textDomain) }}</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary-700" />
-                  <span>{{ __('Validação do acesso e liberação dos recursos premium', textDomain) }}</span>
+                  <span>{{ __('Access validation and premium feature unlocking', textDomain) }}</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary-700" />
-                  <span>{{ __('Acesso ao suporte e às atualizações da sua assinatura', textDomain) }}</span>
+                  <span>{{ __('Support access and subscription updates', textDomain) }}</span>
                 </li>
               </ul>
             </div>
           </div>
-        </div>
 
-        <div v-else class="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
-          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
-            <h2 class="text-xl font-semibold text-ink">{{ __('Informações sobre a licença', textDomain) }}</h2>
+          <div v-else class="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
+            <div class="rounded-[8px] border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
+              <h3 class="text-lg font-semibold text-ink">{{ __('License information', textDomain) }}</h3>
 
-            <div class="mt-6 space-y-4">
-              <div v-for="row in activeRows" :key="row.label" class="flex flex-col gap-2 border-b border-slate-100 pb-4 last:border-b-0 last:pb-0 sm:flex-row sm:items-start sm:justify-between">
-                <span class="text-[15px] font-medium text-slate-600">{{ row.label }}</span>
-                <span v-if="row.badge" class="sm:pl-4">
-                  <StatusBadge :label="row.value" :tone="statusTone" />
-                </span>
-                <span v-else class="max-w-[70%] text-[15px] text-slate-800 sm:text-right">
-                  {{ row.value }}
-                </span>
+              <div class="mt-6 space-y-4">
+                <div
+                  v-for="row in activeRows"
+                  :key="row.label"
+                  class="flex flex-col gap-2 border-b border-slate-100 pb-4 last:border-b-0 last:pb-0 sm:flex-row sm:items-start sm:justify-between"
+                >
+                  <span class="text-[15px] font-medium text-slate-600">{{ row.label }}</span>
+                  <span v-if="row.badge" class="sm:pl-4">
+                    <StatusBadge :label="row.value" :tone="statusTone" />
+                  </span>
+                  <span v-else class="max-w-[70%] text-[15px] text-slate-800 sm:text-right">
+                    {{ row.value }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="mt-8 flex flex-wrap gap-3">
+                <BaseButton
+                  :title="__('Deactivate license', textDomain)"
+                  color="primary"
+                  :loading="busyAction === 'deactivate'"
+                  :disabled="busyAction === 'sync' || busyAction === 'activate'"
+                  @click="confirmDeactivateLicense"
+                />
+                <BaseButton
+                  :title="__('Sync license', textDomain)"
+                  color="white"
+                  :loading="busyAction === 'sync'"
+                  :disabled="busyAction === 'deactivate' || busyAction === 'activate'"
+                  @click="syncLicense"
+                />
               </div>
             </div>
 
-            <div class="mt-8 flex flex-wrap gap-3">
-              <BaseButton
-                :title="__('Desativar licença', textDomain)"
-                color="primary"
-                :loading="busyAction === 'deactivate'"
-                :disabled="busyAction === 'sync' || busyAction === 'activate'"
-                @click="deactivateLicense"
-              />
-              <BaseButton
-                :title="__('Sincronizar licença', textDomain)"
-                color="white"
-                :loading="busyAction === 'sync'"
-                :disabled="busyAction === 'deactivate' || busyAction === 'activate'"
-                @click="syncLicense"
-              />
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
-              {{ __('Status da conta', textDomain) }}
-            </p>
-            <div class="mt-3 flex items-center gap-3">
-              <StatusBadge :label="license.status_label || __('Válida', textDomain)" :tone="statusTone" />
-              <span class="text-sm text-slate-500">{{ license.title || __('Licença ativa', textDomain) }}</span>
-            </div>
-
-            <p class="mt-4 text-sm leading-6 text-slate-600">
-              {{ license.subtitle || __('Sua instalação está liberada para uso completo.', textDomain) }}
-            </p>
-
-            <div class="mt-6 rounded-xl bg-slate-50 p-4">
-              <p class="text-sm font-semibold text-slate-700">{{ __('Ajuda rápida', textDomain) }}</p>
-              <p class="mt-2 text-sm leading-6 text-slate-600">
-                {{ __('Se a licença não atualizar imediatamente, clique em sincronizar para buscar o estado atual no servidor.', textDomain) }}
+            <div class="rounded-[8px] border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
+                {{ __('Account status', textDomain) }}
               </p>
-              <a class="mt-3 inline-flex text-sm font-semibold text-primary-700 underline underline-offset-4" :href="docsUrl" target="_blank" rel="noreferrer">
-                {{ __('Abrir central de ajuda', textDomain) }}
-              </a>
+              <div class="mt-3 flex items-center gap-3">
+                <StatusBadge :label="statusLabel" :tone="statusTone" />
+                <span class="text-sm text-slate-500">{{ __('Your installation is unlocked for full use.', textDomain) }}</span>
+              </div>
+
+              <p class="mt-4 text-sm leading-6 text-slate-600">
+                {{ __('Your license is active. You can keep it synced here whenever the status changes on the server.', textDomain) }}
+              </p>
+
+              <div class="mt-6 rounded-[8px] bg-slate-50 p-4">
+                <p class="text-sm font-semibold text-slate-700">{{ __('Quick help', textDomain) }}</p>
+                <p class="mt-2 text-sm leading-6 text-slate-600">
+                  {{ __('If the license does not update immediately, click Sync to fetch the latest status from the server.', textDomain) }}
+                </p>
+                <a
+                  class="mt-3 inline-flex text-sm font-semibold text-primary-700 underline underline-offset-4"
+                  :href="docsUrl"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {{ __('Open help center', textDomain) }}
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </SectionCard>
+      </section>
     </div>
 
     <ToastStack :toasts="toasts" @dismiss="dismissToast" />
+    <ConfirmDialog
+      :open="confirm.open"
+      :title="confirm.title"
+      :description="confirm.description"
+      :loading="confirm.loading"
+      @confirm="runConfirm"
+      @cancel="cancelConfirm"
+    />
   </div>
 </template>
