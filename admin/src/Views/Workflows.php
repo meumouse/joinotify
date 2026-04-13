@@ -3,7 +3,7 @@
 /**
  * Workflows view file.
  *
- * @since 1.4.8
+ * @since 1.4.7
  */
 
 defined('ABSPATH') || exit;

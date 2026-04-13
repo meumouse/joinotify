@@ -162,7 +162,7 @@ class Menu {
     /**
      * Display the Vue workflows screen.
      *
-     * @since 1.4.8
+     * @since 1.4.7
      * @return void
      */
     public function all_workflows_page() {
@@ -179,7 +179,7 @@ class Menu {
     /**
      * Build the initial data payload for the workflows Vue screen.
      *
-     * @since 1.4.8
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     private function get_workflows_bootstrap() {

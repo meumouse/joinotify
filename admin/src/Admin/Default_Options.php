@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Admin;
 
+use MeuMouse\Joinotify\Integrations\Integrations_Base;
+
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -23,7 +25,7 @@ class Default_Options {
      * @return array
      */
     public static function set_default_options() {
-        return apply_filters( 'Joinotify/Admin/Set_Default_Options', array(
+        $defaults = array(
             'enable_whatsapp_integration' => 'yes',
             'enable_woocommerce_integration' => 'yes',
             'enable_elementor_integration' => 'yes',
@@ -46,6 +48,41 @@ class Default_Options {
             'enable_update_notice' => 'yes',
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-        ));
+        );
+
+        $defaults = array_merge( $defaults, self::get_integration_default_options() );
+
+        return apply_filters( 'Joinotify/Admin/Set_Default_Options', $defaults );
+    }
+
+
+    /**
+     * Collect default options declared by registered integrations.
+     *
+     * @since 1.4.7
+     * @return array<string,mixed>
+     */
+    private static function get_integration_default_options() {
+        $defaults = array();
+
+        foreach ( Integrations_Base::integration_tab_items() as $slug => $item ) {
+            if ( ! is_array( $item ) ) {
+                continue;
+            }
+
+            foreach ( $item['defaults'] ?? array() as $key => $value ) {
+                if ( '' === $key || ! is_string( $key ) && ! is_int( $key ) ) {
+                    continue;
+                }
+
+                $defaults[ (string) $key ] = $value;
+            }
+
+            if ( ! empty( $item['setting_key'] ) && ! isset( $defaults[ (string) $item['setting_key'] ] ) ) {
+                $defaults[ (string) $item['setting_key'] ] = 'no';
+            }
+        }
+
+        return $defaults;
     }
 }

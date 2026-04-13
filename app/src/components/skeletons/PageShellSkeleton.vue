@@ -20,7 +20,7 @@ const loadingLabel = {
 </script>
 
 <template>
-  <div class="joinotify-settings min-h-screen bg-[#f3f3f5]">
+  <div class="joinotify-settings min-h-screen">
     <div class="w-full">
       <div class="flex items-start gap-3 px-10 pt-8">
         <div class="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-sm font-semibold text-slate-400 shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-200">

@@ -13,12 +13,17 @@ defined('ABSPATH') || exit;
 
 /**
  * Build the settings schema and bootstrap payload for the Vue admin app.
+ * 
+ * @since 1.4.7
+ * @package MeuMouse\Joinotify\Admin\Settings
+ * @author MeuMouse.com
  */
 class Registry {
 
     /**
      * Return the current settings merged with defaults.
      *
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     public static function get_settings() {
@@ -29,6 +34,7 @@ class Registry {
     /**
      * Build the settings schema consumed by the Vue app.
      *
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     public static function get_schema() {
@@ -36,29 +42,29 @@ class Registry {
             array(
                 'id' => 'general',
                 'title' => esc_html__( 'General', 'joinotify' ),
-                'description' => esc_html__( 'PreferÃªncias base do plugin, proxy de envio e avisos do WhatsApp.', 'joinotify' ),
+                'description' => esc_html__( "Plugin's basic preferences, sending proxy, and WhatsApp notifications.", 'joinotify' ),
                 'layout' => 'cards',
                 'cards' => array(
                     array(
                         'id' => 'general-localization',
                         'title' => esc_html__( 'Location and phone numbers', 'joinotify' ),
-                        'description' => esc_html__( 'Define o paÃ­s padrÃ£o usado para formatar nÃºmeros e preencher as opÃ§Ãµes de suporte.', 'joinotify' ),
+                        'description' => esc_html__( 'Defines the default country used to format numbers and populate support options.', 'joinotify' ),
                         'fields' => array(
                             self::field_select(
                                 'joinotify_default_country_code',
-                                esc_html__( 'CÃ³digo padrÃ£o do paÃ­s', 'joinotify' ),
+                                esc_html__( 'Default country code', 'joinotify' ),
                                 esc_html__( 'Choose the fallback country when the phone number does not include a country code.', 'joinotify' ),
                                 self::build_country_code_options()
                             ),
                             self::field_toggle(
                                 'enable_send_disconnect_notifications',
                                 esc_html__( 'Notify when WhatsApp disconnects', 'joinotify' ),
-                                esc_html__( 'Envia uma notificaÃ§Ã£o ao remetente quando a conexÃ£o nÃ£o Ã© estabelecida.', 'joinotify' )
+                                esc_html__( 'Sends a notification to the sender when the connection is not established.', 'joinotify' )
                             ),
                             self::field_text(
                                 'test_number_phone',
                                 esc_html__( 'Test phone', 'joinotify' ),
-                                esc_html__( 'NÃºmero usado como destino padrÃ£o em envios de teste. Informe apenas nÃºmeros com DDI + DDD.', 'joinotify' ),
+                                esc_html__( 'Number used as the default destination in test mailings. Please only include numbers with country code + area code.', 'joinotify' ),
                                 array(
                                     'placeholder' => '5541987111527',
                                 )
@@ -68,12 +74,12 @@ class Registry {
                     array(
                         'id' => 'general-proxy',
                         'title' => esc_html__( 'Proxy API', 'joinotify' ),
-                        'description' => esc_html__( 'Ative e configure os endpoints usados para processar requisiÃ§Ãµes externas de API.', 'joinotify' ),
+                        'description' => esc_html__( 'Activate and configure the endpoints used to process external API requests.', 'joinotify' ),
                         'fields' => array(
                             self::field_toggle(
                                 'enable_proxy_api',
                                 esc_html__( 'Enable Proxy API', 'joinotify' ),
-                                esc_html__( 'ExpÃµe endpoints neste site para processar requisiÃ§Ãµes do Joinotify.', 'joinotify' )
+                                esc_html__( 'This site exposes endpoints to process Joinotify requests.', 'joinotify' )
                             ),
                             self::field_text(
                                 'send_text_proxy_api_route',
@@ -85,7 +91,7 @@ class Registry {
                             ),
                             self::field_text(
                                 'send_media_proxy_api_route',
-                                esc_html__( 'Rota de mÃ­dia', 'joinotify' ),
+                                esc_html__( 'Media route', 'joinotify' ),
                                 esc_html__( 'Caminho da rota usada para enviar mensagens com mÃ­dia.', 'joinotify' ),
                                 array(
                                     'placeholder' => 'send-message/media',
@@ -112,21 +118,21 @@ class Registry {
                     array(
                         'id' => 'phones-senders',
                         'title' => esc_html__( 'Registered senders', 'joinotify' ),
-                        'description' => esc_html__( 'Phones jÃ¡ validados e disponÃ­veis para uso nos fluxos.', 'joinotify' ),
+                        'description' => esc_html__( 'Phones already validated and available for use in workflows.', 'joinotify' ),
                         'component' => 'phone-sender-list',
                     ),
                     array(
                         'id' => 'phones-actions',
-                        'title' => esc_html__( 'Ferramentas rÃ¡pidas', 'joinotify' ),
-                        'description' => esc_html__( 'AÃ§ÃµActions to add a new sender and send a test message.', 'joinotify' ),
+                        'title' => esc_html__( 'Quick Tools', 'joinotify' ),
+                        'description' => esc_html__( 'Actions to add a new sender and send a test message.', 'joinotify' ),
                         'component' => 'phone-actions',
                     ),
                 ),
             ),
             array(
                 'id' => 'integrations',
-                'title' => esc_html__( 'IntegraÃ§Ãµes', 'joinotify' ),
-                'description' => esc_html__( 'Ative integraÃ§Ãµes, controle dependÃªncias e ajuste opÃ§Ãµes avanÃ§adas de cada serviÃ§o.', 'joinotify' ),
+                'title' => esc_html__( 'Integrations', 'joinotify' ),
+                'description' => esc_html__( 'Enable integrations, manage dependencies, and adjust advanced options for each service.', 'joinotify' ),
                 'layout' => 'cards',
                 'cards' => self::get_integration_cards(),
             ),
@@ -138,12 +144,12 @@ class Registry {
                 'cards' => array(
                     array(
                         'id' => 'about-maintenance',
-                        'title' => esc_html__( 'ManutenÃ§Ã£o e preferÃªncia', 'joinotify' ),
+                        'title' => esc_html__( 'Maintenance and preference', 'joinotify' ),
                         'description' => esc_html__( 'Operational plugin settings and development flags.', 'joinotify' ),
                         'fields' => array(
                             self::field_toggle(
                                 'enable_debug_mode',
-                                esc_html__( 'Modo de depuraÃ§Ã£o', 'joinotify' ),
+                                esc_html__( 'Debug mode', 'joinotify' ),
                                 esc_html__( 'Enable to log additional error and process details.', 'joinotify' )
                             ),
                             self::field_toggle(
@@ -154,19 +160,19 @@ class Registry {
                             self::field_toggle(
                                 'enable_update_notice',
                                 esc_html__( 'Update notices', 'joinotify' ),
-                                esc_html__( 'Mostra notificaÃ§Ãµes quando houver uma nova versÃ£o disponÃ­vel.', 'joinotify' )
+                                esc_html__( 'Displays notifications when a new version is available.', 'joinotify' )
                             ),
                             self::field_toggle(
                                 'enable_developer_integration',
-                                esc_html__( 'IntegraÃ§Ã£o para desenvolvedor', 'joinotify' ),
-                                esc_html__( 'MantÃ©m integraÃ§Ãµes de suporte e contratos avanÃ§ados disponÃ­veis.', 'joinotify' )
+                                esc_html__( 'Developer integration', 'joinotify' ),
+                                esc_html__( 'Maintains support integrations and advanced contracts available.', 'joinotify' )
                             ),
                         ),
                     ),
                     array(
                         'id' => 'about-system',
                         'title' => esc_html__( 'System status', 'joinotify' ),
-                        'description' => esc_html__( 'VisÃ£o rÃ¡pida do ambiente WordPress, PHP e extensÃµes crÃ­ticas.', 'joinotify' ),
+                        'description' => esc_html__( 'A quick overview of the WordPress environment, PHP, and critical extensions.', 'joinotify' ),
                         'component' => 'system-status',
                     ),
                     array(
@@ -186,6 +192,7 @@ class Registry {
     /**
      * Build the tabs used by the settings section navigation.
      *
+     * @since 1.4.7
      * @return array<int,array<string,mixed>>
      */
     public static function get_section_tabs() {
@@ -204,7 +211,7 @@ class Registry {
             ),
             array(
                 'id' => 'integrations',
-                'name' => esc_html__( 'IntegraÃ§Ãµes', 'joinotify' ),
+                'name' => esc_html__( 'Integrations', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon"><path d="M3 8h2v5c0 2.206 1.794 4 4 4h2v5h2v-5h2c2.206 0 4-1.794 4-4V8h2V6H3v2zm4 0h10v5c0 1.103-.897 2-2 2H9c-1.103 0-2-.897-2-2V8zm0-6h2v3H7zm8 0h2v3h-2z"></path></svg>',
                 'section' => 'integrations',
             ),
@@ -223,6 +230,7 @@ class Registry {
     /**
      * Flatten all field definitions by key.
      *
+     * @since 1.4.7
      * @return array<string,array<string,mixed>>
      */
     public static function get_field_definitions() {
@@ -230,9 +238,9 @@ class Registry {
 
         foreach ( self::get_schema() as $section ) {
             foreach ( $section['cards'] ?? array() as $card ) {
-                foreach ( $card['fields'] ?? array() as $field ) {
-                    if ( ! empty( $field['key'] ) ) {
-                        $fields[ $field['key'] ] = $field;
+                foreach ( self::collect_card_fields( $card ) as $field ) {
+                    if ( is_array( $field ) && ! empty( $field['key'] ) ) {
+                        $fields[ (string) $field['key'] ] = $field;
                     }
                 }
             }
@@ -245,6 +253,7 @@ class Registry {
     /**
      * Build the integration cards used by the integrations section.
      *
+     * @since 1.4.7
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_cards() {
@@ -264,6 +273,9 @@ class Registry {
             $requires_plugin = ! empty( $item['is_plugin'] );
             $plugin_active = self::is_integration_plugin_active( $item['plugin_active'] ?? array(), $requires_plugin );
             $setting_key = $item['setting_key'] ?? '';
+            $settings_fields = self::collect_card_fields( $item );
+            $coming_soon = ! empty( $item['coming_soon'] ) || ! empty( $item['comming_soon'] );
+            $modal = isset( $item['modal'] ) && is_array( $item['modal'] ) ? $item['modal'] : array();
 
             $card = array(
                 'slug' => $slug,
@@ -274,16 +286,17 @@ class Registry {
                 'enabled' => $setting_key ? ( ( $settings[ $setting_key ] ?? 'no' ) === 'yes' ) : false,
                 'requires_plugin' => $requires_plugin,
                 'plugin_active' => $plugin_active,
-                'coming_soon' => ! empty( $item['comming_soon'] ),
+                'coming_soon' => $coming_soon,
+                'comming_soon' => $coming_soon,
+                'modal' => $modal,
                 'disabled_message' => $requires_plugin && ! $plugin_active
                     ? esc_html__( 'Este plugin precisa estar instalado e ativo para habilitar esta integraÃ§Ã£o.', 'joinotify' )
                     : '',
-                'fields' => array(),
+                'fields' => $settings_fields,
+                'settings' => $settings_fields,
+                'defaults' => $item['defaults'] ?? array(),
+                'has_settings' => ! empty( $settings_fields ),
             );
-
-            if ( 'woocommerce' === $slug ) {
-                $card['fields'] = self::get_woocommerce_advanced_fields();
-            }
 
             $cards[] = $card;
         }
@@ -295,19 +308,20 @@ class Registry {
     /**
      * WooCommerce advanced settings rendered inside the integrations card.
      *
+     * @since 1.4.7
      * @return array<int,array<string,mixed>>
      */
     public static function get_woocommerce_advanced_fields() {
         return array(
             self::field_toggle(
                 'enable_create_coupon_action',
-                esc_html__( 'Ativar aÃ§Ã£o Cupom de desconto', 'joinotify' ),
+                esc_html__( 'Activate discount coupon action', 'joinotify' ),
                 esc_html__( 'Adds the coupon action to WooCommerce workflows.', 'joinotify' )
             ),
             self::field_text(
                 'create_coupon_prefix',
                 esc_html__( 'Coupon prefix', 'joinotify' ),
-                esc_html__( 'Prefixo usado na criaÃ§Ã£o automÃ¡tica de cupons.', 'joinotify' ),
+                esc_html__( 'Prefix used in the automatic creation of coupons.', 'joinotify' ),
                 array(
                     'placeholder' => 'CUPOM_',
                 )
@@ -332,8 +346,8 @@ class Registry {
             ),
             self::field_toggle(
                 'enable_ignore_processed_actions',
-                esc_html__( 'Ignorar aÃ§Ãµes jÃ¡ processadas', 'joinotify' ),
-                esc_html__( 'Evita que a mesma aÃ§Ã£o seja processada novamente quando o gatilho se repetir.', 'joinotify' )
+                esc_html__( 'Ignore actions already processed.', 'joinotify' ),
+                esc_html__( 'It prevents the same action from being processed again when the trigger is repeated.', 'joinotify' )
             ),
         );
     }
@@ -342,6 +356,7 @@ class Registry {
     /**
      * Current sender list and supporting phone metadata.
      *
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     public static function get_phone_state() {
@@ -362,7 +377,7 @@ class Registry {
             'senders' => $senders,
             'test_number_phone' => Admin::get_setting( 'test_number_phone' ),
             'default_country_iso2' => self::get_default_country_iso2(),
-            'locale' => self::get_current_locale(),
+            'locale' => function_exists('determine_locale') ? determine_locale() : get_locale(),
             'sender_count' => count( $senders ),
         );
     }
@@ -371,6 +386,7 @@ class Registry {
     /**
      * Runtime system details shown on the About tab.
      *
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     public static function get_system_status() {
@@ -383,13 +399,13 @@ class Registry {
         return array(
             'wordpress' => array(
                 array(
-                    'label' => esc_html__( 'VersÃ£o do WordPress', 'joinotify' ),
+                    'label' => esc_html__( 'WordPress version', 'joinotify' ),
                     'value' => get_bloginfo( 'version' ),
                     'status' => 'info',
                 ),
                 array(
                     'label' => esc_html__( 'WordPress Multisite', 'joinotify' ),
-                    'value' => is_multisite() ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'NÃ£o', 'joinotify' ),
+                    'value' => is_multisite() ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'No', 'joinotify' ),
                     'status' => 'info',
                 ),
                 array(
@@ -400,14 +416,14 @@ class Registry {
             ),
             'plugin' => array(
                 array(
-                    'label' => esc_html__( 'VersÃ£o do Joinotify', 'joinotify' ),
+                    'label' => esc_html__( 'Joinotify version', 'joinotify' ),
                     'value' => JOINOTIFY_VERSION,
                     'status' => 'info',
                 ),
             ),
             'server' => array(
                 array(
-                    'label' => esc_html__( 'VersÃ£o do PHP', 'joinotify' ),
+                    'label' => esc_html__( 'PHP version', 'joinotify' ),
                     'value' => PHP_VERSION,
                     'status' => version_compare( PHP_VERSION, '7.4', '>=' ) ? 'success' : 'danger',
                 ),
@@ -417,12 +433,12 @@ class Registry {
                     'status' => class_exists( 'DOMDocument' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => esc_html__( 'ExtensÃ£o cURL', 'joinotify' ),
+                    'label' => esc_html__( 'cURL ', 'joinotify' ),
                     'value' => extension_loaded( 'curl' ) ? curl_version()['version'] : esc_html__( 'NÃ£o', 'joinotify' ),
                     'status' => extension_loaded( 'curl' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => esc_html__( 'ExtensÃ£o OpenSSL', 'joinotify' ),
+                    'label' => esc_html__( 'OpenSSL extension', 'joinotify' ),
                     'value' => extension_loaded( 'openssl' ) ? OPENSSL_VERSION_TEXT : esc_html__( 'NÃ£o', 'joinotify' ),
                     'status' => extension_loaded( 'openssl' ) ? 'success' : 'danger',
                 ),
@@ -464,6 +480,7 @@ class Registry {
     /**
      * Build the full bootstrap payload for the frontend application.
      *
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     public static function get_bootstrap_data() {
@@ -493,6 +510,8 @@ class Registry {
                 'schema_filter' => 'Joinotify/Admin/Settings/Schema',
                 'section_tabs_filter' => 'Joinotify/Admin/Settings/Section_Tabs',
                 'integration_filter' => 'Joinotify/Settings/Tabs/Integrations',
+                'integration_field_types' => self::get_supported_integration_field_types(),
+                'integration_field_components' => self::get_supported_integration_field_components(),
                 'actions_filter' => 'Joinotify/Builder/Actions',
                 'triggers_filter' => 'Joinotify/Builder/Get_All_Triggers',
             ),
@@ -507,6 +526,7 @@ class Registry {
     /**
      * Build the license state payload used by the Vue license page.
      *
+     * @since 1.4.7
      * @return array<string,mixed>
      */
     public static function get_license_state() {
@@ -534,11 +554,11 @@ class Registry {
 
         return array(
             'is_valid' => $is_valid,
-            'status_label' => $is_valid ? esc_html__( 'VÃ¡lida', 'joinotify' ) : esc_html__( 'InvÃ¡lida', 'joinotify' ),
+            'status_label' => $is_valid ? esc_html__( 'Valid', 'joinotify' ) : esc_html__( 'Invalid', 'joinotify' ),
             'status_tone' => $is_valid ? 'success' : 'danger',
             'title' => $is_valid ? esc_html__( 'Active license', 'joinotify' ) : esc_html__( 'Activate your license', 'joinotify' ),
             'subtitle' => $is_valid
-                ? esc_html__( 'Sua instalaÃ§Ã£o estÃ¡ liberada para uso completo.', 'joinotify' )
+                ? esc_html__( 'Your installation is now ready for full use.', 'joinotify' )
                 : esc_html__( 'Enter the license code to unlock premium features.', 'joinotify' ),
             'purchase_url' => esc_url_raw( $purchase_url ),
             'docs_url' => esc_url_raw( $docs_url ),
@@ -552,10 +572,10 @@ class Registry {
             'subscription_label' => $subscription_label,
             'expire_label' => $is_valid
                 ? sprintf( esc_html__( 'License expires in: %s', 'joinotify' ), License::license_expire() )
-                : esc_html__( 'LicenÃ§a expira em: Not available', 'joinotify' ),
+                : esc_html__( 'License expires in: Not available', 'joinotify' ),
             'support_label' => $is_valid
-                ? sprintf( esc_html__( 'Suporte atÃ©: %s', 'joinotify' ), $support_text )
-                : esc_html__( 'Suporte atÃ©: Not available', 'joinotify' ),
+                ? sprintf( esc_html__( 'Support up to: %s', 'joinotify' ), $support_text )
+                : esc_html__( 'Support up to: Not available', 'joinotify' ),
             'key_label' => esc_html__( 'Your license key:', 'joinotify' ) . ' ' . self::mask_license_key( $license_key ),
             'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
             'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
@@ -565,8 +585,86 @@ class Registry {
 
 
     /**
+     * Collect field definitions from a card payload.
+     *
+     * @since 1.4.7
+     * @param array<string,mixed> $card
+     * @return array<int,array<string,mixed>>
+     */
+    private static function collect_card_fields( $card ) {
+        $fields = array();
+        $seen = array();
+
+        foreach ( array( 'settings', 'fields' ) as $property ) {
+            if ( empty( $card[ $property ] ) || ! is_array( $card[ $property ] ) ) {
+                continue;
+            }
+
+            foreach ( $card[ $property ] as $field ) {
+                if ( ! is_array( $field ) ) {
+                    continue;
+                }
+
+                $signature = '';
+
+                if ( ! empty( $field['key'] ) ) {
+                    $signature = 'key:' . sanitize_key( (string) $field['key'] );
+                } else {
+                    $signature = md5( wp_json_encode( $field ) );
+                }
+
+                if ( isset( $seen[ $signature ] ) ) {
+                    continue;
+                }
+
+                $seen[ $signature ] = true;
+                $fields[] = $field;
+            }
+        }
+
+        return $fields;
+    }
+
+
+    /**
+     * Return the integration field types supported by the frontend.
+     *
+     * @since 1.4.7
+     * @return array<int,string>
+     */
+    private static function get_supported_integration_field_types() {
+        return array( 'toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale' );
+    }
+
+
+    /**
+     * Return the built-in integration field components supported by the frontend.
+     *
+     * @since 1.4.7
+     * @return array<int,string>
+     */
+    private static function get_supported_integration_field_components() {
+        return array(
+            'toggle',
+            'text',
+            'textarea',
+            'select',
+            'phone',
+            'input-group',
+            'input-button',
+            'otp',
+            'color-picker',
+            'color-picker-field',
+            'color-scale',
+            'color-scale-field',
+        );
+    }
+
+
+    /**
      * Build the country-code select options.
      *
+     * @since 1.4.7
      * @return array<int,array<string,string>>
      */
     private static function build_country_code_options() {
@@ -591,6 +689,7 @@ class Registry {
     /**
      * Convert the configured default dial code to an ISO2 country code.
      *
+     * @since 1.4.7
      * @return string
      */
     private static function get_default_country_iso2() {
@@ -609,18 +708,9 @@ class Registry {
 
 
     /**
-     * Get the current WordPress locale used by the admin interface.
-     *
-     * @return string
-     */
-    private static function get_current_locale() {
-        return 'en_US';
-    }
-
-
-    /**
      * Mask a license key preserving the beginning and end.
      *
+     * @since 1.4.7
      * @param string $license_key
      * @return string
      */
@@ -638,6 +728,7 @@ class Registry {
     /**
      * Check whether all required plugins for an integration are active.
      *
+     * @since 1.4.7
      * @param array<int,string> $plugin_slugs
      * @param bool $requires_plugin
      * @return bool
@@ -664,6 +755,7 @@ class Registry {
     /**
      * Build a select field definition.
      *
+     * @since 1.4.7
      * @param string $key
      * @param string $label
      * @param string $description
@@ -685,6 +777,7 @@ class Registry {
     /**
      * Build a toggle field definition.
      *
+     * @since 1.4.7
      * @param string $key
      * @param string $label
      * @param string $description
@@ -704,6 +797,7 @@ class Registry {
     /**
      * Build a text field definition.
      *
+     * @since 1.4.7
      * @param string $key
      * @param string $label
      * @param string $description
@@ -723,6 +817,7 @@ class Registry {
     /**
      * Build a textarea field definition.
      *
+     * @since 1.4.7
      * @param string $key
      * @param string $label
      * @param string $description
@@ -735,6 +830,56 @@ class Registry {
             'key' => $key,
             'label' => $label,
             'description' => $description,
+        ), $extra );
+    }
+
+
+    /**
+     * Build a color picker field definition.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    private static function field_color( $key, $label, $description, $extra = array() ) {
+        return array_merge( array(
+            'type' => 'color',
+            'key' => $key,
+            'label' => $label,
+            'description' => $description,
+            'default' => '#4f46e5',
+        ), $extra );
+    }
+
+
+    /**
+     * Build a color scale field definition.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    private static function field_color_scale( $key, $label, $description, $extra = array() ) {
+        return array_merge( array(
+            'type' => 'color-scale',
+            'key' => $key,
+            'label' => $label,
+            'description' => $description,
+            'default' => array(
+                'baseColor' => '#4f46e5',
+                'palette'   => array(),
+            ),
+            'component' => 'color-scale',
+            'component_props' => array(
+                'baseColorName' => $key . '_base_color',
+                'paletteName'   => $key . '_palette',
+            ),
         ), $extra );
     }
 }

@@ -310,7 +310,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="joinotify-settings min-h-screen bg-[#f3f3f5]">
+  <div class="joinotify-settings min-h-screen">
     <div class="w-full">
       <SettingsHeader :docs-url="docsUrl" />
 

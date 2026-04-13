@@ -37,38 +37,7 @@ class Repository {
         foreach ( $defaults as $key => $default_value ) {
             $definition = $definitions[ $key ] ?? array();
             $value = array_key_exists( $key, $incoming ) ? $incoming[ $key ] : $default_value;
-
-            if ( isset( $definition['type'] ) && 'toggle' === $definition['type'] ) {
-                $sanitized[ $key ] = self::sanitize_toggle( $value );
-                continue;
-            }
-
-            if ( isset( $definition['type'] ) && 'select' === $definition['type'] ) {
-                $sanitized[ $key ] = sanitize_text_field( (string) $value );
-                continue;
-            }
-
-            if ( in_array( $key, array( 'test_number_phone', 'proxy_api_key' ), true ) ) {
-                $sanitized[ $key ] = sanitize_text_field( (string) $value );
-                continue;
-            }
-
-            if ( in_array( $key, array( 'send_text_proxy_api_route', 'send_media_proxy_api_route', 'create_coupon_prefix' ), true ) ) {
-                $sanitized[ $key ] = sanitize_text_field( (string) $value );
-                continue;
-            }
-
-            if ( in_array( $key, array( 'woocommerce_billing_full_address_format', 'woocommerce_shipping_full_address_format' ), true ) ) {
-                $sanitized[ $key ] = sanitize_textarea_field( (string) $value );
-                continue;
-            }
-
-            if ( $key === 'joinotify_default_country_code' ) {
-                $sanitized[ $key ] = sanitize_text_field( (string) $value );
-                continue;
-            }
-
-            $sanitized[ $key ] = sanitize_text_field( (string) $value );
+            $sanitized[ $key ] = self::sanitize_setting_value( $key, $value, $definition );
         }
 
         foreach ( Helpers::get_switch_options() as $switch_key ) {
@@ -124,5 +93,40 @@ class Repository {
      */
     private static function sanitize_toggle( $value ) {
         return in_array( $value, array( 'yes', '1', 1, true, 'true', 'on' ), true ) ? 'yes' : 'no';
+    }
+
+
+    /**
+     * Sanitize a setting based on its field definition.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @param array<string,mixed> $definition
+     * @return mixed
+     */
+    private static function sanitize_setting_value( $key, $value, $definition ) {
+        $type = isset( $definition['type'] ) ? (string) $definition['type'] : 'text';
+
+        if ( 'toggle' === $type ) {
+            return self::sanitize_toggle( $value );
+        }
+
+        if ( 'textarea' === $type ) {
+            return sanitize_textarea_field( (string) $value );
+        }
+
+        if ( in_array( $type, array( 'select', 'text', 'phone' ), true ) ) {
+            return sanitize_text_field( (string) $value );
+        }
+
+        if ( in_array( $key, array( 'joinotify_default_country_code', 'test_number_phone', 'proxy_api_key', 'send_text_proxy_api_route', 'send_media_proxy_api_route', 'create_coupon_prefix' ), true ) ) {
+            return sanitize_text_field( (string) $value );
+        }
+
+        if ( in_array( $key, array( 'woocommerce_billing_full_address_format', 'woocommerce_shipping_full_address_format' ), true ) ) {
+            return sanitize_textarea_field( (string) $value );
+        }
+
+        return sanitize_text_field( (string) $value );
     }
 }

@@ -32,7 +32,7 @@ defineEmits(['close']);
     <button class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" type="button" :aria-label="__('Close dialog', textDomain)" @click="$emit('close')" />
 
     <div
-      class="relative z-10 w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border border-white/20 bg-white p-6 shadow-soft sm:max-h-[calc(100dvh-3rem)]"
+      class="relative z-10 w-full max-h-[calc(100dvh-4rem)] overflow-y-auto rounded-lg border border-white/20 bg-white p-6 shadow-soft sm:max-h-[calc(100dvh-5rem)]"
       :class="sizeClass"
     >
       <div class="mb-6 flex items-start justify-between gap-4">

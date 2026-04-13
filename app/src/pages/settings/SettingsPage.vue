@@ -69,6 +69,16 @@ const proxyDefaults = {
 };
 
 const activeSectionId = ref(getInitialActiveSectionId());
+const selectedIntegrationModalSize = computed(() => {
+  return (
+    selectedIntegration.value?.modal?.size ||
+    selectedIntegration.value?.modal?.modal_size ||
+    selectedIntegration.value?.modal?.modal_size_class ||
+    selectedIntegration.value?.modal_size ||
+    selectedIntegration.value?.modal_size_class ||
+    'medium'
+  );
+});
 
 watch(
   sections,
@@ -465,12 +475,14 @@ function canConfigureIntegration(integration) {
     return false;
   }
 
-  return isEnabled(integration.setting_key) && Array.isArray(integration.fields) && integration.fields.length > 0;
+  const fields = Array.isArray(integration.settings) ? integration.settings : integration.fields;
+
+  return isEnabled(integration.setting_key) && Array.isArray(fields) && fields.length > 0;
 }
 </script>
 
 <template>
-  <div class="joinotify-settings min-h-screen bg-[#f3f3f5]">
+  <div class="joinotify-settings min-h-screen">
     <div class="w-full">
       <SettingsHeader :docs-url="docsUrl" />
 
@@ -552,6 +564,7 @@ function canConfigureIntegration(integration) {
       :open="integrationConfigOpen && canConfigureIntegration(selectedIntegration)"
       :integration="selectedIntegration"
       :settings="settings"
+      :modal-size="selectedIntegrationModalSize"
       @close="closeIntegrationConfig"
       @update-setting="updateSetting"
     />

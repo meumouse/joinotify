@@ -238,7 +238,7 @@ function handleToggleStatus(workflow, nextStatus) {
 </script>
 
 <template>
-  <div class="joinotify-settings min-h-screen bg-[#f3f3f5] p-4">
+  <div class="joinotify-settings min-h-screen p-4">
     <div class="w-full">
       <PageHeader
         :action-label="addWorkflowLabel"

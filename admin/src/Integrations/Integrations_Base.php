@@ -26,7 +26,7 @@ abstract class Integrations_Base {
      * @return array
      */
     public static function integration_tab_items() {
-        return apply_filters( 'Joinotify/Settings/Tabs/Integrations', array() );
+        return self::normalize_integration_items( apply_filters( 'Joinotify/Settings/Tabs/Integrations', array() ) );
     }
 
 
@@ -47,8 +47,33 @@ abstract class Integrations_Base {
      */
     public static function build_integration_item( $slug, $title, $description, $icon, $args = array() ) {
         $slug = sanitize_key( $slug );
+        $settings = isset( $args['settings'] ) && is_array( $args['settings'] )
+            ? $args['settings']
+            : ( isset( $args['fields'] ) && is_array( $args['fields'] ) ? $args['fields'] : array() );
+        $modal = isset( $args['modal'] ) && is_array( $args['modal'] ) ? $args['modal'] : array();
 
-        return wp_parse_args( $args, array(
+        if ( empty( $modal['size'] ) ) {
+            if ( ! empty( $args['modal_size'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $args['modal_size'] );
+            } elseif ( ! empty( $args['modal_size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $args['modal_size_class'] );
+            } elseif ( ! empty( $args['size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $args['size_class'] );
+            }
+        }
+
+        if ( empty( $modal['modal_size_class'] ) ) {
+            if ( ! empty( $args['modal_size_class'] ) ) {
+                $modal['modal_size_class'] = $args['modal_size_class'];
+            } elseif ( ! empty( $args['size_class'] ) ) {
+                $modal['modal_size_class'] = $args['size_class'];
+            }
+        }
+
+        $defaults = isset( $args['defaults'] ) && is_array( $args['defaults'] ) ? $args['defaults'] : array();
+
+        $item = wp_parse_args( $args, array(
+            'slug'          => $slug,
             'title'         => $title,
             'description'   => $description,
             'icon'          => $icon,
@@ -56,9 +81,469 @@ abstract class Integrations_Base {
             'action_hook'   => self::get_integration_action_hook( $slug ),
             'is_plugin'     => false,
             'plugin_active' => array(),
-            'comming_soon'  => false,
-            'fields'        => array(),
+            'coming_soon'   => ! empty( $args['coming_soon'] ) || ! empty( $args['comming_soon'] ),
+            'comming_soon'  => ! empty( $args['coming_soon'] ) || ! empty( $args['comming_soon'] ),
+            'settings'      => $settings,
+            'fields'        => $settings,
+            'defaults'      => $defaults,
+            'modal'         => $modal,
         ) );
+
+        return self::normalize_integration_item( $slug, $item );
+    }
+
+
+    /**
+     * Normalize a list of integration items.
+     *
+     * This keeps legacy integrations working even when they return a raw
+     * associative array with only `fields`, `comming_soon`, or callback data.
+     *
+     * @since 1.4.7
+     * @param array<string,array<string,mixed>> $items
+     * @return array<string,array<string,mixed>>
+     */
+    public static function normalize_integration_items( $items ) {
+        if ( ! is_array( $items ) ) {
+            return array();
+        }
+
+        $normalized = array();
+
+        foreach ( $items as $slug => $item ) {
+            if ( ! is_array( $item ) ) {
+                continue;
+            }
+
+            $item_slug = is_string( $slug ) && '' !== $slug ? sanitize_key( $slug ) : '';
+
+            if ( empty( $item_slug ) && ! empty( $item['slug'] ) ) {
+                $item_slug = sanitize_key( (string) $item['slug'] );
+            }
+
+            if ( empty( $item_slug ) ) {
+                continue;
+            }
+
+            $normalized[ $item_slug ] = self::normalize_integration_item( $item_slug, $item );
+        }
+
+        return $normalized;
+    }
+
+
+    /**
+     * Normalize an integration item payload.
+     *
+     * @since 1.4.7
+     * @param string $slug Integration slug.
+     * @param array<string,mixed> $item Raw integration item.
+     * @return array<string,mixed>
+     */
+    public static function normalize_integration_item( $slug, $item ) {
+        $slug = sanitize_key( $slug );
+        $item = is_array( $item ) ? $item : array();
+
+        $settings = isset( $item['settings'] ) && is_array( $item['settings'] )
+            ? $item['settings']
+            : ( isset( $item['fields'] ) && is_array( $item['fields'] ) ? $item['fields'] : array() );
+
+        $modal = isset( $item['modal'] ) && is_array( $item['modal'] ) ? $item['modal'] : array();
+
+        if ( empty( $modal['size'] ) ) {
+            if ( ! empty( $item['modal_size'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $item['modal_size'] );
+            } elseif ( ! empty( $item['modal_size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $item['modal_size_class'] );
+            } elseif ( ! empty( $item['size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $item['size_class'] );
+            }
+        }
+
+        if ( empty( $modal['modal_size_class'] ) ) {
+            if ( ! empty( $item['modal_size_class'] ) ) {
+                $modal['modal_size_class'] = $item['modal_size_class'];
+            } elseif ( ! empty( $item['size_class'] ) ) {
+                $modal['modal_size_class'] = $item['size_class'];
+            }
+        }
+
+        $defaults = self::normalize_integration_defaults(
+            isset( $item['defaults'] ) && is_array( $item['defaults'] ) ? $item['defaults'] : array(),
+            $settings
+        );
+        $coming_soon = ! empty( $item['coming_soon'] ) || ! empty( $item['comming_soon'] );
+
+        $normalized = wp_parse_args( $item, array(
+            'slug'          => $slug,
+            'title'         => '',
+            'description'   => '',
+            'icon'          => '',
+            'setting_key'   => '',
+            'action_hook'   => self::get_integration_action_hook( $slug ),
+            'is_plugin'     => false,
+            'plugin_active' => array(),
+            'coming_soon'   => $coming_soon,
+            'comming_soon'  => $coming_soon,
+            'settings'      => $settings,
+            'fields'        => $settings,
+            'defaults'      => $defaults,
+            'modal'         => $modal,
+        ) );
+
+        $normalized['slug'] = $slug;
+        $normalized['settings'] = self::normalize_integration_settings( $normalized['settings'] );
+        $normalized['fields'] = $normalized['settings'];
+        $normalized['defaults'] = self::normalize_integration_defaults( $normalized['defaults'], $normalized['settings'] );
+        $normalized['modal'] = self::normalize_integration_modal( $normalized['modal'] );
+        $normalized['coming_soon'] = ! empty( $normalized['coming_soon'] ) || ! empty( $normalized['comming_soon'] );
+        $normalized['comming_soon'] = $normalized['coming_soon'];
+
+        return $normalized;
+    }
+
+
+    /**
+     * Normalize integration settings definitions.
+     *
+     * @since 1.4.7
+     * @param array<int|string,array<string,mixed>> $settings
+     * @return array<int,array<string,mixed>>
+     */
+    public static function normalize_integration_settings( $settings ) {
+        if ( ! is_array( $settings ) ) {
+            return array();
+        }
+
+        $normalized = array();
+        $field_index = 0;
+
+        foreach ( $settings as $key => $setting ) {
+            if ( ! is_array( $setting ) ) {
+                continue;
+            }
+
+            $is_associative = self::is_associative_array( $settings );
+
+            if ( $is_associative && empty( $setting['key'] ) && is_string( $key ) ) {
+                $setting['key'] = $key;
+            }
+
+            $setting = wp_parse_args( $setting, array(
+                'key'              => '',
+                'type'             => 'text',
+                'label'            => '',
+                'description'      => '',
+                'component'        => '',
+                'component_props'  => array(),
+                'default'          => null,
+                'placeholder'      => '',
+                'options'          => array(),
+                'rows'             => 4,
+                'show_header'      => true,
+                'disabled'         => false,
+                'required'         => false,
+                'wrapper_class'    => '',
+                'group_class'      => '',
+                'input_class'      => '',
+                'addon_class'      => '',
+                'autocomplete'     => 'off',
+                'inputmode'        => '',
+                'searchable'       => false,
+                'search_placeholder' => '',
+                'empty_label'      => '',
+                'prepend_text'     => '',
+                'append_text'      => '',
+            ) );
+
+            $setting['key'] = sanitize_key( (string) $setting['key'] );
+
+            if ( empty( $setting['key'] ) ) {
+                $setting['key'] = sanitize_key( (string) $key );
+            }
+
+            if ( empty( $setting['key'] ) ) {
+                $setting['key'] = 'integration_setting_' . $field_index;
+            }
+
+            $setting['type'] = self::normalize_integration_setting_type( $setting['type'] );
+            $setting['component'] = sanitize_key( (string) $setting['component'] );
+            $setting['component_props'] = is_array( $setting['component_props'] ) ? $setting['component_props'] : array();
+            $setting['options'] = is_array( $setting['options'] ) ? array_values( $setting['options'] ) : array();
+            if ( empty( $setting['label'] ) ) {
+                if ( ! empty( $setting['name'] ) ) {
+                    $setting['label'] = (string) $setting['name'];
+                } elseif ( ! empty( $setting['title'] ) ) {
+                    $setting['label'] = (string) $setting['title'];
+                }
+            }
+            $setting['default'] = array_key_exists( 'default', $setting ) ? $setting['default'] : self::infer_integration_default_value( $setting );
+            $setting['show_header'] = (bool) $setting['show_header'];
+            $setting['disabled'] = (bool) $setting['disabled'];
+            $setting['required'] = (bool) $setting['required'];
+            $setting['searchable'] = (bool) $setting['searchable'];
+
+            $normalized[] = $setting;
+            $field_index++;
+        }
+
+        return $normalized;
+    }
+
+
+    /**
+     * Normalize the default values declared by an integration item.
+     *
+     * @since 1.4.7
+     * @param array<string,mixed> $defaults Explicit defaults.
+     * @param array<int,array<string,mixed>> $settings Settings definitions.
+     * @return array<string,mixed>
+     */
+    public static function normalize_integration_defaults( $defaults, $settings ) {
+        $normalized = is_array( $defaults ) ? $defaults : array();
+
+        foreach ( self::normalize_integration_settings( $settings ) as $setting ) {
+            $key = $setting['key'] ?? '';
+
+            if ( empty( $key ) || array_key_exists( $key, $normalized ) ) {
+                continue;
+            }
+
+            $normalized[ $key ] = array_key_exists( 'default', $setting ) && null !== $setting['default']
+                ? $setting['default']
+                : self::infer_integration_default_value( $setting );
+        }
+
+        return $normalized;
+    }
+
+
+    /**
+     * Normalize modal metadata.
+     *
+     * @since 1.4.7
+     * @param array<string,mixed> $modal
+     * @return array<string,mixed>
+     */
+    public static function normalize_integration_modal( $modal ) {
+        $modal = is_array( $modal ) ? $modal : array();
+
+        if ( empty( $modal['size'] ) ) {
+            if ( ! empty( $modal['modal_size'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $modal['modal_size'] );
+            } elseif ( ! empty( $modal['modal_size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $modal['modal_size_class'] );
+            } elseif ( ! empty( $modal['size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $modal['size_class'] );
+            }
+        }
+
+        if ( empty( $modal['modal_size_class'] ) ) {
+            $modal['modal_size_class'] = self::get_modal_size_class( $modal['size'] ?? 'medium' );
+        }
+
+        return wp_parse_args( $modal, array(
+            'title'              => '',
+            'description'        => '',
+            'button_label'       => esc_html__( 'Configure', 'joinotify' ),
+            'render_button'      => true,
+            'show_when_disabled' => false,
+            'size'               => 'medium',
+            'modal_size_class'   => self::get_modal_size_class( 'medium' ),
+        ) );
+    }
+
+
+    /**
+     * Build a select field definition.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<int,array{value:string,label:string}> $options
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function field_select( $key, $label, $description, $options, $extra = array() ) {
+        return self::build_field_definition( 'select', $key, $label, $description, array_merge( array(
+            'options' => $options,
+        ), $extra ) );
+    }
+
+
+    /**
+     * Build a toggle field definition.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function field_toggle( $key, $label, $description, $extra = array() ) {
+        return self::build_field_definition( 'toggle', $key, $label, $description, $extra );
+    }
+
+
+    /**
+     * Build a text field definition.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function field_text( $key, $label, $description, $extra = array() ) {
+        return self::build_field_definition( 'text', $key, $label, $description, $extra );
+    }
+
+
+    /**
+     * Build a textarea field definition.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function field_textarea( $key, $label, $description, $extra = array() ) {
+        return self::build_field_definition( 'textarea', $key, $label, $description, $extra );
+    }
+
+
+    /**
+     * Build a field definition that uses a custom frontend component.
+     *
+     * The `type` should still describe how the value is stored and sanitized.
+     *
+     * @since 1.4.7
+     * @param string $key
+     * @param string $type Storage/type contract used by the backend.
+     * @param string $component Vue component name or registry key.
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function field_component( $key, $type, $component, $label, $description = '', $extra = array() ) {
+        return self::build_field_definition( $type, $key, $label, $description, array_merge( array(
+            'component' => $component,
+        ), $extra ) );
+    }
+
+
+    /**
+     * Build a field definition array.
+     *
+     * @since 1.4.7
+     * @param string $type
+     * @param string $key
+     * @param string $label
+     * @param string $description
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    protected static function build_field_definition( $type, $key, $label, $description, $extra = array() ) {
+        $definition = array_merge( array(
+            'type'        => self::normalize_integration_setting_type( $type ),
+            'key'         => sanitize_key( $key ),
+            'label'       => $label,
+            'description' => $description,
+        ), is_array( $extra ) ? $extra : array() );
+
+        if ( ! isset( $definition['default'] ) ) {
+            $definition['default'] = self::infer_integration_default_value( $definition );
+        }
+
+        return $definition;
+    }
+
+
+    /**
+     * Normalize a modal size contract to one of the supported size tokens.
+     *
+     * @since 1.4.7
+     * @param string $size Raw size value.
+     * @return string
+     */
+    protected static function normalize_modal_size( $size ) {
+        $size = sanitize_key( str_replace( '_', '-', (string) $size ) );
+
+        $map = array(
+            'sm'          => 'small',
+            'small'       => 'small',
+            'md'          => 'medium',
+            'medium'      => 'medium',
+            'lg'          => 'large',
+            'large'       => 'large',
+            'xl'          => 'extra-large',
+            'extra-large' => 'extra-large',
+            'extra_large' => 'extra-large',
+            'popup-lg'    => 'medium',
+        );
+
+        if ( isset( $map[ $size ] ) ) {
+            return $map[ $size ];
+        }
+
+        return in_array( $size, array( 'small', 'medium', 'large', 'extra-large' ), true ) ? $size : 'medium';
+    }
+
+
+    /**
+     * Return the CSS width class for a modal size token.
+     *
+     * @since 1.4.7
+     * @param string $size Modal size token.
+     * @return string
+     */
+    protected static function get_modal_size_class( $size ) {
+        switch ( self::normalize_modal_size( $size ) ) {
+            case 'small':
+                return 'max-w-[640px]';
+            case 'large':
+                return 'max-w-[1200px]';
+            case 'extra-large':
+                return 'max-w-[1400px]';
+            case 'medium':
+            default:
+                return 'max-w-[900px]';
+        }
+    }
+
+
+    /**
+     * Infer the default value for a field definition.
+     *
+     * @since 1.4.7
+     * @param array<string,mixed> $field
+     * @return mixed
+     */
+    public static function infer_integration_default_value( $field ) {
+        $type = self::normalize_integration_setting_type( $field['type'] ?? 'text' );
+
+        if ( 'toggle' === $type ) {
+            return 'no';
+        }
+
+        if ( 'color' === $type ) {
+            return '#4f46e5';
+        }
+
+        if ( 'color-scale' === $type ) {
+            return array(
+                'baseColor' => '#4f46e5',
+                'palette'   => array(),
+            );
+        }
+
+        return '';
     }
 
 
@@ -92,9 +577,9 @@ abstract class Integrations_Base {
      */
     public static function render_integration_settings_modal( $slug, $args = array(), $content_callback = null ) {
         $defaults = array(
-            'title'                 => esc_html__( 'ConfiguraÃ§Ãµes da integraÃ§Ã£o', 'joinotify' ),
+            'title'                 => esc_html__( 'Integration settings', 'joinotify' ),
             'description'           => '',
-            'button_label'          => esc_html__( 'ConfiguraÃ§Ãµes', 'joinotify' ),
+            'button_label'          => esc_html__( 'Configure', 'joinotify' ),
             'setting_key'           => '',
             'action_hook'           => self::get_integration_action_hook( $slug ),
             'modal_size_class'      => 'popup-lg',
@@ -195,7 +680,7 @@ abstract class Integrations_Base {
                         <span class="description"><?php echo esc_html( $trigger['description'] ); ?></span>
 
                         <?php if ( isset( $trigger['class'] ) && $trigger['class'] === 'locked' ) : ?>
-                            <span class="fs-sm mt-3"><?php esc_html_e( 'Este recurso serÃ¡ liberado em breve', 'joinotify' ); ?></span>
+                            <span class="fs-sm mt-3"><?php esc_html_e( 'This feature will be released soon.', 'joinotify' ); ?></span>
                         <?php endif; ?>
 
                         <!-- Install trigger dependencies -->
@@ -232,5 +717,43 @@ abstract class Integrations_Base {
         }
 
         return Admin::get_setting( $setting_key ) === 'yes';
+    }
+
+
+    /**
+     * Normalize a field type to the supported contract.
+     *
+     * @since 1.4.7
+     * @param string $type Raw field type.
+     * @return string
+     */
+    protected static function normalize_integration_setting_type( $type ) {
+        $type = sanitize_key( (string) $type );
+
+        if ( 'switch' === $type ) {
+            return 'toggle';
+        }
+
+        if ( 'custom' === $type ) {
+            return 'text';
+        }
+
+        return in_array( $type, array( 'toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale' ), true ) ? $type : 'text';
+    }
+
+
+    /**
+     * Check if the array uses non-sequential keys.
+     *
+     * @since 1.4.7
+     * @param array<mixed> $value
+     * @return bool
+     */
+    protected static function is_associative_array( $value ) {
+        if ( ! is_array( $value ) || empty( $value ) ) {
+            return false;
+        }
+
+        return array_keys( $value ) !== range( 0, count( $value ) - 1 );
     }
 }

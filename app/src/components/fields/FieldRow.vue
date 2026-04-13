@@ -20,7 +20,7 @@ defineEmits(['update:modelValue']);
 <template>
   <div class="grid items-start gap-6 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)] lg:items-center">
     <div>
-      <h3 class="text-[15px] font-semibold text-slate-800">{{ field.label }}</h3>
+      <h3 class="text-[15px] font-semibold text-slate-800">{{ field.label || field.name || '' }}</h3>
       <p v-if="field.description" class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">
         {{ field.description }}
       </p>

@@ -7,7 +7,7 @@ defined('ABSPATH') || exit;
 /**
  * Resolve Vite manifest assets for Joinotify admin pages.
  *
- * @since 1.4.8
+ * @since 1.4.7
  * @package MeuMouse\Joinotify\Core
  */
 class Scripts {

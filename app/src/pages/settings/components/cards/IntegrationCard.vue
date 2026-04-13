@@ -17,8 +17,9 @@ const props = defineProps({
 
 const emit = defineEmits(['toggle', 'configure']);
 
-const hasSettings = computed(() => Array.isArray(props.card.fields) && props.card.fields.length > 0);
-const toggleDisabled = computed(() => props.card.coming_soon || (props.card.requires_plugin && !props.card.plugin_active));
+const hasSettings = computed(() => Array.isArray(props.card.settings) ? props.card.settings.length > 0 : Array.isArray(props.card.fields) && props.card.fields.length > 0);
+const toggleDisabled = computed(() => Boolean(props.card.coming_soon || props.card.comming_soon) || (props.card.requires_plugin && !props.card.plugin_active));
+const configLabel = computed(() => props.card?.modal?.button_label || __('Configure', textDomain));
 const showConfigButton = computed(() => hasSettings.value && props.enabled && !toggleDisabled.value);
 const enabledProxy = computed({
   get: () => props.enabled,
@@ -53,14 +54,14 @@ const enabledProxy = computed({
 
       <div class="mt-5 space-y-3 text-left">
         <div
-          v-if="card.coming_soon"
+          v-if="card.coming_soon || card.comming_soon"
           class="rounded-lg border border-primary-100 bg-primary-50 px-4 py-3 text-[13px] font-medium text-primary-700"
         >
           {{ __('Coming soon', textDomain) }}
         </div>
 
         <div
-          v-if="card.coming_soon"
+          v-if="card.coming_soon || card.comming_soon"
           class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-5 text-amber-800"
         >
           {{ card.disabled_message || __('This integration depends on an installed and active plugin.', textDomain) }}
@@ -89,7 +90,7 @@ const enabledProxy = computed({
           class="rounded-[8px] border border-primary-200 px-6 py-3 text-[14px] font-semibold text-primary-700 transition hover:bg-primary-50"
           @click="$emit('configure', card.slug)"
         >
-          {{ __('Configure', textDomain) }}
+          {{ configLabel }}
         </button>
       </div>
     </div>

@@ -9,9 +9,7 @@
 import { computed } from 'vue';
 import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 import TextField from './TextField.vue';
-import TextAreaField from './TextAreaField.vue';
-import SelectField from './SelectField.vue';
-import PhoneField from './PhoneField.vue';
+import { buildFieldProps, resolveFieldComponent } from './fieldRegistry';
 
 const props = defineProps({
   modelValue: { type: [String, Number, Boolean], default: '' },
@@ -22,14 +20,15 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const fieldComponent = computed(() => {
-  const map = {
-    text: TextField,
-    textarea: TextAreaField,
-    select: SelectField,
-    phone: PhoneField,
-  };
+  return resolveFieldComponent(props.field) || TextField;
+});
 
-  return map[props.field.type] || TextField;
+const fieldProps = computed(() => {
+  return buildFieldProps(props.field, { showHeader: false });
+});
+
+const usesToggle = computed(() => {
+  return String(props.field?.type || '').toLowerCase() === 'toggle' && !props.field?.component;
 });
 
 const model = computed({
@@ -40,7 +39,7 @@ const model = computed({
 
 <template>
   <ToggleSwitch
-    v-if="field.type === 'toggle'"
+    v-if="usesToggle"
     :id="name"
     :name="name"
     :aria-label="field.label"
@@ -54,6 +53,7 @@ const model = computed({
     v-else
     :is="fieldComponent"
     v-model="model"
+    v-bind="fieldProps"
     :field="field"
     :name="name"
   />
