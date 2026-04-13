@@ -1,6 +1,6 @@
-# Integracoes declarativas do Joinotify
+# Contrato declarativo de integracoes do Joinotify
 
-Este documento descreve o contrato para adicionar novas integracoes na aba **Settings > Integrations**, com foco em reuso de componentes do frontend, configuracao do modal e defaults automaticos.
+Este documento descreve o contrato para adicionar novas integracoes na aba **Settings > Integrations**, com foco em reuso de componentes do frontend, configuracao do modal, HTML personalizado e defaults automaticos.
 
 ## Objetivo
 
@@ -8,6 +8,7 @@ O fluxo de integracao foi desenhado para que um desenvolvedor consiga:
 
 - registrar um novo card de integracao via filtro `Joinotify/Settings/Tabs/Integrations`
 - declarar os campos que serao exibidos no modal de configuracao
+- inserir HTML personalizado ou componentes Vue dentro do modal
 - reutilizar componentes nativos do frontend quando possivel
 - fornecer valores padrao para `Joinotify/Admin/Set_Default_Options`
 - manter compatibilidade com integracoes antigas que ainda usam `fields` e `comming_soon`
@@ -27,14 +28,14 @@ $integrations['minha_integracao'] = array(
         array(
             'type' => 'toggle',
             'key' => 'enable_minha_integracao',
-            'name' => esc_html__( 'Ativar integracao', 'joinotify-minha-integracao' ),
+            'label' => esc_html__( 'Ativar integracao', 'joinotify-minha-integracao' ),
             'description' => esc_html__( 'Liga ou desliga a integracao.', 'joinotify-minha-integracao' ),
             'default' => 'no',
         ),
         array(
             'type' => 'text',
             'key' => 'api_key',
-            'name' => esc_html__( 'API Key', 'joinotify-minha-integracao' ),
+            'label' => esc_html__( 'API Key', 'joinotify-minha-integracao' ),
             'description' => esc_html__( 'Chave de acesso fornecida pelo servico.', 'joinotify-minha-integracao' ),
             'default' => '',
         ),
@@ -47,29 +48,37 @@ $integrations['minha_integracao'] = array(
         'title' => esc_html__( 'Configuracoes da integracao', 'joinotify-minha-integracao' ),
         'description' => esc_html__( 'Ajuste as credenciais e opcoes da integracao.', 'joinotify-minha-integracao' ),
         'button_label' => esc_html__( 'Configurar', 'joinotify-minha-integracao' ),
+        'blocks' => array(
+            MeuMouse\Joinotify\Integrations\Integrations_Base::modal_html_block(
+                '<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">Conteudo personalizado do modal.</div>'
+            ),
+        ),
     ),
 );
 ```
 
-## Campos suportados
+## Tipos de campos suportados
 
-Os campos declarativos podem usar os tipos padrao abaixo:
+Os campos declarativos podem usar os tipos nativos abaixo:
 
 - `toggle`
 - `text`
 - `textarea`
 - `select`
+- `phone`
+- `color`
+- `color-scale`
 
 O sistema tambem aceita componentes customizados atraves do campo `component`.
 
-### Exemplo de componente customizado
+### Exemplo de campo com componente customizado
 
 ```php
 array(
     'type' => 'component',
     'component' => 'input-group',
     'key' => 'sender_name',
-    'name' => esc_html__( 'Nome do remetente', 'joinotify-minha-integracao' ),
+    'label' => esc_html__( 'Nome do remetente', 'joinotify-minha-integracao' ),
     'description' => esc_html__( 'Valor exibido no componente personalizado.', 'joinotify-minha-integracao' ),
     'default' => '',
     'component_props' => array(
@@ -79,29 +88,35 @@ array(
 ),
 ```
 
-## Como os campos sao renderizados no modal
+## Como o modal de integracao e renderizado
 
-O modal de integracao passa a consumir, nesta ordem:
+O modal de integracao consome o conteudo nesta ordem:
 
-1. `settings`
-2. `fields` legado
-3. `modal` com titulo, descricao e texto do botao
+1. `modal.blocks` quando existir
+2. `modal.content` ou `modal.html` como fallback de HTML direto
+3. `settings`
+4. `fields` legado
 
-No frontend, o modal usa o registry de componentes em `window.JoinotifyFieldComponents` para descobrir como renderizar cada tipo.
+Os blocos do modal aceitam dois formatos principais:
+
+- `type => 'html'` para HTML confiavel renderizado no modal
+- `type => 'component'` para um componente Vue registrado no frontend
+
+O HTML e sanitizado no backend com `wp_kses_post()`. Use esse recurso para conteudo estatico, avisos, caixas de ajuda e estrutura adicional dentro do modal.
 
 ## Defaults e persistencia
 
 Os valores iniciais devem ser declarados em `defaults`. Eles sao usados para:
 
 - preencher `Joinotify/Admin/Set_Default_Options`
-- garantir que a integracao tenha estado inicial consistente
+- manter o estado da integracao consistente
 - evitar defaults espalhados em varios pontos do codigo
 
-Se a integracao informar `setting_key` e nao declarar o valor em `defaults`, o sistema assume `no` como fallback quando fizer sentido para ativacao/desativacao.
+Se a integracao informar `setting_key` e nao declarar o valor padrao dele, o sistema assume `no` como fallback quando fizer sentido para ativacao/desativacao.
 
 ## Reuso de componentes no frontend
 
-O frontend ja oferece componentes prontos para o modal de configuracao. A recomendacao e reutilizar esses componentes sempre que possivel.
+O frontend ja oferece componentes prontos para o modal de configuracao. A recomendacao e reutiliza-los sempre que possivel.
 
 ### Componentes nativos
 
@@ -109,6 +124,9 @@ O frontend ja oferece componentes prontos para o modal de configuracao. A recome
 - `text`
 - `textarea`
 - `select`
+- `phone`
+- `color`
+- `color-scale`
 
 ### Componentes customizados
 
@@ -128,9 +146,39 @@ array(
     'type' => 'component',
     'component' => 'otp',
     'key' => 'otp_code',
-    'name' => esc_html__( 'Codigo OTP', 'joinotify-minha-integracao' ),
+    'label' => esc_html__( 'Codigo OTP', 'joinotify-minha-integracao' ),
     'description' => esc_html__( 'Componente customizado de OTP.', 'joinotify-minha-integracao' ),
     'default' => '',
+),
+```
+
+### Blocos de HTML no modal
+
+Se voce precisar apenas inserir conteudo estatico, use um bloco HTML:
+
+```php
+'modal' => array(
+    'title' => esc_html__( 'Configuracoes do exemplo', 'joinotify-exemplo' ),
+    'blocks' => array(
+        MeuMouse\Joinotify\Integrations\Integrations_Base::modal_html_block(
+            '<div class="rounded-2xl border border-primary-100 bg-primary-50 p-4">Instrucoes ou conteudo personalizado.</div>'
+        ),
+    ),
+),
+```
+
+Se voce quiser renderizar um componente Vue no modal:
+
+```php
+'modal' => array(
+    'blocks' => array(
+        MeuMouse\Joinotify\Integrations\Integrations_Base::modal_component_block(
+            'otp',
+            array(
+                'placeholder' => esc_html__( 'Selecione um template', 'joinotify-exemplo' ),
+            )
+        ),
+    ),
 ),
 ```
 
@@ -141,6 +189,7 @@ O contrato atual preserva compatibilidade com:
 - `fields` legado
 - `comming_soon` com erro de escrita
 - `action_hook` existente
+- `modal.content` e `modal.html` como fallback de conteudo
 
 Isso permite migrar integracoes antigas aos poucos, sem quebrar cards ja publicados.
 
@@ -154,21 +203,25 @@ Adicione a integracao no filtro `Joinotify/Settings/Tabs/Integrations`.
 
 Prefira `settings` com o array de campos que sera renderizado no modal.
 
-### 3. Definir defaults
+### 3. Inserir conteudo complementar no modal
+
+Use `modal.blocks` para instrucoes, avisos, previews ou componentes customizados.
+
+### 4. Definir defaults
 
 Inclua os valores iniciais em `defaults` para manter consistencia com o reset e com o bootstrap.
 
-### 4. Reutilizar componentes do frontend
+### 5. Reutilizar componentes do frontend
 
 Quando o campo puder ser atendido por componente existente, use o tipo padrao.
 
-### 5. Usar componente customizado apenas quando necessario
+### 6. Usar componente customizado apenas quando necessario
 
 Se a UI exigir comportamento especifico, registre o componente no frontend e referencie-o por `component`.
 
 ## Exemplo pratico: OTP Login
 
-Exemplo de integracao com ativacao, chave de API e opcao de personalizacao:
+Exemplo de integracao com ativacao, chave de API e conteudo extra no modal:
 
 ```php
 $integrations['otp_login'] = array(
@@ -181,14 +234,14 @@ $integrations['otp_login'] = array(
         array(
             'type' => 'toggle',
             'key' => 'enable_otp_login_integration',
-            'name' => esc_html__( 'Ativar integracao', 'joinotify-otp-login' ),
+            'label' => esc_html__( 'Ativar integracao', 'joinotify-otp-login' ),
             'description' => esc_html__( 'Habilita o envio de OTP via WhatsApp.', 'joinotify-otp-login' ),
             'default' => 'no',
         ),
         array(
             'type' => 'text',
             'key' => 'otp_sender_name',
-            'name' => esc_html__( 'Nome do remetente', 'joinotify-otp-login' ),
+            'label' => esc_html__( 'Nome do remetente', 'joinotify-otp-login' ),
             'description' => esc_html__( 'Nome exibido na mensagem enviada ao usuario.', 'joinotify-otp-login' ),
             'default' => '',
         ),
@@ -196,7 +249,7 @@ $integrations['otp_login'] = array(
             'type' => 'component',
             'component' => 'otp',
             'key' => 'otp_template',
-            'name' => esc_html__( 'Template OTP', 'joinotify-otp-login' ),
+            'label' => esc_html__( 'Template OTP', 'joinotify-otp-login' ),
             'description' => esc_html__( 'Componente customizado para selecionar o template.', 'joinotify-otp-login' ),
             'default' => '',
             'component_props' => array(
@@ -213,6 +266,11 @@ $integrations['otp_login'] = array(
         'title' => esc_html__( 'Configuracoes do OTP Login', 'joinotify-otp-login' ),
         'description' => esc_html__( 'Defina ativacao, remetente e template do OTP.', 'joinotify-otp-login' ),
         'button_label' => esc_html__( 'Abrir configuracoes', 'joinotify-otp-login' ),
+        'blocks' => array(
+            MeuMouse\Joinotify\Integrations\Integrations_Base::modal_html_block(
+                '<div class="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600">Use o template OTP para padronizar a mensagem enviada.</div>'
+            ),
+        ),
     ),
 );
 ```
@@ -221,9 +279,10 @@ $integrations['otp_login'] = array(
 
 - Prefira declaracao de `settings` em vez de montar HTML manual no PHP.
 - Reutilize componentes nativos antes de criar um componente customizado.
-- Mantenha os `key` dos campos consistentes com os nomes usados em `defaults`.
-- Sempre forneca texto curto e objetivo em `name` e `description`.
+- Mantenha os valores de `key` consistentes com os nomes usados em `defaults`.
+- Sempre forneca texto curto e objetivo em `label` e `description`.
 - Use `modal` para ajustar a experiencia sem duplicar estrutura em varios pontos.
+- Para HTML bruto, mantenha o conteudo simples e confiavel.
 
 ## Onde o contrato e consumido
 
@@ -236,4 +295,4 @@ $integrations['otp_login'] = array(
 
 ## Resumo
 
-O modelo declarativo simplifica a inclusao de novas integracoes, reduz duplicacao e abre espaco para reuso de componentes existentes no frontend. A recomendacao principal e centralizar tudo o que a integracao precisa em `settings`, `defaults` e `modal`, deixando `action_hook` apenas como compatibilidade e transicao.
+O modelo declarativo simplifica a inclusao de novas integracoes, reduz duplicacao e agora suporta conteudo personalizado dentro do modal de configuracao. A recomendacao principal e centralizar tudo o que a integracao precisa em `settings`, `defaults` e `modal`, deixando `action_hook` apenas como compatibilidade e transicao.

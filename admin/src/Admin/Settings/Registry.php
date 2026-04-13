@@ -512,6 +512,7 @@ class Registry {
                 'integration_filter' => 'Joinotify/Settings/Tabs/Integrations',
                 'integration_field_types' => self::get_supported_integration_field_types(),
                 'integration_field_components' => self::get_supported_integration_field_components(),
+                'integration_modal_block_types' => array( 'html', 'component' ),
                 'actions_filter' => 'Joinotify/Builder/Actions',
                 'triggers_filter' => 'Joinotify/Builder/Get_All_Triggers',
             ),

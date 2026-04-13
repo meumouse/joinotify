@@ -342,6 +342,24 @@ abstract class Integrations_Base {
             $modal['modal_size_class'] = self::get_modal_size_class( $modal['size'] ?? 'medium' );
         }
 
+        $modal['blocks'] = self::normalize_integration_modal_blocks(
+            isset( $modal['blocks'] ) && is_array( $modal['blocks'] ) ? $modal['blocks'] : array()
+        );
+
+        if ( empty( $modal['blocks'] ) ) {
+            $content = '';
+
+            if ( ! empty( $modal['content'] ) ) {
+                $content = (string) $modal['content'];
+            } elseif ( ! empty( $modal['html'] ) ) {
+                $content = (string) $modal['html'];
+            }
+
+            if ( '' !== trim( $content ) ) {
+                $modal['blocks'] = array( self::modal_html_block( $content ) );
+            }
+        }
+
         return wp_parse_args( $modal, array(
             'title'              => '',
             'description'        => '',
@@ -350,6 +368,7 @@ abstract class Integrations_Base {
             'show_when_disabled' => false,
             'size'               => 'medium',
             'modal_size_class'   => self::get_modal_size_class( 'medium' ),
+            'blocks'             => array(),
         ) );
     }
 
@@ -414,6 +433,40 @@ abstract class Integrations_Base {
      */
     public static function field_textarea( $key, $label, $description, $extra = array() ) {
         return self::build_field_definition( 'textarea', $key, $label, $description, $extra );
+    }
+
+
+    /**
+     * Build a modal block that renders trusted HTML.
+     *
+     * @since 1.4.8
+     * @param string $html
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function modal_html_block( $html, $extra = array() ) {
+        return array_merge( array(
+            'type' => 'html',
+            'html' => wp_kses_post( (string) $html ),
+        ), is_array( $extra ) ? $extra : array() );
+    }
+
+
+    /**
+     * Build a modal block that renders a registered Vue component.
+     *
+     * @since 1.4.8
+     * @param string $component
+     * @param array<string,mixed> $props
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    public static function modal_component_block( $component, $props = array(), $extra = array() ) {
+        return array_merge( array(
+            'type' => 'component',
+            'component' => sanitize_key( (string) $component ),
+            'props' => is_array( $props ) ? $props : array(),
+        ), is_array( $extra ) ? $extra : array() );
     }
 
 
@@ -755,5 +808,69 @@ abstract class Integrations_Base {
         }
 
         return array_keys( $value ) !== range( 0, count( $value ) - 1 );
+    }
+
+
+    /**
+     * Normalize modal blocks for the Vue settings modal.
+     *
+     * @since 1.4.8
+     * @param array<int,mixed> $blocks
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function normalize_integration_modal_blocks( $blocks ) {
+        if ( ! is_array( $blocks ) ) {
+            return array();
+        }
+
+        $normalized = array();
+
+        foreach ( $blocks as $index => $block ) {
+            if ( is_string( $block ) ) {
+                $normalized[] = self::modal_html_block( $block );
+                continue;
+            }
+
+            if ( ! is_array( $block ) ) {
+                continue;
+            }
+
+            $type = sanitize_key( (string) ( $block['type'] ?? $block['kind'] ?? 'html' ) );
+
+            if ( in_array( $type, array( 'html', 'markup', 'content' ), true ) ) {
+                $normalized[] = self::modal_html_block(
+                    isset( $block['html'] ) ? $block['html'] : ( $block['content'] ?? '' ),
+                    array_diff_key( $block, array(
+                        'type' => true,
+                        'kind' => true,
+                        'html' => true,
+                        'content' => true,
+                    ) )
+                );
+                continue;
+            }
+
+            if ( in_array( $type, array( 'component', 'vue-component' ), true ) ) {
+                $component = sanitize_key( (string) ( $block['component'] ?? $block['name'] ?? '' ) );
+
+                if ( empty( $component ) ) {
+                    continue;
+                }
+
+                $normalized[] = array_merge( array(
+                    'type' => 'component',
+                    'component' => $component,
+                    'props' => array(),
+                ), $block );
+                continue;
+            }
+
+            $normalized[] = array_merge( array(
+                'type' => $type ?: 'html',
+                'key' => 'modal-block-' . $index,
+            ), $block );
+        }
+
+        return array_values( $normalized );
     }
 }

@@ -33,17 +33,32 @@ class Repository {
         $definitions = Registry::get_field_definitions();
         $current = self::get_settings();
         $sanitized = $current;
+        $all_keys = array_unique( array_merge(
+            array_keys( $defaults ),
+            array_keys( $definitions ),
+            array_keys( $current ),
+            array_keys( is_array( $incoming ) ? $incoming : array() )
+        ) );
 
-        foreach ( $defaults as $key => $default_value ) {
+        foreach ( $all_keys as $key ) {
             $definition = $definitions[ $key ] ?? array();
-            $value = array_key_exists( $key, $incoming ) ? $incoming[ $key ] : $default_value;
-            $sanitized[ $key ] = self::sanitize_setting_value( $key, $value, $definition );
-        }
 
-        foreach ( Helpers::get_switch_options() as $switch_key ) {
-            if ( ! array_key_exists( $switch_key, $incoming ) ) {
-                $sanitized[ $switch_key ] = 'no';
+            if ( in_array( $key, Helpers::get_switch_options(), true ) && ! array_key_exists( $key, $incoming ) ) {
+                $sanitized[ $key ] = 'no';
+                continue;
             }
+
+            if ( array_key_exists( $key, $incoming ) ) {
+                $value = $incoming[ $key ];
+            } elseif ( array_key_exists( $key, $current ) ) {
+                $value = $current[ $key ];
+            } elseif ( array_key_exists( $key, $defaults ) ) {
+                $value = $defaults[ $key ];
+            } else {
+                continue;
+            }
+
+            $sanitized[ $key ] = self::sanitize_setting_value( $key, $value, $definition );
         }
 
         update_option( 'joinotify_settings', $sanitized );
@@ -111,6 +126,18 @@ class Repository {
             return self::sanitize_toggle( $value );
         }
 
+        if ( 'color' === $type ) {
+            return self::sanitize_color_value( $value );
+        }
+
+        if ( 'color-scale' === $type ) {
+            return self::sanitize_color_scale_value( $value );
+        }
+
+        if ( is_array( $value ) ) {
+            return self::sanitize_array_value( $value );
+        }
+
         if ( 'textarea' === $type ) {
             return sanitize_textarea_field( (string) $value );
         }
@@ -128,5 +155,91 @@ class Repository {
         }
 
         return sanitize_text_field( (string) $value );
+    }
+
+
+    /**
+     * Sanitize a plain nested array setting.
+     *
+     * @param array<mixed> $value
+     * @return array<mixed>
+     */
+    private static function sanitize_array_value( $value ) {
+        $sanitized = array();
+
+        foreach ( $value as $item_key => $item_value ) {
+            if ( is_array( $item_value ) ) {
+                $sanitized[ $item_key ] = self::sanitize_array_value( $item_value );
+                continue;
+            }
+
+            if ( is_bool( $item_value ) ) {
+                $sanitized[ $item_key ] = $item_value;
+                continue;
+            }
+
+            if ( is_int( $item_value ) || is_float( $item_value ) ) {
+                $sanitized[ $item_key ] = $item_value;
+                continue;
+            }
+
+            $sanitized[ $item_key ] = sanitize_text_field( (string) $item_value );
+        }
+
+        return $sanitized;
+    }
+
+
+    /**
+     * Sanitize a hex color value.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private static function sanitize_color_value( $value ) {
+        $value = is_string( $value ) ? trim( $value ) : '';
+
+        if ( '' === $value ) {
+            return '';
+        }
+
+        if ( function_exists( 'sanitize_hex_color' ) ) {
+            $sanitized = sanitize_hex_color( $value );
+
+            if ( null !== $sanitized ) {
+                return $sanitized;
+            }
+        }
+
+        return sanitize_text_field( $value );
+    }
+
+
+    /**
+     * Sanitize a color scale payload.
+     *
+     * @param mixed $value
+     * @return array<string,mixed>
+     */
+    private static function sanitize_color_scale_value( $value ) {
+        $value = is_array( $value ) ? $value : array();
+
+        $base_color = isset( $value['baseColor'] ) ? self::sanitize_color_value( $value['baseColor'] ) : '';
+        $palette = array();
+
+        if ( ! empty( $value['palette'] ) && is_array( $value['palette'] ) ) {
+            foreach ( $value['palette'] as $palette_color ) {
+                $sanitized_color = self::sanitize_color_value( $palette_color );
+
+                if ( '' !== $sanitized_color ) {
+                    $palette[] = $sanitized_color;
+                }
+            }
+        }
+
+        return array(
+            'baseColor' => $base_color,
+            'palette' => $palette,
+        );
     }
 }
