@@ -1,10 +1,4 @@
 <?php
-/**
- * Phone_Check_Connection source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -46,7 +40,7 @@ class Phone_Check_Connection extends Abstract_Route {
         if ( empty( $phone ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Número de telefone inválido.', 'joinotify' ),
+                'message' => esc_html__( 'NúInvalid phone number.', 'joinotify' ),
             ) );
         }
 
@@ -57,8 +51,8 @@ class Phone_Check_Connection extends Abstract_Route {
         return rest_ensure_response( array(
             'status' => $connected ? 'success' : 'error',
             'message' => $connected
-                ? esc_html__( 'O telefone está conectado.', 'joinotify' )
-                : esc_html__( 'O telefone está desconectado.', 'joinotify' ),
+                ? esc_html__( 'The phone is connected.', 'joinotify' )
+                : esc_html__( 'The phone is disconnected.', 'joinotify' ),
             'connection' => $state,
             'phone' => $phone,
         ) );

@@ -1,10 +1,4 @@
 <?php
-/**
- * Workflow_Post_Type source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -59,7 +53,7 @@ class Workflow_Post_Type {
     
         $args = array(
             'labels' => $labels,
-            'description'        => __( 'Descrição.', 'joinotify' ),
+            'description'        => __( 'DescriÃ§Ã£o.', 'joinotify' ),
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,

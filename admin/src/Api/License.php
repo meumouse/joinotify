@@ -1,10 +1,4 @@
 <?php
-/**
- * License source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Api;
 
@@ -275,7 +269,7 @@ class License {
                     // Handle decryption failure
                     $decryption_error = new \stdClass();
                     $decryption_error->status = false;
-                    $decryption_error->msg = __( 'Ocorreu um erro na conexão com o servidor de verificação de licenças. Verifique o erro nos logs do WooCommerce.', 'joinotify' );
+                    $decryption_error->msg = __( 'Ocorreu um erro na conexÃ£o com o servidor de verificaÃ§Ã£o de licenÃ§as. Verifique o erro nos logs do WooCommerce.', 'joinotify' );
                     $decryption_error->data = NULL;
 
                     return $decryption_error;
@@ -371,7 +365,7 @@ class License {
     
                         // Check if it is a cURL 35 error
                         if ( strpos( $curl_error_message, 'cURL error 35' ) !== false ) {
-                            $error = __( 'Erro cURL 35: Problema de comunicação SSL/TLS.', 'joinotify' );
+                            $error = __( 'Erro cURL 35: Problema de comunicaÃ§Ã£o SSL/TLS.', 'joinotify' );
                         } else {
                             $response->msg = $curl_error_message;
                             $response->status = false;
@@ -391,7 +385,7 @@ class License {
                     }
                 }
             } elseif ( ! extension_loaded( 'curl' ) ) {
-                $response->msg = __( 'A extensão cURL está faltando.', 'joinotify' );
+                $response->msg = __( 'A extensÃ£o cURL estÃ¡ faltando.', 'joinotify' );
                 $response->status = false;
                 $response->data = NULL;
                 $response->is_request_error = true;
@@ -424,7 +418,7 @@ class License {
     
                     // Check if it is a cURL 35 error
                     if ( strpos( $error_message, 'cURL error 35' ) !== false ) {
-                        $error = __( 'Erro cURL 35: Problema de comunicação SSL/TLS.', 'joinotify' );
+                        $error = __( 'Erro cURL 35: Problema de comunicaÃ§Ã£o SSL/TLS.', 'joinotify' );
                     } else {
                         $response->msg = sprintf( __( 'Erro cURL: %s', 'joinotify' ), $error_message );
                     }
@@ -749,7 +743,7 @@ class License {
                             }
                         }
                     } else {
-                        $error = __( 'Dados inválidos.', 'joinotify' );
+                        $error = __( 'Dados invÃ¡lidos.', 'joinotify' );
                     }
                 } else {
                     $error = $response->msg;
@@ -880,7 +874,7 @@ class License {
         if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->license_title ) ) {
           return $object_query->license_title;
         } else {
-          return esc_html__( 'Não disponível', 'joinotify' );
+          return esc_html__( 'NÃ£o disponÃ­vel', 'joinotify' );
         }
     }
 
@@ -905,7 +899,7 @@ class License {
                     update_option( 'joinotify_license_status', 'invalid' );
                     delete_option('joinotify_license_response_object');
 
-                    return esc_html__( 'Licença expirada', 'joinotify' );
+                    return esc_html__( 'LicenÃ§a expirada', 'joinotify' );
                 }
 
                 // get wordpress date format setting

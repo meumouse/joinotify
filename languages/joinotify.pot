@@ -81,7 +81,7 @@ msgid ""
 "data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>"
 msgstr ""
 
-#: admin/src/Core/Init.php:203
+#: admin/src/Core/Init.php:223
 msgid ""
 "<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o "
 "suporte da sua hospedagem para realizar a atualização."
@@ -259,8 +259,8 @@ msgstr ""
 msgid "Adicionar mídia: *"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:79
-#: admin/src/Admin/Menu.php:80
+#: admin/src/Admin/Menu.php:69
+#: admin/src/Admin/Menu.php:70
 #: admin/src/Admin/Menu.php:181
 #: admin/src/Core/Workflow_Post_Type.php:49
 msgid "Adicionar novo fluxo"
@@ -333,7 +333,7 @@ msgstr ""
 msgid "Angola"
 msgstr ""
 
-#: admin/src/Core/Assets.php:173
+#: admin/src/Core/Assets.php:171
 msgid "Animais e Natureza"
 msgstr ""
 
@@ -400,7 +400,7 @@ msgstr ""
 msgid "Aruba"
 msgstr ""
 
-#: admin/src/Core/Assets.php:183
+#: admin/src/Core/Assets.php:181
 msgid "As alteraÃ§Ãµes nÃ£o serÃ£o salvas."
 msgstr ""
 
@@ -496,13 +496,13 @@ msgstr ""
 msgid "Ative sua licença para liberar os recursos premium."
 msgstr ""
 
-#: admin/src/Core/Assets.php:175
+#: admin/src/Core/Assets.php:173
 msgid "Atividades"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:403
 #: admin/src/Core/Ajax.php:807
-#: admin/src/Core/Assets.php:158
+#: admin/src/Core/Assets.php:156
 msgid "Ativo"
 msgstr ""
 
@@ -560,7 +560,7 @@ msgstr ""
 msgid "Bahrain"
 msgstr ""
 
-#: admin/src/Core/Assets.php:179
+#: admin/src/Core/Assets.php:177
 msgid "Bandeiras"
 msgstr ""
 
@@ -672,6 +672,7 @@ msgid "Canada"
 msgstr ""
 
 #: app/src/components/modals/ConfirmDialog.vue:31
+#: app/src/pages/settings/components/cards/PhoneActions.vue:282
 #: app/src/pages/settings/components/cards/PhoneActions.vue:350
 msgid "Cancel"
 msgstr ""
@@ -686,7 +687,6 @@ msgstr ""
 #: admin/src/Builder/Components.php:425
 #: admin/src/Builder/Components.php:1011
 #: admin/src/Views/Builder/Choose_Template.php:114
-#: app/src/pages/settings/components/cards/PhoneActions.vue:282
 msgid "Cancelar"
 msgstr ""
 
@@ -781,6 +781,8 @@ msgid ""
 msgstr ""
 
 #: app/src/components/modals/ModalDialog.vue:54
+#: app/src/components/toasts/ToastStack.vue:80
+#: app/src/components/toasts/ToastStack.vue:88
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:37
 msgid "Close"
 msgstr ""
@@ -842,7 +844,7 @@ msgstr ""
 msgid "Comece a automatizar seu site a partir de um modelo"
 msgstr ""
 
-#: admin/src/Core/Assets.php:174
+#: admin/src/Core/Assets.php:172
 msgid "Comidas e Bebidas"
 msgstr ""
 
@@ -882,8 +884,8 @@ msgstr ""
 msgid "Conexão estabelecida."
 msgstr ""
 
-#: admin/src/Admin/Menu.php:69
-#: admin/src/Admin/Menu.php:70
+#: admin/src/Admin/Menu.php:80
+#: admin/src/Admin/Menu.php:81
 #: admin/src/Builder/Components.php:406
 #: admin/src/Integrations/Integrations_Base.php:103
 #: admin/src/Integrations/Woocommerce.php:680
@@ -898,8 +900,8 @@ msgstr ""
 msgid "Configurações da integração com WooCommerce"
 msgstr ""
 
-#: admin/src/Core/Init.php:422
-#: admin/src/Core/Init.php:426
+#: admin/src/Core/Init.php:442
+#: admin/src/Core/Init.php:446
 msgid "Configurar"
 msgstr ""
 
@@ -1235,7 +1237,7 @@ msgstr ""
 msgid "Disconnected"
 msgstr ""
 
-#: admin/src/Core/Assets.php:170
+#: admin/src/Core/Assets.php:168
 msgid "Diversidade"
 msgstr ""
 
@@ -1243,7 +1245,7 @@ msgstr ""
 msgid "Djibouti"
 msgstr ""
 
-#: admin/src/Core/Init.php:448
+#: admin/src/Core/Init.php:468
 msgid "Documentação"
 msgstr ""
 
@@ -1373,10 +1375,6 @@ msgstr ""
 msgid "Envia uma notificação ao remetente quando a conexão não é estabelecida."
 msgstr ""
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:286
-msgid "Enviar"
-msgstr ""
-
 #: admin/src/Integrations/Elementor_Forms.php:127
 msgid "Enviar mensagem de texto"
 msgstr ""
@@ -1496,7 +1494,7 @@ msgstr ""
 msgid "Escolha o tipo de acionamento"
 msgstr ""
 
-#: admin/src/Core/Assets.php:160
+#: admin/src/Core/Assets.php:158
 msgid "Escolher mÃ­dia"
 msgstr ""
 
@@ -1797,8 +1795,6 @@ msgstr ""
 #: admin/src/Integrations/Integrations_Base.php:140
 #: admin/src/Integrations/Whatsapp.php:129
 #: admin/src/Integrations/Woocommerce.php:686
-#: app/src/components/toasts/ToastStack.vue:80
-#: app/src/components/toasts/ToastStack.vue:88
 msgid "Fechar"
 msgstr ""
 
@@ -2062,7 +2058,7 @@ msgstr ""
 msgid "Iceland"
 msgstr ""
 
-#: admin/src/Core/Assets.php:163
+#: admin/src/Core/Assets.php:161
 msgid "ID copiado!"
 msgstr ""
 
@@ -2127,6 +2123,12 @@ msgstr ""
 
 #: admin/src/Core/Workflows_Table.php:99
 msgid "Inativos"
+msgstr ""
+
+#: admin/src/Core/Init.php:172
+msgid ""
+"Increase customer satisfaction by automating WhatsApp messaging with "
+"Joinotify."
 msgstr ""
 
 #: app/src/pages/settings/components/SettingsHeader.vue:29
@@ -2264,6 +2266,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:46
 #: admin/src/Admin/Menu.php:47
+#: admin/src/Core/Init.php:171
 #: admin/src/Integrations/Elementor_Forms.php:56
 #: admin/src/Integrations/Elementor_Forms.php:72
 #: app/src/pages/license/LicensePage.vue:111
@@ -2626,7 +2629,7 @@ msgstr ""
 msgid "Mexico"
 msgstr ""
 
-#: admin/src/Core/Assets.php:162
+#: admin/src/Core/Assets.php:160
 msgid "Minha automaÃ§Ã£o #%s"
 msgstr ""
 
@@ -2714,7 +2717,7 @@ msgstr ""
 #: admin/src/Admin/Settings/Registry.php:533
 #: admin/src/Admin/Settings/Registry.php:538
 #: admin/src/Admin/Settings/Registry.php:557
-#: admin/src/Admin/Settings/Registry.php:643
+#: admin/src/Admin/Settings/Registry.php:635
 #: admin/src/Api/License.php:883
 #: admin/src/Core/Ajax.php:2437
 msgid "Não disponível"
@@ -2856,7 +2859,7 @@ msgstr ""
 msgid "Nenhum fluxo encontrado na lixeira."
 msgstr ""
 
-#: admin/src/Core/Assets.php:165
+#: admin/src/Core/Assets.php:163
 #: admin/src/Core/Workflow_Post_Type.php:56
 msgid "Nenhum fluxo encontrado."
 msgstr ""
@@ -3139,7 +3142,7 @@ msgstr ""
 msgid "O título do fluxo foi atualizado."
 msgstr ""
 
-#: admin/src/Core/Assets.php:177
+#: admin/src/Core/Assets.php:175
 msgid "Objetos"
 msgstr ""
 
@@ -3241,7 +3244,7 @@ msgstr ""
 msgid "OpenAI"
 msgstr ""
 
-#: admin/src/Core/Assets.php:182
+#: admin/src/Core/Assets.php:180
 msgid "Ops! NÃ£o hÃ¡ conexÃ£o com a internet"
 msgstr ""
 
@@ -3732,7 +3735,7 @@ msgstr ""
 msgid "Peru"
 msgstr ""
 
-#: admin/src/Core/Assets.php:167
+#: admin/src/Core/Assets.php:165
 msgid "Pesquisar"
 msgstr ""
 
@@ -3873,7 +3876,7 @@ msgstr ""
 msgid "Rascunho"
 msgstr ""
 
-#: admin/src/Core/Assets.php:171
+#: admin/src/Core/Assets.php:169
 msgid "Recentes"
 msgstr ""
 
@@ -3962,7 +3965,7 @@ msgid "Remove sender"
 msgstr ""
 
 #: admin/src/Admin/Components.php:51
-#: admin/src/Core/Assets.php:164
+#: admin/src/Core/Assets.php:162
 msgid "Remover"
 msgstr ""
 
@@ -4083,7 +4086,7 @@ msgstr ""
 msgid "Salvo com sucesso"
 msgstr ""
 
-#: admin/src/Core/Assets.php:178
+#: admin/src/Core/Assets.php:176
 msgid "SÃ­mbolos"
 msgstr ""
 
@@ -4207,6 +4210,10 @@ msgstr ""
 msgid "semanas"
 msgstr ""
 
+#: app/src/pages/settings/components/cards/PhoneActions.vue:286
+msgid "Send"
+msgstr ""
+
 #: app/src/pages/settings/components/cards/PhoneActions.vue:199
 #: app/src/pages/settings/components/cards/PhoneActions.vue:205
 msgid "Send test message"
@@ -4296,7 +4303,7 @@ msgstr ""
 msgid "Somalia"
 msgstr ""
 
-#: admin/src/Core/Assets.php:172
+#: admin/src/Core/Assets.php:170
 msgid "Sorrisos e Pessoas"
 msgstr ""
 
@@ -4482,7 +4489,7 @@ msgstr ""
 msgid "Tem certeza que deseja desativar sua licenÃ§a?"
 msgstr ""
 
-#: admin/src/Core/Assets.php:159
+#: admin/src/Core/Assets.php:157
 msgid "Tem certeza que deseja excluir esta aÃ§Ã£o?"
 msgstr ""
 
@@ -4667,11 +4674,11 @@ msgstr ""
 msgid "Uruguay"
 msgstr ""
 
-#: admin/src/Core/Assets.php:161
+#: admin/src/Core/Assets.php:159
 msgid "Usar esta mÃ­dia"
 msgstr ""
 
-#: admin/src/Core/Assets.php:168
+#: admin/src/Core/Assets.php:166
 msgid "Use a tecla TAB para inserir um emoji rapidamente"
 msgstr ""
 
@@ -4847,7 +4854,7 @@ msgstr ""
 msgid "Versão do WordPress"
 msgstr ""
 
-#: admin/src/Core/Assets.php:176
+#: admin/src/Core/Assets.php:174
 msgid "Viajens e Lugares"
 msgstr ""
 

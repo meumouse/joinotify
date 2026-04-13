@@ -1,15 +1,9 @@
 <?php
-/**
- * Menu source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Admin;
 
 use MeuMouse\Joinotify\Api\License;
-use MeuMouse\Joinotify\Core\Workflows_Table;
+use WP_Query;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -61,18 +55,6 @@ class Menu {
             array( $this, 'all_workflows_page' )
         );
 
-        add_action( "load-{$hook}", array( $this, 'workflows_screen_options' ) );
-
-        // The Vue settings shell must remain reachable even when the license is inactive.
-        add_submenu_page(
-            'joinotify-workflows',
-            esc_html__( 'Configurações', 'joinotify' ),
-            esc_html__( 'Configurações', 'joinotify' ),
-            'manage_options',
-            'joinotify-settings',
-            array( $this, 'render_settings_page' )
-        );
-
         if ( License::is_valid() ) {
             add_submenu_page(
                 'joinotify-workflows',
@@ -84,10 +66,20 @@ class Menu {
             );
         }
 
+        // The Vue settings shell must remain reachable even when the license is inactive.
         add_submenu_page(
             'joinotify-workflows',
-            esc_html__( 'Licença', 'joinotify' ),
-            esc_html__( 'Licença', 'joinotify' ),
+            esc_html__( 'Settings', 'joinotify' ),
+            esc_html__( 'Settings', 'joinotify' ),
+            'manage_options',
+            'joinotify-settings',
+            array( $this, 'render_settings_page' )
+        );
+
+        add_submenu_page(
+            'joinotify-workflows',
+            esc_html__( 'License', 'joinotify' ),
+            esc_html__( 'License', 'joinotify' ),
             'manage_options',
             'joinotify-license',
             array( $this, 'render_license_page' )
@@ -96,8 +88,8 @@ class Menu {
         if ( isset( $_GET['page'] ) && $_GET['page'] === 'joinotify-workflows-builder' ) {
             add_submenu_page(
                 null,
-                esc_html__( 'Editar fluxo', 'joinotify' ),
-                esc_html__( 'Editar fluxo', 'joinotify' ),
+                esc_html__( 'Edit workflow', 'joinotify' ),
+                esc_html__( 'Edit workflow', 'joinotify' ),
                 'manage_options',
                 'joinotify-workflows-builder',
                 array( $this, 'render_builder_page' )
@@ -114,7 +106,7 @@ class Menu {
      */
     public function workflows_screen_options() {
         add_screen_option( 'per_page', array(
-            'label'   => __( 'Fluxos por página', 'joinotify' ),
+            'label'   => __( 'Workflows per page', 'joinotify' ),
             'default' => 20,
             'option'  => 'joinotify_workflows_per_page',
         ) );
@@ -130,7 +122,7 @@ class Menu {
      */
     public function render_builder_page() {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html__( 'Você não tem permissão para acessar esta página.', 'joinotify' ) );
+            wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
         }
 
         do_action( 'Joinotify/Admin/Builder_Page' );
@@ -167,20 +159,79 @@ class Menu {
 
 
     /**
-     * Display table with all workflows.
+     * Display the Vue workflows screen.
      *
-     * @since 1.0.0
-     * @version 1.4.7
+     * @since 1.4.8
      * @return void
      */
     public function all_workflows_page() {
-        $workflows_table = new Workflows_Table();
-        $workflows_table->prepare_items();
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
+        }
 
-        echo '<div class="wrap"><h1 class="wp-heading-inline">' . __( 'Gerenciar fluxos', 'joinotify' ) . '</h1>';
-        echo '<a class="page-title-action" href="' . admin_url( 'admin.php?page=joinotify-workflows-builder' ) . '">' . __( 'Adicionar novo fluxo', 'joinotify' ) . '</a>';
-        echo '<form method="post">';
-        $workflows_table->display();
-        echo '</form></div>';
+        $bootstrap = $this->get_workflows_bootstrap();
+
+        include JOINOTIFY_SRC . 'Views/Workflows.php';
+    }
+
+
+    /**
+     * Build the initial data payload for the workflows Vue screen.
+     *
+     * @since 1.4.8
+     * @return array<string,mixed>
+     */
+    private function get_workflows_bootstrap() {
+        $status = isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'publish';
+        $status = in_array( $status, array( 'publish', 'draft', 'trash' ), true ) ? $status : 'publish';
+        $current_page = isset( $_GET['paged'] ) ? max( 1, absint( $_GET['paged'] ) ) : 1;
+        $per_page = 20;
+
+        $query = new WP_Query(
+            array(
+                'post_type'      => 'joinotify-workflow',
+                'post_status'    => $status,
+                'posts_per_page' => $per_page,
+                'paged'          => $current_page,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            )
+        );
+
+        $counts = wp_count_posts( 'joinotify-workflow' );
+        $workflows = array();
+
+        foreach ( $query->posts as $post ) {
+            $workflows[] = array(
+                'id'                   => (int) $post->ID,
+                'name'                 => get_the_title( $post ),
+                'created_at'           => get_post_time( 'Y-m-d H:i:s', false, $post ),
+                'status'               => $post->post_status,
+                'edit_url'             => admin_url( 'admin.php?page=joinotify-workflows-builder&id=' . (int) $post->ID ),
+                'delete_url'           => admin_url( 'admin.php?page=joinotify-workflows&action=delete&id=' . (int) $post->ID ),
+                'restore_url'          => admin_url( 'admin.php?page=joinotify-workflows&action=restore&id=' . (int) $post->ID ),
+                'delete_permanently_url' => admin_url( 'admin.php?page=joinotify-workflows&action=delete_permanently&id=' . (int) $post->ID ),
+            );
+        }
+
+        return array(
+            'page'         => 'workflows',
+            'title'        => __( 'Gerenciar fluxos', 'joinotify' ),
+            'create_url'   => admin_url( 'admin.php?page=joinotify-workflows-builder' ),
+            'active_status'=> $status,
+            'loading_delay' => 350,
+            'workflows'    => $workflows,
+            'counts'       => array(
+                'publish' => isset( $counts->publish ) ? (int) $counts->publish : 0,
+                'draft'   => isset( $counts->draft ) ? (int) $counts->draft : 0,
+                'trash'   => isset( $counts->trash ) ? (int) $counts->trash : 0,
+            ),
+            'pagination'   => array(
+                'current_page' => $current_page,
+                'per_page'     => $per_page,
+                'total_items'  => (int) $query->found_posts,
+                'total_pages'  => (int) max( 1, ceil( $query->found_posts / $per_page ) ),
+            ),
+        );
     }
 }

@@ -23,11 +23,11 @@ defined('ABSPATH') || exit; ?>
     </div>
 
     <div class="joinotify-navbar-actions d-flex align-items-center">
-        <button type="button" id="joinotify_builder_run_test" class="btn btn-sm btn-outline-secondary" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Rodar um teste da automação. Obs.: Atrasos e condições não são considerados.', 'joinotify' ) ?>"><?php esc_html_e( 'Rodar teste', 'joinotify' ) ?></button>
+        <button type="button" id="joinotify_builder_run_test" class="btn btn-sm btn-outline-secondary" disabled data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Rodar um teste da automação. Obs.: Atrasos e condições não são considerados.', 'joinotify' ) ?>"><?php esc_html_e( 'Run test', 'joinotify' ) ?></button>
 
         <div class="form-check form-switch me-4 d-flex justify-content-center mb-0 w-fit">
-            <span id="joinotify_workflow_status_title" class="fs-sm fw-semibold me-2"><?php esc_html_e( 'Inativo', 'joinotify' ) ?></span>
-            <input type="checkbox" class="toggle-switch status" id="joinotify_workflow_status_switch" name="joinotify_workflow_status_switch" disabled value="yes" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Status do fluxo', 'joinotify' ) ?>"/>
+            <span id="joinotify_workflow_status_title" class="fs-sm fw-semibold me-2"><?php esc_html_e( 'Inactive', 'joinotify' ) ?></span>
+            <input type="checkbox" class="toggle-switch status" id="joinotify_workflow_status_switch" name="joinotify_workflow_status_switch" disabled value="yes" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Workflow status', 'joinotify' ) ?>"/>
         </div>
 
         <div class="btn-group me-3">
@@ -48,7 +48,7 @@ defined('ABSPATH') || exit; ?>
                 <li>
                     <a id="joinotify_export_workflow" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0" href="#">
                         <svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 16h2V7h3l-4-5-4 5h3z"></path><path d="M5 22h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2z"></path></svg>
-                        <?php esc_html_e( 'Exportar fluxo', 'joinotify' ) ?>
+                        <?php esc_html_e( 'Export workflow', 'joinotify' ) ?>
                     </a>
                 </li>
 
@@ -57,7 +57,7 @@ defined('ABSPATH') || exit; ?>
                 <li>
                     <a class="dropdown-item px-3 py-2 d-flex align-items-center" href="<?php echo esc_url( admin_url('admin.php?page=joinotify-workflows-builder') ) ?>">
                         <svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 2H8c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM8 16V4h12l.002 12H8z"></path><path d="M4 8H2v12c0 1.103.897 2 2 2h12v-2H4V8zm11-2h-2v3h-3v2h3v3h2v-3h3V9h-3z"></path></svg>
-                        <?php esc_html_e( 'Criar um novo fluxo', 'joinotify' ) ?>
+                        <?php esc_html_e( 'Create a new workflow', 'joinotify' ) ?>
                     </a>
                 </li>
 
@@ -66,13 +66,13 @@ defined('ABSPATH') || exit; ?>
                 <li>
                     <a class="dropdown-item px-3 py-2 d-flex align-items-center" href="<?php echo esc_url( admin_url('admin.php?page=joinotify-workflows') ) ?>">
                         <svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m2 12 5 4v-3h9v-2H7V8z"></path><path d="M13.001 2.999a8.938 8.938 0 0 0-6.364 2.637L8.051 7.05c1.322-1.322 3.08-2.051 4.95-2.051s3.628.729 4.95 2.051 2.051 3.08 2.051 4.95-.729 3.628-2.051 4.95-3.08 2.051-4.95 2.051-3.628-.729-4.95-2.051l-1.414 1.414c1.699 1.7 3.959 2.637 6.364 2.637s4.665-.937 6.364-2.637c1.7-1.699 2.637-3.959 2.637-6.364s-.937-4.665-2.637-6.364a8.938 8.938 0 0 0-6.364-2.637z"></path></svg>
-                        <?php esc_html_e( 'Voltar para o painel', 'joinotify' ) ?>
+                        <?php esc_html_e( 'Back to dashboard', 'joinotify' ) ?>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <a class="me-5 icon-translucent help-center-btn" href="<?php esc_attr_e( JOINOTIFY_DOCS_URL ) ?>" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Central de ajuda', 'joinotify' ) ?>">
+        <a class="me-5 icon-translucent help-center-btn" href="<?php esc_attr_e( JOINOTIFY_DOCS_URL ) ?>" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php esc_attr_e( 'Help center', 'joinotify' ) ?>">
             <svg class="icon icon-xg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 6a3.939 3.939 0 0 0-3.934 3.934h2C10.066 8.867 10.934 8 12 8s1.934.867 1.934 1.934c0 .598-.481 1.032-1.216 1.626a9.208 9.208 0 0 0-.691.599c-.998.997-1.027 2.056-1.027 2.174V15h2l-.001-.633c.001-.016.033-.386.441-.793.15-.15.339-.3.535-.458.779-.631 1.958-1.584 1.958-3.182A3.937 3.937 0 0 0 12 6zm-1 10h2v2h-2z"></path><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path></svg>
         </a>
     </div>

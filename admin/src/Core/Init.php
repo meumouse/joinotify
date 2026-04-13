@@ -236,11 +236,11 @@ class Init {
 	public function instance_init_classes() {
 		$classes = apply_filters( 'Joinotify/Init/Init_Classes', array(
 			'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
-			'MeuMouse\\Joinotify\\Core\\Assets',
 			'MeuMouse\\Joinotify\\Core\\Ajax',
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
 			'MeuMouse\\Joinotify\\Admin\\Menu',
-			'MeuMouse\\Joinotify\\Admin\\Settings\\Assets',
+			'MeuMouse\\Joinotify\\Assets\\Core_Assets',
+			'MeuMouse\\Joinotify\\Assets\\Settings_Assets',
 			'MeuMouse\\Joinotify\\Api\\Controller',
 			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Core\\Notification_Queue',

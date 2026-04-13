@@ -11,6 +11,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const TEXT_DOMAIN = "joinotify";
+const SCRIPT_HANDLES = [
+  "joinotify",
+  "joinotify-settings-app",
+  "joinotify-license-app",
+  "joinotify-builder-app",
+];
 const POT_FILE = path.join(__dirname, `${TEXT_DOMAIN}.pot`);
 const BATCH_SIZE = 50;
 const DELAY_BETWEEN_BATCHES = 1000;
@@ -204,7 +210,7 @@ function writeMoFile(poData, outputPath) {
   fs.writeFileSync(outputPath, gettextParser.mo.compile(poData));
 }
 
-function generateJsonFile(poData, jsonPath, langCode) {
+function generateJsonFile(poData, jsonPath, langCode, domain = TEXT_DOMAIN) {
   const wpFormat = {
     domain: TEXT_DOMAIN,
     locale_data: {
@@ -231,15 +237,17 @@ function generateJsonFile(poData, jsonPath, langCode) {
   fs.writeFileSync(jsonPath, JSON.stringify(wpFormat, null, 2));
 }
 
-function writeTranslationArtifacts(poData, poPath, moPath, jsonPath, langCode) {
+function writeTranslationArtifacts(poData, poPath, moPath, jsonPaths, langCode) {
   writePoFile(poData, poPath);
   console.log(`   Written: ${path.basename(poPath)}`);
 
   writeMoFile(poData, moPath);
   console.log(`   Written: ${path.basename(moPath)}`);
 
-  generateJsonFile(poData, jsonPath, langCode);
-  console.log(`   Written: ${path.basename(jsonPath)}`);
+  for (const { path: jsonPath, domain } of jsonPaths) {
+    generateJsonFile(poData, jsonPath, langCode, domain);
+    console.log(`   Written: ${path.basename(jsonPath)}`);
+  }
 }
 
 async function main() {
@@ -263,10 +271,10 @@ async function main() {
 
     const poPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.po`);
     const moPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.mo`);
-    const jsonPath = path.join(
-      __dirname,
-      `${TEXT_DOMAIN}-${langCode}-${TEXT_DOMAIN}.json`
-    );
+    const jsonPaths = SCRIPT_HANDLES.map((domain) => ({
+      domain,
+      path: path.join(__dirname, `${TEXT_DOMAIN}-${langCode}-${domain}.json`),
+    }));
 
     let existingPoData = null;
 
@@ -303,7 +311,7 @@ async function main() {
       poData = createPoFile(potData, existingPoData, newTranslations, langCode);
     }
 
-    writeTranslationArtifacts(poData, poPath, moPath, jsonPath, langCode);
+    writeTranslationArtifacts(poData, poPath, moPath, jsonPaths, langCode);
   }
 
   console.log("\nTranslation complete.");

@@ -1,10 +1,4 @@
 <?php
-/**
- * Phone_Test_Message source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -50,7 +44,7 @@ class Phone_Test_Message extends Abstract_Route {
         if ( 201 === $result ) {
             return rest_ensure_response( array(
                 'status' => 'success',
-                'message' => esc_html__( 'A mensagem teste foi enviada com sucesso!', 'joinotify' ),
+                'message' => esc_html__( 'The test message was sent successfully!', 'joinotify' ),
             ) );
         }
 
@@ -58,7 +52,7 @@ class Phone_Test_Message extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status' => 'error',
-            'message' => esc_html__( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
+            'message' => esc_html__( 'Could not send the test message.', 'joinotify' ),
         ) );
     }
 }

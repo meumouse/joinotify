@@ -158,7 +158,7 @@ class Controller {
         
         return new \WP_Error(
             'rest_forbidden',
-            __('Chave de API inválida ou ausente.', 'joinotify'),
+            __('Invalid or missing API key.', 'joinotify'),
             array('status' => 403)
         );
     }
@@ -260,12 +260,12 @@ class Controller {
         if ( 201 === $response_code ) {
             return new WP_REST_Response( array(
                 'status' => 'success',
-                'message' => __( 'Mensagem de texto enviada com sucesso.', 'joinotify' ),
+                'message' => __( 'Text message sent successfully.', 'joinotify' ),
             ), 200 );
         } else {
             return new WP_REST_Response( array(
                 'status' => 'error',
-                'message' => __( 'Falha ao enviar mensagem de texto.', 'joinotify' ),
+                'message' => __( 'Failed to send text message.', 'joinotify' ),
             ), 500 );
         }
     }
@@ -292,12 +292,12 @@ class Controller {
         if ( 201 === $response_code ) {
             return new \WP_REST_Response( array(
                 'status' => 'success',
-                'message' => __( 'Mensagem de mídia enviada com sucesso.', 'joinotify' ),
+                'message' => __( 'Media message sent successfully.', 'joinotify' ),
             ), 200 );
         } else {
             return new \WP_REST_Response( array(
                 'status' => 'error',
-                'message' => __( 'Falha ao enviar mensagem de mídia.', 'joinotify' ),
+                'message' => __( 'Failed to send media message.', 'joinotify' ),
             ), 500 );
         }
     }

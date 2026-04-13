@@ -1,0 +1,3435 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "12345": [
+        "12345"
+      ],
+      "": {
+        "domain": "joinotify",
+        "lang": "pt_BR",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "(max-height: 600px)": [
+        "(altura máxima: 600px)"
+      ],
+      "(max-width: 500px)": [
+        "(largura máxima: 500px)"
+      ],
+      "(pointer: coarse)": [
+        "(ponteiro: grosso)"
+      ],
+      "{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})": [
+        "{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})"
+      ],
+      "%s %s: %s": [
+        "%s %s: %s"
+      ],
+      "%s minutos": [
+        "%s minutos"
+      ],
+      "%s/checkout/pay/order/12345": [
+        "%s/finalizar compra/pagar/pedido/12345"
+      ],
+      "%s%%": [
+        "%s%%"
+      ],
+      "+55 11 91234-5678": [
+        "+55 11 91234-5678"
+      ],
+      "+55 41 91234-5678": [
+        "+55 41 91234-5678"
+      ],
+      "<span class=\"builder-placeholder\">%s</span> %s: %s": [
+        "<span class=\"builder-placeholder\">%s</span> %s: %s"
+      ],
+      "<span class=\"builder-placeholder\">%s</span> é vazio": [
+        "<span class=\"builder-placeholder\">%s</span> está vazio"
+      ],
+      "<span class=\"builder-placeholder\">%s</span> não é vazio": [
+        "<span class=\"builder-placeholder\">%s</span> não está vazio"
+      ],
+      "<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros no site.": [
+        "<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros no site."
+      ],
+      "<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados, ou riscados com variáveis do WhatsApp. Veja mais detalhes na <a href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" class=\"alert-link\" target=\"_blank\">documentação do Joinotify</a>. <a id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>": [
+        "<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados ou riscados com variáveis do WhatsApp. Veja mais detalhes na <a href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" class=\"alert-link\" target=\"_blank\">documentação do Joinotify</a>. <a id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>"
+      ],
+      "<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.": [
+        "<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Entre em contato com o suporte da sua hospedagem para realizar a atualização."
+      ],
+      "<style>%s</style>": [
+        "<style>%s</style>"
+      ],
+      "$object->item": [
+        "$objeto->item"
+      ],
+      "1x - Camiseta de algodão masculina (Produto exemplo)": [
+        "1x - Camiseta de algodão masculina (Produto exemplo)"
+      ],
+      "1x - Óculos de sol com proteção UV (Produto exemplo)": [
+        "1x - Óculos de sol com proteção UV (Produto exemplo)"
+      ],
+      "30 minutos": [
+        "30 minutos"
+      ],
+      "41912345678": [
+        "41912345678"
+      ],
+      "5541987111527": [
+        "5541987111527"
+      ],
+      "A ação foi atualizada com sucesso!": [
+        "A ação foi atualizada com sucesso!"
+      ],
+      "A ação foi removida do fluxo com sucesso!": [
+        "A ação foi removida do fluxo com sucesso!"
+      ],
+      "A cada 5 minutos": [
+        "A cada 5 minutos"
+      ],
+      "A cada 6 horas": [
+        "A cada 6 horas"
+      ],
+      "A extensão cURL está faltando.": [
+        "A extensão cURL está faltando."
+      ],
+      "A função WP-CRON está desabilitada neste site. Ative-o para usar a ação Tempo de espera.": [
+        "A função WP-CRON está desabilitada neste site. Ative-o para usar a ação Tempo de espera."
+      ],
+      "A integração ou acionamento deste modelo não está disponível no momento.": [
+        "A integração ou acionamento deste modelo não está disponível no momento."
+      ],
+      "A licença foi desativada com sucesso!": [
+        "A licença foi desativada com sucesso!"
+      ],
+      "A licença informada não é permitida para este produto.": [
+        "A licença informada não é permitida para este produto."
+      ],
+      "A mensagem teste foi enviada com sucesso!": [
+        "A mensagem teste foi enviada com sucesso!"
+      ],
+      "A versão do plugin <strong>Joinotify</strong> é a mais recente.": [
+        "A versão do plugin <strong>Joinotify</strong> é a mais recente."
+      ],
+      "Abandono do carrinho": [
+        "Abandono do carrinho"
+      ],
+      "Abandono do pedido": [
+        "Abandono do pedido"
+      ],
+      "Ação adicionada com sucesso": [
+        "Ação lírica com sucesso"
+      ],
+      "Ação adicionada no fluxo com sucesso!": [
+        "Ação baixada no fluxo com sucesso!"
+      ],
+      "Ação atualizada": [
+        "Ação atualizada"
+      ],
+      "Ação excluída com sucesso": [
+        "Ação com sucesso"
+      ],
+      "Access validation and premium feature unlocking": [
+        "Validação de acesso e desbloqueio de recursos premium"
+      ],
+      "Account status": [
+        "Status da conta"
+      ],
+      "Acionamento atualizado": [
+        "A"
+      ],
+      "Acionamento e fluxo atualizados com sucesso!": [
+        "Acionamento e fluxos atualizados com sucesso!"
+      ],
+      "Acionamento e fluxo criados com sucesso!": [
+        "Acionamento e fluxo criado com sucesso!"
+      ],
+      "Acionamento:": [
+        "Aave:"
+      ],
+      "Ações irreversíveis e operação de limpeza da configuração.": [
+        "Ações irreversíveis e operação de limpeza da configuração."
+      ],
+      "Ações para adicionar novo remetente e disparar uma mensagem de teste.": [
+        "Ações para adicionar novo remetente e disparar uma mensagem de teste."
+      ],
+      "Activate license": [
+        "Ativar licença"
+      ],
+      "Activate the license to unlock Joinotify premium features.": [
+        "Ative a licença para desbloquear os recursos premium do Joinotify."
+      ],
+      "Activate your license to unlock premium features.": [
+        "Ative sua licença para desbloquear recursos premium."
+      ],
+      "Add new phone": [
+        "Adicionar novo telefone"
+      ],
+      "Adiciona a ação de cupom aos fluxos do WooCommerce.": [
+        "Adicionada a ação de cupom aos fluxos do WooCommerce."
+      ],
+      "Adicionar ação": [
+        "A."
+      ],
+      "Adicionar mídia": [
+        "mídia"
+      ],
+      "Adicionar mídia: *": [
+        "mídia: *"
+      ],
+      "Adicionar novo fluxo": [
+        "novo fluxo"
+      ],
+      "Adicionar uma ação": [
+        "ÚMA"
+      ],
+      "Adicione seu texto à ser enviado ao usuário do WhatsApp. Adicione variáveis de texto para substituir informações. Use {{ field_id=[FIELD_ID] }} substituindo FIELD_ID pelo ID do campo correspondente para recuperar a informação de um campo.": [
+        "Adicione seu texto a ser enviado ao usuário do WhatsApp. Altere variáveis de texto para substituir informações. Use {{ field_id=[FIELD_ID] }} atualizando FIELD_ID pelo ID do campo correspondente para recuperar a informação de um campo."
+      ],
+      "Adicione uma função, conjunto de ações e ou filtros em PHP.": [
+        "Adicione uma função, conjunto de ações e filtros em PHP."
+      ],
+      "Adicione uma legenda para acompanhar a mídia enviada. Suporta variáveis de texto (placeholders).": [
+        "Adicione uma legenda para acompanhar a mídia enviada. Suporta variáveis de texto (espaços reservados)."
+      ],
+      "Adjust the routes and API key used by the proxy.": [
+        "Ajuste as rotas e a chave de API usadas pelo proxy."
+      ],
+      "Afghanistan": [
+        "Afeganistão"
+      ],
+      "Agora todos os recursos estão ativos!": [
+        "Agora todos os recursos estão ativos!"
+      ],
+      "Ajustes operacionais do plugin e sinalizadores de desenvolvimento.": [
+        "Ajustes operacionais do plugin e sinalizadores de desenvolvimento."
+      ],
+      "Åland Islands": [
+        "Ilhas Åland"
+      ],
+      "Albania": [
+        "Albânia"
+      ],
+      "Algeria": [
+        "Argélia"
+      ],
+      "All options will return to the plugin defaults.": [
+        "Todas as opções retornarão aos valores padrão do plugin."
+      ],
+      "allow_url_fopen": [
+        "permitir_url_fopen"
+      ],
+      "Andorra": [
+        "Andorra"
+      ],
+      "Angola": [
+        "Angola"
+      ],
+      "Animais e Natureza": [
+        "Mosto e"
+      ],
+      "ano": [
+        "ano"
+      ],
+      "Ano (s)": [
+        "Ano (s)"
+      ],
+      "anos": [
+        "anos"
+      ],
+      "API key": [
+        "Chave de API"
+      ],
+      "Are you sure you want to clear the debug logs?": [
+        "Tem certeza de que deseja limpar os registros de depuração?"
+      ],
+      "Are you sure you want to deactivate this license? This will disable premium features.": [
+        "Tem certeza de que deseja desativar esta licença? Isso desativará os recursos premium."
+      ],
+      "Are you sure you want to remove this sender?": [
+        "Tem certeza de que deseja remover este remetente?"
+      ],
+      "Argentina": [
+        "Argentina"
+      ],
+      "Armenia": [
+        "Armênia"
+      ],
+      "Arquivo enviado com sucesso!": [
+        "Arquivo enviado com sucesso!"
+      ],
+      "Arquivo enviado com sucesso.": [
+        "Arquivo enviado com sucesso."
+      ],
+      "Arquivo inválido": [
+        "Arquivo"
+      ],
+      "Arquivo inválido. O arquivo deve ser extensão .key": [
+        "Arquivo inválido. O arquivo deve ter extensão .key"
+      ],
+      "Arraste e solte o arquivo .json aqui": [
+        "Arraste e solte o arquivo .json aqui"
+      ],
+      "Aruba": [
+        "Aruba"
+      ],
+      "As alteraÃ§Ãµes nÃ£o serÃ£o salvas.": [
+        "As alterações não serão salvas."
+      ],
+      "As configurações foram atualizadas!": [
+        "As configurações foram atualizadas!"
+      ],
+      "As configurações foram salvas.": [
+        "As configurações foram salvas."
+      ],
+      "As informações da sua licença foram atualizadas com sucesso.": [
+        "As informações da sua licença foram atualizadas com sucesso."
+      ],
+      "As opções foram redefinidas": [
+        "As opções foram redefinidas"
+      ],
+      "As opções foram redefinidas com sucesso!": [
+        "As opções foram redefinidas com sucesso!"
+      ],
+      "Assinatura é ativada": [
+        "Assinatura é church"
+      ],
+      "Assinatura tem status alterado para cancelado": [
+        "Assinatura tem status alterado para cancelamento"
+      ],
+      "Assinatura: %s": [
+        "Assinatura: %s"
+      ],
+      "Assinatura: Clube M - %s": [
+        "Assinatura: Clube M - %s"
+      ],
+      "Ativa": [
+        "Ativa"
+      ],
+      "Ativar ação Cupom de desconto": [
+        "Ativar ação Cupom de desconto"
+      ],
+      "Ativar plugin": [
+        "Plugin Ativar"
+      ],
+      "Ativar Proxy API": [
+        "API Ativar Proxy"
+      ],
+      "Ative e configure os endpoints usados para processar requisições externas de API.": [
+        "Ative e configure os endpoints usados para processar requisições externas de API."
+      ],
+      "Ative essa opção para adicionar a ação Cupom de desconto em fluxos do WooCommerce.": [
+        "Ative essa opção para adicionar a ação Cupom de desconto em fluxos do WooCommerce."
+      ],
+      "Ative essa opção para que ações já previamente processadas sejam ignoradas quando o mesmo acionamento ocorrer. Esta opções é útil quando ações agendadas estão sendo disparadas novamente.": [
+        "Ative essa opção para que ações já processadas anteriormente sejam ignoradas quando o mesmo acionamento ocorrer. Estas opções são úteis quando as ações agendadas estão sendo disparadas novamente."
+      ],
+      "Ative integrações, controle dependências e ajuste opções avançadas de cada serviço.": [
+        "Integrações ativas, controle de dependências e opções de ajuste avançadas de cada serviço."
+      ],
+      "Ative para registrar informações extras de erros e processos.": [
+        "Ativo para registrador informações extras de erros e processos."
+      ],
+      "Ative sua licença": [
+        "Ative sua vez"
+      ],
+      "Ative sua licença para liberar os recursos premium.": [
+        "Ative sua licença para liberar os recursos premium."
+      ],
+      "Atividades": [
+        "Atividades"
+      ],
+      "Ativo": [
+        "Ativo"
+      ],
+      "Ativos": [
+        "Ativos"
+      ],
+      "Atualizações automáticas": [
+        "Atualizações automáticas"
+      ],
+      "Áudio": [
+        "Áudio"
+      ],
+      "Australia": [
+        "Austrália"
+      ],
+      "Austria": [
+        "Áustria"
+      ],
+      "Automatic updates and license synchronization": [
+        "Atualizações automáticas e sincronização de licenças"
+      ],
+      "Automatize o envio de mensagens ao receber um formulário WPForms com telefone. Mantenha seus clientes informados em tempo real.": [
+        "Automatize o envio de mensagens ao receber um formulário WPForms com telefone. Mantenha seus clientes informados em tempo real."
+      ],
+      "Automatize o envio de mensagens em acionamentos de eventos no WordPress.": [
+        "Automatize o envio de mensagens em ações de eventos no WordPress."
+      ],
+      "Autor do post: *": [
+        "Autor da postagem: *"
+      ],
+      "Avisar quando o WhatsApp desconectar": [
+        "Avisar quando o WhatsApp desconectar"
+      ],
+      "Avisos de atualização": [
+        "Avisos de atualização"
+      ],
+      "Azerbaijan": [
+        "Azerbaijão"
+      ],
+      "Bahrain": [
+        "Bahrein"
+      ],
+      "Bandeiras": [
+        "Bandeiras"
+      ],
+      "Bangladesh": [
+        "Bangladesh"
+      ],
+      "Belarus": [
+        "Bielorrússia"
+      ],
+      "Belgium": [
+        "Bélgica"
+      ],
+      "Belize": [
+        "Belize"
+      ],
+      "Benin": [
+        "Benim"
+      ],
+      "Bhutan": [
+        "Butão"
+      ],
+      "Bolivia": [
+        "Bolívia"
+      ],
+      "Bosnia and Herzegovina": [
+        "Bósnia e Herzegovina"
+      ],
+      "Botswana": [
+        "Botsuana"
+      ],
+      "Brasil": [
+        "Brasil"
+      ],
+      "British Indian Ocean Territory": [
+        "Território Britânico do Oceano Índico"
+      ],
+      "Brunei": [
+        "Brunei"
+      ],
+      "Bulgaria": [
+        "Bulgária"
+      ],
+      "Burkina Faso": [
+        "Burkina Faso"
+      ],
+      "Burundi": [
+        "Burundi"
+      ],
+      "Buy license": [
+        "Comprar licença"
+      ],
+      "Cadastrar remetente": [
+        "Cadastro"
+      ],
+      "Cadastrar um remetente": [
+        "Cadastrar um"
+      ],
+      "Cambodia": [
+        "Camboja"
+      ],
+      "Cameroon": [
+        "Camarões"
+      ],
+      "Caminho da rota usada para enviar mensagens com mídia.": [
+        "Caminho da rota usada para enviar mensagens com mídia."
+      ],
+      "Caminho da rota usada para enviar mensagens de texto.": [
+        "Caminho da rota usada para enviar mensagens de texto."
+      ],
+      "Campo com ID <span class=\"builder-placeholder\">%s</span> %s: <span class=\"builder-placeholder\">%s</span>": [
+        "Campo com ID <span class=\"builder-placeholder\">%s</span> %s: <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Campo com ID <span class=\"builder-placeholder\">%s</span> é vazio": [
+        "Campo com ID <span class=\"builder-placeholder\">%s</span> está vazio"
+      ],
+      "Campo com ID <span class=\"builder-placeholder\">%s</span> não é vazio": [
+        "Campo com ID <span class=\"builder-placeholder\">%s</span> não é vazio"
+      ],
+      "Canada": [
+        "Canadá"
+      ],
+      "Cancel": [
+        "Cancelar"
+      ],
+      "Cancelada": [
+        "Cancelada"
+      ],
+      "Cancelar": [
+        "Cancelar"
+      ],
+      "Candidate phone": [
+        "Telefone do candidato"
+      ],
+      "Cape Verde": [
+        "Cabo Verde"
+      ],
+      "Carrinho abandonado é recuperado": [
+        "Carrinho abandonado é recuperado"
+      ],
+      "Carrinho perdido": [
+        "Carrinho"
+      ],
+      "Carrinho recuperado": [
+        "Carrinho recuperado"
+      ],
+      "Cartão de crédito": [
+        "Cartão de crédito"
+      ],
+      "Categoria 1, Categoria 2": [
+        "Categoria 1, Categoria 2"
+      ],
+      "Central African Republic": [
+        "República Centro-Africana"
+      ],
+      "Central de ajuda": [
+        "Central de ajuda"
+      ],
+      "Chad": [
+        "Chade"
+      ],
+      "Chave da API": [
+        "Chave da API"
+      ],
+      "Chave de API inválida ou ausente.": [
+        "Chave de API inválida ou ausente."
+      ],
+      "Chave do meta dado": [
+        "Chave do meta dado"
+      ],
+      "Chave usada para autenticar chamadas ao Proxy API.": [
+        "Chave usada para autenticar chamadas ao Proxy API."
+      ],
+      "Chave: *": [
+        "Chave: *"
+      ],
+      "Chile": [
+        "Chile"
+      ],
+      "China": [
+        "China"
+      ],
+      "Choose one of the validated senders available in your account.": [
+        "Escolha um dos remetentes validados disponíveis em sua conta."
+      ],
+      "Choose the sender and review the message before sending a test WhatsApp message.": [
+        "Escolha o remetente e revise a mensagem antes de enviar uma mensagem de teste pelo WhatsApp."
+      ],
+      "Clear logs": [
+        "Limpar registros"
+      ],
+      "Clique no botão do modelo de sua preferência para iniciar a criação do fluxo.": [
+        "Clique no botão do modelo de sua preferência para iniciar a criação do fluxo."
+      ],
+      "Close": [
+        "Fechar"
+      ],
+      "Close dialog": [
+        "Fechar caixa de diálogo"
+      ],
+      "Code digit %s": [
+        "Dígito de código %s"
+      ],
+      "Code sent successfully.": [
+        "Código enviado com sucesso."
+      ],
+      "Código do cupom: *": [
+        "Código do cupom: *"
+      ],
+      "Código enviado com sucesso.": [
+        "Código enviado com sucesso."
+      ],
+      "Código OTP inválido ou expirado.": [
+        "Código OTP inválido ou expirado."
+      ],
+      "Código padrão do país": [
+        "Código do país"
+      ],
+      "Coleta de lead via checkout": [
+        "Coleta de chumbo via caixa"
+      ],
+      "Coleta de lead via modal": [
+        "Coleta de lead via modal"
+      ],
+      "Colombia": [
+        "Colômbia"
+      ],
+      "Começa com": [
+        "Começar com"
+      ],
+      "Começar com um modelo": [
+        "Começar com um modelo"
+      ],
+      "Começar do zero": [
+        "Começar do zero"
+      ],
+      "Comece a automatizar seu site a partir de um modelo": [
+        "Comece a automatizar seu site a partir de um modelo"
+      ],
+      "Comidas e Bebidas": [
+        "Comidas e bebidas"
+      ],
+      "Coming soon": [
+        "Em breve"
+      ],
+      "Como você gostaria de criar seu novo fluxo?": [
+        "Como você gostaria de criar seu novo fluxo?"
+      ],
+      "Comoros": [
+        "Comores"
+      ],
+      "Concluído": [
+        "ConUG"
+      ],
+      "Condição": [
+        "Condição"
+      ],
+      "Condição: *": [
+        "Condição: *"
+      ],
+      "Condição: %s": [
+        "Condição: %s"
+      ],
+      "Conectado": [
+        "Conectado"
+      ],
+      "Conexão estabelecida.": [
+        "pós-baixa."
+      ],
+      "Configurações": [
+        "configurações"
+      ],
+      "Configurações da integração": [
+        "Configurações de integração"
+      ],
+      "Configurações da integração com WooCommerce": [
+        "Configurações de integração com WooCommerce"
+      ],
+      "Configurar": [
+        "Configurar"
+      ],
+      "Configurar ação": [
+        "Configurar ação"
+      ],
+      "Configurar acionamento": [
+        "acionamento"
+      ],
+      "Configurar condição": [
+        "condição"
+      ],
+      "Configure": [
+        "Configurar"
+      ],
+      "Configure Proxy API": [
+        "Configurar API de proxy"
+      ],
+      "Confirm": [
+        "Confirmar"
+      ],
+      "Confirmation": [
+        "Confirmação"
+      ],
+      "Connected": [
+        "Conectado"
+      ],
+      "Connection updated.": [
+        "Conexão atualizada."
+      ],
+      "Contém": [
+        "contém"
+      ],
+      "Conteúdo de exemplo do post": [
+        "Conteúdo de destaque do post"
+      ],
+      "Continuar": [
+        "Continuar"
+      ],
+      "Cook Islands": [
+        "Ilhas Cook"
+      ],
+      "Copy code": [
+        "Copiar código"
+      ],
+      "Costa Rica": [
+        "Costa Rica"
+      ],
+      "Could not activate the license.": [
+        "Não foi possível ativar a licença."
+      ],
+      "Could not clear the logs.": [
+        "Não foi possível limpar os registros."
+      ],
+      "Could not deactivate the license.": [
+        "Não foi possível desativar a licença."
+      ],
+      "Could not open the logs.": [
+        "Não foi possível abrir os registros."
+      ],
+      "Could not remove.": [
+        "Não foi possível remover."
+      ],
+      "Could not reset.": [
+        "Não foi possível reiniciar."
+      ],
+      "Could not save.": [
+        "Não foi possível salvar."
+      ],
+      "Could not sync the license.": [
+        "Não foi possível sincronizar a licença."
+      ],
+      "Could not update the connection.": [
+        "Não foi possível atualizar a conexão."
+      ],
+      "Criado": [
+        "Criado"
+      ],
+      "Criar com um modelo": [
+        "Criar com um modelo"
+      ],
+      "Criar do zero": [
+        "Criar do zero"
+      ],
+      "Criar um novo fluxo": [
+        "Criar um novo fluxo"
+      ],
+      "Crie mensagens dinâmicas para suas automações de uma forma simples e direta usando ChatGPT.": [
+        "Crie mensagens dinâmicas para suas automatizações de uma forma simples e direta usando ChatGPT."
+      ],
+      "Crie seu fluxo de automação a partir de um modelo de sua escolha": [
+        "Crie seu fluxo de automação a partir de um modelo de sua escolha"
+      ],
+      "Crie seu fluxo de automação do zero": [
+        "Crie seu fluxo de automação do zero"
+      ],
+      "Crie seu fluxo de automação importando a partir de um arquivo": [
+        "Crie seu fluxo de automação importando a partir de um arquivo"
+      ],
+      "Croatia": [
+        "Croácia"
+      ],
+      "Cuba": [
+        "Cuba"
+      ],
+      "Cupom de desconto": [
+        "Cupom de desconto"
+      ],
+      "Cupom de desconto: <span class=\"builder-placeholder\">%s</span>": [
+        "Cupom de desconto: <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Cupom expira: %s": [
+        "Cupom expira em: %s"
+      ],
+      "Cupom não expira": [
+        "Cupom não expira"
+      ],
+      "Cupom para recuperação de compras": [
+        "Cupom para recuperação de compras"
+      ],
+      "CUPOM_": [
+        "COPOM_"
+      ],
+      "CUPOM_EXCLUSIVO": [
+        "CUPOM_EXCLUSIVO"
+      ],
+      "CUPOM10, FRETEGRATIS": [
+        "CUPOM10, FRETEGRATIS"
+      ],
+      "Curaçao": [
+        "Curaçao"
+      ],
+      "Cyprus": [
+        "Chipre"
+      ],
+      "Czech Republic": [
+        "República Tcheca"
+      ],
+      "da Silva": [
+        "da Silva"
+      ],
+      "Dados incompletos": [
+        "Dados incompletos"
+      ],
+      "Dados insuficientes para criar o cupom.": [
+        "Dados insuficientes para criar o cupom."
+      ],
+      "Dados inválidos": [
+        "Dados"
+      ],
+      "Dados inválidos.": [
+        "Dados inválidos."
+      ],
+      "Danger zone": [
+        "Zona de perigo"
+      ],
+      "Deactivate license": [
+        "Desativar licença"
+      ],
+      "Debug logs": [
+        "Registros de depuração"
+      ],
+      "Defina um nome para este fluxo": [
+        "Defina um nome para este fluxo"
+      ],
+      "Define o país padrão usado para formatar números e preencher as opções de suporte.": [
+        "Defina o país padrão usado para formatar números e preencher as opções de suporte."
+      ],
+      "Define o texto usado na variável de endereço completo de entrega.": [
+        "Defina o texto usado na variável de endereço completo de entrega."
+      ],
+      "Define o texto usado na variável de endereço completo de faturamento.": [
+        "Defina o texto usado na variável de endereço completo de faturamento."
+      ],
+      "Defines the endpoint used to send media through the Proxy API.": [
+        "Define o endpoint usado para enviar mídia através da API Proxy."
+      ],
+      "Defines the endpoint used to send text messages through the Proxy API.": [
+        "Define o endpoint usado para enviar mensagens de texto através da API Proxy."
+      ],
+      "Definir expiração do cupom": [
+        "expiração do cupom"
+      ],
+      "Democratic Republic of the Congo": [
+        "República Democrática do Congo"
+      ],
+      "Denmark": [
+        "Dinamarca"
+      ],
+      "Desativado": [
+        "Desativado"
+      ],
+      "Desconectado": [
+        "Desconectado"
+      ],
+      "Desconto fixo": [
+        "Desconto"
+      ],
+      "Desconto: %s": [
+        "Desconto: %s"
+      ],
+      "Descrição do cupom (opcional)": [
+        "Descrição do cupom (opcional)"
+      ],
+      "Descrição.": [
+        "Descrição."
+      ],
+      "Desligado": [
+        "‡do"
+      ],
+      "Destinatário: *": [
+        "Destinatário: *"
+      ],
+      "Destinatário: %s": [
+        "Destinatário: %s"
+      ],
+      "dia": [
+        "dia"
+      ],
+      "Dia (s)": [
+        "Dia (s)"
+      ],
+      "Diagnostics": [
+        "Diagnóstico"
+      ],
+      "Diariamente": [
+        "Diariamente"
+      ],
+      "dias": [
+        "dias"
+      ],
+      "Dica": [
+        "Dica"
+      ],
+      "Digite o código da licença para desbloquear os recursos premium.": [
+        "Digite o código de licença para desbloquear os recursos premium."
+      ],
+      "Disconnected": [
+        "Desconectado"
+      ],
+      "Diversidade": [
+        "Diversidade"
+      ],
+      "Djibouti": [
+        "Djibuti"
+      ],
+      "Documentação": [
+        "Documentação"
+      ],
+      "Documento": [
+        "Documento"
+      ],
+      "DOMDocument": [
+        "Documento DOM"
+      ],
+      "Download iniciado": [
+        "Baixar iniciado"
+      ],
+      "Download realizado com sucesso": [
+        "Download realizado com sucesso"
+      ],
+      "Dutch Caribbean": [
+        "Caribe Holandês"
+      ],
+      "É": [
+        "É"
+      ],
+      "E-mail do cliente": [
+        "E-mail do cliente"
+      ],
+      "E-mail do cliente:": [
+        "E-mail do cliente:"
+      ],
+      "East Timor": [
+        "Timor-Leste"
+      ],
+      "Ecuador": [
+        "Equador"
+      ],
+      "Editar": [
+        "Editar"
+      ],
+      "Editar ação": [
+        "†"
+      ],
+      "Editar condição": [
+        "ano"
+      ],
+      "Editar fluxo": [
+        "fluxo"
+      ],
+      "Editar título do fluxo": [
+        "caro título do fluxo"
+      ],
+      "Egypt": [
+        "Egito"
+      ],
+      "El Salvador": [
+        "El Salvador"
+      ],
+      "Elementor": [
+        "Elementor"
+      ],
+      "Em espera": [
+        "Em espera"
+      ],
+      "Enable debug mode": [
+        "Ativar o modo de depuração"
+      ],
+      "Enable Proxy API": [
+        "Habilitar API de proxy"
+      ],
+      "Enable the integration to access its settings.": [
+        "Habilite a integração para acessar as configurações."
+      ],
+      "Enter a license key before activating.": [
+        "Insira uma chave de licença antes de ativar."
+      ],
+      "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
+        "Insira um número de telefone para receber mensagens de teste do construtor. Use apenas números e formatos internacionais."
+      ],
+      "Enter phone number": [
+        "Digite o número de telefone"
+      ],
+      "Enter the code received on the selected phone.": [
+        "Digite o código recebido no telefone selecionado."
+      ],
+      "Enter the destination phone number that will receive the test message.": [
+        "Digite o número de telefone de destino que receberá a mensagem de teste."
+      ],
+      "Enter your license key to unlock premium features.": [
+        "Insira sua chave de licença para desbloquear os recursos premium."
+      ],
+      "Envia uma notificação ao remetente quando a conexão não é estabelecida.": [
+        "Envia uma notificação ao remetente quando a conexão não é estabelecida."
+      ],
+      "Enviar mensagem de texto": [
+        "Enviar mensagem de texto"
+      ],
+      "Enviar mídia": [
+        "Exportar mídia"
+      ],
+      "Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação de pedidos não pagos. Mantenha seus clientes atualizados.": [
+        "Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação de pedidos não pagos. Mantenha seus clientes atualizados."
+      ],
+      "Envie mensagens quando um formulário Elementor com campo de telefone for enviado. Conecte-se com seus clientes instantaneamente.": [
+        "Envie mensagens quando um formulário Elementor com campo de telefone para enviado. Conecte-se com seus clientes instantaneamente."
+      ],
+      "Envie seu arquivo .json para importar o modelo da automação de mensagens.": [
+        "Envie seu arquivo .json para importar o modelo da automação de mensagens."
+      ],
+      "Envie um cupom de desconto para seu usuário através de mensagem de texto do WhatsApp.": [
+        "Envie um cupom de desconto para seu usuário através de mensagem de texto do WhatsApp."
+      ],
+      "Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o WhatsApp.": [
+        "Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o WhatsApp."
+      ],
+      "Envie uma mensagem de texto com o WhatsApp.": [
+        "Envie uma mensagem de texto com o WhatsApp."
+      ],
+      "Equatorial Guinea": [
+        "Guiné Equatorial"
+      ],
+      "Erro ao atualizar o fluxo": [
+        "Erro ao atualizar o fluxo"
+      ],
+      "Erro ao carregar o arquivo. A ação não foi acionada corretamente.": [
+        "Erro ao carregar o arquivo. A ação não foi acionada corretamente."
+      ],
+      "Erro ao carregar o arquivo. O arquivo não foi enviado.": [
+        "Erro ao carregar o arquivo. O arquivo não foi enviado."
+      ],
+      "Erro ao criar fluxo": [
+        "Erro ao criar fluxo"
+      ],
+      "Erro ao importar": [
+        "Erro ao"
+      ],
+      "Erro ao remover remetente": [
+        "Erro ao remover"
+      ],
+      "Erro ao remover telefone": [
+        "Erro ao remover telefone"
+      ],
+      "Erro cURL 35: Problema de comunicação SSL/TLS.": [
+        "Erro cURL 35: Problema de comunicação SSL/TLS."
+      ],
+      "Erro cURL: %s": [
+        "Erro cURL: %s"
+      ],
+      "Erro JSON: %s": [
+        "Erro JSON: %s"
+      ],
+      "Erro na execução do fluxo": [
+        "Erro na execução do fluxo"
+      ],
+      "Erro na validação do OTP": [
+        "Erro na validação do OTP"
+      ],
+      "Erro na verificação": [
+        "Erro na verificação"
+      ],
+      "Erro no upload": [
+        "Erro ao fazer upload"
+      ],
+      "error": [
+        "erro"
+      ],
+      "Error": [
+        "Erro"
+      ],
+      "Escolha o país usado como fallback quando o telefone não vier com DDI.": [
+        "Escolha o país usado como substituto quando o telefone não vier com DDI."
+      ],
+      "Escolha o tipo de acionamento": [
+        "Escolha o tipo de acionamento"
+      ],
+      "Escolher mÃ­dia": [
+        "Escolher mídia"
+      ],
+      "Esperar até": [
+        "Esperar até"
+      ],
+      "Esperar até %s": [
+        "Esperar até %s"
+      ],
+      "Esperar até %s - %s": [
+        "Esperar até %s - %s"
+      ],
+      "Esperar até uma data": [
+        "Esperar até uma data"
+      ],
+      "Esperar por": [
+        "Esperar por"
+      ],
+      "Esperar por %s %s": [
+        "Esperar por %s %s"
+      ],
+      "Esperar tempo": [
+        "Esperar tempo"
+      ],
+      "Essa opção controla o prefixo do cupom criado automaticamente.": [
+        "Essa opção controla o prefixo do cupom criado automaticamente."
+      ],
+      "Esta ação não necessita de configurações auxiliares.": [
+        "Esta ação não necessita de configurações auxiliares."
+      ],
+      "Este acionamento depende de um plugin": [
+        "Este funcionamento depende de um plugin"
+      ],
+      "Este acionamento é disparado quando a assinatura tem seu status alterado para cancelado.": [
+        "Este acionamento é disparado quando a assinatura tem seu status alterado para cancelamento."
+      ],
+      "Este acionamento é disparado quando o prazo de um assinatura expirou.": [
+        "Este acionamento é disparado quando o prazo de uma assinatura expirou."
+      ],
+      "Este acionamento é disparado quando o usuário abandona o carrinho.": [
+        "Este acionamento é disparado quando o usuário abandona o carrinho."
+      ],
+      "Este acionamento é disparado quando o usuário fornece seus dados de contato pelo checkout.": [
+        "Este acionamento é disparado quando o usuário fornece seus dados de contato pelo checkout."
+      ],
+      "Este acionamento é disparado quando o usuário fornece seus dados de contato via modal.": [
+        "Este acionamento é disparado quando o usuário fornece seus dados de contato via modal."
+      ],
+      "Este acionamento é disparado quando um carrinho abandonado é recuperado.": [
+        "Este acionamento é disparado quando um carrinho abandonado é recuperado."
+      ],
+      "Este acionamento é disparado quando um carrinho é considerado perdido.": [
+        "Este acionamento é disparado quando um carrinho é considerado perdido."
+      ],
+      "Este acionamento é disparado quando um formulário de pagamento do WPForms é processado usando PayPal.": [
+        "Este acionamento é disparado quando um formulário de pagamento do WPForms é processado usando PayPal."
+      ],
+      "Este acionamento é disparado quando um formulário do Elementor é enviado.": [
+        "Este acionamento é disparado quando um formulário do Elementor é enviado."
+      ],
+      "Este acionamento é disparado quando um formulário do WPForms é enviado.": [
+        "Este acionamento é disparado quando um formulário do WPForms é enviado."
+      ],
+      "Este acionamento é disparado quando um novo pedido é recebido no WooCommerce com qualquer status.": [
+        "Este acionamento é disparado quando um novo pedido é recebido no WooCommerce com qualquer status."
+      ],
+      "Este acionamento é disparado quando um novo pedido é recebido no WooCommerce com status processando.": [
+        "Este acordo é disparado quando um novo pedido é recebido no WooCommerce com status processando."
+      ],
+      "Este acionamento é disparado quando um novo registro de usuário é recebido.": [
+        "Este acionamento é disparado quando um novo registro de usuário é recebido."
+      ],
+      "Este acionamento é disparado quando um pedido é abandonado.": [
+        "Este acionamento é disparado quando um pedido é abandonado."
+      ],
+      "Este acionamento é disparado quando um pedido é parcialmente reembolsado.": [
+        "Este acordo é disparado quando um pedido é parcialmente reembolsado."
+      ],
+      "Este acionamento é disparado quando um pedido é totalmente reembolsado.": [
+        "Este acionamento é disparado quando um pedido é totalmente reembolsado."
+      ],
+      "Este acionamento é disparado quando um pedido tem o status alterado para concluído.": [
+        "Este acionamento é disparado quando um pedido tem o status alterado para conclusão."
+      ],
+      "Este acionamento é disparado quando um pedido tem seu status alterado.": [
+        "Este acionamento é disparado quando um pedido tem seu status alterado."
+      ],
+      "Este acionamento é disparado quando um post tem o status alterado no site.": [
+        "Este acionamento é disparado quando um post tem o status alterado no site."
+      ],
+      "Este acionamento é disparado quando um usuário fizer login no site.": [
+        "Este acionamento é disparado quando um usuário faz login no site."
+      ],
+      "Este acionamento é disparado quando um usuário solicitar recuperação de senha no site.": [
+        "Este acionamento é disparado quando um usuário solicita recuperação de senha no site."
+      ],
+      "Este acionamento é disparado quando uma assinatura recorrente tem o pagamento recebido.": [
+        "Este acionamento é disparado quando uma assinatura recorrente tem o pagamento recebido."
+      ],
+      "Este acionamento é disparado quando uma assinatura recorrente tem seu pagamento falhado ou recusado.": [
+        "Este acionamento é disparado quando uma assinatura recorrente tem seu pagamento falhado ou recusado."
+      ],
+      "Este acionamento é disparado quando uma assinatura tem seu status alterado para ativo.": [
+        "Este acionamento é disparado quando uma assinatura tem seu status alterado para ativo."
+      ],
+      "Este acionamento é disparado quando uma nova assinatura é criada no WooCommerce.": [
+        "Este acionamento é disparado quando uma nova assinatura é criada no WooCommerce."
+      ],
+      "Este plugin precisa estar instalado e ativo para habilitar esta integração.": [
+        "Este plugin precisa estar instalado e ativo para habilitar esta integração."
+      ],
+      "Este recurso será liberado em breve": [
+        "Este recurso será liberado em breve"
+      ],
+      "Estonia": [
+        "Estônia"
+      ],
+      "Eswatini (Swaziland)": [
+        "Eswatini (Suazilândia)"
+      ],
+      "Ethiopia": [
+        "Etiópia"
+      ],
+      "Evita que a mesma ação seja processada novamente quando o gatilho se repetir.": [
+        "Evite que a mesma ação seja processada novamente quando o gatilho se repetir."
+      ],
+      "Example: CM-0000-0000-0000": [
+        "Exemplo: CM-0000-0000-0000"
+      ],
+      "Excluir ação": [
+        "Excluir"
+      ],
+      "Excluir permanentemente": [
+        "Excluir"
+      ],
+      "Expandir": [
+        "Expandir"
+      ],
+      "Expira em %s": [
+        "Expira em %s"
+      ],
+      "Expira em %s - %s": [
+        "Expira em %s - %s"
+      ],
+      "Expira em %s %s": [
+        "Expira em %s %s"
+      ],
+      "Expires on": [
+        "Expira em"
+      ],
+      "Expires on: Not available": [
+        "Expira em: Não disponível"
+      ],
+      "Expõe endpoints neste site para processar requisições do Joinotify.": [
+        "Expõe endpoints neste site para processar requisições do Joinotify."
+      ],
+      "Exportar fluxo": [
+        "Exportar fluxo"
+      ],
+      "Extensão cURL": [
+        "Extensão cURL"
+      ],
+      "Extensão OpenSSL": [
+        "Extensão OpenSSL"
+      ],
+      "Failed to send message.": [
+        "Falha ao enviar a mensagem."
+      ],
+      "Failed to send OTP.": [
+        "Falha no envio do OTP."
+      ],
+      "Falha ao ativar o plugin.": [
+        "Falha ao ativar o plugin."
+      ],
+      "Falha ao enviar mensagem de mídia.": [
+        "Falha ao enviar mensagem de mídia."
+      ],
+      "Falha ao enviar mensagem de texto.": [
+        "Falha ao enviar mensagem de texto."
+      ],
+      "Falha ao instalar/atualizar o plugin.": [
+        "Falha ao instalar/atualizar o plugin."
+      ],
+      "Falkland Islands (Malvinas)": [
+        "Ilhas Malvinas (Falkland Islands)"
+      ],
+      "Falso": [
+        "Falso"
+      ],
+      "Faroe Islands": [
+        "Ilhas Faroé"
+      ],
+      "Fechar": [
+        "Fechar"
+      ],
+      "Federated States of Micronesia": [
+        "Estados Federados da Micronésia"
+      ],
+      "Ferramentas rápidas": [
+        "Ferramentas rápidas"
+      ],
+      "Fiji": [
+        "Fiji"
+      ],
+      "Finland": [
+        "Finlândia"
+      ],
+      "Flexify Checkout": [
+        "Flexibilize o checkout"
+      ],
+      "Flexify Checkout - Recuperação de carrinhos abandonados": [
+        "Flexify Checkout - Recuperação de carrinhos abandonados"
+      ],
+      "Flexify Checkout para WooCommerce": [
+        "Flexify Checkout para WooCommerce"
+      ],
+      "Fluxo ativo": [
+        "Fluxo ativo"
+      ],
+      "Fluxo atualizado com sucesso": [
+        "Fluxote com sucesso"
+      ],
+      "Fluxo criado com sucesso": [
+        "Fluxo criado com sucesso"
+      ],
+      "Fluxo exportado com sucesso!": [
+        "Fluxo exportado com sucesso!"
+      ],
+      "Fluxo importado": [
+        "Fluxo importado"
+      ],
+      "Fluxo inativo": [
+        "Fluxo inativo"
+      ],
+      "Fluxo não encontrado": [
+        "Fluxo não encontrado"
+      ],
+      "Fluxo pai:": [
+        "Fluxo pai:"
+      ],
+      "Fluxo vazio": [
+        "Fluxograma"
+      ],
+      "Fluxos por página": [
+        "Fluxos por página"
+      ],
+      "Forma de entrega": [
+        "Forma de entrega"
+      ],
+      "Forma de pagamento": [
+        "Forma de pagamento"
+      ],
+      "Formato do endereço completo (entrega)": [
+        "Formato do endereço completo (entrega)"
+      ],
+      "Formato do endereço completo (faturamento)": [
+        "Formato do endereço completo (faturamento)"
+      ],
+      "Formato do endereço completo de entrega": [
+        "Formato do endereço completo de entrega"
+      ],
+      "Formato do endereço completo de faturamento": [
+        "Formato do endereço completo do faturamento"
+      ],
+      "Formulário do Elementor: *": [
+        "� do Elementor: *"
+      ],
+      "Formulário do WPForms: *": [
+        "Plataforma do WPForms: *"
+      ],
+      "Formulário é enviado": [
+        "é enviado"
+      ],
+      "France": [
+        "França"
+      ],
+      "French Guiana": [
+        "Guiana Francesa"
+      ],
+      "French Polynesia": [
+        "Polinésia Francesa"
+      ],
+      "Frete grátis: %s": [
+        "Frete grátis: %s"
+      ],
+      "Função do usuário": [
+        "Aninha do usuário"
+      ],
+      "Função do usuário: *": [
+        "moça do usuário: *"
+      ],
+      "Gabon": [
+        "Gabão"
+      ],
+      "Gambia": [
+        "Gâmbia"
+      ],
+      "General": [
+        "Em geral"
+      ],
+      "Generate a new key": [
+        "Gerar uma nova chave"
+      ],
+      "Generate a new key to authenticate Proxy API calls.": [
+        "Gere uma nova chave para autenticar chamadas da API Proxy."
+      ],
+      "Georgia": [
+        "Geórgia"
+      ],
+      "Gerado automaticamente": [
+        "Gerado automaticamente"
+      ],
+      "Geral": [
+        "Geral"
+      ],
+      "Gerar cupom automaticamente": [
+        "Gerar cupom automaticamente"
+      ],
+      "Gerenciar fluxos": [
+        "Gerenciar fluxos"
+      ],
+      "Gerencie remetentes, valide novas conexões e envie mensagens de teste.": [
+        "Gerencie remetentes, valide novas conexões e envie mensagens de teste."
+      ],
+      "Germany": [
+        "Alemanha"
+      ],
+      "Ghana": [
+        "Gana"
+      ],
+      "Gibraltar": [
+        "Gibraltar"
+      ],
+      "Greece": [
+        "Grécia"
+      ],
+      "Greenland": [
+        "Groenlândia"
+      ],
+      "Guadeloupe": [
+        "Guadalupe"
+      ],
+      "Guatemala": [
+        "Guatemala"
+      ],
+      "Guinea": [
+        "Guiné"
+      ],
+      "Guinea-Bissau": [
+        "Guiné-Bissau"
+      ],
+      "Guyana": [
+        "Guiana"
+      ],
+      "Haiti": [
+        "Haiti"
+      ],
+      "Hello, this is a test message.": [
+        "Olá, esta é uma mensagem de teste."
+      ],
+      "Help Center": [
+        "Central de Ajuda"
+      ],
+      "Honduras": [
+        "Honduras"
+      ],
+      "Hong Kong": [
+        "Hong Kong"
+      ],
+      "hora": [
+        "hora"
+      ],
+      "Hora (s)": [
+        "Hora(s)"
+      ],
+      "horas": [
+        "horas"
+      ],
+      "Hungary": [
+        "Hungria"
+      ],
+      "Iceland": [
+        "Islândia"
+      ],
+      "ID copiado!": [
+        "ID copiado!"
+      ],
+      "ID do campo": [
+        "ID do campo"
+      ],
+      "ID do campo de destinatário": [
+        "ID do campo de"
+      ],
+      "ID do campo:": [
+        "ID do campo:"
+      ],
+      "ID do formulário": [
+        "ID do lu"
+      ],
+      "If the license does not update immediately, click Sync to fetch the latest status from the server.": [
+        "Se a licença não for atualizada imediatamente, clique em Sincronizar para obter o status mais recente do servidor."
+      ],
+      "Ignorar ações já processadas": [
+        "Ignorar ações já processadas"
+      ],
+      "Ignorar ações já processadas no fluxo": [
+        "Ignorar ações já processadas no fluxo"
+      ],
+      "Imagem": [
+        "Imagem"
+      ],
+      "Importar": [
+        "Importar"
+      ],
+      "Importar arquivo": [
+        "Importar arquivo"
+      ],
+      "Importar fluxo": [
+        "Importar fluxo"
+      ],
+      "Importar modelo": [
+        "Importar modelo"
+      ],
+      "Importar um modelo": [
+        "Importar um modelo"
+      ],
+      "Inativo": [
+        "Inativo"
+      ],
+      "Inativos": [
+        "Inativos"
+      ],
+      "Increase customer satisfaction by automating WhatsApp messaging with Joinotify.": [
+        "Aumente a satisfação do cliente automatizando o envio de mensagens pelo WhatsApp com o Joinotify."
+      ],
+      "Increase customer satisfaction by automating WhatsApp messaging with Joinotify. If you need help setting it up, visit our ": [
+        "Aumente a satisfação do cliente automatizando o envio de mensagens pelo WhatsApp com o Joinotify. Se precisar de ajuda para configurar, visite nosso site."
+      ],
+      "India": [
+        "Índia"
+      ],
+      "Indonesia": [
+        "Indonésia"
+      ],
+      "info": [
+        "informações"
+      ],
+      "Informe o código de 4 dígitos que foi enviado para": [
+        "Informe o código de 4 dígitos que foi enviado para"
+      ],
+      "Informe o ID deste formulário para validar o processamento das informações. Disponível nas informações adicionais do formulário.": [
+        "Informe o ID deste formulário para validar o processamento das informações. Disponível nas informações adicionais do formulário."
+      ],
+      "Informe o ID do campo que coleta o telefone de destinatário do formulário.": [
+        "Informe o ID do campo que coleta o telefone do destinatário do formulário."
+      ],
+      "Informe o ID do formulário": [
+        "Informe o ID do LUC"
+      ],
+      "Instalar plugin": [
+        "plugin"
+      ],
+      "Integração indisponível": [
+        "Integração indisponível"
+      ],
+      "Integração ou acionamento indisponível para este modelo.": [
+        "Integração ou acionamento indisponível para este modelo."
+      ],
+      "Integração para desenvolvedor": [
+        "Integração para desenvolvedor"
+      ],
+      "Integração:": [
+        "Integração:"
+      ],
+      "Integrações": [
+        "Integrações"
+      ],
+      "Integration settings": [
+        "Configurações de integração"
+      ],
+      "Integrations": [
+        "Integrações"
+      ],
+      "Invalid": [
+        "Inválido"
+      ],
+      "Invalid or missing API key.": [
+        "Chave de API inválida ou ausente."
+      ],
+      "Inválida": [
+        "Inválida"
+      ],
+      "Iran": [
+        "Irã"
+      ],
+      "Iraq": [
+        "Iraque"
+      ],
+      "Ireland": [
+        "Irlanda"
+      ],
+      "Irreversible": [
+        "Irreversível"
+      ],
+      "Irreversible actions for clearing configuration and logs.": [
+        "Ações irreversíveis para limpar a configuração e os registros."
+      ],
+      "Israel": [
+        "Israel"
+      ],
+      "Italy": [
+        "Itália"
+      ],
+      "Itens no carrinho": [
+        "Itens no carrinho"
+      ],
+      "Ivory Coast": [
+        "Costa do Marfim"
+      ],
+      "Japan": [
+        "Japão"
+      ],
+      "João": [
+        "João"
+      ],
+      "joaodasilva@email.com": [
+        "joaodasilva@email.com"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Joinotify: Automate your notifications. Simplify your communication.": [
+        "Joinotify: Automatize suas notificações. Simplifique sua comunicação."
+      ],
+      "Jordan": [
+        "Jordânia"
+      ],
+      "Kazakhstan": [
+        "Cazaquistão"
+      ],
+      "Kenya": [
+        "Quênia"
+      ],
+      "Kiribati": [
+        "Kiribati"
+      ],
+      "Kuwait": [
+        "Kuwait"
+      ],
+      "Kyrgyzstan": [
+        "Quirguistão"
+      ],
+      "Lao": [
+        "Lao"
+      ],
+      "Latvia": [
+        "Letônia"
+      ],
+      "Lebanon": [
+        "Líbano"
+      ],
+      "Legenda da mídia": [
+        "Legenda da mídia"
+      ],
+      "Legenda:": [
+        "Legenda:"
+      ],
+      "Lesotho": [
+        "Lesoto"
+      ],
+      "Liberia": [
+        "Libéria"
+      ],
+      "Libya": [
+        "Líbia"
+      ],
+      "Licença": [
+        "licença"
+      ],
+      "Licença ativa": [
+        "Licença ativa"
+      ],
+      "Licença ativada com sucesso.": [
+        "Licença ativada com sucesso."
+      ],
+      "Licença desativada.": [
+        "Licença desativada."
+      ],
+      "Licença expira em: %s": [
+        "Licença expira em: %s"
+      ],
+      "Licença expira em: Não disponível": [
+        "Licença expira em: Não disponível"
+      ],
+      "Licença expirada": [
+        "Licença expirada"
+      ],
+      "Licença não encontrada": [
+        "Licença não"
+      ],
+      "Licença sincronizada": [
+        "Licença sincronizada"
+      ],
+      "License": [
+        "Licença"
+      ],
+      "License activated successfully.": [
+        "Licença ativada com sucesso."
+      ],
+      "License deactivated.": [
+        "Licença desativada."
+      ],
+      "License details": [
+        "Detalhes da licença"
+      ],
+      "License information": [
+        "Informações sobre a licença"
+      ],
+      "License information updated successfully.": [
+        "Informações da licença atualizadas com sucesso."
+      ],
+      "License key": [
+        "Chave de licença"
+      ],
+      "License status": [
+        "Situação da licença"
+      ],
+      "Liechtenstein": [
+        "Liechtenstein"
+      ],
+      "Ligado": [
+        "Ligado"
+      ],
+      "Link de recuperação do carrinho abandonado.": [
+        "Link de recuperação do carrinho abandonado."
+      ],
+      "Lithuania": [
+        "Lituânia"
+      ],
+      "Lixeira": [
+        "Lixeira"
+      ],
+      "Localização e telefones": [
+        "Localização e telefones"
+      ],
+      "Login do usuário": [
+        "Login do usuário"
+      ],
+      "Logs": [
+        "Registros"
+      ],
+      "Logs cleared successfully.": [
+        "Registros apagados com sucesso."
+      ],
+      "Luxembourg": [
+        "Luxemburgo"
+      ],
+      "Macau": [
+        "Macau"
+      ],
+      "Madagascar": [
+        "Madagáscar"
+      ],
+      "Maior que": [
+        "Maior que"
+      ],
+      "Maior que <span class=\"builder-placeholder\">%s</span>": [
+        "Maior que <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Malawi": [
+        "Malawi"
+      ],
+      "Malaysia": [
+        "Malásia"
+      ],
+      "Maldives": [
+        "Maldivas"
+      ],
+      "Mali": [
+        "Mali"
+      ],
+      "Malta": [
+        "Malta"
+      ],
+      "Mantém integrações de suporte e contratos avançados disponíveis.": [
+        "Mantém integrações de suporte e contratos avançados disponíveis."
+      ],
+      "Manutenção e preferência": [
+        "Manutenção e preferência"
+      ],
+      "Manutenção, logs, atualizações e informações do ambiente.": [
+        "Manutenção, logs, atualizações e informações do ambiente."
+      ],
+      "Marcar como ativo": [
+        "Marcar como ativo"
+      ],
+      "Marcar como inativo": [
+        "Marcar como inativo"
+      ],
+      "Marshall Islands": [
+        "Ilhas Marshall"
+      ],
+      "Martinique": [
+        "Martinica"
+      ],
+      "Mauritania": [
+        "Mauritânia"
+      ],
+      "Mauritius": [
+        "Maurício"
+      ],
+      "max_execution_time": [
+        "tempo_máximo_de_execução"
+      ],
+      "max_input_vars": [
+        "variáveis_máximas_de_entrada"
+      ],
+      "Mayotte": [
+        "Mayotte"
+      ],
+      "Media message route": [
+        "Rota de mensagem de mídia"
+      ],
+      "memory_limit": [
+        "limite_de_memória"
+      ],
+      "Menor que": [
+        "Menor que"
+      ],
+      "Menor que <span class=\"builder-placeholder\">%s</span>": [
+        "Menor que <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Mensagem": [
+        "Mensagem"
+      ],
+      "Mensagem de mídia enviada com sucesso.": [
+        "Mensagem de mídia enviada com sucesso."
+      ],
+      "Mensagem de texto": [
+        "Mensagem de texto"
+      ],
+      "Mensagem de texto enviada com sucesso.": [
+        "Mensagem de texto enviada com sucesso."
+      ],
+      "Mensagem de texto: *": [
+        "Mensagem de texto: *"
+      ],
+      "Mensagem enviada": [
+        "Mensagem enviada"
+      ],
+      "Mensagens enviadas": [
+        "Mensagens enviadas"
+      ],
+      "mês": [
+        "mês"
+      ],
+      "Mês (es)": [
+        "Mês (es)"
+      ],
+      "meses": [
+        "meses"
+      ],
+      "Message": [
+        "Mensagem"
+      ],
+      "Message sent.": [
+        "Mensagem enviada."
+      ],
+      "Meta dados do usuário": [
+        "Metadados do usuário"
+      ],
+      "Método de entrega: *": [
+        "Método de entrega: *"
+      ],
+      "Método de pagamento: *": [
+        "Método de pagamento: *"
+      ],
+      "Mexico": [
+        "México"
+      ],
+      "Minha automaÃ§Ã£o #%s": [
+        "Minha automaça #%s"
+      ],
+      "Minha automação de mensagens": [
+        "Minha automação de mensagens"
+      ],
+      "minuto": [
+        "minuto"
+      ],
+      "Minuto (s)": [
+        "Minuto (s)"
+      ],
+      "minutos": [
+        "minutos"
+      ],
+      "Modo de depuração": [
+        "Modo de decadência"
+      ],
+      "Modo desenvolvedor": [
+        "Modo desenvolvedor"
+      ],
+      "Moldova": [
+        "Moldávia"
+      ],
+      "Monaco": [
+        "Mônaco"
+      ],
+      "Mongolia": [
+        "Mongólia"
+      ],
+      "Montenegro": [
+        "Montenegro"
+      ],
+      "Morocco": [
+        "Marrocos"
+      ],
+      "Mostra notificações quando houver uma nova versão disponível.": [
+        "Mostrar notificações quando houver uma nova versão disponível."
+      ],
+      "Mover para lixeira": [
+        "Mover para lixeira"
+      ],
+      "Mozambique": [
+        "Moçambique"
+      ],
+      "Myanmar": [
+        "Myanmar"
+      ],
+      "Namibia": [
+        "Namíbia"
+      ],
+      "Não": [
+        "Não"
+      ],
+      "Não contém": [
+        "Não contém"
+      ],
+      "Não disponível": [
+        "Não disponível"
+      ],
+      "Não é": [
+        "Não é"
+      ],
+      "Não está vazio": [
+        "Não está"
+      ],
+      "Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro pelo link: %s": [
+        "Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro pelo link: %s"
+      ],
+      "Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro pelo link: <a class=\"fancy-link\" href=\"%s\" target=\"_blank\">%s</a>": [
+        "Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro pelo link: <a class=\"fancy-link\" href=\"%s\" target=\"_blank\">%s</a>"
+      ],
+      "Não foi possível atualizar a ação.": [
+        "Não foi possível atualizar a ação."
+      ],
+      "Não foi possível atualizar o acionamento.": [
+        "Não foi possível atualizar o acionamento."
+      ],
+      "Não foi possível atualizar o fluxo após a exclusão da ação.": [
+        "Não foi possível atualizar o fluxo após a exclusão da ação."
+      ],
+      "Não foi possível concluir a operação.": [
+        "Não foi possível concluir a operação."
+      ],
+      "Não foi possível desativar a licença.": [
+        "Não foi possível desativar a licença."
+      ],
+      "Não foi possível descriptografar o arquivo de licença.": [
+        "Não foi possível descrever o arquivo de licença."
+      ],
+      "Não foi possível encontrar a ação para atualizar.": [
+        "Não foi possível encontrar uma ação para atualizar."
+      ],
+      "Não foi possível encontrar o acionamento para atualizar.": [
+        "Não foi possível encontrar o acionamento para atualização."
+      ],
+      "Não foi possível encontrar o telefone informado.": [
+        "Não foi possível encontrar o telefone informado."
+      ],
+      "Não foi possível enviar a mensagem de teste.": [
+        "Não foi possível enviar uma mensagem de teste."
+      ],
+      "Não foi possível enviar o código de verificação.": [
+        "Não foi possível enviar o código de verificação."
+      ],
+      "Não foi possível enviar uma ou mais mensagens de teste.": [
+        "Não foi possível enviar uma ou mais mensagens de teste."
+      ],
+      "Não foi possível limpar os registros de depuração.": [
+        "Não foi possível limpar os registros de depuração."
+      ],
+      "Não foi possível processar o conteúdo do fluxo.": [
+        "Não foi possível processar o conteúdo do fluxo."
+      ],
+      "Não foi possível recuperar as informações de grupos.": [
+        "Não foi possível recuperar informações de grupos."
+      ],
+      "Não foi possível recuperar o e-mail do usuário": [
+        "Não foi possível recuperar o e-mail do usuário"
+      ],
+      "Não foi possível recuperar o nome do usuário": [
+        "Não foi possível recuperar o nome do usuário"
+      ],
+      "Não foi possível recuperar o sobrenome do usuário": [
+        "Não foi possível recuperar o nome do usuário"
+      ],
+      "Não foi possível sincronizar as informações da licença.": [
+        "Não foi possível sincronizar as informações da licença."
+      ],
+      "Não foi possível verificar atualizações para o plugin <strong>Joinotify.</strong>": [
+        "Não foi possível verificar atualizações para o plugin <strong>Joinotify.</strong>"
+      ],
+      "Não há ações para remover no fluxo.": [
+        "Não há ações para remover nenhum fluxo."
+      ],
+      "Não identificado": [
+        "Não identificado"
+      ],
+      "Nauru": [
+        "Nauru"
+      ],
+      "Nenhum": [
+        "nenhum"
+      ],
+      "Nenhum arquivo foi especificado.": [
+        "Nenhum arquivo foi especificado."
+      ],
+      "Nenhum código disponível.": [
+        "Nenhum código disponível."
+      ],
+      "Nenhum fluxo encontrado na lixeira.": [
+        "Nenhum fluxo encontrado na lixeira."
+      ],
+      "Nenhum fluxo encontrado.": [
+        "Nenhum fluxo encontrado."
+      ],
+      "Nenhum item adquirido.": [
+        "Nenhum item adquirido."
+      ],
+      "Nenhum modelo de fluxo disponível. Volte mais tarde.": [
+        "Nenhum modelo de fluxo disponível. Volte mais tarde."
+      ],
+      "Nenhum registro foi encontrado": [
+        "Nenhum registro foi encontrado"
+      ],
+      "Nenhum remetente disponível para uso": [
+        "Nenhum remetente disponível para uso"
+      ],
+      "Nenhum telefone para testes registrado.": [
+        "Nenhum telefone para testes registrados."
+      ],
+      "Nenhuma ação será executada ao chegar nesse ponto.": [
+        "Nenhuma ação será realizada ao chegar nesse ponto."
+      ],
+      "Nenhuma condição disponível para esta ação": [
+        "Nenhuma condição disponível para esta ação"
+      ],
+      "Nenhuma condição foi definida para esta ação.": [
+        "Nenhuma condição foi definida para esta ação."
+      ],
+      "Nenhuma configuração disponível para esta condição": [
+        "Nenhuma configuração disponível para esta condição"
+      ],
+      "Nenhuma descrição disponível": [
+        "Nenhuma descrição disponível"
+      ],
+      "Nenhuma licença foi encontrada para sincronizar.": [
+        "Nenhuma licença foi encontrada para sincronizar."
+      ],
+      "Nepal": [
+        "Nepal"
+      ],
+      "Netherlands": [
+        "Holanda"
+      ],
+      "New Caledonia": [
+        "Nova Caledônia"
+      ],
+      "New Zealand": [
+        "Nova Zelândia"
+      ],
+      "Nicaragua": [
+        "Nicarágua"
+      ],
+      "Niger": [
+        "Níger"
+      ],
+      "Nigeria": [
+        "Nigéria"
+      ],
+      "Niue": [
+        "Niue"
+      ],
+      "No logs available.": [
+        "Nenhum registro disponível."
+      ],
+      "No options available": [
+        "Nenhuma opção disponível"
+      ],
+      "No phone available": [
+        "Nenhum telefone disponível"
+      ],
+      "No sender available": [
+        "Nenhum remetente disponível"
+      ],
+      "No validated sender yet.": [
+        "Nenhum remetente validado ainda."
+      ],
+      "Nome": [
+        "Nome"
+      ],
+      "Nome da variável de texto": [
+        "Nome da variável de texto"
+      ],
+      "Nome do autor": [
+        "Nome do autor"
+      ],
+      "nome_da_variavel": [
+        "nome_da_variável"
+      ],
+      "Norfolk Island": [
+        "Ilha Norfolk"
+      ],
+      "North Korea": [
+        "Coréia do Norte"
+      ],
+      "North Macedonia": [
+        "Macedônia do Norte"
+      ],
+      "Norway": [
+        "Noruega"
+      ],
+      "Not available": [
+        "Não disponível"
+      ],
+      "Nova assinatura criada": [
+        "Nova assinatura criada"
+      ],
+      "Novo fluxo": [
+        "Novo fluxo"
+      ],
+      "Novo pedido": [
+        "Novo pedido"
+      ],
+      "Novo pedido (Processando)": [
+        "Novo pedido (Processando)"
+      ],
+      "Novo recurso adicionado!": [
+        "Novo recurso adicionado!"
+      ],
+      "Novo registro de usuário": [
+        "Novo cadastro de usuário"
+      ],
+      "Número de telefone inválido.": [
+        "Número de telefone inválido."
+      ],
+      "Número usado como destino padrão em envios de teste. Informe apenas números com DDI + DDD.": [
+        "Número usado como destino padrão em envios de teste. Informe apenas números com DDI + DDD."
+      ],
+      "Nunca expira": [
+        "Nunca expira"
+      ],
+      "O acionamento foi atualizado com sucesso!": [
+        "O acionamento foi atualizado com sucesso!"
+      ],
+      "O arquivo de logs não foi encontrado.": [
+        "O arquivo de log não foi encontrado."
+      ],
+      "O arquivo de registros foi baixado com sucesso!": [
+        "O arquivo de registros foi baixado com sucesso!"
+      ],
+      "O arquivo de registros não foi encontrado.": [
+        "O arquivo de registros não foi encontrado."
+      ],
+      "O arquivo deve ser um JSON.": [
+        "O arquivo deve ser um JSON."
+      ],
+      "O arquivo enviado não é válido.": [
+        "O arquivo enviado não é válido."
+      ],
+      "O arquivo JSON não possui um formato válido.": [
+        "O arquivo JSON não possui um formato válido."
+      ],
+      "O código de verificação está incorreto ou expirou. Por favor, tente novamente.": [
+        "O código de verificação está incorreto ou expirou. Por favor, tente novamente."
+      ],
+      "O cupom já existe.": [
+        "O cupom já existe."
+      ],
+      "O domínio de ativação não é permitido.": [
+        "O domínio de ativação não é permitido."
+      ],
+      "O fluxo foi importado com sucesso!": [
+        "O fluxo foi importado com sucesso!"
+      ],
+      "O fluxo não foi encontrado ou o tipo de post está incorreto.": [
+        "O fluxo não foi encontrado ou o tipo de postagem está incorreto."
+      ],
+      "O JSON do modelo não é válido.": [
+        "O JSON do modelo não é válido."
+      ],
+      "O nome servirá para controle interno desse fluxo": [
+        "O nome servirá para controle interno desse fluxo"
+      ],
+      "O plugin foi instalado, mas não pôde ser ativado.": [
+        "O plugin foi instalado, mas não pôde ser ativado."
+      ],
+      "O registro de depuração está vazio.": [
+        "O registro de depuração está vazio."
+      ],
+      "O status do fluxo foi atualizado com sucesso!": [
+        "O status do fluxo foi atualizado com sucesso!"
+      ],
+      "O status do fluxo foi atualizado.": [
+        "O status do fluxo foi atualizado."
+      ],
+      "O telefone está conectado!": [
+        "O telefone está conectado!"
+      ],
+      "O telefone está conectado.": [
+        "O telefone está conectado."
+      ],
+      "O telefone está desconectado.": [
+        "O telefone está desconectado."
+      ],
+      "O telefone remetente foi removido com sucesso!": [
+        "O telefone enviado foi removido com sucesso!"
+      ],
+      "O template selecionado não foi encontrado.": [
+        "O modelo selecionado não foi encontrado."
+      ],
+      "O título do fluxo foi atualizado.": [
+        "O título do fluxo foi atualizado."
+      ],
+      "Objetos": [
+        "Objetos"
+      ],
+      "Obter dados de amostra": [
+        "obter dados de amostra"
+      ],
+      "Obter informações de grupos": [
+        "Obter informações de grupos"
+      ],
+      "Ocorreu um erro": [
+        "Ocorreu um erro"
+      ],
+      "Ocorreu um erro ao adicionar ação no fluxo.": [
+        "Ocorreu um erro ao adicionar ação no fluxo."
+      ],
+      "Ocorreu um erro ao atualizar o fluxo e acionamento.": [
+        "Ocorreu um erro ao atualizar o fluxo e o acionamento."
+      ],
+      "Ocorreu um erro ao atualizar o status do fluxo.": [
+        "Ocorreu um erro ao atualizar o status do fluxo."
+      ],
+      "Ocorreu um erro ao atualizar o status do post": [
+        "Corrigi um erro ao atualizar o status do post"
+      ],
+      "Ocorreu um erro ao atualizar o título do fluxo.": [
+        "Ocorreu um erro ao atualizar o título do fluxo."
+      ],
+      "Ocorreu um erro ao criar o fluxo e acionamento.": [
+        "Corrigi um erro ao criar o fluxo e o acionamento."
+      ],
+      "Ocorreu um erro ao criar o fluxo no banco de dados.": [
+        "Corrigi um erro ao criar o fluxo no banco de dados."
+      ],
+      "Ocorreu um erro ao criar o fluxo.": [
+        "Corrigi um erro ao criar o fluxo."
+      ],
+      "Ocorreu um erro ao recuperar os dados do fluxo.": [
+        "Ocorreu um erro ao recuperar os dados do fluxo."
+      ],
+      "Ocorreu um erro ao redefinir as configurações.": [
+        "Ocorreu um erro ao redefinir as configurações."
+      ],
+      "Ocorreu um erro ao tentar instalar ou atualizar o plugin.": [
+        "Corrigi um erro ao tentar instalar ou atualizar o plugin."
+      ],
+      "Ocorreu um erro na conexão com o servidor de verificação de licenças. Verifique o erro nos logs do WooCommerce.": [
+        "Ocorreu um erro na conexão com o servidor de verificação de licenças. Verifique o erro nos logs do WooCommerce."
+      ],
+      "Ocorreu um problema ao enviar o arquivo.": [
+        "Corrigimos um problema ao enviar o arquivo."
+      ],
+      "ok": [
+        "OK"
+      ],
+      "Olá {{ field_id=[FIELD_ID] }}!": [
+        "Olá {{field_id=[FIELD_ID] }}!"
+      ],
+      "Olá {{ field_id=[nome] }}, veja esse arquivo!": [
+        "Olá {{ field_id=[nome] }}, veja esse arquivo!"
+      ],
+      "Olá {{ field_id=[nome] }}! Recebemos suas informações, em breve um atendente retornará o contato.": [
+        "Olá {{field_id=[nome] }}! Receberemos suas informações, em breve um atendente retornará o contato."
+      ],
+      "Oman": [
+        "Omã"
+      ],
+      "Open help center": [
+        "Abra a central de ajuda"
+      ],
+      "OpenAI": [
+        "OpenAI"
+      ],
+      "Ops! NÃ£o hÃ¡ conexÃ£o com a internet": [
+        "Ops! Não há conexão com a internet"
+      ],
+      "Ops! Ocorreu um erro": [
+        "Ops! Ocorreu um erro"
+      ],
+      "Ops! Ocorreu um erro.": [
+        "Ops! Ocorreu um erro."
+      ],
+      "Options have been reset.": [
+        "As opções foram redefinidas."
+      ],
+      "Os dados fornecidos são inválidos ou o fluxo não foi encontrado.": [
+        "Os dados fornecidos são inválidos ou o fluxo não foi encontrado."
+      ],
+      "Os registros foram limpos": [
+        "Os registros foram limpos"
+      ],
+      "Ou clique para procurar seu arquivo": [
+        "Ou clique para procurar seu arquivo"
+      ],
+      "Pagamento da renovação falhou": [
+        "Pagamento da renovação falhada"
+      ],
+      "Pagamento da renovação recebido": [
+        "Pagamento da atualização recebida"
+      ],
+      "Pagamento da renovação: *": [
+        "compra da renovação: *"
+      ],
+      "Pagamento processado pelo PayPal": [
+        "Pagamento processado pelo PayPal"
+      ],
+      "Pakistan": [
+        "Paquistão"
+      ],
+      "Palau": [
+        "Palau"
+      ],
+      "Palestine": [
+        "Palestina"
+      ],
+      "Panama": [
+        "Panamá"
+      ],
+      "Papua New Guinea": [
+        "Papua Nova Guiné"
+      ],
+      "Para recuperar a data atual": [
+        "Para recuperar a data atual"
+      ],
+      "Para recuperar a data de publicação do post": [
+        "Para recuperar os dados de publicação do post"
+      ],
+      "Para recuperar a data do pedido do WooCommerce": [
+        "Para recuperar os dados do pedido do WooCommerce"
+      ],
+      "Para recuperar a descrição do cupom de desconto.": [
+        "Para recuperar a descrição do cupom de desconto."
+      ],
+      "Para recuperar a expiração do cupom de desconto. Exemplo: Expira em 1 hora.": [
+        "Para recuperar a expiração do cupom de desconto. Exemplo: Expira em 1 hora."
+      ],
+      "Para recuperar a informação de um campo do formulário do Elementor. Substitua FIELD_ID pelo id respectivo.": [
+        "Para recuperar as informações de um campo do formulário do Elementor. Substitua FIELD_ID pelo id correspondente."
+      ],
+      "Para recuperar a informação de um campo do formulário do WPForms. Substitua FIELD_ID pelo id respectivo.": [
+        "Para recuperar as informações de um campo do formulário do WPForms. Substitua FIELD_ID pelo id correspondente."
+      ],
+      "Para recuperar a URL da imagem destacada do post": [
+        "Para recuperar a URL da imagem destacada do post"
+      ],
+      "Para recuperar a URL de pagamento do pedido": [
+        "Para recuperar a URL do pagamento do pedido"
+      ],
+      "Para recuperar a URL do site": [
+        "Para recuperar a URL do site"
+      ],
+      "Para recuperar as categorias do post, separadas por vírgula": [
+        "Para recuperar as categorias do post, separadas por vírgula"
+      ],
+      "Para recuperar as tags do post, separadas por vírgula": [
+        "Para recuperar as tags do post, separadas por vírgula"
+      ],
+      "Para recuperar cada produto e quantidade adquiridos no pedido, separados por linha": [
+        "Para recuperar cada produto e quantidades adquiridas no pedido, separadas por linha"
+      ],
+      "Para recuperar o código do cupom de desconto.": [
+        "Para recuperar o código do cupom de desconto."
+      ],
+      "Para recuperar o código Pix Copia e Cola do pedido. Através da integração Flexify Checkout - Inter addon": [
+        "Para recuperar o código Pix Copia e Cola do pedido. Através da integração Flexify Checkout - Inter addon"
+      ],
+      "Para recuperar o conteúdo do post (somente texto)": [
+        "Para recuperar o conteúdo do post (somente texto)"
+      ],
+      "Para recuperar o e-mail de contato do carrinho.": [
+        "Para recuperar o e-mail de contato do carrinho."
+      ],
+      "Para recuperar o e-mail de faturamento do cliente no pedido do WooCommerce": [
+        "Para recuperar o e-mail de faturamento do cliente no pedido do WooCommerce"
+      ],
+      "Para recuperar o e-mail do usuário": [
+        "Para recuperar o e-mail do usuário"
+      ],
+      "Para recuperar o endereço completo de entrega do usuário (formato configurável nas opções do WooCommerce).": [
+        "Para recuperar o endereço completo de entrega do usuário (formato configurável nas opções do WooCommerce)."
+      ],
+      "Para recuperar o endereço completo de faturamento do usuário (formato configurável nas opções do WooCommerce).": [
+        "Para recuperar o endereço completo de relatórios do usuário (formato configurável nas opções do WooCommerce)."
+      ],
+      "Para recuperar o endereço de entrega do pedido do WooCommerce": [
+        "Para recuperar o endereço de entrega do pedido do WooCommerce"
+      ],
+      "Para recuperar o link do post": [
+        "Para recuperar o link do post"
+      ],
+      "Para recuperar o nome do contato do carrinho.": [
+        "Para recuperar o nome do contato do carrinho."
+      ],
+      "Para recuperar o nome do site": [
+        "Para recuperar o nome do site"
+      ],
+      "Para recuperar o número do pedido do WooCommerce": [
+        "Para recuperar o número do pedido do WooCommerce"
+      ],
+      "Para recuperar o primeiro nome de faturamento do cliente no pedido do WooCommerce": [
+        "Para recuperar o primeiro nome de faturamento do cliente no pedido do WooCommerce"
+      ],
+      "Para recuperar o primeiro nome do usuário": [
+        "Para recuperar o primeiro nome do usuário"
+      ],
+      "Para recuperar o símbolo de moeda do pedido": [
+        "Para recuperar o símbolo de moeda do pedido"
+      ],
+      "Para recuperar o sobrenome de faturamento do cliente no pedido do WooCommerce": [
+        "Para recuperar o sobrenome de faturamento do cliente no pedido do WooCommerce"
+      ],
+      "Para recuperar o sobrenome do contato do carrinho.": [
+        "Para recuperar o sobrenome do contato do carrinho."
+      ],
+      "Para recuperar o sobrenome do usuário": [
+        "Para recuperar o sobrenome do usuário"
+      ],
+      "Para recuperar o status do pedido do WooCommerce": [
+        "Para recuperar o status do pedido do WooCommerce"
+      ],
+      "Para recuperar o telefone de contato do carrinho.": [
+        "Para recuperar o telefone de contato do carrinho."
+      ],
+      "Para recuperar o telefone de entrega do pedido do WooCommerce": [
+        "Para recuperar o telefone de entrega do pedido do WooCommerce"
+      ],
+      "Para recuperar o telefone de faturamento do pedido do WooCommerce": [
+        "Para recuperar o telefone de faturamento do pedido do WooCommerce"
+      ],
+      "Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon": [
+        "Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon"
+      ],
+      "Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou Valor fixo.": [
+        "Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou Valor fixo."
+      ],
+      "Para recuperar o título do método de pagamento do pedido do WooCommerce": [
+        "Para recuperar o título do método de pagamento do pedido do WooCommerce"
+      ],
+      "Para recuperar o título do post": [
+        "Para recuperar o título do post"
+      ],
+      "Para recuperar o valor de %s": [
+        "Para recuperar o valor de %s"
+      ],
+      "Para recuperar o valor de um campo específico do checkout no pedido do WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: billing_email.": [
+        "Para recuperar o valor de um campo específico do checkout no pedido do WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: billing_email."
+      ],
+      "Para recuperar o valor do cupom de desconto formatado com símbolo de moeda ou percentual. Exemplo: 10%.": [
+        "Para recuperar o valor do cupom de desconto formatado com símbolo de moeda ou percentual. Exemplo: 10%."
+      ],
+      "Para recuperar o valor do cupom de desconto.": [
+        "Para recuperar o valor do cupom de desconto."
+      ],
+      "Para recuperar o valor total de desconto do pedido do WooCommerce": [
+        "Para recuperar o valor total de desconto do pedido do WooCommerce"
+      ],
+      "Para recuperar o valor total de impostos do pedido do WooCommerce": [
+        "Para recuperar o valor total de impostos do pedido do WooCommerce"
+      ],
+      "Para recuperar o valor total do carrinho.": [
+        "Para recuperar o valor total do carrinho."
+      ],
+      "Para recuperar o valor total do pedido do WooCommerce": [
+        "Para recuperar o valor total do pedido do WooCommerce"
+      ],
+      "Para recuperar o valor total reembolsado do pedido do WooCommerce": [
+        "Para recuperar o valor total reembolsado do pedido do WooCommerce"
+      ],
+      "Para recuperar os códigos de cupom utilizados no pedido do WooCommerce": [
+        "Para recuperar os códigos de cupom usados no pedido do WooCommerce"
+      ],
+      "Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que deseja recuperar o valor. Exemplo: billing_phone": [
+        "Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que deseja recuperar o valor. Exemplo: billing_phone"
+      ],
+      "Paraguay": [
+        "Paraguai"
+      ],
+      "Parar automação aqui": [
+        "Parar mais aqui"
+      ],
+      "Paste the code you received after purchase.": [
+        "Cole o código que você recebeu após a compra."
+      ],
+      "Paste the license key you received after purchase and click Activate to unlock all features.": [
+        "Cole a chave de licença que você recebeu após a compra e clique em Ativar para desbloquear todos os recursos."
+      ],
+      "Pedido concluído": [
+        "Pedido"
+      ],
+      "Pedido pago": [
+        "Pedido pago"
+      ],
+      "Pedido parcialmente reembolsado": [
+        "Pedido parcialmente reembolsado"
+      ],
+      "Pedido totalmente reembolsado": [
+        "Pedido totalmente reembolsado"
+      ],
+      "Percentual": [
+        "Percentual"
+      ],
+      "Permissão negada": [
+        "Permissão negada"
+      ],
+      "Permite definir um tempo de espera antes da ação ser executada.": [
+        "Permite definir um tempo de espera antes da ação ser realizada."
+      ],
+      "Permite definir uma condição para uma ação ser executada.": [
+        "Permite definir uma condição para uma ação ser executada."
+      ],
+      "Permite que o plugin seja atualizado automaticamente sempre que possível.": [
+        "Permite que o plugin seja atualizado automaticamente sempre que possível."
+      ],
+      "Permite verificar a forma de entrega do pedido.": [
+        "Permite verificar a forma de entrega do pedido."
+      ],
+      "Permite verificar a forma de pagamento do pedido.": [
+        "Permite verificar a forma de pagamento do pedido."
+      ],
+      "Permite verificar a função do usuário que disparou o acionamento.": [
+        "Permite verificar a função do usuário que disparou o acionamento."
+      ],
+      "Permite verificar a função do usuário que fez o login.": [
+        "Permite verificar a função do usuário que fez o login."
+      ],
+      "Permite verificar metadados específicos do usuário que disparou o acionamento.": [
+        "Permite verificar metadados específicos do usuário que disparou o acionamento."
+      ],
+      "Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.": [
+        "Permite verificar metadados específicos do usuário que solicita uma redefinição de senha."
+      ],
+      "Permite verificar metadados específicos do usuário.": [
+        "Permite verificar metadados específicos do usuário."
+      ],
+      "Permite verificar o e-mail do cliente que realizou o pedido.": [
+        "Permite verificar o e-mail do cliente que fez o pedido."
+      ],
+      "Permite verificar o status da assinatura criada.": [
+        "Permite verificar o status da assinatura criada."
+      ],
+      "Permite verificar o status do pedido.": [
+        "Permite verificar o status do pedido."
+      ],
+      "Permite verificar o tipo de post que foi publicado.": [
+        "Permite verificar o tipo de postagem que foi publicada."
+      ],
+      "Permite verificar o valor do reembolso do pedido.": [
+        "Permite verificar o valor do reembolso do pedido."
+      ],
+      "Permite verificar o valor total do carrinho abandonado.": [
+        "Permite verificar o valor total do carrinho abandonado."
+      ],
+      "Permite verificar o valor total do pedido.": [
+        "Permite verificar o valor total do pedido."
+      ],
+      "Permite verificar os itens presentes no carrinho abandonado.": [
+        "Permite verificar os itens presentes no carrinho abandonado."
+      ],
+      "Permite verificar os produtos adquiridos no pedido.": [
+        "Permite verificar os produtos adquiridos no pedido."
+      ],
+      "Permite verificar se o carrinho abandonado foi recuperado.": [
+        "Permite verificar se o carrinho abandonado foi recuperado."
+      ],
+      "Permite verificar se o pedido foi pago.": [
+        "Permite verificar se o pedido foi pago."
+      ],
+      "Permite verificar um valor específico de um campo do formulário enviado.": [
+        "Permite verificar um valor específico de um campo do formulário enviado."
+      ],
+      "Permitir frete grátis": [
+        "Permitir frete grátis"
+      ],
+      "Personalize o texto usado na variável {{ wc_billing_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).": [
+        "Personalize o texto usado na variável {{ wc_billing_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})."
+      ],
+      "Personalize o texto usado na variável {{ wc_shipping_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }}).": [
+        "Personalize o texto usado na variável {{ wc_shipping_full_address }} usando os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})."
+      ],
+      "Peru": [
+        "Peru"
+      ],
+      "Pesquisar": [
+        "Pesquisar"
+      ],
+      "Pesquisar fluxos": [
+        "Pesquisar fluxos"
+      ],
+      "Pesquisar por fluxos": [
+        "Pesquisar por fluxos"
+      ],
+      "Pesquise os produtos que deseja incluir": [
+        "Execute os produtos que desejam incluir"
+      ],
+      "Philippines": [
+        "Filipinas"
+      ],
+      "Phone number that will receive the test WhatsApp message.": [
+        "Número de telefone que receberá a mensagem de teste do WhatsApp."
+      ],
+      "Phone numbers already validated and available for use in flows.": [
+        "Números de telefone já validados e disponíveis para uso nos fluxos."
+      ],
+      "Phone validated.": [
+        "Telefone validado."
+      ],
+      "Phones": [
+        "Telefones"
+      ],
+      "Plugin ativado com sucesso.": [
+        "Plugin ativado com sucesso."
+      ],
+      "Plugin instalado e ativado com sucesso.": [
+        "Plugin instalado e ativado com sucesso."
+      ],
+      "Plugin instalado e ativado.": [
+        "Plugin instalado e."
+      ],
+      "Poland": [
+        "Polônia"
+      ],
+      "Por favor, preencha o número de telefone e o código OTP.": [
+        "Por favor, responda o número de telefone e o código OTP."
+      ],
+      "Portugal": [
+        "Portugal"
+      ],
+      "Post tem status alterado": [
+        "Post tem status alter"
+      ],
+      "post_max_size": [
+        "post_max_size"
+      ],
+      "Preencha o telefone e o código OTP.": [
+        "Preencha o telefone e o código OTP."
+      ],
+      "Preferências base do plugin, proxy de envio e avisos do WhatsApp.": [
+        "Preferências base do plugin, proxy de envio e avisos do WhatsApp."
+      ],
+      "Prefixo do cupom": [
+        "Prefixo do cupom"
+      ],
+      "Prefixo para criação de cupons": [
+        "Prefixo para criação de cupons"
+      ],
+      "Prefixo usado na criação automática de cupons.": [
+        "Prefixo usado na criação automática de cupons."
+      ],
+      "Procure por categorias ou nomes.": [
+        "Procure por categorias ou nomes."
+      ],
+      "Produtos adquiridos": [
+        "Produtos adquiridos"
+      ],
+      "Produtos adquiridos:": [
+        "Produtos adquiridos:"
+      ],
+      "Produtos no carrinho:": [
+        "Produtos no carrinho:"
+      ],
+      "Proprietário: %s | Membros: %s": [
+        "Proprietário: %s | Membros: %s"
+      ],
+      "Proxy API": [
+        "API de proxy"
+      ],
+      "Qatar": [
+        "Catar"
+      ],
+      "Qualquer status": [
+        "status"
+      ],
+      "Quick help": [
+        "Ajuda rápida"
+      ],
+      "Rascunho": [
+        "Rascunho"
+      ],
+      "Recentes": [
+        "Recentes"
+      ],
+      "Recipient": [
+        "Destinatário"
+      ],
+      "Recipient phone": [
+        "Telefone do destinatário"
+      ],
+      "Recuperação de senha do usuário": [
+        "Recuperação de senha do usuário"
+      ],
+      "Recupere dados de qualquer parte do WordPress via código PHP, acessando objetos, arrays e metadados dinamicamente.": [
+        "Recupere dados de qualquer parte do WordPress via código PHP, acessando objetos, arrays e metadados dinamicamente."
+      ],
+      "Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a finalização de compras, garantindo mais conversões.": [
+        "Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a finalização de compras, garantindo mais ofertas."
+      ],
+      "Reenvie o código em": [
+        "Reenvie o código em"
+      ],
+      "Refresh connection": [
+        "Atualizar conexão"
+      ],
+      "Refreshing connection": [
+        "Conexão revigorante"
+      ],
+      "Register new phone": [
+        "Cadastre um novo telefone"
+      ],
+      "Register phone": [
+        "Cadastre o telefone"
+      ],
+      "Registered senders": [
+        "Remetentes registrados"
+      ],
+      "Registros de depuração limpos com sucesso!": [
+        "Registros de depuração limpos com sucesso!"
+      ],
+      "Remetente": [
+        "Remetente"
+      ],
+      "Remetente removido": [
+        "Remetente de história"
+      ],
+      "Remetente: *": [
+        "Remetente: *"
+      ],
+      "Remetente: %s": [
+        "Remetente: %s"
+      ],
+      "Remetentes cadastrados": [
+        "Remetentes cadastrados"
+      ],
+      "Remove": [
+        "Remover"
+      ],
+      "Remove sender": [
+        "Remover remetente"
+      ],
+      "Remover": [
+        "Removedor"
+      ],
+      "Renovação da assinatura expirou": [
+        "Renovação da assinatura expirada"
+      ],
+      "Republic of the Congo": [
+        "República do Congo"
+      ],
+      "Reset": [
+        "Reiniciar"
+      ],
+      "Reset settings": [
+        "Redefinir configurações"
+      ],
+      "Resposta desconhecida": [
+        "Resposta desconhecida"
+      ],
+      "Resposta vazia.": [
+        "Resposta separada."
+      ],
+      "Restaurar": [
+        "Restaurar"
+      ],
+      "Restore default": [
+        "Restaurar padrão"
+      ],
+      "Retrair": [
+        "Retrair"
+      ],
+      "Réunion": [
+        "Reunião"
+      ],
+      "Review your current license status and refresh it whenever needed.": [
+        "Verifique o status atual da sua licença e atualize-a sempre que necessário."
+      ],
+      "Rodar teste": [
+        "Rodar teste"
+      ],
+      "Rodar um teste da automação. Obs.: Atrasos e condições não são considerados.": [
+        "Rodar um teste de automação. Obs.: Atrasos e condições não são considerados."
+      ],
+      "Romania": [
+        "Romênia"
+      ],
+      "Rota de mídia": [
+        "Rota de mídia"
+      ],
+      "Rota de texto": [
+        "Rota de texto"
+      ],
+      "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)": [
+        "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
+      ],
+      "Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)": [
+        "Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
+      ],
+      "Russia": [
+        "Rússia"
+      ],
+      "Rwanda": [
+        "Ruanda"
+      ],
+      "Saint Barthelemy": [
+        "São Bartolomeu"
+      ],
+      "Saint Helena": [
+        "Santa Helena"
+      ],
+      "Saint Martin": [
+        "São Martinho"
+      ],
+      "Saint Pierre and Miquelon": [
+        "São Pedro e Miquelão"
+      ],
+      "Salvar alterações": [
+        "Salvar alterações"
+      ],
+      "Salvo com sucesso": [
+        "Salvo com sucesso"
+      ],
+      "SÃ­mbolos": [
+        "Símbolos"
+      ],
+      "Samoa": [
+        "Samoa"
+      ],
+      "San Marino": [
+        "São Marino"
+      ],
+      "São Tomé and Príncipe": [
+        "São Tomé e Príncipe"
+      ],
+      "Saudi Arabia": [
+        "Arábia Saudita"
+      ],
+      "Save changes": [
+        "Salvar alterações"
+      ],
+      "Saved": [
+        "Salvo"
+      ],
+      "Search...": [
+        "Procurar..."
+      ],
+      "segundo": [
+        "segundo"
+      ],
+      "Segundo (s)": [
+        "Segundo (s)"
+      ],
+      "segundos": [
+        "segundos"
+      ],
+      "Selecione o tipo de atraso da próxima ação": [
+        "Selecione o tipo de atraso da próxima ação"
+      ],
+      "Selecione o tipo de expiração": [
+        "Selecione o tipo de expiração"
+      ],
+      "Selecione um formulário": [
+        "Selecione um"
+      ],
+      "Selecione um método de entrega": [
+        "Selecione um método de entrega"
+      ],
+      "Selecione um método de pagamento": [
+        "Selecione um método de pagamento"
+      ],
+      "Selecione um status": [
+        "Selecione um status"
+      ],
+      "Selecione um tipo de post": [
+        "Selecione um tipo de postagem"
+      ],
+      "Selecione uma condição": [
+        "Selecione uma condição"
+      ],
+      "Selecione uma data": [
+        "Selecione uma data"
+      ],
+      "Selecione uma integração de acionamento para iniciar o fluxo da sua automação.": [
+        "Selecione uma integração de funcionamento para iniciar o fluxo de sua automação."
+      ],
+      "Selecione uma ou mais ações para o fluxo da automação.": [
+        "Selecione uma ou mais ações para o fluxo da automação."
+      ],
+      "Select a phone": [
+        "Selecione um telefone"
+      ],
+      "Select a sender": [
+        "Selecione um remetente"
+      ],
+      "Select an available phone for registration and validation.": [
+        "Selecione um telefone disponível para cadastro e validação."
+      ],
+      "Select an option": [
+        "Selecione uma opção"
+      ],
+      "Select the WhatsApp sender that will be used to deliver this test message.": [
+        "Selecione o remetente do WhatsApp que será usado para entregar esta mensagem de teste."
+      ],
+      "semana": [
+        "semana"
+      ],
+      "Semana (s)": [
+        "Semana(s)"
+      ],
+      "semanas": [
+        "semanas"
+      ],
+      "Send": [
+        "Enviar"
+      ],
+      "Send test message": [
+        "Enviar mensagem de teste"
+      ],
+      "send-message/media": [
+        "enviar-mensagem/mídia"
+      ],
+      "send-message/text": [
+        "enviar-mensagem/texto"
+      ],
+      "Sender": [
+        "Remetente"
+      ],
+      "Sender removed.": [
+        "Remetente removido."
+      ],
+      "Senegal": [
+        "Senegal"
+      ],
+      "Serbia": [
+        "Sérvia"
+      ],
+      "Server": [
+        "Servidor"
+      ],
+      "Settings have been saved.": [
+        "As configurações foram salvas."
+      ],
+      "Seu WhatsApp foi verificado com sucesso!": [
+        "Seu WhatsApp foi verificado com sucesso!"
+      ],
+      "Seychelles": [
+        "Seicheles"
+      ],
+      "Sierra Leone": [
+        "Serra Leoa"
+      ],
+      "Sim": [
+        "Sim"
+      ],
+      "Singapore": [
+        "Cingapura"
+      ],
+      "Slovakia": [
+        "Eslováquia"
+      ],
+      "Slovenia": [
+        "Eslovênia"
+      ],
+      "Snippet PHP": [
+        "Trecho de código PHP"
+      ],
+      "Sobre": [
+        "Sobre"
+      ],
+      "Solomon Islands": [
+        "Ilhas Salomão"
+      ],
+      "Somalia": [
+        "Somália"
+      ],
+      "Sorrisos e Pessoas": [
+        "Sorrisos e Pessoas"
+      ],
+      "South Africa": [
+        "África do Sul"
+      ],
+      "South Korea": [
+        "Coréia do Sul"
+      ],
+      "South Sudan": [
+        "Sudão do Sul"
+      ],
+      "Spain": [
+        "Espanha"
+      ],
+      "Sri Lanka": [
+        "Sri Lanka"
+      ],
+      "Status": [
+        "Status"
+      ],
+      "Status atualizado com sucesso": [
+        "Status com sucesso"
+      ],
+      "Status da assinatura": [
+        "Status da assinatura"
+      ],
+      "Status da assinatura: *": [
+        "Status da assinatura: *"
+      ],
+      "Status de um pedido alterado": [
+        "Status de um pedido alterado"
+      ],
+      "Status do fluxo": [
+        "Status do fluxo"
+      ],
+      "Status do fluxo atualizado": [
+        "Status do fluxo"
+      ],
+      "Status do pedido": [
+        "Status do pedido"
+      ],
+      "Status do pedido: *": [
+        "Status do pedido: *"
+      ],
+      "Status do post": [
+        "Postar status"
+      ],
+      "Status do sistema": [
+        "Status do sistema"
+      ],
+      "Step 1: Select an available phone": [
+        "Passo 1: Selecione um telefone disponível"
+      ],
+      "Step 1: Select an available phone.": [
+        "Passo 1: Selecione um telefone disponível."
+      ],
+      "Step 2: Enter the verification code": [
+        "Passo 2: Insira o código de verificação"
+      ],
+      "Step 2: Enter the verification code.": [
+        "Passo 2: Insira o código de verificação."
+      ],
+      "Sua chave de licença:": [
+        "Sua chave de trabalho:"
+      ],
+      "Sua instalação está liberada para uso completo.": [
+        "Sua instalação está liberada para uso completo."
+      ],
+      "Subscription": [
+        "Subscrição"
+      ],
+      "Substitua informações com ": [
+        "informações com"
+      ],
+      "Sudan": [
+        "Sudão"
+      ],
+      "Suporte até: %s": [
+        "Suporte até: %s"
+      ],
+      "Suporte até: Não disponível": [
+        "Suporte até: Não disponível"
+      ],
+      "Support access and subscription updates": [
+        "Suporte, acesso e atualizações de assinatura"
+      ],
+      "Support until": [
+        "Apoio até"
+      ],
+      "Support until: Not available": [
+        "Suporte até: Não disponível"
+      ],
+      "Suriname": [
+        "Suriname"
+      ],
+      "Sweden": [
+        "Suécia"
+      ],
+      "Switzerland": [
+        "Suíça"
+      ],
+      "Sync": [
+        "Sincronizar"
+      ],
+      "Sync license": [
+        "Licença de sincronização"
+      ],
+      "Syria": [
+        "Síria"
+      ],
+      "System status:": [
+        "Estado do sistema:"
+      ],
+      "tag1, tag2": [
+        "tag1, tag2"
+      ],
+      "Taiwan": [
+        "Taiwan"
+      ],
+      "Tajikistan": [
+        "Tadjiquistão"
+      ],
+      "Tanzania": [
+        "Tanzânia"
+      ],
+      "Telefone de teste": [
+        "Telefone de teste"
+      ],
+      "Telefones": [
+        "Telefones"
+      ],
+      "Telefones já validados e disponíveis para uso nos fluxos.": [
+        "Telefones já validados e disponíveis para uso em fluxos."
+      ],
+      "Tem certeza que deseja desativar sua licenÃ§a?": [
+        "Tem certeza que deseja desativar sua licença?"
+      ],
+      "Tem certeza que deseja excluir esta aÃ§Ã£o?": [
+        "Tem certeza que deseja excluir esta ação?"
+      ],
+      "Tempo de espera": [
+        "Tempo de espera"
+      ],
+      "Termina com": [
+        "Termina com"
+      ],
+      "Test phone number": [
+        "Número de telefone de teste"
+      ],
+      "Test sender": [
+        "Remetente de teste"
+      ],
+      "Text message route": [
+        "Rota de mensagem de texto"
+      ],
+      "Thailand": [
+        "Tailândia"
+      ],
+      "The debug log is empty.": [
+        "O log de depuração está vazio."
+      ],
+      "The message is prefilled and can be adjusted before sending the test.": [
+        "A mensagem já vem preenchida e pode ser ajustada antes do envio do teste."
+      ],
+      "This integration depends on an installed and active plugin.": [
+        "Essa integração depende de um plugin instalado e ativo."
+      ],
+      "This integration has no additional settings.": [
+        "Esta integração não possui configurações adicionais."
+      ],
+      "Tipo de arquivo inválido": [
+        "Tipo de arquivo"
+      ],
+      "Tipo de mídia": [
+        "Tipo de mídia"
+      ],
+      "Tipo de mídia: *": [
+        "Tipo de mídia: *"
+      ],
+      "Tipo de post": [
+        "Tipo de postagem"
+      ],
+      "Tipo de post: *": [
+        "Tipo de postagem: *"
+      ],
+      "Tipo e valor do desconto: *": [
+        "Tipo e valor do desconto: *"
+      ],
+      "Tipo: %s": [
+        "Tipo: %s"
+      ],
+      "Título atualizado com sucesso": [
+        "Título atualizado com sucesso"
+      ],
+      "Título de exemplo do post": [
+        "Título de destaque do post"
+      ],
+      "Título do seu fluxo": [
+        "Título do seu fluxo"
+      ],
+      "Todas as mensagens de teste foram enviadas com sucesso!": [
+        "Todas as mensagens de teste foram enviadas com sucesso!"
+      ],
+      "Todos os fluxos": [
+        "Todos os fluxos"
+      ],
+      "Toggle %s": [
+        "Alternar %s"
+      ],
+      "Togo": [
+        "Ir"
+      ],
+      "Tokelau": [
+        "Tokelau"
+      ],
+      "Tonga": [
+        "Tonga"
+      ],
+      "Tunisia": [
+        "Tunísia"
+      ],
+      "Turkey": [
+        "Peru"
+      ],
+      "Turkmenistan": [
+        "Turcomenistão"
+      ],
+      "Turn this on to enable debug mode and inspect errors and other relevant information.": [
+        "Ative esta opção para habilitar o modo de depuração e inspecionar erros e outras informações relevantes."
+      ],
+      "Turn this on to expose endpoints on this site for processing Joinotify API requests.": [
+        "Ative esta opção para expor os endpoints deste site para processamento de solicitações da API Joinotify."
+      ],
+      "Tuvalu": [
+        "Tuvalu"
+      ],
+      "Type your test message...": [
+        "Digite sua mensagem de teste..."
+      ],
+      "Uganda": [
+        "Uganda"
+      ],
+      "Ukraine": [
+        "Ucrânia"
+      ],
+      "Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href=\"%s\">Atualize agora</a>.": [
+        "Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href=\"%s\">Atualize agora</a>."
+      ],
+      "Uma nova versão do plugin <strong>Joinotify</strong> está disponível.": [
+        "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
+      ],
+      "United Arab Emirates": [
+        "Emirados Árabes Unidos"
+      ],
+      "United Kingdom": [
+        "Reino Unido"
+      ],
+      "United States": [
+        "Estados Unidos"
+      ],
+      "upload_max_filesize": [
+        "tamanho_máximo_do_arquivo_para_carregar"
+      ],
+      "URL da mídia": [
+        "URL da mídia"
+      ],
+      "Uruguay": [
+        "Uruguai"
+      ],
+      "Usar esta mÃ­dia": [
+        "Usar esta mídia"
+      ],
+      "Use a tecla TAB para inserir um emoji rapidamente": [
+        "Use a tecla TAB para inserir um emoji rapidamente"
+      ],
+      "Use o ID informado em Informações adicionais do formulário do Elementor.": [
+        "Utilize o ID informado em Informações adicionais do formulário do Elementor."
+      ],
+      "Use o maior serviço de mensagens do mundo para notificar seu cliente em eventos do seu site.": [
+        "Use o maior serviço de mensagens do mundo para notificar seu cliente em eventos do seu site."
+      ],
+      "usuario@exemplo.com": [
+        "usuario@exemplo.com"
+      ],
+      "Uzbekistan": [
+        "Uzbequistão"
+      ],
+      "Valid": [
+        "Válido"
+      ],
+      "Válida": [
+        "Válida"
+      ],
+      "Validate and save": [
+        "Validar e salvar"
+      ],
+      "Validation failed.": [
+        "A validação falhou."
+      ],
+      "Valor da variável": [
+        "Valor da variável"
+      ],
+      "Valor de um campo do formulário": [
+        "Valor de um campo do formulário"
+      ],
+      "Valor do campo": [
+        "Valor do campo"
+      ],
+      "Valor do campo:": [
+        "Valor do campo:"
+      ],
+      "Valor do desconto": [
+        "Valor do desconto"
+      ],
+      "Valor do meta dado": [
+        "Valor do meta dado"
+      ],
+      "Valor do reembolso": [
+        "Valor do reembolso"
+      ],
+      "Valor do reembolso: *": [
+        "Valor do reembolso: *"
+      ],
+      "Valor fixo": [
+        "Valor"
+      ],
+      "Valor total do carrinho": [
+        "Valor total do carrinho"
+      ],
+      "Valor total do carrinho:": [
+        "Valor total do carrinho:"
+      ],
+      "Valor total do pedido": [
+        "Valor total do pedido"
+      ],
+      "Valor total do pedido: *": [
+        "Valor total do pedido: *"
+      ],
+      "Valor: *": [
+        "Valor: *"
+      ],
+      "Vanuatu": [
+        "Vanuatu"
+      ],
+      "variáveis de texto": [
+        " de texto"
+      ],
+      "Variáveis de texto": [
+        "Variáveis de texto"
+      ],
+      "Variáveis de texto:": [
+        "Variáveis de texto:"
+      ],
+      "Variável de texto dinâmica": [
+        "Variável de texto dinâmica"
+      ],
+      "Vatican City": [
+        "Cidade do Vaticano"
+      ],
+      "Vazio": [
+        "Vazio"
+      ],
+      "Venezuela": [
+        "Venezuela"
+      ],
+      "Ver fluxo": [
+        "Ver fluxo"
+      ],
+      "Verdadeiro": [
+        "Verdadeiro"
+      ],
+      "Verificação bem-sucedida": [
+        "Verificação bem-sucesso"
+      ],
+      "Verificar atualizações": [
+        "Verificar atualizações"
+      ],
+      "Verificar conexão": [
+        "Verificador"
+      ],
+      "Verificar se o pedido foi pago": [
+        "Verifique se o pedido foi pago"
+      ],
+      "Verificar se o pedido não foi pago": [
+        "Verifique se o pedido não foi pago"
+      ],
+      "Verifique seu WhatsApp": [
+        "Verifique seu WhatsApp"
+      ],
+      "Versão do Joinotify": [
+        "Versão do Joinotify"
+      ],
+      "Versão do PHP": [
+        "Versão do PHP"
+      ],
+      "Versão do WordPress": [
+        "Versão do WordPress"
+      ],
+      "Viajens e Lugares": [
+        "Viajens e Lugares"
+      ],
+      "Vídeo": [
+        "Vídeo"
+      ],
+      "Vietnam": [
+        "Vietnã"
+      ],
+      "View debug logs": [
+        "Exibir registros de depuração"
+      ],
+      "View the recent events recorded by the plugin.": [
+        "Veja os eventos recentes registrados pelo plugin."
+      ],
+      "Visão rápida do ambiente WordPress, PHP e extensões críticas.": [
+        "Visão rápida do ambiente WordPress, PHP e extensões críticas."
+      ],
+      "Você não tem permissão de editar posts": [
+        "Você não tem permissão para editar postagens"
+      ],
+      "Você não tem permissão para acessar esta página.": [
+        "Você não tem permissão para acessar esta página."
+      ],
+      "Voltar": [
+        "Voltar"
+      ],
+      "Voltar para o painel": [
+        "Voltar para o painel"
+      ],
+      "Wallis and Futuna": [
+        "Wallis e Futuna"
+      ],
+      "warning": [
+        "aviso"
+      ],
+      "Western Sahara": [
+        "Saara Ocidental"
+      ],
+      "What you unlock": [
+        "O que você desbloqueia"
+      ],
+      "WhatsApp": [
+        "WhatsApp"
+      ],
+      "WhatsApp: Mensagem de mídia": [
+        "WhatsApp: Mensagem de mídia"
+      ],
+      "WhatsApp: Mensagem de texto": [
+        "WhatsApp: Mensagem de texto"
+      ],
+      "WooCommerce": [
+        "WooCommerce"
+      ],
+      "WordPress": [
+        "WordPress"
+      ],
+      "WordPress Multisite": [
+        "WordPress Multisite"
+      ],
+      "WP_DEBUG": [
+        "WP_DEBUG"
+      ],
+      "WPForms": [
+        "WPForms"
+      ],
+      "Yemen": [
+        "Iémen"
+      ],
+      "Your installation is unlocked for full use.": [
+        "Sua instalação está desbloqueada para uso completo."
+      ],
+      "Your license is active. You can keep it synced here whenever the status changes on the server.": [
+        "Sua licença está ativa. Você pode mantê-la sincronizada aqui sempre que o status mudar no servidor."
+      ],
+      "Your license key": [
+        "Sua chave de licença"
+      ],
+      "Your license key: Not available": [
+        "Sua chave de licença: Não disponível"
+      ],
+      "Zambia": [
+        "Zâmbia"
+      ],
+      "Zimbabwe": [
+        "Zimbábue"
+      ],
+      "Zona de risco": [
+        "Zona de risco"
+      ]
+    }
+  }
+}

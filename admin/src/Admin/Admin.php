@@ -1,10 +1,4 @@
 <?php
-/**
- * Admin source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Admin;
 

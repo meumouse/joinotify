@@ -1,10 +1,4 @@
 <?php
-/**
- * Country_Codes source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Validations;
 
@@ -98,7 +92,7 @@ class Country_Codes {
             '236' => [ 'CF' => __('Central African Republic', 'joinotify') ],
             '237' => [ 'CM' => __('Cameroon', 'joinotify') ],
             '238' => [ 'CV' => __('Cape Verde', 'joinotify') ],
-            '239' => [ 'ST' => __('São Tomé and Príncipe', 'joinotify') ],
+            '239' => [ 'ST' => __('SÃ£o TomÃ© and PrÃ­ncipe', 'joinotify') ],
             '240' => [ 'GQ' => __('Equatorial Guinea', 'joinotify') ],
             '241' => [ 'GA' => __('Gabon', 'joinotify') ],
             '242' => [ 'CG' => __('Republic of the Congo', 'joinotify') ],
@@ -119,7 +113,7 @@ class Country_Codes {
             '258' => [ 'MZ' => __('Mozambique', 'joinotify') ],
             '260' => [ 'ZM' => __('Zambia', 'joinotify') ],
             '261' => [ 'MG' => __('Madagascar', 'joinotify') ],
-            '262' => [ 'RE' => __('Réunion', 'joinotify'), 'YT' => __('Mayotte', 'joinotify') ],
+            '262' => [ 'RE' => __('RÃ©union', 'joinotify'), 'YT' => __('Mayotte', 'joinotify') ],
             '263' => [ 'ZW' => __('Zimbabwe', 'joinotify') ],
             '264' => [ 'NA' => __('Namibia', 'joinotify') ],
             '265' => [ 'MW' => __('Malawi', 'joinotify') ],
@@ -139,7 +133,7 @@ class Country_Codes {
             '355' => [ 'AL' => __('Albania', 'joinotify') ],
             '356' => [ 'MT' => __('Malta', 'joinotify') ],
             '357' => [ 'CY' => __('Cyprus', 'joinotify') ],
-            '358' => [ 'FI' => __('Finland', 'joinotify'), 'AX' => __('Åland Islands', 'joinotify') ],
+            '358' => [ 'FI' => __('Finland', 'joinotify'), 'AX' => __('Ã…land Islands', 'joinotify') ],
             '359' => [ 'BG' => __('Bulgaria', 'joinotify') ],
             '370' => [ 'LT' => __('Lithuania', 'joinotify') ],
             '371' => [ 'LV' => __('Latvia', 'joinotify') ],
@@ -180,7 +174,7 @@ class Country_Codes {
             '596' => [ 'MQ' => __('Martinique', 'joinotify') ],
             '597' => [ 'SR' => __('Suriname', 'joinotify') ],
             '598' => [ 'UY' => __('Uruguay', 'joinotify') ],
-            '599' => [ 'CW' => __('Curaçao', 'joinotify'), 'BQ' => __('Dutch Caribbean', 'joinotify') ],
+            '599' => [ 'CW' => __('CuraÃ§ao', 'joinotify'), 'BQ' => __('Dutch Caribbean', 'joinotify') ],
             '670' => [ 'TL' => __('East Timor', 'joinotify') ],
             '672' => [ 'NF' => __('Norfolk Island', 'joinotify') ],
             '673' => [ 'BN' => __('Brunei', 'joinotify') ],

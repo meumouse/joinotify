@@ -1,10 +1,4 @@
 <?php
-/**
- * Settings_Reset source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -46,8 +40,8 @@ class Settings_Reset extends Abstract_Route {
         return rest_ensure_response( array(
             'status' => $deleted ? 'success' : 'error',
             'message' => $deleted
-                ? esc_html__( 'As opções foram redefinidas com sucesso!', 'joinotify' )
-                : esc_html__( 'Ocorreu um erro ao redefinir as configurações.', 'joinotify' ),
+                ? esc_html__( 'Settings reset successfully!', 'joinotify' )
+                : esc_html__( 'An error occurred while resetting the settings.', 'joinotify' ),
             'bootstrap' => Registry::get_bootstrap_data(),
         ) );
     }

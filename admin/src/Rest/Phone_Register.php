@@ -1,10 +1,4 @@
 <?php
-/**
- * Phone_Register source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -47,20 +41,20 @@ class Phone_Register extends Abstract_Route {
         if ( empty( $phone ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Número de telefone inválido.', 'joinotify' ),
+                'message' => esc_html__( 'NúInvalid phone number.', 'joinotify' ),
             ) );
         }
 
         if ( ! Otp_Validation::generate_and_send_otp( $phone ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Não foi possível enviar o código de verificação.', 'joinotify' ),
+                'message' => esc_html__( 'Could not send the verification code.', 'joinotify' ),
             ) );
         }
 
         return rest_ensure_response( array(
             'status' => 'success',
-            'message' => esc_html__( 'Código enviado com sucesso.', 'joinotify' ),
+            'message' => esc_html__( 'Code sent successfully.', 'joinotify' ),
             'phone' => $phone,
             'countdown' => 60,
         ) );

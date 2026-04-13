@@ -1,10 +1,4 @@
 <?php
-/**
- * Debug_Logs source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -45,7 +39,7 @@ class Debug_Logs extends Abstract_Route {
         if ( empty( $log_content ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'O registro de depuração está vazio.', 'joinotify' ),
+                'message' => esc_html__( 'The debug log is empty.', 'joinotify' ),
                 'content' => '',
             ) );
         }

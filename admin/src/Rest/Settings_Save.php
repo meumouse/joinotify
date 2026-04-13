@@ -1,10 +1,4 @@
 <?php
-/**
- * Settings_Save source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -46,7 +40,7 @@ class Settings_Save extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status' => 'success',
-            'message' => esc_html__( 'As configurações foram salvas.', 'joinotify' ),
+            'message' => esc_html__( 'Settings saved.', 'joinotify' ),
             'settings' => $saved,
         ) );
     }

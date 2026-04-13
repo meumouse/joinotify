@@ -1,10 +1,4 @@
 <?php
-/**
- * Send_Media_Message source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -121,13 +115,13 @@ class Send_Media_Message extends Abstract_Route {
         if ( 201 === $response_code ) {
             return rest_ensure_response( array(
                 'status' => 'success',
-                'message' => esc_html__( 'Mensagem de mídia enviada com sucesso.', 'joinotify' ),
+                'message' => esc_html__( 'Media message sent successfully.', 'joinotify' ),
             ) );
         }
 
         return rest_ensure_response( array(
             'status' => 'error',
-            'message' => esc_html__( 'Falha ao enviar mensagem de mídia.', 'joinotify' ),
+            'message' => esc_html__( 'Failed to send media message.', 'joinotify' ),
         ) );
     }
 }

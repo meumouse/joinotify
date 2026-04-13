@@ -1,10 +1,4 @@
 <?php
-/**
- * Debug_Clear source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -45,8 +39,8 @@ class Debug_Clear extends Abstract_Route {
         return rest_ensure_response( array(
             'status' => ! Logger::has_logs() ? 'success' : 'error',
             'message' => ! Logger::has_logs()
-                ? esc_html__( 'Registros de depuração limpos com sucesso!', 'joinotify' )
-                : esc_html__( 'Não foi possível limpar os registros de depuração.', 'joinotify' ),
+                ? esc_html__( 'Debug logs cleared successfully!', 'joinotify' )
+                : esc_html__( 'Could not clear the debug logs.', 'joinotify' ),
         ) );
     }
 }

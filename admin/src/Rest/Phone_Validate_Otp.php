@@ -1,10 +1,4 @@
 <?php
-/**
- * Phone_Validate_Otp source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -49,14 +43,14 @@ class Phone_Validate_Otp extends Abstract_Route {
         if ( empty( $phone ) || empty( $otp ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Preencha o telefone e o código OTP.', 'joinotify' ),
+                'message' => esc_html__( 'Fill in the phone number and OTP code.', 'joinotify' ),
             ) );
         }
 
         if ( ! Otp_Validation::validate_otp( $phone, $otp ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Código OTP inválido ou expirado.', 'joinotify' ),
+                'message' => esc_html__( 'Invalid or expired OTP code.', 'joinotify' ),
             ) );
         }
 
@@ -72,7 +66,7 @@ class Phone_Validate_Otp extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status' => 'success',
-            'message' => esc_html__( 'Seu WhatsApp foi verificado com sucesso!', 'joinotify' ),
+            'message' => esc_html__( 'Your WhatsApp was verified successfully!', 'joinotify' ),
             'phones' => Registry::get_phone_state(),
         ) );
     }

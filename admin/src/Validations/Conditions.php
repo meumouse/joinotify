@@ -1,10 +1,4 @@
 <?php
-/**
- * Conditions source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Validations;
 
@@ -38,8 +32,8 @@ class Conditions {
         // Default condition when no action is found
         $conditions = $conditions_map[$trigger] ?? array(
             'no_action' => array(
-                'title' => __( 'Nenhuma condição disponível para esta ação', 'joinotify' ),
-                'description' => __( 'Nenhuma condição foi definida para esta ação.', 'joinotify' ),
+                'title' => __( 'Nenhuma condiÃ§Ã£o disponÃ­vel para esta aÃ§Ã£o', 'joinotify' ),
+                'description' => __( 'Nenhuma condiÃ§Ã£o foi definida para esta aÃ§Ã£o.', 'joinotify' ),
             ),
         );
     

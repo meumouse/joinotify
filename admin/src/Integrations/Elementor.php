@@ -1,10 +1,4 @@
 <?php
-/**
- * Elementor source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -72,7 +66,7 @@ class Elementor extends Integrations_Base {
     public function add_integration_item( $integrations ) {
         $integrations['elementor'] = array(
             'title' => esc_html__('Elementor', 'joinotify'),
-            'description' => esc_html__('Envie mensagens quando um formulário Elementor com campo de telefone for enviado. Conecte-se com seus clientes instantaneamente.', 'joinotify'),
+            'description' => esc_html__('Envie mensagens quando um formulÃ¡rio Elementor com campo de telefone for enviado. Conecte-se com seus clientes instantaneamente.', 'joinotify'),
             'icon' => '<svg viewBox="0 0 400 400" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g clip-path="url(#a)"><path d="M200 0C89.532 0 0 89.532 0 200c0 110.431 89.532 200 200 200s200-89.532 200-200C399.964 89.532 310.431 0 200 0Zm-49.991 283.306h-33.315V116.658h33.315v166.648Zm133.297 0h-99.982v-33.315h99.982v33.315Zm0-66.667h-99.982v-33.315h99.982v33.315Zm0-66.666h-99.982v-33.315h99.982v33.315Z" fill="#92003B"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h400v400H0z"/></clipPath></defs></svg>',
             'setting_key' => 'enable_elementor_integration',
             'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Elementor',
@@ -97,8 +91,8 @@ class Elementor extends Integrations_Base {
         $triggers['elementor'] = array(
             array(
                 'data_trigger' => 'elementor_pro/forms/new_record',
-                'title' => esc_html__( 'Formulário é enviado', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando um formulário do Elementor é enviado.', 'joinotify' ),
+                'title' => esc_html__( 'FormulÃ¡rio Ã© enviado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando um formulÃ¡rio do Elementor Ã© enviado.', 'joinotify' ),
                 'class' => '',
                 'require_settings' => true,
             ),
@@ -147,7 +141,7 @@ class Elementor extends Integrations_Base {
         $placeholders['elementor'] = array(
             '{{ field_id=[FIELD_ID] }}' => array(
                 'triggers' => Triggers::get_trigger_names('elementor'),
-                'description' => esc_html__( 'Para recuperar a informação de um campo do formulário do Elementor. Substitua FIELD_ID pelo id respectivo.', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar a informaÃ§Ã£o de um campo do formulÃ¡rio do Elementor. Substitua FIELD_ID pelo id respectivo.', 'joinotify' ),
                 'replacement' => array(),
             ),
         );
@@ -167,12 +161,12 @@ class Elementor extends Integrations_Base {
         $elementor_conditions = array(
             'elementor_pro/forms/new_record' => array(
                 'field_value' => array(
-                    'title' => __( 'Valor de um campo do formulário', 'joinotify' ),
-                    'description' => __( 'Permite verificar um valor específico de um campo do formulário enviado.', 'joinotify' ),
+                    'title' => __( 'Valor de um campo do formulÃ¡rio', 'joinotify' ),
+                    'description' => __( 'Permite verificar um valor especÃ­fico de um campo do formulÃ¡rio enviado.', 'joinotify' ),
                 ),
                 'user_meta' => array(
-                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
-                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
+                    'title' => __( 'Meta dados do usuÃ¡rio', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados especÃ­ficos do usuÃ¡rio que solicitou a redefiniÃ§Ã£o de senha.', 'joinotify' ),
                 ),
             ),
         );

@@ -1,10 +1,4 @@
 <?php
-/**
- * Send_Text_Message source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -115,13 +109,13 @@ class Send_Text_Message extends Abstract_Route {
         if ( 201 === $response_code ) {
             return rest_ensure_response( array(
                 'status' => 'success',
-                'message' => esc_html__( 'Mensagem de texto enviada com sucesso.', 'joinotify' ),
+                'message' => esc_html__( 'Text message sent successfully.', 'joinotify' ),
             ) );
         }
 
         return rest_ensure_response( array(
             'status' => 'error',
-            'message' => esc_html__( 'Falha ao enviar mensagem de texto.', 'joinotify' ),
+            'message' => esc_html__( 'Failed to send text message.', 'joinotify' ),
         ) );
     }
 }

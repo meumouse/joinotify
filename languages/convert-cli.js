@@ -3,6 +3,12 @@ const path = require("path");
 const { execSync } = require("child_process");
 
 // run with command: node convert-cli.js
+const SCRIPT_HANDLES = [
+  "joinotify",
+  "joinotify-settings-app",
+  "joinotify-license-app",
+  "joinotify-builder-app",
+];
 
 // Function to convert a single .po file
 function convertPoToJson(inputFile) {
@@ -13,33 +19,38 @@ function convertPoToJson(inputFile) {
   }
 
   const [, textDomain, lang] = match;
-  const outputFile = `${path.parse(inputFile).name}-${textDomain}.json`;
+  const outputFiles = SCRIPT_HANDLES.map((domain) => ({
+    domain,
+    path: `${path.parse(inputFile).name}-${domain}.json`,
+  }));
   const tempFile = `temp_${Math.random().toString(36).substring(7)}.json`;
 
   try {
     execSync(`i18next-conv -l ${lang} -s ${inputFile} -t ${tempFile}`);
     let data = JSON.parse(fs.readFileSync(tempFile, "utf8"));
-    let wpFormat = {
-      domain: textDomain,
-      locale_data: {
-        [textDomain]: {
-          "": {
-            domain: textDomain,
-            lang: lang,
-            "plural-forms": "nplurals=2; plural=(n != 1);",
+    outputFiles.forEach(({ domain, path: outputFile }) => {
+      let wpFormat = {
+        domain: textDomain,
+        locale_data: {
+          [textDomain]: {
+            "": {
+              domain: textDomain,
+              lang: lang,
+              "plural-forms": "nplurals=2; plural=(n != 1);",
+            },
           },
         },
-      },
-    };
+      };
 
-    Object.entries(data).forEach(([key, value]) => {
-      if (key !== "") {
-        wpFormat.locale_data[textDomain][key] = [value];
-      }
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== "") {
+          wpFormat.locale_data[textDomain][key] = [value];
+        }
+      });
+
+      fs.writeFileSync(outputFile, JSON.stringify(wpFormat, null, 2));
+      console.log(`Conversion completed. Output saved to ${outputFile}`);
     });
-
-    fs.writeFileSync(outputFile, JSON.stringify(wpFormat, null, 2));
-    console.log(`Conversion completed. Output saved to ${outputFile}`);
   } catch (error) {
     console.error(`An error occurred while processing ${inputFile}:`, error.message);
   } finally {

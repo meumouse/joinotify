@@ -1,7 +1,7 @@
 {
-	"name": "joinotify-otp-login-translations",
-	"version": "1.0.0",
-	"description": "AI-powered translation workflow for Joinotify OTP Login WordPress plugin",
+	"name": "joinotify-translations",
+	"version": "1.4.7",
+	"description": "AI-powered translation workflow for Joinotify WordPress plugin",
 	"type": "module",
 	"scripts": {
 		"pot": "node generate-pot-cli.js",

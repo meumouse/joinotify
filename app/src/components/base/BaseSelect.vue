@@ -1,0 +1,50 @@
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  modelValue: { type: [String, Number], default: '' },
+  options: { type: Array, default: () => [] },
+  id: { type: String, default: '' },
+  name: { type: String, default: '' },
+  label: { type: String, default: '' },
+  placeholder: { type: String, default: '' },
+  disabled: { type: Boolean, default: false },
+});
+
+const emit = defineEmits(['update:modelValue', 'change']);
+
+const inputId = computed(() => props.id || `select-${Math.random().toString(36).slice(2, 10)}`);
+
+function handleChange(event) {
+  emit('update:modelValue', event.target.value);
+  emit('change', event.target.value);
+}
+</script>
+
+<template>
+  <label class="flex flex-col gap-1.5">
+    <span v-if="label" class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+      {{ label }}
+    </span>
+    <select
+      :id="inputId"
+      :name="name"
+      :value="modelValue"
+      :disabled="disabled"
+      class="min-w-[14rem] rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-slate-900 focus:ring-4 focus:ring-slate-200 disabled:cursor-not-allowed disabled:bg-slate-50"
+      @change="handleChange"
+    >
+      <option v-if="placeholder" value="">
+        {{ placeholder }}
+      </option>
+      <option
+        v-for="option in options"
+        :key="String(option.value)"
+        :disabled="option.disabled"
+        :value="option.value"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+  </label>
+</template>

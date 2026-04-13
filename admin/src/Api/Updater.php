@@ -1,10 +1,4 @@
 <?php
-/**
- * Updater source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Api;
 
@@ -232,7 +226,7 @@ class Updater {
     
                 // if the current version is lower than that of the remote server
                 if ( version_compare( $current_version, $latest_version, '<' )) {
-                    $message = __('Uma nova versão do plugin <strong>Joinotify</strong> está disponível.', 'joinotify');
+                    $message = __('Uma nova versÃ£o do plugin <strong>Joinotify</strong> estÃ¡ disponÃ­vel.', 'joinotify');
                     $class = 'notice is-dismissible notice-success';
     
                     // Display notice
@@ -246,14 +240,14 @@ class Updater {
                     </script>
                     <?php
                 } elseif ( version_compare( $current_version, $latest_version, '>=' ) ) {
-                    $message = __('A versão do plugin <strong>Joinotify</strong> é a mais recente.', 'joinotify');
+                    $message = __('A versÃ£o do plugin <strong>Joinotify</strong> Ã© a mais recente.', 'joinotify');
                     $class = 'notice is-dismissible notice-success';
     
                     // Display notice
                     printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
                 }
             } else {
-                $message = __('Não foi possível verificar atualizações para o plugin <strong>Joinotify.</strong>', 'joinotify');
+                $message = __('NÃ£o foi possÃ­vel verificar atualizaÃ§Ãµes para o plugin <strong>Joinotify.</strong>', 'joinotify');
                 $class = 'notice is-dismissible notice-error';
     
                 // Display notice
@@ -286,13 +280,13 @@ class Updater {
      * Add check updates link in the plugin_row_meta
      * 
      * @since 1.0.0
-     * @param string $plugin_meta | An array of the plugin’s metadata, including the version, author, author URI, and plugin URI
+     * @param string $plugin_meta | An array of the pluginâ€™s metadata, including the version, author, author URI, and plugin URI
      * @param string $plugin_file | Path to the plugin file relative to the plugins directory
      * @return array
      */
     public function add_check_updates_link( $plugin_meta, $plugin_file ) {
         if ( $plugin_file === $this->plugin_slug . '/' . $this->plugin_slug . '.php' ) {
-            $check_updates_link = '<a href="' . esc_url( add_query_arg( 'joinotify_check_updates', '1' ) ) . '">' . esc_html__( 'Verificar atualizações', 'joinotify' ) . '</a>';
+            $check_updates_link = '<a href="' . esc_url( add_query_arg( 'joinotify_check_updates', '1' ) ) . '">' . esc_html__( 'Verificar atualizaÃ§Ãµes', 'joinotify' ) . '</a>';
             $plugin_meta['joinotify_check_updates'] = $check_updates_link;
         }
         
@@ -383,7 +377,7 @@ class Updater {
         error_log( "[AUTO UPDATE] Downloading update from remote repository." );
 
         if ( ! $this->download_and_extract( $download_url ) ) {
-            error_log( '[AUTO UPDATE] Falha na extração do plugin Joinotify.' );
+            error_log( '[AUTO UPDATE] Falha na extraÃ§Ã£o do plugin Joinotify.' );
             return;
         }
 
@@ -460,7 +454,7 @@ class Updater {
         );
 
         $message = sprintf(
-            __( 'Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href="%s">Atualize agora</a>.', 'joinotify' ),
+            __( 'Uma nova versÃ£o do plugin <strong>Joinotify</strong> (%s) estÃ¡ disponÃ­vel. <a href="%s">Atualize agora</a>.', 'joinotify' ),
             esc_html( $latest_version ),
             esc_url( $update_url )
         );

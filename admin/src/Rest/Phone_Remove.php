@@ -1,10 +1,4 @@
 <?php
-/**
- * Phone_Remove source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -48,7 +42,7 @@ class Phone_Remove extends Abstract_Route {
         if ( empty( $phone ) || ! in_array( $phone, $phones_senders, true ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Não foi possível encontrar o telefone informado.', 'joinotify' ),
+                'message' => esc_html__( 'Could not find the provided phone number.', 'joinotify' ),
             ) );
         }
 
@@ -61,7 +55,7 @@ class Phone_Remove extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status' => 'success',
-            'message' => esc_html__( 'O telefone remetente foi removido com sucesso!', 'joinotify' ),
+            'message' => esc_html__( 'The sender phone number was removed successfully!', 'joinotify' ),
             'phones' => Registry::get_phone_state(),
         ) );
     }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Messages source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -89,9 +83,9 @@ class Messages {
                 $time_value = isset( $data['time_value'] ) ? $data['time_value'] : '';
 
                 if ( ! empty( $time_value ) ) {
-                    $message = sprintf( __( 'Esperar até %s - %s', 'joinotify' ), $date_value, $time_value );
+                    $message = sprintf( __( 'Esperar atÃ© %s - %s', 'joinotify' ), $date_value, $time_value );
                 } else {
-                    $message = sprintf( __( 'Esperar até %s', 'joinotify' ), $date_value );
+                    $message = sprintf( __( 'Esperar atÃ© %s', 'joinotify' ), $date_value );
                 }
             }
         }
@@ -123,22 +117,22 @@ class Messages {
             
                 $description .= sprintf( '%s: %s', $condition_content['type_text'], implode( ', ', $product_titles ) );
             } elseif ( $get_condition === 'order_paid' ) {
-                $description .= $condition_type === 'is' ? esc_html__( 'Verificar se o pedido foi pago', 'joinotify' ) : esc_html__( 'Verificar se o pedido não foi pago', 'joinotify' );
+                $description .= $condition_type === 'is' ? esc_html__( 'Check whether the order was paid', 'joinotify' ) : esc_html__( 'Verificar se o pedido nÃ£o foi pago', 'joinotify' );
             } elseif ( $get_condition === 'order_total' ) {
                 $description .= $condition_type === 'bigger_than' ? sprintf( __( 'Maior que <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_plain_text( wc_price( (float) $condition_content['value'] ?? '' ) ) ) : sprintf( __( 'Menor que <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_plain_text( wc_price( (float) $condition_content['value'] ?? '' ) ) );
             } elseif ( $get_condition === 'field_value' ) {
                 if ( $condition_type === 'empty' ) {
-                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
+                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> Ã© vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
                 } elseif ( $condition_type === 'not_empty' ) {
-                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> não é vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
+                    $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> nÃ£o Ã© vazio', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
                 } else {
                     $description .= sprintf( __( 'Campo com ID <span class="builder-placeholder">%s</span> %s: <span class="builder-placeholder">%s</span>', 'joinotify' ), $condition_content['field_id'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
                 }
             } elseif ( $get_condition === 'user_meta' ) {
                 if ( $condition_type === 'empty' ) {
-                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> é vazio', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
+                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> Ã© vazio', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
                 } elseif ( $condition_type === 'not_empty' ) {
-                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> não é vazio', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
+                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> nÃ£o Ã© vazio', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
                 } else {
                     $description .= sprintf( __( '<span class="builder-placeholder">%s</span> %s: %s' ), $condition_content['meta_key'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
                 }
@@ -243,13 +237,13 @@ class Messages {
         $message = '<div class="coupon-message-preview">';
             $coupon_code = $data['settings']['generate_coupon'] === 'yes' ? esc_html__( 'Gerado automaticamente', 'joinotify' ) : $data['settings']['coupon_code'];
             $discount_type = $data['settings']['discount_type'] === 'percent' ? esc_html__( 'Percentual', 'joinotify' ) : esc_html__( 'Valor fixo', 'joinotify' );
-            $free_shipping = $data['settings']['free_shipping'] === 'yes' ? esc_html__( 'Sim', 'joinotify' ) : esc_html__( 'Não', 'joinotify' );
-            $coupon_expires = $data['settings']['coupon_expiry'] === 'yes' ? esc_html__( 'Sim', 'joinotify' ) : esc_html__( 'Não', 'joinotify' );
+            $free_shipping = $data['settings']['free_shipping'] === 'yes' ? esc_html__( 'Sim', 'joinotify' ) : esc_html__( 'NÃ£o', 'joinotify' );
+            $coupon_expires = $data['settings']['coupon_expiry'] === 'yes' ? esc_html__( 'Sim', 'joinotify' ) : esc_html__( 'NÃ£o', 'joinotify' );
 
             $message .= sprintf( '<div class="coupon-message coupon-code">'. __( 'Cupom de desconto: <span class="builder-placeholder">%s</span>', 'joinotify' ) .'</div>', $coupon_code );
             $message .= sprintf( '<div class="coupon-message discount-type">'. __( 'Tipo: %s', 'joinotify' ) .'</div>', $discount_type );
             $message .= sprintf( '<div class="coupon-message discount-value">'. __( 'Desconto: %s', 'joinotify' ) .'</div>', $data['settings']['coupon_amount'] );
-            $message .= sprintf( '<div class="coupon-message free-shipping">'. __( 'Frete grátis: %s', 'joinotify' ) .'</div>', $free_shipping );
+            $message .= sprintf( '<div class="coupon-message free-shipping">'. __( 'Frete grÃ¡tis: %s', 'joinotify' ) .'</div>', $free_shipping );
             $message .= sprintf( '<div class="coupon-message coupon-expires">'. __( 'Cupom expira: %s', 'joinotify' ) .'</div>', $coupon_expires );
 
             // add coupon expiry message
@@ -260,15 +254,15 @@ class Messages {
     
                     // Format time unit: singular/plural
                     $formatted_time = ( $time_value > 1 ) ? Helpers::format_time_unit( $time_unit, true ) : Helpers::format_time_unit( $time_unit, false );
-                    $message .= sprintf( '<div class="coupon-message coupon-expires-period">'. __( 'Expira em %s %s', 'joinotify' ) .'</div>', $time_value, $formatted_time );
+                    $message .= sprintf( '<div class="coupon-message coupon-expires-period">'. __( 'Expires in %s %s', 'joinotify' ) .'</div>', $time_value, $formatted_time );
                 } elseif ( $data['settings']['expiry_data']['type'] === 'date' ) {
                     $date_value = $data['settings']['expiry_data']['date_value'] ?? '';
                     $time_value = $data['settings']['expiry_data']['time_value'] ?? '';
     
                     if ( ! empty( $time_value ) ) {
-                        $message .= sprintf( '<div class="coupon-message coupon-expires-date">'. __( 'Expira em %s - %s', 'joinotify' ) .'</div>', $date_value, $time_value );
+                        $message .= sprintf( '<div class="coupon-message coupon-expires-date">'. __( 'Expires in %s - %s', 'joinotify' ) .'</div>', $date_value, $time_value );
                     } else {
-                        $message .= sprintf( '<div class="coupon-message coupon-expires-date">'. __( 'Expira em %s', 'joinotify' ) .'</div>', $date_value );
+                        $message .= sprintf( '<div class="coupon-message coupon-expires-date">'. __( 'Expires in %s', 'joinotify' ) .'</div>', $date_value );
                     }
                 }
             }
@@ -287,7 +281,7 @@ class Messages {
      */
     public static function build_snippet_php_description( $data ) {
         if ( empty( $data['snippet_php'] ) ) {
-            return '<div class="joinotify-code-preview"><p>' . esc_html__( 'Nenhum código disponível.', 'joinotify' ) . '</p></div>';
+            return '<div class="joinotify-code-preview"><p>' . esc_html__( 'Nenhum cÃ³digo disponÃ­vel.', 'joinotify' ) . '</p></div>';
         }
     
         // break the code into lines

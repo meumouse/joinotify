@@ -1,44 +1,54 @@
 <?php
-/**
- * Assets source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
-namespace MeuMouse\Joinotify\Admin\Settings;
+namespace MeuMouse\Joinotify\Assets;
 
 use MeuMouse\Joinotify\Core\Scripts;
 
 defined('ABSPATH') || exit;
 
 /**
- * Load the Vite-built admin app assets for Joinotify pages.
+ * Load Vite-built admin assets for Joinotify settings pages.
+ *
+ * @since 1.4.7
+ * @package MeuMouse\Joinotify\Assets
+ * @author MeuMouse.com
  */
-class Assets {
+class Settings_Assets extends Abstract_Assets {
 
     /**
-     * Page-to-entry map.
+     * Page-to-entry map for the Vite build.
      *
+     * @since 1.4.7
      * @var array<string,string>
      */
     private $entries = array(
-        'joinotify-settings' => 'src/entries/settings.js',
-        'joinotify-license' => 'src/entries/license.js',
+        'joinotify-settings'         => 'src/entries/settings.js',
+        'joinotify-license'          => 'src/entries/license.js',
         'joinotify-workflows-builder' => 'src/entries/builder.js',
+        'joinotify-workflows'         => 'src/entries/workflows.js',
     );
 
 
+    /**
+     * Register hooks for the Vite-driven admin pages.
+     *
+     * @since 1.4.7
+     * @version 1.4.7
+     * @return void
+     */
     public function __construct() {
+        parent::__construct();
+
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
         add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
     }
 
 
     /**
-     * Enqueue the assets produced by Vite, falling back to the legacy shell
-     * when the manifest is unavailable.
+     * Enqueue the assets produced by Vite for the current admin page.
      *
+     * @since 1.4.7
+     * @version 1.4.7
      * @return void
      */
     public function enqueue_assets() {
@@ -56,13 +66,15 @@ class Assets {
 
         $this->dequeue_legacy_assets();
 
-        foreach ( $assets['styles'] as $index => $style_url ) {
-            wp_enqueue_style(
-                'joinotify-vue-' . sanitize_key( $page ) . '-' . $index,
-                $style_url,
-                array(),
-                null
-            );
+        if ( ! empty( $assets['styles'] ) && is_array( $assets['styles'] ) ) {
+            foreach ( $assets['styles'] as $index => $style_url ) {
+                wp_enqueue_style(
+                    'joinotify-vue-' . sanitize_key( $page ) . '-' . $index,
+                    $style_url,
+                    array(),
+                    null
+                );
+            }
         }
 
         $handle = $this->get_script_handle( $page );
@@ -84,8 +96,10 @@ class Assets {
 
 
     /**
-     * Determine the current Joinotify page slug.
+     * Resolve the current Joinotify admin page slug.
      *
+     * @since 1.4.7
+     * @version 1.4.7
      * @return string
      */
     private function get_current_page() {
@@ -100,6 +114,8 @@ class Assets {
     /**
      * Remove the legacy asset handles when the Vite build is available.
      *
+     * @since 1.4.7
+     * @version 1.4.7
      * @return void
      */
     private function dequeue_legacy_assets() {
@@ -107,23 +123,30 @@ class Assets {
         wp_dequeue_script( 'joinotify-scripts' );
         wp_dequeue_style( 'bootstrap-grid' );
         wp_dequeue_style( 'bootstrap-utilities' );
+        wp_dequeue_style( 'joinotify-workflows-table-styles' );
+        wp_dequeue_script( 'joinotify-workflows-table-scripts' );
 
         wp_deregister_style( 'joinotify-styles' );
         wp_deregister_script( 'joinotify-scripts' );
+        wp_deregister_style( 'joinotify-workflows-table-styles' );
+        wp_deregister_script( 'joinotify-workflows-table-scripts' );
     }
 
 
     /**
-     * Get a stable script handle for a page.
+     * Build a stable script handle for each admin page.
      *
+     * @since 1.4.7
+     * @version 1.4.7
      * @param string $page Admin page slug.
      * @return string
      */
     private function get_script_handle( $page ) {
         $handles = array(
-            'joinotify-settings' => 'joinotify-settings-app',
-            'joinotify-license' => 'joinotify-license-app',
+            'joinotify-settings'         => 'joinotify-settings-app',
+            'joinotify-license'          => 'joinotify-license-app',
             'joinotify-workflows-builder' => 'joinotify-builder-app',
+            'joinotify-workflows'         => 'joinotify-workflows-app',
         );
 
         return isset( $handles[ $page ] ) ? $handles[ $page ] : 'joinotify-vite-app';
@@ -131,11 +154,13 @@ class Assets {
 
 
     /**
-     * Mark Vite entry scripts as ES modules so browser import statements work.
+     * Mark Vite entry scripts as ES modules.
      *
-     * @param string $tag    Script tag HTML.
+     * @since 1.4.7
+     * @version 1.4.7
+     * @param string $tag Script tag HTML.
      * @param string $handle Script handle.
-     * @param string $src    Script URL.
+     * @param string $src Script URL.
      * @return string
      */
     public function add_module_type_attribute( $tag, $handle, $src ) {
@@ -143,6 +168,7 @@ class Assets {
             'joinotify-settings-app',
             'joinotify-license-app',
             'joinotify-builder-app',
+            'joinotify-workflows-app',
             'joinotify-vite-app',
         );
 

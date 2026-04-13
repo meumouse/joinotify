@@ -1,25 +1,276 @@
 <script setup>
+import { computed, reactive, ref } from 'vue';
+import { useWorkflows } from '../../composables/useWorkflows';
+import BaseButton from '../../components/buttons/button/BaseButton.vue';
+import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
+import EmptyState from '../../components/workflows/EmptyState.vue';
+import LoadingState from '../../components/workflows/LoadingState.vue';
+import PageHeader from '../../components/workflows/PageHeader.vue';
+import StatusTabs from '../../components/workflows/StatusTabs.vue';
+import TableToolbar from '../../components/workflows/TableToolbar.vue';
+import WorkflowSearch from '../../components/workflows/WorkflowSearch.vue';
+import WorkflowTable from '../../components/workflows/WorkflowTable.vue';
 
-/**
- * WorkflowsPage.vue frontend component.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
-defineProps({
+const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
 });
+
+const {
+  applyBulkAction,
+  bulkActionLoading,
+  bulkActionOptions,
+  bulkSelection,
+  error,
+  loading,
+  navigateTo,
+  pageSummary,
+  pagination,
+  reload,
+  searchQuery,
+  selectedStatus,
+  setSearchQuery,
+  setStatusFilter,
+  statusTabs,
+  totalItemsText,
+  totalSelected,
+  toggleWorkflowStatus,
+  updateLoadingIds,
+  visibleWorkflows,
+} = useWorkflows(props.bootstrap);
+
+const bulkAction = ref('');
+const confirmState = reactive({
+  open: false,
+  title: '',
+  description: '',
+  action: '',
+  kind: '',
+  workflowId: '',
+});
+
+const createUrl = computed(() => props.bootstrap?.create_url || 'admin.php?page=joinotify-workflows-builder');
+const loadingIds = computed(() => Array.from(updateLoadingIds.value));
+const selectedIds = computed(() => bulkSelection.selectedIds.value);
+const allVisibleSelected = computed(() => bulkSelection.isAllVisibleSelected.value);
+const partiallyVisibleSelected = computed(() => bulkSelection.isPartiallyVisibleSelected.value);
+const tablePagination = computed(() => ({
+  current_page: pagination.currentPage.value,
+  total_items: pagination.totalItems.value,
+  total_pages: pagination.totalPages.value,
+}));
+
+function formatDate(value) {
+  if (!value) {
+    return '-';
+  }
+
+  const parsed = new Date(String(value).replace(' ', 'T'));
+
+  if (Number.isNaN(parsed.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(parsed);
+}
+
+function resetConfirmation() {
+  confirmState.open = false;
+  confirmState.title = '';
+  confirmState.description = '';
+  confirmState.action = '';
+  confirmState.kind = '';
+  confirmState.workflowId = '';
+}
+
+function confirmSelectionAction() {
+  if (!confirmState.action) {
+    return;
+  }
+
+  applyBulkAction(confirmState.action, confirmState.kind === 'bulk' ? undefined : [confirmState.workflowId]).finally(() => {
+    resetConfirmation();
+    bulkAction.value = '';
+  });
+}
+
+function openBulkConfirmation(action) {
+  if (!bulkSelection.selectedIds.value.length || !action) {
+    return;
+  }
+
+  const option = bulkActionOptions.value.find((item) => item.value === action);
+
+  if (option?.destructive) {
+    confirmState.open = true;
+    confirmState.kind = 'bulk';
+    confirmState.action = action;
+    confirmState.title = action === 'delete_permanently' ? 'Delete permanently' : 'Move to trash';
+    confirmState.description =
+      action === 'delete_permanently'
+        ? 'The selected workflows will be removed permanently and this action cannot be undone.'
+        : 'The selected workflows will be moved to trash and can be restored later.';
+    return;
+  }
+
+  applyBulkAction(action).finally(() => {
+    bulkAction.value = '';
+  });
+}
+
+function handleSelectAll(checked) {
+  bulkSelection.setVisibleSelected(visibleWorkflows.value, checked);
+}
+
+function handleRowSelect(workflow, checked) {
+  bulkSelection.setSelected(workflow.id, checked);
+}
+
+function handleEdit(workflow) {
+  navigateTo(workflow.edit_url);
+}
+
+function handleTrash(workflow) {
+  confirmState.open = true;
+  confirmState.kind = 'single';
+  confirmState.action = 'trash';
+  confirmState.workflowId = String(workflow.id);
+  confirmState.title = 'Move to trash';
+  confirmState.description = `The workflow "${workflow.name}" will be moved to trash.`;
+}
+
+function handleRestore(workflow) {
+  applyBulkAction('restore', [String(workflow.id)]);
+}
+
+function handleDeletePermanent(workflow) {
+  confirmState.open = true;
+  confirmState.kind = 'single';
+  confirmState.action = 'delete_permanently';
+  confirmState.workflowId = String(workflow.id);
+  confirmState.title = 'Delete permanently';
+  confirmState.description = `The workflow "${workflow.name}" will be removed permanently.`;
+}
+
+function handleToggleStatus(workflow, nextStatus) {
+  if (workflow.status === 'trash' || nextStatus === workflow.status) {
+    return;
+  }
+
+  toggleWorkflowStatus(workflow.id, nextStatus);
+}
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f3f3f5] px-4 py-8 sm:px-6 lg:px-8">
-    <div class="mx-auto flex w-full max-w-[1240px] flex-col gap-6">
-      <section class="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_12px_30px_rgba(16,32,51,0.04)]">
-        <h1 class="text-2xl font-semibold text-ink">Workflows</h1>
-        <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
-          Reserved page for listing and managing workflows. The component is ready for future implementation.
-        </p>
-      </section>
+  <div class="joinotify-settings min-h-screen bg-[#f3f3f5] px-4 py-8 sm:px-6 lg:px-10">
+    <div class="w-full">
+      <PageHeader
+        action-label="Add new workflow"
+        :action-href="createUrl"
+        :description="'Browse, filter and manage workflows with bulk selection, pagination and quick status switching.'"
+        :loading="loading"
+        title="Manage workflows"
+      />
+
+      <div class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
+        <div class="flex flex-col gap-4 px-4 py-4 sm:px-6 sm:py-6 lg:px-10 lg:py-8">
+          <StatusTabs
+            :active-status="selectedStatus"
+            :tabs="statusTabs"
+            @select="setStatusFilter"
+          />
+
+          <WorkflowSearch
+            :model-value="searchQuery"
+            clear-label="Clear search"
+            placeholder="Search workflows..."
+            @clear="setSearchQuery('')"
+            @update:modelValue="setSearchQuery"
+          />
+
+          <div v-if="error" class="rounded-[8px] border border-danger/20 bg-danger/10 px-4 py-3 text-sm text-danger">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p>{{ error }}</p>
+              <BaseButton title="Try again" variant="secondary" @click="reload" />
+            </div>
+          </div>
+
+          <LoadingState v-if="loading" />
+
+          <template v-else>
+            <TableToolbar
+              :bulk-action="bulkAction"
+              :bulk-options="bulkActionOptions"
+              :bulk-disabled="!totalSelected"
+              :loading="bulkActionLoading"
+              :pagination="tablePagination"
+              :pagination-disabled="loading || bulkActionLoading"
+              :selected-count="totalSelected"
+              :summary="pageSummary"
+              @applyBulkAction="openBulkConfirmation(bulkAction)"
+              @first="pagination.firstPage"
+              @last="pagination.lastPage"
+              @next="pagination.nextPage"
+              @previous="pagination.previousPage"
+              @update:bulkAction="bulkAction = $event"
+            />
+
+            <WorkflowTable
+              v-if="visibleWorkflows.length"
+              :all-selected="allVisibleSelected"
+              :format-date="formatDate"
+              :indeterminate="partiallyVisibleSelected"
+              :loading-ids="loadingIds"
+              :selected-ids="selectedIds"
+              :workflows="visibleWorkflows"
+              @deletePermanent="handleDeletePermanent"
+              @edit="handleEdit"
+              @restore="handleRestore"
+              @select="handleRowSelect"
+              @toggleAll="handleSelectAll"
+              @toggleStatus="handleToggleStatus"
+              @trash="handleTrash"
+            />
+
+            <EmptyState
+              v-else
+              action-href="admin.php?page=joinotify-workflows-builder"
+              action-label="Add new workflow"
+              description="No workflows match the current filters. Create a new workflow or switch tabs to see other results."
+              title="No workflows found"
+            />
+
+            <TableToolbar
+              :bulk-action="bulkAction"
+              :bulk-options="bulkActionOptions"
+              :bulk-disabled="!totalSelected"
+              :loading="bulkActionLoading"
+              :pagination="tablePagination"
+              :pagination-disabled="loading || bulkActionLoading"
+              :selected-count="totalSelected"
+              :summary="`${totalItemsText} | ${pageSummary}`"
+              @applyBulkAction="openBulkConfirmation(bulkAction)"
+              @first="pagination.firstPage"
+              @last="pagination.lastPage"
+              @next="pagination.nextPage"
+              @previous="pagination.previousPage"
+              @update:bulkAction="bulkAction = $event"
+            />
+          </template>
+        </div>
+      </div>
     </div>
+
+    <ConfirmActionModal
+      :confirm-label="confirmState.action === 'delete_permanently' ? 'Delete' : 'Confirm'"
+      :description="confirmState.description"
+      :loading="bulkActionLoading"
+      :open="confirmState.open"
+      :title="confirmState.title"
+      @cancel="resetConfirmation"
+      @confirm="confirmSelectionAction"
+    />
   </div>
 </template>

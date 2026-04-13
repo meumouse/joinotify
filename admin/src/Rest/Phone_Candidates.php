@@ -1,10 +1,4 @@
 <?php
-/**
- * Phone_Candidates source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Rest;
 
@@ -67,7 +61,7 @@ class Phone_Candidates extends Abstract_Route {
             return rest_ensure_response( array(
                 'status' => 'success',
                 'empty_message' => sprintf(
-                    esc_html__( 'Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro pelo link: %s', 'joinotify' ),
+                    esc_html__( 'No available phone number was found for registration. Register it using the link: %s', 'joinotify' ),
                     esc_url( JOINOTIFY_REGISTER_PHONE_URL )
                 ),
                 'candidates' => array(),

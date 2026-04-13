@@ -1,0 +1,5171 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: joinotify\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"x-domain: joinotify\n"
+
+#: admin/src/Integrations/Woocommerce.php:268
+msgid "12345"
+msgstr "12345"
+
+#: assets/admin/vue-settings/settings-app.js:17
+msgid "(max-height: 600px)"
+msgstr "(altura máxima: 600px)"
+
+#: assets/admin/vue-settings/settings-app.js:17
+msgid "(max-width: 500px)"
+msgstr "(largura máxima: 500px)"
+
+#: assets/admin/vue-settings/settings-app.js:17
+msgid "(pointer: coarse)"
+msgstr "(ponteiro: grosso)"
+
+#: admin/src/Integrations/Woocommerce.php:728
+#: admin/src/Integrations/Woocommerce.php:746
+msgid ""
+"{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode "
+"}})"
+msgstr ""
+"{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode "
+"}})"
+
+#: admin/src/Builder/Messages.php:146
+msgid "%s %s: %s"
+msgstr "%s %s: %s"
+
+#: admin/src/Integrations/Flexify_Checkout.php:242
+msgid "%s minutos"
+msgstr "%s minutos"
+
+#: admin/src/Integrations/Woocommerce.php:316
+msgid "%s/checkout/pay/order/12345"
+msgstr "%s/finalizar compra/pagar/pedido/12345"
+
+#: admin/src/Integrations/Woocommerce.php:1014
+msgid "%s%%"
+msgstr "%s%%"
+
+#: admin/src/Integrations/Woocommerce.php:252
+msgid "+55 11 91234-5678"
+msgstr "+55 11 91234-5678"
+
+#: admin/src/Integrations/Woocommerce.php:260
+msgid "+55 41 91234-5678"
+msgstr "+55 41 91234-5678"
+
+#: admin/src/Builder/Messages.php:143
+msgid "<span class=\"builder-placeholder\">%s</span> %s: %s"
+msgstr "<span class=\"builder-placeholder\">%s</span> %s: %s"
+
+#: admin/src/Builder/Messages.php:139
+msgid "<span class=\"builder-placeholder\">%s</span> é vazio"
+msgstr "<span class=\"builder-placeholder\">%s</span> está vazio"
+
+#: admin/src/Builder/Messages.php:141
+msgid "<span class=\"builder-placeholder\">%s</span> não é vazio"
+msgstr "<span class=\"builder-placeholder\">%s</span> não está vazio"
+
+#: admin/src/Builder/Components.php:1125
+msgid ""
+"<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros "
+"no site."
+msgstr ""
+"<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros "
+"no site."
+
+#: admin/src/Integrations/Whatsapp.php:128
+msgid ""
+"<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados, ou "
+"riscados com variáveis do WhatsApp. Veja mais detalhes na <a "
+"href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" "
+"class=\"alert-link\" target=\"_blank\">documentação do Joinotify</a>. <a "
+"id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" "
+"data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>"
+msgstr ""
+"<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados ou "
+"riscados com variáveis do WhatsApp. Veja mais detalhes na <a "
+"href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" "
+"class=\"alert-link\" target=\"_blank\">documentação do Joinotify</a>. <a "
+"id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" "
+"data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>"
+
+#: admin/src/Core/Init.php:223
+msgid ""
+"<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o "
+"suporte da sua hospedagem para realizar a atualização."
+msgstr ""
+"<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Entre em "
+"contato com o suporte da sua hospedagem para realizar a atualização."
+
+#: admin/src/Core/Debug.php:94
+msgid "<style>%s</style>"
+msgstr "<style>%s</style>"
+
+#: admin/src/Builder/Components.php:1276
+msgid "$object->item"
+msgstr "$objeto->item"
+
+#: admin/src/Integrations/Woocommerce.php:308
+msgid "1x - Camiseta de algodão masculina (Produto exemplo)"
+msgstr "1x - Camiseta de algodão masculina (Produto exemplo)"
+
+#: admin/src/Integrations/Woocommerce.php:308
+msgid "1x - Óculos de sol com proteção UV (Produto exemplo)"
+msgstr "1x - Óculos de sol com proteção UV (Produto exemplo)"
+
+#: admin/src/Integrations/Flexify_Checkout.php:243
+#: admin/src/Integrations/Flexify_Checkout.php:251
+msgid "30 minutos"
+msgstr "30 minutos"
+
+#: admin/src/Integrations/Flexify_Checkout.php:306
+msgid "41912345678"
+msgstr "41912345678"
+
+#: admin/src/Integrations/Whatsapp.php:148
+#: admin/src/Integrations/Whatsapp.php:198
+#: app/src/pages/settings/components/cards/PhoneActions.vue:172
+#: app/src/pages/settings/components/cards/PhoneActions.vue:247
+msgid "5541987111527"
+msgstr "5541987111527"
+
+#: admin/src/Core/Ajax.php:2009
+msgid "A ação foi atualizada com sucesso!"
+msgstr "A ação foi atualizada com sucesso!"
+
+#: admin/src/Core/Ajax.php:1162
+msgid "A ação foi removida do fluxo com sucesso!"
+msgstr "A ação foi removida do fluxo com sucesso!"
+
+#: admin/src/Core/Notification_Queue.php:78
+msgid "A cada 5 minutos"
+msgstr "A cada 5 minutos"
+
+#: admin/src/Cron/Routines.php:93
+msgid "A cada 6 horas"
+msgstr "A cada 6 horas"
+
+#: admin/src/Api/License.php:394
+msgid "A extensão cURL está faltando."
+msgstr "A extensão cURL está faltando."
+
+#: admin/src/Builder/Components.php:1103
+msgid ""
+"A função WP-CRON está desabilitada neste site. Ative-o para usar a ação "
+"Tempo de espera."
+msgstr ""
+"A função WP-CRON está desabilitada neste site. Ative-o para usar a ação "
+"Tempo de espera."
+
+#: admin/src/Core/Ajax.php:2197
+msgid "A integração ou acionamento deste modelo não está disponível no momento."
+msgstr "A integração ou acionamento deste modelo não está disponível no momento."
+
+#: admin/src/Core/Ajax.php:385
+msgid "A licença foi desativada com sucesso!"
+msgstr "A licença foi desativada com sucesso!"
+
+#: admin/src/Core/Ajax.php:320
+msgid "A licença informada não é permitida para este produto."
+msgstr "A licença informada não é permitida para este produto."
+
+#: admin/src/Core/Ajax.php:1701
+#: admin/src/Rest/Phone_Test_Message.php:53
+msgid "A mensagem teste foi enviada com sucesso!"
+msgstr "A mensagem teste foi enviada com sucesso!"
+
+#: admin/src/Api/Updater.php:249
+msgid "A versão do plugin <strong>Joinotify</strong> é a mais recente."
+msgstr "A versão do plugin <strong>Joinotify</strong> é a mais recente."
+
+#: admin/src/Integrations/Flexify_Checkout.php:142
+msgid "Abandono do carrinho"
+msgstr "Abandono do carrinho"
+
+#: admin/src/Integrations/Flexify_Checkout.php:162
+msgid "Abandono do pedido"
+msgstr "Abandono do pedido"
+
+#: admin/src/Core/Ajax.php:1048
+msgid "Ação adicionada com sucesso"
+msgstr "Ação lírica com sucesso"
+
+#: admin/src/Core/Ajax.php:1049
+msgid "Ação adicionada no fluxo com sucesso!"
+msgstr "Ação baixada no fluxo com sucesso!"
+
+#: admin/src/Core/Ajax.php:2008
+msgid "Ação atualizada"
+msgstr "Ação atualizada"
+
+#: admin/src/Core/Ajax.php:1161
+msgid "Ação excluída com sucesso"
+msgstr "Ação com sucesso"
+
+#: app/src/pages/license/LicensePage.vue:391
+msgid "Access validation and premium feature unlocking"
+msgstr "Validação de acesso e desbloqueio de recursos premium"
+
+#: app/src/pages/license/LicensePage.vue:441
+msgid "Account status"
+msgstr "Status da conta"
+
+#: admin/src/Core/Ajax.php:2081
+msgid "Acionamento atualizado"
+msgstr "A"
+
+#: admin/src/Core/Ajax.php:611
+msgid "Acionamento e fluxo atualizados com sucesso!"
+msgstr "Acionamento e fluxos atualizados com sucesso!"
+
+#: admin/src/Core/Ajax.php:673
+msgid "Acionamento e fluxo criados com sucesso!"
+msgstr "Acionamento e fluxo criado com sucesso!"
+
+#: admin/src/Core/Ajax.php:434
+msgid "Acionamento:"
+msgstr "Aave:"
+
+#: admin/src/Admin/Settings/Registry.php:181
+msgid "Ações irreversíveis e operação de limpeza da configuração."
+msgstr "Ações irreversíveis e operação de limpeza da configuração."
+
+#: admin/src/Admin/Settings/Registry.php:127
+msgid "Ações para adicionar novo remetente e disparar uma mensagem de teste."
+msgstr "Ações para adicionar novo remetente e disparar uma mensagem de teste."
+
+#: app/src/pages/license/LicensePage.vue:49
+#: app/src/pages/license/LicensePage.vue:184
+#: app/src/pages/license/LicensePage.vue:344
+#: app/src/pages/license/LicensePage.vue:362
+msgid "Activate license"
+msgstr "Ativar licença"
+
+#: app/src/pages/license/LicensePage.vue:381
+msgid "Activate the license to unlock Joinotify premium features."
+msgstr "Ative a licença para desbloquear os recursos premium do Joinotify."
+
+#: app/src/pages/license/LicensePage.vue:187
+msgid "Activate your license to unlock premium features."
+msgstr "Ative sua licença para desbloquear recursos premium."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:191
+msgid "Add new phone"
+msgstr "Adicionar novo telefone"
+
+#: admin/src/Admin/Settings/Registry.php:311
+msgid "Adiciona a ação de cupom aos fluxos do WooCommerce."
+msgstr "Adicionada a ação de cupom aos fluxos do WooCommerce."
+
+#: admin/src/Builder/Components.php:596
+#: admin/src/Builder/Components.php:619
+#: admin/src/Builder/Components.php:1204
+msgid "Adicionar ação"
+msgstr "A."
+
+#: admin/src/Integrations/Elementor_Forms.php:201
+msgid "Adicionar mídia"
+msgstr "mídia"
+
+#: admin/src/Integrations/Whatsapp.php:212
+msgid "Adicionar mídia: *"
+msgstr "mídia: *"
+
+#: admin/src/Admin/Menu.php:69
+#: admin/src/Admin/Menu.php:70
+#: admin/src/Admin/Menu.php:181
+#: admin/src/Core/Workflow_Post_Type.php:49
+msgid "Adicionar novo fluxo"
+msgstr "novo fluxo"
+
+#: admin/src/Views/Builder/Actions.php:16
+msgid "Adicionar uma ação"
+msgstr "ÚMA"
+
+#: admin/src/Integrations/Elementor_Forms.php:142
+msgid ""
+"Adicione seu texto à ser enviado ao usuário do WhatsApp. Adicione variáveis "
+"de texto para substituir informações. Use {{ field_id=[FIELD_ID] }} "
+"substituindo FIELD_ID pelo ID do campo correspondente para recuperar a "
+"informação de um campo."
+msgstr ""
+"Adicione seu texto a ser enviado ao usuário do WhatsApp. Altere variáveis "
+"de texto para substituir informações. Use {{ field_id=[FIELD_ID] }} "
+"atualizando FIELD_ID pelo ID do campo correspondente para recuperar a "
+"informação de um campo."
+
+#: admin/src/Builder/Actions.php:76
+msgid "Adicione uma função, conjunto de ações e ou filtros em PHP."
+msgstr "Adicione uma função, conjunto de ações e filtros em PHP."
+
+#: admin/src/Integrations/Elementor_Forms.php:215
+msgid ""
+"Adicione uma legenda para acompanhar a mídia enviada. Suporta variáveis de "
+"texto (placeholders)."
+msgstr ""
+"Adicione uma legenda para acompanhar a mídia enviada. Suporta variáveis de "
+"texto (espaços reservados)."
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
+msgid "Adjust the routes and API key used by the proxy."
+msgstr "Ajuste as rotas e a chave de API usadas pelo proxy."
+
+#: admin/src/Validations/Country_Codes.php:73
+msgid "Afghanistan"
+msgstr "Afeganistão"
+
+#: admin/src/Core/Ajax.php:226
+#: admin/src/Core/Ajax.php:353
+msgid "Agora todos os recursos estão ativos!"
+msgstr "Agora todos os recursos estão ativos!"
+
+#: admin/src/Admin/Settings/Registry.php:148
+msgid "Ajustes operacionais do plugin e sinalizadores de desenvolvimento."
+msgstr "Ajustes operacionais do plugin e sinalizadores de desenvolvimento."
+
+#: admin/src/Validations/Country_Codes.php:142
+msgid "Åland Islands"
+msgstr "Ilhas Åland"
+
+#: admin/src/Validations/Country_Codes.php:139
+msgid "Albania"
+msgstr "Albânia"
+
+#: admin/src/Validations/Country_Codes.php:79
+msgid "Algeria"
+msgstr "Argélia"
+
+#: app/src/pages/settings/SettingsPage.vue:396
+msgid "All options will return to the plugin defaults."
+msgstr "Todas as opções retornarão aos valores padrão do plugin."
+
+#: admin/src/Admin/Settings/Registry.php:461
+msgid "allow_url_fopen"
+msgstr "permitir_url_fopen"
+
+#: admin/src/Validations/Country_Codes.php:150
+msgid "Andorra"
+msgstr "Andorra"
+
+#: admin/src/Validations/Country_Codes.php:106
+msgid "Angola"
+msgstr "Angola"
+
+#: admin/src/Core/Assets.php:171
+msgid "Animais e Natureza"
+msgstr "Mosto e"
+
+#: admin/src/Core/Helpers.php:48
+msgid "ano"
+msgstr "ano"
+
+#: admin/src/Builder/Components.php:319
+msgid "Ano (s)"
+msgstr "Ano (s)"
+
+#: admin/src/Core/Helpers.php:48
+msgid "anos"
+msgstr "anos"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:140
+msgid "API key"
+msgstr "Chave de API"
+
+#: app/src/pages/settings/SettingsPage.vue:381
+msgid "Are you sure you want to clear the debug logs?"
+msgstr "Tem certeza de que deseja limpar os registros de depuração?"
+
+#: app/src/pages/license/LicensePage.vue:271
+msgid ""
+"Are you sure you want to deactivate this license? This will disable premium "
+"features."
+msgstr ""
+"Tem certeza de que deseja desativar esta licença? Isso desativará os "
+"recursos premium."
+
+#: app/src/pages/settings/SettingsPage.vue:329
+msgid "Are you sure you want to remove this sender?"
+msgstr "Tem certeza de que deseja remover este remetente?"
+
+#: admin/src/Validations/Country_Codes.php:54
+msgid "Argentina"
+msgstr "Argentina"
+
+#: admin/src/Validations/Country_Codes.php:148
+msgid "Armenia"
+msgstr "Armênia"
+
+#: admin/src/Core/Ajax.php:552
+msgid "Arquivo enviado com sucesso!"
+msgstr "Arquivo enviado com sucesso!"
+
+#: admin/src/Core/Ajax.php:351
+msgid "Arquivo enviado com sucesso."
+msgstr "Arquivo enviado com sucesso."
+
+#: admin/src/Core/Ajax.php:503
+#: admin/src/Core/Ajax.php:2188
+msgid "Arquivo inválido"
+msgstr "Arquivo"
+
+#: admin/src/Core/Ajax.php:281
+msgid "Arquivo inválido. O arquivo deve ser extensão .key"
+msgstr "Arquivo inválido. O arquivo deve ter extensão .key"
+
+#: admin/src/Views/Builder/Choose_Template.php:99
+msgid "Arraste e solte o arquivo .json aqui"
+msgstr "Arraste e solte o arquivo .json aqui"
+
+#: admin/src/Validations/Country_Codes.php:131
+msgid "Aruba"
+msgstr "Aruba"
+
+#: admin/src/Core/Assets.php:181
+msgid "As alteraÃ§Ãµes nÃ£o serÃ£o salvas."
+msgstr "As alterações não serão salvas."
+
+#: admin/src/Core/Ajax.php:177
+msgid "As configurações foram atualizadas!"
+msgstr "As configurações foram atualizadas!"
+
+#: admin/src/Admin/Settings/Registry.php:506
+#: admin/src/Rest/Settings_Save.php:49
+msgid "As configurações foram salvas."
+msgstr "As configurações foram salvas."
+
+#: admin/src/Core/Ajax.php:2403
+msgid "As informações da sua licença foram atualizadas com sucesso."
+msgstr "As informações da sua licença foram atualizadas com sucesso."
+
+#: admin/src/Core/Ajax.php:1615
+msgid "As opções foram redefinidas"
+msgstr "As opções foram redefinidas"
+
+#: admin/src/Core/Ajax.php:1616
+#: admin/src/Rest/Settings_Reset.php:49
+msgid "As opções foram redefinidas com sucesso!"
+msgstr "As opções foram redefinidas com sucesso!"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:81
+msgid "Assinatura é ativada"
+msgstr "Assinatura é church"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:105
+msgid "Assinatura tem status alterado para cancelado"
+msgstr "Assinatura tem status alterado para cancelamento"
+
+#: admin/src/Admin/Settings/Registry.php:529
+msgid "Assinatura: %s"
+msgstr "Assinatura: %s"
+
+#: admin/src/Admin/Settings/Registry.php:528
+msgid "Assinatura: Clube M - %s"
+msgstr "Assinatura: Clube M - %s"
+
+#: admin/src/Builder/Components.php:849
+msgid "Ativa"
+msgstr "Ativa"
+
+#: admin/src/Admin/Settings/Registry.php:310
+#: admin/src/Integrations/Woocommerce.php:694
+msgid "Ativar ação Cupom de desconto"
+msgstr "Ativar ação Cupom de desconto"
+
+#: admin/src/Integrations/Integrations_Base.php:213
+msgid "Ativar plugin"
+msgstr "Plugin Ativar"
+
+#: admin/src/Admin/Settings/Registry.php:81
+msgid "Ativar Proxy API"
+msgstr "API Ativar Proxy"
+
+#: admin/src/Admin/Settings/Registry.php:77
+msgid ""
+"Ative e configure os endpoints usados para processar requisições externas "
+"de API."
+msgstr ""
+"Ative e configure os endpoints usados para processar requisições externas "
+"de API."
+
+#: admin/src/Integrations/Woocommerce.php:695
+msgid ""
+"Ative essa opção para adicionar a ação Cupom de desconto em fluxos do "
+"WooCommerce."
+msgstr ""
+"Ative essa opção para adicionar a ação Cupom de desconto em fluxos do "
+"WooCommerce."
+
+#: admin/src/Integrations/Woocommerce.php:753
+msgid ""
+"Ative essa opção para que ações já previamente processadas sejam ignoradas "
+"quando o mesmo acionamento ocorrer. Esta opções é útil quando ações "
+"agendadas estão sendo disparadas novamente."
+msgstr ""
+"Ative essa opção para que ações já processadas anteriormente sejam "
+"ignoradas quando o mesmo acionamento ocorrer. Estas opções são úteis quando "
+"as ações agendadas estão sendo disparadas novamente."
+
+#: admin/src/Admin/Settings/Registry.php:135
+msgid ""
+"Ative integrações, controle dependências e ajuste opções avançadas de cada "
+"serviço."
+msgstr ""
+"Integrações ativas, controle de dependências e opções de ajuste avançadas "
+"de cada serviço."
+
+#: admin/src/Admin/Settings/Registry.php:153
+msgid "Ative para registrar informações extras de erros e processos."
+msgstr "Ativo para registrador informações extras de erros e processos."
+
+#: admin/src/Admin/Settings/Registry.php:545
+msgid "Ative sua licença"
+msgstr "Ative sua vez"
+
+#: admin/src/Admin/Settings/Registry.php:531
+msgid "Ative sua licença para liberar os recursos premium."
+msgstr "Ative sua licença para liberar os recursos premium."
+
+#: admin/src/Core/Assets.php:173
+msgid "Atividades"
+msgstr "Atividades"
+
+#: admin/src/Admin/Settings/Registry.php:403
+#: admin/src/Core/Ajax.php:807
+#: admin/src/Core/Assets.php:156
+msgid "Ativo"
+msgstr "Ativo"
+
+#: admin/src/Core/Workflows_Table.php:91
+msgid "Ativos"
+msgstr "Ativos"
+
+#: admin/src/Admin/Settings/Registry.php:157
+msgid "Atualizações automáticas"
+msgstr "Atualizações automáticas"
+
+#: admin/src/Validations/Media_Types.php:47
+msgid "Áudio"
+msgstr "Áudio"
+
+#: admin/src/Validations/Country_Codes.php:60
+msgid "Australia"
+msgstr "Austrália"
+
+#: admin/src/Validations/Country_Codes.php:44
+msgid "Austria"
+msgstr "Áustria"
+
+#: app/src/pages/license/LicensePage.vue:387
+msgid "Automatic updates and license synchronization"
+msgstr "Atualizações automáticas e sincronização de licenças"
+
+#: admin/src/Integrations/Wpforms.php:78
+msgid ""
+"Automatize o envio de mensagens ao receber um formulário WPForms com "
+"telefone. Mantenha seus clientes informados em tempo real."
+msgstr ""
+"Automatize o envio de mensagens ao receber um formulário WPForms com "
+"telefone. Mantenha seus clientes informados em tempo real."
+
+#: admin/src/Integrations/Wordpress.php:81
+msgid "Automatize o envio de mensagens em acionamentos de eventos no WordPress."
+msgstr "Automatize o envio de mensagens em ações de eventos no WordPress."
+
+#: admin/src/Builder/Components.php:731
+msgid "Autor do post: *"
+msgstr "Autor da postagem: *"
+
+#: admin/src/Admin/Settings/Registry.php:61
+msgid "Avisar quando o WhatsApp desconectar"
+msgstr "Avisar quando o WhatsApp desconectar"
+
+#: admin/src/Admin/Settings/Registry.php:162
+msgid "Avisos de atualização"
+msgstr "Avisos de atualização"
+
+#: admin/src/Validations/Country_Codes.php:231
+msgid "Azerbaijan"
+msgstr "Azerbaijão"
+
+#: admin/src/Validations/Country_Codes.php:224
+msgid "Bahrain"
+msgstr "Bahrein"
+
+#: admin/src/Core/Assets.php:177
+msgid "Bandeiras"
+msgstr "Bandeiras"
+
+#: admin/src/Validations/Country_Codes.php:210
+msgid "Bangladesh"
+msgstr "Bangladesh"
+
+#: admin/src/Validations/Country_Codes.php:149
+msgid "Belarus"
+msgstr "Bielorrússia"
+
+#: admin/src/Validations/Country_Codes.php:37
+msgid "Belgium"
+msgstr "Bélgica"
+
+#: admin/src/Validations/Country_Codes.php:165
+msgid "Belize"
+msgstr "Belize"
+
+#: admin/src/Validations/Country_Codes.php:91
+msgid "Benin"
+msgstr "Benim"
+
+#: admin/src/Validations/Country_Codes.php:226
+msgid "Bhutan"
+msgstr "Butão"
+
+#: admin/src/Validations/Country_Codes.php:175
+msgid "Bolivia"
+msgstr "Bolívia"
+
+#: admin/src/Validations/Country_Codes.php:159
+msgid "Bosnia and Herzegovina"
+msgstr "Bósnia e Herzegovina"
+
+#: admin/src/Validations/Country_Codes.php:127
+msgid "Botswana"
+msgstr "Botsuana"
+
+#: admin/src/Validations/Country_Codes.php:55
+msgid "Brasil"
+msgstr "Brasil"
+
+#: admin/src/Validations/Country_Codes.php:108
+msgid "British Indian Ocean Territory"
+msgstr "Território Britânico do Oceano Índico"
+
+#: admin/src/Validations/Country_Codes.php:186
+msgid "Brunei"
+msgstr "Brunei"
+
+#: admin/src/Validations/Country_Codes.php:143
+msgid "Bulgaria"
+msgstr "Bulgária"
+
+#: admin/src/Validations/Country_Codes.php:88
+msgid "Burkina Faso"
+msgstr "Burkina Faso"
+
+#: admin/src/Validations/Country_Codes.php:118
+msgid "Burundi"
+msgstr "Burundi"
+
+#: app/src/pages/license/LicensePage.vue:332
+#: app/src/pages/license/LicensePage.vue:368
+msgid "Buy license"
+msgstr "Comprar licença"
+
+#: admin/src/Core/Ajax.php:1305
+msgid "Cadastrar remetente"
+msgstr "Cadastro"
+
+#: admin/src/Core/Ajax.php:1292
+msgid "Cadastrar um remetente"
+msgstr "Cadastrar um"
+
+#: admin/src/Validations/Country_Codes.php:208
+msgid "Cambodia"
+msgstr "Camboja"
+
+#: admin/src/Validations/Country_Codes.php:99
+msgid "Cameroon"
+msgstr "Camarões"
+
+#: admin/src/Admin/Settings/Registry.php:95
+msgid "Caminho da rota usada para enviar mensagens com mídia."
+msgstr "Caminho da rota usada para enviar mensagens com mídia."
+
+#: admin/src/Admin/Settings/Registry.php:87
+msgid "Caminho da rota usada para enviar mensagens de texto."
+msgstr "Caminho da rota usada para enviar mensagens de texto."
+
+#: admin/src/Builder/Messages.php:135
+msgid ""
+"Campo com ID <span class=\"builder-placeholder\">%s</span> %s: <span "
+"class=\"builder-placeholder\">%s</span>"
+msgstr ""
+"Campo com ID <span class=\"builder-placeholder\">%s</span> %s: <span "
+"class=\"builder-placeholder\">%s</span>"
+
+#: admin/src/Builder/Messages.php:131
+msgid "Campo com ID <span class=\"builder-placeholder\">%s</span> é vazio"
+msgstr "Campo com ID <span class=\"builder-placeholder\">%s</span> está vazio"
+
+#: admin/src/Builder/Messages.php:133
+msgid "Campo com ID <span class=\"builder-placeholder\">%s</span> não é vazio"
+msgstr "Campo com ID <span class=\"builder-placeholder\">%s</span> não é vazio"
+
+#: admin/src/Validations/Country_Codes.php:31
+msgid "Canada"
+msgstr "Canadá"
+
+#: app/src/components/modals/ConfirmDialog.vue:31
+#: app/src/pages/settings/components/cards/PhoneActions.vue:282
+#: app/src/pages/settings/components/cards/PhoneActions.vue:350
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: admin/src/Builder/Components.php:851
+msgid "Cancelada"
+msgstr "Cancelada"
+
+#: admin/src/Builder/Components.php:166
+#: admin/src/Builder/Components.php:200
+#: admin/src/Builder/Components.php:290
+#: admin/src/Builder/Components.php:425
+#: admin/src/Builder/Components.php:1011
+#: admin/src/Views/Builder/Choose_Template.php:114
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:313
+msgid "Candidate phone"
+msgstr "Telefone do candidato"
+
+#: admin/src/Validations/Country_Codes.php:100
+msgid "Cape Verde"
+msgstr "Cabo Verde"
+
+#: admin/src/Integrations/Flexify_Checkout.php:152
+msgid "Carrinho abandonado é recuperado"
+msgstr "Carrinho abandonado é recuperado"
+
+#: admin/src/Integrations/Flexify_Checkout.php:172
+msgid "Carrinho perdido"
+msgstr "Carrinho"
+
+#: admin/src/Integrations/Flexify_Checkout.php:363
+msgid "Carrinho recuperado"
+msgstr "Carrinho recuperado"
+
+#: admin/src/Integrations/Woocommerce.php:379
+msgid "Cartão de crédito"
+msgstr "Cartão de crédito"
+
+#: admin/src/Integrations/Wordpress.php:278
+msgid "Categoria 1, Categoria 2"
+msgstr "Categoria 1, Categoria 2"
+
+#: admin/src/Validations/Country_Codes.php:98
+msgid "Central African Republic"
+msgstr "República Centro-Africana"
+
+#: admin/src/Views/Builder/Navbar.php:75
+msgid "Central de ajuda"
+msgstr "Central de ajuda"
+
+#: admin/src/Validations/Country_Codes.php:97
+msgid "Chad"
+msgstr "Chade"
+
+#: admin/src/Admin/Settings/Registry.php:102
+msgid "Chave da API"
+msgstr "Chave da API"
+
+#: admin/src/Api/Controller.php:161
+msgid "Chave de API inválida ou ausente."
+msgstr "Chave de API inválida ou ausente."
+
+#: admin/src/Builder/Components.php:703
+msgid "Chave do meta dado"
+msgstr "Chave do meta dado"
+
+#: admin/src/Admin/Settings/Registry.php:103
+msgid "Chave usada para autenticar chamadas ao Proxy API."
+msgstr "Chave usada para autenticar chamadas ao Proxy API."
+
+#: admin/src/Builder/Components.php:702
+msgid "Chave: *"
+msgstr "Chave: *"
+
+#: admin/src/Validations/Country_Codes.php:56
+msgid "Chile"
+msgstr "Chile"
+
+#: admin/src/Validations/Country_Codes.php:69
+msgid "China"
+msgstr "China"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:224
+msgid "Choose one of the validated senders available in your account."
+msgstr "Escolha um dos remetentes validados disponíveis em sua conta."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:206
+msgid ""
+"Choose the sender and review the message before sending a test WhatsApp "
+"message."
+msgstr ""
+"Escolha o remetente e revise a mensagem antes de enviar uma mensagem de "
+"teste pelo WhatsApp."
+
+#: app/src/pages/settings/components/cards/DangerZone.vue:40
+#: app/src/pages/settings/components/cards/DebugLogModal.vue:44
+#: app/src/pages/settings/SettingsPage.vue:380
+msgid "Clear logs"
+msgstr "Limpar registros"
+
+#: admin/src/Views/Builder/Choose_Template.php:28
+msgid ""
+"Clique no botão do modelo de sua preferência para iniciar a criação do "
+"fluxo."
+msgstr ""
+"Clique no botão do modelo de sua preferência para iniciar a criação do "
+"fluxo."
+
+#: app/src/components/modals/ModalDialog.vue:54
+#: app/src/components/toasts/ToastStack.vue:80
+#: app/src/components/toasts/ToastStack.vue:88
+#: app/src/pages/settings/components/cards/DebugLogModal.vue:37
+msgid "Close"
+msgstr "Fechar"
+
+#: app/src/components/modals/ModalDialog.vue:32
+#: app/src/components/modals/ModalDialog.vue:51
+msgid "Close dialog"
+msgstr "Fechar caixa de diálogo"
+
+#: app/src/components/fields/OtpField.vue:79
+msgid "Code digit %s"
+msgstr "Dígito de código %s"
+
+#: app/src/pages/settings/SettingsPage.vue:288
+msgid "Code sent successfully."
+msgstr "Código enviado com sucesso."
+
+#: admin/src/Integrations/Woocommerce.php:813
+msgid "Código do cupom: *"
+msgstr "Código do cupom: *"
+
+#: admin/src/Rest/Phone_Register.php:63
+msgid "Código enviado com sucesso."
+msgstr "Código enviado com sucesso."
+
+#: admin/src/Rest/Phone_Validate_Otp.php:59
+msgid "Código OTP inválido ou expirado."
+msgstr "Código OTP inválido ou expirado."
+
+#: admin/src/Admin/Settings/Registry.php:55
+msgid "Código padrão do país"
+msgstr "Código do país"
+
+#: admin/src/Integrations/Flexify_Checkout.php:132
+msgid "Coleta de lead via checkout"
+msgstr "Coleta de chumbo via caixa"
+
+#: admin/src/Integrations/Flexify_Checkout.php:122
+msgid "Coleta de lead via modal"
+msgstr "Coleta de lead via modal"
+
+#: admin/src/Validations/Country_Codes.php:57
+msgid "Colombia"
+msgstr "Colômbia"
+
+#: admin/src/Builder/Components.php:920
+msgid "Começa com"
+msgstr "Começar com"
+
+#: admin/src/Builder/Workflow_Manager.php:63
+msgid "Começar com um modelo"
+msgstr "Começar com um modelo"
+
+#: admin/src/Builder/Workflow_Manager.php:57
+msgid "Começar do zero"
+msgstr "Começar do zero"
+
+#: admin/src/Views/Builder/Choose_Template.php:59
+msgid "Comece a automatizar seu site a partir de um modelo"
+msgstr "Comece a automatizar seu site a partir de um modelo"
+
+#: admin/src/Core/Assets.php:172
+msgid "Comidas e Bebidas"
+msgstr "Comidas e bebidas"
+
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:59
+msgid "Coming soon"
+msgstr "Em breve"
+
+#: admin/src/Views/Builder/Choose_Template.php:27
+msgid "Como você gostaria de criar seu novo fluxo?"
+msgstr "Como você gostaria de criar seu novo fluxo?"
+
+#: admin/src/Validations/Country_Codes.php:129
+msgid "Comoros"
+msgstr "Comores"
+
+#: admin/src/Integrations/Woocommerce.php:276
+msgid "Concluído"
+msgstr "ConUG"
+
+#: admin/src/Builder/Actions.php:52
+msgid "Condição"
+msgstr "Condição"
+
+#: admin/src/Builder/Components.php:927
+msgid "Condição: *"
+msgstr "Condição: *"
+
+#: admin/src/Builder/Components.php:79
+msgid "Condição: %s"
+msgstr "Condição: %s"
+
+#: admin/src/Admin/Components.php:116
+msgid "Conectado"
+msgstr "Conectado"
+
+#: admin/src/Core/Ajax.php:2346
+msgid "Conexão estabelecida."
+msgstr "pós-baixa."
+
+#: admin/src/Admin/Menu.php:80
+#: admin/src/Admin/Menu.php:81
+#: admin/src/Builder/Components.php:406
+#: admin/src/Integrations/Integrations_Base.php:103
+#: admin/src/Integrations/Woocommerce.php:680
+msgid "Configurações"
+msgstr "configurações"
+
+#: admin/src/Integrations/Integrations_Base.php:101
+msgid "Configurações da integração"
+msgstr "Configurações de integração"
+
+#: admin/src/Integrations/Woocommerce.php:685
+msgid "Configurações da integração com WooCommerce"
+msgstr "Configurações de integração com WooCommerce"
+
+#: admin/src/Core/Init.php:442
+#: admin/src/Core/Init.php:446
+msgid "Configurar"
+msgstr "Configurar"
+
+#: admin/src/Builder/Components.php:191
+#: admin/src/Builder/Components.php:281
+msgid "Configurar ação"
+msgstr "Configurar ação"
+
+#: admin/src/Builder/Components.php:416
+msgid "Configurar acionamento"
+msgstr "acionamento"
+
+#: admin/src/Builder/Components.php:156
+msgid "Configurar condição"
+msgstr "condição"
+
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:92
+#: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:48
+msgid "Configure"
+msgstr "Configurar"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
+msgid "Configure Proxy API"
+msgstr "Configurar API de proxy"
+
+#: app/src/components/modals/ConfirmDialog.vue:40
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: app/src/components/modals/ConfirmDialog.vue:23
+msgid "Confirmation"
+msgstr "Confirmação"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:47
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:63
+msgid "Connected"
+msgstr "Conectado"
+
+#: app/src/pages/settings/SettingsPage.vue:357
+msgid "Connection updated."
+msgstr "Conexão atualizada."
+
+#: admin/src/Builder/Components.php:918
+msgid "Contém"
+msgstr "contém"
+
+#: admin/src/Integrations/Wordpress.php:251
+msgid "Conteúdo de exemplo do post"
+msgstr "Conteúdo de destaque do post"
+
+#: admin/src/Views/Builder/Triggers.php:92
+msgid "Continuar"
+msgstr "Continuar"
+
+#: admin/src/Validations/Country_Codes.php:195
+msgid "Cook Islands"
+msgstr "Ilhas Cook"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:153
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:157
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:160
+msgid "Copy code"
+msgstr "Copiar código"
+
+#: admin/src/Validations/Country_Codes.php:170
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: app/src/pages/license/LicensePage.vue:220
+msgid "Could not activate the license."
+msgstr "Não foi possível ativar a licença."
+
+#: app/src/pages/settings/SettingsPage.vue:388
+msgid "Could not clear the logs."
+msgstr "Não foi possível limpar os registros."
+
+#: app/src/pages/license/LicensePage.vue:262
+msgid "Could not deactivate the license."
+msgstr "Não foi possível desativar a licença."
+
+#: app/src/pages/settings/SettingsPage.vue:374
+msgid "Could not open the logs."
+msgstr "Não foi possível abrir os registros."
+
+#: app/src/pages/settings/SettingsPage.vue:339
+msgid "Could not remove."
+msgstr "Não foi possível remover."
+
+#: app/src/pages/settings/SettingsPage.vue:405
+msgid "Could not reset."
+msgstr "Não foi possível reiniciar."
+
+#: app/src/pages/settings/SettingsPage.vue:268
+msgid "Could not save."
+msgstr "Não foi possível salvar."
+
+#: app/src/pages/license/LicensePage.vue:241
+msgid "Could not sync the license."
+msgstr "Não foi possível sincronizar a licença."
+
+#: app/src/pages/settings/SettingsPage.vue:359
+msgid "Could not update the connection."
+msgstr "Não foi possível atualizar a conexão."
+
+#: admin/src/Core/Workflows_Table.php:138
+msgid "Criado"
+msgstr "Criado"
+
+#: admin/src/Builder/Workflow_Manager.php:65
+msgid "Criar com um modelo"
+msgstr "Criar com um modelo"
+
+#: admin/src/Builder/Workflow_Manager.php:59
+msgid "Criar do zero"
+msgstr "Criar do zero"
+
+#: admin/src/Views/Builder/Navbar.php:60
+msgid "Criar um novo fluxo"
+msgstr "Criar um novo fluxo"
+
+#: admin/src/Integrations/OpenAI.php:45
+msgid ""
+"Crie mensagens dinâmicas para suas automações de uma forma simples e direta "
+"usando ChatGPT."
+msgstr ""
+"Crie mensagens dinâmicas para suas automatizações de uma forma simples e "
+"direta usando ChatGPT."
+
+#: admin/src/Builder/Workflow_Manager.php:64
+msgid "Crie seu fluxo de automação a partir de um modelo de sua escolha"
+msgstr "Crie seu fluxo de automação a partir de um modelo de sua escolha"
+
+#: admin/src/Builder/Workflow_Manager.php:58
+msgid "Crie seu fluxo de automação do zero"
+msgstr "Crie seu fluxo de automação do zero"
+
+#: admin/src/Builder/Workflow_Manager.php:70
+msgid "Crie seu fluxo de automação importando a partir de um arquivo"
+msgstr "Crie seu fluxo de automação importando a partir de um arquivo"
+
+#: admin/src/Validations/Country_Codes.php:157
+msgid "Croatia"
+msgstr "Croácia"
+
+#: admin/src/Validations/Country_Codes.php:53
+msgid "Cuba"
+msgstr "Cuba"
+
+#: admin/src/Integrations/Woocommerce.php:780
+msgid "Cupom de desconto"
+msgstr "Cupom de desconto"
+
+#: admin/src/Builder/Messages.php:249
+msgid "Cupom de desconto: <span class=\"builder-placeholder\">%s</span>"
+msgstr "Cupom de desconto: <span class=\"builder-placeholder\">%s</span>"
+
+#: admin/src/Builder/Messages.php:253
+msgid "Cupom expira: %s"
+msgstr "Cupom expira em: %s"
+
+#: admin/src/Integrations/Woocommerce.php:1040
+msgid "Cupom não expira"
+msgstr "Cupom não expira"
+
+#: admin/src/Integrations/Woocommerce.php:819
+msgid "Cupom para recuperação de compras"
+msgstr "Cupom para recuperação de compras"
+
+#: admin/src/Integrations/Woocommerce.php:710
+msgid "CUPOM_"
+msgstr "COPOM_"
+
+#: admin/src/Integrations/Woocommerce.php:814
+msgid "CUPOM_EXCLUSIVO"
+msgstr "CUPOM_EXCLUSIVO"
+
+#: admin/src/Integrations/Woocommerce.php:364
+msgid "CUPOM10, FRETEGRATIS"
+msgstr "CUPOM10, FRETEGRATIS"
+
+#: admin/src/Validations/Country_Codes.php:183
+msgid "Curaçao"
+msgstr "Curaçao"
+
+#: admin/src/Validations/Country_Codes.php:141
+msgid "Cyprus"
+msgstr "Chipre"
+
+#: admin/src/Validations/Country_Codes.php:161
+msgid "Czech Republic"
+msgstr "República Tcheca"
+
+#: admin/src/Integrations/Flexify_Checkout.php:298
+#: admin/src/Integrations/Woocommerce.php:236
+#: admin/src/Integrations/Wordpress.php:185
+msgid "da Silva"
+msgstr "da Silva"
+
+#: admin/src/Core/Ajax.php:1675
+msgid "Dados incompletos"
+msgstr "Dados incompletos"
+
+#: admin/src/Integrations/Woocommerce.php:905
+msgid "Dados insuficientes para criar o cupom."
+msgstr "Dados insuficientes para criar o cupom."
+
+#: admin/src/Core/Ajax.php:1190
+#: admin/src/Core/Ajax.php:1250
+msgid "Dados inválidos"
+msgstr "Dados"
+
+#: admin/src/Api/License.php:752
+msgid "Dados inválidos."
+msgstr "Dados inválidos."
+
+#: app/src/pages/settings/components/cards/DangerZone.vue:19
+msgid "Danger zone"
+msgstr "Zona de perigo"
+
+#: app/src/pages/license/LicensePage.vue:270
+#: app/src/pages/license/LicensePage.vue:423
+msgid "Deactivate license"
+msgstr "Desativar licença"
+
+#: app/src/pages/settings/components/cards/DebugLogModal.vue:24
+msgid "Debug logs"
+msgstr "Registros de depuração"
+
+#: admin/src/Views/Builder/Triggers.php:73
+msgid "Defina um nome para este fluxo"
+msgstr "Defina um nome para este fluxo"
+
+#: admin/src/Admin/Settings/Registry.php:51
+msgid ""
+"Define o país padrão usado para formatar números e preencher as opções de "
+"suporte."
+msgstr ""
+"Defina o país padrão usado para formatar números e preencher as opções de "
+"suporte."
+
+#: admin/src/Admin/Settings/Registry.php:333
+msgid "Define o texto usado na variável de endereço completo de entrega."
+msgstr "Defina o texto usado na variável de endereço completo de entrega."
+
+#: admin/src/Admin/Settings/Registry.php:324
+msgid "Define o texto usado na variável de endereço completo de faturamento."
+msgstr "Defina o texto usado na variável de endereço completo de faturamento."
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:97
+msgid "Defines the endpoint used to send media through the Proxy API."
+msgstr "Define o endpoint usado para enviar mídia através da API Proxy."
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:52
+msgid "Defines the endpoint used to send text messages through the Proxy API."
+msgstr "Define o endpoint usado para enviar mensagens de texto através da API Proxy."
+
+#: admin/src/Integrations/Woocommerce.php:841
+msgid "Definir expiração do cupom"
+msgstr "expiração do cupom"
+
+#: admin/src/Validations/Country_Codes.php:105
+msgid "Democratic Republic of the Congo"
+msgstr "República Democrática do Congo"
+
+#: admin/src/Validations/Country_Codes.php:46
+msgid "Denmark"
+msgstr "Dinamarca"
+
+#: admin/src/Admin/Settings/Registry.php:403
+msgid "Desativado"
+msgstr "Desativado"
+
+#: admin/src/Admin/Components.php:118
+msgid "Desconectado"
+msgstr "Desconectado"
+
+#: admin/src/Integrations/Woocommerce.php:827
+msgid "Desconto fixo"
+msgstr "Desconto"
+
+#: admin/src/Builder/Messages.php:251
+msgid "Desconto: %s"
+msgstr "Desconto: %s"
+
+#: admin/src/Integrations/Woocommerce.php:818
+msgid "Descrição do cupom (opcional)"
+msgstr "Descrição do cupom (opcional)"
+
+#: admin/src/Core/Workflow_Post_Type.php:62
+msgid "Descrição."
+msgstr "Descrição."
+
+#: admin/src/Admin/Settings/Registry.php:462
+msgid "Desligado"
+msgstr "‡do"
+
+#: admin/src/Integrations/Whatsapp.php:146
+#: admin/src/Integrations/Whatsapp.php:196
+msgid "Destinatário: *"
+msgstr "Destinatário: *"
+
+#: admin/src/Builder/Components.php:87
+#: admin/src/Builder/Components.php:241
+msgid "Destinatário: %s"
+msgstr "Destinatário: %s"
+
+#: admin/src/Core/Helpers.php:45
+msgid "dia"
+msgstr "dia"
+
+#: admin/src/Builder/Components.php:316
+msgid "Dia (s)"
+msgstr "Dia (s)"
+
+#: app/src/pages/settings/components/cards/DebugLogModal.vue:24
+msgid "Diagnostics"
+msgstr "Diagnóstico"
+
+#: admin/src/Cron/Routines.php:98
+msgid "Diariamente"
+msgstr "Diariamente"
+
+#: admin/src/Core/Helpers.php:45
+msgid "dias"
+msgstr "dias"
+
+#: admin/src/Integrations/Elementor_Forms.php:162
+msgid "Dica"
+msgstr "Dica"
+
+#: admin/src/Admin/Settings/Registry.php:548
+msgid "Digite o código da licença para desbloquear os recursos premium."
+msgstr "Digite o código de licença para desbloquear os recursos premium."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:47
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:63
+msgid "Disconnected"
+msgstr "Desconectado"
+
+#: admin/src/Core/Assets.php:168
+msgid "Diversidade"
+msgstr "Diversidade"
+
+#: admin/src/Validations/Country_Codes.php:114
+msgid "Djibouti"
+msgstr "Djibuti"
+
+#: admin/src/Core/Init.php:468
+msgid "Documentação"
+msgstr "Documentação"
+
+#: admin/src/Validations/Media_Types.php:46
+msgid "Documento"
+msgstr "Documento"
+
+#: admin/src/Admin/Settings/Registry.php:421
+msgid "DOMDocument"
+msgstr "Documento DOM"
+
+#: admin/src/Core/Ajax.php:1805
+msgid "Download iniciado"
+msgstr "Baixar iniciado"
+
+#: admin/src/Core/Ajax.php:1244
+msgid "Download realizado com sucesso"
+msgstr "Download realizado com sucesso"
+
+#: admin/src/Validations/Country_Codes.php:183
+msgid "Dutch Caribbean"
+msgstr "Caribe Holandês"
+
+#: admin/src/Builder/Components.php:914
+msgid "É"
+msgstr "É"
+
+#: admin/src/Builder/Components.php:826
+#: admin/src/Integrations/Woocommerce.php:1115
+msgid "E-mail do cliente"
+msgstr "E-mail do cliente"
+
+#: admin/src/Builder/Components.php:825
+msgid "E-mail do cliente:"
+msgstr "E-mail do cliente:"
+
+#: admin/src/Validations/Country_Codes.php:184
+msgid "East Timor"
+msgstr "Timor-Leste"
+
+#: admin/src/Validations/Country_Codes.php:177
+msgid "Ecuador"
+msgstr "Equador"
+
+#: admin/src/Core/Workflows_Table.php:186
+msgid "Editar"
+msgstr "Editar"
+
+#: admin/src/Builder/Components.php:122
+#: admin/src/Builder/Components.php:267
+msgid "Editar ação"
+msgstr "†"
+
+#: admin/src/Builder/Components.php:115
+msgid "Editar condição"
+msgstr "ano"
+
+#: admin/src/Admin/Menu.php:99
+#: admin/src/Admin/Menu.php:100
+#: admin/src/Core/Workflow_Post_Type.php:51
+msgid "Editar fluxo"
+msgstr "fluxo"
+
+#: admin/src/Builder/Components.php:1002
+#: admin/src/Views/Builder/Navbar.php:42
+msgid "Editar título do fluxo"
+msgstr "caro título do fluxo"
+
+#: admin/src/Validations/Country_Codes.php:33
+msgid "Egypt"
+msgstr "Egito"
+
+#: admin/src/Validations/Country_Codes.php:167
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: admin/src/Builder/Utils.php:109
+#: admin/src/Integrations/Elementor.php:74
+#: admin/src/Integrations/Elementor.php:120
+msgid "Elementor"
+msgstr "Elementor"
+
+#: admin/src/Builder/Components.php:850
+msgid "Em espera"
+msgstr "Em espera"
+
+#: app/src/pages/settings/components/sections/AboutSettingsSection.vue:40
+msgid "Enable debug mode"
+msgstr "Ativar o modo de depuração"
+
+#: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:35
+msgid "Enable Proxy API"
+msgstr "Habilitar API de proxy"
+
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:73
+msgid "Enable the integration to access its settings."
+msgstr "Habilite a integração para acessar as configurações."
+
+#: app/src/pages/license/LicensePage.vue:201
+msgid "Enter a license key before activating."
+msgstr "Insira uma chave de licença antes de ativar."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:164
+msgid ""
+"Enter a phone number to receive test messages from the builder. Use "
+"international format and numbers only."
+msgstr ""
+"Insira um número de telefone para receber mensagens de teste do construtor. "
+"Use apenas números e formatos internacionais."
+
+#: app/src/components/fields/PhoneField.vue:266
+msgid "Enter phone number"
+msgstr "Digite o número de telefone"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:332
+msgid "Enter the code received on the selected phone."
+msgstr "Digite o código recebido no telefone selecionado."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:238
+msgid "Enter the destination phone number that will receive the test message."
+msgstr "Digite o número de telefone de destino que receberá a mensagem de teste."
+
+#: app/src/pages/license/LicensePage.vue:53
+#: app/src/pages/license/LicensePage.vue:185
+msgid "Enter your license key to unlock premium features."
+msgstr "Insira sua chave de licença para desbloquear os recursos premium."
+
+#: admin/src/Admin/Settings/Registry.php:62
+msgid "Envia uma notificação ao remetente quando a conexão não é estabelecida."
+msgstr "Envia uma notificação ao remetente quando a conexão não é estabelecida."
+
+#: admin/src/Integrations/Elementor_Forms.php:127
+msgid "Enviar mensagem de texto"
+msgstr "Enviar mensagem de texto"
+
+#: admin/src/Integrations/Elementor_Forms.php:170
+msgid "Enviar mídia"
+msgstr "Exportar mídia"
+
+#: admin/src/Integrations/Woocommerce.php:109
+msgid ""
+"Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação "
+"de pedidos não pagos. Mantenha seus clientes atualizados."
+msgstr ""
+"Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação "
+"de pedidos não pagos. Mantenha seus clientes atualizados."
+
+#: admin/src/Integrations/Elementor.php:75
+msgid ""
+"Envie mensagens quando um formulário Elementor com campo de telefone for "
+"enviado. Conecte-se com seus clientes instantaneamente."
+msgstr ""
+"Envie mensagens quando um formulário Elementor com campo de telefone para "
+"enviado. Conecte-se com seus clientes instantaneamente."
+
+#: admin/src/Views/Builder/Choose_Template.php:92
+msgid "Envie seu arquivo .json para importar o modelo da automação de mensagens."
+msgstr "Envie seu arquivo .json para importar o modelo da automação de mensagens."
+
+#: admin/src/Integrations/Woocommerce.php:781
+msgid ""
+"Envie um cupom de desconto para seu usuário através de mensagem de texto do "
+"WhatsApp."
+msgstr ""
+"Envie um cupom de desconto para seu usuário através de mensagem de texto do "
+"WhatsApp."
+
+#: admin/src/Integrations/Whatsapp.php:92
+msgid ""
+"Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o "
+"WhatsApp."
+msgstr ""
+"Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o "
+"WhatsApp."
+
+#: admin/src/Integrations/Whatsapp.php:79
+msgid "Envie uma mensagem de texto com o WhatsApp."
+msgstr "Envie uma mensagem de texto com o WhatsApp."
+
+#: admin/src/Validations/Country_Codes.php:102
+msgid "Equatorial Guinea"
+msgstr "Guiné Equatorial"
+
+#: admin/src/Core/Ajax.php:1170
+msgid "Erro ao atualizar o fluxo"
+msgstr "Erro ao atualizar o fluxo"
+
+#: admin/src/Core/Ajax.php:257
+msgid "Erro ao carregar o arquivo. A ação não foi acionada corretamente."
+msgstr "Erro ao carregar o arquivo. A ação não foi acionada corretamente."
+
+#: admin/src/Core/Ajax.php:268
+msgid "Erro ao carregar o arquivo. O arquivo não foi enviado."
+msgstr "Erro ao carregar o arquivo. O arquivo não foi enviado."
+
+#: admin/src/Core/Ajax.php:531
+#: admin/src/Core/Ajax.php:2213
+msgid "Erro ao criar fluxo"
+msgstr "Erro ao criar fluxo"
+
+#: admin/src/Core/Ajax.php:2166
+#: admin/src/Core/Ajax.php:2177
+msgid "Erro ao importar"
+msgstr "Erro ao"
+
+#: admin/src/Core/Ajax.php:1491
+msgid "Erro ao remover remetente"
+msgstr "Erro ao remover"
+
+#: admin/src/Core/Ajax.php:1448
+msgid "Erro ao remover telefone"
+msgstr "Erro ao remover telefone"
+
+#: admin/src/Api/License.php:374
+#: admin/src/Api/License.php:427
+msgid "Erro cURL 35: Problema de comunicação SSL/TLS."
+msgstr "Erro cURL 35: Problema de comunicação SSL/TLS."
+
+#: admin/src/Api/License.php:429
+msgid "Erro cURL: %s"
+msgstr "Erro cURL: %s"
+
+#: admin/src/Api/License.php:301
+msgid "Erro JSON: %s"
+msgstr "Erro JSON: %s"
+
+#: admin/src/Core/Ajax.php:1587
+msgid "Erro na execução do fluxo"
+msgstr "Erro na execução do fluxo"
+
+#: admin/src/Core/Ajax.php:1371
+msgid "Erro na validação do OTP"
+msgstr "Erro na validação do OTP"
+
+#: admin/src/Core/Ajax.php:1423
+msgid "Erro na verificação"
+msgstr "Erro na verificação"
+
+#: admin/src/Core/Ajax.php:478
+msgid "Erro no upload"
+msgstr "Erro ao fazer upload"
+
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:34
+msgid "error"
+msgstr "erro"
+
+#: app/src/pages/settings/SettingsPage.vue:268
+msgid "Error"
+msgstr "Erro"
+
+#: admin/src/Admin/Settings/Registry.php:56
+msgid "Escolha o país usado como fallback quando o telefone não vier com DDI."
+msgstr "Escolha o país usado como substituto quando o telefone não vier com DDI."
+
+#: admin/src/Views/Builder/Triggers.php:22
+msgid "Escolha o tipo de acionamento"
+msgstr "Escolha o tipo de acionamento"
+
+#: admin/src/Core/Assets.php:158
+msgid "Escolher mÃ­dia"
+msgstr "Escolher mídia"
+
+#: admin/src/Builder/Components.php:1093
+#: admin/src/Integrations/Woocommerce.php:855
+msgid "Esperar até"
+msgstr "Esperar até"
+
+#: admin/src/Builder/Messages.php:94
+msgid "Esperar até %s"
+msgstr "Esperar até %s"
+
+#: admin/src/Builder/Messages.php:92
+msgid "Esperar até %s - %s"
+msgstr "Esperar até %s - %s"
+
+#: admin/src/Builder/Components.php:1074
+#: admin/src/Integrations/Woocommerce.php:850
+msgid "Esperar até uma data"
+msgstr "Esperar até uma data"
+
+#: admin/src/Builder/Components.php:1079
+#: admin/src/Integrations/Woocommerce.php:864
+msgid "Esperar por"
+msgstr "Esperar por"
+
+#: admin/src/Builder/Messages.php:86
+msgid "Esperar por %s %s"
+msgstr "Esperar por %s %s"
+
+#: admin/src/Builder/Components.php:1073
+#: admin/src/Integrations/Woocommerce.php:849
+msgid "Esperar tempo"
+msgstr "Esperar tempo"
+
+#: admin/src/Integrations/Woocommerce.php:707
+msgid "Essa opção controla o prefixo do cupom criado automaticamente."
+msgstr "Essa opção controla o prefixo do cupom criado automaticamente."
+
+#: admin/src/Builder/Components.php:1198
+msgid "Esta ação não necessita de configurações auxiliares."
+msgstr "Esta ação não necessita de configurações auxiliares."
+
+#: admin/src/Integrations/Integrations_Base.php:211
+#: admin/src/Integrations/Integrations_Base.php:215
+msgid "Este acionamento depende de um plugin"
+msgstr "Este funcionamento depende de um plugin"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:106
+msgid ""
+"Este acionamento é disparado quando a assinatura tem seu status alterado "
+"para cancelado."
+msgstr ""
+"Este acionamento é disparado quando a assinatura tem seu status alterado "
+"para cancelamento."
+
+#: admin/src/Integrations/Woo_Subscriptions.php:100
+msgid "Este acionamento é disparado quando o prazo de um assinatura expirou."
+msgstr "Este acionamento é disparado quando o prazo de uma assinatura expirou."
+
+#: admin/src/Integrations/Flexify_Checkout.php:143
+msgid "Este acionamento é disparado quando o usuário abandona o carrinho."
+msgstr "Este acionamento é disparado quando o usuário abandona o carrinho."
+
+#: admin/src/Integrations/Flexify_Checkout.php:133
+msgid ""
+"Este acionamento é disparado quando o usuário fornece seus dados de contato "
+"pelo checkout."
+msgstr ""
+"Este acionamento é disparado quando o usuário fornece seus dados de contato "
+"pelo checkout."
+
+#: admin/src/Integrations/Flexify_Checkout.php:123
+msgid ""
+"Este acionamento é disparado quando o usuário fornece seus dados de contato "
+"via modal."
+msgstr ""
+"Este acionamento é disparado quando o usuário fornece seus dados de contato "
+"via modal."
+
+#: admin/src/Integrations/Flexify_Checkout.php:153
+msgid "Este acionamento é disparado quando um carrinho abandonado é recuperado."
+msgstr "Este acionamento é disparado quando um carrinho abandonado é recuperado."
+
+#: admin/src/Integrations/Flexify_Checkout.php:173
+msgid "Este acionamento é disparado quando um carrinho é considerado perdido."
+msgstr "Este acionamento é disparado quando um carrinho é considerado perdido."
+
+#: admin/src/Integrations/Wpforms.php:112
+msgid ""
+"Este acionamento é disparado quando um formulário de pagamento do WPForms é "
+"processado usando PayPal."
+msgstr ""
+"Este acionamento é disparado quando um formulário de pagamento do WPForms é "
+"processado usando PayPal."
+
+#: admin/src/Integrations/Elementor.php:101
+msgid "Este acionamento é disparado quando um formulário do Elementor é enviado."
+msgstr "Este acionamento é disparado quando um formulário do Elementor é enviado."
+
+#: admin/src/Integrations/Wpforms.php:106
+msgid "Este acionamento é disparado quando um formulário do WPForms é enviado."
+msgstr "Este acionamento é disparado quando um formulário do WPForms é enviado."
+
+#: admin/src/Integrations/Woocommerce.php:135
+msgid ""
+"Este acionamento é disparado quando um novo pedido é recebido no "
+"WooCommerce com qualquer status."
+msgstr ""
+"Este acionamento é disparado quando um novo pedido é recebido no "
+"WooCommerce com qualquer status."
+
+#: admin/src/Integrations/Woocommerce.php:141
+msgid ""
+"Este acionamento é disparado quando um novo pedido é recebido no "
+"WooCommerce com status processando."
+msgstr ""
+"Este acordo é disparado quando um novo pedido é recebido no WooCommerce com "
+"status processando."
+
+#: admin/src/Integrations/Wordpress.php:104
+msgid "Este acionamento é disparado quando um novo registro de usuário é recebido."
+msgstr "Este acionamento é disparado quando um novo registro de usuário é recebido."
+
+#: admin/src/Integrations/Flexify_Checkout.php:163
+msgid "Este acionamento é disparado quando um pedido é abandonado."
+msgstr "Este acionamento é disparado quando um pedido é abandonado."
+
+#: admin/src/Integrations/Woocommerce.php:159
+msgid "Este acionamento é disparado quando um pedido é parcialmente reembolsado."
+msgstr "Este acordo é disparado quando um pedido é parcialmente reembolsado."
+
+#: admin/src/Integrations/Woocommerce.php:153
+msgid "Este acionamento é disparado quando um pedido é totalmente reembolsado."
+msgstr "Este acionamento é disparado quando um pedido é totalmente reembolsado."
+
+#: admin/src/Integrations/Woocommerce.php:147
+msgid ""
+"Este acionamento é disparado quando um pedido tem o status alterado para "
+"concluído."
+msgstr ""
+"Este acionamento é disparado quando um pedido tem o status alterado para "
+"conclusão."
+
+#: admin/src/Integrations/Woocommerce.php:165
+msgid "Este acionamento é disparado quando um pedido tem seu status alterado."
+msgstr "Este acionamento é disparado quando um pedido tem seu status alterado."
+
+#: admin/src/Integrations/Wordpress.php:122
+msgid "Este acionamento é disparado quando um post tem o status alterado no site."
+msgstr "Este acionamento é disparado quando um post tem o status alterado no site."
+
+#: admin/src/Integrations/Wordpress.php:110
+msgid "Este acionamento é disparado quando um usuário fizer login no site."
+msgstr "Este acionamento é disparado quando um usuário faz login no site."
+
+#: admin/src/Integrations/Wordpress.php:116
+msgid ""
+"Este acionamento é disparado quando um usuário solicitar recuperação de "
+"senha no site."
+msgstr ""
+"Este acionamento é disparado quando um usuário solicita recuperação de "
+"senha no site."
+
+#: admin/src/Integrations/Woo_Subscriptions.php:88
+msgid ""
+"Este acionamento é disparado quando uma assinatura recorrente tem o "
+"pagamento recebido."
+msgstr ""
+"Este acionamento é disparado quando uma assinatura recorrente tem o "
+"pagamento recebido."
+
+#: admin/src/Integrations/Woo_Subscriptions.php:94
+msgid ""
+"Este acionamento é disparado quando uma assinatura recorrente tem seu "
+"pagamento falhado ou recusado."
+msgstr ""
+"Este acionamento é disparado quando uma assinatura recorrente tem seu "
+"pagamento falhado ou recusado."
+
+#: admin/src/Integrations/Woo_Subscriptions.php:82
+msgid ""
+"Este acionamento é disparado quando uma assinatura tem seu status alterado "
+"para ativo."
+msgstr ""
+"Este acionamento é disparado quando uma assinatura tem seu status alterado "
+"para ativo."
+
+#: admin/src/Integrations/Woo_Subscriptions.php:76
+msgid ""
+"Este acionamento é disparado quando uma nova assinatura é criada no "
+"WooCommerce."
+msgstr ""
+"Este acionamento é disparado quando uma nova assinatura é criada no "
+"WooCommerce."
+
+#: admin/src/Admin/Settings/Registry.php:285
+msgid "Este plugin precisa estar instalado e ativo para habilitar esta integração."
+msgstr "Este plugin precisa estar instalado e ativo para habilitar esta integração."
+
+#: admin/src/Integrations/Integrations_Base.php:204
+msgid "Este recurso será liberado em breve"
+msgstr "Este recurso será liberado em breve"
+
+#: admin/src/Validations/Country_Codes.php:146
+msgid "Estonia"
+msgstr "Estônia"
+
+#: admin/src/Validations/Country_Codes.php:128
+msgid "Eswatini (Swaziland)"
+msgstr "Eswatini (Suazilândia)"
+
+#: admin/src/Validations/Country_Codes.php:112
+msgid "Ethiopia"
+msgstr "Etiópia"
+
+#: admin/src/Admin/Settings/Registry.php:342
+msgid ""
+"Evita que a mesma ação seja processada novamente quando o gatilho se "
+"repetir."
+msgstr ""
+"Evite que a mesma ação seja processada novamente quando o gatilho se "
+"repetir."
+
+#: app/src/pages/license/LicensePage.vue:47
+msgid "Example: CM-0000-0000-0000"
+msgstr "Exemplo: CM-0000-0000-0000"
+
+#: admin/src/Builder/Components.php:107
+#: admin/src/Builder/Components.php:259
+msgid "Excluir ação"
+msgstr "Excluir"
+
+#: admin/src/Core/Workflows_Table.php:173
+#: admin/src/Core/Workflows_Table.php:250
+msgid "Excluir permanentemente"
+msgstr "Excluir"
+
+#: admin/src/Builder/Components.php:1178
+msgid "Expandir"
+msgstr "Expandir"
+
+#: admin/src/Builder/Messages.php:271
+#: admin/src/Integrations/Woocommerce.php:1036
+msgid "Expira em %s"
+msgstr "Expira em %s"
+
+#: admin/src/Builder/Messages.php:269
+#: admin/src/Integrations/Woocommerce.php:1034
+msgid "Expira em %s - %s"
+msgstr "Expira em %s - %s"
+
+#: admin/src/Builder/Messages.php:263
+#: admin/src/Integrations/Woocommerce.php:1028
+msgid "Expira em %s %s"
+msgstr "Expira em %s %s"
+
+#: app/src/pages/license/LicensePage.vue:66
+msgid "Expires on"
+msgstr "Expira em"
+
+#: app/src/pages/license/LicensePage.vue:188
+msgid "Expires on: Not available"
+msgstr "Expira em: Não disponível"
+
+#: admin/src/Admin/Settings/Registry.php:82
+msgid "Expõe endpoints neste site para processar requisições do Joinotify."
+msgstr "Expõe endpoints neste site para processar requisições do Joinotify."
+
+#: admin/src/Views/Builder/Navbar.php:51
+msgid "Exportar fluxo"
+msgstr "Exportar fluxo"
+
+#: admin/src/Admin/Settings/Registry.php:426
+msgid "Extensão cURL"
+msgstr "Extensão cURL"
+
+#: admin/src/Admin/Settings/Registry.php:431
+msgid "Extensão OpenSSL"
+msgstr "Extensão OpenSSL"
+
+#: app/src/pages/settings/SettingsPage.vue:317
+msgid "Failed to send message."
+msgstr "Falha ao enviar a mensagem."
+
+#: app/src/pages/settings/SettingsPage.vue:290
+msgid "Failed to send OTP."
+msgstr "Falha no envio do OTP."
+
+#: admin/src/Core/Ajax.php:2276
+msgid "Falha ao ativar o plugin."
+msgstr "Falha ao ativar o plugin."
+
+#: admin/src/Api/Controller.php:300
+#: admin/src/Rest/Send_Media_Message.php:130
+msgid "Falha ao enviar mensagem de mídia."
+msgstr "Falha ao enviar mensagem de mídia."
+
+#: admin/src/Api/Controller.php:268
+#: admin/src/Rest/Send_Text_Message.php:124
+msgid "Falha ao enviar mensagem de texto."
+msgstr "Falha ao enviar mensagem de texto."
+
+#: admin/src/Core/Ajax.php:2283
+msgid "Falha ao instalar/atualizar o plugin."
+msgstr "Falha ao instalar/atualizar o plugin."
+
+#: admin/src/Validations/Country_Codes.php:164
+msgid "Falkland Islands (Malvinas)"
+msgstr "Ilhas Malvinas (Falkland Islands)"
+
+#: admin/src/Builder/Components.php:580
+msgid "Falso"
+msgstr "Falso"
+
+#: admin/src/Validations/Country_Codes.php:132
+msgid "Faroe Islands"
+msgstr "Ilhas Faroé"
+
+#: admin/src/Builder/Components.php:1003
+#: admin/src/Builder/Components.php:1045
+#: admin/src/Builder/Components.php:1187
+#: admin/src/Core/Assets.php:91
+#: admin/src/Integrations/Integrations_Base.php:140
+#: admin/src/Integrations/Whatsapp.php:129
+#: admin/src/Integrations/Woocommerce.php:686
+msgid "Fechar"
+msgstr "Fechar"
+
+#: admin/src/Validations/Country_Codes.php:203
+msgid "Federated States of Micronesia"
+msgstr "Estados Federados da Micronésia"
+
+#: admin/src/Admin/Settings/Registry.php:126
+msgid "Ferramentas rápidas"
+msgstr "Ferramentas rápidas"
+
+#: admin/src/Validations/Country_Codes.php:192
+msgid "Fiji"
+msgstr "Fiji"
+
+#: admin/src/Validations/Country_Codes.php:142
+msgid "Finland"
+msgstr "Finlândia"
+
+#: admin/src/Builder/Utils.php:108
+#: admin/src/Integrations/Flexify_Checkout.php:195
+msgid "Flexify Checkout"
+msgstr "Flexibilize o checkout"
+
+#: admin/src/Integrations/Flexify_Checkout.php:114
+msgid "Flexify Checkout - Recuperação de carrinhos abandonados"
+msgstr "Flexify Checkout - Recuperação de carrinhos abandonados"
+
+#: admin/src/Integrations/Flexify_Checkout.php:89
+msgid "Flexify Checkout para WooCommerce"
+msgstr "Flexify Checkout para WooCommerce"
+
+#: admin/src/Builder/Components.php:43
+msgid "Fluxo ativo"
+msgstr "Fluxo ativo"
+
+#: admin/src/Core/Ajax.php:610
+msgid "Fluxo atualizado com sucesso"
+msgstr "Fluxote com sucesso"
+
+#: admin/src/Core/Ajax.php:672
+msgid "Fluxo criado com sucesso"
+msgstr "Fluxo criado com sucesso"
+
+#: admin/src/Core/Ajax.php:1245
+msgid "Fluxo exportado com sucesso!"
+msgstr "Fluxo exportado com sucesso!"
+
+#: admin/src/Core/Ajax.php:550
+#: admin/src/Core/Ajax.php:2231
+msgid "Fluxo importado"
+msgstr "Fluxo importado"
+
+#: admin/src/Builder/Components.php:46
+msgid "Fluxo inativo"
+msgstr "Fluxo inativo"
+
+#: admin/src/Core/Ajax.php:829
+#: admin/src/Core/Ajax.php:1122
+msgid "Fluxo não encontrado"
+msgstr "Fluxo não encontrado"
+
+#: admin/src/Core/Workflow_Post_Type.php:55
+msgid "Fluxo pai:"
+msgstr "Fluxo pai:"
+
+#: admin/src/Core/Ajax.php:1183
+msgid "Fluxo vazio"
+msgstr "Fluxograma"
+
+#: admin/src/Admin/Menu.php:117
+msgid "Fluxos por página"
+msgstr "Fluxos por página"
+
+#: admin/src/Integrations/Woocommerce.php:1107
+msgid "Forma de entrega"
+msgstr "Forma de entrega"
+
+#: admin/src/Integrations/Woocommerce.php:1103
+msgid "Forma de pagamento"
+msgstr "Forma de pagamento"
+
+#: admin/src/Integrations/Woocommerce.php:734
+msgid "Formato do endereço completo (entrega)"
+msgstr "Formato do endereço completo (entrega)"
+
+#: admin/src/Integrations/Woocommerce.php:716
+msgid "Formato do endereço completo (faturamento)"
+msgstr "Formato do endereço completo (faturamento)"
+
+#: admin/src/Admin/Settings/Registry.php:332
+msgid "Formato do endereço completo de entrega"
+msgstr "Formato do endereço completo de entrega"
+
+#: admin/src/Admin/Settings/Registry.php:323
+msgid "Formato do endereço completo de faturamento"
+msgstr "Formato do endereço completo do faturamento"
+
+#: admin/src/Builder/Components.php:511
+msgid "Formulário do Elementor: *"
+msgstr "� do Elementor: *"
+
+#: admin/src/Builder/Components.php:480
+msgid "Formulário do WPForms: *"
+msgstr "Plataforma do WPForms: *"
+
+#: admin/src/Integrations/Elementor.php:100
+#: admin/src/Integrations/Wpforms.php:105
+msgid "Formulário é enviado"
+msgstr "é enviado"
+
+#: admin/src/Validations/Country_Codes.php:38
+msgid "France"
+msgstr "França"
+
+#: admin/src/Validations/Country_Codes.php:178
+msgid "French Guiana"
+msgstr "Guiana Francesa"
+
+#: admin/src/Validations/Country_Codes.php:201
+msgid "French Polynesia"
+msgstr "Polinésia Francesa"
+
+#: admin/src/Builder/Messages.php:252
+msgid "Frete grátis: %s"
+msgstr "Frete grátis: %s"
+
+#: admin/src/Integrations/Wordpress.php:306
+#: admin/src/Integrations/Wordpress.php:316
+msgid "Função do usuário"
+msgstr "Aninha do usuário"
+
+#: admin/src/Builder/Components.php:687
+msgid "Função do usuário: *"
+msgstr "moça do usuário: *"
+
+#: admin/src/Validations/Country_Codes.php:103
+msgid "Gabon"
+msgstr "Gabão"
+
+#: admin/src/Validations/Country_Codes.php:82
+msgid "Gambia"
+msgstr "Gâmbia"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
+msgid "General"
+msgstr "Em geral"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:180
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:184
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:187
+msgid "Generate a new key"
+msgstr "Gerar uma nova chave"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:142
+msgid "Generate a new key to authenticate Proxy API calls."
+msgstr "Gere uma nova chave para autenticar chamadas da API Proxy."
+
+#: admin/src/Validations/Country_Codes.php:232
+msgid "Georgia"
+msgstr "Geórgia"
+
+#: admin/src/Builder/Messages.php:244
+msgid "Gerado automaticamente"
+msgstr "Gerado automaticamente"
+
+#: admin/src/Admin/Settings/Registry.php:44
+#: admin/src/Admin/Settings/Registry.php:201
+msgid "Geral"
+msgstr "Geral"
+
+#: admin/src/Integrations/Woocommerce.php:808
+msgid "Gerar cupom automaticamente"
+msgstr "Gerar cupom automaticamente"
+
+#: admin/src/Admin/Menu.php:180
+msgid "Gerenciar fluxos"
+msgstr "Gerenciar fluxos"
+
+#: admin/src/Admin/Settings/Registry.php:115
+msgid "Gerencie remetentes, valide novas conexões e envie mensagens de teste."
+msgstr "Gerencie remetentes, valide novas conexões e envie mensagens de teste."
+
+#: admin/src/Validations/Country_Codes.php:50
+msgid "Germany"
+msgstr "Alemanha"
+
+#: admin/src/Validations/Country_Codes.php:95
+msgid "Ghana"
+msgstr "Gana"
+
+#: admin/src/Validations/Country_Codes.php:134
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: admin/src/Validations/Country_Codes.php:35
+msgid "Greece"
+msgstr "Grécia"
+
+#: admin/src/Validations/Country_Codes.php:133
+msgid "Greenland"
+msgstr "Groenlândia"
+
+#: admin/src/Validations/Country_Codes.php:174
+msgid "Guadeloupe"
+msgstr "Guadalupe"
+
+#: admin/src/Validations/Country_Codes.php:166
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: admin/src/Validations/Country_Codes.php:86
+msgid "Guinea"
+msgstr "Guiné"
+
+#: admin/src/Validations/Country_Codes.php:107
+msgid "Guinea-Bissau"
+msgstr "Guiné-Bissau"
+
+#: admin/src/Validations/Country_Codes.php:176
+msgid "Guyana"
+msgstr "Guiana"
+
+#: admin/src/Validations/Country_Codes.php:173
+msgid "Haiti"
+msgstr "Haiti"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:18
+msgid "Hello, this is a test message."
+msgstr "Olá, esta é uma mensagem de teste."
+
+#: app/src/pages/settings/components/SettingsHeader.vue:31
+msgid "Help Center"
+msgstr "Central de Ajuda"
+
+#: admin/src/Validations/Country_Codes.php:168
+msgid "Honduras"
+msgstr "Honduras"
+
+#: admin/src/Validations/Country_Codes.php:206
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: admin/src/Core/Helpers.php:44
+msgid "hora"
+msgstr "hora"
+
+#: admin/src/Builder/Components.php:315
+msgid "Hora (s)"
+msgstr "Hora(s)"
+
+#: admin/src/Core/Helpers.php:44
+msgid "horas"
+msgstr "horas"
+
+#: admin/src/Validations/Country_Codes.php:40
+msgid "Hungary"
+msgstr "Hungria"
+
+#: admin/src/Validations/Country_Codes.php:138
+msgid "Iceland"
+msgstr "Islândia"
+
+#: admin/src/Core/Assets.php:161
+msgid "ID copiado!"
+msgstr "ID copiado!"
+
+#: admin/src/Builder/Components.php:884
+msgid "ID do campo"
+msgstr "ID do campo"
+
+#: admin/src/Integrations/Elementor_Forms.php:103
+msgid "ID do campo de destinatário"
+msgstr "ID do campo de"
+
+#: admin/src/Builder/Components.php:883
+msgid "ID do campo:"
+msgstr "ID do campo:"
+
+#: admin/src/Integrations/Elementor_Forms.php:115
+msgid "ID do formulário"
+msgstr "ID do lu"
+
+#: app/src/pages/license/LicensePage.vue:455
+msgid ""
+"If the license does not update immediately, click Sync to fetch the latest "
+"status from the server."
+msgstr ""
+"Se a licença não for atualizada imediatamente, clique em Sincronizar para "
+"obter o status mais recente do servidor."
+
+#: admin/src/Admin/Settings/Registry.php:341
+msgid "Ignorar ações já processadas"
+msgstr "Ignorar ações já processadas"
+
+#: admin/src/Integrations/Woocommerce.php:752
+msgid "Ignorar ações já processadas no fluxo"
+msgstr "Ignorar ações já processadas no fluxo"
+
+#: admin/src/Validations/Media_Types.php:44
+msgid "Imagem"
+msgstr "Imagem"
+
+#: admin/src/Views/Builder/Choose_Template.php:115
+msgid "Importar"
+msgstr "Importar"
+
+#: admin/src/Builder/Workflow_Manager.php:71
+msgid "Importar arquivo"
+msgstr "Importar arquivo"
+
+#: admin/src/Core/Ajax.php:439
+msgid "Importar fluxo"
+msgstr "Importar fluxo"
+
+#: admin/src/Views/Builder/Choose_Template.php:91
+msgid "Importar modelo"
+msgstr "Importar modelo"
+
+#: admin/src/Builder/Workflow_Manager.php:69
+msgid "Importar um modelo"
+msgstr "Importar um modelo"
+
+#: admin/src/Core/Ajax.php:809
+#: admin/src/Views/Builder/Navbar.php:29
+msgid "Inativo"
+msgstr "Inativo"
+
+#: admin/src/Core/Workflows_Table.php:99
+msgid "Inativos"
+msgstr "Inativos"
+
+#: admin/src/Core/Init.php:172
+msgid ""
+"Increase customer satisfaction by automating WhatsApp messaging with "
+"Joinotify."
+msgstr ""
+"Aumente a satisfação do cliente automatizando o envio de mensagens pelo "
+"WhatsApp com o Joinotify."
+
+#: app/src/pages/settings/components/SettingsHeader.vue:29
+msgid ""
+"Increase customer satisfaction by automating WhatsApp messaging with "
+"Joinotify. If you need help setting it up, visit our "
+msgstr ""
+"Aumente a satisfação do cliente automatizando o envio de mensagens pelo "
+"WhatsApp com o Joinotify. Se precisar de ajuda para configurar, visite "
+"nosso site."
+
+#: admin/src/Validations/Country_Codes.php:71
+msgid "India"
+msgstr "Índia"
+
+#: admin/src/Validations/Country_Codes.php:61
+msgid "Indonesia"
+msgstr "Indonésia"
+
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:35
+msgid "info"
+msgstr "informações"
+
+#: admin/src/Admin/Components.php:81
+msgid "Informe o código de 4 dígitos que foi enviado para"
+msgstr "Informe o código de 4 dígitos que foi enviado para"
+
+#: admin/src/Integrations/Elementor_Forms.php:117
+msgid ""
+"Informe o ID deste formulário para validar o processamento das informações. "
+"Disponível nas informações adicionais do formulário."
+msgstr ""
+"Informe o ID deste formulário para validar o processamento das informações. "
+"Disponível nas informações adicionais do formulário."
+
+#: admin/src/Integrations/Elementor_Forms.php:105
+msgid "Informe o ID do campo que coleta o telefone de destinatário do formulário."
+msgstr "Informe o ID do campo que coleta o telefone do destinatário do formulário."
+
+#: admin/src/Builder/Components.php:512
+msgid "Informe o ID do formulário"
+msgstr "Informe o ID do LUC"
+
+#: admin/src/Integrations/Integrations_Base.php:217
+msgid "Instalar plugin"
+msgstr "plugin"
+
+#: admin/src/Core/Ajax.php:2196
+msgid "Integração indisponível"
+msgstr "Integração indisponível"
+
+#: admin/src/Core/Ajax.php:428
+msgid "Integração ou acionamento indisponível para este modelo."
+msgstr "Integração ou acionamento indisponível para este modelo."
+
+#: admin/src/Admin/Settings/Registry.php:167
+msgid "Integração para desenvolvedor"
+msgstr "Integração para desenvolvedor"
+
+#: admin/src/Core/Ajax.php:433
+msgid "Integração:"
+msgstr "Integração:"
+
+#: admin/src/Admin/Settings/Registry.php:134
+#: admin/src/Admin/Settings/Registry.php:213
+msgid "Integrações"
+msgstr "Integrações"
+
+#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:25
+msgid "Integration settings"
+msgstr "Configurações de integração"
+
+#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:27
+msgid "Integrations"
+msgstr "Integrações"
+
+#: app/src/pages/license/LicensePage.vue:43
+#: app/src/pages/license/LicensePage.vue:182
+msgid "Invalid"
+msgstr "Inválido"
+
+#: admin/src/Rest/Send_Media_Message.php:99
+#: admin/src/Rest/Send_Text_Message.php:95
+msgid "Invalid or missing API key."
+msgstr "Chave de API inválida ou ausente."
+
+#: admin/src/Admin/Settings/Registry.php:543
+msgid "Inválida"
+msgstr "Inválida"
+
+#: admin/src/Validations/Country_Codes.php:76
+msgid "Iran"
+msgstr "Irã"
+
+#: admin/src/Validations/Country_Codes.php:216
+msgid "Iraq"
+msgstr "Iraque"
+
+#: admin/src/Validations/Country_Codes.php:137
+msgid "Ireland"
+msgstr "Irlanda"
+
+#: app/src/pages/settings/components/cards/DangerZone.vue:24
+msgid "Irreversible"
+msgstr "Irreversível"
+
+#: app/src/pages/settings/components/cards/DangerZone.vue:21
+msgid "Irreversible actions for clearing configuration and logs."
+msgstr "Ações irreversíveis para limpar a configuração e os registros."
+
+#: admin/src/Validations/Country_Codes.php:223
+msgid "Israel"
+msgstr "Israel"
+
+#: admin/src/Validations/Country_Codes.php:41
+msgid "Italy"
+msgstr "Itália"
+
+#: admin/src/Integrations/Flexify_Checkout.php:355
+msgid "Itens no carrinho"
+msgstr "Itens no carrinho"
+
+#: admin/src/Validations/Country_Codes.php:87
+msgid "Ivory Coast"
+msgstr "Costa do Marfim"
+
+#: admin/src/Validations/Country_Codes.php:66
+msgid "Japan"
+msgstr "Japão"
+
+#: admin/src/Integrations/Flexify_Checkout.php:290
+#: admin/src/Integrations/Woocommerce.php:228
+#: admin/src/Integrations/Wordpress.php:177
+msgid "João"
+msgstr "João"
+
+#: admin/src/Integrations/Flexify_Checkout.php:314
+msgid "joaodasilva@email.com"
+msgstr "joaodasilva@email.com"
+
+#: admin/src/Admin/Menu.php:46
+#: admin/src/Admin/Menu.php:47
+#: admin/src/Core/Init.php:171
+#: admin/src/Integrations/Elementor_Forms.php:56
+#: admin/src/Integrations/Elementor_Forms.php:72
+#: app/src/pages/license/LicensePage.vue:111
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
+#: app/src/pages/settings/SettingsPage.vue:194
+msgid "Joinotify"
+msgstr "Joinotify"
+
+#: app/src/pages/settings/components/SettingsHeader.vue:26
+msgid "Joinotify: Automate your notifications. Simplify your communication."
+msgstr "Joinotify: Automatize suas notificações. Simplifique sua comunicação."
+
+#: admin/src/Validations/Country_Codes.php:214
+msgid "Jordan"
+msgstr "Jordânia"
+
+#: admin/src/Validations/Country_Codes.php:32
+msgid "Kazakhstan"
+msgstr "Cazaquistão"
+
+#: admin/src/Validations/Country_Codes.php:115
+msgid "Kenya"
+msgstr "Quênia"
+
+#: admin/src/Validations/Country_Codes.php:198
+msgid "Kiribati"
+msgstr "Kiribati"
+
+#: admin/src/Validations/Country_Codes.php:217
+msgid "Kuwait"
+msgstr "Kuwait"
+
+#: admin/src/Validations/Country_Codes.php:233
+msgid "Kyrgyzstan"
+msgstr "Quirguistão"
+
+#: admin/src/Validations/Country_Codes.php:209
+msgid "Lao"
+msgstr "Lao"
+
+#: admin/src/Validations/Country_Codes.php:145
+msgid "Latvia"
+msgstr "Letônia"
+
+#: admin/src/Validations/Country_Codes.php:213
+msgid "Lebanon"
+msgstr "Líbano"
+
+#: admin/src/Integrations/Elementor_Forms.php:212
+#: admin/src/Integrations/Whatsapp.php:226
+msgid "Legenda da mídia"
+msgstr "Legenda da mídia"
+
+#: admin/src/Integrations/Whatsapp.php:224
+msgid "Legenda:"
+msgstr "Legenda:"
+
+#: admin/src/Validations/Country_Codes.php:126
+msgid "Lesotho"
+msgstr "Lesoto"
+
+#: admin/src/Validations/Country_Codes.php:93
+msgid "Liberia"
+msgstr "Libéria"
+
+#: admin/src/Validations/Country_Codes.php:81
+msgid "Libya"
+msgstr "Líbia"
+
+#: admin/src/Admin/Menu.php:89
+#: admin/src/Admin/Menu.php:90
+msgid "Licença"
+msgstr "licença"
+
+#: admin/src/Admin/Settings/Registry.php:545
+msgid "Licença ativa"
+msgstr "Licença ativa"
+
+#: admin/src/Core/Ajax.php:225
+#: admin/src/Core/Ajax.php:352
+msgid "Licença ativada com sucesso."
+msgstr "Licença ativada com sucesso."
+
+#: admin/src/Core/Ajax.php:384
+msgid "Licença desativada."
+msgstr "Licença desativada."
+
+#: admin/src/Admin/Settings/Registry.php:560
+msgid "Licença expira em: %s"
+msgstr "Licença expira em: %s"
+
+#: admin/src/Admin/Settings/Registry.php:561
+msgid "Licença expira em: Não disponível"
+msgstr "Licença expira em: Não disponível"
+
+#: admin/src/Api/License.php:908
+msgid "Licença expirada"
+msgstr "Licença expirada"
+
+#: admin/src/Core/Ajax.php:2381
+msgid "Licença não encontrada"
+msgstr "Licença não"
+
+#: admin/src/Core/Ajax.php:2402
+msgid "Licença sincronizada"
+msgstr "Licença sincronizada"
+
+#: app/src/pages/license/LicensePage.vue:201
+#: app/src/pages/license/LicensePage.vue:214
+#: app/src/pages/license/LicensePage.vue:217
+#: app/src/pages/license/LicensePage.vue:220
+#: app/src/pages/license/LicensePage.vue:241
+#: app/src/pages/license/LicensePage.vue:260
+#: app/src/pages/license/LicensePage.vue:262
+#: app/src/pages/license/LicensePage.vue:322
+msgid "License"
+msgstr "Licença"
+
+#: app/src/pages/license/LicensePage.vue:214
+#: app/src/pages/license/LicensePage.vue:217
+msgid "License activated successfully."
+msgstr "Licença ativada com sucesso."
+
+#: app/src/pages/license/LicensePage.vue:260
+msgid "License deactivated."
+msgstr "Licença desativada."
+
+#: app/src/pages/license/LicensePage.vue:49
+msgid "License details"
+msgstr "Detalhes da licença"
+
+#: app/src/pages/license/LicensePage.vue:403
+msgid "License information"
+msgstr "Informações sobre a licença"
+
+#: app/src/pages/license/LicensePage.vue:237
+msgid "License information updated successfully."
+msgstr "Informações da licença atualizadas com sucesso."
+
+#: app/src/pages/license/LicensePage.vue:45
+msgid "License key"
+msgstr "Chave de licença"
+
+#: app/src/pages/license/LicensePage.vue:57
+msgid "License status"
+msgstr "Situação da licença"
+
+#: admin/src/Validations/Country_Codes.php:163
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+#: admin/src/Admin/Settings/Registry.php:462
+msgid "Ligado"
+msgstr "Ligado"
+
+#: admin/src/Integrations/Flexify_Checkout.php:319
+msgid "Link de recuperação do carrinho abandonado."
+msgstr "Link de recuperação do carrinho abandonado."
+
+#: admin/src/Validations/Country_Codes.php:144
+msgid "Lithuania"
+msgstr "Lituânia"
+
+#: admin/src/Core/Workflows_Table.php:107
+msgid "Lixeira"
+msgstr "Lixeira"
+
+#: admin/src/Admin/Settings/Registry.php:50
+msgid "Localização e telefones"
+msgstr "Localização e telefones"
+
+#: admin/src/Integrations/Wordpress.php:109
+msgid "Login do usuário"
+msgstr "Login do usuário"
+
+#: app/src/pages/settings/SettingsPage.vue:371
+#: app/src/pages/settings/SettingsPage.vue:374
+#: app/src/pages/settings/SettingsPage.vue:386
+#: app/src/pages/settings/SettingsPage.vue:388
+msgid "Logs"
+msgstr "Registros"
+
+#: app/src/pages/settings/SettingsPage.vue:386
+msgid "Logs cleared successfully."
+msgstr "Registros apagados com sucesso."
+
+#: admin/src/Validations/Country_Codes.php:136
+msgid "Luxembourg"
+msgstr "Luxemburgo"
+
+#: admin/src/Validations/Country_Codes.php:207
+msgid "Macau"
+msgstr "Macau"
+
+#: admin/src/Validations/Country_Codes.php:121
+msgid "Madagascar"
+msgstr "Madagáscar"
+
+#: admin/src/Builder/Components.php:922
+msgid "Maior que"
+msgstr "Maior que"
+
+#: admin/src/Builder/Messages.php:128
+msgid "Maior que <span class=\"builder-placeholder\">%s</span>"
+msgstr "Maior que <span class=\"builder-placeholder\">%s</span>"
+
+#: admin/src/Validations/Country_Codes.php:125
+msgid "Malawi"
+msgstr "Malawi"
+
+#: admin/src/Validations/Country_Codes.php:59
+msgid "Malaysia"
+msgstr "Malásia"
+
+#: admin/src/Validations/Country_Codes.php:212
+msgid "Maldives"
+msgstr "Maldivas"
+
+#: admin/src/Validations/Country_Codes.php:85
+msgid "Mali"
+msgstr "Mali"
+
+#: admin/src/Validations/Country_Codes.php:140
+msgid "Malta"
+msgstr "Malta"
+
+#: admin/src/Admin/Settings/Registry.php:168
+msgid "Mantém integrações de suporte e contratos avançados disponíveis."
+msgstr "Mantém integrações de suporte e contratos avançados disponíveis."
+
+#: admin/src/Admin/Settings/Registry.php:147
+msgid "Manutenção e preferência"
+msgstr "Manutenção e preferência"
+
+#: admin/src/Admin/Settings/Registry.php:142
+msgid "Manutenção, logs, atualizações e informações do ambiente."
+msgstr "Manutenção, logs, atualizações e informações do ambiente."
+
+#: admin/src/Core/Workflows_Table.php:256
+msgid "Marcar como ativo"
+msgstr "Marcar como ativo"
+
+#: admin/src/Core/Workflows_Table.php:257
+msgid "Marcar como inativo"
+msgstr "Marcar como inativo"
+
+#: admin/src/Validations/Country_Codes.php:204
+msgid "Marshall Islands"
+msgstr "Ilhas Marshall"
+
+#: admin/src/Validations/Country_Codes.php:180
+msgid "Martinique"
+msgstr "Martinica"
+
+#: admin/src/Validations/Country_Codes.php:84
+msgid "Mauritania"
+msgstr "Mauritânia"
+
+#: admin/src/Validations/Country_Codes.php:92
+msgid "Mauritius"
+msgstr "Maurício"
+
+#: admin/src/Admin/Settings/Registry.php:441
+msgid "max_execution_time"
+msgstr "tempo_máximo_de_execução"
+
+#: admin/src/Admin/Settings/Registry.php:446
+msgid "max_input_vars"
+msgstr "variáveis_máximas_de_entrada"
+
+#: admin/src/Validations/Country_Codes.php:122
+msgid "Mayotte"
+msgstr "Mayotte"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:95
+msgid "Media message route"
+msgstr "Rota de mensagem de mídia"
+
+#: admin/src/Admin/Settings/Registry.php:451
+msgid "memory_limit"
+msgstr "limite_de_memória"
+
+#: admin/src/Builder/Components.php:923
+msgid "Menor que"
+msgstr "Menor que"
+
+#: admin/src/Builder/Messages.php:128
+msgid "Menor que <span class=\"builder-placeholder\">%s</span>"
+msgstr "Menor que <span class=\"builder-placeholder\">%s</span>"
+
+#: admin/src/Integrations/Whatsapp.php:154
+msgid "Mensagem"
+msgstr "Mensagem"
+
+#: admin/src/Api/Controller.php:295
+#: admin/src/Rest/Send_Media_Message.php:124
+msgid "Mensagem de mídia enviada com sucesso."
+msgstr "Mensagem de mídia enviada com sucesso."
+
+#: admin/src/Integrations/Elementor_Forms.php:139
+msgid "Mensagem de texto"
+msgstr "Mensagem de texto"
+
+#: admin/src/Api/Controller.php:263
+#: admin/src/Rest/Send_Text_Message.php:118
+msgid "Mensagem de texto enviada com sucesso."
+msgstr "Mensagem de texto enviada com sucesso."
+
+#: admin/src/Integrations/Whatsapp.php:152
+msgid "Mensagem de texto: *"
+msgstr "Mensagem de texto: *"
+
+#: admin/src/Core/Ajax.php:1700
+msgid "Mensagem enviada"
+msgstr "Mensagem enviada"
+
+#: admin/src/Core/Ajax.php:1580
+msgid "Mensagens enviadas"
+msgstr "Mensagens enviadas"
+
+#: admin/src/Core/Helpers.php:47
+msgid "mês"
+msgstr "mês"
+
+#: admin/src/Builder/Components.php:318
+msgid "Mês (es)"
+msgstr "Mês (es)"
+
+#: admin/src/Core/Helpers.php:47
+msgid "meses"
+msgstr "meses"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:258
+msgid "Message"
+msgstr "Mensagem"
+
+#: app/src/pages/settings/SettingsPage.vue:314
+msgid "Message sent."
+msgstr "Mensagem enviada."
+
+#: admin/src/Integrations/Elementor.php:174
+#: admin/src/Integrations/Flexify_Checkout.php:359
+#: admin/src/Integrations/Woocommerce.php:1111
+#: admin/src/Integrations/Wordpress.php:310
+#: admin/src/Integrations/Wordpress.php:320
+#: admin/src/Integrations/Wordpress.php:326
+#: admin/src/Integrations/Wpforms.php:219
+msgid "Meta dados do usuário"
+msgstr "Metadados do usuário"
+
+#: admin/src/Builder/Components.php:810
+msgid "Método de entrega: *"
+msgstr "Método de entrega: *"
+
+#: admin/src/Builder/Components.php:793
+msgid "Método de pagamento: *"
+msgstr "Método de pagamento: *"
+
+#: admin/src/Validations/Country_Codes.php:52
+msgid "Mexico"
+msgstr "México"
+
+#: admin/src/Core/Assets.php:160
+msgid "Minha automaÃ§Ã£o #%s"
+msgstr "Minha automaça #%s"
+
+#: admin/src/Views/Builder/Triggers.php:75
+msgid "Minha automação de mensagens"
+msgstr "Minha automação de mensagens"
+
+#: admin/src/Core/Helpers.php:43
+msgid "minuto"
+msgstr "minuto"
+
+#: admin/src/Builder/Components.php:314
+msgid "Minuto (s)"
+msgstr "Minuto (s)"
+
+#: admin/src/Core/Helpers.php:43
+msgid "minutos"
+msgstr "minutos"
+
+#: admin/src/Admin/Settings/Registry.php:152
+msgid "Modo de depuração"
+msgstr "Modo de decadência"
+
+#: admin/src/Integrations/Developer_Mode.php:46
+msgid "Modo desenvolvedor"
+msgstr "Modo desenvolvedor"
+
+#: admin/src/Validations/Country_Codes.php:147
+msgid "Moldova"
+msgstr "Moldávia"
+
+#: admin/src/Validations/Country_Codes.php:151
+msgid "Monaco"
+msgstr "Mônaco"
+
+#: admin/src/Validations/Country_Codes.php:227
+msgid "Mongolia"
+msgstr "Mongólia"
+
+#: admin/src/Validations/Country_Codes.php:156
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: admin/src/Validations/Country_Codes.php:78
+msgid "Morocco"
+msgstr "Marrocos"
+
+#: admin/src/Admin/Settings/Registry.php:163
+msgid "Mostra notificações quando houver uma nova versão disponível."
+msgstr "Mostrar notificações quando houver uma nova versão disponível."
+
+#: admin/src/Core/Workflows_Table.php:191
+#: admin/src/Core/Workflows_Table.php:255
+msgid "Mover para lixeira"
+msgstr "Mover para lixeira"
+
+#: admin/src/Validations/Country_Codes.php:119
+msgid "Mozambique"
+msgstr "Moçambique"
+
+#: admin/src/Validations/Country_Codes.php:75
+msgid "Myanmar"
+msgstr "Myanmar"
+
+#: admin/src/Validations/Country_Codes.php:124
+msgid "Namibia"
+msgstr "Namíbia"
+
+#: admin/src/Admin/Settings/Registry.php:398
+#: admin/src/Admin/Settings/Registry.php:422
+#: admin/src/Admin/Settings/Registry.php:427
+#: admin/src/Admin/Settings/Registry.php:432
+#: admin/src/Builder/Components.php:862
+#: admin/src/Builder/Messages.php:246
+#: admin/src/Builder/Messages.php:247
+#: admin/src/Integrations/Elementor_Forms.php:130
+#: admin/src/Integrations/Elementor_Forms.php:173
+msgid "Não"
+msgstr "Não"
+
+#: admin/src/Builder/Components.php:919
+msgid "Não contém"
+msgstr "Não contém"
+
+#: admin/src/Admin/Settings/Registry.php:533
+#: admin/src/Admin/Settings/Registry.php:538
+#: admin/src/Admin/Settings/Registry.php:557
+#: admin/src/Admin/Settings/Registry.php:635
+#: admin/src/Api/License.php:883
+#: admin/src/Core/Ajax.php:2437
+msgid "Não disponível"
+msgstr "Não disponível"
+
+#: admin/src/Builder/Components.php:915
+msgid "Não é"
+msgstr "Não é"
+
+#: admin/src/Builder/Components.php:917
+msgid "Não está vazio"
+msgstr "Não está"
+
+#: admin/src/Rest/Phone_Candidates.php:70
+msgid ""
+"Não foi encontrado nenhum telefone disponível para cadastro. Faça o "
+"cadastro pelo link: %s"
+msgstr ""
+"Não foi encontrado nenhum telefone disponível para cadastro. Faça o "
+"cadastro pelo link: %s"
+
+#: admin/src/Core/Ajax.php:1292
+msgid ""
+"Não foi encontrado nenhum telefone disponível para cadastro. Faça o "
+"cadastro pelo link: <a class=\"fancy-link\" href=\"%s\" "
+"target=\"_blank\">%s</a>"
+msgstr ""
+"Não foi encontrado nenhum telefone disponível para cadastro. Faça o "
+"cadastro pelo link: <a class=\"fancy-link\" href=\"%s\" "
+"target=\"_blank\">%s</a>"
+
+#: admin/src/Core/Ajax.php:2016
+msgid "Não foi possível atualizar a ação."
+msgstr "Não foi possível atualizar a ação."
+
+#: admin/src/Core/Ajax.php:2088
+msgid "Não foi possível atualizar o acionamento."
+msgstr "Não foi possível atualizar o acionamento."
+
+#: admin/src/Core/Ajax.php:1171
+msgid "Não foi possível atualizar o fluxo após a exclusão da ação."
+msgstr "Não foi possível atualizar o fluxo após a exclusão da ação."
+
+#: admin/src/Admin/Settings/Registry.php:507
+msgid "Não foi possível concluir a operação."
+msgstr "Não foi possível concluir a operação."
+
+#: admin/src/Core/Ajax.php:391
+msgid "Não foi possível desativar a licença."
+msgstr "Não foi possível desativar a licença."
+
+#: admin/src/Core/Ajax.php:363
+msgid "Não foi possível descriptografar o arquivo de licença."
+msgstr "Não foi possível descrever o arquivo de licença."
+
+#: admin/src/Core/Ajax.php:2029
+msgid "Não foi possível encontrar a ação para atualizar."
+msgstr "Não foi possível encontrar uma ação para atualizar."
+
+#: admin/src/Core/Ajax.php:2101
+msgid "Não foi possível encontrar o acionamento para atualizar."
+msgstr "Não foi possível encontrar o acionamento para atualização."
+
+#: admin/src/Core/Ajax.php:1492
+#: admin/src/Rest/Phone_Remove.php:51
+msgid "Não foi possível encontrar o telefone informado."
+msgstr "Não foi possível encontrar o telefone informado."
+
+#: admin/src/Core/Ajax.php:1551
+#: admin/src/Core/Ajax.php:1710
+#: admin/src/Rest/Phone_Test_Message.php:61
+msgid "Não foi possível enviar a mensagem de teste."
+msgstr "Não foi possível enviar uma mensagem de teste."
+
+#: admin/src/Core/Ajax.php:1345
+#: admin/src/Rest/Phone_Register.php:57
+msgid "Não foi possível enviar o código de verificação."
+msgstr "Não foi possível enviar o código de verificação."
+
+#: admin/src/Core/Ajax.php:1571
+msgid "Não foi possível enviar uma ou mais mensagens de teste."
+msgstr "Não foi possível enviar uma ou mais mensagens de teste."
+
+#: admin/src/Core/Ajax.php:1781
+#: admin/src/Rest/Debug_Clear.php:49
+msgid "Não foi possível limpar os registros de depuração."
+msgstr "Não foi possível limpar os registros de depuração."
+
+#: admin/src/Core/Ajax.php:1588
+msgid "Não foi possível processar o conteúdo do fluxo."
+msgstr "Não foi possível processar o conteúdo do fluxo."
+
+#: admin/src/Core/Ajax.php:1933
+msgid "Não foi possível recuperar as informações de grupos."
+msgstr "Não foi possível recuperar informações de grupos."
+
+#: admin/src/Integrations/Wordpress.php:192
+msgid "Não foi possível recuperar o e-mail do usuário"
+msgstr "Não foi possível recuperar o e-mail do usuário"
+
+#: admin/src/Integrations/Wordpress.php:176
+msgid "Não foi possível recuperar o nome do usuário"
+msgstr "Não foi possível recuperar o nome do usuário"
+
+#: admin/src/Integrations/Wordpress.php:184
+msgid "Não foi possível recuperar o sobrenome do usuário"
+msgstr "Não foi possível recuperar o nome do usuário"
+
+#: admin/src/Core/Ajax.php:2412
+msgid "Não foi possível sincronizar as informações da licença."
+msgstr "Não foi possível sincronizar as informações da licença."
+
+#: admin/src/Api/Updater.php:256
+msgid ""
+"Não foi possível verificar atualizações para o plugin "
+"<strong>Joinotify.</strong>"
+msgstr ""
+"Não foi possível verificar atualizações para o plugin "
+"<strong>Joinotify.</strong>"
+
+#: admin/src/Core/Ajax.php:1184
+msgid "Não há ações para remover no fluxo."
+msgstr "Não há ações para remover nenhum fluxo."
+
+#: admin/src/Core/Ajax.php:424
+msgid "Não identificado"
+msgstr "Não identificado"
+
+#: admin/src/Validations/Country_Codes.php:187
+msgid "Nauru"
+msgstr "Nauru"
+
+#: admin/src/Admin/Settings/Registry.php:582
+msgid "Nenhum"
+msgstr "nenhum"
+
+#: admin/src/Core/Ajax.php:2167
+msgid "Nenhum arquivo foi especificado."
+msgstr "Nenhum arquivo foi especificado."
+
+#: admin/src/Builder/Messages.php:290
+msgid "Nenhum código disponível."
+msgstr "Nenhum código disponível."
+
+#: admin/src/Core/Workflow_Post_Type.php:57
+msgid "Nenhum fluxo encontrado na lixeira."
+msgstr "Nenhum fluxo encontrado na lixeira."
+
+#: admin/src/Core/Assets.php:163
+#: admin/src/Core/Workflow_Post_Type.php:56
+msgid "Nenhum fluxo encontrado."
+msgstr "Nenhum fluxo encontrado."
+
+#: admin/src/Integrations/Woocommerce.php:444
+msgid "Nenhum item adquirido."
+msgstr "Nenhum item adquirido."
+
+#: admin/src/Core/Ajax.php:453
+msgid "Nenhum modelo de fluxo disponível. Volte mais tarde."
+msgstr "Nenhum modelo de fluxo disponível. Volte mais tarde."
+
+#: admin/src/Core/Ajax.php:1733
+msgid "Nenhum registro foi encontrado"
+msgstr "Nenhum registro foi encontrado"
+
+#: admin/src/Admin/Components.php:58
+msgid "Nenhum remetente disponível para uso"
+msgstr "Nenhum remetente disponível para uso"
+
+#: admin/src/Core/Ajax.php:1521
+msgid "Nenhum telefone para testes registrado."
+msgstr "Nenhum telefone para testes registrados."
+
+#: admin/src/Builder/Actions.php:65
+msgid "Nenhuma ação será executada ao chegar nesse ponto."
+msgstr "Nenhuma ação será realizada ao chegar nesse ponto."
+
+#: admin/src/Validations/Conditions.php:41
+msgid "Nenhuma condição disponível para esta ação"
+msgstr "Nenhuma condição disponível para esta ação"
+
+#: admin/src/Validations/Conditions.php:42
+msgid "Nenhuma condição foi definida para esta ação."
+msgstr "Nenhuma condição foi definida para esta ação."
+
+#: admin/src/Builder/Components.php:894
+msgid "Nenhuma configuração disponível para esta condição"
+msgstr "Nenhuma configuração disponível para esta condição"
+
+#: admin/src/Core/Ajax.php:1907
+msgid "Nenhuma descrição disponível"
+msgstr "Nenhuma descrição disponível"
+
+#: admin/src/Core/Ajax.php:2382
+msgid "Nenhuma licença foi encontrada para sincronizar."
+msgstr "Nenhuma licença foi encontrada para sincronizar."
+
+#: admin/src/Validations/Country_Codes.php:228
+msgid "Nepal"
+msgstr "Nepal"
+
+#: admin/src/Validations/Country_Codes.php:36
+msgid "Netherlands"
+msgstr "Holanda"
+
+#: admin/src/Validations/Country_Codes.php:199
+msgid "New Caledonia"
+msgstr "Nova Caledônia"
+
+#: admin/src/Validations/Country_Codes.php:63
+msgid "New Zealand"
+msgstr "Nova Zelândia"
+
+#: admin/src/Validations/Country_Codes.php:169
+msgid "Nicaragua"
+msgstr "Nicarágua"
+
+#: admin/src/Validations/Country_Codes.php:89
+msgid "Niger"
+msgstr "Níger"
+
+#: admin/src/Validations/Country_Codes.php:96
+msgid "Nigeria"
+msgstr "Nigéria"
+
+#: admin/src/Validations/Country_Codes.php:196
+msgid "Niue"
+msgstr "Niue"
+
+#: app/src/pages/settings/components/cards/DebugLogModal.vue:27
+msgid "No logs available."
+msgstr "Nenhum registro disponível."
+
+#: app/src/components/fields/SelectField.vue:243
+msgid "No options available"
+msgstr "Nenhuma opção disponível"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:316
+msgid "No phone available"
+msgstr "Nenhum telefone disponível"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:226
+msgid "No sender available"
+msgstr "Nenhum remetente disponível"
+
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:32
+msgid "No validated sender yet."
+msgstr "Nenhum remetente validado ainda."
+
+#: admin/src/Core/Workflows_Table.php:137
+msgid "Nome"
+msgstr "Nome"
+
+#: admin/src/Builder/Components.php:1268
+msgid "Nome da variável de texto"
+msgstr "Nome da variável de texto"
+
+#: admin/src/Builder/Components.php:732
+msgid "Nome do autor"
+msgstr "Nome do autor"
+
+#: admin/src/Builder/Components.php:1270
+msgid "nome_da_variavel"
+msgstr "nome_da_variável"
+
+#: admin/src/Validations/Country_Codes.php:185
+msgid "Norfolk Island"
+msgstr "Ilha Norfolk"
+
+#: admin/src/Validations/Country_Codes.php:205
+msgid "North Korea"
+msgstr "Coréia do Norte"
+
+#: admin/src/Validations/Country_Codes.php:160
+msgid "North Macedonia"
+msgstr "Macedônia do Norte"
+
+#: admin/src/Validations/Country_Codes.php:48
+msgid "Norway"
+msgstr "Noruega"
+
+#: app/src/pages/license/LicensePage.vue:85
+#: app/src/pages/license/LicensePage.vue:94
+#: app/src/pages/license/LicensePage.vue:186
+#: app/src/pages/license/LicensePage.vue:191
+msgid "Not available"
+msgstr "Não disponível"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:75
+msgid "Nova assinatura criada"
+msgstr "Nova assinatura criada"
+
+#: admin/src/Core/Workflow_Post_Type.php:50
+msgid "Novo fluxo"
+msgstr "Novo fluxo"
+
+#: admin/src/Integrations/Woocommerce.php:134
+msgid "Novo pedido"
+msgstr "Novo pedido"
+
+#: admin/src/Integrations/Woocommerce.php:140
+msgid "Novo pedido (Processando)"
+msgstr "Novo pedido (Processando)"
+
+#: admin/src/Core/Ajax.php:2315
+msgid "Novo recurso adicionado!"
+msgstr "Novo recurso adicionado!"
+
+#: admin/src/Integrations/Wordpress.php:103
+msgid "Novo registro de usuário"
+msgstr "Novo cadastro de usuário"
+
+#: admin/src/Core/Ajax.php:1449
+#: admin/src/Rest/Phone_Check_Connection.php:49
+#: admin/src/Rest/Phone_Register.php:50
+msgid "Número de telefone inválido."
+msgstr "Número de telefone inválido."
+
+#: admin/src/Admin/Settings/Registry.php:67
+msgid ""
+"Número usado como destino padrão em envios de teste. Informe apenas números "
+"com DDI + DDD."
+msgstr ""
+"Número usado como destino padrão em envios de teste. Informe apenas números "
+"com DDI + DDD."
+
+#: admin/src/Api/License.php:899
+msgid "Nunca expira"
+msgstr "Nunca expira"
+
+#: admin/src/Core/Ajax.php:2082
+msgid "O acionamento foi atualizado com sucesso!"
+msgstr "O acionamento foi atualizado com sucesso!"
+
+#: admin/src/Core/Ajax.php:1852
+msgid "O arquivo de logs não foi encontrado."
+msgstr "O arquivo de log não foi encontrado."
+
+#: admin/src/Core/Ajax.php:1806
+msgid "O arquivo de registros foi baixado com sucesso!"
+msgstr "O arquivo de registros foi baixado com sucesso!"
+
+#: admin/src/Core/Ajax.php:1813
+msgid "O arquivo de registros não foi encontrado."
+msgstr "O arquivo de registros não foi encontrado."
+
+#: admin/src/Core/Ajax.php:491
+msgid "O arquivo deve ser um JSON."
+msgstr "O arquivo deve ser um JSON."
+
+#: admin/src/Core/Ajax.php:513
+msgid "O arquivo enviado não é válido."
+msgstr "O arquivo enviado não é válido."
+
+#: admin/src/Core/Ajax.php:504
+msgid "O arquivo JSON não possui um formato válido."
+msgstr "O arquivo JSON não possui um formato válido."
+
+#: admin/src/Core/Ajax.php:1424
+msgid ""
+"O código de verificação está incorreto ou expirou. Por favor, tente "
+"novamente."
+msgstr ""
+"O código de verificação está incorreto ou expirou. Por favor, tente "
+"novamente."
+
+#: admin/src/Integrations/Woocommerce.php:928
+msgid "O cupom já existe."
+msgstr "O cupom já existe."
+
+#: admin/src/Core/Ajax.php:309
+msgid "O domínio de ativação não é permitido."
+msgstr "O domínio de ativação não é permitido."
+
+#: admin/src/Core/Ajax.php:551
+#: admin/src/Core/Ajax.php:2232
+msgid "O fluxo foi importado com sucesso!"
+msgstr "O fluxo foi importado com sucesso!"
+
+#: admin/src/Core/Ajax.php:830
+#: admin/src/Core/Ajax.php:1123
+msgid "O fluxo não foi encontrado ou o tipo de post está incorreto."
+msgstr "O fluxo não foi encontrado ou o tipo de postagem está incorreto."
+
+#: admin/src/Core/Ajax.php:2189
+msgid "O JSON do modelo não é válido."
+msgstr "O JSON do modelo não é válido."
+
+#: admin/src/Views/Builder/Triggers.php:74
+msgid "O nome servirá para controle interno desse fluxo"
+msgstr "O nome servirá para controle interno desse fluxo"
+
+#: admin/src/Core/Ajax.php:2277
+msgid "O plugin foi instalado, mas não pôde ser ativado."
+msgstr "O plugin foi instalado, mas não pôde ser ativado."
+
+#: admin/src/Core/Ajax.php:1734
+#: admin/src/Rest/Debug_Logs.php:48
+msgid "O registro de depuração está vazio."
+msgstr "O registro de depuração está vazio."
+
+#: admin/src/Core/Ajax.php:1668
+msgid "O status do fluxo foi atualizado com sucesso!"
+msgstr "O status do fluxo foi atualizado com sucesso!"
+
+#: admin/src/Core/Ajax.php:817
+msgid "O status do fluxo foi atualizado."
+msgstr "O status do fluxo foi atualizado."
+
+#: admin/src/Core/Ajax.php:2347
+msgid "O telefone está conectado!"
+msgstr "O telefone está conectado!"
+
+#: admin/src/Rest/Phone_Check_Connection.php:60
+msgid "O telefone está conectado."
+msgstr "O telefone está conectado."
+
+#: admin/src/Core/Ajax.php:2354
+#: admin/src/Rest/Phone_Check_Connection.php:61
+msgid "O telefone está desconectado."
+msgstr "O telefone está desconectado."
+
+#: admin/src/Core/Ajax.php:1481
+#: admin/src/Rest/Phone_Remove.php:64
+msgid "O telefone remetente foi removido com sucesso!"
+msgstr "O telefone enviado foi removido com sucesso!"
+
+#: admin/src/Core/Ajax.php:2178
+msgid "O template selecionado não foi encontrado."
+msgstr "O modelo selecionado não foi encontrado."
+
+#: admin/src/Core/Ajax.php:1110
+msgid "O título do fluxo foi atualizado."
+msgstr "O título do fluxo foi atualizado."
+
+#: admin/src/Core/Assets.php:175
+msgid "Objetos"
+msgstr "Objetos"
+
+#: admin/src/Builder/Components.php:1265
+msgid "Obter dados de amostra"
+msgstr "obter dados de amostra"
+
+#: admin/src/Builder/Components.php:1028
+#: admin/src/Builder/Components.php:1044
+msgid "Obter informações de grupos"
+msgstr "Obter informações de grupos"
+
+#: admin/src/Core/Ajax.php:512
+msgid "Ocorreu um erro"
+msgstr "Ocorreu um erro"
+
+#: admin/src/Core/Ajax.php:1064
+msgid "Ocorreu um erro ao adicionar ação no fluxo."
+msgstr "Ocorreu um erro ao adicionar ação no fluxo."
+
+#: admin/src/Core/Ajax.php:648
+msgid "Ocorreu um erro ao atualizar o fluxo e acionamento."
+msgstr "Ocorreu um erro ao atualizar o fluxo e o acionamento."
+
+#: admin/src/Core/Ajax.php:823
+msgid "Ocorreu um erro ao atualizar o status do fluxo."
+msgstr "Ocorreu um erro ao atualizar o status do fluxo."
+
+#: admin/src/Core/Ajax.php:1662
+msgid "Ocorreu um erro ao atualizar o status do post"
+msgstr "Corrigi um erro ao atualizar o status do post"
+
+#: admin/src/Core/Ajax.php:1116
+msgid "Ocorreu um erro ao atualizar o título do fluxo."
+msgstr "Ocorreu um erro ao atualizar o título do fluxo."
+
+#: admin/src/Core/Ajax.php:710
+msgid "Ocorreu um erro ao criar o fluxo e acionamento."
+msgstr "Corrigi um erro ao criar o fluxo e o acionamento."
+
+#: admin/src/Core/Ajax.php:532
+msgid "Ocorreu um erro ao criar o fluxo no banco de dados."
+msgstr "Corrigi um erro ao criar o fluxo no banco de dados."
+
+#: admin/src/Core/Ajax.php:2214
+msgid "Ocorreu um erro ao criar o fluxo."
+msgstr "Corrigi um erro ao criar o fluxo."
+
+#: admin/src/Core/Ajax.php:776
+msgid "Ocorreu um erro ao recuperar os dados do fluxo."
+msgstr "Ocorreu um erro ao recuperar os dados do fluxo."
+
+#: admin/src/Core/Ajax.php:1622
+#: admin/src/Rest/Settings_Reset.php:50
+msgid "Ocorreu um erro ao redefinir as configurações."
+msgstr "Ocorreu um erro ao redefinir as configurações."
+
+#: admin/src/Core/Ajax.php:2284
+msgid "Ocorreu um erro ao tentar instalar ou atualizar o plugin."
+msgstr "Corrigi um erro ao tentar instalar ou atualizar o plugin."
+
+#: admin/src/Api/License.php:278
+msgid ""
+"Ocorreu um erro na conexão com o servidor de verificação de licenças. "
+"Verifique o erro nos logs do WooCommerce."
+msgstr ""
+"Ocorreu um erro na conexão com o servidor de verificação de licenças. "
+"Verifique o erro nos logs do WooCommerce."
+
+#: admin/src/Core/Ajax.php:479
+msgid "Ocorreu um problema ao enviar o arquivo."
+msgstr "Corrigimos um problema ao enviar o arquivo."
+
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:32
+msgid "ok"
+msgstr "OK"
+
+#: admin/src/Integrations/Elementor_Forms.php:143
+msgid "Olá {{ field_id=[FIELD_ID] }}!"
+msgstr "Olá {{field_id=[FIELD_ID] }}!"
+
+#: admin/src/Integrations/Elementor_Forms.php:216
+msgid "Olá {{ field_id=[nome] }}, veja esse arquivo!"
+msgstr "Olá {{ field_id=[nome] }}, veja esse arquivo!"
+
+#: admin/src/Integrations/Elementor_Forms.php:144
+msgid ""
+"Olá {{ field_id=[nome] }}! Recebemos suas informações, em breve um "
+"atendente retornará o contato."
+msgstr ""
+"Olá {{field_id=[nome] }}! Receberemos suas informações, em breve um "
+"atendente retornará o contato."
+
+#: admin/src/Validations/Country_Codes.php:220
+msgid "Oman"
+msgstr "Omã"
+
+#: app/src/pages/license/LicensePage.vue:463
+msgid "Open help center"
+msgstr "Abra a central de ajuda"
+
+#: admin/src/Integrations/OpenAI.php:44
+msgid "OpenAI"
+msgstr "OpenAI"
+
+#: admin/src/Core/Assets.php:180
+msgid "Ops! NÃ£o hÃ¡ conexÃ£o com a internet"
+msgstr "Ops! Não há conexão com a internet"
+
+#: admin/src/Core/Ajax.php:1550
+#: admin/src/Core/Ajax.php:1570
+#: admin/src/Core/Ajax.php:1661
+#: admin/src/Core/Ajax.php:1674
+#: admin/src/Core/Ajax.php:1709
+#: admin/src/Core/Ajax.php:1780
+#: admin/src/Core/Ajax.php:1812
+#: admin/src/Core/Ajax.php:1932
+#: admin/src/Core/Ajax.php:2015
+#: admin/src/Core/Ajax.php:2028
+#: admin/src/Core/Ajax.php:2087
+#: admin/src/Core/Ajax.php:2100
+msgid "Ops! Ocorreu um erro"
+msgstr "Ops! Ocorreu um erro"
+
+#: admin/src/Core/Ajax.php:234
+#: admin/src/Core/Ajax.php:256
+#: admin/src/Core/Ajax.php:267
+#: admin/src/Core/Ajax.php:280
+#: admin/src/Core/Ajax.php:308
+#: admin/src/Core/Ajax.php:319
+#: admin/src/Core/Ajax.php:362
+#: admin/src/Core/Ajax.php:390
+#: admin/src/Core/Ajax.php:452
+#: admin/src/Core/Ajax.php:647
+#: admin/src/Core/Ajax.php:709
+#: admin/src/Core/Ajax.php:775
+#: admin/src/Core/Ajax.php:822
+#: admin/src/Core/Ajax.php:1063
+#: admin/src/Core/Ajax.php:1115
+#: admin/src/Core/Ajax.php:1344
+#: admin/src/Core/Ajax.php:1520
+#: admin/src/Core/Ajax.php:1621
+#: admin/src/Core/Ajax.php:2308
+#: admin/src/Core/Ajax.php:2353
+#: admin/src/Core/Ajax.php:2411
+msgid "Ops! Ocorreu um erro."
+msgstr "Ops! Ocorreu um erro."
+
+#: app/src/pages/settings/SettingsPage.vue:403
+msgid "Options have been reset."
+msgstr "As opções foram redefinidas."
+
+#: admin/src/Core/Ajax.php:1191
+#: admin/src/Core/Ajax.php:1251
+msgid "Os dados fornecidos são inválidos ou o fluxo não foi encontrado."
+msgstr "Os dados fornecidos são inválidos ou o fluxo não foi encontrado."
+
+#: admin/src/Core/Ajax.php:1774
+msgid "Os registros foram limpos"
+msgstr "Os registros foram limpos"
+
+#: admin/src/Views/Builder/Choose_Template.php:107
+msgid "Ou clique para procurar seu arquivo"
+msgstr "Ou clique para procurar seu arquivo"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:93
+msgid "Pagamento da renovação falhou"
+msgstr "Pagamento da renovação falhada"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:87
+msgid "Pagamento da renovação recebido"
+msgstr "Pagamento da atualização recebida"
+
+#: admin/src/Builder/Components.php:858
+msgid "Pagamento da renovação: *"
+msgstr "compra da renovação: *"
+
+#: admin/src/Integrations/Wpforms.php:111
+msgid "Pagamento processado pelo PayPal"
+msgstr "Pagamento processado pelo PayPal"
+
+#: admin/src/Validations/Country_Codes.php:72
+msgid "Pakistan"
+msgstr "Paquistão"
+
+#: admin/src/Validations/Country_Codes.php:193
+msgid "Palau"
+msgstr "Palau"
+
+#: admin/src/Validations/Country_Codes.php:221
+msgid "Palestine"
+msgstr "Palestina"
+
+#: admin/src/Validations/Country_Codes.php:171
+msgid "Panama"
+msgstr "Panamá"
+
+#: admin/src/Validations/Country_Codes.php:188
+msgid "Papua New Guinea"
+msgstr "Papua Nova Guiné"
+
+#: admin/src/Integrations/Wordpress.php:214
+msgid "Para recuperar a data atual"
+msgstr "Para recuperar a data atual"
+
+#: admin/src/Integrations/Wordpress.php:239
+msgid "Para recuperar a data de publicação do post"
+msgstr "Para recuperar os dados de publicação do post"
+
+#: admin/src/Integrations/Woocommerce.php:281
+msgid "Para recuperar a data do pedido do WooCommerce"
+msgstr "Para recuperar os dados do pedido do WooCommerce"
+
+#: admin/src/Integrations/Woocommerce.php:1050
+msgid "Para recuperar a descrição do cupom de desconto."
+msgstr "Para recuperar a descrição do cupom de desconto."
+
+#: admin/src/Integrations/Woocommerce.php:1066
+msgid "Para recuperar a expiração do cupom de desconto. Exemplo: Expira em 1 hora."
+msgstr "Para recuperar a expiração do cupom de desconto. Exemplo: Expira em 1 hora."
+
+#: admin/src/Integrations/Elementor.php:150
+msgid ""
+"Para recuperar a informação de um campo do formulário do Elementor. "
+"Substitua FIELD_ID pelo id respectivo."
+msgstr ""
+"Para recuperar as informações de um campo do formulário do Elementor. "
+"Substitua FIELD_ID pelo id correspondente."
+
+#: admin/src/Integrations/Wpforms.php:160
+msgid ""
+"Para recuperar a informação de um campo do formulário do WPForms. Substitua "
+"FIELD_ID pelo id respectivo."
+msgstr ""
+"Para recuperar as informações de um campo do formulário do WPForms. "
+"Substitua FIELD_ID pelo id correspondente."
+
+#: admin/src/Integrations/Wordpress.php:284
+msgid "Para recuperar a URL da imagem destacada do post"
+msgstr "Para recuperar a URL da imagem destacada do post"
+
+#: admin/src/Integrations/Woocommerce.php:313
+msgid "Para recuperar a URL de pagamento do pedido"
+msgstr "Para recuperar a URL do pagamento do pedido"
+
+#: admin/src/Integrations/Wordpress.php:198
+msgid "Para recuperar a URL do site"
+msgstr "Para recuperar a URL do site"
+
+#: admin/src/Integrations/Wordpress.php:275
+msgid "Para recuperar as categorias do post, separadas por vírgula"
+msgstr "Para recuperar as categorias do post, separadas por vírgula"
+
+#: admin/src/Integrations/Wordpress.php:266
+msgid "Para recuperar as tags do post, separadas por vírgula"
+msgstr "Para recuperar as tags do post, separadas por vírgula"
+
+#: admin/src/Integrations/Woocommerce.php:305
+msgid ""
+"Para recuperar cada produto e quantidade adquiridos no pedido, separados "
+"por linha"
+msgstr ""
+"Para recuperar cada produto e quantidades adquiridas no pedido, separadas "
+"por linha"
+
+#: admin/src/Integrations/Woocommerce.php:1046
+msgid "Para recuperar o código do cupom de desconto."
+msgstr "Para recuperar o código do cupom de desconto."
+
+#: admin/src/Integrations/Flexify_Checkout.php:232
+msgid ""
+"Para recuperar o código Pix Copia e Cola do pedido. Através da integração "
+"Flexify Checkout - Inter addon"
+msgstr ""
+"Para recuperar o código Pix Copia e Cola do pedido. Através da integração "
+"Flexify Checkout - Inter addon"
+
+#: admin/src/Integrations/Wordpress.php:248
+msgid "Para recuperar o conteúdo do post (somente texto)"
+msgstr "Para recuperar o conteúdo do post (somente texto)"
+
+#: admin/src/Integrations/Flexify_Checkout.php:311
+msgid "Para recuperar o e-mail de contato do carrinho."
+msgstr "Para recuperar o e-mail de contato do carrinho."
+
+#: admin/src/Integrations/Woocommerce.php:241
+msgid "Para recuperar o e-mail de faturamento do cliente no pedido do WooCommerce"
+msgstr "Para recuperar o e-mail de faturamento do cliente no pedido do WooCommerce"
+
+#: admin/src/Integrations/Wordpress.php:190
+msgid "Para recuperar o e-mail do usuário"
+msgstr "Para recuperar o e-mail do usuário"
+
+#: admin/src/Integrations/Woocommerce.php:297
+msgid ""
+"Para recuperar o endereço completo de entrega do usuário (formato "
+"configurável nas opções do WooCommerce)."
+msgstr ""
+"Para recuperar o endereço completo de entrega do usuário (formato "
+"configurável nas opções do WooCommerce)."
+
+#: admin/src/Integrations/Woocommerce.php:289
+msgid ""
+"Para recuperar o endereço completo de faturamento do usuário (formato "
+"configurável nas opções do WooCommerce)."
+msgstr ""
+"Para recuperar o endereço completo de relatórios do usuário (formato "
+"configurável nas opções do WooCommerce)."
+
+#: admin/src/Integrations/Woocommerce.php:384
+msgid "Para recuperar o endereço de entrega do pedido do WooCommerce"
+msgstr "Para recuperar o endereço de entrega do pedido do WooCommerce"
+
+#: admin/src/Integrations/Wordpress.php:257
+msgid "Para recuperar o link do post"
+msgstr "Para recuperar o link do post"
+
+#: admin/src/Integrations/Flexify_Checkout.php:287
+msgid "Para recuperar o nome do contato do carrinho."
+msgstr "Para recuperar o nome do contato do carrinho."
+
+#: admin/src/Integrations/Wordpress.php:206
+msgid "Para recuperar o nome do site"
+msgstr "Para recuperar o nome do site"
+
+#: admin/src/Integrations/Woocommerce.php:265
+msgid "Para recuperar o número do pedido do WooCommerce"
+msgstr "Para recuperar o número do pedido do WooCommerce"
+
+#: admin/src/Integrations/Woocommerce.php:225
+msgid ""
+"Para recuperar o primeiro nome de faturamento do cliente no pedido do "
+"WooCommerce"
+msgstr ""
+"Para recuperar o primeiro nome de faturamento do cliente no pedido do "
+"WooCommerce"
+
+#: admin/src/Integrations/Wordpress.php:174
+msgid "Para recuperar o primeiro nome do usuário"
+msgstr "Para recuperar o primeiro nome do usuário"
+
+#: admin/src/Integrations/Woocommerce.php:321
+msgid "Para recuperar o símbolo de moeda do pedido"
+msgstr "Para recuperar o símbolo de moeda do pedido"
+
+#: admin/src/Integrations/Woocommerce.php:233
+msgid ""
+"Para recuperar o sobrenome de faturamento do cliente no pedido do "
+"WooCommerce"
+msgstr ""
+"Para recuperar o sobrenome de faturamento do cliente no pedido do "
+"WooCommerce"
+
+#: admin/src/Integrations/Flexify_Checkout.php:295
+msgid "Para recuperar o sobrenome do contato do carrinho."
+msgstr "Para recuperar o sobrenome do contato do carrinho."
+
+#: admin/src/Integrations/Wordpress.php:182
+msgid "Para recuperar o sobrenome do usuário"
+msgstr "Para recuperar o sobrenome do usuário"
+
+#: admin/src/Integrations/Woocommerce.php:273
+msgid "Para recuperar o status do pedido do WooCommerce"
+msgstr "Para recuperar o status do pedido do WooCommerce"
+
+#: admin/src/Integrations/Flexify_Checkout.php:303
+msgid "Para recuperar o telefone de contato do carrinho."
+msgstr "Para recuperar o telefone de contato do carrinho."
+
+#: admin/src/Integrations/Woocommerce.php:257
+msgid "Para recuperar o telefone de entrega do pedido do WooCommerce"
+msgstr "Para recuperar o telefone de entrega do pedido do WooCommerce"
+
+#: admin/src/Integrations/Woocommerce.php:249
+msgid "Para recuperar o telefone de faturamento do pedido do WooCommerce"
+msgstr "Para recuperar o telefone de faturamento do pedido do WooCommerce"
+
+#: admin/src/Integrations/Flexify_Checkout.php:240
+#: admin/src/Integrations/Flexify_Checkout.php:248
+msgid ""
+"Para recuperar o tempo de expiração do Pix Copia e Cola. Através da "
+"integração Flexify Checkout - Inter addon"
+msgstr ""
+"Para recuperar o tempo de expiração do Pix Copia e Cola. Através da "
+"integração Flexify Checkout - Inter addon"
+
+#: admin/src/Integrations/Woocommerce.php:1054
+msgid ""
+"Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou Valor "
+"fixo."
+msgstr ""
+"Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou Valor "
+"fixo."
+
+#: admin/src/Integrations/Woocommerce.php:369
+msgid "Para recuperar o título do método de pagamento do pedido do WooCommerce"
+msgstr "Para recuperar o título do método de pagamento do pedido do WooCommerce"
+
+#: admin/src/Integrations/Wordpress.php:230
+msgid "Para recuperar o título do post"
+msgstr "Para recuperar o título do post"
+
+#: admin/src/Integrations/Woocommerce.php:1447
+msgid "Para recuperar o valor de %s"
+msgstr "Para recuperar o valor de %s"
+
+#: admin/src/Integrations/Woocommerce.php:392
+msgid ""
+"Para recuperar o valor de um campo específico do checkout no pedido do "
+"WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: "
+"billing_email."
+msgstr ""
+"Para recuperar o valor de um campo específico do checkout no pedido do "
+"WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: "
+"billing_email."
+
+#: admin/src/Integrations/Woocommerce.php:1062
+msgid ""
+"Para recuperar o valor do cupom de desconto formatado com símbolo de moeda "
+"ou percentual. Exemplo: 10%."
+msgstr ""
+"Para recuperar o valor do cupom de desconto formatado com símbolo de moeda "
+"ou percentual. Exemplo: 10%."
+
+#: admin/src/Integrations/Woocommerce.php:1058
+msgid "Para recuperar o valor do cupom de desconto."
+msgstr "Para recuperar o valor do cupom de desconto."
+
+#: admin/src/Integrations/Woocommerce.php:337
+msgid "Para recuperar o valor total de desconto do pedido do WooCommerce"
+msgstr "Para recuperar o valor total de desconto do pedido do WooCommerce"
+
+#: admin/src/Integrations/Woocommerce.php:345
+msgid "Para recuperar o valor total de impostos do pedido do WooCommerce"
+msgstr "Para recuperar o valor total de impostos do pedido do WooCommerce"
+
+#: admin/src/Integrations/Flexify_Checkout.php:327
+msgid "Para recuperar o valor total do carrinho."
+msgstr "Para recuperar o valor total do carrinho."
+
+#: admin/src/Integrations/Woocommerce.php:329
+msgid "Para recuperar o valor total do pedido do WooCommerce"
+msgstr "Para recuperar o valor total do pedido do WooCommerce"
+
+#: admin/src/Integrations/Woocommerce.php:353
+msgid "Para recuperar o valor total reembolsado do pedido do WooCommerce"
+msgstr "Para recuperar o valor total reembolsado do pedido do WooCommerce"
+
+#: admin/src/Integrations/Woocommerce.php:361
+msgid "Para recuperar os códigos de cupom utilizados no pedido do WooCommerce"
+msgstr "Para recuperar os códigos de cupom usados no pedido do WooCommerce"
+
+#: admin/src/Integrations/Wordpress.php:222
+msgid ""
+"Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que "
+"deseja recuperar o valor. Exemplo: billing_phone"
+msgstr ""
+"Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que "
+"deseja recuperar o valor. Exemplo: billing_phone"
+
+#: admin/src/Validations/Country_Codes.php:179
+msgid "Paraguay"
+msgstr "Paraguai"
+
+#: admin/src/Builder/Actions.php:64
+msgid "Parar automação aqui"
+msgstr "Parar mais aqui"
+
+#: app/src/pages/license/LicensePage.vue:46
+msgid "Paste the code you received after purchase."
+msgstr "Cole o código que você recebeu após a compra."
+
+#: app/src/pages/license/LicensePage.vue:346
+msgid ""
+"Paste the license key you received after purchase and click Activate to "
+"unlock all features."
+msgstr ""
+"Cole a chave de licença que você recebeu após a compra e clique em Ativar "
+"para desbloquear todos os recursos."
+
+#: admin/src/Integrations/Woocommerce.php:146
+msgid "Pedido concluído"
+msgstr "Pedido"
+
+#: admin/src/Integrations/Woocommerce.php:1095
+msgid "Pedido pago"
+msgstr "Pedido pago"
+
+#: admin/src/Integrations/Woocommerce.php:158
+msgid "Pedido parcialmente reembolsado"
+msgstr "Pedido parcialmente reembolsado"
+
+#: admin/src/Integrations/Woocommerce.php:152
+msgid "Pedido totalmente reembolsado"
+msgstr "Pedido totalmente reembolsado"
+
+#: admin/src/Builder/Messages.php:245
+#: admin/src/Integrations/Woocommerce.php:828
+#: admin/src/Integrations/Woocommerce.php:1055
+msgid "Percentual"
+msgstr "Percentual"
+
+#: admin/src/Core/Ajax.php:1641
+msgid "Permissão negada"
+msgstr "Permissão negada"
+
+#: admin/src/Builder/Actions.php:41
+msgid "Permite definir um tempo de espera antes da ação ser executada."
+msgstr "Permite definir um tempo de espera antes da ação ser realizada."
+
+#: admin/src/Builder/Actions.php:53
+msgid "Permite definir uma condição para uma ação ser executada."
+msgstr "Permite definir uma condição para uma ação ser executada."
+
+#: admin/src/Admin/Settings/Registry.php:158
+msgid "Permite que o plugin seja atualizado automaticamente sempre que possível."
+msgstr "Permite que o plugin seja atualizado automaticamente sempre que possível."
+
+#: admin/src/Integrations/Woocommerce.php:1108
+msgid "Permite verificar a forma de entrega do pedido."
+msgstr "Permite verificar a forma de entrega do pedido."
+
+#: admin/src/Integrations/Woocommerce.php:1104
+msgid "Permite verificar a forma de pagamento do pedido."
+msgstr "Permite verificar a forma de pagamento do pedido."
+
+#: admin/src/Integrations/Wordpress.php:307
+msgid "Permite verificar a função do usuário que disparou o acionamento."
+msgstr "Permite verificar a função do usuário que disparou o acionamento."
+
+#: admin/src/Integrations/Wordpress.php:317
+msgid "Permite verificar a função do usuário que fez o login."
+msgstr "Permite verificar a função do usuário que fez o login."
+
+#: admin/src/Integrations/Wordpress.php:311
+msgid ""
+"Permite verificar metadados específicos do usuário que disparou o "
+"acionamento."
+msgstr ""
+"Permite verificar metadados específicos do usuário que disparou o "
+"acionamento."
+
+#: admin/src/Integrations/Elementor.php:175
+#: admin/src/Integrations/Flexify_Checkout.php:360
+#: admin/src/Integrations/Wordpress.php:321
+#: admin/src/Integrations/Wordpress.php:327
+msgid ""
+"Permite verificar metadados específicos do usuário que solicitou a "
+"redefinição de senha."
+msgstr ""
+"Permite verificar metadados específicos do usuário que solicita uma "
+"redefinição de senha."
+
+#: admin/src/Integrations/Woocommerce.php:1112
+#: admin/src/Integrations/Wpforms.php:220
+msgid "Permite verificar metadados específicos do usuário."
+msgstr "Permite verificar metadados específicos do usuário."
+
+#: admin/src/Integrations/Woocommerce.php:1116
+msgid "Permite verificar o e-mail do cliente que realizou o pedido."
+msgstr "Permite verificar o e-mail do cliente que fez o pedido."
+
+#: admin/src/Integrations/Woocommerce.php:1124
+msgid "Permite verificar o status da assinatura criada."
+msgstr "Permite verificar o status da assinatura criada."
+
+#: admin/src/Integrations/Woocommerce.php:1088
+msgid "Permite verificar o status do pedido."
+msgstr "Permite verificar o status do pedido."
+
+#: admin/src/Integrations/Wordpress.php:333
+msgid "Permite verificar o tipo de post que foi publicado."
+msgstr "Permite verificar o tipo de postagem que foi publicada."
+
+#: admin/src/Integrations/Woocommerce.php:1120
+msgid "Permite verificar o valor do reembolso do pedido."
+msgstr "Permite verificar o valor do reembolso do pedido."
+
+#: admin/src/Integrations/Flexify_Checkout.php:352
+msgid "Permite verificar o valor total do carrinho abandonado."
+msgstr "Permite verificar o valor total do carrinho abandonado."
+
+#: admin/src/Integrations/Woocommerce.php:1092
+msgid "Permite verificar o valor total do pedido."
+msgstr "Permite verificar o valor total do pedido."
+
+#: admin/src/Integrations/Flexify_Checkout.php:356
+msgid "Permite verificar os itens presentes no carrinho abandonado."
+msgstr "Permite verificar os itens presentes no carrinho abandonado."
+
+#: admin/src/Integrations/Woocommerce.php:1100
+msgid "Permite verificar os produtos adquiridos no pedido."
+msgstr "Permite verificar os produtos adquiridos no pedido."
+
+#: admin/src/Integrations/Flexify_Checkout.php:364
+msgid "Permite verificar se o carrinho abandonado foi recuperado."
+msgstr "Permite verificar se o carrinho abandonado foi recuperado."
+
+#: admin/src/Integrations/Woocommerce.php:1096
+msgid "Permite verificar se o pedido foi pago."
+msgstr "Permite verificar se o pedido foi pago."
+
+#: admin/src/Integrations/Elementor.php:171
+#: admin/src/Integrations/Wpforms.php:216
+msgid "Permite verificar um valor específico de um campo do formulário enviado."
+msgstr "Permite verificar um valor específico de um campo do formulário enviado."
+
+#: admin/src/Integrations/Woocommerce.php:836
+msgid "Permitir frete grátis"
+msgstr "Permitir frete grátis"
+
+#: admin/src/Integrations/Woocommerce.php:717
+msgid ""
+"Personalize o texto usado na variável {{ wc_billing_full_address }} usando "
+"os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city "
+"}} - {{ state }} (CEP: {{ postcode }})."
+msgstr ""
+"Personalize o texto usado na variável {{ wc_billing_full_address }} usando "
+"os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city "
+"}} - {{ state }} (CEP: {{ postcode }})."
+
+#: admin/src/Integrations/Woocommerce.php:735
+msgid ""
+"Personalize o texto usado na variável {{ wc_shipping_full_address }} usando "
+"os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city "
+"}} - {{ state }} (CEP: {{ postcode }})."
+msgstr ""
+"Personalize o texto usado na variável {{ wc_shipping_full_address }} usando "
+"os campos do checkout, por exemplo: {{ address_1 }}, {{ number }}, {{ city "
+"}} - {{ state }} (CEP: {{ postcode }})."
+
+#: admin/src/Validations/Country_Codes.php:51
+msgid "Peru"
+msgstr "Peru"
+
+#: admin/src/Core/Assets.php:165
+msgid "Pesquisar"
+msgstr "Pesquisar"
+
+#: admin/src/Core/Workflow_Post_Type.php:54
+msgid "Pesquisar fluxos"
+msgstr "Pesquisar fluxos"
+
+#: admin/src/Views/Builder/Choose_Template.php:63
+msgid "Pesquisar por fluxos"
+msgstr "Pesquisar por fluxos"
+
+#: admin/src/Builder/Components.php:779
+#: admin/src/Builder/Components.php:877
+msgid "Pesquise os produtos que deseja incluir"
+msgstr "Execute os produtos que desejam incluir"
+
+#: admin/src/Validations/Country_Codes.php:62
+msgid "Philippines"
+msgstr "Filipinas"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:246
+msgid "Phone number that will receive the test WhatsApp message."
+msgstr "Número de telefone que receberá a mensagem de teste do WhatsApp."
+
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:27
+msgid "Phone numbers already validated and available for use in flows."
+msgstr "Números de telefone já validados e disponíveis para uso nos fluxos."
+
+#: app/src/pages/settings/SettingsPage.vue:303
+msgid "Phone validated."
+msgstr "Telefone validado."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:207
+#: app/src/pages/settings/components/cards/PhoneActions.vue:301
+#: app/src/pages/settings/SettingsPage.vue:288
+#: app/src/pages/settings/SettingsPage.vue:290
+#: app/src/pages/settings/SettingsPage.vue:303
+#: app/src/pages/settings/SettingsPage.vue:305
+#: app/src/pages/settings/SettingsPage.vue:314
+#: app/src/pages/settings/SettingsPage.vue:317
+#: app/src/pages/settings/SettingsPage.vue:337
+#: app/src/pages/settings/SettingsPage.vue:339
+#: app/src/pages/settings/SettingsPage.vue:357
+#: app/src/pages/settings/SettingsPage.vue:359
+msgid "Phones"
+msgstr "Telefones"
+
+#: admin/src/Core/Ajax.php:2314
+msgid "Plugin ativado com sucesso."
+msgstr "Plugin ativado com sucesso."
+
+#: admin/src/Core/Ajax.php:2271
+msgid "Plugin instalado e ativado com sucesso."
+msgstr "Plugin instalado e ativado com sucesso."
+
+#: admin/src/Core/Ajax.php:2270
+msgid "Plugin instalado e ativado."
+msgstr "Plugin instalado e."
+
+#: admin/src/Validations/Country_Codes.php:49
+msgid "Poland"
+msgstr "Polônia"
+
+#: admin/src/Core/Ajax.php:1372
+msgid "Por favor, preencha o número de telefone e o código OTP."
+msgstr "Por favor, responda o número de telefone e o código OTP."
+
+#: admin/src/Validations/Country_Codes.php:135
+msgid "Portugal"
+msgstr "Portugal"
+
+#: admin/src/Integrations/Wordpress.php:121
+msgid "Post tem status alterado"
+msgstr "Post tem status alter"
+
+#: admin/src/Admin/Settings/Registry.php:436
+msgid "post_max_size"
+msgstr "post_max_size"
+
+#: admin/src/Rest/Phone_Validate_Otp.php:52
+msgid "Preencha o telefone e o código OTP."
+msgstr "Preencha o telefone e o código OTP."
+
+#: admin/src/Admin/Settings/Registry.php:45
+msgid "Preferências base do plugin, proxy de envio e avisos do WhatsApp."
+msgstr "Preferências base do plugin, proxy de envio e avisos do WhatsApp."
+
+#: admin/src/Admin/Settings/Registry.php:315
+msgid "Prefixo do cupom"
+msgstr "Prefixo do cupom"
+
+#: admin/src/Integrations/Woocommerce.php:706
+msgid "Prefixo para criação de cupons"
+msgstr "Prefixo para criação de cupons"
+
+#: admin/src/Admin/Settings/Registry.php:316
+msgid "Prefixo usado na criação automática de cupons."
+msgstr "Prefixo usado na criação automática de cupons."
+
+#: admin/src/Views/Builder/Choose_Template.php:60
+msgid "Procure por categorias ou nomes."
+msgstr "Procure por categorias ou nomes."
+
+#: admin/src/Integrations/Woocommerce.php:1099
+msgid "Produtos adquiridos"
+msgstr "Produtos adquiridos"
+
+#: admin/src/Builder/Components.php:774
+msgid "Produtos adquiridos:"
+msgstr "Produtos adquiridos:"
+
+#: admin/src/Builder/Components.php:876
+msgid "Produtos no carrinho:"
+msgstr "Produtos no carrinho:"
+
+#: admin/src/Core/Ajax.php:1914
+msgid "Proprietário: %s | Membros: %s"
+msgstr "Proprietário: %s | Membros: %s"
+
+#: admin/src/Admin/Settings/Registry.php:76
+msgid "Proxy API"
+msgstr "API de proxy"
+
+#: admin/src/Validations/Country_Codes.php:225
+msgid "Qatar"
+msgstr "Catar"
+
+#: admin/src/Builder/Components.php:469
+#: admin/src/Builder/Components.php:500
+msgid "Qualquer status"
+msgstr "status"
+
+#: app/src/pages/license/LicensePage.vue:453
+msgid "Quick help"
+msgstr "Ajuda rápida"
+
+#: admin/src/Core/Workflows_Table.php:200
+msgid "Rascunho"
+msgstr "Rascunho"
+
+#: admin/src/Core/Assets.php:169
+msgid "Recentes"
+msgstr "Recentes"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:236
+msgid "Recipient"
+msgstr "Destinatário"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:245
+msgid "Recipient phone"
+msgstr "Telefone do destinatário"
+
+#: admin/src/Integrations/Wordpress.php:115
+msgid "Recuperação de senha do usuário"
+msgstr "Recuperação de senha do usuário"
+
+#: admin/src/Builder/Actions.php:89
+msgid ""
+"Recupere dados de qualquer parte do WordPress via código PHP, acessando "
+"objetos, arrays e metadados dinamicamente."
+msgstr ""
+"Recupere dados de qualquer parte do WordPress via código PHP, acessando "
+"objetos, arrays e metadados dinamicamente."
+
+#: admin/src/Integrations/Flexify_Checkout.php:90
+msgid ""
+"Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a "
+"finalização de compras, garantindo mais conversões."
+msgstr ""
+"Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a "
+"finalização de compras, garantindo mais ofertas."
+
+#: admin/src/Admin/Components.php:93
+msgid "Reenvie o código em"
+msgstr "Reenvie o código em"
+
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:45
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:51
+msgid "Refresh connection"
+msgstr "Atualizar conexão"
+
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:51
+msgid "Refreshing connection"
+msgstr "Conexão revigorante"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:299
+msgid "Register new phone"
+msgstr "Cadastre um novo telefone"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:360
+msgid "Register phone"
+msgstr "Cadastre o telefone"
+
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:25
+msgid "Registered senders"
+msgstr "Remetentes registrados"
+
+#: admin/src/Core/Ajax.php:1775
+#: admin/src/Rest/Debug_Clear.php:48
+msgid "Registros de depuração limpos com sucesso!"
+msgstr "Registros de depuração limpos com sucesso!"
+
+#: admin/src/Integrations/Elementor_Forms.php:93
+msgid "Remetente"
+msgstr "Remetente"
+
+#: admin/src/Core/Ajax.php:1480
+msgid "Remetente removido"
+msgstr "Remetente de história"
+
+#: admin/src/Integrations/Whatsapp.php:136
+#: admin/src/Integrations/Whatsapp.php:186
+msgid "Remetente: *"
+msgstr "Remetente: *"
+
+#: admin/src/Builder/Components.php:86
+#: admin/src/Builder/Components.php:240
+msgid "Remetente: %s"
+msgstr "Remetente: %s"
+
+#: admin/src/Admin/Settings/Registry.php:120
+msgid "Remetentes cadastrados"
+msgstr "Remetentes cadastrados"
+
+#: app/src/pages/settings/components/cards/PhoneSenderList.vue:71
+msgid "Remove"
+msgstr "Remover"
+
+#: app/src/pages/settings/SettingsPage.vue:328
+msgid "Remove sender"
+msgstr "Remover remetente"
+
+#: admin/src/Admin/Components.php:51
+#: admin/src/Core/Assets.php:162
+msgid "Remover"
+msgstr "Removedor"
+
+#: admin/src/Integrations/Woo_Subscriptions.php:99
+msgid "Renovação da assinatura expirou"
+msgstr "Renovação da assinatura expirada"
+
+#: admin/src/Validations/Country_Codes.php:104
+msgid "Republic of the Congo"
+msgstr "República do Congo"
+
+#: app/src/pages/settings/SettingsPage.vue:403
+#: app/src/pages/settings/SettingsPage.vue:405
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: app/src/pages/settings/components/cards/DangerZone.vue:33
+#: app/src/pages/settings/SettingsPage.vue:395
+msgid "Reset settings"
+msgstr "Redefinir configurações"
+
+#: admin/src/Api/License.php:312
+msgid "Resposta desconhecida"
+msgstr "Resposta desconhecida"
+
+#: admin/src/Api/License.php:337
+msgid "Resposta vazia."
+msgstr "Resposta separada."
+
+#: admin/src/Core/Workflows_Table.php:178
+#: admin/src/Core/Workflows_Table.php:251
+msgid "Restaurar"
+msgstr "Restaurar"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:63
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:67
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:70
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:108
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:112
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:115
+msgid "Restore default"
+msgstr "Restaurar padrão"
+
+#: admin/src/Builder/Components.php:1182
+msgid "Retrair"
+msgstr "Retrair"
+
+#: admin/src/Validations/Country_Codes.php:122
+msgid "Réunion"
+msgstr "Reunião"
+
+#: app/src/pages/license/LicensePage.vue:52
+msgid "Review your current license status and refresh it whenever needed."
+msgstr "Verifique o status atual da sua licença e atualize-a sempre que necessário."
+
+#: admin/src/Views/Builder/Navbar.php:26
+msgid "Rodar teste"
+msgstr "Rodar teste"
+
+#: admin/src/Views/Builder/Navbar.php:26
+msgid "Rodar um teste da automação. Obs.: Atrasos e condições não são considerados."
+msgstr "Rodar um teste de automação. Obs.: Atrasos e condições não são considerados."
+
+#: admin/src/Validations/Country_Codes.php:42
+msgid "Romania"
+msgstr "Romênia"
+
+#: admin/src/Admin/Settings/Registry.php:94
+msgid "Rota de mídia"
+msgstr "Rota de mídia"
+
+#: admin/src/Admin/Settings/Registry.php:86
+msgid "Rota de texto"
+msgstr "Rota de texto"
+
+#: admin/src/Integrations/Woocommerce.php:292
+msgid "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
+msgstr "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
+
+#: admin/src/Integrations/Woocommerce.php:300
+#: admin/src/Integrations/Woocommerce.php:387
+msgid "Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
+msgstr "Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
+
+#: admin/src/Validations/Country_Codes.php:32
+msgid "Russia"
+msgstr "Rússia"
+
+#: admin/src/Validations/Country_Codes.php:111
+msgid "Rwanda"
+msgstr "Ruanda"
+
+#: admin/src/Validations/Country_Codes.php:174
+msgid "Saint Barthelemy"
+msgstr "São Bartolomeu"
+
+#: admin/src/Validations/Country_Codes.php:130
+msgid "Saint Helena"
+msgstr "Santa Helena"
+
+#: admin/src/Validations/Country_Codes.php:174
+msgid "Saint Martin"
+msgstr "São Martinho"
+
+#: admin/src/Validations/Country_Codes.php:172
+msgid "Saint Pierre and Miquelon"
+msgstr "São Pedro e Miquelão"
+
+#: admin/src/Builder/Components.php:167
+#: admin/src/Builder/Components.php:201
+#: admin/src/Builder/Components.php:291
+#: admin/src/Builder/Components.php:426
+#: admin/src/Builder/Components.php:1012
+msgid "Salvar alterações"
+msgstr "Salvar alterações"
+
+#: admin/src/Core/Ajax.php:176
+msgid "Salvo com sucesso"
+msgstr "Salvo com sucesso"
+
+#: admin/src/Core/Assets.php:176
+msgid "SÃ­mbolos"
+msgstr "Símbolos"
+
+#: admin/src/Validations/Country_Codes.php:197
+msgid "Samoa"
+msgstr "Samoa"
+
+#: admin/src/Validations/Country_Codes.php:152
+msgid "San Marino"
+msgstr "São Marino"
+
+#: admin/src/Validations/Country_Codes.php:101
+msgid "São Tomé and Príncipe"
+msgstr "São Tomé e Príncipe"
+
+#: admin/src/Validations/Country_Codes.php:218
+msgid "Saudi Arabia"
+msgstr "Arábia Saudita"
+
+#: app/src/pages/settings/components/SettingsActionBar.vue:23
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+#: app/src/pages/settings/SettingsPage.vue:266
+msgid "Saved"
+msgstr "Salvo"
+
+#: app/src/components/fields/SelectField.vue:225
+msgid "Search..."
+msgstr "Procurar..."
+
+#: admin/src/Core/Helpers.php:42
+msgid "segundo"
+msgstr "segundo"
+
+#: admin/src/Builder/Components.php:313
+msgid "Segundo (s)"
+msgstr "Segundo (s)"
+
+#: admin/src/Admin/Components.php:95
+#: admin/src/Core/Helpers.php:42
+msgid "segundos"
+msgstr "segundos"
+
+#: admin/src/Builder/Components.php:1070
+msgid "Selecione o tipo de atraso da próxima ação"
+msgstr "Selecione o tipo de atraso da próxima ação"
+
+#: admin/src/Integrations/Woocommerce.php:846
+msgid "Selecione o tipo de expiração"
+msgstr "Selecione o tipo de expiração"
+
+#: admin/src/Builder/Components.php:483
+msgid "Selecione um formulário"
+msgstr "Selecione um"
+
+#: admin/src/Builder/Components.php:813
+msgid "Selecione um método de entrega"
+msgstr "Selecione um método de entrega"
+
+#: admin/src/Builder/Components.php:796
+msgid "Selecione um método de pagamento"
+msgstr "Selecione um método de pagamento"
+
+#: admin/src/Builder/Components.php:745
+msgid "Selecione um status"
+msgstr "Selecione um status"
+
+#: admin/src/Builder/Components.php:720
+msgid "Selecione um tipo de post"
+msgstr "Selecione um tipo de postagem"
+
+#: admin/src/Builder/Components.php:929
+msgid "Selecione uma condição"
+msgstr "Selecione uma condição"
+
+#: admin/src/Builder/Components.php:1096
+#: admin/src/Integrations/Woocommerce.php:858
+msgid "Selecione uma data"
+msgstr "Selecione uma data"
+
+#: admin/src/Views/Builder/Triggers.php:23
+msgid ""
+"Selecione uma integração de acionamento para iniciar o fluxo da sua "
+"automação."
+msgstr ""
+"Selecione uma integração de funcionamento para iniciar o fluxo de sua "
+"automação."
+
+#: admin/src/Views/Builder/Actions.php:17
+msgid "Selecione uma ou mais ações para o fluxo da automação."
+msgstr "Selecione uma ou mais ações para o fluxo da automação."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:315
+msgid "Select a phone"
+msgstr "Selecione um telefone"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:225
+msgid "Select a sender"
+msgstr "Selecione um remetente"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:314
+msgid "Select an available phone for registration and validation."
+msgstr "Selecione um telefone disponível para cadastro e validação."
+
+#: app/src/components/fields/SelectField.vue:59
+msgid "Select an option"
+msgstr "Selecione uma opção"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:216
+msgid "Select the WhatsApp sender that will be used to deliver this test message."
+msgstr ""
+"Selecione o remetente do WhatsApp que será usado para entregar esta "
+"mensagem de teste."
+
+#: admin/src/Core/Helpers.php:46
+msgid "semana"
+msgstr "semana"
+
+#: admin/src/Builder/Components.php:317
+msgid "Semana (s)"
+msgstr "Semana(s)"
+
+#: admin/src/Core/Helpers.php:46
+msgid "semanas"
+msgstr "semanas"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:286
+msgid "Send"
+msgstr "Enviar"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:199
+#: app/src/pages/settings/components/cards/PhoneActions.vue:205
+msgid "Send test message"
+msgstr "Enviar mensagem de teste"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:104
+msgid "send-message/media"
+msgstr "enviar-mensagem/mídia"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:59
+msgid "send-message/text"
+msgstr "enviar-mensagem/texto"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:223
+msgid "Sender"
+msgstr "Remetente"
+
+#: app/src/pages/settings/SettingsPage.vue:337
+msgid "Sender removed."
+msgstr "Remetente removido."
+
+#: admin/src/Validations/Country_Codes.php:83
+msgid "Senegal"
+msgstr "Senegal"
+
+#: admin/src/Validations/Country_Codes.php:155
+msgid "Serbia"
+msgstr "Sérvia"
+
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:85
+msgid "Server"
+msgstr "Servidor"
+
+#: app/src/pages/settings/SettingsPage.vue:266
+msgid "Settings have been saved."
+msgstr "As configurações foram salvas."
+
+#: admin/src/Core/Ajax.php:1416
+#: admin/src/Rest/Phone_Validate_Otp.php:75
+msgid "Seu WhatsApp foi verificado com sucesso!"
+msgstr "Seu WhatsApp foi verificado com sucesso!"
+
+#: admin/src/Validations/Country_Codes.php:109
+msgid "Seychelles"
+msgstr "Seicheles"
+
+#: admin/src/Validations/Country_Codes.php:94
+msgid "Sierra Leone"
+msgstr "Serra Leoa"
+
+#: admin/src/Admin/Settings/Registry.php:398
+#: admin/src/Admin/Settings/Registry.php:422
+#: admin/src/Builder/Components.php:861
+#: admin/src/Builder/Messages.php:246
+#: admin/src/Builder/Messages.php:247
+#: admin/src/Integrations/Elementor_Forms.php:129
+#: admin/src/Integrations/Elementor_Forms.php:172
+msgid "Sim"
+msgstr "Sim"
+
+#: admin/src/Validations/Country_Codes.php:64
+msgid "Singapore"
+msgstr "Cingapura"
+
+#: admin/src/Validations/Country_Codes.php:162
+msgid "Slovakia"
+msgstr "Eslováquia"
+
+#: admin/src/Validations/Country_Codes.php:158
+msgid "Slovenia"
+msgstr "Eslovênia"
+
+#: admin/src/Builder/Actions.php:75
+msgid "Snippet PHP"
+msgstr "Trecho de código PHP"
+
+#: admin/src/Admin/Settings/Registry.php:141
+#: admin/src/Admin/Settings/Registry.php:219
+msgid "Sobre"
+msgstr "Sobre"
+
+#: admin/src/Validations/Country_Codes.php:190
+msgid "Solomon Islands"
+msgstr "Ilhas Salomão"
+
+#: admin/src/Validations/Country_Codes.php:113
+msgid "Somalia"
+msgstr "Somália"
+
+#: admin/src/Core/Assets.php:170
+msgid "Sorrisos e Pessoas"
+msgstr "Sorrisos e Pessoas"
+
+#: admin/src/Validations/Country_Codes.php:34
+msgid "South Africa"
+msgstr "África do Sul"
+
+#: admin/src/Validations/Country_Codes.php:67
+msgid "South Korea"
+msgstr "Coréia do Sul"
+
+#: admin/src/Validations/Country_Codes.php:77
+msgid "South Sudan"
+msgstr "Sudão do Sul"
+
+#: admin/src/Validations/Country_Codes.php:39
+msgid "Spain"
+msgstr "Espanha"
+
+#: admin/src/Validations/Country_Codes.php:74
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: admin/src/Core/Workflows_Table.php:139
+msgid "Status"
+msgstr "Status"
+
+#: admin/src/Core/Ajax.php:816
+msgid "Status atualizado com sucesso"
+msgstr "Status com sucesso"
+
+#: admin/src/Integrations/Woocommerce.php:1123
+msgid "Status da assinatura"
+msgstr "Status da assinatura"
+
+#: admin/src/Builder/Components.php:846
+msgid "Status da assinatura: *"
+msgstr "Status da assinatura: *"
+
+#: admin/src/Integrations/Woocommerce.php:164
+msgid "Status de um pedido alterado"
+msgstr "Status de um pedido alterado"
+
+#: admin/src/Views/Builder/Navbar.php:30
+msgid "Status do fluxo"
+msgstr "Status do fluxo"
+
+#: admin/src/Core/Ajax.php:1667
+msgid "Status do fluxo atualizado"
+msgstr "Status do fluxo"
+
+#: admin/src/Builder/Components.php:466
+#: admin/src/Integrations/Woocommerce.php:1087
+msgid "Status do pedido"
+msgstr "Status do pedido"
+
+#: admin/src/Builder/Components.php:742
+msgid "Status do pedido: *"
+msgstr "Status do pedido: *"
+
+#: admin/src/Builder/Components.php:497
+msgid "Status do post"
+msgstr "Postar status"
+
+#: admin/src/Admin/Settings/Registry.php:174
+msgid "Status do sistema"
+msgstr "Status do sistema"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:307
+msgid "Step 1: Select an available phone"
+msgstr "Passo 1: Selecione um telefone disponível"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:300
+msgid "Step 1: Select an available phone."
+msgstr "Passo 1: Selecione um telefone disponível."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:330
+msgid "Step 2: Enter the verification code"
+msgstr "Passo 2: Insira o código de verificação"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:300
+msgid "Step 2: Enter the verification code."
+msgstr "Passo 2: Insira o código de verificação."
+
+#: admin/src/Admin/Settings/Registry.php:565
+msgid "Sua chave de licença:"
+msgstr "Sua chave de trabalho:"
+
+#: admin/src/Admin/Settings/Registry.php:547
+msgid "Sua instalação está liberada para uso completo."
+msgstr "Sua instalação está liberada para uso completo."
+
+#: app/src/pages/license/LicensePage.vue:62
+msgid "Subscription"
+msgstr "Subscrição"
+
+#: admin/src/Integrations/Elementor_Forms.php:163
+msgid "Substitua informações com "
+msgstr "informações com"
+
+#: admin/src/Validations/Country_Codes.php:110
+msgid "Sudan"
+msgstr "Sudão"
+
+#: admin/src/Admin/Settings/Registry.php:563
+msgid "Suporte até: %s"
+msgstr "Suporte até: %s"
+
+#: admin/src/Admin/Settings/Registry.php:564
+msgid "Suporte até: Não disponível"
+msgstr "Suporte até: Não disponível"
+
+#: app/src/pages/license/LicensePage.vue:395
+msgid "Support access and subscription updates"
+msgstr "Suporte, acesso e atualizações de assinatura"
+
+#: app/src/pages/license/LicensePage.vue:70
+msgid "Support until"
+msgstr "Apoio até"
+
+#: app/src/pages/license/LicensePage.vue:189
+msgid "Support until: Not available"
+msgstr "Suporte até: Não disponível"
+
+#: admin/src/Validations/Country_Codes.php:181
+msgid "Suriname"
+msgstr "Suriname"
+
+#: admin/src/Validations/Country_Codes.php:47
+msgid "Sweden"
+msgstr "Suécia"
+
+#: admin/src/Validations/Country_Codes.php:43
+msgid "Switzerland"
+msgstr "Suíça"
+
+#: app/src/pages/license/LicensePage.vue:237
+msgid "Sync"
+msgstr "Sincronizar"
+
+#: app/src/pages/license/LicensePage.vue:430
+msgid "Sync license"
+msgstr "Licença de sincronização"
+
+#: admin/src/Validations/Country_Codes.php:215
+msgid "Syria"
+msgstr "Síria"
+
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:42
+msgid "System status:"
+msgstr "Estado do sistema:"
+
+#: admin/src/Integrations/Wordpress.php:269
+msgid "tag1, tag2"
+msgstr "tag1, tag2"
+
+#: admin/src/Validations/Country_Codes.php:211
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: admin/src/Validations/Country_Codes.php:229
+msgid "Tajikistan"
+msgstr "Tadjiquistão"
+
+#: admin/src/Validations/Country_Codes.php:116
+msgid "Tanzania"
+msgstr "Tanzânia"
+
+#: admin/src/Admin/Settings/Registry.php:66
+msgid "Telefone de teste"
+msgstr "Telefone de teste"
+
+#: admin/src/Admin/Settings/Registry.php:114
+#: admin/src/Admin/Settings/Registry.php:207
+msgid "Telefones"
+msgstr "Telefones"
+
+#: admin/src/Admin/Settings/Registry.php:121
+msgid "Telefones já validados e disponíveis para uso nos fluxos."
+msgstr "Telefones já validados e disponíveis para uso em fluxos."
+
+#: admin/src/Core/Assets.php:92
+msgid "Tem certeza que deseja desativar sua licenÃ§a?"
+msgstr "Tem certeza que deseja desativar sua licença?"
+
+#: admin/src/Core/Assets.php:157
+msgid "Tem certeza que deseja excluir esta aÃ§Ã£o?"
+msgstr "Tem certeza que deseja excluir esta ação?"
+
+#: admin/src/Builder/Actions.php:40
+msgid "Tempo de espera"
+msgstr "Tempo de espera"
+
+#: admin/src/Builder/Components.php:921
+msgid "Termina com"
+msgstr "Termina com"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:162
+msgid "Test phone number"
+msgstr "Número de telefone de teste"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:214
+msgid "Test sender"
+msgstr "Remetente de teste"
+
+#: app/src/pages/settings/components/modals/ProxySettingsModal.vue:50
+msgid "Text message route"
+msgstr "Rota de mensagem de texto"
+
+#: admin/src/Validations/Country_Codes.php:65
+msgid "Thailand"
+msgstr "Tailândia"
+
+#: app/src/pages/settings/SettingsPage.vue:371
+msgid "The debug log is empty."
+msgstr "O log de depuração está vazio."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:260
+msgid "The message is prefilled and can be adjusted before sending the test."
+msgstr "A mensagem já vem preenchida e pode ser ajustada antes do envio do teste."
+
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:66
+msgid "This integration depends on an installed and active plugin."
+msgstr "Essa integração depende de um plugin instalado e ativo."
+
+#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:41
+msgid "This integration has no additional settings."
+msgstr "Esta integração não possui configurações adicionais."
+
+#: admin/src/Core/Ajax.php:490
+msgid "Tipo de arquivo inválido"
+msgstr "Tipo de arquivo"
+
+#: admin/src/Integrations/Elementor_Forms.php:188
+msgid "Tipo de mídia"
+msgstr "Tipo de mídia"
+
+#: admin/src/Integrations/Whatsapp.php:202
+msgid "Tipo de mídia: *"
+msgstr "Tipo de mídia: *"
+
+#: admin/src/Integrations/Wordpress.php:332
+msgid "Tipo de post"
+msgstr "Tipo de postagem"
+
+#: admin/src/Builder/Components.php:717
+msgid "Tipo de post: *"
+msgstr "Tipo de postagem: *"
+
+#: admin/src/Integrations/Woocommerce.php:823
+msgid "Tipo e valor do desconto: *"
+msgstr "Tipo e valor do desconto: *"
+
+#: admin/src/Builder/Messages.php:250
+msgid "Tipo: %s"
+msgstr "Tipo: %s"
+
+#: admin/src/Core/Ajax.php:1109
+msgid "Título atualizado com sucesso"
+msgstr "Título atualizado com sucesso"
+
+#: admin/src/Integrations/Wordpress.php:233
+msgid "Título de exemplo do post"
+msgstr "Título de destaque do post"
+
+#: admin/src/Builder/Components.php:1007
+msgid "Título do seu fluxo"
+msgstr "Título do seu fluxo"
+
+#: admin/src/Core/Ajax.php:1581
+msgid "Todas as mensagens de teste foram enviadas com sucesso!"
+msgstr "Todas as mensagens de teste foram enviadas com sucesso!"
+
+#: admin/src/Admin/Menu.php:57
+#: admin/src/Admin/Menu.php:58
+#: admin/src/Core/Workflow_Post_Type.php:53
+#: admin/src/Views/Builder/Choose_Template.php:66
+msgid "Todos os fluxos"
+msgstr "Todos os fluxos"
+
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:80
+msgid "Toggle %s"
+msgstr "Alternar %s"
+
+#: admin/src/Validations/Country_Codes.php:90
+msgid "Togo"
+msgstr "Ir"
+
+#: admin/src/Validations/Country_Codes.php:202
+msgid "Tokelau"
+msgstr "Tokelau"
+
+#: admin/src/Validations/Country_Codes.php:189
+msgid "Tonga"
+msgstr "Tonga"
+
+#: admin/src/Validations/Country_Codes.php:80
+msgid "Tunisia"
+msgstr "Tunísia"
+
+#: admin/src/Validations/Country_Codes.php:70
+msgid "Turkey"
+msgstr "Peru"
+
+#: admin/src/Validations/Country_Codes.php:230
+msgid "Turkmenistan"
+msgstr "Turcomenistão"
+
+#: app/src/pages/settings/components/sections/AboutSettingsSection.vue:42
+msgid ""
+"Turn this on to enable debug mode and inspect errors and other relevant "
+"information."
+msgstr ""
+"Ative esta opção para habilitar o modo de depuração e inspecionar erros e "
+"outras informações relevantes."
+
+#: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:37
+msgid ""
+"Turn this on to expose endpoints on this site for processing Joinotify API "
+"requests."
+msgstr ""
+"Ative esta opção para expor os endpoints deste site para processamento de "
+"solicitações da API Joinotify."
+
+#: admin/src/Validations/Country_Codes.php:200
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:267
+msgid "Type your test message..."
+msgstr "Digite sua mensagem de teste..."
+
+#: admin/src/Validations/Country_Codes.php:117
+msgid "Uganda"
+msgstr "Uganda"
+
+#: admin/src/Validations/Country_Codes.php:154
+msgid "Ukraine"
+msgstr "Ucrânia"
+
+#: admin/src/Api/Updater.php:463
+msgid ""
+"Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. "
+"<a href=\"%s\">Atualize agora</a>."
+msgstr ""
+"Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. "
+"<a href=\"%s\">Atualize agora</a>."
+
+#: admin/src/Api/Updater.php:235
+msgid "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
+msgstr "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
+
+#: admin/src/Validations/Country_Codes.php:222
+msgid "United Arab Emirates"
+msgstr "Emirados Árabes Unidos"
+
+#: admin/src/Validations/Country_Codes.php:45
+msgid "United Kingdom"
+msgstr "Reino Unido"
+
+#: admin/src/Validations/Country_Codes.php:31
+msgid "United States"
+msgstr "Estados Unidos"
+
+#: admin/src/Admin/Settings/Registry.php:456
+msgid "upload_max_filesize"
+msgstr "tamanho_máximo_do_arquivo_para_carregar"
+
+#: admin/src/Integrations/Whatsapp.php:219
+msgid "URL da mídia"
+msgstr "URL da mídia"
+
+#: admin/src/Validations/Country_Codes.php:182
+msgid "Uruguay"
+msgstr "Uruguai"
+
+#: admin/src/Core/Assets.php:159
+msgid "Usar esta mÃ­dia"
+msgstr "Usar esta mídia"
+
+#: admin/src/Core/Assets.php:166
+msgid "Use a tecla TAB para inserir um emoji rapidamente"
+msgstr "Use a tecla TAB para inserir um emoji rapidamente"
+
+#: admin/src/Builder/Components.php:513
+msgid "Use o ID informado em Informações adicionais do formulário do Elementor."
+msgstr "Utilize o ID informado em Informações adicionais do formulário do Elementor."
+
+#: admin/src/Integrations/Whatsapp.php:57
+msgid ""
+"Use o maior serviço de mensagens do mundo para notificar seu cliente em "
+"eventos do seu site."
+msgstr ""
+"Use o maior serviço de mensagens do mundo para notificar seu cliente em "
+"eventos do seu site."
+
+#: admin/src/Integrations/Woocommerce.php:244
+#: admin/src/Integrations/Wordpress.php:193
+msgid "usuario@exemplo.com"
+msgstr "usuario@exemplo.com"
+
+#: admin/src/Validations/Country_Codes.php:234
+msgid "Uzbekistan"
+msgstr "Uzbequistão"
+
+#: app/src/pages/license/LicensePage.vue:43
+msgid "Valid"
+msgstr "Válido"
+
+#: admin/src/Admin/Settings/Registry.php:543
+msgid "Válida"
+msgstr "Válida"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:370
+msgid "Validate and save"
+msgstr "Validar e salvar"
+
+#: app/src/pages/settings/SettingsPage.vue:305
+msgid "Validation failed."
+msgstr "A validação falhou."
+
+#: admin/src/Builder/Components.php:1274
+msgid "Valor da variável"
+msgstr "Valor da variável"
+
+#: admin/src/Integrations/Elementor.php:170
+#: admin/src/Integrations/Wpforms.php:215
+msgid "Valor de um campo do formulário"
+msgstr "Valor de um campo do formulário"
+
+#: admin/src/Builder/Components.php:889
+msgid "Valor do campo"
+msgstr "Valor do campo"
+
+#: admin/src/Builder/Components.php:888
+msgid "Valor do campo:"
+msgstr "Valor do campo:"
+
+#: admin/src/Integrations/Woocommerce.php:831
+msgid "Valor do desconto"
+msgstr "Valor do desconto"
+
+#: admin/src/Builder/Components.php:708
+msgid "Valor do meta dado"
+msgstr "Valor do meta dado"
+
+#: admin/src/Builder/Components.php:839
+#: admin/src/Integrations/Woocommerce.php:1119
+msgid "Valor do reembolso"
+msgstr "Valor do reembolso"
+
+#: admin/src/Builder/Components.php:832
+msgid "Valor do reembolso: *"
+msgstr "Valor do reembolso: *"
+
+#: admin/src/Builder/Messages.php:245
+#: admin/src/Integrations/Woocommerce.php:1055
+msgid "Valor fixo"
+msgstr "Valor"
+
+#: admin/src/Builder/Components.php:870
+#: admin/src/Integrations/Flexify_Checkout.php:351
+msgid "Valor total do carrinho"
+msgstr "Valor total do carrinho"
+
+#: admin/src/Builder/Components.php:869
+msgid "Valor total do carrinho:"
+msgstr "Valor total do carrinho:"
+
+#: admin/src/Builder/Components.php:764
+#: admin/src/Integrations/Woocommerce.php:1091
+msgid "Valor total do pedido"
+msgstr "Valor total do pedido"
+
+#: admin/src/Builder/Components.php:757
+msgid "Valor total do pedido: *"
+msgstr "Valor total do pedido: *"
+
+#: admin/src/Builder/Components.php:707
+msgid "Valor: *"
+msgstr "Valor: *"
+
+#: admin/src/Validations/Country_Codes.php:191
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: admin/src/Integrations/Elementor_Forms.php:163
+msgid "variáveis de texto"
+msgstr " de texto"
+
+#: admin/src/Builder/Components.php:960
+msgid "Variáveis de texto"
+msgstr "Variáveis de texto"
+
+#: admin/src/Integrations/Woocommerce.php:884
+msgid "Variáveis de texto:"
+msgstr "Variáveis de texto:"
+
+#: admin/src/Builder/Actions.php:88
+msgid "Variável de texto dinâmica"
+msgstr "Variável de texto dinâmica"
+
+#: admin/src/Validations/Country_Codes.php:153
+msgid "Vatican City"
+msgstr "Cidade do Vaticano"
+
+#: admin/src/Builder/Components.php:916
+msgid "Vazio"
+msgstr "Vazio"
+
+#: admin/src/Validations/Country_Codes.php:58
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: admin/src/Core/Workflow_Post_Type.php:52
+msgid "Ver fluxo"
+msgstr "Ver fluxo"
+
+#: admin/src/Builder/Components.php:603
+msgid "Verdadeiro"
+msgstr "Verdadeiro"
+
+#: admin/src/Core/Ajax.php:1415
+msgid "Verificação bem-sucedida"
+msgstr "Verificação bem-sucesso"
+
+#: admin/src/Api/Updater.php:295
+msgid "Verificar atualizações"
+msgstr "Verificar atualizações"
+
+#: admin/src/Admin/Components.php:47
+msgid "Verificar conexão"
+msgstr "Verificador"
+
+#: admin/src/Builder/Messages.php:126
+msgid "Verificar se o pedido foi pago"
+msgstr "Verifique se o pedido foi pago"
+
+#: admin/src/Builder/Messages.php:126
+msgid "Verificar se o pedido não foi pago"
+msgstr "Verifique se o pedido não foi pago"
+
+#: admin/src/Admin/Components.php:80
+msgid "Verifique seu WhatsApp"
+msgstr "Verifique seu WhatsApp"
+
+#: admin/src/Admin/Settings/Registry.php:409
+msgid "Versão do Joinotify"
+msgstr "Versão do Joinotify"
+
+#: admin/src/Admin/Settings/Registry.php:416
+msgid "Versão do PHP"
+msgstr "Versão do PHP"
+
+#: admin/src/Admin/Settings/Registry.php:392
+msgid "Versão do WordPress"
+msgstr "Versão do WordPress"
+
+#: admin/src/Core/Assets.php:174
+msgid "Viajens e Lugares"
+msgstr "Viajens e Lugares"
+
+#: admin/src/Validations/Media_Types.php:45
+msgid "Vídeo"
+msgstr "Vídeo"
+
+#: admin/src/Validations/Country_Codes.php:68
+msgid "Vietnam"
+msgstr "Vietnã"
+
+#: app/src/pages/settings/components/sections/AboutSettingsSection.vue:53
+msgid "View debug logs"
+msgstr "Exibir registros de depuração"
+
+#: app/src/pages/settings/components/cards/DebugLogModal.vue:24
+msgid "View the recent events recorded by the plugin."
+msgstr "Veja os eventos recentes registrados pelo plugin."
+
+#: admin/src/Admin/Settings/Registry.php:175
+msgid "Visão rápida do ambiente WordPress, PHP e extensões críticas."
+msgstr "Visão rápida do ambiente WordPress, PHP e extensões críticas."
+
+#: admin/src/Core/Ajax.php:1642
+msgid "Você não tem permissão de editar posts"
+msgstr "Você não tem permissão para editar postagens"
+
+#: admin/src/Admin/Menu.php:133
+msgid "Você não tem permissão para acessar esta página."
+msgstr "Você não tem permissão para acessar esta página."
+
+#: admin/src/Views/Builder/Choose_Template.php:83
+#: admin/src/Views/Builder/Triggers.php:89
+msgid "Voltar"
+msgstr "Voltar"
+
+#: admin/src/Views/Builder/Choose_Template.php:51
+#: admin/src/Views/Builder/Navbar.php:69
+msgid "Voltar para o painel"
+msgstr "Voltar para o painel"
+
+#: admin/src/Validations/Country_Codes.php:194
+msgid "Wallis and Futuna"
+msgstr "Wallis e Futuna"
+
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:33
+msgid "warning"
+msgstr "aviso"
+
+#: admin/src/Validations/Country_Codes.php:78
+msgid "Western Sahara"
+msgstr "Saara Ocidental"
+
+#: app/src/pages/license/LicensePage.vue:378
+msgid "What you unlock"
+msgstr "O que você desbloqueia"
+
+#: admin/src/Integrations/Whatsapp.php:56
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: admin/src/Integrations/Whatsapp.php:91
+msgid "WhatsApp: Mensagem de mídia"
+msgstr "WhatsApp: Mensagem de mídia"
+
+#: admin/src/Integrations/Whatsapp.php:78
+msgid "WhatsApp: Mensagem de texto"
+msgstr "WhatsApp: Mensagem de texto"
+
+#: admin/src/Builder/Utils.php:107
+#: admin/src/Integrations/Woocommerce.php:108
+#: admin/src/Integrations/Woocommerce.php:183
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: admin/src/Builder/Utils.php:106
+#: admin/src/Integrations/Wordpress.php:80
+#: admin/src/Integrations/Wordpress.php:140
+#: app/src/pages/settings/components/cards/SystemStatusPanel.vue:47
+msgid "WordPress"
+msgstr "WordPress"
+
+#: admin/src/Admin/Settings/Registry.php:397
+msgid "WordPress Multisite"
+msgstr "WordPress Multisite"
+
+#: admin/src/Admin/Settings/Registry.php:402
+msgid "WP_DEBUG"
+msgstr "WP_DEBUG"
+
+#: admin/src/Builder/Utils.php:110
+#: admin/src/Integrations/Wpforms.php:77
+#: admin/src/Integrations/Wpforms.php:130
+msgid "WPForms"
+msgstr "WPForms"
+
+#: admin/src/Validations/Country_Codes.php:219
+msgid "Yemen"
+msgstr "Iémen"
+
+#: app/src/pages/license/LicensePage.vue:445
+msgid "Your installation is unlocked for full use."
+msgstr "Sua instalação está desbloqueada para uso completo."
+
+#: app/src/pages/license/LicensePage.vue:449
+msgid ""
+"Your license is active. You can keep it synced here whenever the status "
+"changes on the server."
+msgstr ""
+"Sua licença está ativa. Você pode mantê-la sincronizada aqui sempre que o "
+"status mudar no servidor."
+
+#: app/src/pages/license/LicensePage.vue:74
+msgid "Your license key"
+msgstr "Sua chave de licença"
+
+#: app/src/pages/license/LicensePage.vue:190
+msgid "Your license key: Not available"
+msgstr "Sua chave de licença: Não disponível"
+
+#: admin/src/Validations/Country_Codes.php:120
+msgid "Zambia"
+msgstr "Zâmbia"
+
+#: admin/src/Validations/Country_Codes.php:123
+msgid "Zimbabwe"
+msgstr "Zimbábue"
+
+#: admin/src/Admin/Settings/Registry.php:180
+msgid "Zona de risco"
+msgstr "Zona de risco"
+
+#: admin/src/Core/Workflow_Post_Type.php:48
+msgctxt "fluxo"
+msgid "Adicionar novo"
+msgstr ""
+
+#: admin/src/Core/Workflow_Post_Type.php:47
+msgctxt "add new on admin bar"
+msgid "Fluxo"
+msgstr ""
+
+#: admin/src/Core/Workflow_Post_Type.php:45
+msgctxt "post type singular name"
+msgid "Fluxo"
+msgstr ""
+
+#: admin/src/Core/Workflow_Post_Type.php:46
+msgctxt "admin menu"
+msgid "Fluxos"
+msgstr ""
+
+#: admin/src/Core/Workflow_Post_Type.php:44
+msgctxt "post type general name"
+msgid "Fluxos"
+msgstr ""

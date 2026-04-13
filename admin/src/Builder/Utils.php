@@ -1,10 +1,4 @@
 <?php
-/**
- * Utils source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Builder;
 
@@ -127,9 +121,9 @@ class Utils {
                 return $item;
             }
 
-            // verifica se há children
+            // verifica se hÃ¡ children
             if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
-                // caso a ação seja uma condição com 'action_true' e 'action_false'
+                // caso a aÃ§Ã£o seja uma condiÃ§Ã£o com 'action_true' e 'action_false'
                 if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' ) {
                     if ( isset( $item['children']['action_true'] ) ) {
                         $found = self::find_workflow_item_by_id( $item['children']['action_true'], $item_id );
@@ -147,7 +141,7 @@ class Utils {
                         }
                     }
                 } else {
-                    // caso normal, apenas um array de ações filhas
+                    // caso normal, apenas um array de aÃ§Ãµes filhas
                     $found = self::find_workflow_item_by_id( $item['children'], $item_id );
 
                     if ( $found ) {

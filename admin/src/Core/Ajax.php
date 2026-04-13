@@ -1,10 +1,4 @@
 <?php
-/**
- * Ajax source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Core;
 
@@ -173,8 +167,8 @@ class Ajax {
             if ( $saved_options ) {
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => esc_html__( 'Salvo com sucesso', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'As configurações foram atualizadas!', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Saved successfully', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'As configuraÃ§Ãµes foram atualizadas!', 'joinotify' ),
                 );
 
                 if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
@@ -222,8 +216,8 @@ class Ajax {
                 if ( License::is_valid() ) {
                     $response = array(
                         'status' => 'success',
-                        'toast_header_title' => __( 'Licença ativada com sucesso.', 'joinotify' ),
-                        'toast_body_title' => __( 'Agora todos os recursos estão ativos!', 'joinotify' ),
+                        'toast_header_title' => __( 'LicenÃ§a ativada com sucesso.', 'joinotify' ),
+                        'toast_body_title' => __( 'Agora todos os recursos estÃ£o ativos!', 'joinotify' ),
                         'license_data' => $this->get_license_view_data(),
                     );
                 }
@@ -231,7 +225,7 @@ class Ajax {
                 if ( ! empty( $license_key ) && ! empty( $this->license_message ) ) {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
+                        'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
                         'toast_body_title' => $this->license_message,
                     );
                 }
@@ -253,8 +247,8 @@ class Ajax {
         if ( ! isset( $_POST['action'] ) || $_POST['action'] !== 'joinotify_alternative_activation_license' ) {
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                'toast_body_title' => __( 'Erro ao carregar o arquivo. A ação não foi acionada corretamente.', 'joinotify' ),
+                'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                'toast_body_title' => __( 'Erro ao carregar o arquivo. A aÃ§Ã£o nÃ£o foi acionada corretamente.', 'joinotify' ),
             );
 
             wp_send_json( $response );
@@ -264,8 +258,8 @@ class Ajax {
         if ( empty( $_FILES['file'] ) ) {
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                'toast_body_title' => __( 'Erro ao carregar o arquivo. O arquivo não foi enviado.', 'joinotify' ),
+                'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                'toast_body_title' => __( 'Erro ao carregar o arquivo. O arquivo nÃ£o foi enviado.', 'joinotify' ),
             );
 
             wp_send_json( $response );
@@ -277,8 +271,8 @@ class Ajax {
         if ( pathinfo( $file['name'], PATHINFO_EXTENSION ) !== 'key' ) {
             $response = array(
                 'status' => 'invalid_file',
-                'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                'toast_body_title' => __( 'Arquivo inválido. O arquivo deve ser extensão .key', 'joinotify' ),
+                'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                'toast_body_title' => __( 'Arquivo invÃ¡lido. O arquivo deve ser extensÃ£o .key', 'joinotify' ),
             );
             
             wp_send_json( $response );
@@ -305,8 +299,8 @@ class Ajax {
             if ( $this_domain !== $license_data_array->site_domain ) {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'O domínio de ativação não é permitido.', 'joinotify' ),
+                    'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => __( 'O domÃ­nio de ativaÃ§Ã£o nÃ£o Ã© permitido.', 'joinotify' ),
                 );
     
                 wp_send_json( $response );
@@ -316,8 +310,8 @@ class Ajax {
             if ( ! in_array( $license_data_array->selected_product, array( '7', '8' ) ) ) {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'A licença informada não é permitida para este produto.', 'joinotify' ),
+                    'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => __( 'A licenÃ§a informada nÃ£o Ã© permitida para este produto.', 'joinotify' ),
                 );
     
                 wp_send_json( $response );
@@ -348,9 +342,9 @@ class Ajax {
 
                 $response = array(
                     'status' => 'success',
-                    'dropfile_message' => __( 'Arquivo enviado com sucesso.', 'joinotify' ),
-                    'toast_header_title' => __( 'Licença ativada com sucesso.', 'joinotify' ),
-                    'toast_body_title' => __( 'Agora todos os recursos estão ativos!', 'joinotify' ),
+                    'dropfile_message' => __( 'File uploaded successfully.', 'joinotify' ),
+                    'toast_header_title' => __( 'LicenÃ§a ativada com sucesso.', 'joinotify' ),
+                    'toast_body_title' => __( 'Agora todos os recursos estÃ£o ativos!', 'joinotify' ),
                     'license_data' => $this->get_license_view_data(),
                 );
 
@@ -359,8 +353,8 @@ class Ajax {
         } else {
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                'toast_body_title' => __( 'Não foi possível descriptografar o arquivo de licença.', 'joinotify' ),
+                'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                'toast_body_title' => __( 'NÃ£o foi possÃ­vel descriptografar o arquivo de licenÃ§a.', 'joinotify' ),
             );
 
             wp_send_json( $response );
@@ -381,14 +375,14 @@ class Ajax {
             if ( License::deactive_license( JOINOTIFY_FILE, $message ) ) {
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => __( 'Licença desativada.', 'joinotify' ),
-                    'toast_body_title' => __( 'A licença foi desativada com sucesso!', 'joinotify' ),
+                    'toast_header_title' => __( 'LicenÃ§a desativada.', 'joinotify' ),
+                    'toast_body_title' => __( 'A licenÃ§a foi desativada com sucesso!', 'joinotify' ),
                 );
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível desativar a licença.', 'joinotify' ),
+                    'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => __( 'NÃ£o foi possÃ­vel desativar a licenÃ§a.', 'joinotify' ),
                 );
             }
 
@@ -421,22 +415,22 @@ class Ajax {
                         $category = isset( $decoded_content['post']['category'] ) ? esc_attr( $decoded_content['post']['category'] ) : '';
                         $trigger_data = $this->get_template_trigger_data( $decoded_content['workflow_content'] ?? array() );
                         $integration_label = Utils::get_template_categories()[ $trigger_data['context'] ?? '' ] ?? ucfirst( (string) ( $trigger_data['context'] ?? '' ) );
-                        $trigger_label = $trigger_data ? ( Triggers::get_trigger( $trigger_data['context'], $trigger_data['trigger'] )['title'] ?? $trigger_data['trigger'] ) : esc_html__( 'Não identificado', 'joinotify' );
+                        $trigger_label = $trigger_data ? ( Triggers::get_trigger( $trigger_data['context'], $trigger_data['trigger'] )['title'] ?? $trigger_data['trigger'] ) : esc_html__( 'NÃ£o identificado', 'joinotify' );
                         $is_available = $this->is_template_trigger_available( $decoded_content );
                         $button_classes = $is_available ? 'btn-outline-primary' : 'btn-outline-secondary';
                         $button_disabled = $is_available ? '' : 'disabled';
-                        $button_title = $is_available ? '' : ' title="' . esc_attr__( 'Integração ou acionamento indisponível para este modelo.', 'joinotify' ) . '"';
+                        $button_title = $is_available ? '' : ' title="' . esc_attr__( 'IntegraÃ§Ã£o ou acionamento indisponÃ­vel para este modelo.', 'joinotify' ) . '"';
 
                         $template_html .= '<div class="template-item" data-category="' . $category . '">';
                             $template_html .= '<div class="template-item-header mb-3">';
                                 $template_html .= '<h4 class="title">' . $title . '</h4>';
-                                $template_html .= '<span class="d-block text-muted fs-xs mb-1"><strong>' . esc_html__( 'Integração:', 'joinotify' ) . '</strong> ' . esc_html( $integration_label ) . '</span>';
-                                $template_html .= '<span class="d-block text-muted fs-xs"><strong>' . esc_html__( 'Acionamento:', 'joinotify' ) . '</strong> ' . esc_html( $trigger_label ) . '</span>';
+                                $template_html .= '<span class="d-block text-muted fs-xs mb-1"><strong>' . esc_html__( 'IntegraÃ§Ã£o:', 'joinotify' ) . '</strong> ' . esc_html( $integration_label ) . '</span>';
+                                $template_html .= '<span class="d-block text-muted fs-xs"><strong>' . esc_html__( 'Trigger:', 'joinotify' ) . '</strong> ' . esc_html( $trigger_label ) . '</span>';
                             $template_html .= '</div>';
 
                             $template_html .= '<button class="btn btn-sm ' . esc_attr( $button_classes ) . ' d-flex align-items-center justify-content-center download-template" data-file="' . esc_attr( $filename ) . '" ' . $button_disabled . $button_title . '>';
                                 $template_html .= '<svg class="icon icon-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 18 4-5h-3V2h-2v11H8z"></path><path d="M19 9h-4v2h4v9H5v-9h4V9H5c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-9c0-1.103-.897-2-2-2z"></path></svg>';
-                                $template_html .= esc_html__( 'Importar fluxo', 'joinotify' );
+                                $template_html .= esc_html__( 'Import workflow', 'joinotify' );
                             $template_html .= '</button>';
                         $template_html .= '</div>';
                     }
@@ -449,8 +443,8 @@ class Ajax {
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Nenhum modelo de fluxo disponível. Volte mais tarde.', 'joinotify' ),
+                    'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => __( 'Nenhum modelo de fluxo disponÃ­vel. Volte mais tarde.', 'joinotify' ),
                 );
             }
 
@@ -475,8 +469,8 @@ class Ajax {
         if ( ! isset( $_FILES['file'] ) || $_FILES['file']['error'] !== UPLOAD_ERR_OK ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Erro no upload', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'Ocorreu um problema ao enviar o arquivo.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Upload error', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'There was a problem uploading the file.', 'joinotify' ),
             ));
         }
 
@@ -487,7 +481,7 @@ class Ajax {
         if ( strtolower( $file_ext ) !== 'json' ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Tipo de arquivo inválido', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Tipo de arquivo invÃ¡lido', 'joinotify' ),
                 'toast_body_title' => esc_html__( 'O arquivo deve ser um JSON.', 'joinotify' ),
             ));
         }
@@ -500,8 +494,8 @@ class Ajax {
         if ( ! $workflow_data || ! isset( $workflow_data['post'] ) || ! isset( $workflow_data['workflow_content'] ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Arquivo inválido', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'O arquivo JSON não possui um formato válido.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Arquivo invÃ¡lido', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O arquivo JSON nÃ£o possui um formato vÃ¡lido.', 'joinotify' ),
             ));
         }
 
@@ -509,8 +503,8 @@ class Ajax {
         if ( ! isset( $workflow_data['post']['type'] ) || $workflow_data['post']['type'] !== 'joinotify-workflow' ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Ocorreu um erro', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'O arquivo enviado não é válido.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'An error occurred', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O arquivo enviado nÃ£o Ã© vÃ¡lido.', 'joinotify' ),
             ));
         }
 
@@ -528,8 +522,8 @@ class Ajax {
         if ( is_wp_error( $post_id ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Erro ao criar fluxo', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'Ocorreu um erro ao criar o fluxo no banco de dados.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Error creating workflow', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'An error occurred while creating the workflow in the database.', 'joinotify' ),
             ));
         }
 
@@ -547,8 +541,8 @@ class Ajax {
         wp_send_json( array(
             'status' => 'success',
             'redirect' => $redirect_url,
-            'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
-            'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+            'toast_header_title' => esc_html__('Workflow imported', 'joinotify'),
+            'toast_body_title' => esc_html__('The workflow was imported successfully!', 'joinotify' ),
             'dropfile_message' => esc_html__('Arquivo enviado com sucesso!', 'joinotify' ),
         ));
     }
@@ -607,8 +601,8 @@ class Ajax {
                         'proceed' => true,
                         'workflow_content' => Workflow_Manager::get_workflow_content( $post_id ),
                         'workflow_status' => Builder_Components::check_workflow_status( $post_id ),
-                        'toast_header_title' => __('Fluxo atualizado com sucesso', 'joinotify'),
-                        'toast_body_title' => __('Acionamento e fluxo atualizados com sucesso!', 'joinotify'),
+                        'toast_header_title' => __('Workflow updated successfully', 'joinotify'),
+                        'toast_body_title' => __('Trigger and workflow updated successfully!', 'joinotify'),
                     );
 
                     // get updated post meta data
@@ -644,8 +638,8 @@ class Ajax {
                     $response = array(
                         'status' => 'error',
                         'proceed' => false,
-                        'toast_header_title' => __('Ops! Ocorreu um erro.', 'joinotify'),
-                        'toast_body_title' => __('Ocorreu um erro ao atualizar o fluxo e acionamento.', 'joinotify'),
+                        'toast_header_title' => __('Oops! An error occurred.', 'joinotify'),
+                        'toast_body_title' => __('An error occurred while updating the workflow and trigger.', 'joinotify'),
                     );
                 }
             } else {
@@ -669,8 +663,8 @@ class Ajax {
                         'proceed' => true,
                         'workflow_content' => Workflow_Manager::get_workflow_content( $new_post_id ),
                         'workflow_status' => Builder_Components::check_workflow_status( $new_post_id ),
-                        'toast_header_title' => __('Fluxo criado com sucesso', 'joinotify'),
-                        'toast_body_title' => __('Acionamento e fluxo criados com sucesso!', 'joinotify'),
+                        'toast_header_title' => __('Workflow created successfully', 'joinotify'),
+                        'toast_body_title' => __('Trigger and workflow created successfully!', 'joinotify'),
                     );
 
                     // Retrieve existing workflow content
@@ -706,8 +700,8 @@ class Ajax {
                     $response = array(
                         'status' => 'error',
                         'proceed' => false,
-                        'toast_header_title' => __('Ops! Ocorreu um erro.', 'joinotify'),
-                        'toast_body_title' => __('Ocorreu um erro ao criar o fluxo e acionamento.', 'joinotify'),
+                        'toast_header_title' => __('Oops! An error occurred.', 'joinotify'),
+                        'toast_body_title' => __('An error occurred while creating the workflow and trigger.', 'joinotify'),
                     );
                 }
             }
@@ -772,8 +766,8 @@ class Ajax {
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Ocorreu um erro ao recuperar os dados do fluxo.', 'joinotify' ),
+                    'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => __( 'An error occurred while retrieving the workflow data.', 'joinotify' ),
                 );
             }
 
@@ -813,21 +807,21 @@ class Ajax {
                         'status' => 'success',
                         'workflow_status' => $workflow_status,
                         'display_workflow_status' => Builder_Components::check_workflow_status( $post_id ),
-                        'toast_header_title' => __( 'Status atualizado com sucesso', 'joinotify' ),
-                        'toast_body_title' => __( 'O status do fluxo foi atualizado.', 'joinotify' ),
+                        'toast_header_title' => __( 'Status updated successfully', 'joinotify' ),
+                        'toast_body_title' => __( 'The workflow status was updated.', 'joinotify' ),
                     );
                 } else {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Ocorreu um erro ao atualizar o status do fluxo.', 'joinotify' ),
+                        'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                        'toast_body_title' => __( 'An error occurred while updating the workflow status.', 'joinotify' ),
                     );
                 }
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Fluxo não encontrado', 'joinotify' ),
-                    'toast_body_title' => __( 'O fluxo não foi encontrado ou o tipo de post está incorreto.', 'joinotify' ),
+                    'toast_header_title' => __( 'Fluxo nÃ£o encontrado', 'joinotify' ),
+                    'toast_body_title' => __( 'O fluxo nÃ£o foi encontrado ou o tipo de post estÃ¡ incorreto.', 'joinotify' ),
                 );
             }
 
@@ -1045,8 +1039,8 @@ class Ajax {
                         'status' => 'success',
                         'has_action' => Utils::check_workflow_content( $post_id, 'action' ),
                         'workflow_content' => Workflow_Manager::get_workflow_content( $post_id ),
-                        'toast_header_title' => __( 'Ação adicionada com sucesso', 'joinotify' ),
-                        'toast_body_title' => __( 'Ação adicionada no fluxo com sucesso!', 'joinotify' ),
+                        'toast_header_title' => __( 'AÃ§Ã£o adicionada com sucesso', 'joinotify' ),
+                        'toast_body_title' => __( 'AÃ§Ã£o adicionada no fluxo com sucesso!', 'joinotify' ),
                     );
     
                     if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
@@ -1060,8 +1054,8 @@ class Ajax {
                 } else {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Ocorreu um erro ao adicionar ação no fluxo.', 'joinotify' ),
+                        'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                        'toast_body_title' => __( 'An error occurred ao adicionar aÃ§Ã£o no fluxo.', 'joinotify' ),
                     );
     
                     if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
@@ -1106,21 +1100,21 @@ class Ajax {
                     $response = array(
                         'status' => 'success',
                         'workflow_title' => $workflow_title,
-                        'toast_header_title' => __( 'Título atualizado com sucesso', 'joinotify' ),
-                        'toast_body_title' => __( 'O título do fluxo foi atualizado.', 'joinotify' ),
+                        'toast_header_title' => __( 'TÃ­tulo atualizado com sucesso', 'joinotify' ),
+                        'toast_body_title' => __( 'O tÃ­tulo do fluxo foi atualizado.', 'joinotify' ),
                     );
                 } else {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Ocorreu um erro ao atualizar o título do fluxo.', 'joinotify' ),
+                        'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                        'toast_body_title' => __( 'An error occurred ao atualizar o tÃ­tulo do fluxo.', 'joinotify' ),
                     );
                 }
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Fluxo não encontrado', 'joinotify' ),
-                    'toast_body_title' => __( 'O fluxo não foi encontrado ou o tipo de post está incorreto.', 'joinotify' ),
+                    'toast_header_title' => __( 'Fluxo nÃ£o encontrado', 'joinotify' ),
+                    'toast_body_title' => __( 'O fluxo nÃ£o foi encontrado ou o tipo de post estÃ¡ incorreto.', 'joinotify' ),
                 );
             }
 
@@ -1158,8 +1152,8 @@ class Ajax {
                             'status' => 'success',
                             'workflow_content' => Workflow_Manager::get_workflow_content( $post_id ),
                             'has_action' => Utils::check_workflow_content( $post_id, 'action' ),
-                            'toast_header_title' => __( 'Ação excluída com sucesso', 'joinotify' ),
-                            'toast_body_title' => __( 'A ação foi removida do fluxo com sucesso!', 'joinotify' ),
+                            'toast_header_title' => __( 'AÃ§Ã£o excluÃ­da com sucesso', 'joinotify' ),
+                            'toast_body_title' => __( 'A aÃ§Ã£o foi removida do fluxo com sucesso!', 'joinotify' ),
                         );
                     } else {
                         $response = array(
@@ -1167,8 +1161,8 @@ class Ajax {
                             'post_id' => $post_id,
                             'action_id' => $action_id,
                             'check_content' => $workflow_content,
-                            'toast_header_title' => __( 'Erro ao atualizar o fluxo', 'joinotify' ),
-                            'toast_body_title' => __( 'Não foi possível atualizar o fluxo após a exclusão da ação.', 'joinotify' ),
+                            'toast_header_title' => __( 'Error updating workflow', 'joinotify' ),
+                            'toast_body_title' => __( 'NÃ£o foi possÃ­vel atualizar o fluxo apÃ³s a exclusÃ£o da aÃ§Ã£o.', 'joinotify' ),
                         );
 
                         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
@@ -1180,15 +1174,15 @@ class Ajax {
                 } else {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => __( 'Fluxo vazio', 'joinotify' ),
-                        'toast_body_title' => __( 'Não há ações para remover no fluxo.', 'joinotify' ),
+                        'toast_header_title' => __( 'Empty workflow', 'joinotify' ),
+                        'toast_body_title' => __( 'NÃ£o hÃ¡ aÃ§Ãµes para remover no fluxo.', 'joinotify' ),
                     );
                 }
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Dados inválidos', 'joinotify' ),
-                    'toast_body_title' => __( 'Os dados fornecidos são inválidos ou o fluxo não foi encontrado.', 'joinotify' ),
+                    'toast_header_title' => __( 'Dados invÃ¡lidos', 'joinotify' ),
+                    'toast_body_title' => __( 'Os dados fornecidos sÃ£o invÃ¡lidos ou o fluxo nÃ£o foi encontrado.', 'joinotify' ),
                 );
             }
     
@@ -1241,14 +1235,14 @@ class Ajax {
             $response = array(
                 'status' => 'success',
                 'export_data' => $export_data,
-                'toast_header_title' => __( 'Download realizado com sucesso', 'joinotify' ),
-                'toast_body_title' => __( 'Fluxo exportado com sucesso!', 'joinotify' ),
+                'toast_header_title' => __( 'Download completed successfully', 'joinotify' ),
+                'toast_body_title' => __( 'Workflow exported successfully!', 'joinotify' ),
             );
         } else {
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => __( 'Dados inválidos', 'joinotify' ),
-                'toast_body_title' => __( 'Os dados fornecidos são inválidos ou o fluxo não foi encontrado.', 'joinotify' ),
+                'toast_header_title' => __( 'Dados invÃ¡lidos', 'joinotify' ),
+                'toast_body_title' => __( 'Os dados fornecidos sÃ£o invÃ¡lidos ou o fluxo nÃ£o foi encontrado.', 'joinotify' ),
             );
         }
 
@@ -1289,7 +1283,7 @@ class Ajax {
             if ( empty( $filtered_phone_numbers ) ) {
                 $response = array(
                     'status' => 'success',
-                    'empty_phone_message' => sprintf( __( 'Não foi encontrado nenhum telefone disponível para cadastro. Faça o cadastro pelo link: <a class="fancy-link" href="%s" target="_blank">%s</a>', 'joinotify' ), esc_url( JOINOTIFY_REGISTER_PHONE_URL ), __( 'Cadastrar um remetente', 'joinotify' ) ),
+                    'empty_phone_message' => sprintf( __( 'NÃ£o foi encontrado nenhum telefone disponÃ­vel para cadastro. FaÃ§a o cadastro pelo link: <a class="fancy-link" href="%s" target="_blank">%s</a>', 'joinotify' ), esc_url( JOINOTIFY_REGISTER_PHONE_URL ), __( 'Register a sender', 'joinotify' ) ),
                 );
             } else {
                 $html = '<ul class="list-group">';
@@ -1341,8 +1335,8 @@ class Ajax {
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível enviar o código de verificação.', 'joinotify' ),
+                    'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => __( 'NÃ£o foi possÃ­vel enviar o cÃ³digo de verificaÃ§Ã£o.', 'joinotify' ),
                 );
             }
 
@@ -1368,8 +1362,8 @@ class Ajax {
             if ( empty( $phone ) || empty( $otp ) ) {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Erro na validação do OTP', 'joinotify' ),
-                    'toast_body_title' => __( 'Por favor, preencha o número de telefone e o código OTP.', 'joinotify' ),
+                    'toast_header_title' => __( 'Erro na validaÃ§Ã£o do OTP', 'joinotify' ),
+                    'toast_body_title' => __( 'Por favor, preencha o nÃºmero de telefone e o cÃ³digo OTP.', 'joinotify' ),
                 );
 
                 // send response for frontend
@@ -1412,16 +1406,16 @@ class Ajax {
                 // If OTP is valid, send a success response
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => __( 'Verificação bem-sucedida', 'joinotify' ),
-                    'toast_body_title' => __( 'Seu WhatsApp foi verificado com sucesso!', 'joinotify' ),
+                    'toast_header_title' => __( 'VerificaÃ§Ã£o bem-sucedida', 'joinotify' ),
+                    'toast_body_title' => __( 'Your WhatsApp was verified successfully!', 'joinotify' ),
                     'current_phone_senders' => Admin_Components::current_phones_senders(),
                 );
             } else {
                 // If OTP is invalid or expired, send an error response
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Erro na verificação', 'joinotify' ),
-                    'toast_body_title' => __( 'O código de verificação está incorreto ou expirou. Por favor, tente novamente.', 'joinotify' ),
+                    'toast_header_title' => __( 'Erro na verificaÃ§Ã£o', 'joinotify' ),
+                    'toast_body_title' => __( 'O cÃ³digo de verificaÃ§Ã£o estÃ¡ incorreto ou expirou. Por favor, tente novamente.', 'joinotify' ),
                 );
             }
 
@@ -1445,8 +1439,8 @@ class Ajax {
             if ( empty( $phone ) ) {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Erro ao remover telefone', 'joinotify' ),
-                    'toast_body_title' => __( 'Número de telefone inválido.', 'joinotify' ),
+                    'toast_header_title' => __( 'Error removing phone', 'joinotify' ),
+                    'toast_body_title' => __( 'NÃºmero de telefone invÃ¡lido.', 'joinotify' ),
                 );
 
                 wp_send_json( $response );
@@ -1478,7 +1472,7 @@ class Ajax {
                     $response = array(
                         'status' => 'success',
                         'toast_header_title' => __( 'Remetente removido', 'joinotify' ),
-                        'toast_body_title' => __( 'O telefone remetente foi removido com sucesso!', 'joinotify' ),
+                        'toast_body_title' => __( 'The sender phone was removed successfully!', 'joinotify' ),
                         'updated_list_html' => Admin_Components::current_phones_senders(),
                     );
 
@@ -1488,8 +1482,8 @@ class Ajax {
 
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => __( 'Erro ao remover remetente', 'joinotify' ),
-                'toast_body_title' => __( 'Não foi possível encontrar o telefone informado.', 'joinotify' ),
+                'toast_header_title' => __( 'Error removing sender', 'joinotify' ),
+                'toast_body_title' => __( 'NÃ£o foi possÃ­vel encontrar o telefone informado.', 'joinotify' ),
             );
 
             wp_send_json( $response );
@@ -1517,8 +1511,8 @@ class Ajax {
                 if ( empty( $receiver ) ) {
                     wp_send_json([
                         'status' => 'error',
-                        'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                        'toast_body_title' => __( 'Nenhum telefone para testes registrado.', 'joinotify' ),
+                        'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                        'toast_body_title' => __( 'No test phone numbers are registered.', 'joinotify' ),
                     ]);
 
                     return;
@@ -1547,8 +1541,8 @@ class Ajax {
 
                                     wp_send_json([
                                         'status' => 'error',
-                                        'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                                        'toast_body_title' => __( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
+                                        'toast_header_title' => __( 'Ops! An error occurred', 'joinotify' ),
+                                        'toast_body_title' => __( 'NÃ£o foi possÃ­vel enviar a mensagem de teste.', 'joinotify' ),
                                     ]);
                                 }
                             }
@@ -1567,8 +1561,8 @@ class Ajax {
 
                                     wp_send_json([
                                         'status' => 'error',
-                                        'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                                        'toast_body_title' => __( 'Não foi possível enviar uma ou mais mensagens de teste.', 'joinotify' ),
+                                        'toast_header_title' => __( 'Ops! An error occurred', 'joinotify' ),
+                                        'toast_body_title' => __( 'NÃ£o foi possÃ­vel enviar uma ou mais mensagens de teste.', 'joinotify' ),
                                     ]);
                                 }
                             }
@@ -1578,14 +1572,14 @@ class Ajax {
                     wp_send_json([
                         'status' => 'success',
                         'toast_header_title' => __( 'Mensagens enviadas', 'joinotify' ),
-                        'toast_body_title' => __( 'Todas as mensagens de teste foram enviadas com sucesso!', 'joinotify' ),
+                        'toast_body_title' => __( 'All test messages were sent successfully!', 'joinotify' ),
                     ]);
                 }
     
                 wp_send_json([
                     'status' => 'error',
-                    'toast_header_title' => __( 'Erro na execução do fluxo', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível processar o conteúdo do fluxo.', 'joinotify' ),
+                    'toast_header_title' => __( 'Erro na execuÃ§Ã£o do fluxo', 'joinotify' ),
+                    'toast_body_title' => __( 'NÃ£o foi possÃ­vel processar o conteÃºdo do fluxo.', 'joinotify' ),
                 ]);
             }
         }
@@ -1612,14 +1606,14 @@ class Ajax {
 
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => esc_html__( 'As opções foram redefinidas', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'As opções foram redefinidas com sucesso!', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'As opÃ§Ãµes foram redefinidas', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'As opÃ§Ãµes foram redefinidas com sucesso!', 'joinotify' ),
                 );
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'Ocorreu um erro ao redefinir as configurações.', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'An error occurred ao redefinir as configuraÃ§Ãµes.', 'joinotify' ),
                 );
             }
 
@@ -1638,8 +1632,8 @@ class Ajax {
         if ( ! current_user_can('edit_posts') ) {
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Permissão negada', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'Você não tem permissão de editar posts', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'PermissÃ£o negada', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'VocÃª nÃ£o tem permissÃ£o de editar posts', 'joinotify' ),
             );
 
             wp_send_json( $response );
@@ -1658,20 +1652,20 @@ class Ajax {
             if ( is_wp_error( $updated ) ) {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'Ocorreu um erro ao atualizar o status do post', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Ops! An error occurred', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'An error occurred while updating the post status', 'joinotify' ),
                 );
             } else {
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => esc_html__( 'Status do fluxo atualizado', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'O status do fluxo foi atualizado com sucesso!', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Workflow status updated', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'The workflow status was updated successfully!', 'joinotify' ),
                 );
             }
         } else {
             $response = array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Ops! An error occurred', 'joinotify' ),
                 'toast_body_title' => esc_html__( 'Dados incompletos', 'joinotify' ),
             );
         }
@@ -1697,8 +1691,8 @@ class Ajax {
             if ( 201 === $send_test_message ) {
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => __( 'Mensagem enviada', 'joinotify' ),
-                    'toast_body_title' => __( 'A mensagem teste foi enviada com sucesso!', 'joinotify' ),
+                    'toast_header_title' => __( 'Message sent', 'joinotify' ),
+                    'toast_body_title' => __( 'The test message was sent successfully!', 'joinotify' ),
                 );
             } else {
                 // check connection state and notify user if disconnected
@@ -1706,8 +1700,8 @@ class Ajax {
 
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível enviar a mensagem de teste.', 'joinotify' ),
+                    'toast_header_title' => __( 'Ops! An error occurred', 'joinotify' ),
+                    'toast_body_title' => __( 'NÃ£o foi possÃ­vel enviar a mensagem de teste.', 'joinotify' ),
                 );
             }
 
@@ -1730,8 +1724,8 @@ class Ajax {
             if ( empty( $log_content ) ) {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Nenhum registro foi encontrado', 'joinotify' ),
-                    'toast_body_title' => __( 'O registro de depuração está vazio.', 'joinotify' ),
+                    'toast_header_title' => __( 'No record was found', 'joinotify' ),
+                    'toast_body_title' => __( 'O registro de depuraÃ§Ã£o estÃ¡ vazio.', 'joinotify' ),
                 );
             } else {
                 $log_lines = explode( "\n", $log_content );
@@ -1771,14 +1765,14 @@ class Ajax {
             if ( ! Logger::has_logs() ) {
                 $response = array(
                     'status' => 'success',
-                    'toast_header_title' => __( 'Os registros foram limpos', 'joinotify' ),
-                    'toast_body_title' => __( 'Registros de depuração limpos com sucesso!', 'joinotify' ),
+                    'toast_header_title' => __( 'The logs were cleared', 'joinotify' ),
+                    'toast_body_title' => __( 'Registros de depuraÃ§Ã£o limpos com sucesso!', 'joinotify' ),
                 );
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                    'toast_body_title' => __( 'Não foi possível limpar os registros de depuração.', 'joinotify' ),
+                    'toast_header_title' => __( 'Ops! An error occurred', 'joinotify' ),
+                    'toast_body_title' => __( 'NÃ£o foi possÃ­vel limpar os registros de depuraÃ§Ã£o.', 'joinotify' ),
                 );
             }
 
@@ -1803,14 +1797,14 @@ class Ajax {
                 $response = array(
                     'status' => 'success',
                     'toast_header_title' => __( 'Download iniciado', 'joinotify' ),
-                    'toast_body_title' => __( 'O arquivo de registros foi baixado com sucesso!', 'joinotify' ),
+                    'toast_body_title' => __( 'The log file was downloaded successfully!', 'joinotify' ),
                     'download_url' => admin_url('admin-ajax.php?action=joinotify_force_download'),
                 );
             } else {
                 $response = array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Ops! Ocorreu um erro', 'joinotify' ),
-                    'toast_body_title' => __( 'O arquivo de registros não foi encontrado.', 'joinotify' ),
+                    'toast_header_title' => __( 'Ops! An error occurred', 'joinotify' ),
+                    'toast_body_title' => __( 'O arquivo de registros nÃ£o foi encontrado.', 'joinotify' ),
                 );
             }
 
@@ -1849,7 +1843,7 @@ class Ajax {
             
             exit;
         } else {
-            wp_die( __( 'O arquivo de logs não foi encontrado.', 'joinotify' ) );
+            wp_die( __( 'O arquivo de logs nÃ£o foi encontrado.', 'joinotify' ) );
         }
     }
 
@@ -1904,14 +1898,14 @@ class Ajax {
                     $group_name = isset( $group['subject'] ) ? esc_html( $group['subject'] ) : '';
                     $group_owner = isset( $group['owner'] ) ? esc_html( $group['owner'] ) : '';
                     $group_size = isset( $group['size'] ) ? esc_html( $group['size'] ) : '';
-                    $group_desc = ! empty( $group['desc'] ) ? esc_html( $group['desc'] ) : esc_html__( 'Nenhuma descrição disponível', 'joinotify' );
+                    $group_desc = ! empty( $group['desc'] ) ? esc_html( $group['desc'] ) : esc_html__( 'Nenhuma descriÃ§Ã£o disponÃ­vel', 'joinotify' );
                     $group_image = ! empty( $group['pictureUrl'] ) ? esc_url( $group['pictureUrl'] ) : JOINOTIFY_ASSETS . 'builder/img/empty-profile-avatar.svg';
     
                     $groups_details_html .= '<a href="#" class="list-group-item list-group-item-action d-flex align-items-center shadow-none get-group-id" data-group-id="'. $group_id .'">
                         <img src="' . $group_image . '" class="rounded-circle me-3" alt="' . $group_name . '" width="50" height="50">
                         <div>
                             <h5 class="mb-1">' . $group_name . '</h5>
-                            <p class="mb-1 text-muted">'. sprintf( __( 'Proprietário: %s | Membros: %s', 'joinotify' ), $group_owner, $group_size ) . '</p>
+                            <p class="mb-1 text-muted">'. sprintf( __( 'ProprietÃ¡rio: %s | Membros: %s', 'joinotify' ), $group_owner, $group_size ) . '</p>
                             <small>' . $group_desc . '</small>
                         </div>
                     </a>';
@@ -1929,8 +1923,8 @@ class Ajax {
             // error on retrieve groups data
             if ( $fetch_groups && isset( $fetch_groups['status'] ) && $fetch_groups['status'] === 404 ) {
                 $response['status'] = 'error';
-                $response['toast_header_title'] = esc_html__( 'Ops! Ocorreu um erro', 'joinotify' );
-                $response['toast_body_title'] = esc_html__( 'Não foi possível recuperar as informações de grupos.', 'joinotify' );
+                $response['toast_header_title'] = esc_html__( 'Ops! An error occurred', 'joinotify' );
+                $response['toast_body_title'] = esc_html__( 'NÃ£o foi possÃ­vel recuperar as informaÃ§Ãµes de grupos.', 'joinotify' );
             }
 
             // send json to frontend
@@ -2005,15 +1999,15 @@ class Ajax {
                     if ( $updated_workflow ) {
                         $response = array(
                             'status' => 'success',
-                            'toast_header_title' => esc_html__( 'Ação atualizada', 'joinotify' ),
-                            'toast_body_title' => esc_html__( 'A ação foi atualizada com sucesso!', 'joinotify' ),
+                            'toast_header_title' => esc_html__( 'AÃ§Ã£o atualizada', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'A aÃ§Ã£o foi atualizada com sucesso!', 'joinotify' ),
                             'workflow_content' => Workflow_Manager::get_workflow_content( $post_id ),
                         );
                     } else {
                         $response = array(
                             'status' => 'error',
-                            'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
-                            'toast_body_title' => esc_html__( 'Não foi possível atualizar a ação.', 'joinotify' ),
+                            'toast_header_title' => esc_html__( 'Ops! An error occurred', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'NÃ£o foi possÃ­vel atualizar a aÃ§Ã£o.', 'joinotify' ),
                         );
 
                         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
@@ -2025,8 +2019,8 @@ class Ajax {
                 } else {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
-                        'toast_body_title' => esc_html__( 'Não foi possível encontrar a ação para atualizar.', 'joinotify' ),
+                        'toast_header_title' => esc_html__( 'Ops! An error occurred', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'NÃ£o foi possÃ­vel encontrar a aÃ§Ã£o para atualizar.', 'joinotify' ),
                     );
                 }
     
@@ -2078,14 +2072,14 @@ class Ajax {
                     if ( $updated_workflow ) {
                         $response = array(
                             'status' => 'success',
-                            'toast_header_title' => esc_html__( 'Acionamento atualizado', 'joinotify' ),
-                            'toast_body_title' => esc_html__( 'O acionamento foi atualizado com sucesso!', 'joinotify' ),
+                            'toast_header_title' => esc_html__( 'Trigger updated', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'The trigger was updated successfully!', 'joinotify' ),
                         );
                     } else {
                         $response = array(
                             'status' => 'error',
-                            'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
-                            'toast_body_title' => esc_html__( 'Não foi possível atualizar o acionamento.', 'joinotify' ),
+                            'toast_header_title' => esc_html__( 'Ops! An error occurred', 'joinotify' ),
+                            'toast_body_title' => esc_html__( 'NÃ£o foi possÃ­vel atualizar o acionamento.', 'joinotify' ),
                         );
 
                         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
@@ -2097,8 +2091,8 @@ class Ajax {
                 } else {
                     $response = array(
                         'status' => 'error',
-                        'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro', 'joinotify' ),
-                        'toast_body_title' => esc_html__( 'Não foi possível encontrar o acionamento para atualizar.', 'joinotify' ),
+                        'toast_header_title' => esc_html__( 'Ops! An error occurred', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'NÃ£o foi possÃ­vel encontrar o acionamento para atualizar.', 'joinotify' ),
                     );
                 }
 
@@ -2163,7 +2157,7 @@ class Ajax {
         if ( ! isset( $_POST['file'] ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Erro ao importar', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Import error', 'joinotify' ),
                 'toast_body_title' => esc_html__( 'Nenhum arquivo foi especificado.', 'joinotify' ),
             ));
         }
@@ -2174,8 +2168,8 @@ class Ajax {
         if ( ! isset( $templates[ $filename ] ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Erro ao importar', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'O template selecionado não foi encontrado.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Import error', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O template selecionado nÃ£o foi encontrado.', 'joinotify' ),
             ));
         }
 
@@ -2185,16 +2179,16 @@ class Ajax {
         if ( ! $workflow_data || ! isset( $workflow_data['post'] ) || ! isset( $workflow_data['workflow_content'] ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Arquivo inválido', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'O JSON do modelo não é válido.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Arquivo invÃ¡lido', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'O JSON do modelo nÃ£o Ã© vÃ¡lido.', 'joinotify' ),
             ));
         }
 
         if ( ! $this->is_template_trigger_available( $workflow_data ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Integração indisponível', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'A integração ou acionamento deste modelo não está disponível no momento.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'IntegraÃ§Ã£o indisponÃ­vel', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'A integraÃ§Ã£o ou acionamento deste modelo nÃ£o estÃ¡ disponÃ­vel no momento.', 'joinotify' ),
             ));
         }
 
@@ -2210,8 +2204,8 @@ class Ajax {
         if ( is_wp_error( $post_id ) ) {
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => esc_html__( 'Erro ao criar fluxo', 'joinotify' ),
-                'toast_body_title' => esc_html__( 'Ocorreu um erro ao criar o fluxo.', 'joinotify' ),
+                'toast_header_title' => esc_html__( 'Error creating workflow', 'joinotify' ),
+                'toast_body_title' => esc_html__( 'An error occurred while creating the workflow.', 'joinotify' ),
             ));
         }
 
@@ -2228,8 +2222,8 @@ class Ajax {
         wp_send_json( array(
             'status' => 'success',
             'redirect' => $redirect_url,
-            'toast_header_title' => esc_html__('Fluxo importado', 'joinotify'),
-            'toast_body_title' => esc_html__('O fluxo foi importado com sucesso!', 'joinotify' ),
+            'toast_header_title' => esc_html__('Workflow imported', 'joinotify'),
+            'toast_body_title' => esc_html__('The workflow was imported successfully!', 'joinotify' ),
         ));
     }
 
@@ -2267,21 +2261,21 @@ class Ajax {
                 if ( ! is_wp_error( $activate ) ) {
                     $response = array(
                         'status'  => 'success',
-                        'toast_header_title' => esc_html__( 'Plugin instalado e ativado.', 'joinotify' ),
-                        'toast_body_title' => esc_html__( 'Plugin instalado e ativado com sucesso.', 'joinotify' ),
+                        'toast_header_title' => esc_html__( 'Plugin installed and activated.', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'Plugin installed and activated successfully.', 'joinotify' ),
                     );
                 } else {
                     $response = array(
                         'status'  => 'error',
-                        'toast_header_title' => esc_html__( 'Falha ao ativar o plugin.', 'joinotify' ),
-                        'toast_body_title' => esc_html__( 'O plugin foi instalado, mas não pôde ser ativado.', 'joinotify' ),
+                        'toast_header_title' => esc_html__( 'Failed to activate the plugin.', 'joinotify' ),
+                        'toast_body_title' => esc_html__( 'O plugin foi instalado, mas nÃ£o pÃ´de ser ativado.', 'joinotify' ),
                     );
                 }
             } else {
                 $response = array(
                     'status'  => 'error',
-                    'toast_header_title' => esc_html__( 'Falha ao instalar/atualizar o plugin.', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'Ocorreu um erro ao tentar instalar ou atualizar o plugin.', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Failed to install/update the plugin.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'An error occurred while trying to install or update the plugin.', 'joinotify' ),
                 );
             }
 
@@ -2305,13 +2299,13 @@ class Ajax {
             if ( is_wp_error( $activate ) ) {
                 $response = array(
                     'status'  => 'error',
-                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Oops! An error occurred.', 'joinotify' ),
                     'toast_body_title' => $activate->get_error_message(),
                 );
             } else {
                 $response = array(
                     'status'  => 'success',
-                    'toast_header_title' => esc_html__( 'Plugin ativado com sucesso.', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Plugin activated successfully.', 'joinotify' ),
                     'toast_body_title' => esc_html__( 'Novo recurso adicionado!', 'joinotify' ),
                 );
             }
@@ -2343,15 +2337,15 @@ class Ajax {
             if ( isset( $get_state['connection'] ) && $get_state['connection'] === 'connected' ) {
                 $response = array(
                     'status'  => 'success',
-                    'toast_header_title' => esc_html__( 'Conexão estabelecida.', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'O telefone está conectado!', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'ConexÃ£o estabelecida.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'O telefone estÃ¡ conectado!', 'joinotify' ),
                     'display_state_component' => Admin_Components::display_state_connection( $phone ),
                 );
             } else {
                 $response = array(
                     'status'  => 'error',
-                    'toast_header_title' => esc_html__( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                    'toast_body_title' => esc_html__( 'O telefone está desconectado.', 'joinotify' ),
+                    'toast_header_title' => esc_html__( 'Oops! An error occurred.', 'joinotify' ),
+                    'toast_body_title' => esc_html__( 'O telefone estÃ¡ desconectado.', 'joinotify' ),
                     'display_state_component' => Admin_Components::display_state_connection( $phone ),
                 );
             }
@@ -2378,8 +2372,8 @@ class Ajax {
             if ( empty( $license_key ) ) {
                 wp_send_json( array(
                     'status' => 'error',
-                    'toast_header_title' => __( 'Licença não encontrada', 'joinotify' ),
-                    'toast_body_title' => __( 'Nenhuma licença foi encontrada para sincronizar.', 'joinotify' ),
+                    'toast_header_title' => __( 'LicenÃ§a nÃ£o encontrada', 'joinotify' ),
+                    'toast_body_title' => __( 'Nenhuma licenÃ§a foi encontrada para sincronizar.', 'joinotify' ),
                 ) );
             }
 
@@ -2399,8 +2393,8 @@ class Ajax {
 
                 wp_send_json( array(
                     'status' => 'success',
-                    'toast_header_title' => __( 'Licença sincronizada', 'joinotify' ),
-                    'toast_body_title' => __( 'As informações da sua licença foram atualizadas com sucesso.', 'joinotify' ),
+                    'toast_header_title' => __( 'LicenÃ§a sincronizada', 'joinotify' ),
+                    'toast_body_title' => __( 'As informaÃ§Ãµes da sua licenÃ§a foram atualizadas com sucesso.', 'joinotify' ),
                     'license_data' => $this->get_license_view_data(),
                 ));
             }
@@ -2408,8 +2402,8 @@ class Ajax {
             // fallback error
             wp_send_json( array(
                 'status' => 'error',
-                'toast_header_title' => __( 'Ops! Ocorreu um erro.', 'joinotify' ),
-                'toast_body_title' => ! empty( $this->license_message ) ? $this->license_message : __( 'Não foi possível sincronizar as informações da licença.', 'joinotify' ),
+                'toast_header_title' => __( 'Oops! An error occurred.', 'joinotify' ),
+                'toast_body_title' => ! empty( $this->license_message ) ? $this->license_message : __( 'NÃ£o foi possÃ­vel sincronizar as informaÃ§Ãµes da licenÃ§a.', 'joinotify' ),
             ));
         }
     }
@@ -2434,7 +2428,7 @@ class Ajax {
      */
     private function mask_license_key( $license_key ) {
         if ( empty( $license_key ) ) {
-            return esc_html__( 'Não disponível', 'joinotify' );
+            return esc_html__( 'NÃ£o disponÃ­vel', 'joinotify' );
         }
 
         return substr( $license_key, 0, 9 ) . 'XXXXXXXX-XXXXXXXX' . substr( $license_key, -9 );

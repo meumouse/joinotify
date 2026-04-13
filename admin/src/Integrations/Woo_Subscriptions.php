@@ -1,10 +1,4 @@
 <?php
-/**
- * Woo_Subscriptions source file.
- *
- * @since 1.4.7
- * @version 1.4.7
- */
 
 namespace MeuMouse\Joinotify\Integrations;
 
@@ -72,38 +66,38 @@ class Woo_Subscriptions extends Integrations_Base {
         $new_triggers = array(
             array(
                 'data_trigger' => 'woocommerce_checkout_subscription_created',
-                'title' => esc_html__( 'Nova assinatura criada', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando uma nova assinatura é criada no WooCommerce.', 'joinotify' ),
+                'title' => esc_html__( 'New subscription created', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando uma nova assinatura Ã© criada no WooCommerce.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_subscription_status_active',
-                'title' => esc_html__( 'Assinatura é ativada', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando uma assinatura tem seu status alterado para ativo.', 'joinotify' ),
+                'title' => esc_html__( 'Assinatura Ã© ativada', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando uma assinatura tem seu status alterado para ativo.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_subscription_payment_complete',
-                'title' => esc_html__( 'Pagamento da renovação recebido', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando uma assinatura recorrente tem o pagamento recebido.', 'joinotify' ),
+                'title' => esc_html__( 'Pagamento da renovaÃ§Ã£o recebido', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando uma assinatura recorrente tem o pagamento recebido.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_subscription_payment_failed',
-                'title' => esc_html__( 'Pagamento da renovação falhou', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando uma assinatura recorrente tem seu pagamento falhado ou recusado.', 'joinotify' ),
+                'title' => esc_html__( 'Pagamento da renovaÃ§Ã£o falhou', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando uma assinatura recorrente tem seu pagamento falhado ou recusado.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_subscription_status_expired',
-                'title' => esc_html__( 'Renovação da assinatura expirou', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando o prazo de um assinatura expirou.', 'joinotify' ),
+                'title' => esc_html__( 'RenovaÃ§Ã£o da assinatura expirou', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando o prazo de um assinatura expirou.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_subscription_status_cancelled',
-                'title' => esc_html__( 'Assinatura tem status alterado para cancelado', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando a assinatura tem seu status alterado para cancelado.', 'joinotify' ),
+                'title' => esc_html__( 'Subscription canceled', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento Ã© disparado quando a assinatura tem seu status alterado para cancelado.', 'joinotify' ),
                 'require_settings' => false,
             ),
         );
