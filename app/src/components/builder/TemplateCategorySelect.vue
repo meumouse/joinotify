@@ -1,14 +1,30 @@
 <script setup>
+import { computed } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
+import SelectField from '../fields/SelectField.vue';
+
 defineProps({
   modelValue: { type: String, default: 'all' },
   options: { type: Array, default: () => [] },
 });
 
 defineEmits(['update:modelValue']);
+
+const field = computed(() => ({
+  placeholder: __('All workflows', textDomain),
+  searchable: false,
+  options: [],
+}));
 </script>
 
 <template>
-  <select class="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10" :value="modelValue" @change="$emit('update:modelValue', $event.target.value)">
-    <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
-  </select>
+  <SelectField
+    name="template-category"
+    :field="{ ...field, options }"
+    :model-value="modelValue"
+    :button-class="'h-12 px-4 text-sm text-slate-700'"
+    :dropdown-class="'mt-2'"
+    :root-class="'w-full'"
+    @update:model-value="$emit('update:modelValue', $event)"
+  />
 </template>

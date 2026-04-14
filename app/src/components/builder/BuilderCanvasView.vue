@@ -1,7 +1,6 @@
 <script setup>
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
-import BaseCard from '../base/BaseCard.vue';
 import BuilderCanvas from './BuilderCanvas.vue';
 import NodeSettingsDrawer from '../settings/NodeSettingsDrawer.vue';
 import WorkflowTreeRenderer from '../nodes/WorkflowTreeRenderer.vue';
@@ -19,7 +18,7 @@ defineEmits(['select-node', 'add-node', 'duplicate-node', 'remove-node', 'open-a
 </script>
 
 <template>
-  <BaseCard class="overflow-hidden p-0">
+  <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-soft">
     <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
       <div>
         <p class="text-sm font-semibold text-slate-900">{{ __('Canvas', textDomain) }}</p>
@@ -60,5 +59,5 @@ defineEmits(['select-node', 'add-node', 'duplicate-node', 'remove-node', 'open-a
       @close="$emit('close-drawer')"
       @update="$emit('update-node', $event)"
     />
-  </BaseCard>
+  </div>
 </template>

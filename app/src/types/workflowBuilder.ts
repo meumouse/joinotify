@@ -91,6 +91,7 @@ export interface WorkflowContextDefinition {
   label: string;
   description: string;
   icon: string;
+  icon_svg?: string;
   category: string;
 }
 
@@ -104,6 +105,7 @@ export interface BuilderBootstrap {
   templates?: Array<Record<string, unknown>>;
   actions?: Array<Record<string, unknown>>;
   triggers?: Record<string, Array<Record<string, unknown>>>;
+  trigger_contexts?: Array<Record<string, unknown>>;
   placeholders?: Record<string, unknown>;
   links?: Record<string, string>;
   permissions?: Record<string, unknown>;

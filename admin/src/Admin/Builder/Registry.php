@@ -11,6 +11,7 @@ use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Builder\Utils;
 use MeuMouse\Joinotify\Builder\Workflow_Manager;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Admin\Settings\Registry as Settings_Registry;
 
 defined('ABSPATH') || exit;
 
@@ -40,9 +41,9 @@ class Registry {
 			'workflow' => $workflow_state,
 			'workflow_file' => self::build_exported_workflow_file( $workflow_state, $post_id ),
 			'start_templates' => Workflow_Manager::get_start_templates(),
-			'templates' => self::get_templates_catalog(),
 			'actions' => self::get_actions_catalog(),
 			'triggers' => self::get_triggers_catalog(),
+			'trigger_contexts' => self::get_trigger_contexts_catalog(),
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
@@ -214,6 +215,7 @@ class Registry {
 	public static function get_triggers_catalog() {
 		$all = Triggers::get_all_triggers();
 		$catalog = array();
+		$context_icons = self::get_trigger_context_icons();
 
 		if ( ! is_array( $all ) ) {
 			return $catalog;
@@ -232,7 +234,7 @@ class Registry {
 					'data_trigger' => $trigger['data_trigger'] ?? '',
 					'title' => $trigger['title'] ?? '',
 					'description' => $trigger['description'] ?? '',
-					'icon' => $trigger['icon'] ?? '',
+					'icon' => $trigger['icon'] ?? ( $context_icons[ $context ] ?? '' ),
 					'require_settings' => ! empty( $trigger['require_settings'] ),
 					'category' => $trigger['category'] ?? '',
 					'settings' => isset( $trigger['settings'] ) && is_array( $trigger['settings'] ) ? $trigger['settings'] : array(),
@@ -241,6 +243,58 @@ class Registry {
 		}
 
 		return $catalog;
+	}
+
+
+	/**
+	 * Return the enabled trigger integrations with their rendered SVG icon.
+	 *
+	 * @since 1.4.7
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function get_trigger_contexts_catalog() {
+		$trigger_catalog = self::get_triggers_catalog();
+		$integrations = Settings_Registry::get_integration_cards();
+		$contexts = array();
+
+		foreach ( $integrations as $integration ) {
+			$slug = isset( $integration['slug'] ) ? sanitize_key( (string) $integration['slug'] ) : '';
+
+			if ( empty( $slug ) || empty( $trigger_catalog[ $slug ] ) ) {
+				continue;
+			}
+
+			if ( empty( $integration['enabled'] ) ) {
+				continue;
+			}
+
+			$contexts[] = array(
+				'id' => $slug,
+				'label' => $integration['title'] ?? ucfirst( $slug ),
+				'description' => $integration['description'] ?? '',
+				'icon_svg' => $integration['icon'] ?? '',
+				'category' => $integration['setting_key'] ?? $slug,
+			);
+		}
+
+		return $contexts;
+	}
+
+
+	/**
+	 * Return the icon slug used for each trigger context.
+	 *
+	 * @since 1.4.7
+	 * @return array<string,string>
+	 */
+	private static function get_trigger_context_icons() {
+		return array(
+			'wordpress' => 'wordpress',
+			'woocommerce' => 'shopping-cart',
+			'flexify_checkout' => 'credit-card',
+			'elementor' => 'elementor',
+			'wpforms' => 'wpforms',
+		);
 	}
 
 
@@ -669,11 +723,12 @@ class Registry {
 	 * @param string $context Context key.
 	 * @return string
 	 */
-	private static function get_integration_label( $context ) {
-		$categories = Utils::get_template_categories();
+    private static function get_integration_label( $context ) {
+        $categories = Utils::get_template_categories();
+        $context = is_scalar( $context ) ? (string) $context : '';
 
-		return isset( $categories[ $context ] ) ? (string) $categories[ $context ] : ucfirst( str_replace( '_', ' ', $context ) );
-	}
+        return isset( $categories[ $context ] ) ? (string) $categories[ $context ] : ucfirst( str_replace( '_', ' ', $context ) );
+    }
 
 
 	/**

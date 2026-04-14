@@ -46,7 +46,8 @@ class License {
      * @return void
      */
     public function __construct( $plugin_base_file = '' ) {
-        $license_key = get_option('joinotify_license_key');
+        $license_key = get_option( 'joinotify_license_key' );
+        $license_key = is_string( $license_key ) ? $license_key : '';
 
         // check if license is for Clube M, else license is product base
         if ( strpos( $license_key, 'CM-' ) === 0 ) {
@@ -111,33 +112,41 @@ class License {
         $show_button = false;
 
         if ( $type == 's' ) {
-            $support_str = strtolower( trim( $response_object->support_end ) );
+            $support_end = isset( $response_object->support_end ) && is_scalar( $response_object->support_end ) ? (string) $response_object->support_end : '';
+            $support_str = strtolower( trim( $support_end ) );
 
-            if ( strtolower( trim( $response_object->support_end ) ) == 'no support' ) {
+            if ( strtolower( trim( $support_end ) ) == 'no support' ) {
                 $show_button = true;
             } elseif ( ! in_array( $support_str, ["unlimited"] ) ) {
-                if ( strtotime( 'ADD 30 DAYS', strtotime( $response_object->support_end ) ) < time() ) {
+                if ( strtotime( 'ADD 30 DAYS', strtotime( $support_end ) ) < time() ) {
                     $show_button = true;
                 }
             }
             
             if ( $show_button ) {
-                return $response_object->renew_link . ( strpos( $response_object->renew_link, '?' ) === FALSE ? '?type=s&lic=' . rawurlencode( $response_object->license_key ) : '&type=s&lic='. rawurlencode( $response_object->license_key ) );
+                $renew_link = is_scalar( $response_object->renew_link ) ? (string) $response_object->renew_link : '';
+                $license_key = isset( $response_object->license_key ) && is_scalar( $response_object->license_key ) ? (string) $response_object->license_key : '';
+
+                return $renew_link . ( strpos( $renew_link, '?' ) === FALSE ? '?type=s&lic=' . rawurlencode( $license_key ) : '&type=s&lic='. rawurlencode( $license_key ) );
             }
 
             return '';
         } else {
             $show_button = false;
-            $expire_str = strtolower( trim( $response_object->expire_date ) );
+            $expire_date = isset( $response_object->expire_date ) && is_scalar( $response_object->expire_date ) ? (string) $response_object->expire_date : '';
+            $expire_str = strtolower( trim( $expire_date ) );
 
             if ( ! in_array( $expire_str, array( 'unlimited', 'no expiry' ) ) ) {
-                if ( strtotime( 'ADD 30 DAYS', strtotime( $response_object->expire_date ) ) < time() ) {
+                if ( strtotime( 'ADD 30 DAYS', strtotime( $expire_date ) ) < time() ) {
                     $show_button = true;
                 }
             }
 
             if ( $show_button ) {
-                return $response_object->renew_link . ( strpos( $response_object->renew_link, '?' ) === FALSE ? '?type=l&lic=' . rawurlencode( $response_object->license_key ) : '&type=l&lic=' . rawurlencode( $response_object->license_key ) );
+                $renew_link = is_scalar( $response_object->renew_link ) ? (string) $response_object->renew_link : '';
+                $license_key = isset( $response_object->license_key ) && is_scalar( $response_object->license_key ) ? (string) $response_object->license_key : '';
+
+                return $renew_link . ( strpos( $renew_link, '?' ) === FALSE ? '?type=l&lic=' . rawurlencode( $license_key ) : '&type=l&lic=' . rawurlencode( $license_key ) );
             }
 
             return '';

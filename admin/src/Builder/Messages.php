@@ -154,7 +154,7 @@ class Messages {
      * @return string
      */
     public static function build_whatsapp_text_description( $data ) {
-        $message = isset( $data['message'] ) ? $data['message'] : '';
+        $message = isset( $data['message'] ) && is_scalar( $data['message'] ) ? (string) $data['message'] : '';
 
         // apply WhatsApp formatting before adding line breaks
         $message = preg_replace([
@@ -193,8 +193,8 @@ class Messages {
      */
     public static function build_whatsapp_media_description( $data ) {
         $media_type = isset( $data['media_type'] ) ? $data['media_type'] : '';
-        $media = isset( $data['media_url'] ) ? $data['media_url'] : '';
-        $caption = $data['caption'] ?? '';
+        $media = isset( $data['media_url'] ) && is_scalar( $data['media_url'] ) ? (string) $data['media_url'] : '';
+        $caption = isset( $data['caption'] ) && is_scalar( $data['caption'] ) ? (string) $data['caption'] : '';
 
         $message = '';
 

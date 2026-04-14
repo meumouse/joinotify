@@ -164,6 +164,7 @@ class Settings_Assets extends Abstract_Assets {
      * @return string
      */
     public function add_module_type_attribute( $tag, $handle, $src ) {
+        $tag = is_scalar( $tag ) ? (string) $tag : '';
         $module_handles = array(
             'joinotify-settings-app',
             'joinotify-license-app',

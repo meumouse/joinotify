@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { ACTION_REGISTRY, getActionDefinition } from '../registries/actionRegistry';
-import { TRIGGER_CONTEXTS } from '../registries/triggerContexts';
-import { getTriggerDefinition, getTriggersForContext } from '../registries/triggerRegistry';
+import { TRIGGER_CONTEXTS, getTriggerContextById } from '../registries/triggerContexts';
+import { getTriggersForContext } from '../registries/triggerRegistry';
 import { createWorkflowFileFromParts, normalizeWorkflowFile, parseWorkflowFile, parseWorkflowFromJson } from '../parsers/workflowParser';
 import { serializeWorkflowFile, serializeWorkflowToJson } from '../serializers/workflowSerializer';
 import { createWorkflowApiClient } from '../services/workflowApi';
@@ -58,6 +58,8 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const drawerOpen = ref(false);
   const drawerMode = ref<'settings' | 'context' | 'menu'>('settings');
   const loading = ref({
+    bootstrap: true,
+    templates: false,
     import: false,
     export: false,
     save: false,
@@ -67,16 +69,30 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const errors = ref<string[]>([]);
   const warnings = ref<string[]>([]);
   const lastExportJson = ref('');
+  const triggerCatalog = computed(() => bootstrap.value.triggers || {});
+  const templateCatalog = ref([]);
+  const triggerContexts = computed(() => {
+    const catalog = bootstrap.value.trigger_contexts;
+
+    if (Array.isArray(catalog) && catalog.length > 0) {
+      return catalog.map((item) => ({
+        id: String(item.id || ''),
+        label: String(item.label || ''),
+        description: String(item.description || ''),
+        icon: String(item.icon || ''),
+        icon_svg: String(item.icon_svg || ''),
+        category: String(item.category || item.id || ''),
+      })).filter((item) => item.id);
+    }
+
+    return TRIGGER_CONTEXTS;
+  });
 
   const workflowContent = computed(() => file.value.workflow_content || []);
   const triggerNode = computed(() => workflowContent.value.find((node) => node.type === 'trigger') || null);
   const selectedNode = computed(() => (selectedNodeId.value ? findNodePath(workflowContent.value, selectedNodeId.value)?.node || null : null));
   const selectedTriggerDefinition = computed(() => {
-    if (!activeContext.value || !selectedTrigger.value) {
-      return undefined;
-    }
-
-    return getTriggerDefinition(activeContext.value, selectedTrigger.value);
+    return getTriggerOptionsForContext(activeContext.value || '').find((item) => item.id === selectedTrigger.value);
   });
   const selectedActionDefinition = computed(() => {
     const node = selectedNode.value;
@@ -87,12 +103,39 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const dirty = computed(() => serializeWorkflowToJson(file.value) !== baseline.value);
   const hasErrors = computed(() => errors.value.length > 0);
   const canContinue = computed(() => !!activeContext.value && !!selectedTrigger.value);
-  const triggerOptions = computed(() => getTriggersForContext(activeContext.value || ''));
+  const triggerOptions = computed(() => getTriggerOptionsForContext(activeContext.value || ''));
 
   function setApiFromBootstrap(value: BuilderBootstrap) {
     bootstrap.value = cloneValue(value || {});
     api.value = createWorkflowApiClient(bootstrap.value);
     postId.value = Number((value?.workflow as Record<string, unknown> | undefined)?.post_id || 0) || 0;
+  }
+
+  function getTriggerOptionsForContext(context: string) {
+    const contextDefinition = triggerContexts.value.find((item) => item.id === context) || getTriggerContextById(context);
+    const catalog = triggerCatalog.value?.[context];
+
+    if (Array.isArray(catalog) && catalog.length > 0) {
+      return catalog.map((item) => ({
+        id: String(item.data_trigger || ''),
+        label: String(item.title || ''),
+        description: String(item.description || ''),
+        icon: String(item.icon || contextDefinition?.icon || context || ''),
+        iconSvg: String(contextDefinition?.icon_svg || ''),
+        requireSettings: Boolean(item.require_settings),
+        context,
+      }));
+    }
+
+    return getTriggersForContext(context).map((item) => ({
+      id: item.id,
+      label: item.label,
+      description: item.description,
+      icon: String(contextDefinition?.icon || context || ''),
+      iconSvg: String(contextDefinition?.icon_svg || ''),
+      requireSettings: false,
+      context,
+    }));
   }
 
   function markBaseline() {
@@ -122,7 +165,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     editingNodeId.value = selectedNodeId.value;
     activeContext.value = file.value.post.category || (triggerNode.value && typeof triggerNode.value.data.context === 'string' ? triggerNode.value.data.context : '');
     selectedTrigger.value = triggerNode.value && typeof triggerNode.value.data.trigger === 'string' ? triggerNode.value.data.trigger : '';
-    step.value = workflowContent.value.length ? 'canvas' : 'start';
+    step.value = workflowContent.value.length ? 'canvas' : (step.value === 'trigger' ? 'trigger' : 'start');
     drawerOpen.value = false;
     drawerMode.value = 'settings';
     markBaseline();
@@ -216,6 +259,42 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  async function loadBootstrapFromServer(nextPostId = postId.value) {
+    loading.value.bootstrap = true;
+
+    try {
+      const response = api.value ? await api.value.loadBootstrap(nextPostId) : null;
+
+      if (response && typeof response === 'object') {
+        hydrateFromBootstrap(response);
+      }
+
+      return response;
+    } finally {
+      loading.value.bootstrap = false;
+    }
+  }
+
+  async function loadTemplatesFromServer(force = false) {
+    if (!force && Array.isArray(templateCatalog.value) && templateCatalog.value.length > 0) {
+      return { templates: templateCatalog.value };
+    }
+
+    loading.value.templates = true;
+
+    try {
+      const response = api.value ? await api.value.loadTemplates() : null;
+
+      if (response && Array.isArray(response.templates)) {
+        templateCatalog.value = cloneValue(response.templates);
+      }
+
+      return response;
+    } finally {
+      loading.value.templates = false;
+    }
+  }
+
   function setWorkflowTitle(title: string) {
     file.value.post.title = title;
 
@@ -268,7 +347,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     selectedTrigger.value = triggerId;
 
     const trigger = triggerNode.value;
-    const definition = triggerId ? getTriggerDefinition(activeContext.value, triggerId) : undefined;
+    const definition = triggerId ? getTriggerOptionsForContext(activeContext.value || '').find((item) => item.id === triggerId) : undefined;
 
     if (trigger) {
       trigger.data = {
@@ -530,6 +609,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     drawerOpen,
     drawerMode,
     loading,
+    templateCatalog,
     errors,
     warnings,
     dirty,
@@ -543,13 +623,15 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     triggerOptions,
     bootstrapData: bootstrap,
     actionsCatalog: ACTION_REGISTRY,
-    triggerContexts: TRIGGER_CONTEXTS,
+    triggerContexts,
     setApiFromBootstrap,
     hydrateFromBootstrap,
     createEmptyWorkflowFile,
     createWorkflowFromScratch,
     createWorkflowFromTemplate,
     loadWorkflowFile,
+    loadBootstrapFromServer,
+    loadTemplatesFromServer,
     setWorkflowTitle,
     setWorkflowStatus,
     setWorkflowCategory,

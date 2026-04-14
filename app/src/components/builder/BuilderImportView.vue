@@ -1,7 +1,6 @@
 <script setup>
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
-import BaseCard from '../base/BaseCard.vue';
 import BaseFileDropzone from '../base/BaseFileDropzone.vue';
 import BaseTextarea from '../base/BaseTextarea.vue';
 
@@ -14,7 +13,7 @@ defineEmits(['update:jsonText', 'import', 'file', 'back']);
 </script>
 
 <template>
-  <BaseCard class="p-6">
+  <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
     <div class="max-w-2xl">
       <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">{{ __('Import', textDomain) }}</p>
       <h2 class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">{{ __('Import a real Joinotify export', textDomain) }}</h2>
@@ -33,5 +32,5 @@ defineEmits(['update:jsonText', 'import', 'file', 'back']);
       <BaseButton :title="__('Import', textDomain)" :loading="importing" @click="$emit('import')" />
       <BaseButton :title="__('Back', textDomain)" variant="secondary" @click="$emit('back')" />
     </div>
-  </BaseCard>
+  </div>
 </template>

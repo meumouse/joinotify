@@ -25,6 +25,7 @@ defined('ABSPATH') || exit;
  */
 function joinotify_check_admin_page( $admin_page ) {
    $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+   $admin_page = is_scalar( $admin_page ) ? (string) $admin_page : '';
 
    return strpos( $current_url, "admin.php?page=$admin_page" ) !== false;
 }

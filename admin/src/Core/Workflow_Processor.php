@@ -148,7 +148,9 @@ class Workflow_Processor {
             // check order status
             if ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
                 // remove prefix "wc-" fron workflow trigger settings
-                $trigger_order_status = str_replace( 'wc-', '', $trigger_data['data']['settings']['order_status'] );
+                $trigger_order_status = isset( $trigger_data['data']['settings']['order_status'] ) && is_scalar( $trigger_data['data']['settings']['order_status'] )
+                    ? str_replace( 'wc-', '', (string) $trigger_data['data']['settings']['order_status'] )
+                    : '';
 
                 // check order status only if is setted different of "none" => all statuses
                 if ( $trigger_order_status !== 'none' && $trigger_order_status !== $order_status ) {
@@ -320,9 +322,13 @@ class Workflow_Processor {
         $condition_value = '';
 
         if ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
-            $condition_value = str_replace( 'wc-', '', $action_data['condition_content']['value'] );
+            $condition_value = isset( $action_data['condition_content']['value'] ) && is_scalar( $action_data['condition_content']['value'] )
+                ? str_replace( 'wc-', '', (string) $action_data['condition_content']['value'] )
+                : '';
         } else {
-            $condition_value = $action_data['condition_content']['value'] ?? '';
+            $condition_value = isset( $action_data['condition_content']['value'] ) && is_scalar( $action_data['condition_content']['value'] )
+                ? (string) $action_data['condition_content']['value']
+                : '';
         }
 
         // get meta key for user meta condition

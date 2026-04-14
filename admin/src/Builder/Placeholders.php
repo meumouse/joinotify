@@ -109,6 +109,10 @@ class Placeholders {
                     $replacement = call_user_func( $replacement, $payload );
                 }
 
+                if ( ! is_scalar( $replacement ) ) {
+                    $replacement = '';
+                }
+
                 $message = str_replace( $placeholder, $replacement, $message );
             }
         }

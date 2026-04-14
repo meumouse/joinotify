@@ -1,12 +1,11 @@
 <script setup>
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../../components/base/BaseButton.vue';
-import BaseCard from '../../components/base/BaseCard.vue';
 import BaseDialog from '../../components/base/BaseDialog.vue';
 import BaseInput from '../../components/base/BaseInput.vue';
 import BuilderActionPickerModal from '../../components/builder/BuilderActionPickerModal.vue';
 import BuilderCanvasView from '../../components/builder/BuilderCanvasView.vue';
-import BuilderLoader from '../../components/builder/BuilderLoader.vue';
 import BuilderImportModal from '../../components/builder/BuilderImportModal.vue';
 import BuilderNavbar from '../../components/builder/BuilderNavbar.vue';
 import BuilderPanel from '../../components/builder/BuilderPanel.vue';
@@ -26,7 +25,6 @@ const props = defineProps({
 
 const store = useWorkflowBuilderStore();
 const bootstrap = ref(cloneValue(props.bootstrap || {}));
-const uiReady = ref(false);
 const templateSearch = ref('');
 const templateCategory = ref('all');
 const importJson = ref('');
@@ -38,12 +36,12 @@ const actionInsertAfterId = ref('');
 const titleModalOpen = ref(false);
 const titleDraft = ref('');
 
-const templates = computed(() => bootstrap.value.templates || []);
+const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
 const docsUrl = computed(() => bootstrap.value?.links?.docs_url || '#');
 const debugMode = computed(() => Boolean(bootstrap.value?.debug_mode));
 const startShellStyle = computed(() => ({
-  top: debugMode.value ? '32px' : '0',
+  top: debugMode.value ? '32px !important' : '0',
   height: debugMode.value ? 'calc(100vh - 32px)' : '100vh',
 }));
 const availableActions = computed(() => Object.values(store.actionsCatalog || {}));
@@ -78,13 +76,6 @@ watch(
   },
   { deep: true, immediate: true }
 );
-
-onMounted(async () => {
-  await nextTick();
-  requestAnimationFrame(() => {
-    uiReady.value = true;
-  });
-});
 
 function goStart() {
   store.step = 'start';
@@ -132,9 +123,25 @@ function saveTitleModal() {
 }
 
 async function startScratch() {
-  await store.createWorkflowFromScratch(store.file.post.title || 'New workflow');
-  syncBuilderUrl(store.postId);
+  const title = store.file.post.title || 'New workflow';
+  store.createEmptyWorkflowFile(title);
   goTrigger();
+  store.loading.bootstrap = true;
+  await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+  try {
+    await store.createWorkflowFromScratch(title);
+    await store.loadBootstrapFromServer(store.postId);
+    syncBuilderUrl(store.postId);
+  } catch (error) {
+    store.loading.bootstrap = false;
+    throw error;
+  }
+}
+
+async function openTemplateLibrary() {
+  goLibrary();
+  await store.loadTemplatesFromServer();
 }
 
 async function openTemplate(template) {
@@ -200,6 +207,7 @@ function handleActionSelect(actionId) {
 
 async function createNewWorkflow() {
   await store.createWorkflowFromScratch();
+  await store.loadBootstrapFromServer(store.postId);
   syncBuilderUrl(store.postId);
   goTrigger();
 }
@@ -236,25 +244,49 @@ function syncBuilderUrl(postId) {
 </script>
 
 <template>
-  <div v-if="!uiReady" class="fixed inset-0 z-[120] flex items-center justify-center bg-slate-50">
-    <BuilderLoader />
-  </div>
-
-  <template v-if="store.step === 'start'">
-    <div class="fixed inset-0 z-[999] bg-white text-slate-900" :style="startShellStyle">
+  <Transition name="builder-step" mode="out-in">
+    <div v-if="store.step === 'start'" key="start" class="fixed inset-0 z-[999] bg-white text-slate-900" :style="startShellStyle">
       <div class="flex h-full w-full items-center justify-center overflow-hidden">
         <BuilderStartView
           :creating="store.loading.create"
           @scratch="startScratch"
-          @template="goLibrary"
+          @template="openTemplateLibrary"
           @import="openImportModal"
           @back="goBack"
         />
       </div>
     </div>
-  </template>
 
-  <BuilderShell v-else :debug-mode="debugMode">
+    <div v-else-if="store.step === 'library'" key="library" class="fixed inset-0 z-[999] overflow-y-auto bg-white text-slate-900" :style="startShellStyle">
+      <BuilderTemplateLibraryView
+        v-model:search="templateSearch"
+        v-model:category="templateCategory"
+        :category-options="categoryOptions"
+        :templates="filteredTemplates"
+        :loading="store.loading.templates"
+        @select-template="openTemplate"
+        @back="goStart"
+      />
+    </div>
+
+    <div v-else-if="store.step === 'trigger'" key="trigger" class="fixed inset-0 z-[999] overflow-hidden bg-white text-slate-900" :style="startShellStyle">
+      <BuilderTriggerSetupView
+        :title="store.file.post.title"
+        :context="store.activeContext"
+        :trigger="store.selectedTrigger"
+        :contexts="store.triggerContexts"
+        :triggers="store.triggerOptions"
+        :loading="store.loading.bootstrap"
+        :ready="store.canContinue"
+        @update:title="store.setWorkflowTitle"
+        @update:context="store.selectTriggerContext"
+        @select-trigger="store.selectTrigger"
+        @continue="goCanvas"
+        @back="goStart"
+      />
+    </div>
+
+    <BuilderShell v-else key="canvas" :debug-mode="debugMode">
     <template #navbar>
       <BuilderNavbar
         :title="store.file.post.title"
@@ -273,80 +305,53 @@ function syncBuilderUrl(postId) {
     <template #sidebar>
       <BuilderPanel>
         <div class="space-y-4">
-          <BaseCard class="p-4">
+          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ __('Status', textDomain) }}</p>
             <p class="mt-2 text-sm text-slate-700">{{ store.dirty ? __('Unsaved changes', textDomain) : __('Synced', textDomain) }}</p>
             <p v-if="store.errors.length" class="mt-2 text-sm text-rose-600">{{ store.errors[0] }}</p>
             <p v-else-if="store.warnings.length" class="mt-2 text-sm text-amber-600">{{ store.warnings[0] }}</p>
-          </BaseCard>
+          </div>
 
-          <BaseCard class="p-4">
+          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ __('Flow', textDomain) }}</p>
             <p class="mt-2 text-sm text-slate-700">{{ store.workflowContent.length }} {{ __('nodes', textDomain) }}</p>
             <p class="mt-1 text-sm text-slate-500">{{ __('Category:', textDomain) }} {{ store.file.post.category || __('none', textDomain) }}</p>
             <p class="mt-1 text-sm text-slate-500">{{ __('Trigger:', textDomain) }} {{ store.selectedTrigger || __('none', textDomain) }}</p>
-          </BaseCard>
+          </div>
 
-          <BaseCard class="p-4">
+          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ __('Quick actions', textDomain) }}</p>
             <div class="mt-3 flex flex-col gap-2">
               <BaseButton :title="__('Save workflow', textDomain)" variant="secondary" :loading="store.loading.save" @click="saveWorkflow" />
               <BaseButton :title="__('Run test', textDomain)" variant="secondary" :loading="store.loading.test" @click="runTest" />
               <BaseButton :title="__('Export workflow', textDomain)" variant="secondary" @click="exportWorkflow" />
             </div>
-          </BaseCard>
+          </div>
         </div>
       </BuilderPanel>
     </template>
 
     <template #main>
-      <div class="space-y-6">
-        <BuilderTemplateLibraryView
-          v-if="store.step === 'library'"
-          v-model:search="templateSearch"
-          v-model:category="templateCategory"
-          :category-options="categoryOptions"
-          :templates="filteredTemplates"
-          @select-template="openTemplate"
-          @back="goStart"
-        />
-
-        <BuilderTriggerSetupView
-          v-else-if="store.step === 'trigger'"
-          :title="store.file.post.title"
-          :context="store.activeContext"
-          :trigger="store.selectedTrigger"
-          :contexts="store.triggerContexts"
-          :triggers="store.triggerOptions"
-          :ready="store.canContinue"
-          @update:title="store.setWorkflowTitle"
-          @update:context="store.selectTriggerContext"
-          @select-trigger="store.selectTrigger"
-          @continue="goCanvas"
-          @back="goStart"
-        />
-
-        <BuilderCanvasView
-          v-else
-          :nodes="store.workflowContent"
-          :selected-node-id="store.selectedNodeId"
-          :selected-node="store.selectedNode"
-          :contexts="store.triggerContexts"
-          :drawer-open="store.drawerOpen"
-          :loading="store.loading.test"
-          @select-node="store.openNodeSettings"
-          @add-node="handleActionOpen"
-          @duplicate-node="store.duplicateNode"
-          @remove-node="store.removeNode"
-          @update-node="store.updateNodeData(store.editingNodeId || store.selectedNodeId, $event)"
-          @close-drawer="store.closeNodeSettings"
-          @test="runTest"
-          @export="exportWorkflow"
-          @open-actions="handleActionOpen"
-        />
-      </div>
+      <BuilderCanvasView
+        :nodes="store.workflowContent"
+        :selected-node-id="store.selectedNodeId"
+        :selected-node="store.selectedNode"
+        :contexts="store.triggerContexts"
+        :drawer-open="store.drawerOpen"
+        :loading="store.loading.test"
+        @select-node="store.openNodeSettings"
+        @add-node="handleActionOpen"
+        @duplicate-node="store.duplicateNode"
+        @remove-node="store.removeNode"
+        @update-node="store.updateNodeData(store.editingNodeId || store.selectedNodeId, $event)"
+        @close-drawer="store.closeNodeSettings"
+        @test="runTest"
+        @export="exportWorkflow"
+        @open-actions="handleActionOpen"
+      />
     </template>
-  </BuilderShell>
+    </BuilderShell>
+  </Transition>
 
   <BuilderImportModal
     :open="importModalOpen"
@@ -375,3 +380,24 @@ function syncBuilderUrl(postId) {
     </div>
   </BaseDialog>
 </template>
+
+<style scoped>
+.builder-step-enter-active,
+.builder-step-leave-active {
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.builder-step-enter-from,
+.builder-step-leave-to {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.builder-step-enter-to,
+.builder-step-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
