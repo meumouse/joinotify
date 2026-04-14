@@ -17,10 +17,6 @@ defineProps({
 
 defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'back']);
 
-const sidebarTitle = __('Choose trigger type', textDomain);
-const flowTitle = __('Define a name for this flow', textDomain);
-const flowDescription = __('The name is used only for internal workflow tracking.', textDomain);
-
 function getContextFallbackLabel(item) {
   const source = String(item.label || item.id || '')
     .replace(/[^a-z0-9]+/gi, ' ')
@@ -35,7 +31,7 @@ function getContextFallbackLabel(item) {
     .toUpperCase();
 }
 
-const triggerGridClass = computed(() => 'grid gap-4 sm:grid-cols-2 2xl:grid-cols-4');
+const triggerGridClass = computed(() => 'grid gap-4 sm:grid-cols-2 2xl:grid-cols-4 overflow-y-auto max-h-[450px]');
 
 const skeletonCards = computed(() => Array.from({ length: 4 }, (_, index) => index));
 const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => index));
@@ -50,9 +46,14 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
             <div class="h-8 w-4/5 animate-pulse rounded-full bg-slate-200" />
             <div class="mt-3 h-5 w-2/3 animate-pulse rounded-full bg-slate-200" />
           </template>
-          <h2 v-else class="text-[30px] font-semibold tracking-tight text-slate-900">
-            {{ sidebarTitle }}
-          </h2>
+
+          <template v-else>
+            <h2 class="text-[30px] font-semibold tracking-tight text-slate-900">{{ __('Choose trigger type', textDomain) }}</h2>
+
+            <p class="mt-3 text-[15px] leading-7 text-slate-500">
+              {{ __('The name is used only for internal workflow tracking.', textDomain) }}
+            </p>
+          </template>
         </div>
 
         <div class="mt-10 space-y-4">
@@ -84,7 +85,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
               >
                 <span
                   v-if="item.icon_svg"
-                  class="builder-context-icon flex h-full w-full items-center justify-center p-1.5"
+                  class="builder-context-icon bg-white flex h-full w-full items-center justify-center p-1.5"
                   v-html="item.icon_svg"
                 />
                 <span v-else>
@@ -103,17 +104,17 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
 
       <div class="min-w-0 flex-1 px-6 py-12 sm:px-8 lg:px-12 xl:px-16">
         <div class="mx-auto flex w-full max-w-[1440px] flex-col">
-          <div class="max-w-3xl pt-14">
+          <div class="max-w-3xl">
             <template v-if="loading">
               <div class="h-9 w-3/5 animate-pulse rounded-full bg-slate-200" />
               <div class="mt-3 h-5 w-4/5 animate-pulse rounded-full bg-slate-200" />
             </template>
             <template v-else>
               <p class="text-[32px] font-semibold tracking-tight text-slate-900">
-                {{ flowTitle }}
+                {{ __('Define a name for this flow', textDomain) }}
               </p>
               <p class="mt-3 text-[15px] leading-7 text-slate-500">
-                {{ flowDescription }}
+                {{ __('The name is used only for internal workflow tracking.', textDomain) }}
               </p>
             </template>
           </div>
@@ -134,7 +135,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
               <div
                 v-for="index in skeletonCards"
                 :key="index"
-                class="flex min-h-[154px] animate-pulse flex-col rounded-[14px] border border-slate-200 bg-white p-5"
+                class="flex min-h-[154px] animate-pulse flex-col rounded-2xl border border-slate-200 bg-white p-5"
               >
                 <div class="mx-auto h-12 w-12 rounded-full bg-slate-100" />
                 <div class="mx-auto mt-4 h-5 w-24 rounded-full bg-slate-100" />
@@ -154,12 +155,12 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
                 @click="$emit('select-trigger', item.id)"
               />
             </div>
-            <div v-else class="rounded-[14px] border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center text-sm text-slate-500">
+            <div v-else class="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center text-sm text-slate-500">
               {{ __('No triggers available for this integration.', textDomain) }}
             </div>
           </div>
 
-          <div class="mt-auto max-w-[1180px] pb-8 pt-16">
+          <div class="mt-auto max-w-[1180px] py-8">
             <TriggerStepFooter :disabled="!ready" @continue="$emit('continue')" @back="$emit('back')" />
           </div>
         </div>
