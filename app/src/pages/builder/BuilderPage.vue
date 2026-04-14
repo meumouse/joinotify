@@ -1,18 +1,17 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../../components/base/BaseButton.vue';
 import BaseDialog from '../../components/base/BaseDialog.vue';
 import BaseInput from '../../components/base/BaseInput.vue';
-import BuilderActionPickerModal from '../../components/builder/BuilderActionPickerModal.vue';
 import BuilderCanvasView from '../../components/builder/BuilderCanvasView.vue';
 import BuilderImportModal from '../../components/builder/BuilderImportModal.vue';
 import BuilderNavbar from '../../components/builder/BuilderNavbar.vue';
-import BuilderPanel from '../../components/builder/BuilderPanel.vue';
 import BuilderShell from '../../components/builder/BuilderShell.vue';
 import BuilderStartView from '../../components/builder/BuilderStartView.vue';
 import BuilderTemplateLibraryView from '../../components/builder/BuilderTemplateLibraryView.vue';
 import BuilderTriggerSetupView from '../../components/builder/BuilderTriggerSetupView.vue';
+import ToastStack from '../../components/toasts/ToastStack.vue';
 import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { cloneValue } from '../../utils/object';
@@ -32,9 +31,16 @@ const importFileName = ref('');
 const importError = ref('');
 const importModalOpen = ref(false);
 const actionModalOpen = ref(false);
-const actionInsertAfterId = ref('');
+const actionInsertTarget = ref({
+  afterNodeId: '',
+  branchKey: '',
+});
 const titleModalOpen = ref(false);
 const titleDraft = ref('');
+const titleSaving = ref(false);
+const routeWorkflowLoaded = ref(false);
+const toasts = ref([]);
+const toastTimers = new Map();
 
 const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
@@ -44,7 +50,32 @@ const startShellStyle = computed(() => ({
   top: debugMode.value ? '32px !important' : '0',
   height: debugMode.value ? 'calc(100vh - 32px)' : '100vh',
 }));
-const availableActions = computed(() => Object.values(store.actionsCatalog || {}));
+const workflowIdFromUrl = computed(() => {
+  if (typeof window === 'undefined') {
+    return 0;
+  }
+
+  return Number(new URL(window.location.href).searchParams.get('id') || 0) || 0;
+});
+const availableActions = computed(() => {
+  const actions = Array.isArray(store.actionsCatalog) ? store.actionsCatalog : [];
+  const context = store.activeContext || '';
+
+  return actions.filter((action) => {
+    const contexts = Array.isArray(action.contexts)
+      ? action.contexts.map((item) => String(item))
+      : Array.isArray(action.context)
+        ? action.context.map((item) => String(item))
+        : typeof action.context === 'string'
+          ? [action.context]
+          : [];
+
+    return !context || contexts.length === 0 || contexts.includes(context);
+  });
+});
+const actionSidebarOpen = computed(() => Boolean(actionModalOpen.value));
+const isSavingTitle = computed(() => titleSaving.value || store.loading.save);
+const isUpdatingStatus = computed(() => Boolean(store.loading.status));
 const categoryOptions = computed(() => {
   const categories = [...new Set(templates.value.map((template) => template.category).filter(Boolean))];
 
@@ -72,10 +103,53 @@ watch(
   () => props.bootstrap,
   (value) => {
     bootstrap.value = cloneValue(value || {});
+
+    if (workflowIdFromUrl.value > 0) {
+      store.setApiFromBootstrap(bootstrap.value);
+      store.step = 'canvas';
+      return;
+    }
+
     store.hydrateFromBootstrap(bootstrap.value);
   },
   { deep: true, immediate: true }
 );
+
+watch(
+  () => store.step,
+  async (step) => {
+    if (step !== 'canvas') {
+      return;
+    }
+
+    if (workflowIdFromUrl.value <= 0 || routeWorkflowLoaded.value) {
+      return;
+    }
+
+    const response = await store.loadWorkflowFromServer(workflowIdFromUrl.value);
+
+    if (response && response.ok === false) {
+      return;
+    }
+
+    routeWorkflowLoaded.value = true;
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(() => {
+  toastTimers.forEach((timers) => {
+    if (timers.hide) {
+      window.clearTimeout(timers.hide);
+    }
+
+    if (timers.remove) {
+      window.clearTimeout(timers.remove);
+    }
+  });
+
+  toastTimers.clear();
+});
 
 function goStart() {
   store.step = 'start';
@@ -91,6 +165,23 @@ function goTrigger() {
 
 function goCanvas() {
   store.step = 'canvas';
+}
+
+function openActionSidebar(afterNodeId) {
+  const target = afterNodeId && typeof afterNodeId === 'object'
+    ? afterNodeId
+    : { afterNodeId };
+  const targetNodeId = String(target.afterNodeId || store.triggerNode?.id || store.selectedNodeId || '');
+
+  actionInsertTarget.value = {
+    afterNodeId: targetNodeId,
+    branchKey: String(target.branchKey || ''),
+  };
+  actionModalOpen.value = Boolean(targetNodeId);
+
+  if (!store.actionsLoaded) {
+    void store.loadCanvasActionsFromServer();
+  }
 }
 
 function goBack() {
@@ -117,9 +208,134 @@ function closeTitleModal() {
   titleModalOpen.value = false;
 }
 
-function saveTitleModal() {
-  store.setWorkflowTitle(titleDraft.value.trim() || 'New workflow');
-  closeTitleModal();
+function normalizeToastTone(tone) {
+  if (tone === 'danger') {
+    return 'error';
+  }
+
+  if (tone === 'success' || tone === 'warning' || tone === 'error' || tone === 'info') {
+    return tone;
+  }
+
+  return 'info';
+}
+
+function clearToastTimers(id) {
+  const timers = toastTimers.get(id);
+
+  if (!timers) {
+    return;
+  }
+
+  if (timers.hide) {
+    window.clearTimeout(timers.hide);
+  }
+
+  if (timers.remove) {
+    window.clearTimeout(timers.remove);
+  }
+
+  toastTimers.delete(id);
+}
+
+function removeToast(id) {
+  clearToastTimers(id);
+  toasts.value = toasts.value.filter((item) => item.id !== id);
+}
+
+function setToastClosing(id, closing) {
+  toasts.value = toasts.value.map((item) => (item.id === id ? { ...item, closing } : item));
+}
+
+function pushToast(message, tone = 'info', title = __('Joinotify', textDomain)) {
+  const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const normalizedTone = normalizeToastTone(tone);
+
+  toasts.value.push({ id, title, message, tone: normalizedTone, closing: false });
+
+  const hideTimer = window.setTimeout(() => {
+    setToastClosing(id, true);
+  }, 3000);
+
+  const removeTimer = window.setTimeout(() => {
+    removeToast(id);
+  }, 3500);
+
+  toastTimers.set(id, { hide: hideTimer, remove: removeTimer });
+}
+
+function dismissToast(id) {
+  clearToastTimers(id);
+  setToastClosing(id, true);
+
+  const removeTimer = window.setTimeout(() => {
+    toasts.value = toasts.value.filter((item) => item.id !== id);
+  }, 180);
+
+  toastTimers.set(id, { hide: null, remove: removeTimer });
+}
+
+async function saveTitleModal() {
+  const nextTitle = titleDraft.value.trim() || 'New workflow';
+  const previousTitle = store.file.post.title || '';
+
+  titleSaving.value = true;
+
+  try {
+    store.setWorkflowTitle(nextTitle);
+    const response = await store.saveWorkflow();
+    syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    pushToast(__('Workflow name saved successfully.', textDomain), 'success', __('Builder', textDomain));
+    closeTitleModal();
+  } catch (error) {
+    store.setWorkflowTitle(previousTitle);
+    pushToast(
+      error instanceof Error ? error.message : __('Could not save the workflow name.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+  } finally {
+    titleSaving.value = false;
+  }
+}
+
+function workflowStatusToastMessage(response, fallback) {
+  return response?.toast_body_title || response?.toast_header_title || fallback;
+}
+
+async function handleWorkflowStatusChange(nextStatus) {
+  const previousStatus = store.file.post.status || 'draft';
+
+  if (previousStatus === nextStatus) {
+    return;
+  }
+
+  try {
+    const response = await store.updateWorkflowStatus(nextStatus);
+
+    if (!response || response?.ok === false) {
+      throw new Error(__('Could not update the workflow status.', textDomain));
+    }
+
+    store.setWorkflowStatus(nextStatus);
+    pushToast(
+      workflowStatusToastMessage(
+        response,
+        nextStatus === 'publish'
+          ? __('The workflow was activated.', textDomain)
+          : __('The workflow was deactivated.', textDomain)
+      ),
+      'success',
+      __('Builder', textDomain)
+    );
+  } catch (error) {
+    store.setWorkflowStatus(previousStatus);
+    pushToast(
+      error instanceof Error ? error.message : __('Could not update the workflow status.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+  }
 }
 
 async function startScratch() {
@@ -136,6 +352,18 @@ async function startScratch() {
   } catch (error) {
     store.loading.bootstrap = false;
     throw error;
+  }
+}
+
+async function continueFromTriggerSetup() {
+  try {
+    await store.saveWorkflow();
+    await store.loadBootstrapFromServer(store.postId);
+    syncBuilderUrl(store.postId);
+    goCanvas();
+  } catch (error) {
+    console.error(error);
+    window.alert(error instanceof Error ? error.message : __('Could not save the selected trigger.', textDomain));
   }
 }
 
@@ -195,14 +423,28 @@ function confirmImport() {
 }
 
 function handleActionOpen(afterNodeId) {
-  actionInsertAfterId.value = afterNodeId || store.selectedNodeId || store.triggerNode?.id || '';
-  actionModalOpen.value = true;
+  openActionSidebar(afterNodeId);
 }
 
 function handleActionSelect(actionId) {
-  store.addActionNode(actionId, actionInsertAfterId.value);
+  const targetNodeId = actionInsertTarget.value.afterNodeId || store.triggerNode?.id || store.selectedNodeId || '';
+  const branchKey = actionInsertTarget.value.branchKey || undefined;
+
+  store.addActionNode(actionId, targetNodeId, branchKey);
   actionModalOpen.value = false;
+  actionInsertTarget.value = {
+    afterNodeId: '',
+    branchKey: '',
+  };
   goCanvas();
+}
+
+function closeActionSidebar() {
+  actionModalOpen.value = false;
+  actionInsertTarget.value = {
+    afterNodeId: '',
+    branchKey: '',
+  };
 }
 
 async function createNewWorkflow() {
@@ -281,7 +523,7 @@ function syncBuilderUrl(postId) {
         @update:title="store.setWorkflowTitle"
         @update:context="store.selectTriggerContext"
         @select-trigger="store.selectTrigger"
-        @continue="goCanvas"
+        @continue="continueFromTriggerSetup"
         @back="goStart"
       />
     </div>
@@ -293,7 +535,8 @@ function syncBuilderUrl(postId) {
         :status="store.file.post.status"
         :docs-url="docsUrl"
         :loading="store.loading.test"
-        @update:status="store.setWorkflowStatus"
+        :status-loading="isUpdatingStatus"
+        @update:status="handleWorkflowStatusChange"
         @test="runTest"
         @new="createNewWorkflow"
         @back="goBack"
@@ -302,52 +545,30 @@ function syncBuilderUrl(postId) {
       />
     </template>
 
-    <template #sidebar>
-      <BuilderPanel>
-        <div class="space-y-4">
-          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ __('Status', textDomain) }}</p>
-            <p class="mt-2 text-sm text-slate-700">{{ store.dirty ? __('Unsaved changes', textDomain) : __('Synced', textDomain) }}</p>
-            <p v-if="store.errors.length" class="mt-2 text-sm text-rose-600">{{ store.errors[0] }}</p>
-            <p v-else-if="store.warnings.length" class="mt-2 text-sm text-amber-600">{{ store.warnings[0] }}</p>
-          </div>
-
-          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ __('Flow', textDomain) }}</p>
-            <p class="mt-2 text-sm text-slate-700">{{ store.workflowContent.length }} {{ __('nodes', textDomain) }}</p>
-            <p class="mt-1 text-sm text-slate-500">{{ __('Category:', textDomain) }} {{ store.file.post.category || __('none', textDomain) }}</p>
-            <p class="mt-1 text-sm text-slate-500">{{ __('Trigger:', textDomain) }} {{ store.selectedTrigger || __('none', textDomain) }}</p>
-          </div>
-
-          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-soft">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{{ __('Quick actions', textDomain) }}</p>
-            <div class="mt-3 flex flex-col gap-2">
-              <BaseButton :title="__('Save workflow', textDomain)" variant="secondary" :loading="store.loading.save" @click="saveWorkflow" />
-              <BaseButton :title="__('Run test', textDomain)" variant="secondary" :loading="store.loading.test" @click="runTest" />
-              <BaseButton :title="__('Export workflow', textDomain)" variant="secondary" @click="exportWorkflow" />
-            </div>
-          </div>
-        </div>
-      </BuilderPanel>
-    </template>
-
     <template #main>
       <BuilderCanvasView
+        :trigger-node="store.triggerNode"
         :nodes="store.workflowContent"
         :selected-node-id="store.selectedNodeId"
         :selected-node="store.selectedNode"
         :contexts="store.triggerContexts"
         :drawer-open="store.drawerOpen"
-        :loading="store.loading.test"
+        :loading="store.loading.workflow"
+        :actions="availableActions"
+        :actions-loading="store.loading.actions"
+        :actions-open="actionSidebarOpen"
         @select-node="store.openNodeSettings"
         @add-node="handleActionOpen"
         @duplicate-node="store.duplicateNode"
         @remove-node="store.removeNode"
+        @move-node="({ nodeId, direction }) => store.moveNode(nodeId, direction)"
         @update-node="store.updateNodeData(store.editingNodeId || store.selectedNodeId, $event)"
         @close-drawer="store.closeNodeSettings"
         @test="runTest"
         @export="exportWorkflow"
         @open-actions="handleActionOpen"
+        @select-action="handleActionSelect"
+        @close-actions="closeActionSidebar"
       />
     </template>
     </BuilderShell>
@@ -363,22 +584,17 @@ function syncBuilderUrl(postId) {
     @import="confirmImport"
   />
 
-  <BuilderActionPickerModal
-    :open="actionModalOpen"
-    :actions="availableActions"
-    @close="actionModalOpen = false"
-    @select="handleActionSelect"
-  />
-
   <BaseDialog :open="titleModalOpen" :title="__('Edit workflow title', textDomain)" size-class="max-w-lg" @close="closeTitleModal">
     <div class="space-y-5">
       <BaseInput v-model="titleDraft" :label="__('Workflow name', textDomain)" />
       <div class="flex items-center justify-end gap-3">
-        <BaseButton :title="__('Cancel', textDomain)" variant="ghost" @click="closeTitleModal" />
-        <BaseButton :title="__('Save', textDomain)" @click="saveTitleModal" />
+        <BaseButton :title="__('Cancel', textDomain)" variant="ghost" :disabled="isSavingTitle" @click="closeTitleModal" />
+        <BaseButton :title="__('Save', textDomain)" :loading="isSavingTitle" @click="saveTitleModal" />
       </div>
     </div>
   </BaseDialog>
+
+  <ToastStack :toasts="toasts" @dismiss="dismissToast" />
 </template>
 
 <style scoped>

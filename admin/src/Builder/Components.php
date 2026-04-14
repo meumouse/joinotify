@@ -905,20 +905,20 @@ class Components {
      */
     public static function get_condition_options( $condition, $condition_value = '' ) {
         $condition_options = array(
-            'is' => esc_html__( 'Ã‰', 'joinotify' ),
-            'is_not' => esc_html__( 'NÃ£o Ã©', 'joinotify' ),
-            'empty' => esc_html__( 'Vazio', 'joinotify' ),
-            'not_empty' => esc_html__( 'NÃ£o estÃ¡ vazio', 'joinotify' ),
-            'contains' => esc_html__( 'ContÃ©m', 'joinotify' ),
-            'not_contain' => esc_html__( 'NÃ£o contÃ©m', 'joinotify' ),
-            'start_with' => esc_html__( 'ComeÃ§a com', 'joinotify' ),
-            'finish_with' => esc_html__( 'Termina com', 'joinotify' ),
-            'bigger_than' => esc_html__( 'Maior que', 'joinotify' ),
-            'less_than' => esc_html__( 'Menor que', 'joinotify' ),
+            'is' => esc_html__( 'Is', 'joinotify' ),
+            'is_not' => esc_html__( 'Is not', 'joinotify' ),
+            'empty' => esc_html__( 'Empty', 'joinotify' ),
+            'not_empty' => esc_html__( 'Not empty', 'joinotify' ),
+            'contains' => esc_html__( 'Contains', 'joinotify' ),
+            'not_contain' => esc_html__( 'Not contains', 'joinotify' ),
+            'start_with' => esc_html__( 'Start with', 'joinotify' ),
+            'finish_with' => esc_html__( 'Ends with', 'joinotify' ),
+            'bigger_than' => esc_html__( 'Bigger than', 'joinotify' ),
+            'less_than' => esc_html__( 'Less than', 'joinotify' ),
         );
 
         $html = '<div class="mb-4">';
-            $html .= '<label class="form-label">'. esc_html__( 'CondiÃ§Ã£o: *', 'joinotify' ) .'</label>';
+            $html .= '<label class="form-label">'. esc_html__( 'Condition: *', 'joinotify' ) .'</label>';
             $html .= '<select class="form-select get-condition-type required-setting">';
                 $html .= '<option value="none">'. esc_html__( 'Selecione uma condiÃ§Ã£o', 'joinotify' ) .'</option>';
 
@@ -977,75 +977,6 @@ class Components {
         $html .= '</div>';
 
         return $html;
-    }
-
-
-    /**
-     * Add modal content for edit workflow title
-     * 
-     * @since 1.0.0
-     * @version 1.4.7
-     * @return void
-     */
-    public static function workflow_title_modal_content() {
-        if ( joinotify_check_admin_page('joinotify-workflows-builder') ) : ?>
-            <div class="modal fade" id="edit_workflow_title" tabindex="-1" aria-labelledby="edit_workflow_title_label">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-0">
-                            <h1 class="modal-title fs-5" id="edit_workflow_title_label"><?php esc_html_e( 'Editar tÃ­tulo do fluxo', 'joinotify' ) ?></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ) ?>"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <input type="text" id="joinotify_edit_workflow_title" class="form-control" value="" placeholder="<?php esc_attr_e( 'TÃ­tulo do seu fluxo', 'joinotify' ) ?>"/>
-                        </div>
-                        
-                        <div class="modal-footer border-top-0">
-                            <button type="button" class="btn btn-sm btn-outline-secondary me-2" data-bs-dismiss="modal"><?php esc_html_e( 'Cancelar', 'joinotify' ) ?></button>
-                            <button type="button" id="joinotify_update_workflow_title" class="btn btn-sm btn-primary"><?php esc_html_e( 'Salvar alteraÃ§Ãµes', 'joinotify' ) ?></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif;
-    }
-
-
-    /**
-     * Add modal trigger for fetch all groups
-     * 
-     * @since 1.1.0
-     * @return void
-     */
-    public static function fetch_all_groups_modal_trigger() {
-        return '<button id="joinotify_fetch_all_groups" class="btn btn-outline-secondary d-block w-100 my-3" role="button" data-bs-toggle="modal" data-bs-target="#joinotify_fetch_all_groups_container">'. esc_html__( 'Obter informaÃ§Ãµes de grupos', 'joinotify' ) .'</button>';
-    }
-
-
-    /**
-     * Add modal content for fetch all groups
-     * 
-     * @since 1.1.0
-     * @return void
-     */
-    public static function fetch_all_groups_modal_content() {
-        if ( joinotify_check_admin_page('joinotify-workflows-builder') ) : ?>
-            <div class="modal fade" id="joinotify_fetch_all_groups_container" tabindex="-1" aria-labelledby="joinotify_fetch_all_groups_label">
-                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="joinotify_fetch_all_groups_label"><?php esc_html_e( 'Obter informaÃ§Ãµes de grupos', 'joinotify' ) ?></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ) ?>"></button>
-                        </div>
-
-                        <div class="modal-body my-3 text-start">
-                            <div class="placeholder-content" style="width: 100%; height: 10rem;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif;
     }
 
 

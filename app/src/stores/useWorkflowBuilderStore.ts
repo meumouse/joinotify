@@ -1,47 +1,231 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { ACTION_REGISTRY, getActionDefinition } from '../registries/actionRegistry';
+import {
+  getActionCatalog,
+  getActionDefinition,
+  getActionsForContext,
+  setActionCatalog,
+} from '../registries/actionRegistry';
 import { TRIGGER_CONTEXTS, getTriggerContextById } from '../registries/triggerContexts';
-import { getTriggersForContext } from '../registries/triggerRegistry';
-import { createWorkflowFileFromParts, normalizeWorkflowFile, parseWorkflowFile, parseWorkflowFromJson } from '../parsers/workflowParser';
-import { serializeWorkflowFile, serializeWorkflowToJson } from '../serializers/workflowSerializer';
+import {
+  getTriggerCatalog,
+  getTriggerContextsCatalog,
+  getTriggerDefinition,
+  getTriggersForContext,
+  setTriggerCatalog,
+} from '../registries/triggerRegistry';
+import {
+  createWorkflowFileFromParts,
+  normalizeWorkflowFile,
+  parseWorkflowFile,
+  parseWorkflowFromJson,
+} from '../parsers/workflowParser';
+import {
+  serializeWorkflowFile,
+  serializeWorkflowToJson,
+} from '../serializers/workflowSerializer';
 import { createWorkflowApiClient } from '../services/workflowApi';
-import type { BuilderBootstrap, BuilderStep, ExportedWorkflowFile, WorkflowNode } from '../types/workflowBuilder';
+import type {
+  BuilderBootstrap,
+  BuilderStep,
+  ExportedWorkflowFile,
+  WorkflowBranchKey,
+  WorkflowContextDefinition,
+  WorkflowNode,
+  WorkflowPlaceholderGroup,
+  WorkflowRegistryItem,
+} from '../types/workflowBuilder';
+import {
+  cloneSerializable,
+  cloneWorkflowNode,
+  createActionNode,
+  createConditionNode,
+  createEmptyBranches,
+  createTriggerNode,
+  ensureBranchesOnNode,
+  findWorkflowNodeLocation,
+  getBranchCollection,
+  insertWorkflowNodeAfter,
+  insertWorkflowNodeIntoConditionBranch,
+  isConditionNode,
+  isDelayNode,
+  isPlaceholderNode,
+  isSnippetNode,
+  isStopNode,
+  moveWorkflowNode,
+  removeWorkflowNode,
+  replaceWorkflowNodeData,
+} from '../utils/workflowTree';
 import { createWorkflowNodeId } from '../utils/workflowIds';
 
-function cloneValue<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value ?? null));
+function normalizePlaceholderEntry(placeholder: string, details: unknown): WorkflowPlaceholderGroup | null {
+  if (!placeholder || !details || typeof details !== 'object') {
+    return null;
+  }
+
+  const source = details as Record<string, unknown>;
+  const items = Array.isArray(source.items)
+    ? source.items
+    : [
+        {
+          placeholder,
+          description: typeof source.description === 'string' ? source.description : '',
+          group: typeof source.group === 'string' ? source.group : String(source.category || placeholder).trim(),
+          category: typeof source.category === 'string' ? source.category : '',
+          triggers: Array.isArray(source.triggers) ? source.triggers.map((item) => String(item)) : [],
+          replacement: source.replacement && typeof source.replacement === 'object' ? cloneSerializable(source.replacement) : {},
+          ...source,
+        },
+      ];
+
+  return {
+    id: String(source.group || source.category || placeholder).trim() || placeholder,
+    label: String(source.group_label || source.label || source.category || source.group || placeholder),
+    description: typeof source.description === 'string' ? source.description : '',
+    items: items.map((item) => ({
+      placeholder: String((item as Record<string, unknown>).placeholder || placeholder),
+      description: String((item as Record<string, unknown>).description || ''),
+      category: String((item as Record<string, unknown>).category || source.category || ''),
+      group: String((item as Record<string, unknown>).group || source.group || ''),
+      triggers: Array.isArray((item as Record<string, unknown>).triggers)
+        ? ((item as Record<string, unknown>).triggers as unknown[]).map((trigger) => String(trigger))
+        : [],
+      replacement: (item as Record<string, unknown>).replacement && typeof (item as Record<string, unknown>).replacement === 'object'
+        ? cloneSerializable((item as Record<string, unknown>).replacement)
+        : {},
+    })),
+  };
 }
 
-function findNodePath(
-  nodes: WorkflowNode[],
-  targetId: string,
-  trail: WorkflowNode[] = []
-): { node: WorkflowNode; parent: WorkflowNode | null; index: number; trail: WorkflowNode[] } | null {
-  for (let index = 0; index < nodes.length; index += 1) {
-    const node = nodes[index];
+function normalizePlaceholdersCatalog(raw: unknown): WorkflowPlaceholderGroup[] {
+  if (!raw) {
+    return [];
+  }
 
-    if (node.id === targetId) {
-      return { node, parent: trail[trail.length - 1] || null, index, trail };
+  if (Array.isArray(raw)) {
+    const itemGroups = raw
+      .map((entry) => {
+        if (!entry || typeof entry !== 'object') {
+          return null;
+        }
+
+        const source = entry as Record<string, unknown>;
+        const placeholder = String(source.placeholder || source.key || source.id || '');
+
+        if (!placeholder) {
+          return null;
+        }
+
+        return {
+          id: String(source.group || source.category || 'general'),
+          label: String(source.group_label || source.label || source.category || 'General'),
+          description: typeof source.description === 'string' ? source.description : '',
+          items: [
+            {
+              placeholder,
+              description: typeof source.description === 'string' ? source.description : '',
+              category: typeof source.category === 'string' ? source.category : '',
+              group: typeof source.group === 'string' ? source.group : '',
+              triggers: Array.isArray(source.triggers) ? source.triggers.map((item) => String(item)) : [],
+              replacement: source.replacement && typeof source.replacement === 'object' ? cloneSerializable(source.replacement) : {},
+            },
+          ],
+        } satisfies WorkflowPlaceholderGroup;
+      })
+      .filter(Boolean) as WorkflowPlaceholderGroup[];
+
+    return itemGroups;
+  }
+
+  if (typeof raw === 'object') {
+    const source = raw as Record<string, unknown>;
+    const groups: WorkflowPlaceholderGroup[] = [];
+
+    for (const [key, value] of Object.entries(source)) {
+      if (Array.isArray(value)) {
+        const items = value
+          .map((entry) => {
+            if (!entry || typeof entry !== 'object') {
+              return null;
+            }
+
+            const item = entry as Record<string, unknown>;
+            const placeholder = String(item.placeholder || item.key || item.id || key || '');
+
+            if (!placeholder) {
+              return null;
+            }
+
+            return {
+              placeholder,
+              description: String(item.description || ''),
+              category: String(item.category || key || ''),
+              group: String(item.group || key || ''),
+              triggers: Array.isArray(item.triggers) ? item.triggers.map((trigger) => String(trigger)) : [],
+              replacement: item.replacement && typeof item.replacement === 'object' ? cloneSerializable(item.replacement) : {},
+            };
+          })
+          .filter(Boolean);
+
+        if (items.length) {
+          groups.push({
+            id: key,
+            label: String(key).replace(/[_-]+/g, ' ').replace(/\b\w/g, (character) => character.toUpperCase()),
+            description: '',
+            items: items as WorkflowPlaceholderGroup['items'],
+          });
+        }
+
+        continue;
+      }
+
+      if (value && typeof value === 'object') {
+        const maybeGroup = normalizePlaceholderEntry(key, value);
+        if (maybeGroup) {
+          groups.push(maybeGroup);
+        }
+      }
     }
 
-    if (Array.isArray(node.children) && node.children.length > 0) {
-      const result = findNodePath(node.children, targetId, [...trail, node]);
-      if (result) {
-        return result;
-      }
+    if (groups.length) {
+      return groups;
+    }
+
+    const flatItems = Object.entries(source)
+      .map(([placeholder, details]) => {
+        if (!details || typeof details !== 'object') {
+          return null;
+        }
+
+        const item = details as Record<string, unknown>;
+        return {
+          placeholder,
+          description: String(item.description || ''),
+          category: String(item.category || ''),
+          group: String(item.group || ''),
+          triggers: Array.isArray(item.triggers) ? item.triggers.map((trigger) => String(trigger)) : [],
+          replacement: item.replacement && typeof item.replacement === 'object' ? cloneSerializable(item.replacement) : {},
+        };
+      })
+      .filter(Boolean);
+
+    if (flatItems.length) {
+      return [
+        {
+          id: 'general',
+          label: 'General',
+          description: '',
+          items: flatItems as WorkflowPlaceholderGroup['items'],
+        },
+      ];
     }
   }
 
-  return null;
+  return [];
 }
 
-function cloneNodeWithNewIds(node: WorkflowNode): WorkflowNode {
-  return {
-    ...cloneValue(node),
-    id: createWorkflowNodeId(node.type),
-    children: (node.children || []).map((child) => cloneNodeWithNewIds(child)),
-  };
+function resolveDefaultContext(catalog: WorkflowContextDefinition[]): string {
+  return catalog[0]?.id || TRIGGER_CONTEXTS[0]?.id || 'woocommerce';
 }
 
 export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', () => {
@@ -59,136 +243,269 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const drawerMode = ref<'settings' | 'context' | 'menu'>('settings');
   const loading = ref({
     bootstrap: true,
+    workflow: false,
     templates: false,
     import: false,
     export: false,
     save: false,
     test: false,
     create: false,
+    actions: false,
+    status: false,
   });
   const errors = ref<string[]>([]);
   const warnings = ref<string[]>([]);
   const lastExportJson = ref('');
-  const triggerCatalog = computed(() => bootstrap.value.triggers || {});
-  const templateCatalog = ref([]);
-  const triggerContexts = computed(() => {
-    const catalog = bootstrap.value.trigger_contexts;
-
-    if (Array.isArray(catalog) && catalog.length > 0) {
-      return catalog.map((item) => ({
-        id: String(item.id || ''),
-        label: String(item.label || ''),
-        description: String(item.description || ''),
-        icon: String(item.icon || ''),
-        icon_svg: String(item.icon_svg || ''),
-        category: String(item.category || item.id || ''),
-      })).filter((item) => item.id);
-    }
-
-    return TRIGGER_CONTEXTS;
-  });
+  const templateCatalog = ref<Record<string, unknown>[]>([]);
+  const actionsCatalog = ref<WorkflowRegistryItem[]>([]);
+  const actionsLoaded = ref(false);
+  const placeholderCatalog = ref<WorkflowPlaceholderGroup[]>([]);
+  const triggerCatalog = ref<Record<string, WorkflowRegistryItem[]>>(getTriggerCatalog());
+  const triggerContextsCache = ref<WorkflowContextDefinition[]>(getTriggerContextsCatalog());
 
   const workflowContent = computed(() => file.value.workflow_content || []);
+
   const triggerNode = computed(() => workflowContent.value.find((node) => node.type === 'trigger') || null);
-  const selectedNode = computed(() => (selectedNodeId.value ? findNodePath(workflowContent.value, selectedNodeId.value)?.node || null : null));
-  const selectedTriggerDefinition = computed(() => {
-    return getTriggerOptionsForContext(activeContext.value || '').find((item) => item.id === selectedTrigger.value);
+
+  const selectedNode = computed(() => {
+    if (!selectedNodeId.value) {
+      return null;
+    }
+
+    return findWorkflowNodeLocation(workflowContent.value, selectedNodeId.value)?.node || null;
   });
+
+  const selectedNodeDefinition = computed(() => {
+    const node = selectedNode.value;
+
+    if (!node) {
+      return undefined;
+    }
+
+    if (node.type === 'trigger') {
+      return getTriggerDefinition(String(node.data.context || ''), String(node.data.trigger || ''));
+    }
+
+    return getActionDefinition(String(node.data.action || ''));
+  });
+
+  const selectedTriggerDefinition = computed(() => {
+    if (!activeContext.value || !selectedTrigger.value) {
+      return undefined;
+    }
+
+    return getTriggerDefinition(activeContext.value, selectedTrigger.value);
+  });
+
   const selectedActionDefinition = computed(() => {
     const node = selectedNode.value;
-    const actionId = node && node.type === 'action' && typeof node.data.action === 'string' ? node.data.action : '';
 
-    return actionId ? getActionDefinition(actionId) : undefined;
+    if (!node || node.type !== 'action') {
+      return undefined;
+    }
+
+    return getActionDefinition(String(node.data.action || ''));
   });
+
   const dirty = computed(() => serializeWorkflowToJson(file.value) !== baseline.value);
   const hasErrors = computed(() => errors.value.length > 0);
   const canContinue = computed(() => !!activeContext.value && !!selectedTrigger.value);
-  const triggerOptions = computed(() => getTriggerOptionsForContext(activeContext.value || ''));
+  const triggerOptions = computed(() => getTriggersForContext(activeContext.value || ''));
+  const triggerContexts = computed(() => triggerContextsCache.value.length ? triggerContextsCache.value : TRIGGER_CONTEXTS);
 
   function setApiFromBootstrap(value: BuilderBootstrap) {
-    bootstrap.value = cloneValue(value || {});
+    bootstrap.value = cloneSerializable(value || {});
     api.value = createWorkflowApiClient(bootstrap.value);
-    postId.value = Number((value?.workflow as Record<string, unknown> | undefined)?.post_id || 0) || 0;
-  }
 
-  function getTriggerOptionsForContext(context: string) {
-    const contextDefinition = triggerContexts.value.find((item) => item.id === context) || getTriggerContextById(context);
-    const catalog = triggerCatalog.value?.[context];
+    const workflowState = (value?.workflow as Record<string, unknown> | undefined) || {};
+    postId.value = Number(workflowState.post_id || 0) || 0;
 
-    if (Array.isArray(catalog) && catalog.length > 0) {
-      return catalog.map((item) => ({
-        id: String(item.data_trigger || ''),
-        label: String(item.title || ''),
-        description: String(item.description || ''),
-        icon: String(item.icon || contextDefinition?.icon || context || ''),
-        iconSvg: String(contextDefinition?.icon_svg || ''),
-        requireSettings: Boolean(item.require_settings),
-        context,
-      }));
-    }
+    const rawTriggers = value?.triggers && typeof value.triggers === 'object' ? (value.triggers as Record<string, Record<string, unknown>[]>) : {};
+    const rawContexts = Array.isArray(value?.trigger_contexts) ? (value.trigger_contexts as Record<string, unknown>[]) : [];
 
-    return getTriggersForContext(context).map((item) => ({
-      id: item.id,
-      label: item.label,
-      description: item.description,
-      icon: String(contextDefinition?.icon || context || ''),
-      iconSvg: String(contextDefinition?.icon_svg || ''),
-      requireSettings: false,
-      context,
-    }));
+    setTriggerCatalog(rawTriggers, rawContexts);
+    triggerCatalog.value = getTriggerCatalog();
+    triggerContextsCache.value = getTriggerContextsCatalog();
+    placeholderCatalog.value = normalizePlaceholdersCatalog(value?.placeholders);
   }
 
   function markBaseline() {
     baseline.value = serializeWorkflowToJson(file.value);
   }
 
+  function syncSelectionFromFile() {
+    const currentTrigger = triggerNode.value;
+
+    activeContext.value = file.value.post.category || (currentTrigger && typeof currentTrigger.data.context === 'string' ? currentTrigger.data.context : '') || resolveDefaultContext(triggerContexts.value);
+    selectedTrigger.value = currentTrigger && typeof currentTrigger.data.trigger === 'string' ? currentTrigger.data.trigger : '';
+    selectedNodeId.value = selectedNodeId.value && findWorkflowNodeLocation(workflowContent.value, selectedNodeId.value)
+      ? selectedNodeId.value
+      : currentTrigger?.id || workflowContent.value[0]?.id || '';
+    editingNodeId.value = selectedNodeId.value;
+  }
+
+  function applyWorkflowFile(value: ExportedWorkflowFile, nextPostId = postId.value, forceCanvas = false) {
+    const normalized = normalizeWorkflowFile(value);
+    file.value = normalized;
+
+    if (Number(nextPostId) > 0) {
+      postId.value = Number(nextPostId);
+    }
+
+    syncSelectionFromFile();
+    step.value = forceCanvas ? 'canvas' : (workflowContent.value.length ? 'canvas' : 'trigger');
+    drawerOpen.value = false;
+    drawerMode.value = 'settings';
+    errors.value = [];
+    warnings.value = [];
+    markBaseline();
+  }
+
   function hydrateFromBootstrap(value: BuilderBootstrap) {
+    const previousStep = step.value;
     setApiFromBootstrap(value);
 
     const candidate = value?.workflow_file || value?.workflow || value;
     const parsed = parseWorkflowFile(candidate);
 
     if (parsed.ok && parsed.file) {
-      file.value = normalizeWorkflowFile(parsed.file);
-      errors.value = [];
+      applyWorkflowFile(parsed.file, postId.value);
       warnings.value = parsed.warnings;
+      errors.value = [];
     } else {
       file.value = createWorkflowFileFromParts({
         plugin_version: String(value?.version || '1.0.0'),
-        title: value?.title || 'My automation',
+        title: value?.title ? String(value.title) : 'My automation',
+        category: resolveDefaultContext(triggerContexts.value),
       });
+
+      activeContext.value = file.value.post.category || resolveDefaultContext(triggerContexts.value);
+      selectedTrigger.value = '';
+      selectedNodeId.value = '';
+      editingNodeId.value = '';
       errors.value = parsed.errors;
       warnings.value = parsed.warnings;
+      markBaseline();
     }
 
-    selectedNodeId.value = triggerNode.value?.id || workflowContent.value[0]?.id || '';
-    editingNodeId.value = selectedNodeId.value;
-    activeContext.value = file.value.post.category || (triggerNode.value && typeof triggerNode.value.data.context === 'string' ? triggerNode.value.data.context : '');
-    selectedTrigger.value = triggerNode.value && typeof triggerNode.value.data.trigger === 'string' ? triggerNode.value.data.trigger : '';
-    step.value = workflowContent.value.length ? 'canvas' : (step.value === 'trigger' ? 'trigger' : 'start');
-    drawerOpen.value = false;
-    drawerMode.value = 'settings';
-    markBaseline();
+    step.value = previousStep || 'start';
+  }
+
+  async function loadCanvasActionsFromServer() {
+    if (actionsLoaded.value) {
+      return { ok: true, actions: actionsCatalog.value };
+    }
+
+    if (loading.value.actions) {
+      return { ok: true, actions: actionsCatalog.value };
+    }
+
+    loading.value.actions = true;
+
+    try {
+      const response = api.value ? await api.value.loadActions() : null;
+      const rawActions = Array.isArray(response?.actions) ? (response.actions as Record<string, unknown>[]) : [];
+
+      if (rawActions.length) {
+        setActionCatalog(rawActions);
+        actionsCatalog.value = getActionCatalog();
+      } else {
+        actionsCatalog.value = getActionCatalog();
+      }
+
+      actionsLoaded.value = true;
+
+      return response || { ok: true, actions: actionsCatalog.value };
+    } catch (error) {
+      actionsCatalog.value = getActionCatalog();
+      errors.value = [error instanceof Error ? error.message : 'Could not load actions.'];
+      return { ok: false, error };
+    } finally {
+      loading.value.actions = false;
+    }
+  }
+
+  async function loadWorkflowFromServer(nextPostId = postId.value) {
+    const resolvedPostId = Number(nextPostId || 0) || 0;
+
+    if (resolvedPostId <= 0) {
+      return { ok: false };
+    }
+
+    if (loading.value.workflow) {
+      return { ok: true };
+    }
+
+    loading.value.workflow = true;
+
+    try {
+      const response = api.value ? await api.value.loadWorkflow(resolvedPostId) : null;
+
+      if (response && typeof response === 'object') {
+        const workflowContent = Array.isArray(response.workflow_content)
+          ? response.workflow_content
+          : Array.isArray(response.content)
+            ? response.content
+            : Array.isArray(response.workflow?.content)
+              ? response.workflow.content
+              : [];
+        const workflowPost = response.post && typeof response.post === 'object'
+          ? response.post
+          : response.workflow && typeof response.workflow === 'object'
+            ? response.workflow
+            : {};
+
+        const workflowFile = createWorkflowFileFromParts({
+          plugin_version: String(bootstrap.value.version || '1.0.0'),
+          post: {
+            type: 'joinotify-workflow',
+            title: String(
+              response.workflow_title
+                || workflowPost.title
+                || bootstrap.value.title
+                || 'My automation'
+            ),
+            date: String(response.created_at || workflowPost.date || new Date().toISOString()),
+            status: String(response.workflow_status || workflowPost.status || 'draft'),
+            modified: String(response.updated_at || workflowPost.modified || new Date().toISOString()),
+            category: String(
+              workflowContent?.[0]?.data?.context
+                || workflowContent?.[0]?.data?.category
+                || workflowPost.category
+                || ''
+            ),
+          },
+          workflow_content: workflowContent,
+        });
+
+        applyWorkflowFile(workflowFile, resolvedPostId, true);
+        errors.value = [];
+        warnings.value = [];
+      }
+
+      return response || { ok: true };
+    } catch (error) {
+      errors.value = [error instanceof Error ? error.message : 'Could not load workflow.'];
+      return { ok: false, error };
+    } finally {
+      loading.value.workflow = false;
+    }
   }
 
   function createEmptyWorkflowFile(title = 'My automation') {
-    const context = TRIGGER_CONTEXTS[0]?.id || 'woocommerce';
+    const context = resolveDefaultContext(triggerContexts.value);
     file.value = createWorkflowFileFromParts({
       title,
       category: context,
       status: 'draft',
       workflow_content: [
-        {
-          id: createWorkflowNodeId('trigger'),
-          type: 'trigger',
-          data: {
-            title,
-            description: '',
-            trigger: '',
-            context,
-          },
-          children: [],
-        },
+        createTriggerNode({
+          title,
+          description: '',
+          trigger: '',
+          context,
+          settings: {},
+        }),
       ],
     });
 
@@ -205,17 +522,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   function loadWorkflowFile(value: ExportedWorkflowFile, nextPostId = 0) {
-    const parsed = normalizeWorkflowFile(value);
-    file.value = parsed;
-    if (Number(nextPostId) > 0) {
-      postId.value = Number(nextPostId);
-    }
-    activeContext.value = parsed.post.category || '';
-    selectedTrigger.value = triggerNode.value && typeof triggerNode.value.data.trigger === 'string' ? triggerNode.value.data.trigger : '';
-    selectedNodeId.value = triggerNode.value?.id || parsed.workflow_content[0]?.id || '';
-    editingNodeId.value = selectedNodeId.value;
-    step.value = parsed.workflow_content.length ? 'canvas' : 'trigger';
-    markBaseline();
+    applyWorkflowFile(value, nextPostId);
   }
 
   async function createWorkflowFromScratch(title = file.value.post.title || 'My automation') {
@@ -226,10 +533,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
       if (response?.workflow_file) {
         postId.value = Number(response?.workflow?.post_id || 0) || 0;
-        createEmptyWorkflowFile(title);
-        file.value.post.title = title;
-        file.value.post.status = 'draft';
-        file.value.post.category = TRIGGER_CONTEXTS[0]?.id || 'woocommerce';
+        applyWorkflowFile(response.workflow_file, postId.value);
         step.value = 'trigger';
         return response;
       }
@@ -241,14 +545,14 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
-  async function createWorkflowFromTemplate(templateFile, title = '') {
+  async function createWorkflowFromTemplate(templateFile: string, title = '') {
     loading.value.create = true;
 
     try {
       const response = api.value ? await api.value.createWorkflow({ mode: 'template', template_file: templateFile, title }) : null;
 
       if (response?.workflow_file) {
-        loadWorkflowFile(response.workflow_file, response?.workflow?.post_id || 0);
+        applyWorkflowFile(response.workflow_file, response?.workflow?.post_id || 0);
         step.value = 'canvas';
         return response;
       }
@@ -286,7 +590,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       const response = api.value ? await api.value.loadTemplates() : null;
 
       if (response && Array.isArray(response.templates)) {
-        templateCatalog.value = cloneValue(response.templates);
+        templateCatalog.value = cloneSerializable(response.templates);
       }
 
       return response;
@@ -309,6 +613,41 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   function setWorkflowStatus(status: string) {
     file.value.post.status = status;
+  }
+
+  function markWorkflowSaved() {
+    baseline.value = serializeWorkflowToJson(file.value);
+  }
+
+  async function updateWorkflowStatus(status: string) {
+    if (loading.value.status) {
+      return { ok: false };
+    }
+
+    if (postId.value <= 0) {
+      return { ok: false, error: new Error('Workflow not saved yet.') };
+    }
+
+    loading.value.status = true;
+
+    try {
+      const response = api.value
+        ? await api.value.updateWorkflowStatus({
+            post_id: postId.value,
+            status,
+          })
+        : null;
+
+      if (response?.status === 'success' || response?.workflow_status) {
+        setWorkflowStatus(status);
+        markWorkflowSaved();
+        return response;
+      }
+
+      return { ok: false };
+    } finally {
+      loading.value.status = false;
+    }
   }
 
   function setWorkflowCategory(category: string) {
@@ -347,7 +686,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     selectedTrigger.value = triggerId;
 
     const trigger = triggerNode.value;
-    const definition = triggerId ? getTriggerOptionsForContext(activeContext.value || '').find((item) => item.id === triggerId) : undefined;
+    const definition = triggerId ? getTriggersForContext(activeContext.value || '').find((item) => item.id === triggerId) : undefined;
 
     if (trigger) {
       trigger.data = {
@@ -369,7 +708,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
     trigger.data = {
       ...trigger.data,
-      ...patch,
+      ...cloneSerializable(patch),
     };
 
     if (typeof patch.context === 'string') {
@@ -386,18 +725,20 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   function updateNodeData(nodeId: string, patch: Record<string, unknown>) {
-    const path = findNodePath(workflowContent.value, nodeId);
-
-    if (!path) {
+    if (!nodeId) {
       return;
     }
 
-    path.node.data = {
-      ...path.node.data,
-      ...patch,
-    };
+    if (!replaceWorkflowNodeData(workflowContent.value, nodeId, patch)) {
+      return;
+    }
 
-    if (path.node.type === 'trigger') {
+    const node = findWorkflowNodeLocation(workflowContent.value, nodeId)?.node;
+    if (!node) {
+      return;
+    }
+
+    if (node.type === 'trigger') {
       if (typeof patch.context === 'string') {
         setWorkflowCategory(patch.context);
       }
@@ -412,83 +753,97 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
-  function addActionNode(actionId = 'send_whatsapp_message_text', afterNodeId = selectedNodeId.value) {
+  function addActionNode(
+    actionId = 'send_whatsapp_message_text',
+    afterNodeId = selectedNodeId.value,
+    branchKey?: WorkflowBranchKey
+  ) {
     const definition = getActionDefinition(actionId);
-    const node: WorkflowNode = {
-      id: createWorkflowNodeId('action'),
-      type: 'action',
-      data: definition?.parseData
-        ? definition.parseData({
-            title: definition.label,
-            description: '',
-            action: actionId,
-            message: '',
-            sender: '',
-            receiver: '',
-          })
-        : {
-            title: definition?.label || 'Action',
-            description: '',
-            action: actionId,
-            message: '',
-            sender: '',
-            receiver: '',
-          },
-      children: [],
-    };
+    const node = actionId === 'condition'
+      ? createConditionNode({
+          title: definition?.label || 'Condition',
+          description: '',
+          action: 'condition',
+          condition: '',
+          condition_type: '',
+          field_id: '',
+          meta_key: '',
+          value_text: '',
+          type_text: '',
+          settings: {},
+        }, definition)
+      : createActionNode(actionId, {
+          title: definition?.label || 'Action',
+          description: '',
+          action: actionId,
+          message: '',
+          sender: '',
+          receiver: '',
+          settings: {},
+        }, definition);
 
-    if (!afterNodeId) {
-      file.value.workflow_content.push(node);
-      selectedNodeId.value = node.id;
-      editingNodeId.value = node.id;
-      return node;
+    if (branchKey) {
+      const inserted = insertWorkflowNodeIntoConditionBranch(workflowContent.value, afterNodeId, branchKey, node, afterNodeId);
+
+      if (inserted) {
+        selectedNodeId.value = inserted.id;
+        editingNodeId.value = inserted.id;
+        drawerOpen.value = true;
+        drawerMode.value = 'settings';
+        return inserted;
+      }
     }
 
-    const path = findNodePath(workflowContent.value, afterNodeId);
-    if (!path) {
-      file.value.workflow_content.push(node);
-    } else if (path.parent) {
-      path.parent.children.splice(path.index + 1, 0, node);
-    } else {
-      workflowContent.value.splice(path.index + 1, 0, node);
-    }
+    const inserted = afterNodeId
+      ? insertWorkflowNodeAfter(workflowContent.value, afterNodeId, node)
+      : insertWorkflowNodeAfter(workflowContent.value, triggerNode.value?.id || '', node) || node;
 
-    selectedNodeId.value = node.id;
-    editingNodeId.value = node.id;
+    selectedNodeId.value = inserted?.id || node.id;
+    editingNodeId.value = selectedNodeId.value;
     drawerOpen.value = true;
     drawerMode.value = 'settings';
 
-    return node;
+    return inserted || node;
+  }
+
+  function addNodeBelow(nodeId: string, actionId: string, branchKey?: WorkflowBranchKey) {
+    return addActionNode(actionId, nodeId, branchKey);
+  }
+
+  function addNodeToBranch(conditionId: string, branchKey: WorkflowBranchKey, actionId: string) {
+    return addActionNode(actionId, conditionId, branchKey);
   }
 
   function removeNode(nodeId: string) {
-    const path = findNodePath(workflowContent.value, nodeId);
-    if (!path) {
+    if (!nodeId || triggerNode.value?.id === nodeId) {
       return;
     }
 
-    if (path.parent) {
-      path.parent.children.splice(path.index, 1);
-    } else {
-      workflowContent.value.splice(path.index, 1);
+    if (!removeWorkflowNode(workflowContent.value, nodeId)) {
+      return;
     }
 
-    selectedNodeId.value = workflowContent.value[0]?.id || '';
+    const fallback = workflowContent.value.find((node) => node.id !== nodeId) || null;
+    selectedNodeId.value = fallback?.id || triggerNode.value?.id || '';
     editingNodeId.value = selectedNodeId.value;
   }
 
   function duplicateNode(nodeId: string) {
-    const path = findNodePath(workflowContent.value, nodeId);
-    if (!path) {
+    const location = findWorkflowNodeLocation(workflowContent.value, nodeId);
+
+    if (!location) {
       return null;
     }
 
-    const clone = cloneNodeWithNewIds(path.node);
+    const clone = cloneWorkflowNode(location.node);
+    clone.id = createWorkflowNodeId(clone.type);
 
-    if (path.parent) {
-      path.parent.children.splice(path.index + 1, 0, clone);
+    if (location.parent && location.branchKey && location.parent.data.action === 'condition' && location.parent.branches) {
+      const branch = getBranchCollection(location.parent)[location.branchKey];
+      branch.splice(location.index + 1, 0, clone);
+      ensureBranchesOnNode(location.parent);
     } else {
-      workflowContent.value.splice(path.index + 1, 0, clone);
+      location.container.splice(location.index + 1, 0, clone);
     }
 
     selectedNodeId.value = clone.id;
@@ -497,20 +852,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   function moveNode(nodeId: string, direction: 'up' | 'down') {
-    const path = findNodePath(workflowContent.value, nodeId);
-    if (!path) {
-      return;
-    }
-
-    const siblings = path.parent ? path.parent.children : workflowContent.value;
-    const targetIndex = direction === 'up' ? path.index - 1 : path.index + 1;
-
-    if (targetIndex < 0 || targetIndex >= siblings.length) {
-      return;
-    }
-
-    const [item] = siblings.splice(path.index, 1);
-    siblings.splice(targetIndex, 0, item);
+    return moveWorkflowNode(workflowContent.value, nodeId, direction);
   }
 
   function openNodeSettings(nodeId: string, mode: 'settings' | 'context' | 'menu' = 'settings') {
@@ -534,10 +876,19 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       return { ok: false, errors: parsed.errors, warnings: parsed.warnings };
     }
 
-    loadWorkflowFile(parsed.file);
-    errors.value = [];
+    applyWorkflowFile(parsed.file);
     warnings.value = parsed.warnings;
+    errors.value = [];
     return parsed;
+  }
+
+  async function importWorkflowFromServer(json: string) {
+    loading.value.import = true;
+    try {
+      return importWorkflowFromJson(json);
+    } finally {
+      loading.value.import = false;
+    }
   }
 
   function exportWorkflowToJson() {
@@ -555,6 +906,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function runWorkflowTest() {
     loading.value.test = true;
+
     try {
       await Promise.resolve();
       return { ok: true, message: 'Workflow test queued.' };
@@ -565,8 +917,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function saveWorkflow() {
     loading.value.save = true;
+
     try {
       const payload = serializeWorkflowFile(file.value);
+
       if (api.value && postId.value <= 0) {
         const created = await api.value.createWorkflow({ mode: 'scratch', title: file.value.post.title });
         if (created?.workflow?.post_id) {
@@ -577,7 +931,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       const response = api.value ? await api.value.saveWorkflow({ post_id: postId.value, workflow_file: payload }) : null;
 
       if (response?.workflow_file) {
-        loadWorkflowFile(response.workflow_file, response?.workflow?.post_id || postId.value);
+        applyWorkflowFile(response.workflow_file, response?.workflow?.post_id || postId.value);
         return response;
       }
 
@@ -588,16 +942,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
-  async function importWorkflowFromServer(json: string) {
-    loading.value.import = true;
-    try {
-      return importWorkflowFromJson(json);
-    } finally {
-      loading.value.import = false;
-    }
-  }
-
-  return {
+  const state = {
     bootstrap,
     postId,
     file,
@@ -610,6 +955,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     drawerMode,
     loading,
     templateCatalog,
+    actionsCatalog,
+    actionsLoaded,
+    placeholderCatalog,
+    triggerCatalog,
+    triggerContexts,
     errors,
     warnings,
     dirty,
@@ -618,12 +968,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     workflowContent,
     triggerNode,
     selectedNode,
+    selectedNodeDefinition,
     selectedTriggerDefinition,
     selectedActionDefinition,
     triggerOptions,
     bootstrapData: bootstrap,
-    actionsCatalog: ACTION_REGISTRY,
-    triggerContexts,
     setApiFromBootstrap,
     hydrateFromBootstrap,
     createEmptyWorkflowFile,
@@ -631,14 +980,19 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     createWorkflowFromTemplate,
     loadWorkflowFile,
     loadBootstrapFromServer,
+    loadWorkflowFromServer,
     loadTemplatesFromServer,
+    loadCanvasActionsFromServer,
     setWorkflowTitle,
     setWorkflowStatus,
+    updateWorkflowStatus,
     setWorkflowCategory,
     selectTriggerContext,
     selectTrigger,
     updateTriggerNode,
     addActionNode,
+    addNodeBelow,
+    addNodeToBranch,
     updateNodeData,
     removeNode,
     duplicateNode,
@@ -652,5 +1006,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     parseWorkflow,
     runWorkflowTest,
     saveWorkflow,
+    getActionsForContext,
+    getTriggersForContext,
+    getTriggerDefinition,
+    getActionDefinition,
+    resolveDefaultContext,
   };
+
+  return state;
 });

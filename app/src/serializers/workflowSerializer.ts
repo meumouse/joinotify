@@ -1,10 +1,94 @@
-import type { ExportedWorkflowFile } from '../types/workflowBuilder';
+import { getActionDefinition } from '../registries/actionRegistry';
+import { getTriggerDefinition } from '../registries/triggerRegistry';
+import { cloneSerializable, isConditionNode, isRecord, ensureBranchesOnNode } from '../utils/workflowTree';
 import { normalizeWorkflowFile } from '../parsers/workflowParser';
+import type {
+  ExportedWorkflowFile,
+  WorkflowBranches,
+  WorkflowNode,
+  WorkflowPostMeta,
+} from '../types/workflowBuilder';
+
+function serializeNodeData(node: WorkflowNode): Record<string, unknown> {
+  const data = isRecord(node.data) ? cloneSerializable(node.data) : {};
+
+  if (node.type === 'trigger') {
+    const context = String(data.context || '');
+    const trigger = String(data.trigger || '');
+    const definition = context && trigger ? getTriggerDefinition(context, trigger) : undefined;
+
+    if (definition?.serializeData) {
+      return definition.serializeData(data);
+    }
+
+    return data;
+  }
+
+  const action = String(data.action || '');
+  const definition = action ? getActionDefinition(action) : undefined;
+
+  if (definition?.serializeData) {
+    return definition.serializeData(data);
+  }
+
+  return data;
+}
+
+function serializeLinearChildren(children: WorkflowNode[]): WorkflowNode[] {
+  return (children || []).map((child) => serializeWorkflowNode(child));
+}
+
+function serializeBranchChildren(branches: WorkflowBranches): Record<string, WorkflowNode[]> {
+  return {
+    action_true: serializeLinearChildren(branches.action_true || []),
+    action_false: serializeLinearChildren(branches.action_false || []),
+  };
+}
+
+export function serializeWorkflowNode(node: WorkflowNode): Record<string, unknown> {
+  const payload: Record<string, unknown> = {
+    ...cloneSerializable(node),
+    id: node.id,
+    type: node.type,
+    data: serializeNodeData(node),
+  };
+
+  delete payload.branchKey;
+  delete payload.parentId;
+
+  if (isConditionNode(node) || node.branches) {
+    const branches = ensureBranchesOnNode(node);
+    payload.children = serializeBranchChildren(branches);
+  } else {
+    payload.children = serializeLinearChildren(node.children || []);
+  }
+
+  return payload;
+}
 
 export function serializeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkflowFile {
-  return normalizeWorkflowFile(file);
+  const normalized = normalizeWorkflowFile(file);
+  const post: WorkflowPostMeta = {
+    ...cloneSerializable(normalized.post),
+    type: 'joinotify-workflow',
+    title: typeof normalized.post.title === 'string' ? normalized.post.title : 'My automation',
+    date: typeof normalized.post.date === 'string' ? normalized.post.date : '',
+    status: typeof normalized.post.status === 'string' ? normalized.post.status : 'draft',
+    modified: typeof normalized.post.modified === 'string' ? normalized.post.modified : '',
+    category: typeof normalized.post.category === 'string' ? normalized.post.category : '',
+  };
+
+  return {
+    ...cloneSerializable(normalized),
+    plugin_version: typeof normalized.plugin_version === 'string' && normalized.plugin_version.trim()
+      ? normalized.plugin_version
+      : '1.0.0',
+    post,
+    workflow_content: normalized.workflow_content.map((node) => serializeWorkflowNode(node)) as WorkflowNode[],
+  };
 }
 
 export function serializeWorkflowToJson(file: ExportedWorkflowFile): string {
   return JSON.stringify(serializeWorkflowFile(file), null, 2);
 }
+

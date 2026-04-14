@@ -134,3 +134,10 @@
 	position: absolute;
 	stroke: #ced4da;
 }
+
+.canvas-dot {
+    background-size: 20px 20px;
+    background-position: left -400px top -248px;
+    background-image: radial-gradient(circle at 10px 10px, #DEE2E6 1px, transparent 0);
+    background-color: #F8F9FA !important;
+}

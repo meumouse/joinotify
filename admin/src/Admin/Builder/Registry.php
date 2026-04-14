@@ -41,7 +41,6 @@ class Registry {
 			'workflow' => $workflow_state,
 			'workflow_file' => self::build_exported_workflow_file( $workflow_state, $post_id ),
 			'start_templates' => Workflow_Manager::get_start_templates(),
-			'actions' => self::get_actions_catalog(),
 			'triggers' => self::get_triggers_catalog(),
 			'trigger_contexts' => self::get_trigger_contexts_catalog(),
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),

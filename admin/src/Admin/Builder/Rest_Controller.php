@@ -18,6 +18,7 @@ class Rest_Controller {
 	 */
 	private $route_classes = array(
 		'\MeuMouse\Joinotify\Rest\Builder_Bootstrap',
+		'\MeuMouse\Joinotify\Rest\Builder_Actions',
 		'\MeuMouse\Joinotify\Rest\Builder_Workflow',
 		'\MeuMouse\Joinotify\Rest\Builder_Create',
 		'\MeuMouse\Joinotify\Rest\Builder_Import',
