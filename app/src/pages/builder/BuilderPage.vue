@@ -14,6 +14,7 @@ import BuilderTriggerSetupView from '../../components/builder/BuilderTriggerSetu
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
+import { createDebugLogger } from '../../utils/debug';
 import { cloneValue } from '../../utils/object';
 
 defineOptions({ name: 'BuilderPage' });
@@ -46,6 +47,7 @@ const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
 const docsUrl = computed(() => bootstrap.value?.links?.docs_url || '#');
 const debugMode = computed(() => Boolean(bootstrap.value?.debug_mode));
+const debugLogger = createDebugLogger('Builder', () => debugMode.value);
 const startShellStyle = computed(() => ({
   top: debugMode.value ? '32px !important' : '0',
   height: debugMode.value ? 'calc(100vh - 32px)' : '100vh',
@@ -103,14 +105,25 @@ watch(
   () => props.bootstrap,
   (value) => {
     bootstrap.value = cloneValue(value || {});
+    debugLogger.log('bootstrap:loaded', {
+      debug_mode: debugMode.value,
+      post_id: workflowIdFromUrl.value,
+    });
 
     if (workflowIdFromUrl.value > 0) {
       store.setApiFromBootstrap(bootstrap.value);
       store.step = 'canvas';
+      debugLogger.log('builder:opened-existing-workflow', {
+        workflow_id: workflowIdFromUrl.value,
+      });
       return;
     }
 
     store.hydrateFromBootstrap(bootstrap.value);
+    debugLogger.log('builder:hydrated-from-bootstrap', {
+      step: store.step,
+      has_workflow: Boolean(store.workflowContent.length),
+    });
   },
   { deep: true, immediate: true }
 );
@@ -152,18 +165,22 @@ onBeforeUnmount(() => {
 });
 
 function goStart() {
+  debugLogger.log('navigation:go-start');
   store.step = 'start';
 }
 
 function goLibrary() {
+  debugLogger.log('navigation:go-library');
   store.step = 'library';
 }
 
 function goTrigger() {
+  debugLogger.log('navigation:go-trigger');
   store.step = 'trigger';
 }
 
 function goCanvas() {
+  debugLogger.log('navigation:go-canvas');
   store.step = 'canvas';
 }
 
@@ -185,10 +202,14 @@ function openActionSidebar(afterNodeId) {
 }
 
 function goBack() {
+  debugLogger.log('navigation:back', {
+    url: backUrl.value,
+  });
   window.location.href = backUrl.value;
 }
 
 function openImportModal() {
+  debugLogger.log('modal:open-import');
   importJson.value = '';
   importFileName.value = '';
   importError.value = '';
@@ -196,15 +217,18 @@ function openImportModal() {
 }
 
 function closeImportModal() {
+  debugLogger.log('modal:close-import');
   importModalOpen.value = false;
 }
 
 function openTitleModal() {
+  debugLogger.log('modal:open-title');
   titleDraft.value = store.file.post.title || '';
   titleModalOpen.value = true;
 }
 
 function closeTitleModal() {
+  debugLogger.log('modal:close-title');
   titleModalOpen.value = false;
 }
 
@@ -280,6 +304,10 @@ async function saveTitleModal() {
   const previousTitle = store.file.post.title || '';
 
   titleSaving.value = true;
+  debugLogger.log('workflow:title-save-requested', {
+    next_title: nextTitle,
+    previous_title: previousTitle,
+  });
 
   try {
     store.setWorkflowTitle(nextTitle);
@@ -294,6 +322,9 @@ async function saveTitleModal() {
       'error',
       __('Builder', textDomain)
     );
+    debugLogger.log('workflow:title-save-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     titleSaving.value = false;
   }
@@ -309,6 +340,11 @@ async function handleWorkflowStatusChange(nextStatus) {
   if (previousStatus === nextStatus) {
     return;
   }
+
+  debugLogger.log('workflow:status-change-requested', {
+    from: previousStatus,
+    to: nextStatus,
+  });
 
   try {
     const response = await store.updateWorkflowStatus(nextStatus);
@@ -335,11 +371,17 @@ async function handleWorkflowStatusChange(nextStatus) {
       'error',
       __('Builder', textDomain)
     );
+    debugLogger.log('workflow:status-change-failed', {
+      from: previousStatus,
+      to: nextStatus,
+      error: error instanceof Error ? error.message : String(error),
+    });
   }
 }
 
 async function startScratch() {
   const title = store.file.post.title || 'New workflow';
+  debugLogger.log('start:scratch', { title });
   store.createEmptyWorkflowFile(title);
   goTrigger();
   store.loading.bootstrap = true;
@@ -351,11 +393,15 @@ async function startScratch() {
     syncBuilderUrl(store.postId);
   } catch (error) {
     store.loading.bootstrap = false;
+    debugLogger.log('start:scratch-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw error;
   }
 }
 
 async function continueFromTriggerSetup() {
+  debugLogger.log('trigger:continue');
   try {
     await store.saveWorkflow();
     await store.loadBootstrapFromServer(store.postId);
@@ -363,16 +409,25 @@ async function continueFromTriggerSetup() {
     goCanvas();
   } catch (error) {
     console.error(error);
+    debugLogger.log('trigger:continue-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     window.alert(error instanceof Error ? error.message : __('Could not save the selected trigger.', textDomain));
   }
 }
 
 async function openTemplateLibrary() {
+  debugLogger.log('templates:open-library');
   goLibrary();
   await store.loadTemplatesFromServer();
 }
 
 async function openTemplate(template) {
+  debugLogger.log('templates:select-template', {
+    title: template?.title || '',
+    file: template?.file || '',
+  });
+
   if (template.file) {
     await store.createWorkflowFromTemplate(template.file, template.title || '');
   } else if (Array.isArray(template.workflow_content)) {
@@ -397,6 +452,9 @@ async function openTemplate(template) {
 }
 
 function handleImportFile(file) {
+  debugLogger.log('import:file-selected', {
+    file_name: file?.name || 'file.json',
+  });
   importFileName.value = file?.name || 'file.json';
 
   const reader = new FileReader();
@@ -411,18 +469,28 @@ function handleImportFile(file) {
 }
 
 function confirmImport() {
+  debugLogger.log('import:confirm', {
+    file_name: importFileName.value,
+  });
   const result = store.importWorkflowFromJson(importJson.value);
 
   if (!result.ok) {
+    debugLogger.log('import:failed', {
+      errors: result.errors,
+    });
     importError.value = result.errors?.[0] || 'Invalid file.';
     return;
   }
 
   importModalOpen.value = false;
+  debugLogger.log('import:completed');
   goCanvas();
 }
 
 function handleActionOpen(afterNodeId) {
+  debugLogger.log('actions:open-picker', {
+    after_node_id: typeof afterNodeId === 'object' ? afterNodeId?.afterNodeId || '' : afterNodeId || '',
+  });
   openActionSidebar(afterNodeId);
 }
 
@@ -430,6 +498,11 @@ function handleActionSelect(actionId) {
   const targetNodeId = actionInsertTarget.value.afterNodeId || store.triggerNode?.id || store.selectedNodeId || '';
   const branchKey = actionInsertTarget.value.branchKey || undefined;
 
+  debugLogger.log('actions:add-node', {
+    action_id: actionId,
+    after_node_id: targetNodeId,
+    branch_key: branchKey || '',
+  });
   store.addActionNode(actionId, targetNodeId, branchKey);
   actionModalOpen.value = false;
   actionInsertTarget.value = {
@@ -440,6 +513,7 @@ function handleActionSelect(actionId) {
 }
 
 function closeActionSidebar() {
+  debugLogger.log('actions:close-picker');
   actionModalOpen.value = false;
   actionInsertTarget.value = {
     afterNodeId: '',
@@ -448,6 +522,7 @@ function closeActionSidebar() {
 }
 
 async function createNewWorkflow() {
+  debugLogger.log('workflow:create-new');
   await store.createWorkflowFromScratch();
   await store.loadBootstrapFromServer(store.postId);
   syncBuilderUrl(store.postId);
@@ -455,11 +530,18 @@ async function createNewWorkflow() {
 }
 
 async function saveWorkflow() {
+  debugLogger.log('workflow:save-requested');
   const response = await store.saveWorkflow();
   syncBuilderUrl(response?.workflow?.post_id || store.postId);
+  debugLogger.log('workflow:save-completed', {
+    workflow_id: response?.workflow?.post_id || store.postId,
+  });
 }
 
 function exportWorkflow() {
+  debugLogger.log('workflow:export-requested', {
+    workflow_id: store.postId,
+  });
   const json = store.exportWorkflowToJson();
   const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
   const url = window.URL.createObjectURL(blob);
@@ -471,6 +553,9 @@ function exportWorkflow() {
 }
 
 function runTest() {
+  debugLogger.log('workflow:test-requested', {
+    workflow_id: store.postId,
+  });
   void store.runWorkflowTest();
 }
 

@@ -14,7 +14,7 @@ defineEmits(['confirm', 'cancel']);
 
 <template>
   <teleport to="body">
-    <div v-if="open" class="fixed inset-0 z-50 flex items-center justify-center px-4">
+    <div v-if="open" class="fixed inset-0 z-[9999] flex items-center justify-center px-4">
       <div class="absolute inset-0 bg-slate-950/50 backdrop-blur-sm" @click="$emit('cancel')" />
       <div class="relative w-full max-w-lg rounded-[8px] bg-white p-6 shadow-soft">
         <h2 class="text-xl font-semibold text-ink">{{ title }}</h2>

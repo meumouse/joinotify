@@ -2428,10 +2428,9 @@ class Ajax {
      */
     private function mask_license_key( $license_key ) {
         if ( empty( $license_key ) ) {
-            return esc_html__( 'NÃ£o disponÃ­vel', 'joinotify' );
+            return esc_html__( 'Unavailable', 'joinotify' );
         }
 
         return substr( $license_key, 0, 9 ) . 'XXXXXXXX-XXXXXXXX' . substr( $license_key, -9 );
     }
 }
-

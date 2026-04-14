@@ -25,6 +25,7 @@ import {
   serializeWorkflowToJson,
 } from '../serializers/workflowSerializer';
 import { createWorkflowApiClient } from '../services/workflowApi';
+import { createDebugLogger } from '../utils/debug';
 import type {
   BuilderBootstrap,
   BuilderStep,
@@ -231,6 +232,7 @@ function resolveDefaultContext(catalog: WorkflowContextDefinition[]): string {
 export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', () => {
   const bootstrap = ref<BuilderBootstrap>({});
   const api = ref<ReturnType<typeof createWorkflowApiClient> | null>(null);
+  const debugLogger = createDebugLogger('Builder', () => Boolean(bootstrap.value?.debug_mode));
   const postId = ref(0);
   const file = ref<ExportedWorkflowFile>(createWorkflowFileFromParts());
   const baseline = ref('');
@@ -316,6 +318,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   function setApiFromBootstrap(value: BuilderBootstrap) {
     bootstrap.value = cloneSerializable(value || {});
     api.value = createWorkflowApiClient(bootstrap.value);
+    debugLogger.log('bootstrap:api-ready', {
+      debug_mode: Boolean(bootstrap.value?.debug_mode),
+      post_id: Number(bootstrap.value?.workflow?.post_id || 0) || 0,
+    });
 
     const workflowState = (value?.workflow as Record<string, unknown> | undefined) || {};
     postId.value = Number(workflowState.post_id || 0) || 0;
@@ -364,6 +370,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   function hydrateFromBootstrap(value: BuilderBootstrap) {
     const previousStep = step.value;
     setApiFromBootstrap(value);
+    debugLogger.log('bootstrap:hydrate-start', {
+      step: previousStep,
+    });
 
     const candidate = value?.workflow_file || value?.workflow || value;
     const parsed = parseWorkflowFile(candidate);
@@ -386,9 +395,16 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       errors.value = parsed.errors;
       warnings.value = parsed.warnings;
       markBaseline();
+      debugLogger.log('bootstrap:hydrate-empty', {
+        errors: parsed.errors,
+      });
     }
 
     step.value = previousStep || 'start';
+    debugLogger.log('bootstrap:hydrate-complete', {
+      step: step.value,
+      node_count: workflowContent.value.length,
+    });
   }
 
   async function loadCanvasActionsFromServer() {
@@ -401,6 +417,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     loading.value.actions = true;
+    debugLogger.log('actions:load-start');
 
     try {
       const response = api.value ? await api.value.loadActions() : null;
@@ -414,11 +431,17 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       }
 
       actionsLoaded.value = true;
+      debugLogger.log('actions:load-complete', {
+        count: actionsCatalog.value.length,
+      });
 
       return response || { ok: true, actions: actionsCatalog.value };
     } catch (error) {
       actionsCatalog.value = getActionCatalog();
       errors.value = [error instanceof Error ? error.message : 'Could not load actions.'];
+      debugLogger.log('actions:load-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return { ok: false, error };
     } finally {
       loading.value.actions = false;
@@ -437,6 +460,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     loading.value.workflow = true;
+    debugLogger.log('workflow:load-start', {
+      workflow_id: resolvedPostId,
+    });
 
     try {
       const response = api.value ? await api.value.loadWorkflow(resolvedPostId) : null;
@@ -481,11 +507,19 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         applyWorkflowFile(workflowFile, resolvedPostId, true);
         errors.value = [];
         warnings.value = [];
+        debugLogger.log('workflow:load-complete', {
+          workflow_id: resolvedPostId,
+          node_count: workflowContent.value.length,
+        });
       }
 
       return response || { ok: true };
     } catch (error) {
       errors.value = [error instanceof Error ? error.message : 'Could not load workflow.'];
+      debugLogger.log('workflow:load-failed', {
+        workflow_id: resolvedPostId,
+        error: error instanceof Error ? error.message : String(error),
+      });
       return { ok: false, error };
     } finally {
       loading.value.workflow = false;
@@ -494,6 +528,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   function createEmptyWorkflowFile(title = 'My automation') {
     const context = resolveDefaultContext(triggerContexts.value);
+    debugLogger.log('workflow:create-empty', {
+      title,
+      context,
+    });
     file.value = createWorkflowFileFromParts({
       title,
       category: context,
@@ -527,6 +565,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function createWorkflowFromScratch(title = file.value.post.title || 'My automation') {
     loading.value.create = true;
+    debugLogger.log('workflow:create-from-scratch-start', {
+      title,
+    });
 
     try {
       const response = api.value ? await api.value.createWorkflow({ mode: 'scratch', title }) : null;
@@ -535,6 +576,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         postId.value = Number(response?.workflow?.post_id || 0) || 0;
         applyWorkflowFile(response.workflow_file, postId.value);
         step.value = 'trigger';
+        debugLogger.log('workflow:create-from-scratch-complete', {
+          workflow_id: postId.value,
+        });
         return response;
       }
 
@@ -547,6 +591,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function createWorkflowFromTemplate(templateFile: string, title = '') {
     loading.value.create = true;
+    debugLogger.log('workflow:create-from-template-start', {
+      template_file: templateFile,
+      title,
+    });
 
     try {
       const response = api.value ? await api.value.createWorkflow({ mode: 'template', template_file: templateFile, title }) : null;
@@ -554,6 +602,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       if (response?.workflow_file) {
         applyWorkflowFile(response.workflow_file, response?.workflow?.post_id || 0);
         step.value = 'canvas';
+        debugLogger.log('workflow:create-from-template-complete', {
+          template_file: templateFile,
+          workflow_id: response?.workflow?.post_id || 0,
+        });
         return response;
       }
 
@@ -565,6 +617,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function loadBootstrapFromServer(nextPostId = postId.value) {
     loading.value.bootstrap = true;
+    debugLogger.log('bootstrap:load-start', {
+      workflow_id: Number(nextPostId || 0) || 0,
+    });
 
     try {
       const response = api.value ? await api.value.loadBootstrap(nextPostId) : null;
@@ -573,6 +628,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         hydrateFromBootstrap(response);
       }
 
+      debugLogger.log('bootstrap:load-complete', {
+        workflow_id: Number(nextPostId || 0) || 0,
+      });
       return response;
     } finally {
       loading.value.bootstrap = false;
@@ -585,6 +643,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     loading.value.templates = true;
+    debugLogger.log('templates:load-start', {
+      force,
+    });
 
     try {
       const response = api.value ? await api.value.loadTemplates() : null;
@@ -593,6 +654,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         templateCatalog.value = cloneSerializable(response.templates);
       }
 
+      debugLogger.log('templates:load-complete', {
+        count: Array.isArray(templateCatalog.value) ? templateCatalog.value.length : 0,
+      });
       return response;
     } finally {
       loading.value.templates = false;
@@ -629,6 +693,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     loading.value.status = true;
+    debugLogger.log('workflow:status-update-start', {
+      workflow_id: postId.value,
+      status,
+    });
 
     try {
       const response = api.value
@@ -641,9 +709,17 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       if (response?.status === 'success' || response?.workflow_status) {
         setWorkflowStatus(status);
         markWorkflowSaved();
+        debugLogger.log('workflow:status-update-complete', {
+          workflow_id: postId.value,
+          status,
+        });
         return response;
       }
 
+      debugLogger.log('workflow:status-update-failed', {
+        workflow_id: postId.value,
+        status,
+      });
       return { ok: false };
     } finally {
       loading.value.status = false;
@@ -667,6 +743,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   function selectTriggerContext(context: string) {
+    debugLogger.log('trigger:context-selected', {
+      context,
+    });
     activeContext.value = context;
     file.value.post.category = context;
     selectedTrigger.value = '';
@@ -683,6 +762,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   function selectTrigger(triggerId: string) {
+    debugLogger.log('trigger:selected', {
+      context: activeContext.value,
+      trigger: triggerId,
+    });
     selectedTrigger.value = triggerId;
 
     const trigger = triggerNode.value;
@@ -729,6 +812,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       return;
     }
 
+    debugLogger.log('node:update-requested', {
+      node_id: nodeId,
+      keys: Object.keys(patch || {}),
+    });
+
     if (!replaceWorkflowNodeData(workflowContent.value, nodeId, patch)) {
       return;
     }
@@ -758,6 +846,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     afterNodeId = selectedNodeId.value,
     branchKey?: WorkflowBranchKey
   ) {
+    debugLogger.log('node:add-requested', {
+      action_id: actionId,
+      after_node_id: afterNodeId,
+      branch_key: branchKey || '',
+    });
     const definition = getActionDefinition(actionId);
     const node = actionId === 'condition'
       ? createConditionNode({
@@ -790,6 +883,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         editingNodeId.value = inserted.id;
         drawerOpen.value = true;
         drawerMode.value = 'settings';
+        debugLogger.log('node:add-complete', {
+          node_id: inserted.id,
+          action_id: actionId,
+          branch_key: branchKey,
+        });
         return inserted;
       }
     }
@@ -802,6 +900,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     editingNodeId.value = selectedNodeId.value;
     drawerOpen.value = true;
     drawerMode.value = 'settings';
+    debugLogger.log('node:add-complete', {
+      node_id: inserted?.id || node.id,
+      action_id: actionId,
+      branch_key: branchKey || '',
+    });
 
     return inserted || node;
   }
@@ -819,6 +922,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       return;
     }
 
+    debugLogger.log('node:remove-requested', {
+      node_id: nodeId,
+    });
+
     if (!removeWorkflowNode(workflowContent.value, nodeId)) {
       return;
     }
@@ -826,6 +933,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     const fallback = workflowContent.value.find((node) => node.id !== nodeId) || null;
     selectedNodeId.value = fallback?.id || triggerNode.value?.id || '';
     editingNodeId.value = selectedNodeId.value;
+    debugLogger.log('node:remove-complete', {
+      node_id: nodeId,
+      next_selected_node_id: selectedNodeId.value,
+    });
   }
 
   function duplicateNode(nodeId: string) {
@@ -834,6 +945,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     if (!location) {
       return null;
     }
+
+    debugLogger.log('node:duplicate-requested', {
+      node_id: nodeId,
+    });
 
     const clone = cloneWorkflowNode(location.node);
     clone.id = createWorkflowNodeId(clone.type);
@@ -848,14 +963,26 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
     selectedNodeId.value = clone.id;
     editingNodeId.value = clone.id;
+    debugLogger.log('node:duplicate-complete', {
+      original_node_id: nodeId,
+      cloned_node_id: clone.id,
+    });
     return clone;
   }
 
   function moveNode(nodeId: string, direction: 'up' | 'down') {
+    debugLogger.log('node:move-requested', {
+      node_id: nodeId,
+      direction,
+    });
     return moveWorkflowNode(workflowContent.value, nodeId, direction);
   }
 
   function openNodeSettings(nodeId: string, mode: 'settings' | 'context' | 'menu' = 'settings') {
+    debugLogger.log('node:open-settings', {
+      node_id: nodeId,
+      mode,
+    });
     editingNodeId.value = nodeId;
     selectedNodeId.value = nodeId;
     drawerMode.value = mode;
@@ -868,22 +995,32 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   function importWorkflowFromJson(json: string) {
+    debugLogger.log('workflow:import-requested', {
+      input_length: json?.length || 0,
+    });
     const parsed = parseWorkflowFromJson(json);
 
     if (!parsed.ok || !parsed.file) {
       errors.value = parsed.errors;
       warnings.value = parsed.warnings;
+      debugLogger.log('workflow:import-failed', {
+        errors: parsed.errors,
+      });
       return { ok: false, errors: parsed.errors, warnings: parsed.warnings };
     }
 
     applyWorkflowFile(parsed.file);
     warnings.value = parsed.warnings;
     errors.value = [];
+    debugLogger.log('workflow:import-complete', {
+      node_count: workflowContent.value.length,
+    });
     return parsed;
   }
 
   async function importWorkflowFromServer(json: string) {
     loading.value.import = true;
+    debugLogger.log('workflow:import-from-server-start');
     try {
       return importWorkflowFromJson(json);
     } finally {
@@ -906,9 +1043,15 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function runWorkflowTest() {
     loading.value.test = true;
+    debugLogger.log('workflow:test-start', {
+      workflow_id: postId.value,
+    });
 
     try {
       await Promise.resolve();
+      debugLogger.log('workflow:test-complete', {
+        workflow_id: postId.value,
+      });
       return { ok: true, message: 'Workflow test queued.' };
     } finally {
       loading.value.test = false;
@@ -917,6 +1060,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function saveWorkflow() {
     loading.value.save = true;
+    debugLogger.log('workflow:save-start', {
+      workflow_id: postId.value,
+    });
 
     try {
       const payload = serializeWorkflowFile(file.value);
@@ -932,10 +1078,18 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
       if (response?.workflow_file) {
         applyWorkflowFile(response.workflow_file, response?.workflow?.post_id || postId.value);
+        debugLogger.log('workflow:save-complete', {
+          workflow_id: response?.workflow?.post_id || postId.value,
+          mode: 'server',
+        });
         return response;
       }
 
       markBaseline();
+      debugLogger.log('workflow:save-complete', {
+        workflow_id: postId.value,
+        mode: 'local',
+      });
       return { ok: true, workflow_file: payload };
     } finally {
       loading.value.save = false;

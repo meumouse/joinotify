@@ -23,6 +23,7 @@ import IntegrationSettingsModal from './components/modals/IntegrationSettingsMod
 import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import DebugLogModal from './components/cards/DebugLogModal.vue';
+import { createDebugLogger } from '../../utils/debug';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -31,6 +32,7 @@ const props = defineProps({
 const docsUrl = props.bootstrap?.docs_url || props.bootstrap?.docs || 'https://ajuda.meumouse.com/docs/joinotify/overview';
 const api = createApiClient(props.bootstrap);
 const bootstrap = ref(cloneValue(props.bootstrap));
+const debugLogger = createDebugLogger('Settings', () => Boolean(bootstrap.value?.debug_mode));
 const settings = reactive({});
 const savedSettings = ref(cloneValue(props.bootstrap?.settings || {}));
 const phoneCandidates = ref([]);
@@ -95,12 +97,19 @@ watch(
 );
 
 watch(activeSectionId, (value) => {
+  debugLogger.log('navigation:section-changed', {
+    section: value,
+  });
   persistActiveSectionId(value);
 });
 
 loadPhoneCandidates();
 
 onMounted(() => {
+  debugLogger.log('page:mounted', {
+    debug_mode: Boolean(bootstrap.value?.debug_mode),
+    active_section: activeSectionId.value,
+  });
   window.setTimeout(() => {
     isHydrated.value = true;
   }, 300);
@@ -236,10 +245,19 @@ function isEnabled(key) {
 
 function toggleSetting(key) {
   if (!key) return;
+  debugLogger.log('setting:toggled', {
+    key,
+    previous: isEnabled(key) ? 'yes' : 'no',
+    next: isEnabled(key) ? 'no' : 'yes',
+  });
   settings[key] = isEnabled(key) ? 'no' : 'yes';
 }
 
 function updateSetting(key, value) {
+  debugLogger.log('setting:updated', {
+    key,
+    value_type: Array.isArray(value) ? 'array' : typeof value,
+  });
   settings[key] = value;
 }
 
@@ -248,11 +266,15 @@ function resetProxyField(key) {
     return;
   }
 
+  debugLogger.log('proxy:reset-field', {
+    key,
+  });
   updateSetting(key, proxyDefaults[key]);
 }
 
 function generateProxyApiKey() {
   const generated = generateHexToken(32);
+  debugLogger.log('proxy:generate-key');
   updateSetting('proxy_api_key', generated);
 }
 
@@ -269,36 +291,62 @@ async function saveSettings() {
   }
 
   saving.value = true;
+  debugLogger.log('settings:save-start', {
+    changes_pending: true,
+  });
 
   try {
     const response = await api.post('/admin/settings', { settings });
     syncSettings(response.settings || {});
     bootstrap.value = { ...bootstrap.value, settings: cloneValue(response.settings || {}) };
     toast(response.message || __('Settings have been saved.', textDomain), 'success', __('Saved', textDomain));
+    debugLogger.log('settings:save-complete', {
+      saved_keys: Object.keys(settings),
+    });
   } catch (error) {
     toast(error.message || __('Could not save.', textDomain), 'danger', __('Error', textDomain));
+    debugLogger.log('settings:save-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     saving.value = false;
   }
 }
 
 async function loadPhoneCandidates() {
+  debugLogger.log('phones:candidates-load-start');
   try {
     const response = await api.get('/admin/settings/phones/candidates');
     phoneCandidates.value = response.candidates || [];
+    debugLogger.log('phones:candidates-load-complete', {
+      count: phoneCandidates.value.length,
+    });
   } catch (error) {
     phoneCandidates.value = [];
+    debugLogger.log('phones:candidates-load-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   }
 }
 
 async function registerPhone(phone) {
   senderActionLoading.value = true;
+  debugLogger.log('phones:register-start', {
+    phone,
+  });
 
   try {
     const response = await api.post('/admin/settings/phones/register', { phone });
     toast(response.message || __('Code sent successfully.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:register-complete', {
+      phone,
+    });
   } catch (error) {
     toast(error.message || __('Failed to send OTP.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:register-failed', {
+      phone,
+      error: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     senderActionLoading.value = false;
   }
@@ -306,26 +354,46 @@ async function registerPhone(phone) {
 
 async function validateOtp(payload) {
   senderActionLoading.value = true;
+  debugLogger.log('phones:validate-start', {
+    phone: payload?.phone || '',
+  });
 
   try {
     const response = await api.post('/admin/settings/phones/validate-otp', payload);
     syncPhones(response.phones || {});
     await loadPhoneCandidates();
     toast(response.message || __('Phone validated.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:validate-complete', {
+      phone: payload?.phone || '',
+    });
   } catch (error) {
     toast(error.message || __('Validation failed.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:validate-failed', {
+      phone: payload?.phone || '',
+      error: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     senderActionLoading.value = false;
   }
 }
 
 async function sendTestMessage(payload) {
+  debugLogger.log('phones:test-message-start', {
+    phone: payload?.phone || '',
+  });
   try {
     const response = await api.post('/admin/settings/phones/test-message', payload);
     toast(response.message || __('Message sent.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:test-message-complete', {
+      phone: payload?.phone || '',
+    });
     return true;
   } catch (error) {
     toast(error.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:test-message-failed', {
+      phone: payload?.phone || '',
+      error: error instanceof Error ? error.message : String(error),
+    });
     return false;
   }
 }
@@ -335,6 +403,9 @@ function syncPhones(nextPhones) {
 }
 
 function confirmRemoveSender(phone) {
+  debugLogger.log('phones:remove-confirm-open', {
+    phone,
+  });
   confirm.open = true;
   confirm.title = __('Remove sender', textDomain);
   confirm.description = __('Are you sure you want to remove this sender?', textDomain);
@@ -356,6 +427,9 @@ function confirmRemoveSender(phone) {
 
 async function refreshSenderConnection(phone) {
   refreshingSenderPhone.value = phone;
+  debugLogger.log('phones:refresh-connection-start', {
+    phone,
+  });
 
   try {
     const response = await api.post('/admin/settings/phones/check-connection', { phone });
@@ -366,8 +440,15 @@ async function refreshSenderConnection(phone) {
       ),
     });
     toast(response.message || __('Connection updated.', textDomain), 'info', __('Phones', textDomain));
+    debugLogger.log('phones:refresh-connection-complete', {
+      phone,
+    });
   } catch (error) {
     toast(error.message || __('Could not update the connection.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:refresh-connection-failed', {
+      phone,
+      error: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     refreshingSenderPhone.value = '';
   }
@@ -375,6 +456,7 @@ async function refreshSenderConnection(phone) {
 
 async function loadDebugLogs() {
   logsLoading.value = true;
+  debugLogger.log('logs:load-start');
 
   try {
     const response = await api.get('/admin/settings/debug/logs');
@@ -383,24 +465,33 @@ async function loadDebugLogs() {
     if (logsOpen.value && !debugLogs.value.length) {
       toast(response.message || __('The debug log is empty.', textDomain), 'info', __('Logs', textDomain));
     }
+    debugLogger.log('logs:load-complete', {
+      count: debugLogs.value.length,
+    });
   } catch (error) {
     toast(error.message || __('Could not open the logs.', textDomain), 'danger', __('Logs', textDomain));
+    debugLogger.log('logs:load-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     logsLoading.value = false;
   }
 }
 
 function openLogs() {
+  debugLogger.log('logs:open');
   logsOpen.value = true;
   debugLogs.value = [];
   void loadDebugLogs();
 }
 
 function refreshLogs() {
+  debugLogger.log('logs:refresh');
   void loadDebugLogs();
 }
 
 function confirmClearLogs() {
+  debugLogger.log('logs:clear-confirm-open');
   confirm.open = true;
   confirm.title = __('Clear logs', textDomain);
   confirm.description = __('Are you sure you want to clear the debug logs?', textDomain);
@@ -409,13 +500,18 @@ function confirmClearLogs() {
       const response = await api.post('/admin/settings/debug/clear', {});
       debugLogs.value = [];
       toast(response.message || __('Logs cleared successfully.', textDomain), 'success', __('Logs', textDomain));
+      debugLogger.log('logs:clear-complete');
     } catch (error) {
       toast(error.message || __('Could not clear the logs.', textDomain), 'danger', __('Logs', textDomain));
+      debugLogger.log('logs:clear-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 }
 
 function confirmReset() {
+  debugLogger.log('settings:reset-confirm-open');
   confirm.open = true;
   confirm.title = __('Reset settings', textDomain);
   confirm.description = __('All options will return to the plugin defaults.', textDomain);
@@ -426,8 +522,12 @@ function confirmReset() {
       syncSettings(bootstrap.value.settings || {});
       await loadPhoneCandidates();
       toast(response.message || __('Options have been reset.', textDomain), 'success', __('Reset', textDomain));
+      debugLogger.log('settings:reset-complete');
     } catch (error) {
       toast(error.message || __('Could not reset.', textDomain), 'danger', __('Reset', textDomain));
+      debugLogger.log('settings:reset-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 }
@@ -439,11 +539,15 @@ function openIntegrationConfig(slug) {
     return;
   }
 
+  debugLogger.log('integrations:open-config', {
+    slug,
+  });
   selectedIntegration.value = integration;
   integrationConfigOpen.value = true;
 }
 
 function closeIntegrationConfig() {
+  debugLogger.log('integrations:close-config');
   integrationConfigOpen.value = false;
   selectedIntegration.value = null;
 }

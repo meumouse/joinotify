@@ -36,6 +36,14 @@ $bootstrap_json = wp_json_encode( $bootstrap, JSON_UNESCAPED_UNICODE | JSON_UNES
 				display: none !important;
 			}
 
+			.d-flex {
+				display: flex;
+			}
+
+			.align-items-center {
+				align-items: center;
+			}
+
 			.joinotify-loader-container {
 				position: fixed;
 				z-index: 9999999;
