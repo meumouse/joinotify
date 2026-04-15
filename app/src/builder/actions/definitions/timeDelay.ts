@@ -4,15 +4,19 @@ import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validat
 import type { ActionDefinition } from '../registry/types';
 
 function normalizeTimeDelayData(data: Record<string, unknown>): Record<string, unknown> {
+  const delayValue = data.delay_value ?? 1;
+  const delayTimestamp = data.delay_timestamp ?? '';
+
   return {
     title: String(data.title || 'Delay'),
     description: String(data.description || ''),
     action: 'time_delay',
     delay_type: String(data.delay_type || 'period'),
-    delay_value: data.delay_value ?? 1,
+    delay_value: delayValue,
     delay_period: String(data.delay_period || 'minute'),
     date_value: String(data.date_value || ''),
     time_value: String(data.time_value || ''),
+    delay_timestamp: delayTimestamp,
     settings: data.settings && typeof data.settings === 'object' ? data.settings : {},
   };
 }

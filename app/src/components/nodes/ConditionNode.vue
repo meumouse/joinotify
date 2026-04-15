@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useActionRegistry } from '../../builder/actions/composables/useActionRegistry';
 import { __, textDomain } from '../../utils/i18n';
+import { resolveSvgMarkup } from '../../utils/icon';
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -11,6 +13,13 @@ const props = defineProps({
 });
 
 defineEmits(['click']);
+
+const registry = useActionRegistry();
+
+const resolvedIconSvg = computed(() => {
+  const definition = registry.get('condition');
+  return resolveSvgMarkup(definition?.iconSvg, definition?.icon);
+});
 
 const summary = computed(() => {
   const pieces = [props.condition, props.operator].filter(Boolean);
@@ -29,7 +38,12 @@ const summary = computed(() => {
   >
     <div class="flex items-start gap-4">
       <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border" :class="active ? 'border-white/10 bg-white/10 text-white' : 'border-violet-100 bg-violet-100 text-violet-700'">
-        <span class="text-sm font-semibold uppercase tracking-[0.2em]">IF</span>
+        <span
+          v-if="resolvedIconSvg"
+          class="flex h-6 w-6 items-center justify-center"
+          v-html="resolvedIconSvg"
+        />
+        <span v-else class="text-sm font-semibold uppercase tracking-[0.2em]">IF</span>
       </div>
 
       <div class="min-w-0 flex-1">

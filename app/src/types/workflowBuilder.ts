@@ -165,6 +165,7 @@ export interface ConditionNodeData extends Record<string, unknown> {
   meta_key?: string;
   value_text?: string;
   type_text?: string;
+  condition_content?: Record<string, unknown>;
   settings?: Record<string, unknown>;
 }
 
@@ -177,6 +178,7 @@ export interface DelayNodeData extends Record<string, unknown> {
   delay_period?: string;
   date_value?: string;
   time_value?: string;
+  delay_timestamp?: string | number;
   settings?: Record<string, unknown>;
 }
 

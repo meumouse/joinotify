@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Admin\Builder;
 
 use MeuMouse\Joinotify\Admin\Settings\Repository;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
+use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Actions;
 use MeuMouse\Joinotify\Builder\Messages;
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -187,15 +188,18 @@ class Registry {
 	 * Return the builder action catalog stripped down to data used by Vue.
 	 *
 	 * @since 1.4.7
+	 * @param string $context Optional context filter.
 	 * @return array<int,array<string,mixed>>
 	 */
-	public static function get_actions_catalog() {
-		$actions = Actions::get_all_actions();
+	public static function get_actions_catalog( $context = '' ) {
+		$actions = Actions::get_all_actions( $context );
 		$catalog = array();
+		$context = sanitize_key( (string) $context );
 
 		foreach ( $actions as $action ) {
+			$action_slug = $action['action'] ?? '';
 			$catalog[] = array(
-				'action' => $action['action'] ?? '',
+				'action' => $action_slug,
 				'title' => $action['title'] ?? '',
 				'description' => $action['description'] ?? '',
 				'icon' => $action['icon'] ?? '',
@@ -203,10 +207,267 @@ class Registry {
 				'has_settings' => ! empty( $action['has_settings'] ),
 				'is_expansible' => ! empty( $action['is_expansible'] ),
 				'context' => isset( $action['context'] ) && is_array( $action['context'] ) ? array_values( $action['context'] ) : array(),
+				'default_data' => self::get_action_default_data( $action_slug, $action ),
 			);
 		}
 
 		return $catalog;
+	}
+
+
+	/**
+	 * Return the full action definition for a specific action slug.
+	 *
+	 * @since 1.4.7
+	 * @param string $action Action slug.
+	 * @return array<string,mixed>|null
+	 */
+	public static function get_action_definition( $action ) {
+		$action = sanitize_key( (string) $action );
+
+		if ( empty( $action ) ) {
+			return null;
+		}
+
+		foreach ( Actions::get_all_actions() as $item ) {
+			if ( empty( $item['action'] ) || $item['action'] !== $action ) {
+				continue;
+			}
+
+			$definition = array(
+				'action' => $item['action'] ?? '',
+				'title' => $item['title'] ?? '',
+				'description' => $item['description'] ?? '',
+				'icon' => $item['icon'] ?? '',
+				'priority' => isset( $item['priority'] ) ? (int) $item['priority'] : 0,
+				'has_settings' => ! empty( $item['has_settings'] ),
+				'is_expansible' => ! empty( $item['is_expansible'] ),
+				'context' => isset( $item['context'] ) && is_array( $item['context'] ) ? array_values( $item['context'] ) : array(),
+				'default_data' => self::get_action_default_data( $action, $item ),
+				'settings_schema' => self::get_action_settings_schema( $action ),
+			);
+
+			return $definition;
+		}
+
+		return null;
+	}
+
+
+	/**
+	 * Return the configuration schema for an action.
+	 *
+	 * @since 1.4.7
+	 * @param string $action Action slug.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private static function get_action_settings_schema( $action ) {
+		switch ( sanitize_key( (string) $action ) ) {
+			case 'time_delay':
+				return array(
+					array(
+						'key' => 'delay_type',
+						'label' => esc_html__( 'Delay type', 'joinotify' ),
+						'component' => 'select',
+						'required' => true,
+						'options' => array(
+							array( 'label' => esc_html__( 'Period', 'joinotify' ), 'value' => 'period' ),
+							array( 'label' => esc_html__( 'Date', 'joinotify' ), 'value' => 'date' ),
+						),
+					),
+					array(
+						'key' => 'delay_value',
+						'label' => esc_html__( 'Amount', 'joinotify' ),
+						'component' => 'number',
+						'componentProps' => array(
+							'min' => 1,
+						),
+					),
+					array(
+						'key' => 'delay_period',
+						'label' => esc_html__( 'Period', 'joinotify' ),
+						'component' => 'select',
+						'options' => array(
+							array( 'label' => esc_html__( 'Seconds', 'joinotify' ), 'value' => 'seconds' ),
+							array( 'label' => esc_html__( 'Minutes', 'joinotify' ), 'value' => 'minute' ),
+							array( 'label' => esc_html__( 'Hours', 'joinotify' ), 'value' => 'hours' ),
+							array( 'label' => esc_html__( 'Days', 'joinotify' ), 'value' => 'day' ),
+							array( 'label' => esc_html__( 'Weeks', 'joinotify' ), 'value' => 'week' ),
+							array( 'label' => esc_html__( 'Months', 'joinotify' ), 'value' => 'month' ),
+							array( 'label' => esc_html__( 'Years', 'joinotify' ), 'value' => 'year' ),
+						),
+					),
+					array(
+						'key' => 'date_value',
+						'label' => esc_html__( 'Date', 'joinotify' ),
+						'component' => 'date',
+					),
+					array(
+						'key' => 'time_value',
+						'label' => esc_html__( 'Time', 'joinotify' ),
+						'component' => 'time',
+					),
+				);
+
+			case 'condition':
+				return array(
+					array(
+						'key' => 'condition',
+						'label' => esc_html__( 'Condition type', 'joinotify' ),
+						'component' => 'select',
+						'required' => true,
+					),
+					array(
+						'key' => 'condition_type',
+						'label' => esc_html__( 'Operator', 'joinotify' ),
+						'component' => 'select',
+						'required' => true,
+					),
+					array(
+						'key' => 'field_id',
+						'label' => esc_html__( 'Field ID', 'joinotify' ),
+						'component' => 'input',
+					),
+					array(
+						'key' => 'meta_key',
+						'label' => esc_html__( 'Meta key', 'joinotify' ),
+						'component' => 'input',
+					),
+					array(
+						'key' => 'value_text',
+						'label' => esc_html__( 'Value', 'joinotify' ),
+						'component' => 'textarea',
+					),
+					array(
+						'key' => 'type_text',
+						'label' => esc_html__( 'Type label', 'joinotify' ),
+						'component' => 'input',
+					),
+				);
+
+			case 'snippet_php':
+				return array(
+					array(
+						'key' => 'snippet_php',
+						'label' => esc_html__( 'PHP code', 'joinotify' ),
+						'component' => 'code',
+						'required' => true,
+						'rows' => 12,
+					),
+				);
+
+			case 'stop_funnel':
+			default:
+				return array();
+		}
+	}
+
+	/**
+	 * Return the default workflow data for an action.
+	 *
+	 * @since 1.4.7
+	 * @param string $action Action slug.
+	 * @param array<string,mixed> $item Raw action item.
+	 * @return array<string,mixed>
+	 */
+	private static function get_action_default_data( $action, $item = array() ) {
+		$action = sanitize_key( (string) $action );
+		$base_title = isset( $item['title'] ) ? (string) $item['title'] : '';
+
+		switch ( $action ) {
+			case 'time_delay':
+				return array(
+					'title' => $base_title ?: esc_html__( 'Delay', 'joinotify' ),
+					'description' => '',
+					'action' => 'time_delay',
+					'delay_type' => 'period',
+					'delay_value' => 1,
+					'delay_period' => 'minute',
+					'date_value' => '',
+					'time_value' => '',
+				);
+
+			case 'condition':
+				return array(
+					'title' => $base_title ?: esc_html__( 'Condition', 'joinotify' ),
+					'description' => '',
+					'action' => 'condition',
+					'condition' => '',
+					'condition_type' => '',
+					'field_id' => '',
+					'meta_key' => '',
+					'value_text' => '',
+					'type_text' => '',
+				);
+
+			case 'snippet_php':
+				return array(
+					'title' => $base_title ?: esc_html__( 'Snippet PHP', 'joinotify' ),
+					'description' => '',
+					'action' => 'snippet_php',
+					'snippet_php' => '',
+				);
+
+			case 'stop_funnel':
+				return array(
+					'title' => $base_title ?: esc_html__( 'Stop automation', 'joinotify' ),
+					'description' => '',
+					'action' => 'stop_funnel',
+				);
+
+			case 'send_whatsapp_message_text':
+				return array(
+					'title' => $base_title ?: esc_html__( 'WhatsApp: Text message', 'joinotify' ),
+					'description' => '',
+					'action' => 'send_whatsapp_message_text',
+					'message' => '',
+					'sender' => '',
+					'receiver' => '{{ wc_billing_phone }}',
+				);
+
+			case 'send_whatsapp_message_media':
+				return array(
+					'title' => $base_title ?: esc_html__( 'WhatsApp: Media message', 'joinotify' ),
+					'description' => '',
+					'action' => 'send_whatsapp_message_media',
+					'media_type' => 'image',
+					'media_url' => '',
+					'caption' => '',
+					'sender' => '',
+					'receiver' => '{{ wc_billing_phone }}',
+				);
+
+			case 'create_coupon':
+				return array(
+					'title' => $base_title ?: esc_html__( 'Discount coupon', 'joinotify' ),
+					'description' => '',
+					'action' => 'create_coupon',
+					'settings' => array(
+						'generate_coupon' => 'yes',
+						'coupon_code' => '',
+						'coupon_description' => '',
+						'discount_type' => 'fixed_cart',
+						'coupon_amount' => '',
+						'free_shipping' => 'no',
+						'coupon_expiry' => 'no',
+						'expiry_data' => array(
+							'type' => 'period',
+							'delay_value' => 1,
+							'delay_period' => 'day',
+							'date_value' => '',
+							'time_value' => '',
+						),
+						'message' => array(
+							'sender' => '',
+							'receiver' => '{{ wc_billing_phone }}',
+							'message' => '',
+						),
+					),
+				);
+
+			default:
+				return isset( $item['default_data'] ) && is_array( $item['default_data'] ) ? $item['default_data'] : array();
+		}
 	}
 
 
@@ -471,6 +732,56 @@ class Registry {
 	 * @return array<string,mixed>
 	 */
 	public static function create_blank_workflow( $title = '' ) {
+		return self::create_workflow_from_content( $title, array() );
+	}
+
+
+	/**
+	 * Create a workflow from a trigger selection.
+	 *
+	 * @since 1.4.8
+	 * @param string $title Workflow title.
+	 * @param string $context Trigger context.
+	 * @param string $trigger Trigger slug.
+	 * @param array<string,mixed> $settings Optional trigger settings.
+	 * @return array<string,mixed>
+	 */
+	public static function create_workflow_from_trigger( $title = '', $context = '', $trigger = '', $settings = array() ) {
+		$title = sanitize_text_field( $title );
+		$context = sanitize_key( (string) $context );
+		$trigger = sanitize_key( (string) $trigger );
+		$settings = is_array( $settings ) ? $settings : array();
+		$trigger_definition = $context && $trigger ? Triggers::get_trigger( $context, $trigger ) : null;
+		$trigger_node = array(
+			'id' => uniqid( 'joinotify_trigger_' ),
+			'type' => 'trigger',
+			'data' => array(
+				'title' => $title,
+				'description' => is_array( $trigger_definition ) && ! empty( $trigger_definition['description'] ) ? (string) $trigger_definition['description'] : '',
+				'trigger' => $trigger,
+				'context' => $context,
+				'settings' => $settings,
+			),
+			'children' => array(),
+		);
+
+		if ( is_array( $trigger_definition ) && ! empty( $trigger_definition['title'] ) ) {
+			$trigger_node['data']['title'] = sanitize_text_field( (string) $trigger_definition['title'] );
+		}
+
+		return self::create_workflow_from_content( $title, array( $trigger_node ) );
+	}
+
+
+	/**
+	 * Create a workflow from an initial content payload.
+	 *
+	 * @since 1.4.8
+	 * @param string $title Workflow title.
+	 * @param array<int,array<string,mixed>> $workflow_content Initial workflow nodes.
+	 * @return array<string,mixed>
+	 */
+	public static function create_workflow_from_content( $title = '', $workflow_content = array() ) {
 		$title = sanitize_text_field( $title );
 
 		if ( empty( $title ) ) {
@@ -479,6 +790,8 @@ class Registry {
 				function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
 			);
 		}
+
+		$workflow_content = is_array( $workflow_content ) ? self::sanitize_workflow_content( $workflow_content ) : array();
 
 		$post_id = wp_insert_post( array(
 			'post_title' => $title,
@@ -494,12 +807,15 @@ class Registry {
 			);
 		}
 
-		Helpers::update_workflow_content_meta( $post_id, array() );
+		Helpers::update_workflow_content_meta( $post_id, $workflow_content );
+
+		$workflow_state = self::get_workflow_state( $post_id );
 
 		return array(
 			'status' => 'success',
-			'workflow' => self::get_workflow_state( $post_id ),
-			'workflow_file' => self::build_exported_workflow_file( self::get_workflow_state( $post_id ), $post_id ),
+			'post_id' => $post_id,
+			'workflow' => $workflow_state,
+			'workflow_file' => self::build_exported_workflow_file( $workflow_state, $post_id ),
 		);
 	}
 
@@ -804,9 +1120,163 @@ class Registry {
 		$node['id'] = isset( $node['id'] ) ? sanitize_text_field( (string) $node['id'] ) : uniqid( 'joinotify_' . $type . '_' );
 		$node['type'] = $type;
 		$node['data'] = isset( $node['data'] ) && is_array( $node['data'] ) ? self::sanitize_node_data( $node['data'], $type ) : array();
-		$node['children'] = isset( $node['children'] ) && is_array( $node['children'] ) ? self::sanitize_workflow_content( $node['children'] ) : array();
+		$node['children'] = self::sanitize_node_children( $node, $type );
+		$node['data'] = self::enrich_workflow_node_data( $node['data'] );
 
 		return $node;
+	}
+
+
+	/**
+	 * Sanitize a node children payload while preserving condition branches.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,mixed> $node Workflow node.
+	 * @param string $type Node type.
+	 * @return array<string,mixed>
+	 */
+	private static function sanitize_node_children( $node, $type ) {
+		if ( ! isset( $node['children'] ) || ! is_array( $node['children'] ) ) {
+			return array();
+		}
+
+		if ( 'condition' === $type && self::is_branch_container( $node['children'] ) ) {
+			return self::sanitize_condition_children( $node['children'] );
+		}
+
+		return self::sanitize_workflow_content( $node['children'] );
+	}
+
+
+	/**
+	 * Determine whether a children payload contains condition branches.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,mixed> $children Children payload.
+	 * @return bool
+	 */
+	private static function is_branch_container( $children ) {
+		return is_array( $children ) && ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) );
+	}
+
+
+	/**
+	 * Sanitize branch-based children without flattening their keys.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,mixed> $children Branch container.
+	 * @return array<string,mixed>
+	 */
+	private static function sanitize_condition_children( $children ) {
+		$sanitized = array(
+			'action_true' => array(),
+			'action_false' => array(),
+		);
+
+		foreach ( array( 'action_true', 'action_false' ) as $branch_key ) {
+			if ( isset( $children[ $branch_key ] ) && is_array( $children[ $branch_key ] ) ) {
+				$sanitized[ $branch_key ] = self::sanitize_workflow_content( $children[ $branch_key ] );
+			}
+		}
+
+		return $sanitized;
+	}
+
+
+	/**
+	 * Enrich sanitized node data with runtime-compatible fields.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,mixed> $data Node data.
+	 * @return array<string,mixed>
+	 */
+	private static function enrich_workflow_node_data( $data ) {
+		if ( ! is_array( $data ) || empty( $data['action'] ) ) {
+			return $data;
+		}
+
+		$action = isset( $data['action'] ) ? sanitize_key( (string) $data['action'] ) : '';
+
+		if ( 'condition' === $action ) {
+			$data['condition_content'] = self::build_condition_content_payload( $data );
+		} elseif ( 'time_delay' === $action ) {
+			$data['delay_timestamp'] = self::build_delay_timestamp( $data );
+		}
+
+		return $data;
+	}
+
+
+	/**
+	 * Build the legacy condition payload expected by the runtime.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,mixed> $data Node data.
+	 * @return array<string,mixed>
+	 */
+	private static function build_condition_content_payload( $data ) {
+		$legacy = isset( $data['condition_content'] ) && is_array( $data['condition_content'] ) ? $data['condition_content'] : array();
+		$condition = isset( $data['condition'] ) ? sanitize_text_field( (string) $data['condition'] ) : ( isset( $legacy['condition'] ) ? sanitize_text_field( (string) $legacy['condition'] ) : '' );
+		$type = isset( $data['condition_type'] ) ? sanitize_text_field( (string) $data['condition_type'] ) : ( isset( $legacy['type'] ) ? sanitize_text_field( (string) $legacy['type'] ) : '' );
+		$type_text = isset( $data['type_text'] ) ? sanitize_text_field( (string) $data['type_text'] ) : ( isset( $legacy['type_text'] ) ? sanitize_text_field( (string) $legacy['type_text'] ) : '' );
+		$value_text = isset( $data['value_text'] ) ? sanitize_textarea_field( (string) $data['value_text'] ) : ( isset( $legacy['value_text'] ) ? sanitize_textarea_field( (string) $legacy['value_text'] ) : '' );
+		$value = isset( $legacy['value'] ) ? $legacy['value'] : '';
+		$meta_key = isset( $data['meta_key'] ) ? sanitize_textarea_field( (string) $data['meta_key'] ) : ( isset( $legacy['meta_key'] ) ? sanitize_textarea_field( (string) $legacy['meta_key'] ) : '' );
+		$field_id = isset( $data['field_id'] ) ? sanitize_textarea_field( (string) $data['field_id'] ) : ( isset( $legacy['field_id'] ) ? sanitize_textarea_field( (string) $legacy['field_id'] ) : '' );
+
+		$content = array(
+			'condition' => $condition,
+			'type' => $type,
+			'type_text' => $type_text,
+			'value' => $value,
+			'value_text' => $value_text,
+			'meta_key' => $meta_key,
+			'field_id' => $field_id,
+		);
+
+		$products = isset( $legacy['products'] ) && is_array( $legacy['products'] ) ? $legacy['products'] : ( isset( $data['products'] ) && is_array( $data['products'] ) ? $data['products'] : array() );
+
+		if ( ! empty( $products ) ) {
+			$content['products'] = array();
+
+			foreach ( $products as $product ) {
+				if ( ! is_array( $product ) ) {
+					continue;
+				}
+
+				$content['products'][] = array(
+					'id' => isset( $product['id'] ) ? (int) $product['id'] : 0,
+					'title' => isset( $product['title'] ) ? sanitize_text_field( (string) $product['title'] ) : '',
+				);
+			}
+		}
+
+		return $content;
+	}
+
+
+	/**
+	 * Build the runtime delay timestamp from delay settings.
+	 *
+	 * @since 1.4.7
+	 * @param array<string,mixed> $data Node data.
+	 * @return int
+	 */
+	private static function build_delay_timestamp( $data ) {
+		$delay_type = isset( $data['delay_type'] ) ? sanitize_text_field( (string) $data['delay_type'] ) : 'period';
+
+		if ( 'date' === $delay_type ) {
+			$date_value = isset( $data['date_value'] ) ? sanitize_text_field( (string) $data['date_value'] ) : '';
+			$time_value = isset( $data['time_value'] ) ? sanitize_text_field( (string) $data['time_value'] ) : '00:00';
+			$timestamp = $date_value ? strtotime( $date_value . ' ' . $time_value ) : 0;
+
+			return $timestamp ? (int) $timestamp : 0;
+		}
+
+		$delay_value = isset( $data['delay_value'] ) ? (int) $data['delay_value'] : 0;
+		$delay_period = isset( $data['delay_period'] ) ? sanitize_text_field( (string) $data['delay_period'] ) : 'seconds';
+
+		return (int) Schedule::get_delay_timestamp( $delay_value, $delay_period );
 	}
 
 

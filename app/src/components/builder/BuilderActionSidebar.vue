@@ -18,7 +18,13 @@ defineEmits(['close', 'select']);
       class="pointer-events-auto h-full transition-[transform,opacity] duration-300 ease-out"
       :class="open ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'"
     >
-      <ActionLibraryPanel :context="context" :loading="loading" @close="$emit('close')" @select="$emit('select', $event)" />
+      <ActionLibraryPanel
+        :actions="actions"
+        :context="context"
+        :loading="loading || actionsLoading"
+        @close="$emit('close')"
+        @select="$emit('select', $event)"
+      />
     </div>
   </div>
 </template>

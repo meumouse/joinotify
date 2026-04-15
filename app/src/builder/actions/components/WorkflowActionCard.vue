@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useActionRegistry } from '../composables/useActionRegistry';
 import type { ActionDefinition } from '../registry/types';
+import { resolveSvgMarkup } from '../../../utils/icon';
 
 const props = defineProps<{
   action: string;
@@ -47,6 +48,12 @@ const toneClasses = computed(() => {
 
   return 'border-slate-200 bg-white';
 });
+
+function hasSvg(value: string): boolean {
+  return String(value || '').trim().startsWith('<svg');
+}
+
+const resolvedIconSvg = computed(() => resolveSvgMarkup(resolvedDefinition.value?.iconSvg, resolvedDefinition.value?.icon));
 </script>
 
 <template>
@@ -65,108 +72,76 @@ const toneClasses = computed(() => {
   />
   <article
     v-else
-    class="w-full rounded-[28px] border p-5 text-left transition"
+    class="relative w-full rounded-[8px] border border-slate-200 bg-white px-6 py-5 text-left transition"
     :class="[
-      toneClasses,
-      active ? 'border-primary-700 shadow-[0_18px_50px_rgba(10,140,255,0.12)] ring-1 ring-primary-100' : 'shadow-[0_1px_4px_rgba(15,23,42,0.03)] hover:border-slate-300 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)]',
-      resolvedDefinition?.action === 'snippet_php' ? 'text-white' : 'text-slate-900',
+      compact ? 'px-5 py-4' : 'px-6 py-5',
+      active ? 'border-slate-300 shadow-[0_12px_28px_rgba(15,23,42,0.08)]' : 'shadow-[0_1px_4px_rgba(15,23,42,0.03)] hover:border-slate-300 hover:shadow-[0_12px_28px_rgba(15,23,42,0.06)]',
+      resolvedDefinition?.action === 'snippet_php' ? 'bg-slate-950 text-white' : 'text-slate-900',
     ]"
   >
-    <div class="flex items-start gap-4">
+    <div class="absolute right-3 top-3">
+      <button
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+        :aria-label="`${title} actions`"
+        @click.stop="$emit('edit')"
+      >
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+          <path d="M12 5.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0 8.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0 8.25a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex items-start gap-4 pr-9">
       <div
-        class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border text-sm font-semibold uppercase tracking-[0.2em]"
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-[14px] border text-sm font-semibold uppercase tracking-[0.18em]"
         :class="resolvedDefinition?.action === 'snippet_php'
           ? 'border-white/10 bg-white/5 text-white'
-          : 'border-slate-100 bg-slate-50 text-slate-600'"
+          : 'border-slate-200 bg-slate-50 text-slate-600'"
       >
-        {{ (resolvedDefinition?.icon || title).slice(0, 1).toUpperCase() }}
+        <span
+          v-if="hasSvg(resolvedIconSvg)"
+          class="flex h-5 w-5 items-center justify-center"
+          v-html="resolvedIconSvg"
+        />
+        <span v-else-if="resolvedDefinition?.icon" class="text-xs font-semibold uppercase tracking-[0.18em]">
+          {{ String(resolvedDefinition.icon).slice(0, 1).toUpperCase() }}
+        </span>
+        <span v-else class="text-xs font-semibold uppercase tracking-[0.18em]">
+          {{ String(title).slice(0, 1).toUpperCase() }}
+        </span>
       </div>
 
       <div class="min-w-0 flex-1">
-        <div class="flex flex-wrap items-center gap-2">
-          <h3 class="text-base font-semibold leading-6" :class="resolvedDefinition?.action === 'snippet_php' ? 'text-white' : 'text-slate-900'">
-            {{ title }}
-          </h3>
-          <span
-            v-if="resolvedDefinition?.hasSettings"
-            class="rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
-            :class="resolvedDefinition?.action === 'snippet_php' ? 'bg-white/10 text-white' : 'bg-primary-50 text-primary-700'"
-          >
-            settings
-          </span>
-          <span
-            v-if="resolvedDefinition?.isExpansible"
-            class="rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
-            :class="resolvedDefinition?.action === 'snippet_php' ? 'bg-white/10 text-white' : 'bg-violet-50 text-violet-700'"
-          >
-            branches
-          </span>
-        </div>
+        <h3 class="text-[15px] font-semibold leading-6" :class="resolvedDefinition?.action === 'snippet_php' ? 'text-white' : 'text-slate-900'">
+          {{ title }}
+        </h3>
 
-        <p class="mt-2 text-sm leading-6" :class="resolvedDefinition?.action === 'snippet_php' ? 'text-slate-200' : 'text-slate-500'">
+        <p class="mt-1 text-[13px] leading-5" :class="resolvedDefinition?.action === 'snippet_php' ? 'text-slate-300' : 'text-slate-500'">
           {{ description }}
         </p>
 
-        <div class="mt-4 flex flex-wrap gap-2">
+        <div class="mt-3 flex flex-wrap gap-2 text-[11px] font-medium text-slate-500">
           <span
             v-if="data.sender"
-            class="rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
-            :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 bg-white/10 text-white' : 'border-slate-200 bg-slate-50 text-slate-600'"
+            class="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1"
           >
-            From: {{ String(data.sender) }}
+            Remetente: {{ String(data.sender) }}
           </span>
           <span
             v-if="data.receiver"
-            class="rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
-            :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 bg-white/10 text-white' : 'border-slate-200 bg-slate-50 text-slate-600'"
+            class="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1"
           >
-            To: {{ String(data.receiver) }}
+            Destinatário: {{ String(data.receiver) }}
           </span>
           <span
             v-if="resolvedDefinition?.action"
-            class="rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
-            :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 bg-white/10 text-white' : 'border-slate-200 bg-slate-50 text-slate-500'"
+            class="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1"
           >
             {{ resolvedDefinition.action }}
           </span>
         </div>
       </div>
-    </div>
-
-    <div class="mt-5 flex flex-wrap gap-2">
-      <button
-        type="button"
-        class="rounded-full border px-3 py-1.5 text-xs font-semibold transition"
-        :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 text-white hover:bg-white/10' : 'border-slate-200 text-slate-700 hover:border-primary-200 hover:bg-primary-50 hover:text-primary-800'"
-        @click="$emit('edit')"
-      >
-        Edit
-      </button>
-      <button
-        type="button"
-        class="rounded-full border px-3 py-1.5 text-xs font-semibold transition"
-        :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 text-white hover:bg-white/10' : 'border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'"
-        @click="$emit('duplicate')"
-      >
-        Duplicate
-      </button>
-      <button
-        type="button"
-        class="rounded-full border px-3 py-1.5 text-xs font-semibold transition"
-        :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 text-white hover:bg-white/10' : 'border-rose-200 text-rose-700 hover:bg-rose-50'"
-        @click="$emit('delete')"
-      >
-        Delete
-      </button>
-      <button
-        v-if="resolvedDefinition?.isExpansible"
-        type="button"
-        class="rounded-full border px-3 py-1.5 text-xs font-semibold transition"
-        :class="resolvedDefinition?.action === 'snippet_php' ? 'border-white/15 text-white hover:bg-white/10' : 'border-violet-200 text-violet-700 hover:bg-violet-50'"
-        @click="$emit('expand')"
-      >
-        Expand
-      </button>
     </div>
   </article>
 </template>

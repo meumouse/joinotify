@@ -19,7 +19,7 @@ function toLegacyActionDefinition(definition: ActionDefinition): WorkflowRegistr
     label: definition.title,
     description: definition.description,
     icon: definition.icon || definition.title || definition.action,
-    iconSvg: '',
+    iconSvg: definition.iconSvg || '',
     context: Array.isArray(definition.context) ? [...definition.context] : [],
     contexts: Array.isArray(definition.context) ? [...definition.context] : [],
     category: '',

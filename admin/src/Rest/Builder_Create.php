@@ -45,6 +45,19 @@ class Builder_Create extends Abstract_Route {
 			return rest_ensure_response( Registry::create_workflow_from_template( $template_file, $title ) );
 		}
 
+		$workflow_content = isset( $payload['workflow_content'] ) && is_array( $payload['workflow_content'] ) ? $payload['workflow_content'] : array();
+		$context = isset( $payload['context'] ) ? sanitize_key( (string) $payload['context'] ) : '';
+		$trigger = isset( $payload['trigger'] ) ? sanitize_key( (string) $payload['trigger'] ) : '';
+		$settings = isset( $payload['settings'] ) && is_array( $payload['settings'] ) ? $payload['settings'] : array();
+
+		if ( ! empty( $workflow_content ) ) {
+			return rest_ensure_response( Registry::create_workflow_from_content( $title, $workflow_content ) );
+		}
+
+		if ( ! empty( $context ) || ! empty( $trigger ) ) {
+			return rest_ensure_response( Registry::create_workflow_from_trigger( $title, $context, $trigger, $settings ) );
+		}
+
 		return rest_ensure_response( Registry::create_blank_workflow( $title ) );
 	}
 }

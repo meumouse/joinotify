@@ -7,8 +7,12 @@ export function createWorkflowApiClient(bootstrap) {
     loadBootstrap(postId) {
       return api.get(`/admin/builder?id=${postId || 0}`);
     },
-    loadActions() {
-      return api.get('/admin/builder/actions');
+    loadActions(context = '') {
+      const query = context ? `?context=${encodeURIComponent(context)}` : '';
+      return api.get(`/admin/builder/actions${query}`);
+    },
+    loadAction(action) {
+      return api.get(`/admin/builder/actions?action=${encodeURIComponent(action || '')}`);
     },
     loadWorkflow(postId) {
       return api.get(`/admin/builder/workflow?id=${postId}`);

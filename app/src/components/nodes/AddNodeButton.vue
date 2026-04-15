@@ -5,6 +5,8 @@ import { __, textDomain } from '../../utils/i18n';
 const props = defineProps({
   label: { type: String, default: '' },
   compact: { type: Boolean, default: false },
+  buttonId: { type: String, default: '' },
+  ariaLabel: { type: String, default: '' },
 });
 
 defineEmits(['click']);
@@ -15,6 +17,8 @@ const resolvedLabel = computed(() => props.label || __('Add node', textDomain));
 <template>
   <button
     type="button"
+    :id="buttonId || undefined"
+    :aria-label="ariaLabel || resolvedLabel"
     class="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 shadow-[0_1px_6px_rgba(15,23,42,0.06)] transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
     :class="compact ? 'px-3 py-2 text-xs' : ''"
     @click="$emit('click')"

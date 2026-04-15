@@ -121,10 +121,34 @@ class Actions {
 
                 continue;
             }
+
+            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
+                if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' && self::is_branch_container( $item['children'] ) ) {
+                    foreach ( array( 'action_true', 'action_false' ) as $branch_key ) {
+                        if ( isset( $item['children'][ $branch_key ] ) && is_array( $item['children'][ $branch_key ] ) ) {
+                            $item['children'][ $branch_key ] = self::delete_item_recursive( $item['children'][ $branch_key ], $action_id );
+                        }
+                    }
+                } else {
+                    $item['children'] = self::delete_item_recursive( $item['children'], $action_id );
+                }
+            }
         }
 
         // Reindex the array to avoid index failures
         return array_values( $workflow_content );
+    }
+
+
+    /**
+     * Check whether a children payload contains branch collections.
+     *
+     * @since 1.4.7
+     * @param array $children Children payload.
+     * @return bool
+     */
+    private static function is_branch_container( $children ) {
+        return is_array( $children ) && ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) );
     }
 
 

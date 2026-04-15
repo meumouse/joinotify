@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import BaseAlert from '../../builder/components/base/BaseAlert.vue';
 import BaseInput from '../base/BaseInput.vue';
 import BaseSelect from '../base/BaseSelect.vue';
@@ -22,6 +22,8 @@ const emit = defineEmits<{
 
 const store = useWorkflowBuilderStore();
 const draft = ref<Record<string, unknown>>({});
+const isSyncingFromNode = ref(false);
+const lastEmittedSnapshot = ref('');
 
 const isTrigger = computed(() => props.node?.type === 'trigger');
 const actionSlug = computed(() => String(props.node?.data?.action || ''));
@@ -66,8 +68,12 @@ const validationErrors = computed(() => {
 
 watch(
   () => props.node,
-  (node) => {
+  async (node) => {
+    isSyncingFromNode.value = true;
     draft.value = cloneSerializable(node?.data || {});
+    lastEmittedSnapshot.value = JSON.stringify(draft.value || {});
+    await nextTick();
+    isSyncingFromNode.value = false;
   },
   { immediate: true, deep: true }
 );
@@ -75,6 +81,17 @@ watch(
 watch(
   () => draft.value,
   (value) => {
+    if (isSyncingFromNode.value) {
+      return;
+    }
+
+    const snapshot = JSON.stringify(value || {});
+
+    if (snapshot === lastEmittedSnapshot.value) {
+      return;
+    }
+
+    lastEmittedSnapshot.value = snapshot;
     emit('update', cloneSerializable(value || {}));
   },
   { deep: true }

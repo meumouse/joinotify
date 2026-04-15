@@ -47,6 +47,20 @@ function resolveDefinition(node: WorkflowNode) {
   return registry.get(action);
 }
 
+function sanitizeButtonId(value: string): string {
+  return String(value || '')
+    .trim()
+    .replace(/[^a-z0-9_-]+/gi, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function branchButtonId(nodeId: string, branch = '', index = -1): string {
+  const suffix = branch ? `${branch}-` : '';
+  const position = index >= 0 ? `${index}` : 'end';
+  return sanitizeButtonId(`joinotify-add-action-${suffix}${nodeId || props.parentNodeId || 'root'}-${position}`);
+}
+
 function hasChildren(node: WorkflowNode): boolean {
   return Array.isArray(node.children) && node.children.length > 0;
 }
@@ -100,6 +114,8 @@ function hasConditionBranches(node: WorkflowNode): boolean {
 
         <div class="flex flex-col items-center" :class="index < nodes.length - 1 ? 'pb-2' : 'pb-4'">
           <AddNodeButton
+            :button-id="branchButtonId(node.id, branchKey || '', index)"
+            :aria-label="branchKey ? `Add action to ${branchKey.replace(/_/g, ' ')}` : 'Add action'"
             :label="isConditionNode(node) ? 'Add to flow' : 'Add action'"
             @click="branchTarget(node.id, branchKey || undefined)"
           />
@@ -176,6 +192,8 @@ function hasConditionBranches(node: WorkflowNode): boolean {
 
         <div class="mt-6 flex justify-center">
           <AddNodeButton
+            :button-id="branchButtonId(parentNodeId || 'root', branchKey || '', 0)"
+            :aria-label="branchLabel ? `Add action inside ${branchLabel}` : 'Add action'"
             :label="branchKey ? 'Add action' : 'Add action'"
             @click="branchTarget(parentNodeId || '')"
           />

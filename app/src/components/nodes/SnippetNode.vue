@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useActionRegistry } from '../../builder/actions/composables/useActionRegistry';
 import ActionNode from './ActionNode.vue';
+import { resolveSvgMarkup } from '../../utils/icon';
 
 defineProps({
   title: { type: String, default: '' },
@@ -9,6 +12,12 @@ defineProps({
 });
 
 defineEmits(['click']);
+
+const registry = useActionRegistry();
+const resolvedIconSvg = computed(() => {
+  const definition = registry.get('snippet_php');
+  return resolveSvgMarkup(definition?.iconSvg, definition?.icon);
+});
 </script>
 
 <template>
@@ -19,6 +28,7 @@ defineEmits(['click']);
     badge="Snippet"
     accent="violet"
     icon="code"
+    :icon-svg="resolvedIconSvg"
     :active="active"
     @click="$emit('click')"
   />

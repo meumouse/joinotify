@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
+import { resolveSvgMarkup } from '../../utils/icon';
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -67,6 +68,8 @@ function firstGlyph(value: string): string {
   const trimmed = String(value || '').trim();
   return trimmed ? trimmed.slice(0, 1).toUpperCase() : 'A';
 }
+
+const resolvedIconSvg = computed(() => resolveSvgMarkup(props.iconSvg, props.icon));
 </script>
 
 <template>
@@ -83,9 +86,9 @@ function firstGlyph(value: string): string {
     <div class="flex items-start gap-4">
       <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border" :class="[accent.border, accent.icon]">
         <span
-          v-if="iconSvg && String(iconSvg).trim().startsWith('<svg')"
+          v-if="resolvedIconSvg"
           class="flex h-6 w-6 items-center justify-center"
-          v-html="iconSvg"
+          v-html="resolvedIconSvg"
         />
         <span v-else-if="icon" class="text-xs font-semibold uppercase tracking-[0.22em]">
           {{ firstGlyph(icon) }}

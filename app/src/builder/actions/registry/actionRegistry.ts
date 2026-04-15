@@ -9,6 +9,7 @@ import type {
   WorkflowActionItem,
 } from './types';
 import { registerCoreActions } from './registerCoreActions';
+import { resolveSvgMarkup } from '../../../utils/icon';
 
 const registry = new Map<BuilderActionSlug, ActionDefinition>();
 const bootstrapped = ref(false);
@@ -87,11 +88,15 @@ function normalizeDefinition(definition: ActionDefinition | BackendActionDefinit
     return null;
   }
 
+  const iconValue = String(definition.icon || '').trim();
+  const iconSvgValue = resolveSvgMarkup(definition.iconSvg, iconValue);
+
   return cloneDefinition({
     action,
     title: String(definition.title || definition.label || action),
     description: String(definition.description || ''),
-    icon: definition.icon || '',
+    icon: iconSvgValue ? '' : iconValue,
+    iconSvg: iconSvgValue,
     externalIcon: Boolean(definition.externalIcon ?? definition.external_icon),
     context: cleanContext(definition.context || definition.contexts),
     hasSettings: Boolean(definition.hasSettings ?? definition.has_settings ?? false),
@@ -120,6 +125,7 @@ function createFallbackDefinition(action: string, metadata: Partial<ActionDefini
     title: metadata.title || action,
     description: metadata.description || 'Configuration component not available for this action.',
     icon: metadata.icon || 'sparkles',
+    iconSvg: metadata.iconSvg || '',
     externalIcon: Boolean(metadata.externalIcon),
     context: metadata.context || [],
     hasSettings: Boolean(metadata.hasSettings ?? false),

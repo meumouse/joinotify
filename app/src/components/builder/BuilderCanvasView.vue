@@ -81,13 +81,17 @@ function openActionsForTrigger() {
 
   emit('open-actions', { afterNodeId: props.triggerNode.id });
 }
+
+function getTriggerAddButtonId() {
+  return props.triggerNode?.id ? `joinotify-add-action-after-${props.triggerNode.id}` : 'joinotify-add-action-after-trigger';
+}
 </script>
 
 <template>
-  <div class="relative h-full w-full overflow-hidden">
+  <div class="relative h-full min-h-0 w-full overflow-hidden">
     <BuilderCanvas class="canvas-dot absolute inset-0 h-full w-full">
-      <div class="relative h-full w-full overflow-hidden">
-        <div class="flex h-full w-full flex-col">
+      <div class="relative h-full min-h-0 w-full overflow-hidden">
+        <div class="flex h-full min-h-0 w-full flex-col">
           <div class="flex-1 overflow-y-auto px-4 pb-12 pt-6 lg:px-8">
             <div class="mx-auto flex w-full max-w-[1280px] flex-col items-center">
               <div v-if="loading" class="w-full max-w-[920px]">
@@ -142,16 +146,21 @@ function openActionsForTrigger() {
 
                 <div class="flex flex-col items-center">
                   <NodeConnector branch-label="Start" />
-                  <AddNodeButton label="Add action" @click="openActionsForTrigger" />
+                  <AddNodeButton
+                    :button-id="getTriggerAddButtonId()"
+                    :aria-label="__('Add action after trigger', textDomain)"
+                    label="Add action"
+                    @click="openActionsForTrigger"
+                  />
                   <NodeConnector />
                 </div>
               </div>
 
-              <div v-else-if="rootFlowNodes.length" class="w-full">
+              <div v-if="triggerNode && rootFlowNodes.length" class="mt-8 w-full">
                 <WorkflowTreeRenderer
                   :nodes="rootFlowNodes"
                   :selected-node-id="selectedNodeId"
-                  :parent-node-id="triggerNode?.id || ''"
+                  :parent-node-id="triggerNode.id"
                   empty-label="Add the next action"
                   @select-node="$emit('select-node', $event)"
                   @open-actions="$emit('open-actions', $event)"
@@ -173,7 +182,12 @@ function openActionsForTrigger() {
                     {{ __('Pick an action from the side panel to continue the workflow after the trigger.', textDomain) }}
                   </p>
                   <div class="mt-6 flex justify-center">
-                    <AddNodeButton label="Add action" @click="openActionsForTrigger" />
+                    <AddNodeButton
+                      :button-id="getTriggerAddButtonId()"
+                      :aria-label="__('Add action after trigger', textDomain)"
+                      label="Add action"
+                      @click="openActionsForTrigger"
+                    />
                   </div>
                 </div>
               </div>

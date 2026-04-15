@@ -24,6 +24,7 @@ export interface ActionDefinition {
   title: string;
   description: string;
   icon?: string;
+  iconSvg?: string;
   externalIcon?: boolean;
   context?: BuilderActionContext[];
   hasSettings: boolean;
@@ -51,6 +52,7 @@ export interface BackendActionDefinition extends Partial<ActionDefinition> {
   label?: string;
   description?: string;
   icon?: string;
+  iconSvg?: string;
   external_icon?: boolean;
   externalIcon?: boolean;
   context?: string | string[];

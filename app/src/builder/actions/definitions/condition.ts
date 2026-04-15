@@ -3,17 +3,51 @@ import { describeConditionAction, truncateDescription } from '../utils/actionDes
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function normalizeConditionContent(data: Record<string, unknown>): Record<string, unknown> {
+  const legacy = isRecord(data.condition_content) ? data.condition_content : {};
+  const condition = String(data.condition || legacy.condition || '');
+  const conditionType = String(data.condition_type || legacy.type || '');
+  const typeText = String(data.type_text || legacy.type_text || '');
+  const valueText = String(data.value_text || legacy.value_text || '');
+  const value = data.value ?? legacy.value ?? '';
+
+  const content: Record<string, unknown> = {
+    condition,
+    type: conditionType,
+    type_text: typeText,
+    value,
+    value_text: valueText,
+    meta_key: String(data.meta_key || legacy.meta_key || ''),
+    field_id: String(data.field_id || legacy.field_id || ''),
+  };
+
+  if (Array.isArray(data.products)) {
+    content.products = data.products;
+  } else if (Array.isArray(legacy.products)) {
+    content.products = legacy.products;
+  }
+
+  return content;
+}
+
 function normalizeConditionData(data: Record<string, unknown>): Record<string, unknown> {
+  const conditionContent = normalizeConditionContent(data);
+
   return {
     title: String(data.title || 'Condition'),
     description: String(data.description || ''),
     action: 'condition',
-    condition: String(data.condition || ''),
-    condition_type: String(data.condition_type || ''),
-    field_id: String(data.field_id || ''),
-    meta_key: String(data.meta_key || ''),
-    value_text: String(data.value_text || ''),
-    type_text: String(data.type_text || ''),
+    condition: String(conditionContent.condition || ''),
+    condition_type: String(conditionContent.type || ''),
+    field_id: String(conditionContent.field_id || ''),
+    meta_key: String(conditionContent.meta_key || ''),
+    value_text: String(conditionContent.value_text || ''),
+    type_text: String(conditionContent.type_text || ''),
+    condition_content: conditionContent,
     settings: data.settings && typeof data.settings === 'object' ? data.settings : {},
   };
 }

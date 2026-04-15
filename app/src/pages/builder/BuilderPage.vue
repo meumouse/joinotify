@@ -17,6 +17,7 @@ import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { createDebugLogger } from '../../utils/debug';
 import { cloneValue } from '../../utils/object';
+import { removeWorkflowNode } from '../../utils/workflowTree';
 
 defineOptions({ name: 'BuilderPage' });
 
@@ -45,8 +46,14 @@ const testPhoneModalOpen = ref(false);
 const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
 const routeWorkflowLoaded = ref(false);
+const deleteConfirmOpen = ref(false);
+const deleteConfirmBusy = ref(false);
+const deleteConfirmNodeId = ref('');
+const deleteConfirmNodeLabel = ref('');
+const deleteConfirmHasNestedFlow = ref(false);
 const toasts = ref([]);
 const toastTimers = new Map();
+let nodeAutosaveTimer = null;
 
 const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
@@ -159,6 +166,11 @@ watch(
 );
 
 onBeforeUnmount(() => {
+  if (nodeAutosaveTimer) {
+    window.clearTimeout(nodeAutosaveTimer);
+    nodeAutosaveTimer = null;
+  }
+
   toastTimers.forEach((timers) => {
     if (timers.hide) {
       window.clearTimeout(timers.hide);
@@ -192,6 +204,39 @@ function goCanvas() {
   store.step = 'canvas';
 }
 
+function scheduleNodeAutosave() {
+  if (nodeAutosaveTimer) {
+    window.clearTimeout(nodeAutosaveTimer);
+  }
+
+  nodeAutosaveTimer = window.setTimeout(() => {
+    nodeAutosaveTimer = null;
+
+    if (store.loading.save) {
+      scheduleNodeAutosave();
+      return;
+    }
+
+    void store.saveWorkflow()
+      .then((response) => {
+        syncBuilderUrl(response?.workflow?.post_id || store.postId);
+      })
+      .catch((error) => {
+        pushToast(
+          error instanceof Error ? error.message : __('Could not save the workflow changes.', textDomain),
+          'error',
+          __('Builder', textDomain)
+        );
+      });
+  }, 700);
+}
+
+function handleNodeUpdate(patch) {
+  const nodeId = store.editingNodeId || store.selectedNodeId;
+  store.updateNodeData(nodeId, patch);
+  scheduleNodeAutosave();
+}
+
 function openActionSidebar(afterNodeId) {
   const target = afterNodeId && typeof afterNodeId === 'object'
     ? afterNodeId
@@ -204,9 +249,7 @@ function openActionSidebar(afterNodeId) {
   };
   actionModalOpen.value = Boolean(targetNodeId);
 
-  if (!store.actionsLoaded) {
-    void store.loadCanvasActionsFromServer();
-  }
+  void store.loadCanvasActionsFromServer(store.activeContext);
 }
 
 function goBack() {
@@ -401,20 +444,6 @@ async function startScratch() {
   debugLogger.log('start:scratch', { title });
   store.createEmptyWorkflowFile(title);
   goTrigger();
-  store.loading.bootstrap = true;
-  await new Promise((resolve) => requestAnimationFrame(() => resolve()));
-
-  try {
-    await store.createWorkflowFromScratch(title);
-    await store.loadBootstrapFromServer(store.postId);
-    syncBuilderUrl(store.postId);
-  } catch (error) {
-    store.loading.bootstrap = false;
-    debugLogger.log('start:scratch-failed', {
-      error: error instanceof Error ? error.message : String(error),
-    });
-    throw error;
-  }
 }
 
 async function continueFromTriggerSetup() {
@@ -422,9 +451,18 @@ async function continueFromTriggerSetup() {
   triggerContinuing.value = true;
 
   try {
-    await store.saveWorkflow();
-    await store.loadBootstrapFromServer(store.postId);
-    syncBuilderUrl(store.postId);
+    const response = await store.createWorkflowFromTrigger(
+      store.file.post.title,
+      store.activeContext,
+      store.selectedTrigger
+    );
+
+    if (!response || response?.ok === false) {
+      throw new Error(__('Could not create the workflow.', textDomain));
+    }
+
+    syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    routeWorkflowLoaded.value = true;
     goCanvas();
   } catch (error) {
     console.error(error);
@@ -469,6 +507,7 @@ async function openTemplate(template) {
   }
 
   syncBuilderUrl(store.postId);
+  routeWorkflowLoaded.value = true;
   goCanvas();
 }
 
@@ -515,7 +554,14 @@ function handleActionOpen(afterNodeId) {
   openActionSidebar(afterNodeId);
 }
 
-function handleActionSelect(actionId) {
+function handleActionSelect(action) {
+  const actionId = typeof action === 'string'
+    ? action
+    : String(action?.action || action?.id || action?.slug || '').trim();
+  const actionDefinition = typeof action === 'object' && action
+    ? action
+    : store.getActionDefinition(actionId);
+
   const targetNodeId = actionInsertTarget.value.afterNodeId || store.triggerNode?.id || store.selectedNodeId || '';
   const branchKey = actionInsertTarget.value.branchKey || undefined;
 
@@ -524,13 +570,38 @@ function handleActionSelect(actionId) {
     after_node_id: targetNodeId,
     branch_key: branchKey || '',
   });
-  store.addActionNode(actionId, targetNodeId, branchKey);
+  const insertedNode = store.addActionNode(actionId, targetNodeId, branchKey, action);
   actionModalOpen.value = false;
   actionInsertTarget.value = {
     afterNodeId: '',
     branchKey: '',
   };
   goCanvas();
+
+  const shouldOpenSettings = Boolean(
+    actionDefinition && (
+      actionDefinition.hasSettings
+      || actionDefinition.requireSettings
+      || (Array.isArray(actionDefinition.settingsSchema) && actionDefinition.settingsSchema.length > 0)
+    )
+  );
+
+  if (shouldOpenSettings && insertedNode?.id) {
+    store.openNodeSettings(insertedNode.id);
+  }
+
+  void store.loadActionDefinitionFromServer(actionId);
+  void store.saveWorkflow()
+    .then((response) => {
+      syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    })
+    .catch((error) => {
+      pushToast(
+        error instanceof Error ? error.message : __('Could not save the action.', textDomain),
+        'error',
+        __('Builder', textDomain)
+      );
+    });
 }
 
 function closeActionSidebar() {
@@ -544,10 +615,18 @@ function closeActionSidebar() {
 
 async function createNewWorkflow() {
   debugLogger.log('workflow:create-new');
-  await store.createWorkflowFromScratch();
-  await store.loadBootstrapFromServer(store.postId);
-  syncBuilderUrl(store.postId);
-  goTrigger();
+  actionModalOpen.value = false;
+  importModalOpen.value = false;
+  titleModalOpen.value = false;
+  testPhoneModalOpen.value = false;
+  actionInsertTarget.value = {
+    afterNodeId: '',
+    branchKey: '',
+  };
+  routeWorkflowLoaded.value = false;
+  store.resetWorkflowSession();
+  clearBuilderUrl();
+  goStart();
 }
 
 async function saveWorkflow() {
@@ -557,6 +636,87 @@ async function saveWorkflow() {
   debugLogger.log('workflow:save-completed', {
     workflow_id: response?.workflow?.post_id || store.postId,
   });
+}
+
+function openDeleteConfirm(nodeId) {
+  const targetNodeId = String(nodeId || '').trim();
+
+  if (!targetNodeId || targetNodeId === store.triggerNode?.id) {
+    return;
+  }
+
+  const targetNode = store.getNodeById(targetNodeId);
+  const fallbackLabel = String(targetNode?.data?.title || targetNode?.data?.action || __('action', textDomain));
+  const hasNestedChildren = Boolean(
+    Array.isArray(targetNode?.children) && targetNode.children.length > 0
+    || (targetNode?.branches && (
+      (Array.isArray(targetNode.branches.action_true) && targetNode.branches.action_true.length > 0)
+      || (Array.isArray(targetNode.branches.action_false) && targetNode.branches.action_false.length > 0)
+    ))
+  );
+
+  deleteConfirmNodeId.value = targetNodeId;
+  deleteConfirmNodeLabel.value = fallbackLabel;
+  deleteConfirmHasNestedFlow.value = hasNestedChildren;
+  deleteConfirmOpen.value = true;
+}
+
+function closeDeleteConfirm() {
+  if (deleteConfirmBusy.value) {
+    return;
+  }
+
+  deleteConfirmOpen.value = false;
+  deleteConfirmNodeId.value = '';
+  deleteConfirmNodeLabel.value = '';
+  deleteConfirmHasNestedFlow.value = false;
+}
+
+async function confirmDeleteNode() {
+  const nodeId = String(deleteConfirmNodeId.value || '').trim();
+
+  if (!nodeId || deleteConfirmBusy.value) {
+    return;
+  }
+
+  deleteConfirmBusy.value = true;
+  debugLogger.log('node:delete-confirmed', {
+    node_id: nodeId,
+  });
+
+  try {
+    const nextWorkflow = cloneValue(store.file);
+
+    if (!Array.isArray(nextWorkflow?.workflow_content) || !removeWorkflowNode(nextWorkflow.workflow_content, nodeId)) {
+      throw new Error(__('Could not delete the action.', textDomain));
+    }
+
+    const response = await store.saveWorkflowSnapshot(nextWorkflow);
+
+    if (!response || response?.ok === false) {
+      throw new Error(__('Could not delete the action.', textDomain));
+    }
+
+    syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    closeDeleteConfirm();
+    pushToast(
+      __('Action deleted successfully.', textDomain),
+      'success',
+      __('Builder', textDomain)
+    );
+  } catch (error) {
+    pushToast(
+      error instanceof Error ? error.message : __('Could not delete the action.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+    debugLogger.log('node:delete-failed', {
+      node_id: nodeId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    deleteConfirmBusy.value = false;
+  }
 }
 
 function exportWorkflow() {
@@ -658,6 +818,12 @@ function syncBuilderUrl(postId) {
   url.searchParams.set('id', String(postId));
   window.history.replaceState({}, '', url.toString());
 }
+
+function clearBuilderUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete('id');
+  window.history.replaceState({}, '', url.toString());
+}
 </script>
 
 <template>
@@ -736,9 +902,9 @@ function syncBuilderUrl(postId) {
         @select-node="store.openNodeSettings"
         @add-node="handleActionOpen"
         @duplicate-node="store.duplicateNode"
-        @remove-node="store.removeNode"
+        @remove-node="openDeleteConfirm"
         @move-node="({ nodeId, direction }) => store.moveNode(nodeId, direction)"
-        @update-node="store.updateNodeData(store.editingNodeId || store.selectedNodeId, $event)"
+        @update-node="handleNodeUpdate"
         @close-drawer="store.closeNodeSettings"
         @test="runTest"
         @export="exportWorkflow"
@@ -812,6 +978,45 @@ function syncBuilderUrl(postId) {
           :loading="testPhoneSaving"
           :disabled="!String(testPhoneDraft || '').trim()"
           @click="saveTestPhoneAndRun"
+        />
+      </div>
+    </div>
+  </ModalDialog>
+
+  <ModalDialog
+    :open="deleteConfirmOpen"
+    :title="__('Delete action', textDomain)"
+    :description="__('This action will be removed from the workflow.', textDomain)"
+    sizeClass="max-w-xl"
+    @close="closeDeleteConfirm"
+  >
+    <div class="space-y-6">
+      <div class="rounded-[18px] border border-rose-100 bg-rose-50 px-4 py-4">
+        <h3 class="text-[15px] font-semibold text-rose-900">
+          {{ __('Confirm deletion', textDomain) }}
+        </h3>
+        <p class="mt-2 text-[13px] leading-6 text-rose-800">
+          {{ __('You are about to delete the action', textDomain) }}
+          <span class="font-semibold">"{{ deleteConfirmNodeLabel }}"</span>.
+          {{ __('This step will be removed from the canvas and saved to the workflow.', textDomain) }}
+          <span v-if="deleteConfirmHasNestedFlow">
+            {{ __('Any nested branch inside this action will also be removed.', textDomain) }}
+          </span>
+        </p>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 border-t border-slate-100 pt-5">
+        <BaseButton
+          :title="__('Cancel', textDomain)"
+          variant="ghost"
+          :disabled="deleteConfirmBusy"
+          @click="closeDeleteConfirm"
+        />
+        <BaseButton
+          :title="__('Delete action', textDomain)"
+          variant="danger"
+          :loading="deleteConfirmBusy"
+          @click="confirmDeleteNode"
         />
       </div>
     </div>
