@@ -24,30 +24,6 @@ defined('ABSPATH') || exit;
 class Components {
 
     /**
-     * Check workflow status
-     * 
-     * @since 1.0.0
-     * @param int $post_id | Post ID
-     * @return string
-     */
-    public static function check_workflow_status( $post_id ) {
-        if ( isset( $post_id ) ) {
-            if ( 'publish' === get_post_status( $post_id ) ) {
-                $class = 'text-success bg-success border-success';
-                $text = esc_html__( 'Fluxo ativo', 'joinotify' );
-            } else {
-                $class = 'text-dark bg-secondary border-dark';
-                $text = esc_html__( 'Fluxo inativo', 'joinotify' );
-            }
-
-            return '<span id="joinotify_workflow_status" class="fw-semibold fs-sm bg-opacity-10 border border-opacity-10 px-2 py-1 w-fit rounded-3 '. esc_attr( $class ) .'">'. $text .'</span>';
-        }
-
-        return '';
-    }
-
-
-    /**
      * Display workflow action component
      * 
      * @since 1.0.0

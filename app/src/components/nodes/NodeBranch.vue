@@ -1,18 +1,12 @@
 <script setup lang="ts">
-import { getActionDefinition, getActionRegistryPreview } from '../../registries/actionRegistry';
-import { getTriggerDefinitionFromNode } from '../../registries/triggerRegistry';
-import type { WorkflowBranchKey, WorkflowNode } from '../../types/workflowBuilder';
-import { isConditionNode, isDelayNode, isPlaceholderNode, isSnippetNode, isStopNode } from '../../utils/workflowTree';
+import { computed } from 'vue';
+import { useActionRegistry } from '../../builder/actions/composables/useActionRegistry';
+import ConditionBranchNode from '../../builder/actions/components/ConditionBranchNode.vue';
+import WorkflowActionCard from '../../builder/actions/components/WorkflowActionCard.vue';
+import WorkflowConnector from '../../builder/actions/components/WorkflowConnector.vue';
 import AddNodeButton from './AddNodeButton.vue';
-import ActionNode from './ActionNode.vue';
-import ConditionNode from './ConditionNode.vue';
-import DelayNode from './DelayNode.vue';
-import NodeConnector from './NodeConnector.vue';
 import NodeToolbar from './NodeToolbar.vue';
-import PlaceholderNode from './PlaceholderNode.vue';
-import SnippetNode from './SnippetNode.vue';
-import StopNode from './StopNode.vue';
-import TriggerNode from './TriggerNode.vue';
+import type { WorkflowNode } from '../../types/workflowBuilder';
 
 defineOptions({ name: 'NodeBranch' });
 
@@ -33,140 +27,32 @@ const emit = defineEmits([
   'move-node',
 ]);
 
-function branchTarget(afterNodeId: string, branchKey?: WorkflowBranchKey) {
+const registry = useActionRegistry();
+
+function branchTarget(afterNodeId: string, branchKey?: string) {
   emit('open-actions', {
     afterNodeId,
     branchKey,
   });
 }
 
-function resolveNodeDefinition(node: WorkflowNode) {
-  if (node.type === 'trigger') {
-    return getTriggerDefinitionFromNode(node) || undefined;
-  }
-
-  return getActionDefinition(String(node.data.action || '')) || undefined;
+function isConditionNode(node: WorkflowNode): boolean {
+  const action = String(node.data?.action || '');
+  const definition = registry.get(action);
+  return action === 'condition' || Boolean(definition?.isExpansible && Array.isArray(definition.branchKeys) && definition.branchKeys.length);
 }
 
-function resolveNodePreview(node: WorkflowNode) {
-  const definition = resolveNodeDefinition(node);
-
-  if (node.type === 'trigger' && definition?.preview) {
-    return definition.preview(node.data);
-  }
-
-  if (definition?.preview) {
-    return definition.preview(node.data);
-  }
-
-  return getActionRegistryPreview(node);
+function resolveDefinition(node: WorkflowNode) {
+  const action = String(node.data?.action || '');
+  return registry.get(action);
 }
 
-function resolveNodeComponent(node: WorkflowNode) {
-  if (node.type === 'trigger') {
-    return TriggerNode;
-  }
-
-  if (isConditionNode(node)) {
-    return ConditionNode;
-  }
-
-  if (isDelayNode(node)) {
-    return DelayNode;
-  }
-
-  if (isStopNode(node)) {
-    return StopNode;
-  }
-
-  if (isSnippetNode(node)) {
-    return SnippetNode;
-  }
-
-  if (isPlaceholderNode(node)) {
-    return PlaceholderNode;
-  }
-
-  return ActionNode;
-}
-
-function resolveNodeAccent(node: WorkflowNode): string {
-  if (node.type === 'trigger') {
-    return 'blue';
-  }
-
-  if (isConditionNode(node)) {
-    return 'violet';
-  }
-
-  if (isDelayNode(node)) {
-    return 'amber';
-  }
-
-  if (isStopNode(node)) {
-    return 'rose';
-  }
-
-  if (isSnippetNode(node)) {
-    return 'violet';
-  }
-
-  if (isPlaceholderNode(node)) {
-    return 'emerald';
-  }
-
-  return 'slate';
-}
-
-function resolveNodeBadge(node: WorkflowNode): string {
-  if (node.type === 'trigger') {
-    return 'Trigger';
-  }
-
-  if (isConditionNode(node)) {
-    return 'Condition';
-  }
-
-  if (isDelayNode(node)) {
-    return 'Delay';
-  }
-
-  if (isStopNode(node)) {
-    return 'Stop';
-  }
-
-  if (isSnippetNode(node)) {
-    return 'Snippet';
-  }
-
-  if (isPlaceholderNode(node)) {
-    return 'Placeholder';
-  }
-
-  return 'Action';
-}
-
-function resolveNodeTitle(node: WorkflowNode): string {
-  return String(node.data?.title || resolveNodeDefinition(node)?.label || resolveNodeBadge(node));
-}
-
-function resolveNodeDescription(node: WorkflowNode): string {
-  const description = node.type === 'trigger'
-    ? String(node.data?.description || '')
-    : String(node.data?.description || node.data?.message || resolveNodePreview(node) || '');
-
-  return description;
-}
-
-function hasBranchChildren(node: WorkflowNode): boolean {
+function hasChildren(node: WorkflowNode): boolean {
   return Array.isArray(node.children) && node.children.length > 0;
 }
 
 function hasConditionBranches(node: WorkflowNode): boolean {
-  return isConditionNode(node) && Boolean(node.branches) && (
-    (node.branches?.action_true || []).length > 0 ||
-    (node.branches?.action_false || []).length > 0
-  );
+  return Boolean(node.branches && (node.branches.action_true?.length || node.branches.action_false?.length));
 }
 </script>
 
@@ -197,27 +83,20 @@ function hasConditionBranches(node: WorkflowNode): boolean {
             />
           </div>
 
-          <component
-            :is="resolveNodeComponent(node)"
+          <WorkflowActionCard
             class="w-full"
-            :title="resolveNodeTitle(node)"
-            :description="resolveNodeDescription(node)"
             :action="String(node.data?.action || '')"
-            :condition="String(node.data?.condition || '')"
-            :operator="String(node.data?.condition_type || '')"
-            :preview="resolveNodePreview(node)"
-            :badge="resolveNodeBadge(node)"
-            :icon="resolveNodeDefinition(node)?.icon || ''"
-            :icon-svg="resolveNodeDefinition(node)?.iconSvg || ''"
-            :accent="resolveNodeAccent(node)"
-            :context="String(node.data?.context || '')"
-            :trigger="String(node.data?.trigger || '')"
+            :data="node.data || {}"
+            :definition="resolveDefinition(node)"
             :active="selectedNodeId === node.id"
-            @click="$emit('select-node', node.id)"
+            @edit="$emit('select-node', node.id)"
+            @duplicate="$emit('duplicate-node', node.id)"
+            @delete="$emit('remove-node', node.id)"
+            @expand="branchTarget(node.id)"
           />
         </div>
 
-        <NodeConnector v-if="index < nodes.length - 1 || !hasConditionBranches(node)" />
+        <WorkflowConnector v-if="index < nodes.length - 1 || !hasConditionBranches(node)" />
 
         <div class="flex flex-col items-center" :class="index < nodes.length - 1 ? 'pb-2' : 'pb-4'">
           <AddNodeButton
@@ -226,7 +105,7 @@ function hasConditionBranches(node: WorkflowNode): boolean {
           />
         </div>
 
-        <div v-if="hasBranchChildren(node)" class="mt-6 w-full pl-6 lg:pl-10">
+        <div v-if="hasChildren(node)" class="mt-6 w-full pl-6 lg:pl-10">
           <NodeBranch
             :nodes="node.children"
             :selected-node-id="selectedNodeId"
@@ -243,15 +122,12 @@ function hasConditionBranches(node: WorkflowNode): boolean {
         </div>
 
         <div v-if="isConditionNode(node)" class="mt-6 grid w-full gap-6 xl:grid-cols-2">
-          <section class="rounded-[28px] border border-emerald-200 bg-emerald-50/50 p-4 shadow-[0_10px_30px_rgba(16,185,129,0.08)]">
-            <div class="mb-4 flex items-center justify-between gap-3">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-700">True branch</p>
-                <p class="mt-1 text-sm text-emerald-900/70">Nodes that continue when the condition matches.</p>
-              </div>
-              <span class="rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-700">action_true</span>
-            </div>
-
+          <ConditionBranchNode
+            branch-key="action_true"
+            branch-label="True branch"
+            empty-label="Nodes that continue when the condition matches."
+            tone="emerald"
+          >
             <NodeBranch
               :nodes="node.branches?.action_true || []"
               :selected-node-id="selectedNodeId"
@@ -264,17 +140,14 @@ function hasConditionBranches(node: WorkflowNode): boolean {
               @remove-node="$emit('remove-node', $event)"
               @move-node="$emit('move-node', $event)"
             />
-          </section>
+          </ConditionBranchNode>
 
-          <section class="rounded-[28px] border border-rose-200 bg-rose-50/50 p-4 shadow-[0_10px_30px_rgba(244,63,94,0.08)]">
-            <div class="mb-4 flex items-center justify-between gap-3">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">False branch</p>
-                <p class="mt-1 text-sm text-rose-900/70">Nodes that continue when the condition does not match.</p>
-              </div>
-              <span class="rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-rose-700">action_false</span>
-            </div>
-
+          <ConditionBranchNode
+            branch-key="action_false"
+            branch-label="False branch"
+            empty-label="Nodes that continue when the condition does not match."
+            tone="rose"
+          >
             <NodeBranch
               :nodes="node.branches?.action_false || []"
               :selected-node-id="selectedNodeId"
@@ -287,7 +160,7 @@ function hasConditionBranches(node: WorkflowNode): boolean {
               @remove-node="$emit('remove-node', $event)"
               @move-node="$emit('move-node', $event)"
             />
-          </section>
+          </ConditionBranchNode>
         </div>
       </div>
     </template>

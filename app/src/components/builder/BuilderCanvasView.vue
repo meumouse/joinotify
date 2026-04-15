@@ -209,6 +209,7 @@ function openActionsForTrigger() {
       :open="actionsOpen"
       :actions="actions"
       :loading="actionsLoading"
+      :context="String(triggerNode?.data?.context || '')"
       @close="$emit('close-actions')"
       @select="$emit('select-action', $event)"
     />

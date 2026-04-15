@@ -101,7 +101,9 @@ export function createTriggerNode(payload: Partial<Record<string, unknown>> = {}
 }
 
 export function createActionNode(actionId = '', payload: Partial<Record<string, unknown>> = {}, definition?: WorkflowRegistryItem | null): WorkflowNode {
+  const defaults = isRecord(definition?.defaultData) ? cloneSerializable(definition?.defaultData) : {};
   const baseData = {
+    ...defaults,
     title: typeof payload.title === 'string' ? payload.title : definition?.label || 'Action',
     description: typeof payload.description === 'string' ? payload.description : '',
     action: actionId,
@@ -111,7 +113,8 @@ export function createActionNode(actionId = '', payload: Partial<Record<string, 
     settings: isRecord(payload.settings) ? cloneSerializable(payload.settings) : {},
   };
 
-  const normalized = definition?.parseData ? definition.parseData(baseData) : baseData;
+  const normalize = definition?.parseData || definition?.normalizeData;
+  const normalized = normalize ? normalize(baseData) : baseData;
 
   return ensureNodeDefaults({
     type: 'action',
@@ -122,7 +125,9 @@ export function createActionNode(actionId = '', payload: Partial<Record<string, 
 }
 
 export function createConditionNode(payload: Partial<Record<string, unknown>> = {}, definition?: WorkflowRegistryItem | null): WorkflowNode {
+  const defaults = isRecord(definition?.defaultData) ? cloneSerializable(definition?.defaultData) : {};
   const baseData = {
+    ...defaults,
     title: typeof payload.title === 'string' ? payload.title : definition?.label || 'Condition',
     description: typeof payload.description === 'string' ? payload.description : '',
     action: 'condition',
@@ -135,7 +140,8 @@ export function createConditionNode(payload: Partial<Record<string, unknown>> = 
     settings: isRecord(payload.settings) ? cloneSerializable(payload.settings) : {},
   };
 
-  const normalized = definition?.parseData ? definition.parseData(baseData) : baseData;
+  const normalize = definition?.parseData || definition?.normalizeData;
+  const normalized = normalize ? normalize(baseData) : baseData;
 
   return ensureNodeDefaults({
     type: 'action',

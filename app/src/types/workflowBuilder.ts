@@ -71,12 +71,18 @@ export interface WorkflowRegistryItem {
   category?: string;
   schema: WorkflowFieldSchema[];
   settingsComponent?: string;
+  defaultData?: Record<string, unknown>;
+  normalizeData?: (data: Record<string, unknown>) => Record<string, unknown>;
   parseData?: (data: Record<string, unknown>) => Record<string, unknown>;
   serializeData?: (data: Record<string, unknown>) => Record<string, unknown>;
   preview?: (data: Record<string, unknown>) => string;
   validate?: (data: Record<string, unknown>) => string[];
   requireSettings?: boolean;
   enabled?: boolean;
+  branchKeys?: string[];
+  branchLabels?: Record<string, string>;
+  hasSettings?: boolean;
+  isExpansible?: boolean;
 }
 
 export interface WorkflowContextDefinition {

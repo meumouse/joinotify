@@ -121,8 +121,8 @@ class Settings_Assets extends Abstract_Assets {
     private function dequeue_legacy_assets() {
         wp_dequeue_style( 'joinotify-styles' );
         wp_dequeue_script( 'joinotify-scripts' );
-        wp_dequeue_style( 'bootstrap-grid' );
-        wp_dequeue_style( 'bootstrap-utilities' );
+    //    wp_dequeue_style( 'bootstrap-grid' );
+    //    wp_dequeue_style( 'bootstrap-utilities' );
         wp_dequeue_style( 'joinotify-workflows-table-styles' );
         wp_dequeue_script( 'joinotify-workflows-table-scripts' );
 
