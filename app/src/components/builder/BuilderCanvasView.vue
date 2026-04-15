@@ -9,19 +9,24 @@ import NodeSettingsDrawer from '../settings/NodeSettingsDrawer.vue';
 import WorkflowTreeRenderer from '../nodes/WorkflowTreeRenderer.vue';
 import BuilderActionSidebar from './BuilderActionSidebar.vue';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
+import type { WorkflowContextDefinition, WorkflowNode } from '../../types/workflowBuilder';
 
-const props = defineProps({
-  triggerNode: { type: Object, default: null },
-  nodes: { type: Array, default: () => [] },
-  selectedNodeId: { type: String, default: '' },
-  selectedNode: { type: Object, default: null },
-  contexts: { type: Array, default: () => [] },
-  drawerOpen: { type: Boolean, default: false },
-  loading: { type: Boolean, default: false },
-  actions: { type: Array, default: () => [] },
-  actionsLoading: { type: Boolean, default: false },
-  actionsOpen: { type: Boolean, default: false },
-});
+type BuilderAction = Record<string, unknown>;
+
+interface BuilderCanvasProps {
+  triggerNode: WorkflowNode | null;
+  nodes: WorkflowNode[];
+  selectedNodeId: string;
+  selectedNode: WorkflowNode | null;
+  contexts: WorkflowContextDefinition[];
+  drawerOpen: boolean;
+  loading: boolean;
+  actions: BuilderAction[];
+  actionsLoading: boolean;
+  actionsOpen: boolean;
+}
+
+const props = defineProps<BuilderCanvasProps>();
 
 const emit = defineEmits([
   'select-node',
@@ -57,7 +62,7 @@ const triggerContextIconSvg = computed(() => {
   }
 
   const context = Array.isArray(props.contexts)
-    ? props.contexts.find((item) => item && item.id === contextId)
+    ? props.contexts.find((item) => item.id === contextId)
     : null;
 
   return String(context?.icon_svg || '').trim();
@@ -65,7 +70,7 @@ const triggerContextIconSvg = computed(() => {
 
 const rootFlowNodes = computed(() => {
   return Array.isArray(props.nodes)
-    ? props.nodes.filter((node) => node && node.type !== 'trigger')
+    ? props.nodes.filter((node) => node.type !== 'trigger')
     : [];
 });
 
