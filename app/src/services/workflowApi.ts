@@ -1,8 +1,7 @@
-import { createAjaxClient, createApiClient } from '../utils/api';
+import { createApiClient } from '../utils/api';
 
 export function createWorkflowApiClient(bootstrap) {
   const api = createApiClient(bootstrap);
-  const ajax = createAjaxClient(bootstrap);
 
   return {
     loadBootstrap(postId) {
@@ -27,7 +26,7 @@ export function createWorkflowApiClient(bootstrap) {
       return api.post('/admin/settings', body);
     },
     updateWorkflowStatus(body) {
-      return ajax.post('joinotify_update_workflow_status', body);
+      return api.post('/admin/builder/status', body);
     },
     importWorkflow(body) {
       return api.post('/admin/builder/import', body);
@@ -36,7 +35,7 @@ export function createWorkflowApiClient(bootstrap) {
       return api.get(`/admin/builder/export?id=${postId}`);
     },
     runWorkflowTest(body) {
-      return ajax.post('joinotify_run_workflow_test', body);
+      return api.post('/admin/builder/test', body);
     },
   };
 }

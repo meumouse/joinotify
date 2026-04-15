@@ -48,7 +48,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-40 border-b border-slate-200 bg-white">
+  <header class="sticky top-0 z-10 border-b border-slate-200 bg-white">
     <div class="flex h-[80px] w-full items-stretch">
       <div class="flex w-[88px] shrink-0 items-center justify-center border-r border-slate-200">
         <BrandMark variant="primary" size="md" />
@@ -64,15 +64,15 @@ onBeforeUnmount(() => {
         </button>
 
         <BaseBadge :class="badgeClass()" class="rounded-full px-3 py-1 text-xs font-medium">
-          {{ status === 'publish' ? __('Fluxo ativo', textDomain) : __('Fluxo inativo', textDomain) }}
+          {{ status === 'publish' ? __('Active workflow', textDomain) : __('Inactive workflow', textDomain) }}
         </BaseBadge>
       </div>
 
       <div class="ml-auto flex items-center gap-8 pr-6">
-        <BaseButton :title="__('Rodar teste', textDomain)" variant="secondary" :loading="loading" @click="$emit('test')" />
+        <BaseButton :title="__('Run test', textDomain)" variant="secondary" :loading="loading" @click="$emit('test')" />
         <BaseSwitch
           :model-value="status === 'publish'"
-          :label="statusLoading ? __('Salvando...', textDomain) : (status === 'publish' ? __('Ativo', textDomain) : __('Inativo', textDomain))"
+          :label="statusLoading ? __('Saving...', textDomain) : (status === 'publish' ? __('Active', textDomain) : __('Inactive', textDomain))"
           :loading="statusLoading"
           @change="$emit('update:status', $event ? 'publish' : 'draft')"
         />

@@ -64,7 +64,7 @@ function closeMenu() {
           @click="$emit('edit'); closeMenu()"
         >
           <span class="text-base leading-none">✎</span>
-          <span>{{ __('Configurações', textDomain) }}</span>
+          <span>{{ __('Settings', textDomain) }}</span>
         </button>
       </div>
     </div>

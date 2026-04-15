@@ -32,6 +32,10 @@ function getContextFallbackLabel(item) {
     .toUpperCase();
 }
 
+function getContextLogo(contextId) {
+  return props.contexts.find((item) => item.id === contextId)?.icon_svg || '';
+}
+
 const triggerGridClass = computed(() => 'grid gap-4 sm:grid-cols-2 2xl:grid-cols-4 overflow-y-auto max-h-[450px]');
 
 const skeletonCards = computed(() => Array.from({ length: 4 }, (_, index) => index));
@@ -150,6 +154,8 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
                 :key="item.id"
                 :title="item.label"
                 :description="item.description"
+                :context-label="item.contexts?.[0] || context"
+                :context-icon-svg="getContextLogo(item.contexts?.[0] || context)"
                 :icon="item.icon"
                 :icon-svg="item.iconSvg || item.icon_svg || ''"
                 :selected="trigger === item.id"

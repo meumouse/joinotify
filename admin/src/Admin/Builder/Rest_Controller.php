@@ -24,6 +24,10 @@ class Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Builder_Import',
 		'\MeuMouse\Joinotify\Rest\Builder_Templates',
 		'\MeuMouse\Joinotify\Rest\Builder_Export',
+		'\MeuMouse\Joinotify\Rest\Builder_Test',
+		'\MeuMouse\Joinotify\Rest\Builder_Status',
+		'\MeuMouse\Joinotify\Rest\Builder_Groups',
+		'\MeuMouse\Joinotify\Rest\Builder_Woo_Products',
 	);
 
 

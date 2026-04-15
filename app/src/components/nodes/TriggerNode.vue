@@ -10,6 +10,7 @@ const props = defineProps({
   description: { type: String, default: '' },
   context: { type: String, default: '' },
   trigger: { type: String, default: '' },
+  contextIconSvg: { type: String, default: '' },
   icon: { type: String, default: '' },
   iconSvg: { type: String, default: '' },
   settingsSchema: { type: Array as PropType<WorkflowFieldSchema[]>, default: () => [] },
@@ -96,13 +97,18 @@ function openSettings(event: MouseEvent) {
     @keydown.enter.prevent="$emit('click')"
     @keydown.space.prevent="$emit('click')"
   >
-    <div class="flex items-start gap-4">
-      <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[14px] border border-slate-200 bg-slate-50 text-slate-500">
-        <span
-          v-if="displayIconSvg && displayIconSvg.startsWith('<svg')"
-          class="flex h-5 w-5 items-center justify-center"
-          v-html="displayIconSvg"
-        />
+  <div class="flex items-start gap-4">
+    <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[14px] border border-slate-200 bg-slate-50 text-slate-500">
+      <span
+        v-if="contextIconSvg"
+        class="trigger-context-icon flex h-full w-full items-center justify-center p-1.5"
+        v-html="contextIconSvg"
+      />
+      <span
+        v-else-if="displayIconSvg && displayIconSvg.startsWith('<svg')"
+        class="flex h-5 w-5 items-center justify-center"
+        v-html="displayIconSvg"
+      />
         <span v-else-if="displayIcon" class="text-sm font-semibold uppercase tracking-[0.2em]">
           {{ displayIconGlyph }}
         </span>
@@ -206,3 +212,13 @@ function openSettings(event: MouseEvent) {
     </div>
   </ModalDialog>
 </template>
+
+<style scoped>
+.trigger-context-icon :deep(svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+  fill: currentColor;
+}
+</style>

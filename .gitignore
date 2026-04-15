@@ -4,3 +4,4 @@ release/
 dist/
 composer.lock
 admin/vendor
+.claude
