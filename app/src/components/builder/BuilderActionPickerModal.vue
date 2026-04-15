@@ -1,7 +1,7 @@
 <script setup>
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
-import BaseDialog from '../base/BaseDialog.vue';
+import ModalDialog from '../modals/ModalDialog.vue';
 
 defineProps({
   open: { type: Boolean, default: false },
@@ -12,7 +12,7 @@ defineEmits(['close', 'select']);
 </script>
 
 <template>
-  <BaseDialog :open="open" :title="__('Available actions', textDomain)" size-class="max-w-3xl" @close="$emit('close')">
+  <ModalDialog :open="open" :title="__('Available actions', textDomain)" sizeClass="max-w-3xl" @close="$emit('close')">
     <div class="space-y-5">
       <p class="text-sm leading-6 text-slate-500">{{ __('Choose an action to insert below the selected block.', textDomain) }}</p>
 
@@ -34,5 +34,5 @@ defineEmits(['close', 'select']);
         <BaseButton :title="__('Close', textDomain)" variant="ghost" @click="$emit('close')" />
       </div>
     </div>
-  </BaseDialog>
+  </ModalDialog>
 </template>

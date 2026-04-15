@@ -38,6 +38,8 @@ class Registry {
 			'debug_mode' => defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : false,
 			'page' => 'builder',
 			'title' => esc_html__( 'Workflow builder', 'joinotify' ),
+			'settings' => Settings_Registry::get_settings(),
+			'phones' => Settings_Registry::get_phone_state(),
 			'workflow' => $workflow_state,
 			'workflow_file' => self::build_exported_workflow_file( $workflow_state, $post_id ),
 			'start_templates' => Workflow_Manager::get_start_templates(),
@@ -57,6 +59,9 @@ class Registry {
 			'rest' => array(
 				'root' => esc_url_raw( rest_url( 'joinotify/v1' ) ),
 				'nonce' => wp_create_nonce( 'wp_rest' ),
+			),
+			'ajax' => array(
+				'url' => admin_url( 'admin-ajax.php' ),
 			),
 			'i18n' => array(
 				'saved' => esc_html__( 'Workflow saved.', 'joinotify' ),

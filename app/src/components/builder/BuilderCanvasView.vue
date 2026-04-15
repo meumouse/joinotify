@@ -7,6 +7,7 @@ import TriggerNode from '../nodes/TriggerNode.vue';
 import AddNodeButton from '../nodes/AddNodeButton.vue';
 import NodeSettingsDrawer from '../settings/NodeSettingsDrawer.vue';
 import WorkflowTreeRenderer from '../nodes/WorkflowTreeRenderer.vue';
+import { getTriggerDefinition } from '../../registries/triggerRegistry';
 
 const props = defineProps({
   triggerNode: { type: Object, default: null },
@@ -36,12 +37,15 @@ const emit = defineEmits([
   'close-actions',
 ]);
 
-const triggerDescription = computed(() => {
+const triggerDefinition = computed(() => {
   if (!props.triggerNode) {
-    return __('Create a trigger to start the workflow.', textDomain);
+    return undefined;
   }
 
-  return String(props.triggerNode.data?.description || `${props.triggerNode.data?.context || ''} ${props.triggerNode.data?.trigger || ''}`).trim();
+  return getTriggerDefinition(
+    String(props.triggerNode.data?.context || ''),
+    String(props.triggerNode.data?.trigger || '')
+  );
 });
 
 const rootFlowNodes = computed(() => {
@@ -102,12 +106,15 @@ function openActionsForTrigger() {
 
               <div v-else-if="triggerNode" class="w-full max-w-[920px]">
                 <TriggerNode
-                  :title="String(triggerNode.data?.title || __('Trigger', textDomain))"
-                  :description="triggerDescription"
+                  :title="String(triggerDefinition?.label || triggerNode.data?.title || __('Trigger', textDomain))"
+                  :description="String(triggerDefinition?.description || triggerNode.data?.description || __('Create a trigger to start the workflow.', textDomain))"
                   :context="String(triggerNode.data?.context || '')"
                   :trigger="String(triggerNode.data?.trigger || '')"
-                  :icon="String(triggerNode.data?.icon || '')"
-                  :icon-svg="String(triggerNode.data?.iconSvg || triggerNode.data?.icon_svg || '')"
+                  :icon="String(triggerDefinition?.icon || triggerNode.data?.icon || '')"
+                  :icon-svg="String(triggerDefinition?.iconSvg || triggerNode.data?.iconSvg || triggerNode.data?.icon_svg || '')"
+                  :settings-schema="triggerDefinition?.schema || []"
+                  :settings-component="String(triggerDefinition?.settingsComponent || '')"
+                  :require-settings="Boolean(triggerDefinition?.requireSettings)"
                   :active="selectedNodeId === triggerNode.id"
                   @click="$emit('select-node', triggerNode.id)"
                 />

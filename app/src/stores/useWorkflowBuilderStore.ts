@@ -1048,14 +1048,31 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     });
 
     try {
-      await Promise.resolve();
+      const response = api.value ? await api.value.runWorkflowTest({ post_id: postId.value }) : null;
       debugLogger.log('workflow:test-complete', {
         workflow_id: postId.value,
       });
-      return { ok: true, message: 'Workflow test queued.' };
+      return response || { ok: true, message: 'Workflow test queued.' };
     } finally {
       loading.value.test = false;
     }
+  }
+
+  async function saveSettings(settings) {
+    if (!api.value) {
+      throw new Error('API client not initialized.');
+    }
+
+    const response = await api.value.saveSettings({ settings });
+
+    if (response?.settings) {
+      bootstrap.value = {
+        ...bootstrap.value,
+        settings: cloneSerializable(response.settings),
+      };
+    }
+
+    return response;
   }
 
   async function saveWorkflow() {
@@ -1159,6 +1176,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     serializeWorkflow,
     parseWorkflow,
     runWorkflowTest,
+    saveSettings,
     saveWorkflow,
     getActionsForContext,
     getTriggersForContext,

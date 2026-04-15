@@ -2,8 +2,9 @@
 import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../../components/base/BaseButton.vue';
-import BaseDialog from '../../components/base/BaseDialog.vue';
+import ModalDialog from '../../components/modals/ModalDialog.vue';
 import BaseInput from '../../components/base/BaseInput.vue';
+import PhoneField from '../../components/fields/PhoneField.vue';
 import BuilderCanvasView from '../../components/builder/BuilderCanvasView.vue';
 import BuilderImportModal from '../../components/builder/BuilderImportModal.vue';
 import BuilderNavbar from '../../components/builder/BuilderNavbar.vue';
@@ -39,6 +40,9 @@ const actionInsertTarget = ref({
 const titleModalOpen = ref(false);
 const titleDraft = ref('');
 const titleSaving = ref(false);
+const testPhoneModalOpen = ref(false);
+const testPhoneDraft = ref('');
+const testPhoneSaving = ref(false);
 const routeWorkflowLoaded = ref(false);
 const toasts = ref([]);
 const toastTimers = new Map();
@@ -48,6 +52,8 @@ const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
 const docsUrl = computed(() => bootstrap.value?.links?.docs_url || '#');
 const debugMode = computed(() => Boolean(bootstrap.value?.debug_mode));
 const debugLogger = createDebugLogger('Builder', () => debugMode.value);
+const isRunningTest = computed(() => store.loading.test || testPhoneSaving.value);
+const savedTestPhoneNumber = computed(() => String(bootstrap.value?.settings?.test_number_phone || '').trim());
 const startShellStyle = computed(() => ({
   top: debugMode.value ? '32px !important' : '0',
   height: debugMode.value ? 'calc(100vh - 32px)' : '100vh',
@@ -105,6 +111,7 @@ watch(
   () => props.bootstrap,
   (value) => {
     bootstrap.value = cloneValue(value || {});
+    testPhoneDraft.value = String(bootstrap.value?.settings?.test_number_phone || '').trim();
     debugLogger.log('bootstrap:loaded', {
       debug_mode: debugMode.value,
       post_id: workflowIdFromUrl.value,
@@ -230,6 +237,15 @@ function openTitleModal() {
 function closeTitleModal() {
   debugLogger.log('modal:close-title');
   titleModalOpen.value = false;
+}
+
+function openRunTestModal() {
+  testPhoneDraft.value = savedTestPhoneNumber.value;
+  testPhoneModalOpen.value = true;
+}
+
+function closeTestPhoneModal() {
+  testPhoneModalOpen.value = false;
 }
 
 function normalizeToastTone(tone) {
@@ -552,11 +568,80 @@ function exportWorkflow() {
   window.URL.revokeObjectURL(url);
 }
 
-function runTest() {
+async function runTest() {
+  if (isRunningTest.value) {
+    return;
+  }
+
+  if (!savedTestPhoneNumber.value) {
+    openRunTestModal();
+    return;
+  }
+
   debugLogger.log('workflow:test-requested', {
     workflow_id: store.postId,
   });
-  void store.runWorkflowTest();
+
+  try {
+    const response = await store.runWorkflowTest();
+    pushToast(
+      response?.toast_body_title || response?.message || __('Workflow test queued.', textDomain),
+      'success',
+      __('Builder', textDomain)
+    );
+  } catch (error) {
+    pushToast(
+      error instanceof Error ? error.message : __('Could not run the workflow test.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+    debugLogger.log('workflow:test-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+}
+
+async function saveTestPhoneAndRun() {
+  const nextPhone = String(testPhoneDraft.value || '').trim();
+
+  if (!nextPhone || testPhoneSaving.value) {
+    return;
+  }
+
+  testPhoneSaving.value = true;
+  debugLogger.log('workflow:test-phone-save-start', {
+    test_number_phone: nextPhone,
+  });
+
+  try {
+    const response = await store.saveSettings({ test_number_phone: nextPhone });
+    bootstrap.value = {
+      ...bootstrap.value,
+      settings: cloneValue(response?.settings || {
+        ...(bootstrap.value.settings || {}),
+        test_number_phone: nextPhone,
+      }),
+    };
+    testPhoneModalOpen.value = false;
+
+    const testResponse = await store.runWorkflowTest();
+    pushToast(
+      testResponse?.toast_body_title || testResponse?.message || __('Workflow test queued.', textDomain),
+      'success',
+      __('Builder', textDomain)
+    );
+  } catch (error) {
+    pushToast(
+      error instanceof Error ? error.message : __('Could not save the test phone number.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+    debugLogger.log('workflow:test-phone-save-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    testPhoneSaving.value = false;
+  }
 }
 
 function syncBuilderUrl(postId) {
@@ -619,7 +704,7 @@ function syncBuilderUrl(postId) {
         :title="store.file.post.title"
         :status="store.file.post.status"
         :docs-url="docsUrl"
-        :loading="store.loading.test"
+        :loading="isRunningTest"
         :status-loading="isUpdatingStatus"
         @update:status="handleWorkflowStatusChange"
         @test="runTest"
@@ -669,7 +754,7 @@ function syncBuilderUrl(postId) {
     @import="confirmImport"
   />
 
-  <BaseDialog :open="titleModalOpen" :title="__('Edit workflow title', textDomain)" size-class="max-w-lg" @close="closeTitleModal">
+  <ModalDialog :open="titleModalOpen" :title="__('Edit workflow title', textDomain)" sizeClass="max-w-lg" @close="closeTitleModal">
     <div class="space-y-5">
       <BaseInput v-model="titleDraft" :label="__('Workflow name', textDomain)" />
       <div class="flex items-center justify-end gap-3">
@@ -677,7 +762,54 @@ function syncBuilderUrl(postId) {
         <BaseButton :title="__('Save', textDomain)" :loading="isSavingTitle" @click="saveTitleModal" />
       </div>
     </div>
-  </BaseDialog>
+  </ModalDialog>
+
+  <ModalDialog
+    :open="testPhoneModalOpen"
+    :title="__('Add test phone number', textDomain)"
+    @close="closeTestPhoneModal"
+  >
+    <div class="space-y-6">
+      <div class="grid items-center gap-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)]">
+        <div>
+          <h3 class="text-[15px] font-semibold text-slate-800">
+            {{ __('Test phone number', textDomain) }}
+          </h3>
+          <p class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">
+            {{ __('Enter a phone number to receive test messages from the builder. Use international format and numbers only.', textDomain) }}
+          </p>
+        </div>
+
+        <div class="lg:justify-self-start">
+          <PhoneField
+            v-model="testPhoneDraft"
+            :field="{
+              placeholder: __('5541987111527', textDomain),
+            }"
+            :default-country="String(bootstrap?.phones?.default_country_iso2 || '').trim() || 'us'"
+            :locale="String(bootstrap?.phones?.locale || 'en_US')"
+            :show-header="false"
+            name="builder-test-phone"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 border-t border-slate-100 pt-5">
+        <BaseButton
+          :title="__('Cancel', textDomain)"
+          variant="ghost"
+          :disabled="testPhoneSaving"
+          @click="closeTestPhoneModal"
+        />
+        <BaseButton
+          :title="__('Save and run test', textDomain)"
+          :loading="testPhoneSaving"
+          :disabled="!String(testPhoneDraft || '').trim()"
+          @click="saveTestPhoneAndRun"
+        />
+      </div>
+    </div>
+  </ModalDialog>
 
   <ToastStack :toasts="toasts" @dismiss="dismissToast" />
 </template>

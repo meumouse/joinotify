@@ -1,7 +1,7 @@
 <script setup>
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
-import BaseDialog from '../base/BaseDialog.vue';
+import ModalDialog from '../modals/ModalDialog.vue';
 import BaseFileDropzone from '../base/BaseFileDropzone.vue';
 
 defineProps({
@@ -15,7 +15,7 @@ defineEmits(['close', 'file', 'import']);
 </script>
 
 <template>
-  <BaseDialog :open="open" :title="__('Import template', textDomain)" size-class="max-w-2xl" @close="$emit('close')">
+  <ModalDialog :open="open" :title="__('Import template', textDomain)" sizeClass="max-w-2xl" @close="$emit('close')">
     <div class="space-y-5">
       <p class="text-sm leading-6 text-slate-500">
         {{ __('Drag and drop the template JSON file or click to browse. The format must match a real Joinotify export.', textDomain) }}
@@ -36,5 +36,5 @@ defineEmits(['close', 'file', 'import']);
         <BaseButton :title="__('Import', textDomain)" :loading="importing" :disabled="!fileName" @click="$emit('import')" />
       </div>
     </div>
-  </BaseDialog>
+  </ModalDialog>
 </template>

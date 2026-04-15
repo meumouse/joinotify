@@ -23,6 +23,9 @@ export function createWorkflowApiClient(bootstrap) {
     saveWorkflow(body) {
       return api.post('/admin/builder/workflow', body);
     },
+    saveSettings(body) {
+      return api.post('/admin/settings', body);
+    },
     updateWorkflowStatus(body) {
       return ajax.post('joinotify_update_workflow_status', body);
     },
@@ -31,6 +34,9 @@ export function createWorkflowApiClient(bootstrap) {
     },
     exportWorkflow(postId) {
       return api.get(`/admin/builder/export?id=${postId}`);
+    },
+    runWorkflowTest(body) {
+      return ajax.post('joinotify_run_workflow_test', body);
     },
   };
 }
