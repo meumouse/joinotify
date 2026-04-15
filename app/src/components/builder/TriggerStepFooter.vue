@@ -4,6 +4,7 @@ import BaseButton from '../base/BaseButton.vue';
 
 defineProps({
   disabled: { type: Boolean, default: false },
+  continuing: { type: Boolean, default: false },
 });
 
 defineEmits(['continue', 'back']);
@@ -19,6 +20,6 @@ defineEmits(['continue', 'back']);
       <span aria-hidden="true">&larr;</span>
       <span>{{ __('Back', textDomain) }}</span>
     </button>
-    <BaseButton :title="__('Continue', textDomain)" size="md" :disabled="disabled" @click="$emit('continue')" />
+    <BaseButton :title="__('Continue', textDomain)" size="md" :disabled="disabled || continuing" :loading="continuing" @click="$emit('continue')" />
   </div>
 </template>

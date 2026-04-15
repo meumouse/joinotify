@@ -13,9 +13,10 @@ defineProps({
   triggers: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },
   ready: { type: Boolean, default: false },
+  continuing: { type: Boolean, default: false },
 });
 
-defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'back']);
+defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'back', 'update:continuing']);
 
 function getContextFallbackLabel(item) {
   const source = String(item.label || item.id || '')
@@ -161,7 +162,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
           </div>
 
           <div class="mt-auto max-w-[1180px] py-8">
-            <TriggerStepFooter :disabled="!ready" @continue="$emit('continue')" @back="$emit('back')" />
+            <TriggerStepFooter :disabled="!ready" :continuing="continuing" @continue="$emit('continue')" @back="$emit('back')" />
           </div>
         </div>
       </div>

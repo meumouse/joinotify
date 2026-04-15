@@ -38,7 +38,11 @@ class Builder_Workflow extends Abstract_Route {
 	public function handle( WP_REST_Request $request ) {
 		if ( 'GET' === $request->get_method() ) {
 			$post_id = absint( $request->get_param( 'id' ) );
-			return rest_ensure_response( Registry::get_workflow_state( $post_id ) );
+			$workflow_state = Registry::get_workflow_state( $post_id );
+			$response = Registry::build_exported_workflow_file( $workflow_state, $post_id );
+			$response['post_id'] = $post_id;
+
+			return rest_ensure_response( $response );
 		}
 
 		$payload = $request->get_json_params();

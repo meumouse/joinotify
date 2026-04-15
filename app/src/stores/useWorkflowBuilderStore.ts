@@ -359,7 +359,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     syncSelectionFromFile();
-    step.value = forceCanvas ? 'canvas' : (workflowContent.value.length ? 'canvas' : 'trigger');
+    step.value = forceCanvas ? 'canvas' : (triggerNode.value ? 'canvas' : 'trigger');
     drawerOpen.value = false;
     drawerMode.value = 'settings';
     errors.value = [];
@@ -468,45 +468,17 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       const response = api.value ? await api.value.loadWorkflow(resolvedPostId) : null;
 
       if (response && typeof response === 'object') {
-        const workflowContent = Array.isArray(response.workflow_content)
-          ? response.workflow_content
-          : Array.isArray(response.content)
-            ? response.content
-            : Array.isArray(response.workflow?.content)
-              ? response.workflow.content
-              : [];
-        const workflowPost = response.post && typeof response.post === 'object'
-          ? response.post
-          : response.workflow && typeof response.workflow === 'object'
-            ? response.workflow
-            : {};
+        const parsed = parseWorkflowFile(response);
 
-        const workflowFile = createWorkflowFileFromParts({
-          plugin_version: String(bootstrap.value.version || '1.0.0'),
-          post: {
-            type: 'joinotify-workflow',
-            title: String(
-              response.workflow_title
-                || workflowPost.title
-                || bootstrap.value.title
-                || 'My automation'
-            ),
-            date: String(response.created_at || workflowPost.date || new Date().toISOString()),
-            status: String(response.workflow_status || workflowPost.status || 'draft'),
-            modified: String(response.updated_at || workflowPost.modified || new Date().toISOString()),
-            category: String(
-              workflowContent?.[0]?.data?.context
-                || workflowContent?.[0]?.data?.category
-                || workflowPost.category
-                || ''
-            ),
-          },
-          workflow_content: workflowContent,
-        });
+        if (parsed.ok && parsed.file) {
+          applyWorkflowFile(parsed.file, resolvedPostId);
+          errors.value = [];
+          warnings.value = parsed.warnings;
+        } else {
+          errors.value = parsed.errors;
+          warnings.value = parsed.warnings;
+        }
 
-        applyWorkflowFile(workflowFile, resolvedPostId, true);
-        errors.value = [];
-        warnings.value = [];
         debugLogger.log('workflow:load-complete', {
           workflow_id: resolvedPostId,
           node_count: workflowContent.value.length,
@@ -523,6 +495,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       return { ok: false, error };
     } finally {
       loading.value.workflow = false;
+      loading.value.bootstrap = false;
     }
   }
 
@@ -768,18 +741,32 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     });
     selectedTrigger.value = triggerId;
 
-    const trigger = triggerNode.value;
     const definition = triggerId ? getTriggersForContext(activeContext.value || '').find((item) => item.id === triggerId) : undefined;
 
-    if (trigger) {
-      trigger.data = {
-        ...trigger.data,
-        trigger: triggerId,
-        title: definition?.label || trigger.data.title || file.value.post.title,
+    let trigger = triggerNode.value;
+
+    if (!trigger) {
+      const newNode = createTriggerNode({
+        title: definition?.label || file.value.post.title,
         description: definition?.description || '',
+        trigger: triggerId,
         context: activeContext.value,
-      };
+        settings: {},
+      });
+      file.value.workflow_content = [newNode, ...(file.value.workflow_content || [])];
+      selectedNodeId.value = newNode.id;
+      editingNodeId.value = newNode.id;
+      debugLogger.log('trigger:node-created', { node_id: newNode.id });
+      return;
     }
+
+    trigger.data = {
+      ...trigger.data,
+      trigger: triggerId,
+      title: definition?.label || trigger.data.title || file.value.post.title,
+      description: definition?.description || '',
+      context: activeContext.value,
+    };
   }
 
   function updateTriggerNode(patch: Record<string, unknown>) {

@@ -40,6 +40,7 @@ const actionInsertTarget = ref({
 const titleModalOpen = ref(false);
 const titleDraft = ref('');
 const titleSaving = ref(false);
+const triggerContinuing = ref(false);
 const testPhoneModalOpen = ref(false);
 const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
@@ -418,6 +419,8 @@ async function startScratch() {
 
 async function continueFromTriggerSetup() {
   debugLogger.log('trigger:continue');
+  triggerContinuing.value = true;
+
   try {
     await store.saveWorkflow();
     await store.loadBootstrapFromServer(store.postId);
@@ -429,6 +432,8 @@ async function continueFromTriggerSetup() {
       error: error instanceof Error ? error.message : String(error),
     });
     window.alert(error instanceof Error ? error.message : __('Could not save the selected trigger.', textDomain));
+  } finally {
+    triggerContinuing.value = false;
   }
 }
 
@@ -690,6 +695,7 @@ function syncBuilderUrl(postId) {
         :triggers="store.triggerOptions"
         :loading="store.loading.bootstrap"
         :ready="store.canContinue"
+        :continuing="triggerContinuing"
         @update:title="store.setWorkflowTitle"
         @update:context="store.selectTriggerContext"
         @select-trigger="store.selectTrigger"
