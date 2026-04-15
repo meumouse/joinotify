@@ -14,6 +14,11 @@ import { resolveSvgMarkup } from '../../../utils/icon';
 const registry = new Map<BuilderActionSlug, ActionDefinition>();
 const bootstrapped = ref(false);
 const bootstrapping = ref(false);
+const registryRevision = ref(0);
+
+function bumpRegistryRevision(): void {
+  registryRevision.value += 1;
+}
 
 function cleanContext(value: unknown): string[] {
   if (Array.isArray(value)) {
@@ -156,6 +161,7 @@ export function registerBuilderAction(definition: ActionDefinition | BackendActi
   const current = registry.get(normalized.action);
   const merged = mergeDefinition(current, normalized);
   registry.set(merged.action, merged);
+  bumpRegistryRevision();
   return cloneDefinition(merged);
 }
 
@@ -283,4 +289,9 @@ export function getActionRegistryPreview(node: { data?: Record<string, unknown> 
 
 export function ensureActionRegistry(): void {
   ensureBootstrapped();
+}
+
+export function getActionRegistryRevision(): number {
+  ensureBootstrapped();
+  return registryRevision.value;
 }

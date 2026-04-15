@@ -150,12 +150,14 @@ function joinotify_prepare_message( $message, $payload = array() ) {
  * Removes HTML tags and decodes HTML entities, returning a clean text output.
  *
  * @since 1.2.2
+ * @version 1.4.7
  * @param string $content | Input text with potential HTML formatting
  * @return string Cleaned plain text
  */
 function joinotify_format_plain_text( $content ) {
-	$content = is_scalar( $content ) ? (string) $content : '';
-	return html_entity_decode( strip_tags( $content ) );
+	$content = (string) ( $content ?? '' );
+
+	return html_entity_decode( strip_tags( $content ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 }
 
 

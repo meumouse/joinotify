@@ -698,6 +698,7 @@ async function confirmDeleteNode() {
     }
 
     syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    deleteConfirmBusy.value = false;
     closeDeleteConfirm();
     pushToast(
       __('Action deleted successfully.', textDomain),

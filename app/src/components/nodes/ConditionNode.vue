@@ -17,6 +17,7 @@ defineEmits(['click']);
 const registry = useActionRegistry();
 
 const resolvedIconSvg = computed(() => {
+  registry.revision.value;
   const definition = registry.get('condition');
   return resolveSvgMarkup(definition?.iconSvg, definition?.icon);
 });

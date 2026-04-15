@@ -64,6 +64,8 @@ function normalizeAction(action: unknown): ActionDefinition | null {
 }
 
 const availableActions = computed(() => {
+  registry.revision.value;
+
   const source = Array.isArray(props.actions) && props.actions.length
     ? props.actions.map((action) => normalizeAction(action)).filter(Boolean)
     : (props.context ? registry.byContext(props.context) : registry.actions.value);

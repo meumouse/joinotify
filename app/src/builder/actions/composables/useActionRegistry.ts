@@ -10,6 +10,7 @@ import {
   getBuilderActionsByContext,
   getActionsForContext,
   hydrateBuilderActionsFromBackend,
+  getActionRegistryRevision,
   registerBuilderAction,
   registerBuilderActions,
   setActionCatalog,
@@ -20,6 +21,7 @@ export function useActionRegistry() {
   ensureActionRegistry();
 
   const actions = computed<ActionDefinition[]>(() => getActionCatalog());
+  const revision = computed(() => getActionRegistryRevision());
 
   function byContext(context: string) {
     return getActionsForContext(context);
@@ -58,5 +60,6 @@ export function useActionRegistry() {
     hydrateFromBackend: hydrateBuilderActionsFromBackend,
     setCatalog: setActionCatalog,
     getActionsForContext: getBuilderActionsByContext,
+    revision,
   };
 }

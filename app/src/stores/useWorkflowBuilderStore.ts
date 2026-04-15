@@ -378,6 +378,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     errors.value = [];
     warnings.value = [];
     markBaseline();
+    void loadCanvasActionsFromServer(activeContext.value);
   }
 
   function hydrateFromBootstrap(value: BuilderBootstrap) {
@@ -408,6 +409,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       errors.value = parsed.errors;
       warnings.value = parsed.warnings;
       markBaseline();
+      void loadCanvasActionsFromServer(activeContext.value);
       debugLogger.log('bootstrap:hydrate-empty', {
         errors: parsed.errors,
       });
@@ -590,6 +592,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     errors.value = [];
     warnings.value = [];
     markBaseline();
+    void loadCanvasActionsFromServer(activeContext.value);
 
     return file.value;
   }
@@ -827,6 +830,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     file.value.post.category = category;
     activeContext.value = category;
     selectedTrigger.value = '';
+    void loadCanvasActionsFromServer(category);
 
     const trigger = triggerNode.value;
     if (trigger) {
@@ -846,6 +850,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     activeContext.value = context;
     file.value.post.category = context;
     selectedTrigger.value = '';
+    void loadCanvasActionsFromServer(context);
 
     const trigger = triggerNode.value;
     if (trigger) {
