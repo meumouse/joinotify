@@ -9,6 +9,7 @@
 import { computed, ref, watch } from 'vue';
 import BaseRichTextArea from '../base/BaseRichTextArea.vue';
 import { getFlowNodeConfig } from './flowNodeTypes';
+import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 
 const props = defineProps<{
   open: boolean;
@@ -26,6 +27,7 @@ const emit = defineEmits<{
 const draftLabel = ref(props.label);
 const draftDescription = ref(props.description);
 const draftConfig = ref<Record<string, unknown>>({ ...props.config });
+const store = useWorkflowBuilderStore();
 
 watch(
   () => props.open,
@@ -95,6 +97,22 @@ function removeCondition(index: number) {
 }
 
 const normalizedNodeType = computed(() => String(props.nodeType || '').trim());
+const senderSuggestions = computed(() => {
+  const senders = Array.isArray(store.bootstrap?.phones?.senders)
+    ? store.bootstrap.phones.senders
+    : [];
+
+  return senders
+    .map((item) => {
+      if (!item || typeof item !== 'object') {
+        return '';
+      }
+
+      return String((item as Record<string, unknown>).phone || '').trim();
+    })
+    .filter(Boolean);
+});
+const senderDatalistId = computed(() => `joinotify-sender-options-${normalizedNodeType.value || 'node'}`);
 const nodeConfig = computed(() => getFlowNodeConfig(normalizedNodeType.value));
 const isSnippetNode = computed(() => ['php-snippet', 'snippet_php'].includes(normalizedNodeType.value));
 const isTimeDelayNode = computed(() => ['wait-time', 'time_delay'].includes(normalizedNodeType.value));
@@ -283,9 +301,17 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
                     type="text"
                     placeholder="Número ou {{sender}}"
                     :value="String(draftConfig.sender ?? '')"
+                    :list="senderSuggestions.length ? senderDatalistId : undefined"
                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                     @input="updateConfig('sender', ($event.target as HTMLInputElement).value)"
                   />
+                  <datalist v-if="senderSuggestions.length" :id="senderDatalistId">
+                    <option
+                      v-for="senderPhone in senderSuggestions"
+                      :key="`text-${senderPhone}`"
+                      :value="senderPhone"
+                    />
+                  </datalist>
                 </div>
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Destinatário</label>
@@ -317,9 +343,17 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
                     type="text"
                     placeholder="Número ou {{sender}}"
                     :value="String(draftConfig.sender ?? '')"
+                    :list="senderSuggestions.length ? senderDatalistId : undefined"
                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                     @input="updateConfig('sender', ($event.target as HTMLInputElement).value)"
                   />
+                  <datalist v-if="senderSuggestions.length" :id="senderDatalistId">
+                    <option
+                      v-for="senderPhone in senderSuggestions"
+                      :key="`media-${senderPhone}`"
+                      :value="senderPhone"
+                    />
+                  </datalist>
                 </div>
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Destinatário</label>

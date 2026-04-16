@@ -6,6 +6,7 @@ import SmileIcon from '@boxicons/vue/Smile';
 import UnderlineIcon from '@boxicons/vue/Underline';
 import EmojiPicker from 'vue3-emoji-picker';
 import 'vue3-emoji-picker/css';
+import { sanitizePreviewHtml } from '../../utils/html';
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -130,6 +131,10 @@ watch(
   },
 );
 
+function renderPreviewHtml() {
+  return sanitizePreviewHtml(String(props.modelValue || ''));
+}
+
 onMounted(() => {
   document.addEventListener('click', handleDocumentClick);
 });
@@ -215,11 +220,18 @@ onBeforeUnmount(() => {
           @mouseup="syncSelection"
           @select="syncSelection"
         />
+
+        <div v-if="String(modelValue || '').trim()" class="border-t border-slate-200 bg-slate-50 px-4 py-3">
+          <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+            Preview
+          </p>
+          <div class="text-sm leading-6 text-slate-800" v-html="renderPreviewHtml()" />
+        </div>
       </div>
 
       <div
         v-if="showEmojiPicker"
-        class="absolute left-0 top-[calc(100%+0.5rem)] z-20 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+        class="absolute right-3 top-[3.1rem] z-30 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
       >
         <EmojiPicker
           :native="true"

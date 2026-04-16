@@ -8,10 +8,11 @@
  *
  * @since 1.4.7
  */
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import {
   VueFlow,
   MarkerType,
+  type Connection,
   type Edge,
   type Node,
 } from '@vue-flow/core';
@@ -41,6 +42,22 @@ interface DroppedActionPayload {
   [key: string]: unknown;
 }
 
+interface FlowEdgeRemovePayload {
+  edgeId: string;
+  sourceId: string;
+  targetId: string;
+  sourceHandle: string;
+  targetHandle: string;
+}
+
+export interface FlowCanvasExpose {}
+
+interface WorkflowConnectionMeta {
+  source_id?: string;
+  source_handle?: string;
+  target_handle?: string;
+}
+
 const props = defineProps<{
   triggerLabel?: string;
   triggerDescription?: string;
@@ -57,15 +74,7 @@ const emit = defineEmits<{
 }>();
 
 const canvasRef = ref<HTMLDivElement | null>(null);
-const hiddenEdgeIds = ref<string[]>([]);
-
-watch(
-  () => props.workflowNodes,
-  () => {
-    hiddenEdgeIds.value = [];
-  },
-  { deep: true },
-);
+const flowPositionCache = ref<Record<string, { x: number; y: number }>>({});
 
 const defaultEdgeOptions: Partial<Edge> = {
   type: 'flowEdge',
@@ -85,6 +94,33 @@ function resolveActionIcon(actionId: string) {
     icon: String(definition?.icon || '').trim(),
     iconSvg: String(definition?.iconSvg || '').trim(),
   };
+}
+
+function getConnectionMeta(node: WorkflowNode | null | undefined): WorkflowConnectionMeta | null {
+  if (!node || !node.data || typeof node.data.connection_from !== 'object' || !node.data.connection_from) {
+    return null;
+  }
+
+  return node.data.connection_from as WorkflowConnectionMeta;
+}
+
+function isFloatingNode(node: WorkflowNode | null | undefined): boolean {
+  if (!node || !node.data) {
+    return false;
+  }
+
+  return node.data.connection_mode === 'floating' || Boolean(node.data.connection_break_before);
+}
+
+function getVisibleNodeConfig(node: WorkflowNode): Record<string, unknown> {
+  const config = { ...node.data };
+
+  delete config.connection_from;
+  delete config.connection_mode;
+  delete config.connection_break_before;
+  delete config.canvas_position;
+
+  return config;
 }
 
 function buildNodeData(node: WorkflowNode): FlowNodeData {
@@ -109,7 +145,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
         || props.triggerDescription
         || 'Define o acionamento que inicia o fluxo.',
       ),
-      config: { ...node.data },
+      config: getVisibleNodeConfig(node),
       icon: String(triggerDefinition?.icon || ''),
       iconSvg: String(triggerDefinition?.iconSvg || ''),
       contextLabel: String(contextDefinition?.label || context || 'Trigger'),
@@ -128,9 +164,9 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
   return {
     type: isConditionNode(node) ? 'condition' : 'action',
     actionId,
-    label: String(node.data?.title || actionDefinition?.label || actionId || 'Ação'),
+    label: String(node.data?.title || actionDefinition?.label || actionId || 'Acao'),
     description,
-    config: { ...node.data },
+    config: getVisibleNodeConfig(node),
     icon,
     iconSvg,
     onEdit: handleNodeEdit,
@@ -154,6 +190,10 @@ function createEdge(
     ...defaultEdgeOptions,
     data: {
       edgeId: `${source}:${sourceHandle}->${target}:${targetHandle}`,
+      sourceId: source,
+      targetId: target,
+      sourceHandle,
+      targetHandle,
       onRemove: handleRemoveEdge,
     },
   };
@@ -199,19 +239,34 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
       }
 
       const currentY = cursorY;
-
       const storedPosition = getStoredPosition(workflowNode);
+      const cachedPosition = flowPositionCache.value[workflowNode.id];
+      const nodePosition = storedPosition || cachedPosition || { x: startX, y: currentY };
 
       flowNodes.push({
         id: workflowNode.id,
         type: 'flowNode',
-        position: storedPosition || { x: startX, y: currentY },
+        position: nodePosition,
         selected: workflowNode.id === props.selectedNodeId,
         draggable: true,
+        connectable: true,
         data: buildNodeData(workflowNode),
       });
+      flowPositionCache.value[workflowNode.id] = {
+        x: Number(nodePosition.x),
+        y: Number(nodePosition.y),
+      };
 
-      if (previousNodeId) {
+      const connectionMeta = getConnectionMeta(workflowNode);
+
+      if (connectionMeta?.source_id) {
+        flowEdges.push(createEdge(
+          connectionMeta.source_id,
+          workflowNode.id,
+          String(connectionMeta.source_handle || 'output'),
+          String(connectionMeta.target_handle || 'input'),
+        ));
+      } else if (previousNodeId && !isFloatingNode(workflowNode)) {
         flowEdges.push(createEdge(previousNodeId, workflowNode.id));
       }
 
@@ -222,11 +277,11 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
         const trueLayout = layoutSequence(branches.action_true, startX - branchOffsetX, currentY + rowGapY);
         const falseLayout = layoutSequence(branches.action_false, startX + branchOffsetX, currentY + rowGapY);
 
-        if (trueLayout.firstId) {
+        if (trueLayout.firstId && !getConnectionMeta(branches.action_true[0]) && !isFloatingNode(branches.action_true[0])) {
           flowEdges.push(createEdge(workflowNode.id, trueLayout.firstId, 'true'));
         }
 
-        if (falseLayout.firstId) {
+        if (falseLayout.firstId && !getConnectionMeta(branches.action_false[0]) && !isFloatingNode(branches.action_false[0])) {
           flowEdges.push(createEdge(workflowNode.id, falseLayout.firstId, 'false'));
         }
 
@@ -236,7 +291,7 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
       if (Array.isArray(workflowNode.children) && workflowNode.children.length > 0) {
         const childLayout = layoutSequence(workflowNode.children, startX, nextY);
 
-        if (childLayout.firstId) {
+        if (childLayout.firstId && !getConnectionMeta(workflowNode.children[0]) && !isFloatingNode(workflowNode.children[0])) {
           flowEdges.push(createEdge(workflowNode.id, childLayout.firstId));
         }
 
@@ -260,10 +315,17 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
 
 const graph = computed(() => {
   const nextGraph = buildFlowGraph(props.workflowNodes || []);
+  const nextNodeIds = new Set(nextGraph.nodes.map((node) => String(node.id)));
+
+  for (const nodeId of Object.keys(flowPositionCache.value)) {
+    if (!nextNodeIds.has(nodeId)) {
+      delete flowPositionCache.value[nodeId];
+    }
+  }
 
   return {
     nodes: nextGraph.nodes,
-    edges: nextGraph.edges.filter((edge) => !hiddenEdgeIds.value.includes(String(edge.id))),
+    edges: nextGraph.edges,
   };
 });
 
@@ -283,12 +345,52 @@ function handleRemoveRequest(nodeId: string) {
   emit('remove-node', nodeId);
 }
 
-function handleRemoveEdge(edgeId: string) {
-  if (!edgeId || hiddenEdgeIds.value.includes(edgeId)) {
+function handleRemoveEdge(payload: FlowEdgeRemovePayload | string) {
+  const targetNodeId = typeof payload === 'string'
+    ? String(payload.split('->')[1] || '').split(':')[0]
+    : String(payload?.targetId || '');
+
+  if (!targetNodeId) {
     return;
   }
 
-  hiddenEdgeIds.value = [...hiddenEdgeIds.value, edgeId];
+  emit('update-node', {
+    nodeId: targetNodeId,
+    patch: {
+      connection_from: null,
+      connection_mode: 'floating',
+      connection_break_before: null,
+      ...(flowPositionCache.value[targetNodeId]
+        ? {
+            canvas_position: {
+              x: Number(flowPositionCache.value[targetNodeId].x),
+              y: Number(flowPositionCache.value[targetNodeId].y),
+            },
+          }
+        : {}),
+    },
+  });
+}
+
+function handleConnect(connection: Connection) {
+  const targetNodeId = String(connection.target || '').trim();
+
+  if (!targetNodeId) {
+    return;
+  }
+
+  emit('update-node', {
+    nodeId: targetNodeId,
+    patch: {
+      connection_from: {
+        source_id: String(connection.source || '').trim(),
+        source_handle: String(connection.sourceHandle || 'output'),
+        target_handle: String(connection.targetHandle || 'input'),
+      },
+      connection_mode: null,
+      connection_break_before: null,
+    },
+  });
 }
 
 function handleNodeEdit(
@@ -339,6 +441,11 @@ function onNodeDragStop(_event: unknown, node: Node) {
     return;
   }
 
+  flowPositionCache.value[String(node.id)] = {
+    x: Number(node.position.x),
+    y: Number(node.position.y),
+  };
+
   emit('update-node', {
     nodeId: String(node.id),
     patch: {
@@ -368,11 +475,13 @@ function openAddAction() {
       :fit-view-on-init="true"
       :delete-key-code="[]"
       :nodes-draggable="true"
-      :nodes-connectable="false"
+      :nodes-connectable="true"
+      :connect-on-click="true"
       :elements-selectable="true"
       class="bg-[#f8f9fb]"
       @dragover="onDragOver"
       @drop="onDrop"
+      @connect="handleConnect"
       @node-drag-stop="onNodeDragStop"
     >
       <Background
@@ -398,7 +507,7 @@ function openAddAction() {
       @click="openAddAction"
     >
       <i class="bx bx-plus" style="font-size: 15px;" />
-      Adicionar ação
+      Adicionar acao
     </button>
   </div>
 </template>

@@ -10,11 +10,12 @@ const props = defineProps({
   title: { type: String, default: '' },
   status: { type: String, default: 'draft' },
   loading: { type: Boolean, default: false },
+  saving: { type: Boolean, default: false },
   statusLoading: { type: Boolean, default: false },
   docsUrl: { type: String, default: '#' },
 });
 
-defineEmits(['update:status', 'test', 'new', 'back', 'export', 'edit-title']);
+defineEmits(['update:status', 'test', 'new', 'back', 'export', 'edit-title', 'save']);
 
 const menuOpen = ref(false);
 
@@ -69,6 +70,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="ml-auto flex items-center gap-8 pr-6">
+        <BaseButton :title="__('Save flow', textDomain)" variant="primary" :loading="saving" @click="$emit('save')" />
         <BaseButton :title="__('Run test', textDomain)" variant="secondary" :loading="loading" @click="$emit('test')" />
         <BaseSwitch
           :model-value="status === 'publish'"

@@ -47,8 +47,8 @@ import {
   ensureBranchesOnNode,
   findWorkflowNodeLocation,
   getBranchCollection,
-  insertWorkflowNodeAfter,
   insertWorkflowNodeIntoConditionBranch,
+  insertWorkflowNodeAtEnd,
   isConditionNode,
   isDelayNode,
   isPlaceholderNode,
@@ -300,6 +300,35 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     return findWorkflowNodeLocation(workflowContent.value, nodeId)?.node || null;
+  }
+
+  function getNodeCanvasPosition(node: WorkflowNode | null | undefined) {
+    const candidate = node?.data?.canvas_position;
+
+    if (
+      candidate
+      && typeof candidate === 'object'
+      && typeof (candidate as Record<string, unknown>).x === 'number'
+      && typeof (candidate as Record<string, unknown>).y === 'number'
+    ) {
+      return {
+        x: Number((candidate as Record<string, unknown>).x),
+        y: Number((candidate as Record<string, unknown>).y),
+      };
+    }
+
+    return null;
+  }
+
+  function resolveFloatingNodePosition(referenceId: string) {
+    const referenceNode = getNodeById(referenceId) || triggerNode.value || selectedNode.value;
+    const referencePosition = getNodeCanvasPosition(referenceNode) || { x: 320, y: 80 };
+    const floatingCount = workflowContent.value.filter((node) => node.data?.connection_mode === 'floating').length;
+
+    return {
+      x: referencePosition.x + 280,
+      y: referencePosition.y + 140 + (floatingCount * 36),
+    };
   }
 
   const selectedTriggerDefinition = computed(() => {
@@ -1012,9 +1041,17 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       }
     }
 
-    const inserted = afterNodeId
-      ? insertWorkflowNodeAfter(workflowContent.value, afterNodeId, node)
-      : insertWorkflowNodeAfter(workflowContent.value, triggerNode.value?.id || '', node) || node;
+    const canvasPosition = resolveFloatingNodePosition(afterNodeId || triggerNode.value?.id || '');
+
+    node.data = {
+      ...node.data,
+      connection_from: null,
+      connection_mode: 'floating',
+      connection_break_before: null,
+      canvas_position: canvasPosition,
+    };
+
+    const inserted = insertWorkflowNodeAtEnd(workflowContent.value, node);
 
     selectedNodeId.value = inserted?.id || node.id;
     editingNodeId.value = selectedNodeId.value;
@@ -1230,29 +1267,22 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         } else if (created?.post_id) {
           postId.value = Number(created.post_id) || 0;
         }
-
-        if (created?.workflow_file && created?.workflow?.post_id) {
-          applyWorkflowFile(created.workflow_file, created.workflow.post_id, true);
-        }
       }
 
       const response = api.value ? await api.value.saveWorkflow({ post_id: postId.value, workflow_file: payload }) : null;
 
-      if (response?.workflow_file) {
-        applyWorkflowFile(response.workflow_file, response?.workflow?.post_id || postId.value);
-        debugLogger.log('workflow:save-complete', {
-          workflow_id: response?.workflow?.post_id || postId.value,
-          mode: 'server',
-        });
-        return response;
+      if (response?.workflow?.post_id) {
+        postId.value = Number(response.workflow.post_id) || postId.value;
+      } else if (response?.post_id) {
+        postId.value = Number(response.post_id) || postId.value;
       }
 
       markBaseline();
       debugLogger.log('workflow:save-complete', {
         workflow_id: postId.value,
-        mode: 'local',
+        mode: 'server',
       });
-      return { ok: true, workflow_file: payload };
+      return response || { ok: true, workflow_file: payload };
     } finally {
       loading.value.save = false;
     }
@@ -1300,11 +1330,8 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
           postId.value = Number(created.post_id) || 0;
         }
 
-        if (created?.workflow_file && created?.workflow?.post_id) {
-          applyWorkflowFile(created.workflow_file, created.workflow.post_id, true);
-        }
-
         if (created?.status === 'success' || created?.workflow?.post_id || created?.post_id) {
+          markBaseline();
           return created;
         }
 
@@ -1313,14 +1340,15 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
       const response = await api.value.saveWorkflow({ post_id: postId.value, workflow_file: payload });
 
-      if (response?.workflow_file) {
-        applyWorkflowFile(response.workflow_file, response?.workflow?.post_id || postId.value);
-      } else {
-        applyWorkflowFile(workflowFile, response?.workflow?.post_id || postId.value);
+      if (response?.workflow?.post_id) {
+        postId.value = Number(response.workflow.post_id) || postId.value;
+      } else if (response?.post_id) {
+        postId.value = Number(response.post_id) || postId.value;
       }
 
+      markBaseline();
       debugLogger.log('workflow:save-snapshot-complete', {
-        workflow_id: response?.workflow?.post_id || postId.value,
+        workflow_id: postId.value,
       });
       return response || { ok: true, workflow_file: payload };
     } finally {

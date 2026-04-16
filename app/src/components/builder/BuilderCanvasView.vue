@@ -17,8 +17,6 @@ import type { WorkflowContextDefinition, WorkflowNode } from '../../types/workfl
 
 type BuilderAction = Record<string, unknown>;
 
-// ── Props ─────────────────────────────────────────────────────────────────
-
 interface BuilderCanvasProps {
   triggerNode: WorkflowNode | null;
   nodes: WorkflowNode[];
@@ -30,11 +28,13 @@ interface BuilderCanvasProps {
   actions: BuilderAction[];
   actionsLoading: boolean;
   actionsOpen: boolean;
+  flowReady: boolean;
+  readyTrigger: boolean;
+  readyActions: boolean;
+  readySenders: boolean;
 }
 
 const props = defineProps<BuilderCanvasProps>();
-
-// ── Emits ─────────────────────────────────────────────────────────────────
 
 const emit = defineEmits([
   'select-node',
@@ -50,8 +50,6 @@ const emit = defineEmits([
   'select-action',
   'close-actions',
 ]);
-
-// ── Trigger info (used as the initial trigger node label/description) ────
 
 const triggerDefinition = computed(() => {
   if (!props.triggerNode) return undefined;
@@ -77,9 +75,25 @@ const triggerDescription = computed(() =>
   ),
 );
 
-// ── FlowCanvas imperative ref ─────────────────────────────────────────────
-
 const flowCanvasRef = ref<FlowCanvasExpose | null>(null);
+const showFlowLoader = computed(() => props.loading || !props.flowReady);
+const loaderItems = computed(() => [
+  {
+    key: 'trigger',
+    label: __('Trigger definido', textDomain),
+    ready: props.readyTrigger,
+  },
+  {
+    key: 'actions',
+    label: __('Acoes carregadas', textDomain),
+    ready: props.readyActions,
+  },
+  {
+    key: 'senders',
+    label: __('Remetentes disponiveis', textDomain),
+    ready: props.readySenders,
+  },
+]);
 
 function openActionsSidebar() {
   emit('open-actions', { afterNodeId: props.triggerNode?.id ?? '' });
@@ -88,20 +102,8 @@ function openActionsSidebar() {
 
 <template>
   <div class="relative h-full min-h-0 w-full overflow-hidden">
-
-    <!-- ── Loading skeleton ─────────────────────────────────────────────── -->
-    <div v-if="loading" class="flex h-full items-center justify-center bg-[#f8f9fb]">
-      <div class="space-y-4 w-full max-w-sm px-8">
-        <div class="joinotify-skeleton h-16 w-full rounded-xl bg-slate-200/70" />
-        <div class="joinotify-skeleton h-10 w-2/3 mx-auto rounded-xl bg-slate-200/60" />
-        <div class="joinotify-skeleton h-16 w-full rounded-xl bg-slate-200/70" />
-        <div class="joinotify-skeleton h-16 w-full rounded-xl bg-slate-200/70" />
-      </div>
-    </div>
-
-    <!-- ── Empty state (no trigger set yet) ───────────────────────────── -->
     <div
-      v-else-if="!triggerNode"
+      v-if="!triggerNode"
       class="flex h-full items-center justify-center bg-[#f8f9fb]"
     >
       <div class="max-w-md px-6 text-center">
@@ -112,12 +114,11 @@ function openActionsSidebar() {
           {{ __('Canvas vazio', textDomain) }}
         </h3>
         <p class="mt-2 text-sm leading-6 text-slate-500">
-          {{ __('Crie ou importe um fluxo, escolha um acionamento e comece a adicionar ações.', textDomain) }}
+          {{ __('Crie ou importe um fluxo, escolha um acionamento e comece a adicionar acoes.', textDomain) }}
         </p>
       </div>
     </div>
 
-    <!-- ── Main FlowCanvas ─────────────────────────────────────────────── -->
     <FlowCanvas
       v-else
       ref="flowCanvasRef"
@@ -133,7 +134,50 @@ function openActionsSidebar() {
       @update-node="$emit('update-node', $event)"
     />
 
-    <!-- ── Node Settings Drawer ────────────────────────────────────────── -->
+    <Transition name="flow-loader-fade">
+      <div
+        v-if="showFlowLoader"
+        class="canvas-flow-loader absolute inset-0 z-30 flex items-center justify-center px-4"
+        role="status"
+        aria-live="polite"
+        aria-label="Canvas flow carregando"
+      >
+        <div class="canvas-flow-loader__surface w-full max-w-md rounded-3xl border border-white/70 px-7 py-8 shadow-2xl">
+          <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center">
+            <span class="canvas-flow-loader__orbit canvas-flow-loader__orbit--outer" />
+            <span class="canvas-flow-loader__orbit canvas-flow-loader__orbit--middle" />
+            <span class="canvas-flow-loader__core">
+              <span class="canvas-flow-loader__core-dot" />
+            </span>
+          </div>
+
+          <h3 class="text-center text-[20px] font-semibold tracking-tight text-slate-900">
+            {{ __('Preparando o canvas flow', textDomain) }}
+          </h3>
+          <p class="mt-1 text-center text-sm text-slate-600">
+            {{ __('Finalizando recursos para liberar o builder.', textDomain) }}
+          </p>
+
+          <div class="mt-6 space-y-2.5">
+            <div
+              v-for="item in loaderItems"
+              :key="item.key"
+              class="flex items-center justify-between rounded-xl border px-3 py-2.5 text-sm"
+              :class="item.ready ? 'border-emerald-200 bg-emerald-50/80 text-emerald-800' : 'border-slate-200 bg-white/80 text-slate-600'"
+            >
+              <span class="font-medium">{{ item.label }}</span>
+              <span
+                class="inline-flex h-6 w-6 items-center justify-center rounded-full border"
+                :class="item.ready ? 'border-emerald-300 bg-emerald-100 text-emerald-700' : 'border-slate-300 text-slate-400'"
+              >
+                <i :class="item.ready ? 'bx bx-check' : 'bx bx-loader-alt bx-spin'" />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
     <NodeSettingsDrawer
       :open="drawerOpen"
       :node="selectedNode"
@@ -142,7 +186,6 @@ function openActionsSidebar() {
       @update="$emit('update-node', $event)"
     />
 
-    <!-- ── Action Library Sidebar ─────────────────────────────────────── -->
     <BuilderActionSidebar
       :open="actionsOpen"
       :actions="actions"
@@ -153,3 +196,105 @@ function openActionsSidebar() {
     />
   </div>
 </template>
+
+<style scoped>
+.canvas-flow-loader {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.16), transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.14), transparent 44%),
+    linear-gradient(160deg, rgba(248, 250, 252, 0.96), rgba(241, 245, 249, 0.98));
+  backdrop-filter: blur(4px);
+}
+
+.canvas-flow-loader__surface {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.9));
+}
+
+.canvas-flow-loader__orbit {
+  position: absolute;
+  border-radius: 9999px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #16a34a;
+  border-right-color: rgba(37, 99, 235, 0.8);
+}
+
+.canvas-flow-loader__orbit--outer {
+  width: 80px;
+  height: 80px;
+  border-width: 3px;
+  animation: joinotify-flow-loader-spin 1.05s linear infinite;
+}
+
+.canvas-flow-loader__orbit--middle {
+  width: 56px;
+  height: 56px;
+  border-width: 3px;
+  border-top-color: #2563eb;
+  border-right-color: rgba(22, 163, 74, 0.8);
+  animation: joinotify-flow-loader-spin-reverse 1.35s linear infinite;
+}
+
+.canvas-flow-loader__core {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #22c55e, #2563eb);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
+  animation: joinotify-flow-loader-pulse 1.2s ease-in-out infinite;
+}
+
+.canvas-flow-loader__core-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.flow-loader-fade-enter-active,
+.flow-loader-fade-leave-active {
+  transition: opacity 0.42s ease, transform 0.42s ease;
+}
+
+.flow-loader-fade-enter-from,
+.flow-loader-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+@keyframes joinotify-flow-loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes joinotify-flow-loader-spin-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes joinotify-flow-loader-pulse {
+  0%,
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.2);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 16px 28px rgba(22, 163, 74, 0.28);
+  }
+}
+</style>

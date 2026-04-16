@@ -17,7 +17,6 @@ import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { createDebugLogger } from '../../utils/debug';
 import { cloneValue } from '../../utils/object';
-import { removeWorkflowNode } from '../../utils/workflowTree';
 
 defineOptions({ name: 'BuilderPage' });
 
@@ -53,7 +52,6 @@ const deleteConfirmNodeLabel = ref('');
 const deleteConfirmHasNestedFlow = ref(false);
 const toasts = ref([]);
 const toastTimers = new Map();
-let nodeAutosaveTimer = null;
 
 const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
@@ -89,6 +87,25 @@ const availableActions = computed(() => {
     return !context || contexts.length === 0 || contexts.includes(context);
   });
 });
+const canvasHasTrigger = computed(() => {
+  const triggerId = String(store.triggerNode?.data?.trigger || store.selectedTrigger || '').trim();
+  return Boolean(triggerId);
+});
+const canvasHasActions = computed(() => availableActions.value.length > 0);
+const canvasHasSenders = computed(() => {
+  const senders = Array.isArray(store.bootstrap?.phones?.senders)
+    ? store.bootstrap.phones.senders
+    : [];
+
+  return senders.some((item) => {
+    if (!item || typeof item !== 'object') {
+      return false;
+    }
+
+    return Boolean(String(item.phone || '').trim());
+  });
+});
+const canvasFlowReady = computed(() => canvasHasTrigger.value && canvasHasActions.value && canvasHasSenders.value);
 const actionSidebarOpen = computed(() => Boolean(actionModalOpen.value));
 const isSavingTitle = computed(() => titleSaving.value || store.loading.save);
 const isUpdatingStatus = computed(() => Boolean(store.loading.status));
@@ -118,6 +135,7 @@ const filteredTemplates = computed(() => {
 watch(
   () => props.bootstrap,
   (value) => {
+    routeWorkflowLoaded.value = false;
     bootstrap.value = cloneValue(value || {});
     testPhoneDraft.value = String(bootstrap.value?.settings?.test_number_phone || '').trim();
     debugLogger.log('bootstrap:loaded', {
@@ -146,18 +164,22 @@ watch(
 watch(
   () => store.step,
   async (step) => {
-    if (step !== 'canvas') {
+    if (step !== 'canvas' || routeWorkflowLoaded.value) {
       return;
     }
 
-    if (workflowIdFromUrl.value <= 0 || routeWorkflowLoaded.value) {
-      return;
-    }
+    const persistedWorkflowId = workflowIdFromUrl.value > 0
+      ? workflowIdFromUrl.value
+      : (Number(store.postId || 0) || 0);
 
-    const response = await store.loadWorkflowFromServer(workflowIdFromUrl.value);
+    if (persistedWorkflowId > 0) {
+      const response = await store.loadBootstrapFromServer(persistedWorkflowId);
 
-    if (response && response.ok === false) {
-      return;
+      if (response && response.ok === false) {
+        return;
+      }
+    } else {
+      await store.loadCanvasActionsFromServer(store.activeContext);
     }
 
     routeWorkflowLoaded.value = true;
@@ -166,11 +188,6 @@ watch(
 );
 
 onBeforeUnmount(() => {
-  if (nodeAutosaveTimer) {
-    window.clearTimeout(nodeAutosaveTimer);
-    nodeAutosaveTimer = null;
-  }
-
   toastTimers.forEach((timers) => {
     if (timers.hide) {
       window.clearTimeout(timers.hide);
@@ -204,33 +221,6 @@ function goCanvas() {
   store.step = 'canvas';
 }
 
-function scheduleNodeAutosave() {
-  if (nodeAutosaveTimer) {
-    window.clearTimeout(nodeAutosaveTimer);
-  }
-
-  nodeAutosaveTimer = window.setTimeout(() => {
-    nodeAutosaveTimer = null;
-
-    if (store.loading.save) {
-      scheduleNodeAutosave();
-      return;
-    }
-
-    void store.saveWorkflow()
-      .then((response) => {
-        syncBuilderUrl(response?.workflow?.post_id || store.postId);
-      })
-      .catch((error) => {
-        pushToast(
-          error instanceof Error ? error.message : __('Could not save the workflow changes.', textDomain),
-          'error',
-          __('Builder', textDomain)
-        );
-      });
-  }, 700);
-}
-
 function handleNodeUpdate(payload) {
   const isExplicitPayload = payload && typeof payload === 'object' && payload.nodeId && payload.patch;
   const nodeId = isExplicitPayload
@@ -243,7 +233,6 @@ function handleNodeUpdate(payload) {
   }
 
   store.updateNodeData(nodeId, patch);
-  scheduleNodeAutosave();
 }
 
 function openActionSidebar(afterNodeId) {
@@ -370,40 +359,17 @@ function dismissToast(id) {
 
 async function saveTitleModal() {
   const nextTitle = titleDraft.value.trim() || 'New workflow';
-  const previousTitle = store.file.post.title || '';
-
-  titleSaving.value = true;
   debugLogger.log('workflow:title-save-requested', {
     next_title: nextTitle,
-    previous_title: previousTitle,
+    previous_title: store.file.post.title || '',
   });
 
-  try {
-    store.setWorkflowTitle(nextTitle);
-    const response = await store.saveWorkflow();
-    syncBuilderUrl(response?.workflow?.post_id || store.postId);
-    pushToast(__('Workflow name saved successfully.', textDomain), 'success', __('Builder', textDomain));
-    closeTitleModal();
-  } catch (error) {
-    store.setWorkflowTitle(previousTitle);
-    pushToast(
-      error instanceof Error ? error.message : __('Could not save the workflow name.', textDomain),
-      'error',
-      __('Builder', textDomain)
-    );
-    debugLogger.log('workflow:title-save-failed', {
-      error: error instanceof Error ? error.message : String(error),
-    });
-  } finally {
-    titleSaving.value = false;
-  }
+  store.setWorkflowTitle(nextTitle);
+  pushToast(__('Workflow name updated. Click Save flow to persist changes.', textDomain), 'info', __('Builder', textDomain));
+  closeTitleModal();
 }
 
-function workflowStatusToastMessage(response, fallback) {
-  return response?.toast_body_title || response?.toast_header_title || fallback;
-}
-
-async function handleWorkflowStatusChange(nextStatus) {
+function handleWorkflowStatusChange(nextStatus) {
   const previousStatus = store.file.post.status || 'draft';
 
   if (previousStatus === nextStatus) {
@@ -415,37 +381,14 @@ async function handleWorkflowStatusChange(nextStatus) {
     to: nextStatus,
   });
 
-  try {
-    const response = await store.updateWorkflowStatus(nextStatus);
-
-    if (!response || response?.ok === false) {
-      throw new Error(__('Could not update the workflow status.', textDomain));
-    }
-
-    store.setWorkflowStatus(nextStatus);
-    pushToast(
-      workflowStatusToastMessage(
-        response,
-        nextStatus === 'publish'
-          ? __('The workflow was activated.', textDomain)
-          : __('The workflow was deactivated.', textDomain)
-      ),
-      'success',
-      __('Builder', textDomain)
-    );
-  } catch (error) {
-    store.setWorkflowStatus(previousStatus);
-    pushToast(
-      error instanceof Error ? error.message : __('Could not update the workflow status.', textDomain),
-      'error',
-      __('Builder', textDomain)
-    );
-    debugLogger.log('workflow:status-change-failed', {
-      from: previousStatus,
-      to: nextStatus,
-      error: error instanceof Error ? error.message : String(error),
-    });
-  }
+  store.setWorkflowStatus(nextStatus);
+  pushToast(
+    nextStatus === 'publish'
+      ? __('Workflow activated locally. Click Save flow to persist changes.', textDomain)
+      : __('Workflow deactivated locally. Click Save flow to persist changes.', textDomain),
+    'info',
+    __('Builder', textDomain)
+  );
 }
 
 async function startScratch() {
@@ -471,7 +414,7 @@ async function continueFromTriggerSetup() {
     }
 
     syncBuilderUrl(response?.workflow?.post_id || store.postId);
-    routeWorkflowLoaded.value = true;
+    routeWorkflowLoaded.value = false;
     goCanvas();
   } catch (error) {
     console.error(error);
@@ -516,7 +459,7 @@ async function openTemplate(template) {
   }
 
   syncBuilderUrl(store.postId);
-  routeWorkflowLoaded.value = true;
+  routeWorkflowLoaded.value = false;
   goCanvas();
 }
 
@@ -600,17 +543,6 @@ function handleActionSelect(action) {
   }
 
   void store.loadActionDefinitionFromServer(actionId);
-  void store.saveWorkflow()
-    .then((response) => {
-      syncBuilderUrl(response?.workflow?.post_id || store.postId);
-    })
-    .catch((error) => {
-      pushToast(
-        error instanceof Error ? error.message : __('Could not save the action.', textDomain),
-        'error',
-        __('Builder', textDomain)
-      );
-    });
 }
 
 function closeActionSidebar() {
@@ -640,11 +572,27 @@ async function createNewWorkflow() {
 
 async function saveWorkflow() {
   debugLogger.log('workflow:save-requested');
-  const response = await store.saveWorkflow();
-  syncBuilderUrl(response?.workflow?.post_id || store.postId);
-  debugLogger.log('workflow:save-completed', {
-    workflow_id: response?.workflow?.post_id || store.postId,
-  });
+  try {
+    const response = await store.saveWorkflow();
+    syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    pushToast(
+      __('Workflow saved successfully.', textDomain),
+      'success',
+      __('Builder', textDomain)
+    );
+    debugLogger.log('workflow:save-completed', {
+      workflow_id: response?.workflow?.post_id || store.postId,
+    });
+  } catch (error) {
+    pushToast(
+      error instanceof Error ? error.message : __('Could not save the workflow.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+    debugLogger.log('workflow:save-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 }
 
 function openDeleteConfirm(nodeId) {
@@ -694,23 +642,11 @@ async function confirmDeleteNode() {
   });
 
   try {
-    const nextWorkflow = cloneValue(store.file);
-
-    if (!Array.isArray(nextWorkflow?.workflow_content) || !removeWorkflowNode(nextWorkflow.workflow_content, nodeId)) {
-      throw new Error(__('Could not delete the action.', textDomain));
-    }
-
-    const response = await store.saveWorkflowSnapshot(nextWorkflow);
-
-    if (!response || response?.ok === false) {
-      throw new Error(__('Could not delete the action.', textDomain));
-    }
-
-    syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    store.removeNode(nodeId);
     deleteConfirmBusy.value = false;
     closeDeleteConfirm();
     pushToast(
-      __('Action deleted successfully.', textDomain),
+      __('Action removed locally. Click Save flow to persist changes.', textDomain),
       'success',
       __('Builder', textDomain)
     );
@@ -887,8 +823,10 @@ function clearBuilderUrl() {
         :status="store.file.post.status"
         :docs-url="docsUrl"
         :loading="isRunningTest"
+        :saving="store.loading.save || titleSaving"
         :status-loading="isUpdatingStatus"
         @update:status="handleWorkflowStatusChange"
+        @save="saveWorkflow"
         @test="runTest"
         @new="createNewWorkflow"
         @back="goBack"
@@ -909,6 +847,10 @@ function clearBuilderUrl() {
         :actions="availableActions"
         :actions-loading="store.loading.actions"
         :actions-open="actionSidebarOpen"
+        :flow-ready="canvasFlowReady"
+        :ready-trigger="canvasHasTrigger"
+        :ready-actions="canvasHasActions"
+        :ready-senders="canvasHasSenders"
         @select-node="store.openNodeSettings"
         @add-node="handleActionOpen"
         @duplicate-node="store.duplicateNode"
@@ -1008,7 +950,7 @@ function clearBuilderUrl() {
         <p class="mt-2 text-[13px] leading-6 text-rose-800">
           {{ __('You are about to delete the action', textDomain) }}
           <span class="font-semibold">"{{ deleteConfirmNodeLabel }}"</span>.
-          {{ __('This step will be removed from the canvas and saved to the workflow.', textDomain) }}
+          {{ __('This step will be removed from the canvas. Click Save flow to persist this change.', textDomain) }}
           <span v-if="deleteConfirmHasNestedFlow">
             {{ __('Any nested branch inside this action will also be removed.', textDomain) }}
           </span>
