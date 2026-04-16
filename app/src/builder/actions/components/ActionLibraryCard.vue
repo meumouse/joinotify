@@ -20,14 +20,33 @@ function hasSvg(value: string): boolean {
 }
 
 const resolvedIconSvg = computed(() => resolveSvgMarkup(props.action.iconSvg, props.action.icon));
+
+/** Serialize the action as a vue-flow node type payload for drag-and-drop onto FlowCanvas */
+function onDragStart(event: DragEvent) {
+  if (!event.dataTransfer) return;
+
+  const payload = {
+    type: props.action.action,
+    label: props.action.title,
+    description: props.action.description,
+    icon: props.action.icon ?? '',
+    color: 'bg-primary-600',
+    category: (Array.isArray(props.action.context) ? props.action.context[0] : props.action.context) ?? '',
+  };
+
+  event.dataTransfer.setData('application/vueflow-node-type', JSON.stringify(payload));
+  event.dataTransfer.effectAllowed = 'move';
+}
 </script>
 
 <template>
   <button
     type="button"
-    class="w-full rounded-[14px] border p-4 text-left transition"
+    draggable="true"
+    class="w-full cursor-grab rounded-[14px] border p-4 text-left transition active:cursor-grabbing"
     :class="[accentClasses, compact ? 'p-3' : 'p-4']"
     @click="$emit('click', action)"
+    @dragstart="onDragStart"
   >
     <div class="flex items-start gap-3.5">
       <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600">
