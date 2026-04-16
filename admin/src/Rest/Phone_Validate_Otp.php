@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Validations\Otp_Validation;
 use WP_REST_Request;
 
@@ -37,38 +38,23 @@ class Phone_Validate_Otp extends Abstract_Route {
      */
     public function handle( WP_REST_Request $request ) {
         $payload = $request->get_json_params();
-        $phone = isset( $payload['phone'] ) ? preg_replace( '/\D+/', '', sanitize_text_field( $payload['phone'] ) ) : '';
-        $otp = isset( $payload['otp'] ) ? preg_replace( '/\D+/', '', sanitize_text_field( $payload['otp'] ) ) : '';
+        $phone   = isset( $payload['phone'] ) ? Phone_Manager::sanitize_phone( $payload['phone'] ) : '';
+        $otp     = isset( $payload['otp'] ) ? preg_replace( '/\D+/', '', sanitize_text_field( $payload['otp'] ) ) : '';
 
         if ( empty( $phone ) || empty( $otp ) ) {
-            return rest_ensure_response( array(
-                'status' => 'error',
-                'message' => esc_html__( 'Fill in the phone number and OTP code.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Fill in the phone number and OTP code.', 'joinotify' ) );
         }
 
         if ( ! Otp_Validation::validate_otp( $phone, $otp ) ) {
-            return rest_ensure_response( array(
-                'status' => 'error',
-                'message' => esc_html__( 'Invalid or expired OTP code.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Invalid or expired OTP code.', 'joinotify' ) );
         }
 
-        $current_senders = get_option( 'joinotify_get_phones_senders', array() );
-        $current_senders = is_array( $current_senders ) ? $current_senders : array();
-
-        if ( ! in_array( $phone, $current_senders, true ) ) {
-            $current_senders[] = $phone;
-        }
-
-        update_option( 'joinotify_get_phones_senders', array_values( $current_senders ) );
+        Phone_Manager::add_sender( $phone );
         Controller::get_connection_state( $phone );
 
-        return rest_ensure_response( array(
-            'status' => 'success',
+        return $this->success_response( array(
             'message' => esc_html__( 'Your WhatsApp was verified successfully!', 'joinotify' ),
-            'phones' => Registry::get_phone_state(),
+            'phones'  => Registry::get_phone_state(),
         ) );
     }
 }
-

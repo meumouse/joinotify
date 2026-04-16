@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Api\License;
+use MeuMouse\Joinotify\Core\Cache_Helper;
 use WP_REST_Request;
 use stdClass;
 
@@ -44,16 +45,10 @@ class License_Sync extends Abstract_Route {
         $license_key     = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
 
         if ( empty( $license_key ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'No license key found to sync.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'No license key found to sync.', 'joinotify' ) );
         }
 
-        // Clear caches to force refresh
-        delete_transient( 'joinotify_api_request_cache' );
-        delete_transient( 'joinotify_api_response_cache' );
-        delete_transient( 'joinotify_license_status_cached' );
+        Cache_Helper::clear_license_cache();
 
         if ( License::check_license( $license_key, $license_message, $response_obj, JOINOTIFY_FILE ) ) {
             if ( $response_obj && ! empty( $response_obj->is_valid ) ) {
@@ -63,16 +58,14 @@ class License_Sync extends Abstract_Route {
                 update_option( 'joinotify_license_status', 'invalid' );
             }
 
-            return rest_ensure_response( array(
-                'status'       => 'success',
+            return $this->success_response( array(
                 'message'      => esc_html__( 'License information updated successfully.', 'joinotify' ),
                 'license_data' => Registry::get_license_state(),
             ) );
         }
 
-        return rest_ensure_response( array(
-            'status'  => 'error',
-            'message' => ! empty( $license_message ) ? $license_message : esc_html__( 'Could not sync the license information.', 'joinotify' ),
-        ) );
+        return $this->error_response(
+            ! empty( $license_message ) ? $license_message : esc_html__( 'Could not sync the license information.', 'joinotify' )
+        );
     }
 }

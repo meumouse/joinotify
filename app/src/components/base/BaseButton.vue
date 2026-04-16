@@ -20,10 +20,10 @@ const props = defineProps({
 const emit = defineEmits(['click']);
 
 const variantClasses = {
-  primary: 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 focus-visible:ring-primary-700/20',
-  secondary: 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-slate-200',
-  ghost: 'bg-transparent text-slate-700 hover:bg-slate-100 focus-visible:ring-slate-200',
-  danger: 'bg-rose-600 text-white shadow-sm hover:bg-rose-500 focus-visible:ring-rose-500/20',
+  primary: 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 focus-visible:ring-primary-100',
+  secondary: 'bg-white text-ink ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-primary-100',
+  ghost: 'bg-transparent text-ink hover:bg-slate-100 focus-visible:ring-primary-100',
+  danger: 'bg-danger text-white shadow-sm hover:opacity-90 focus-visible:ring-red-100',
 };
 
 const sizeClasses = {
@@ -38,7 +38,6 @@ function handleClick(event) {
     return;
   }
 
-  // The event is still useful for parents that want to intercept navigation.
   emit('click', event);
 }
 </script>

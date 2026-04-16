@@ -13,7 +13,16 @@ import {
 import { toWorkflowActionItem } from '../registry/actionRegistry';
 import type { WorkflowActionItem } from '../registry/types';
 
-export function useWorkflowBuilder(initialWorkflow: WorkflowActionItem[] = []) {
+/**
+ * Composable for managing the builder action workflow tree.
+ *
+ * Renamed from useWorkflowBuilder to useBuilderWorkflow to avoid a naming
+ * conflict with the app-level composable of the same name in
+ * src/composables/useWorkflowBuilder.ts (which wraps the Pinia store).
+ *
+ * @since 1.4.7
+ */
+export function useBuilderWorkflow(initialWorkflow: WorkflowActionItem[] = []) {
   const registry = useActionRegistry();
   const workflow = ref<WorkflowActionItem[]>(createActionTreeFromList(initialWorkflow || []));
   const selectedActionId = ref('');

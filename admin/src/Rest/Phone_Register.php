@@ -2,7 +2,7 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Validations\Otp_Validation;
 use WP_REST_Request;
 
@@ -36,28 +36,20 @@ class Phone_Register extends Abstract_Route {
      */
     public function handle( WP_REST_Request $request ) {
         $payload = $request->get_json_params();
-        $phone = isset( $payload['phone'] ) ? preg_replace( '/\D+/', '', sanitize_text_field( $payload['phone'] ) ) : '';
+        $phone   = isset( $payload['phone'] ) ? Phone_Manager::sanitize_phone( $payload['phone'] ) : '';
 
         if ( empty( $phone ) ) {
-            return rest_ensure_response( array(
-                'status' => 'error',
-                'message' => esc_html__( 'NúInvalid phone number.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Invalid phone number.', 'joinotify' ) );
         }
 
         if ( ! Otp_Validation::generate_and_send_otp( $phone ) ) {
-            return rest_ensure_response( array(
-                'status' => 'error',
-                'message' => esc_html__( 'Could not send the verification code.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Could not send the verification code.', 'joinotify' ) );
         }
 
-        return rest_ensure_response( array(
-            'status' => 'success',
-            'message' => esc_html__( 'Code sent successfully.', 'joinotify' ),
-            'phone' => $phone,
+        return $this->success_response( array(
+            'message'   => esc_html__( 'Code sent successfully.', 'joinotify' ),
+            'phone'     => $phone,
             'countdown' => 60,
         ) );
     }
 }
-

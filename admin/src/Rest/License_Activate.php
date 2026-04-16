@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Api\License;
+use MeuMouse\Joinotify\Core\Cache_Helper;
 use WP_REST_Request;
 use stdClass;
 
@@ -42,19 +43,13 @@ class License_Activate extends Abstract_Route {
         $license_key = isset( $payload['license_key'] ) ? sanitize_text_field( $payload['license_key'] ) : '';
 
         if ( empty( $license_key ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'License key is required.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'License key is required.', 'joinotify' ) );
         }
 
         $response_obj    = new stdClass();
         $license_message = '';
 
-        // clear cached data first
-        delete_transient( 'joinotify_api_request_cache' );
-        delete_transient( 'joinotify_api_response_cache' );
-        delete_transient( 'joinotify_license_status_cached' );
+        Cache_Helper::clear_license_cache();
 
         update_option( 'joinotify_license_key', $license_key );
         update_option( 'joinotify_temp_license_key', $license_key );
@@ -69,17 +64,15 @@ class License_Activate extends Abstract_Route {
             }
 
             if ( License::is_valid() ) {
-                return rest_ensure_response( array(
-                    'status'       => 'success',
+                return $this->success_response( array(
                     'message'      => esc_html__( 'License activated successfully.', 'joinotify' ),
                     'license_data' => Registry::get_license_state(),
                 ) );
             }
         }
 
-        return rest_ensure_response( array(
-            'status'  => 'error',
-            'message' => ! empty( $license_message ) ? $license_message : esc_html__( 'Could not activate the license.', 'joinotify' ),
-        ) );
+        return $this->error_response(
+            ! empty( $license_message ) ? $license_message : esc_html__( 'Could not activate the license.', 'joinotify' )
+        );
     }
 }

@@ -86,4 +86,32 @@ abstract class Abstract_Route {
      * @return mixed
      */
     abstract public function handle( WP_REST_Request $request );
+
+
+    /**
+     * Build a standardised success REST response.
+     *
+     * @since 1.4.7
+     * @param array $data Additional key/value pairs to merge into the response body.
+     * @return \WP_REST_Response
+     */
+    protected function success_response( array $data = array() ) {
+        return rest_ensure_response( array_merge( array( 'status' => 'success' ), $data ) );
+    }
+
+
+    /**
+     * Build a standardised error REST response.
+     *
+     * @since 1.4.7
+     * @param string $message Human-readable error description (already escaped).
+     * @param array  $data    Optional additional key/value pairs.
+     * @return \WP_REST_Response
+     */
+    protected function error_response( $message, array $data = array() ) {
+        return rest_ensure_response( array_merge( array(
+            'status'  => 'error',
+            'message' => $message,
+        ), $data ) );
+    }
 }

@@ -1,6 +1,6 @@
 <script setup>
 import { __, textDomain } from '../../utils/i18n';
-import BaseButton from '../buttons/button/BaseButton.vue';
+import BaseButton from '../base/BaseButton.vue';
 import BrandMark from '../brand/BrandMark.vue';
 
 defineProps({

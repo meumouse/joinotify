@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
-import BaseButton from '../buttons/button/BaseButton.vue';
+import BaseButton from '../base/BaseButton.vue';
 import SelectField from '../fields/SelectField.vue';
 
 const props = defineProps({

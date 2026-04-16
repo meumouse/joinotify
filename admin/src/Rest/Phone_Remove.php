@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
+use MeuMouse\Joinotify\Core\Phone_Manager;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
@@ -35,28 +36,17 @@ class Phone_Remove extends Abstract_Route {
      */
     public function handle( WP_REST_Request $request ) {
         $payload = $request->get_json_params();
-        $phone = isset( $payload['phone'] ) ? preg_replace( '/\D+/', '', sanitize_text_field( $payload['phone'] ) ) : '';
-        $phones_senders = get_option( 'joinotify_get_phones_senders', array() );
-        $phones_senders = is_array( $phones_senders ) ? $phones_senders : array();
+        $phone   = isset( $payload['phone'] ) ? Phone_Manager::sanitize_phone( $payload['phone'] ) : '';
 
-        if ( empty( $phone ) || ! in_array( $phone, $phones_senders, true ) ) {
-            return rest_ensure_response( array(
-                'status' => 'error',
-                'message' => esc_html__( 'Could not find the provided phone number.', 'joinotify' ),
-            ) );
+        if ( empty( $phone ) || ! Phone_Manager::remove_sender( $phone ) ) {
+            return $this->error_response( esc_html__( 'Could not find the provided phone number.', 'joinotify' ) );
         }
 
-        $phones_senders = array_values( array_filter( $phones_senders, static function ( $item ) use ( $phone ) {
-            return $item !== $phone;
-        } ) );
-
-        update_option( 'joinotify_get_phones_senders', $phones_senders );
         do_action( 'Joinotify/Remove_Phone/Success', $phone );
 
-        return rest_ensure_response( array(
-            'status' => 'success',
+        return $this->success_response( array(
             'message' => esc_html__( 'The sender phone number was removed successfully!', 'joinotify' ),
-            'phones' => Registry::get_phone_state(),
+            'phones'  => Registry::get_phone_state(),
         ) );
     }
 }

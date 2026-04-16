@@ -1,6 +1,6 @@
 <script setup>
 import { __, textDomain } from '../../utils/i18n';
-import BaseButton from '../buttons/button/BaseButton.vue';
+import BaseButton from '../base/BaseButton.vue';
 
 defineProps({
   modelValue: { type: String, default: '' },

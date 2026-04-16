@@ -2,7 +2,7 @@
 import { computed, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { useWorkflows } from '../../composables/useWorkflows';
-import BaseButton from '../../components/buttons/button/BaseButton.vue';
+import BaseButton from '../../components/base/BaseButton.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
 import EmptyState from '../../components/workflows/EmptyState.vue';
 import LoadingState from '../../components/workflows/LoadingState.vue';
