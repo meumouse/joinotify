@@ -12,6 +12,7 @@ import { computed, ref, watch } from 'vue';
 import {
   VueFlow,
   MarkerType,
+  useVueFlow,
   type Connection,
   type Edge,
   type Node,
@@ -78,6 +79,7 @@ const emit = defineEmits<{
 }>();
 
 const canvasRef = ref<HTMLDivElement | null>(null);
+const { zoomIn, zoomOut, fitView } = useVueFlow();
 const flowPositionCache = ref<Record<string, { x: number; y: number }>>({});
 const syncedPositionCache = ref<Record<string, { x: number; y: number }>>({});
 const actionRegistryRevision = computed(() => getActionRegistryRevision());
@@ -580,6 +582,21 @@ function openAddAction() {
     afterNodeId: props.selectedNodeId || props.workflowNodes?.[0]?.id || '',
   });
 }
+
+function handleZoomIn() {
+  zoomIn();
+}
+
+function handleZoomOut() {
+  zoomOut();
+}
+
+function handleZoomFit() {
+  fitView({
+    padding: 0.2,
+    duration: 250,
+  });
+}
 </script>
 
 <template>
@@ -614,11 +631,41 @@ function openAddAction() {
 
       <MiniMap
         position="bottom-left"
-        node-color="#818cf8"
+        node-color="#374151"
         mask-color="rgba(248,249,251,0.75)"
         :style="{ width: 180, height: 112 }"
       />
     </VueFlow>
+
+    <div class="absolute bottom-[132px] left-3 z-10 flex items-center gap-1 rounded-lg border border-slate-300 bg-white/95 p-1 shadow-sm">
+      <button
+        type="button"
+        class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+        aria-label="Zoom in"
+        title="Zoom in"
+        @click="handleZoomIn"
+      >
+        +
+      </button>
+      <button
+        type="button"
+        class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+        aria-label="Zoom out"
+        title="Zoom out"
+        @click="handleZoomOut"
+      >
+        -
+      </button>
+      <button
+        type="button"
+        class="inline-flex h-7 items-center justify-center rounded-md border border-slate-200 px-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100"
+        aria-label="Ajustar zoom"
+        title="Ajustar zoom"
+        @click="handleZoomFit"
+      >
+        Fit
+      </button>
+    </div>
 
     <button
       type="button"
