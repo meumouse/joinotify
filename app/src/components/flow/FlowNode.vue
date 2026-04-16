@@ -24,6 +24,8 @@ export interface FlowNodeData {
   iconSvg?: string;
   contextLabel?: string;
   contextIconSvg?: string;
+  contextIcon?: string;
+  contextIconUrl?: string;
   onRequestDelete?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
   onSelect?: (id: string) => void;
@@ -44,6 +46,8 @@ const showEditModal = ref(false);
 
 const resolvedIconSvg = computed(() => resolveSvgMarkup(props.data.iconSvg, props.data.icon));
 const contextIconSvg = computed(() => String(props.data.contextIconSvg || '').trim());
+const contextIcon = computed(() => String(props.data.contextIcon || '').trim());
+const contextIconUrl = computed(() => String(props.data.contextIconUrl || '').trim());
 const displayIcon = computed(() => String(props.data.icon || fallbackConfig.value?.icon || '').trim());
 const displayColorClass = computed(() => fallbackConfig.value?.color || 'bg-slate-500');
 
@@ -102,6 +106,19 @@ function isBoxiconClass(value: string) {
           class="flow-node-context-icon flex h-full w-full items-center justify-center bg-white p-1"
           v-html="contextIconSvg"
         />
+        <img
+          v-else-if="isTrigger && contextIconUrl"
+          :src="contextIconUrl"
+          :alt="data.contextLabel || data.label"
+          class="flow-node-context-logo h-full w-full object-contain bg-white p-1"
+          loading="lazy"
+        />
+        <span
+          v-else-if="isTrigger && contextIcon"
+          class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700"
+        >
+          {{ iconGlyph(contextIcon) }}
+        </span>
         <span
           v-else-if="resolvedIconSvg"
           class="flow-node-action-icon flex h-4 w-4 items-center justify-center"
@@ -237,5 +254,9 @@ function isBoxiconClass(value: string) {
   height: 100%;
   color: currentColor;
   fill: currentColor;
+}
+
+.flow-node-context-icon {
+  color: #334155;
 }
 </style>

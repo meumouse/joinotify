@@ -9,8 +9,28 @@ import type {
   WorkflowPostMeta,
 } from '../types/workflowBuilder';
 
+const EDITOR_META_KEYS = [
+  'connection_from',
+  'connection_mode',
+  'connection_break_before',
+  'canvas_position',
+] as const;
+
+function pickEditorMeta(data: Record<string, unknown>): Record<string, unknown> {
+  const meta: Record<string, unknown> = {};
+
+  EDITOR_META_KEYS.forEach((key) => {
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      meta[key] = cloneSerializable(data[key]);
+    }
+  });
+
+  return meta;
+}
+
 function serializeNodeData(node: WorkflowNode): Record<string, unknown> {
   const data = isRecord(node.data) ? cloneSerializable(node.data) : {};
+  const editorMeta = pickEditorMeta(data);
 
   if (node.type === 'trigger') {
     const context = String(data.context || '');
@@ -18,20 +38,32 @@ function serializeNodeData(node: WorkflowNode): Record<string, unknown> {
     const definition = context && trigger ? getTriggerDefinition(context, trigger) : undefined;
 
     if (definition?.serializeData) {
-      return definition.serializeData(data);
+      return {
+        ...definition.serializeData(data),
+        ...editorMeta,
+      };
     }
 
-    return data;
+    return {
+      ...data,
+      ...editorMeta,
+    };
   }
 
   const action = String(data.action || '');
   const definition = action ? getActionDefinition(action) : undefined;
 
   if (definition?.serializeData) {
-    return definition.serializeData(data);
+    return {
+      ...definition.serializeData(data),
+      ...editorMeta,
+    };
   }
 
-  return data;
+  return {
+    ...data,
+    ...editorMeta,
+  };
 }
 
 function serializeLinearChildren(children: WorkflowNode[]): WorkflowNode[] {

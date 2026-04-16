@@ -230,6 +230,21 @@ function resolveDefaultContext(catalog: WorkflowContextDefinition[]): string {
   return catalog[0]?.id || TRIGGER_CONTEXTS[0]?.id || 'woocommerce';
 }
 
+function toFiniteNumber(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
+}
+
 export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', () => {
   const bootstrap = ref<BuilderBootstrap>({});
   const api = ref<ReturnType<typeof createWorkflowApiClient> | null>(null);
@@ -304,16 +319,14 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   function getNodeCanvasPosition(node: WorkflowNode | null | undefined) {
     const candidate = node?.data?.canvas_position;
+    const source = candidate && typeof candidate === 'object' ? (candidate as Record<string, unknown>) : null;
+    const x = source ? toFiniteNumber(source.x) : null;
+    const y = source ? toFiniteNumber(source.y) : null;
 
-    if (
-      candidate
-      && typeof candidate === 'object'
-      && typeof (candidate as Record<string, unknown>).x === 'number'
-      && typeof (candidate as Record<string, unknown>).y === 'number'
-    ) {
+    if (x !== null && y !== null) {
       return {
-        x: Number((candidate as Record<string, unknown>).x),
-        y: Number((candidate as Record<string, unknown>).y),
+        x,
+        y,
       };
     }
 

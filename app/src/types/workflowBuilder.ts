@@ -91,6 +91,7 @@ export interface WorkflowContextDefinition {
   description: string;
   icon: string;
   icon_svg?: string;
+  icon_url?: string;
   category: string;
   enabled?: boolean;
 }

@@ -8,22 +8,26 @@
  *
  * @since 1.4.7
  */
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import {
   VueFlow,
   MarkerType,
   type Connection,
   type Edge,
   type Node,
+  type NodeChange,
 } from '@vue-flow/core';
 import { Background, BackgroundVariant } from '@vue-flow/background';
 import { Controls } from '@vue-flow/controls';
 import { MiniMap } from '@vue-flow/minimap';
 import FlowEdge from './FlowEdge.vue';
 import FlowNode, { type FlowNodeData } from './FlowNode.vue';
-import { getActionDefinition, getActionRegistryPreview } from '../../registries/actionRegistry';
-import { getTriggerContextById } from '../../registries/triggerContexts';
-import { getTriggerDefinition } from '../../registries/triggerRegistry';
+import {
+  getActionDefinition,
+  getActionRegistryPreview,
+} from '../../registries/actionRegistry';
+import { getActionRegistryRevision } from '../../builder/actions/registry/actionRegistry';
+import { getTriggerContextDefinition, getTriggerDefinition } from '../../registries/triggerRegistry';
 import {
   getBranchCollection,
   isConditionNode,
@@ -75,6 +79,8 @@ const emit = defineEmits<{
 
 const canvasRef = ref<HTMLDivElement | null>(null);
 const flowPositionCache = ref<Record<string, { x: number; y: number }>>({});
+const syncedPositionCache = ref<Record<string, { x: number; y: number }>>({});
+const actionRegistryRevision = computed(() => getActionRegistryRevision());
 
 const defaultEdgeOptions: Partial<Edge> = {
   type: 'flowEdge',
@@ -94,6 +100,11 @@ function resolveActionIcon(actionId: string) {
     icon: String(definition?.icon || '').trim(),
     iconSvg: String(definition?.iconSvg || '').trim(),
   };
+}
+
+function isImageUrl(value: unknown): boolean {
+  const source = String(value || '').trim();
+  return /^https?:\/\//i.test(source) || /^data:image\//i.test(source) || source.startsWith('/');
 }
 
 function getConnectionMeta(node: WorkflowNode | null | undefined): WorkflowConnectionMeta | null {
@@ -127,8 +138,10 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
   if (node.type === 'trigger') {
     const context = String(node.data?.context || '');
     const trigger = String(node.data?.trigger || '');
-    const contextDefinition = getTriggerContextById(context);
+    const contextDefinition = getTriggerContextDefinition(context);
     const triggerDefinition = getTriggerDefinition(context, trigger);
+    const contextIcon = String(contextDefinition?.icon || '').trim();
+    const contextIconUrl = String(contextDefinition?.icon_url || '').trim() || (isImageUrl(contextIcon) ? contextIcon : '');
 
     return {
       type: 'trigger',
@@ -150,6 +163,8 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
       iconSvg: String(triggerDefinition?.iconSvg || ''),
       contextLabel: String(contextDefinition?.label || context || 'Trigger'),
       contextIconSvg: String(contextDefinition?.icon_svg || ''),
+      contextIcon: contextIcon,
+      contextIconUrl: contextIconUrl,
       onEdit: handleNodeEdit,
       onRequestDelete: handleRemoveRequest,
       onSelect: handleNodeSelect,
@@ -199,22 +214,58 @@ function createEdge(
   };
 }
 
+function toFiniteNumber(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
+}
+
 function getStoredPosition(node: WorkflowNode) {
   const candidate = node.data?.canvas_position;
+  const source = candidate && typeof candidate === 'object' ? (candidate as Record<string, unknown>) : null;
+  const x = source ? toFiniteNumber(source.x) : null;
+  const y = source ? toFiniteNumber(source.y) : null;
 
-  if (
-    candidate
-    && typeof candidate === 'object'
-    && typeof (candidate as Record<string, unknown>).x === 'number'
-    && typeof (candidate as Record<string, unknown>).y === 'number'
-  ) {
+  if (x !== null && y !== null) {
     return {
-      x: Number((candidate as Record<string, unknown>).x),
-      y: Number((candidate as Record<string, unknown>).y),
+      x,
+      y,
     };
   }
 
   return null;
+}
+
+function flattenWorkflowNodes(nodes: WorkflowNode[] = []): WorkflowNode[] {
+  const flattened: WorkflowNode[] = [];
+
+  const walk = (items: WorkflowNode[]) => {
+    items.forEach((item) => {
+      flattened.push(item);
+
+      if (Array.isArray(item.children) && item.children.length > 0) {
+        walk(item.children);
+      }
+
+      if (isConditionNode(item)) {
+        const branches = getBranchCollection(item);
+        walk(branches.action_true || []);
+        walk(branches.action_false || []);
+      }
+    });
+  };
+
+  walk(nodes);
+  return flattened;
 }
 
 function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
@@ -314,6 +365,8 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
 }
 
 const graph = computed(() => {
+  // Track action registry updates so nodes refresh when async metadata arrives.
+  actionRegistryRevision.value;
   const nextGraph = buildFlowGraph(props.workflowNodes || []);
   const nextNodeIds = new Set(nextGraph.nodes.map((node) => String(node.id)));
 
@@ -328,6 +381,41 @@ const graph = computed(() => {
     edges: nextGraph.edges,
   };
 });
+
+watch(
+  graph,
+  (nextGraph) => {
+    const nodesById = new Map(nextGraph.nodes.map((node) => [String(node.id), node]));
+    const workflowNodes = flattenWorkflowNodes(props.workflowNodes || []);
+
+    workflowNodes.forEach((workflowNode) => {
+      if (getStoredPosition(workflowNode)) {
+        return;
+      }
+
+      const flowNode = nodesById.get(String(workflowNode.id));
+
+      if (!flowNode) {
+        return;
+      }
+
+      const x = Number(flowNode.position?.x);
+      const y = Number(flowNode.position?.y);
+
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        return;
+      }
+
+      emit('update-node', {
+        nodeId: String(workflowNode.id),
+        patch: {
+          canvas_position: { x, y },
+        },
+      });
+    });
+  },
+  { immediate: true },
+);
 
 function handleNodeSelect(nodeId: string) {
   if (!nodeId) {
@@ -412,6 +500,33 @@ function handleNodeEdit(
   });
 }
 
+function syncNodePosition(nodeId: string, x: number, y: number) {
+  if (!nodeId || !Number.isFinite(x) || !Number.isFinite(y)) {
+    return;
+  }
+
+  const normalized = {
+    x: Number(x),
+    y: Number(y),
+  };
+  const previous = syncedPositionCache.value[nodeId];
+
+  flowPositionCache.value[nodeId] = normalized;
+
+  if (previous && previous.x === normalized.x && previous.y === normalized.y) {
+    return;
+  }
+
+  syncedPositionCache.value[nodeId] = normalized;
+
+  emit('update-node', {
+    nodeId,
+    patch: {
+      canvas_position: normalized,
+    },
+  });
+}
+
 function onDragOver(event: DragEvent) {
   event.preventDefault();
 
@@ -441,19 +556,22 @@ function onNodeDragStop(_event: unknown, node: Node) {
     return;
   }
 
-  flowPositionCache.value[String(node.id)] = {
-    x: Number(node.position.x),
-    y: Number(node.position.y),
-  };
+  syncNodePosition(String(node.id), Number(node.position.x), Number(node.position.y));
+}
 
-  emit('update-node', {
-    nodeId: String(node.id),
-    patch: {
-      canvas_position: {
-        x: Number(node.position.x),
-        y: Number(node.position.y),
-      },
-    },
+function onNodesChange(changes: NodeChange[]) {
+  (changes || []).forEach((change) => {
+    const source = change as NodeChange & { id?: string; type?: string; position?: { x?: number; y?: number } };
+
+    if (source.type !== 'position' || !source.id || !source.position) {
+      return;
+    }
+
+    syncNodePosition(
+      String(source.id),
+      Number(source.position.x),
+      Number(source.position.y),
+    );
   });
 }
 
@@ -483,6 +601,7 @@ function openAddAction() {
       @drop="onDrop"
       @connect="handleConnect"
       @node-drag-stop="onNodeDragStop"
+      @nodes-change="onNodesChange"
     >
       <Background
         :variant="BackgroundVariant.Dots"

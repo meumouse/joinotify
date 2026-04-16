@@ -75,6 +75,7 @@ function normalizeNodeData(
   nodeId: string
 ): Record<string, unknown> {
   const data = isRecord(rawData) ? cloneSerializable(rawData) : {};
+  const editorMeta = pickEditorMeta(data);
 
   if (type === 'trigger') {
     const context = typeof data.context === 'string' ? data.context : '';
@@ -90,12 +91,16 @@ function normalizeNodeData(
     });
 
     if (definition?.serializeData) {
-      return definition.serializeData(base.data);
+      return {
+        ...definition.serializeData(base.data),
+        ...editorMeta,
+      };
     }
 
     return {
       ...base.data,
       ...data,
+      ...editorMeta,
       title: typeof data.title === 'string' && data.title.trim() ? data.title : base.data.title,
       description: typeof data.description === 'string' ? data.description : base.data.description,
       trigger: trigger || base.data.trigger,
@@ -120,7 +125,15 @@ function normalizeNodeData(
       settings: isRecord(data.settings) ? data.settings : {},
     }, definition);
 
-    return definition?.serializeData ? definition.serializeData(base.data) : base.data;
+    return definition?.serializeData
+      ? {
+          ...definition.serializeData(base.data),
+          ...editorMeta,
+        }
+      : {
+          ...base.data,
+          ...editorMeta,
+        };
   }
 
   const base = createActionNode(action, {
@@ -135,16 +148,66 @@ function normalizeNodeData(
   }, definition);
 
   if (definition?.serializeData) {
-    return definition.serializeData(base.data);
+    return {
+      ...definition.serializeData(base.data),
+      ...editorMeta,
+    };
   }
 
   return {
     ...base.data,
     ...data,
+    ...editorMeta,
     title: typeof data.title === 'string' && data.title.trim() ? data.title : base.data.title,
     description: typeof data.description === 'string' ? data.description : base.data.description,
     action,
   };
+}
+
+function toFiniteNumber(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+
+  return null;
+}
+
+function pickEditorMeta(data: Record<string, unknown>): Record<string, unknown> {
+  const meta: Record<string, unknown> = {};
+
+  if (isRecord(data.connection_from)) {
+    meta.connection_from = {
+      source_id: String(data.connection_from.source_id || ''),
+      source_handle: String(data.connection_from.source_handle || 'output'),
+      target_handle: String(data.connection_from.target_handle || 'input'),
+    };
+  }
+
+  if (Object.prototype.hasOwnProperty.call(data, 'connection_mode')) {
+    meta.connection_mode = data.connection_mode == null ? null : String(data.connection_mode);
+  }
+
+  if (Object.prototype.hasOwnProperty.call(data, 'connection_break_before')) {
+    meta.connection_break_before = data.connection_break_before;
+  }
+
+  if (isRecord(data.canvas_position)) {
+    const x = toFiniteNumber(data.canvas_position.x);
+    const y = toFiniteNumber(data.canvas_position.y);
+
+    if (x !== null && y !== null) {
+      meta.canvas_position = { x, y };
+    }
+  }
+
+  return meta;
 }
 
 function normalizeLinearChildren(children: unknown): WorkflowNode[] {

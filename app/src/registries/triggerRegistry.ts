@@ -262,6 +262,7 @@ function normalizeContextDefinition(raw: BackendTriggerRecord): WorkflowContextD
     description: String(raw.description || ''),
     icon: String(raw.icon || id),
     icon_svg: String(raw.icon_svg || raw.iconSvg || ''),
+    icon_url: String(raw.icon_url || raw.iconUrl || raw.logo || ''),
     category: String(raw.category || id),
     enabled: raw.enabled === undefined ? true : Boolean(raw.enabled),
   };
@@ -399,6 +400,16 @@ export function getTriggerCatalog(): Record<string, WorkflowRegistryItem[]> {
 
 export function getTriggerContextsCatalog(): WorkflowContextDefinition[] {
   return cloneSerializable(activeTriggerContexts.length ? activeTriggerContexts : TRIGGER_CONTEXTS);
+}
+
+export function getTriggerContextDefinition(contextId: string): WorkflowContextDefinition | undefined {
+  const safeContextId = String(contextId || '').trim();
+
+  if (!safeContextId) {
+    return undefined;
+  }
+
+  return getTriggerContextsCatalog().find((context) => context.id === safeContextId);
 }
 
 export const TRIGGER_REGISTRY: WorkflowRegistryItem[] = TRIGGER_FALLBACKS;

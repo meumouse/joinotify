@@ -1140,7 +1140,9 @@ class Registry {
 			return array();
 		}
 
-		if ( 'condition' === $type && self::is_branch_container( $node['children'] ) ) {
+		$action = isset( $node['data']['action'] ) ? sanitize_key( (string) $node['data']['action'] ) : '';
+
+		if ( ( 'condition' === $type || 'condition' === $action ) && self::is_branch_container( $node['children'] ) ) {
 			return self::sanitize_condition_children( $node['children'] );
 		}
 
@@ -1292,6 +1294,28 @@ class Registry {
 		$clean = array();
 
 		foreach ( $data as $key => $value ) {
+			if ( 'canvas_position' === $key && is_array( $value ) ) {
+				$x = isset( $value['x'] ) && is_numeric( $value['x'] ) ? (float) $value['x'] : null;
+				$y = isset( $value['y'] ) && is_numeric( $value['y'] ) ? (float) $value['y'] : null;
+
+				if ( null !== $x && null !== $y ) {
+					$clean[ $key ] = array(
+						'x' => $x,
+						'y' => $y,
+					);
+				}
+				continue;
+			}
+
+			if ( 'connection_from' === $key && is_array( $value ) ) {
+				$clean[ $key ] = array(
+					'source_id' => isset( $value['source_id'] ) ? sanitize_text_field( (string) $value['source_id'] ) : '',
+					'source_handle' => isset( $value['source_handle'] ) ? sanitize_text_field( (string) $value['source_handle'] ) : 'output',
+					'target_handle' => isset( $value['target_handle'] ) ? sanitize_text_field( (string) $value['target_handle'] ) : 'input',
+				);
+				continue;
+			}
+
 			if ( is_array( $value ) ) {
 				$clean[ $key ] = self::sanitize_node_data( $value, $type );
 				continue;
