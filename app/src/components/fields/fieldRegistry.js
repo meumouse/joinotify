@@ -1,6 +1,7 @@
 import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 import TextField from './TextField.vue';
 import TextAreaField from './TextAreaField.vue';
+import RichTextAreaField from './RichTextAreaField.vue';
 import SelectField from './SelectField.vue';
 import PhoneField from './PhoneField.vue';
 import InputGroupField from './InputGroupField.vue';
@@ -31,6 +32,9 @@ function registerAlias(name, component) {
 registerAlias('toggle', ToggleSwitch);
 registerAlias('text', TextField);
 registerAlias('textarea', TextAreaField);
+registerAlias('richtext', RichTextAreaField);
+registerAlias('rich-text', RichTextAreaField);
+registerAlias('rich-text-area', RichTextAreaField);
 registerAlias('select', SelectField);
 registerAlias('phone', PhoneField);
 registerAlias('input-group', InputGroupField);
@@ -159,11 +163,11 @@ export function getRegisteredFieldComponents() {
 }
 
 export function getSupportedFieldTypes() {
-  return ['toggle', 'text', 'textarea', 'select', 'phone', 'color', 'color-scale', 'input-group'];
+  return ['toggle', 'text', 'textarea', 'richtext', 'select', 'phone', 'color', 'color-scale', 'input-group'];
 }
 
 export function getSupportedFieldComponents() {
-  return ['toggle', 'text', 'textarea', 'select', 'phone', 'input-group', 'input-button', 'otp', 'color-picker', 'color-scale'];
+  return ['toggle', 'text', 'textarea', 'richtext', 'select', 'phone', 'input-group', 'input-button', 'otp', 'color-picker', 'color-scale'];
 }
 
 syncWindowRegistry();

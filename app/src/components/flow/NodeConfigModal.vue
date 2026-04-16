@@ -2,15 +2,13 @@
 /**
  * NodeConfigModal.vue
  *
- * Configuration modal for flow nodes. Each node type renders its own
- * specific fields. Adapted from the React builder's NodeConfigModal.tsx.
+ * Lightweight configuration modal for flow nodes.
  *
  * @since 1.4.7
  */
-import { ref, watch, computed } from 'vue';
+import { computed, ref, watch } from 'vue';
+import BaseRichTextArea from '../base/BaseRichTextArea.vue';
 import { getFlowNodeConfig } from './flowNodeTypes';
-
-// ── Props / Emits ──────────────────────────────────────────────────────────
 
 const props = defineProps<{
   open: boolean;
@@ -25,8 +23,6 @@ const emit = defineEmits<{
   (e: 'save', data: { label: string; description: string; config: Record<string, unknown> }): void;
 }>();
 
-// ── Local draft state ──────────────────────────────────────────────────────
-
 const draftLabel = ref(props.label);
 const draftDescription = ref(props.description);
 const draftConfig = ref<Record<string, unknown>>({ ...props.config });
@@ -34,11 +30,13 @@ const draftConfig = ref<Record<string, unknown>>({ ...props.config });
 watch(
   () => props.open,
   (isOpen) => {
-    if (isOpen) {
-      draftLabel.value = props.label;
-      draftDescription.value = props.description;
-      draftConfig.value = { ...props.config };
+    if (!isOpen) {
+      return;
     }
+
+    draftLabel.value = props.label;
+    draftDescription.value = props.description;
+    draftConfig.value = { ...props.config };
   },
 );
 
@@ -55,26 +53,18 @@ function handleSave() {
   emit('close');
 }
 
-// ── Emoji picker (WhatsApp fields) ────────────────────────────────────────
-
 const showEmoji = ref(false);
 const emojiTarget = ref<'message' | 'caption'>('message');
-
 const COMMON_EMOJIS = [
   '😀', '😂', '❤️', '👍', '🎉', '🔥', '✅', '⭐', '💡', '📌',
   '🚀', '💬', '📎', '📢', '🙏', '👋', '💪', '🤝', '📞', '✨',
 ];
 
 function insertEmoji(emoji: string) {
-  if (emojiTarget.value === 'caption') {
-    updateConfig('caption', String(draftConfig.value.caption ?? '') + emoji);
-  } else {
-    updateConfig('message', String(draftConfig.value.message ?? '') + emoji);
-  }
+  const field = emojiTarget.value === 'caption' ? 'caption' : 'message';
+  updateConfig(field, `${String(draftConfig.value[field] ?? '')}${emoji}`);
   showEmoji.value = false;
 }
-
-// ── Condition rows ────────────────────────────────────────────────────────
 
 interface Condition {
   field: string;
@@ -90,10 +80,10 @@ const conditions = computed<Condition[]>(() => {
 });
 
 function updateCondition(index: number, key: keyof Condition, value: string) {
-  const updated = conditions.value.map((c, i) =>
-    i === index ? { ...c, [key]: value } : c,
+  const nextConditions = conditions.value.map((condition, currentIndex) =>
+    currentIndex === index ? { ...condition, [key]: value } : condition,
   );
-  updateConfig('conditions', updated);
+  updateConfig('conditions', nextConditions);
 }
 
 function addCondition() {
@@ -101,28 +91,34 @@ function addCondition() {
 }
 
 function removeCondition(index: number) {
-  updateConfig('conditions', conditions.value.filter((_, i) => i !== index));
+  updateConfig('conditions', conditions.value.filter((_, currentIndex) => currentIndex !== index));
 }
 
-// ── Misc ──────────────────────────────────────────────────────────────────
-
-const nodeConfig = computed(() => getFlowNodeConfig(props.nodeType));
+const normalizedNodeType = computed(() => String(props.nodeType || '').trim());
+const nodeConfig = computed(() => getFlowNodeConfig(normalizedNodeType.value));
+const isSnippetNode = computed(() => ['php-snippet', 'snippet_php'].includes(normalizedNodeType.value));
+const isTimeDelayNode = computed(() => ['wait-time', 'time_delay'].includes(normalizedNodeType.value));
+const isWaitDateNode = computed(() => normalizedNodeType.value === 'wait-date');
+const isWhatsappTextNode = computed(() => normalizedNodeType.value.includes('whatsapp') && !normalizedNodeType.value.includes('media'));
+const isWhatsappMediaNode = computed(() => normalizedNodeType.value.includes('whatsapp') && normalizedNodeType.value.includes('media'));
+const isConditionNode = computed(() => normalizedNodeType.value === 'condition');
+const isStopNode = computed(() => ['stop', 'stop_funnel'].includes(normalizedNodeType.value));
 
 const WAIT_UNITS = [
   { value: 'seconds', label: 'Segundos' },
-  { value: 'minutes', label: 'Minutos' },
+  { value: 'minute', label: 'Minutos' },
   { value: 'hours', label: 'Horas' },
-  { value: 'days', label: 'Dias' },
-  { value: 'weeks', label: 'Semanas' },
-  { value: 'months', label: 'Meses' },
-  { value: 'years', label: 'Anos' },
+  { value: 'day', label: 'Dias' },
+  { value: 'week', label: 'Semanas' },
+  { value: 'month', label: 'Meses' },
+  { value: 'year', label: 'Anos' },
 ];
 
 const MEDIA_TYPES = [
-  { value: 'image', label: 'Imagem', icon: 'bx-image' },
-  { value: 'video', label: 'Vídeo', icon: 'bx-video' },
-  { value: 'document', label: 'Documento', icon: 'bx-file' },
-  { value: 'audio', label: 'Áudio', icon: 'bx-music' },
+  { value: 'image', label: 'Imagem' },
+  { value: 'video', label: 'Vídeo' },
+  { value: 'document', label: 'Documento' },
+  { value: 'audio', label: 'Áudio' },
 ];
 
 const OPERATORS = [
@@ -138,9 +134,8 @@ const OPERATORS = [
   { value: 'is_not_empty', label: 'Não está vazio' },
 ];
 
-// Hours/minutes arrays for wait-date
-const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
-const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
+const HOURS = Array.from({ length: 24 }, (_, index) => String(index).padStart(2, '0'));
+const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(2, '0'));
 </script>
 
 <template>
@@ -149,7 +144,6 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
       v-if="open"
       class="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto px-4 py-6"
     >
-      <!-- Backdrop -->
       <button
         class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
         type="button"
@@ -157,16 +151,12 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
         @click="$emit('close')"
       />
 
-      <!-- Dialog -->
-      <div
-        class="relative z-10 w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-xl border border-white/20 bg-white shadow-2xl"
-      >
-        <!-- Header -->
+      <div class="relative z-10 max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-white/20 bg-white shadow-2xl">
         <div class="sticky top-0 z-10 flex items-start justify-between border-b border-slate-100 bg-white px-6 py-5">
           <div>
-            <div class="flex items-center gap-2 mb-1">
+            <div class="mb-1 flex items-center gap-2">
               <div
-                class="flex items-center justify-center w-6 h-6 rounded-md shrink-0"
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md"
                 :class="nodeConfig?.color ?? 'bg-slate-400'"
               >
                 <i :class="`bx ${nodeConfig?.icon ?? 'bx-cog'} text-white`" style="font-size: 12px;" />
@@ -179,7 +169,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
           </div>
           <button
             type="button"
-            class="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+            class="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
             aria-label="Fechar"
             @click="$emit('close')"
           >
@@ -187,9 +177,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
           </button>
         </div>
 
-        <!-- Body -->
         <div class="space-y-6 px-6 py-5">
-          <!-- Common: label + description -->
           <div class="grid grid-cols-2 gap-4">
             <div class="space-y-1.5">
               <label class="block text-sm font-medium text-slate-700">Nome da ação</label>
@@ -210,18 +198,16 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
           </div>
 
           <div class="border-t border-slate-100 pt-5">
-
-            <!-- ── php-snippet ────────────────────────────── -->
-            <template v-if="nodeType === 'php-snippet'">
+            <template v-if="isSnippetNode">
               <div class="space-y-1.5">
                 <label class="block text-sm font-medium text-slate-700">Código PHP</label>
-                <div class="rounded-lg border border-slate-200 overflow-hidden">
+                <div class="overflow-hidden rounded-lg border border-slate-200">
                   <textarea
-                    :value="String(draftConfig.code ?? '<?php\n\n// Seu código aqui\n')"
+                    :value="String(draftConfig.snippet_php ?? draftConfig.code ?? '<?php\n\n// Seu código aqui\n')"
                     rows="12"
                     spellcheck="false"
-                    class="w-full bg-slate-900 px-4 py-3 text-sm font-mono text-emerald-400 outline-none resize-none"
-                    @input="updateConfig('code', ($event.target as HTMLTextAreaElement).value)"
+                    class="w-full resize-none bg-slate-900 px-4 py-3 text-sm font-mono text-emerald-400 outline-none"
+                    @input="updateConfig('snippet_php', ($event.target as HTMLTextAreaElement).value)"
                   />
                 </div>
                 <p class="text-xs text-slate-400">
@@ -230,8 +216,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
               </div>
             </template>
 
-            <!-- ── wait-time ──────────────────────────────── -->
-            <template v-else-if="nodeType === 'wait-time'">
+            <template v-else-if="isTimeDelayNode">
               <div class="space-y-1.5">
                 <label class="block text-sm font-medium text-slate-700">Tempo de espera</label>
                 <div class="flex gap-3">
@@ -239,31 +224,30 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                     type="number"
                     min="1"
                     placeholder="Ex: 30"
-                    :value="draftConfig.duration ?? ''"
+                    :value="draftConfig.delay_value ?? draftConfig.duration ?? ''"
                     class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @input="updateConfig('duration', ($event.target as HTMLInputElement).value)"
+                    @input="updateConfig('delay_value', ($event.target as HTMLInputElement).value)"
                   />
                   <select
-                    :value="String(draftConfig.unit ?? 'minutes')"
+                    :value="String(draftConfig.delay_period ?? draftConfig.unit ?? 'minute')"
                     class="w-44 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @change="updateConfig('unit', ($event.target as HTMLSelectElement).value)"
+                    @change="updateConfig('delay_period', ($event.target as HTMLSelectElement).value)"
                   >
-                    <option v-for="u in WAIT_UNITS" :key="u.value" :value="u.value">{{ u.label }}</option>
+                    <option v-for="unit in WAIT_UNITS" :key="unit.value" :value="unit.value">{{ unit.label }}</option>
                   </select>
                 </div>
               </div>
             </template>
 
-            <!-- ── wait-date ──────────────────────────────── -->
-            <template v-else-if="nodeType === 'wait-date'">
+            <template v-else-if="isWaitDateNode">
               <div class="space-y-4">
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Data</label>
                   <input
                     type="date"
-                    :value="String(draftConfig.date ?? '')"
+                    :value="String(draftConfig.date ?? draftConfig.date_value ?? '')"
                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @change="updateConfig('date', ($event.target as HTMLInputElement).value)"
+                    @change="updateConfig('date_value', ($event.target as HTMLInputElement).value)"
                   />
                 </div>
                 <div class="grid grid-cols-2 gap-3">
@@ -274,7 +258,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                       @change="updateConfig('hour', ($event.target as HTMLSelectElement).value)"
                     >
-                      <option v-for="h in HOURS" :key="h" :value="h">{{ h }}h</option>
+                      <option v-for="hour in HOURS" :key="hour" :value="hour">{{ hour }}h</option>
                     </select>
                   </div>
                   <div class="space-y-1.5">
@@ -284,15 +268,14 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                       @change="updateConfig('minute', ($event.target as HTMLSelectElement).value)"
                     >
-                      <option v-for="m in MINUTES" :key="m" :value="m">{{ m }}min</option>
+                      <option v-for="minute in MINUTES" :key="minute" :value="minute">{{ minute }}min</option>
                     </select>
                   </div>
                 </div>
               </div>
             </template>
 
-            <!-- ── whatsapp-text ───────────────────────────── -->
-            <template v-else-if="nodeType === 'whatsapp-text'">
+            <template v-else-if="isWhatsappTextNode">
               <div class="space-y-4">
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Remetente</label>
@@ -309,57 +292,24 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                   <input
                     type="text"
                     placeholder="Ex: {{contato.telefone}} ou +5511999990000"
-                    :value="String(draftConfig.recipient ?? '')"
+                    :value="String(draftConfig.receiver ?? draftConfig.recipient ?? '')"
                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @input="updateConfig('recipient', ($event.target as HTMLInputElement).value)"
+                    @input="updateConfig('receiver', ($event.target as HTMLInputElement).value)"
                   />
                 </div>
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Mensagem</label>
-                  <!-- Formatting toolbar -->
-                  <div class="flex items-center gap-1 rounded-t-lg border border-b-0 border-slate-200 bg-slate-50 px-2 py-1.5">
-                    <button type="button" class="rounded p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition-colors" title="Negrito"><i class="bx bx-bold" style="font-size:14px;" /></button>
-                    <button type="button" class="rounded p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition-colors" title="Itálico"><i class="bx bx-italic" style="font-size:14px;" /></button>
-                    <button type="button" class="rounded p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition-colors" title="Tachado"><i class="bx bx-strikethrough" style="font-size:14px;" /></button>
-                    <div class="mx-1 h-4 w-px bg-slate-200" />
-                    <div class="relative">
-                      <button
-                        type="button"
-                        class="rounded p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition-colors"
-                        title="Emoji"
-                        @click="emojiTarget = 'message'; showEmoji = !showEmoji"
-                      >
-                        <i class="bx bx-smile" style="font-size:14px;" />
-                      </button>
-                      <div
-                        v-if="showEmoji && emojiTarget === 'message'"
-                        class="absolute left-0 top-full z-50 mt-1 rounded-lg border border-slate-200 bg-white p-2 shadow-xl"
-                      >
-                        <div class="grid grid-cols-10 gap-1">
-                          <button
-                            v-for="emoji in COMMON_EMOJIS"
-                            :key="emoji"
-                            type="button"
-                            class="flex h-7 w-7 items-center justify-center rounded text-lg hover:bg-slate-100 transition-colors"
-                            @click="insertEmoji(emoji)"
-                          >{{ emoji }}</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <textarea
-                    rows="5"
+                  <BaseRichTextArea
+                    :model-value="String(draftConfig.message ?? '')"
                     placeholder="Digite sua mensagem... Use {{placeholders}}"
-                    :value="String(draftConfig.message ?? '')"
-                    class="w-full rounded-b-lg rounded-t-none border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 resize-none"
-                    @input="updateConfig('message', ($event.target as HTMLTextAreaElement).value)"
+                    :rows="5"
+                    @update:model-value="updateConfig('message', $event)"
                   />
                 </div>
               </div>
             </template>
 
-            <!-- ── whatsapp-media ──────────────────────────── -->
-            <template v-else-if="nodeType === 'whatsapp-media'">
+            <template v-else-if="isWhatsappMediaNode">
               <div class="space-y-4">
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Remetente</label>
@@ -376,9 +326,9 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                   <input
                     type="text"
                     placeholder="Ex: {{contato.telefone}} ou +5511999990000"
-                    :value="String(draftConfig.recipient ?? '')"
+                    :value="String(draftConfig.receiver ?? draftConfig.recipient ?? '')"
                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @input="updateConfig('recipient', ($event.target as HTMLInputElement).value)"
+                    @input="updateConfig('receiver', ($event.target as HTMLInputElement).value)"
                   />
                 </div>
                 <div class="grid grid-cols-2 gap-4">
@@ -389,7 +339,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                       @change="updateConfig('mediaType', ($event.target as HTMLSelectElement).value)"
                     >
-                      <option v-for="mt in MEDIA_TYPES" :key="mt.value" :value="mt.value">{{ mt.label }}</option>
+                      <option v-for="mediaType in MEDIA_TYPES" :key="mediaType.value" :value="mediaType.value">{{ mediaType.label }}</option>
                     </select>
                   </div>
                   <div class="space-y-1.5">
@@ -405,87 +355,59 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                 </div>
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Legenda</label>
-                  <div class="flex items-center gap-1 rounded-t-lg border border-b-0 border-slate-200 bg-slate-50 px-2 py-1.5">
-                    <div class="relative">
-                      <button
-                        type="button"
-                        class="rounded p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition-colors"
-                        title="Emoji"
-                        @click="emojiTarget = 'caption'; showEmoji = !showEmoji"
-                      >
-                        <i class="bx bx-smile" style="font-size:14px;" />
-                      </button>
-                      <div
-                        v-if="showEmoji && emojiTarget === 'caption'"
-                        class="absolute left-0 top-full z-50 mt-1 rounded-lg border border-slate-200 bg-white p-2 shadow-xl"
-                      >
-                        <div class="grid grid-cols-10 gap-1">
-                          <button
-                            v-for="emoji in COMMON_EMOJIS"
-                            :key="emoji"
-                            type="button"
-                            class="flex h-7 w-7 items-center justify-center rounded text-lg hover:bg-slate-100 transition-colors"
-                            @click="insertEmoji(emoji)"
-                          >{{ emoji }}</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <textarea
-                    rows="3"
+                  <BaseRichTextArea
+                    :model-value="String(draftConfig.caption ?? '')"
                     placeholder="Legenda da mídia..."
-                    :value="String(draftConfig.caption ?? '')"
-                    class="w-full rounded-b-lg rounded-t-none border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 resize-none"
-                    @input="updateConfig('caption', ($event.target as HTMLTextAreaElement).value)"
+                    :rows="3"
+                    @update:model-value="updateConfig('caption', $event)"
                   />
                 </div>
               </div>
             </template>
 
-            <!-- ── condition ───────────────────────────────── -->
-            <template v-else-if="nodeType === 'condition'">
+            <template v-else-if="isConditionNode">
               <div class="space-y-4">
                 <label class="block text-sm font-medium text-slate-700">Condições</label>
 
                 <div
-                  v-for="(cond, i) in conditions"
-                  :key="i"
+                  v-for="(condition, index) in conditions"
+                  :key="index"
                   class="flex items-end gap-2"
                 >
                   <div class="flex-1 space-y-1">
-                    <span v-if="i === 0" class="text-xs text-slate-400">Campo</span>
+                    <span v-if="index === 0" class="text-xs text-slate-400">Campo</span>
                     <input
                       type="text"
                       placeholder="Ex: email"
-                      :value="cond.field"
+                      :value="condition.field"
                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                      @input="updateCondition(i, 'field', ($event.target as HTMLInputElement).value)"
+                      @input="updateCondition(index, 'field', ($event.target as HTMLInputElement).value)"
                     />
                   </div>
                   <div class="w-[160px] space-y-1">
-                    <span v-if="i === 0" class="text-xs text-slate-400">Operador</span>
+                    <span v-if="index === 0" class="text-xs text-slate-400">Operador</span>
                     <select
-                      :value="cond.operator"
+                      :value="condition.operator"
                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                      @change="updateCondition(i, 'operator', ($event.target as HTMLSelectElement).value)"
+                      @change="updateCondition(index, 'operator', ($event.target as HTMLSelectElement).value)"
                     >
-                      <option v-for="op in OPERATORS" :key="op.value" :value="op.value">{{ op.label }}</option>
+                      <option v-for="operator in OPERATORS" :key="operator.value" :value="operator.value">{{ operator.label }}</option>
                     </select>
                   </div>
                   <div class="flex-1 space-y-1">
-                    <span v-if="i === 0" class="text-xs text-slate-400">Valor</span>
+                    <span v-if="index === 0" class="text-xs text-slate-400">Valor</span>
                     <input
                       type="text"
                       placeholder="Valor"
-                      :value="cond.value"
+                      :value="condition.value"
                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                      @input="updateCondition(i, 'value', ($event.target as HTMLInputElement).value)"
+                      @input="updateCondition(index, 'value', ($event.target as HTMLInputElement).value)"
                     />
                   </div>
                   <button
                     type="button"
-                    class="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors"
-                    @click="removeCondition(i)"
+                    class="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-red-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                    @click="removeCondition(index)"
                   >
                     <i class="bx bx-x" style="font-size: 18px;" />
                   </button>
@@ -493,7 +415,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
 
                 <button
                   type="button"
-                  class="flex items-center gap-1.5 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 hover:border-primary-400 hover:text-primary-600 transition-colors"
+                  class="flex items-center gap-1.5 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-primary-400 hover:text-primary-600"
                   @click="addCondition"
                 >
                   <i class="bx bx-plus" style="font-size:14px;" />
@@ -502,8 +424,7 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
               </div>
             </template>
 
-            <!-- ── stop ───────────────────────────────────── -->
-            <template v-else-if="nodeType === 'stop'">
+            <template v-else-if="isStopNode">
               <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-4">
                 <p class="text-sm font-medium text-red-700">
                   Nenhuma ação será executada ao chegar neste ponto.
@@ -514,7 +435,6 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
               </div>
             </template>
 
-            <!-- ── default / trigger ──────────────────────── -->
             <template v-else>
               <div class="space-y-1.5">
                 <label class="block text-sm font-medium text-slate-700">Descrição</label>
@@ -522,25 +442,24 @@ const MINUTES = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'))
                   v-model="draftDescription"
                   rows="4"
                   placeholder="Descreva esta etapa..."
-                  class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10 resize-none"
+                  class="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                 />
               </div>
             </template>
           </div>
         </div>
 
-        <!-- Footer -->
         <div class="sticky bottom-0 z-10 flex items-center justify-end gap-3 border-t border-slate-100 bg-white px-6 py-4">
           <button
             type="button"
-            class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
             @click="$emit('close')"
           >
             Cancelar
           </button>
           <button
             type="button"
-            class="rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
+            class="rounded-lg bg-primary-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
             @click="handleSave"
           >
             Salvar configurações

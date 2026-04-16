@@ -2,25 +2,31 @@
 /**
  * FlowNode.vue
  *
- * Custom node component for the vue-flow canvas.
- * Adapted from the React builder's FlowNode.tsx.
+ * Custom node used in the vue-flow canvas.
  *
  * @since 1.4.7
  */
 import { computed, ref } from 'vue';
+import { DotsVerticalRounded } from '@boxicons/vue';
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
+import { resolveSvgMarkup } from '../../utils/icon';
 import NodeConfigModal from './NodeConfigModal.vue';
 
 export interface FlowNodeData {
   type: string;
+  actionId?: string;
   label: string;
   description?: string;
   config?: Record<string, unknown>;
-  onDelete?: (id: string) => void;
-  onDuplicate?: (id: string) => void;
+  icon?: string;
+  iconSvg?: string;
+  contextLabel?: string;
+  contextIconSvg?: string;
+  onRequestDelete?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
+  onSelect?: (id: string) => void;
 }
 
 const props = defineProps<{
@@ -29,45 +35,55 @@ const props = defineProps<{
   selected?: boolean;
 }>();
 
-const nodeConfig = computed(() => getFlowNodeConfig(props.data.type));
+const fallbackConfig = computed(() => getFlowNodeConfig(props.data.type));
 const isCondition = computed(() => props.data.type === 'condition');
 const isTrigger = computed(() => props.data.type === 'trigger');
-
 const menuRef = ref<HTMLElement | null>(null);
 const menuOpen = ref(false);
-const showDeleteConfirm = ref(false);
 const showEditModal = ref(false);
+
+const resolvedIconSvg = computed(() => resolveSvgMarkup(props.data.iconSvg, props.data.icon));
+const contextIconSvg = computed(() => String(props.data.contextIconSvg || '').trim());
+const displayIcon = computed(() => String(props.data.icon || fallbackConfig.value?.icon || '').trim());
+const displayColorClass = computed(() => fallbackConfig.value?.color || 'bg-slate-500');
 
 onClickOutside(menuRef, () => {
   menuOpen.value = false;
 });
 
-function handleDelete() {
-  props.data.onDelete?.(props.id);
-  showDeleteConfirm.value = false;
+function handleEdit(payload: { label: string; description: string; config?: Record<string, unknown> }) {
+  props.data.onEdit?.(props.id, payload);
 }
 
-function handleDuplicate() {
-  props.data.onDuplicate?.(props.id);
+function requestDelete() {
+  props.data.onRequestDelete?.(props.id);
   menuOpen.value = false;
 }
 
-function handleEdit(payload: { label: string; description: string; config?: Record<string, unknown> }) {
-  props.data.onEdit?.(props.id, payload);
+function selectNode() {
+  props.data.onSelect?.(props.id);
+}
+
+function iconGlyph(value: string) {
+  const normalized = String(value || '').trim();
+  return normalized ? normalized.slice(0, 1).toUpperCase() : 'A';
+}
+
+function isBoxiconClass(value: string) {
+  return /^bx[lrs]?-/.test(String(value || '').trim());
 }
 </script>
 
 <template>
-  <!-- ─── Node card ─── -->
   <div
-    class="group relative min-w-[220px] max-w-[400px] rounded-xl border bg-white shadow-md transition-all duration-200 select-none"
+    class="group relative min-w-[240px] max-w-[420px] rounded-xl border bg-white shadow-md transition-all duration-200 select-none"
     :class="[
       selected
         ? 'border-primary-600 ring-2 ring-primary-600/20'
         : 'border-slate-200 hover:border-slate-300 hover:shadow-lg',
     ]"
+    @click="selectNode"
   >
-    <!-- Target handle (top) — not rendered for trigger -->
     <Handle
       v-if="!isTrigger"
       id="input"
@@ -76,27 +92,50 @@ function handleEdit(payload: { label: string; description: string; config?: Reco
       :style="{ top: '-7px', width: '12px', height: '12px', background: '#94a3b8', border: '2px solid white' }"
     />
 
-    <!-- ── Header ── -->
-    <div class="flex items-center gap-2.5 px-3 py-2.5 border-b border-slate-100">
+    <div class="flex items-center gap-2.5 border-b border-slate-100 px-3 py-2.5">
       <div
-        class="flex items-center justify-center w-7 h-7 rounded-md shrink-0"
-        :class="nodeConfig?.color ?? 'bg-slate-400'"
+        class="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md text-white"
+        :class="displayColorClass"
       >
-        <i :class="`bx ${nodeConfig?.icon ?? 'bx-cog'} text-white`" style="font-size: 14px;" />
+        <span
+          v-if="isTrigger && contextIconSvg"
+          class="flow-node-context-icon flex h-full w-full items-center justify-center bg-white p-1"
+          v-html="contextIconSvg"
+        />
+        <span
+          v-else-if="resolvedIconSvg"
+          class="flow-node-action-icon flex h-4 w-4 items-center justify-center"
+          v-html="resolvedIconSvg"
+        />
+        <i
+          v-else-if="isBoxiconClass(displayIcon)"
+          :class="`bx ${displayIcon} text-white`"
+          style="font-size: 14px;"
+        />
+        <span v-else class="text-[11px] font-semibold uppercase tracking-[0.18em]">
+          {{ iconGlyph(displayIcon || data.label) }}
+        </span>
       </div>
 
-      <span class="font-semibold text-sm text-slate-900 flex-1 truncate">
-        {{ data.label }}
-      </span>
+      <div class="min-w-0 flex-1">
+        <p
+          v-if="isTrigger && data.contextLabel"
+          class="truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400"
+        >
+          {{ data.contextLabel }}
+        </p>
+        <span class="block truncate text-sm font-semibold text-slate-900">
+          {{ data.label }}
+        </span>
+      </div>
 
-      <!-- Actions dropdown (hidden for trigger) -->
       <div v-if="!isTrigger" ref="menuRef" class="relative">
         <button
           type="button"
-          class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-slate-700 p-0.5 rounded"
+          class="rounded p-0.5 text-slate-400 opacity-0 transition-opacity hover:text-slate-700 group-hover:opacity-100"
           @click.stop="menuOpen = !menuOpen"
         >
-          <i class="bx bx-dots-vertical-rounded" style="font-size: 16px;" />
+          <DotsVerticalRounded :size="16" />
         </button>
 
         <div
@@ -106,7 +145,7 @@ function handleEdit(payload: { label: string; description: string; config?: Reco
         >
           <button
             type="button"
-            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
             @click="showEditModal = true; menuOpen = false"
           >
             <i class="bx bx-edit" style="font-size: 13px;" />
@@ -114,32 +153,22 @@ function handleEdit(payload: { label: string; description: string; config?: Reco
           </button>
           <button
             type="button"
-            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
-            @click="handleDuplicate"
-          >
-            <i class="bx bx-copy" style="font-size: 13px;" />
-            Duplicar
-          </button>
-          <button
-            type="button"
-            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-            @click="showDeleteConfirm = true; menuOpen = false"
+            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
+            @click="requestDelete"
           >
             <i class="bx bx-trash" style="font-size: 13px;" />
-            Remover
+            Excluir
           </button>
         </div>
       </div>
     </div>
 
-    <!-- ── Body ── -->
     <div v-if="data.description" class="px-3 py-2.5">
-      <p class="text-xs text-slate-500 leading-relaxed whitespace-pre-line line-clamp-3">
+      <p class="line-clamp-3 whitespace-pre-line text-xs leading-relaxed text-slate-500">
         {{ data.description }}
       </p>
     </div>
 
-    <!-- ── Condition: two labelled source handles ── -->
     <template v-if="isCondition">
       <div class="flex items-end justify-between px-5 pb-3 pt-1">
         <div class="flex flex-col items-center gap-1">
@@ -179,7 +208,6 @@ function handleEdit(payload: { label: string; description: string; config?: Reco
       </div>
     </template>
 
-    <!-- ── Single source handle (bottom) ── -->
     <template v-else>
       <Handle
         id="output"
@@ -190,47 +218,9 @@ function handleEdit(payload: { label: string; description: string; config?: Reco
     </template>
   </div>
 
-  <!-- ─── Delete confirmation dialog ─── -->
-  <Teleport to="body">
-    <div
-      v-if="showDeleteConfirm"
-      class="fixed inset-0 z-[9999] flex items-center justify-center px-4"
-    >
-      <button
-        class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
-        type="button"
-        @click="showDeleteConfirm = false"
-      />
-      <div class="relative z-10 w-full max-w-sm rounded-xl bg-white p-6 shadow-2xl">
-        <h3 class="text-lg font-semibold text-slate-900">Remover ação</h3>
-        <p class="mt-2 text-sm text-slate-500">
-          Tem certeza que deseja remover <strong>"{{ data.label }}"</strong> do fluxo?
-          Esta ação não pode ser desfeita.
-        </p>
-        <div class="mt-5 flex justify-end gap-3">
-          <button
-            type="button"
-            class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-            @click="showDeleteConfirm = false"
-          >
-            Cancelar
-          </button>
-          <button
-            type="button"
-            class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition-colors"
-            @click="handleDelete"
-          >
-            Remover
-          </button>
-        </div>
-      </div>
-    </div>
-  </Teleport>
-
-  <!-- ─── Edit / Config modal ─── -->
   <NodeConfigModal
     :open="showEditModal"
-    :node-type="data.type"
+    :node-type="data.actionId || data.type"
     :label="data.label"
     :description="data.description ?? ''"
     :config="(data.config as Record<string, unknown>) ?? {}"
@@ -238,3 +228,14 @@ function handleEdit(payload: { label: string; description: string; config?: Reco
     @save="handleEdit"
   />
 </template>
+
+<style scoped>
+.flow-node-context-icon :deep(svg),
+.flow-node-action-icon :deep(svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+  fill: currentColor;
+}
+</style>

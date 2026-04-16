@@ -124,7 +124,13 @@ function openActionsSidebar() {
       class="h-full w-full"
       :trigger-label="triggerLabel"
       :trigger-description="triggerDescription"
+      :workflow-nodes="nodes"
+      :selected-node-id="selectedNodeId"
       @add-action="openActionsSidebar"
+      @remove-node="$emit('remove-node', $event)"
+      @select-node="$emit('select-node', $event)"
+      @select-action="$emit('select-action', $event)"
+      @update-node="$emit('update-node', $event)"
     />
 
     <!-- ── Node Settings Drawer ────────────────────────────────────────── -->

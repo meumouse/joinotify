@@ -231,8 +231,17 @@ function scheduleNodeAutosave() {
   }, 700);
 }
 
-function handleNodeUpdate(patch) {
-  const nodeId = store.editingNodeId || store.selectedNodeId;
+function handleNodeUpdate(payload) {
+  const isExplicitPayload = payload && typeof payload === 'object' && payload.nodeId && payload.patch;
+  const nodeId = isExplicitPayload
+    ? String(payload.nodeId || '')
+    : (store.editingNodeId || store.selectedNodeId);
+  const patch = isExplicitPayload ? payload.patch : payload;
+
+  if (!nodeId || !patch || typeof patch !== 'object') {
+    return;
+  }
+
   store.updateNodeData(nodeId, patch);
   scheduleNodeAutosave();
 }

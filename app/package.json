@@ -18,7 +18,8 @@
     "@wordpress/i18n": "^6.16.0",
     "intl-tel-input": "^25.15.1",
     "pinia": "^2.3.0",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue3-emoji-picker": "^1.1.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

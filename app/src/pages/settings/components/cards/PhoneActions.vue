@@ -10,7 +10,7 @@ import { computed, ref, watch } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
 import ModalDialog from '../../../../components/modals/ModalDialog.vue';
 import SelectField from '../../../../components/fields/SelectField.vue';
-import TextAreaField from '../../../../components/fields/TextAreaField.vue';
+import RichTextAreaField from '../../../../components/fields/RichTextAreaField.vue';
 import BaseButton from '../../../../components/buttons/BaseButton.vue';
 import PhoneField from '../../../../components/fields/PhoneField.vue';
 import OtpField from '../../../../components/fields/OtpField.vue';
@@ -261,7 +261,7 @@ async function submitTestMessage() {
             </p>
           </div>
 
-          <TextAreaField
+          <RichTextAreaField
             v-model="testMessageBody"
             :field="{
               placeholder: __('Type your test message...', textDomain),
