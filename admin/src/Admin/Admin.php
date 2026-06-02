@@ -51,6 +51,25 @@ class Admin {
 
             update_option( 'joinotify_settings', $default_options );
         }
+
+        // Track the installed version so future upgrades can run migrations.
+        $stored_version = get_option( 'joinotify_version', '' );
+
+        if ( $stored_version !== JOINOTIFY_VERSION ) {
+            /**
+             * Fires once when Joinotify is installed or upgraded to a new version.
+             *
+             * Migration routines should hook here and guard on the previous
+             * version. Empty string means a fresh install.
+             *
+             * @since 2.0.0
+             * @param string $stored_version Previously stored version ('' on fresh install).
+             * @param string $new_version    Current plugin version.
+             */
+            do_action( 'Joinotify/Upgraded', $stored_version, JOINOTIFY_VERSION );
+
+            update_option( 'joinotify_version', JOINOTIFY_VERSION );
+        }
     }
 
 

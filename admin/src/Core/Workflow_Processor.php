@@ -22,6 +22,35 @@ defined('ABSPATH') || exit;
 class Workflow_Processor {
 
     /**
+     * Whether a stop_funnel action has halted the current execution segment.
+     *
+     * Reset at the start of every workflow run and every scheduled segment, so
+     * stopping one funnel never leaks into the next workflow processed on the
+     * same request.
+     *
+     * @since 2.0.0
+     * @var bool
+     */
+    private static $funnel_stopped = false;
+
+
+    /**
+     * Flag the current execution segment as stopped.
+     *
+     * Used as the handler for the `stop_funnel` action so that no subsequent
+     * action in the funnel (linear, branch or scheduled) is dispatched.
+     *
+     * @since 2.0.0
+     * @return bool
+     */
+    public static function stop_funnel() {
+        self::$funnel_stopped = true;
+
+        return true;
+    }
+
+
+    /**
      * Returns published posts that have a specific hook in the content
      *
      * @since 1.0.0
@@ -103,6 +132,9 @@ class Workflow_Processor {
      * @return void
      */
     public static function process_workflow_content( $workflow_content, $post_id, $payload ) {
+        // Start every workflow with a clean stop flag.
+        self::$funnel_stopped = false;
+
         if ( JOINOTIFY_DEV_MODE ) {
             error_log( 'Function process_workflow_content() fired' );
             error_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
@@ -202,6 +234,11 @@ class Workflow_Processor {
     
         // Processes pending actions
         foreach ( $state['pending_actions'] as $index => $action ) {
+            // A previous action requested the funnel to stop.
+            if ( self::$funnel_stopped ) {
+                break;
+            }
+
             $action_id = $action['id'] ?? null;
             $action_data = $action['data'] ?? array();
 
@@ -278,6 +315,7 @@ class Workflow_Processor {
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
+            'stop_funnel' => fn() => self::stop_funnel(),
         //  'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
         ));
 
@@ -359,6 +397,11 @@ class Workflow_Processor {
         // Process the resulting actions based on the condition outcome
         foreach ( $next_actions as $child_action ) {
             self::handle_action( $child_action, $post_id, $payload );
+
+            // Stop dispatching this branch (and the outer funnel) on stop_funnel.
+            if ( self::$funnel_stopped ) {
+                break;
+            }
         }
 
         return true;
@@ -376,6 +419,9 @@ class Workflow_Processor {
      * @return void
      */
     public static function process_scheduled_action( $post_id, $payload, $action_data ) {
+        // Start every scheduled segment with a clean stop flag.
+        self::$funnel_stopped = false;
+
         // get saved state for woocommerce hooks
         if ( $payload['integration'] === 'woocommerce' ) {
             $meta_key = 'joinotify_workflow_state_' . $payload['order_id'];
@@ -408,6 +454,11 @@ class Workflow_Processor {
 
         // loop for each next actions
         foreach ( $next_actions as $idx => $next_action ) {
+            // A previous action requested the funnel to stop.
+            if ( self::$funnel_stopped ) {
+                break;
+            }
+
             $next_id = $next_action['id'] ?? null;
             $next_type = $next_action['data']['action'] ?? '';
 

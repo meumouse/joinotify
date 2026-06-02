@@ -78,7 +78,10 @@ class Workflow_Post_Type {
     
         register_post_type( 'joinotify-workflow', $args );
 
-        // update permalinks
-        flush_rewrite_rules();
+        // Flush rewrite rules once per plugin version instead of on every request.
+        if ( get_option( 'joinotify_rewrite_rules_version' ) !== JOINOTIFY_VERSION ) {
+            flush_rewrite_rules();
+            update_option( 'joinotify_rewrite_rules_version', JOINOTIFY_VERSION );
+        }
     }
 }
