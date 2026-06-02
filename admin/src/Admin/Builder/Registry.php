@@ -1316,6 +1316,18 @@ class Registry {
 				continue;
 			}
 
+			// Preserve the canvas connection mode as a clean key or null.
+			if ( 'connection_mode' === $key ) {
+				$clean[ $key ] = is_null( $value ) ? null : sanitize_key( (string) $value );
+				continue;
+			}
+
+			// Preserve the boolean flag without coercing it into "1"/"" strings.
+			if ( 'connection_break_before' === $key ) {
+				$clean[ $key ] = is_null( $value ) ? null : (bool) $value;
+				continue;
+			}
+
 			if ( is_array( $value ) ) {
 				$clean[ $key ] = self::sanitize_node_data( $value, $type );
 				continue;

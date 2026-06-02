@@ -1,5 +1,6 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../utils/i18n';
+import { createApiClient } from '../utils/api';
 import { useBulkSelection } from './useBulkSelection';
 import { usePagination } from './usePagination';
 
@@ -88,13 +89,16 @@ function simulateLatency(duration = 300) {
 }
 
 export function useWorkflows(bootstrap = {}) {
+  const api = createApiClient(bootstrap);
+  const hasApi = Boolean(bootstrap?.rest?.root);
+
   const loading = ref(true);
   const error = ref('');
   const bulkActionLoading = ref(false);
   const updateLoadingIds = ref(new Set());
   const searchQuery = ref(bootstrap.search_query || '');
   const selectedStatus = ref(normalizeStatus(bootstrap.active_status));
-  const baseWorkflows = cloneWorkflows(bootstrap.workflows?.length ? bootstrap.workflows : MOCK_WORKFLOWS);
+  const baseWorkflows = cloneWorkflows(bootstrap.workflows?.length ? bootstrap.workflows : hasApi ? [] : MOCK_WORKFLOWS);
   const workflows = ref(baseWorkflows);
   const initialSnapshot = cloneWorkflows(baseWorkflows);
 
@@ -149,21 +153,45 @@ export function useWorkflows(bootstrap = {}) {
     bulkSelection.clearSelection();
   });
 
+  async function fetchWorkflows() {
+    if (!hasApi) {
+      workflows.value = cloneWorkflows(initialSnapshot);
+      await simulateLatency(bootstrap.loading_delay || 350);
+      return;
+    }
+
+    const response = await api.get('/admin/workflows');
+
+    if (response?.status === 'error') {
+      throw new Error(response.message || __('Could not load workflows.', textDomain));
+    }
+
+    workflows.value = cloneWorkflows(Array.isArray(response?.workflows) ? response.workflows : []);
+  }
+
   onMounted(async () => {
-    await simulateLatency(bootstrap.loading_delay || 350);
-    loading.value = false;
+    try {
+      await fetchWorkflows();
+    } catch (fetchError) {
+      error.value = fetchError instanceof Error ? fetchError.message : __('Could not load workflows.', textDomain);
+    } finally {
+      loading.value = false;
+    }
   });
 
-  function reload() {
+  async function reload() {
     loading.value = true;
     error.value = '';
-    workflows.value = cloneWorkflows(initialSnapshot);
-    pagination.firstPage();
     bulkSelection.clearSelection();
 
-    return simulateLatency(bootstrap.loading_delay || 350).then(() => {
+    try {
+      await fetchWorkflows();
+    } catch (fetchError) {
+      error.value = fetchError instanceof Error ? fetchError.message : __('Could not load workflows.', textDomain);
+    } finally {
+      pagination.firstPage();
       loading.value = false;
-    });
+    }
   }
 
   function setStatusFilter(status) {
@@ -203,7 +231,18 @@ export function useWorkflows(bootstrap = {}) {
     updateLoadingIds.value = nextLoadingIds;
 
     try {
-      await simulateLatency(280);
+      error.value = '';
+
+      if (hasApi) {
+        const response = await api.post('/admin/workflows/status', { id, status: nextStatus });
+
+        if (response?.status === 'error') {
+          throw new Error(response.message || __('Could not update the status.', textDomain));
+        }
+      } else {
+        await simulateLatency(280);
+      }
+
       setWorkflowStatus(id, nextStatus);
     } catch (taskError) {
       error.value = taskError instanceof Error ? taskError.message : __('Could not update the status.', textDomain);
@@ -212,6 +251,41 @@ export function useWorkflows(bootstrap = {}) {
       finishedLoadingIds.delete(String(id));
       updateLoadingIds.value = finishedLoadingIds;
     }
+  }
+
+  function applyBulkActionLocally(action, ids) {
+    if (action === 'delete_permanently') {
+      workflows.value = workflows.value.filter((workflow) => !ids.includes(String(workflow.id)));
+      return;
+    }
+
+    workflows.value = workflows.value.map((workflow) => {
+      if (!ids.includes(String(workflow.id))) {
+        return workflow;
+      }
+
+      if (action === 'restore') {
+        return {
+          ...workflow,
+          status: normalizeStatus(workflow.previous_status || 'draft'),
+          previous_status: null,
+        };
+      }
+
+      if (action === 'trash') {
+        return {
+          ...workflow,
+          previous_status: workflow.status,
+          status: 'trash',
+        };
+      }
+
+      return {
+        ...workflow,
+        previous_status: workflow.status === 'trash' ? workflow.previous_status : workflow.status,
+        status: normalizeStatus(action),
+      };
+    });
   }
 
   async function applyBulkAction(action, ids = bulkSelection.selectedIds.value) {
@@ -223,41 +297,22 @@ export function useWorkflows(bootstrap = {}) {
     error.value = '';
 
     try {
-      await simulateLatency(300);
+      if (hasApi) {
+        const response = await api.post('/admin/workflows/bulk', { action, ids });
 
-      if (action === 'delete_permanently') {
-        workflows.value = workflows.value.filter((workflow) => !ids.includes(String(workflow.id)));
-        bulkSelection.clearSelection();
-        return;
+        if (response?.status === 'error') {
+          throw new Error(response.message || __('The bulk action failed.', textDomain));
+        }
+
+        if (Array.isArray(response?.workflows)) {
+          workflows.value = cloneWorkflows(response.workflows);
+        } else {
+          await fetchWorkflows();
+        }
+      } else {
+        await simulateLatency(300);
+        applyBulkActionLocally(action, ids);
       }
-
-      workflows.value = workflows.value.map((workflow) => {
-        if (!ids.includes(String(workflow.id))) {
-          return workflow;
-        }
-
-        if (action === 'restore') {
-          return {
-            ...workflow,
-            status: normalizeStatus(workflow.previous_status || 'draft'),
-            previous_status: null,
-          };
-        }
-
-        if (action === 'trash') {
-          return {
-            ...workflow,
-            previous_status: workflow.status,
-            status: 'trash',
-          };
-        }
-
-        return {
-          ...workflow,
-          previous_status: workflow.status === 'trash' ? workflow.previous_status : workflow.status,
-          status: normalizeStatus(action),
-        };
-      });
 
       bulkSelection.clearSelection();
     } catch (taskError) {

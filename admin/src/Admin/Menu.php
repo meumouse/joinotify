@@ -3,7 +3,7 @@
 namespace MeuMouse\Joinotify\Admin;
 
 use MeuMouse\Joinotify\Api\License;
-use WP_Query;
+use MeuMouse\Joinotify\Admin\Workflows\Registry as Workflows_Registry;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -185,35 +185,9 @@ class Menu {
     private function get_workflows_bootstrap() {
         $status = isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'publish';
         $status = in_array( $status, array( 'publish', 'draft', 'trash' ), true ) ? $status : 'publish';
-        $current_page = isset( $_GET['paged'] ) ? max( 1, absint( $_GET['paged'] ) ) : 1;
-        $per_page = 20;
 
-        $query = new WP_Query(
-            array(
-                'post_type'      => 'joinotify-workflow',
-                'post_status'    => $status,
-                'posts_per_page' => $per_page,
-                'paged'          => $current_page,
-                'orderby'        => 'date',
-                'order'          => 'DESC',
-            )
-        );
-
-        $counts = wp_count_posts( 'joinotify-workflow' );
-        $workflows = array();
-
-        foreach ( $query->posts as $post ) {
-            $workflows[] = array(
-                'id'                   => (int) $post->ID,
-                'name'                 => get_the_title( $post ),
-                'created_at'           => get_post_time( 'Y-m-d H:i:s', false, $post ),
-                'status'               => $post->post_status,
-                'edit_url'             => admin_url( 'admin.php?page=joinotify-workflows-builder&id=' . (int) $post->ID ),
-                'delete_url'           => admin_url( 'admin.php?page=joinotify-workflows&action=delete&id=' . (int) $post->ID ),
-                'restore_url'          => admin_url( 'admin.php?page=joinotify-workflows&action=restore&id=' . (int) $post->ID ),
-                'delete_permanently_url' => admin_url( 'admin.php?page=joinotify-workflows&action=delete_permanently&id=' . (int) $post->ID ),
-            );
-        }
+        // The Vue list filters/paginates client-side, so seed it with every status.
+        $list = Workflows_Registry::get_list_state();
 
         return array(
             'page'         => 'workflows',
@@ -223,17 +197,12 @@ class Menu {
             'date_format'  => get_option( 'date_format' ),
             'time_format'  => get_option( 'time_format' ),
             'loading_delay' => 350,
-            'workflows'    => $workflows,
-            'counts'       => array(
-                'publish' => isset( $counts->publish ) ? (int) $counts->publish : 0,
-                'draft'   => isset( $counts->draft ) ? (int) $counts->draft : 0,
-                'trash'   => isset( $counts->trash ) ? (int) $counts->trash : 0,
-            ),
-            'pagination'   => array(
-                'current_page' => $current_page,
-                'per_page'     => $per_page,
-                'total_items'  => (int) $query->found_posts,
-                'total_pages'  => (int) max( 1, ceil( $query->found_posts / $per_page ) ),
+            'workflows'    => $list['workflows'],
+            'counts'       => $list['counts'],
+            'pagination'   => $list['pagination'],
+            'rest'         => array(
+                'root'  => esc_url_raw( rest_url( 'joinotify/v1' ) ),
+                'nonce' => wp_create_nonce( 'wp_rest' ),
             ),
         );
     }

@@ -244,11 +244,14 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
 			'MeuMouse\\Joinotify\\Admin\\Menu',
 			'MeuMouse\\Joinotify\\Admin\\Builder\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\Workflows\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Assets\\Core_Assets',
 			'MeuMouse\\Joinotify\\Assets\\Settings_Assets',
 			'MeuMouse\\Joinotify\\Api\\Controller',
 			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Core\\Notification_Queue',
+			'MeuMouse\\Joinotify\\Cron\\Schedule',
+			'MeuMouse\\Joinotify\\Cron\\Routines',
 			'MeuMouse\\Joinotify\\Core\\Debug',
 		));
 
