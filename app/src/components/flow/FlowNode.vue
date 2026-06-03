@@ -55,6 +55,21 @@ const displayIcon = computed(() => String(props.data.icon || fallbackConfig.valu
 const resolvedBoxiconClass = computed(() => normalizeBoxiconClass(displayIcon.value));
 const displayColorClass = computed(() => fallbackConfig.value?.color || 'bg-slate-500');
 
+// Integration/group label shown below the title for actions tied to an integration.
+const ACTION_GROUP_LABELS: Record<string, string> = {
+  send_whatsapp_message_text: 'WhatsApp',
+  send_whatsapp_message_media: 'WhatsApp',
+  create_coupon: 'WooCommerce',
+};
+const actionGroupLabel = computed(() => {
+  if (isTrigger.value) {
+    return '';
+  }
+
+  const key = String(props.data.actionId || props.data.type || '').trim();
+  return String(props.data.contextLabel || ACTION_GROUP_LABELS[key] || '').trim();
+});
+
 onClickOutside(menuRef, () => {
   menuOpen.value = false;
 });
@@ -109,7 +124,7 @@ function normalizeBoxiconClass(value: string) {
 
 <template>
   <div
-    class="group relative min-w-[240px] max-w-[420px] rounded-xl border bg-white shadow-md transition-all duration-200 select-none"
+    class="group relative w-[300px] rounded-xl border bg-white shadow-md transition-all duration-200 select-none"
     :class="[
       selected
         ? 'border-primary-600 ring-2 ring-primary-600/20'
@@ -169,6 +184,12 @@ function normalizeBoxiconClass(value: string) {
         <span class="block truncate text-sm font-semibold text-slate-900">
           {{ data.label }}
         </span>
+        <p
+          v-if="!isTrigger && actionGroupLabel"
+          class="truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400"
+        >
+          {{ actionGroupLabel }}
+        </p>
       </div>
 
       <div v-if="!isTrigger" ref="menuRef" class="relative">
@@ -206,9 +227,11 @@ function normalizeBoxiconClass(value: string) {
     </div>
 
     <div v-if="data.description" class="px-3 py-2.5">
-      <p class="line-clamp-3 whitespace-pre-line text-xs leading-relaxed text-slate-500">
-        {{ data.description }}
-      </p>
+      <!-- Descriptions are plugin-generated HTML (bold spans, placeholder pills, <br>). -->
+      <div
+        class="builder-node-description line-clamp-3 whitespace-pre-line text-xs leading-relaxed text-slate-400"
+        v-html="data.description"
+      />
     </div>
 
     <template v-if="isCondition">
@@ -283,5 +306,28 @@ function normalizeBoxiconClass(value: string) {
 
 .flow-node-context-icon {
   color: #334155;
+}
+
+/* Render the plugin-generated HTML description (bold spans + placeholder pills). */
+.builder-node-description :deep(.builder-placeholder) {
+  display: inline-block;
+  padding: 0 5px;
+  border-radius: 5px;
+  background: #eef2ff;
+  color: #4338ca;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.builder-node-description :deep(strong),
+.builder-node-description :deep(b) {
+  font-weight: 700;
+  color: #334155;
+}
+
+.builder-node-description :deep(a) {
+  color: #4338ca;
+  text-decoration: underline;
 }
 </style>
