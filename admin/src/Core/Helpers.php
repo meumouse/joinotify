@@ -38,7 +38,7 @@ class Helpers {
             'hours' => $plural ? __( 'horas', 'joinotify' ) : __( 'hora', 'joinotify' ),
             'day' => $plural ? __( 'dias', 'joinotify' ) : __( 'dia', 'joinotify' ),
             'week' => $plural ? __( 'semanas', 'joinotify' ) : __( 'semana', 'joinotify' ),
-            'month' => $plural ? __( 'meses', 'joinotify' ) : __( 'mÃªs', 'joinotify' ),
+            'month' => $plural ? __( 'meses', 'joinotify' ) : __( 'mês', 'joinotify' ),
             'year' => $plural ? __( 'anos', 'joinotify' ) : __( 'ano', 'joinotify' ),
         ));
 

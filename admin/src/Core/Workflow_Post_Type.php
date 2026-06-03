@@ -53,7 +53,7 @@ class Workflow_Post_Type {
     
         $args = array(
             'labels' => $labels,
-            'description'        => __( 'DescriÃ§Ã£o.', 'joinotify' ),
+            'description'        => __( 'Descrição.', 'joinotify' ),
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,

@@ -273,7 +273,7 @@ class Woocommerce extends Integrations_Base {
                 'description' => esc_html__( 'To retrieve the customer billing first name from the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_billing_first_name() : '',
-                    'sandbox' => $current_user->exists() ? $current_user->first_name : esc_html__( 'JoÃ£o', 'joinotify' ),
+                    'sandbox' => $current_user->exists() ? $current_user->first_name : esc_html__( 'João', 'joinotify' ),
                 ),
             ),
             '{{ wc_billing_last_name }}' => array(
@@ -310,7 +310,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_order_number }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o nÃºmero do pedido do WooCommerce', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o número do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_order_number() : '',
                     'sandbox' => esc_html__( '12345', 'joinotify' ),
@@ -321,7 +321,7 @@ class Woocommerce extends Integrations_Base {
                 'description' => esc_html__( 'To retrieve the WooCommerce order status', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ?  wc_get_order_status_name( $order->get_status() ) : '',
-                    'sandbox' => esc_html__( 'ConcluÃ­do', 'joinotify' ),
+                    'sandbox' => esc_html__( 'Concluído', 'joinotify' ),
                 ),
             ),
             '{{ wc_order_date }}' => array(
@@ -334,7 +334,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereÃ§o completo de faturamento do usuÃ¡rio (formato configurÃ¡vel nas opÃ§Ãµes do WooCommerce).', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço completo de faturamento do usuário (formato configurável nas opções do WooCommerce).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'billing' ) : '',
                     'sandbox' => esc_html__( 'Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)', 'joinotify' ),
@@ -342,7 +342,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_shipping_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereÃ§o completo de entrega do usuÃ¡rio (formato configurÃ¡vel nas opÃ§Ãµes do WooCommerce).', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço completo de entrega do usuário (formato configurável nas opções do WooCommerce).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'shipping' ) : '',
                     'sandbox' => esc_html__( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
@@ -353,7 +353,7 @@ class Woocommerce extends Integrations_Base {
                 'description' => esc_html__( 'To retrieve each purchased product and quantity from the order, separated by line', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_purchased_items( $order ) : '',
-                    'sandbox' => sprintf( '%s %s %s', esc_html__( '1x - Camiseta de algodÃ£o masculina (Produto exemplo)', 'joinotify' ), "\n",  esc_html__( '1x - Ã“culos de sol com proteÃ§Ã£o UV (Produto exemplo)', 'joinotify' ) ),
+                    'sandbox' => sprintf( '%s %s %s', esc_html__( '1x - Camiseta de algodão masculina (Produto exemplo)', 'joinotify' ), "\n",  esc_html__( '1x - Óculos de sol com proteção UV (Produto exemplo)', 'joinotify' ) ),
                 ),
             ),
             '{{ wc_payment_url }}' => array(
@@ -366,7 +366,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_currency_symbol }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o sÃ­mbolo de moeda do pedido', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o símbolo de moeda do pedido', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? get_woocommerce_currency_symbol( $order->get_currency() ) : '',
                     'sandbox' => get_woocommerce_currency_symbol(),
@@ -406,7 +406,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_coupon_codes }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar os cÃ³digos de cupom utilizados no pedido do WooCommerce', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar os códigos de cupom utilizados no pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? implode(', ', $order->get_coupon_codes()) : '',
                     'sandbox' => esc_html__( 'CUPOM10, FRETEGRATIS', 'joinotify' ),
@@ -414,7 +414,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_payment_method_title }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o tÃ­tulo do mÃ©todo de pagamento do pedido do WooCommerce', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o título do método de pagamento do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? (function ( $order ) {
                         $id = $order->get_payment_method();
@@ -424,12 +424,12 @@ class Woocommerce extends Integrations_Base {
                             ? joinotify_format_plain_text( $gateways[ $id ]->get_title() )
                             : '';
                     })( $order ) : '',
-                    'sandbox' => esc_html__( 'CartÃ£o de crÃ©dito', 'joinotify' ),
+                    'sandbox' => esc_html__( 'Cartão de crédito', 'joinotify' ),
                 ),
             ),
             '{{ wc_shipping_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o endereÃ§o de entrega do pedido do WooCommerce', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o endereço de entrega do pedido do WooCommerce', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_shipping_to_display() : '',
                     'sandbox' => esc_html__( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
@@ -437,7 +437,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_checkout_field=[FIELD_ID] }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Para recuperar o valor de um campo especÃ­fico do checkout no pedido do WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: billing_email.', 'joinotify' ),
+                'description' => esc_html__( 'Para recuperar o valor de um campo específico do checkout no pedido do WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: billing_email.', 'joinotify' ),
                 'replacement' => array(), // dynamic replacement is make on Placeholders::replace_placeholders()
             ),
         );
@@ -568,7 +568,7 @@ class Woocommerce extends Integrations_Base {
                     $placeholder_id = substr( $field_id, 9 );
                 }
 
-                // Donâ€™t overwrite core keys already set.
+                // Don’t overwrite core keys already set.
                 if ( isset( $data[ $placeholder_id ] ) && $data[ $placeholder_id ] !== '' ) {
                     continue;
                 }
@@ -759,13 +759,13 @@ class Woocommerce extends Integrations_Base {
             </div>
 
             <div class="coupon-action-item coupon-code-wrapper">
-                <label class="form-label"><?php esc_html_e( 'CÃ³digo do cupom: *', 'joinotify' ) ?></label>
+                <label class="form-label"><?php esc_html_e( 'Código do cupom: *', 'joinotify' ) ?></label>
                 <input type="text" class="form-control set-coupon-code required-setting" value="<?php esc_attr_e( $settings['settings']['coupon_code'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'EXCLUSIVE_COUPON', 'joinotify' ) ?>"/>
             </div>
 
             <div class="coupon-action-item">
-                <label class="form-label"><?php esc_html_e( 'DescriÃ§Ã£o do cupom (opcional)', 'joinotify' ) ?></label>
-                <input type="text" class="form-control set-coupon-description" value="<?php esc_attr_e( $settings['settings']['coupon_description'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'Cupom para recuperaÃ§Ã£o de compras', 'joinotify' ) ?>"/>
+                <label class="form-label"><?php esc_html_e( 'Descrição do cupom (opcional)', 'joinotify' ) ?></label>
+                <input type="text" class="form-control set-coupon-description" value="<?php esc_attr_e( $settings['settings']['coupon_description'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'Cupom para recuperação de compras', 'joinotify' ) ?>"/>
             </div>
 
             <div class="coupon-action-item">
@@ -782,26 +782,26 @@ class Woocommerce extends Integrations_Base {
             </div>
 
             <div class="coupon-action-item d-flex align-items-center">
-                <label class="form-label me-3"><?php esc_html_e( 'Permitir frete grÃ¡tis', 'joinotify' ) ?></label>
+                <label class="form-label me-3"><?php esc_html_e( 'Permitir frete grátis', 'joinotify' ) ?></label>
                 <input type="checkbox" class="toggle-switch allow-free-shipping" <?php checked( isset( $settings['settings']['free_shipping'] ) && $settings['settings']['free_shipping'] === 'yes' ) ?>>
             </div>
 
             <div class="coupon-action-item d-flex align-items-center">
-                <label class="form-label me-3"><?php esc_html_e( 'Definir expiraÃ§Ã£o do cupom', 'joinotify' ) ?></label>
+                <label class="form-label me-3"><?php esc_html_e( 'Definir expiração do cupom', 'joinotify' ) ?></label>
                 <input type="checkbox" class="toggle-switch set-expires-coupon validate-required-settings" <?php checked( isset( $settings['settings']['coupon_expiry'] ) && $settings['settings']['coupon_expiry'] === 'yes' ) ?>>
             </div>
 
             <div class="coupon-action-item select-time-delay-container d-none">
-                <label class="form-label" for="set-time-delay-type"><?php esc_html_e( 'Selecione o tipo de expiraÃ§Ã£o', 'joinotify' ) ?></label>
+                <label class="form-label" for="set-time-delay-type"><?php esc_html_e( 'Selecione o tipo de expiração', 'joinotify' ) ?></label>
                 
                 <select class="form-select set-time-delay-type">
                     <option value="period" <?php selected( $settings['settings']['expiry_data']['type'] ?? '', 'period', true ) ?> ><?php esc_html_e( 'Esperar tempo', 'joinotify' ) ?></option>
-                    <option value="date" <?php selected( $settings['settings']['expiry_data']['type'] ?? '', 'date', true ) ?> ><?php esc_html_e( 'Esperar atÃ© uma data', 'joinotify' ) ?></option>
+                    <option value="date" <?php selected( $settings['settings']['expiry_data']['type'] ?? '', 'date', true ) ?> ><?php esc_html_e( 'Esperar até uma data', 'joinotify' ) ?></option>
                 </select>
             </div>
 
             <div class="coupon-action-item wait-date-container d-none">
-                <label class="form-label"><?php esc_html_e( 'Esperar atÃ©', 'joinotify' ) ?></label>
+                <label class="form-label"><?php esc_html_e( 'Esperar até', 'joinotify' ) ?></label>
                 
                 <div class="input-group">
                     <input type="text" class="form-control dateselect get-date-value" value="<?php esc_attr_e( $settings['settings']['expiry_data']['date_value'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'Selecione uma data', 'joinotify' ) ?>"/>
@@ -830,7 +830,7 @@ class Woocommerce extends Integrations_Base {
             </div>
 
             <div class="border-top divider mt-5 pt-4 coupon-placeholders">
-                <label class="form-label"><?php esc_html_e( 'VariÃ¡veis de texto:', 'joinotify' ) ?></label>
+                <label class="form-label"><?php esc_html_e( 'Variáveis de texto:', 'joinotify' ) ?></label>
                 <?php echo Builder_Components::render_coupon_placeholders(); ?>
             </div>
         </div>
@@ -874,7 +874,7 @@ class Woocommerce extends Integrations_Base {
         if ( $query->have_posts() ) {
             error_log( 'Coupon already exists.' );
             
-            return new WP_Error( 'duplicate_coupon', __( 'O cupom jÃ¡ existe.', 'joinotify' ) );
+            return new WP_Error( 'duplicate_coupon', __( 'O cupom já existe.', 'joinotify' ) );
         }
 
         // reset query
@@ -918,7 +918,7 @@ class Woocommerce extends Integrations_Base {
             // Define o expiry_date como a data original primeiro
             $expiry_date = $original_expiry_date;
 
-            // Se a expiraÃ§Ã£o for menor que 24 horas, ajusta para o inÃ­cio do prÃ³ximo dia (23:59:59)
+            // Se a expiração for menor que 24 horas, ajusta para o início do próximo dia (23:59:59)
             if ( $expiry_date && ( $expiry_date - time() ) < DAY_IN_SECONDS ) {
                 $expiry_date = strtotime( 'tomorrow 23:59:59' ); // Fim do dia seguinte
             }
@@ -1058,7 +1058,7 @@ class Woocommerce extends Integrations_Base {
             ),
             'user_meta' => array(
                 'title' => __( 'User metadata', 'joinotify' ),
-                'description' => __( 'Permite verificar metadados especÃ­ficos do usuÃ¡rio.', 'joinotify' ),
+                'description' => __( 'Permite verificar metadados específicos do usuário.', 'joinotify' ),
             ),
             'customer_email' => array(
                 'title' => __( 'Customer email', 'joinotify' ),

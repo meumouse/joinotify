@@ -191,7 +191,7 @@ if ( is_admin() ) {
             $status_display = '';
 
             if ( $item->post_status === 'draft' ) {
-                $status_display = '<span class="post-state"> â€” ' . esc_html__( 'Rascunho', 'joinotify' ) . '</span>';
+                $status_display = '<span class="post-state"> — ' . esc_html__( 'Rascunho', 'joinotify' ) . '</span>';
             }
         
             return sprintf(

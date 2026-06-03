@@ -92,7 +92,7 @@ class Registry {
                             self::field_text(
                                 'send_media_proxy_api_route',
                                 esc_html__( 'Media route', 'joinotify' ),
-                                esc_html__( 'Caminho da rota usada para enviar mensagens com mÃ­dia.', 'joinotify' ),
+                                esc_html__( 'Caminho da rota usada para enviar mensagens com mídia.', 'joinotify' ),
                                 array(
                                     'placeholder' => 'send-message/media',
                                 )
@@ -381,17 +381,17 @@ class Registry {
                 ),
                 array(
                     'label' => esc_html__( 'DOMDocument', 'joinotify' ),
-                    'value' => class_exists( 'DOMDocument' ) ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'NÃ£o', 'joinotify' ),
+                    'value' => class_exists( 'DOMDocument' ) ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'Não', 'joinotify' ),
                     'status' => class_exists( 'DOMDocument' ) ? 'success' : 'danger',
                 ),
                 array(
                     'label' => esc_html__( 'cURL ', 'joinotify' ),
-                    'value' => extension_loaded( 'curl' ) ? curl_version()['version'] : esc_html__( 'NÃ£o', 'joinotify' ),
+                    'value' => extension_loaded( 'curl' ) ? curl_version()['version'] : esc_html__( 'Não', 'joinotify' ),
                     'status' => extension_loaded( 'curl' ) ? 'success' : 'danger',
                 ),
                 array(
                     'label' => esc_html__( 'OpenSSL extension', 'joinotify' ),
-                    'value' => extension_loaded( 'openssl' ) ? OPENSSL_VERSION_TEXT : esc_html__( 'NÃ£o', 'joinotify' ),
+                    'value' => extension_loaded( 'openssl' ) ? OPENSSL_VERSION_TEXT : esc_html__( 'Não', 'joinotify' ),
                     'status' => extension_loaded( 'openssl' ) ? 'success' : 'danger',
                 ),
                 array(

@@ -36,9 +36,9 @@ class Media_Types {
     public static function get_media_types() {
         return apply_filters( 'Joinotify/Validations/Get_Media_Types', array(
             'image' => esc_html__( 'Imagem', 'joinotify' ),
-            'video' => esc_html__( 'VÃ­deo', 'joinotify' ),
+            'video' => esc_html__( 'Vídeo', 'joinotify' ),
             'document' => esc_html__( 'Documento', 'joinotify' ),
-            'audio' => esc_html__( 'Ãudio', 'joinotify' ),
+            'audio' => esc_html__( 'Áudio', 'joinotify' ),
         ));
     }
 

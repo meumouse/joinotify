@@ -46,7 +46,7 @@ class Components {
     
                     // Action title
                     if ( isset( $action_details['title'] ) && ! empty( $action_details['title'] ) && $action_details['type'] === 'condition' ) {
-                        $html .= '<h4 class="title">'. sprintf( esc_html__( 'CondiÃ§Ã£o: %s', 'joinotify' ), $action_details['title'] ) .'</h4>';
+                        $html .= '<h4 class="title">'. sprintf( esc_html__( 'Condição: %s', 'joinotify' ), $action_details['title'] ) .'</h4>';
                     } else {
                         $html .= '<h4 class="title">'. $value['title'] .'</h4>';
                     }
@@ -54,7 +54,7 @@ class Components {
                     // Message sender and receiver details
                     if ( $value['action'] === 'send_whatsapp_message_text' || $value['action'] === 'send_whatsapp_message_media' ) {
                         $html .= '<span class="text-muted fs-xs sender d-block">'. sprintf( __( 'Remetente: %s', 'joinotify' ), $action_details['sender'] ) .'</span>';
-                        $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'DestinatÃ¡rio: %s', 'joinotify' ), $action_details['receiver'] ) .'</span>';
+                        $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'Destinatário: %s', 'joinotify' ), $action_details['receiver'] ) .'</span>';
                     }
     
                     // Action description
@@ -74,7 +74,7 @@ class Components {
                             $html .= '<li class="d-flex align-items-center mb-0">';
                                 $html .= '<a id="exclude_action_'. esc_attr( $action_id ) .'" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 exclude-action" data-action-id="'. esc_attr( $action_id ) .'" href="#">';
                                     $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z"></path></svg>';
-                                    $html .= esc_html__( 'Excluir aÃ§Ã£o', 'joinotify' );
+                                    $html .= esc_html__( 'Excluir ação', 'joinotify' );
                                 $html .= '</a>';
                             $html .= '</li>';
                             
@@ -82,14 +82,14 @@ class Components {
                                 $html .= '<li class="d-flex align-items-center mb-0">';
                                     $html .= '<a id="edit_condition_'. esc_attr( $action_id ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-action" href="#" data-bs-toggle="modal" data-bs-target="#edit_condition_'. esc_attr( $action_id ) .'">';
                                         $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.045 7.401c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.378-.378-.88-.586-1.414-.586s-1.036.208-1.413.585L4 13.585V18h4.413L19.045 7.401zm-3-3 1.587 1.585-1.59 1.584-1.586-1.585 1.589-1.584zM6 16v-1.585l7.04-7.018 1.586 1.586L7.587 16H6zm-2 4h16v2H4z"></path></svg>';
-                                        $html .= esc_html__( 'Editar condiÃ§Ã£o', 'joinotify' );
+                                        $html .= esc_html__( 'Editar condição', 'joinotify' );
                                     $html .= '</a>';
                                 $html .= '</li>';
                             } elseif ( $value['action'] !== 'condition' && $value['action'] !== 'stop_funnel' ) {
                                 $html .= '<li class="d-flex align-items-center mb-0">';
                                     $html .= '<a id="edit_action_'. esc_attr( $action_id ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-action" href="#" data-bs-toggle="modal" data-bs-target="#edit_action_'. esc_attr( $action_id ) .'">';
                                         $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.045 7.401c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.378-.378-.88-.586-1.414-.586s-1.036.208-1.413.585L4 13.585V18h4.413L19.045 7.401zm-3-3 1.587 1.585-1.59 1.584-1.586-1.585 1.589-1.584zM6 16v-1.585l7.04-7.018 1.586 1.586L7.587 16H6zm-2 4h16v2H4z"></path></svg>';
-                                        $html .= esc_html__( 'Editar aÃ§Ã£o', 'joinotify' );
+                                        $html .= esc_html__( 'Editar ação', 'joinotify' );
                                     $html .= '</a>';
                                 $html .= '</li>';
                             }
@@ -123,7 +123,7 @@ class Components {
             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                 $html .= '<div class="modal-content">';
                     $html .= '<div class="modal-header px-4">';
-                        $html .= '<h3 class="modal-title fs-5">'. esc_html__( 'Configurar condiÃ§Ã£o', 'joinotify' ) .'</h3>';
+                        $html .= '<h3 class="modal-title fs-5">'. esc_html__( 'Configurar condição', 'joinotify' ) .'</h3>';
                         $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                     $html .= '</div>';
 
@@ -134,7 +134,7 @@ class Components {
 
                     $html .= '<div class="modal-footer px-4">';
                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="condition" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alteraÃ§Ãµes', 'joinotify' ) .'</button>';
+                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="condition" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                     $html .= '</div>';
                 $html .= '</div>';
             $html .= '</div>';
@@ -158,7 +158,7 @@ class Components {
             $html .= '<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">';
                 $html .= '<div class="modal-content">';
                     $html .= '<div class="modal-header px-4">';
-                        $html .= '<h3 class="modal-title fs-5">'. esc_html__( 'Configurar aÃ§Ã£o', 'joinotify' ) .'</h3>';
+                        $html .= '<h3 class="modal-title fs-5">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
                         $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                     $html .= '</div>';
 
@@ -168,7 +168,7 @@ class Components {
 
                     $html .= '<div class="modal-footer px-4">';
                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action ) .'" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alteraÃ§Ãµes', 'joinotify' ) .'</button>';
+                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action ) .'" data-action-id="'. esc_attr( $action_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                     $html .= '</div>';
                 $html .= '</div>';
             $html .= '</div>';
@@ -208,7 +208,7 @@ class Components {
 
                         if ( $action_value['action'] === 'send_whatsapp_message_text' || $action_value['action'] === 'send_whatsapp_message_media' ) {
                             $html .= '<span class="text-muted fs-xs sender d-block">'. sprintf( __( 'Remetente: %s', 'joinotify' ), $condition_data['data']['sender'] ) .'</span>';
-                            $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'DestinatÃ¡rio: %s', 'joinotify' ), $condition_data['data']['receiver'] ) .'</span>';
+                            $html .= '<span class="text-muted fs-xs receiver d-block mb-2">'. sprintf( __( 'Destinatário: %s', 'joinotify' ), $condition_data['data']['receiver'] ) .'</span>';
                         }
                         
                         if ( ! empty( $description ) ) {
@@ -226,7 +226,7 @@ class Components {
                                 $html .= '<li class="d-flex align-items-center mb-0">';
                                     $html .= '<a id="exclude_action_'. esc_attr( $action ) .'" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 exclude-action" data-action-id="'. esc_attr( $action ) .'" href="#">';
                                         $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 2H9c-1.103 0-2 .897-2 2v2H3v2h2v12c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V8h2V6h-4V4c0-1.103-.897-2-2-2zM9 4h6v2H9V4zm8 16H7V8h10v12z"></path></svg>';
-                                        $html .= esc_html__( 'Excluir aÃ§Ã£o', 'joinotify' );
+                                        $html .= esc_html__( 'Excluir ação', 'joinotify' );
                                     $html .= '</a>';
                                 $html .= '</li>';
 
@@ -234,7 +234,7 @@ class Components {
                                     $html .= '<li class="d-flex align-items-center mb-0">';
                                         $html .= '<a id="edit_action_'. esc_attr( $action ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-action" href="#" data-bs-toggle="modal" data-bs-target="#edit_action_'. esc_attr( $action ) .'" data-action-id="'. esc_attr( $action ) .'">';
                                             $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.045 7.401c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.378-.378-.88-.586-1.414-.586s-1.036.208-1.413.585L4 13.585V18h4.413L19.045 7.401zm-3-3 1.587 1.585-1.59 1.584-1.586-1.585 1.589-1.584zM6 16v-1.585l7.04-7.018 1.586 1.586L7.587 16H6zm-2 4h16v2H4z"></path></svg>';
-                                            $html .= esc_html__( 'Editar aÃ§Ã£o', 'joinotify' );
+                                            $html .= esc_html__( 'Editar ação', 'joinotify' );
                                         $html .= '</a>';
                                     $html .= '</li>';
                                 }
@@ -248,7 +248,7 @@ class Components {
                             $html .= '<div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">';
                                 $html .= '<div class="modal-content">';
                                     $html .= '<div class="modal-header px-4">';
-                                        $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action ) .'_label">'. esc_html__( 'Configurar aÃ§Ã£o', 'joinotify' ) .'</h3>';
+                                        $html .= '<h3 class="modal-title fs-5" id="edit_action_'. esc_attr( $action ) .'_label">'. esc_html__( 'Configurar ação', 'joinotify' ) .'</h3>';
                                         $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                                     $html .= '</div>';
 
@@ -258,7 +258,7 @@ class Components {
 
                                     $html .= '<div class="modal-footer px-4">';
                                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $action ) .'">'. esc_html__( 'Salvar alteraÃ§Ãµes', 'joinotify' ) .'</button>';
+                                        $html .= '<button type="button" class="btn btn-primary save-action-edit m-0" data-action="'. esc_attr( $action_value['action'] ) .'" data-action-id="'. esc_attr( $action ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                                     $html .= '</div>';
                                 $html .= '</div>';
                             $html .= '</div>';
@@ -285,7 +285,7 @@ class Components {
             'hours' => esc_html__( 'Hora (s)', 'joinotify' ),
             'day' => esc_html__( 'Dia (s)', 'joinotify' ),
             'week' => esc_html__( 'Semana (s)', 'joinotify' ),
-            'month' => esc_html__( 'MÃªs (es)', 'joinotify' ),
+            'month' => esc_html__( 'Mês (es)', 'joinotify' ),
             'year' => esc_html__( 'Ano (s)', 'joinotify' ),
         ));
     }
@@ -373,7 +373,7 @@ class Components {
                                 $html .= '<li class="d-flex align-items-center mb-0">';
                                     $html .= '<a id="edit_trigger_'. esc_attr( $trigger_id ) .'_trigger" class="dropdown-item px-3 py-2 d-flex align-items-center box-shadow-0 bg-transparent border-0 edit-trigger" href="#" data-bs-toggle="modal" data-bs-target="#edit_trigger_'. esc_attr( $trigger_id ) .'">';
                                         $html .= '<svg class="icon me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.045 7.401c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.378-.378-.88-.586-1.414-.586s-1.036.208-1.413.585L4 13.585V18h4.413L19.045 7.401zm-3-3 1.587 1.585-1.59 1.584-1.586-1.585 1.589-1.584zM6 16v-1.585l7.04-7.018 1.586 1.586L7.587 16H6zm-2 4h16v2H4z"></path></svg>';
-                                        $html .= esc_html__( 'ConfiguraÃ§Ãµes', 'joinotify' );
+                                        $html .= esc_html__( 'Configurações', 'joinotify' );
                                     $html .= '</a>';
                                 $html .= '</li>';
                             $html .= '</ul>';
@@ -393,7 +393,7 @@ class Components {
 
                                     $html .= '<div class="modal-footer px-4 py-3">';
                                         $html .= '<button type="button" class="btn btn-outline-secondary my-2 me-3" data-bs-dismiss="modal">'. esc_html__( 'Cancelar', 'joinotify' ) .'</button>';
-                                        $html .= '<button type="button" class="btn btn-primary save-trigger-settings m-0" data-trigger="'. esc_attr( $data_trigger ) .'" data-trigger-id="'. esc_attr( $trigger_id ) .'">'. esc_html__( 'Salvar alteraÃ§Ãµes', 'joinotify' ) .'</button>';
+                                        $html .= '<button type="button" class="btn btn-primary save-trigger-settings m-0" data-trigger="'. esc_attr( $data_trigger ) .'" data-trigger-id="'. esc_attr( $trigger_id ) .'">'. esc_html__( 'Salvar alterações', 'joinotify' ) .'</button>';
                                     $html .= '</div>';
                                 $html .= '</div>';
                             $html .= '</div>';
@@ -447,10 +447,10 @@ class Components {
             $current_form_id = isset( $trigger_data['settings']['form_id'] ) ? $trigger_data['settings']['form_id'] : null;
 
             $html .= '<div class="joinotify-get-form-id-trigger">';
-                $html .= '<label class="form-label" for="get_wpforms_form_id">'. esc_html__( 'FormulÃ¡rio do WPForms: *', 'joinotify' ) .'</label>';
+                $html .= '<label class="form-label" for="get_wpforms_form_id">'. esc_html__( 'Formulário do WPForms: *', 'joinotify' ) .'</label>';
 
                 $html .= '<select id="get_wpforms_form_id" class="form-select set-trigger-settings wpforms-form-id required-setting">';
-                    $html .= '<option value="none">'. esc_html__( 'Selecione um formulÃ¡rio', 'joinotify' ) .'</option>';
+                    $html .= '<option value="none">'. esc_html__( 'Selecione um formulário', 'joinotify' ) .'</option>';
                     
                     // get all wpforms forms
                     $forms = \MeuMouse\Joinotify\Integrations\Wpforms::get_forms();
@@ -478,9 +478,9 @@ class Components {
             $current_form_id = isset( $trigger_data['settings']['form_id'] ) ? $trigger_data['settings']['form_id'] : '';
 
             $html .= '<div class="joinotify-get-elementor-form-id-trigger">';
-                $html .= '<label class="form-label" for="get_elementor_form_id">'. esc_html__( 'FormulÃ¡rio do Elementor: *', 'joinotify' ) .'</label>';
-                $html .= '<input id="get_elementor_form_id" type="text" class="form-control set-trigger-settings elementor-form-id required-setting" placeholder="'. esc_attr__( 'Informe o ID do formulÃ¡rio', 'joinotify' ) .'" value="'. esc_attr( $current_form_id ) .'">';
-                $html .= '<div class="form-text">'. esc_html__( 'Use o ID informado em InformaÃ§Ãµes adicionais do formulÃ¡rio do Elementor.', 'joinotify' ) .'</div>';
+                $html .= '<label class="form-label" for="get_elementor_form_id">'. esc_html__( 'Formulário do Elementor: *', 'joinotify' ) .'</label>';
+                $html .= '<input id="get_elementor_form_id" type="text" class="form-control set-trigger-settings elementor-form-id required-setting" placeholder="'. esc_attr__( 'Informe o ID do formulário', 'joinotify' ) .'" value="'. esc_attr( $current_form_id ) .'">';
+                $html .= '<div class="form-text">'. esc_html__( 'Use o ID informado em Informações adicionais do formulário do Elementor.', 'joinotify' ) .'</div>';
             $html .= '</div>';
         }
 
@@ -563,7 +563,7 @@ class Components {
                         // button for add new action on condition false
                         $html .= '<button class="funnel_add_action btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" data-action="condition" data-condition="false" data-action-id="'. esc_attr( $action_id ) .'">';
                             $html .= '<svg class="icon icon-dark me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" d="M12 3.5v17m8.5-8.5h-17"/></svg>';
-                            $html .= esc_html__( 'Adicionar aÃ§Ã£o', 'joinotify' );
+                            $html .= esc_html__( 'Adicionar ação', 'joinotify' );
                         $html .= '</button>';
                     $html .= '</div>';
                 $html .= '</div>';
@@ -586,7 +586,7 @@ class Components {
                         // button for add new action on condition true
                         $html .= '<button class="funnel_add_action btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" data-action="condition" data-condition="true" data-action-id="'. esc_attr( $action_id ) .'">';
                             $html .= '<svg class="icon icon-dark me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" d="M12 3.5v17m8.5-8.5h-17"/></svg>';
-                            $html .= esc_html__( 'Adicionar aÃ§Ã£o', 'joinotify' );
+                            $html .= esc_html__( 'Adicionar ação', 'joinotify' );
                         $html .= '</button>';
                     $html .= '</div>';
                 $html .= '</div>';
@@ -654,7 +654,7 @@ class Components {
                 $roles = $wp_roles->get_names();
 
                 $html .= '<div class="mb-4 user-role-wrapper">';
-                    $html .= '<label class="form-label">' . esc_html__('FunÃ§Ã£o do usuÃ¡rio: *', 'joinotify') . '</label>';
+                    $html .= '<label class="form-label">' . esc_html__('Função do usuário: *', 'joinotify') . '</label>';
                     $html .= '<select class="form-control get-condition-value required-setting">';
                 
                     foreach ( $roles as $role_key => $role_name ) {
@@ -760,10 +760,10 @@ class Components {
                 $html .= '<div class="mb-4 payment-method-wrapper">';;
                     // Retrieves all WooCommerce payment gateways
                     if ( function_exists('WC') ) {
-                        $html .= '<label class="form-label">' . esc_html__('MÃ©todo de pagamento: *', 'joinotify') . '</label>';
+                        $html .= '<label class="form-label">' . esc_html__('Método de pagamento: *', 'joinotify') . '</label>';
 
                         $html .= '<select class="form-control get-condition-value required-setting">';
-                            $html .= '<option value="none">' . esc_html__( 'Selecione um mÃ©todo de pagamento', 'joinotify' ) . '</option>';
+                            $html .= '<option value="none">' . esc_html__( 'Selecione um método de pagamento', 'joinotify' ) . '</option>';
                             
                             foreach ( WC()->payment_gateways->payment_gateways() as $payment_gateway_key => $payment_gateway_object ) {
                                 $html .= '<option value="' . esc_attr( $payment_gateway_key ) . '" '. selected( $condition_value, $payment_gateway_key, false ) .'>' . esc_html( $payment_gateway_object->title ) . '</option>';
@@ -777,10 +777,10 @@ class Components {
                 $html .= '<div class="mb-4 shipping-method-wrapper">';
                     // Retrieves all WooCommerce shipping methods
                     if ( function_exists('WC') ) {
-                        $html .= '<label class="form-label">' . esc_html__('MÃ©todo de entrega: *', 'joinotify') . '</label>';
+                        $html .= '<label class="form-label">' . esc_html__('Método de entrega: *', 'joinotify') . '</label>';
 
                         $html .= '<select class="form-control get-condition-value required-setting">';
-                            $html .= '<option value="none">' . esc_html__( 'Selecione um mÃ©todo de entrega', 'joinotify' ) . '</option>';
+                            $html .= '<option value="none">' . esc_html__( 'Selecione um método de entrega', 'joinotify' ) . '</option>';
 
                             foreach ( WC()->shipping->get_shipping_methods() as $shipping_method_key => $shipping_method_object ) {
                                 $html .= '<option value="' . esc_attr( $shipping_method_key ) . '" '. selected( $condition_value, $shipping_method_key, false ) .'>' . esc_html( $shipping_method_object->method_title ) . '</option>';
@@ -825,11 +825,11 @@ class Components {
                 break;
             case 'renewal_payment':
                 $html .= '<div class="mb-4 renewal-payment-wrapper">';
-                    $html .= '<label class="form-label">' . esc_html__('Pagamento da renovaÃ§Ã£o: *', 'joinotify') . '</label>';
+                    $html .= '<label class="form-label">' . esc_html__('Pagamento da renovação: *', 'joinotify') . '</label>';
                     
                     $html .= '<select class="form-control get-condition-value required-setting">';
                         $html .= '<option value="yes" '. selected( $condition_value, 'yes', false ) .'>' . esc_html__( 'Sim', 'joinotify' ) . '</option>';
-                        $html .= '<option value="no" '. selected( $condition_value, 'no', false ) .'>' . esc_html__( 'NÃ£o', 'joinotify' ) . '</option>';
+                        $html .= '<option value="no" '. selected( $condition_value, 'no', false ) .'>' . esc_html__( 'Não', 'joinotify' ) . '</option>';
                     $html .= '</select>';
                 $html .= '</div>';
 
@@ -861,7 +861,7 @@ class Components {
 
                 break;
             default:
-                $html .= '<p class="alert alert-info">' . esc_html__( 'Nenhuma configuraÃ§Ã£o disponÃ­vel para esta condiÃ§Ã£o', 'joinotify' ) . '</p>';
+                $html .= '<p class="alert alert-info">' . esc_html__( 'Nenhuma configuração disponível para esta condição', 'joinotify' ) . '</p>';
                 
                 break;
         }
@@ -896,7 +896,7 @@ class Components {
         $html = '<div class="mb-4">';
             $html .= '<label class="form-label">'. esc_html__( 'Condition: *', 'joinotify' ) .'</label>';
             $html .= '<select class="form-select get-condition-type required-setting">';
-                $html .= '<option value="none">'. esc_html__( 'Selecione uma condiÃ§Ã£o', 'joinotify' ) .'</option>';
+                $html .= '<option value="none">'. esc_html__( 'Selecione uma condição', 'joinotify' ) .'</option>';
 
                 $allowed_conditions = Conditions::check_condition_type( $condition );
 
@@ -927,7 +927,7 @@ class Components {
         $html = '<div class="accordion" id="'. esc_attr( $accordion_id ) .'">';
             $html .= '<div class="accordion-item">';
                 $html .= '<h2 class="accordion-header fw-normal">';
-                    $html .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#'. esc_attr( $accordion_container_id ) .'" aria-expanded="true">'. esc_html__( 'VariÃ¡veis de texto', 'joinotify' ) .'</button>';
+                    $html .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#'. esc_attr( $accordion_container_id ) .'" aria-expanded="true">'. esc_html__( 'Variáveis de texto', 'joinotify' ) .'</button>';
                 $html .= '</h2>';
 
                 $html .= '<div id="'. esc_attr( $accordion_container_id ) .'" class="accordion-collapse collapse" data-bs-parent="#'. esc_attr( $accordion_id ) .'">';
@@ -968,11 +968,11 @@ class Components {
 
         if ( Schedule::is_wp_cron_active() ) : ?>
             <div class="mb-4">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Selecione o tipo de atraso da prÃ³xima aÃ§Ã£o', 'joinotify' ) ?></span>
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Selecione o tipo de atraso da próxima ação', 'joinotify' ) ?></span>
                 
                 <select class="form-select set-time-delay-type">
                     <option value="period" <?php selected( $settings['delay_type'] ?? '', 'period' ) ?>><?php esc_html_e( 'Esperar tempo', 'joinotify' ) ?></option>
-                    <option value="date" <?php selected( $settings['delay_type'] ?? '', 'date' ) ?>><?php esc_html_e( 'Esperar atÃ© uma data', 'joinotify' ) ?></option>
+                    <option value="date" <?php selected( $settings['delay_type'] ?? '', 'date' ) ?>><?php esc_html_e( 'Esperar até uma data', 'joinotify' ) ?></option>
                 </select>
             </div>
 
@@ -991,7 +991,7 @@ class Components {
             </div>
 
             <div class="wait-date-container d-none">
-                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Esperar atÃ©', 'joinotify' ) ?></span>
+                <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Esperar até', 'joinotify' ) ?></span>
                 
                 <div class="input-group">
                     <input type="text" class="form-control dateselect get-date-value" value="<?php echo $settings['date_value'] ?? '' ?>" placeholder="<?php esc_attr_e( 'Selecione uma data', 'joinotify' ) ?>"/>
@@ -1001,7 +1001,7 @@ class Components {
         <?php else : ?>
             <div class="alert alert-warning d-flex align-items-center">
                 <svg class="icon icon-lg icon-warning me-2 w-25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.001 10h2v5h-2zM11 16h2v2h-2z"/><path d="M13.768 4.2C13.42 3.545 12.742 3.138 12 3.138s-1.42.407-1.768 1.063L2.894 18.064a1.986 1.986 0 0 0 .054 1.968A1.984 1.984 0 0 0 4.661 21h14.678c.708 0 1.349-.362 1.714-.968a1.989 1.989 0 0 0 .054-1.968L13.768 4.2zM4.661 19 12 5.137 19.344 19H4.661z"/></svg>
-                <?php esc_html_e( 'A funÃ§Ã£o WP-CRON estÃ¡ desabilitada neste site. Ative-o para usar a aÃ§Ã£o Tempo de espera.', 'joinotify' ) ?>
+                <?php esc_html_e( 'A função WP-CRON está desabilitada neste site. Ative-o para usar a ação Tempo de espera.', 'joinotify' ) ?>
             </div>
         <?php endif;
 
@@ -1023,7 +1023,7 @@ class Components {
         if ( empty( $settings ) ) : ?>
             <div class="alert alert-warning alert-dismissible fade show mb-4">
                 <svg class="icon icon-lg me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#664d03" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path fill="#664d03" d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
-                <?php echo __( '<strong>AtenÃ§Ã£o!</strong> O uso incorreto de Snippets PHP pode causar erros no site.', 'joinotify' ) ?>
+                <?php echo __( '<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros no site.', 'joinotify' ) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
@@ -1096,13 +1096,13 @@ class Components {
                         <?php else : ?>
                             <div class="alert alert-info d-flex align-items-center">
                                 <svg class="icon icon-lg icon-info me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>
-                                <?php esc_html_e( 'Esta aÃ§Ã£o nÃ£o necessita de configuraÃ§Ãµes auxiliares.', 'joinotify' ) ?>
+                                <?php esc_html_e( 'Esta ação não necessita de configurações auxiliares.', 'joinotify' ) ?>
                             </div>
                         <?php endif; ?>
                     </div>
 
                     <div class="offcanvas-footer px-4 py-lg-2 py-xxl-3 d-flex justify-content-end">
-                        <button id="add_action_<?php esc_attr_e( $action['action'] ) ?>" class="btn btn-primary add-funnel-action" disabled data-action="<?php esc_attr_e( $action['action'] ) ?>"><?php esc_html_e( 'Adicionar aÃ§Ã£o', 'joinotify' ) ?></button>
+                        <button id="add_action_<?php esc_attr_e( $action['action'] ) ?>" class="btn btn-primary add-funnel-action" disabled data-action="<?php esc_attr_e( $action['action'] ) ?>"><?php esc_html_e( 'Adicionar ação', 'joinotify' ) ?></button>
                     </div>
                 </div>
             </div>
@@ -1166,13 +1166,13 @@ class Components {
         <button type="submit" id="joinotify_listen_hook" class="btn btn-outline-secondary" role="button" data-trigger="" data-bs-toggle="modal" data-bs-target="#edit_workflow_title"><?php esc_html_e( 'Get sample data', 'joinotify' ) ?></button>
 
         <div class="mb-4">
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Nome da variÃ¡vel de texto', 'joinotify' ) ?></span>
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Nome da variável de texto', 'joinotify' ) ?></span>
             
             <input type="text" class="form-control required-setting get-dynamic-placeholder-text" value="<?php echo $settings['dynamic_placeholder_text'] ?? ''; ?>" placeholder="<?php esc_attr_e( 'nome_da_variavel', 'joinotify' ) ?>"/>
         </div>
 
         <div>
-            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Valor da variÃ¡vel', 'joinotify' ) ?></span>
+            <span class="fs-md text-muted mb-2 ms-2 d-block"><?php esc_html_e( 'Valor da variável', 'joinotify' ) ?></span>
 
             <input type="text" class="form-control required-setting get-dynamic-placeholder-value" value="<?php echo $settings['dynamic_placeholder_value'] ?? ''; ?>" placeholder="<?php esc_attr_e( '$object->item', 'joinotify' ) ?>"/>
         </div>

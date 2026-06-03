@@ -105,7 +105,7 @@ class Flexify_Checkout extends Integrations_Base {
      */
     public function add_triggers( $triggers ) {
         $fcrc_plugin = array(
-            'name' => esc_html__( 'Flexify Checkout - RecuperaÃ§Ã£o de carrinhos abandonados', 'joinotify' ),
+            'name' => esc_html__( 'Flexify Checkout - Recuperação de carrinhos abandonados', 'joinotify' ),
             'slug' => 'flexify-checkout-recovery-carts-addon/flexify-checkout-recovery-carts-addon.php',
             'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
         );
@@ -114,7 +114,7 @@ class Flexify_Checkout extends Integrations_Base {
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Lead_Collected',
                 'title' => esc_html__( 'Lead capture via modal', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando o usuÃ¡rio fornece seus dados de contato via modal.', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário fornece seus dados de contato via modal.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -124,7 +124,7 @@ class Flexify_Checkout extends Integrations_Base {
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Checkout_Lead_Collected',
                 'title' => esc_html__( 'Lead capture via checkout', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando o usuÃ¡rio fornece seus dados de contato pelo checkout.', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário fornece seus dados de contato pelo checkout.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -134,7 +134,7 @@ class Flexify_Checkout extends Integrations_Base {
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Abandoned',
                 'title' => esc_html__( 'Cart abandoned', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando o usuÃ¡rio abandona o carrinho.', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando o usuário abandona o carrinho.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -143,8 +143,8 @@ class Flexify_Checkout extends Integrations_Base {
             ),
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Recovered',
-                'title' => esc_html__( 'Carrinho abandonado Ã© recuperado', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um carrinho abandonado Ã© recuperado.', 'joinotify' ),
+                'title' => esc_html__( 'Carrinho abandonado é recuperado', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um carrinho abandonado é recuperado.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -154,7 +154,7 @@ class Flexify_Checkout extends Integrations_Base {
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Order_Abandoned',
                 'title' => esc_html__( 'Order abandoned', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um pedido Ã© abandonado.', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um pedido é abandonado.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -164,7 +164,7 @@ class Flexify_Checkout extends Integrations_Base {
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Cart_Lost',
                 'title' => esc_html__( 'Carrinho perdido', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento Ã© disparado quando um carrinho Ã© considerado perdido.', 'joinotify' ),
+                'description' => esc_html__( 'Este acionamento é disparado quando um carrinho é considerado perdido.', 'joinotify' ),
                 'require_settings' => false,
                 'require_plugins' => true,
                 'plugins' => array(
@@ -223,7 +223,7 @@ class Flexify_Checkout extends Integrations_Base {
             $inter_placeholders = array(
                 '{{ fc_inter_pix_copia_cola }}' => array(
                     'triggers' => $trigger_names,
-                    'description' => esc_html__( 'Para recuperar o cÃ³digo Pix Copia e Cola do pedido. AtravÃ©s da integraÃ§Ã£o Flexify Checkout - Inter addon', 'joinotify' ),
+                    'description' => esc_html__( 'Para recuperar o código Pix Copia e Cola do pedido. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
                         'production' => isset( $order ) ? $order->get_meta('inter_pix_payload') : '',
                         'sandbox' => '00020126330014BR.GOV.BCB.PIX0114+5581999999999520400005303986540540.005802BR5925_MEUMOUSE.COM_6008BRASIL62070503***6304ABCD',
@@ -231,7 +231,7 @@ class Flexify_Checkout extends Integrations_Base {
                 ),
                 '{{ fc_inter_pix_expiration_time }}' => array(
                     'triggers' => $trigger_names,
-                    'description' => esc_html__( 'Para recuperar o tempo de expiraÃ§Ã£o do Pix Copia e Cola. AtravÃ©s da integraÃ§Ã£o Flexify Checkout - Inter addon', 'joinotify' ),
+                    'description' => esc_html__( 'Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
                         'production' => isset( $order ) ? sprintf( esc_html__( '%s minutos', 'joinotify' ), $order->get_meta('inter_pix_expires_in') ) : '',
                         'sandbox' => esc_html__( '30 minutos', 'joinotify' ),
@@ -239,7 +239,7 @@ class Flexify_Checkout extends Integrations_Base {
                 ),
                 '{{ fc_inter_bank_slip_url }}' => array(
                     'triggers' => $trigger_names,
-                    'description' => esc_html__( 'Para recuperar o tempo de expiraÃ§Ã£o do Pix Copia e Cola. AtravÃ©s da integraÃ§Ã£o Flexify Checkout - Inter addon', 'joinotify' ),
+                    'description' => esc_html__( 'Para recuperar o tempo de expiração do Pix Copia e Cola. Através da integração Flexify Checkout - Inter addon', 'joinotify' ),
                     'replacement' => array(
                         'production' => isset( $order ) ? $order->get_meta('inter_boleto_url') : '',
                         'sandbox' => esc_html__( '30 minutos', 'joinotify' ),
@@ -310,7 +310,7 @@ class Flexify_Checkout extends Integrations_Base {
                 ),
                 '{{ fcrc_recovery_link }}' => array(
                     'triggers' => $fcrc_triggers,
-                    'description' => esc_html__( 'Link de recuperaÃ§Ã£o do carrinho abandonado.', 'joinotify' ),
+                    'description' => esc_html__( 'Link de recuperação do carrinho abandonado.', 'joinotify' ),
                     'replacement' => array(
                         'production' => class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers') ? \MeuMouse\Flexify_Checkout\Recovery_Carts\Core\Helpers::generate_recovery_cart_link( $cart_id ) : '',
                         'sandbox' => wc_get_checkout_url() . '?recovery_cart=10905',
@@ -350,8 +350,8 @@ class Flexify_Checkout extends Integrations_Base {
                     'description' => __( 'Allows checking the items present in the abandoned cart.', 'joinotify' ),
                 ),
                 'user_meta' => array(
-                    'title' => __( 'Meta dados do usuÃ¡rio', 'joinotify' ),
-                    'description' => __( 'Permite verificar metadados especÃ­ficos do usuÃ¡rio que solicitou a redefiniÃ§Ã£o de senha.', 'joinotify' ),
+                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
+                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
                 ),
                 'cart_recovered' => array(
                     'title' => __( 'Cart recovered', 'joinotify' ),

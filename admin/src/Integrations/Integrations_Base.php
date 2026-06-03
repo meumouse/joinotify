@@ -835,7 +835,7 @@ abstract class Integrations_Base {
      * 
      * @since 1.1.0
      * @version 1.4.7
-     * @param string $slug | Slug da integraÃ§Ã£o (eg: 'wordpress')
+     * @param string $slug | Slug da integração (eg: 'wordpress')
      * @return void
      */
     protected function render_integration_trigger_content( $slug ) {

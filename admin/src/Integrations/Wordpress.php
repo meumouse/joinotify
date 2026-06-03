@@ -94,19 +94,19 @@ class Wordpress extends Integrations_Base {
         $triggers['wordpress'] = array(
             array(
                 'data_trigger' => 'user_register',
-                'title' => esc_html__( 'Novo registro de usuÃ¡rio', 'joinotify' ),
+                'title' => esc_html__( 'Novo registro de usuário', 'joinotify' ),
                 'description' => esc_html__( 'This trigger fires when a new user registration is received.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'wp_login',
-                'title' => esc_html__( 'Login do usuÃ¡rio', 'joinotify' ),
+                'title' => esc_html__( 'Login do usuário', 'joinotify' ),
                 'description' => esc_html__( 'This trigger fires when a user logs in to the site.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'password_reset',
-                'title' => esc_html__( 'RecuperaÃ§Ã£o de senha do usuÃ¡rio', 'joinotify' ),
+                'title' => esc_html__( 'Recuperação de senha do usuário', 'joinotify' ),
                 'description' => esc_html__( 'This trigger fires when a user requests a password reset on the site.', 'joinotify' ),
                 'require_settings' => false,
             ),
