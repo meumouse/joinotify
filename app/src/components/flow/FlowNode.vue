@@ -12,7 +12,6 @@ import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
 import { resolveSvgMarkup } from '../../utils/icon';
-import NodeConfigModal from './NodeConfigModal.vue';
 
 export interface FlowNodeData {
   type: string;
@@ -45,7 +44,6 @@ const isTrigger = computed(() => props.data.type === 'trigger');
 const isStopAutomation = computed(() => String(props.data.actionId || props.data.type || '').trim() === 'stop_funnel');
 const menuRef = ref<HTMLElement | null>(null);
 const menuOpen = ref(false);
-const showEditModal = ref(false);
 
 const resolvedIconSvg = computed(() => resolveSvgMarkup(props.data.iconSvg, props.data.icon));
 const contextIconSvg = computed(() => String(props.data.contextIconSvg || '').trim());
@@ -74,8 +72,9 @@ onClickOutside(menuRef, () => {
   menuOpen.value = false;
 });
 
-function handleEdit(payload: { label: string; description: string; config?: Record<string, unknown> }) {
-  props.data.onEdit?.(props.id, payload);
+function openSettings() {
+  selectNode();
+  menuOpen.value = false;
 }
 
 function requestDelete() {
@@ -209,10 +208,10 @@ function normalizeBoxiconClass(value: string) {
           <button
             type="button"
             class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
-            @click="showEditModal = true; menuOpen = false"
+            @click="openSettings"
           >
-            <i class="bx bx-edit" style="font-size: 13px;" />
-            Editar
+            <i class="bx bx-cog" style="font-size: 13px;" />
+            Configurações
           </button>
           <button
             type="button"
@@ -282,16 +281,6 @@ function normalizeBoxiconClass(value: string) {
       />
     </template>
   </div>
-
-  <NodeConfigModal
-    :open="showEditModal"
-    :node-type="data.actionId || data.type"
-    :label="data.label"
-    :description="data.description ?? ''"
-    :config="(data.config as Record<string, unknown>) ?? {}"
-    @close="showEditModal = false"
-    @save="handleEdit"
-  />
 </template>
 
 <style scoped>
