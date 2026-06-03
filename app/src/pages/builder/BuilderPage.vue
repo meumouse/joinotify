@@ -106,6 +106,7 @@ const canvasHasSenders = computed(() => {
   });
 });
 const canvasFlowReady = computed(() => canvasHasTrigger.value && canvasHasActions.value && canvasHasSenders.value);
+const hideCanvasNavbar = computed(() => store.loading.workflow || !canvasFlowReady.value);
 const actionSidebarOpen = computed(() => Boolean(actionModalOpen.value));
 const isSavingTitle = computed(() => titleSaving.value || store.loading.save);
 const isUpdatingStatus = computed(() => Boolean(store.loading.status));
@@ -816,7 +817,7 @@ function clearBuilderUrl() {
       />
     </div>
 
-    <BuilderShell v-else key="canvas" :debug-mode="debugMode">
+    <BuilderShell v-else key="canvas" :debug-mode="debugMode" :hide-navbar="hideCanvasNavbar">
     <template #navbar>
       <BuilderNavbar
         :title="store.file.post.title"

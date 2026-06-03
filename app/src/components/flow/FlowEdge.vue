@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue';
+import TrashAlt from '@boxicons/vue/TrashAlt';
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -122,7 +123,7 @@ onBeforeUnmount(() => {
       @mouseleave="handleButtonLeave"
       @click.stop="removeTargetNode"
     >
-      <i class="bx bx-trash" style="font-size: 14px;" />
+      <TrashAlt class="h-4 w-4" />
     </button>
   </EdgeLabelRenderer>
 </template>

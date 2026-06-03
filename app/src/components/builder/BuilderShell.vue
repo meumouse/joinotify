@@ -3,6 +3,7 @@ import { computed } from 'vue';
 
 defineProps({
   debugMode: { type: Boolean, default: false },
+  hideNavbar: { type: Boolean, default: false },
 });
 
 const shellStyle = computed(() => ({
@@ -17,8 +18,8 @@ const shellStyle = computed(() => ({
     :class="debugMode ? 'builder-shell--debug' : ''"
     :style="shellStyle"
   >
-    <slot name="navbar" />
-    <div class="flex h-[calc(100%-72px)] w-full min-h-0 overflow-hidden">
+    <slot v-if="!hideNavbar" name="navbar" />
+    <div class="flex w-full min-h-0 overflow-hidden" :class="hideNavbar ? 'h-full' : 'h-[calc(100%-72px)]'">
       <main class="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
         <slot name="main" />
       </main>

@@ -8,6 +8,7 @@
  */
 import { computed, ref, watch } from 'vue';
 import BaseRichTextArea from '../base/BaseRichTextArea.vue';
+import SelectField from '../fields/SelectField.vue';
 import { getFlowNodeConfig } from './flowNodeTypes';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 
@@ -55,19 +56,6 @@ function handleSave() {
   emit('close');
 }
 
-const showEmoji = ref(false);
-const emojiTarget = ref<'message' | 'caption'>('message');
-const COMMON_EMOJIS = [
-  '😀', '😂', '❤️', '👍', '🎉', '🔥', '✅', '⭐', '💡', '📌',
-  '🚀', '💬', '📎', '📢', '🙏', '👋', '💪', '🤝', '📞', '✨',
-];
-
-function insertEmoji(emoji: string) {
-  const field = emojiTarget.value === 'caption' ? 'caption' : 'message';
-  updateConfig(field, `${String(draftConfig.value[field] ?? '')}${emoji}`);
-  showEmoji.value = false;
-}
-
 interface Condition {
   field: string;
   operator: string;
@@ -112,7 +100,28 @@ const senderSuggestions = computed(() => {
     })
     .filter(Boolean);
 });
-const senderDatalistId = computed(() => `joinotify-sender-options-${normalizedNodeType.value || 'node'}`);
+const senderSelectOptions = computed(() => {
+  const options = senderSuggestions.value.map((senderPhone) => ({
+    value: senderPhone,
+    label: senderPhone,
+  }));
+  const currentSender = String(draftConfig.value.sender ?? '').trim();
+
+  if (currentSender && !options.some((option) => option.value === currentSender)) {
+    options.unshift({
+      value: currentSender,
+      label: `${currentSender} (atual)`,
+    });
+  }
+
+  return options;
+});
+const senderField = computed(() => ({
+  placeholder: senderSelectOptions.value.length ? 'Selecione um remetente' : 'Nenhum remetente registrado',
+  searchable: senderSelectOptions.value.length > 8,
+  emptyLabel: 'Nenhum remetente encontrado',
+  options: senderSelectOptions.value,
+}));
 const nodeConfig = computed(() => getFlowNodeConfig(normalizedNodeType.value));
 const isSnippetNode = computed(() => ['php-snippet', 'snippet_php'].includes(normalizedNodeType.value));
 const isTimeDelayNode = computed(() => ['wait-time', 'time_delay'].includes(normalizedNodeType.value));
@@ -131,6 +140,18 @@ const WAIT_UNITS = [
   { value: 'month', label: 'Meses' },
   { value: 'year', label: 'Anos' },
 ];
+const delayUnitField = computed(() => ({
+  placeholder: 'Selecione o período',
+  searchable: false,
+  options: WAIT_UNITS,
+}));
+const closeButtonStyle = {
+  backgroundImage:
+    'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\' fill=\'%23000\'%3e%3cpath d=\'M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 1 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 1 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z\'/%3e%3c/svg%3e")',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: '0.75rem auto',
+};
 
 const MEDIA_TYPES = [
   { value: 'image', label: 'Imagem' },
@@ -138,6 +159,11 @@ const MEDIA_TYPES = [
   { value: 'document', label: 'Documento' },
   { value: 'audio', label: 'Áudio' },
 ];
+const mediaTypeField = computed(() => ({
+  placeholder: 'Selecione o tipo de midia',
+  searchable: false,
+  options: MEDIA_TYPES,
+}));
 
 const OPERATORS = [
   { value: 'equals', label: 'Igual a' },
@@ -154,6 +180,39 @@ const OPERATORS = [
 
 const HOURS = Array.from({ length: 24 }, (_, index) => String(index).padStart(2, '0'));
 const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(2, '0'));
+
+function openWpMediaLibrary() {
+  const wpMedia = (window as Window & {
+    wp?: {
+      media?: (...args: unknown[]) => {
+        on: (event: string, callback: () => void) => void;
+        state: () => { get: (key: string) => { first: () => { toJSON: () => { url?: string } } | undefined } };
+        open: () => void;
+      };
+    };
+  }).wp?.media;
+
+  if (!wpMedia) {
+    return;
+  }
+
+  const frame = wpMedia({
+    title: 'Selecionar midia',
+    button: { text: 'Usar esta midia' },
+    multiple: false,
+  });
+
+  frame.on('select', () => {
+    const attachment = frame.state().get('selection').first();
+    const url = String(attachment?.toJSON?.().url || '').trim();
+
+    if (url) {
+      updateConfig('mediaUrl', url);
+    }
+  });
+
+  frame.open();
+}
 </script>
 
 <template>
@@ -183,20 +242,30 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
                 Configurações
               </p>
             </div>
-            <h3 class="text-xl font-semibold text-slate-900">{{ label }}</h3>
+            <h3 class="flex items-center gap-2 text-xl font-semibold text-slate-900">
+              <span
+                v-if="isWhatsappMediaNode"
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md"
+                :class="nodeConfig?.color ?? 'bg-slate-400'"
+              >
+                <i :class="`bx ${nodeConfig?.icon ?? 'bx-cog'} text-white`" style="font-size: 12px;" />
+              </span>
+              <span>{{ label }}</span>
+            </h3>
           </div>
           <button
             type="button"
-            class="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            class="btn-close box-content flex h-4 w-4 shrink-0 items-center justify-center rounded border-0 bg-transparent p-[0.25rem] opacity-50 transition hover:opacity-75 focus:outline-none focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25"
+            :style="closeButtonStyle"
             aria-label="Fechar"
             @click="$emit('close')"
           >
-            <i class="bx bx-x" style="font-size: 20px;" />
+            <span class="sr-only">Fechar</span>
           </button>
         </div>
 
         <div class="space-y-6 px-6 py-5">
-          <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-4">
             <div class="space-y-1.5">
               <label class="block text-sm font-medium text-slate-700">Nome da ação</label>
               <input
@@ -207,9 +276,9 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
             </div>
             <div class="space-y-1.5">
               <label class="block text-sm font-medium text-slate-700">Descrição</label>
-              <input
+              <textarea
                 v-model="draftDescription"
-                type="text"
+                rows="3"
                 class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
               />
             </div>
@@ -246,13 +315,15 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
                     class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
                     @input="updateConfig('delay_value', ($event.target as HTMLInputElement).value)"
                   />
-                  <select
-                    :value="String(draftConfig.delay_period ?? draftConfig.unit ?? 'minute')"
-                    class="w-44 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @change="updateConfig('delay_period', ($event.target as HTMLSelectElement).value)"
-                  >
-                    <option v-for="unit in WAIT_UNITS" :key="unit.value" :value="unit.value">{{ unit.label }}</option>
-                  </select>
+                  <SelectField
+                    name="delay_period"
+                    :field="delayUnitField"
+                    :model-value="String(draftConfig.delay_period ?? draftConfig.unit ?? 'minute')"
+                    :button-class="'h-full min-h-[42px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10'"
+                    :dropdown-class="'mt-1'"
+                    :root-class="'w-44'"
+                    @update:model-value="updateConfig('delay_period', $event)"
+                  />
                 </div>
               </div>
             </template>
@@ -297,21 +368,14 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
               <div class="space-y-4">
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Remetente</label>
-                  <input
-                    type="text"
-                    placeholder="Número ou {{sender}}"
-                    :value="String(draftConfig.sender ?? '')"
-                    :list="senderSuggestions.length ? senderDatalistId : undefined"
-                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @input="updateConfig('sender', ($event.target as HTMLInputElement).value)"
+                  <SelectField
+                    name="whatsapp_text_sender"
+                    :field="senderField"
+                    :model-value="String(draftConfig.sender ?? '')"
+                    :button-class="'h-full min-h-[42px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10'"
+                    :dropdown-class="'mt-1'"
+                    @update:model-value="updateConfig('sender', $event)"
                   />
-                  <datalist v-if="senderSuggestions.length" :id="senderDatalistId">
-                    <option
-                      v-for="senderPhone in senderSuggestions"
-                      :key="`text-${senderPhone}`"
-                      :value="senderPhone"
-                    />
-                  </datalist>
                 </div>
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Destinatário</label>
@@ -339,21 +403,14 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
               <div class="space-y-4">
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Remetente</label>
-                  <input
-                    type="text"
-                    placeholder="Número ou {{sender}}"
-                    :value="String(draftConfig.sender ?? '')"
-                    :list="senderSuggestions.length ? senderDatalistId : undefined"
-                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                    @input="updateConfig('sender', ($event.target as HTMLInputElement).value)"
+                  <SelectField
+                    name="whatsapp_media_sender"
+                    :field="senderField"
+                    :model-value="String(draftConfig.sender ?? '')"
+                    :button-class="'h-full min-h-[42px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10'"
+                    :dropdown-class="'mt-1'"
+                    @update:model-value="updateConfig('sender', $event)"
                   />
-                  <datalist v-if="senderSuggestions.length" :id="senderDatalistId">
-                    <option
-                      v-for="senderPhone in senderSuggestions"
-                      :key="`media-${senderPhone}`"
-                      :value="senderPhone"
-                    />
-                  </datalist>
                 </div>
                 <div class="space-y-1.5">
                   <label class="block text-sm font-medium text-slate-700">Destinatário</label>
@@ -368,23 +425,34 @@ const MINUTES = Array.from({ length: 60 }, (_, index) => String(index).padStart(
                 <div class="grid grid-cols-2 gap-4">
                   <div class="space-y-1.5">
                     <label class="block text-sm font-medium text-slate-700">Tipo de mídia</label>
-                    <select
-                      :value="String(draftConfig.mediaType ?? 'image')"
-                      class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                      @change="updateConfig('mediaType', ($event.target as HTMLSelectElement).value)"
-                    >
-                      <option v-for="mediaType in MEDIA_TYPES" :key="mediaType.value" :value="mediaType.value">{{ mediaType.label }}</option>
-                    </select>
+                    <SelectField
+                      name="whatsapp_media_type"
+                      :field="mediaTypeField"
+                      :model-value="String(draftConfig.mediaType ?? 'image')"
+                      :button-class="'h-full min-h-[42px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10'"
+                      :dropdown-class="'mt-1'"
+                      @update:model-value="updateConfig('mediaType', $event)"
+                    />
                   </div>
                   <div class="space-y-1.5">
                     <label class="block text-sm font-medium text-slate-700">URL da mídia</label>
-                    <input
-                      type="url"
-                      placeholder="https://exemplo.com/arquivo.jpg"
-                      :value="String(draftConfig.mediaUrl ?? '')"
-                      class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
-                      @input="updateConfig('mediaUrl', ($event.target as HTMLInputElement).value)"
-                    />
+                    <div class="flex gap-2">
+                      <input
+                        type="url"
+                        placeholder="https://exemplo.com/arquivo.jpg"
+                        :value="String(draftConfig.mediaUrl ?? '')"
+                        class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/10"
+                        @input="updateConfig('mediaUrl', ($event.target as HTMLInputElement).value)"
+                      />
+                      <button
+                        type="button"
+                        class="inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+                        @click="openWpMediaLibrary"
+                      >
+                        <i class="bx bx-image-add text-base" />
+                        Biblioteca
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="space-y-1.5">

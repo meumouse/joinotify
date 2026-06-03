@@ -5,7 +5,7 @@ import TriggerCard from './TriggerCard.vue';
 import TriggerStepFooter from './TriggerStepFooter.vue';
 import WorkflowNameField from './WorkflowNameField.vue';
 
-defineProps({
+const props = defineProps({
   title: { type: String, default: '' },
   context: { type: String, default: '' },
   trigger: { type: String, default: '' },

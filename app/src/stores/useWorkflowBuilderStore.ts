@@ -425,43 +425,48 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   function hydrateFromBootstrap(value: BuilderBootstrap) {
     const previousStep = step.value;
-    setApiFromBootstrap(value);
-    debugLogger.log('bootstrap:hydrate-start', {
-      step: previousStep,
-    });
-
-    const candidate = value?.workflow_file || value?.workflow || value;
-    const parsed = parseWorkflowFile(candidate);
-
-    if (parsed.ok && parsed.file) {
-      applyWorkflowFile(parsed.file, postId.value);
-      warnings.value = parsed.warnings;
-      errors.value = [];
-    } else {
-      file.value = createWorkflowFileFromParts({
-        plugin_version: String(value?.version || '1.0.0'),
-        title: value?.title ? String(value.title) : 'My automation',
-        category: resolveDefaultContext(triggerContexts.value),
+    loading.value.bootstrap = true;
+    try {
+      setApiFromBootstrap(value);
+      debugLogger.log('bootstrap:hydrate-start', {
+        step: previousStep,
       });
 
-      activeContext.value = file.value.post.category || resolveDefaultContext(triggerContexts.value);
-      selectedTrigger.value = '';
-      selectedNodeId.value = '';
-      editingNodeId.value = '';
-      errors.value = parsed.errors;
-      warnings.value = parsed.warnings;
-      markBaseline();
-      void loadCanvasActionsFromServer(activeContext.value);
-      debugLogger.log('bootstrap:hydrate-empty', {
-        errors: parsed.errors,
+      const candidate = value?.workflow_file || value?.workflow || value;
+      const parsed = parseWorkflowFile(candidate);
+
+      if (parsed.ok && parsed.file) {
+        applyWorkflowFile(parsed.file, postId.value);
+        warnings.value = parsed.warnings;
+        errors.value = [];
+      } else {
+        file.value = createWorkflowFileFromParts({
+          plugin_version: String(value?.version || '1.0.0'),
+          title: value?.title ? String(value.title) : 'My automation',
+          category: resolveDefaultContext(triggerContexts.value),
+        });
+
+        activeContext.value = file.value.post.category || resolveDefaultContext(triggerContexts.value);
+        selectedTrigger.value = '';
+        selectedNodeId.value = '';
+        editingNodeId.value = '';
+        errors.value = parsed.errors;
+        warnings.value = parsed.warnings;
+        markBaseline();
+        void loadCanvasActionsFromServer(activeContext.value);
+        debugLogger.log('bootstrap:hydrate-empty', {
+          errors: parsed.errors,
+        });
+      }
+
+      step.value = previousStep || 'start';
+      debugLogger.log('bootstrap:hydrate-complete', {
+        step: step.value,
+        node_count: workflowContent.value.length,
       });
+    } finally {
+      loading.value.bootstrap = false;
     }
-
-    step.value = previousStep || 'start';
-    debugLogger.log('bootstrap:hydrate-complete', {
-      step: step.value,
-      node_count: workflowContent.value.length,
-    });
   }
 
   async function loadCanvasActionsFromServer(nextContext = activeContext.value) {

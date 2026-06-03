@@ -37,9 +37,12 @@ const props = defineProps<{
   selected?: boolean;
 }>();
 
-const fallbackConfig = computed(() => getFlowNodeConfig(props.data.type));
+const fallbackConfig = computed(() => {
+  return getFlowNodeConfig(String(props.data.actionId || '')) || getFlowNodeConfig(props.data.type);
+});
 const isCondition = computed(() => props.data.type === 'condition');
 const isTrigger = computed(() => props.data.type === 'trigger');
+const isStopAutomation = computed(() => String(props.data.actionId || props.data.type || '').trim() === 'stop_funnel');
 const menuRef = ref<HTMLElement | null>(null);
 const menuOpen = ref(false);
 const showEditModal = ref(false);
@@ -49,6 +52,7 @@ const contextIconSvg = computed(() => String(props.data.contextIconSvg || '').tr
 const contextIcon = computed(() => String(props.data.contextIcon || '').trim());
 const contextIconUrl = computed(() => String(props.data.contextIconUrl || '').trim());
 const displayIcon = computed(() => String(props.data.icon || fallbackConfig.value?.icon || '').trim());
+const resolvedBoxiconClass = computed(() => normalizeBoxiconClass(displayIcon.value));
 const displayColorClass = computed(() => fallbackConfig.value?.color || 'bg-slate-500');
 
 onClickOutside(menuRef, () => {
@@ -75,6 +79,31 @@ function iconGlyph(value: string) {
 
 function isBoxiconClass(value: string) {
   return /^bx[lrs]?-/.test(String(value || '').trim());
+}
+
+function normalizeBoxiconClass(value: string) {
+  const normalized = String(value || '').trim().toLowerCase();
+
+  if (!normalized) {
+    return '';
+  }
+
+  if (isBoxiconClass(normalized)) {
+    return normalized;
+  }
+
+  const split = normalized.split(/\s+/).filter(Boolean);
+  const classToken = split.find((token) => isBoxiconClass(token));
+
+  if (classToken) {
+    return classToken;
+  }
+
+  if (/^[a-z0-9-]+$/.test(normalized)) {
+    return `bx-${normalized}`;
+  }
+
+  return '';
 }
 </script>
 
@@ -124,11 +153,7 @@ function isBoxiconClass(value: string) {
           class="flow-node-action-icon flex h-4 w-4 items-center justify-center"
           v-html="resolvedIconSvg"
         />
-        <i
-          v-else-if="isBoxiconClass(displayIcon)"
-          :class="`bx ${displayIcon} text-white`"
-          style="font-size: 14px;"
-        />
+        <i v-else-if="resolvedBoxiconClass" :class="`bx ${resolvedBoxiconClass} text-white`" style="font-size: 14px;" />
         <span v-else class="text-[11px] font-semibold uppercase tracking-[0.18em]">
           {{ iconGlyph(displayIcon || data.label) }}
         </span>
@@ -225,7 +250,7 @@ function isBoxiconClass(value: string) {
       </div>
     </template>
 
-    <template v-else>
+    <template v-else-if="!isStopAutomation">
       <Handle
         id="output"
         type="source"

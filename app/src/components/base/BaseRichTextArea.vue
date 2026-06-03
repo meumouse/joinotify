@@ -191,17 +191,32 @@ onBeforeUnmount(() => {
 
           <div class="mx-1 h-4 w-px bg-slate-200" />
 
-          <button
-            type="button"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="disabled"
-            aria-label="Emojis"
-            title="Emojis"
-            @mousedown.prevent
-            @click="showEmojiPicker = !showEmojiPicker"
-          >
-            <SmileIcon width="14" height="14" />
-          </button>
+          <div class="relative">
+            <button
+              type="button"
+              class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="disabled"
+              aria-label="Emojis"
+              title="Emojis"
+              @mousedown.prevent
+              @click="showEmojiPicker = !showEmojiPicker"
+            >
+              <SmileIcon width="14" height="14" />
+            </button>
+
+            <div
+              v-if="showEmojiPicker"
+              class="absolute right-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+            >
+              <EmojiPicker
+                :native="true"
+                :hide-search="false"
+                :display-recent="true"
+                theme="light"
+                @select="handleEmojiSelect"
+              />
+            </div>
+          </div>
         </div>
 
         <textarea
@@ -229,18 +244,6 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <div
-        v-if="showEmojiPicker"
-        class="absolute right-3 top-[3.1rem] z-30 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
-      >
-        <EmojiPicker
-          :native="true"
-          :hide-search="false"
-          :display-recent="true"
-          theme="light"
-          @select="handleEmojiSelect"
-        />
-      </div>
     </div>
 
     <p v-if="description" class="text-xs leading-5 text-slate-500">

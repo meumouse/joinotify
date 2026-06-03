@@ -71,20 +71,6 @@ function onDragStart(event: DragEvent) {
           {{ action.description }}
         </p>
 
-        <div class="mt-3 flex flex-wrap gap-2">
-          <span
-            v-if="action.hasSettings"
-            class="rounded-full bg-primary-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-700"
-          >
-            settings
-          </span>
-          <span
-            v-if="action.isExpansible"
-            class="rounded-full bg-violet-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-violet-700"
-          >
-            branches
-          </span>
-        </div>
       </div>
     </div>
   </button>
