@@ -30,23 +30,41 @@ class Workflow_Manager {
         // load builder files
         add_action( 'Joinotify/Admin/Builder_Page', array( $this, 'load_builder_files' ) );
 
-        // Remove third-party admin notices on the full-screen builder page.
+        // Remove third-party admin notices on the full-screen Joinotify pages.
         add_action( 'in_admin_header', array( $this, 'suppress_admin_notices' ), PHP_INT_MAX );
     }
 
 
     /**
-     * Remove WordPress admin notices on the builder screen.
+     * Remove WordPress admin notices on the full-screen Joinotify pages.
      *
-     * The builder is a full-screen Vue app, so notices printed by the core or
-     * other plugins into #wpbody-content leak into the builder UI. They are
-     * removed right before WordPress outputs them in admin-header.php.
+     * The builder and workflows screens are full-screen Vue apps, so notices
+     * printed by the core or other plugins into #wpbody-content leak into the
+     * UI. They are removed right before WordPress outputs them in
+     * admin-header.php.
      *
      * @since 2.0.0
      * @return void
      */
     public function suppress_admin_notices() {
-        if ( ! is_admin() || ! isset( $_GET['page'] ) || 'joinotify-workflows-builder' !== sanitize_key( wp_unslash( $_GET['page'] ) ) ) {
+        if ( ! is_admin() || ! isset( $_GET['page'] ) ) {
+            return;
+        }
+
+        $current_page = sanitize_key( wp_unslash( $_GET['page'] ) );
+
+        /**
+         * Filter the Joinotify admin pages where notices are suppressed.
+         *
+         * @since 2.0.0
+         * @param array $pages List of admin page slugs.
+         */
+        $suppressed_pages = apply_filters( 'Joinotify/Admin/Suppress_Notices_Pages', array(
+            'joinotify-workflows-builder',
+            'joinotify-workflows',
+        ) );
+
+        if ( ! in_array( $current_page, $suppressed_pages, true ) ) {
             return;
         }
 
