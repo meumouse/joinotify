@@ -8,19 +8,24 @@
  *
  * @since 1.4.7
  */
-import { computed, ref, watch } from 'vue';
+import { computed, markRaw, ref, watch } from 'vue';
 import {
   VueFlow,
   MarkerType,
   useVueFlow,
   type Connection,
   type Edge,
+  type EdgeTypesObject,
   type Node,
   type NodeChange,
+  type NodeDragEvent,
+  type NodeTypesObject,
 } from '@vue-flow/core';
 import { Background, BackgroundVariant } from '@vue-flow/background';
 import { Controls } from '@vue-flow/controls';
 import { MiniMap } from '@vue-flow/minimap';
+import { Plus } from '@boxicons/vue';
+import { __, textDomain } from '../../utils/i18n';
 import FlowEdge from './FlowEdge.vue';
 import FlowNode, { type FlowNodeData } from './FlowNode.vue';
 import {
@@ -33,6 +38,7 @@ import {
   getBranchCollection,
   isConditionNode,
 } from '../../utils/workflowTree';
+import { getTriggerSettingsSchema, triggerNeedsSetup } from '../../utils/triggerSettings';
 import type { WorkflowNode } from '../../types/workflowBuilder';
 
 interface NodeEditEvent {
@@ -92,8 +98,8 @@ const defaultEdgeOptions: Partial<Edge> = {
   markerEnd: MarkerType.ArrowClosed,
 };
 
-const nodeTypes = { flowNode: FlowNode };
-const edgeTypes = { flowEdge: FlowEdge };
+const nodeTypes = { flowNode: markRaw(FlowNode) } as unknown as NodeTypesObject;
+const edgeTypes = { flowEdge: markRaw(FlowEdge) } as unknown as EdgeTypesObject;
 
 function resolveActionIcon(actionId: string) {
   const definition = getActionDefinition(actionId);
@@ -152,21 +158,23 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
         node.data?.title
         || triggerDefinition?.label
         || props.triggerLabel
-        || 'Acionamento',
+        || __('Trigger', textDomain),
       ),
       description: String(
         node.data?.description
         || triggerDefinition?.description
         || props.triggerDescription
-        || 'Define o acionamento que inicia o fluxo.',
+        || __('Define the trigger that starts the workflow', textDomain),
       ),
       config: getVisibleNodeConfig(node),
       icon: String(triggerDefinition?.icon || ''),
       iconSvg: String(triggerDefinition?.iconSvg || ''),
-      contextLabel: String(contextDefinition?.label || context || 'Trigger'),
+      contextLabel: String(contextDefinition?.label || context || __('Trigger', textDomain)),
       contextIconSvg: String(contextDefinition?.icon_svg || ''),
       contextIcon: contextIcon,
       contextIconUrl: contextIconUrl,
+      hasSettings: Boolean(triggerDefinition?.requireSettings) || getTriggerSettingsSchema(triggerDefinition).length > 0,
+      needsSetup: triggerNeedsSetup(node, triggerDefinition),
       onEdit: handleNodeEdit,
       onRequestDelete: handleRemoveRequest,
       onSelect: handleNodeSelect,
@@ -182,7 +190,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
   return {
     type: isConditionNode(node) ? 'condition' : 'action',
     actionId,
-    label: String(node.data?.title || actionDefinition?.label || actionId || 'Acao'),
+    label: String(node.data?.title || actionDefinition?.label || actionId || __('Action', textDomain)),
     description,
     config: getVisibleNodeConfig(node),
     icon,
@@ -566,7 +574,7 @@ function onDrop(event: DragEvent) {
   }
 }
 
-function onNodeDragStop(_event: unknown, node: Node) {
+function onNodeDragStop({ node }: NodeDragEvent) {
   if (!node?.id) {
     return;
   }
@@ -654,8 +662,8 @@ function handleZoomFit() {
       <button
         type="button"
         class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
-        aria-label="Zoom in"
-        title="Zoom in"
+        :aria-label="__('Zoom in', textDomain)"
+        :title="__('Zoom in', textDomain)"
         @click="handleZoomIn"
       >
         +
@@ -663,8 +671,8 @@ function handleZoomFit() {
       <button
         type="button"
         class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
-        aria-label="Zoom out"
-        title="Zoom out"
+        :aria-label="__('Zoom out', textDomain)"
+        :title="__('Zoom out', textDomain)"
         @click="handleZoomOut"
       >
         -
@@ -672,11 +680,11 @@ function handleZoomFit() {
       <button
         type="button"
         class="inline-flex h-7 items-center justify-center rounded-md border border-slate-200 px-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100"
-        aria-label="Ajustar zoom"
-        title="Ajustar zoom"
+        :aria-label="__('Fit view', textDomain)"
+        :title="__('Fit view', textDomain)"
         @click="handleZoomFit"
       >
-        Fit
+        {{ __('Fit', textDomain) }}
       </button>
     </div>
 
@@ -685,8 +693,8 @@ function handleZoomFit() {
       class="absolute right-4 top-4 z-10 flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-primary-700"
       @click="openAddAction"
     >
-      <i class="bx bx-plus" style="font-size: 15px;" />
-      Adicionar acao
+      <Plus :width="15" :height="15" />
+      {{ __('Add action', textDomain) }}
     </button>
   </div>
 </template>
