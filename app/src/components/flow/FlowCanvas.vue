@@ -624,7 +624,7 @@ function handleZoomFit() {
       :delete-key-code="[]"
       :nodes-draggable="true"
       :nodes-connectable="true"
-      :connect-on-click="true"
+      :connect-on-click="false"
       :elements-selectable="true"
       class="bg-[#f8f9fb]"
       @dragover="onDragOver"

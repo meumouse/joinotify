@@ -240,7 +240,7 @@ function normalizeBoxiconClass(value: string) {
 
     <template v-if="isCondition">
       <div class="flex items-end justify-between px-5 pb-3 pt-1">
-        <div class="flex flex-col items-center gap-1.5">
+        <div class="flex flex-col items-center gap-1">
           <span class="text-[10px] font-semibold text-emerald-600">Verdadeiro</span>
           <Handle
             id="true"
@@ -254,19 +254,18 @@ function normalizeBoxiconClass(value: string) {
               height: '12px',
               background: '#10b981',
               border: '2px solid #6ee7b7',
+              cursor: 'pointer',
             }"
-          />
-          <button
-            type="button"
-            class="nodrag flow-node-add-btn flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-emerald-500 text-white shadow-md transition hover:bg-emerald-600"
-            title="Adicionar ação (Verdadeiro)"
-            aria-label="Adicionar ação no ramo verdadeiro"
-            @click.stop="requestAddAction('action_true')"
           >
-            <i class="bx bx-plus" style="font-size: 14px;" />
-          </button>
+            <span
+              class="nodrag flow-node-add-hit"
+              title="Adicionar ação (Verdadeiro)"
+              aria-label="Adicionar ação no ramo verdadeiro"
+              @click.stop="requestAddAction('action_true')"
+            />
+          </Handle>
         </div>
-        <div class="flex flex-col items-center gap-1.5">
+        <div class="flex flex-col items-center gap-1">
           <span class="text-[10px] font-semibold text-red-500">Falso</span>
           <Handle
             id="false"
@@ -280,17 +279,16 @@ function normalizeBoxiconClass(value: string) {
               height: '12px',
               background: '#ef4444',
               border: '2px solid #fca5a5',
+              cursor: 'pointer',
             }"
-          />
-          <button
-            type="button"
-            class="nodrag flow-node-add-btn flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-white shadow-md transition hover:bg-red-600"
-            title="Adicionar ação (Falso)"
-            aria-label="Adicionar ação no ramo falso"
-            @click.stop="requestAddAction('action_false')"
           >
-            <i class="bx bx-plus" style="font-size: 14px;" />
-          </button>
+            <span
+              class="nodrag flow-node-add-hit"
+              title="Adicionar ação (Falso)"
+              aria-label="Adicionar ação no ramo falso"
+              @click.stop="requestAddAction('action_false')"
+            />
+          </Handle>
         </div>
       </div>
     </template>
@@ -300,23 +298,30 @@ function normalizeBoxiconClass(value: string) {
         id="output"
         type="source"
         :position="Position.Bottom"
-        :style="{ bottom: '-7px', width: '12px', height: '12px', background: '#94a3b8', border: '2px solid white' }"
-      />
-      <button
-        type="button"
-        class="nodrag flow-node-add-btn absolute left-1/2 z-20 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white bg-primary-600 text-white shadow-md transition hover:bg-primary-700"
-        style="bottom: -36px;"
-        title="Adicionar ação"
-        aria-label="Adicionar ação"
-        @click.stop="requestAddAction()"
+        :style="{ bottom: '-7px', width: '12px', height: '12px', background: '#94a3b8', border: '2px solid white', cursor: 'pointer' }"
       >
-        <i class="bx bx-plus" style="font-size: 14px;" />
-      </button>
+        <span
+          class="nodrag flow-node-add-hit"
+          title="Adicionar ação"
+          aria-label="Adicionar ação"
+          @click.stop="requestAddAction()"
+        />
+      </Handle>
     </template>
   </div>
 </template>
 
 <style scoped>
+/* Clickable hit-area filling the output handle so clicking the dot opens the
+   action sidebar. Slightly larger than the dot for an easier target, while the
+   handle itself still starts a drag-connection. */
+.flow-node-add-hit {
+  position: absolute;
+  inset: -5px;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
 .flow-node-context-icon :deep(svg),
 .flow-node-action-icon :deep(svg) {
   display: block;
