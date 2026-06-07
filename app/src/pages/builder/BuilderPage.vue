@@ -15,6 +15,7 @@ import BuilderTriggerSetupView from '../../components/builder/BuilderTriggerSetu
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
+import { triggerNeedsSetup } from '../../utils/triggerSettings';
 import { createDebugLogger } from '../../utils/debug';
 import { cloneValue } from '../../utils/object';
 
@@ -45,6 +46,7 @@ const testPhoneModalOpen = ref(false);
 const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
 const routeWorkflowLoaded = ref(false);
+const autoOpenedTriggerSetupId = ref('');
 const deleteConfirmOpen = ref(false);
 const deleteConfirmBusy = ref(false);
 const deleteConfirmNodeId = ref('');
@@ -187,6 +189,45 @@ watch(
     }
 
     routeWorkflowLoaded.value = true;
+  },
+  { immediate: true }
+);
+
+// Triggers with required settings (e.g. "Order status changed") must be configured
+// before the workflow runs correctly. Open their settings drawer automatically the
+// first time the canvas is ready and the required configuration is still missing.
+watch(
+  () => [store.step, canvasFlowReady.value, store.triggerNode?.id, store.loading.workflow],
+  () => {
+    if (store.step !== 'canvas' || store.loading.workflow || !canvasFlowReady.value) {
+      return;
+    }
+
+    const triggerNode = store.triggerNode;
+
+    if (!triggerNode) {
+      return;
+    }
+
+    if (autoOpenedTriggerSetupId.value === triggerNode.id) {
+      return;
+    }
+
+    const definition = store.getTriggerDefinition(
+      String(triggerNode.data?.context ?? ''),
+      String(triggerNode.data?.trigger ?? ''),
+    );
+
+    if (!triggerNeedsSetup(triggerNode, definition)) {
+      return;
+    }
+
+    autoOpenedTriggerSetupId.value = triggerNode.id;
+    debugLogger.log('trigger:auto-open-required-settings', {
+      node_id: triggerNode.id,
+      trigger: String(triggerNode.data?.trigger ?? ''),
+    });
+    store.openNodeSettings(triggerNode.id);
   },
   { immediate: true }
 );
@@ -362,7 +403,7 @@ function dismissToast(id) {
 }
 
 async function saveTitleModal() {
-  const nextTitle = titleDraft.value.trim() || 'New workflow';
+  const nextTitle = titleDraft.value.trim() || __('New workflow', textDomain);
   debugLogger.log('workflow:title-save-requested', {
     next_title: nextTitle,
     previous_title: store.file.post.title || '',
@@ -373,7 +414,7 @@ async function saveTitleModal() {
   closeTitleModal();
 }
 
-function handleWorkflowStatusChange(nextStatus) {
+async function handleWorkflowStatusChange(nextStatus) {
   const previousStatus = store.file.post.status || 'draft';
 
   if (previousStatus === nextStatus) {
@@ -385,18 +426,46 @@ function handleWorkflowStatusChange(nextStatus) {
     to: nextStatus,
   });
 
-  store.setWorkflowStatus(nextStatus);
-  pushToast(
-    nextStatus === 'publish'
-      ? __('Workflow activated locally. Click Save flow to persist changes.', textDomain)
-      : __('Workflow deactivated locally. Click Save flow to persist changes.', textDomain),
-    'info',
-    __('Builder', textDomain)
-  );
+  if (store.postId <= 0) {
+    pushToast(
+      __('Save the workflow before activating it.', textDomain),
+      'warning',
+      __('Builder', textDomain)
+    );
+    return;
+  }
+
+  try {
+    const response = await store.updateWorkflowStatus(nextStatus);
+
+    if (!response || response?.ok === false) {
+      throw new Error(__('Could not update the workflow status.', textDomain));
+    }
+
+    pushToast(
+      nextStatus === 'publish'
+        ? __('Workflow activated.', textDomain)
+        : __('Workflow deactivated.', textDomain),
+      'success',
+      __('Builder', textDomain)
+    );
+  } catch (error) {
+    console.error(error);
+    debugLogger.log('workflow:status-change-failed', {
+      from: previousStatus,
+      to: nextStatus,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    pushToast(
+      __('Could not update the workflow status. Please try again.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+  }
 }
 
 async function startScratch() {
-  const title = store.file.post.title || 'New workflow';
+  const title = store.file.post.title || __('New workflow', textDomain);
   debugLogger.log('start:scratch', { title });
   store.createEmptyWorkflowFile(title);
   goTrigger();
@@ -451,7 +520,7 @@ async function openTemplate(template) {
         plugin_version: bootstrap.value.version || '1.0.0',
         post: {
           type: 'joinotify-workflow',
-          title: template.title || 'Template',
+          title: template.title || __('Template', textDomain),
           date: template.date || new Date().toISOString().slice(0, 19).replace('T', ' '),
           status: 'draft',
           modified: template.modified || new Date().toISOString().slice(0, 19).replace('T', ' '),
@@ -479,7 +548,7 @@ function handleImportFile(file) {
     importError.value = '';
   };
   reader.onerror = () => {
-    importError.value = 'Could not read the selected file.';
+    importError.value = __('Could not read the selected file.', textDomain);
   };
   reader.readAsText(file);
 }
@@ -494,7 +563,7 @@ function confirmImport() {
     debugLogger.log('import:failed', {
       errors: result.errors,
     });
-    importError.value = result.errors?.[0] || 'Invalid file.';
+    importError.value = result.errors?.[0] || __('Invalid file.', textDomain);
     return;
   }
 

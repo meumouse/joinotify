@@ -5,6 +5,7 @@ import BaseBadge from '../base/BaseBadge.vue';
 import BaseButton from '../base/BaseButton.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BrandMark from '../brand/BrandMark.vue';
+import { DotsHorizontalRounded } from '@boxicons/vue';
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -76,17 +77,18 @@ onBeforeUnmount(() => {
           :model-value="status === 'publish'"
           :label="statusLoading ? __('Saving...', textDomain) : (status === 'publish' ? __('Active', textDomain) : __('Inactive', textDomain))"
           :loading="statusLoading"
+          active-class="bg-[#22c55e]"
           @change="$emit('update:status', $event ? 'publish' : 'draft')"
         />
 
         <div class="relative" data-builder-menu>
           <button
             type="button"
-            class="inline-flex h-10 w-10 items-center justify-center rounded-full text-2xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
             :aria-label="__('Actions menu', textDomain)"
             @click="toggleMenu"
           >
-            ...
+            <DotsHorizontalRounded :size="22" />
           </button>
           <div
             v-if="menuOpen"

@@ -4,6 +4,7 @@ const props = defineProps({
   label: { type: String, default: '' },
   disabled: { type: Boolean, default: false },
   loading: { type: Boolean, default: false },
+  activeClass: { type: String, default: 'bg-primary-700' },
 });
 
 const emit = defineEmits(['update:modelValue', 'change']);
@@ -26,7 +27,7 @@ function toggle() {
     <span v-if="label" class="text-sm font-medium text-slate-700">{{ label }}</span>
     <span
       class="relative inline-flex h-7 w-12 items-center rounded-full transition"
-      :class="modelValue ? 'bg-primary-700' : 'bg-slate-300'"
+      :class="modelValue ? activeClass : 'bg-slate-300'"
     >
       <span
         v-if="loading"
