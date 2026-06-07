@@ -7,6 +7,7 @@
  * @version 1.4.7
  */
 import { computed } from 'vue';
+import { __, textDomain } from '../../../../utils/i18n';
 import { resolveFieldComponent } from '../../../../components/fields/fieldRegistry';
 
 const props = defineProps({
@@ -55,6 +56,6 @@ function handleUpdateSetting(key, value) {
   />
 
   <div v-else class="rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
-    Custom block not available.
+    {{ __('Custom block not available.', textDomain) }}
   </div>
 </template>

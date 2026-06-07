@@ -54,7 +54,7 @@ function stripInternalRootFields(source: Record<string, unknown>) {
 function normalizePostMeta(value: unknown, fallbackCategory = ''): WorkflowPostMeta {
   const source = isRecord(value) ? value : {};
   const extra = stripInternalRootFields(source);
-  const title = typeof source.title === 'string' && source.title.trim() ? source.title.trim() : 'My automation';
+  const title = typeof source.title === 'string' && source.title.trim() ? source.title.trim() : __('My automation', textDomain);
   const status = typeof source.status === 'string' && source.status.trim() ? source.status.trim() : 'draft';
   const category = typeof source.category === 'string' && source.category.trim() ? source.category.trim() : fallbackCategory;
 
@@ -425,7 +425,7 @@ export function createWorkflowFileFromParts(
   const post = normalizePostMeta(
     payload.post || {
       type: 'joinotify-workflow',
-      title: payload.title || 'My automation',
+      title: payload.title || __('My automation', textDomain),
       date: nowString(),
       status: payload.status || 'draft',
       modified: nowString(),

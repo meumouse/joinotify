@@ -7,11 +7,12 @@
  * @since 1.4.7
  */
 import { computed, ref } from 'vue';
-import { DotsVerticalRounded } from '@boxicons/vue';
+import { Cog, DotsVerticalRounded, Trash } from '@boxicons/vue';
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
 import { resolveSvgMarkup } from '../../utils/icon';
+import { __, textDomain } from '../../utils/i18n';
 
 export interface FlowNodeData {
   type: string;
@@ -25,6 +26,8 @@ export interface FlowNodeData {
   contextIconSvg?: string;
   contextIcon?: string;
   contextIconUrl?: string;
+  hasSettings?: boolean;
+  needsSetup?: boolean;
   onRequestDelete?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
   onSelect?: (id: string) => void;
@@ -43,6 +46,10 @@ const fallbackConfig = computed(() => {
 const isCondition = computed(() => props.data.type === 'condition');
 const isTrigger = computed(() => props.data.type === 'trigger');
 const isStopAutomation = computed(() => String(props.data.actionId || props.data.type || '').trim() === 'stop_funnel');
+const needsSetup = computed(() => Boolean(props.data.needsSetup));
+// Trigger nodes show the kebab menu only when the trigger exposes settings;
+// action nodes always show it (Configurações + Excluir).
+const showMenu = computed(() => !isTrigger.value || Boolean(props.data.hasSettings));
 const menuRef = ref<HTMLElement | null>(null);
 const menuOpen = ref(false);
 
@@ -132,7 +139,9 @@ function normalizeBoxiconClass(value: string) {
     :class="[
       selected
         ? 'border-primary-600 ring-2 ring-primary-600/20'
-        : 'border-slate-200 hover:border-slate-300 hover:shadow-lg',
+        : needsSetup
+          ? 'border-amber-300 ring-2 ring-amber-300/30 hover:border-amber-400'
+          : 'border-slate-200 hover:border-slate-300 hover:shadow-lg',
     ]"
     @click="selectNode"
   >
@@ -196,13 +205,27 @@ function normalizeBoxiconClass(value: string) {
         </p>
       </div>
 
-      <div v-if="!isTrigger" ref="menuRef" class="relative">
+      <div v-if="showMenu" ref="menuRef" class="relative">
         <button
           type="button"
-          class="rounded p-0.5 text-slate-400 opacity-0 transition-opacity hover:text-slate-700 group-hover:opacity-100"
+          class="relative rounded p-0.5 text-slate-400 transition-opacity hover:text-slate-700"
+          :class="[
+            needsSetup
+              ? 'text-amber-500 opacity-100 hover:text-amber-600'
+              : 'opacity-0 group-hover:opacity-100',
+          ]"
+          :aria-label="__('Options', textDomain)"
           @click.stop="menuOpen = !menuOpen"
         >
           <DotsVerticalRounded :size="16" />
+          <span
+            v-if="needsSetup"
+            class="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5"
+            aria-hidden="true"
+          >
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
+          </span>
         </button>
 
         <div
@@ -215,16 +238,17 @@ function normalizeBoxiconClass(value: string) {
             class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
             @click="openSettings"
           >
-            <i class="bx bx-cog" style="font-size: 13px;" />
-            Configurações
+            <Cog :width="13" :height="13" />
+            {{ __('Settings', textDomain) }}
           </button>
           <button
+            v-if="!isTrigger"
             type="button"
             class="flex w-full items-center gap-2 px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
             @click="requestDelete"
           >
-            <i class="bx bx-trash" style="font-size: 13px;" />
-            Excluir
+            <Trash :width="13" :height="13" />
+            {{ __('Delete', textDomain) }}
           </button>
         </div>
       </div>
@@ -241,7 +265,7 @@ function normalizeBoxiconClass(value: string) {
     <template v-if="isCondition">
       <div class="flex items-end justify-between px-5 pb-3 pt-1">
         <div class="flex flex-col items-center gap-1">
-          <span class="text-[10px] font-semibold text-emerald-600">Verdadeiro</span>
+          <span class="text-[10px] font-semibold text-emerald-600">{{ __('True', textDomain) }}</span>
           <Handle
             id="true"
             type="source"
@@ -259,14 +283,14 @@ function normalizeBoxiconClass(value: string) {
           >
             <span
               class="nodrag flow-node-add-hit"
-              title="Adicionar ação (Verdadeiro)"
-              aria-label="Adicionar ação no ramo verdadeiro"
+              :title="__('Add action (True)', textDomain)"
+              :aria-label="__('Add action to the true branch', textDomain)"
               @click.stop="requestAddAction('action_true')"
             />
           </Handle>
         </div>
         <div class="flex flex-col items-center gap-1">
-          <span class="text-[10px] font-semibold text-red-500">Falso</span>
+          <span class="text-[10px] font-semibold text-red-500">{{ __('False', textDomain) }}</span>
           <Handle
             id="false"
             type="source"
@@ -284,8 +308,8 @@ function normalizeBoxiconClass(value: string) {
           >
             <span
               class="nodrag flow-node-add-hit"
-              title="Adicionar ação (Falso)"
-              aria-label="Adicionar ação no ramo falso"
+              :title="__('Add action (False)', textDomain)"
+              :aria-label="__('Add action to the false branch', textDomain)"
               @click.stop="requestAddAction('action_false')"
             />
           </Handle>
@@ -302,8 +326,8 @@ function normalizeBoxiconClass(value: string) {
       >
         <span
           class="nodrag flow-node-add-hit"
-          title="Adicionar ação"
-          aria-label="Adicionar ação"
+          :title="__('Add action', textDomain)"
+          :aria-label="__('Add action', textDomain)"
           @click.stop="requestAddAction()"
         />
       </Handle>

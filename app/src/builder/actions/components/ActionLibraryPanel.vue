@@ -10,7 +10,7 @@ const props = defineProps({
   actions: { type: Array, default: () => [] },
   context: { type: String, default: '' },
   loading: { type: Boolean, default: false },
-  title: { type: String, default: 'Add an action' },
+  title: { type: String, default: () => __('Add an action', textDomain) },
 });
 
 defineEmits(['select', 'close']);
@@ -93,7 +93,7 @@ const availableActions = computed(() => {
           {{ title }}
         </h2>
         <p class="mt-2 max-w-[20rem] text-sm leading-6 text-slate-500">
-          Choose a step for the workflow. Actions are loaded from the registry and filtered by context.
+          {{ __('Choose a step for the workflow. Actions are loaded from the registry and filtered by context.', textDomain) }}
         </p>
       </div>
 
@@ -110,11 +110,11 @@ const availableActions = computed(() => {
 
     <div class="min-h-0 flex-1 overflow-y-auto px-5 py-5 max-h-[calc(100%-12rem)]">
       <label class="mb-4 block">
-        <span class="sr-only">Search actions</span>
+        <span class="sr-only">{{ __('Search actions', textDomain) }}</span>
         <input
           v-model="query"
           type="search"
-          placeholder="Search actions"
+          :placeholder="__('Search actions', textDomain)"
           class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-700/10"
         />
       </label>
@@ -144,8 +144,8 @@ const availableActions = computed(() => {
         />
 
         <div v-if="!availableActions.length" class="rounded-[14px] border border-dashed border-slate-300 px-4 py-8 text-center">
-          <p class="text-sm font-medium text-slate-700">No actions available.</p>
-          <p class="mt-1 text-sm leading-6 text-slate-500">Check the backend registry, the selected context, or the search term.</p>
+          <p class="text-sm font-medium text-slate-700">{{ __('No actions available.', textDomain) }}</p>
+          <p class="mt-1 text-sm leading-6 text-slate-500">{{ __('Check the backend registry, the selected context, or the search term.', textDomain) }}</p>
         </div>
       </template>
     </div>

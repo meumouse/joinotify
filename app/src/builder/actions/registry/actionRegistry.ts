@@ -10,6 +10,7 @@ import type {
 } from './types';
 import { registerCoreActions } from './registerCoreActions';
 import { resolveSvgMarkup } from '../../../utils/icon';
+import { __, textDomain } from '../../../utils/i18n';
 
 const registry = new Map<BuilderActionSlug, ActionDefinition>();
 const bootstrapped = ref(false);
@@ -128,7 +129,7 @@ function createFallbackDefinition(action: string, metadata: Partial<ActionDefini
   return cloneDefinition({
     action,
     title: metadata.title || action,
-    description: metadata.description || 'Configuration component not available for this action.',
+    description: metadata.description || __('Configuration component not available for this action.', textDomain),
     icon: metadata.icon || 'sparkles',
     iconSvg: metadata.iconSvg || '',
     externalIcon: Boolean(metadata.externalIcon),

@@ -2,6 +2,7 @@ import { getActionDefinition } from '../registries/actionRegistry';
 import { getTriggerDefinition } from '../registries/triggerRegistry';
 import { cloneSerializable, isConditionNode, isRecord, ensureBranchesOnNode } from '../utils/workflowTree';
 import { normalizeWorkflowFile } from '../parsers/workflowParser';
+import { __, textDomain } from '../utils/i18n';
 import type {
   ExportedWorkflowFile,
   WorkflowBranches,
@@ -103,7 +104,7 @@ export function serializeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkf
   const post: WorkflowPostMeta = {
     ...cloneSerializable(normalized.post),
     type: 'joinotify-workflow',
-    title: typeof normalized.post.title === 'string' ? normalized.post.title : 'My automation',
+    title: typeof normalized.post.title === 'string' ? normalized.post.title : __('My automation', textDomain),
     date: typeof normalized.post.date === 'string' ? normalized.post.date : '',
     status: typeof normalized.post.status === 'string' ? normalized.post.status : 'draft',
     modified: typeof normalized.post.modified === 'string' ? normalized.post.modified : '',

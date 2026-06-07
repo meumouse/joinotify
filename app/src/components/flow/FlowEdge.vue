@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue';
 import TrashAlt from '@boxicons/vue/TrashAlt';
+import { __, textDomain } from '../../utils/i18n';
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -118,7 +119,7 @@ onBeforeUnmount(() => {
         transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
         pointerEvents: 'all',
       }"
-      aria-label="Excluir conexao"
+      :aria-label="__('Delete connection', textDomain)"
       @mouseenter="handleButtonEnter"
       @mouseleave="handleButtonLeave"
       @click.stop="removeTargetNode"

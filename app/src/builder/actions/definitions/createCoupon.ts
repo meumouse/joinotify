@@ -1,6 +1,7 @@
 import CreateCouponSettings from '../settings/CreateCouponSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import type { ActionDefinition } from '../registry/types';
+import { __, sprintf, textDomain } from '../../../utils/i18n';
 
 function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
@@ -13,7 +14,7 @@ function normalizeCreateCouponData(data: Record<string, unknown>): Record<string
   const couponMessage = String(message.message || '');
 
   return {
-    title: String(data.title || 'Discount coupon'),
+    title: String(data.title || __('Discount coupon', textDomain)),
     description: String(data.description || ''),
     action: 'create_coupon',
     settings: {
@@ -42,8 +43,8 @@ function normalizeCreateCouponData(data: Record<string, unknown>): Record<string
 
 export const createCouponDefinition: ActionDefinition = {
   action: 'create_coupon',
-  title: 'Discount coupon',
-  description: 'Generate a WooCommerce coupon and notify the customer.',
+  title: __('Discount coupon', textDomain),
+  description: __('Generate a WooCommerce coupon and notify the customer.', textDomain),
   icon: 'purchase-tag',
   context: ['woocommerce'],
   hasSettings: true,
@@ -56,7 +57,7 @@ export const createCouponDefinition: ActionDefinition = {
   buildDescription: (data) => {
     const settings = asRecord(data.settings);
     const message = asRecord(settings.message);
-    const summary = String(message.message || '') || `Coupon: ${String(settings.discount_type || 'fixed_cart')}`;
+    const summary = String(message.message || '') || sprintf(__('Coupon: %s', textDomain), String(settings.discount_type || 'fixed_cart'));
     return truncateDescription(summary);
   },
 };

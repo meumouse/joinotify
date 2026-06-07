@@ -1,5 +1,9 @@
+<script setup>
+import { __, textDomain } from '../../utils/i18n';
+</script>
+
 <template>
-  <div class="flex items-center justify-content-center joinotify-loader-container" role="status" aria-label="Loading the builder">
+  <div class="flex items-center justify-content-center joinotify-loader-container" role="status" :aria-label="__('Loading the builder', textDomain)">
     <svg
       id="joinotify-builder-logo"
       class="loader-logo position-absolute"

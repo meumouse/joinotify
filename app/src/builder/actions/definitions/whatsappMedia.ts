@@ -2,13 +2,14 @@ import WhatsappMediaSettings from '../settings/WhatsappMediaSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { __, sprintf, textDomain } from '../../../utils/i18n';
 
 function normalizeWhatsappMediaData(data: Record<string, unknown>): Record<string, unknown> {
   const caption = String(data.caption || '');
   const mediaType = String(data.media_type || 'image');
 
   return {
-    title: String(data.title || 'WhatsApp: Media message'),
+    title: String(data.title || __('WhatsApp: Media message', textDomain)),
     description: String(data.description || ''),
     action: 'send_whatsapp_message_media',
     media_type: mediaType,
@@ -21,8 +22,8 @@ function normalizeWhatsappMediaData(data: Record<string, unknown>): Record<strin
 
 export const whatsappMediaDefinition: ActionDefinition = {
   action: 'send_whatsapp_message_media',
-  title: 'WhatsApp: Media message',
-  description: 'Send a WhatsApp media message.',
+  title: __('WhatsApp: Media message', textDomain),
+  description: __('Send a WhatsApp media message.', textDomain),
   icon: 'image',
   hasSettings: true,
   priority: 99,
@@ -32,10 +33,10 @@ export const whatsappMediaDefinition: ActionDefinition = {
   normalizeData: normalizeWhatsappMediaData,
   serializeData: normalizeWhatsappMediaData,
   buildDescription: (data) => truncateDescription(
-    String(data.caption || '') || `Media: ${String(data.media_type || 'image')}`,
+    String(data.caption || '') || sprintf(__('Media: %s', textDomain), String(data.media_type || 'image')),
   ),
   validate: (data) => normalizeValidationErrors(requiredFieldErrors(data, [
-    { key: 'sender', label: 'Sender' },
-    { key: 'media_url', label: 'Media URL' },
+    { key: 'sender', label: __('Sender', textDomain) },
+    { key: 'media_url', label: __('Media URL', textDomain) },
   ])),
 };

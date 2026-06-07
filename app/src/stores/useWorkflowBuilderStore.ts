@@ -27,6 +27,7 @@ import {
 } from '../serializers/workflowSerializer';
 import { createWorkflowApiClient } from '../services/workflowApi';
 import { createDebugLogger } from '../utils/debug';
+import { __, textDomain } from '../utils/i18n';
 import type {
   BuilderBootstrap,
   BuilderStep,
@@ -120,7 +121,7 @@ function normalizePlaceholdersCatalog(raw: unknown): WorkflowPlaceholderGroup[] 
 
         return {
           id: String(source.group || source.category || 'general'),
-          label: String(source.group_label || source.label || source.category || 'General'),
+          label: String(source.group_label || source.label || source.category || __('General', textDomain)),
           description: typeof source.description === 'string' ? source.description : '',
           items: [
             {
@@ -215,7 +216,7 @@ function normalizePlaceholdersCatalog(raw: unknown): WorkflowPlaceholderGroup[] 
       return [
         {
           id: 'general',
-          label: 'General',
+          label: __('General', textDomain),
           description: '',
           items: flatItems as WorkflowPlaceholderGroup['items'],
         },
@@ -442,7 +443,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       } else {
         file.value = createWorkflowFileFromParts({
           plugin_version: String(value?.version || '1.0.0'),
-          title: value?.title ? String(value.title) : 'My automation',
+          title: value?.title ? String(value.title) : __('My automation', textDomain),
           category: resolveDefaultContext(triggerContexts.value),
         });
 
@@ -505,7 +506,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     } catch (error) {
       actionsCatalog.value = getActionCatalog();
       actionsCatalogContext.value = context;
-      errors.value = [error instanceof Error ? error.message : 'Could not load actions.'];
+      errors.value = [error instanceof Error ? error.message : __('Could not load actions.', textDomain)];
       debugLogger.log('actions:load-failed', {
         error: error instanceof Error ? error.message : String(error),
         context,
@@ -597,7 +598,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
       return response || { ok: true };
     } catch (error) {
-      errors.value = [error instanceof Error ? error.message : 'Could not load workflow.'];
+      errors.value = [error instanceof Error ? error.message : __('Could not load workflow.', textDomain)];
       debugLogger.log('workflow:load-failed', {
         workflow_id: resolvedPostId,
         error: error instanceof Error ? error.message : String(error),
@@ -609,7 +610,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
-  function createEmptyWorkflowFile(title = 'My automation') {
+  function createEmptyWorkflowFile(title = __('My automation', textDomain)) {
     const context = resolveDefaultContext(triggerContexts.value);
     debugLogger.log('workflow:create-empty', {
       title,
@@ -668,7 +669,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     applyWorkflowFile(value, nextPostId);
   }
 
-  function createWorkflowFromScratch(title = file.value.post.title || 'My automation') {
+  function createWorkflowFromScratch(title = file.value.post.title || __('My automation', textDomain)) {
     debugLogger.log('workflow:create-from-scratch-start', {
       title,
     });
@@ -685,7 +686,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   async function createWorkflowFromTrigger(
-    title = file.value.post.title || 'My automation',
+    title = file.value.post.title || __('My automation', textDomain),
     context = activeContext.value,
     trigger = selectedTrigger.value,
     settings: Record<string, unknown> = {}
@@ -836,7 +837,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     if (postId.value <= 0) {
-      return { ok: false, error: new Error('Workflow not saved yet.') };
+      return { ok: false, error: new Error(__('Workflow not saved yet.', textDomain)) };
     }
 
     loading.value.status = true;
@@ -1023,7 +1024,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     const definition = getActionDefinition(actionId);
     const node = actionId === 'condition'
       ? createConditionNode({
-          title: definition?.label || 'Condition',
+          title: definition?.label || __('Condition', textDomain),
           description: '',
           action: 'condition',
           condition: '',
@@ -1035,7 +1036,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
           settings: {},
         }, definition)
       : createActionNode(actionId, {
-          title: definition?.label || 'Action',
+          title: definition?.label || __('Action', textDomain),
           description: '',
           action: actionId,
           message: '',
@@ -1225,7 +1226,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       debugLogger.log('workflow:test-complete', {
         workflow_id: postId.value,
       });
-      return response || { ok: true, message: 'Workflow test queued.' };
+      return response || { ok: true, message: __('Workflow test queued.', textDomain) };
     } finally {
       loading.value.test = false;
     }
@@ -1233,7 +1234,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
   async function saveSettings(settings) {
     if (!api.value) {
-      throw new Error('API client not initialized.');
+      throw new Error(__('API client not initialized.', textDomain));
     }
 
     const response = await api.value.saveSettings({ settings });
@@ -1316,7 +1317,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       const payload = serializeWorkflowFile(workflowFile);
 
       if (!api.value) {
-        return { ok: false, error: new Error('Workflow API is not available.') };
+        return { ok: false, error: new Error(__('Workflow API is not available.', textDomain)) };
       }
 
       if (postId.value <= 0) {

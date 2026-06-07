@@ -6,6 +6,8 @@ import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
+import { ImagePlus } from '@boxicons/vue';
+import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
@@ -18,10 +20,10 @@ const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
 const store = useWorkflowBuilderStore();
 
 const mediaTypeOptions = [
-  { label: 'Image', value: 'image' },
-  { label: 'Video', value: 'video' },
-  { label: 'Document', value: 'document' },
-  { label: 'Audio', value: 'audio' },
+  { label: __('Image', textDomain), value: 'image' },
+  { label: __('Video', textDomain), value: 'video' },
+  { label: __('Document', textDomain), value: 'document' },
+  { label: __('Audio', textDomain), value: 'audio' },
 ];
 
 const senderOptions = computed(() => {
@@ -37,7 +39,7 @@ const senderOptions = computed(() => {
     options.unshift({ label: current, value: current });
   }
 
-  return [{ label: '— Select a sender —', value: '' }, ...options];
+  return [{ label: __('— Select a sender —', textDomain), value: '' }, ...options];
 });
 
 const isAudio = computed(() => String((props.modelValue as Record<string, unknown>).media_type || 'image') === 'audio');
@@ -70,7 +72,7 @@ function openMediaLibrary() {
     return;
   }
 
-  const frame = wpMedia({ title: 'Select media', button: { text: 'Use this media' }, multiple: false });
+  const frame = wpMedia({ title: __('Select media', textDomain), button: { text: __('Use this media', textDomain) }, multiple: false });
 
   frame.on('select', () => {
     const attachment = frame.state().get('selection').first();
@@ -87,36 +89,36 @@ function openMediaLibrary() {
 
 <template>
   <div class="space-y-4">
-    <FieldGroup title="Sender" description="WhatsApp number that will send the media.">
+    <FieldGroup :title="__('Sender', textDomain)" :description="__('WhatsApp number that will send the media.', textDomain)">
       <BaseSelectField
         :model-value="String(modelValue.sender || '')"
         :options="senderOptions"
-        label="Sender"
+        :label="__('Sender', textDomain)"
         @update:model-value="update('sender', $event)"
       />
     </FieldGroup>
 
-    <FieldGroup title="Recipient" description="Phone number or a placeholder that resolves to one.">
+    <FieldGroup :title="__('Recipient', textDomain)" :description="__('Phone number or a placeholder that resolves to one.', textDomain)">
       <BaseTextField
         :model-value="String(modelValue.receiver || '')"
-        label="Recipient"
-        placeholder="{{ wc_billing_phone }} or +5511999990000"
+        :label="__('Recipient', textDomain)"
+        :placeholder="__('{{ wc_billing_phone }} or +5511999990000', textDomain)"
         @update:model-value="update('receiver', $event)"
       />
     </FieldGroup>
 
-    <FieldGroup title="Media">
+    <FieldGroup :title="__('Media', textDomain)">
       <BaseSelectField
         :model-value="String(modelValue.media_type || 'image')"
         :options="mediaTypeOptions"
-        label="Media type"
+        :label="__('Media type', textDomain)"
         @update:model-value="update('media_type', $event)"
       />
       <div class="flex items-end gap-2">
         <div class="flex-1">
           <BaseTextField
             :model-value="String(modelValue.media_url || '')"
-            label="Media URL"
+            :label="__('Media URL', textDomain)"
             type="url"
             placeholder="https://example.com/file.jpg"
             @update:model-value="update('media_url', $event)"
@@ -127,18 +129,18 @@ function openMediaLibrary() {
           class="mb-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
           @click="openMediaLibrary"
         >
-          <i class="bx bx-image-add text-base" />
-          Library
+          <ImagePlus class="text-base" />
+          {{ __('Library', textDomain) }}
         </button>
       </div>
     </FieldGroup>
 
-    <FieldGroup v-if="!isAudio" title="Caption" description="Optional text sent together with the media.">
+    <FieldGroup v-if="!isAudio" :title="__('Caption', textDomain)" :description="__('Optional text sent together with the media.', textDomain)">
       <BaseTextareaField
         :model-value="String(modelValue.caption || '')"
-        label="Caption"
+        :label="__('Caption', textDomain)"
         :rows="4"
-        placeholder="Media caption... Use {{ placeholders }}"
+        :placeholder="__('Media caption... Use {{ placeholders }}', textDomain)"
         @update:model-value="update('caption', $event)"
       />
     </FieldGroup>
@@ -146,7 +148,7 @@ function openMediaLibrary() {
     <PlaceholderList
       v-if="!isAudio && Array.isArray(availablePlaceholders) && availablePlaceholders.length"
       :placeholders="availablePlaceholders"
-      title="Available placeholders"
+      :title="__('Available placeholders', textDomain)"
       @select="insertPlaceholder"
     />
   </div>

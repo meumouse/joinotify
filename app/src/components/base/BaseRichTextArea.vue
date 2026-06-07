@@ -7,6 +7,7 @@ import UnderlineIcon from '@boxicons/vue/Underline';
 import EmojiPicker from 'vue3-emoji-picker';
 import 'vue3-emoji-picker/css';
 import { sanitizePreviewHtml } from '../../utils/html';
+import { __, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -157,8 +158,8 @@ onBeforeUnmount(() => {
             type="button"
             class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             :disabled="disabled"
-            aria-label="Negrito"
-            title="Negrito"
+            :aria-label="__('Bold', textDomain)"
+            :title="__('Bold', textDomain)"
             @mousedown.prevent
             @click="wrapSelection('<strong>', '</strong>')"
           >
@@ -169,8 +170,8 @@ onBeforeUnmount(() => {
             type="button"
             class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             :disabled="disabled"
-            aria-label="Itálico"
-            title="Itálico"
+            :aria-label="__('Italic', textDomain)"
+            :title="__('Italic', textDomain)"
             @mousedown.prevent
             @click="wrapSelection('<em>', '</em>')"
           >
@@ -181,8 +182,8 @@ onBeforeUnmount(() => {
             type="button"
             class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             :disabled="disabled"
-            aria-label="Sublinhado"
-            title="Sublinhado"
+            :aria-label="__('Underline', textDomain)"
+            :title="__('Underline', textDomain)"
             @mousedown.prevent
             @click="wrapSelection('<u>', '</u>')"
           >
@@ -196,8 +197,8 @@ onBeforeUnmount(() => {
               type="button"
               class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
               :disabled="disabled"
-              aria-label="Emojis"
-              title="Emojis"
+              :aria-label="__('Emojis', textDomain)"
+              :title="__('Emojis', textDomain)"
               @mousedown.prevent
               @click="showEmojiPicker = !showEmojiPicker"
             >
@@ -238,7 +239,7 @@ onBeforeUnmount(() => {
 
         <div v-if="String(modelValue || '').trim()" class="border-t border-slate-200 bg-slate-50 px-4 py-3">
           <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-            Preview
+            {{ __('Preview', textDomain) }}
           </p>
           <div class="text-sm leading-6 text-slate-800" v-html="renderPreviewHtml()" />
         </div>

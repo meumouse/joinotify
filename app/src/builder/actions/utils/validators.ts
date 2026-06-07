@@ -1,4 +1,5 @@
 import type { BuilderActionValidationMap } from '../registry/types';
+import { __, sprintf, textDomain } from '../../../utils/i18n';
 
 export function normalizeValidationErrors(errors: BuilderActionValidationMap): BuilderActionValidationMap {
   return Object.entries(errors || {}).reduce<BuilderActionValidationMap>((accumulator, [key, value]) => {
@@ -20,7 +21,7 @@ export function requiredFieldErrors(
       const empty = value === undefined || value === null || String(value).trim() === '';
 
       if (empty) {
-        errors[field.key] = field.message || `${field.label} is required.`;
+        errors[field.key] = field.message || sprintf(__('%s is required.', textDomain), field.label);
       }
 
       return errors;

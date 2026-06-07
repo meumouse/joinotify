@@ -215,7 +215,7 @@ const TRIGGER_FALLBACKS: WorkflowRegistryItem[] = [
         context: 'woocommerce',
         settings: {},
       }),
-      requireSettings: false,
+      requireSettings: true,
     }
   ),
   createTriggerDefinition(

@@ -1,10 +1,11 @@
 import StopFunnelSettings from '../settings/StopFunnelSettings.vue';
 import { describeStopAction, truncateDescription } from '../utils/actionDescription';
 import type { ActionDefinition } from '../registry/types';
+import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeStopFunnelData(data: Record<string, unknown>): Record<string, unknown> {
   return {
-    title: String(data.title || 'Stop funnel'),
+    title: String(data.title || __('Stop funnel', textDomain)),
     description: String(data.description || ''),
     action: 'stop_funnel',
     settings: data.settings && typeof data.settings === 'object' ? data.settings : {},
@@ -13,8 +14,8 @@ function normalizeStopFunnelData(data: Record<string, unknown>): Record<string, 
 
 export const stopFunnelDefinition: ActionDefinition = {
   action: 'stop_funnel',
-  title: 'Stop funnel',
-  description: 'End the workflow at this point.',
+  title: __('Stop funnel', textDomain),
+  description: __('End the workflow at this point.', textDomain),
   icon: 'ban',
   hasSettings: false,
   priority: 40,

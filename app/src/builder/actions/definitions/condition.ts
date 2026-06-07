@@ -2,6 +2,7 @@ import ConditionSettings from '../settings/ConditionSettings.vue';
 import { describeConditionAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { __, textDomain } from '../../../utils/i18n';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value);
@@ -38,7 +39,7 @@ function normalizeConditionData(data: Record<string, unknown>): Record<string, u
   const conditionContent = normalizeConditionContent(data);
 
   return {
-    title: String(data.title || 'Condition'),
+    title: String(data.title || __('Condition', textDomain)),
     description: String(data.description || ''),
     action: 'condition',
     condition: String(conditionContent.condition || ''),
@@ -54,8 +55,8 @@ function normalizeConditionData(data: Record<string, unknown>): Record<string, u
 
 export const conditionDefinition: ActionDefinition = {
   action: 'condition',
-  title: 'Condition',
-  description: 'Split the workflow into true and false branches.',
+  title: __('Condition', textDomain),
+  description: __('Split the workflow into true and false branches.', textDomain),
   icon: 'git-branch',
   hasSettings: true,
   priority: 100,
@@ -64,22 +65,22 @@ export const conditionDefinition: ActionDefinition = {
   settingsComponent: ConditionSettings,
   branchKeys: ['action_true', 'action_false'],
   branchLabels: {
-    action_true: 'True branch',
-    action_false: 'False branch',
+    action_true: __('True branch', textDomain),
+    action_false: __('False branch', textDomain),
   },
   settingsSchema: [
-    { key: 'condition', label: 'Condition type', component: 'select', required: true },
-    { key: 'condition_type', label: 'Operator', component: 'select', required: true },
-    { key: 'field_id', label: 'Field ID', component: 'input' },
-    { key: 'meta_key', label: 'Meta key', component: 'input' },
-    { key: 'value_text', label: 'Value', component: 'textarea' },
-    { key: 'type_text', label: 'Type label', component: 'input' },
+    { key: 'condition', label: __('Condition type', textDomain), component: 'select', required: true },
+    { key: 'condition_type', label: __('Operator', textDomain), component: 'select', required: true },
+    { key: 'field_id', label: __('Field ID', textDomain), component: 'input' },
+    { key: 'meta_key', label: __('Meta key', textDomain), component: 'input' },
+    { key: 'value_text', label: __('Value', textDomain), component: 'textarea' },
+    { key: 'type_text', label: __('Type label', textDomain), component: 'input' },
   ],
   normalizeData: normalizeConditionData,
   serializeData: normalizeConditionData,
   buildDescription: (data) => truncateDescription(describeConditionAction(data)),
   validate: (data) => normalizeValidationErrors(requiredFieldErrors(data, [
-    { key: 'condition', label: 'Condition type' },
-    { key: 'condition_type', label: 'Operator' },
+    { key: 'condition', label: __('Condition type', textDomain) },
+    { key: 'condition_type', label: __('Operator', textDomain) },
   ])),
 };

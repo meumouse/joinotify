@@ -8,8 +8,10 @@
  * @since 1.4.7
  */
 import { computed, ref } from 'vue';
+import { GitRepoForked } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 import FlowCanvas, { type FlowCanvasExpose } from '../flow/FlowCanvas.vue';
+import BuilderLoader from './BuilderLoader.vue';
 import BuilderActionSidebar from './BuilderActionSidebar.vue';
 import NodeSettingsDrawer from '../settings/NodeSettingsDrawer.vue';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
@@ -71,29 +73,37 @@ const triggerDescription = computed(() =>
   String(
     triggerDefinition.value?.description ??
     props.triggerNode?.data?.description ??
-    __('Define o acionamento para iniciar o fluxo.', textDomain),
+    __('Define the trigger that starts the workflow', textDomain),
   ),
 );
 
 const flowCanvasRef = ref<FlowCanvasExpose | null>(null);
 const showFlowLoader = computed(() => props.loading || !props.flowReady);
-const loaderItems = computed(() => [
-  {
-    key: 'trigger',
-    label: __('Trigger definido', textDomain),
-    ready: props.readyTrigger,
-  },
-  {
-    key: 'actions',
-    label: __('Acoes carregadas', textDomain),
-    ready: props.readyActions,
-  },
-  {
-    key: 'senders',
-    label: __('Remetentes disponiveis', textDomain),
-    ready: props.readySenders,
-  },
-]);
+
+/**
+ * Loader stages, in order. Each stage maps to a real data dependency and is
+ * marked `done` once that data has arrived, so the message below the loader
+ * reflects whatever request is currently in flight (never a fixed timer).
+ *
+ * The first stage ("Initializing builder") is considered done as soon as
+ * any data has been received, so it only shows on the very first paint.
+ */
+const loaderStages = computed(() => {
+  const received = props.readySenders || props.readyTrigger || props.readyActions;
+
+  return [
+    { done: received, label: __('Initializing builder', textDomain) },
+    { done: props.readySenders, label: __('Loading senders...', textDomain) },
+    { done: props.readyTrigger, label: __('Loading trigger...', textDomain) },
+    { done: props.readyActions, label: __('Loading actions...', textDomain) },
+  ];
+});
+
+const loaderMessage = computed(() => {
+  const active = loaderStages.value.find((stage) => !stage.done);
+
+  return active ? active.label : loaderStages.value[loaderStages.value.length - 1].label;
+});
 
 function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string }) {
   emit('open-actions', {
@@ -111,13 +121,13 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
     >
       <div class="max-w-md px-6 text-center">
         <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
-          <i class="bx bx-git-repo-forked text-slate-400" style="font-size: 28px;" />
+          <GitRepoForked class="text-slate-400" :width="28" :height="28" />
         </div>
         <h3 class="text-xl font-semibold tracking-tight text-slate-900">
-          {{ __('Canvas vazio', textDomain) }}
+          {{ __('Empty canvas', textDomain) }}
         </h3>
         <p class="mt-2 text-sm leading-6 text-slate-500">
-          {{ __('Crie ou importe um fluxo, escolha um acionamento e comece a adicionar acoes.', textDomain) }}
+          {{ __('Create or import a workflow, choose a trigger, and start adding actions.', textDomain) }}
         </p>
       </div>
     </div>
@@ -140,43 +150,22 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
     <Transition name="flow-loader-fade">
       <div
         v-if="showFlowLoader"
-        class="canvas-flow-loader absolute inset-0 z-30 flex items-center justify-center px-4"
+        class="canvas-flow-loader fixed inset-0 z-[9999999] flex flex-col items-center justify-center bg-white px-4"
         role="status"
         aria-live="polite"
-        aria-label="Canvas flow carregando"
+        :aria-label="__('Loading flow canvas', textDomain)"
       >
-        <div class="canvas-flow-loader__surface w-full max-w-md rounded-3xl border border-white/70 px-7 py-8 shadow-2xl">
-          <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center">
-            <span class="canvas-flow-loader__orbit canvas-flow-loader__orbit--outer" />
-            <span class="canvas-flow-loader__orbit canvas-flow-loader__orbit--middle" />
-            <span class="canvas-flow-loader__core">
-              <span class="canvas-flow-loader__core-dot" />
-            </span>
-          </div>
+        <BuilderLoader />
 
-          <h3 class="text-center text-[20px] font-semibold tracking-tight text-slate-900">
-            {{ __('Preparando o canvas flow', textDomain) }}
-          </h3>
-          <p class="mt-1 text-center text-sm text-slate-600">
-            {{ __('Finalizando recursos para liberar o builder.', textDomain) }}
-          </p>
-
-          <div class="mt-6 space-y-2.5">
-            <div
-              v-for="item in loaderItems"
-              :key="item.key"
-              class="flex items-center justify-between rounded-xl border px-3 py-2.5 text-sm"
-              :class="item.ready ? 'border-emerald-200 bg-emerald-50/80 text-emerald-800' : 'border-slate-200 bg-white/80 text-slate-600'"
+        <div class="canvas-flow-loader__text mt-6 flex h-6 items-center justify-center overflow-hidden">
+          <Transition name="loader-text-swap" mode="out-in">
+            <span
+              :key="loaderMessage"
+              class="block text-sm font-medium text-slate-600"
             >
-              <span class="font-medium">{{ item.label }}</span>
-              <span
-                class="inline-flex h-6 w-6 items-center justify-center rounded-full border"
-                :class="item.ready ? 'border-emerald-300 bg-emerald-100 text-emerald-700' : 'border-slate-300 text-slate-400'"
-              >
-                <i :class="item.ready ? 'bx bx-check' : 'bx bx-loader-alt bx-spin'" />
-              </span>
-            </div>
-          </div>
+              {{ loaderMessage }}
+            </span>
+          </Transition>
         </div>
       </div>
     </Transition>
@@ -201,60 +190,19 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
 </template>
 
 <style scoped>
-.canvas-flow-loader {
-  background:
-    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.16), transparent 40%),
-    radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.14), transparent 44%),
-    linear-gradient(160deg, rgba(248, 250, 252, 0.96), rgba(241, 245, 249, 0.98));
-  backdrop-filter: blur(4px);
+.loader-text-swap-enter-active,
+.loader-text-swap-leave-active {
+  transition: opacity 0.32s ease, transform 0.32s ease;
 }
 
-.canvas-flow-loader__surface {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.9));
+.loader-text-swap-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
-.canvas-flow-loader__orbit {
-  position: absolute;
-  border-radius: 9999px;
-  border-style: solid;
-  border-color: transparent;
-  border-top-color: #16a34a;
-  border-right-color: rgba(37, 99, 235, 0.8);
-}
-
-.canvas-flow-loader__orbit--outer {
-  width: 80px;
-  height: 80px;
-  border-width: 3px;
-  animation: joinotify-flow-loader-spin 1.05s linear infinite;
-}
-
-.canvas-flow-loader__orbit--middle {
-  width: 56px;
-  height: 56px;
-  border-width: 3px;
-  border-top-color: #2563eb;
-  border-right-color: rgba(22, 163, 74, 0.8);
-  animation: joinotify-flow-loader-spin-reverse 1.35s linear infinite;
-}
-
-.canvas-flow-loader__core {
-  width: 34px;
-  height: 34px;
-  border-radius: 9999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #22c55e, #2563eb);
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
-  animation: joinotify-flow-loader-pulse 1.2s ease-in-out infinite;
-}
-
-.canvas-flow-loader__core-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.9);
+.loader-text-swap-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .flow-loader-fade-enter-active,
@@ -266,38 +214,5 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
 .flow-loader-fade-leave-to {
   opacity: 0;
   transform: scale(0.98);
-}
-
-@keyframes joinotify-flow-loader-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes joinotify-flow-loader-spin-reverse {
-  0% {
-    transform: rotate(360deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes joinotify-flow-loader-pulse {
-  0%,
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.2);
-  }
-
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 16px 28px rgba(22, 163, 74, 0.28);
-  }
 }
 </style>

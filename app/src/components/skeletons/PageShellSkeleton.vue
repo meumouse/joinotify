@@ -5,6 +5,7 @@
  * @since 1.4.7
  * @version 1.4.7
  */
+import { __, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
   variant: {
@@ -14,8 +15,8 @@ const props = defineProps({
 });
 
 const loadingLabel = {
-  settings: 'Loading the settings interface...',
-  license: 'Loading the license interface...',
+  settings: __('Loading the settings interface...', textDomain),
+  license: __('Loading the license interface...', textDomain),
 };
 </script>
 
@@ -37,13 +38,13 @@ const loadingLabel = {
         <div class="px-10 py-12">
           <div class="rounded-[8px] border border-slate-200 bg-slate-50 px-6 py-10 text-center">
             <p class="text-sm font-semibold uppercase tracking-[0.18em] text-shell-500">
-              {{ variant === 'license' ? 'License' : 'Settings' }}
+              {{ variant === 'license' ? __('License', textDomain) : __('Settings', textDomain) }}
             </p>
             <p class="mt-3 text-base font-medium text-slate-700">
               {{ loadingLabel[variant] || loadingLabel.settings }}
             </p>
             <p class="mt-2 text-sm text-slate-500">
-              Please wait a moment while we load the data.
+              {{ __('Please wait a moment while we load the data.', textDomain) }}
             </p>
           </div>
         </div>

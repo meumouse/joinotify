@@ -6,6 +6,7 @@ import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
+import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
@@ -30,7 +31,7 @@ const senderOptions = computed(() => {
     options.unshift({ label: current, value: current });
   }
 
-  return [{ label: '— Select a sender —', value: '' }, ...options];
+  return [{ label: __('— Select a sender —', textDomain), value: '' }, ...options];
 });
 
 function update(key: string, value: unknown) {
@@ -49,30 +50,30 @@ function insertPlaceholder(placeholder: string) {
 
 <template>
   <div class="space-y-4">
-    <FieldGroup title="Sender" description="WhatsApp number that will send the message.">
+    <FieldGroup :title="__('Sender', textDomain)" :description="__('WhatsApp number that will send the message.', textDomain)">
       <BaseSelectField
         :model-value="String(modelValue.sender || '')"
         :options="senderOptions"
-        label="Sender"
+        :label="__('Sender', textDomain)"
         @update:model-value="update('sender', $event)"
       />
     </FieldGroup>
 
-    <FieldGroup title="Recipient" description="Phone number or a placeholder that resolves to one.">
+    <FieldGroup :title="__('Recipient', textDomain)" :description="__('Phone number or a placeholder that resolves to one.', textDomain)">
       <BaseTextField
         :model-value="String(modelValue.receiver || '')"
-        label="Recipient"
-        placeholder="{{ wc_billing_phone }} or +5511999990000"
+        :label="__('Recipient', textDomain)"
+        :placeholder="__('{{ wc_billing_phone }} or +5511999990000', textDomain)"
         @update:model-value="update('receiver', $event)"
       />
     </FieldGroup>
 
-    <FieldGroup title="Message">
+    <FieldGroup :title="__('Message', textDomain)">
       <BaseTextareaField
         :model-value="String(modelValue.message || '')"
-        label="Message"
+        :label="__('Message', textDomain)"
         :rows="6"
-        placeholder="Type your message... Use {{ placeholders }} and *bold*"
+        :placeholder="__('Type your message... Use {{ placeholders }} and *bold*', textDomain)"
         @update:model-value="update('message', $event)"
       />
     </FieldGroup>
@@ -80,7 +81,7 @@ function insertPlaceholder(placeholder: string) {
     <PlaceholderList
       v-if="Array.isArray(availablePlaceholders) && availablePlaceholders.length"
       :placeholders="availablePlaceholders"
-      title="Available placeholders"
+      :title="__('Available placeholders', textDomain)"
       @select="insertPlaceholder"
     />
   </div>

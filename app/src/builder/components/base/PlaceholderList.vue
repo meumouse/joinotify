@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { __, textDomain } from '../../../utils/i18n';
+
 defineProps({
   placeholders: { type: Array, default: () => [] },
-  title: { type: String, default: 'Placeholders' },
+  title: { type: String, default: () => __('Placeholders', textDomain) },
 });
 
 defineEmits(['select']);
@@ -29,7 +31,7 @@ defineEmits(['select']);
     </div>
 
     <div v-else class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">
-      No placeholders available.
+      {{ __('No placeholders available.', textDomain) }}
     </div>
   </div>
 </template>

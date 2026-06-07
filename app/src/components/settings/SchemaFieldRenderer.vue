@@ -5,6 +5,7 @@ import BaseInput from '../base/BaseInput.vue';
 import BaseSelect from '../base/BaseSelect.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BaseTextarea from '../base/BaseTextarea.vue';
+import { __, textDomain } from '../../utils/i18n';
 import type { WorkflowFieldCondition, WorkflowFieldSchema } from '../../types/workflowBuilder';
 
 const props = defineProps<{
@@ -197,7 +198,7 @@ const inputType = computed(() => {
         </div>
 
         <BaseButton
-          :title="field.placeholder || 'Add item'"
+          :title="field.placeholder || __('Add item', textDomain)"
           variant="secondary"
           size="sm"
           :disabled="disabled"
@@ -222,7 +223,7 @@ const inputType = computed(() => {
               :disabled="disabled"
               @click="removeRepeaterItem(index)"
             >
-              Remove
+              {{ __('Remove', textDomain) }}
             </button>
           </div>
 

@@ -5,6 +5,7 @@ import BaseAlert from '../../components/base/BaseAlert.vue';
 import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
+import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
   action: { type: String, default: '' },
@@ -76,22 +77,22 @@ function updateField(key: string, value: unknown) {
     <BaseAlert
       v-if="!action"
       tone="neutral"
-      title="No action selected"
-      message="Select a workflow action to configure it."
+      :title="__('No action selected', textDomain)"
+      :message="__('Select a workflow action to configure it.', textDomain)"
     />
 
     <template v-else>
-      <FieldGroup title="Shared fields" description="These fields are common to every action.">
+      <FieldGroup :title="__('Shared fields', textDomain)" :description="__('These fields are common to every action.', textDomain)">
         <BaseTextField
           :model-value="String(modelValue.title || '')"
-          label="Title"
-          placeholder="Action title"
+          :label="__('Title', textDomain)"
+          :placeholder="__('Action title', textDomain)"
           @update:model-value="updateField('title', $event)"
         />
         <BaseTextareaField
           :model-value="String(modelValue.description || '')"
-          label="Description"
-          placeholder="Action summary"
+          :label="__('Description', textDomain)"
+          :placeholder="__('Action summary', textDomain)"
           :rows="3"
           @update:model-value="updateField('description', $event)"
         />
@@ -110,14 +111,14 @@ function updateField(key: string, value: unknown) {
       <BaseAlert
         v-else
         tone="warning"
-        title="Configuration component not available"
-        message="This action is registered, but the frontend component is not available yet. The workflow can still be saved safely."
+        :title="__('Configuration component not available', textDomain)"
+        :message="__('This action is registered, but the frontend component is not available yet. The workflow can still be saved safely.', textDomain)"
       />
 
       <BaseAlert
         v-if="Object.keys(validationErrors || {}).length"
         tone="danger"
-        title="Validation"
+        :title="__('Validation', textDomain)"
       >
         <p
           v-for="(message, key) in validationErrors"

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
 
 const emit = defineEmits(['file']);
 const inputRef = ref(null);
@@ -29,7 +30,7 @@ function handlePick(event) {
     <input ref="inputRef" type="file" class="hidden" accept=".json,application/json" @change="handlePick" />
     <slot />
     <button type="button" class="mt-4 rounded-[8px] bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800" @click="inputRef?.click()">
-      Select file
+      {{ __('Select file', textDomain) }}
     </button>
   </div>
 </template>

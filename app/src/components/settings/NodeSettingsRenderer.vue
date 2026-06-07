@@ -4,11 +4,14 @@ import BaseAlert from '../../builder/components/base/BaseAlert.vue';
 import BaseInput from '../base/BaseInput.vue';
 import BaseSelect from '../base/BaseSelect.vue';
 import BaseTextarea from '../base/BaseTextarea.vue';
+import SchemaFieldRenderer from './SchemaFieldRenderer.vue';
 import DynamicActionSettingsRenderer from '../../builder/actions/components/DynamicActionSettingsRenderer.vue';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { getActionDefinition as getLegacyActionDefinition } from '../../registries/actionRegistry';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
+import { getTriggerSettingsSchema } from '../../utils/triggerSettings';
 import { cloneSerializable } from '../../utils/workflowTree';
+import { __, textDomain } from '../../utils/i18n';
 import type { WorkflowNode } from '../../types/workflowBuilder';
 
 const props = defineProps<{
@@ -40,6 +43,26 @@ const actionDefinition = computed(() => {
 
   return getLegacyActionDefinition(actionSlug.value);
 });
+
+const triggerSettingsSchema = computed(() =>
+  isTrigger.value ? getTriggerSettingsSchema(actionDefinition.value) : []
+);
+
+const draftSettings = computed<Record<string, unknown>>(() =>
+  draft.value.settings && typeof draft.value.settings === 'object'
+    ? (draft.value.settings as Record<string, unknown>)
+    : {}
+);
+
+function updateSettingField(key: string, value: unknown) {
+  draft.value = {
+    ...draft.value,
+    settings: {
+      ...draftSettings.value,
+      [key]: value,
+    },
+  };
+}
 
 const placeholderItems = computed(() =>
   (store.placeholderCatalog || []).flatMap((group) =>
@@ -135,7 +158,7 @@ const summaryText = computed(() => {
   }
 
   if (isTrigger.value) {
-    const title = String(draft.value.title || props.node.data.title || 'Trigger');
+    const title = String(draft.value.title || props.node.data.title || __('Trigger', textDomain));
     const trigger = String(draft.value.trigger || props.node.data.trigger || '');
     return trigger ? `${title} · ${trigger}` : title;
   }
@@ -155,40 +178,61 @@ const summaryText = computed(() => {
     <BaseAlert
       v-if="summaryText"
       tone="neutral"
-      :title="String(actionDefinition?.title || node.data?.title || (isTrigger ? 'Trigger' : 'Action'))"
+      :title="String(actionDefinition?.title || node.data?.title || (isTrigger ? __('Trigger', textDomain) : __('Action', textDomain)))"
       :message="summaryText"
     />
 
     <div v-if="isTrigger" class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
       <BaseInput
         :model-value="String(draft.title || '')"
-        :label="'Workflow name'"
-        :placeholder="'Workflow name'"
+        :label="__('Workflow name', textDomain)"
+        :placeholder="__('Workflow name', textDomain)"
         @update:model-value="updateField('title', $event)"
       />
 
       <BaseSelect
         :model-value="String(draft.context || '')"
-        :label="'Integration'"
+        :label="__('Integration', textDomain)"
         :options="triggerContexts().map((item) => ({ label: item.label, value: item.id }))"
-        placeholder="Select integration"
+        :placeholder="__('Select integration', textDomain)"
         @update:model-value="updateField('context', $event)"
       />
 
       <BaseSelect
         :model-value="String(draft.trigger || '')"
-        :label="'Trigger'"
+        :label="__('Trigger', textDomain)"
         :options="triggerOptions().map((item) => ({ label: item.label, value: item.id }))"
-        placeholder="Select trigger"
+        :placeholder="__('Select trigger', textDomain)"
         @update:model-value="updateField('trigger', $event)"
       />
 
       <BaseTextarea
         :model-value="String(draft.description || '')"
-        :label="'Description'"
+        :label="__('Description', textDomain)"
         :rows="4"
-        placeholder="Internal summary"
+        :placeholder="__('Internal summary', textDomain)"
         @update:model-value="updateField('description', $event)"
+      />
+    </div>
+
+    <div
+      v-if="isTrigger && triggerSettingsSchema.length"
+      class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+    >
+      <div>
+        <h4 class="text-sm font-semibold text-slate-900">{{ __('Trigger settings', textDomain) }}</h4>
+        <p class="mt-1 text-sm leading-6 text-slate-500">
+          {{ __('Required configuration for this trigger to run correctly.', textDomain) }}
+        </p>
+      </div>
+
+      <SchemaFieldRenderer
+        v-for="field in triggerSettingsSchema"
+        :key="field.key"
+        :field="field"
+        :model-value="draftSettings[field.key]"
+        :root-value="draftSettings"
+        @update:model-value="updateSettingField(field.key, $event)"
       />
     </div>
 
@@ -203,7 +247,7 @@ const summaryText = computed(() => {
     />
 
     <div v-if="validationErrors.length" class="space-y-2 rounded-3xl border border-rose-200 bg-rose-50 p-5">
-      <h4 class="text-sm font-semibold text-rose-900">Validation</h4>
+      <h4 class="text-sm font-semibold text-rose-900">{{ __('Validation', textDomain) }}</h4>
       <p
         v-for="error in validationErrors"
         :key="error"
@@ -215,6 +259,6 @@ const summaryText = computed(() => {
   </div>
 
   <div v-else class="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">
-    Select a node to edit its settings.
+    {{ __('Select a node to edit its settings.', textDomain) }}
   </div>
 </template>

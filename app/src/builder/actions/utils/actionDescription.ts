@@ -1,3 +1,5 @@
+import { __, textDomain } from '../../../utils/i18n';
+
 function cleanText(value: unknown): string {
   return String(value ?? '').replace(/\s+/g, ' ').trim();
 }
@@ -11,15 +13,15 @@ export function describeTimeDelayAction(data: Record<string, unknown>): string {
 
   if (mode === 'date') {
     return joinSegments([
-      'Delay',
+      __('Delay', textDomain),
       cleanText(data.date_value || ''),
       cleanText(data.time_value || ''),
-    ]) || 'Delay until a fixed date';
+    ]) || __('Delay until a fixed date', textDomain);
   }
 
   const amount = cleanText(data.delay_value || '');
   const period = cleanText(data.delay_period || 'minute');
-  return joinSegments(['Delay', amount ? `${amount} ${period}` : period]);
+  return joinSegments([__('Delay', textDomain), amount ? `${amount} ${period}` : period]);
 }
 
 export function describeConditionAction(data: Record<string, unknown>): string {
@@ -28,7 +30,7 @@ export function describeConditionAction(data: Record<string, unknown>): string {
   const field = cleanText(data.field_id || data.meta_key || '');
 
   return joinSegments([
-    'Condition',
+    __('Condition', textDomain),
     field,
     condition,
     operator,
@@ -39,14 +41,14 @@ export function describeSnippetAction(data: Record<string, unknown>): string {
   const snippet = cleanText(data.snippet_php || '');
 
   if (!snippet) {
-    return 'PHP snippet';
+    return __('PHP snippet', textDomain);
   }
 
-  return joinSegments(['PHP snippet', snippet.slice(0, 48)]);
+  return joinSegments([__('PHP snippet', textDomain), snippet.slice(0, 48)]);
 }
 
 export function describeStopAction(): string {
-  return 'Stops the workflow immediately';
+  return __('Stops the workflow immediately', textDomain);
 }
 
 export function describeFallbackAction(title: string, description: string, data: Record<string, unknown>): string {
