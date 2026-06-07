@@ -92,16 +92,34 @@ onBeforeUnmount(() => {
             v-if="menuOpen"
             class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-soft"
           >
-            <button type="button" class="block w-full rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('edit-title'); closeMenu()">
+            <button type="button" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('edit-title'); closeMenu()">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
               {{ __('Edit workflow title', textDomain) }}
             </button>
-            <button type="button" class="block w-full rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('export'); closeMenu()">
+            <button type="button" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('export'); closeMenu()">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path d="M7 10l5 5 5-5" />
+                <path d="M12 15V3" />
+              </svg>
               {{ __('Export workflow', textDomain) }}
             </button>
-            <button type="button" class="block w-full rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('new'); closeMenu()">
+            <button type="button" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('new'); closeMenu()">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+                <path d="M14 2v6h6" />
+                <path d="M12 12v6M9 15h6" />
+              </svg>
               {{ __('Create a new workflow', textDomain) }}
             </button>
-            <button type="button" class="block w-full rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('back'); closeMenu()">
+            <button type="button" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('back'); closeMenu()">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5" />
+                <path d="M12 19l-7-7 7-7" />
+              </svg>
               {{ __('Back to dashboard', textDomain) }}
             </button>
           </div>
