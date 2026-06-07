@@ -95,8 +95,11 @@ const loaderItems = computed(() => [
   },
 ]);
 
-function openActionsSidebar() {
-  emit('open-actions', { afterNodeId: props.triggerNode?.id ?? '' });
+function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string }) {
+  emit('open-actions', {
+    afterNodeId: payload?.afterNodeId || props.triggerNode?.id || '',
+    branchKey: payload?.branchKey || '',
+  });
 }
 </script>
 

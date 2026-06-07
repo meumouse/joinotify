@@ -28,6 +28,7 @@ export interface FlowNodeData {
   onRequestDelete?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
   onSelect?: (id: string) => void;
+  onAddAction?: (id: string, branchKey?: 'action_true' | 'action_false') => void;
 }
 
 const props = defineProps<{
@@ -84,6 +85,10 @@ function requestDelete() {
 
 function selectNode() {
   props.data.onSelect?.(props.id);
+}
+
+function requestAddAction(branchKey?: 'action_true' | 'action_false') {
+  props.data.onAddAction?.(props.id, branchKey);
 }
 
 function iconGlyph(value: string) {
@@ -235,7 +240,7 @@ function normalizeBoxiconClass(value: string) {
 
     <template v-if="isCondition">
       <div class="flex items-end justify-between px-5 pb-3 pt-1">
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-col items-center gap-1.5">
           <span class="text-[10px] font-semibold text-emerald-600">Verdadeiro</span>
           <Handle
             id="true"
@@ -251,8 +256,17 @@ function normalizeBoxiconClass(value: string) {
               border: '2px solid #6ee7b7',
             }"
           />
+          <button
+            type="button"
+            class="nodrag flow-node-add-btn flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-emerald-500 text-white shadow-md transition hover:bg-emerald-600"
+            title="Adicionar ação (Verdadeiro)"
+            aria-label="Adicionar ação no ramo verdadeiro"
+            @click.stop="requestAddAction('action_true')"
+          >
+            <i class="bx bx-plus" style="font-size: 14px;" />
+          </button>
         </div>
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-col items-center gap-1.5">
           <span class="text-[10px] font-semibold text-red-500">Falso</span>
           <Handle
             id="false"
@@ -268,6 +282,15 @@ function normalizeBoxiconClass(value: string) {
               border: '2px solid #fca5a5',
             }"
           />
+          <button
+            type="button"
+            class="nodrag flow-node-add-btn flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 text-white shadow-md transition hover:bg-red-600"
+            title="Adicionar ação (Falso)"
+            aria-label="Adicionar ação no ramo falso"
+            @click.stop="requestAddAction('action_false')"
+          >
+            <i class="bx bx-plus" style="font-size: 14px;" />
+          </button>
         </div>
       </div>
     </template>
@@ -279,6 +302,16 @@ function normalizeBoxiconClass(value: string) {
         :position="Position.Bottom"
         :style="{ bottom: '-7px', width: '12px', height: '12px', background: '#94a3b8', border: '2px solid white' }"
       />
+      <button
+        type="button"
+        class="nodrag flow-node-add-btn absolute left-1/2 z-20 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-2 border-white bg-primary-600 text-white shadow-md transition hover:bg-primary-700"
+        style="bottom: -36px;"
+        title="Adicionar ação"
+        aria-label="Adicionar ação"
+        @click.stop="requestAddAction()"
+      >
+        <i class="bx bx-plus" style="font-size: 14px;" />
+      </button>
     </template>
   </div>
 </template>

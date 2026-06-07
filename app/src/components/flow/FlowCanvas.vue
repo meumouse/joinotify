@@ -170,6 +170,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
       onEdit: handleNodeEdit,
       onRequestDelete: handleRemoveRequest,
       onSelect: handleNodeSelect,
+      onAddAction: handleAddAction,
     };
   }
 
@@ -189,6 +190,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
     onEdit: handleNodeEdit,
     onRequestDelete: handleRemoveRequest,
     onSelect: handleNodeSelect,
+    onAddAction: handleAddAction,
   };
 }
 
@@ -425,6 +427,17 @@ function handleNodeSelect(nodeId: string) {
   }
 
   emit('select-node', nodeId);
+}
+
+function handleAddAction(nodeId: string, branchKey?: 'action_true' | 'action_false') {
+  if (!nodeId) {
+    return;
+  }
+
+  emit('add-action', {
+    afterNodeId: nodeId,
+    branchKey: branchKey || '',
+  });
 }
 
 function handleRemoveRequest(nodeId: string) {
