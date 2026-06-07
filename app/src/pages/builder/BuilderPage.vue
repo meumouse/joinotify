@@ -145,8 +145,11 @@ watch(
     });
 
     if (workflowIdFromUrl.value > 0) {
-      store.setApiFromBootstrap(bootstrap.value);
+      // The bootstrap prop is already a fresh GET of /admin/builder?id=N, so hydrate
+      // directly from it and mark the route loaded to avoid a duplicate server fetch.
       store.step = 'canvas';
+      store.hydrateFromBootstrap(bootstrap.value);
+      routeWorkflowLoaded.value = true;
       debugLogger.log('builder:opened-existing-workflow', {
         workflow_id: workflowIdFromUrl.value,
       });
