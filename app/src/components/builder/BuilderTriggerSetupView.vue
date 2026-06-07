@@ -36,7 +36,7 @@ function getContextLogo(contextId) {
   return props.contexts.find((item) => item.id === contextId)?.icon_svg || '';
 }
 
-const triggerGridClass = computed(() => 'grid gap-4 sm:grid-cols-2 2xl:grid-cols-4 overflow-y-auto max-h-[450px]');
+const triggerGridClass = computed(() => 'builder-trigger-grid grid gap-4 overflow-y-auto');
 
 const skeletonCards = computed(() => Array.from({ length: 4 }, (_, index) => index));
 const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => index));
@@ -124,7 +124,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
             </template>
           </div>
 
-          <div class="mt-7 max-w-[1180px]">
+          <div class="mt-7 w-full">
             <div v-if="loading" class="h-[52px] rounded-[12px] border border-slate-200 bg-slate-100 animate-pulse" />
             <WorkflowNameField
               v-else
@@ -135,7 +135,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
             />
           </div>
 
-          <div class="mt-10 max-w-[1180px]">
+          <div class="mt-10 w-full">
             <div v-if="loading" :class="triggerGridClass">
               <div
                 v-for="index in skeletonCards"
@@ -167,7 +167,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
             </div>
           </div>
 
-          <div class="mt-auto max-w-[1180px] py-8">
+          <div class="mt-auto w-full py-8">
             <TriggerStepFooter :disabled="!ready" :continuing="continuing" @continue="$emit('continue')" @back="$emit('back')" />
           </div>
         </div>
@@ -177,6 +177,12 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
 </template>
 
 <style scoped>
+.builder-trigger-grid {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  max-height: min(720px, calc(100vh - 320px));
+  align-content: start;
+}
+
 .builder-context-icon :deep(svg) {
   display: block;
   width: 100%;
