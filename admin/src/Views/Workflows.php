@@ -4,14 +4,13 @@
  * Workflows view file.
  *
  * @since 1.4.7
+ * @version 2.0.0
  */
 
-defined('ABSPATH') || exit;
-
-$bootstrap_json = wp_json_encode( $bootstrap ?? array(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ); ?>
+defined('ABSPATH') || exit; ?>
 
 <div class="wrap p-0">
-    <div id="joinotify-workflows-app" data-bootstrap="<?php echo esc_attr( $bootstrap_json ); ?>">
+    <div id="joinotify-workflows-app">
         <div class="skeleton-content" style="width: 950px; height: 100px;"></div>
 
         <div class="skeleton-content" style="width: 680px; height: 65px; margin-top: 2rem;"></div>

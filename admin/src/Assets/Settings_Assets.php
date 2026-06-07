@@ -92,6 +92,51 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify',
             JOINOTIFY_DIR . 'languages'
         );
+
+        $config = $this->build_bootstrap_config( $page );
+
+        if ( ! empty( $config ) ) {
+            wp_localize_script( $handle, 'joinotifyBootstrapConfig', $config );
+        }
+    }
+
+
+    /**
+     * Build the minimal bootstrap config the Vue app needs to fetch its payload.
+     *
+     * Instead of embedding the full page payload in a data-bootstrap attribute,
+     * the client receives only the REST root, a nonce, the page slug, and the
+     * endpoint it should request to hydrate itself.
+     *
+     * @since 2.0.0
+     * @param string $page Admin page slug.
+     * @return array<string,mixed>|null
+     */
+    private function build_bootstrap_config( $page ) {
+        $map = array(
+            'joinotify-settings'          => array( 'page' => 'settings', 'endpoint' => 'admin/settings' ),
+            'joinotify-license'           => array( 'page' => 'license', 'endpoint' => 'admin/settings' ),
+            'joinotify-workflows-builder' => array( 'page' => 'builder', 'endpoint' => 'admin/builder' ),
+            'joinotify-workflows'         => array( 'page' => 'workflows', 'endpoint' => 'admin/workflows/bootstrap' ),
+        );
+
+        if ( ! isset( $map[ $page ] ) ) {
+            return null;
+        }
+
+        $endpoint = $map[ $page ]['endpoint'];
+
+        if ( 'joinotify-workflows-builder' === $page ) {
+            $post_id = isset( $_GET['id'] ) ? absint( wp_unslash( $_GET['id'] ) ) : 0;
+            $endpoint = add_query_arg( 'id', $post_id, $endpoint );
+        }
+
+        return array(
+            'restUrl'  => esc_url_raw( rest_url( 'joinotify/v1' ) ),
+            'nonce'    => wp_create_nonce( 'wp_rest' ),
+            'page'     => $map[ $page ]['page'],
+            'endpoint' => $endpoint,
+        );
     }
 
 

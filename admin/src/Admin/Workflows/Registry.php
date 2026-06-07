@@ -44,6 +44,40 @@ class Registry {
 
 
 	/**
+	 * Build the full bootstrap payload for the workflows Vue screen.
+	 *
+	 * The Vue list filters and paginates client-side, so it is seeded with every
+	 * status. Mirrors the previous inline data-bootstrap payload, now served over
+	 * a GET request.
+	 *
+	 * @since 2.0.0
+	 * @param string $status Optional active status hint.
+	 * @return array<string,mixed>
+	 */
+	public static function get_bootstrap_data( $status = 'publish' ) {
+		$status = in_array( $status, self::ALLOWED_STATUSES, true ) ? $status : 'publish';
+		$list = self::get_list_state();
+
+		return array(
+			'page'          => 'workflows',
+			'title'         => __( 'Manage workflows', 'joinotify' ),
+			'create_url'    => admin_url( 'admin.php?page=joinotify-workflows-builder' ),
+			'active_status' => $status,
+			'date_format'   => get_option( 'date_format' ),
+			'time_format'   => get_option( 'time_format' ),
+			'loading_delay' => 350,
+			'workflows'     => $list['workflows'],
+			'counts'        => $list['counts'],
+			'pagination'    => $list['pagination'],
+			'rest'          => array(
+				'root'  => esc_url_raw( rest_url( 'joinotify/v1' ) ),
+				'nonce' => wp_create_nonce( 'wp_rest' ),
+			),
+		);
+	}
+
+
+	/**
 	 * Build a normalized list item from a workflow post.
 	 *
 	 * @since 2.0.0

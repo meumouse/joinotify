@@ -17,6 +17,7 @@ class Rest_Controller {
 	 * @var string[]
 	 */
 	private $route_classes = array(
+		'\MeuMouse\Joinotify\Rest\Workflows_Bootstrap',
 		'\MeuMouse\Joinotify\Rest\Workflows_List',
 		'\MeuMouse\Joinotify\Rest\Workflows_Status',
 		'\MeuMouse\Joinotify\Rest\Workflows_Bulk',

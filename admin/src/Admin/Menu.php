@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Admin;
 
 use MeuMouse\Joinotify\Api\License;
-use MeuMouse\Joinotify\Admin\Workflows\Registry as Workflows_Registry;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -170,40 +169,7 @@ class Menu {
             wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
         }
 
-        $bootstrap = $this->get_workflows_bootstrap();
-
+        // The Vue app fetches its bootstrap payload over REST (admin/workflows/bootstrap).
         include JOINOTIFY_SRC . 'Views/Workflows.php';
-    }
-
-
-    /**
-     * Build the initial data payload for the workflows Vue screen.
-     *
-     * @since 1.4.7
-     * @return array<string,mixed>
-     */
-    private function get_workflows_bootstrap() {
-        $status = isset( $_GET['post_status'] ) ? sanitize_text_field( wp_unslash( $_GET['post_status'] ) ) : 'publish';
-        $status = in_array( $status, array( 'publish', 'draft', 'trash' ), true ) ? $status : 'publish';
-
-        // The Vue list filters/paginates client-side, so seed it with every status.
-        $list = Workflows_Registry::get_list_state();
-
-        return array(
-            'page'         => 'workflows',
-            'title'        => __( 'Manage workflows', 'joinotify' ),
-            'create_url'   => admin_url( 'admin.php?page=joinotify-workflows-builder' ),
-            'active_status'=> $status,
-            'date_format'  => get_option( 'date_format' ),
-            'time_format'  => get_option( 'time_format' ),
-            'loading_delay' => 350,
-            'workflows'    => $list['workflows'],
-            'counts'       => $list['counts'],
-            'pagination'   => $list['pagination'],
-            'rest'         => array(
-                'root'  => esc_url_raw( rest_url( 'joinotify/v1' ) ),
-                'nonce' => wp_create_nonce( 'wp_rest' ),
-            ),
-        );
     }
 }
