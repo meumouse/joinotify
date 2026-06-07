@@ -4,7 +4,7 @@
  * PhoneField.vue frontend component.
  *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.0.0
  */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import intlTelInput from 'intl-tel-input';
@@ -156,6 +156,24 @@ function applyModelValue(value) {
   iti.value.setNumber('');
 }
 
+function handleCountryChange() {
+  if (isSyncingFromModel.value || !iti.value) {
+    return;
+  }
+
+  // When the field is still empty, prefill it with the selected country's dial code (DDI).
+  if (!inputEl.value.value.trim()) {
+    const country = iti.value.getSelectedCountryData();
+
+    if (country && country.dialCode) {
+      iti.value.setNumber(`+${country.dialCode}`);
+    }
+  }
+
+  const number = iti.value.getNumber();
+  emit('update:modelValue', number || inputEl.value.value.trim());
+}
+
 onMounted(() => {
   if (!inputEl.value) {
     return;
@@ -180,15 +198,7 @@ onMounted(() => {
 
       applyModelValue(props.modelValue);
 
-      onCountryChange = () => {
-        if (isSyncingFromModel.value || !iti.value) {
-          return;
-        }
-
-        const number = iti.value.getNumber();
-        emit('update:modelValue', number || inputEl.value.value.trim());
-      };
-
+      onCountryChange = handleCountryChange;
       inputEl.value.addEventListener('countrychange', onCountryChange);
     })
     .catch(() => {
@@ -208,15 +218,7 @@ onMounted(() => {
 
       applyModelValue(props.modelValue);
 
-      onCountryChange = () => {
-        if (isSyncingFromModel.value || !iti.value) {
-          return;
-        }
-
-        const number = iti.value.getNumber();
-        emit('update:modelValue', number || inputEl.value.value.trim());
-      };
-
+      onCountryChange = handleCountryChange;
       inputEl.value.addEventListener('countrychange', onCountryChange);
     });
 });
