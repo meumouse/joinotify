@@ -29,6 +29,31 @@ class Workflow_Manager {
     public function __construct() {
         // load builder files
         add_action( 'Joinotify/Admin/Builder_Page', array( $this, 'load_builder_files' ) );
+
+        // Remove third-party admin notices on the full-screen builder page.
+        add_action( 'in_admin_header', array( $this, 'suppress_admin_notices' ), PHP_INT_MAX );
+    }
+
+
+    /**
+     * Remove WordPress admin notices on the builder screen.
+     *
+     * The builder is a full-screen Vue app, so notices printed by the core or
+     * other plugins into #wpbody-content leak into the builder UI. They are
+     * removed right before WordPress outputs them in admin-header.php.
+     *
+     * @since 2.0.0
+     * @return void
+     */
+    public function suppress_admin_notices() {
+        if ( ! is_admin() || ! isset( $_GET['page'] ) || 'joinotify-workflows-builder' !== sanitize_key( wp_unslash( $_GET['page'] ) ) ) {
+            return;
+        }
+
+        remove_all_actions( 'admin_notices' );
+        remove_all_actions( 'all_admin_notices' );
+        remove_all_actions( 'user_admin_notices' );
+        remove_all_actions( 'network_admin_notices' );
     }
 
 
