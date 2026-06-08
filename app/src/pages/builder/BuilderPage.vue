@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../../components/base/BaseButton.vue';
 import ModalDialog from '../../components/modals/ModalDialog.vue';
@@ -236,7 +236,54 @@ watch(
   { immediate: true }
 );
 
+function isEditableTarget(target) {
+  const element = target instanceof HTMLElement ? target : null;
+
+  if (!element) {
+    return false;
+  }
+
+  if (element.isContentEditable) {
+    return true;
+  }
+
+  return ['INPUT', 'TEXTAREA', 'SELECT'].includes(element.tagName);
+}
+
+function handleHistoryShortcut(event) {
+  if (!event.ctrlKey && !event.metaKey) {
+    return;
+  }
+
+  const key = String(event.key || '').toLowerCase();
+  const isUndo = key === 'z' && !event.shiftKey;
+  const isRedo = (key === 'z' && event.shiftKey) || key === 'y';
+
+  if (!isUndo && !isRedo) {
+    return;
+  }
+
+  // Let the browser handle native undo/redo while typing in a field.
+  if (isEditableTarget(event.target)) {
+    return;
+  }
+
+  event.preventDefault();
+
+  if (isUndo) {
+    store.undo();
+  } else {
+    store.redo();
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleHistoryShortcut);
+});
+
 onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleHistoryShortcut);
+
   toastTimers.forEach((timers) => {
     if (timers.hide) {
       window.clearTimeout(timers.hide);
@@ -934,6 +981,7 @@ function clearBuilderUrl() {
         :docs-url="docsUrl"
         :loading="isRunningTest"
         :saving="store.loading.save || titleSaving"
+        :dirty="store.dirty"
         :status-loading="isUpdatingStatus"
         @update:status="handleWorkflowStatusChange"
         @save="saveWorkflow"

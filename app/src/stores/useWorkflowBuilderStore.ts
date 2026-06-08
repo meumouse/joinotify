@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import {
   getActionCatalog,
   getActionDefinition,
@@ -253,6 +253,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const postId = ref(0);
   const file = ref<ExportedWorkflowFile>(createWorkflowFileFromParts());
   const baseline = ref('');
+  const undoStack = ref<string[]>([]);
+  const redoStack = ref<string[]>([]);
+  const isTimeTraveling = ref(false);
+  const HISTORY_LIMIT = 100;
+  let lastHistorySnapshot = '';
+  let historyDebounceTimer: ReturnType<typeof setTimeout> | null = null;
   const step = ref<BuilderStep>('start');
   const activeContext = ref('');
   const selectedTrigger = ref('');
@@ -365,6 +371,8 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   });
 
   const dirty = computed(() => serializeWorkflowToJson(file.value) !== baseline.value);
+  const canUndo = computed(() => undoStack.value.length > 0);
+  const canRedo = computed(() => redoStack.value.length > 0);
   const hasErrors = computed(() => errors.value.length > 0);
   const canContinue = computed(() => !!activeContext.value && !!selectedTrigger.value);
   const triggerOptions = computed(() => getTriggersForContext(activeContext.value || ''));
@@ -396,6 +404,126 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     baseline.value = serializeWorkflowToJson(file.value);
   }
 
+  function resetHistory() {
+    if (historyDebounceTimer) {
+      clearTimeout(historyDebounceTimer);
+      historyDebounceTimer = null;
+    }
+
+    undoStack.value = [];
+    redoStack.value = [];
+    isTimeTraveling.value = false;
+    lastHistorySnapshot = serializeWorkflowToJson(file.value);
+  }
+
+  function commitHistorySnapshot() {
+    if (isTimeTraveling.value) {
+      return;
+    }
+
+    const current = serializeWorkflowToJson(file.value);
+
+    if (current === lastHistorySnapshot) {
+      return;
+    }
+
+    undoStack.value.push(lastHistorySnapshot);
+
+    if (undoStack.value.length > HISTORY_LIMIT) {
+      undoStack.value.shift();
+    }
+
+    redoStack.value = [];
+    lastHistorySnapshot = current;
+  }
+
+  function applyHistorySnapshot(json: string) {
+    const parsed = parseWorkflowFromJson(json);
+
+    if (!parsed.ok || !parsed.file) {
+      return false;
+    }
+
+    isTimeTraveling.value = true;
+    file.value = normalizeWorkflowFile(parsed.file);
+
+    if (selectedNodeId.value && !findWorkflowNodeLocation(workflowContent.value, selectedNodeId.value)) {
+      selectedNodeId.value = triggerNode.value?.id || workflowContent.value[0]?.id || '';
+      editingNodeId.value = selectedNodeId.value;
+    }
+
+    // The serialized-file watcher flushes before this nextTick callback, so the
+    // guard stays active while the restore propagates and no snapshot is recorded.
+    void nextTick(() => {
+      isTimeTraveling.value = false;
+    });
+
+    return true;
+  }
+
+  function undo() {
+    if (!undoStack.value.length) {
+      return false;
+    }
+
+    const previous = undoStack.value.pop();
+
+    if (typeof previous !== 'string') {
+      return false;
+    }
+
+    redoStack.value.push(lastHistorySnapshot);
+    lastHistorySnapshot = previous;
+
+    debugLogger.log('history:undo', {
+      undo_remaining: undoStack.value.length,
+      redo_available: redoStack.value.length,
+    });
+
+    return applyHistorySnapshot(previous);
+  }
+
+  function redo() {
+    if (!redoStack.value.length) {
+      return false;
+    }
+
+    const next = redoStack.value.pop();
+
+    if (typeof next !== 'string') {
+      return false;
+    }
+
+    undoStack.value.push(lastHistorySnapshot);
+    lastHistorySnapshot = next;
+
+    debugLogger.log('history:redo', {
+      undo_available: undoStack.value.length,
+      redo_remaining: redoStack.value.length,
+    });
+
+    return applyHistorySnapshot(next);
+  }
+
+  watch(
+    () => serializeWorkflowToJson(file.value),
+    () => {
+      if (isTimeTraveling.value) {
+        return;
+      }
+
+      if (historyDebounceTimer) {
+        clearTimeout(historyDebounceTimer);
+      }
+
+      // Debounce so a burst of changes (e.g. a node drag) collapses into one entry.
+      historyDebounceTimer = setTimeout(() => {
+        historyDebounceTimer = null;
+        commitHistorySnapshot();
+      }, 350);
+    }
+  );
+
   function syncSelectionFromFile() {
     const currentTrigger = triggerNode.value;
 
@@ -422,6 +550,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     errors.value = [];
     warnings.value = [];
     markBaseline();
+    resetHistory();
     void loadCanvasActionsFromServer(activeContext.value);
   }
 
@@ -646,6 +775,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     errors.value = [];
     warnings.value = [];
     markBaseline();
+    resetHistory();
     void loadCanvasActionsFromServer(activeContext.value);
 
     return file.value;
@@ -669,6 +799,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     loading.value.create = false;
     actionsLoaded.value = false;
     actionsCatalogContext.value = '';
+    resetHistory();
   }
 
   function loadWorkflowFile(value: ExportedWorkflowFile, nextPostId = 0) {
@@ -1403,6 +1534,8 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     errors,
     warnings,
     dirty,
+    canUndo,
+    canRedo,
     hasErrors,
     canContinue,
     workflowContent,
@@ -1451,6 +1584,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     saveSettings,
     saveWorkflow,
     saveWorkflowSnapshot,
+    undo,
+    redo,
+    resetHistory,
     resetWorkflowSession,
     getActionsForContext,
     getTriggersForContext,
