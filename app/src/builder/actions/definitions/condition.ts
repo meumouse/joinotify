@@ -46,6 +46,9 @@ function normalizeConditionData(data: Record<string, unknown>): Record<string, u
     condition_type: String(conditionContent.type || ''),
     field_id: String(conditionContent.field_id || ''),
     meta_key: String(conditionContent.meta_key || ''),
+    // `value` is the comparison value the runtime actually reads
+    // (condition_content.value); keep it as a flat key so it round-trips.
+    value: conditionContent.value ?? '',
     value_text: String(conditionContent.value_text || ''),
     type_text: String(conditionContent.type_text || ''),
     condition_content: conditionContent,

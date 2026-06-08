@@ -1,48 +1,117 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import BaseAlert from '../../components/base/BaseAlert.vue';
-import BaseCodeEditorField from '../../components/base/BaseCodeEditorField.vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
+import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
+import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { __, textDomain } from '../../../utils/i18n';
+
+interface CatalogCondition {
+  key: string;
+  title?: string;
+  description?: string;
+  operators?: string[];
+  value_type?: string;
+  requires?: string[];
+}
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
   availablePlaceholders: { type: Array, default: () => [] },
 });
 
-defineEmits(['update:modelValue', 'placeholder-selected']);
+const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
+const { update } = useActionSettingsUpdate(props, emit);
+const store = useWorkflowBuilderStore();
 
-const conditionOptions = [
-  { label: __('User role', textDomain), value: 'user_role' },
-  { label: __('Order status', textDomain), value: 'order_status' },
-  { label: __('Cart total', textDomain), value: 'cart_total' },
-  { label: __('Items in cart', textDomain), value: 'items_in_cart' },
-  { label: __('Field value', textDomain), value: 'field_value' },
-  { label: __('Meta value', textDomain), value: 'meta_value' },
-  { label: __('Post type', textDomain), value: 'post_type' },
-  { label: __('Post status', textDomain), value: 'post_status' },
+// Operators that compare against no value.
+const OPERATORS_WITHOUT_VALUE = ['empty', 'not_empty'];
+
+const model = computed(() => props.modelValue as Record<string, unknown>);
+
+// Conditions catalog exposed by the backend bootstrap (single source of truth).
+const catalog = computed(() => {
+  const raw = (store.bootstrap as Record<string, unknown> | undefined)?.conditions;
+  return raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+});
+
+const operatorLabels = computed<Record<string, string>>(() => {
+  const ops = catalog.value.operators;
+  return ops && typeof ops === 'object' ? (ops as Record<string, string>) : {};
+});
+
+// The workflow trigger decides which conditions are available.
+const triggerId = computed(() => String(store.triggerNode?.data?.trigger || ''));
+
+const triggerConditions = computed<CatalogCondition[]>(() => {
+  const triggers = catalog.value.triggers as Record<string, CatalogCondition[]> | undefined;
+  const list = triggers?.[triggerId.value];
+  return Array.isArray(list) ? list : [];
+});
+
+const conditionOptions = computed(() => [
+  { label: __('Select a condition', textDomain), value: '' },
+  ...triggerConditions.value.map((item) => ({ label: String(item.title || item.key), value: String(item.key) })),
+]);
+
+const selectedCondition = computed<CatalogCondition | null>(() =>
+  triggerConditions.value.find((item) => String(item.key) === String(model.value.condition || '')) || null,
+);
+
+const operatorOptions = computed(() => {
+  const ops = Array.isArray(selectedCondition.value?.operators) ? selectedCondition.value!.operators! : [];
+  return [
+    { label: __('Select an operator', textDomain), value: '' },
+    ...ops.map((op) => ({ label: operatorLabels.value[op] || op, value: op })),
+  ];
+});
+
+const valueType = computed(() => String(selectedCondition.value?.value_type || 'text'));
+const requires = computed<string[]>(() => (Array.isArray(selectedCondition.value?.requires) ? selectedCondition.value!.requires! : []));
+const requiresMetaKey = computed(() => requires.value.includes('meta_key'));
+const requiresFieldId = computed(() => requires.value.includes('field_id'));
+
+const currentOperator = computed(() => String(model.value.condition_type || ''));
+const showValueInput = computed(() => !!currentOperator.value && !OPERATORS_WITHOUT_VALUE.includes(currentOperator.value));
+
+const currentValue = computed(() => {
+  const content = model.value.condition_content && typeof model.value.condition_content === 'object'
+    ? (model.value.condition_content as Record<string, unknown>)
+    : {};
+  return String(model.value.value ?? content.value ?? '');
+});
+
+const booleanOptions = [
+  { label: __('Yes', textDomain), value: 'true' },
+  { label: __('No', textDomain), value: 'false' },
 ];
 
-const operatorOptions = [
-  { label: __('Is', textDomain), value: 'is' },
-  { label: __('Is not', textDomain), value: 'is_not' },
-  { label: __('Contains', textDomain), value: 'contains' },
-  { label: __('Does not contain', textDomain), value: 'not_contain' },
-  { label: __('Starts with', textDomain), value: 'start_with' },
-  { label: __('Ends with', textDomain), value: 'finish_with' },
-  { label: __('Greater than', textDomain), value: 'bigger_than' },
-  { label: __('Less than', textDomain), value: 'less_than' },
-  { label: __('Empty', textDomain), value: 'empty' },
-  { label: __('Not empty', textDomain), value: 'not_empty' },
-];
+const hasTrigger = computed(() => triggerId.value !== '');
+const hasConditions = computed(() => triggerConditions.value.length > 0);
+const isProductsValue = computed(() => valueType.value === 'products');
 
-function update(draft: Record<string, unknown>, key: string, value: unknown) {
-  return {
-    ...draft,
-    [key]: value,
-  };
+// Changing the condition family invalidates the chosen operator and value.
+function onConditionChange(value: unknown) {
+  emit('update:modelValue', {
+    ...model.value,
+    condition: value,
+    condition_type: '',
+    value: '',
+    value_text: '',
+  });
+}
+
+// Write the canonical comparison value (read by the runtime as
+// condition_content.value) and keep value_text in sync for legacy/display.
+function setValue(value: unknown) {
+  emit('update:modelValue', {
+    ...model.value,
+    value,
+    value_text: value,
+  });
 }
 </script>
 
@@ -54,57 +123,101 @@ function update(draft: Record<string, unknown>, key: string, value: unknown) {
       :message="__('This action creates true and false branches. Each branch can contain its own nested actions.', textDomain)"
     />
 
-    <FieldGroup :title="__('Condition rule', textDomain)" :description="__('Choose the condition family and operator.', textDomain)">
-      <BaseTextField
-        :model-value="String(modelValue.title || '')"
-        :label="__('Title', textDomain)"
-        :placeholder="__('Condition', textDomain)"
-        @update:model-value="$emit('update:modelValue', update(modelValue, 'title', $event))"
-      />
-      <BaseSelectField
-        :model-value="String(modelValue.condition || '')"
-        :options="conditionOptions"
-        :label="__('Condition type', textDomain)"
-        @update:model-value="$emit('update:modelValue', update(modelValue, 'condition', $event))"
-      />
-      <BaseSelectField
-        :model-value="String(modelValue.condition_type || '')"
-        :options="operatorOptions"
-        :label="__('Operator', textDomain)"
-        @update:model-value="$emit('update:modelValue', update(modelValue, 'condition_type', $event))"
-      />
-    </FieldGroup>
-
-    <FieldGroup :title="__('Rule data', textDomain)" :description="__('Additional values used by the condition engine.', textDomain)">
-      <div class="grid gap-4 sm:grid-cols-2">
-        <BaseTextField
-          :model-value="String(modelValue.field_id || '')"
-          :label="__('Field ID', textDomain)"
-          @update:model-value="$emit('update:modelValue', update(modelValue, 'field_id', $event))"
-        />
-        <BaseTextField
-          :model-value="String(modelValue.meta_key || '')"
-          :label="__('Meta key', textDomain)"
-          @update:model-value="$emit('update:modelValue', update(modelValue, 'meta_key', $event))"
-        />
-      </div>
-      <BaseCodeEditorField
-        :model-value="String(modelValue.value_text || '')"
-        :label="__('Value', textDomain)"
-        :rows="6"
-        @update:model-value="$emit('update:modelValue', update(modelValue, 'value_text', $event))"
-      />
-      <BaseTextField
-        :model-value="String(modelValue.type_text || '')"
-        :label="__('Type label', textDomain)"
-        @update:model-value="$emit('update:modelValue', update(modelValue, 'type_text', $event))"
-      />
-    </FieldGroup>
-
-    <PlaceholderList
-      v-if="Array.isArray(availablePlaceholders) && availablePlaceholders.length"
-      :placeholders="availablePlaceholders"
-      @select="$emit('placeholder-selected', $event)"
+    <BaseAlert
+      v-if="!hasTrigger"
+      tone="warning"
+      :title="__('Configure the trigger first', textDomain)"
+      :message="__('Choose and configure the workflow trigger before adding conditions.', textDomain)"
     />
+
+    <BaseAlert
+      v-else-if="!hasConditions"
+      tone="info"
+      :title="__('No conditions for this trigger', textDomain)"
+      :message="__('This trigger does not expose any conditions to evaluate.', textDomain)"
+    />
+
+    <template v-else>
+      <FieldGroup :title="__('Condition rule', textDomain)" :description="__('Only conditions and operators supported by the engine for this trigger are shown.', textDomain)">
+        <BaseTextField
+          :model-value="String(model.title || '')"
+          :label="__('Title', textDomain)"
+          :placeholder="__('Condition', textDomain)"
+          @update:model-value="update('title', $event)"
+        />
+        <BaseSelectField
+          :model-value="String(model.condition || '')"
+          :options="conditionOptions"
+          :label="__('Condition type', textDomain)"
+          @update:model-value="onConditionChange($event)"
+        />
+        <BaseSelectField
+          v-if="model.condition"
+          :model-value="currentOperator"
+          :options="operatorOptions"
+          :label="__('Operator', textDomain)"
+          @update:model-value="update('condition_type', $event)"
+        />
+        <p v-if="selectedCondition?.description" class="text-xs text-slate-500">
+          {{ selectedCondition.description }}
+        </p>
+      </FieldGroup>
+
+      <FieldGroup
+        v-if="model.condition && (requiresMetaKey || requiresFieldId || showValueInput)"
+        :title="__('Rule data', textDomain)"
+        :description="__('Values used by the condition engine.', textDomain)"
+      >
+        <BaseTextField
+          v-if="requiresMetaKey"
+          :model-value="String(model.meta_key || '')"
+          :label="__('Meta key', textDomain)"
+          @update:model-value="update('meta_key', $event)"
+        />
+        <BaseTextField
+          v-if="requiresFieldId"
+          :model-value="String(model.field_id || '')"
+          :label="__('Field ID', textDomain)"
+          @update:model-value="update('field_id', $event)"
+        />
+
+        <template v-if="showValueInput">
+          <BaseSelectField
+            v-if="valueType === 'boolean'"
+            :model-value="currentValue"
+            :options="booleanOptions"
+            :label="__('Value', textDomain)"
+            @update:model-value="setValue($event)"
+          />
+          <template v-else-if="isProductsValue">
+            <BaseAlert
+              tone="info"
+              :title="__('Products', textDomain)"
+              :message="__('Enter the product IDs to match, separated by commas.', textDomain)"
+            />
+            <BaseTextField
+              :model-value="currentValue"
+              :label="__('Product IDs', textDomain)"
+              :placeholder="__('e.g. 12, 34, 56', textDomain)"
+              @update:model-value="setValue($event)"
+            />
+          </template>
+          <BaseTextField
+            v-else
+            :model-value="currentValue"
+            :type="valueType === 'number' ? 'number' : 'text'"
+            :label="__('Value', textDomain)"
+            :placeholder="valueType === 'order_status' ? __('e.g. completed', textDomain) : ''"
+            @update:model-value="setValue($event)"
+          />
+        </template>
+      </FieldGroup>
+
+      <PlaceholderList
+        v-if="Array.isArray(availablePlaceholders) && availablePlaceholders.length"
+        :placeholders="availablePlaceholders"
+        @select="$emit('placeholder-selected', $event)"
+      />
+    </template>
   </div>
 </template>
