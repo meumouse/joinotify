@@ -168,6 +168,54 @@ class Schedule {
 
 
     /**
+     * Calculate the relative delay (in seconds from now) for a scheduled offset:
+     * advance the calendar by N period units from now, then anchor the execution
+     * to a specific time of day on the resulting date (e.g. "+1 day at 09:00").
+     *
+     * Returns a RELATIVE delay (seconds from now) so it is consumed correctly by
+     * Schedule::schedule_actions(), which fires at time() + delay.
+     *
+     * @since 2.0.0
+     * @param int $delay_value | Number of units to advance (e.g. 1 = +1 day)
+     * @param string $delay_period | Offset unit: 'day', 'week', 'month' or 'year'
+     * @param string $time_value | Target time of day in HH:MM (24h)
+     * @return int The delay in seconds from now (0 if the result is in the past)
+     */
+    public static function get_scheduled_delay_timestamp( $delay_value, $delay_period, $time_value ) {
+        $delay_value = max( 0, intval( $delay_value ) );
+
+        // only day-based offsets make sense with a fixed time of day; fall back to day
+        $units = array(
+            'day'   => 'day',
+            'week'  => 'week',
+            'month' => 'month',
+            'year'  => 'year',
+        );
+
+        $unit = $units[ $delay_period ] ?? 'day';
+
+        // normalize the time of day, default to midnight when missing/invalid
+        if ( ! preg_match( '/^\d{1,2}:\d{2}(:\d{2})?$/', (string) $time_value ) ) {
+            $time_value = '00:00';
+        }
+
+        $now = time();
+
+        // advance the calendar date by the requested offset
+        $base_date = strtotime( "+{$delay_value} {$unit}", $now );
+
+        // anchor to the requested time of day on that date
+        $target = $base_date ? strtotime( date( 'Y-m-d', $base_date ) . ' ' . $time_value ) : 0;
+
+        if ( ! $target ) {
+            return 0;
+        }
+
+        return max( 0, $target - $now );
+    }
+
+
+    /**
      * Update the coupon expiration date to the previous day after expiration
      *
      * @since 1.2.2

@@ -27,8 +27,9 @@ class Messages {
      */
     public static function build_workflow_action_description( $workflow_action ) {
         $message = '';
+        $action_slug = isset( $workflow_action['data']['action'] ) ? (string) $workflow_action['data']['action'] : '';
 
-        switch ( $workflow_action['data']['action'] ) {
+        switch ( $action_slug ) {
             case 'time_delay':
                 $message = self::build_time_delay_description( $workflow_action['data'] );
 
@@ -51,6 +52,22 @@ class Messages {
                 break;
             case 'snippet_php':
                 $message = self::build_snippet_php_description( $workflow_action['data'] );
+
+                break;
+            default:
+                /**
+                 * Filter the description rendered on the canvas for a custom (third-party) action.
+                 *
+                 * Built-in actions are handled by the cases above; only unknown action slugs reach
+                 * this filter, so third parties can describe their own actions without touching core.
+                 *
+                 * @since 1.4.7
+                 * @param string $message        Default description (empty string).
+                 * @param string $action_slug     Action slug (eg: 'my_custom_action').
+                 * @param array  $workflow_action Full workflow action item ({id,type,data,children}).
+                 * @return string HTML description (may include the plugin's placeholder pill markup).
+                 */
+                $message = apply_filters( 'Joinotify/Builder/Action_Description', $message, $action_slug, $workflow_action );
 
                 break;
         }
@@ -86,6 +103,19 @@ class Messages {
                     $message = sprintf( __( 'Esperar até %s - %s', 'joinotify' ), $date_value, $time_value );
                 } else {
                     $message = sprintf( __( 'Esperar até %s', 'joinotify' ), $date_value );
+                }
+            } elseif ( $data['delay_type'] === 'scheduled' ) {
+                $time_value = $data['delay_value'];
+                $time_unit = $data['delay_period'];
+                $scheduled_time = isset( $data['time_value'] ) ? $data['time_value'] : '';
+
+                // Format time unit: singular/plural
+                $formatted_time_unit = ( $time_value > 1 ) ? Helpers::format_time_unit( $time_unit, true ) : Helpers::format_time_unit( $time_unit, false );
+
+                if ( ! empty( $scheduled_time ) ) {
+                    $message = sprintf( __( 'Esperar %s %s e executar às %s', 'joinotify' ), $time_value, $formatted_time_unit, $scheduled_time );
+                } else {
+                    $message = sprintf( __( 'Esperar %s %s', 'joinotify' ), $time_value, $formatted_time_unit );
                 }
             }
         }

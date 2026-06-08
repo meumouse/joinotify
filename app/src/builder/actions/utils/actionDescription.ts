@@ -19,6 +19,19 @@ export function describeTimeDelayAction(data: Record<string, unknown>): string {
     ]) || __('Delay until a fixed date', textDomain);
   }
 
+  if (mode === 'scheduled') {
+    const amount = cleanText(data.delay_value || '');
+    const period = cleanText(data.delay_period || 'day');
+    const time = cleanText(data.time_value || '');
+    const offset = amount ? `${amount} ${period}` : period;
+
+    return joinSegments([
+      __('Delay', textDomain),
+      offset,
+      time ? `${__('at', textDomain)} ${time}` : '',
+    ]);
+  }
+
   const amount = cleanText(data.delay_value || '');
   const period = cleanText(data.delay_period || 'minute');
   return joinSegments([__('Delay', textDomain), amount ? `${amount} ${period}` : period]);

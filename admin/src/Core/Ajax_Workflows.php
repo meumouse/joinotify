@@ -976,6 +976,12 @@ class Ajax_Workflows {
                         (int) ( $d['delay_value'] ?? 0 ),
                         $d['delay_period'] ?? 'seconds'
                     );
+                } elseif ( $delay_type === 'scheduled' ) {
+                    $new_action['data']['delay_timestamp'] = Schedule::get_scheduled_delay_timestamp(
+                        (int) ( $d['delay_value'] ?? 0 ),
+                        $d['delay_period'] ?? 'day',
+                        $d['time_value'] ?? '00:00'
+                    );
                 } elseif ( $delay_type === 'date' && ! empty( $d['date_value'] ) ) {
                     $timestamp = strtotime( $d['date_value'] . ' ' . ( $d['time_value'] ?? '00:00' ) );
 

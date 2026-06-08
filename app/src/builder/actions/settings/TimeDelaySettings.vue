@@ -19,6 +19,7 @@ const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
 const typeOptions = [
   { label: __('Period', textDomain), value: 'period' },
   { label: __('Date', textDomain), value: 'date' },
+  { label: __('Scheduled', textDomain), value: 'scheduled' },
 ];
 
 const periodOptions = [
@@ -31,11 +32,37 @@ const periodOptions = [
   { label: __('Years', textDomain), value: 'year' },
 ];
 
+// Scheduled mode only supports day-based offsets anchored to a time of day.
+const scheduledPeriodOptions = [
+  { label: __('Days', textDomain), value: 'day' },
+  { label: __('Weeks', textDomain), value: 'week' },
+  { label: __('Months', textDomain), value: 'month' },
+  { label: __('Years', textDomain), value: 'year' },
+];
+
 function update(key: string, value: unknown) {
   emit('update:modelValue', {
     ...(props.modelValue as Record<string, unknown>),
     [key]: value,
   });
+}
+
+function changeDelayType(value: unknown) {
+  const next = {
+    ...(props.modelValue as Record<string, unknown>),
+    delay_type: value,
+  };
+
+  // Scheduled offsets are day-based; coerce sub-day period units to a sane default.
+  if (value === 'scheduled') {
+    const current = String(props.modelValue?.delay_period || '');
+
+    if (!scheduledPeriodOptions.some((option) => option.value === current)) {
+      next.delay_period = 'day';
+    }
+  }
+
+  emit('update:modelValue', next);
 }
 </script>
 
@@ -48,12 +75,12 @@ function update(key: string, value: unknown) {
       :message="__('This delay uses scheduled execution. The workflow environment does not report cron as available.', textDomain)"
     />
 
-    <FieldGroup :title="__('Delay mode', textDomain)" :description="__('Choose whether the workflow should wait for a period or a fixed date.', textDomain)">
+    <FieldGroup :title="__('Delay mode', textDomain)" :description="__('Choose whether the workflow should wait for a period, a fixed date, or a relative offset at a specific time.', textDomain)">
       <BaseSelectField
         :model-value="String(modelValue.delay_type || 'period')"
         :options="typeOptions"
         :label="__('Type', textDomain)"
-        @update:model-value="update('delay_type', $event)"
+        @update:model-value="changeDelayType($event)"
       />
     </FieldGroup>
 
@@ -69,6 +96,32 @@ function update(key: string, value: unknown) {
         :options="periodOptions"
         :label="__('Period', textDomain)"
         @update:model-value="update('delay_period', $event)"
+      />
+    </FieldGroup>
+
+    <FieldGroup
+      v-else-if="String(modelValue.delay_type) === 'scheduled'"
+      :title="__('Scheduled delay', textDomain)"
+      :description="__('Advance the date by the chosen offset, then run at the selected time of day (e.g. +1 day at 09:00).', textDomain)"
+    >
+      <div class="grid gap-4 sm:grid-cols-2">
+        <BaseNumberField
+          :model-value="modelValue.delay_value ?? ''"
+          :label="__('Amount', textDomain)"
+          placeholder="1"
+          @update:model-value="update('delay_value', $event)"
+        />
+        <BaseSelectField
+          :model-value="String(modelValue.delay_period || 'day')"
+          :options="scheduledPeriodOptions"
+          :label="__('Period', textDomain)"
+          @update:model-value="update('delay_period', $event)"
+        />
+      </div>
+      <BaseTimeField
+        :model-value="String(modelValue.time_value || '')"
+        :label="__('Time', textDomain)"
+        @update:model-value="update('time_value', $event)"
       />
     </FieldGroup>
 

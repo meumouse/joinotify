@@ -209,6 +209,7 @@ class Registry {
 				'context' => isset( $action['context'] ) && is_array( $action['context'] ) ? array_values( $action['context'] ) : array(),
 				'category' => ! empty( $action['category'] ) ? sanitize_key( (string) $action['category'] ) : 'general',
 				'default_data' => self::get_action_default_data( $action_slug, $action ),
+				'settings_schema' => self::get_action_settings_schema( $action_slug, $action ),
 			);
 		}
 
@@ -282,7 +283,7 @@ class Registry {
 				'is_expansible' => ! empty( $item['is_expansible'] ),
 				'context' => isset( $item['context'] ) && is_array( $item['context'] ) ? array_values( $item['context'] ) : array(),
 				'default_data' => self::get_action_default_data( $action, $item ),
-				'settings_schema' => self::get_action_settings_schema( $action ),
+				'settings_schema' => self::get_action_settings_schema( $action, $item ),
 			);
 
 			return $definition;
@@ -299,7 +300,7 @@ class Registry {
 	 * @param string $action Action slug.
 	 * @return array<int,array<string,mixed>>
 	 */
-	private static function get_action_settings_schema( $action ) {
+	private static function get_action_settings_schema( $action, $item = array() ) {
 		switch ( sanitize_key( (string) $action ) ) {
 			case 'time_delay':
 				return array(
@@ -311,6 +312,7 @@ class Registry {
 						'options' => array(
 							array( 'label' => esc_html__( 'Period', 'joinotify' ), 'value' => 'period' ),
 							array( 'label' => esc_html__( 'Date', 'joinotify' ), 'value' => 'date' ),
+							array( 'label' => esc_html__( 'Scheduled', 'joinotify' ), 'value' => 'scheduled' ),
 						),
 					),
 					array(
@@ -395,8 +397,25 @@ class Registry {
 				);
 
 			case 'stop_funnel':
-			default:
 				return array();
+
+			default:
+				$schema = isset( $item['settings_schema'] ) && is_array( $item['settings_schema'] ) ? $item['settings_schema'] : array();
+
+				/**
+				 * Filter the settings field schema for a custom (third-party) action.
+				 *
+				 * Built-in actions return their schema from the cases above; custom actions fall
+				 * through here, letting third parties drive their settings UI from PHP only — the
+				 * frontend renders these fields via DynamicActionSettingsRenderer.vue with no JS.
+				 *
+				 * @since 1.4.7
+				 * @param array  $schema Field schema array (each: {key,label,component,required,options,...}).
+				 * @param string $action Action slug.
+				 * @param array  $item   Raw action definition.
+				 * @return array
+				 */
+				return apply_filters( 'Joinotify/Builder/Action_Settings_Schema', $schema, sanitize_key( (string) $action ), $item );
 		}
 	}
 
@@ -591,13 +610,23 @@ class Registry {
 	 * @return array<string,string>
 	 */
 	private static function get_trigger_context_icons() {
-		return array(
+		/**
+		 * Filter the fallback icon slug used for each trigger context.
+		 *
+		 * Used only when a trigger (and its integration card) does not provide its own icon.
+		 * Third parties can map their custom context slug to an icon here.
+		 *
+		 * @since 1.4.7
+		 * @param array<string,string> $icons Map of context slug => icon slug/markup.
+		 * @return array<string,string>
+		 */
+		return apply_filters( 'Joinotify/Builder/Trigger_Context_Icons', array(
 			'wordpress' => 'wordpress',
 			'woocommerce' => 'shopping-cart',
 			'flexify_checkout' => 'credit-card',
 			'elementor' => 'elementor',
 			'wpforms' => 'wpforms',
-		);
+		) );
 	}
 
 
@@ -1315,6 +1344,12 @@ class Registry {
 
 		$delay_value = isset( $data['delay_value'] ) ? (int) $data['delay_value'] : 0;
 		$delay_period = isset( $data['delay_period'] ) ? sanitize_text_field( (string) $data['delay_period'] ) : 'seconds';
+
+		if ( 'scheduled' === $delay_type ) {
+			$time_value = isset( $data['time_value'] ) ? sanitize_text_field( (string) $data['time_value'] ) : '00:00';
+
+			return (int) Schedule::get_scheduled_delay_timestamp( $delay_value, $delay_period, $time_value );
+		}
 
 		return (int) Schedule::get_delay_timestamp( $delay_value, $delay_period );
 	}

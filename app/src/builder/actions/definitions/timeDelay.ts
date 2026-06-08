@@ -36,6 +36,7 @@ export const timeDelayDefinition: ActionDefinition = {
     { key: 'delay_type', label: __('Delay type', textDomain), component: 'select', required: true, options: [
       { label: __('Period', textDomain), value: 'period' },
       { label: __('Date', textDomain), value: 'date' },
+      { label: __('Scheduled', textDomain), value: 'scheduled' },
     ] },
     { key: 'delay_value', label: __('Amount', textDomain), component: 'number', componentProps: { min: 1 } },
     { key: 'delay_period', label: __('Period', textDomain), component: 'select', options: [
@@ -59,6 +60,14 @@ export const timeDelayDefinition: ActionDefinition = {
     if (delayType === 'date') {
       return normalizeValidationErrors(requiredFieldErrors(data, [
         { key: 'date_value', label: __('Date', textDomain) },
+        { key: 'time_value', label: __('Time', textDomain) },
+      ]));
+    }
+
+    if (delayType === 'scheduled') {
+      return normalizeValidationErrors(requiredFieldErrors(data, [
+        { key: 'delay_value', label: __('Amount', textDomain) },
+        { key: 'delay_period', label: __('Period', textDomain) },
         { key: 'time_value', label: __('Time', textDomain) },
       ]));
     }

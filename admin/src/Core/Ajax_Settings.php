@@ -478,6 +478,12 @@ class Ajax_Settings {
             $delay_period = $action_data['data']['delay_period'] ?? 'seconds';
 
             $action_data['data']['delay_timestamp'] = \MeuMouse\Joinotify\Cron\Schedule::get_delay_timestamp( $delay_value, $delay_period );
+        } elseif ( $delay_type === 'scheduled' ) {
+            $delay_value  = (int) ( $action_data['data']['delay_value'] ?? 0 );
+            $delay_period = $action_data['data']['delay_period'] ?? 'day';
+            $time_value   = $action_data['data']['time_value'] ?? '00:00';
+
+            $action_data['data']['delay_timestamp'] = \MeuMouse\Joinotify\Cron\Schedule::get_scheduled_delay_timestamp( $delay_value, $delay_period, $time_value );
         } elseif ( $delay_type === 'date' ) {
             $date_value = $action_data['data']['date_value'] ?? '';
             $time_value = $action_data['data']['time_value'] ?? '00:00';
