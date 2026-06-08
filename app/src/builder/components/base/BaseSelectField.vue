@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseSelect from '../../../components/base/BaseSelect.vue';
+import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
 
 defineProps({
   modelValue: { type: [String, Number, Boolean], default: '' },
@@ -15,7 +15,7 @@ defineEmits(['update:modelValue', 'change']);
 </script>
 
 <template>
-  <BaseSelect
+  <BaseListboxSelect
     :model-value="modelValue"
     :options="options"
     :id="id"

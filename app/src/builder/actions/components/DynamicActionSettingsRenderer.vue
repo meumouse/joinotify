@@ -2,9 +2,6 @@
 import { computed } from 'vue';
 import { useActionRegistry } from '../composables/useActionRegistry';
 import BaseAlert from '../../components/base/BaseAlert.vue';
-import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
-import BaseTextField from '../../components/base/BaseTextField.vue';
-import FieldGroup from '../../components/base/FieldGroup.vue';
 import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
@@ -14,7 +11,7 @@ const props = defineProps({
   cronAvailable: { type: Boolean, default: true },
 });
 
-const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
+defineEmits(['update:modelValue', 'placeholder-selected']);
 
 const registry = useActionRegistry();
 
@@ -63,13 +60,6 @@ const placeholderItems = computed(() => {
 
   return items;
 });
-
-function updateField(key: string, value: unknown) {
-  emit('update:modelValue', {
-    ...(props.modelValue as Record<string, unknown>),
-    [key]: value,
-  });
-}
 </script>
 
 <template>
@@ -82,22 +72,6 @@ function updateField(key: string, value: unknown) {
     />
 
     <template v-else>
-      <FieldGroup :title="__('Shared fields', textDomain)" :description="__('These fields are common to every action.', textDomain)">
-        <BaseTextField
-          :model-value="String(modelValue.title || '')"
-          :label="__('Title', textDomain)"
-          :placeholder="__('Action title', textDomain)"
-          @update:model-value="updateField('title', $event)"
-        />
-        <BaseTextareaField
-          :model-value="String(modelValue.description || '')"
-          :label="__('Description', textDomain)"
-          :placeholder="__('Action summary', textDomain)"
-          :rows="3"
-          @update:model-value="updateField('description', $event)"
-        />
-      </FieldGroup>
-
       <component
         :is="settingsComponent"
         v-if="settingsComponent"

@@ -80,6 +80,7 @@ const emit = defineEmits<{
   (e: 'add-action', payload?: { afterNodeId?: string; branchKey?: string }): void;
   (e: 'remove-node', nodeId: string): void;
   (e: 'select-node', nodeId: string): void;
+  (e: 'change-trigger', nodeId: string): void;
   (e: 'select-action', payload: DroppedActionPayload): void;
   (e: 'update-node', payload: NodeEditEvent): void;
 }>();
@@ -178,6 +179,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
       onEdit: handleNodeEdit,
       onRequestDelete: handleRemoveRequest,
       onSelect: handleNodeSelect,
+      onChangeTrigger: handleChangeTrigger,
       onAddAction: handleAddAction,
     };
   }
@@ -435,6 +437,14 @@ function handleNodeSelect(nodeId: string) {
   }
 
   emit('select-node', nodeId);
+}
+
+function handleChangeTrigger(nodeId: string) {
+  if (!nodeId) {
+    return;
+  }
+
+  emit('change-trigger', nodeId);
 }
 
 function handleAddAction(nodeId: string, branchKey?: 'action_true' | 'action_false') {

@@ -6,6 +6,7 @@ import SmileIcon from '@boxicons/vue/Smile';
 import UnderlineIcon from '@boxicons/vue/Underline';
 import EmojiPicker from 'vue3-emoji-picker';
 import 'vue3-emoji-picker/css';
+import VariablePicker from './VariablePicker.vue';
 import { sanitizePreviewHtml } from '../../utils/html';
 import { __, textDomain } from '../../utils/i18n';
 
@@ -18,6 +19,7 @@ const props = defineProps({
   placeholder: { type: String, default: '' },
   disabled: { type: Boolean, default: false },
   rows: { type: Number, default: 5 },
+  placeholders: { type: Array, default: () => [] },
 });
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
@@ -101,6 +103,19 @@ function handleEmojiSelect(emoji: { i?: string } | string) {
   }
 
   insertEmoji(String(emoji?.i || ''));
+}
+
+function insertVariable(placeholder: string) {
+  if (props.disabled || !placeholder) {
+    return;
+  }
+
+  const value = String(props.modelValue || '');
+  const { start, end } = selection.value;
+  const nextValue = `${value.slice(0, start)}${placeholder}${value.slice(end)}`;
+  const cursor = start + placeholder.length;
+
+  emitValue(nextValue, cursor, cursor);
 }
 
 function handleInput(event: Event) {
@@ -218,6 +233,13 @@ onBeforeUnmount(() => {
               />
             </div>
           </div>
+
+          <VariablePicker
+            v-if="Array.isArray(placeholders) && placeholders.length"
+            :placeholders="placeholders"
+            :disabled="disabled"
+            @select="insertVariable"
+          />
         </div>
 
         <textarea

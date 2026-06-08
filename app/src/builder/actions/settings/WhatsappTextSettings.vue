@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
-import BaseTextField from '../../components/base/BaseTextField.vue';
-import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
+import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
+import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
-import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { __, textDomain } from '../../../utils/i18n';
 
@@ -40,12 +39,6 @@ function update(key: string, value: unknown) {
     [key]: value,
   });
 }
-
-function insertPlaceholder(placeholder: string) {
-  const current = String((props.modelValue as Record<string, unknown>).message || '');
-  update('message', current ? `${current} ${placeholder}` : placeholder);
-  emit('placeholder-selected', placeholder);
-}
 </script>
 
 <template>
@@ -60,29 +53,24 @@ function insertPlaceholder(placeholder: string) {
     </FieldGroup>
 
     <FieldGroup :title="__('Recipient', textDomain)" :description="__('Phone number or a placeholder that resolves to one.', textDomain)">
-      <BaseTextField
+      <BaseTextFieldVariables
         :model-value="String(modelValue.receiver || '')"
         :label="__('Recipient', textDomain)"
         :placeholder="__('{{ wc_billing_phone }} or +5511999990000', textDomain)"
+        :placeholders="availablePlaceholders"
         @update:model-value="update('receiver', $event)"
       />
     </FieldGroup>
 
     <FieldGroup :title="__('Message', textDomain)">
-      <BaseTextareaField
+      <BaseRichTextArea
         :model-value="String(modelValue.message || '')"
         :label="__('Message', textDomain)"
         :rows="6"
         :placeholder="__('Type your message... Use {{ placeholders }} and *bold*', textDomain)"
+        :placeholders="availablePlaceholders"
         @update:model-value="update('message', $event)"
       />
     </FieldGroup>
-
-    <PlaceholderList
-      v-if="Array.isArray(availablePlaceholders) && availablePlaceholders.length"
-      :placeholders="availablePlaceholders"
-      :title="__('Available placeholders', textDomain)"
-      @select="insertPlaceholder"
-    />
   </div>
 </template>

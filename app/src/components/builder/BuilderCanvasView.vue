@@ -40,6 +40,7 @@ const props = defineProps<BuilderCanvasProps>();
 
 const emit = defineEmits([
   'select-node',
+  'change-trigger',
   'add-node',
   'duplicate-node',
   'remove-node',
@@ -143,6 +144,7 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
       @add-action="openActionsSidebar"
       @remove-node="$emit('remove-node', $event)"
       @select-node="$emit('select-node', $event)"
+      @change-trigger="$emit('change-trigger', $event)"
       @select-action="$emit('select-action', $event)"
       @update-node="$emit('update-node', $event)"
     />

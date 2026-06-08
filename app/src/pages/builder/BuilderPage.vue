@@ -42,6 +42,10 @@ const titleModalOpen = ref(false);
 const titleDraft = ref('');
 const titleSaving = ref(false);
 const triggerContinuing = ref(false);
+// True while the trigger-setup view was opened to change an existing flow's
+// trigger (via the node menu), so we update it in place instead of recreating
+// the workflow and losing the existing actions.
+const changingTrigger = ref(false);
 const testPhoneModalOpen = ref(false);
 const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
@@ -266,6 +270,25 @@ function goCanvas() {
   store.step = 'canvas';
 }
 
+function goChangeTrigger() {
+  debugLogger.log('trigger:change-requested', {
+    node_id: store.triggerNode?.id || '',
+  });
+  store.closeNodeSettings();
+  changingTrigger.value = true;
+  store.step = 'trigger';
+}
+
+function handleTriggerBack() {
+  if (changingTrigger.value) {
+    changingTrigger.value = false;
+    goCanvas();
+    return;
+  }
+
+  goStart();
+}
+
 function handleNodeUpdate(payload) {
   const isExplicitPayload = payload && typeof payload === 'object' && payload.nodeId && payload.patch;
   const nodeId = isExplicitPayload
@@ -473,6 +496,20 @@ async function startScratch() {
 
 async function continueFromTriggerSetup() {
   debugLogger.log('trigger:continue');
+
+  // Changing the trigger of an existing flow: the trigger node was already
+  // updated in place (selectTrigger / selectTriggerContext), so just return to
+  // the canvas without recreating the workflow — keeps the other actions.
+  if (changingTrigger.value) {
+    changingTrigger.value = false;
+    debugLogger.log('trigger:changed-in-place', {
+      node_id: store.triggerNode?.id || '',
+      trigger: store.selectedTrigger,
+    });
+    goCanvas();
+    return;
+  }
+
   triggerContinuing.value = true;
 
   try {
@@ -885,7 +922,7 @@ function clearBuilderUrl() {
         @update:context="store.selectTriggerContext"
         @select-trigger="store.selectTrigger"
         @continue="continueFromTriggerSetup"
-        @back="goStart"
+        @back="handleTriggerBack"
       />
     </div>
 
@@ -925,6 +962,7 @@ function clearBuilderUrl() {
         :ready-actions="canvasHasActions"
         :ready-senders="canvasHasSenders"
         @select-node="store.openNodeSettings"
+        @change-trigger="goChangeTrigger"
         @add-node="handleActionOpen"
         @duplicate-node="store.duplicateNode"
         @remove-node="openDeleteConfirm"

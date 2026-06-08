@@ -7,7 +7,7 @@
  * @since 1.4.7
  */
 import { computed, ref } from 'vue';
-import { Cog, DotsVerticalRounded, Trash } from '@boxicons/vue';
+import { Cog, DotsVerticalRounded, Repeat, Trash } from '@boxicons/vue';
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
@@ -31,6 +31,7 @@ export interface FlowNodeData {
   onRequestDelete?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
   onSelect?: (id: string) => void;
+  onChangeTrigger?: (id: string) => void;
   onAddAction?: (id: string, branchKey?: 'action_true' | 'action_false') => void;
 }
 
@@ -47,9 +48,10 @@ const isCondition = computed(() => props.data.type === 'condition');
 const isTrigger = computed(() => props.data.type === 'trigger');
 const isStopAutomation = computed(() => String(props.data.actionId || props.data.type || '').trim() === 'stop_funnel');
 const needsSetup = computed(() => Boolean(props.data.needsSetup));
-// Trigger nodes show the kebab menu only when the trigger exposes settings;
-// action nodes always show it (Configurações + Excluir).
-const showMenu = computed(() => !isTrigger.value || Boolean(props.data.hasSettings));
+// Every node has a menu: triggers expose "Change trigger" (+ Settings when the
+// trigger has settings); action nodes expose Settings + Delete.
+const showMenu = computed(() => true);
+const showSettings = computed(() => !isTrigger.value || Boolean(props.data.hasSettings));
 const menuRef = ref<HTMLElement | null>(null);
 const menuOpen = ref(false);
 
@@ -82,6 +84,11 @@ onClickOutside(menuRef, () => {
 
 function openSettings() {
   selectNode();
+  menuOpen.value = false;
+}
+
+function changeTrigger() {
+  props.data.onChangeTrigger?.(props.id);
   menuOpen.value = false;
 }
 
@@ -230,10 +237,20 @@ function normalizeBoxiconClass(value: string) {
 
         <div
           v-if="menuOpen"
-          class="absolute right-0 top-full z-50 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-xl"
+          class="absolute right-0 top-full z-50 mt-1 w-52 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-xl"
           @click.stop
         >
           <button
+            v-if="isTrigger"
+            type="button"
+            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+            @click="changeTrigger"
+          >
+            <Repeat :width="13" :height="13" />
+            {{ __('Change trigger', textDomain) }}
+          </button>
+          <button
+            v-if="showSettings"
             type="button"
             class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
             @click="openSettings"

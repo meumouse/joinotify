@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
 import BaseAlert from '../../builder/components/base/BaseAlert.vue';
-import BaseInput from '../base/BaseInput.vue';
-import BaseSelect from '../base/BaseSelect.vue';
-import BaseTextarea from '../base/BaseTextarea.vue';
 import SchemaFieldRenderer from './SchemaFieldRenderer.vue';
 import DynamicActionSettingsRenderer from '../../builder/actions/components/DynamicActionSettingsRenderer.vue';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
@@ -120,13 +117,6 @@ watch(
   { deep: true }
 );
 
-function updateField(key: string, value: unknown) {
-  draft.value = {
-    ...draft.value,
-    [key]: value,
-  };
-}
-
 function replaceDraft(value: Record<string, unknown>) {
   draft.value = cloneSerializable(value || {});
 }
@@ -141,15 +131,6 @@ async function copyPlaceholder(placeholder: string) {
   } catch {
     // Clipboard access can fail in restricted contexts. Ignore safely.
   }
-}
-
-function triggerContexts() {
-  return props.contexts || [];
-}
-
-function triggerOptions() {
-  const context = String(draft.value.context || props.node?.data.context || '');
-  return store.getTriggersForContext(context);
 }
 
 const summaryText = computed(() => {
@@ -182,59 +163,35 @@ const summaryText = computed(() => {
       :message="summaryText"
     />
 
-    <div v-if="isTrigger" class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-      <BaseInput
-        :model-value="String(draft.title || '')"
-        :label="__('Workflow name', textDomain)"
-        :placeholder="__('Workflow name', textDomain)"
-        @update:model-value="updateField('title', $event)"
-      />
+    <template v-if="isTrigger">
+      <div
+        v-if="triggerSettingsSchema.length"
+        class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+      >
+        <div>
+          <h4 class="text-sm font-semibold text-slate-900">{{ __('Trigger settings', textDomain) }}</h4>
+          <p class="mt-1 text-sm leading-6 text-slate-500">
+            {{ __('Required configuration for this trigger to run correctly.', textDomain) }}
+          </p>
+        </div>
 
-      <BaseSelect
-        :model-value="String(draft.context || '')"
-        :label="__('Integration', textDomain)"
-        :options="triggerContexts().map((item) => ({ label: item.label, value: item.id }))"
-        :placeholder="__('Select integration', textDomain)"
-        @update:model-value="updateField('context', $event)"
-      />
-
-      <BaseSelect
-        :model-value="String(draft.trigger || '')"
-        :label="__('Trigger', textDomain)"
-        :options="triggerOptions().map((item) => ({ label: item.label, value: item.id }))"
-        :placeholder="__('Select trigger', textDomain)"
-        @update:model-value="updateField('trigger', $event)"
-      />
-
-      <BaseTextarea
-        :model-value="String(draft.description || '')"
-        :label="__('Description', textDomain)"
-        :rows="4"
-        :placeholder="__('Internal summary', textDomain)"
-        @update:model-value="updateField('description', $event)"
-      />
-    </div>
-
-    <div
-      v-if="isTrigger && triggerSettingsSchema.length"
-      class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
-    >
-      <div>
-        <h4 class="text-sm font-semibold text-slate-900">{{ __('Trigger settings', textDomain) }}</h4>
-        <p class="mt-1 text-sm leading-6 text-slate-500">
-          {{ __('Required configuration for this trigger to run correctly.', textDomain) }}
-        </p>
+        <SchemaFieldRenderer
+          v-for="field in triggerSettingsSchema"
+          :key="field.key"
+          :field="field"
+          :model-value="draftSettings[field.key]"
+          :root-value="draftSettings"
+          @update:model-value="updateSettingField(field.key, $event)"
+        />
       </div>
 
-      <SchemaFieldRenderer
-        v-for="field in triggerSettingsSchema"
-        :key="field.key"
-        :field="field"
-        :model-value="draftSettings[field.key]"
-        :root-value="draftSettings"
-        @update:model-value="updateSettingField(field.key, $event)"
-      />
-    </div>
+      <div
+        v-else
+        class="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500"
+      >
+        {{ __('This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one.', textDomain) }}
+      </div>
+    </template>
 
     <DynamicActionSettingsRenderer
       v-else

@@ -2,9 +2,9 @@
 import { computed } from 'vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
-import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
+import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
+import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
-import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { ImagePlus } from '@boxicons/vue';
 import { __, textDomain } from '../../../utils/i18n';
@@ -51,12 +51,6 @@ function update(key: string, value: unknown) {
   });
 }
 
-function insertPlaceholder(placeholder: string) {
-  const current = String((props.modelValue as Record<string, unknown>).caption || '');
-  update('caption', current ? `${current} ${placeholder}` : placeholder);
-  emit('placeholder-selected', placeholder);
-}
-
 function openMediaLibrary() {
   const wpMedia = (window as Window & {
     wp?: {
@@ -99,10 +93,11 @@ function openMediaLibrary() {
     </FieldGroup>
 
     <FieldGroup :title="__('Recipient', textDomain)" :description="__('Phone number or a placeholder that resolves to one.', textDomain)">
-      <BaseTextField
+      <BaseTextFieldVariables
         :model-value="String(modelValue.receiver || '')"
         :label="__('Recipient', textDomain)"
         :placeholder="__('{{ wc_billing_phone }} or +5511999990000', textDomain)"
+        :placeholders="availablePlaceholders"
         @update:model-value="update('receiver', $event)"
       />
     </FieldGroup>
@@ -136,20 +131,14 @@ function openMediaLibrary() {
     </FieldGroup>
 
     <FieldGroup v-if="!isAudio" :title="__('Caption', textDomain)" :description="__('Optional text sent together with the media.', textDomain)">
-      <BaseTextareaField
+      <BaseRichTextArea
         :model-value="String(modelValue.caption || '')"
         :label="__('Caption', textDomain)"
         :rows="4"
         :placeholder="__('Media caption... Use {{ placeholders }}', textDomain)"
+        :placeholders="availablePlaceholders"
         @update:model-value="update('caption', $event)"
       />
     </FieldGroup>
-
-    <PlaceholderList
-      v-if="!isAudio && Array.isArray(availablePlaceholders) && availablePlaceholders.length"
-      :placeholders="availablePlaceholders"
-      :title="__('Available placeholders', textDomain)"
-      @select="insertPlaceholder"
-    />
   </div>
 </template>
