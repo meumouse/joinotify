@@ -17,10 +17,6 @@ const registry = useActionRegistry();
 
 const definition = computed(() => registry.get(props.action));
 const settingsComponent = computed(() => definition.value?.settingsComponent);
-const validationErrors = computed(() => {
-  const validate = definition.value?.validate;
-  return validate ? validate(props.modelValue || {}) : {};
-});
 const placeholderItems = computed(() => {
   const source = Array.isArray(props.availablePlaceholders) ? props.availablePlaceholders : [];
   const items: Array<{ placeholder: string; description?: string }> = [];
@@ -88,20 +84,6 @@ const placeholderItems = computed(() => {
         :title="__('Configuration component not available', textDomain)"
         :message="__('This action is registered, but the frontend component is not available yet. The workflow can still be saved safely.', textDomain)"
       />
-
-      <BaseAlert
-        v-if="Object.keys(validationErrors || {}).length"
-        tone="danger"
-        :title="__('Validation', textDomain)"
-      >
-        <p
-          v-for="(message, key) in validationErrors"
-          :key="key"
-          class="mt-1"
-        >
-          {{ message }}
-        </p>
-      </BaseAlert>
     </template>
   </div>
 </template>

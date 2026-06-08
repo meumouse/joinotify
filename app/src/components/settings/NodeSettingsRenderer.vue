@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
-import BaseAlert from '../../builder/components/base/BaseAlert.vue';
 import SchemaFieldRenderer from './SchemaFieldRenderer.vue';
 import DynamicActionSettingsRenderer from '../../builder/actions/components/DynamicActionSettingsRenderer.vue';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
@@ -70,22 +69,6 @@ const placeholderItems = computed(() =>
   )
 );
 
-const validationErrors = computed(() => {
-  const validator = actionDefinition.value?.validate;
-
-  if (!validator) {
-    return [];
-  }
-
-  const result = validator(draft.value);
-
-  if (Array.isArray(result)) {
-    return result;
-  }
-
-  return Object.values(result || {});
-});
-
 watch(
   () => props.node,
   async (node) => {
@@ -132,41 +115,14 @@ async function copyPlaceholder(placeholder: string) {
     // Clipboard access can fail in restricted contexts. Ignore safely.
   }
 }
-
-const summaryText = computed(() => {
-  if (!props.node) {
-    return '';
-  }
-
-  if (isTrigger.value) {
-    const title = String(draft.value.title || props.node.data.title || __('Trigger', textDomain));
-    const trigger = String(draft.value.trigger || props.node.data.trigger || '');
-    return trigger ? `${title} · ${trigger}` : title;
-  }
-
-  const preview = actionDefinition.value?.preview;
-
-  if (preview) {
-    return preview(draft.value);
-  }
-
-  return String(draft.value.description || '');
-});
 </script>
 
 <template>
   <div v-if="node" class="space-y-6">
-    <BaseAlert
-      v-if="summaryText"
-      tone="neutral"
-      :title="String(actionDefinition?.title || node.data?.title || (isTrigger ? __('Trigger', textDomain) : __('Action', textDomain)))"
-      :message="summaryText"
-    />
-
     <template v-if="isTrigger">
       <div
         v-if="triggerSettingsSchema.length"
-        class="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+        class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
       >
         <div>
           <h4 class="text-sm font-semibold text-slate-900">{{ __('Trigger settings', textDomain) }}</h4>
@@ -187,7 +143,7 @@ const summaryText = computed(() => {
 
       <div
         v-else
-        class="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500"
+        class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500"
       >
         {{ __('This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one.', textDomain) }}
       </div>
@@ -202,20 +158,9 @@ const summaryText = computed(() => {
       @update:model-value="replaceDraft"
       @placeholder-selected="copyPlaceholder"
     />
-
-    <div v-if="validationErrors.length" class="space-y-2 rounded-3xl border border-rose-200 bg-rose-50 p-5">
-      <h4 class="text-sm font-semibold text-rose-900">{{ __('Validation', textDomain) }}</h4>
-      <p
-        v-for="error in validationErrors"
-        :key="error"
-        class="text-sm leading-6 text-rose-700"
-      >
-        {{ error }}
-      </p>
-    </div>
   </div>
 
-  <div v-else class="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">
+  <div v-else class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">
     {{ __('Select a node to edit its settings.', textDomain) }}
   </div>
 </template>

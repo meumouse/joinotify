@@ -313,6 +313,37 @@ class Workflow_Processor {
         }
 
         /**
+         * Required configuration keys for each built-in action.
+         *
+         * If any of the listed keys is missing or empty in the action data, the action is
+         * silently skipped at runtime (a warning is logged) instead of dispatching with an
+         * incomplete configuration and risking a fatal error. Third parties can register
+         * requirements for their custom action slugs through this filter.
+         *
+         * @since 2.0.0
+         * @param array $required_config Map of action_slug => array of required data keys.
+         * @param array $action          Full action item ({id,type,data,children}).
+         * @param int   $post_id         Workflow post ID.
+         * @param array $event_data      Runtime trigger payload.
+         */
+        $required_config = apply_filters( 'Joinotify/Workflow_Processor/Action_Required_Config', array(
+            'send_whatsapp_message_text' => array( 'sender', 'receiver', 'message' ),
+            'send_whatsapp_message_media' => array( 'sender', 'receiver', 'media_type', 'media_url' ),
+            'create_coupon' => array( 'settings' ),
+        ), $action, $post_id, $event_data );
+
+        // skip the action when any required configuration is missing, avoiding runtime failures
+        if ( isset( $required_config[ $action_data['action'] ] ) ) {
+            foreach ( $required_config[ $action_data['action'] ] as $required_key ) {
+                if ( self::is_config_value_empty( $action_data[ $required_key ] ?? null ) ) {
+                    Logger::register_log( sprintf( 'Skipping action "%s": missing required configuration "%s".', $action_data['action'], $required_key ), 'WARNING' );
+
+                    return false;
+                }
+            }
+        }
+
+        /**
          * Filter for enqueue function callback for each action
          *
          * The map is keyed by action slug; each value is a callable returning bool. Third parties
@@ -346,8 +377,35 @@ class Workflow_Processor {
         // return action function processed
         return $actions[ $action_data['action'] ]();
     }
-    
-    
+
+
+    /**
+     * Check whether a configuration value should be treated as missing/empty.
+     *
+     * Handles the common runtime value shapes: null, empty/whitespace strings and
+     * empty arrays all count as "not configured".
+     *
+     * @since 2.0.0
+     * @param mixed $value | Configuration value to check
+     * @return bool True when the value is considered empty.
+     */
+    protected static function is_config_value_empty( $value ) {
+        if ( $value === null ) {
+            return true;
+        }
+
+        if ( is_string( $value ) ) {
+            return trim( $value ) === '';
+        }
+
+        if ( is_array( $value ) ) {
+            return empty( $value );
+        }
+
+        return false;
+    }
+
+
     /**
      * Processes a conditional action within a workflow
      *
