@@ -90,38 +90,40 @@ function insertVariable(placeholder: string) {
   <label class="flex flex-col gap-1.5">
     <span v-if="label" class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{{ label }}</span>
 
-    <div class="flex items-stretch gap-2">
-      <input
-        ref="inputRef"
-        :id="id"
-        :name="name"
-        :type="type"
-        :value="modelValue"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10 disabled:cursor-not-allowed disabled:bg-slate-50"
-        @input="handleInput"
-        @change="handleChange"
-        @focus="syncSelection"
-        @keyup="syncSelection"
-        @mouseup="syncSelection"
-        @select="syncSelection"
-      />
+    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition focus-within:border-primary-700 focus-within:ring-4 focus-within:ring-primary-700/10">
+      <div class="flex items-stretch">
+        <input
+          ref="inputRef"
+          :id="id"
+          :name="name"
+          :type="type"
+          :value="modelValue"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          class="w-full border-0 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-0 disabled:cursor-not-allowed disabled:bg-slate-50"
+          @input="handleInput"
+          @change="handleChange"
+          @focus="syncSelection"
+          @keyup="syncSelection"
+          @mouseup="syncSelection"
+          @select="syncSelection"
+        />
 
-      <VariablePicker
-        v-if="Array.isArray(placeholders) && placeholders.length"
-        :placeholders="placeholders"
-        :disabled="disabled"
-        button-class="inline-flex h-[46px] w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition hover:bg-slate-50 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-        @select="insertVariable"
-      />
-    </div>
+        <VariablePicker
+          v-if="Array.isArray(placeholders) && placeholders.length"
+          :placeholders="placeholders"
+          :disabled="disabled"
+          button-class="inline-flex w-11 shrink-0 items-center justify-center border-0 border-l border-slate-200 bg-white text-slate-500 transition hover:bg-slate-50 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+          @select="insertVariable"
+        />
+      </div>
 
-    <div v-if="hasVariables" class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-      <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-        {{ __('Preview', textDomain) }}
-      </p>
-      <RichTextPreview :value="String(modelValue ?? '')" :placeholders="placeholders" />
+      <div v-if="hasVariables" class="border-t border-slate-200 bg-slate-50 px-4 py-3">
+        <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+          {{ __('Preview', textDomain) }}
+        </p>
+        <RichTextPreview :value="String(modelValue ?? '')" :placeholders="placeholders" />
+      </div>
     </div>
   </label>
 </template>
