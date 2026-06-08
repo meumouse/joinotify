@@ -787,7 +787,7 @@ abstract class Integrations_Base {
                     <h5 class="<?php echo esc_attr( $args['title_class'] ); ?>">
                         <?php echo esc_html( $args['title'] ); ?>
                     </h5>
-                    <button id="<?php echo esc_attr( $close_id ); ?>" class="<?php echo esc_attr( $args['close_button_class'] ); ?>" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ); ?>"></button>
+                    <button id="<?php echo esc_attr( $close_id ); ?>" class="<?php echo esc_attr( $args['close_button_class'] ); ?>" aria-label="<?php esc_attr_e( 'Close', 'joinotify' ); ?>"></button>
                 </div>
 
                 <?php if ( ! empty( $args['description'] ) ) : ?>
@@ -864,7 +864,7 @@ abstract class Integrations_Base {
                                 <?php elseif ( ! array_key_exists( $item['slug'], get_plugins() ) ) : ?>
                                     <span class="fs-sm my-3"><?php esc_html_e( 'This trigger depends on a plugin', 'joinotify' ); ?></span>
 
-                                    <button class="btn btn-sm btn-outline-secondary install-required-plugin mb-2" data-download-url="<?php echo esc_attr( $item['download_url'] ) ?>" data-required-plugin="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Instalar plugin', 'joinotify' ) ?></button>
+                                    <button class="btn btn-sm btn-outline-secondary install-required-plugin mb-2" data-download-url="<?php echo esc_attr( $item['download_url'] ) ?>" data-required-plugin="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Install plugin', 'joinotify' ) ?></button>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>

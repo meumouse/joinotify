@@ -278,7 +278,7 @@ class License {
                     // Handle decryption failure
                     $decryption_error = new \stdClass();
                     $decryption_error->status = false;
-                    $decryption_error->msg = __( 'Ocorreu um erro na conexão com o servidor de verificação de licenças. Verifique o erro nos logs do WooCommerce.', 'joinotify' );
+                    $decryption_error->msg = __( 'An error occurred while connecting to the license verification server. Check the error in the WooCommerce logs.', 'joinotify' );
                     $decryption_error->data = NULL;
 
                     return $decryption_error;
@@ -301,7 +301,7 @@ class License {
                 // Handle JSON decoding error
                 $json_error = new \stdClass();
                 $json_error->status = false;
-                $json_error->msg = sprintf( __( 'Erro JSON: %s', 'joinotify' ), json_last_error_msg() );
+                $json_error->msg = sprintf( __( 'JSON Error: %s', 'joinotify' ), json_last_error_msg() );
                 $json_error->data = $resbk;
 
                 return $json_error;
@@ -312,7 +312,7 @@ class License {
 
         // Treat unknown response
         $unknown_response = new \stdClass();
-        $unknown_response->msg = __( 'Resposta desconhecida', 'joinotify' );
+        $unknown_response->msg = __( 'Unknown response', 'joinotify' );
         $unknown_response->status = false;
         $unknown_response->data = NULL;
 
@@ -337,7 +337,7 @@ class License {
         if ( false === $cached_response ) {
             $response = new \stdClass();
             $response->status = false;
-            $response->msg = __( 'Resposta vazia.', 'joinotify' );
+            $response->msg = __( 'Empty response.', 'joinotify' );
             $response->is_request_error = false;
             $final_data = wp_json_encode( $data );
             $url = rtrim( self::$server_host, '/' ) . "/" . ltrim( $relative_url, '/' );
@@ -374,7 +374,7 @@ class License {
     
                         // Check if it is a cURL 35 error
                         if ( strpos( $curl_error_message, 'cURL error 35' ) !== false ) {
-                            $error = __( 'Erro cURL 35: Problema de comunicação SSL/TLS.', 'joinotify' );
+                            $error = __( 'cURL Error 35: SSL/TLS communication issue.', 'joinotify' );
                         } else {
                             $response->msg = $curl_error_message;
                             $response->status = false;
@@ -394,7 +394,7 @@ class License {
                     }
                 }
             } elseif ( ! extension_loaded( 'curl' ) ) {
-                $response->msg = __( 'A extensão cURL está faltando.', 'joinotify' );
+                $response->msg = __( 'The cURL extension is missing.', 'joinotify' );
                 $response->status = false;
                 $response->data = NULL;
                 $response->is_request_error = true;
@@ -427,9 +427,9 @@ class License {
     
                     // Check if it is a cURL 35 error
                     if ( strpos( $error_message, 'cURL error 35' ) !== false ) {
-                        $error = __( 'Erro cURL 35: Problema de comunicação SSL/TLS.', 'joinotify' );
+                        $error = __( 'cURL Error 35: SSL/TLS communication issue.', 'joinotify' );
                     } else {
-                        $response->msg = sprintf( __( 'Erro cURL: %s', 'joinotify' ), $error_message );
+                        $response->msg = sprintf( __( 'cURL Error: %s', 'joinotify' ), $error_message );
                     }
                 }
     
@@ -752,7 +752,7 @@ class License {
                             }
                         }
                     } else {
-                        $error = __( 'Dados inválidos.', 'joinotify' );
+                        $error = __( 'Invalid data.', 'joinotify' );
                     }
                 } else {
                     $error = $response->msg;
@@ -883,7 +883,7 @@ class License {
         if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->license_title ) ) {
           return $object_query->license_title;
         } else {
-          return esc_html__( 'Não disponível', 'joinotify' );
+          return esc_html__( 'Not available', 'joinotify' );
         }
     }
 
@@ -899,7 +899,7 @@ class License {
 
         if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->expire_date ) ) {
             if ( $object_query->expire_date === 'No expiry' ) {
-                return esc_html__( 'Nunca expira', 'joinotify' );
+                return esc_html__( 'Never expires', 'joinotify' );
             } else {
                 if ( strtotime( $object_query->expire_date ) < time() ) {
                     $object_query->is_valid = false;
@@ -908,7 +908,7 @@ class License {
                     update_option( 'joinotify_license_status', 'invalid' );
                     delete_option('joinotify_license_response_object');
 
-                    return esc_html__( 'Licença expirada', 'joinotify' );
+                    return esc_html__( 'Expired license', 'joinotify' );
                 }
 
                 // get wordpress date format setting

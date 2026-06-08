@@ -98,7 +98,7 @@ if ( is_admin() ) {
                 <li>
                     <a href="<?php echo esc_url( add_query_arg( 'post_status', 'trash', $base_url ) ); ?>" 
                     class="<?php echo ( $current_status === 'trash' ) ? 'current' : ''; ?>">
-                        <?php esc_html_e('Lixeira', 'joinotify'); ?>
+                        <?php esc_html_e('Trash', 'joinotify'); ?>
                         <span class="count">(<?php echo number_format_i18n( $trash_count ); ?>)</span>
                     </a>
                 </li>
@@ -128,8 +128,8 @@ if ( is_admin() ) {
         public function get_columns() {
             $columns = array(
                 'cb' => '<input type="checkbox" />',
-                'name' => __('Nome', 'joinotify'),
-                'created_at'=> __('Criado', 'joinotify'),
+                'name' => __('Name', 'joinotify'),
+                'created_at'=> __('Created', 'joinotify'),
                 'status' => __('Status', 'joinotify'),
             );
 
@@ -164,12 +164,12 @@ if ( is_admin() ) {
                     'delete_permanently' => sprintf(
                         '<a href="?page=joinotify-workflows&action=delete_permanently&id=%s">%s</a>',
                         $item->ID,
-                        __('Excluir permanentemente', 'joinotify')
+                        __('Delete permanently', 'joinotify')
                     ),
                     'restore' => sprintf(
                         '<a href="?page=joinotify-workflows&action=restore&id=%s">%s</a>',
                         $item->ID,
-                        __('Restaurar', 'joinotify')
+                        __('Restore', 'joinotify')
                     ),
                 );
             } else {
@@ -177,12 +177,12 @@ if ( is_admin() ) {
                     'edit' => sprintf(
                         '<a href="admin.php?page=joinotify-workflows-builder&id=%s">%s</a>',
                         $item->ID,
-                        __('Editar', 'joinotify')
+                        __('Edit', 'joinotify')
                     ),
                     'delete' => sprintf(
                         '<a href="?page=joinotify-workflows&action=delete&id=%s">%s</a>',
                         $item->ID,
-                        __('Mover para lixeira', 'joinotify')
+                        __('Move to trash', 'joinotify')
                     ),
                 );
             }
@@ -191,7 +191,7 @@ if ( is_admin() ) {
             $status_display = '';
 
             if ( $item->post_status === 'draft' ) {
-                $status_display = '<span class="post-state"> — ' . esc_html__( 'Rascunho', 'joinotify' ) . '</span>';
+                $status_display = '<span class="post-state"> — ' . esc_html__( 'Draft', 'joinotify' ) . '</span>';
             }
         
             return sprintf(
@@ -241,12 +241,12 @@ if ( is_admin() ) {
 
             if ( $post_status === 'trash' ) {
                 $actions = array(
-                    'delete_permanently' => __( 'Excluir permanentemente', 'joinotify' ),
-                    'restore' => __( 'Restaurar', 'joinotify' ),
+                    'delete_permanently' => __( 'Delete permanently', 'joinotify' ),
+                    'restore' => __( 'Restore', 'joinotify' ),
                 );
             } else {
                 $actions = array(
-                    'trash' => __( 'Mover para lixeira', 'joinotify' ),
+                    'trash' => __( 'Move to trash', 'joinotify' ),
                     'publish' => __( 'Marcar como ativo', 'joinotify' ),
                     'draft' => __( 'Marcar como inativo', 'joinotify' ),
                 );

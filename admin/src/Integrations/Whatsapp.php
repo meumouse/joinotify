@@ -141,25 +141,25 @@ class Whatsapp extends Integrations_Base {
         // display toast tip for customize WhatsApp texts with variables
         if ( empty( $settings ) && get_user_meta( get_current_user_id(), 'joinotify_dismiss_placeholders_tip_user_meta', true ) !== 'hidden' ) : ?>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <?php echo __( '<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados, ou riscados com variáveis do WhatsApp. Veja mais detalhes na <a href="https://ajuda.meumouse.com/docs/joinotify/placeholders" class="alert-link" target="_blank">documentação do Joinotify</a>. <a id="joinotify_dismiss_placeholders_tip" class="alert-link mt-4 d-block" data-bs-dismiss="alert" href="#">Não mostrar novamente</a>', 'joinotify' ); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<?php esc_attr_e( 'Fechar', 'joinotify' ) ?>"></button>
+                <?php echo __( '<strong>Tip: </strong> You can make text bold, underlined, or strikethrough using WhatsApp variables. See more details in the <a href="https://ajuda.meumouse.com/docs/joinotify/placeholders" class="alert-link" target="_blank">Joinotify documentation</a>. <a id="joinotify_dismiss_placeholders_tip" class="alert-link mt-4 d-block" data-bs-dismiss="alert" href="#">Do not show again</a>', 'joinotify' ); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<?php esc_attr_e( 'Close', 'joinotify' ) ?>"></button>
             </div>
         <?php endif; ?>
 
         <div class="preview-whatsapp-message-sender <?php echo ( ! empty( $message ) ) ? 'active' : ''; ?>"><?php echo nl2br( $message ) ?></div>
 
         <div class="mb-4">
-            <label class="form-label" for="get-whatsapp-phone-sender"><?php esc_html_e( 'Remetente: *', 'joinotify' ); ?></label>
+            <label class="form-label" for="get-whatsapp-phone-sender"><?php esc_html_e( 'Sender: *', 'joinotify' ); ?></label>
             
             <select class="form-select get-whatsapp-phone-sender required-setting">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
-                    <option value="<?php esc_attr_e( $phone ) ?>" <?php selected( $sender, $phone, true ) ?> class="get-sender-number"><?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ) ?></option>
+                    <option value="<?php echo esc_attr( $phone ) ?>" <?php selected( $sender, $phone, true ) ?> class="get-sender-number"><?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
 
         <div class="mb-4">
-            <label class="form-label" for="get-whatsapp-receiver"><?php esc_html_e( 'Destinatário: *', 'joinotify' ); ?></label>
+            <label class="form-label" for="get-whatsapp-receiver"><?php esc_html_e( 'Recipient: *', 'joinotify' ); ?></label>
 
             <input type="text" class="form-control get-whatsapp-receiver required-setting" value="<?php echo $receiver ?>" placeholder="<?php esc_attr_e( '5541987111527', 'joinotify' ) ?>"/>
         </div>
@@ -199,47 +199,47 @@ class Whatsapp extends Integrations_Base {
         <div class="preview-whatsapp-message-sender media <?php echo $media_type ?> <?php echo ( ! empty( $media_url ) ) ? 'active' : ''; ?>"><?php echo Messages::build_whatsapp_media_description( $settings ) ?></div>
 
         <div class="mb-4">
-            <label class="form-label" for="get-whatsapp-phone-sender"><?php esc_html_e( 'Remetente: *', 'joinotify' ); ?></label>
+            <label class="form-label" for="get-whatsapp-phone-sender"><?php esc_html_e( 'Sender: *', 'joinotify' ); ?></label>
 
             <select class="form-select get-whatsapp-phone-sender required-setting">
                 <?php foreach ( get_option('joinotify_get_phones_senders') as $phone ) : ?>
-                    <option value="<?php esc_attr_e( $phone ) ?>" <?php selected( $sender, $phone ) ?> class="get-sender-number"><?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ) ?></option>
+                    <option value="<?php echo esc_attr( $phone ) ?>" <?php selected( $sender, $phone ) ?> class="get-sender-number"><?php echo esc_html( Helpers::validate_and_format_phone( $phone ) ) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
 
         <div class="mb-4">
-            <label class="form-label" for="get-whatsapp-receiver"><?php esc_html_e( 'Destinatário: *', 'joinotify' ); ?></label>
+            <label class="form-label" for="get-whatsapp-receiver"><?php esc_html_e( 'Recipient: *', 'joinotify' ); ?></label>
 
             <input type="text" class="form-control get-whatsapp-receiver required-setting" value="<?php echo $receiver ?>" placeholder="<?php esc_attr_e( '5541987111527', 'joinotify' ) ?>"/>
         </div>
 
         <div class="mb-4">
-            <label class="form-label" for="get-whatsapp-media-type"><?php esc_html_e( 'Tipo de mídia: *', 'joinotify' ) ?></label>
+            <label class="form-label" for="get-whatsapp-media-type"><?php esc_html_e( 'Media type: *', 'joinotify' ) ?></label>
 
             <select class="form-select get-whatsapp-media-type required-setting">
                 <?php foreach ( Media_Types::get_media_types() as $type => $value ) : ?>
-                    <option value="<?php esc_attr_e( $type ) ?>" <?php selected( $media_type, $type, true ) ?>><?php esc_html_e( $value ) ?></option>
+                    <option value="<?php echo esc_attr( $type ) ?>" <?php selected( $media_type, $type, true ) ?>><?php echo esc_html( $value ) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
 
         <div class="require-media-type-image mb-4">
-            <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Adicionar mídia: *', 'joinotify' ) ?></label>
+            <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Add media: *', 'joinotify' ) ?></label>
             
             <div class="input-group">
                 <button id="joinotify_set_url_media" class="set-media-url btn btn-icon btn-outline-secondary icon-translucent">
                     <svg class="icon icon-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 5h13v7h2V5c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h8v-2H4V5z"></path><path d="m8 11-3 4h11l-4-6-3 4z"></path><path d="M19 14h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path></svg>
                 </button>
 
-                <input type="text" class="form-control get-media-url get-whatsapp-media-url required-setting" value="<?php echo $media_url ?>" placeholder="<?php esc_attr_e( 'URL da mídia', 'joinotify' ) ?>"/>
+                <input type="text" class="form-control get-media-url get-whatsapp-media-url required-setting" value="<?php echo $media_url ?>" placeholder="<?php esc_attr_e( 'Media URL', 'joinotify' ) ?>"/>
             </div>
         </div>
 
         <div class="require-media-type-image mb-4">
-            <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Legenda:', 'joinotify' ) ?></label>
+            <label class="form-label" for="get-whatsapp-media-url"><?php esc_html_e( 'Caption:', 'joinotify' ) ?></label>
             
-            <textarea type="text" class="form-control add-emoji-picker set-whatsapp-message-caption" placeholder="<?php esc_attr_e( 'Legenda da mídia', 'joinotify' ) ?>" style="height: <?php echo $textarea_height; ?>px;"><?php echo $caption ?></textarea>
+            <textarea type="text" class="form-control add-emoji-picker set-whatsapp-message-caption" placeholder="<?php esc_attr_e( 'Media caption', 'joinotify' ) ?>" style="height: <?php echo $textarea_height; ?>px;"><?php echo $caption ?></textarea>
         </div>
 
         <?php return ob_get_clean();

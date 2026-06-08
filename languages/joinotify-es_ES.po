@@ -9,20 +9,19 @@ msgstr ""
 "Language: es_ES\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.12; wp-6.7\n"
-"X-Domain: joinotify"
+"X-Domain: joinotify\n"
+
+#: inc/Integrations/Woocommerce.php:254
+msgid "12345"
+msgstr "12345"
 
 #: inc/Builder/Components.php:1258
 msgid "$object->item"
 msgstr "$object->item"
-
-#: inc/Integrations/Flexify_Checkout.php:235
-#, php-format
-msgid "%s minutos"
-msgstr "%s minutos"
 
 #: inc/Integrations/Woocommerce.php:759
 #, php-format
@@ -42,23 +41,6 @@ msgstr "+55 11 91234-5678"
 msgid "+55 41 91234-5678"
 msgstr "+55 41 91234-5678"
 
-#: inc/Integrations/Woocommerce.php:254
-msgid "12345"
-msgstr "12345"
-
-#: inc/Integrations/Woocommerce.php:294
-msgid "1x - Camiseta de algodão masculina (Produto exemplo)"
-msgstr "1x - Camiseta de algodón masculina (Producto de ejemplo)"
-
-#: inc/Integrations/Woocommerce.php:294
-msgid "1x - Óculos de sol com proteção UV (Produto exemplo)"
-msgstr "1x - Gafas de sol con protección UV (Producto de ejemplo)"
-
-#: inc/Integrations/Flexify_Checkout.php:236
-#: inc/Integrations/Flexify_Checkout.php:244
-msgid "30 minutos"
-msgstr "30 minutos"
-
 #: inc/Integrations/Flexify_Checkout.php:299
 msgid "41912345678"
 msgstr "41912345678"
@@ -67,138 +49,6 @@ msgstr "41912345678"
 #: inc/Views/Settings/Tabs/Phones.php:18
 msgid "5541987111527"
 msgstr "5541987111527"
-
-#: inc/Builder/Messages.php:134
-#, php-format
-msgid "<span class=\"builder-placeholder\">%s</span> não é vazio"
-msgstr "<span class=\"builder-placeholder\">%s</span> no está vacío"
-
-#: inc/Builder/Messages.php:132
-#, php-format
-msgid "<span class=\"builder-placeholder\">%s</span> é vazio"
-msgstr "<span class=\"builder-placeholder\">%s</span> está vacío"
-
-#: inc/Builder/Components.php:1107
-msgid ""
-"<strong>Atenção!</strong> O uso incorreto de Snippets PHP pode causar erros "
-"no site."
-msgstr ""
-"<strong>¡Atención!</strong> El uso incorrecto de Snippets PHP puede causar "
-"errores en el sitio."
-
-#: inc/Integrations/Whatsapp.php:120
-msgid ""
-"<strong>Dica: </strong> Você pode deixar textos em negrito, sublinhados, ou "
-"riscados com variáveis do WhatsApp. Veja mais detalhes na <a href=\"https:"
-"//ajuda.meumouse.com/docs/joinotify/placeholders\" class=\"alert-link\" "
-"target=\"_blank\">documentação do Joinotify</a>. <a "
-"id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" "
-"data-bs-dismiss=\"alert\" href=\"#\">Não mostrar novamente</a>"
-msgstr ""
-"<strong>Consejo: </strong> Puedes dejar textos en negrita, subrayados o "
-"tachados con variables de WhatsApp. Consulta más detalles en la <a "
-"href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" "
-"class=\"alert-link\" target=\"_blank\">documentación de Joinotify</a>. <a "
-"id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" "
-"data-bs-dismiss=\"alert\" href=\"#\">No mostrar de nuevo</a>"
-
-#: joinotify.php:171
-msgid ""
-"<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o "
-"suporte da sua hospedagem para realizar a atualização."
-msgstr ""
-"<strong>Joinotify</strong> requiere la versión de PHP 7.4 o superior. "
-"Contacta con el soporte de tu alojamiento para realizar la actualización."
-
-#: inc/Cron/Routines.php:86
-msgid "A cada 6 horas"
-msgstr "Cada 6 horas"
-
-#: inc/API/License.php:387
-msgid "A extensão cURL está faltando."
-msgstr "Falta la extensión cURL."
-
-#: inc/Builder/Components.php:1085
-msgid ""
-"A função WP-CRON está desabilitada neste site. Ative-o para usar a ação "
-"Tempo de espera."
-msgstr ""
-"La función WP-CRON está deshabilitada en este sitio. Actívala para usar la "
-"acción Tiempo de espera."
-
-#: inc/Core/Updater.php:242
-msgid "A versão do plugin <strong>Joinotify</strong> é a mais recente."
-msgstr "La versión del plugin <strong>Joinotify</strong> es la más reciente."
-
-#: inc/Views/Settings/Tabs/About.php:105
-msgid "A versão mínima exigida do PHP é 7.2"
-msgstr "La versión mínima requerida de PHP es 7.2"
-
-#: inc/Integrations/Flexify_Checkout.php:135
-msgid "Abandono do carrinho"
-msgstr "Abandono del carrito"
-
-#: inc/Integrations/Flexify_Checkout.php:155
-msgid "Abandono do pedido"
-msgstr "Abandono del pedido"
-
-#: inc/Admin/Admin.php:228
-msgctxt "add new on admin bar"
-msgid "Fluxo"
-msgstr "Flujo"
-
-#: inc/Builder/Components.php:578 inc/Builder/Components.php:601
-#: inc/Builder/Components.php:1186
-msgid "Adicionar ação"
-msgstr "Añadir acción"
-
-#: inc/Integrations/Elementor_Forms.php:224
-msgid "Adicionar mídia"
-msgstr "Añadir medio"
-
-#: inc/Integrations/Whatsapp.php:197
-msgid "Adicionar mídia: *"
-msgstr "Añadir medio: *"
-
-#. parent page slug
-#. page title
-#: inc/Admin/Admin.php:73 inc/Admin/Admin.php:74 inc/Admin/Admin.php:165
-#: inc/Admin/Admin.php:230
-msgid "Adicionar novo fluxo"
-msgstr "Añadir nuevo flujo"
-
-#: inc/Views/Settings/Tabs/Phones.php:35
-msgid "Adicionar novo remetente para WhatsApp"
-msgstr "Añadir nuevo remitente para WhatsApp"
-
-#: inc/Views/Settings/Tabs/Phones.php:30
-msgid "Adicionar novo telefone"
-msgstr "Añadir nuevo teléfono"
-
-#: inc/Views/Builder/Actions.php:10
-msgid "Adicionar uma ação"
-msgstr "Añadir una acción"
-
-#: inc/Integrations/Elementor_Forms.php:165
-msgid ""
-"Adicione seu texto à ser enviado ao usuário do WhatsApp. Adicione variáveis "
-"de texto para substituir informações. Use {{ field_id=[FIELD_ID] }} "
-"substituindo FIELD_ID pelo ID do campo correspondente para recuperar a "
-"informação de um campo."
-msgstr ""
-"Añade tu texto para enviar al usuario de WhatsApp. Añade variables de texto "
-"para reemplazar información. Usa {{ field_id=[FIELD_ID] }} reemplazando "
-"FIELD_ID con el ID del campo correspondiente para recuperar la información "
-"de un campo."
-
-#: inc/Builder/Actions.php:69
-msgid "Adicione uma função, conjunto de ações e ou filtros em PHP."
-msgstr "Añade una función, conjunto de acciones y/o filtros en PHP."
-
-#: inc/Admin/Admin.php:227
-msgctxt "admin menu"
-msgid "Fluxos"
-msgstr "Flujos"
 
 #: inc/Validations/Country_Codes.php:66
 msgid "Afghanistan"
@@ -220,30 +70,6 @@ msgstr "Andorra"
 msgid "Angola"
 msgstr "Angola"
 
-#: inc/Core/Assets.php:191
-msgid "Animais e Natureza"
-msgstr "Animales y Naturaleza"
-
-#: inc/Core/Helpers.php:41
-msgid "ano"
-msgstr "año"
-
-#: inc/Builder/Components.php:312
-msgid "Ano (s)"
-msgstr "Año(s)"
-
-#: inc/Core/Helpers.php:41
-msgid "anos"
-msgstr "años"
-
-#: inc/Views/Settings/Tabs/About.php:323
-msgid ""
-"Ao redefinir as configurações do plugin, todas opções serão removidas, "
-"voltando ao estado original. Sua licença não será removida."
-msgstr ""
-"Al restablecer la configuración del plugin, todas las opciones serán "
-"eliminadas, volviendo al estado original. Tu licencia no será eliminada."
-
 #: inc/Validations/Country_Codes.php:47
 msgid "Argentina"
 msgstr "Argentina"
@@ -252,116 +78,9 @@ msgstr "Argentina"
 msgid "Armenia"
 msgstr "Armenia"
 
-#: inc/Views/Builder/Choose_Template.php:93
-msgid "Arraste e solte o arquivo .json aqui"
-msgstr "Arrastra y suelta el archivo .json aquí"
-
-#: inc/Views/License.php:90
-msgid "Arraste e solte o arquivo .key aqui"
-msgstr "Arrastra y suelta el archivo .key aquí"
-
 #: inc/Validations/Country_Codes.php:124
 msgid "Aruba"
 msgstr "Aruba"
-
-#: inc/Core/Assets.php:75 inc/Core/Assets.php:201
-msgid "As alterações não serão salvas."
-msgstr "Los cambios no se guardarán."
-
-#: inc/Integrations/Woo_Subscriptions.php:98
-msgid "Assinatura tem status alterado para cancelado"
-msgstr "La suscripción tiene el estado cambiado a cancelado"
-
-#: inc/Integrations/Woo_Subscriptions.php:74
-msgid "Assinatura é ativada"
-msgstr "La suscripción está activada"
-
-#: inc/Views/License.php:49
-#, php-format
-msgid "Assinatura: Clube M - %s"
-msgstr "Suscripción: Club M - %s"
-
-#: inc/Views/Settings/Tabs/About.php:320
-msgid "Atenção! Você realmente deseja redefinir as configurações?"
-msgstr "¡Atención! ¿Realmente deseas restablecer la configuración?"
-
-#: inc/Builder/Components.php:831
-msgid "Ativa"
-msgstr "Activa"
-
-#: inc/Views/Settings/Tabs/About.php:49
-msgid "Ativar atualizações automáticas"
-msgstr "Activar actualizaciones automáticas"
-
-#: inc/Integrations/Woocommerce.php:475
-msgid "Ativar ação Cupom de desconto"
-msgstr "Activar acción Cupón de descuento"
-
-#: inc/Views/License.php:122
-msgid "Ativar licença"
-msgstr "Activar licencia"
-
-#: inc/Views/Settings/Tabs/About.php:13
-msgid "Ativar modo depuração"
-msgstr "Activar modo de depuración"
-
-#: inc/Integrations/Integrations_Base.php:81
-msgid "Ativar plugin"
-msgstr "Activar plugin"
-
-#: inc/Views/Settings/Tabs/General.php:34
-msgid "Ativar Proxy API"
-msgstr "Activar Proxy API"
-
-#: inc/Integrations/Woocommerce.php:476
-msgid ""
-"Ative essa opção para adicionar a ação Cupom de desconto em fluxos do "
-"WooCommerce."
-msgstr ""
-"Activa esta opción para añadir la acción Cupón de descuento en flujos de "
-"WooCommerce."
-
-#: inc/Views/Settings/Tabs/General.php:35
-msgid ""
-"Ative essa opção para ativar endpoints neste site para processar requisições "
-"de API do Joinotify."
-msgstr ""
-"Activa esta opción para habilitar endpoints en este sitio para procesar "
-"solicitudes de API de Joinotify."
-
-#: inc/Views/Settings/Tabs/About.php:14
-msgid ""
-"Ative essa opção para ativar o modo depuração para verificar mensagens de "
-"erros e informações relevantes."
-msgstr ""
-"Activa esta opción para habilitar el modo de depuración para verificar "
-"mensajes de error e información relevante."
-
-#: inc/Views/Settings/Tabs/General.php:80
-msgid ""
-"Ative essa opção para enviar uma notificação ao remetente quando a conexão "
-"não for estabelecida."
-msgstr ""
-"Habilite esta opción para enviar una notificación al remitente cuando no se "
-"establece la conexión."
-
-#: inc/Integrations/Woocommerce.php:498
-msgid ""
-"Ative essa opção para que ações já previamente processadas sejam ignoradas "
-"quando o mesmo acionamento ocorrer. Esta opções é útil quando ações "
-"agendadas estão sendo disparadas novamente."
-msgstr ""
-"Activa esta opción para que las acciones ya procesadas previamente sean "
-"ignoradas cuando ocurra el mismo disparador. Esta opción es útil cuando las "
-"acciones programadas se están disparando nuevamente."
-
-#: inc/Views/Settings/Tabs/About.php:50
-msgid ""
-"Ative essa opção para que o plugin Joinotify seja atualizado automaticamente "
-"sempre que possível."
-msgstr ""
-"Activa esta opción para que el plugin Joinotify se actualice automáticamente "
-"siempre que sea posible."
 
 #: inc/Views/Settings/Tabs/About.php:62
 msgid ""
@@ -369,34 +88,9 @@ msgid ""
 "atualização disponível."
 msgstr ""
 
-#: inc/Core/Assets.php:193
-msgid "Atividades"
-msgstr "Actividades"
-
-#: inc/Core/Assets.php:176 inc/Views/Settings/Tabs/About.php:87
-msgid "Ativo"
-msgstr "Activo"
-
 #: inc/Core/Workflows_Table.php:56
 msgid "Ativos"
 msgstr ""
-
-#. Description of the plugin
-msgid ""
-"Aumente a satisfação do seu cliente automatizando o envio de mensagens via "
-"WhatsApp com o Joinotify."
-msgstr ""
-"Aumente la satisfacción de sus clientes automatizando el envío de mensajes "
-"vía WhatsApp con Joinotify."
-
-#: inc/Views/License.php:22 inc/Views/Settings.php:23
-msgid ""
-"Aumente a satisfação do seu cliente automatizando o envio de mensagens via "
-"WhatsApp com o Joinotify. Se precisar de ajuda para configurar, acesse nossa"
-msgstr ""
-"Aumenta la satisfacción de tu cliente automatizando el envío de mensajes a "
-"través de WhatsApp con Joinotify. Si necesitas ayuda para configurar, visita "
-"nuestra"
 
 #: inc/Validations/Country_Codes.php:53
 msgid "Australia"
@@ -406,23 +100,6 @@ msgstr "Australia"
 msgid "Austria"
 msgstr "Austria"
 
-#: inc/Integrations/Wpforms.php:71
-msgid ""
-"Automatize o envio de mensagens ao receber um formulário WPForms com "
-"telefone. Mantenha seus clientes informados em tempo real."
-msgstr ""
-"Automatiza el envío de mensajes al recibir un formulario WPForms con "
-"teléfono. Mantén a tus clientes informados en tiempo real."
-
-#: inc/Integrations/Wordpress.php:74
-msgid ""
-"Automatize o envio de mensagens em acionamentos de eventos no WordPress."
-msgstr "Automatiza el envío de mensajes en eventos de activación en WordPress."
-
-#: inc/Builder/Components.php:713
-msgid "Autor do post: *"
-msgstr "Autor del post: *"
-
 #: inc/Validations/Country_Codes.php:224
 msgid "Azerbaijan"
 msgstr "Azerbaiyán"
@@ -430,14 +107,6 @@ msgstr "Azerbaiyán"
 #: inc/Validations/Country_Codes.php:217
 msgid "Bahrain"
 msgstr "Baréin"
-
-#: inc/Views/Settings/Tabs/About.php:39
-msgid "Baixar arquivo"
-msgstr "Descargar archivo"
-
-#: inc/Core/Assets.php:197
-msgid "Bandeiras"
-msgstr "Banderas"
 
 #: inc/Validations/Country_Codes.php:203
 msgid "Bangladesh"
@@ -475,10 +144,6 @@ msgstr "Bosnia y Herzegovina"
 msgid "Botswana"
 msgstr "Botsuana"
 
-#: inc/Validations/Country_Codes.php:48
-msgid "Brasil"
-msgstr "Brasil"
-
 #: inc/Validations/Country_Codes.php:101
 msgid "British Indian Ocean Territory"
 msgstr "Territorio Británico del Océano Índico"
@@ -507,88 +172,21 @@ msgstr "Camboya"
 msgid "Cameroon"
 msgstr "Camerún"
 
-#: inc/Builder/Messages.php:128
-#, php-format
-msgid ""
-"Campo com ID <span class=\"builder-placeholder\">%s</span> %s: <span "
-"class=\"builder-placeholder\">%s</span>"
-msgstr ""
-"Campo con ID <span class=\"builder-placeholder\">%s</span> %s: <span "
-"class=\"builder-placeholder\">%s</span>"
-
-#: inc/Builder/Messages.php:126
-#, php-format
-msgid "Campo com ID <span class=\"builder-placeholder\">%s</span> não é vazio"
-msgstr ""
-"Campo con ID <span class=\"builder-placeholder\">%s</span> no está vacío"
-
-#: inc/Builder/Messages.php:124
-#, php-format
-msgid "Campo com ID <span class=\"builder-placeholder\">%s</span> é vazio"
-msgstr "Campo con ID <span class=\"builder-placeholder\">%s</span> está vacío"
-
 #: inc/Validations/Country_Codes.php:24
 msgid "Canada"
 msgstr "Canadá"
-
-#: inc/Builder/Components.php:833
-msgid "Cancelada"
-msgstr "Cancelada"
-
-#: inc/Builder/Components.php:159 inc/Builder/Components.php:193
-#: inc/Builder/Components.php:283 inc/Builder/Components.php:415
-#: inc/Builder/Components.php:993 inc/Views/Builder/Choose_Template.php:108
-msgid "Cancelar"
-msgstr "Cancelar"
 
 #: inc/Validations/Country_Codes.php:93
 msgid "Cape Verde"
 msgstr "Cabo Verde"
 
-#: inc/Integrations/Flexify_Checkout.php:145
-msgid "Carrinho abandonado é recuperado"
-msgstr "El carrito abandonado es recuperado"
-
-#: inc/Integrations/Flexify_Checkout.php:165
-msgid "Carrinho perdido"
-msgstr "Carrito perdido"
-
-#: inc/Integrations/Flexify_Checkout.php:356
-msgid "Carrinho recuperado"
-msgstr "Carrito recuperado"
-
-#: inc/Integrations/Woocommerce.php:358
-msgid "Cartão de crédito"
-msgstr "Tarjeta de crédito"
-
 #: inc/Validations/Country_Codes.php:91
 msgid "Central African Republic"
 msgstr "República Centroafricana"
 
-#: inc/Views/License.php:23 inc/Views/Settings.php:24
-#: inc/Views/Builder/Navbar.php:69
-msgid "Central de ajuda"
-msgstr "Centro de ayuda"
-
 #: inc/Validations/Country_Codes.php:90
 msgid "Chad"
 msgstr "Chad"
-
-#: inc/API/Controller.php:152
-msgid "Chave de API inválida ou ausente."
-msgstr "Clave de API inválida o ausente."
-
-#: inc/Views/Settings/Tabs/General.php:64
-msgid "Chave de API:"
-msgstr "Clave de API:"
-
-#: inc/Builder/Components.php:685
-msgid "Chave do meta dado"
-msgstr "Clave del meta dato"
-
-#: inc/Builder/Components.php:684
-msgid "Chave: *"
-msgstr "Clave: *"
 
 #: inc/Validations/Country_Codes.php:49
 msgid "Chile"
@@ -598,121 +196,13 @@ msgstr "Chile"
 msgid "China"
 msgstr "China"
 
-#: inc/Views/License.php:84
-msgid "Clique aqui para gerar seu arquivo de licença"
-msgstr "Haz clic aquí para generar tu archivo de licencia"
-
-#: inc/Views/Builder/Choose_Template.php:22
-msgid ""
-"Clique no botão do modelo de sua preferência para iniciar a criação do fluxo."
-msgstr ""
-"Haz clic en el botón del modelo de tu preferencia para iniciar la creación "
-"del flujo."
-
-#: inc/Integrations/Flexify_Checkout.php:125
-msgid "Coleta de lead via checkout"
-msgstr "Recopilación de clientes potenciales mediante pago"
-
-#: inc/Integrations/Flexify_Checkout.php:115
-msgid "Coleta de lead via modal"
-msgstr "Recopilación de clientes potenciales a través del modal"
-
 #: inc/Validations/Country_Codes.php:50
 msgid "Colombia"
 msgstr "Colombia"
 
-#: inc/Views/Builder/Choose_Template.php:53
-msgid "Comece a automatizar seu site a partir de um modelo"
-msgstr "Comienza a automatizar tu sitio a partir de un modelo"
-
-#: inc/Builder/Components.php:902
-msgid "Começa com"
-msgstr "Comienza con"
-
-#: inc/Builder/Workflow_Manager.php:56
-msgid "Começar com um modelo"
-msgstr "Comenzar con un modelo"
-
-#: inc/Builder/Workflow_Manager.php:50
-msgid "Começar do zero"
-msgstr "Comenzar desde cero"
-
-#: inc/Core/Assets.php:192
-msgid "Comidas e Bebidas"
-msgstr "Comidas y Bebidas"
-
-#: inc/Views/Builder/Choose_Template.php:21
-msgid "Como você gostaria de criar seu novo fluxo?"
-msgstr "¿Cómo te gustaría crear tu nuevo flujo?"
-
 #: inc/Validations/Country_Codes.php:122
 msgid "Comoros"
 msgstr "Comoras"
-
-#: inc/Views/License.php:110
-msgid "Comprar licença"
-msgstr "Comprar licencia"
-
-#: inc/Integrations/Woocommerce.php:262
-msgid "Concluído"
-msgstr "Completado"
-
-#: inc/Builder/Actions.php:45
-msgid "Condição"
-msgstr "Condición"
-
-#: inc/Builder/Components.php:72
-#, php-format
-msgid "Condição: %s"
-msgstr "Condición: %s"
-
-#: inc/Builder/Components.php:909
-msgid "Condição: *"
-msgstr "Condición: *"
-
-#: inc/Admin/Components.php:108
-msgid "Conectado"
-msgstr "Conectado"
-
-#: inc/Core/Init.php:88 inc/Core/Init.php:92
-#: inc/Views/Settings/Tabs/General.php:43
-msgid "Configurar"
-msgstr "Configurar"
-
-#: inc/Builder/Components.php:406
-msgid "Configurar acionamento"
-msgstr "Configurar activación"
-
-#: inc/Builder/Components.php:184 inc/Builder/Components.php:274
-msgid "Configurar ação"
-msgstr "Configurar acción"
-
-#: inc/Builder/Components.php:149
-msgid "Configurar condição"
-msgstr "Configurar condición"
-
-#: inc/Views/Settings/Tabs/General.php:48
-msgid "Configurar Proxy API"
-msgstr "Configurar Proxy API"
-
-#. parent page slug
-#. page title
-#: inc/Admin/Admin.php:83 inc/Admin/Admin.php:84 inc/Builder/Components.php:396
-#: inc/Integrations/Woocommerce.php:461
-msgid "Configurações"
-msgstr "Configuraciones"
-
-#: inc/Integrations/Woocommerce.php:466
-msgid "Configurações da integração com WooCommerce"
-msgstr "Configuraciones de la integración con WooCommerce"
-
-#: inc/Views/Builder/Triggers.php:86
-msgid "Continuar"
-msgstr "Continuar"
-
-#: inc/Builder/Components.php:900
-msgid "Contém"
-msgstr "Contiene"
 
 #: inc/Validations/Country_Codes.php:188
 msgid "Cook Islands"
@@ -722,42 +212,6 @@ msgstr "Islas Cook"
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: inc/Core/Workflows_Table.php:96
-msgid "Criado"
-msgstr "Creado"
-
-#: inc/Builder/Workflow_Manager.php:58
-msgid "Criar com um modelo"
-msgstr "Crear con un modelo"
-
-#: inc/Builder/Workflow_Manager.php:52
-msgid "Criar do zero"
-msgstr "Crear desde cero"
-
-#: inc/Views/Builder/Navbar.php:54
-msgid "Criar um novo fluxo"
-msgstr "Crear un nuevo flujo"
-
-#: inc/Integrations/OpenAI.php:38
-msgid ""
-"Crie mensagens dinâmicas para suas automações de uma forma simples e direta "
-"usando ChatGPT."
-msgstr ""
-"Crea mensajes dinámicos para tus automatizaciones de forma sencilla y "
-"directa utilizando ChatGPT."
-
-#: inc/Builder/Workflow_Manager.php:57
-msgid "Crie seu fluxo de automação a partir de um modelo de sua escolha"
-msgstr "Crea tu flujo de automatización a partir de un modelo de tu elección"
-
-#: inc/Builder/Workflow_Manager.php:51
-msgid "Crie seu fluxo de automação do zero"
-msgstr "Crea tu flujo de automatización desde cero"
-
-#: inc/Builder/Workflow_Manager.php:63
-msgid "Crie seu fluxo de automação importando a partir de um arquivo"
-msgstr "Crea tu flujo de automatización importando desde un archivo"
-
 #: inc/Validations/Country_Codes.php:150
 msgid "Croatia"
 msgstr "Croacia"
@@ -765,40 +219,6 @@ msgstr "Croacia"
 #: inc/Validations/Country_Codes.php:46
 msgid "Cuba"
 msgstr "Cuba"
-
-#: inc/Integrations/Woocommerce.php:525
-msgid "Cupom de desconto"
-msgstr "Cupón de descuento"
-
-#: inc/Builder/Messages.php:233
-#, php-format
-msgid "Cupom de desconto: <span class=\"builder-placeholder\">%s</span>"
-msgstr "Cupón de descuento: <span class=\"builder-placeholder\">%s</span>"
-
-#: inc/Builder/Messages.php:237
-#, php-format
-msgid "Cupom expira: %s"
-msgstr "El cupón expira: %s"
-
-#: inc/Integrations/Woocommerce.php:785
-msgid "Cupom não expira"
-msgstr "El cupón no expira"
-
-#: inc/Integrations/Woocommerce.php:564
-msgid "Cupom para recuperação de compras"
-msgstr "Cupón para recuperación de compras"
-
-#: inc/Integrations/Woocommerce.php:350
-msgid "CUPOM10, FRETEGRATIS"
-msgstr "CUPOM10, FRETEGRATIS"
-
-#: inc/Integrations/Woocommerce.php:491
-msgid "CUPOM_"
-msgstr "CUPOM_"
-
-#: inc/Integrations/Woocommerce.php:559
-msgid "CUPOM_EXCLUSIVO"
-msgstr "CUPOM_EXCLUSIVO"
 
 #: inc/Validations/Country_Codes.php:176
 msgid "Curaçao"
@@ -812,38 +232,10 @@ msgstr "Chipre"
 msgid "Czech Republic"
 msgstr "República Checa"
 
-#: inc/Views/License.php:118
-msgid "Código da licença"
-msgstr "Código de la licencia"
-
-#: inc/Integrations/Woocommerce.php:558
-msgid "Código do cupom: *"
-msgstr "Código del cupón: *"
-
-#: inc/Views/Settings/Tabs/General.php:14
-msgid "Código padrão do país"
-msgstr "Código predeterminado del país"
-
 #: inc/Integrations/Flexify_Checkout.php:291
 #: inc/Integrations/Woocommerce.php:222 inc/Integrations/Wordpress.php:177
 msgid "da Silva"
 msgstr "da Silva"
-
-#: inc/Integrations/Woocommerce.php:650
-msgid "Dados insuficientes para criar o cupom."
-msgstr "Datos insuficientes para crear el cupón."
-
-#: inc/API/License.php:744
-msgid "Dados inválidos."
-msgstr "Datos inválidos."
-
-#: inc/Views/Builder/Triggers.php:67
-msgid "Defina um nome para este fluxo"
-msgstr "Define un nombre para este flujo"
-
-#: inc/Integrations/Woocommerce.php:586
-msgid "Definir expiração do cupom"
-msgstr "Definir expiración del cupón"
 
 #: inc/Validations/Country_Codes.php:98
 msgid "Democratic Republic of the Congo"
@@ -853,83 +245,9 @@ msgstr "República Democrática del Congo"
 msgid "Denmark"
 msgstr "Dinamarca"
 
-#: inc/Views/Settings/Tabs/About.php:87
-msgid "Desativado"
-msgstr "Desactivado"
-
-#: inc/Views/License.php:69
-msgid "Desativar licença"
-msgstr "Desactivar licencia"
-
-#: inc/Admin/Components.php:110
-msgid "Desconectado"
-msgstr "Desconectado"
-
-#: inc/Integrations/Woocommerce.php:572
-msgid "Desconto fixo"
-msgstr "Descuento fijo"
-
-#: inc/Builder/Messages.php:235
-#, php-format
-msgid "Desconto: %s"
-msgstr "Descuento: %s"
-
-#: inc/Integrations/Woocommerce.php:563
-msgid "Descrição do cupom (opcional)"
-msgstr "Descripción del cupón (opcional)"
-
-#: inc/Admin/Admin.php:243
-msgid "Descrição."
-msgstr "Descripción."
-
-#: inc/Views/Settings/Tabs/About.php:286
-msgid "Desligado"
-msgstr "Apagado"
-
-#: inc/Builder/Components.php:80 inc/Builder/Components.php:234
-#, php-format
-msgid "Destinatário: %s"
-msgstr "Destinatario: %s"
-
-#: inc/Integrations/Whatsapp.php:138 inc/Integrations/Whatsapp.php:181
-msgid "Destinatário: *"
-msgstr "Destinatario: *"
-
-#: inc/Core/Helpers.php:38
-msgid "dia"
-msgstr "día"
-
-#: inc/Builder/Components.php:309
-msgid "Dia (s)"
-msgstr "Día(s)"
-
-#: inc/Cron/Routines.php:91
-msgid "Diariamente"
-msgstr "Diariamente"
-
-#: inc/Core/Helpers.php:38
-msgid "dias"
-msgstr "días"
-
-#: inc/Integrations/Elementor_Forms.php:185
-msgid "Dica"
-msgstr "Consejo"
-
-#: inc/Core/Assets.php:188
-msgid "Diversidade"
-msgstr "Diversidad"
-
 #: inc/Validations/Country_Codes.php:107
 msgid "Djibouti"
 msgstr "Yibuti"
-
-#: inc/Core/Init.php:114
-msgid "Documentação"
-msgstr "Documentación"
-
-#: inc/Validations/Media_Types.php:39
-msgid "Documento"
-msgstr "Documento"
 
 #: inc/Views/Settings/Tabs/About.php:116
 msgid "DOMDocument:"
@@ -939,14 +257,6 @@ msgstr "DOMDocument:"
 msgid "Dutch Caribbean"
 msgstr "Caribe Neerlandés"
 
-#: inc/Builder/Components.php:808 inc/Integrations/Woocommerce.php:860
-msgid "E-mail do cliente"
-msgstr "Correo electrónico del cliente"
-
-#: inc/Builder/Components.php:807
-msgid "E-mail do cliente:"
-msgstr "Correo electrónico del cliente:"
-
 #: inc/Validations/Country_Codes.php:177
 msgid "East Timor"
 msgstr "Timor Oriental"
@@ -954,26 +264,6 @@ msgstr "Timor Oriental"
 #: inc/Validations/Country_Codes.php:170
 msgid "Ecuador"
 msgstr "Ecuador"
-
-#: inc/Core/Workflows_Table.php:144
-msgid "Editar"
-msgstr "Editar"
-
-#: inc/Builder/Components.php:115 inc/Builder/Components.php:260
-msgid "Editar ação"
-msgstr "Editar acción"
-
-#: inc/Builder/Components.php:108
-msgid "Editar condição"
-msgstr "Editar condición"
-
-#: inc/Admin/Admin.php:232
-msgid "Editar fluxo"
-msgstr "Editar flujo"
-
-#: inc/Builder/Components.php:984 inc/Views/Builder/Navbar.php:36
-msgid "Editar título do fluxo"
-msgstr "Editar título del flujo"
 
 #: inc/Validations/Country_Codes.php:26
 msgid "Egypt"
@@ -988,312 +278,9 @@ msgstr "El Salvador"
 msgid "Elementor"
 msgstr "Elementor"
 
-#: inc/Views/Settings/Tabs/Integrations.php:50
-msgid "Em breve"
-msgstr "Dentro de poco"
-
-#: inc/Builder/Components.php:832
-msgid "Em espera"
-msgstr "En espera"
-
-#: inc/Integrations/Elementor_Forms.php:150
-msgid "Enviar mensagem de texto"
-msgstr "Enviar mensaje de texto"
-
-#: inc/Views/Settings/Tabs/Phones.php:48
-msgid "Enviar mensagem teste"
-msgstr "Enviar mensaje de prueba"
-
-#: inc/Integrations/Elementor_Forms.php:193
-msgid "Enviar mídia"
-msgstr "Enviar medio"
-
-#: inc/Views/Settings/Tabs/Phones.php:53
-msgid "Enviar uma mensagem de teste"
-msgstr "Enviar un mensaje de prueba"
-
-#: inc/Integrations/Woocommerce.php:95
-msgid ""
-"Envie mensagens para novos pedidos, cancelamentos, reembolsos e recuperação "
-"de pedidos não pagos. Mantenha seus clientes atualizados."
-msgstr ""
-"Envía mensajes para nuevos pedidos, cancelaciones, reembolsos y recuperación "
-"de pedidos no pagados. Mantén a tus clientes actualizados."
-
-#: inc/Integrations/Elementor.php:68
-msgid ""
-"Envie mensagens quando um formulário Elementor com campo de telefone for "
-"enviado. Conecte-se com seus clientes instantaneamente."
-msgstr ""
-"Envía mensajes cuando se envíe un formulario de Elementor con campo de "
-"teléfono. Conéctate con tus clientes al instante."
-
-#: inc/Views/Builder/Choose_Template.php:86
-msgid ""
-"Envie seu arquivo .json para importar o modelo da automação de mensagens."
-msgstr ""
-"Envía tu archivo .json para importar el modelo de automatización de mensajes."
-
-#: inc/Integrations/Woocommerce.php:526
-msgid ""
-"Envie um cupom de desconto para seu usuário através de mensagem de texto do "
-"WhatsApp."
-msgstr ""
-"Envía un cupón de descuento a tu usuario a través de un mensaje de texto de "
-"WhatsApp."
-
-#: inc/Integrations/Whatsapp.php:84
-msgid ""
-"Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o "
-"WhatsApp."
-msgstr ""
-"Envía un mensaje de medio (imagen, video, documento y audio) con WhatsApp."
-
-#: inc/Integrations/Whatsapp.php:71
-msgid "Envie uma mensagem de texto com o WhatsApp."
-msgstr "Envía un mensaje de texto con WhatsApp."
-
 #: inc/Validations/Country_Codes.php:95
 msgid "Equatorial Guinea"
 msgstr "Guinea Ecuatorial"
-
-#: inc/API/License.php:367 inc/API/License.php:420
-msgid "Erro cURL 35: Problema de comunicação SSL/TLS."
-msgstr "Error cURL 35: Problema de comunicación SSL/TLS."
-
-#: inc/API/License.php:422
-#, php-format
-msgid "Erro cURL: %s"
-msgstr "Error cURL: %s"
-
-#: inc/API/License.php:294
-#, php-format
-msgid "Erro JSON: %s"
-msgstr "Error JSON: %s"
-
-#: inc/Views/Builder/Triggers.php:16
-msgid "Escolha o tipo de acionamento"
-msgstr "Elige el tipo de activación"
-
-#: inc/Views/Settings/Tabs/Phones.php:59
-msgid "Escolha um remetente:"
-msgstr "Elige un remitente:"
-
-#: inc/Core/Assets.php:178
-msgid "Escolher mídia"
-msgstr "Elegir medio"
-
-#: inc/Builder/Components.php:1075 inc/Integrations/Woocommerce.php:600
-msgid "Esperar até"
-msgstr "Esperar hasta"
-
-#: inc/Builder/Messages.php:87
-#, php-format
-msgid "Esperar até %s"
-msgstr "Esperar hasta %s"
-
-#: inc/Builder/Messages.php:85
-#, php-format
-msgid "Esperar até %s - %s"
-msgstr "Esperar hasta %s - %s"
-
-#: inc/Builder/Components.php:1056 inc/Integrations/Woocommerce.php:595
-msgid "Esperar até uma data"
-msgstr "Esperar hasta una fecha"
-
-#: inc/Builder/Components.php:1061 inc/Integrations/Woocommerce.php:609
-msgid "Esperar por"
-msgstr "Esperar por"
-
-#: inc/Builder/Messages.php:79
-#, php-format
-msgid "Esperar por %s %s"
-msgstr "Esperar por %s %s"
-
-#: inc/Builder/Components.php:1055 inc/Integrations/Woocommerce.php:594
-msgid "Esperar tempo"
-msgstr "Esperar tiempo"
-
-#: inc/Integrations/Woocommerce.php:488
-msgid "Essa opção controla o prefixo do cupom criado automaticamente."
-msgstr "Esta opción controla el prefijo del cupón creado automáticamente."
-
-#: inc/Builder/Components.php:1180
-msgid "Esta ação não necessita de configurações auxiliares."
-msgstr "Esta acción no requiere configuraciones adicionales."
-
-#: inc/Integrations/Integrations_Base.php:79
-#: inc/Integrations/Integrations_Base.php:83
-msgid "Este acionamento depende de um plugin"
-msgstr "Este activador depende de un plugin"
-
-#: inc/Integrations/Woo_Subscriptions.php:99
-msgid ""
-"Este acionamento é disparado quando a assinatura tem seu status alterado "
-"para cancelado."
-msgstr ""
-"Este activador se dispara cuando la suscripción tiene su estado cambiado a "
-"cancelado."
-
-#: inc/Integrations/Woo_Subscriptions.php:93
-msgid "Este acionamento é disparado quando o prazo de um assinatura expirou."
-msgstr ""
-"Este activador se dispara cuando el plazo de una suscripción ha expirado."
-
-#: inc/Integrations/Flexify_Checkout.php:136
-msgid "Este acionamento é disparado quando o usuário abandona o carrinho."
-msgstr "Este activador se dispara cuando el usuario abandona el carrito."
-
-#: inc/Integrations/Flexify_Checkout.php:126
-msgid ""
-"Este acionamento é disparado quando o usuário fornece seus dados de contato "
-"pelo checkout."
-msgstr ""
-"Este disparador se activa cuando el usuario proporciona sus datos de "
-"contacto en el momento del pago."
-
-#: inc/Integrations/Flexify_Checkout.php:116
-msgid ""
-"Este acionamento é disparado quando o usuário fornece seus dados de contato "
-"via modal."
-msgstr ""
-"Este disparador se activa cuando el usuario proporciona sus datos de "
-"contacto a través del modal."
-
-#: inc/Integrations/Flexify_Checkout.php:146
-msgid ""
-"Este acionamento é disparado quando um carrinho abandonado é recuperado."
-msgstr "Este activador se dispara cuando un carrito abandonado es recuperado."
-
-#: inc/Integrations/Flexify_Checkout.php:166
-msgid "Este acionamento é disparado quando um carrinho é considerado perdido."
-msgstr "Este activador se dispara cuando un carrito se considera perdido."
-
-#: inc/Integrations/Wpforms.php:105
-msgid ""
-"Este acionamento é disparado quando um formulário de pagamento do WPForms é "
-"processado usando PayPal."
-msgstr ""
-"Este activador se dispara cuando un formulario de pago de WPForms es "
-"procesado usando PayPal."
-
-#: inc/Integrations/Elementor.php:94
-msgid ""
-"Este acionamento é disparado quando um formulário do Elementor é enviado."
-msgstr "Este activador se dispara cuando se envía un formulario de Elementor."
-
-#: inc/Integrations/Wpforms.php:99
-msgid "Este acionamento é disparado quando um formulário do WPForms é enviado."
-msgstr "Este activador se dispara cuando se envía un formulario de WPForms."
-
-#: inc/Integrations/Woocommerce.php:121
-msgid ""
-"Este acionamento é disparado quando um novo pedido é recebido no WooCommerce "
-"com qualquer status."
-msgstr ""
-"Este activador se dispara cuando se recibe un nuevo pedido en WooCommerce "
-"con cualquier estado."
-
-#: inc/Integrations/Woocommerce.php:127
-msgid ""
-"Este acionamento é disparado quando um novo pedido é recebido no WooCommerce "
-"com status processando."
-msgstr ""
-"Este activador se dispara cuando se recibe un nuevo pedido en WooCommerce "
-"con estado procesando."
-
-#: inc/Integrations/Wordpress.php:97
-msgid ""
-"Este acionamento é disparado quando um novo registro de usuário é recebido."
-msgstr ""
-"Este activador se dispara cuando se recibe un nuevo registro de usuario."
-
-#: inc/Integrations/Woocommerce.php:133
-msgid ""
-"Este acionamento é disparado quando um pedido tem o status alterado para "
-"concluído."
-msgstr ""
-"Este activador se dispara cuando un pedido tiene su estado cambiado a "
-"completado."
-
-#: inc/Integrations/Woocommerce.php:151
-msgid "Este acionamento é disparado quando um pedido tem seu status alterado."
-msgstr "Este activador se dispara cuando un pedido tiene su estado cambiado."
-
-#: inc/Integrations/Flexify_Checkout.php:156
-msgid "Este acionamento é disparado quando um pedido é abandonado."
-msgstr "Este activador se dispara cuando un pedido es abandonado."
-
-#: inc/Integrations/Woocommerce.php:145
-msgid ""
-"Este acionamento é disparado quando um pedido é parcialmente reembolsado."
-msgstr ""
-"Este activador se dispara cuando un pedido es reembolsado parcialmente."
-
-#: inc/Integrations/Woocommerce.php:139
-msgid "Este acionamento é disparado quando um pedido é totalmente reembolsado."
-msgstr "Este activador se dispara cuando un pedido es reembolsado totalmente."
-
-#: inc/Integrations/Wordpress.php:115
-msgid ""
-"Este acionamento é disparado quando um post tem o status alterado no site."
-msgstr ""
-"Este activador se dispara cuando un post tiene su estado cambiado en el "
-"sitio."
-
-#: inc/Integrations/Wordpress.php:103
-msgid "Este acionamento é disparado quando um usuário fizer login no site."
-msgstr "Este activador se dispara cuando un usuario inicia sesión en el sitio."
-
-#: inc/Integrations/Wordpress.php:109
-msgid ""
-"Este acionamento é disparado quando um usuário solicitar recuperação de "
-"senha no site."
-msgstr ""
-"Este activador se dispara cuando un usuario solicita recuperación de "
-"contraseña en el sitio."
-
-#: inc/Integrations/Woo_Subscriptions.php:81
-msgid ""
-"Este acionamento é disparado quando uma assinatura recorrente tem o "
-"pagamento recebido."
-msgstr ""
-"Este activador se dispara cuando una suscripción recurrente tiene el pago "
-"recibido."
-
-#: inc/Integrations/Woo_Subscriptions.php:87
-msgid ""
-"Este acionamento é disparado quando uma assinatura recorrente tem seu "
-"pagamento falhado ou recusado."
-msgstr ""
-"Este activador se dispara cuando una suscripción recurrente tiene su pago "
-"fallido o rechazado."
-
-#: inc/Integrations/Woo_Subscriptions.php:75
-msgid ""
-"Este acionamento é disparado quando uma assinatura tem seu status alterado "
-"para ativo."
-msgstr ""
-"Este activador se dispara cuando una suscripción tiene su estado cambiado a "
-"activo."
-
-#: inc/Integrations/Woo_Subscriptions.php:69
-msgid ""
-"Este acionamento é disparado quando uma nova assinatura é criada no "
-"WooCommerce."
-msgstr ""
-"Este activador se dispara cuando se crea una nueva suscripción en "
-"WooCommerce."
-
-#: inc/Views/Settings/Tabs/Integrations.php:46
-msgid ""
-"Este plugin precisa estar instalado e ativo para ativar esta integração."
-msgstr ""
-"Este plugin debe estar instalado y activo para activar esta integración."
-
-#: inc/Integrations/Integrations_Base.php:72
-msgid "Este recurso será liberado em breve"
-msgstr "Este recurso será lanzado pronto"
 
 #: inc/Validations/Country_Codes.php:139
 msgid "Estonia"
@@ -1307,72 +294,13 @@ msgstr "Eswatini (Suazilandia)"
 msgid "Ethiopia"
 msgstr "Etiopía"
 
-#: inc/Builder/Components.php:100 inc/Builder/Components.php:252
-msgid "Excluir ação"
-msgstr "Eliminar acción"
-
-#: inc/Core/Workflows_Table.php:131 inc/Core/Workflows_Table.php:208
-msgid "Excluir permanentemente"
-msgstr "Eliminar permanentemente"
-
-#: inc/Builder/Components.php:1160
-msgid "Expandir"
-msgstr "Expandir"
-
-#: inc/Builder/Messages.php:255 inc/Integrations/Woocommerce.php:781
-#, php-format
-msgid "Expira em %s"
-msgstr "Expira en %s"
-
-#: inc/Builder/Messages.php:247 inc/Integrations/Woocommerce.php:773
-#, php-format
-msgid "Expira em %s %s"
-msgstr "Expira en %s %s"
-
-#: inc/Builder/Messages.php:253 inc/Integrations/Woocommerce.php:779
-#, php-format
-msgid "Expira em %s - %s"
-msgstr "Expira en %s - %s"
-
-#: inc/Views/Builder/Navbar.php:45
-msgid "Exportar fluxo"
-msgstr "Exportar flujo"
-
-#: inc/Views/Settings/Tabs/About.php:132
-msgid "Extensão cURL:"
-msgstr "Extensión cURL:"
-
-#: inc/Views/Settings/Tabs/About.php:151
-msgid "Extensão OpenSSL:"
-msgstr "Extensión OpenSSL:"
-
-#: inc/API/Controller.php:290
-msgid "Falha ao enviar mensagem de mídia."
-msgstr "Error al enviar mensaje de medio."
-
-#: inc/API/Controller.php:259
-msgid "Falha ao enviar mensagem de texto."
-msgstr "Error al enviar mensaje de texto."
-
 #: inc/Validations/Country_Codes.php:157
 msgid "Falkland Islands (Malvinas)"
 msgstr "Islas Malvinas (Falkland)"
 
-#: inc/Builder/Components.php:562
-msgid "Falso"
-msgstr "Falso"
-
 #: inc/Validations/Country_Codes.php:125
 msgid "Faroe Islands"
 msgstr "Islas Feroe"
-
-#: inc/Builder/Components.php:985 inc/Builder/Components.php:1027
-#: inc/Builder/Components.php:1169 inc/Core/Assets.php:108
-#: inc/Integrations/Whatsapp.php:121 inc/Integrations/Woocommerce.php:467
-#: inc/Views/Settings/Tabs/About.php:29 inc/Views/Settings/Tabs/General.php:49
-#: inc/Views/Settings/Tabs/Phones.php:36 inc/Views/Settings/Tabs/Phones.php:54
-msgid "Fechar"
-msgstr "Cerrar"
 
 #: inc/Validations/Country_Codes.php:196
 msgid "Federated States of Micronesia"
@@ -1390,59 +318,6 @@ msgstr "Finlandia"
 msgid "Flexify Checkout"
 msgstr "Flexify Checkout"
 
-#: inc/Integrations/Flexify_Checkout.php:107
-msgid "Flexify Checkout - Recuperação de carrinhos abandonados"
-msgstr "Flexify Checkout - Recuperación de carritos abandonados"
-
-#: inc/Integrations/Flexify_Checkout.php:82
-msgid "Flexify Checkout para WooCommerce"
-msgstr "Flexify Checkout para WooCommerce"
-
-#: inc/Core/Workflows_Table.php:31
-msgid "Fluxo"
-msgstr "Flujo"
-
-#: inc/Admin/Admin.php:229
-msgctxt "fluxo"
-msgid "Adicionar novo"
-msgstr "Añadir nuevo"
-
-#: inc/Builder/Components.php:36
-msgid "Fluxo ativo"
-msgstr "Flujo activo"
-
-#: inc/Builder/Components.php:39
-msgid "Fluxo inativo"
-msgstr "Flujo inactivo"
-
-#: inc/Admin/Admin.php:236
-msgid "Fluxo pai:"
-msgstr "Flujo padre:"
-
-#: inc/Core/Workflows_Table.php:32
-msgid "Fluxos"
-msgstr "Flujos"
-
-#: inc/Admin/Admin.php:155
-msgid "Fluxos por página"
-msgstr "Flujos por página"
-
-#: inc/Integrations/Woocommerce.php:852
-msgid "Forma de entrega"
-msgstr "Forma de entrega"
-
-#: inc/Integrations/Woocommerce.php:848
-msgid "Forma de pagamento"
-msgstr "Forma de pago"
-
-#: inc/Builder/Components.php:470
-msgid "Formulário do WPForms: *"
-msgstr "Formulario de WPForms: *"
-
-#: inc/Integrations/Elementor.php:93 inc/Integrations/Wpforms.php:98
-msgid "Formulário é enviado"
-msgstr "Formulario es enviado"
-
 #: inc/Validations/Country_Codes.php:31
 msgid "France"
 msgstr "Francia"
@@ -1455,23 +330,6 @@ msgstr "Guayana Francesa"
 msgid "French Polynesia"
 msgstr "Polinesia Francesa"
 
-#: inc/Builder/Messages.php:236
-#, php-format
-msgid "Frete grátis: %s"
-msgstr "Envío gratis: %s"
-
-#: inc/Integrations/Wordpress.php:234 inc/Integrations/Wordpress.php:244
-msgid "Função do usuário"
-msgstr "Función del usuario"
-
-#: inc/Builder/Components.php:669
-msgid "Função do usuário: *"
-msgstr "Función del usuario: *"
-
-#: inc/Views/Settings/Tabs/About.php:282
-msgid "Função PHP \"file_get_content\":"
-msgstr "Función PHP \"file_get_content\":"
-
 #: inc/Validations/Country_Codes.php:96
 msgid "Gabon"
 msgstr "Gabón"
@@ -1483,26 +341,6 @@ msgstr "Gambia"
 #: inc/Validations/Country_Codes.php:225
 msgid "Georgia"
 msgstr "Georgia"
-
-#: inc/Builder/Messages.php:228
-msgid "Gerado automaticamente"
-msgstr "Generado automáticamente"
-
-#: inc/Admin/Components.php:127
-msgid "Geral"
-msgstr "General"
-
-#: inc/Views/Settings/Tabs/General.php:67
-msgid "Gerar chave"
-msgstr "Generar clave"
-
-#: inc/Integrations/Woocommerce.php:553
-msgid "Gerar cupom automaticamente"
-msgstr "Generar cupón automáticamente"
-
-#: inc/Admin/Admin.php:164
-msgid "Gerenciar fluxos"
-msgstr "Gestionar flujos"
 
 #: inc/Validations/Country_Codes.php:43
 msgid "Germany"
@@ -1556,18 +394,6 @@ msgstr "Honduras"
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
-#: inc/Core/Helpers.php:37
-msgid "hora"
-msgstr "hora"
-
-#: inc/Builder/Components.php:308
-msgid "Hora (s)"
-msgstr "Hora(s)"
-
-#: inc/Core/Helpers.php:37
-msgid "horas"
-msgstr "horas"
-
 #. Author URI of the plugin
 msgid "https://meumouse.com/"
 msgstr "https://meumouse.com/"
@@ -1584,54 +410,6 @@ msgstr "Hungría"
 msgid "Iceland"
 msgstr "Islandia"
 
-#: inc/Core/Assets.php:181
-msgid "ID copiado!"
-msgstr "¡ID copiado!"
-
-#: inc/Builder/Components.php:866
-msgid "ID do campo"
-msgstr "ID del campo"
-
-#: inc/Integrations/Elementor_Forms.php:126
-msgid "ID do campo de destinatário"
-msgstr "ID del campo de destinatario"
-
-#: inc/Builder/Components.php:865
-msgid "ID do campo:"
-msgstr "ID del campo:"
-
-#: inc/Integrations/Elementor_Forms.php:138
-msgid "ID do formulário"
-msgstr "ID del formulario"
-
-#: inc/Integrations/Woocommerce.php:497
-msgid "Ignorar ações já processadas no fluxo"
-msgstr "Ignorar acciones ya procesadas en el flujo"
-
-#: inc/Validations/Media_Types.php:37
-msgid "Imagem"
-msgstr "Imagen"
-
-#: inc/Views/Builder/Choose_Template.php:109
-msgid "Importar"
-msgstr "Importar"
-
-#: inc/Builder/Workflow_Manager.php:64
-msgid "Importar arquivo"
-msgstr "Importar archivo"
-
-#: inc/Views/Builder/Choose_Template.php:85
-msgid "Importar modelo"
-msgstr "Importar modelo"
-
-#: inc/Builder/Workflow_Manager.php:62
-msgid "Importar um modelo"
-msgstr "Importar un modelo"
-
-#: inc/Views/Builder/Navbar.php:23
-msgid "Inativo"
-msgstr "Inactivo"
-
 #: inc/Core/Workflows_Table.php:61
 msgid "Inativos"
 msgstr ""
@@ -1643,64 +421,6 @@ msgstr "India"
 #: inc/Validations/Country_Codes.php:54
 msgid "Indonesia"
 msgstr "Indonesia"
-
-#: inc/Views/License.php:33
-msgid "Informações sobre a licença:"
-msgstr "Información sobre la licencia:"
-
-#: inc/Admin/Components.php:73
-msgid "Informe o código de 4 dígitos que foi enviado para"
-msgstr "Ingresa el código de 4 dígitos que fue enviado a"
-
-#: inc/Integrations/Elementor_Forms.php:140
-msgid ""
-"Informe o ID deste formulário para validar o processamento das informações. "
-"Disponível nas informações adicionais do formulário."
-msgstr ""
-"Proporciona el ID de este formulario para validar el procesamiento de la "
-"información. Disponible en la información adicional del formulario."
-
-#: inc/Integrations/Elementor_Forms.php:128
-msgid ""
-"Informe o ID do campo que coleta o telefone de destinatário do formulário."
-msgstr ""
-"Proporciona el ID del campo que recoge el teléfono del destinatario del "
-"formulario."
-
-#: inc/Views/Settings/Tabs/Phones.php:68
-msgid "Informe o telefone destinatário - Apenas números com DDI + DDD:"
-msgstr "Ingresa el teléfono del destinatario - Solo números con DDI + DDD:"
-
-#: inc/Views/License.php:115
-msgid "Informe sua licença abaixo para desbloquear todos os recursos."
-msgstr ""
-"Ingresa tu licencia a continuación para desbloquear todas las funciones."
-
-#: inc/Views/License.php:75
-msgid "Informe sua licença para começar a usar o Joinotify"
-msgstr "Ingresa tu licencia para comenzar a usar Joinotify"
-
-#: inc/Views/Settings/Tabs/Phones.php:15
-msgid ""
-"Informe um telefone para receber mensagens de teste para disparar no "
-"construtor. Use o formato internacional, informando apenas números: "
-"5541987111527"
-msgstr ""
-"Proporciona un teléfono para recibir mensajes de prueba para disparar en el "
-"constructor. Usa el formato internacional, ingresando solo números: "
-"5541987111527"
-
-#: inc/Integrations/Integrations_Base.php:85
-msgid "Instalar plugin"
-msgstr "Instalar plugin"
-
-#: inc/Admin/Components.php:139
-msgid "Integrações"
-msgstr "Integraciones"
-
-#: inc/Views/License.php:41
-msgid "Inválida"
-msgstr "Inválida"
 
 #: inc/Validations/Country_Codes.php:69
 msgid "Iran"
@@ -1722,10 +442,6 @@ msgstr "Israel"
 msgid "Italy"
 msgstr "Italia"
 
-#: inc/Integrations/Flexify_Checkout.php:348
-msgid "Itens no carrinho"
-msgstr "Artículos en el carrito"
-
 #: inc/Validations/Country_Codes.php:80
 msgid "Ivory Coast"
 msgstr "Costa de Marfil"
@@ -1734,26 +450,17 @@ msgstr "Costa de Marfil"
 msgid "Japan"
 msgstr "Japón"
 
-#: inc/Integrations/Flexify_Checkout.php:307
-msgid "joaodasilva@email.com"
-msgstr "joaodasilva@email.com"
-
-#. label
-#. Name of the plugin
 #: inc/Admin/Admin.php:50 inc/Admin/Admin.php:51
 #: inc/Integrations/Elementor_Forms.php:82
 #: inc/Integrations/Elementor_Forms.php:97
+#. label
+#. Name of the plugin
 msgid "Joinotify"
 msgstr "Joinotify"
 
 #: inc/Validations/Country_Codes.php:207
 msgid "Jordan"
 msgstr "Jordania"
-
-#: inc/Integrations/Flexify_Checkout.php:283
-#: inc/Integrations/Woocommerce.php:214 inc/Integrations/Wordpress.php:169
-msgid "João"
-msgstr "Juan"
 
 #: inc/Validations/Country_Codes.php:25
 msgid "Kazakhstan"
@@ -1799,56 +506,13 @@ msgstr "Liberia"
 msgid "Libya"
 msgstr "Libia"
 
-#. parent page slug
-#. page title
-#: inc/Admin/Admin.php:94 inc/Admin/Admin.php:95
-msgid "Licença"
-msgstr "Licencia"
-
-#: inc/Views/License.php:54
-#, php-format
-msgid "Licença expira em: %s"
-msgstr "La licencia expira en: %s"
-
-#: inc/API/License.php:900
-msgid "Licença expirada"
-msgstr "Licencia expirada"
-
 #: inc/Validations/Country_Codes.php:156
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
-#: inc/Views/Settings/Tabs/About.php:290
-msgid "Ligado"
-msgstr "Encendido"
-
-#: inc/Views/Settings/Tabs/About.php:240
-msgid "Limite de memória do PHP:"
-msgstr "Límite de memoria de PHP:"
-
-#: inc/Views/Settings/Tabs/About.php:196
-msgid "Limite de tempo do PHP:"
-msgstr "Límite de tiempo de PHP:"
-
-#: inc/Views/Settings/Tabs/About.php:38
-msgid "Limpar registros"
-msgstr "Limpiar registros"
-
-#: inc/Integrations/Flexify_Checkout.php:312
-msgid "Link de recuperação do carrinho abandonado."
-msgstr "Enlace de recuperación de carrito abandonado."
-
 #: inc/Validations/Country_Codes.php:137
 msgid "Lithuania"
 msgstr "Lituania"
-
-#: inc/Core/Workflows_Table.php:66
-msgid "Lixeira"
-msgstr "Papelera"
-
-#: inc/Integrations/Wordpress.php:102
-msgid "Login do usuário"
-msgstr "Inicio de sesión del usuario"
 
 #: inc/Validations/Country_Codes.php:129
 msgid "Luxembourg"
@@ -1861,15 +525,6 @@ msgstr "Macao"
 #: inc/Validations/Country_Codes.php:114
 msgid "Madagascar"
 msgstr "Madagascar"
-
-#: inc/Builder/Components.php:904
-msgid "Maior que"
-msgstr "Mayor que"
-
-#: inc/Builder/Messages.php:121
-#, php-format
-msgid "Maior que <span class=\"builder-placeholder\">%s</span>"
-msgstr "Mayor que <span class=\"builder-placeholder\">%s</span>"
 
 #: inc/Validations/Country_Codes.php:118
 msgid "Malawi"
@@ -1919,46 +574,6 @@ msgstr "Mauricio"
 msgid "Mayotte"
 msgstr "Mayotte"
 
-#: inc/Builder/Components.php:905
-msgid "Menor que"
-msgstr "Menor que"
-
-#: inc/Builder/Messages.php:121
-#, php-format
-msgid "Menor que <span class=\"builder-placeholder\">%s</span>"
-msgstr "Menor que <span class=\"builder-placeholder\">%s</span>"
-
-#: inc/Integrations/Whatsapp.php:146
-msgid "Mensagem"
-msgstr "Mensaje"
-
-#: inc/API/Controller.php:285
-msgid "Mensagem de mídia enviada com sucesso."
-msgstr "Mensaje de medios enviado con éxito."
-
-#: inc/Integrations/Elementor_Forms.php:162
-msgid "Mensagem de texto"
-msgstr "Mensaje de texto"
-
-#: inc/API/Controller.php:254
-msgid "Mensagem de texto enviada com sucesso."
-msgstr "Mensaje de texto enviado con éxito."
-
-#: inc/Integrations/Whatsapp.php:144
-msgid "Mensagem de texto: *"
-msgstr "Mensaje de texto: *"
-
-#: inc/Core/Helpers.php:40
-msgid "meses"
-msgstr "meses"
-
-#: inc/Integrations/Elementor.php:167 inc/Integrations/Flexify_Checkout.php:352
-#: inc/Integrations/Woocommerce.php:856 inc/Integrations/Wordpress.php:238
-#: inc/Integrations/Wordpress.php:248 inc/Integrations/Wordpress.php:254
-#: inc/Integrations/Wpforms.php:212
-msgid "Meta dados do usuário"
-msgstr "Metadatos del usuario"
-
 #. Author of the plugin
 msgid "MeuMouse.com"
 msgstr "MeuMouse.com"
@@ -1966,35 +581,6 @@ msgstr "MeuMouse.com"
 #: inc/Validations/Country_Codes.php:45
 msgid "Mexico"
 msgstr "México"
-
-#: inc/Core/Assets.php:180
-#, php-format
-msgid "Minha automação #%s"
-msgstr "Mi automatización #%s"
-
-#: inc/Views/Builder/Triggers.php:69
-msgid "Minha automação de mensagens"
-msgstr "Mi automatización de mensajes"
-
-#: inc/Core/Helpers.php:36
-msgid "minuto"
-msgstr "minuto"
-
-#: inc/Builder/Components.php:307
-msgid "Minuto (s)"
-msgstr "Minuto(s)"
-
-#: inc/Core/Helpers.php:36
-msgid "minutos"
-msgstr "minutos"
-
-#: inc/Views/Settings/Tabs/About.php:86
-msgid "Modo de depuração do WordPress:"
-msgstr "Modo de depuración de WordPress:"
-
-#: inc/Integrations/Developer_Mode.php:39
-msgid "Modo desenvolvedor"
-msgstr "Modo desarrollador"
 
 #: inc/Validations/Country_Codes.php:140
 msgid "Moldova"
@@ -2020,10 +606,6 @@ msgstr "Marruecos"
 msgid "Mostrar notificações de atualização de versão"
 msgstr ""
 
-#: inc/Core/Workflows_Table.php:149 inc/Core/Workflows_Table.php:213
-msgid "Mover para lixeira"
-msgstr "Mover a la papelera"
-
 #: inc/Validations/Country_Codes.php:112
 msgid "Mozambique"
 msgstr "Mozambique"
@@ -2032,22 +614,6 @@ msgstr "Mozambique"
 msgid "Myanmar"
 msgstr "Myanmar"
 
-#: inc/Builder/Components.php:792
-msgid "Método de entrega: *"
-msgstr "Método de entrega: *"
-
-#: inc/Builder/Components.php:775
-msgid "Método de pagamento: *"
-msgstr "Método de pago: *"
-
-#: inc/Core/Helpers.php:40
-msgid "mês"
-msgstr "mes"
-
-#: inc/Builder/Components.php:311
-msgid "Mês (es)"
-msgstr "Mes(es)"
-
 #: inc/Validations/Country_Codes.php:117
 msgid "Namibia"
 msgstr "Namibia"
@@ -2055,50 +621,6 @@ msgstr "Namibia"
 #: inc/Validations/Country_Codes.php:180
 msgid "Nauru"
 msgstr "Nauru"
-
-#: inc/Views/Settings/Tabs/General.php:20
-msgid "Nenhum"
-msgstr "Ninguno"
-
-#: inc/Builder/Messages.php:274
-msgid "Nenhum código disponível."
-msgstr "Ningún código disponible."
-
-#: inc/Admin/Admin.php:238
-msgid "Nenhum fluxo encontrado na lixeira."
-msgstr "Ningún flujo encontrado en la papelera."
-
-#: inc/Admin/Admin.php:237 inc/Core/Assets.php:183
-msgid "Nenhum fluxo encontrado."
-msgstr "Ningún flujo encontrado."
-
-#: inc/Integrations/Woocommerce.php:423
-msgid "Nenhum item adquirido."
-msgstr "Ningún artículo adquirido."
-
-#: inc/Admin/Components.php:50
-msgid "Nenhum remetente disponível para uso"
-msgstr "Ningún remitente disponible para uso"
-
-#: inc/Builder/Actions.php:58
-msgid "Nenhuma ação será executada ao chegar nesse ponto."
-msgstr "Ninguna acción se ejecutará al llegar a este punto."
-
-#: inc/Validations/Conditions.php:32
-msgid "Nenhuma condição disponível para esta ação"
-msgstr "Ninguna condición disponible para esta acción"
-
-#: inc/Validations/Conditions.php:33
-msgid "Nenhuma condição foi definida para esta ação."
-msgstr "Ninguna condición fue definida para esta acción."
-
-#: inc/Builder/Components.php:876
-msgid "Nenhuma configuração disponível para esta condição"
-msgstr "Ninguna configuración disponible para esta condición"
-
-#: inc/Views/License.php:39
-msgid "Nenhuma licença informada"
-msgstr "Ninguna licencia informada"
 
 #: inc/Validations/Country_Codes.php:221
 msgid "Nepal"
@@ -2132,22 +654,6 @@ msgstr "Nigeria"
 msgid "Niue"
 msgstr "Niue"
 
-#: inc/Core/Workflows_Table.php:95
-msgid "Nome"
-msgstr "Nombre"
-
-#: inc/Builder/Components.php:1250
-msgid "Nome da variável de texto"
-msgstr "Nombre de la variable de texto"
-
-#: inc/Builder/Components.php:714
-msgid "Nome do autor"
-msgstr "Nombre del autor"
-
-#: inc/Builder/Components.php:1252
-msgid "nome_da_variavel"
-msgstr "nombre_de_variable"
-
 #: inc/Validations/Country_Codes.php:178
 msgid "Norfolk Island"
 msgstr "Isla Norfolk"
@@ -2164,118 +670,6 @@ msgstr "Macedonia del Norte"
 msgid "Norway"
 msgstr "Noruega"
 
-#: inc/Views/License.php:82
-msgid "Notamos que teve problemas de conexão ao tentar ativar sua licença"
-msgstr "Notamos que tuvo problemas de conexión al intentar activar su licencia"
-
-#: inc/Integrations/Woo_Subscriptions.php:68
-msgid "Nova assinatura criada"
-msgstr "Nueva suscripción creada"
-
-#: inc/Admin/Admin.php:231
-msgid "Novo fluxo"
-msgstr "Nuevo flujo"
-
-#: inc/Integrations/Woocommerce.php:120
-msgid "Novo pedido"
-msgstr "Nuevo pedido"
-
-#: inc/Integrations/Woocommerce.php:126
-msgid "Novo pedido (Processando)"
-msgstr "Nuevo pedido (Procesando)"
-
-#: inc/Integrations/Wordpress.php:96
-msgid "Novo registro de usuário"
-msgstr "Nuevo registro de usuario"
-
-#: inc/API/License.php:891
-msgid "Nunca expira"
-msgstr "Nunca expira"
-
-#: inc/Builder/Components.php:844 inc/Builder/Messages.php:230
-#: inc/Builder/Messages.php:231 inc/Integrations/Elementor_Forms.php:153
-#: inc/Integrations/Elementor_Forms.php:196
-#: inc/Views/Settings/Tabs/About.php:83 inc/Views/Settings/Tabs/About.php:121
-#: inc/Views/Settings/Tabs/About.php:137 inc/Views/Settings/Tabs/About.php:156
-msgid "Não"
-msgstr "No"
-
-#: inc/Builder/Components.php:901
-msgid "Não contém"
-msgstr "No contiene"
-
-#: inc/API/License.php:875 inc/Views/License.php:60
-msgid "Não disponível"
-msgstr "No disponible"
-
-#: inc/Builder/Components.php:899
-msgid "Não está vazio"
-msgstr "No está vacío"
-
-#: inc/Integrations/Wordpress.php:184
-msgid "Não foi possível recuperar o e-mail do usuário"
-msgstr "No se pudo recuperar el correo electrónico del usuario"
-
-#: inc/Integrations/Wordpress.php:168
-msgid "Não foi possível recuperar o nome do usuário"
-msgstr "No se pudo recuperar el nombre del usuario"
-
-#: inc/Integrations/Wordpress.php:176
-msgid "Não foi possível recuperar o sobrenome do usuário"
-msgstr "No se pudo recuperar el apellido del usuario"
-
-#: inc/Core/Updater.php:249
-msgid ""
-"Não foi possível verificar atualizações para o plugin <strong>Joinotify."
-"</strong>"
-msgstr ""
-"No se pudo verificar actualizaciones para el plugin <strong>Joinotify."
-"</strong>"
-
-#: inc/Builder/Components.php:897
-msgid "Não é"
-msgstr "No es"
-
-#: inc/Integrations/Woocommerce.php:673
-msgid "O cupom já existe."
-msgstr "El cupón ya existe."
-
-#: inc/Views/Builder/Triggers.php:68
-msgid "O nome servirá para controle interno desse fluxo"
-msgstr "El nombre servirá para control interno de este flujo"
-
-#: inc/Core/Assets.php:195
-msgid "Objetos"
-msgstr "Objetos"
-
-#: inc/Builder/Components.php:1247
-msgid "Obter dados de amostra"
-msgstr "Obtener datos de muestra"
-
-#: inc/Builder/Components.php:1010 inc/Builder/Components.php:1026
-msgid "Obter informações de grupos"
-msgstr "Obtener información de grupos"
-
-#: inc/API/License.php:271
-msgid ""
-"Ocorreu um erro na conexão com o servidor de verificação de licenças. "
-"Verifique o erro nos logs do WooCommerce."
-msgstr ""
-"Ocurrió un error en la conexión con el servidor de verificación de licencias."
-" Verifique el error en los registros de WooCommerce."
-
-#: inc/Integrations/Elementor_Forms.php:166
-msgid "Olá {{ field_id=[FIELD_ID] }}!"
-msgstr "Hola {{ field_id=[FIELD_ID] }}!"
-
-#: inc/Integrations/Elementor_Forms.php:167
-msgid ""
-"Olá {{ field_id=[nome] }}! Recebemos suas informações, em breve um atendente "
-"retornará o contato."
-msgstr ""
-"Hola {{ field_id=[nombre] }}! Recibimos su información, pronto un agente le "
-"responderá."
-
 #: inc/Validations/Country_Codes.php:213
 msgid "Oman"
 msgstr "Omán"
@@ -2283,30 +677,6 @@ msgstr "Omán"
 #: inc/Integrations/OpenAI.php:37
 msgid "OpenAI"
 msgstr "OpenAI"
-
-#: inc/Core/Assets.php:74 inc/Core/Assets.php:200
-msgid "Ops! Não há conexão com a internet"
-msgstr "¡Ups! No hay conexión a internet"
-
-#: inc/Views/License.php:98 inc/Views/Builder/Choose_Template.php:101
-msgid "Ou clique para procurar seu arquivo"
-msgstr "O haga clic para buscar su archivo"
-
-#: inc/Integrations/Woo_Subscriptions.php:86
-msgid "Pagamento da renovação falhou"
-msgstr "El pago de la renovación falló"
-
-#: inc/Integrations/Woo_Subscriptions.php:80
-msgid "Pagamento da renovação recebido"
-msgstr "Pago de la renovación recibido"
-
-#: inc/Builder/Components.php:840
-msgid "Pagamento da renovação: *"
-msgstr "Pago de la renovación: *"
-
-#: inc/Integrations/Wpforms.php:104
-msgid "Pagamento processado pelo PayPal"
-msgstr "Pago procesado por PayPal"
 
 #: inc/Validations/Country_Codes.php:65
 msgid "Pakistan"
@@ -2328,378 +698,13 @@ msgstr "Panamá"
 msgid "Papua New Guinea"
 msgstr "Papúa Nueva Guinea"
 
-#: inc/Integrations/Wordpress.php:206
-msgid "Para recuperar a data atual"
-msgstr "Para recuperar la fecha actual"
-
-#: inc/Integrations/Woocommerce.php:267
-msgid "Para recuperar a data do pedido do WooCommerce"
-msgstr "Para recuperar la fecha del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:795
-msgid "Para recuperar a descrição do cupom de desconto."
-msgstr "Para recuperar la descripción del cupón de descuento."
-
-#: inc/Integrations/Woocommerce.php:811
-msgid ""
-"Para recuperar a expiração do cupom de desconto. Exemplo: Expira em 1 hora."
-msgstr ""
-"Para recuperar la expiración del cupón de descuento. Ejemplo: Expira en 1 "
-"hora."
-
-#: inc/Integrations/Elementor.php:143
-msgid ""
-"Para recuperar a informação de um campo do formulário do Elementor. "
-"Substitua FIELD_ID pelo id respectivo."
-msgstr ""
-"Para recuperar la información de un campo del formulario de Elementor. "
-"Reemplace FIELD_ID con el ID respectivo."
-
-#: inc/Integrations/Wpforms.php:153
-msgid ""
-"Para recuperar a informação de um campo do formulário do WPForms. Substitua "
-"FIELD_ID pelo id respectivo."
-msgstr ""
-"Para recuperar la información de un campo del formulario de WPForms. "
-"Reemplace FIELD_ID con el ID respectivo."
-
-#: inc/Integrations/Woocommerce.php:299
-msgid "Para recuperar a URL de pagamento do pedido"
-msgstr "Para recuperar la URL de pago del pedido"
-
-#: inc/Integrations/Wordpress.php:190
-msgid "Para recuperar a URL do site"
-msgstr "Para recuperar la URL del sitio"
-
-#: inc/Integrations/Woocommerce.php:291
-msgid ""
-"Para recuperar cada produto e quantidade adquiridos no pedido, separados por "
-"linha"
-msgstr ""
-"Para recuperar cada producto y cantidad adquiridos en el pedido, separados "
-"por línea"
-
-#: inc/Integrations/Woocommerce.php:791
-msgid "Para recuperar o código do cupom de desconto."
-msgstr "Para recuperar el código del cupón de descuento."
-
-#: inc/Integrations/Flexify_Checkout.php:225
-msgid ""
-"Para recuperar o código Pix Copia e Cola do pedido. Através da integração "
-"Flexify Checkout - Inter addon"
-msgstr ""
-"Para recuperar el código Pix Copia y Pega del pedido. A través de la "
-"integración Flexify Checkout - Inter addon"
-
-#: inc/Integrations/Flexify_Checkout.php:304
-msgid "Para recuperar o e-mail de contato do carrinho."
-msgstr "Para recuperar el carrito contacte por email."
-
-#: inc/Integrations/Woocommerce.php:227
-msgid ""
-"Para recuperar o e-mail de faturamento do cliente no pedido do WooCommerce"
-msgstr ""
-"Para recuperar el correo electrónico de facturación del cliente en el pedido "
-"de WooCommerce"
-
-#: inc/Integrations/Wordpress.php:182
-msgid "Para recuperar o e-mail do usuário"
-msgstr "Para recuperar el correo electrónico del usuario"
-
-#: inc/Integrations/Woocommerce.php:283
-msgid "Para recuperar o endereço completo de entrega do usuário"
-msgstr "Para recuperar la dirección completa de entrega del usuario"
-
-#: inc/Integrations/Woocommerce.php:275
-msgid "Para recuperar o endereço completo de faturamento do usuário"
-msgstr "Para recuperar la dirección completa de facturación del usuario"
-
-#: inc/Integrations/Woocommerce.php:363
-msgid "Para recuperar o endereço de entrega do pedido do WooCommerce"
-msgstr "Para recuperar la dirección de entrega del pedido de WooCommerce"
-
-#: inc/Integrations/Flexify_Checkout.php:280
-msgid "Para recuperar o nome do contato do carrinho."
-msgstr "Para recuperar el nombre de contacto del carrito."
-
-#: inc/Integrations/Wordpress.php:198
-msgid "Para recuperar o nome do site"
-msgstr "Para recuperar el nombre del sitio"
-
-#: inc/Integrations/Woocommerce.php:251
-msgid "Para recuperar o número do pedido do WooCommerce"
-msgstr "Para recuperar el número del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:211
-msgid ""
-"Para recuperar o primeiro nome de faturamento do cliente no pedido do "
-"WooCommerce"
-msgstr ""
-"Para recuperar el primer nombre de facturación del cliente en el pedido de "
-"WooCommerce"
-
-#: inc/Integrations/Wordpress.php:166
-msgid "Para recuperar o primeiro nome do usuário"
-msgstr "Para recuperar el primer nombre del usuario"
-
-#: inc/Integrations/Woocommerce.php:219
-msgid ""
-"Para recuperar o sobrenome de faturamento do cliente no pedido do WooCommerce"
-msgstr ""
-"Para recuperar el apellido de facturación del cliente en el pedido de "
-"WooCommerce"
-
-#: inc/Integrations/Flexify_Checkout.php:288
-msgid "Para recuperar o sobrenome do contato do carrinho."
-msgstr "Para recuperar el apellido del contacto del carrito."
-
-#: inc/Integrations/Wordpress.php:174
-msgid "Para recuperar o sobrenome do usuário"
-msgstr "Para recuperar el apellido del usuario"
-
-#: inc/Integrations/Woocommerce.php:259
-msgid "Para recuperar o status do pedido do WooCommerce"
-msgstr "Para recuperar el estado del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:307
-msgid "Para recuperar o símbolo de moeda do pedido"
-msgstr "Para recuperar el símbolo de moneda del pedido"
-
-#: inc/Integrations/Flexify_Checkout.php:296
-msgid "Para recuperar o telefone de contato do carrinho."
-msgstr "Para recuperar el carrito contacte con nuestro número de teléfono."
-
-#: inc/Integrations/Woocommerce.php:243
-msgid "Para recuperar o telefone de entrega do pedido do WooCommerce"
-msgstr "Para recuperar el teléfono de entrega del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:235
-msgid "Para recuperar o telefone de faturamento do pedido do WooCommerce"
-msgstr "Para recuperar el teléfono de facturación del pedido de WooCommerce"
-
-#: inc/Integrations/Flexify_Checkout.php:233
-#: inc/Integrations/Flexify_Checkout.php:241
-msgid ""
-"Para recuperar o tempo de expiração do Pix Copia e Cola. Através da "
-"integração Flexify Checkout - Inter addon"
-msgstr ""
-"Para recuperar el tiempo de expiración del Pix Copia y Pega. A través de la "
-"integración Flexify Checkout - Inter addon"
-
-#: inc/Integrations/Woocommerce.php:799
-msgid ""
-"Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou Valor "
-"fixo."
-msgstr ""
-"Para recuperar el tipo de descuento del cupón. Ejemplo: Porcentual o Valor "
-"fijo."
-
-#: inc/Integrations/Woocommerce.php:355
-msgid "Para recuperar o título do método de pagamento do pedido do WooCommerce"
-msgstr "Para recuperar el título del método de pago del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:371
-msgid ""
-"Para recuperar o valor de um campo específico do checkout no pedido do "
-"WooCommerce. Substitua FIELD_ID pelo ID do campo do checkout, por exemplo: "
-"billing_email."
-msgstr ""
-"Para recuperar el valor de un campo específico del checkout en el pedido de "
-"WooCommerce. Reemplace FIELD_ID con el ID del campo del checkout, por "
-"ejemplo: billing_email."
-
-#: inc/Integrations/Woocommerce.php:807
-msgid ""
-"Para recuperar o valor do cupom de desconto formatado com símbolo de moeda "
-"ou percentual. Exemplo: 10%."
-msgstr ""
-"Para recuperar el valor del cupón de descuento formateado con símbolo de "
-"moneda o porcentaje. Ejemplo: 10%."
-
-#: inc/Integrations/Woocommerce.php:803
-msgid "Para recuperar o valor do cupom de desconto."
-msgstr "Para recuperar el valor del cupón de descuento."
-
-#: inc/Integrations/Woocommerce.php:323
-msgid "Para recuperar o valor total de desconto do pedido do WooCommerce"
-msgstr "Para recuperar el valor total de descuento del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:331
-msgid "Para recuperar o valor total de impostos do pedido do WooCommerce"
-msgstr "Para recuperar el valor total de impuestos del pedido de WooCommerce"
-
-#: inc/Integrations/Flexify_Checkout.php:320
-msgid "Para recuperar o valor total do carrinho."
-msgstr "Para recuperar el valor total del carrito."
-
-#: inc/Integrations/Woocommerce.php:315
-msgid "Para recuperar o valor total do pedido do WooCommerce"
-msgstr "Para recuperar el valor total del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:339
-msgid "Para recuperar o valor total reembolsado do pedido do WooCommerce"
-msgstr "Para recuperar el valor total reembolsado del pedido de WooCommerce"
-
-#: inc/Integrations/Woocommerce.php:347
-msgid "Para recuperar os códigos de cupom utilizados no pedido do WooCommerce"
-msgstr ""
-"Para recuperar los códigos de cupón utilizados en el pedido de WooCommerce"
-
-#: inc/Integrations/Wordpress.php:214
-msgid ""
-"Para recuperar um meta dado do usuário. Substitua o META_KEY pela chave que "
-"deseja recuperar o valor. Exemplo: billing_phone"
-msgstr ""
-"Para recuperar un metadato del usuario. Reemplace META_KEY con la clave de "
-"la que desea recuperar el valor. Ejemplo: billing_phone"
-
 #: inc/Validations/Country_Codes.php:172
 msgid "Paraguay"
 msgstr "Paraguay"
 
-#: inc/Builder/Actions.php:57
-msgid "Parar automação aqui"
-msgstr "Detener la automatización aquí"
-
-#: inc/Integrations/Woocommerce.php:132
-msgid "Pedido concluído"
-msgstr "Pedido completado"
-
-#: inc/Integrations/Woocommerce.php:840
-msgid "Pedido pago"
-msgstr "Pedido pagado"
-
-#: inc/Integrations/Woocommerce.php:144
-msgid "Pedido parcialmente reembolsado"
-msgstr "Pedido parcialmente reembolsado"
-
-#: inc/Integrations/Woocommerce.php:138
-msgid "Pedido totalmente reembolsado"
-msgstr "Pedido totalmente reembolsado"
-
-#: inc/Builder/Messages.php:229 inc/Integrations/Woocommerce.php:573
-#: inc/Integrations/Woocommerce.php:800
-msgid "Percentual"
-msgstr "Porcentual"
-
-#: inc/Builder/Actions.php:34
-msgid "Permite definir um tempo de espera antes da ação ser executada."
-msgstr "Permite definir un tiempo de espera antes de que se ejecute la acción."
-
-#: inc/Builder/Actions.php:46
-msgid "Permite definir uma condição para uma ação ser executada."
-msgstr "Permite definir una condición para que se ejecute una acción."
-
-#: inc/Integrations/Woocommerce.php:853
-msgid "Permite verificar a forma de entrega do pedido."
-msgstr "Permite verificar la forma de entrega del pedido."
-
-#: inc/Integrations/Woocommerce.php:849
-msgid "Permite verificar a forma de pagamento do pedido."
-msgstr "Permite verificar la forma de pago del pedido."
-
-#: inc/Integrations/Wordpress.php:235
-msgid "Permite verificar a função do usuário que disparou o acionamento."
-msgstr "Permite verificar la función del usuario que activó el disparador."
-
-#: inc/Integrations/Wordpress.php:245
-msgid "Permite verificar a função do usuário que fez o login."
-msgstr "Permite verificar la función del usuario que inició sesión."
-
-#: inc/Integrations/Wordpress.php:239
-msgid ""
-"Permite verificar metadados específicos do usuário que disparou o "
-"acionamento."
-msgstr ""
-"Permite verificar metadatos específicos del usuario que activó el disparador."
-
-#: inc/Integrations/Elementor.php:168 inc/Integrations/Flexify_Checkout.php:353
-#: inc/Integrations/Wordpress.php:249 inc/Integrations/Wordpress.php:255
-msgid ""
-"Permite verificar metadados específicos do usuário que solicitou a "
-"redefinição de senha."
-msgstr ""
-"Permite verificar metadatos específicos del usuario que solicitó la "
-"redefinición de contraseña."
-
-#: inc/Integrations/Woocommerce.php:857 inc/Integrations/Wpforms.php:213
-msgid "Permite verificar metadados específicos do usuário."
-msgstr "Permite verificar metadatos específicos del usuario."
-
-#: inc/Integrations/Woocommerce.php:861
-msgid "Permite verificar o e-mail do cliente que realizou o pedido."
-msgstr ""
-"Permite verificar el correo electrónico del cliente que realizó el pedido."
-
-#: inc/Integrations/Woocommerce.php:869
-msgid "Permite verificar o status da assinatura criada."
-msgstr "Permite verificar el estado de la suscripción creada."
-
-#: inc/Integrations/Woocommerce.php:833
-msgid "Permite verificar o status do pedido."
-msgstr "Permite verificar el estado del pedido."
-
-#: inc/Integrations/Wordpress.php:261
-msgid "Permite verificar o tipo de post que foi publicado."
-msgstr "Permite verificar el tipo de publicación que fue publicada."
-
-#: inc/Integrations/Woocommerce.php:865
-msgid "Permite verificar o valor do reembolso do pedido."
-msgstr "Permite verificar el valor del reembolso del pedido."
-
-#: inc/Integrations/Flexify_Checkout.php:345
-msgid "Permite verificar o valor total do carrinho abandonado."
-msgstr "Permite verificar el valor total del carrito abandonado."
-
-#: inc/Integrations/Woocommerce.php:837
-msgid "Permite verificar o valor total do pedido."
-msgstr "Permite verificar el valor total del pedido."
-
-#: inc/Integrations/Flexify_Checkout.php:349
-msgid "Permite verificar os itens presentes no carrinho abandonado."
-msgstr "Permite verificar los artículos presentes en el carrito abandonado."
-
-#: inc/Integrations/Woocommerce.php:845
-msgid "Permite verificar os produtos adquiridos no pedido."
-msgstr "Permite verificar los productos adquiridos en el pedido."
-
-#: inc/Integrations/Flexify_Checkout.php:357
-msgid "Permite verificar se o carrinho abandonado foi recuperado."
-msgstr "Permite verificar si el carrito abandonado fue recuperado."
-
-#: inc/Integrations/Woocommerce.php:841
-msgid "Permite verificar se o pedido foi pago."
-msgstr "Permite verificar si el pedido fue pagado."
-
-#: inc/Integrations/Elementor.php:164 inc/Integrations/Wpforms.php:209
-msgid ""
-"Permite verificar um valor específico de um campo do formulário enviado."
-msgstr ""
-"Permite verificar un valor específico de un campo del formulario enviado."
-
-#: inc/Integrations/Woocommerce.php:581
-msgid "Permitir frete grátis"
-msgstr "Permitir envío gratis"
-
 #: inc/Validations/Country_Codes.php:44
 msgid "Peru"
 msgstr "Perú"
-
-#: inc/Core/Assets.php:185
-msgid "Pesquisar"
-msgstr "Buscar"
-
-#: inc/Admin/Admin.php:235
-msgid "Pesquisar fluxos"
-msgstr "Buscar flujos"
-
-#: inc/Views/Builder/Choose_Template.php:57
-msgid "Pesquisar por fluxos"
-msgstr "Buscar por flujos"
-
-#: inc/Builder/Components.php:761 inc/Builder/Components.php:859
-msgid "Pesquise os produtos que deseja incluir"
-msgstr "Busque los productos que desea incluir"
 
 #: inc/Validations/Country_Codes.php:55
 msgid "Philippines"
@@ -2717,167 +722,17 @@ msgstr "Polonia"
 msgid "Portugal"
 msgstr "Portugal"
 
-#: inc/Integrations/Wordpress.php:114
-msgid "Post tem status alterado"
-msgstr "La publicación tiene el estado cambiado"
-
-#: inc/Admin/Admin.php:225
-msgctxt "post type general name"
-msgid "Fluxos"
-msgstr "Flujos"
-
-#: inc/Admin/Admin.php:226
-msgctxt "post type singular name"
-msgid "Fluxo"
-msgstr "Flujo"
-
-#: inc/Integrations/Woocommerce.php:487
-msgid "Prefixo para criação de cupons"
-msgstr "Prefijo para la creación de cupones"
-
-#: inc/Views/Builder/Choose_Template.php:54
-msgid "Procure por categorias ou nomes."
-msgstr "Busque por categorías o nombres."
-
-#: inc/Integrations/Woocommerce.php:844
-msgid "Produtos adquiridos"
-msgstr "Productos adquiridos"
-
-#: inc/Builder/Components.php:756
-msgid "Produtos adquiridos:"
-msgstr "Productos adquiridos:"
-
-#: inc/Builder/Components.php:858
-msgid "Produtos no carrinho:"
-msgstr "Productos en el carrito:"
-
 #: inc/Validations/Country_Codes.php:218
 msgid "Qatar"
 msgstr "Catar"
-
-#: inc/Builder/Components.php:459 inc/Builder/Components.php:490
-msgid "Qualquer status"
-msgstr "Cualquier estado"
-
-#: inc/Core/Workflows_Table.php:158
-msgid "Rascunho"
-msgstr "Borrador"
-
-#: inc/Views/Settings/Tabs/General.php:79
-msgid "Receber avisos quando WhatsApp estiver desconectado"
-msgstr "Recibir notificaciones cuando WhatsApp esté desconectado"
-
-#: inc/Core/Assets.php:189
-msgid "Recentes"
-msgstr "Recientes"
-
-#: inc/Integrations/Wordpress.php:108
-msgid "Recuperação de senha do usuário"
-msgstr "Recuperación de contraseña del usuario"
-
-#: inc/Integrations/Flexify_Checkout.php:83
-msgid ""
-"Recupere vendas não finalizadas, envie o código Pix no WhatsApp e otimize a "
-"finalização de compras, garantindo mais conversões."
-msgstr ""
-"Recupere ventas no finalizadas, envíe el código Pix en WhatsApp y optimice "
-"la finalización de compras, garantizando más conversiones."
-
-#: inc/Views/Settings/Tabs/About.php:305
-msgid "Redefinir configurações"
-msgstr "Restablecer configuraciones"
-
-#: inc/Core/Assets.php:72
-msgid "Reenviar código"
-msgstr "Reenviar código"
-
-#: inc/Admin/Components.php:85
-msgid "Reenvie o código em"
-msgstr "Reenvíe el código en"
-
-#: inc/Views/Settings/Tabs/About.php:28
-msgid "Registros de depuração"
-msgstr "Registros de depuración"
-
-#: inc/Integrations/Elementor_Forms.php:116
-msgid "Remetente"
-msgstr "Remitente"
-
-#: inc/Builder/Components.php:79 inc/Builder/Components.php:233
-#, php-format
-msgid "Remetente: %s"
-msgstr "Remitente: %s"
-
-#: inc/Integrations/Whatsapp.php:128 inc/Integrations/Whatsapp.php:171
-msgid "Remetente: *"
-msgstr "Remitente: *"
-
-#: inc/Views/Settings/Tabs/Phones.php:22
-msgid "Remetentes cadastrados"
-msgstr "Remitentes registrados"
-
-#: inc/Admin/Components.php:43 inc/Core/Assets.php:182
-msgid "Remover"
-msgstr "Eliminar"
-
-#: inc/Integrations/Woo_Subscriptions.php:92
-msgid "Renovação da assinatura expirou"
-msgstr "La renovación de la suscripción ha expirado"
-
-#: inc/Views/Settings/Tabs/About.php:335
-msgid "Reportar problemas"
-msgstr "Reportar problemas"
 
 #: inc/Validations/Country_Codes.php:97
 msgid "Republic of the Congo"
 msgstr "República del Congo"
 
-#: inc/API/License.php:305
-msgid "Resposta desconhecida"
-msgstr "Respuesta desconocida"
-
-#: inc/API/License.php:330
-msgid "Resposta vazia."
-msgstr "Respuesta vacía."
-
-#: inc/Core/Workflows_Table.php:136 inc/Core/Workflows_Table.php:209
-msgid "Restaurar"
-msgstr "Restaurar"
-
-#: inc/Builder/Components.php:1164
-msgid "Retrair"
-msgstr "Retraer"
-
-#: inc/Views/Builder/Navbar.php:20
-msgid "Rodar teste"
-msgstr "Ejecutar prueba"
-
-#: inc/Views/Builder/Navbar.php:20
-msgid ""
-"Rodar um teste da automação. Obs.: Atrasos e condições não são considerados."
-msgstr ""
-"Ejecutar una prueba de la automatización. Obs.: Los retrasos y condiciones "
-"no son considerados."
-
 #: inc/Validations/Country_Codes.php:35
 msgid "Romania"
 msgstr "Rumania"
-
-#: inc/Views/Settings/Tabs/General.php:59
-msgid "Rota para envio de mensagens de mídia:"
-msgstr "Ruta para el envío de mensajes de medios:"
-
-#: inc/Views/Settings/Tabs/General.php:54
-msgid "Rota para envio de mensagens de texto:"
-msgstr "Ruta para el envío de mensajes de texto:"
-
-#: inc/Integrations/Woocommerce.php:278
-msgid "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
-msgstr "Calle de las Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
-
-#: inc/Integrations/Woocommerce.php:286 inc/Integrations/Woocommerce.php:366
-msgid "Rua das Margaridas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
-msgstr "Calle de las Margaritas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
 
 #: inc/Validations/Country_Codes.php:25
 msgid "Russia"
@@ -2891,10 +746,6 @@ msgstr "Ruanda"
 msgid "Réunion"
 msgstr "Reunión"
 
-#: inc/Validations/Country_Codes.php:167
-msgid "Saint Barthelemy"
-msgstr "San Bartolomé"
-
 #: inc/Validations/Country_Codes.php:123
 msgid "Saint Helena"
 msgstr "Santa Elena"
@@ -2907,12 +758,6 @@ msgstr "San Martín"
 msgid "Saint Pierre and Miquelon"
 msgstr "San Pedro y Miquelón"
 
-#: inc/Builder/Components.php:160 inc/Builder/Components.php:194
-#: inc/Builder/Components.php:284 inc/Builder/Components.php:416
-#: inc/Builder/Components.php:994 inc/Views/Settings.php:61
-msgid "Salvar alterações"
-msgstr "Guardar cambios"
-
 #: inc/Validations/Country_Codes.php:190
 msgid "Samoa"
 msgstr "Samoa"
@@ -2924,87 +769,6 @@ msgstr "San Marino"
 #: inc/Validations/Country_Codes.php:211
 msgid "Saudi Arabia"
 msgstr "Arabia Saudita"
-
-#: inc/Core/Helpers.php:35
-msgid "segundo"
-msgstr "segundo"
-
-#: inc/Builder/Components.php:306
-msgid "Segundo (s)"
-msgstr "Segundo(s)"
-
-#: inc/Admin/Components.php:87 inc/Core/Helpers.php:35
-msgid "segundos"
-msgstr "segundos"
-
-#: inc/Builder/Components.php:1052
-msgid "Selecione o tipo de atraso da próxima ação"
-msgstr "Seleccione el tipo de retraso de la próxima acción"
-
-#: inc/Integrations/Woocommerce.php:591
-msgid "Selecione o tipo de expiração"
-msgstr "Seleccione el tipo de expiración"
-
-#: inc/Builder/Components.php:473
-msgid "Selecione um formulário"
-msgstr "Seleccione un formulario"
-
-#: inc/Builder/Components.php:795
-msgid "Selecione um método de entrega"
-msgstr "Seleccione un método de entrega"
-
-#: inc/Builder/Components.php:778
-msgid "Selecione um método de pagamento"
-msgstr "Seleccione un método de pago"
-
-#: inc/Views/Settings/Tabs/General.php:15
-msgid ""
-"Selecione um país para definir o código padrão. O código padrão do país será "
-"usado quando não for possível obter o código de país do telefone."
-msgstr ""
-"Seleccione un país para definir el código predeterminado. El código "
-"predeterminado del país se usará cuando no sea posible obtener el código de "
-"país del teléfono."
-
-#: inc/Builder/Components.php:727
-msgid "Selecione um status"
-msgstr "Seleccione un estado"
-
-#: inc/Builder/Components.php:702
-msgid "Selecione um tipo de post"
-msgstr "Seleccione un tipo de publicación"
-
-#: inc/Builder/Components.php:911
-msgid "Selecione uma condição"
-msgstr "Seleccione una condición"
-
-#: inc/Builder/Components.php:1078 inc/Integrations/Woocommerce.php:603
-msgid "Selecione uma data"
-msgstr "Seleccione una fecha"
-
-#: inc/Views/Builder/Triggers.php:17
-msgid ""
-"Selecione uma integração de acionamento para iniciar o fluxo da sua "
-"automação."
-msgstr ""
-"Seleccione una integración de activación para iniciar el flujo de su "
-"automatización."
-
-#: inc/Views/Builder/Actions.php:11
-msgid "Selecione uma ou mais ações para o fluxo da automação."
-msgstr "Seleccione una o más acciones para el flujo de la automatización."
-
-#: inc/Core/Helpers.php:39
-msgid "semana"
-msgstr "semana"
-
-#: inc/Builder/Components.php:310
-msgid "Semana (s)"
-msgstr "Semana(s)"
-
-#: inc/Core/Helpers.php:39
-msgid "semanas"
-msgstr "semanas"
 
 #: inc/Views/Settings/Tabs/General.php:60
 msgid "send-message/media"
@@ -3022,10 +786,6 @@ msgstr "Senegal"
 msgid "Serbia"
 msgstr "Serbia"
 
-#: inc/Views/Settings/Tabs/About.php:95
-msgid "Servidor"
-msgstr "Servidor"
-
 #: inc/Validations/Country_Codes.php:102
 msgid "Seychelles"
 msgstr "Seychelles"
@@ -3033,18 +793,6 @@ msgstr "Seychelles"
 #: inc/Validations/Country_Codes.php:87
 msgid "Sierra Leone"
 msgstr "Sierra Leona"
-
-#: inc/Builder/Components.php:843 inc/Builder/Messages.php:230
-#: inc/Builder/Messages.php:231 inc/Integrations/Elementor_Forms.php:152
-#: inc/Integrations/Elementor_Forms.php:195
-#: inc/Views/Settings/Tabs/About.php:83 inc/Views/Settings/Tabs/About.php:125
-#: inc/Views/Settings/Tabs/About.php:141 inc/Views/Settings/Tabs/About.php:160
-msgid "Sim"
-msgstr "Sí"
-
-#: inc/Views/Settings/Tabs/About.php:327
-msgid "Sim, desejo redefinir"
-msgstr "Sí, deseo restablecer"
 
 #: inc/Validations/Country_Codes.php:57
 msgid "Singapore"
@@ -3058,14 +806,6 @@ msgstr "Eslovaquia"
 msgid "Slovenia"
 msgstr "Eslovenia"
 
-#: inc/Builder/Actions.php:68
-msgid "Snippet PHP"
-msgstr "Snippet PHP"
-
-#: inc/Admin/Components.php:145
-msgid "Sobre"
-msgstr "Acerca de"
-
 #: inc/Validations/Country_Codes.php:183
 msgid "Solomon Islands"
 msgstr "Islas Salomón"
@@ -3073,10 +813,6 @@ msgstr "Islas Salomón"
 #: inc/Validations/Country_Codes.php:106
 msgid "Somalia"
 msgstr "Somalia"
-
-#: inc/Core/Assets.php:190
-msgid "Sorrisos e Pessoas"
-msgstr "Sonrisas y Personas"
 
 #: inc/Validations/Country_Codes.php:27
 msgid "South Africa"
@@ -3102,49 +838,9 @@ msgstr "Sri Lanka"
 msgid "Status"
 msgstr "Estado"
 
-#: inc/Integrations/Woocommerce.php:868
-msgid "Status da assinatura"
-msgstr "Estado de la suscripción"
-
-#: inc/Builder/Components.php:828
-msgid "Status da assinatura: *"
-msgstr "Estado de la suscripción: *"
-
-#: inc/Views/License.php:35
-msgid "Status da licença:"
-msgstr "Estado de la licencia:"
-
-#: inc/Integrations/Woocommerce.php:150
-msgid "Status de um pedido alterado"
-msgstr "Estado de un pedido cambiado"
-
-#: inc/Views/Builder/Navbar.php:24
-msgid "Status do fluxo"
-msgstr "Estado del flujo"
-
-#: inc/Builder/Components.php:456 inc/Integrations/Woocommerce.php:832
-msgid "Status do pedido"
-msgstr "Estado del pedido"
-
-#: inc/Builder/Components.php:724
-msgid "Status do pedido: *"
-msgstr "Estado del pedido: *"
-
 #: inc/Builder/Components.php:487
 msgid "Status do post"
 msgstr ""
-
-#: inc/Views/Settings/Tabs/About.php:75
-msgid "Status do sistema:"
-msgstr "Estado del sistema:"
-
-#: inc/Views/License.php:56
-msgid "Sua chave de licença:"
-msgstr "Su clave de licencia:"
-
-#: inc/Integrations/Elementor_Forms.php:186
-msgid "Substitua informações com "
-msgstr "Reemplace información con "
 
 #: inc/Validations/Country_Codes.php:103
 msgid "Sudan"
@@ -3170,10 +866,6 @@ msgstr "Siria"
 msgid "São Tomé and Príncipe"
 msgstr "Santo Tomé y Príncipe"
 
-#: inc/Core/Assets.php:196
-msgid "Símbolos"
-msgstr "Símbolos"
-
 #: inc/Validations/Country_Codes.php:204
 msgid "Taiwan"
 msgstr "Taiwán"
@@ -3182,90 +874,13 @@ msgstr "Taiwán"
 msgid "Tajikistan"
 msgstr "Tayikistán"
 
-#: inc/Views/Settings/Tabs/About.php:174
-msgid "Tamanho máximo da postagem do PHP:"
-msgstr "Tamaño máximo de publicación de PHP:"
-
-#: inc/Views/Settings/Tabs/About.php:262
-msgid "Tamanho máximo de envio do PHP:"
-msgstr "Tamaño máximo de envío de PHP:"
-
 #: inc/Validations/Country_Codes.php:109
 msgid "Tanzania"
 msgstr "Tanzania"
 
-#: inc/Views/Settings/Tabs/Phones.php:14
-msgid "Telefone para testes"
-msgstr "Teléfono para pruebas"
-
-#: inc/Admin/Components.php:133
-msgid "Telefones"
-msgstr "Teléfonos"
-
-#: inc/Core/Assets.php:109
-msgid "Tem certeza que deseja desativar sua licença?"
-msgstr "¿Está seguro de que desea desactivar su licencia?"
-
-#: inc/Core/Assets.php:177
-msgid "Tem certeza que deseja excluir esta ação?"
-msgstr "¿Está seguro de que desea eliminar esta acción?"
-
-#: inc/Core/Assets.php:73
-msgid "Tem certeza que deseja limpar os registros de depuração?"
-msgstr "¿Está seguro de que desea limpiar los registros de depuración?"
-
-#: inc/Core/Assets.php:71
-msgid "Tem certeza que deseja remover este remetente?"
-msgstr "¿Está seguro de que desea eliminar este remitente?"
-
-#: inc/Builder/Actions.php:33
-msgid "Tempo de espera"
-msgstr "Tiempo de espera"
-
-#: inc/Builder/Components.php:903
-msgid "Termina com"
-msgstr "Termina con"
-
 #: inc/Validations/Country_Codes.php:58
 msgid "Thailand"
 msgstr "Tailandia"
-
-#: inc/Views/License.php:51
-#, php-format
-msgid "Tipo da licença: %s"
-msgstr "Tipo de licencia: %s"
-
-#: inc/Integrations/Elementor_Forms.php:211
-msgid "Tipo de mídia"
-msgstr "Tipo de medio"
-
-#: inc/Integrations/Whatsapp.php:187
-msgid "Tipo de mídia: *"
-msgstr "Tipo de medio: *"
-
-#: inc/Integrations/Wordpress.php:260
-msgid "Tipo de post"
-msgstr "Tipo de publicación"
-
-#: inc/Builder/Components.php:699
-msgid "Tipo de post: *"
-msgstr "Tipo de publicación: *"
-
-#: inc/Integrations/Woocommerce.php:568
-msgid "Tipo e valor do desconto: *"
-msgstr "Tipo y valor del descuento: *"
-
-#: inc/Builder/Messages.php:234
-#, php-format
-msgid "Tipo: %s"
-msgstr "Tipo: %s"
-
-#. parent page slug
-#. page title
-#: inc/Admin/Admin.php:62 inc/Admin/Admin.php:63 inc/Admin/Admin.php:234
-#: inc/Views/Builder/Choose_Template.php:60
-msgid "Todos os fluxos"
-msgstr "Todos los flujos"
 
 #: inc/Validations/Country_Codes.php:83
 msgid "Togo"
@@ -3278,10 +893,6 @@ msgstr "Tokelau"
 #: inc/Validations/Country_Codes.php:182
 msgid "Tonga"
 msgstr "Tonga"
-
-#: joinotify.php:184 joinotify.php:195
-msgid "Trapaceando?"
-msgstr "¿Haciendo trampa?"
 
 #: inc/Validations/Country_Codes.php:73
 msgid "Tunisia"
@@ -3299,10 +910,6 @@ msgstr "Turkmenistán"
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
-#: inc/Builder/Components.php:989
-msgid "Título do seu fluxo"
-msgstr "Título de su flujo"
-
 #: inc/Validations/Country_Codes.php:110
 msgid "Uganda"
 msgstr "Uganda"
@@ -3310,20 +917,6 @@ msgstr "Uganda"
 #: inc/Validations/Country_Codes.php:147
 msgid "Ukraine"
 msgstr "Ucrania"
-
-#: inc/Core/Updater.php:456
-#, php-format
-msgid ""
-"Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. "
-"<a href=\"%s\">Atualize agora</a>."
-msgstr ""
-"Una nueva versión del plugin <strong>Joinotify</strong> (%s) está disponible."
-" <a href=\"%s\">Actualice ahora</a>."
-
-#: inc/Core/Updater.php:228
-msgid "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
-msgstr ""
-"Una nueva versión del plugin <strong>Joinotify</strong> está disponible."
 
 #: inc/Validations/Country_Codes.php:215
 msgid "United Arab Emirates"
@@ -3337,223 +930,29 @@ msgstr "Reino Unido"
 msgid "United States"
 msgstr "Estados Unidos"
 
-#: inc/Integrations/Whatsapp.php:204
-msgid "URL da mídia"
-msgstr "URL del medio"
-
 #: inc/Validations/Country_Codes.php:175
 msgid "Uruguay"
 msgstr "Uruguay"
-
-#: inc/Core/Assets.php:179
-msgid "Usar esta mídia"
-msgstr "Usar este medio"
-
-#: inc/Core/Assets.php:186
-msgid "Use a tecla TAB para inserir um emoji rapidamente"
-msgstr "Use la tecla TAB para insertar un emoji rápidamente"
-
-#: inc/Integrations/Whatsapp.php:50
-msgid ""
-"Use o maior serviço de mensagens do mundo para notificar seu cliente em "
-"eventos do seu site."
-msgstr ""
-"Use el mayor servicio de mensajes del mundo para notificar a su cliente en "
-"eventos de su sitio."
-
-#: inc/Integrations/Woocommerce.php:230 inc/Integrations/Wordpress.php:185
-msgid "usuario@exemplo.com"
-msgstr "usuario@ejemplo.com"
 
 #: inc/Validations/Country_Codes.php:227
 msgid "Uzbekistan"
 msgstr "Uzbekistán"
 
-#: inc/Builder/Components.php:1256
-msgid "Valor da variável"
-msgstr "Valor variable"
-
-#: inc/Integrations/Elementor.php:163 inc/Integrations/Wpforms.php:208
-msgid "Valor de um campo do formulário"
-msgstr "Valor de un campo del formulario"
-
-#: inc/Builder/Components.php:871
-msgid "Valor do campo"
-msgstr "Valor del campo"
-
-#: inc/Builder/Components.php:870
-msgid "Valor do campo:"
-msgstr "Valor del campo:"
-
-#: inc/Integrations/Woocommerce.php:576
-msgid "Valor do desconto"
-msgstr "Valor del descuento"
-
-#: inc/Builder/Components.php:690
-msgid "Valor do meta dado"
-msgstr "Valor del metadato"
-
-#: inc/Builder/Components.php:821 inc/Integrations/Woocommerce.php:864
-msgid "Valor do reembolso"
-msgstr "Valor del reembolso"
-
-#: inc/Builder/Components.php:814
-msgid "Valor do reembolso: *"
-msgstr "Valor del reembolso: *"
-
-#: inc/Builder/Messages.php:229 inc/Integrations/Woocommerce.php:800
-msgid "Valor fixo"
-msgstr "Valor fijo"
-
-#: inc/Views/Settings/Tabs/About.php:227
-msgid "Valor mínimo recomendado é 10000"
-msgstr "El valor mínimo recomendado es 10000"
-
-#: inc/Views/Settings/Tabs/About.php:249
-msgid "Valor mínimo recomendado é 128M"
-msgstr "El valor mínimo recomendado es 128M"
-
-#: inc/Views/Settings/Tabs/About.php:205
-msgid "Valor mínimo recomendado é 180"
-msgstr "El valor mínimo recomendado es 180"
-
-#: inc/Views/Settings/Tabs/About.php:183 inc/Views/Settings/Tabs/About.php:271
-msgid "Valor mínimo recomendado é 64M"
-msgstr "El valor mínimo recomendado es 64M"
-
-#: inc/Builder/Components.php:852 inc/Integrations/Flexify_Checkout.php:344
-msgid "Valor total do carrinho"
-msgstr "Valor total del carrito"
-
-#: inc/Builder/Components.php:851
-msgid "Valor total do carrinho:"
-msgstr "Valor total del carrito:"
-
-#: inc/Builder/Components.php:746 inc/Integrations/Woocommerce.php:836
-msgid "Valor total do pedido"
-msgstr "Valor total del pedido"
-
-#: inc/Builder/Components.php:739
-msgid "Valor total do pedido: *"
-msgstr "Valor total del pedido: *"
-
-#: inc/Builder/Components.php:689
-msgid "Valor: *"
-msgstr "Valor: *"
-
 #: inc/Validations/Country_Codes.php:184
 msgid "Vanuatu"
 msgstr "Vanuatu"
-
-#: inc/Builder/Components.php:942
-msgid "Variáveis de texto"
-msgstr "Variables de texto"
-
-#: inc/Integrations/Elementor_Forms.php:186
-msgid "variáveis de texto"
-msgstr "variables de texto"
-
-#: inc/Integrations/Woocommerce.php:629
-msgid "Variáveis de texto:"
-msgstr "Variables de texto:"
-
-#: inc/Views/Settings/Tabs/About.php:218
-msgid "Variáveis máximas de entrada do PHP:"
-msgstr "Variables máximas de entrada de PHP:"
 
 #: inc/Validations/Country_Codes.php:146
 msgid "Vatican City"
 msgstr "Ciudad del Vaticano"
 
-#: inc/Builder/Components.php:898
-msgid "Vazio"
-msgstr "Vacío"
-
 #: inc/Validations/Country_Codes.php:51
 msgid "Venezuela"
 msgstr "Venezuela"
 
-#: inc/Admin/Admin.php:233
-msgid "Ver fluxo"
-msgstr "Ver flujo"
-
-#: inc/Views/Settings/Tabs/About.php:23
-msgid "Ver registros de depuração"
-msgstr "Ver registros de depuración"
-
-#: inc/Builder/Components.php:585
-msgid "Verdadeiro"
-msgstr "Verdadero"
-
-#: inc/Core/Updater.php:288
-msgid "Verificar atualizações"
-msgstr "Verificar actualizaciones"
-
-#: inc/Admin/Components.php:39
-msgid "Verificar conexão"
-msgstr "Comprobar la conexión"
-
-#: inc/Builder/Messages.php:119
-msgid "Verificar se o pedido foi pago"
-msgstr "Verificar si el pedido fue pagado"
-
-#: inc/Builder/Messages.php:119
-msgid "Verificar se o pedido não foi pago"
-msgstr "Verificar si el pedido no fue pagado"
-
-#: inc/Admin/Components.php:72
-msgid "Verifique seu WhatsApp"
-msgstr "Verifique su WhatsApp"
-
-#: inc/Views/Settings/Tabs/About.php:144
-#, php-format
-msgid "Versão %s"
-msgstr "Versión %s"
-
-#: inc/Views/Settings/Tabs/About.php:92
-#, php-format
-msgid "Versão do Joinotify: %s"
-msgstr "Versión de Joinotify: %s"
-
-#: inc/Views/Settings/Tabs/About.php:97
-msgid "Versão do PHP:"
-msgstr "Versión de PHP:"
-
-#: inc/Views/Settings/Tabs/About.php:78
-msgid "Versão do WordPress:"
-msgstr "Versión de WordPress:"
-
-#: inc/Core/Assets.php:194
-msgid "Viajens e Lugares"
-msgstr "Viajes y Lugares"
-
 #: inc/Validations/Country_Codes.php:61
 msgid "Vietnam"
 msgstr "Vietnam"
-
-#: inc/Views/License.php:83
-msgid ""
-"Você pode fazer upload do arquivo .key da licença para fazer sua ativação "
-"manual."
-msgstr ""
-"Puede cargar el archivo .key de la licencia para realizar su activación "
-"manual."
-
-#: inc/Views/Builder/Choose_Template.php:77 inc/Views/Builder/Triggers.php:83
-msgid "Voltar"
-msgstr "Volver"
-
-#: inc/Views/Builder/Choose_Template.php:45 inc/Views/Builder/Navbar.php:63
-msgid "Voltar para o painel"
-msgstr "Volver al panel"
-
-#: inc/Views/License.php:37
-msgid "Válida"
-msgstr "Válida"
-
-#: inc/Validations/Media_Types.php:38
-msgid "Vídeo"
-msgstr "Vídeo"
 
 #: inc/Validations/Country_Codes.php:187
 msgid "Wallis and Futuna"
@@ -3566,14 +965,6 @@ msgstr "Sáhara Occidental"
 #: inc/Integrations/Whatsapp.php:49
 msgid "WhatsApp"
 msgstr "WhatsApp"
-
-#: inc/Integrations/Whatsapp.php:83
-msgid "WhatsApp: Mensagem de mídia"
-msgstr "WhatsApp: Mensaje de medios"
-
-#: inc/Integrations/Whatsapp.php:70
-msgid "WhatsApp: Mensagem de texto"
-msgstr "WhatsApp: Mensaje de texto"
 
 #: inc/Builder/Utils.php:96 inc/Integrations/Woocommerce.php:94
 #: inc/Integrations/Woocommerce.php:169
@@ -3606,14 +997,2561 @@ msgstr "Zambia"
 msgid "Zimbabwe"
 msgstr "Zimbabue"
 
-#: inc/Validations/Media_Types.php:40
-msgid "Áudio"
-msgstr "Audio"
-
 #: inc/Validations/Country_Codes.php:135
 msgid "Åland Islands"
 msgstr "Islas Åland"
 
+#: inc/Integrations/Flexify_Checkout.php:235
+#, php-format
+msgid "%s minutes"
+msgstr "%s minutos"
+
+#: inc/Integrations/Woocommerce.php:294
+msgid "1x - Men's cotton T-shirt (Sample product)"
+msgstr "1x - Camiseta de algodón masculina (Producto de ejemplo)"
+
+#: inc/Integrations/Woocommerce.php:294
+msgid "1x - Sunglasses with UV protection (Sample product)"
+msgstr "1x - Gafas de sol con protección UV (Producto de ejemplo)"
+
+#: inc/Integrations/Flexify_Checkout.php:236
+#: inc/Integrations/Flexify_Checkout.php:244
+msgid "30 minutes"
+msgstr "30 minutos"
+
+#: inc/Builder/Messages.php:134
+#, php-format
+msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
+msgstr "<span class=\"builder-placeholder\">%s</span> no está vacío"
+
+#: inc/Builder/Messages.php:132
+#, php-format
+msgid "<span class=\"builder-placeholder\">%s</span> is empty"
+msgstr "<span class=\"builder-placeholder\">%s</span> está vacío"
+
+#: inc/Builder/Components.php:1107
+msgid ""
+"<strong>Warning!</strong> Incorrect use of PHP Snippets may cause errors on "
+"the site."
+msgstr ""
+"<strong>¡Atención!</strong> El uso incorrecto de Snippets PHP puede causar "
+"errores en el sitio."
+
+#: inc/Integrations/Whatsapp.php:120
+msgid ""
+"<strong>Tip: </strong> You can make text bold, underlined, or strikethrough "
+"using WhatsApp variables. See more details in the <a "
+"href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" "
+"class=\"alert-link\" target=\"_blank\">Joinotify documentation</a>. <a "
+"id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" "
+"data-bs-dismiss=\"alert\" href=\"#\">Do not show again</a>"
+msgstr ""
+"<strong>Consejo: </strong> Puedes dejar textos en negrita, subrayados o "
+"tachados con variables de WhatsApp. Consulta más detalles en la <a "
+"href=\"https://ajuda.meumouse.com/docs/joinotify/placeholders\" "
+"class=\"alert-link\" target=\"_blank\">documentación de Joinotify</a>. <a "
+"id=\"joinotify_dismiss_placeholders_tip\" class=\"alert-link mt-4 d-block\" "
+"data-bs-dismiss=\"alert\" href=\"#\">No mostrar de nuevo</a>"
+
+#: joinotify.php:171
+msgid ""
+"<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your "
+"hosting support to upgrade."
+msgstr ""
+"<strong>Joinotify</strong> requiere la versión de PHP 7.4 o superior. "
+"Contacta con el soporte de tu alojamiento para realizar la actualización."
+
+#: inc/Cron/Routines.php:86
+msgid "Every 6 hours"
+msgstr "Cada 6 horas"
+
+#: inc/API/License.php:387
+msgid "The cURL extension is missing."
+msgstr "Falta la extensión cURL."
+
+#: inc/Builder/Components.php:1085
+msgid ""
+"The WP-CRON function is disabled on this site. Enable it to use the Wait "
+"Time action."
+msgstr ""
+"La función WP-CRON está deshabilitada en este sitio. Actívala para usar la "
+"acción Tiempo de espera."
+
+#: inc/Core/Updater.php:242
+msgid "The plugin version <strong>Joinotify</strong> is up to date."
+msgstr "La versión del plugin <strong>Joinotify</strong> es la más reciente."
+
+#: inc/Views/Settings/Tabs/About.php:105
+msgid "The minimum required PHP version is 7.2"
+msgstr "La versión mínima requerida de PHP es 7.2"
+
+#: inc/Integrations/Flexify_Checkout.php:135
+msgid "Cart abandonment"
+msgstr "Abandono del carrito"
+
+#: inc/Integrations/Flexify_Checkout.php:155
+msgid "Order abandonment"
+msgstr "Abandono del pedido"
+
+#: inc/Builder/Components.php:578 inc/Builder/Components.php:601
+#: inc/Builder/Components.php:1186
+msgid "Add action"
+msgstr "Añadir acción"
+
+#: inc/Integrations/Elementor_Forms.php:224
+msgid "Add media"
+msgstr "Añadir medio"
+
+#: inc/Integrations/Whatsapp.php:197
+msgid "Add media: *"
+msgstr "Añadir medio: *"
+
+#: inc/Admin/Admin.php:73 inc/Admin/Admin.php:74 inc/Admin/Admin.php:165
+#: inc/Admin/Admin.php:230
+#. parent page slug
+#. page title
+msgid "Add new flow"
+msgstr "Añadir nuevo flujo"
+
+#: inc/Views/Settings/Tabs/Phones.php:35
+msgid "Add new sender for WhatsApp"
+msgstr "Añadir nuevo remitente para WhatsApp"
+
+#: inc/Views/Settings/Tabs/Phones.php:30
+msgid "Add new phone"
+msgstr "Añadir nuevo teléfono"
+
+#: inc/Views/Builder/Actions.php:10
+msgid "Add an action"
+msgstr "Añadir una acción"
+
+#: inc/Integrations/Elementor_Forms.php:165
+msgid ""
+"Add your text to be sent to the WhatsApp user. Add text variables to "
+"replace information. Use {{ field_id=[FIELD_ID] }} replacing FIELD_ID with "
+"the corresponding field ID to retrieve field information."
+msgstr ""
+"Añade tu texto para enviar al usuario de WhatsApp. Añade variables de texto "
+"para reemplazar información. Usa {{ field_id=[FIELD_ID] }} reemplazando "
+"FIELD_ID con el ID del campo correspondiente para recuperar la información "
+"de un campo."
+
+#: inc/Builder/Actions.php:69
+msgid "Add a function, set of actions, and/or filters in PHP."
+msgstr "Añade una función, conjunto de acciones y/o filtros en PHP."
+
+#: inc/Core/Assets.php:191
+msgid "Animals and Nature"
+msgstr "Animales y Naturaleza"
+
+#: inc/Core/Helpers.php:41
+msgid "year"
+msgstr "año"
+
+#: inc/Builder/Components.php:312
+msgid "Year(s)"
+msgstr "Año(s)"
+
+#: inc/Core/Helpers.php:41
+msgid "years"
+msgstr "años"
+
+#: inc/Views/Settings/Tabs/About.php:323
+msgid ""
+"Resetting the plugin settings will remove all options, returning to the "
+"original state. Your license will not be removed."
+msgstr ""
+"Al restablecer la configuración del plugin, todas las opciones serán "
+"eliminadas, volviendo al estado original. Tu licencia no será eliminada."
+
+#: inc/Views/Builder/Choose_Template.php:93
+msgid "Drag and drop the .json file here"
+msgstr "Arrastra y suelta el archivo .json aquí"
+
+#: inc/Views/License.php:90
+msgid "Drag and drop the .key file here"
+msgstr "Arrastra y suelta el archivo .key aquí"
+
+#: inc/Core/Assets.php:75 inc/Core/Assets.php:201
+msgid "Changes will not be saved."
+msgstr "Los cambios no se guardarán."
+
+#: inc/Integrations/Woo_Subscriptions.php:98
+msgid "Subscription status changed to canceled"
+msgstr "La suscripción tiene el estado cambiado a cancelado"
+
+#: inc/Integrations/Woo_Subscriptions.php:74
+msgid "Subscription is activated"
+msgstr "La suscripción está activada"
+
+#: inc/Views/License.php:49
+#, php-format
+msgid "Subscription: Clube M - %s"
+msgstr "Suscripción: Club M - %s"
+
+#: inc/Views/Settings/Tabs/About.php:320
+msgid "Warning! Do you really want to reset the settings?"
+msgstr "¡Atención! ¿Realmente deseas restablecer la configuración?"
+
+#: inc/Core/Assets.php:176 inc/Views/Settings/Tabs/About.php:87
+msgid "Active"
+msgstr "Activo"
+
+#: inc/Views/Settings/Tabs/About.php:49
+msgid "Enable automatic updates"
+msgstr "Activar actualizaciones automáticas"
+
+#: inc/Integrations/Woocommerce.php:475
+msgid "Enable Discount Coupon action"
+msgstr "Activar acción Cupón de descuento"
+
+#: inc/Views/License.php:122
+msgid "Activate license"
+msgstr "Activar licencia"
+
+#: inc/Views/Settings/Tabs/About.php:13
+msgid "Enable debug mode"
+msgstr "Activar modo de depuración"
+
+#: inc/Integrations/Integrations_Base.php:81
+msgid "Activate plugin"
+msgstr "Activar plugin"
+
+#: inc/Views/Settings/Tabs/General.php:34
+msgid "Enable Proxy API"
+msgstr "Activar Proxy API"
+
+#: inc/Integrations/Woocommerce.php:476
+msgid "Enable this option to add the Discount Coupon action in WooCommerce flows."
+msgstr ""
+"Activa esta opción para añadir la acción Cupón de descuento en flujos de "
+"WooCommerce."
+
+#: inc/Views/Settings/Tabs/General.php:35
+msgid ""
+"Enable this option to activate endpoints on this site to process Joinotify "
+"API requests."
+msgstr ""
+"Activa esta opción para habilitar endpoints en este sitio para procesar "
+"solicitudes de API de Joinotify."
+
+#: inc/Views/Settings/Tabs/About.php:14
+msgid ""
+"Enable this option to activate debug mode to check error messages and "
+"relevant information."
+msgstr ""
+"Activa esta opción para habilitar el modo de depuración para verificar "
+"mensajes de error e información relevante."
+
+#: inc/Views/Settings/Tabs/General.php:80
+msgid ""
+"Enable this option for send a notification for the sender when connection "
+"is not established"
+msgstr ""
+"Habilite esta opción para enviar una notificación al remitente cuando no se "
+"establece la conexión."
+
+#: inc/Integrations/Woocommerce.php:498
+msgid ""
+"Enable this option to ignore previously processed actions when the same "
+"trigger occurs. This option is useful when scheduled actions are being "
+"triggered again."
+msgstr ""
+"Activa esta opción para que las acciones ya procesadas previamente sean "
+"ignoradas cuando ocurra el mismo disparador. Esta opción es útil cuando las "
+"acciones programadas se están disparando nuevamente."
+
+#: inc/Views/Settings/Tabs/About.php:50
+msgid ""
+"Enable this option so that the Joinotify plugin is automatically updated "
+"whenever possible."
+msgstr ""
+"Activa esta opción para que el plugin Joinotify se actualice "
+"automáticamente siempre que sea posible."
+
+#: inc/Core/Assets.php:193
+msgid "Activities"
+msgstr "Actividades"
+
+#. Description of the plugin
+msgid ""
+"Increase your customer's satisfaction by automating WhatsApp message "
+"sending with Joinotify."
+msgstr ""
+"Aumente la satisfacción de sus clientes automatizando el envío de mensajes "
+"vía WhatsApp con Joinotify."
+
+#: inc/Views/License.php:22 inc/Views/Settings.php:23
+msgid ""
+"Increase your customer's satisfaction by automating WhatsApp message "
+"sending with Joinotify. If you need help setting it up, visit our"
+msgstr ""
+"Aumenta la satisfacción de tu cliente automatizando el envío de mensajes a "
+"través de WhatsApp con Joinotify. Si necesitas ayuda para configurar, "
+"visita nuestra"
+
+#: inc/Integrations/Wpforms.php:71
+msgid ""
+"Automate message sending when receiving a WPForms form with a phone number. "
+"Keep your customers informed in real-time."
+msgstr ""
+"Automatiza el envío de mensajes al recibir un formulario WPForms con "
+"teléfono. Mantén a tus clientes informados en tiempo real."
+
+#: inc/Integrations/Wordpress.php:74
+msgid "Automate message sending on event triggers in WordPress."
+msgstr "Automatiza el envío de mensajes en eventos de activación en WordPress."
+
+#: inc/Builder/Components.php:713
+msgid "Post author: *"
+msgstr "Autor del post: *"
+
+#: inc/Views/Settings/Tabs/About.php:39
+msgid "Download file"
+msgstr "Descargar archivo"
+
+#: inc/Core/Assets.php:197
+msgid "Flags"
+msgstr "Banderas"
+
+#: inc/Validations/Country_Codes.php:48
+msgid "Brazil"
+msgstr "Brasil"
+
+#: inc/Builder/Messages.php:128
+#, php-format
+msgid ""
+"Field with ID <span class=\"builder-placeholder\">%s</span> %s: <span "
+"class=\"builder-placeholder\">%s</span>"
+msgstr ""
+"Campo con ID <span class=\"builder-placeholder\">%s</span> %s: <span "
+"class=\"builder-placeholder\">%s</span>"
+
+#: inc/Builder/Messages.php:126
+#, php-format
+msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is not empty"
+msgstr "Campo con ID <span class=\"builder-placeholder\">%s</span> no está vacío"
+
+#: inc/Builder/Messages.php:124
+#, php-format
+msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is empty"
+msgstr "Campo con ID <span class=\"builder-placeholder\">%s</span> está vacío"
+
+#: inc/Builder/Components.php:833
+msgid "Canceled"
+msgstr "Cancelada"
+
+#: inc/Builder/Components.php:159 inc/Builder/Components.php:193
+#: inc/Builder/Components.php:283 inc/Builder/Components.php:415
+#: inc/Builder/Components.php:993 inc/Views/Builder/Choose_Template.php:108
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: inc/Integrations/Flexify_Checkout.php:145
+msgid "Abandoned cart is recovered"
+msgstr "El carrito abandonado es recuperado"
+
+#: inc/Integrations/Flexify_Checkout.php:165
+msgid "Lost cart"
+msgstr "Carrito perdido"
+
+#: inc/Integrations/Flexify_Checkout.php:356
+msgid "Recovered cart"
+msgstr "Carrito recuperado"
+
+#: inc/Integrations/Woocommerce.php:358
+msgid "Credit card"
+msgstr "Tarjeta de crédito"
+
+#: inc/Views/License.php:23 inc/Views/Settings.php:24
+#: inc/Views/Builder/Navbar.php:69
+msgid "Help Center"
+msgstr "Centro de ayuda"
+
+#: inc/API/Controller.php:152
+msgid "Invalid or missing API key."
+msgstr "Clave de API inválida o ausente."
+
+#: inc/Views/Settings/Tabs/General.php:64
+msgid "API Key:"
+msgstr "Clave de API:"
+
+#: inc/Builder/Components.php:685
+msgid "Meta key"
+msgstr "Clave del meta dato"
+
+#: inc/Builder/Components.php:684
+msgid "Key: *"
+msgstr "Clave: *"
+
+#: inc/Views/License.php:84
+msgid "Click here to generate your license file"
+msgstr "Haz clic aquí para generar tu archivo de licencia"
+
+#: inc/Views/Builder/Choose_Template.php:22
+msgid "Click the button of your preferred template to start creating the flow."
+msgstr ""
+"Haz clic en el botón del modelo de tu preferencia para iniciar la creación "
+"del flujo."
+
+#: inc/Integrations/Flexify_Checkout.php:125
+msgid "Lead collection via checkout"
+msgstr "Recopilación de clientes potenciales mediante pago"
+
+#: inc/Integrations/Flexify_Checkout.php:115
+msgid "Lead collection via modal"
+msgstr "Recopilación de clientes potenciales a través del modal"
+
+#: inc/Views/Builder/Choose_Template.php:53
+msgid "Start automating your site from a template"
+msgstr "Comienza a automatizar tu sitio a partir de un modelo"
+
+#: inc/Builder/Components.php:902
+msgid "Starts with"
+msgstr "Comienza con"
+
+#: inc/Builder/Workflow_Manager.php:56
+msgid "Start with a template"
+msgstr "Comenzar con un modelo"
+
+#: inc/Builder/Workflow_Manager.php:50
+msgid "Start from scratch"
+msgstr "Comenzar desde cero"
+
+#: inc/Core/Assets.php:192
+msgid "Food and Drinks"
+msgstr "Comidas y Bebidas"
+
+#: inc/Views/Builder/Choose_Template.php:21
+msgid "How would you like to create your new flow?"
+msgstr "¿Cómo te gustaría crear tu nuevo flujo?"
+
+#: inc/Views/License.php:110
+msgid "Buy license"
+msgstr "Comprar licencia"
+
+#: inc/Integrations/Woocommerce.php:262
+msgid "Completed"
+msgstr "Completado"
+
+#: inc/Builder/Actions.php:45
+msgid "Condition"
+msgstr "Condición"
+
+#: inc/Builder/Components.php:72
+#, php-format
+msgid "Condition: %s"
+msgstr "Condición: %s"
+
+#: inc/Builder/Components.php:909
+msgid "Condition: *"
+msgstr "Condición: *"
+
+#: inc/Admin/Components.php:108
+msgid "Connected"
+msgstr "Conectado"
+
+#: inc/Core/Init.php:88 inc/Core/Init.php:92
+#: inc/Views/Settings/Tabs/General.php:43
+msgid "Configure"
+msgstr "Configurar"
+
+#: inc/Builder/Components.php:406
+msgid "Configure trigger"
+msgstr "Configurar activación"
+
+#: inc/Builder/Components.php:184 inc/Builder/Components.php:274
+msgid "Configure action"
+msgstr "Configurar acción"
+
+#: inc/Builder/Components.php:149
+msgid "Configure condition"
+msgstr "Configurar condición"
+
+#: inc/Views/Settings/Tabs/General.php:48
+msgid "Configure Proxy API"
+msgstr "Configurar Proxy API"
+
+#: inc/Admin/Admin.php:83 inc/Admin/Admin.php:84 inc/Builder/Components.php:396
+#: inc/Integrations/Woocommerce.php:461
+#. parent page slug
+#. page title
+msgid "Settings"
+msgstr "Configuraciones"
+
+#: inc/Integrations/Woocommerce.php:466
+msgid "WooCommerce integration settings"
+msgstr "Configuraciones de la integración con WooCommerce"
+
+#: inc/Views/Builder/Triggers.php:86
+msgid "Continue"
+msgstr "Continuar"
+
+#: inc/Builder/Components.php:900
+msgid "Contains"
+msgstr "Contiene"
+
+#: inc/Core/Workflows_Table.php:96
+msgid "Created"
+msgstr "Creado"
+
+#: inc/Builder/Workflow_Manager.php:58
+msgid "Create with a template"
+msgstr "Crear con un modelo"
+
+#: inc/Builder/Workflow_Manager.php:52
+msgid "Create from scratch"
+msgstr "Crear desde cero"
+
+#: inc/Views/Builder/Navbar.php:54
+msgid "Create a new workflow"
+msgstr "Crear un nuevo flujo"
+
+#: inc/Integrations/OpenAI.php:38
+msgid ""
+"Create dynamic messages for your automations in a simple and direct way "
+"using ChatGPT."
+msgstr ""
+"Crea mensajes dinámicos para tus automatizaciones de forma sencilla y "
+"directa utilizando ChatGPT."
+
+#: inc/Builder/Workflow_Manager.php:57
+msgid "Create your automation flow from a template of your choice"
+msgstr "Crea tu flujo de automatización a partir de un modelo de tu elección"
+
+#: inc/Builder/Workflow_Manager.php:51
+msgid "Create your automation flow from scratch"
+msgstr "Crea tu flujo de automatización desde cero"
+
+#: inc/Builder/Workflow_Manager.php:63
+msgid "Create your automation flow by importing from a file"
+msgstr "Crea tu flujo de automatización importando desde un archivo"
+
+#: inc/Integrations/Woocommerce.php:525
+msgid "Discount coupon"
+msgstr "Cupón de descuento"
+
+#: inc/Builder/Messages.php:233
+#, php-format
+msgid "Discount coupon: <span class=\"builder-placeholder\">%s</span>"
+msgstr "Cupón de descuento: <span class=\"builder-placeholder\">%s</span>"
+
+#: inc/Builder/Messages.php:237
+#, php-format
+msgid "Coupon expires: %s"
+msgstr "El cupón expira: %s"
+
+#: inc/Integrations/Woocommerce.php:785
+msgid "Coupon does not expire"
+msgstr "El cupón no expira"
+
+#: inc/Integrations/Woocommerce.php:564
+msgid "Coupon for purchase recovery"
+msgstr "Cupón para recuperación de compras"
+
+#: inc/Integrations/Woocommerce.php:350
+msgid "CUPOM10, FREESHIPPING"
+msgstr "CUPOM10, FRETEGRATIS"
+
+#: inc/Integrations/Woocommerce.php:491
+msgid "COUPON_"
+msgstr "CUPOM_"
+
+#: inc/Integrations/Woocommerce.php:559
+msgid "EXCLUSIVE_COUPON"
+msgstr "CUPOM_EXCLUSIVO"
+
+#: inc/Views/License.php:118
+msgid "License code"
+msgstr "Código de la licencia"
+
+#: inc/Integrations/Woocommerce.php:558
+msgid "Coupon code: *"
+msgstr "Código del cupón: *"
+
+#: inc/Views/Settings/Tabs/General.php:14
+msgid "Default country code"
+msgstr "Código predeterminado del país"
+
+#: inc/Integrations/Woocommerce.php:650
+msgid "Insufficient data to create the coupon."
+msgstr "Datos insuficientes para crear el cupón."
+
+#: inc/API/License.php:744
+msgid "Invalid data."
+msgstr "Datos inválidos."
+
+#: inc/Views/Builder/Triggers.php:67
+msgid "Set a name for this flow"
+msgstr "Define un nombre para este flujo"
+
+#: inc/Integrations/Woocommerce.php:586
+msgid "Set coupon expiration"
+msgstr "Definir expiración del cupón"
+
+#: inc/Views/Settings/Tabs/About.php:87
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: inc/Views/License.php:69
+msgid "Deactivate license"
+msgstr "Desactivar licencia"
+
+#: inc/Admin/Components.php:110
+msgid "Disconnected"
+msgstr "Desconectado"
+
+#: inc/Integrations/Woocommerce.php:572
+msgid "Fixed discount"
+msgstr "Descuento fijo"
+
+#: inc/Builder/Messages.php:235
+#, php-format
+msgid "Discount: %s"
+msgstr "Descuento: %s"
+
+#: inc/Integrations/Woocommerce.php:563
+msgid "Coupon description (optional)"
+msgstr "Descripción del cupón (opcional)"
+
+#: inc/Admin/Admin.php:243
+msgid "Description."
+msgstr "Descripción."
+
+#: inc/Views/Settings/Tabs/About.php:286
+msgid "Turned off"
+msgstr "Apagado"
+
+#: inc/Builder/Components.php:80 inc/Builder/Components.php:234
+#, php-format
+msgid "Recipient: %s"
+msgstr "Destinatario: %s"
+
+#: inc/Integrations/Whatsapp.php:138 inc/Integrations/Whatsapp.php:181
+msgid "Recipient: *"
+msgstr "Destinatario: *"
+
+#: inc/Core/Helpers.php:38
+msgid "day"
+msgstr "día"
+
+#: inc/Builder/Components.php:309
+msgid "Day(s)"
+msgstr "Día(s)"
+
+#: inc/Cron/Routines.php:91
+msgid "Daily"
+msgstr "Diariamente"
+
+#: inc/Core/Helpers.php:38
+msgid "days"
+msgstr "días"
+
+#: inc/Integrations/Elementor_Forms.php:185
+msgid "Tip"
+msgstr "Consejo"
+
+#: inc/Core/Assets.php:188
+msgid "Diversity"
+msgstr "Diversidad"
+
+#: inc/Core/Init.php:114
+msgid "Documentation"
+msgstr "Documentación"
+
+#: inc/Validations/Media_Types.php:39
+msgid "Document"
+msgstr "Documento"
+
+#: inc/Builder/Components.php:808 inc/Integrations/Woocommerce.php:860
+msgid "Customer email"
+msgstr "Correo electrónico del cliente"
+
+#: inc/Builder/Components.php:807
+msgid "Customer email:"
+msgstr "Correo electrónico del cliente:"
+
+#: inc/Core/Workflows_Table.php:144
+msgid "Edit"
+msgstr "Editar"
+
+#: inc/Builder/Components.php:115 inc/Builder/Components.php:260
+msgid "Edit action"
+msgstr "Editar acción"
+
+#: inc/Builder/Components.php:108
+msgid "Edit condition"
+msgstr "Editar condición"
+
+#: inc/Admin/Admin.php:232
+msgid "Edit flow"
+msgstr "Editar flujo"
+
+#: inc/Builder/Components.php:984 inc/Views/Builder/Navbar.php:36
+msgid "Edit flow title"
+msgstr "Editar título del flujo"
+
+#: inc/Views/Settings/Tabs/Integrations.php:50
+msgid "Comming soon"
+msgstr "Dentro de poco"
+
+#: inc/Builder/Components.php:832
+msgid "Pending"
+msgstr "En espera"
+
+#: inc/Integrations/Elementor_Forms.php:150
+msgid "Send text message"
+msgstr "Enviar mensaje de texto"
+
+#: inc/Views/Settings/Tabs/Phones.php:48
+msgid "Send test message"
+msgstr "Enviar mensaje de prueba"
+
+#: inc/Integrations/Elementor_Forms.php:193
+msgid "Send media"
+msgstr "Enviar medio"
+
+#: inc/Views/Settings/Tabs/Phones.php:53
+msgid "Send a test message"
+msgstr "Enviar un mensaje de prueba"
+
+#: inc/Integrations/Woocommerce.php:95
+msgid ""
+"Send messages for new orders, cancellations, refunds, and recovery of "
+"unpaid orders. Keep your customers updated."
+msgstr ""
+"Envía mensajes para nuevos pedidos, cancelaciones, reembolsos y "
+"recuperación de pedidos no pagados. Mantén a tus clientes actualizados."
+
+#: inc/Integrations/Elementor.php:68
+msgid ""
+"Send messages when an Elementor form with a phone field is submitted. "
+"Connect with your customers instantly."
+msgstr ""
+"Envía mensajes cuando se envíe un formulario de Elementor con campo de "
+"teléfono. Conéctate con tus clientes al instante."
+
+#: inc/Views/Builder/Choose_Template.php:86
+msgid "Upload your .json file to import the message automation template."
+msgstr ""
+"Envía tu archivo .json para importar el modelo de automatización de "
+"mensajes."
+
+#: inc/Integrations/Woocommerce.php:526
+msgid "Send a discount coupon to your user via WhatsApp text message."
+msgstr ""
+"Envía un cupón de descuento a tu usuario a través de un mensaje de texto de "
+"WhatsApp."
+
+#: inc/Integrations/Whatsapp.php:84
+msgid "Send a media message (image, video, document, and audio) via WhatsApp."
+msgstr "Envía un mensaje de medio (imagen, video, documento y audio) con WhatsApp."
+
+#: inc/Integrations/Whatsapp.php:71
+msgid "Send a text message via WhatsApp."
+msgstr "Envía un mensaje de texto con WhatsApp."
+
+#: inc/API/License.php:367 inc/API/License.php:420
+msgid "cURL Error 35: SSL/TLS communication issue."
+msgstr "Error cURL 35: Problema de comunicación SSL/TLS."
+
+#: inc/API/License.php:422
+#, php-format
+msgid "cURL Error: %s"
+msgstr "Error cURL: %s"
+
+#: inc/API/License.php:294
+#, php-format
+msgid "JSON Error: %s"
+msgstr "Error JSON: %s"
+
+#: inc/Views/Builder/Triggers.php:16
+msgid "Choose the trigger type"
+msgstr "Elige el tipo de activación"
+
+#: inc/Views/Settings/Tabs/Phones.php:59
+msgid "Choose a sender:"
+msgstr "Elige un remitente:"
+
+#: inc/Core/Assets.php:178
+msgid "Choose media"
+msgstr "Elegir medio"
+
+#: inc/Builder/Components.php:1075 inc/Integrations/Woocommerce.php:600
+msgid "Wait until"
+msgstr "Esperar hasta"
+
+#: inc/Builder/Messages.php:87
+#, php-format
+msgid "Wait until %s"
+msgstr "Esperar hasta %s"
+
+#: inc/Builder/Messages.php:85
+#, php-format
+msgid "Wait until %s - %s"
+msgstr "Esperar hasta %s - %s"
+
+#: inc/Builder/Components.php:1056 inc/Integrations/Woocommerce.php:595
+msgid "Wait until a date"
+msgstr "Esperar hasta una fecha"
+
+#: inc/Builder/Components.php:1061 inc/Integrations/Woocommerce.php:609
+msgid "Wait for"
+msgstr "Esperar por"
+
+#: inc/Builder/Messages.php:79
+#, php-format
+msgid "Wait for %s %s"
+msgstr "Esperar por %s %s"
+
+#: inc/Builder/Components.php:1055 inc/Integrations/Woocommerce.php:594
+msgid "Wait time"
+msgstr "Esperar tiempo"
+
+#: inc/Integrations/Woocommerce.php:488
+msgid "This option controls the prefix of the automatically created coupon."
+msgstr "Esta opción controla el prefijo del cupón creado automáticamente."
+
+#: inc/Builder/Components.php:1180
+msgid "This action does not require additional settings."
+msgstr "Esta acción no requiere configuraciones adicionales."
+
+#: inc/Integrations/Integrations_Base.php:79
+#: inc/Integrations/Integrations_Base.php:83
+msgid "This trigger depends on a plugin"
+msgstr "Este activador depende de un plugin"
+
+#: inc/Integrations/Woo_Subscriptions.php:99
+msgid "This trigger is fired when the subscription status changes to canceled."
+msgstr ""
+"Este activador se dispara cuando la suscripción tiene su estado cambiado a "
+"cancelado."
+
+#: inc/Integrations/Woo_Subscriptions.php:93
+msgid "This trigger is fired when a subscription term has expired."
+msgstr "Este activador se dispara cuando el plazo de una suscripción ha expirado."
+
+#: inc/Integrations/Flexify_Checkout.php:136
+msgid "This trigger is fired when the user abandons the cart."
+msgstr "Este activador se dispara cuando el usuario abandona el carrito."
+
+#: inc/Integrations/Flexify_Checkout.php:126
+msgid "This trigger is fired when the user provides your contact on checkout"
+msgstr ""
+"Este disparador se activa cuando el usuario proporciona sus datos de "
+"contacto en el momento del pago."
+
+#: inc/Integrations/Flexify_Checkout.php:116
+msgid "This trigger is fired when the user provides your contact on modal"
+msgstr ""
+"Este disparador se activa cuando el usuario proporciona sus datos de "
+"contacto a través del modal."
+
+#: inc/Integrations/Flexify_Checkout.php:146
+msgid "This trigger is fired when an abandoned cart is recovered."
+msgstr "Este activador se dispara cuando un carrito abandonado es recuperado."
+
+#: inc/Integrations/Flexify_Checkout.php:166
+msgid "This trigger is fired when a cart is considered lost."
+msgstr "Este activador se dispara cuando un carrito se considera perdido."
+
+#: inc/Integrations/Wpforms.php:105
+msgid "This trigger is fired when a WPForms payment form is processed using PayPal."
+msgstr ""
+"Este activador se dispara cuando un formulario de pago de WPForms es "
+"procesado usando PayPal."
+
+#: inc/Integrations/Elementor.php:94
+msgid "This trigger is fired when an Elementor form is submitted."
+msgstr "Este activador se dispara cuando se envía un formulario de Elementor."
+
+#: inc/Integrations/Wpforms.php:99
+msgid "This trigger is fired when a WPForms form is submitted."
+msgstr "Este activador se dispara cuando se envía un formulario de WPForms."
+
+#: inc/Integrations/Woocommerce.php:121
+msgid ""
+"This trigger is fired when a new order is received in WooCommerce with any "
+"status."
+msgstr ""
+"Este activador se dispara cuando se recibe un nuevo pedido en WooCommerce "
+"con cualquier estado."
+
+#: inc/Integrations/Woocommerce.php:127
+msgid ""
+"This trigger is fired when a new order is received in WooCommerce with "
+"processing status."
+msgstr ""
+"Este activador se dispara cuando se recibe un nuevo pedido en WooCommerce "
+"con estado procesando."
+
+#: inc/Integrations/Wordpress.php:97
+msgid "This trigger is fired when a new user registration is received."
+msgstr "Este activador se dispara cuando se recibe un nuevo registro de usuario."
+
+#: inc/Integrations/Woocommerce.php:133
+msgid "This trigger is fired when an order status changes to completed."
+msgstr ""
+"Este activador se dispara cuando un pedido tiene su estado cambiado a "
+"completado."
+
+#: inc/Integrations/Woocommerce.php:151
+msgid "This trigger is fired when an order status changes."
+msgstr "Este activador se dispara cuando un pedido tiene su estado cambiado."
+
+#: inc/Integrations/Flexify_Checkout.php:156
+msgid "This trigger is fired when an order is abandoned."
+msgstr "Este activador se dispara cuando un pedido es abandonado."
+
+#: inc/Integrations/Woocommerce.php:145
+msgid "This trigger is fired when an order is partially refunded."
+msgstr "Este activador se dispara cuando un pedido es reembolsado parcialmente."
+
+#: inc/Integrations/Woocommerce.php:139
+msgid "This trigger is fired when an order is fully refunded."
+msgstr "Este activador se dispara cuando un pedido es reembolsado totalmente."
+
+#: inc/Integrations/Wordpress.php:115
+msgid "This trigger is fired when a post status changes on the site."
+msgstr ""
+"Este activador se dispara cuando un post tiene su estado cambiado en el "
+"sitio."
+
+#: inc/Integrations/Wordpress.php:103
+msgid "This trigger is fired when a user logs into the site."
+msgstr "Este activador se dispara cuando un usuario inicia sesión en el sitio."
+
+#: inc/Integrations/Wordpress.php:109
+msgid "This trigger is fired when a user requests password recovery on the site."
+msgstr ""
+"Este activador se dispara cuando un usuario solicita recuperación de "
+"contraseña en el sitio."
+
+#: inc/Integrations/Woo_Subscriptions.php:81
+msgid "This trigger is fired when a recurring subscription payment is received."
+msgstr ""
+"Este activador se dispara cuando una suscripción recurrente tiene el pago "
+"recibido."
+
+#: inc/Integrations/Woo_Subscriptions.php:87
+msgid ""
+"This trigger is fired when a recurring subscription payment fails or is "
+"declined."
+msgstr ""
+"Este activador se dispara cuando una suscripción recurrente tiene su pago "
+"fallido o rechazado."
+
+#: inc/Integrations/Woo_Subscriptions.php:75
+msgid "This trigger is fired when a subscription status changes to active."
+msgstr ""
+"Este activador se dispara cuando una suscripción tiene su estado cambiado a "
+"activo."
+
+#: inc/Integrations/Woo_Subscriptions.php:69
+msgid "This trigger is fired when a new subscription is created in WooCommerce."
+msgstr ""
+"Este activador se dispara cuando se crea una nueva suscripción en "
+"WooCommerce."
+
+#: inc/Views/Settings/Tabs/Integrations.php:46
+msgid "This plugin must be installed and active to enable this integration."
+msgstr "Este plugin debe estar instalado y activo para activar esta integración."
+
+#: inc/Integrations/Integrations_Base.php:72
+msgid "This feature will be released soon"
+msgstr "Este recurso será lanzado pronto"
+
+#: inc/Builder/Components.php:100 inc/Builder/Components.php:252
+msgid "Delete action"
+msgstr "Eliminar acción"
+
+#: inc/Core/Workflows_Table.php:131 inc/Core/Workflows_Table.php:208
+msgid "Delete permanently"
+msgstr "Eliminar permanentemente"
+
+#: inc/Builder/Components.php:1160
+msgid "Expand"
+msgstr "Expandir"
+
+#: inc/Builder/Messages.php:255 inc/Integrations/Woocommerce.php:781
+#, php-format
+msgid "Expires in %s"
+msgstr "Expira en %s"
+
+#: inc/Builder/Messages.php:247 inc/Integrations/Woocommerce.php:773
+#, php-format
+msgid "Expires in %s %s"
+msgstr "Expira en %s %s"
+
+#: inc/Builder/Messages.php:253 inc/Integrations/Woocommerce.php:779
+#, php-format
+msgid "Expires in %s - %s"
+msgstr "Expira en %s - %s"
+
+#: inc/Views/Builder/Navbar.php:45
+msgid "Export flow"
+msgstr "Exportar flujo"
+
+#: inc/Views/Settings/Tabs/About.php:132
+msgid "cURL extension:"
+msgstr "Extensión cURL:"
+
+#: inc/Views/Settings/Tabs/About.php:151
+msgid "OpenSSL extension:"
+msgstr "Extensión OpenSSL:"
+
+#: inc/API/Controller.php:290
+msgid "Failed to send media message."
+msgstr "Error al enviar mensaje de medio."
+
+#: inc/API/Controller.php:259
+msgid "Failed to send text message."
+msgstr "Error al enviar mensaje de texto."
+
+#: inc/Builder/Components.php:562
+msgid "False"
+msgstr "Falso"
+
+#: inc/Builder/Components.php:985 inc/Builder/Components.php:1027
+#: inc/Builder/Components.php:1169 inc/Core/Assets.php:108
+#: inc/Integrations/Whatsapp.php:121 inc/Integrations/Woocommerce.php:467
+#: inc/Views/Settings/Tabs/About.php:29 inc/Views/Settings/Tabs/General.php:49
+#: inc/Views/Settings/Tabs/Phones.php:36 inc/Views/Settings/Tabs/Phones.php:54
+msgid "Close"
+msgstr "Cerrar"
+
+#: inc/Integrations/Flexify_Checkout.php:107
+msgid "Flexify Checkout - Abandoned cart recovery"
+msgstr "Flexify Checkout - Recuperación de carritos abandonados"
+
+#: inc/Integrations/Flexify_Checkout.php:82
+msgid "Flexify Checkout for WooCommerce"
+msgstr "Flexify Checkout para WooCommerce"
+
+#: inc/Core/Workflows_Table.php:31
+msgid "Flow"
+msgstr "Flujo"
+
+#: inc/Builder/Components.php:36
+msgid "Active flow"
+msgstr "Flujo activo"
+
+#: inc/Builder/Components.php:39
+msgid "Inactive flow"
+msgstr "Flujo inactivo"
+
+#: inc/Admin/Admin.php:236
+msgid "Parent flow:"
+msgstr "Flujo padre:"
+
+#: inc/Core/Workflows_Table.php:32
+msgid "Flows"
+msgstr "Flujos"
+
+#: inc/Admin/Admin.php:155
+msgid "Flows per page"
+msgstr "Flujos por página"
+
+#: inc/Integrations/Woocommerce.php:852
+msgid "Shipping method"
+msgstr "Forma de entrega"
+
+#: inc/Integrations/Woocommerce.php:848
+msgid "Payment method"
+msgstr "Forma de pago"
+
+#: inc/Builder/Components.php:470
+msgid "WPForms form: *"
+msgstr "Formulario de WPForms: *"
+
+#: inc/Integrations/Elementor.php:93 inc/Integrations/Wpforms.php:98
+msgid "Form submitted"
+msgstr "Formulario es enviado"
+
+#: inc/Builder/Messages.php:236
+#, php-format
+msgid "Free shipping: %s"
+msgstr "Envío gratis: %s"
+
+#: inc/Integrations/Wordpress.php:234 inc/Integrations/Wordpress.php:244
+msgid "User role"
+msgstr "Función del usuario"
+
+#: inc/Builder/Components.php:669
+msgid "User role: *"
+msgstr "Función del usuario: *"
+
+#: inc/Views/Settings/Tabs/About.php:282
+msgid "PHP function \"file_get_contents\":"
+msgstr "Función PHP \"file_get_content\":"
+
+#: inc/Builder/Messages.php:228
+msgid "Automatically generated"
+msgstr "Generado automáticamente"
+
+#: inc/Admin/Components.php:127
+msgid "General"
+msgstr "General"
+
+#: inc/Views/Settings/Tabs/General.php:67
+msgid "Generate key"
+msgstr "Generar clave"
+
+#: inc/Integrations/Woocommerce.php:553
+msgid "Automatically generate coupon"
+msgstr "Generar cupón automáticamente"
+
+#: inc/Admin/Admin.php:164
+msgid "Manage flows"
+msgstr "Gestionar flujos"
+
+#: inc/Core/Helpers.php:37
+msgid "hour"
+msgstr "hora"
+
+#: inc/Builder/Components.php:308
+msgid "Hour(s)"
+msgstr "Hora(s)"
+
+#: inc/Core/Helpers.php:37
+msgid "hours"
+msgstr "horas"
+
+#: inc/Core/Assets.php:181
+msgid "ID copied!"
+msgstr "¡ID copiado!"
+
+#: inc/Builder/Components.php:866
+msgid "Field ID"
+msgstr "ID del campo"
+
+#: inc/Integrations/Elementor_Forms.php:126
+msgid "Recipient field ID"
+msgstr "ID del campo de destinatario"
+
+#: inc/Builder/Components.php:865
+msgid "Field ID:"
+msgstr "ID del campo:"
+
+#: inc/Integrations/Elementor_Forms.php:138
+msgid "Form ID"
+msgstr "ID del formulario"
+
+#: inc/Integrations/Woocommerce.php:497
+msgid "Ignore actions already processed in the flow"
+msgstr "Ignorar acciones ya procesadas en el flujo"
+
+#: inc/Validations/Media_Types.php:37
+msgid "Image"
+msgstr "Imagen"
+
+#: inc/Views/Builder/Choose_Template.php:109
+msgid "Import"
+msgstr "Importar"
+
+#: inc/Builder/Workflow_Manager.php:64
+msgid "Import file"
+msgstr "Importar archivo"
+
+#: inc/Views/Builder/Choose_Template.php:85
+msgid "Import template"
+msgstr "Importar modelo"
+
+#: inc/Builder/Workflow_Manager.php:62
+msgid "Import a template"
+msgstr "Importar un modelo"
+
+#: inc/Views/Builder/Navbar.php:23
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: inc/Views/License.php:33
+msgid "License information:"
+msgstr "Información sobre la licencia:"
+
+#: inc/Admin/Components.php:73
+msgid "Enter the 4-digit code sent to"
+msgstr "Ingresa el código de 4 dígitos que fue enviado a"
+
+#: inc/Integrations/Elementor_Forms.php:140
+msgid ""
+"Enter this form's ID to validate data processing. Available in the form's "
+"additional information."
+msgstr ""
+"Proporciona el ID de este formulario para validar el procesamiento de la "
+"información. Disponible en la información adicional del formulario."
+
+#: inc/Integrations/Elementor_Forms.php:128
+msgid "Enter the field ID that collects the recipient's phone number."
+msgstr ""
+"Proporciona el ID del campo que recoge el teléfono del destinatario del "
+"formulario."
+
+#: inc/Views/Settings/Tabs/Phones.php:68
+msgid ""
+"Enter the recipient phone number - Only numbers with country code + area "
+"code:"
+msgstr "Ingresa el teléfono del destinatario - Solo números con DDI + DDD:"
+
+#: inc/Views/License.php:115
+msgid "Enter your license below to unlock all features."
+msgstr "Ingresa tu licencia a continuación para desbloquear todas las funciones."
+
+#: inc/Views/License.php:75
+msgid "Enter your license to start using Joinotify"
+msgstr "Ingresa tu licencia para comenzar a usar Joinotify"
+
+#: inc/Views/Settings/Tabs/Phones.php:15
+msgid ""
+"Enter a phone number to receive test messages in the builder. Use the "
+"international format, numbers only: 5541987111527"
+msgstr ""
+"Proporciona un teléfono para recibir mensajes de prueba para disparar en el "
+"constructor. Usa el formato internacional, ingresando solo números: "
+"5541987111527"
+
+#: inc/Integrations/Integrations_Base.php:85
+msgid "Install plugin"
+msgstr "Instalar plugin"
+
+#: inc/Admin/Components.php:139
+msgid "Integrations"
+msgstr "Integraciones"
+
+#: inc/Views/License.php:41
+msgid "Invalid"
+msgstr "Inválida"
+
+#: inc/Integrations/Flexify_Checkout.php:348
+msgid "Items in cart"
+msgstr "Artículos en el carrito"
+
+#: inc/Integrations/Flexify_Checkout.php:307
+msgid "johndoe@email.com"
+msgstr "joaodasilva@email.com"
+
+#: inc/Integrations/Flexify_Checkout.php:283
+#: inc/Integrations/Woocommerce.php:214 inc/Integrations/Wordpress.php:169
+msgid "John"
+msgstr "Juan"
+
+#: inc/Admin/Admin.php:94 inc/Admin/Admin.php:95
+#. parent page slug
+#. page title
+msgid "License"
+msgstr "Licencia"
+
+#: inc/Views/License.php:54
+#, php-format
+msgid "License expires on: %s"
+msgstr "La licencia expira en: %s"
+
+#: inc/API/License.php:900
+msgid "Expired license"
+msgstr "Licencia expirada"
+
+#: inc/Views/Settings/Tabs/About.php:290
+msgid "Enabled"
+msgstr "Encendido"
+
+#: inc/Views/Settings/Tabs/About.php:240
+msgid "PHP memory limit:"
+msgstr "Límite de memoria de PHP:"
+
+#: inc/Views/Settings/Tabs/About.php:196
+msgid "PHP time limit:"
+msgstr "Límite de tiempo de PHP:"
+
+#: inc/Views/Settings/Tabs/About.php:38
+msgid "Clear logs"
+msgstr "Limpiar registros"
+
+#: inc/Integrations/Flexify_Checkout.php:312
+msgid "Recovery link from abandoned cart"
+msgstr "Enlace de recuperación de carrito abandonado."
+
+#: inc/Core/Workflows_Table.php:66
+msgid "Trash"
+msgstr "Papelera"
+
+#: inc/Integrations/Wordpress.php:102
+msgid "User login"
+msgstr "Inicio de sesión del usuario"
+
+#: inc/Builder/Components.php:904
+msgid "Greater than"
+msgstr "Mayor que"
+
+#: inc/Builder/Messages.php:121
+#, php-format
+msgid "Greater than <span class=\"builder-placeholder\">%s</span>"
+msgstr "Mayor que <span class=\"builder-placeholder\">%s</span>"
+
+#: inc/Builder/Components.php:905
+msgid "Less than"
+msgstr "Menor que"
+
+#: inc/Builder/Messages.php:121
+#, php-format
+msgid "Less than <span class=\"builder-placeholder\">%s</span>"
+msgstr "Menor que <span class=\"builder-placeholder\">%s</span>"
+
+#: inc/Integrations/Whatsapp.php:146
+msgid "Message"
+msgstr "Mensaje"
+
+#: inc/API/Controller.php:285
+msgid "Media message sent successfully."
+msgstr "Mensaje de medios enviado con éxito."
+
+#: inc/Integrations/Elementor_Forms.php:162
+msgid "Text message"
+msgstr "Mensaje de texto"
+
+#: inc/API/Controller.php:254
+msgid "Text message sent successfully."
+msgstr "Mensaje de texto enviado con éxito."
+
+#: inc/Integrations/Whatsapp.php:144
+msgid "Text message: *"
+msgstr "Mensaje de texto: *"
+
+#: inc/Core/Helpers.php:40
+msgid "months"
+msgstr "meses"
+
+#: inc/Integrations/Elementor.php:167 inc/Integrations/Flexify_Checkout.php:352
+#: inc/Integrations/Woocommerce.php:856 inc/Integrations/Wordpress.php:238
+#: inc/Integrations/Wordpress.php:248 inc/Integrations/Wordpress.php:254
+#: inc/Integrations/Wpforms.php:212
+msgid "User metadata"
+msgstr "Metadatos del usuario"
+
+#: inc/Core/Assets.php:180
+#, php-format
+msgid "My automation #%s"
+msgstr "Mi automatización #%s"
+
+#: inc/Views/Builder/Triggers.php:69
+msgid "My message automation"
+msgstr "Mi automatización de mensajes"
+
+#: inc/Core/Helpers.php:36
+msgid "minute"
+msgstr "minuto"
+
+#: inc/Builder/Components.php:307
+msgid "Minute(s)"
+msgstr "Minuto(s)"
+
+#: inc/Core/Helpers.php:36
+msgid "minutes"
+msgstr "minutos"
+
+#: inc/Views/Settings/Tabs/About.php:86
+msgid "WordPress debug mode:"
+msgstr "Modo de depuración de WordPress:"
+
+#: inc/Integrations/Developer_Mode.php:39
+msgid "Developer mode"
+msgstr "Modo desarrollador"
+
+#: inc/Core/Workflows_Table.php:149 inc/Core/Workflows_Table.php:213
+msgid "Move to trash"
+msgstr "Mover a la papelera"
+
+#: inc/Builder/Components.php:792
+msgid "Delivery method: *"
+msgstr "Método de entrega: *"
+
+#: inc/Builder/Components.php:775
+msgid "Payment method: *"
+msgstr "Método de pago: *"
+
+#: inc/Core/Helpers.php:40
+msgid "month"
+msgstr "mes"
+
+#: inc/Builder/Components.php:311
+msgid "Month(s)"
+msgstr "Mes(es)"
+
+#: inc/Views/Settings/Tabs/General.php:20
+msgid "None"
+msgstr "Ninguno"
+
+#: inc/Builder/Messages.php:274
+msgid "No code available."
+msgstr "Ningún código disponible."
+
+#: inc/Admin/Admin.php:238
+msgid "No flow found in trash."
+msgstr "Ningún flujo encontrado en la papelera."
+
+#: inc/Admin/Admin.php:237 inc/Core/Assets.php:183
+msgid "No flow found."
+msgstr "Ningún flujo encontrado."
+
+#: inc/Integrations/Woocommerce.php:423
+msgid "No item purchased."
+msgstr "Ningún artículo adquirido."
+
+#: inc/Admin/Components.php:50
+msgid "No sender available for use"
+msgstr "Ningún remitente disponible para uso"
+
+#: inc/Builder/Actions.php:58
+msgid "No action will be executed at this point."
+msgstr "Ninguna acción se ejecutará al llegar a este punto."
+
+#: inc/Validations/Conditions.php:32
+msgid "No condition available for this action"
+msgstr "Ninguna condición disponible para esta acción"
+
+#: inc/Validations/Conditions.php:33
+msgid "No condition has been set for this action."
+msgstr "Ninguna condición fue definida para esta acción."
+
+#: inc/Builder/Components.php:876
+msgid "No configuration available for this condition"
+msgstr "Ninguna configuración disponible para esta condición"
+
+#: inc/Views/License.php:39
+msgid "No license provided"
+msgstr "Ninguna licencia informada"
+
+#: inc/Core/Workflows_Table.php:95
+msgid "Name"
+msgstr "Nombre"
+
+#: inc/Builder/Components.php:1250
+msgid "Text variable name"
+msgstr "Nombre de la variable de texto"
+
+#: inc/Builder/Components.php:714
+msgid "Author's name"
+msgstr "Nombre del autor"
+
+#: inc/Builder/Components.php:1252
+msgid "variable_name"
+msgstr "nombre_de_variable"
+
+#: inc/Views/License.php:82
+msgid "We noticed you had connection issues while trying to activate your license"
+msgstr "Notamos que tuvo problemas de conexión al intentar activar su licencia"
+
+#: inc/Integrations/Woo_Subscriptions.php:68
+msgid "New subscription created"
+msgstr "Nueva suscripción creada"
+
+#: inc/Admin/Admin.php:231
+msgid "New flow"
+msgstr "Nuevo flujo"
+
+#: inc/Integrations/Woocommerce.php:120
+msgid "New order"
+msgstr "Nuevo pedido"
+
+#: inc/Integrations/Woocommerce.php:126
+msgid "New order (Processing)"
+msgstr "Nuevo pedido (Procesando)"
+
+#: inc/Integrations/Wordpress.php:96
+msgid "New user registration"
+msgstr "Nuevo registro de usuario"
+
+#: inc/API/License.php:891
+msgid "Never expires"
+msgstr "Nunca expira"
+
+#: inc/Builder/Components.php:844 inc/Builder/Messages.php:230
+#: inc/Builder/Messages.php:231 inc/Integrations/Elementor_Forms.php:153
+#: inc/Integrations/Elementor_Forms.php:196
+#: inc/Views/Settings/Tabs/About.php:83 inc/Views/Settings/Tabs/About.php:121
+#: inc/Views/Settings/Tabs/About.php:137 inc/Views/Settings/Tabs/About.php:156
+msgid "No"
+msgstr "No"
+
+#: inc/Builder/Components.php:901
+msgid "Does not contain"
+msgstr "No contiene"
+
+#: inc/API/License.php:875 inc/Views/License.php:60
+msgid "Not available"
+msgstr "No disponible"
+
+#: inc/Builder/Components.php:899
+msgid "Is not empty"
+msgstr "No está vacío"
+
+#: inc/Integrations/Wordpress.php:184
+msgid "Could not retrieve the user's email"
+msgstr "No se pudo recuperar el correo electrónico del usuario"
+
+#: inc/Integrations/Wordpress.php:168
+msgid "Could not retrieve the user's name"
+msgstr "No se pudo recuperar el nombre del usuario"
+
+#: inc/Integrations/Wordpress.php:176
+msgid "Could not retrieve the user's last name"
+msgstr "No se pudo recuperar el apellido del usuario"
+
+#: inc/Core/Updater.php:249
+msgid "Could not check for updates for the <strong>Joinotify</strong> plugin"
+msgstr ""
+"No se pudo verificar actualizaciones para el plugin "
+"<strong>Joinotify.</strong>"
+
+#: inc/Builder/Components.php:897
+msgid "Is not"
+msgstr "No es"
+
+#: inc/Integrations/Woocommerce.php:673
+msgid "The coupon already exists."
+msgstr "El cupón ya existe."
+
+#: inc/Views/Builder/Triggers.php:68
+msgid "The name will be used for internal control of this flow"
+msgstr "El nombre servirá para control interno de este flujo"
+
+#: inc/Core/Assets.php:195
+msgid "Objects"
+msgstr "Objetos"
+
+#: inc/Builder/Components.php:1247
+msgid "Get example data"
+msgstr "Obtener datos de muestra"
+
+#: inc/Builder/Components.php:1010 inc/Builder/Components.php:1026
+msgid "Get group information"
+msgstr "Obtener información de grupos"
+
+#: inc/API/License.php:271
+msgid ""
+"An error occurred while connecting to the license verification server. "
+"Check the error in the WooCommerce logs."
+msgstr ""
+"Ocurrió un error en la conexión con el servidor de verificación de "
+"licencias. Verifique el error en los registros de WooCommerce."
+
+#: inc/Integrations/Elementor_Forms.php:166
+msgid "Hello {{ field_id=[FIELD_ID] }}!"
+msgstr "Hola {{ field_id=[FIELD_ID] }}!"
+
+#: inc/Integrations/Elementor_Forms.php:167
+msgid ""
+"Hello {{ field_id=[name] }}! We have received your information, and a "
+"representative will contact you shortly."
+msgstr ""
+"Hola {{ field_id=[nombre] }}! Recibimos su información, pronto un agente le "
+"responderá."
+
+#: inc/Core/Assets.php:74 inc/Core/Assets.php:200
+msgid "Oops! No internet connection"
+msgstr "¡Ups! No hay conexión a internet"
+
+#: inc/Views/License.php:98 inc/Views/Builder/Choose_Template.php:101
+msgid "Or click to search for your file"
+msgstr "O haga clic para buscar su archivo"
+
+#: inc/Integrations/Woo_Subscriptions.php:86
+msgid "Renewal payment failed"
+msgstr "El pago de la renovación falló"
+
+#: inc/Integrations/Woo_Subscriptions.php:80
+msgid "Renewal payment received"
+msgstr "Pago de la renovación recibido"
+
+#: inc/Builder/Components.php:840
+msgid "Renewal payment: *"
+msgstr "Pago de la renovación: *"
+
+#: inc/Integrations/Wpforms.php:104
+msgid "Payment processed by PayPal"
+msgstr "Pago procesado por PayPal"
+
+#: inc/Integrations/Wordpress.php:206
+msgid "To retrieve the current date"
+msgstr "Para recuperar la fecha actual"
+
+#: inc/Integrations/Woocommerce.php:267
+msgid "To retrieve the WooCommerce order date"
+msgstr "Para recuperar la fecha del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:795
+msgid "To retrieve the discount coupon description."
+msgstr "Para recuperar la descripción del cupón de descuento."
+
+#: inc/Integrations/Woocommerce.php:811
+msgid "To retrieve the discount coupon expiration. Example: Expires in 1 hour."
+msgstr ""
+"Para recuperar la expiración del cupón de descuento. Ejemplo: Expira en 1 "
+"hora."
+
+#: inc/Integrations/Elementor.php:143
+msgid ""
+"To retrieve information from an Elementor form field. Replace FIELD_ID with "
+"the respective ID."
+msgstr ""
+"Para recuperar la información de un campo del formulario de Elementor. "
+"Reemplace FIELD_ID con el ID respectivo."
+
+#: inc/Integrations/Wpforms.php:153
+msgid ""
+"To retrieve information from a WPForms form field. Replace FIELD_ID with "
+"the respective ID."
+msgstr ""
+"Para recuperar la información de un campo del formulario de WPForms. "
+"Reemplace FIELD_ID con el ID respectivo."
+
+#: inc/Integrations/Woocommerce.php:299
+msgid "To retrieve the order payment URL"
+msgstr "Para recuperar la URL de pago del pedido"
+
+#: inc/Integrations/Wordpress.php:190
+msgid "To retrieve the site URL"
+msgstr "Para recuperar la URL del sitio"
+
+#: inc/Integrations/Woocommerce.php:291
+msgid ""
+"To retrieve each product and quantity purchased in the order, separated by "
+"line"
+msgstr ""
+"Para recuperar cada producto y cantidad adquiridos en el pedido, separados "
+"por línea"
+
+#: inc/Integrations/Woocommerce.php:791
+msgid "To retrieve the discount coupon code."
+msgstr "Para recuperar el código del cupón de descuento."
+
+#: inc/Integrations/Flexify_Checkout.php:225
+msgid ""
+"To retrieve the Pix Copia e Cola code from the order. Through the Flexify "
+"Checkout - Inter addon integration"
+msgstr ""
+"Para recuperar el código Pix Copia y Pega del pedido. A través de la "
+"integración Flexify Checkout - Inter addon"
+
+#: inc/Integrations/Flexify_Checkout.php:304
+msgid "To retrieve the email of the cart contact"
+msgstr "Para recuperar el carrito contacte por email."
+
+#: inc/Integrations/Woocommerce.php:227
+msgid "To retrieve the customer's billing email in the WooCommerce order"
+msgstr ""
+"Para recuperar el correo electrónico de facturación del cliente en el "
+"pedido de WooCommerce"
+
+#: inc/Integrations/Wordpress.php:182
+msgid "To retrieve the user's email"
+msgstr "Para recuperar el correo electrónico del usuario"
+
+#: inc/Integrations/Woocommerce.php:283
+msgid "To retrieve the user's complete shipping address"
+msgstr "Para recuperar la dirección completa de entrega del usuario"
+
+#: inc/Integrations/Woocommerce.php:275
+msgid "To retrieve the user's complete billing address"
+msgstr "Para recuperar la dirección completa de facturación del usuario"
+
+#: inc/Integrations/Woocommerce.php:363
+msgid "To retrieve the WooCommerce order shipping address"
+msgstr "Para recuperar la dirección de entrega del pedido de WooCommerce"
+
+#: inc/Integrations/Flexify_Checkout.php:280
+msgid "To retrieve the first name of the cart contact"
+msgstr "Para recuperar el nombre de contacto del carrito."
+
+#: inc/Integrations/Wordpress.php:198
+msgid "To retrieve the site name"
+msgstr "Para recuperar el nombre del sitio"
+
+#: inc/Integrations/Woocommerce.php:251
+msgid "To retrieve the WooCommerce order number"
+msgstr "Para recuperar el número del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:211
+msgid "To retrieve the customer's billing first name in the WooCommerce order"
+msgstr ""
+"Para recuperar el primer nombre de facturación del cliente en el pedido de "
+"WooCommerce"
+
+#: inc/Integrations/Wordpress.php:166
+msgid "To retrieve the user's first name"
+msgstr "Para recuperar el primer nombre del usuario"
+
+#: inc/Integrations/Woocommerce.php:219
+msgid "To retrieve the customer's billing last name in the WooCommerce order"
+msgstr ""
+"Para recuperar el apellido de facturación del cliente en el pedido de "
+"WooCommerce"
+
+#: inc/Integrations/Flexify_Checkout.php:288
+msgid "To retrieve the last name of the cart contact"
+msgstr "Para recuperar el apellido del contacto del carrito."
+
+#: inc/Integrations/Wordpress.php:174
+msgid "To retrieve the user's last name"
+msgstr "Para recuperar el apellido del usuario"
+
+#: inc/Integrations/Woocommerce.php:259
+msgid "To retrieve the WooCommerce order status"
+msgstr "Para recuperar el estado del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:307
+msgid "To retrieve the order currency symbol"
+msgstr "Para recuperar el símbolo de moneda del pedido"
+
+#: inc/Integrations/Flexify_Checkout.php:296
+msgid "To retrieve the cart contact phone number"
+msgstr "Para recuperar el carrito contacte con nuestro número de teléfono."
+
+#: inc/Integrations/Woocommerce.php:243
+msgid "To retrieve the WooCommerce order shipping phone"
+msgstr "Para recuperar el teléfono de entrega del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:235
+msgid "To retrieve the WooCommerce order billing phone"
+msgstr "Para recuperar el teléfono de facturación del pedido de WooCommerce"
+
+#: inc/Integrations/Flexify_Checkout.php:233
+#: inc/Integrations/Flexify_Checkout.php:241
+msgid ""
+"To retrieve the Pix Copia e Cola expiration time. Through the Flexify "
+"Checkout - Inter addon integration"
+msgstr ""
+"Para recuperar el tiempo de expiración del Pix Copia y Pega. A través de la "
+"integración Flexify Checkout - Inter addon"
+
+#: inc/Integrations/Woocommerce.php:799
+msgid "To retrieve the discount coupon type. Example: Percentage or Fixed amount."
+msgstr ""
+"Para recuperar el tipo de descuento del cupón. Ejemplo: Porcentual o Valor "
+"fijo."
+
+#: inc/Integrations/Woocommerce.php:355
+msgid "To retrieve the WooCommerce order payment method title"
+msgstr "Para recuperar el título del método de pago del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:371
+msgid ""
+"To retrieve the value of a specific checkout field in the WooCommerce "
+"order. Replace FIELD_ID with the checkout field ID, for example: "
+"billing_email."
+msgstr ""
+"Para recuperar el valor de un campo específico del checkout en el pedido de "
+"WooCommerce. Reemplace FIELD_ID con el ID del campo del checkout, por "
+"ejemplo: billing_email."
+
+#: inc/Integrations/Woocommerce.php:807
+msgid ""
+"To retrieve the discount coupon value formatted with currency symbol or "
+"percentage. Example: 10%."
+msgstr ""
+"Para recuperar el valor del cupón de descuento formateado con símbolo de "
+"moneda o porcentaje. Ejemplo: 10%."
+
+#: inc/Integrations/Woocommerce.php:803
+msgid "To retrieve the discount coupon value."
+msgstr "Para recuperar el valor del cupón de descuento."
+
+#: inc/Integrations/Woocommerce.php:323
+msgid "To retrieve the total discount amount of the WooCommerce order"
+msgstr "Para recuperar el valor total de descuento del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:331
+msgid "To retrieve the total tax amount of the WooCommerce order"
+msgstr "Para recuperar el valor total de impuestos del pedido de WooCommerce"
+
+#: inc/Integrations/Flexify_Checkout.php:320
+msgid "To retrieve the total value of the cart"
+msgstr "Para recuperar el valor total del carrito."
+
+#: inc/Integrations/Woocommerce.php:315
+msgid "To retrieve the total amount of the WooCommerce order"
+msgstr "Para recuperar el valor total del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:339
+msgid "To retrieve the total refunded amount of the WooCommerce order"
+msgstr "Para recuperar el valor total reembolsado del pedido de WooCommerce"
+
+#: inc/Integrations/Woocommerce.php:347
+msgid "To retrieve the coupon codes used in the WooCommerce order"
+msgstr "Para recuperar los códigos de cupón utilizados en el pedido de WooCommerce"
+
+#: inc/Integrations/Wordpress.php:214
+msgid ""
+"To retrieve a user meta value. Replace META_KEY with the key you want to "
+"retrieve the value for. Example: billing_phone"
+msgstr ""
+"Para recuperar un metadato del usuario. Reemplace META_KEY con la clave de "
+"la que desea recuperar el valor. Ejemplo: billing_phone"
+
+#: inc/Builder/Actions.php:57
+msgid "Stop automation here"
+msgstr "Detener la automatización aquí"
+
+#: inc/Integrations/Woocommerce.php:132
+msgid "Order completed"
+msgstr "Pedido completado"
+
+#: inc/Integrations/Woocommerce.php:840
+msgid "Order paid"
+msgstr "Pedido pagado"
+
+#: inc/Integrations/Woocommerce.php:144
+msgid "Order partially refunded"
+msgstr "Pedido parcialmente reembolsado"
+
+#: inc/Integrations/Woocommerce.php:138
+msgid "Order fully refunded"
+msgstr "Pedido totalmente reembolsado"
+
+#: inc/Builder/Messages.php:229 inc/Integrations/Woocommerce.php:573
+#: inc/Integrations/Woocommerce.php:800
+msgid "Percentage"
+msgstr "Porcentual"
+
+#: inc/Builder/Actions.php:34
+msgid "Allows setting a delay before the action is executed."
+msgstr "Permite definir un tiempo de espera antes de que se ejecute la acción."
+
+#: inc/Builder/Actions.php:46
+msgid "Allows setting a condition for an action to be executed."
+msgstr "Permite definir una condición para que se ejecute una acción."
+
+#: inc/Integrations/Woocommerce.php:853
+msgid "Allows checking the order shipping method."
+msgstr "Permite verificar la forma de entrega del pedido."
+
+#: inc/Integrations/Woocommerce.php:849
+msgid "Allows checking the order payment method."
+msgstr "Permite verificar la forma de pago del pedido."
+
+#: inc/Integrations/Wordpress.php:235
+msgid "Allows checking the role of the user who triggered the action."
+msgstr "Permite verificar la función del usuario que activó el disparador."
+
+#: inc/Integrations/Wordpress.php:245
+msgid "Allows checking the role of the user who logged in."
+msgstr "Permite verificar la función del usuario que inició sesión."
+
+#: inc/Integrations/Wordpress.php:239
+msgid "Allows checking specific metadata of the user who triggered the action."
+msgstr ""
+"Permite verificar metadatos específicos del usuario que activó el "
+"disparador."
+
+#: inc/Integrations/Elementor.php:168 inc/Integrations/Flexify_Checkout.php:353
+#: inc/Integrations/Wordpress.php:249 inc/Integrations/Wordpress.php:255
+msgid ""
+"Allows checking specific metadata of the user who requested the password "
+"reset."
+msgstr ""
+"Permite verificar metadatos específicos del usuario que solicitó la "
+"redefinición de contraseña."
+
+#: inc/Integrations/Woocommerce.php:857 inc/Integrations/Wpforms.php:213
+msgid "Allows checking specific user metadata."
+msgstr "Permite verificar metadatos específicos del usuario."
+
+#: inc/Integrations/Woocommerce.php:861
+msgid "Allows checking the email of the customer who placed the order."
+msgstr "Permite verificar el correo electrónico del cliente que realizó el pedido."
+
+#: inc/Integrations/Woocommerce.php:869
+msgid "Allows checking the status of the created subscription."
+msgstr "Permite verificar el estado de la suscripción creada."
+
+#: inc/Integrations/Woocommerce.php:833
+msgid "Allows checking the order status."
+msgstr "Permite verificar el estado del pedido."
+
+#: inc/Integrations/Wordpress.php:261
+msgid "Allows checking the type of post that was published."
+msgstr "Permite verificar el tipo de publicación que fue publicada."
+
+#: inc/Integrations/Woocommerce.php:865
+msgid "Allows checking the order refund amount."
+msgstr "Permite verificar el valor del reembolso del pedido."
+
+#: inc/Integrations/Flexify_Checkout.php:345
+msgid "Allows checking the total amount of the abandoned cart."
+msgstr "Permite verificar el valor total del carrito abandonado."
+
+#: inc/Integrations/Woocommerce.php:837
+msgid "Allows checking the total order amount."
+msgstr "Permite verificar el valor total del pedido."
+
+#: inc/Integrations/Flexify_Checkout.php:349
+msgid "Allows checking the items in the abandoned cart."
+msgstr "Permite verificar los artículos presentes en el carrito abandonado."
+
+#: inc/Integrations/Woocommerce.php:845
+msgid "Allows checking the products purchased in the order."
+msgstr "Permite verificar los productos adquiridos en el pedido."
+
+#: inc/Integrations/Flexify_Checkout.php:357
+msgid "Allows checking if the abandoned cart was recovered."
+msgstr "Permite verificar si el carrito abandonado fue recuperado."
+
+#: inc/Integrations/Woocommerce.php:841
+msgid "Allows checking if the order was paid."
+msgstr "Permite verificar si el pedido fue pagado."
+
+#: inc/Integrations/Elementor.php:164 inc/Integrations/Wpforms.php:209
+msgid "Allows checking a specific value of a submitted form field."
+msgstr "Permite verificar un valor específico de un campo del formulario enviado."
+
+#: inc/Integrations/Woocommerce.php:581
+msgid "Allow free shipping"
+msgstr "Permitir envío gratis"
+
+#: inc/Core/Assets.php:185
+msgid "Search"
+msgstr "Buscar"
+
+#: inc/Admin/Admin.php:235
+msgid "Search flows"
+msgstr "Buscar flujos"
+
+#: inc/Views/Builder/Choose_Template.php:57
+msgid "Search for flows"
+msgstr "Buscar por flujos"
+
+#: inc/Builder/Components.php:761 inc/Builder/Components.php:859
+msgid "Search for the products you want to include"
+msgstr "Busque los productos que desea incluir"
+
+#: inc/Integrations/Wordpress.php:114
+msgid "Post status changed"
+msgstr "La publicación tiene el estado cambiado"
+
+#: inc/Integrations/Woocommerce.php:487
+msgid "Prefix for coupon creation"
+msgstr "Prefijo para la creación de cupones"
+
+#: inc/Views/Builder/Choose_Template.php:54
+msgid "Search by categories or names."
+msgstr "Busque por categorías o nombres."
+
+#: inc/Integrations/Woocommerce.php:844
+msgid "Products purchased"
+msgstr "Productos adquiridos"
+
+#: inc/Builder/Components.php:756
+msgid "Products purchased:"
+msgstr "Productos adquiridos:"
+
+#: inc/Builder/Components.php:858
+msgid "Products in cart:"
+msgstr "Productos en el carrito:"
+
+#: inc/Builder/Components.php:459 inc/Builder/Components.php:490
+msgid "Any status"
+msgstr "Cualquier estado"
+
+#: inc/Core/Workflows_Table.php:158
+msgid "Draft"
+msgstr "Borrador"
+
+#: inc/Views/Settings/Tabs/General.php:79
+msgid "Receive warnings when WhatsApp was disconnected"
+msgstr "Recibir notificaciones cuando WhatsApp esté desconectado"
+
+#: inc/Core/Assets.php:189
+msgid "Recent"
+msgstr "Recientes"
+
+#: inc/Integrations/Wordpress.php:108
+msgid "User password recovery"
+msgstr "Recuperación de contraseña del usuario"
+
+#: inc/Integrations/Flexify_Checkout.php:83
+msgid ""
+"Recover unfinished sales, send the Pix code via WhatsApp, and optimize "
+"checkout, ensuring more conversions."
+msgstr ""
+"Recupere ventas no finalizadas, envíe el código Pix en WhatsApp y optimice "
+"la finalización de compras, garantizando más conversiones."
+
+#: inc/Views/Settings/Tabs/About.php:305
+msgid "Reset settings"
+msgstr "Restablecer configuraciones"
+
+#: inc/Core/Assets.php:72
+msgid "Resend code"
+msgstr "Reenviar código"
+
+#: inc/Admin/Components.php:85
+msgid "Resend the code in"
+msgstr "Reenvíe el código en"
+
+#: inc/Views/Settings/Tabs/About.php:28
+msgid "Debug logs"
+msgstr "Registros de depuración"
+
+#: inc/Integrations/Elementor_Forms.php:116
+msgid "Sender"
+msgstr "Remitente"
+
+#: inc/Builder/Components.php:79 inc/Builder/Components.php:233
+#, php-format
+msgid "Sender: %s"
+msgstr "Remitente: %s"
+
+#: inc/Integrations/Whatsapp.php:128 inc/Integrations/Whatsapp.php:171
+msgid "Sender: *"
+msgstr "Remitente: *"
+
+#: inc/Views/Settings/Tabs/Phones.php:22
+msgid "Registered senders"
+msgstr "Remitentes registrados"
+
+#: inc/Admin/Components.php:43 inc/Core/Assets.php:182
+msgid "Remove"
+msgstr "Eliminar"
+
+#: inc/Integrations/Woo_Subscriptions.php:92
+msgid "Subscription renewal expired"
+msgstr "La renovación de la suscripción ha expirado"
+
+#: inc/Views/Settings/Tabs/About.php:335
+msgid "Report issues"
+msgstr "Reportar problemas"
+
+#: inc/API/License.php:305
+msgid "Unknown response"
+msgstr "Respuesta desconocida"
+
+#: inc/API/License.php:330
+msgid "Empty response."
+msgstr "Respuesta vacía."
+
+#: inc/Core/Workflows_Table.php:136 inc/Core/Workflows_Table.php:209
+msgid "Restore"
+msgstr "Restaurar"
+
+#: inc/Builder/Components.php:1164
+msgid "Collapse"
+msgstr "Retraer"
+
+#: inc/Views/Builder/Navbar.php:20
+msgid "Run test"
+msgstr "Ejecutar prueba"
+
+#: inc/Views/Builder/Navbar.php:20
+msgid ""
+"Run a test of the automation. Note: Delays and conditions are not "
+"considered."
+msgstr ""
+"Ejecutar una prueba de la automatización. Obs.: Los retrasos y condiciones "
+"no son considerados."
+
+#: inc/Views/Settings/Tabs/General.php:59
+msgid "Route for sending media messages:"
+msgstr "Ruta para el envío de mensajes de medios:"
+
+#: inc/Views/Settings/Tabs/General.php:54
+msgid "Route for sending text messages:"
+msgstr "Ruta para el envío de mensajes de texto:"
+
+#: inc/Integrations/Woocommerce.php:278
+msgid "Rua das Flores, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
+msgstr "Calle de las Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
+
+#: inc/Integrations/Woocommerce.php:286 inc/Integrations/Woocommerce.php:366
+msgid "Rua das Margaridas, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
+msgstr "Calle de las Margaritas, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
+
+#: inc/Validations/Country_Codes.php:167
+msgid "Saint Barthélemy"
+msgstr "San Bartolomé"
+
+#: inc/Builder/Components.php:160 inc/Builder/Components.php:194
+#: inc/Builder/Components.php:284 inc/Builder/Components.php:416
+#: inc/Builder/Components.php:994 inc/Views/Settings.php:61
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+#: inc/Core/Helpers.php:35
+msgid "second"
+msgstr "segundo"
+
+#: inc/Builder/Components.php:306
+msgid "Second(s)"
+msgstr "Segundo(s)"
+
+#: inc/Admin/Components.php:87 inc/Core/Helpers.php:35
+msgid "seconds"
+msgstr "segundos"
+
+#: inc/Builder/Components.php:1052
+msgid "Select the delay type for the next action"
+msgstr "Seleccione el tipo de retraso de la próxima acción"
+
+#: inc/Integrations/Woocommerce.php:591
+msgid "Select the expiration type"
+msgstr "Seleccione el tipo de expiración"
+
+#: inc/Builder/Components.php:473
+msgid "Select a form"
+msgstr "Seleccione un formulario"
+
+#: inc/Builder/Components.php:795
+msgid "Select a shipping method"
+msgstr "Seleccione un método de entrega"
+
+#: inc/Builder/Components.php:778
+msgid "Select a payment method"
+msgstr "Seleccione un método de pago"
+
+#: inc/Views/Settings/Tabs/General.php:15
+msgid ""
+"Select a country to set the default code. The default country code will be "
+"used when it is not possible to get the phone's country code."
+msgstr ""
+"Seleccione un país para definir el código predeterminado. El código "
+"predeterminado del país se usará cuando no sea posible obtener el código de "
+"país del teléfono."
+
+#: inc/Builder/Components.php:727
+msgid "Select a status"
+msgstr "Seleccione un estado"
+
+#: inc/Builder/Components.php:702
+msgid "Select a post type"
+msgstr "Seleccione un tipo de publicación"
+
+#: inc/Builder/Components.php:911
+msgid "Select a condition"
+msgstr "Seleccione una condición"
+
+#: inc/Builder/Components.php:1078 inc/Integrations/Woocommerce.php:603
+msgid "Select a date"
+msgstr "Seleccione una fecha"
+
+#: inc/Views/Builder/Triggers.php:17
+msgid "Select a trigger integration to start your automation flow."
+msgstr ""
+"Seleccione una integración de activación para iniciar el flujo de su "
+"automatización."
+
+#: inc/Views/Builder/Actions.php:11
+msgid "Select one or more actions for the automation flow."
+msgstr "Seleccione una o más acciones para el flujo de la automatización."
+
+#: inc/Core/Helpers.php:39
+msgid "week"
+msgstr "semana"
+
+#: inc/Builder/Components.php:310
+msgid "Week(s)"
+msgstr "Semana(s)"
+
+#: inc/Core/Helpers.php:39
+msgid "weeks"
+msgstr "semanas"
+
+#: inc/Views/Settings/Tabs/About.php:95
+msgid "Server"
+msgstr "Servidor"
+
+#: inc/Builder/Components.php:843 inc/Builder/Messages.php:230
+#: inc/Builder/Messages.php:231 inc/Integrations/Elementor_Forms.php:152
+#: inc/Integrations/Elementor_Forms.php:195
+#: inc/Views/Settings/Tabs/About.php:83 inc/Views/Settings/Tabs/About.php:125
+#: inc/Views/Settings/Tabs/About.php:141 inc/Views/Settings/Tabs/About.php:160
+msgid "Yes"
+msgstr "Sí"
+
+#: inc/Views/Settings/Tabs/About.php:327
+msgid "Yes, I want to reset"
+msgstr "Sí, deseo restablecer"
+
+#: inc/Builder/Actions.php:68
+msgid "PHP Snippet"
+msgstr "Snippet PHP"
+
+#: inc/Admin/Components.php:145
+msgid "About"
+msgstr "Acerca de"
+
+#: inc/Core/Assets.php:190
+msgid "Smiles and People"
+msgstr "Sonrisas y Personas"
+
+#: inc/Integrations/Woocommerce.php:868
+msgid "Subscription status"
+msgstr "Estado de la suscripción"
+
+#: inc/Builder/Components.php:828
+msgid "Subscription status: *"
+msgstr "Estado de la suscripción: *"
+
+#: inc/Views/License.php:35
+msgid "License status:"
+msgstr "Estado de la licencia:"
+
+#: inc/Integrations/Woocommerce.php:150
+msgid "Order status changed"
+msgstr "Estado de un pedido cambiado"
+
+#: inc/Views/Builder/Navbar.php:24
+msgid "Flow status"
+msgstr "Estado del flujo"
+
+#: inc/Builder/Components.php:456 inc/Integrations/Woocommerce.php:832
+msgid "Order status"
+msgstr "Estado del pedido"
+
+#: inc/Builder/Components.php:724
+msgid "Order status: *"
+msgstr "Estado del pedido: *"
+
+#: inc/Views/Settings/Tabs/About.php:75
+msgid "System status:"
+msgstr "Estado del sistema:"
+
+#: inc/Views/License.php:56
+msgid "Your license key:"
+msgstr "Su clave de licencia:"
+
+#: inc/Integrations/Elementor_Forms.php:186
+msgid "Replace information with "
+msgstr "Reemplace información con "
+
+#: inc/Core/Assets.php:196
+msgid "Symbols"
+msgstr "Símbolos"
+
+#: inc/Views/Settings/Tabs/About.php:174
+msgid "PHP max post size:"
+msgstr "Tamaño máximo de publicación de PHP:"
+
+#: inc/Views/Settings/Tabs/About.php:262
+msgid "PHP max upload size:"
+msgstr "Tamaño máximo de envío de PHP:"
+
+#: inc/Views/Settings/Tabs/Phones.php:14
+msgid "Test phone"
+msgstr "Teléfono para pruebas"
+
+#: inc/Admin/Components.php:133
+msgid "Phones"
+msgstr "Teléfonos"
+
+#: inc/Core/Assets.php:109
+msgid "Are you sure you want to deactivate your license?"
+msgstr "¿Está seguro de que desea desactivar su licencia?"
+
+#: inc/Core/Assets.php:177
+msgid "Are you sure you want to delete this action?"
+msgstr "¿Está seguro de que desea eliminar esta acción?"
+
+#: inc/Core/Assets.php:73
+msgid "Are you sure you want to clear the debug logs?"
+msgstr "¿Está seguro de que desea limpiar los registros de depuración?"
+
+#: inc/Core/Assets.php:71
+msgid "Are you sure you want to remove this sender?"
+msgstr "¿Está seguro de que desea eliminar este remitente?"
+
+#: inc/Builder/Actions.php:33
+msgid "Delay"
+msgstr "Tiempo de espera"
+
+#: inc/Builder/Components.php:903
+msgid "Ends with"
+msgstr "Termina con"
+
+#: inc/Views/License.php:51
+#, php-format
+msgid "License type: %s"
+msgstr "Tipo de licencia: %s"
+
+#: inc/Integrations/Elementor_Forms.php:211
+msgid "Media type"
+msgstr "Tipo de medio"
+
+#: inc/Integrations/Whatsapp.php:187
+msgid "Media type: *"
+msgstr "Tipo de medio: *"
+
+#: inc/Integrations/Wordpress.php:260
+msgid "Post type"
+msgstr "Tipo de publicación"
+
+#: inc/Builder/Components.php:699
+msgid "Post type: *"
+msgstr "Tipo de publicación: *"
+
+#: inc/Integrations/Woocommerce.php:568
+msgid "Discount type and value: *"
+msgstr "Tipo y valor del descuento: *"
+
+#: inc/Builder/Messages.php:234
+#, php-format
+msgid "Type: %s"
+msgstr "Tipo: %s"
+
+#: inc/Admin/Admin.php:62 inc/Admin/Admin.php:63 inc/Admin/Admin.php:234
+#: inc/Views/Builder/Choose_Template.php:60
+#. parent page slug
+#. page title
+msgid "All flows"
+msgstr "Todos los flujos"
+
+#: joinotify.php:184 joinotify.php:195
+msgid "Cheating?"
+msgstr "¿Haciendo trampa?"
+
+#: inc/Builder/Components.php:989
+msgid "Your flow title"
+msgstr "Título de su flujo"
+
+#: inc/Core/Updater.php:456
+#, php-format
+msgid ""
+"A new version of the <strong>Joinotify</strong> plugin (%s) is available. "
+"<a href=\"%s\">Update now</a>."
+msgstr ""
+"Una nueva versión del plugin <strong>Joinotify</strong> (%s) está "
+"disponible. <a href=\"%s\">Actualice ahora</a>."
+
+#: inc/Core/Updater.php:228
+msgid "A new version of the <strong>Joinotify</strong> plugin is available."
+msgstr "Una nueva versión del plugin <strong>Joinotify</strong> está disponible."
+
+#: inc/Integrations/Whatsapp.php:204
+msgid "Media URL"
+msgstr "URL del medio"
+
+#: inc/Core/Assets.php:179
+msgid "Use this media"
+msgstr "Usar este medio"
+
+#: inc/Core/Assets.php:186
+msgid "Use the TAB key to quickly insert an emoji"
+msgstr "Use la tecla TAB para insertar un emoji rápidamente"
+
+#: inc/Integrations/Whatsapp.php:50
+msgid ""
+"Use the world's largest messaging service to notify your customers about "
+"events on your site."
+msgstr ""
+"Use el mayor servicio de mensajes del mundo para notificar a su cliente en "
+"eventos de su sitio."
+
+#: inc/Integrations/Woocommerce.php:230 inc/Integrations/Wordpress.php:185
+msgid "user@example.com"
+msgstr "usuario@ejemplo.com"
+
+#: inc/Builder/Components.php:1256
+msgid "Variable value"
+msgstr "Valor variable"
+
+#: inc/Integrations/Elementor.php:163 inc/Integrations/Wpforms.php:208
+msgid "Value of a form field"
+msgstr "Valor de un campo del formulario"
+
+#: inc/Builder/Components.php:871
+msgid "Field value"
+msgstr "Valor del campo"
+
+#: inc/Builder/Components.php:870
+msgid "Field value:"
+msgstr "Valor del campo:"
+
+#: inc/Integrations/Woocommerce.php:576
+msgid "Discount value"
+msgstr "Valor del descuento"
+
+#: inc/Builder/Components.php:690
+msgid "Meta value"
+msgstr "Valor del metadato"
+
+#: inc/Builder/Components.php:821 inc/Integrations/Woocommerce.php:864
+msgid "Refund amount"
+msgstr "Valor del reembolso"
+
+#: inc/Builder/Components.php:814
+msgid "Refund amount: *"
+msgstr "Valor del reembolso: *"
+
+#: inc/Builder/Messages.php:229 inc/Integrations/Woocommerce.php:800
+msgid "Fixed amount"
+msgstr "Valor fijo"
+
+#: inc/Views/Settings/Tabs/About.php:227
+msgid "Recommended minimum value is 10000"
+msgstr "El valor mínimo recomendado es 10000"
+
+#: inc/Views/Settings/Tabs/About.php:249
+msgid "Recommended minimum value is 128M"
+msgstr "El valor mínimo recomendado es 128M"
+
+#: inc/Views/Settings/Tabs/About.php:205
+msgid "Recommended minimum value is 180"
+msgstr "El valor mínimo recomendado es 180"
+
+#: inc/Views/Settings/Tabs/About.php:183 inc/Views/Settings/Tabs/About.php:271
+msgid "Recommended minimum value is 64M"
+msgstr "El valor mínimo recomendado es 64M"
+
+#: inc/Builder/Components.php:852 inc/Integrations/Flexify_Checkout.php:344
+msgid "Total cart value"
+msgstr "Valor total del carrito"
+
+#: inc/Builder/Components.php:851
+msgid "Total cart value:"
+msgstr "Valor total del carrito:"
+
+#: inc/Builder/Components.php:746 inc/Integrations/Woocommerce.php:836
+msgid "Total order value"
+msgstr "Valor total del pedido"
+
+#: inc/Builder/Components.php:739
+msgid "Total order value: *"
+msgstr "Valor total del pedido: *"
+
+#: inc/Builder/Components.php:689
+msgid "Value: *"
+msgstr "Valor: *"
+
+#: inc/Builder/Components.php:942
+msgid "Text variables"
+msgstr "Variables de texto"
+
+#: inc/Integrations/Elementor_Forms.php:186
+msgid "text variables"
+msgstr "variables de texto"
+
+#: inc/Integrations/Woocommerce.php:629
+msgid "Text variables:"
+msgstr "Variables de texto:"
+
+#: inc/Views/Settings/Tabs/About.php:218
+msgid "PHP max input variables:"
+msgstr "Variables máximas de entrada de PHP:"
+
+#: inc/Builder/Components.php:898
+msgid "Empty"
+msgstr "Vacío"
+
+#: inc/Admin/Admin.php:233
+msgid "View flow"
+msgstr "Ver flujo"
+
+#: inc/Views/Settings/Tabs/About.php:23
+msgid "View debug logs"
+msgstr "Ver registros de depuración"
+
+#: inc/Builder/Components.php:585
+msgid "True"
+msgstr "Verdadero"
+
+#: inc/Core/Updater.php:288
+msgid "Check for updates"
+msgstr "Verificar actualizaciones"
+
+#: inc/Admin/Components.php:39
+msgid "Check connection"
+msgstr "Comprobar la conexión"
+
+#: inc/Builder/Messages.php:119
+msgid "Check if the order was paid"
+msgstr "Verificar si el pedido fue pagado"
+
+#: inc/Builder/Messages.php:119
+msgid "Check if the order was not paid"
+msgstr "Verificar si el pedido no fue pagado"
+
+#: inc/Admin/Components.php:72
+msgid "Check your WhatsApp"
+msgstr "Verifique su WhatsApp"
+
+#: inc/Views/Settings/Tabs/About.php:144
+#, php-format
+msgid "Version %s"
+msgstr "Versión %s"
+
+#: inc/Views/Settings/Tabs/About.php:92
+#, php-format
+msgid "Joinotify version: %s"
+msgstr "Versión de Joinotify: %s"
+
+#: inc/Views/Settings/Tabs/About.php:97
+msgid "PHP version:"
+msgstr "Versión de PHP:"
+
+#: inc/Views/Settings/Tabs/About.php:78
+msgid "WordPress version:"
+msgstr "Versión de WordPress:"
+
+#: inc/Core/Assets.php:194
+msgid "Travel and Places"
+msgstr "Viajes y Lugares"
+
+#: inc/Views/License.php:83
+msgid "You can upload the .key license file to perform a manual activation."
+msgstr ""
+"Puede cargar el archivo .key de la licencia para realizar su activación "
+"manual."
+
+#: inc/Views/Builder/Choose_Template.php:77 inc/Views/Builder/Triggers.php:83
+msgid "Back"
+msgstr "Volver"
+
+#: inc/Views/Builder/Choose_Template.php:45 inc/Views/Builder/Navbar.php:63
+msgid "Back to dashboard"
+msgstr "Volver al panel"
+
+#: inc/Views/License.php:37
+msgid "Valid"
+msgstr "Válida"
+
+#: inc/Validations/Media_Types.php:38
+msgid "Video"
+msgstr "Vídeo"
+
+#: inc/Integrations/Whatsapp.php:83
+msgid "WhatsApp: Media message"
+msgstr "WhatsApp: Mensaje de medios"
+
+#: inc/Integrations/Whatsapp.php:70
+msgid "WhatsApp: Text message"
+msgstr "WhatsApp: Mensaje de texto"
+
+#: inc/Validations/Media_Types.php:40
+msgid "Audio"
+msgstr "Audio"
+
 #: inc/Builder/Components.php:896
-msgid "É"
+msgid "Is"
 msgstr "Es"
+
+#: inc/Admin/Admin.php:228
+msgctxt "add new on admin bar"
+msgid "Flow"
+msgstr "Flujo"
+
+#: inc/Admin/Admin.php:227
+msgctxt "admin menu"
+msgid "Flows"
+msgstr "Flujos"
+
+#: inc/Admin/Admin.php:229
+msgctxt "fluxo"
+msgid "Add new"
+msgstr "Añadir nuevo"
+
+#: inc/Admin/Admin.php:225
+msgctxt "post type general name"
+msgid "Flows"
+msgstr "Flujos"
+
+#: inc/Admin/Admin.php:226
+msgctxt "post type singular name"
+msgid "Flow"
+msgstr "Flujo"

@@ -226,7 +226,7 @@ class Updater {
     
                 // if the current version is lower than that of the remote server
                 if ( version_compare( $current_version, $latest_version, '<' )) {
-                    $message = __('Uma nova versão do plugin <strong>Joinotify</strong> está disponível.', 'joinotify');
+                    $message = __('A new version of the <strong>Joinotify</strong> plugin is available.', 'joinotify');
                     $class = 'notice is-dismissible notice-success';
     
                     // Display notice
@@ -240,14 +240,14 @@ class Updater {
                     </script>
                     <?php
                 } elseif ( version_compare( $current_version, $latest_version, '>=' ) ) {
-                    $message = __('A versão do plugin <strong>Joinotify</strong> é a mais recente.', 'joinotify');
+                    $message = __('The plugin version <strong>Joinotify</strong> is up to date.', 'joinotify');
                     $class = 'notice is-dismissible notice-success';
     
                     // Display notice
                     printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
                 }
             } else {
-                $message = __('Não foi possível verificar atualizações para o plugin <strong>Joinotify.</strong>', 'joinotify');
+                $message = __('Could not check for updates for the <strong>Joinotify</strong> plugin', 'joinotify');
                 $class = 'notice is-dismissible notice-error';
     
                 // Display notice
@@ -286,7 +286,7 @@ class Updater {
      */
     public function add_check_updates_link( $plugin_meta, $plugin_file ) {
         if ( $plugin_file === $this->plugin_slug . '/' . $this->plugin_slug . '.php' ) {
-            $check_updates_link = '<a href="' . esc_url( add_query_arg( 'joinotify_check_updates', '1' ) ) . '">' . esc_html__( 'Verificar atualizações', 'joinotify' ) . '</a>';
+            $check_updates_link = '<a href="' . esc_url( add_query_arg( 'joinotify_check_updates', '1' ) ) . '">' . esc_html__( 'Check for updates', 'joinotify' ) . '</a>';
             $plugin_meta['joinotify_check_updates'] = $check_updates_link;
         }
         
@@ -454,7 +454,7 @@ class Updater {
         );
 
         $message = sprintf(
-            __( 'Uma nova versão do plugin <strong>Joinotify</strong> (%s) está disponível. <a href="%s">Atualize agora</a>.', 'joinotify' ),
+            __( 'A new version of the <strong>Joinotify</strong> plugin (%s) is available. <a href="%s">Update now</a>.', 'joinotify' ),
             esc_html( $latest_version ),
             esc_url( $update_url )
         );

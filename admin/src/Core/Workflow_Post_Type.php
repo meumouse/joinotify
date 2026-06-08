@@ -35,25 +35,25 @@ class Workflow_Post_Type {
      */
     public function register_joinotify_workflow_post_type() {
         $labels = array(
-            'name'               => _x( 'Fluxos', 'post type general name', 'joinotify' ),
-            'singular_name'      => _x( 'Fluxo', 'post type singular name', 'joinotify' ),
-            'menu_name'          => _x( 'Fluxos', 'admin menu', 'joinotify' ),
-            'name_admin_bar'     => _x( 'Fluxo', 'add new on admin bar', 'joinotify' ),
-            'add_new'            => _x( 'Adicionar novo', 'fluxo', 'joinotify' ),
-            'add_new_item'       => __( 'Adicionar novo fluxo', 'joinotify' ),
-            'new_item'           => __( 'Novo fluxo', 'joinotify' ),
-            'edit_item'          => __( 'Editar fluxo', 'joinotify' ),
-            'view_item'          => __( 'Ver fluxo', 'joinotify' ),
-            'all_items'          => __( 'Todos os fluxos', 'joinotify' ),
-            'search_items'       => __( 'Pesquisar fluxos', 'joinotify' ),
-            'parent_item_colon'  => __( 'Fluxo pai:', 'joinotify' ),
-            'not_found'          => __( 'Nenhum fluxo encontrado.', 'joinotify' ),
-            'not_found_in_trash' => __( 'Nenhum fluxo encontrado na lixeira.', 'joinotify' )
+            'name'               => _x( 'Flows', 'post type general name', 'joinotify' ),
+            'singular_name'      => _x( 'Flow', 'post type singular name', 'joinotify' ),
+            'menu_name'          => _x( 'Flows', 'admin menu', 'joinotify' ),
+            'name_admin_bar'     => _x( 'Flow', 'add new on admin bar', 'joinotify' ),
+            'add_new'            => _x( 'Add new', 'fluxo', 'joinotify' ),
+            'add_new_item'       => __( 'Add new flow', 'joinotify' ),
+            'new_item'           => __( 'New flow', 'joinotify' ),
+            'edit_item'          => __( 'Edit flow', 'joinotify' ),
+            'view_item'          => __( 'View flow', 'joinotify' ),
+            'all_items'          => __( 'All flows', 'joinotify' ),
+            'search_items'       => __( 'Search flows', 'joinotify' ),
+            'parent_item_colon'  => __( 'Parent flow:', 'joinotify' ),
+            'not_found'          => __( 'No flow found.', 'joinotify' ),
+            'not_found_in_trash' => __( 'No flow found in trash.', 'joinotify' )
         );
     
         $args = array(
             'labels' => $labels,
-            'description'        => __( 'Descrição.', 'joinotify' ),
+            'description'        => __( 'Description.', 'joinotify' ),
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,

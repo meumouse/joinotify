@@ -220,7 +220,7 @@ class Init {
 	 */
 	public function php_version_notice() {
 		$class = 'notice notice-error is-dismissible';
-		$message = __( '<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização.', 'joinotify' );
+		$message = __( '<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade.', 'joinotify' );
 
 		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
 	}
@@ -452,11 +452,11 @@ class Init {
 	public function add_action_plugin_links( $action_links ) {
 		if ( get_option('joinotify_license_status') !== 'valid' ) {
 			$plugins_links = array(
-				'<a href="' . admin_url( 'admin.php?page=joinotify-license' ) . '">' . __( 'Configurar', 'joinotify' ) . '</a>',
+				'<a href="' . admin_url( 'admin.php?page=joinotify-license' ) . '">' . __( 'Configure', 'joinotify' ) . '</a>',
 			);
 		} else {
 			$plugins_links = array(
-				'<a href="' . admin_url( 'admin.php?page=joinotify-settings' ) . '">' . __( 'Configurar', 'joinotify' ) . '</a>',
+				'<a href="' . admin_url( 'admin.php?page=joinotify-settings' ) . '">' . __( 'Configure', 'joinotify' ) . '</a>',
 			);
 		}
 
@@ -478,7 +478,7 @@ class Init {
 	public function add_row_meta_links( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( strpos( $plugin_file, $this->basename ) !== false ) {
 			$new_links = array(
-				'docs' => '<a href="' . esc_attr( JOINOTIFY_DOCS_URL ) . '" target="_blank">' . __( 'Documentação', 'joinotify' ) . '</a>',
+				'docs' => '<a href="' . esc_attr( JOINOTIFY_DOCS_URL ) . '" target="_blank">' . __( 'Documentation', 'joinotify' ) . '</a>',
 			);
 
 			$plugin_meta = array_merge( $plugin_meta, $new_links );

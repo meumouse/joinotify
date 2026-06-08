@@ -33,13 +33,13 @@ class Helpers {
      */
     public static function format_time_unit( $time_unit, $plural ) {
         $units = apply_filters( 'Joinotify/Helpers/Format_Time_Unit', array(
-            'seconds' => $plural ? __( 'segundos', 'joinotify' ) : __( 'segundo', 'joinotify' ),
-            'minute' => $plural ? __( 'minutos', 'joinotify' ) : __( 'minuto', 'joinotify' ),
-            'hours' => $plural ? __( 'horas', 'joinotify' ) : __( 'hora', 'joinotify' ),
-            'day' => $plural ? __( 'dias', 'joinotify' ) : __( 'dia', 'joinotify' ),
-            'week' => $plural ? __( 'semanas', 'joinotify' ) : __( 'semana', 'joinotify' ),
-            'month' => $plural ? __( 'meses', 'joinotify' ) : __( 'mês', 'joinotify' ),
-            'year' => $plural ? __( 'anos', 'joinotify' ) : __( 'ano', 'joinotify' ),
+            'seconds' => $plural ? __( 'seconds', 'joinotify' ) : __( 'second', 'joinotify' ),
+            'minute' => $plural ? __( 'minutes', 'joinotify' ) : __( 'minute', 'joinotify' ),
+            'hours' => $plural ? __( 'hours', 'joinotify' ) : __( 'hour', 'joinotify' ),
+            'day' => $plural ? __( 'days', 'joinotify' ) : __( 'day', 'joinotify' ),
+            'week' => $plural ? __( 'weeks', 'joinotify' ) : __( 'week', 'joinotify' ),
+            'month' => $plural ? __( 'months', 'joinotify' ) : __( 'month', 'joinotify' ),
+            'year' => $plural ? __( 'years', 'joinotify' ) : __( 'year', 'joinotify' ),
         ));
 
         return isset( $units[$time_unit] ) ? $units[$time_unit] : $time_unit;

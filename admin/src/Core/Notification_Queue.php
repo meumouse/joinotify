@@ -75,7 +75,7 @@ class Notification_Queue {
     public static function register_cron_interval( $schedules ) {
         $schedules[ self::CRON_INTERVAL ] = array(
             'interval' => 5 * MINUTE_IN_SECONDS,
-            'display' => __( 'A cada 5 minutos', 'joinotify' ),
+            'display' => __( 'Every 5 minutes', 'joinotify' ),
         );
 
         return $schedules;

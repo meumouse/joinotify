@@ -86,7 +86,7 @@ async function generateWithAi() {
     <FieldGroup :title="__('PHP snippet', textDomain)" :description="__('The field is required. Keep the code self-contained and deterministic.', textDomain)">
       <BaseCodeEditorField
         :model-value="String(modelValue.snippet_php || '')"
-        :label="__('Snippet PHP', textDomain)"
+        :label="__('PHP Snippet', textDomain)"
         placeholder="<?php"
         :rows="14"
         @update:model-value="$emit('update:modelValue', { ...modelValue, snippet_php: $event })"

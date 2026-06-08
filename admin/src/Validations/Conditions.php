@@ -32,8 +32,8 @@ class Conditions {
         // Default condition when no action is found
         $conditions = $conditions_map[$trigger] ?? array(
             'no_action' => array(
-                'title' => __( 'Nenhuma condição disponível para esta ação', 'joinotify' ),
-                'description' => __( 'Nenhuma condição foi definida para esta ação.', 'joinotify' ),
+                'title' => __( 'No condition available for this action', 'joinotify' ),
+                'description' => __( 'No condition has been set for this action.', 'joinotify' ),
             ),
         );
     

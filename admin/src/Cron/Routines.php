@@ -84,12 +84,12 @@ class Routines {
     public static function register_custom_schedules( $schedules ) {
         $schedules['six_hours'] = array(
             'interval' => 6 * HOUR_IN_SECONDS,
-            'display' => __( 'A cada 6 horas', 'joinotify' ),
+            'display' => __( 'Every 6 hours', 'joinotify' ),
         );
 
         $schedules['daily'] = array(
             'interval' => DAY_IN_SECONDS,
-            'display' => __( 'Diariamente', 'joinotify' ),
+            'display' => __( 'Daily', 'joinotify' ),
         );
 
         return $schedules;

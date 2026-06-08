@@ -459,7 +459,7 @@ class Registry {
 
 			case 'snippet_php':
 				return array(
-					'title' => $base_title ?: esc_html__( 'Snippet PHP', 'joinotify' ),
+					'title' => $base_title ?: esc_html__( 'PHP Snippet', 'joinotify' ),
 					'description' => '',
 					'action' => 'snippet_php',
 					'snippet_php' => '',

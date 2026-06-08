@@ -6,7 +6,7 @@ import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeSnippetPhpData(data: Record<string, unknown>): Record<string, unknown> {
   return {
-    title: String(data.title || __('Snippet PHP', textDomain)),
+    title: String(data.title || __('PHP Snippet', textDomain)),
     description: String(data.description || ''),
     action: 'snippet_php',
     snippet_php: String(data.snippet_php || ''),
@@ -16,7 +16,7 @@ function normalizeSnippetPhpData(data: Record<string, unknown>): Record<string, 
 
 export const snippetPhpDefinition: ActionDefinition = {
   action: 'snippet_php',
-  title: __('Snippet PHP', textDomain),
+  title: __('PHP Snippet', textDomain),
   description: __('Run a PHP snippet during the workflow.', textDomain),
   icon: 'code',
   hasSettings: true,

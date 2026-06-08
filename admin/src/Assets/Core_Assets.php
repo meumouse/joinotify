@@ -83,7 +83,7 @@ class Core_Assets extends Abstract_Assets {
                 'dev_mode'   => $this->dev_mode,
                 'ajax_url'   => admin_url( 'admin-ajax.php' ),
                 'i18n'       => array(
-                    'close_notice_aria_label'   => __( 'Fechar', 'joinotify' ),
+                    'close_notice_aria_label'   => __( 'Close', 'joinotify' ),
                     'confirm_deactivate_license' => __( 'Are you sure you want to deactivate your license?', 'joinotify' ),
                 ),
             )

@@ -407,8 +407,8 @@ class Ajax_Workflows {
 
                 if ( $result ) {
                     $workflow_status = get_post_status( $post_id ) === 'publish'
-                        ? esc_html__( 'Ativo', 'joinotify' )
-                        : esc_html__( 'Inativo', 'joinotify' );
+                        ? esc_html__( 'Active', 'joinotify' )
+                        : esc_html__( 'Inactive', 'joinotify' );
 
                     $response = array(
                         'status'                  => 'success',
@@ -812,7 +812,7 @@ class Ajax_Workflows {
             wp_send_json( array(
                 'status'             => 'error',
                 'toast_header_title' => esc_html__( 'Import error', 'joinotify' ),
-                'toast_body_title'   => esc_html__( 'Nenhum arquivo foi especificado.', 'joinotify' ),
+                'toast_body_title'   => esc_html__( 'No file was specified.', 'joinotify' ),
             ) );
         }
 

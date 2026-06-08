@@ -188,7 +188,7 @@ class Ajax_Phones {
 
                 wp_send_json( array(
                     'status'             => 'success',
-                    'toast_header_title' => __( 'Remetente removido', 'joinotify' ),
+                    'toast_header_title' => __( 'Sender removed', 'joinotify' ),
                     'toast_body_title'   => __( 'The sender phone was removed successfully!', 'joinotify' ),
                     'updated_list_html'  => Admin_Components::current_phones_senders(),
                 ) );

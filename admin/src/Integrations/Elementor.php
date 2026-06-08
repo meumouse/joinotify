@@ -91,8 +91,8 @@ class Elementor extends Integrations_Base {
         $triggers['elementor'] = array(
             array(
                 'data_trigger' => 'elementor_pro/forms/new_record',
-                'title' => esc_html__( 'Formulário é enviado', 'joinotify' ),
-                'description' => esc_html__( 'Este acionamento é disparado quando um formulário do Elementor é enviado.', 'joinotify' ),
+                'title' => esc_html__( 'Form submitted', 'joinotify' ),
+                'description' => esc_html__( 'This trigger is fired when an Elementor form is submitted.', 'joinotify' ),
                 'class' => '',
                 'require_settings' => true,
             ),
@@ -141,7 +141,7 @@ class Elementor extends Integrations_Base {
         $placeholders['elementor'] = array(
             '{{ field_id=[FIELD_ID] }}' => array(
                 'triggers' => Triggers::get_trigger_names('elementor'),
-                'description' => esc_html__( 'Para recuperar a informação de um campo do formulário do Elementor. Substitua FIELD_ID pelo id respectivo.', 'joinotify' ),
+                'description' => esc_html__( 'To retrieve information from an Elementor form field. Replace FIELD_ID with the respective ID.', 'joinotify' ),
                 'replacement' => array(),
             ),
         );
@@ -161,12 +161,12 @@ class Elementor extends Integrations_Base {
         $elementor_conditions = array(
             'elementor_pro/forms/new_record' => array(
                 'field_value' => array(
-                    'title' => __( 'Valor de um campo do formulário', 'joinotify' ),
-                    'description' => __( 'Permite verificar um valor específico de um campo do formulário enviado.', 'joinotify' ),
+                    'title' => __( 'Value of a form field', 'joinotify' ),
+                    'description' => __( 'Allows checking a specific value of a submitted form field.', 'joinotify' ),
                 ),
                 'user_meta' => array(
-                    'title' => __( 'Meta dados do usuário', 'joinotify' ),
-                    'description' => __( 'Permite verificar metadados específicos do usuário que solicitou a redefinição de senha.', 'joinotify' ),
+                    'title' => __( 'User metadata', 'joinotify' ),
+                    'description' => __( 'Allows checking specific metadata of the user who requested the password reset.', 'joinotify' ),
                 ),
             ),
         );
