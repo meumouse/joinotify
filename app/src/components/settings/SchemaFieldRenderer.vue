@@ -171,7 +171,7 @@ const inputType = computed(() => {
       />
     </label>
 
-    <div v-else-if="isGroup" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+    <div v-else-if="isGroup" class="rounded-xl border border-slate-200 bg-slate-50/70 p-4">
       <div class="mb-4">
         <h4 class="text-sm font-semibold text-slate-900">{{ field.label }}</h4>
         <p v-if="field.description" class="mt-1 text-sm leading-6 text-slate-500">{{ field.description }}</p>
@@ -190,7 +190,7 @@ const inputType = computed(() => {
       </div>
     </div>
 
-    <div v-else-if="isRepeater" class="rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+    <div v-else-if="isRepeater" class="rounded-xl border border-slate-200 bg-slate-50/70 p-4">
       <div class="mb-4 flex items-start justify-between gap-4">
         <div>
           <h4 class="text-sm font-semibold text-slate-900">{{ field.label }}</h4>
@@ -210,7 +210,7 @@ const inputType = computed(() => {
         <div
           v-for="(_, index) in repeaterItems"
           :key="`${field.key}-${index}`"
-          class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+          class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
         >
           <div class="mb-4 flex items-center justify-between gap-3">
             <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">

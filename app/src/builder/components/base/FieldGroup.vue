@@ -6,7 +6,7 @@ defineProps({
 </script>
 
 <template>
-  <section class="space-y-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+  <section class="space-y-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
     <header v-if="title || description" class="space-y-1">
       <h3 v-if="title" class="text-sm font-semibold text-slate-900">
         {{ title }}
