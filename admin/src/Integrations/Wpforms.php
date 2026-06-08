@@ -28,24 +28,12 @@ class Wpforms extends Integrations_Base {
      */
     public function __construct() {
         // add integration on settings
-        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 60, 1 );
+        $this->register_settings_tab( 60 );
 
         // check if WPForms is active
         if ( function_exists('wpforms') ) {
-            // add triggers
-            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
-
-            // add trigger tab
-            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 50 );
-
-            // add trigger content
-            add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
-
-            // add placeholders
-            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 1 );
-
-            // add conditions
-            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+            // standard builder hooks (triggers, tab, content, placeholders, conditions)
+            $this->register_builder_hooks( 50, 1 );
 
             // fire hooks if WPForms is active
             if ( Admin::get_setting('enable_wpforms_integration') === 'yes' ) {

@@ -27,23 +27,9 @@ class Wordpress extends Integrations_Base {
      * @return void
      */
     public function __construct() {
-        // add integration on settings
-        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 70, 1 );
-
-        // add triggers
-        add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
-
-        // add trigger tab
-        add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 10 );
-
-        // add trigger content
-        add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
-
-        // add placeholders
-        add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 2 );
-
-        // add conditions
-        add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+        // settings tab + standard builder hooks (triggers, tab, content, placeholders, conditions)
+        $this->register_settings_tab( 70 );
+        $this->register_builder_hooks( 10, 2 );
 
         // fire hooks if WordPress is active
         if ( Admin::get_setting('enable_wordpress_integration') === 'yes' ) {

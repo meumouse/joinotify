@@ -28,24 +28,12 @@ class Flexify_Checkout extends Integrations_Base {
      */
     public function __construct() {
         // add integration on settings
-        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 30, 1 );
-        
+        $this->register_settings_tab( 30 );
+
         // check if Flexify Checkout is active
         if ( class_exists('\MeuMouse\Flexify_Checkout\Flexify_Checkout') ) {
-            // add triggers
-            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
-
-            // add trigger tab
-            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), 30 );
-
-            // add trigger content
-            add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
-
-            // add placeholders
-            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, 2 );
-
-            // add conditions
-            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+            // standard builder hooks (triggers, tab, content, placeholders, conditions)
+            $this->register_builder_hooks( 30, 2 );
 
             // check if Flexify Checkout extension addon is active
             if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {

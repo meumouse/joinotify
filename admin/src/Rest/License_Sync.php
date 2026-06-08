@@ -51,12 +51,7 @@ class License_Sync extends Abstract_Route {
         Cache_Helper::clear_license_cache();
 
         if ( License::check_license( $license_key, $license_message, $response_obj, JOINOTIFY_FILE ) ) {
-            if ( $response_obj && ! empty( $response_obj->is_valid ) ) {
-                update_option( 'joinotify_license_status', 'valid' );
-                delete_option( 'joinotify_alternative_license_activation' );
-            } else {
-                update_option( 'joinotify_license_status', 'invalid' );
-            }
+            License::persist_status_from_response( $response_obj );
 
             return $this->success_response( array(
                 'message'      => esc_html__( 'License information updated successfully.', 'joinotify' ),

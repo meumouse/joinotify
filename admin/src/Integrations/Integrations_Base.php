@@ -19,8 +19,55 @@ defined('ABSPATH') || exit;
 abstract class Integrations_Base {
 
     /**
+     * Register the integration's settings-tab card filter.
+     *
+     * @since 2.0.0
+     * @param int $priority Filter priority controlling the tab ordering.
+     * @return void
+     */
+    protected function register_settings_tab( $priority = 10 ) {
+        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), $priority, 1 );
+    }
+
+
+    /**
+     * Register the builder hooks shared by trigger-based integrations: the
+     * trigger list, trigger tab + content, placeholders and action conditions.
+     *
+     * Each callback is wired only when the integration defines it, so partial
+     * integrations stay safe and the helper is reusable by third parties.
+     *
+     * @since 2.0.0
+     * @param int $tab_priority     Priority controlling the trigger tab ordering.
+     * @param int $placeholder_args Accepted args for the placeholders filter.
+     * @return void
+     */
+    protected function register_builder_hooks( $tab_priority = 10, $placeholder_args = 1 ) {
+        if ( method_exists( $this, 'add_triggers' ) ) {
+            add_filter( 'Joinotify/Builder/Get_All_Triggers', array( $this, 'add_triggers' ), 10, 1 );
+        }
+
+        if ( method_exists( $this, 'add_triggers_tab' ) ) {
+            add_action( 'Joinotify/Builder/Triggers', array( $this, 'add_triggers_tab' ), $tab_priority );
+        }
+
+        if ( method_exists( $this, 'add_triggers_content' ) ) {
+            add_action( 'Joinotify/Builder/Triggers_Content', array( $this, 'add_triggers_content' ) );
+        }
+
+        if ( method_exists( $this, 'add_placeholders' ) ) {
+            add_filter( 'Joinotify/Builder/Placeholders_List', array( $this, 'add_placeholders' ), 10, $placeholder_args );
+        }
+
+        if ( method_exists( $this, 'add_conditions' ) ) {
+            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_conditions' ), 10, 1 );
+        }
+    }
+
+
+    /**
      * Add tab items on integration settings tab
-     * 
+     *
      * @since 1.0.0
      * @version 1.4.7
      * @return array
@@ -51,24 +98,7 @@ abstract class Integrations_Base {
             ? $args['settings']
             : ( isset( $args['fields'] ) && is_array( $args['fields'] ) ? $args['fields'] : array() );
         $modal = isset( $args['modal'] ) && is_array( $args['modal'] ) ? $args['modal'] : array();
-
-        if ( empty( $modal['size'] ) ) {
-            if ( ! empty( $args['modal_size'] ) ) {
-                $modal['size'] = self::normalize_modal_size( $args['modal_size'] );
-            } elseif ( ! empty( $args['modal_size_class'] ) ) {
-                $modal['size'] = self::normalize_modal_size( $args['modal_size_class'] );
-            } elseif ( ! empty( $args['size_class'] ) ) {
-                $modal['size'] = self::normalize_modal_size( $args['size_class'] );
-            }
-        }
-
-        if ( empty( $modal['modal_size_class'] ) ) {
-            if ( ! empty( $args['modal_size_class'] ) ) {
-                $modal['modal_size_class'] = $args['modal_size_class'];
-            } elseif ( ! empty( $args['size_class'] ) ) {
-                $modal['modal_size_class'] = $args['size_class'];
-            }
-        }
+        $modal = self::resolve_modal_size_hints( $modal, $args );
 
         $defaults = isset( $args['defaults'] ) && is_array( $args['defaults'] ) ? $args['defaults'] : array();
 
@@ -149,24 +179,7 @@ abstract class Integrations_Base {
             : ( isset( $item['fields'] ) && is_array( $item['fields'] ) ? $item['fields'] : array() );
 
         $modal = isset( $item['modal'] ) && is_array( $item['modal'] ) ? $item['modal'] : array();
-
-        if ( empty( $modal['size'] ) ) {
-            if ( ! empty( $item['modal_size'] ) ) {
-                $modal['size'] = self::normalize_modal_size( $item['modal_size'] );
-            } elseif ( ! empty( $item['modal_size_class'] ) ) {
-                $modal['size'] = self::normalize_modal_size( $item['modal_size_class'] );
-            } elseif ( ! empty( $item['size_class'] ) ) {
-                $modal['size'] = self::normalize_modal_size( $item['size_class'] );
-            }
-        }
-
-        if ( empty( $modal['modal_size_class'] ) ) {
-            if ( ! empty( $item['modal_size_class'] ) ) {
-                $modal['modal_size_class'] = $item['modal_size_class'];
-            } elseif ( ! empty( $item['size_class'] ) ) {
-                $modal['modal_size_class'] = $item['size_class'];
-            }
-        }
+        $modal = self::resolve_modal_size_hints( $modal, $item );
 
         $defaults = self::normalize_integration_defaults(
             isset( $item['defaults'] ) && is_array( $item['defaults'] ) ? $item['defaults'] : array(),
@@ -629,6 +642,38 @@ abstract class Integrations_Base {
         }
 
         return $definition;
+    }
+
+
+    /**
+     * Fill a modal config's `size` and `modal_size_class` from a source array,
+     * honoring the `modal_size`, `modal_size_class` and `size_class` hints.
+     *
+     * @since 2.0.0
+     * @param array $modal  Modal config being built.
+     * @param array $source Array to read the size hints from.
+     * @return array Modal config with size/modal_size_class filled in.
+     */
+    protected static function resolve_modal_size_hints( array $modal, array $source ) {
+        if ( empty( $modal['size'] ) ) {
+            if ( ! empty( $source['modal_size'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $source['modal_size'] );
+            } elseif ( ! empty( $source['modal_size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $source['modal_size_class'] );
+            } elseif ( ! empty( $source['size_class'] ) ) {
+                $modal['size'] = self::normalize_modal_size( $source['size_class'] );
+            }
+        }
+
+        if ( empty( $modal['modal_size_class'] ) ) {
+            if ( ! empty( $source['modal_size_class'] ) ) {
+                $modal['modal_size_class'] = $source['modal_size_class'];
+            } elseif ( ! empty( $source['size_class'] ) ) {
+                $modal['modal_size_class'] = $source['size_class'];
+            }
+        }
+
+        return $modal;
     }
 
 

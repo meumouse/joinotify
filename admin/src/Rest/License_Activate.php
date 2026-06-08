@@ -55,12 +55,8 @@ class License_Activate extends Abstract_Route {
         update_option( 'joinotify_temp_license_key', $license_key );
 
         if ( License::check_license( $license_key, $license_message, $response_obj, JOINOTIFY_FILE ) ) {
-            if ( $response_obj && $response_obj->is_valid ) {
-                update_option( 'joinotify_license_status', 'valid' );
+            if ( License::persist_status_from_response( $response_obj ) ) {
                 delete_option( 'joinotify_temp_license_key' );
-                delete_option( 'joinotify_alternative_license_activation' );
-            } else {
-                update_option( 'joinotify_license_status', 'invalid' );
             }
 
             if ( License::is_valid() ) {

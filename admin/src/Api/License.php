@@ -802,8 +802,32 @@ class License {
 
 
     /**
+     * Persist the local license status from a check_license() response object.
+     *
+     * Stores `joinotify_license_status` as valid/invalid and clears the
+     * alternative-activation flag when the license is valid. Shared by the
+     * activate and sync REST endpoints.
+     *
+     * @since 2.0.0
+     * @param object|null $response Response object returned via check_license().
+     * @return bool Whether the response represents a valid license.
+     */
+    public static function persist_status_from_response( $response ) {
+        $is_valid = $response && ! empty( $response->is_valid );
+
+        update_option( 'joinotify_license_status', $is_valid ? 'valid' : 'invalid' );
+
+        if ( $is_valid ) {
+            delete_option( 'joinotify_alternative_license_activation' );
+        }
+
+        return $is_valid;
+    }
+
+
+    /**
      * Get license expires time
-     * 
+     *
      * @since 1.1.0
      * @param string $license_key | License key
      * @return array
