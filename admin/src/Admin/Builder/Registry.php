@@ -12,6 +12,7 @@ use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Builder\Utils;
 use MeuMouse\Joinotify\Builder\Workflow_Manager;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Admin\Settings\Registry as Settings_Registry;
 
 defined('ABSPATH') || exit;
@@ -57,6 +58,7 @@ class Registry {
 			'triggers' => self::get_triggers_catalog(),
 			'trigger_contexts' => self::get_trigger_contexts_catalog(),
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
+			'conditions' => self::get_conditions_catalog(),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
 				'dashboard_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
@@ -1403,6 +1405,95 @@ class Registry {
 				self::update_workflow_indexes( $workflow_id, $content );
 			}
 		}
+	}
+
+
+	/**
+	 * Build the conditions catalog for the builder.
+	 *
+	 * The runtime engine is the single source of truth: the per-trigger condition
+	 * keys come from Conditions::get_conditions_by_trigger() and the operators
+	 * allowed for each key come from Conditions::check_condition_type(). The
+	 * builder consumes this so a user can only pick conditions/operators the
+	 * engine actually evaluates (previously the UI offered invalid operators like
+	 * start_with/finish_with that never matched at runtime).
+	 *
+	 * Shape:
+	 *   operators: { op_key => label }
+	 *   triggers:  { trigger_id => [ { key, title, description, operators[], value_type, requires[] } ] }
+	 *
+	 * @since 2.0.0
+	 * @return array<string,mixed>
+	 */
+	public static function get_conditions_catalog() {
+		// Canonical operator labels — single source of truth for the builder.
+		$operator_labels = apply_filters( 'Joinotify/Builder/Condition_Operators', array(
+			'is' => esc_html__( 'Is equal to', 'joinotify' ),
+			'is_not' => esc_html__( 'Is not equal to', 'joinotify' ),
+			'contains' => esc_html__( 'Contains', 'joinotify' ),
+			'not_contain' => esc_html__( 'Does not contain', 'joinotify' ),
+			'empty' => esc_html__( 'Is empty', 'joinotify' ),
+			'not_empty' => esc_html__( 'Is not empty', 'joinotify' ),
+			'bigger_than' => esc_html__( 'Greater than', 'joinotify' ),
+			'less_than' => esc_html__( 'Less than', 'joinotify' ),
+		));
+
+		// Value-input hints per condition key, so the builder renders the right
+		// control and collects any extra field the runtime needs.
+		$value_types = apply_filters( 'Joinotify/Builder/Condition_Value_Types', array(
+			'order_status' => array( 'type' => 'order_status' ),
+			'subscription_status' => array( 'type' => 'text' ),
+			'products_purchased' => array( 'type' => 'products' ),
+			'order_paid' => array( 'type' => 'boolean' ),
+			'cart_recovered' => array( 'type' => 'boolean' ),
+			'order_total' => array( 'type' => 'number' ),
+			'refund_amount' => array( 'type' => 'number' ),
+			'cart_total' => array( 'type' => 'number' ),
+			'items_in_cart' => array( 'type' => 'number' ),
+			'user_last_login' => array( 'type' => 'number' ),
+			'user_meta' => array( 'type' => 'text', 'requires' => array( 'meta_key' ) ),
+			'field_value' => array( 'type' => 'text', 'requires' => array( 'field_id' ) ),
+		));
+
+		// Per-trigger condition map populated by each integration's add_conditions().
+		$conditions_map = apply_filters( 'Joinotify/Validations/Get_Action_Conditions', array() );
+		$triggers = array();
+
+		foreach ( $conditions_map as $trigger_id => $conditions ) {
+			if ( ! is_array( $conditions ) ) {
+				continue;
+			}
+
+			foreach ( $conditions as $key => $meta ) {
+				// skip the "no condition available" placeholder
+				if ( 'no_action' === $key || ! is_array( $meta ) ) {
+					continue;
+				}
+
+				$operators = Conditions::check_condition_type( $key );
+
+				// only expose conditions the engine can actually evaluate
+				if ( empty( $operators ) ) {
+					continue;
+				}
+
+				$hint = $value_types[ $key ] ?? array();
+
+				$triggers[ $trigger_id ][] = array(
+					'key' => $key,
+					'title' => isset( $meta['title'] ) ? (string) $meta['title'] : $key,
+					'description' => isset( $meta['description'] ) ? (string) $meta['description'] : '',
+					'operators' => array_values( $operators ),
+					'value_type' => isset( $hint['type'] ) ? (string) $hint['type'] : 'text',
+					'requires' => isset( $hint['requires'] ) && is_array( $hint['requires'] ) ? array_values( $hint['requires'] ) : array(),
+				);
+			}
+		}
+
+		return array(
+			'operators' => $operator_labels,
+			'triggers' => $triggers,
+		);
 	}
 
 
