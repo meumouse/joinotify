@@ -32,23 +32,31 @@
 }
 
 .joinotify-license-page .skeleton-content {
-    border-radius: 16px;
-    background:
-        linear-gradient(90deg, rgba(0, 138, 255, 0.06), rgba(0, 138, 255, 0.12), rgba(0, 138, 255, 0.06)),
-        #f5f8fc;
-    background-size: 200% 100%;
-    animation: joinotify-license-pulse 1.4s ease-in-out infinite;
+    height: auto;
+    width: fit-content;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    position: relative;
+    -webkit-animation-duration: 1.7s;
+    animation-duration: 1.7s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-name: skeleton-animation;
+    animation-name: skeleton-animation;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eee 2%, #ddd 18%, #eee 33%);
+    background-size: 1300px;
 }
 
-.joinotify-license-page .skeleton-content + .skeleton-content {
-    margin-top: 24px;
-}
-
-@keyframes joinotify-license-pulse {
+@keyframes skeleton-animation {
     0% {
-        background-position: 0 0;
+        background-position: -650px 0;
     }
     100% {
-        background-position: 200% 0;
+        background-position: 650px 0;
     }
 }
