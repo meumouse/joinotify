@@ -940,6 +940,30 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  async function generateAiSnippet(payload: Record<string, unknown> = {}) {
+    debugLogger.log('snippet:generate-ai-start');
+
+    try {
+      const response = api.value
+        ? await api.value.generateAi({ intent: 'snippet', ...payload })
+        : null;
+
+      if (response && (response as Record<string, unknown>).status === 'success') {
+        return { ok: true, code: String((response as Record<string, unknown>).code || '') };
+      }
+
+      return {
+        ok: false,
+        message: String((response as Record<string, unknown>)?.message || __('The AI could not generate the snippet.', textDomain)),
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : __('The AI could not generate the snippet.', textDomain),
+      };
+    }
+  }
+
   async function loadBootstrapFromServer(nextPostId = postId.value) {
     loading.value.bootstrap = true;
     debugLogger.log('bootstrap:load-start', {
@@ -1593,6 +1617,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     createWorkflowFromScratch,
     createWorkflowFromTemplate,
     generateWorkflowFromAi,
+    generateAiSnippet,
     loadWorkflowFile,
     loadBootstrapFromServer,
     loadWorkflowFromServer,

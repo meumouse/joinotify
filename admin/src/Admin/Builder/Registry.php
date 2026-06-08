@@ -1422,7 +1422,7 @@ class Registry {
 				continue;
 			}
 
-			if ( in_array( $key, array( 'message', 'caption', 'title', 'sender', 'receiver', 'action', 'trigger', 'context', 'delay_type', 'delay_period', 'date_value', 'time_value', 'media_type', 'condition', 'type_text', 'field_id', 'meta_key', 'value_text', 'coupon_code', 'discount_type', 'ai_prompt', 'ai_system', 'ai_tone', 'ai_length', 'ai_model', 'ai_temperature' ), true ) ) {
+			if ( in_array( $key, array( 'message', 'caption', 'title', 'sender', 'receiver', 'action', 'trigger', 'context', 'delay_type', 'delay_period', 'date_value', 'time_value', 'media_type', 'condition', 'type_text', 'field_id', 'meta_key', 'value_text', 'coupon_code', 'discount_type', 'ai_prompt', 'ai_system', 'ai_tone', 'ai_length', 'ai_model', 'ai_temperature', 'var_name' ), true ) ) {
 				$clean[ $key ] = sanitize_textarea_field( (string) $value );
 				continue;
 			}

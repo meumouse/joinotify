@@ -141,6 +141,17 @@ function joinotify_prepare_message( $message, $payload = array() ) {
 	// First, we replace all placeholders
 	$message = Placeholders::replace_placeholders( $message, $payload );
 
+	// Replace AI smart variables produced by the dynamic_placeholder action: {{ ai:NAME }}
+	if ( false !== strpos( $message, '{{ ai:' ) || false !== strpos( $message, '{{ai:' ) ) {
+		$ai_vars = isset( $payload['ai_vars'] ) && is_array( $payload['ai_vars'] ) ? $payload['ai_vars'] : array();
+
+		$message = preg_replace_callback( '/\{\{\s*ai:([a-zA-Z0-9_-]+)\s*\}\}/', function( $matches ) use ( $ai_vars ) {
+			$key = sanitize_key( $matches[1] );
+
+			return isset( $ai_vars[ $key ] ) && is_scalar( $ai_vars[ $key ] ) ? (string) $ai_vars[ $key ] : '';
+		}, $message );
+	}
+
 	return $message;
 }
 

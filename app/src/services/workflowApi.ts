@@ -44,5 +44,8 @@ export function createWorkflowApiClient(bootstrap) {
     generateAiWorkflow(body) {
       return api.post('/admin/ai/generate', body);
     },
+    generateAi(body) {
+      return api.post('/admin/ai/generate', body);
+    },
   };
 }

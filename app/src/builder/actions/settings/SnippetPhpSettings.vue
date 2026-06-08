@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import BaseAlert from '../../components/base/BaseAlert.vue';
 import BaseCodeEditorField from '../../components/base/BaseCodeEditorField.vue';
+import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
+import BaseButton from '../../../components/base/BaseButton.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
+import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
@@ -10,7 +14,37 @@ const props = defineProps({
   availablePlaceholders: { type: Array, default: () => [] },
 });
 
-defineEmits(['update:modelValue', 'placeholder-selected']);
+const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
+
+const store = useWorkflowBuilderStore();
+
+const aiPrompt = ref('');
+const aiLoading = ref(false);
+const aiError = ref('');
+
+async function generateWithAi() {
+  const instructions = aiPrompt.value.trim();
+
+  if (!instructions || aiLoading.value) {
+    return;
+  }
+
+  aiLoading.value = true;
+  aiError.value = '';
+
+  try {
+    const result = await store.generateAiSnippet({ instructions });
+
+    if (!result || result.ok === false) {
+      aiError.value = result?.message || __('The AI could not generate the snippet.', textDomain);
+      return;
+    }
+
+    emit('update:modelValue', { ...props.modelValue, snippet_php: result.code });
+  } finally {
+    aiLoading.value = false;
+  }
+}
 </script>
 
 <template>
@@ -20,6 +54,34 @@ defineEmits(['update:modelValue', 'placeholder-selected']);
       :title="__('Security warning', textDomain)"
       :message="__('PHP snippets execute inside the workflow runtime. Only trusted administrators should edit this code.', textDomain)"
     />
+
+    <details class="rounded-lg border border-indigo-200 bg-indigo-50/60 px-4 py-3">
+      <summary class="cursor-pointer list-none text-sm font-semibold text-indigo-800">
+        {{ __('Generate with AI', textDomain) }}
+      </summary>
+      <div class="space-y-3 pt-3">
+        <BaseTextareaField
+          :model-value="aiPrompt"
+          :rows="3"
+          :disabled="aiLoading"
+          :placeholder="__('Describe what the snippet should do. The runtime exposes $payload with the trigger context.', textDomain)"
+          @update:model-value="aiPrompt = $event"
+        />
+
+        <p v-if="aiError" class="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          {{ aiError }}
+        </p>
+
+        <div class="flex justify-end">
+          <BaseButton
+            :title="__('Generate snippet', textDomain)"
+            :loading="aiLoading"
+            :disabled="!aiPrompt.trim()"
+            @click="generateWithAi"
+          />
+        </div>
+      </div>
+    </details>
 
     <FieldGroup :title="__('PHP snippet', textDomain)" :description="__('The field is required. Keep the code self-contained and deterministic.', textDomain)">
       <BaseCodeEditorField

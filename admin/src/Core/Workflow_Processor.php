@@ -292,17 +292,24 @@ class Workflow_Processor {
      * @param array $payload | Payload data
      * @return bool
      */
-    public static function handle_action( $action, $post_id, $event_data ) {
+    public static function handle_action( $action, $post_id, &$event_data ) {
         $action_data = $action['data'] ?? array();
 
         if ( empty( $action_data['action'] ) ) {
             return false;
         }
 
-        // process time delay action before all the actions 
+        // process time delay action before all the actions
         if ( $action_data['action'] === 'time_delay' ) {
             // schedule the Cron, with next_actions array and return bool
             return Schedule::schedule_actions( $post_id, $event_data, $action_data['delay_timestamp'], $action );
+        }
+
+        // AI smart variable: generate a value and store it on the payload (by reference) so the
+        // following actions in this segment can reference it through {{ ai:NAME }}. Handled before
+        // the closure map because it must mutate the shared payload, not a captured copy.
+        if ( $action_data['action'] === 'dynamic_placeholder' ) {
+            return self::execute_dynamic_placeholder( $action_data, $event_data );
         }
 
         /**
@@ -796,14 +803,68 @@ class Workflow_Processor {
 
 
     /**
-     * Execute dynamic placeholder action
-     * 
-     * @since 1.3.0
+     * Execute the AI smart variable action.
+     *
+     * Generates a named value from a system message + prompt and stores it on
+     * the payload under "ai_vars" (by reference), so later actions can reference
+     * it with the {{ ai:NAME }} placeholder. The value travels with the payload,
+     * so it survives time delays (the payload is serialized into the cron event).
+     *
+     * @since 2.0.0
      * @param array $action_data | Action data
-     * @param array $payload | Payload data
-     * @return void
+     * @param array $payload | Payload data (by reference)
+     * @return bool
      */
-    public static function execute_dynamic_placeholder( $action_data, $payload ) {
+    public static function execute_dynamic_placeholder( $action_data, &$payload ) {
+        $name = isset( $action_data['var_name'] ) ? sanitize_key( (string) $action_data['var_name'] ) : '';
 
+        if ( '' === $name ) {
+            Logger::register_log( 'Skipping AI variable: missing variable name.', 'WARNING' );
+
+            return false;
+        }
+
+        $prompt = joinotify_prepare_message( $action_data['ai_prompt'] ?? '', $payload );
+        $system = joinotify_prepare_message( $action_data['ai_system'] ?? '', $payload );
+
+        if ( '' === trim( $prompt ) ) {
+            Logger::register_log( "Skipping AI variable {$name}: empty prompt.", 'WARNING' );
+
+            return false;
+        }
+
+        $temperature = isset( $action_data['ai_temperature'] ) && is_numeric( $action_data['ai_temperature'] )
+            ? (float) $action_data['ai_temperature']
+            : null;
+
+        $response = AI_Manager::generate( new AI_Request( array(
+            'system' => $system,
+            'prompt' => $prompt,
+            'model' => $action_data['ai_model'] ?? '',
+            'temperature' => $temperature,
+            'context' => array(
+                'intent' => 'smart_variable',
+                'variable' => $name,
+            ),
+        )));
+
+        if ( ! $response->is_successful() ) {
+            $error = $response->get_error();
+
+            Logger::register_log(
+                "AI variable {$name} generation failed: " . ( $error ? $error->get_error_message() : 'unknown error' ),
+                'ERROR'
+            );
+
+            return false;
+        }
+
+        if ( ! isset( $payload['ai_vars'] ) || ! is_array( $payload['ai_vars'] ) ) {
+            $payload['ai_vars'] = array();
+        }
+
+        $payload['ai_vars'][ $name ] = $response->get_text();
+
+        return true;
     }
 }

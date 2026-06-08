@@ -88,6 +88,29 @@ class AI_Messaging extends Integrations_Base {
             ),
         );
 
+        $actions[] = array(
+            'action' => 'dynamic_placeholder',
+            'title' => esc_html__( 'AI: Smart variable', 'joinotify' ),
+            'description' => esc_html__( 'Generate a named value with AI and reuse it in later messages with {{ ai:NAME }}.', 'joinotify' ),
+            'context' => array(),
+            'category' => 'ai',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2zm7 13-1 3-3 1 3 1 1 3 1-3 3-1-3-1-1-3z"></path></svg>',
+            'external_icon' => false,
+            'has_settings' => true,
+            'is_expansible' => false,
+            'priority' => 60,
+            'default_data' => array(
+                'title' => esc_html__( 'AI: Smart variable', 'joinotify' ),
+                'description' => '',
+                'action' => 'dynamic_placeholder',
+                'var_name' => '',
+                'ai_prompt' => '',
+                'ai_system' => '',
+                'ai_model' => '',
+                'ai_temperature' => '',
+            ),
+        );
+
         return $actions;
     }
 }

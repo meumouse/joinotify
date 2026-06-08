@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\AI\Workflow_Generator;
+use MeuMouse\Joinotify\AI\Snippet_Generator;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
@@ -51,6 +52,10 @@ class Builder_Ai_Generate extends Abstract_Route {
         switch ( $intent ) {
             case 'flow':
                 $result = Workflow_Generator::generate( $instructions, $system, $context );
+                break;
+
+            case 'snippet':
+                $result = Snippet_Generator::generate( $instructions, $system );
                 break;
 
             default:
