@@ -11,7 +11,13 @@
  */
 import { computed, nextTick, ref, watch } from 'vue';
 import { useElementBounding, onClickOutside } from '@vueuse/core';
-import { Calendar, ChevronLeft, ChevronRight, X } from '@boxicons/vue';
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOptions,
+  ListboxOption,
+} from '@headlessui/vue';
+import { Calendar, Check, ChevronDown, ChevronLeft, ChevronRight, X } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
@@ -78,11 +84,38 @@ const displayValue = computed(() =>
 const viewYear = ref((selectedDate.value || today).getFullYear());
 const viewMonth = ref((selectedDate.value || today).getMonth());
 
-const monthLabel = computed(() =>
-  new Intl.DateTimeFormat(locale.value, { month: 'long', year: 'numeric' }).format(
-    new Date(viewYear.value, viewMonth.value, 1)
-  )
-);
+// Locale-aware month names for the header month selector.
+const monthOptions = computed(() => {
+  const formatter = new Intl.DateTimeFormat(locale.value, { month: 'long' });
+
+  return Array.from({ length: 12 }, (_, index) => ({
+    value: index,
+    label: formatter.format(new Date(2000, index, 1)),
+  }));
+});
+
+const monthLabel = computed(() => monthOptions.value[viewMonth.value]?.label || '');
+
+// Year range for the header year selector, widened to always include the
+// min/max bounds and whatever month is currently being viewed/selected.
+const yearOptions = computed(() => {
+  const current = today.getFullYear();
+  const candidates = [
+    minDate.value ? minDate.value.getFullYear() : current - 10,
+    maxDate.value ? maxDate.value.getFullYear() : current + 1,
+    viewYear.value,
+    selectedDate.value ? selectedDate.value.getFullYear() : current,
+  ];
+  const start = Math.min(...candidates);
+  const end = Math.max(...candidates);
+  const years = [];
+
+  for (let year = end; year >= start; year -= 1) {
+    years.push(year);
+  }
+
+  return years;
+});
 
 // Locale-aware short weekday headers, week starting on Sunday. 2023-01-01 was a Sunday.
 const weekdayLabels = computed(() => {
@@ -133,7 +166,7 @@ const floatingStyles = computed(() => ({
   position: 'fixed' as const,
   top: `${bottom.value + 4}px`,
   left: `${x.value}px`,
-  minWidth: `${Math.max(width.value, 268)}px`,
+  minWidth: `${Math.max(width.value, 288)}px`,
 }));
 
 onClickOutside(
@@ -240,19 +273,89 @@ watch(isOpen, (open) => {
           class="z-[10000] rounded-lg border border-slate-200 bg-white p-3 shadow-xl"
         >
           <!-- Month navigation -->
-          <div class="mb-2 flex items-center justify-between">
+          <div class="mb-2 flex items-center gap-1.5">
             <button
               type="button"
-              class="flex h-7 w-7 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100"
+              class="flex h-8 w-7 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100"
               :aria-label="__('Previous month', textDomain)"
               @click="previousMonth"
             >
               <ChevronLeft :width="18" :height="18" />
             </button>
-            <span class="text-sm font-semibold capitalize text-slate-700">{{ monthLabel }}</span>
+
+            <!-- Month selector -->
+            <Listbox
+              :model-value="viewMonth"
+              as="div"
+              class="relative flex-1"
+              @update:model-value="viewMonth = $event"
+            >
+              <ListboxButton
+                :aria-label="__('Select month', textDomain)"
+                class="flex w-full items-center justify-between gap-1 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[13px] font-medium capitalize text-slate-700 outline-none transition hover:bg-slate-50 focus:border-primary-700 focus:ring-2 focus:ring-primary-700/10"
+              >
+                <span class="truncate">{{ monthLabel }}</span>
+                <ChevronDown :width="14" :height="14" class="shrink-0 text-slate-400" />
+              </ListboxButton>
+              <ListboxOptions
+                class="absolute left-0 top-full z-[10001] mt-1 max-h-56 w-full min-w-[8rem] overflow-auto rounded-md border border-slate-200 bg-white py-1 text-[13px] shadow-xl focus:outline-none"
+              >
+                <ListboxOption
+                  v-for="month in monthOptions"
+                  :key="month.value"
+                  v-slot="{ active, selected }"
+                  :value="month.value"
+                  as="template"
+                >
+                  <li
+                    class="flex cursor-pointer items-center justify-between gap-2 px-2.5 py-1.5 capitalize"
+                    :class="active ? 'bg-primary-50 text-primary-800' : 'text-slate-700'"
+                  >
+                    <span :class="selected ? 'font-semibold' : ''">{{ month.label }}</span>
+                    <Check v-if="selected" :width="14" :height="14" class="shrink-0 text-primary-600" />
+                  </li>
+                </ListboxOption>
+              </ListboxOptions>
+            </Listbox>
+
+            <!-- Year selector -->
+            <Listbox
+              :model-value="viewYear"
+              as="div"
+              class="relative w-[5.25rem] shrink-0"
+              @update:model-value="viewYear = $event"
+            >
+              <ListboxButton
+                :aria-label="__('Select year', textDomain)"
+                class="flex w-full items-center justify-between gap-1 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[13px] font-medium text-slate-700 outline-none transition hover:bg-slate-50 focus:border-primary-700 focus:ring-2 focus:ring-primary-700/10"
+              >
+                <span class="truncate">{{ viewYear }}</span>
+                <ChevronDown :width="14" :height="14" class="shrink-0 text-slate-400" />
+              </ListboxButton>
+              <ListboxOptions
+                class="absolute right-0 top-full z-[10001] mt-1 max-h-56 w-full min-w-[5rem] overflow-auto rounded-md border border-slate-200 bg-white py-1 text-[13px] shadow-xl focus:outline-none"
+              >
+                <ListboxOption
+                  v-for="year in yearOptions"
+                  :key="year"
+                  v-slot="{ active, selected }"
+                  :value="year"
+                  as="template"
+                >
+                  <li
+                    class="flex cursor-pointer items-center justify-between gap-2 px-2.5 py-1.5"
+                    :class="active ? 'bg-primary-50 text-primary-800' : 'text-slate-700'"
+                  >
+                    <span :class="selected ? 'font-semibold' : ''">{{ year }}</span>
+                    <Check v-if="selected" :width="14" :height="14" class="shrink-0 text-primary-600" />
+                  </li>
+                </ListboxOption>
+              </ListboxOptions>
+            </Listbox>
+
             <button
               type="button"
-              class="flex h-7 w-7 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100"
+              class="flex h-8 w-7 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100"
               :aria-label="__('Next month', textDomain)"
               @click="nextMonth"
             >
