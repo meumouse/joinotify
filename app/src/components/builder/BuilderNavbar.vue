@@ -50,7 +50,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-10 border-b border-slate-200 bg-white">
+  <header class="sticky top-0 z-30 border-b border-slate-200 bg-white">
     <div class="flex h-[80px] w-full items-stretch">
       <div class="flex w-[88px] shrink-0 items-center justify-center border-r border-slate-200">
         <BrandMark variant="primary" size="md" />
