@@ -22,7 +22,7 @@ export const whatsappTextDefinition: ActionDefinition = {
   title: __('WhatsApp: Text message', textDomain),
   description: __('Send a WhatsApp text message.', textDomain),
   icon: 'message-rounded',
-  category: 'messaging',
+  category: 'whatsapp',
   hasSettings: true,
   priority: 100,
   isExpansible: false,
