@@ -24,7 +24,7 @@ import {
 import { Background, BackgroundVariant } from '@vue-flow/background';
 import { Controls } from '@vue-flow/controls';
 import { MiniMap } from '@vue-flow/minimap';
-import { Plus } from '@boxicons/vue';
+import { ChevronLeft, ChevronRight, Plus } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 import FlowEdge from './FlowEdge.vue';
 import FlowNode, { type FlowNodeData } from './FlowNode.vue';
@@ -74,6 +74,8 @@ const props = defineProps<{
   triggerDescription?: string;
   workflowNodes?: WorkflowNode[];
   selectedNodeId?: string;
+  canUndo?: boolean;
+  canRedo?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -83,6 +85,8 @@ const emit = defineEmits<{
   (e: 'change-trigger', nodeId: string): void;
   (e: 'select-action', payload: DroppedActionPayload): void;
   (e: 'update-node', payload: NodeEditEvent): void;
+  (e: 'undo'): void;
+  (e: 'redo'): void;
 }>();
 
 const canvasRef = ref<HTMLDivElement | null>(null);
@@ -698,14 +702,39 @@ function handleZoomFit() {
       </button>
     </div>
 
-    <button
-      type="button"
-      class="absolute right-4 top-4 z-10 flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-primary-700"
-      @click="openAddAction"
-    >
-      <Plus :width="15" :height="15" />
-      {{ __('Add action', textDomain) }}
-    </button>
+    <div class="absolute right-4 top-4 z-10 flex flex-col items-end gap-2">
+      <div class="flex items-center gap-1 rounded-lg border border-slate-300 bg-white/95 p-1 shadow-sm">
+        <button
+          type="button"
+          class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+          :disabled="!canUndo"
+          :aria-label="__('Undo', textDomain)"
+          :title="__('Undo (Ctrl+Z)', textDomain)"
+          @click="emit('undo')"
+        >
+          <ChevronLeft :width="16" :height="16" />
+        </button>
+        <button
+          type="button"
+          class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+          :disabled="!canRedo"
+          :aria-label="__('Redo', textDomain)"
+          :title="__('Redo (Ctrl+Shift+Z)', textDomain)"
+          @click="emit('redo')"
+        >
+          <ChevronRight :width="16" :height="16" />
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-primary-700"
+        @click="openAddAction"
+      >
+        <Plus :width="15" :height="15" />
+        {{ __('Add action', textDomain) }}
+      </button>
+    </div>
   </div>
 </template>
 

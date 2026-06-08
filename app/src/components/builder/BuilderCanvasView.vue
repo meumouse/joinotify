@@ -35,6 +35,8 @@ interface BuilderCanvasProps {
   readyTrigger: boolean;
   readyActions: boolean;
   readySenders: boolean;
+  canUndo: boolean;
+  canRedo: boolean;
 }
 
 const props = defineProps<BuilderCanvasProps>();
@@ -53,6 +55,8 @@ const emit = defineEmits([
   'export',
   'select-action',
   'close-actions',
+  'undo',
+  'redo',
 ]);
 
 const triggerDefinition = computed(() => {
@@ -142,7 +146,11 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
       :trigger-description="triggerDescription"
       :workflow-nodes="nodes"
       :selected-node-id="selectedNodeId"
+      :can-undo="canUndo"
+      :can-redo="canRedo"
       @add-action="openActionsSidebar"
+      @undo="$emit('undo')"
+      @redo="$emit('redo')"
       @remove-node="$emit('remove-node', $event)"
       @select-node="$emit('select-node', $event)"
       @change-trigger="$emit('change-trigger', $event)"

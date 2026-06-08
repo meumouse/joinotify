@@ -809,11 +809,6 @@ function handleRemoveNode(nodeId) {
 
   try {
     store.removeNode(targetNodeId);
-    pushToast(
-      __('Action removed. Use Ctrl+Z to undo or Save flow to persist changes.', textDomain),
-      'success',
-      __('Builder', textDomain)
-    );
   } catch (error) {
     pushToast(
       error instanceof Error ? error.message : __('Could not delete the action.', textDomain),
