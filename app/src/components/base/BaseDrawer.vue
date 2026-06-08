@@ -12,7 +12,7 @@ defineEmits(['close']);
 
 <template>
   <Teleport to="body">
-    <div v-if="open" class="fixed inset-0 z-[90] flex justify-end bg-slate-950/35">
+    <div v-if="open" class="fixed inset-0 z-[9999] flex justify-end bg-slate-950/35">
       <button type="button" class="absolute inset-0" :aria-label="__('Close drawer', textDomain)" @click="$emit('close')" />
       <aside class="relative z-10 h-full w-full max-w-[460px] overflow-y-auto border-l border-slate-200 bg-white shadow-soft">
         <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">

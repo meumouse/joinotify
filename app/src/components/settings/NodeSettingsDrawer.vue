@@ -1,5 +1,5 @@
 <script setup>
-import BaseDrawer from '../base/BaseDrawer.vue';
+import ModalDialog from '../modals/ModalDialog.vue';
 import NodeSettingsRenderer from './NodeSettingsRenderer.vue';
 import { __, textDomain } from '../../utils/i18n';
 
@@ -14,7 +14,7 @@ defineEmits(['close', 'update']);
 </script>
 
 <template>
-  <BaseDrawer :open="open" :title="title" @close="$emit('close')">
+  <ModalDialog :open="open" :title="title" size-class="max-w-2xl" @close="$emit('close')">
     <NodeSettingsRenderer :node="node" :contexts="contexts" @update="$emit('update', $event)" />
-  </BaseDrawer>
+  </ModalDialog>
 </template>
