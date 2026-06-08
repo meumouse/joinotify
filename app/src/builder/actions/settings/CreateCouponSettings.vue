@@ -9,7 +9,7 @@ import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
 import BaseTimeField from '../../components/base/BaseTimeField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
-import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
+import { useSenderOptions } from '../../../composables/useSenderOptions';
 import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
@@ -19,8 +19,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
-
-const store = useWorkflowBuilderStore();
 
 const discountTypeOptions = [
   { label: __('Fixed cart discount', textDomain), value: 'fixed_cart' },
@@ -56,21 +54,7 @@ const message = computed(() => {
   return value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
 });
 
-const senderOptions = computed(() => {
-  const senders = Array.isArray(store.bootstrap?.phones?.senders) ? store.bootstrap.phones.senders : [];
-  const options = senders
-    .map((item: unknown) => String((item && typeof item === 'object' ? (item as Record<string, unknown>).phone : '') || '').trim())
-    .filter(Boolean)
-    .map((phone: string) => ({ label: phone, value: phone }));
-
-  const current = String(message.value.sender || '').trim();
-
-  if (current && !options.some((option) => option.value === current)) {
-    options.unshift({ label: current, value: current });
-  }
-
-  return [{ label: __('— Select a sender —', textDomain), value: '' }, ...options];
-});
+const senderOptions = useSenderOptions(() => message.value.sender);
 
 function updateSettings(patch: Record<string, unknown>) {
   emit('update:modelValue', {

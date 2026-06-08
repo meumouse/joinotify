@@ -5,7 +5,8 @@ import BaseTextField from '../../components/base/BaseTextField.vue';
 import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
 import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
-import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
+import { useSenderOptions } from '../../../composables/useSenderOptions';
+import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { ImagePlus } from '@boxicons/vue';
 import { __, textDomain } from '../../../utils/i18n';
 
@@ -17,8 +18,6 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'placeholder-selected']);
 
-const store = useWorkflowBuilderStore();
-
 const mediaTypeOptions = [
   { label: __('Image', textDomain), value: 'image' },
   { label: __('Video', textDomain), value: 'video' },
@@ -26,30 +25,11 @@ const mediaTypeOptions = [
   { label: __('Audio', textDomain), value: 'audio' },
 ];
 
-const senderOptions = computed(() => {
-  const senders = Array.isArray(store.bootstrap?.phones?.senders) ? store.bootstrap.phones.senders : [];
-  const options = senders
-    .map((item: unknown) => String((item && typeof item === 'object' ? (item as Record<string, unknown>).phone : '') || '').trim())
-    .filter(Boolean)
-    .map((phone: string) => ({ label: phone, value: phone }));
-
-  const current = String((props.modelValue as Record<string, unknown>).sender || '').trim();
-
-  if (current && !options.some((option) => option.value === current)) {
-    options.unshift({ label: current, value: current });
-  }
-
-  return [{ label: __('— Select a sender —', textDomain), value: '' }, ...options];
-});
+const senderOptions = useSenderOptions(() => (props.modelValue as Record<string, unknown>).sender);
 
 const isAudio = computed(() => String((props.modelValue as Record<string, unknown>).media_type || 'image') === 'audio');
 
-function update(key: string, value: unknown) {
-  emit('update:modelValue', {
-    ...(props.modelValue as Record<string, unknown>),
-    [key]: value,
-  });
-}
+const { update } = useActionSettingsUpdate(props, emit);
 
 function openMediaLibrary() {
   const wpMedia = (window as Window & {
