@@ -7,6 +7,7 @@
  */
 
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Extensions;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Core\Helpers;
@@ -179,5 +180,191 @@ function joinotify_get_first_sender() {
 	}
 
 	return $current_senders[0];
+}
+
+
+/**
+ * ---------------------------------------------------------------------------
+ * Developer extension API — global helpers.
+ *
+ * Thin wrappers over MeuMouse\Joinotify\Api\Extensions so third parties can extend every
+ * subsystem with plain PHP filters. Full reference and examples: DEVELOPERS.md.
+ * ---------------------------------------------------------------------------
+ */
+
+/**
+ * Register an action category (a tab in the builder actions library modal).
+ *
+ * @since 1.4.7
+ * @param array $category {id, label, icon?, priority?}.
+ * @return void
+ */
+function joinotify_register_action_category( $category ) {
+	Extensions::register_action_category( $category );
+}
+
+
+/**
+ * Register a builder action (optionally with handler/description/fill_sender convenience keys).
+ *
+ * @since 1.4.7
+ * @param array $definition Action definition.
+ * @return void
+ */
+function joinotify_register_action( $definition ) {
+	Extensions::register_action( $definition );
+}
+
+
+/**
+ * Register the runtime handler for a custom action.
+ *
+ * @since 1.4.7
+ * @param string   $slug     Action slug.
+ * @param callable $callback Handler ($action_data, $action, $post_id, $event_data) => bool.
+ * @return void
+ */
+function joinotify_register_action_handler( $slug, $callback ) {
+	Extensions::register_action_handler( $slug, $callback );
+}
+
+
+/**
+ * Register the canvas description builder for a custom action.
+ *
+ * @since 1.4.7
+ * @param string   $slug     Action slug.
+ * @param callable $callback ($action_data, $workflow_action) => string HTML.
+ * @return void
+ */
+function joinotify_register_action_description( $slug, $callback ) {
+	Extensions::register_action_description( $slug, $callback );
+}
+
+
+/**
+ * Register an integration card (also defines a trigger context).
+ *
+ * @since 1.4.7
+ * @param array $integration {slug, title, description, icon, setting_key?, ...}.
+ * @return void
+ */
+function joinotify_register_integration( $integration ) {
+	Extensions::register_integration( $integration );
+}
+
+
+/**
+ * Register a trigger under a context (integration slug).
+ *
+ * @since 1.4.7
+ * @param string $context Context/integration slug.
+ * @param array  $trigger {data_trigger, title, description, require_settings?, settings?, ...}.
+ * @return void
+ */
+function joinotify_register_trigger( $context, $trigger ) {
+	Extensions::register_trigger( $context, $trigger );
+}
+
+
+/**
+ * Dispatch workflows for a trigger at runtime.
+ *
+ * @since 1.4.7
+ * @param string $hook        Trigger slug.
+ * @param string $integration Context/integration slug.
+ * @param array  $payload     Extra payload keys.
+ * @return void
+ */
+function joinotify_dispatch_trigger( $hook, $integration, $payload = array() ) {
+	Extensions::dispatch_trigger( $hook, $integration, $payload );
+}
+
+
+/**
+ * Register conditions available for a trigger.
+ *
+ * @since 1.4.7
+ * @param string $trigger    Trigger slug.
+ * @param array  $conditions Map of condition_key => {title, description}.
+ * @return void
+ */
+function joinotify_register_conditions( $trigger, $conditions ) {
+	Extensions::register_conditions( $trigger, $conditions );
+}
+
+
+/**
+ * Register the allowed operators for a condition type.
+ *
+ * @since 1.4.7
+ * @param string $condition_type Condition key.
+ * @param array  $operators      Operator slugs.
+ * @return void
+ */
+function joinotify_register_condition_operators( $condition_type, $operators ) {
+	Extensions::register_condition_operators( $condition_type, $operators );
+}
+
+
+/**
+ * Register the value resolver for a condition type.
+ *
+ * @since 1.4.7
+ * @param string   $condition_type Condition key.
+ * @param callable $callback       ($value_map, $type, $payload) => mixed.
+ * @return void
+ */
+function joinotify_register_condition_value( $condition_type, $callback ) {
+	Extensions::register_condition_value( $condition_type, $callback );
+}
+
+
+/**
+ * Register dynamic placeholders for an integration/context.
+ *
+ * @since 1.4.7
+ * @param string $integration  Integration/context slug.
+ * @param array  $placeholders Map of '{{ name }}' => {triggers, description, replacement}.
+ * @return void
+ */
+function joinotify_register_placeholders( $integration, $placeholders ) {
+	Extensions::register_placeholders( $integration, $placeholders );
+}
+
+
+/**
+ * Register a settings navigation tab.
+ *
+ * @since 1.4.7
+ * @param array $tab {id, name, icon, section}.
+ * @return void
+ */
+function joinotify_register_settings_tab( $tab ) {
+	Extensions::register_settings_tab( $tab );
+}
+
+
+/**
+ * Register a settings schema section.
+ *
+ * @since 1.4.7
+ * @param array $section {id, title, layout?, cards}.
+ * @return void
+ */
+function joinotify_register_settings_section( $section ) {
+	Extensions::register_settings_section( $section );
+}
+
+
+/**
+ * Register a custom REST route under joinotify/v1.
+ *
+ * @since 1.4.7
+ * @param array $route {route, methods?, callback, permission?, args?}.
+ * @return void
+ */
+function joinotify_register_rest_route( $route ) {
+	Extensions::register_rest_route( $route );
 }
 
