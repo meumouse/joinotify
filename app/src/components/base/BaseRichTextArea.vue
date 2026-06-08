@@ -343,7 +343,129 @@ function insertVariable(placeholder: string) {
   }
 }
 
+/**
+ * Convert completed {{ ... }} tokens that were typed (or pasted) as plain text
+ * into non-editable chips, in place, without disturbing the caret. This mirrors
+ * what render() does for stored content, so a variable written by hand gets the
+ * same highlight and hover tooltip as one inserted from the picker.
+ */
+function chipifyEditor() {
+  const editor = editorRef.value;
+
+  if (!editor) {
+    return;
+  }
+
+  const sel = window.getSelection();
+  let caretNode: Node | null = null;
+  let caretOffset = 0;
+
+  if (sel && sel.rangeCount > 0) {
+    const range = sel.getRangeAt(0);
+    caretNode = range.endContainer;
+    caretOffset = range.endOffset;
+  }
+
+  // Collect plain-text nodes holding a complete token. Skip text already inside
+  // a chip — its raw token would otherwise be matched and double-wrapped.
+  const candidates: Text[] = [];
+  const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+  let current = walker.nextNode();
+
+  while (current) {
+    const parent = (current as Text).parentElement;
+
+    if (!parent?.closest('.joinotify-var') && /\{\{[\s\S]*?\}\}/.test(current.nodeValue || '')) {
+      candidates.push(current as Text);
+    }
+
+    current = walker.nextNode();
+  }
+
+  if (!candidates.length) {
+    return;
+  }
+
+  let caretTarget: { node: Node; offset: number } | null = null;
+
+  for (const textNode of candidates) {
+    const text = textNode.nodeValue || '';
+    const parent = textNode.parentNode;
+
+    if (!parent) {
+      continue;
+    }
+
+    const isCaretNode = textNode === caretNode;
+    const fragment = document.createDocumentFragment();
+    const regex = /\{\{[\s\S]*?\}\}/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+
+      if (start > lastIndex) {
+        const segment = document.createTextNode(text.slice(lastIndex, start));
+        fragment.appendChild(segment);
+
+        if (isCaretNode && caretOffset >= lastIndex && caretOffset <= start) {
+          caretTarget = { node: segment, offset: caretOffset - lastIndex };
+        }
+      }
+
+      const template = document.createElement('template');
+      template.innerHTML = chipHtml(match[0]);
+      const chip = template.content.firstChild;
+
+      if (chip) {
+        fragment.appendChild(chip);
+
+        if (isCaretNode && caretOffset > start && caretOffset <= end) {
+          caretTarget = { node: chip, offset: -1 };
+        }
+      }
+
+      lastIndex = end;
+    }
+
+    if (lastIndex < text.length) {
+      const tail = document.createTextNode(text.slice(lastIndex));
+      fragment.appendChild(tail);
+
+      if (isCaretNode && caretOffset >= lastIndex) {
+        caretTarget = { node: tail, offset: caretOffset - lastIndex };
+      }
+    }
+
+    parent.replaceChild(fragment, textNode);
+  }
+
+  // Restore the caret next to where the user was typing.
+  if (sel) {
+    const range = document.createRange();
+
+    if (caretTarget && caretTarget.node.parentNode) {
+      if (caretTarget.offset < 0) {
+        range.setStartAfter(caretTarget.node);
+      } else {
+        const max = caretTarget.node.nodeValue?.length ?? 0;
+        range.setStart(caretTarget.node, Math.min(caretTarget.offset, max));
+      }
+    } else {
+      range.selectNodeContents(editor);
+      range.collapse(false);
+    }
+
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+
 function handleInput() {
+  chipifyEditor();
   saveSelection();
   pushValue();
 }
