@@ -201,7 +201,9 @@ class Init {
 			'JOINOTIFY_API_BASE_URL'       	=> 'https://slots-manager.joinotify.com',
 			'JOINOTIFY_SLUG'               	=> 'joinotify',
 			'JOINOTIFY_VERSION'            	=> $this->plugin_version,
-			'JOINOTIFY_DEV_MODE'          	=> true,
+			// Verbose runtime logging follows WP_DEBUG: on in development, off in
+			// production. A site can still force it via wp-config (defined first wins).
+			'JOINOTIFY_DEV_MODE'          	=> defined('WP_DEBUG') && WP_DEBUG,
 		);
 
 		foreach ( $constants as $key => $value ) {

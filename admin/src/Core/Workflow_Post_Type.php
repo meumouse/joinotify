@@ -53,7 +53,7 @@ class Workflow_Post_Type {
     
         $args = array(
             'labels' => $labels,
-            'description'        => __( 'Description.', 'joinotify' ),
+            'description'        => __( 'WhatsApp automation workflows created with Joinotify.', 'joinotify' ),
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,
