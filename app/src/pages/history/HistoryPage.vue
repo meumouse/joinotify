@@ -8,6 +8,8 @@ import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { useMessageHistory } from '../../composables/useMessageHistory';
 import BaseButton from '../../components/base/BaseButton.vue';
+import BaseListboxSelect from '../../components/base/BaseListboxSelect.vue';
+import BaseDatePicker from '../../components/base/BaseDatePicker.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
 import HistoryDetailsModal from './components/HistoryDetailsModal.vue';
 
@@ -183,33 +185,31 @@ const confirmDescription = computed(() =>
 
           <!-- Filters -->
           <div class="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end">
-            <div class="flex flex-col">
+            <div class="flex w-full flex-col sm:w-48">
               <label class="mb-1 text-[12px] font-medium text-slate-500">{{ __('Source', textDomain) }}</label>
-              <select
-                class="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[14px] text-slate-700 focus:border-primary-400 focus:outline-none"
-                :value="filters.source"
-                @change="setSourceFilter($event.target.value)"
-              >
-                <option v-for="option in sources" :key="option.value" :value="option.value">{{ option.label }}</option>
-              </select>
+              <BaseListboxSelect
+                :model-value="filters.source"
+                :options="sources"
+                @update:model-value="setSourceFilter"
+              />
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex w-full flex-col sm:w-44">
               <label class="mb-1 text-[12px] font-medium text-slate-500">{{ __('From', textDomain) }}</label>
-              <input
+              <BaseDatePicker
                 v-model="dateFrom"
-                type="date"
-                class="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[14px] text-slate-700 focus:border-primary-400 focus:outline-none"
+                :max="dateTo"
+                :placeholder="__('Start date', textDomain)"
                 @change="applyDateRange"
               />
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex w-full flex-col sm:w-44">
               <label class="mb-1 text-[12px] font-medium text-slate-500">{{ __('To', textDomain) }}</label>
-              <input
+              <BaseDatePicker
                 v-model="dateTo"
-                type="date"
-                class="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[14px] text-slate-700 focus:border-primary-400 focus:outline-none"
+                :min="dateFrom"
+                :placeholder="__('End date', textDomain)"
                 @change="applyDateRange"
               />
             </div>
