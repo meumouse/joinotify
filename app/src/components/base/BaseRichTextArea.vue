@@ -7,7 +7,8 @@ import UnderlineIcon from '@boxicons/vue/Underline';
 import EmojiPicker from 'vue3-emoji-picker';
 import 'vue3-emoji-picker/css';
 import VariablePicker from './VariablePicker.vue';
-import { sanitizePreviewHtml } from '../../utils/html';
+import RichTextPreview from './RichTextPreview.vue';
+import Tooltip from '../tooltips/Tooltip.vue';
 import { __, textDomain } from '../../utils/i18n';
 
 const props = defineProps({
@@ -26,8 +27,61 @@ const emit = defineEmits(['update:modelValue', 'input', 'change']);
 
 const rootRef = ref<HTMLElement | null>(null);
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
+const emojiButtonRef = ref<HTMLButtonElement | null>(null);
+const emojiPopoverRef = ref<HTMLElement | null>(null);
 const showEmojiPicker = ref(false);
 const selection = ref({ start: 0, end: 0 });
+
+const EMOJI_POPOVER_WIDTH = 352;
+const popoverStyle = ref<Record<string, string>>({});
+
+function updatePopoverPosition() {
+  const button = emojiButtonRef.value;
+
+  if (!button) {
+    return;
+  }
+
+  const rect = button.getBoundingClientRect();
+  const margin = 8;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  let left = rect.right - EMOJI_POPOVER_WIDTH;
+  left = Math.min(Math.max(margin, left), viewportWidth - EMOJI_POPOVER_WIDTH - margin);
+  left = Math.max(margin, left);
+
+  const spaceBelow = viewportHeight - rect.bottom;
+  const placeAbove = spaceBelow < 360 && rect.top > spaceBelow;
+
+  const style: Record<string, string> = {
+    position: 'fixed',
+    left: `${Math.round(left)}px`,
+    width: `${EMOJI_POPOVER_WIDTH}px`,
+    zIndex: '10000',
+  };
+
+  if (placeAbove) {
+    style.bottom = `${Math.round(viewportHeight - rect.top + margin)}px`;
+  } else {
+    style.top = `${Math.round(rect.bottom + margin)}px`;
+  }
+
+  popoverStyle.value = style;
+}
+
+function toggleEmojiPicker() {
+  if (props.disabled) {
+    return;
+  }
+
+  showEmojiPicker.value = !showEmojiPicker.value;
+
+  if (showEmojiPicker.value) {
+    syncSelection();
+    nextTick(updatePopoverPosition);
+  }
+}
 
 function syncSelection() {
   const textarea = textareaRef.value;
@@ -133,11 +187,17 @@ function handleDocumentClick(event: MouseEvent) {
 
   const target = event.target as Node | null;
 
-  if (target && rootRef.value?.contains(target)) {
+  if (target && (rootRef.value?.contains(target) || emojiPopoverRef.value?.contains(target))) {
     return;
   }
 
   showEmojiPicker.value = false;
+}
+
+function handleReposition() {
+  if (showEmojiPicker.value) {
+    updatePopoverPosition();
+  }
 }
 
 watch(
@@ -147,16 +207,16 @@ watch(
   },
 );
 
-function renderPreviewHtml() {
-  return sanitizePreviewHtml(String(props.modelValue || ''));
-}
-
 onMounted(() => {
   document.addEventListener('click', handleDocumentClick);
+  window.addEventListener('resize', handleReposition);
+  window.addEventListener('scroll', handleReposition, true);
 });
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleDocumentClick);
+  window.removeEventListener('resize', handleReposition);
+  window.removeEventListener('scroll', handleReposition, true);
 });
 </script>
 
@@ -169,69 +229,80 @@ onBeforeUnmount(() => {
     <div class="relative">
       <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
         <div class="flex items-center gap-1 border-b border-slate-200 bg-slate-50 px-2 py-1.5">
-          <button
-            type="button"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="disabled"
-            :aria-label="__('Bold', textDomain)"
-            :title="__('Bold', textDomain)"
-            @mousedown.prevent
-            @click="wrapSelection('<strong>', '</strong>')"
-          >
-            <BoldIcon width="14" height="14" />
-          </button>
-
-          <button
-            type="button"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="disabled"
-            :aria-label="__('Italic', textDomain)"
-            :title="__('Italic', textDomain)"
-            @mousedown.prevent
-            @click="wrapSelection('<em>', '</em>')"
-          >
-            <ItalicIcon width="14" height="14" />
-          </button>
-
-          <button
-            type="button"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="disabled"
-            :aria-label="__('Underline', textDomain)"
-            :title="__('Underline', textDomain)"
-            @mousedown.prevent
-            @click="wrapSelection('<u>', '</u>')"
-          >
-            <UnderlineIcon width="14" height="14" />
-          </button>
-
-          <div class="mx-1 h-4 w-px bg-slate-200" />
-
-          <div class="relative">
+          <Tooltip :content="__('Bold', textDomain)">
             <button
               type="button"
               class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
               :disabled="disabled"
-              :aria-label="__('Emojis', textDomain)"
-              :title="__('Emojis', textDomain)"
+              :aria-label="__('Bold', textDomain)"
               @mousedown.prevent
-              @click="showEmojiPicker = !showEmojiPicker"
+              @click="wrapSelection('<strong>', '</strong>')"
             >
-              <SmileIcon width="14" height="14" />
+              <BoldIcon width="14" height="14" />
             </button>
+          </Tooltip>
 
-            <div
-              v-if="showEmojiPicker"
-              class="absolute right-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+          <Tooltip :content="__('Italic', textDomain)">
+            <button
+              type="button"
+              class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="disabled"
+              :aria-label="__('Italic', textDomain)"
+              @mousedown.prevent
+              @click="wrapSelection('<em>', '</em>')"
             >
-              <EmojiPicker
-                :native="true"
-                :hide-search="false"
-                :display-recent="true"
-                theme="light"
-                @select="handleEmojiSelect"
-              />
-            </div>
+              <ItalicIcon width="14" height="14" />
+            </button>
+          </Tooltip>
+
+          <Tooltip :content="__('Underline', textDomain)">
+            <button
+              type="button"
+              class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="disabled"
+              :aria-label="__('Underline', textDomain)"
+              @mousedown.prevent
+              @click="wrapSelection('<u>', '</u>')"
+            >
+              <UnderlineIcon width="14" height="14" />
+            </button>
+          </Tooltip>
+
+          <div class="mx-1 h-4 w-px bg-slate-200" />
+
+          <div class="relative">
+            <Tooltip :content="__('Emojis', textDomain)">
+              <button
+                ref="emojiButtonRef"
+                type="button"
+                class="inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+                :class="{ 'bg-slate-200 text-slate-800': showEmojiPicker }"
+                :disabled="disabled"
+                :aria-label="__('Emojis', textDomain)"
+                @mousedown.prevent
+                @click="toggleEmojiPicker"
+              >
+                <SmileIcon width="14" height="14" />
+              </button>
+            </Tooltip>
+
+            <Teleport to="body">
+              <div
+                v-if="showEmojiPicker"
+                ref="emojiPopoverRef"
+                class="joinotify-emoji-popover overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
+                :style="popoverStyle"
+                @mousedown.prevent
+              >
+                <EmojiPicker
+                  :native="true"
+                  :hide-search="false"
+                  :display-recent="true"
+                  theme="light"
+                  @select="handleEmojiSelect"
+                />
+              </div>
+            </Teleport>
           </div>
 
           <VariablePicker
@@ -263,7 +334,7 @@ onBeforeUnmount(() => {
           <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
             {{ __('Preview', textDomain) }}
           </p>
-          <div class="text-sm leading-6 text-slate-800" v-html="renderPreviewHtml()" />
+          <RichTextPreview :value="modelValue" :placeholders="placeholders" />
         </div>
       </div>
 
@@ -274,3 +345,12 @@ onBeforeUnmount(() => {
     </p>
   </label>
 </template>
+
+<style>
+.joinotify-emoji-popover .v3-emoji-picker {
+  width: 100%;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+}
+</style>

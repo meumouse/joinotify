@@ -8,12 +8,15 @@
  *
  * @since 2.0.0
  */
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import VariablePicker from '../../../components/base/VariablePicker.vue';
+import RichTextPreview from '../../../components/base/RichTextPreview.vue';
+import { __, textDomain } from '../../../utils/i18n';
 
 interface PlaceholderItem {
   placeholder: string;
   description?: string;
+  replacement?: Record<string, unknown>;
 }
 
 const props = defineProps({
@@ -28,6 +31,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
+
+const hasVariables = computed(() => String(props.modelValue ?? '').includes('{{'));
 
 const inputRef = ref<HTMLInputElement | null>(null);
 const selection = ref({ start: 0, end: 0 });
@@ -110,6 +115,13 @@ function insertVariable(placeholder: string) {
         button-class="inline-flex h-[46px] w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition hover:bg-slate-50 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
         @select="insertVariable"
       />
+    </div>
+
+    <div v-if="hasVariables" class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+      <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+        {{ __('Preview', textDomain) }}
+      </p>
+      <RichTextPreview :value="String(modelValue ?? '')" :placeholders="placeholders" />
     </div>
   </label>
 </template>

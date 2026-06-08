@@ -12,11 +12,22 @@
 import { computed, ref } from 'vue';
 import { CodeAlt } from '@boxicons/vue';
 import ModalDialog from '../modals/ModalDialog.vue';
+import Tooltip from '../tooltips/Tooltip.vue';
 import { __, textDomain } from '../../utils/i18n';
 
 interface PlaceholderItem {
   placeholder: string;
   description?: string;
+  replacement?: Record<string, unknown>;
+}
+
+function sandboxSample(item: PlaceholderItem): string {
+  const replacement =
+    item.replacement && typeof item.replacement === 'object'
+      ? (item.replacement as Record<string, unknown>)
+      : {};
+
+  return typeof replacement.sandbox === 'string' ? replacement.sandbox.trim() : '';
 }
 
 const props = defineProps({
@@ -73,17 +84,18 @@ function select(placeholder: string) {
 
 <template>
   <div class="inline-flex">
-    <button
-      type="button"
-      :class="buttonClass"
-      :disabled="disabled"
-      :aria-label="__('Insert variable', textDomain)"
-      :title="__('Insert variable', textDomain)"
-      @mousedown.prevent
-      @click="openModal"
-    >
-      <CodeAlt :width="14" :height="14" />
-    </button>
+    <Tooltip :content="__('Insert variable', textDomain)">
+      <button
+        type="button"
+        :class="buttonClass"
+        :disabled="disabled"
+        :aria-label="__('Insert variable', textDomain)"
+        @mousedown.prevent
+        @click="openModal"
+      >
+        <CodeAlt :width="14" :height="14" />
+      </button>
+    </Tooltip>
 
     <ModalDialog
       :open="open"
@@ -110,6 +122,13 @@ function select(placeholder: string) {
           >
             <span class="font-mono text-sm font-semibold text-primary-800">{{ item.placeholder }}</span>
             <span v-if="item.description" class="text-xs leading-5 text-slate-500">{{ item.description }}</span>
+            <span
+              v-if="sandboxSample(item)"
+              class="mt-0.5 inline-flex items-center gap-1 rounded bg-slate-100 px-1.5 py-0.5 text-[11px] leading-4 text-slate-600"
+            >
+              <span class="font-semibold uppercase tracking-wide text-slate-400">{{ __('Example', textDomain) }}</span>
+              <span class="truncate">{{ sandboxSample(item) }}</span>
+            </span>
           </button>
         </div>
 
