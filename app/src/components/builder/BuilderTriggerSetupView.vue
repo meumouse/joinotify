@@ -14,9 +14,21 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   ready: { type: Boolean, default: false },
   continuing: { type: Boolean, default: false },
+  // Shows a top-right close (X) button. Enabled when the view was opened to
+  // change an existing flow's trigger (from the canvas node menu), so the user
+  // can dismiss the screen and return to the canvas.
+  showClose: { type: Boolean, default: false },
 });
 
-defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'back', 'update:continuing']);
+defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'back', 'update:continuing', 'close']);
+
+const closeButtonStyle = {
+  backgroundImage:
+    'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\' fill=\'%23000\'%3e%3cpath d=\'M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 1 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 1 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z\'/%3e%3c/svg%3e")',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: '0.85rem auto',
+};
 
 function getContextFallbackLabel(item) {
   const source = String(item.label || item.id || '')
@@ -43,7 +55,18 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
 </script>
 
 <template>
-  <section class="min-h-[calc(100vh-72px)] w-full bg-white">
+  <section class="relative min-h-[calc(100vh-72px)] w-full bg-white">
+    <button
+      v-if="showClose"
+      type="button"
+      class="btn-close absolute right-5 top-5 z-20 box-content flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white p-2 text-slate-500 opacity-70 shadow-sm transition hover:opacity-100 focus:opacity-100 focus:outline-none"
+      :style="closeButtonStyle"
+      :aria-label="__('Close', textDomain)"
+      @click="$emit('close')"
+    >
+      <span class="sr-only">{{ __('Close', textDomain) }}</span>
+    </button>
+
     <div class="flex min-h-[calc(100vh-72px)] w-full">
       <aside class="hidden w-[360px] shrink-0 border-r border-slate-200 bg-slate-50/80 px-7 py-10 xl:block">
         <div class="max-w-[300px]">

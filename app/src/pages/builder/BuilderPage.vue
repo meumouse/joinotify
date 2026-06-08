@@ -47,8 +47,10 @@ const titleSaving = ref(false);
 const triggerContinuing = ref(false);
 // True while the trigger-setup view was opened to change an existing flow's
 // trigger (via the node menu), so we update it in place instead of recreating
-// the workflow and losing the existing actions.
-const changingTrigger = ref(false);
+// the workflow and losing the existing actions. Mirrored to the `change_trigger`
+// URL param so the trigger screen can show a close button that returns to the
+// canvas (and the mode survives an accidental reload of the trigger screen).
+const changingTrigger = ref(readChangeTriggerFlag());
 const testPhoneModalOpen = ref(false);
 const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
@@ -151,6 +153,10 @@ watch(
     if (workflowIdFromUrl.value > 0) {
       // The bootstrap prop is already a fresh GET of /admin/builder?id=N, so hydrate
       // directly from it and mark the route loaded to avoid a duplicate server fetch.
+      // Reloading straight to the canvas means any leftover change-trigger intent is
+      // stale, so drop it (and its URL param) before showing the flow.
+      changingTrigger.value = false;
+      setChangeTriggerUrl(false);
       store.step = 'canvas';
       store.hydrateFromBootstrap(bootstrap.value);
       routeWorkflowLoaded.value = true;
@@ -321,17 +327,30 @@ function goChangeTrigger() {
   });
   store.closeNodeSettings();
   changingTrigger.value = true;
+  setChangeTriggerUrl(true);
   store.step = 'trigger';
 }
 
 function handleTriggerBack() {
   if (changingTrigger.value) {
     changingTrigger.value = false;
+    setChangeTriggerUrl(false);
     goCanvas();
     return;
   }
 
   goStart();
+}
+
+// Close (X) on the trigger screen: only available while changing an existing
+// flow's trigger, so it just dismisses the screen and returns to the canvas.
+function closeTriggerSetup() {
+  debugLogger.log('trigger:change-cancelled', {
+    node_id: store.triggerNode?.id || '',
+  });
+  changingTrigger.value = false;
+  setChangeTriggerUrl(false);
+  goCanvas();
 }
 
 function handleNodeUpdate(payload) {
@@ -591,6 +610,7 @@ async function continueFromTriggerSetup() {
   // the canvas without recreating the workflow — keeps the other actions.
   if (changingTrigger.value) {
     changingTrigger.value = false;
+    setChangeTriggerUrl(false);
     debugLogger.log('trigger:changed-in-place', {
       node_id: store.triggerNode?.id || '',
       trigger: store.selectedTrigger,
@@ -927,6 +947,30 @@ function clearBuilderUrl() {
   url.searchParams.delete('id');
   window.history.replaceState({}, '', url.toString());
 }
+
+function readChangeTriggerFlag() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return new URL(window.location.href).searchParams.get('change_trigger') === '1';
+}
+
+function setChangeTriggerUrl(active) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+
+  if (active) {
+    url.searchParams.set('change_trigger', '1');
+  } else {
+    url.searchParams.delete('change_trigger');
+  }
+
+  window.history.replaceState({}, '', url.toString());
+}
 </script>
 
 <template>
@@ -966,11 +1010,13 @@ function clearBuilderUrl() {
         :loading="store.loading.bootstrap"
         :ready="store.canContinue"
         :continuing="triggerContinuing"
+        :show-close="changingTrigger"
         @update:title="store.setWorkflowTitle"
         @update:context="store.selectTriggerContext"
         @select-trigger="store.selectTrigger"
         @continue="continueFromTriggerSetup"
         @back="handleTriggerBack"
+        @close="closeTriggerSetup"
       />
     </div>
 
