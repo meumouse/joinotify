@@ -5,6 +5,7 @@ import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
+import ConditionProductsField from './ConditionProductsField.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { __, textDomain } from '../../../utils/i18n';
@@ -70,6 +71,10 @@ const operatorOptions = computed(() => {
 });
 
 const valueType = computed(() => String(selectedCondition.value?.value_type || 'text'));
+const valueOptions = computed(() => {
+  const opts = (selectedCondition.value as (CatalogCondition & { options?: Array<{ label: string; value: string }> }) | null)?.options;
+  return Array.isArray(opts) ? opts : [];
+});
 const requires = computed<string[]>(() => (Array.isArray(selectedCondition.value?.requires) ? selectedCondition.value!.requires! : []));
 const requiresMetaKey = computed(() => requires.value.includes('meta_key'));
 const requiresFieldId = computed(() => requires.value.includes('field_id'));
@@ -182,32 +187,30 @@ function setValue(value: unknown) {
         />
 
         <template v-if="showValueInput">
+          <ConditionProductsField
+            v-if="isProductsValue"
+            :model-value="Array.isArray(model.products) ? model.products : []"
+            @update:model-value="update('products', $event)"
+          />
           <BaseSelectField
-            v-if="valueType === 'boolean'"
+            v-else-if="valueOptions.length"
+            :model-value="currentValue"
+            :options="[{ label: __('Select a value', textDomain), value: '' }, ...valueOptions]"
+            :label="__('Value', textDomain)"
+            @update:model-value="setValue($event)"
+          />
+          <BaseSelectField
+            v-else-if="valueType === 'boolean'"
             :model-value="currentValue"
             :options="booleanOptions"
             :label="__('Value', textDomain)"
             @update:model-value="setValue($event)"
           />
-          <template v-else-if="isProductsValue">
-            <BaseAlert
-              tone="info"
-              :title="__('Products', textDomain)"
-              :message="__('Enter the product IDs to match, separated by commas.', textDomain)"
-            />
-            <BaseTextField
-              :model-value="currentValue"
-              :label="__('Product IDs', textDomain)"
-              :placeholder="__('e.g. 12, 34, 56', textDomain)"
-              @update:model-value="setValue($event)"
-            />
-          </template>
           <BaseTextField
             v-else
             :model-value="currentValue"
             :type="valueType === 'number' ? 'number' : 'text'"
             :label="__('Value', textDomain)"
-            :placeholder="valueType === 'order_status' ? __('e.g. completed', textDomain) : ''"
             @update:model-value="setValue($event)"
           />
         </template>
