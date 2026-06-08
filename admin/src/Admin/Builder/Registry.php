@@ -1455,6 +1455,13 @@ class Registry {
 			'field_value' => array( 'type' => 'text', 'requires' => array( 'field_id' ) ),
 		));
 
+		// Dynamic value options per condition key (e.g. WooCommerce statuses), so
+		// the builder can render a proper select instead of free text.
+		$options_map = apply_filters( 'Joinotify/Builder/Condition_Options', array(
+			'order_status' => self::get_order_status_condition_options(),
+			'subscription_status' => self::get_subscription_status_condition_options(),
+		));
+
 		// Per-trigger condition map populated by each integration's add_conditions().
 		$conditions_map = apply_filters( 'Joinotify/Validations/Get_Action_Conditions', array() );
 		$triggers = array();
@@ -1486,6 +1493,7 @@ class Registry {
 					'operators' => array_values( $operators ),
 					'value_type' => isset( $hint['type'] ) ? (string) $hint['type'] : 'text',
 					'requires' => isset( $hint['requires'] ) && is_array( $hint['requires'] ) ? array_values( $hint['requires'] ) : array(),
+					'options' => isset( $options_map[ $key ] ) && is_array( $options_map[ $key ] ) ? array_values( $options_map[ $key ] ) : array(),
 				);
 			}
 		}
@@ -1494,6 +1502,57 @@ class Registry {
 			'operators' => $operator_labels,
 			'triggers' => $triggers,
 		);
+	}
+
+
+	/**
+	 * Order-status options for the `order_status` condition value.
+	 *
+	 * Values are stored without the `wc-` prefix because the runtime compares
+	 * them against WC_Order::get_status() (which is unprefixed).
+	 *
+	 * @since 2.0.0
+	 * @return array<int,array<string,string>>
+	 */
+	private static function get_order_status_condition_options() {
+		if ( ! function_exists( 'wc_get_order_statuses' ) ) {
+			return array();
+		}
+
+		$options = array();
+
+		foreach ( wc_get_order_statuses() as $key => $label ) {
+			$options[] = array(
+				'label' => (string) $label,
+				'value' => str_replace( 'wc-', '', (string) $key ),
+			);
+		}
+
+		return $options;
+	}
+
+
+	/**
+	 * Subscription-status options for the `subscription_status` condition value.
+	 *
+	 * @since 2.0.0
+	 * @return array<int,array<string,string>>
+	 */
+	private static function get_subscription_status_condition_options() {
+		if ( ! function_exists( 'wcs_get_subscription_statuses' ) ) {
+			return array();
+		}
+
+		$options = array();
+
+		foreach ( wcs_get_subscription_statuses() as $key => $label ) {
+			$options[] = array(
+				'label' => (string) $label,
+				'value' => str_replace( 'wc-', '', (string) $key ),
+			);
+		}
+
+		return $options;
 	}
 
 
