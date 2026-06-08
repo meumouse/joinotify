@@ -1001,18 +1001,79 @@ class Workflow_Processor {
             return false;
         }
 
+        /**
+         * Master switch to allow/deny PHP snippet execution.
+         *
+         * Returning false here disables the eval()-based snippet action entirely,
+         * letting security-conscious sites turn it off without code changes.
+         *
+         * @since 2.0.0
+         * @param bool   $allow       Whether snippet execution is allowed.
+         * @param string $snippet_php The snippet source.
+         * @param array  $payload     Runtime payload.
+         */
+        if ( ! apply_filters( 'Joinotify/Snippet/Allow_Execution', true, $snippet_php, $payload ) ) {
+            Logger::register_log( 'PHP snippet execution is disabled by filter.', 'WARNING' );
+
+            return false;
+        }
+
         // remove the `<?php` tag if it exists
         $snippet_php = preg_replace( '/^\s*<\?php\s*/', '', $snippet_php );
 
-        // block execution of dangerous functions
-        $blocked_functions = array( 'exec', 'shell_exec', 'system', 'passthru', 'proc_open', 'eval', 'popen', 'dl', 'file_get_contents' );
+        /**
+         * Dangerous functions blocked inside snippets (command execution, file I/O,
+         * network sockets, dynamic invocation and code-eval vectors). The previous
+         * list only blocked a handful and was trivially bypassable (e.g. fopen,
+         * call_user_func, include were allowed).
+         *
+         * @since 2.0.0
+         * @param array $blocked Function names to block.
+         */
+        $blocked_functions = apply_filters( 'Joinotify/Snippet/Blocked_Functions', array(
+            // command execution
+            'exec', 'shell_exec', 'system', 'passthru', 'proc_open', 'popen', 'proc_nice', 'pcntl_exec',
+            // code evaluation / dynamic definition
+            'eval', 'assert', 'create_function',
+            // dynamic invocation (blocklist-bypass vectors)
+            'call_user_func', 'call_user_func_array',
+            // environment / module loading
+            'dl', 'putenv',
+            // filesystem
+            'file_get_contents', 'file_put_contents', 'fopen', 'fwrite', 'fputs', 'fread',
+            'unlink', 'rename', 'copy', 'rmdir', 'mkdir', 'chmod', 'chown', 'symlink', 'link',
+            // network
+            'fsockopen', 'pfsockopen', 'stream_socket_client', 'curl_exec', 'curl_multi_exec',
+        ) );
 
         foreach ( $blocked_functions as $function ) {
-            if ( stripos( $snippet_php, $function . '(' ) !== false ) {
+            // match `name(` even with whitespace, ignoring case
+            if ( preg_match( '/\b' . preg_quote( $function, '/' ) . '\s*\(/i', $snippet_php ) ) {
                 Logger::register_log( "Attempt to execute blocked function: $function", 'ERROR' );
 
                 return false;
             }
+        }
+
+        // block include/require language constructs (with or without parentheses)
+        if ( preg_match( '/\b(include|require)(_once)?\b/i', $snippet_php ) ) {
+            Logger::register_log( 'Attempt to use include/require in a PHP snippet.', 'ERROR' );
+
+            return false;
+        }
+
+        // block backtick shell execution
+        if ( strpos( $snippet_php, '`' ) !== false ) {
+            Logger::register_log( 'Attempt to use shell execution (backticks) in a PHP snippet.', 'ERROR' );
+
+            return false;
+        }
+
+        // block variable / dynamic function calls like $fn(...) which bypass the blocklist
+        if ( preg_match( '/\$\w+\s*\(/', $snippet_php ) ) {
+            Logger::register_log( 'Attempt to use a variable function call in a PHP snippet.', 'ERROR' );
+
+            return false;
         }
 
         // register log before execution for debugging
