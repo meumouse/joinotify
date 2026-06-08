@@ -1,5 +1,19 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+/**
+ * BaseRichTextArea.vue
+ *
+ * WYSIWYG rich text editor. Editing and preview share a single contenteditable
+ * surface: bold/italic/underline render inline as you type and every registered
+ * text variable ({{ ... }}) becomes a highlighted, non-editable chip with a
+ * hover tooltip showing its sandbox sample.
+ *
+ * The public contract is unchanged: `modelValue` is the message source string
+ * using <strong>/<em>/<u> tags, "\n" line breaks and {{ variable }} tokens, and
+ * the same format is emitted back via update:modelValue / input / change.
+ *
+ * @since 2.0.0
+ */
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import BoldIcon from '@boxicons/vue/Bold';
 import ItalicIcon from '@boxicons/vue/Italic';
 import SmileIcon from '@boxicons/vue/Smile';
@@ -7,9 +21,15 @@ import UnderlineIcon from '@boxicons/vue/Underline';
 import EmojiPicker from 'vue3-emoji-picker';
 import 'vue3-emoji-picker/css';
 import VariablePicker from './VariablePicker.vue';
-import RichTextPreview from './RichTextPreview.vue';
 import Tooltip from '../tooltips/Tooltip.vue';
+import { escapeHtml, sanitizePreviewHtml } from '../../utils/html';
 import { __, textDomain } from '../../utils/i18n';
+
+interface PlaceholderItem {
+  placeholder: string;
+  description?: string;
+  replacement?: Record<string, unknown>;
+}
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -20,20 +40,332 @@ const props = defineProps({
   placeholder: { type: String, default: '' },
   disabled: { type: Boolean, default: false },
   rows: { type: Number, default: 5 },
-  placeholders: { type: Array, default: () => [] },
+  placeholders: { type: Array as () => Array<PlaceholderItem | string>, default: () => [] },
 });
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
 
 const rootRef = ref<HTMLElement | null>(null);
-const textareaRef = ref<HTMLTextAreaElement | null>(null);
+const editorRef = ref<HTMLElement | null>(null);
 const emojiButtonRef = ref<HTMLButtonElement | null>(null);
 const emojiPopoverRef = ref<HTMLElement | null>(null);
+const tipEl = ref<HTMLElement | null>(null);
 const showEmojiPicker = ref(false);
-const selection = ref({ start: 0, end: 0 });
+const tipVisible = ref(false);
+const tipText = ref('');
+const tipStyle = ref<Record<string, string>>({});
 
 const EMOJI_POPOVER_WIDTH = 352;
 const popoverStyle = ref<Record<string, string>>({});
+
+// Last value this editor itself produced. Used to tell apart our own edits
+// (don't re-render — that would reset the caret) from external changes.
+let internalValue = String(props.modelValue || '');
+let savedRange: Range | null = null;
+let scrollHandler: (() => void) | null = null;
+
+const minHeight = computed(() => `${Math.max(props.rows, 1) * 1.5}rem`);
+const isEmpty = computed(() => !String(props.modelValue || '').trim());
+
+/**
+ * Normalize a placeholder token into a comparable key: strip the outer braces,
+ * collapse inner whitespace and lowercase it so "{{ Post_Title }}" and
+ * "{{post_title}}" resolve to the same entry.
+ */
+function normalizeKey(placeholder: string): string {
+  return String(placeholder || '')
+    .replace(/^\s*\{\{\s*/, '')
+    .replace(/\s*\}\}\s*$/, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+const lookup = computed(() => {
+  const map = new Map<string, string>();
+
+  for (const raw of Array.isArray(props.placeholders) ? props.placeholders : []) {
+    const item = typeof raw === 'string' ? { placeholder: raw } : raw;
+
+    if (!item || !item.placeholder) {
+      continue;
+    }
+
+    const replacement =
+      item.replacement && typeof item.replacement === 'object'
+        ? (item.replacement as Record<string, unknown>)
+        : {};
+    const sandbox = typeof replacement.sandbox === 'string' ? replacement.sandbox.trim() : '';
+    const description = typeof item.description === 'string' ? item.description.trim() : '';
+
+    const parts: string[] = [];
+
+    if (description) {
+      parts.push(description);
+    }
+
+    if (sandbox) {
+      parts.push(`${__('Example', textDomain)}: ${sandbox}`);
+    }
+
+    map.set(normalizeKey(item.placeholder), parts.join(' — '));
+  }
+
+  return map;
+});
+
+/**
+ * Render a single {{ variable }} token as a non-editable chip carrying the raw
+ * token (so it can be serialized back) and, when known, the tooltip sample.
+ */
+function chipHtml(raw: string): string {
+  const key = normalizeKey(raw);
+  const tip = lookup.value.get(key) || '';
+  const cursor = tip ? ' cursor-help' : '';
+  const tipAttr = tip ? ` data-tip="${escapeHtml(tip)}"` : '';
+
+  return (
+    `<span class="joinotify-var inline-block rounded bg-primary-50 px-1 font-semibold text-primary-800${cursor}"` +
+    ` contenteditable="false" data-var="${escapeHtml(raw)}"${tipAttr}>${escapeHtml(raw)}</span>`
+  );
+}
+
+/** Build the editor DOM markup from the stored source string. */
+function buildEditorHtml(source: string): string {
+  const safe = sanitizePreviewHtml(source);
+
+  return safe.replace(/\{\{[\s\S]*?\}\}/g, (match) => chipHtml(match));
+}
+
+/** Serialize a DOM node back into the stored source format. */
+function serializeNode(node: Node, isLastChild: boolean): string {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return node.nodeValue || '';
+  }
+
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return '';
+  }
+
+  const el = node as HTMLElement;
+  const variable = el.dataset?.var;
+
+  if (variable) {
+    return variable;
+  }
+
+  const tag = el.nodeName;
+
+  if (tag === 'BR') {
+    // The browser keeps a bogus <br> as the last child of a line — drop it so
+    // it does not turn into a spurious trailing newline.
+    return isLastChild ? '' : '\n';
+  }
+
+  let inner = serializeChildren(el);
+
+  const style = el.style;
+
+  if (style) {
+    const weight = style.fontWeight;
+
+    if (weight && (weight === 'bold' || parseInt(weight, 10) >= 600)) {
+      inner = `<strong>${inner}</strong>`;
+    }
+
+    if (style.fontStyle === 'italic') {
+      inner = `<em>${inner}</em>`;
+    }
+
+    if (/underline/.test(`${style.textDecoration} ${style.textDecorationLine}`)) {
+      inner = `<u>${inner}</u>`;
+    }
+  }
+
+  if (tag === 'STRONG' || tag === 'B') {
+    return inner ? `<strong>${inner}</strong>` : '';
+  }
+
+  if (tag === 'EM' || tag === 'I') {
+    return inner ? `<em>${inner}</em>` : '';
+  }
+
+  if (tag === 'U') {
+    return inner ? `<u>${inner}</u>` : '';
+  }
+
+  // Block elements (from pasted content) become explicit line breaks.
+  if (tag === 'DIV' || tag === 'P') {
+    return `\n${inner}`;
+  }
+
+  return inner;
+}
+
+function serializeChildren(node: Node): string {
+  const children = Array.from(node.childNodes);
+
+  return children
+    .map((child, index) => serializeNode(child, index === children.length - 1))
+    .join('');
+}
+
+/** Read the current editor DOM as a source string. */
+function serialize(): string {
+  if (!editorRef.value) {
+    return '';
+  }
+
+  return serializeChildren(editorRef.value).replace(/^\n/, '');
+}
+
+function render() {
+  if (editorRef.value) {
+    editorRef.value.innerHTML = buildEditorHtml(internalValue);
+  }
+}
+
+function pushValue() {
+  const next = serialize();
+
+  if (next === internalValue) {
+    return;
+  }
+
+  internalValue = next;
+  emit('update:modelValue', next);
+  emit('input', next);
+}
+
+function saveSelection() {
+  const sel = window.getSelection();
+
+  if (!sel || sel.rangeCount === 0) {
+    return;
+  }
+
+  const range = sel.getRangeAt(0);
+
+  if (editorRef.value?.contains(range.commonAncestorContainer)) {
+    savedRange = range.cloneRange();
+  }
+}
+
+/** Re-focus the editor and restore the last known caret/selection. */
+function restoreSelection(): Range | null {
+  const editor = editorRef.value;
+
+  if (!editor) {
+    return null;
+  }
+
+  editor.focus();
+
+  const sel = window.getSelection();
+
+  if (!sel) {
+    return null;
+  }
+
+  if (savedRange && editor.contains(savedRange.commonAncestorContainer)) {
+    sel.removeAllRanges();
+    sel.addRange(savedRange);
+
+    return savedRange;
+  }
+
+  // No saved caret — collapse to the end of the editor.
+  const range = document.createRange();
+  range.selectNodeContents(editor);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  return range;
+}
+
+/** Insert a DOM node at the current caret and place the caret right after it. */
+function insertNodeAtCaret(node: Node) {
+  const range = restoreSelection();
+
+  if (!range) {
+    return;
+  }
+
+  range.deleteContents();
+  range.insertNode(node);
+  range.setStartAfter(node);
+  range.collapse(true);
+
+  const sel = window.getSelection();
+  sel?.removeAllRanges();
+  sel?.addRange(range);
+
+  saveSelection();
+  pushValue();
+}
+
+function applyFormat(command: string) {
+  if (props.disabled) {
+    return;
+  }
+
+  restoreSelection();
+  document.execCommand(command, false);
+  saveSelection();
+  pushValue();
+}
+
+function insertEmoji(emoji: string) {
+  if (props.disabled || !emoji) {
+    return;
+  }
+
+  showEmojiPicker.value = false;
+  insertNodeAtCaret(document.createTextNode(emoji));
+}
+
+function handleEmojiSelect(emoji: { i?: string } | string) {
+  insertEmoji(typeof emoji === 'string' ? emoji : String(emoji?.i || ''));
+}
+
+function insertVariable(placeholder: string) {
+  if (props.disabled || !placeholder) {
+    return;
+  }
+
+  const template = document.createElement('template');
+  template.innerHTML = chipHtml(placeholder);
+  const chip = template.content.firstChild;
+
+  if (chip) {
+    insertNodeAtCaret(chip);
+  }
+}
+
+function handleInput() {
+  saveSelection();
+  pushValue();
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    document.execCommand('insertLineBreak');
+    handleInput();
+  }
+}
+
+function handlePaste(event: ClipboardEvent) {
+  event.preventDefault();
+  const text = event.clipboardData?.getData('text/plain') || '';
+  document.execCommand('insertText', false, text);
+  handleInput();
+}
+
+function handleBlur() {
+  emit('change', internalValue);
+}
 
 function updatePopoverPosition() {
   const button = emojiButtonRef.value;
@@ -78,106 +410,9 @@ function toggleEmojiPicker() {
   showEmojiPicker.value = !showEmojiPicker.value;
 
   if (showEmojiPicker.value) {
-    syncSelection();
+    saveSelection();
     nextTick(updatePopoverPosition);
   }
-}
-
-function syncSelection() {
-  const textarea = textareaRef.value;
-
-  if (!textarea) {
-    return;
-  }
-
-  selection.value = {
-    start: textarea.selectionStart ?? String(props.modelValue || '').length,
-    end: textarea.selectionEnd ?? String(props.modelValue || '').length,
-  };
-}
-
-function focusSelection(start: number, end: number) {
-  nextTick(() => {
-    const textarea = textareaRef.value;
-
-    if (!textarea || props.disabled) {
-      return;
-    }
-
-    textarea.focus();
-    textarea.setSelectionRange(start, end);
-  });
-}
-
-function emitValue(nextValue: string, start?: number, end?: number) {
-  emit('update:modelValue', nextValue);
-  emit('input', nextValue);
-
-  if (typeof start === 'number' && typeof end === 'number') {
-    focusSelection(start, end);
-  }
-}
-
-function wrapSelection(before: string, after = before) {
-  if (props.disabled) {
-    return;
-  }
-
-  const value = String(props.modelValue || '');
-  const { start, end } = selection.value;
-  const hasSelection = end > start;
-  const selectedText = value.slice(start, end);
-  const insertedText = hasSelection ? `${before}${selectedText}${after}` : `${before}${after}`;
-  const nextValue = `${value.slice(0, start)}${insertedText}${value.slice(end)}`;
-  const cursorStart = start + before.length;
-  const cursorEnd = hasSelection ? cursorStart + selectedText.length : cursorStart;
-
-  showEmojiPicker.value = false;
-  emitValue(nextValue, cursorStart, cursorEnd);
-}
-
-function insertEmoji(emoji: string) {
-  if (props.disabled || !emoji) {
-    return;
-  }
-
-  const value = String(props.modelValue || '');
-  const { start, end } = selection.value;
-  const nextValue = `${value.slice(0, start)}${emoji}${value.slice(end)}`;
-  const cursor = start + emoji.length;
-
-  showEmojiPicker.value = false;
-  emitValue(nextValue, cursor, cursor);
-}
-
-function handleEmojiSelect(emoji: { i?: string } | string) {
-  if (typeof emoji === 'string') {
-    insertEmoji(emoji);
-    return;
-  }
-
-  insertEmoji(String(emoji?.i || ''));
-}
-
-function insertVariable(placeholder: string) {
-  if (props.disabled || !placeholder) {
-    return;
-  }
-
-  const value = String(props.modelValue || '');
-  const { start, end } = selection.value;
-  const nextValue = `${value.slice(0, start)}${placeholder}${value.slice(end)}`;
-  const cursor = start + placeholder.length;
-
-  emitValue(nextValue, cursor, cursor);
-}
-
-function handleInput(event: Event) {
-  emitValue((event.target as HTMLTextAreaElement).value);
-}
-
-function handleChange(event: Event) {
-  emit('change', (event.target as HTMLTextAreaElement).value);
 }
 
 function handleDocumentClick(event: MouseEvent) {
@@ -200,14 +435,84 @@ function handleReposition() {
   }
 }
 
+function hideTip() {
+  tipVisible.value = false;
+  tipText.value = '';
+
+  if (scrollHandler) {
+    window.removeEventListener('scroll', scrollHandler, true);
+    scrollHandler = null;
+  }
+}
+
+function positionTip(rect: DOMRect) {
+  const margin = 8;
+  let left = rect.left + rect.width / 2;
+  const el = tipEl.value;
+
+  if (el) {
+    const half = el.offsetWidth / 2;
+    left = Math.min(Math.max(left, half + margin), window.innerWidth - half - margin);
+  }
+
+  tipStyle.value = {
+    top: `${rect.top - margin}px`,
+    left: `${left}px`,
+    transform: 'translate(-50%, -100%)',
+  };
+}
+
+function handleMouseOver(event: MouseEvent) {
+  const target = event.target as HTMLElement | null;
+  const variable = target?.closest?.('.joinotify-var') as HTMLElement | null;
+
+  if (!variable || !editorRef.value?.contains(variable)) {
+    hideTip();
+    return;
+  }
+
+  const text = variable.getAttribute('data-tip');
+
+  if (!text) {
+    hideTip();
+    return;
+  }
+
+  const rect = variable.getBoundingClientRect();
+  tipText.value = text;
+  tipVisible.value = true;
+
+  if (!scrollHandler) {
+    scrollHandler = () => hideTip();
+    window.addEventListener('scroll', scrollHandler, true);
+  }
+
+  nextTick(() => positionTip(rect));
+}
+
 watch(
   () => props.modelValue,
-  () => {
-    syncSelection();
+  (value) => {
+    const next = String(value || '');
+
+    if (next === internalValue) {
+      return;
+    }
+
+    internalValue = next;
+    render();
   },
 );
 
+// Re-render chips when the placeholder set changes (tooltips / known styling).
+watch(
+  () => props.placeholders,
+  () => render(),
+  { deep: true },
+);
+
 onMounted(() => {
+  render();
   document.addEventListener('click', handleDocumentClick);
   window.addEventListener('resize', handleReposition);
   window.addEventListener('scroll', handleReposition, true);
@@ -217,11 +522,16 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleDocumentClick);
   window.removeEventListener('resize', handleReposition);
   window.removeEventListener('scroll', handleReposition, true);
+
+  if (scrollHandler) {
+    window.removeEventListener('scroll', scrollHandler, true);
+    scrollHandler = null;
+  }
 });
 </script>
 
 <template>
-  <label ref="rootRef" class="flex flex-col gap-1.5">
+  <div ref="rootRef" class="flex flex-col gap-1.5">
     <span v-if="label" class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
       {{ label }}
     </span>
@@ -236,7 +546,7 @@ onBeforeUnmount(() => {
               :disabled="disabled"
               :aria-label="__('Bold', textDomain)"
               @mousedown.prevent
-              @click="wrapSelection('<strong>', '</strong>')"
+              @click="applyFormat('bold')"
             >
               <BoldIcon width="14" height="14" />
             </button>
@@ -249,7 +559,7 @@ onBeforeUnmount(() => {
               :disabled="disabled"
               :aria-label="__('Italic', textDomain)"
               @mousedown.prevent
-              @click="wrapSelection('<em>', '</em>')"
+              @click="applyFormat('italic')"
             >
               <ItalicIcon width="14" height="14" />
             </button>
@@ -262,7 +572,7 @@ onBeforeUnmount(() => {
               :disabled="disabled"
               :aria-label="__('Underline', textDomain)"
               @mousedown.prevent
-              @click="wrapSelection('<u>', '</u>')"
+              @click="applyFormat('underline')"
             >
               <UnderlineIcon width="14" height="14" />
             </button>
@@ -313,37 +623,53 @@ onBeforeUnmount(() => {
           />
         </div>
 
-        <textarea
-          ref="textareaRef"
+        <div
+          ref="editorRef"
           :id="id"
-          :name="name"
-          :rows="rows"
-          :value="modelValue"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          class="w-full resize-y border-0 bg-white px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-0 disabled:cursor-not-allowed disabled:bg-slate-50"
+          class="rte-editor w-full resize-y overflow-auto whitespace-pre-wrap break-words px-4 py-3 text-sm leading-6 text-slate-900 outline-none focus:ring-0"
+          :class="{ 'is-empty': isEmpty, 'cursor-not-allowed bg-slate-50': disabled }"
+          :contenteditable="!disabled"
+          :data-placeholder="placeholder"
+          :style="{ minHeight }"
+          role="textbox"
+          aria-multiline="true"
           @input="handleInput"
-          @change="handleChange"
-          @focus="syncSelection"
-          @keyup="syncSelection"
-          @mouseup="syncSelection"
-          @select="syncSelection"
+          @keydown="handleKeydown"
+          @paste="handlePaste"
+          @blur="handleBlur"
+          @keyup="saveSelection"
+          @mouseup="saveSelection"
+          @mouseover="handleMouseOver"
+          @mouseleave="hideTip"
         />
-
-        <div v-if="String(modelValue || '').trim()" class="border-t border-slate-200 bg-slate-50 px-4 py-3">
-          <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-            {{ __('Preview', textDomain) }}
-          </p>
-          <RichTextPreview :value="modelValue" :placeholders="placeholders" />
-        </div>
       </div>
-
     </div>
 
     <p v-if="description" class="text-xs leading-5 text-slate-500">
       {{ description }}
     </p>
-  </label>
+
+    <Teleport to="body">
+      <Transition
+        enter-active-class="transition-opacity duration-150 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-100 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="tipVisible && tipText"
+          ref="tipEl"
+          class="pointer-events-none fixed z-[10050] w-max max-w-[240px] rounded-[0.375rem] bg-black/90 px-3 py-1.5 text-center text-[0.8125rem] leading-[1.4] text-white shadow-[0_0.5rem_1rem_rgba(0,0,0,0.15)]"
+          :style="tipStyle"
+          role="tooltip"
+        >
+          {{ tipText }}
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
 </template>
 
 <style>
@@ -352,5 +678,13 @@ onBeforeUnmount(() => {
   box-shadow: none;
   border: 0;
   border-radius: 0;
+}
+</style>
+
+<style scoped>
+.rte-editor.is-empty::before {
+  content: attr(data-placeholder);
+  color: #94a3b8;
+  pointer-events: none;
 }
 </style>
