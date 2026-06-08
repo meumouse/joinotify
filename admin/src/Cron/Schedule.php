@@ -44,6 +44,45 @@ class Schedule {
 
         // backfill the trigger-hook index for existing workflows after an upgrade
         add_action( 'Joinotify/Upgraded', array( '\MeuMouse\Joinotify\Admin\Builder\Registry', 'backfill_trigger_hook_index' ) );
+
+        // cancel pending scheduled segments when a workflow is disabled or removed
+        add_action( 'transition_post_status', array( $this, 'clear_on_status_change' ), 10, 3 );
+        add_action( 'before_delete_post', array( $this, 'clear_on_delete' ), 10, 1 );
+    }
+
+
+    /**
+     * Cancel a workflow's pending scheduled segments when it leaves the
+     * published state (unpublished or trashed).
+     *
+     * @since 2.0.0
+     * @param string $new_status | New post status
+     * @param string $old_status | Previous post status
+     * @param \WP_Post $post | Post object
+     * @return void
+     */
+    public function clear_on_status_change( $new_status, $old_status, $post ) {
+        if ( ! $post instanceof \WP_Post || 'joinotify-workflow' !== $post->post_type ) {
+            return;
+        }
+
+        if ( 'publish' === $old_status && 'publish' !== $new_status ) {
+            self::clear_scheduled_for_post( $post->ID );
+        }
+    }
+
+
+    /**
+     * Cancel a workflow's pending scheduled segments before it is deleted.
+     *
+     * @since 2.0.0
+     * @param int $post_id | Post ID
+     * @return void
+     */
+    public function clear_on_delete( $post_id ) {
+        if ( 'joinotify-workflow' === get_post_type( $post_id ) ) {
+            self::clear_scheduled_for_post( $post_id );
+        }
     }
 
 
@@ -92,6 +131,74 @@ class Schedule {
 
 
     /**
+     * Action Scheduler group for a given workflow.
+     *
+     * A per-post group lets us cancel every pending segment of a single workflow
+     * precisely (Action Scheduler cannot reliably match on a partial args set).
+     *
+     * @since 2.0.0
+     * @param int $post_id | Workflow post ID (0 for the base group)
+     * @return string
+     */
+    public static function get_group( $post_id = 0 ) {
+        $post_id = absint( $post_id );
+
+        return $post_id ? self::AS_GROUP . '_' . $post_id : self::AS_GROUP;
+    }
+
+
+    /**
+     * Cancel every pending scheduled segment for a workflow.
+     *
+     * Used when a workflow is unpublished, trashed or deleted so its delayed
+     * continuations never fire. Precise on Action Scheduler (per-post group);
+     * the WP-Cron fallback scans the cron array for events whose post_id matches.
+     *
+     * @since 2.0.0
+     * @param int $post_id | Workflow post ID
+     * @return void
+     */
+    public static function clear_scheduled_for_post( $post_id ) {
+        $post_id = absint( $post_id );
+
+        if ( ! $post_id ) {
+            return;
+        }
+
+        $hook = 'joinotify_scheduled_actions_event';
+
+        if ( self::is_action_scheduler_available() ) {
+            // Empty args => match any; the per-post group scopes it to this workflow.
+            as_unschedule_all_actions( $hook, array(), self::get_group( $post_id ) );
+
+            return;
+        }
+
+        // WP-Cron fallback: unschedule every matching event by post_id.
+        $crons = _get_cron_array();
+
+        if ( empty( $crons ) ) {
+            return;
+        }
+
+        foreach ( $crons as $timestamp => $hooks ) {
+            if ( empty( $hooks[ $hook ] ) ) {
+                continue;
+            }
+
+            foreach ( $hooks[ $hook ] as $event ) {
+                $event_args = isset( $event['args'] ) && is_array( $event['args'] ) ? $event['args'] : array();
+                $event_post = $event_args['post_id'] ?? ( $event_args[0] ?? null );
+
+                if ( null !== $event_post && (int) $event_post === $post_id ) {
+                    wp_unschedule_event( $timestamp, $hook, $event_args );
+                }
+            }
+        }
+    }
+
+
+    /**
      * Schedule a message for a future time or date
      * 
      * @since 1.0.0
@@ -126,11 +233,13 @@ class Schedule {
         // Prefer Action Scheduler when available: more reliable execution and
         // dedup than WP-Cron, and it survives DISABLE_WP_CRON.
         if ( self::is_action_scheduler_available() ) {
+            $group = self::get_group( $post_id );
+
             // Replace any identical pending continuation before re-scheduling so a
             // re-fired trigger resets the timer instead of stacking duplicates.
-            as_unschedule_all_actions( $hook, $args, self::AS_GROUP );
+            as_unschedule_all_actions( $hook, $args, $group );
 
-            return as_schedule_single_action( $timestamp, $hook, $args, self::AS_GROUP ) > 0;
+            return as_schedule_single_action( $timestamp, $hook, $args, $group ) > 0;
         }
 
         // WP-Cron fallback: clear the ghost event, then schedule a single event.
