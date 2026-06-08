@@ -47,6 +47,7 @@ class Builder_Actions extends Abstract_Route {
 
 		return rest_ensure_response( array(
 			'actions' => Registry::get_actions_catalog( $context ),
+			'categories' => Registry::get_action_categories_catalog(),
 		) );
 	}
 }

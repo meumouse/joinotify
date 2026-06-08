@@ -47,6 +47,7 @@ export const createCouponDefinition: ActionDefinition = {
   description: __('Generate a WooCommerce coupon and notify the customer.', textDomain),
   icon: 'purchase-tag',
   context: ['woocommerce'],
+  category: 'woocommerce',
   hasSettings: true,
   priority: 60,
   isExpansible: false,

@@ -19,6 +19,13 @@ export interface WorkflowActionItem {
   children?: Record<string, WorkflowActionItem[]>;
 }
 
+export interface ActionCategory {
+  id: string;
+  label: string;
+  icon?: string;
+  priority?: number;
+}
+
 export interface ActionDefinition {
   action: BuilderActionSlug;
   title: string;
@@ -27,6 +34,7 @@ export interface ActionDefinition {
   iconSvg?: string;
   externalIcon?: boolean;
   context?: BuilderActionContext[];
+  category?: string;
   hasSettings: boolean;
   priority: number;
   isExpansible?: boolean;
@@ -57,6 +65,7 @@ export interface BackendActionDefinition extends Partial<ActionDefinition> {
   externalIcon?: boolean;
   context?: string | string[];
   contexts?: string | string[];
+  category?: string;
   has_settings?: boolean;
   hasSettings?: boolean;
   priority?: number | string;

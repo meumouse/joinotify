@@ -955,6 +955,7 @@ function clearBuilderUrl() {
         :drawer-open="store.drawerOpen"
         :loading="store.loading.workflow"
         :actions="availableActions"
+        :action-categories="store.actionCategories"
         :actions-loading="store.loading.actions"
         :actions-open="actionSidebarOpen"
         :flow-ready="canvasFlowReady"

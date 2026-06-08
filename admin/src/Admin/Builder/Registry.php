@@ -207,9 +207,47 @@ class Registry {
 				'has_settings' => ! empty( $action['has_settings'] ),
 				'is_expansible' => ! empty( $action['is_expansible'] ),
 				'context' => isset( $action['context'] ) && is_array( $action['context'] ) ? array_values( $action['context'] ) : array(),
+				'category' => ! empty( $action['category'] ) ? sanitize_key( (string) $action['category'] ) : 'general',
 				'default_data' => self::get_action_default_data( $action_slug, $action ),
 			);
 		}
+
+		return $catalog;
+	}
+
+
+	/**
+	 * Return the workflow builder action categories catalog.
+	 *
+	 * Categories are used as tabs on the builder actions library modal. Third
+	 * parties can register categories through the "Joinotify/Builder/Action_Categories"
+	 * filter (see Actions::get_action_categories()).
+	 *
+	 * @since 1.4.7
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function get_action_categories_catalog() {
+		$categories = Actions::get_action_categories();
+		$catalog = array();
+
+		foreach ( $categories as $category ) {
+			$id = isset( $category['id'] ) ? sanitize_key( (string) $category['id'] ) : '';
+
+			if ( empty( $id ) ) {
+				continue;
+			}
+
+			$catalog[] = array(
+				'id' => $id,
+				'label' => isset( $category['label'] ) ? (string) $category['label'] : $id,
+				'icon' => isset( $category['icon'] ) ? (string) $category['icon'] : '',
+				'priority' => isset( $category['priority'] ) ? (int) $category['priority'] : 0,
+			);
+		}
+
+		usort( $catalog, function( $left, $right ) {
+			return $left['priority'] <=> $right['priority'];
+		});
 
 		return $catalog;
 	}

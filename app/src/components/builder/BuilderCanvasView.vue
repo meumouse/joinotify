@@ -12,7 +12,7 @@ import { GitRepoForked } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 import FlowCanvas, { type FlowCanvasExpose } from '../flow/FlowCanvas.vue';
 import BuilderLoader from './BuilderLoader.vue';
-import BuilderActionSidebar from './BuilderActionSidebar.vue';
+import ActionLibraryModal from '../../builder/actions/components/ActionLibraryModal.vue';
 import NodeSettingsDrawer from '../settings/NodeSettingsDrawer.vue';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
 import type { WorkflowContextDefinition, WorkflowNode } from '../../types/workflowBuilder';
@@ -28,6 +28,7 @@ interface BuilderCanvasProps {
   drawerOpen: boolean;
   loading: boolean;
   actions: BuilderAction[];
+  actionCategories: BuilderAction[];
   actionsLoading: boolean;
   actionsOpen: boolean;
   flowReady: boolean;
@@ -180,9 +181,10 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
       @update="$emit('update-node', $event)"
     />
 
-    <BuilderActionSidebar
+    <ActionLibraryModal
       :open="actionsOpen"
       :actions="actions"
+      :categories="actionCategories"
       :loading="actionsLoading"
       :context="String(triggerNode?.data?.context ?? '')"
       @close="$emit('close-actions')"

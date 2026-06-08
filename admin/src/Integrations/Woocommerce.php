@@ -57,6 +57,7 @@ class Woocommerce extends Integrations_Base {
             // add coupon action
             if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
                 add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_coupon_action' ), 10, 1 );
+                add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_woocommerce_category' ), 10, 1 );
             }
 
             // add conditions
@@ -212,10 +213,48 @@ class Woocommerce extends Integrations_Base {
                 'title' => esc_html__( 'Order status changed', 'joinotify' ),
                 'description' => esc_html__( "This action is triggered when an order's status changes.", 'joinotify' ),
                 'require_settings' => true,
+                'settings' => array(
+                    array(
+                        'key' => 'order_status',
+                        'label' => esc_html__( 'Order status', 'joinotify' ),
+                        'component' => 'select',
+                        'required' => true,
+                        'description' => esc_html__( 'Choose which order status should start this workflow. Select "Any status" to run on every status change.', 'joinotify' ),
+                        'placeholder' => esc_html__( 'Select an order status', 'joinotify' ),
+                        'options' => self::get_order_status_options(),
+                    ),
+                ),
             ),
         );
 
         return $triggers;
+    }
+
+
+    /**
+     * Get the order status options used by the "Order status changed" trigger settings.
+     *
+     * @since 1.4.8
+     * @return array<int,array<string,string>>
+     */
+    public static function get_order_status_options() {
+        $options = array(
+            array(
+                'label' => esc_html__( 'Any status', 'joinotify' ),
+                'value' => 'none',
+            ),
+        );
+
+        if ( function_exists('wc_get_order_statuses') ) {
+            foreach ( wc_get_order_statuses() as $status_key => $status_label ) {
+                $options[] = array(
+                    'label' => $status_label,
+                    'value' => $status_key,
+                );
+            }
+        }
+
+        return $options;
     }
 
 
@@ -717,8 +756,27 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Register the "WooCommerce" category on the builder actions library
+     *
+     * @since 1.4.7
+     * @param array $categories | Current categories
+     * @return array
+     */
+    public function add_woocommerce_category( $categories ) {
+        $categories[] = array(
+            'id' => 'woocommerce',
+            'label' => esc_html__( 'WooCommerce', 'joinotify' ),
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zm10 0c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zM7.334 14h9.591c.748 0 1.404-.494 1.611-1.213l1.917-6.708A.5.5 0 0 0 19.96 5.4H6.21l-.94-2.342A1 1 0 0 0 4.34 2.4H2v2h1.66l3.6 8.99-1.35 2.448C5.16 17.227 5.99 18.6 7.334 18.6H19v-2H7.334l1.1-2z"></path></svg>',
+            'priority' => 30,
+        );
+
+        return $categories;
+    }
+
+
+    /**
      * Add coupon action in sidebar list on builder
-     * 
+     *
      * @since 1.1.0
      * @param array $actions | Current actions
      * @return array
@@ -731,6 +789,7 @@ class Woocommerce extends Integrations_Base {
             'context' => array(
                 'woocommerce',
             ),
+            'category' => 'woocommerce',
             'icon' => '<svg class="icon icon-lg icon-dark coupon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 6.75L4.5 6H20.25L21 6.75V10.7812H20.25C19.5769 10.7812 19.0312 11.3269 19.0312 12C19.0312 12.6731 19.5769 13.2188 20.25 13.2188H21V17.25L20.25 18L4.5 18L3.75 17.25V13.2188H4.5C5.1731 13.2188 5.71875 12.6731 5.71875 12C5.71875 11.3269 5.1731 10.7812 4.5 10.7812H3.75V6.75ZM5.25 7.5V9.38602C6.38677 9.71157 7.21875 10.7586 7.21875 12C7.21875 13.2414 6.38677 14.2884 5.25 14.614V16.5L9 16.5L9 7.5H5.25ZM10.5 7.5V16.5L19.5 16.5V14.614C18.3632 14.2884 17.5312 13.2414 17.5312 12C17.5312 10.7586 18.3632 9.71157 19.5 9.38602V7.5H10.5Z"></path></g></svg>',
             'external_icon' => false,
             'has_settings' => true,

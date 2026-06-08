@@ -278,6 +278,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const lastExportJson = ref('');
   const templateCatalog = ref<Record<string, unknown>[]>([]);
   const actionsCatalog = ref<WorkflowRegistryItem[]>([]);
+  const actionCategories = ref<Array<Record<string, unknown>>>([]);
   const actionsLoaded = ref(false);
   const actionsCatalogContext = ref('');
   const placeholderCatalog = ref<WorkflowPlaceholderGroup[]>([]);
@@ -487,6 +488,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     try {
       const response = api.value ? await api.value.loadActions(context) : null;
       const rawActions = Array.isArray(response?.actions) ? (response.actions as Record<string, unknown>[]) : [];
+      const rawCategories = Array.isArray(response?.categories) ? (response.categories as Array<Record<string, unknown>>) : [];
+
+      if (rawCategories.length) {
+        actionCategories.value = rawCategories;
+      }
 
       if (rawActions.length) {
         setActionCatalog(rawActions);
@@ -1389,6 +1395,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     loading,
     templateCatalog,
     actionsCatalog,
+    actionCategories,
     actionsLoaded,
     placeholderCatalog,
     triggerCatalog,

@@ -105,6 +105,7 @@ function normalizeDefinition(definition: ActionDefinition | BackendActionDefinit
     iconSvg: iconSvgValue,
     externalIcon: Boolean(definition.externalIcon ?? definition.external_icon),
     context: cleanContext(definition.context || definition.contexts),
+    category: String(definition.category || '').trim() || 'general',
     hasSettings: Boolean(definition.hasSettings ?? definition.has_settings ?? false),
     priority: cleanPriority(definition.priority, 0),
     isExpansible: Boolean(definition.isExpansible ?? definition.is_expansible),
