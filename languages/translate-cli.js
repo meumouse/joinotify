@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 import gettextParser from "gettext-parser";
 import { Translate } from "@google-cloud/translate/build/src/v2/index.js";
 import dotenv from "dotenv";
+import { translateStringsOpenAI } from "./openai-translate.js";
+import { poDataToPhp } from "./l10n-php.js";
 
 dotenv.config();
 
@@ -23,15 +25,19 @@ const DELAY_BETWEEN_BATCHES = 1000;
 const MAX_RETRIES = 3;
 
 const LANGUAGES = {
+  en_US: { code: "en", name: "English (United States)" },
+  es_ES: { code: "es", name: "Spanish (Spain)" },
+  pt_BR: { code: "pt", name: "Portuguese (Brazil)" },
 //  de_DE: { code: "de", name: "German (Germany)" },
-//  es_ES: { code: "es", name: "Spanish (Spain)" },
 //  fr_FR: { code: "fr", name: "French (France)" },
 //  it_IT: { code: "it", name: "Italian (Italy)" },
 //  nl_NL: { code: "nl", name: "Dutch (Netherlands)" },
-  pt_BR: { code: "pt", name: "Portuguese (Brazil)" },
 //  pt_PT: { code: "pt-PT", name: "Portuguese (Portugal)" },
 //  zh_CN: { code: "zh-CN", name: "Chinese (Simplified)" },
 };
+
+const ENGINES = new Set(["google", "openai"]);
+const DEFAULT_ENGINE = "google";
 
 const translate = new Translate({
   key: process.env.GOOGLE_TRANSLATE_API_KEY,
@@ -39,6 +45,30 @@ const translate = new Translate({
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getSelectedEngine() {
+  const args = process.argv.slice(2);
+  const flagIndex = args.findIndex((arg) => arg === "--engine" || arg === "-e");
+  const inlineArg = args.find((arg) => arg.startsWith("--engine="));
+
+  let engine = process.env.TRANSLATE_ENGINE || DEFAULT_ENGINE;
+
+  if (flagIndex !== -1 && args[flagIndex + 1]) {
+    engine = args[flagIndex + 1];
+  } else if (inlineArg) {
+    engine = inlineArg.split("=")[1];
+  }
+
+  engine = engine.toLowerCase();
+
+  if (!ENGINES.has(engine)) {
+    console.error(`Error: Unsupported engine "${engine}".`);
+    console.error(`Available engines: ${Array.from(ENGINES).join(", ")}`);
+    process.exit(1);
+  }
+
+  return engine;
 }
 
 function getSelectedLanguages() {
@@ -133,7 +163,19 @@ async function translateBatchWithRetry(stringsToTranslate, targetLangCode, retry
   }
 }
 
-async function translateStrings(strings, targetLangCode) {
+async function translateStrings(strings, langInfo, engine) {
+  if (strings.length === 0) {
+    return {};
+  }
+
+  if (engine === "openai") {
+    return translateStringsOpenAI(strings, langInfo);
+  }
+
+  return translateStringsGoogle(strings, langInfo.code);
+}
+
+async function translateStringsGoogle(strings, targetLangCode) {
   if (strings.length === 0) {
     return {};
   }
@@ -210,6 +252,10 @@ function writeMoFile(poData, outputPath) {
   fs.writeFileSync(outputPath, gettextParser.mo.compile(poData));
 }
 
+function writePhpFile(poData, outputPath) {
+  fs.writeFileSync(outputPath, poDataToPhp(poData));
+}
+
 function generateJsonFile(poData, jsonPath, langCode, domain = TEXT_DOMAIN) {
   const wpFormat = {
     domain: TEXT_DOMAIN,
@@ -237,12 +283,15 @@ function generateJsonFile(poData, jsonPath, langCode, domain = TEXT_DOMAIN) {
   fs.writeFileSync(jsonPath, JSON.stringify(wpFormat, null, 2));
 }
 
-function writeTranslationArtifacts(poData, poPath, moPath, jsonPaths, langCode) {
+function writeTranslationArtifacts(poData, poPath, moPath, phpPath, jsonPaths, langCode) {
   writePoFile(poData, poPath);
   console.log(`   Written: ${path.basename(poPath)}`);
 
   writeMoFile(poData, moPath);
   console.log(`   Written: ${path.basename(moPath)}`);
+
+  writePhpFile(poData, phpPath);
+  console.log(`   Written: ${path.basename(phpPath)}`);
 
   for (const { path: jsonPath, domain } of jsonPaths) {
     generateJsonFile(poData, jsonPath, langCode, domain);
@@ -251,7 +300,10 @@ function writeTranslationArtifacts(poData, poPath, moPath, jsonPaths, langCode) 
 }
 
 async function main() {
-  console.log("flexifyDashboard Translation Script (Google Cloud Translation)");
+  const engine = getSelectedEngine();
+  const engineLabel = engine === "openai" ? "OpenAI (AI)" : "Google Cloud Translation";
+
+  console.log(`Joinotify Translation Script (${engineLabel})`);
   console.log("===========================================================\n");
 
   const selectedLanguages = getSelectedLanguages();
@@ -271,6 +323,7 @@ async function main() {
 
     const poPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.po`);
     const moPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.mo`);
+    const phpPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.l10n.php`);
     const jsonPaths = SCRIPT_HANDLES.map((domain) => ({
       domain,
       path: path.join(__dirname, `${TEXT_DOMAIN}-${langCode}-${domain}.json`),
@@ -294,7 +347,7 @@ async function main() {
       console.log("   All strings already translated");
       poData = createPoFile(potData, existingPoData, {}, langCode);
     } else {
-      if (!process.env.GOOGLE_TRANSLATE_API_KEY) {
+      if (engine === "google" && !process.env.GOOGLE_TRANSLATE_API_KEY) {
         console.error("Error: GOOGLE_TRANSLATE_API_KEY environment variable is not set.");
         console.error("Create a .env file with your API key or set it directly:");
         console.error("  GOOGLE_TRANSLATE_API_KEY=xxx node translate-cli.js");
@@ -303,15 +356,25 @@ async function main() {
         process.exit(1);
       }
 
+      if (engine === "openai" && !process.env.OPENAI_API_KEY) {
+        console.error("Error: OPENAI_API_KEY environment variable is not set.");
+        console.error("Create a .env file with your API key or set it directly:");
+        console.error("  OPENAI_API_KEY=sk-xxx node translate-cli.js --engine=openai");
+        console.error("  OPENAI_API_KEY=sk-xxx node translate-cli.js --engine=openai --lang=pt_BR");
+        console.error("\nOptional: OPENAI_MODEL (default gpt-4o-mini), OPENAI_BASE_URL.");
+        console.error("Get an API key from: https://platform.openai.com/api-keys");
+        process.exit(1);
+      }
+
       console.log(`   Found ${stringsToTranslate.length} strings to translate`);
 
-      const newTranslations = await translateStrings(stringsToTranslate, langInfo.code);
+      const newTranslations = await translateStrings(stringsToTranslate, langInfo, engine);
       console.log(`   Received ${Object.keys(newTranslations).length} translations`);
 
       poData = createPoFile(potData, existingPoData, newTranslations, langCode);
     }
 
-    writeTranslationArtifacts(poData, poPath, moPath, jsonPaths, langCode);
+    writeTranslationArtifacts(poData, poPath, moPath, phpPath, jsonPaths, langCode);
   }
 
   console.log("\nTranslation complete.");

@@ -1,15 +1,20 @@
 {
 	"name": "joinotify-translations",
-	"version": "1.4.7",
+	"version": "2.0.0",
 	"description": "AI-powered translation workflow for Joinotify WordPress plugin",
 	"type": "module",
 	"scripts": {
 		"pot": "node generate-pot-cli.js",
 		"compile:mo": "node compile-mo-cli.js",
 		"compile:mo:lang": "node compile-mo-cli.js --lang",
+		"compile:php": "node compile-php-cli.js",
+		"compile:php:lang": "node compile-php-cli.js --lang",
 		"pretranslate": "npm run pot",
 		"translate": "node translate-cli.js",
-		"translate:lang": "node translate-cli.js --lang"
+		"translate:lang": "node translate-cli.js --lang",
+		"pretranslate:ai": "npm run pot",
+		"translate:ai": "node translate-cli.js --engine=openai",
+		"translate:ai:lang": "node translate-cli.js --engine=openai --lang"
 	},
 	"dependencies": {
 		"@google-cloud/translate": "^8.5.0",
