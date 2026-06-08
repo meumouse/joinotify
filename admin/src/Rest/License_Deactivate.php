@@ -40,16 +40,12 @@ class License_Deactivate extends Abstract_Route {
         $message = '';
 
         if ( License::deactive_license( JOINOTIFY_FILE, $message ) ) {
-            return rest_ensure_response( array(
-                'status'       => 'success',
+            return $this->success_response( array(
                 'message'      => esc_html__( 'License deactivated successfully.', 'joinotify' ),
                 'license_data' => Registry::get_license_state(),
             ) );
         }
 
-        return rest_ensure_response( array(
-            'status'  => 'error',
-            'message' => ! empty( $message ) ? $message : esc_html__( 'Could not deactivate the license.', 'joinotify' ),
-        ) );
+        return $this->error_response( ! empty( $message ) ? $message : esc_html__( 'Could not deactivate the license.', 'joinotify' ) );
     }
 }

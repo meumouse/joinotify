@@ -38,9 +38,8 @@ class Settings_Save extends Abstract_Route {
         $settings = isset( $payload['settings'] ) && is_array( $payload['settings'] ) ? $payload['settings'] : array();
         $saved = Repository::save_settings( $settings );
 
-        return rest_ensure_response( array(
-            'status' => 'success',
-            'message' => esc_html__( 'Settings saved.', 'joinotify' ),
+        return $this->success_response( array(
+            'message'  => esc_html__( 'Settings saved.', 'joinotify' ),
             'settings' => $saved,
         ) );
     }

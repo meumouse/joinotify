@@ -37,9 +37,7 @@ class Debug_Logs extends Abstract_Route {
         $log_content = Logger::read_log();
 
         if ( empty( $log_content ) ) {
-            return rest_ensure_response( array(
-                'status' => 'error',
-                'message' => esc_html__( 'The debug log is empty.', 'joinotify' ),
+            return $this->error_response( esc_html__( 'The debug log is empty.', 'joinotify' ), array(
                 'content' => '',
             ) );
         }
@@ -55,8 +53,7 @@ class Debug_Logs extends Abstract_Route {
             }
         }
 
-        return rest_ensure_response( array(
-            'status' => 'success',
+        return $this->success_response( array(
             'content' => $content,
         ) );
     }

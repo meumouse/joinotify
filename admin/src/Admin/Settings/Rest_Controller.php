@@ -2,19 +2,21 @@
 
 namespace MeuMouse\Joinotify\Admin\Settings;
 
+use MeuMouse\Joinotify\Rest\Abstract_Rest_Controller;
+
 defined('ABSPATH') || exit;
 
 /**
  * Bootstrap all Joinotify REST endpoint classes used by the admin interface.
  */
-class Rest_Controller {
+class Rest_Controller extends Abstract_Rest_Controller {
 
     /**
      * REST endpoint classes that should be loaded for the admin UI.
      *
      * @var string[]
      */
-    private $route_classes = array(
+    protected $route_classes = array(
         '\MeuMouse\Joinotify\Rest\Settings_Bootstrap',
         '\MeuMouse\Joinotify\Rest\Settings_Save',
         '\MeuMouse\Joinotify\Rest\Phone_Candidates',
@@ -36,16 +38,4 @@ class Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Send_Text_Message',
         '\MeuMouse\Joinotify\Rest\Send_Media_Message',
     );
-
-
-    /**
-     * Register the route classes on construction.
-     */
-    public function __construct() {
-        foreach ( $this->route_classes as $class ) {
-            if ( class_exists( $class ) ) {
-                new $class();
-            }
-        }
-    }
 }

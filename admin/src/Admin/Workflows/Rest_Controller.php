@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Admin\Workflows;
 
+use MeuMouse\Joinotify\Rest\Abstract_Rest_Controller;
+
 defined('ABSPATH') || exit;
 
 /**
@@ -9,29 +11,17 @@ defined('ABSPATH') || exit;
  *
  * @since 2.0.0
  */
-class Rest_Controller {
+class Rest_Controller extends Abstract_Rest_Controller {
 
 	/**
 	 * Route classes used by the workflows list screen.
 	 *
 	 * @var string[]
 	 */
-	private $route_classes = array(
+	protected $route_classes = array(
 		'\MeuMouse\Joinotify\Rest\Workflows_Bootstrap',
 		'\MeuMouse\Joinotify\Rest\Workflows_List',
 		'\MeuMouse\Joinotify\Rest\Workflows_Status',
 		'\MeuMouse\Joinotify\Rest\Workflows_Bulk',
 	);
-
-
-	/**
-	 * Register the route classes.
-	 */
-	public function __construct() {
-		foreach ( $this->route_classes as $class ) {
-			if ( class_exists( $class ) ) {
-				new $class();
-			}
-		}
-	}
 }

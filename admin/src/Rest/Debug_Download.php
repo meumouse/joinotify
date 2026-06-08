@@ -40,16 +40,12 @@ class Debug_Download extends Abstract_Route {
         $log_file   = trailingslashit( $upload_dir['basedir'] ) . 'joinotify/logs.txt';
 
         if ( ! file_exists( $log_file ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'The log file was not found.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'The log file was not found.', 'joinotify' ) );
         }
 
         $content = file_get_contents( $log_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-        return rest_ensure_response( array(
-            'status'   => 'success',
+        return $this->success_response( array(
             'message'  => esc_html__( 'Log file ready for download.', 'joinotify' ),
             'filename' => 'joinotify-debug-logs.txt',
             'content'  => $content !== false ? $content : '',

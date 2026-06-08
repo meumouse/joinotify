@@ -41,10 +41,7 @@ class Modules_Install extends Abstract_Route {
         $plugin_zip  = isset( $payload['plugin_url'] ) ? esc_url_raw( $payload['plugin_url'] ) : '';
 
         if ( empty( $plugin_slug ) || empty( $plugin_zip ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'Plugin slug and URL are required.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Plugin slug and URL are required.', 'joinotify' ) );
         }
 
         ob_start();
@@ -56,24 +53,17 @@ class Modules_Install extends Abstract_Route {
         ob_end_clean();
 
         if ( is_wp_error( $installed ) || ! $installed ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'Failed to install or update the plugin.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Failed to install or update the plugin.', 'joinotify' ) );
         }
 
         $plugin_file = WP_PLUGIN_DIR . '/' . $plugin_slug;
         $activate    = activate_plugin( $plugin_file );
 
         if ( is_wp_error( $activate ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'The plugin was installed but could not be activated.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'The plugin was installed but could not be activated.', 'joinotify' ) );
         }
 
-        return rest_ensure_response( array(
-            'status'  => 'success',
+        return $this->success_response( array(
             'message' => esc_html__( 'Plugin installed and activated successfully.', 'joinotify' ),
         ) );
     }

@@ -39,23 +39,16 @@ class Modules_Activate extends Abstract_Route {
         $plugin_slug = isset( $payload['plugin_slug'] ) ? sanitize_text_field( $payload['plugin_slug'] ) : '';
 
         if ( empty( $plugin_slug ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => esc_html__( 'Plugin slug is required.', 'joinotify' ),
-            ) );
+            return $this->error_response( esc_html__( 'Plugin slug is required.', 'joinotify' ) );
         }
 
         $activate = activate_plugin( $plugin_slug );
 
         if ( is_wp_error( $activate ) ) {
-            return rest_ensure_response( array(
-                'status'  => 'error',
-                'message' => $activate->get_error_message(),
-            ) );
+            return $this->error_response( $activate->get_error_message() );
         }
 
-        return rest_ensure_response( array(
-            'status'  => 'success',
+        return $this->success_response( array(
             'message' => esc_html__( 'Plugin activated successfully.', 'joinotify' ),
         ) );
     }

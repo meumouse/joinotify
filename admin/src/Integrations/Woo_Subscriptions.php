@@ -109,6 +109,35 @@ class Woo_Subscriptions extends Integrations_Base {
 
 
     /**
+     * Build the trigger payload, apply its filter and dispatch the workflows.
+     *
+     * Shared by every subscription hook callback below; only the hook name,
+     * filter hook and hook-specific payload keys vary.
+     *
+     * @since 2.0.0
+     * @param string $hook   The WooCommerce Subscriptions hook that fired.
+     * @param string $filter The Joinotify payload filter to apply.
+     * @param array  $extra  Hook-specific payload keys (subscription_id, etc.).
+     * @return void
+     */
+    protected function dispatch_subscription_workflow( $hook, $filter, array $extra = array() ) {
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 1.3.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( $filter, array_merge( array(
+            'type' => 'trigger',
+            'hook' => $hook,
+            'integration' => 'woocommerce',
+        ), $extra ) );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
      * Process workflow when subscription is created
      * 
      * @since 1.2.0
@@ -118,22 +147,15 @@ class Woo_Subscriptions extends Integrations_Base {
      * @param object|WC_Cart $recurring_cart | A WC_Cart instance representing the cart which stores the data used for creating this subscription
      */
     public function process_workflow_subscription_created( $subscription, $order, $recurring_cart ) {
-        /**
-         * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
-         * @param array $payload | Payload to be processed
-         */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Checkout_Subscription_Created', array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_checkout_subscription_created',
-            'integration' => 'woocommerce',
-            'subscription_id' => $subscription->get_id(),
-            'order_id' => $order->get_id(),
-            'recurring_cart' => $recurring_cart,
-        ));
-
-        Workflow_Processor::process_workflows( $payload );
+        $this->dispatch_subscription_workflow(
+            'woocommerce_checkout_subscription_created',
+            'Joinotify/Process_Workflows/Woocommerce/Checkout_Subscription_Created',
+            array(
+                'subscription_id' => $subscription->get_id(),
+                'order_id' => $order->get_id(),
+                'recurring_cart' => $recurring_cart,
+            )
+        );
     }
 
 
@@ -146,20 +168,11 @@ class Woo_Subscriptions extends Integrations_Base {
      * @return void
      */
     public function process_workflow_subscription_status_active( $subscription ) {
-        /**
-         * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
-         * @param array $payload | Payload to be processed
-         */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Subscription_Status_Active', array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_status_active',
-            'integration' => 'woocommerce',
-            'subscription_id' => $subscription->get_id(),
-        ));
-
-        Workflow_Processor::process_workflows( $payload );
+        $this->dispatch_subscription_workflow(
+            'woocommerce_subscription_status_active',
+            'Joinotify/Process_Workflows/Woocommerce/Subscription_Status_Active',
+            array( 'subscription_id' => $subscription->get_id() )
+        );
     }
 
 
@@ -172,20 +185,11 @@ class Woo_Subscriptions extends Integrations_Base {
      * @return void
      */
     public function process_workflow_subscription_payment_complete( $subscription ) {
-        /**
-         * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
-         * @param array $payload | Payload to be processed
-         */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Subscription_Payment_Complete', array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_payment_complete',
-            'integration' => 'woocommerce',
-            'subscription_id' => $subscription->get_id(),
-        ));
-
-        Workflow_Processor::process_workflows( $payload );
+        $this->dispatch_subscription_workflow(
+            'woocommerce_subscription_payment_complete',
+            'Joinotify/Process_Workflows/Woocommerce/Subscription_Payment_Complete',
+            array( 'subscription_id' => $subscription->get_id() )
+        );
     }
 
 
@@ -199,21 +203,14 @@ class Woo_Subscriptions extends Integrations_Base {
      * @return void
      */
     public function process_workflow_subscription_payment_failed( $subscription, $new_status ) {
-        /**
-         * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
-         * @param array $payload | Payload to be processed
-         */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Subscription_Payment_Failed', array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_payment_failed',
-            'integration' => 'woocommerce',
-            'subscription_id' => $subscription->get_id(),
-            'new_status' => $new_status,
-        ));
-
-        Workflow_Processor::process_workflows( $payload );
+        $this->dispatch_subscription_workflow(
+            'woocommerce_subscription_payment_failed',
+            'Joinotify/Process_Workflows/Woocommerce/Subscription_Payment_Failed',
+            array(
+                'subscription_id' => $subscription->get_id(),
+                'new_status' => $new_status,
+            )
+        );
     }
 
 
@@ -226,20 +223,11 @@ class Woo_Subscriptions extends Integrations_Base {
      * @return void
      */
     public function process_workflow_subscription_status_expired( $subscription ) {
-        /**
-         * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
-         * @param array $payload | Payload to be processed
-         */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Subscription_Status_Expired', array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_status_expired',
-            'integration' => 'woocommerce',
-            'subscription_id' => $subscription->get_id(),
-        ));
-
-        Workflow_Processor::process_workflows( $payload );
+        $this->dispatch_subscription_workflow(
+            'woocommerce_subscription_status_expired',
+            'Joinotify/Process_Workflows/Woocommerce/Subscription_Status_Expired',
+            array( 'subscription_id' => $subscription->get_id() )
+        );
     }
 
 
@@ -252,19 +240,10 @@ class Woo_Subscriptions extends Integrations_Base {
      * @return void
      */
     public function process_workflow_subscription_status_cancelled( $subscription ) {
-        /**
-         * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
-         * @param array $payload | Payload to be processed
-         */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Subscription_Status_Cancelled', array(
-            'type' => 'trigger',
-            'hook' => 'woocommerce_subscription_status_cancelled',
-            'integration' => 'woocommerce',
-            'subscription_id' => $subscription->get_id(),
-        ));
-
-        Workflow_Processor::process_workflows( $payload );
+        $this->dispatch_subscription_workflow(
+            'woocommerce_subscription_status_cancelled',
+            'Joinotify/Process_Workflows/Woocommerce/Subscription_Status_Cancelled',
+            array( 'subscription_id' => $subscription->get_id() )
+        );
     }
 }

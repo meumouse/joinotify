@@ -36,11 +36,12 @@ class Debug_Clear extends Abstract_Route {
     public function handle( WP_REST_Request $request ) {
         Logger::clear_log();
 
-        return rest_ensure_response( array(
-            'status' => ! Logger::has_logs() ? 'success' : 'error',
-            'message' => ! Logger::has_logs()
-                ? esc_html__( 'Debug logs cleared successfully!', 'joinotify' )
-                : esc_html__( 'Could not clear the debug logs.', 'joinotify' ),
+        if ( Logger::has_logs() ) {
+            return $this->error_response( esc_html__( 'Could not clear the debug logs.', 'joinotify' ) );
+        }
+
+        return $this->success_response( array(
+            'message' => esc_html__( 'Debug logs cleared successfully!', 'joinotify' ),
         ) );
     }
 }
