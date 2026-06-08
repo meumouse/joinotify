@@ -62,7 +62,7 @@ class Workflow_Manager {
         $suppressed_pages = apply_filters( 'Joinotify/Admin/Suppress_Notices_Pages', array(
             'joinotify-workflows-builder',
             'joinotify-workflows',
-        ) );
+        ));
 
         if ( ! in_array( $current_page, $suppressed_pages, true ) ) {
             return;
