@@ -50,6 +50,12 @@ class Default_Options {
             'enable_update_notice' => 'yes',
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
+            'enable_openai_integration' => 'no',
+            'ai_provider' => 'openai',
+            'openai_api_key' => '',
+            'openai_default_model' => 'gpt-4o-mini',
+            'openai_default_temperature' => '0.7',
+            'ai_global_system_prompt' => '',
         );
 
         $defaults = array_merge( $defaults, self::get_integration_default_options() );

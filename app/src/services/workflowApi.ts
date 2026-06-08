@@ -41,5 +41,8 @@ export function createWorkflowApiClient(bootstrap) {
     runWorkflowTest(body) {
       return api.post('/admin/builder/test', body);
     },
+    generateAiWorkflow(body) {
+      return api.post('/admin/ai/generate', body);
+    },
   };
 }

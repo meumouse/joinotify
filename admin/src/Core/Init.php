@@ -301,6 +301,8 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Cache',
 			'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
 			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
+			'MeuMouse\\Joinotify\\Integrations\\OpenAI',
+			'MeuMouse\\Joinotify\\Integrations\\AI_Messaging',
 			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
 			'MeuMouse\\Joinotify\\Integrations\\Elementor',
 			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',

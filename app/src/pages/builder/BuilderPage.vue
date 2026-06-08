@@ -7,6 +7,7 @@ import BaseInput from '../../components/base/BaseInput.vue';
 import PhoneField from '../../components/fields/PhoneField.vue';
 import BuilderCanvasView from '../../components/builder/BuilderCanvasView.vue';
 import BuilderImportModal from '../../components/builder/BuilderImportModal.vue';
+import BuilderAiGenerateModal from '../../components/builder/BuilderAiGenerateModal.vue';
 import BuilderNavbar from '../../components/builder/BuilderNavbar.vue';
 import BuilderShell from '../../components/builder/BuilderShell.vue';
 import BuilderStartView from '../../components/builder/BuilderStartView.vue';
@@ -33,6 +34,8 @@ const importJson = ref('');
 const importFileName = ref('');
 const importError = ref('');
 const importModalOpen = ref(false);
+const aiModalOpen = ref(false);
+const aiError = ref('');
 const actionModalOpen = ref(false);
 const actionInsertTarget = ref({
   afterNodeId: '',
@@ -51,11 +54,6 @@ const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
 const routeWorkflowLoaded = ref(false);
 const autoOpenedTriggerSetupId = ref('');
-const deleteConfirmOpen = ref(false);
-const deleteConfirmBusy = ref(false);
-const deleteConfirmNodeId = ref('');
-const deleteConfirmNodeLabel = ref('');
-const deleteConfirmHasNestedFlow = ref(false);
 const toasts = ref([]);
 const toastTimers = new Map();
 
@@ -383,6 +381,50 @@ function openImportModal() {
 function closeImportModal() {
   debugLogger.log('modal:close-import');
   importModalOpen.value = false;
+}
+
+function openAiModal() {
+  debugLogger.log('modal:open-ai');
+  aiError.value = '';
+  aiModalOpen.value = true;
+}
+
+function closeAiModal() {
+  if (store.loading.create) {
+    return;
+  }
+
+  debugLogger.log('modal:close-ai');
+  aiModalOpen.value = false;
+}
+
+async function handleAiGenerate(payload) {
+  aiError.value = '';
+  debugLogger.log('ai:generate-requested');
+
+  try {
+    const result = await store.generateWorkflowFromAi(payload || {});
+
+    if (!result || result.ok === false) {
+      aiError.value = result?.message || __('The AI could not generate the workflow. Please try again.', textDomain);
+      return;
+    }
+
+    aiModalOpen.value = false;
+    routeWorkflowLoaded.value = false;
+    clearBuilderUrl();
+    goCanvas();
+    pushToast(
+      __('Workflow generated. Review the steps and click Save flow to keep it.', textDomain),
+      'success',
+      __('Builder', textDomain),
+    );
+  } catch (error) {
+    aiError.value = error instanceof Error ? error.message : __('The AI could not generate the workflow.', textDomain);
+    debugLogger.log('ai:generate-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 }
 
 function openTitleModal() {
@@ -752,58 +794,23 @@ async function saveWorkflow() {
   }
 }
 
-function openDeleteConfirm(nodeId) {
+// Deletion is no longer gated behind a confirmation dialog: the builder now
+// supports undo (Ctrl+Z), so an accidental removal can be reverted instantly.
+function handleRemoveNode(nodeId) {
   const targetNodeId = String(nodeId || '').trim();
 
   if (!targetNodeId || targetNodeId === store.triggerNode?.id) {
     return;
   }
 
-  const targetNode = store.getNodeById(targetNodeId);
-  const fallbackLabel = String(targetNode?.data?.title || targetNode?.data?.action || __('action', textDomain));
-  const hasNestedChildren = Boolean(
-    Array.isArray(targetNode?.children) && targetNode.children.length > 0
-    || (targetNode?.branches && (
-      (Array.isArray(targetNode.branches.action_true) && targetNode.branches.action_true.length > 0)
-      || (Array.isArray(targetNode.branches.action_false) && targetNode.branches.action_false.length > 0)
-    ))
-  );
-
-  deleteConfirmNodeId.value = targetNodeId;
-  deleteConfirmNodeLabel.value = fallbackLabel;
-  deleteConfirmHasNestedFlow.value = hasNestedChildren;
-  deleteConfirmOpen.value = true;
-}
-
-function closeDeleteConfirm() {
-  if (deleteConfirmBusy.value) {
-    return;
-  }
-
-  deleteConfirmOpen.value = false;
-  deleteConfirmNodeId.value = '';
-  deleteConfirmNodeLabel.value = '';
-  deleteConfirmHasNestedFlow.value = false;
-}
-
-async function confirmDeleteNode() {
-  const nodeId = String(deleteConfirmNodeId.value || '').trim();
-
-  if (!nodeId || deleteConfirmBusy.value) {
-    return;
-  }
-
-  deleteConfirmBusy.value = true;
-  debugLogger.log('node:delete-confirmed', {
-    node_id: nodeId,
+  debugLogger.log('node:delete', {
+    node_id: targetNodeId,
   });
 
   try {
-    store.removeNode(nodeId);
-    deleteConfirmBusy.value = false;
-    closeDeleteConfirm();
+    store.removeNode(targetNodeId);
     pushToast(
-      __('Action removed locally. Click Save flow to persist changes.', textDomain),
+      __('Action removed. Use Ctrl+Z to undo or Save flow to persist changes.', textDomain),
       'success',
       __('Builder', textDomain)
     );
@@ -814,11 +821,9 @@ async function confirmDeleteNode() {
       __('Builder', textDomain)
     );
     debugLogger.log('node:delete-failed', {
-      node_id: nodeId,
+      node_id: targetNodeId,
       error: error instanceof Error ? error.message : String(error),
     });
-  } finally {
-    deleteConfirmBusy.value = false;
   }
 }
 
@@ -938,6 +943,7 @@ function clearBuilderUrl() {
           @scratch="startScratch"
           @template="openTemplateLibrary"
           @import="openImportModal"
+          @ai="openAiModal"
           @back="goBack"
         />
       </div>
@@ -1010,11 +1016,15 @@ function clearBuilderUrl() {
         :ready-trigger="canvasHasTrigger"
         :ready-actions="canvasHasActions"
         :ready-senders="canvasHasSenders"
+        :can-undo="store.canUndo"
+        :can-redo="store.canRedo"
+        @undo="store.undo"
+        @redo="store.redo"
         @select-node="store.openNodeSettings"
         @change-trigger="goChangeTrigger"
         @add-node="handleActionOpen"
         @duplicate-node="store.duplicateNode"
-        @remove-node="openDeleteConfirm"
+        @remove-node="handleRemoveNode"
         @move-node="({ nodeId, direction }) => store.moveNode(nodeId, direction)"
         @update-node="handleNodeUpdate"
         @close-drawer="store.closeNodeSettings"
@@ -1036,6 +1046,14 @@ function clearBuilderUrl() {
     @close="closeImportModal"
     @file="handleImportFile"
     @import="confirmImport"
+  />
+
+  <BuilderAiGenerateModal
+    :open="aiModalOpen"
+    :loading="store.loading.create"
+    :error="aiError"
+    @close="closeAiModal"
+    @generate="handleAiGenerate"
   />
 
   <ModalDialog :open="titleModalOpen" :title="__('Edit workflow title', textDomain)" sizeClass="max-w-lg" @close="closeTitleModal">
@@ -1090,45 +1108,6 @@ function clearBuilderUrl() {
           :loading="testPhoneSaving"
           :disabled="!String(testPhoneDraft || '').trim()"
           @click="saveTestPhoneAndRun"
-        />
-      </div>
-    </div>
-  </ModalDialog>
-
-  <ModalDialog
-    :open="deleteConfirmOpen"
-    :title="__('Delete action', textDomain)"
-    :description="__('This action will be removed from the workflow.', textDomain)"
-    sizeClass="max-w-xl"
-    @close="closeDeleteConfirm"
-  >
-    <div class="space-y-6">
-      <div class="rounded-[18px] border border-rose-100 bg-rose-50 px-4 py-4">
-        <h3 class="text-[15px] font-semibold text-rose-900">
-          {{ __('Confirm deletion', textDomain) }}
-        </h3>
-        <p class="mt-2 text-[13px] leading-6 text-rose-800">
-          {{ __('You are about to delete the action', textDomain) }}
-          <span class="font-semibold">"{{ deleteConfirmNodeLabel }}"</span>.
-          {{ __('This step will be removed from the canvas. Click Save flow to persist this change.', textDomain) }}
-          <span v-if="deleteConfirmHasNestedFlow">
-            {{ __('Any nested branch inside this action will also be removed.', textDomain) }}
-          </span>
-        </p>
-      </div>
-
-      <div class="flex items-center justify-end gap-3 border-t border-slate-100 pt-5">
-        <BaseButton
-          :title="__('Cancel', textDomain)"
-          variant="ghost"
-          :disabled="deleteConfirmBusy"
-          @click="closeDeleteConfirm"
-        />
-        <BaseButton
-          :title="__('Delete action', textDomain)"
-          variant="danger"
-          :loading="deleteConfirmBusy"
-          @click="confirmDeleteNode"
         />
       </div>
     </div>

@@ -900,6 +900,46 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  async function generateWorkflowFromAi(payload: Record<string, unknown> = {}) {
+    loading.value.create = true;
+    debugLogger.log('workflow:generate-ai-start', {
+      context: String(payload?.context || ''),
+    });
+
+    try {
+      const response = api.value
+        ? await api.value.generateAiWorkflow({ intent: 'flow', ...payload })
+        : null;
+
+      const content = response && Array.isArray((response as Record<string, unknown>).workflow_content)
+        ? ((response as Record<string, unknown>).workflow_content as unknown[])
+        : null;
+
+      if (response && (response as Record<string, unknown>).status === 'success' && content) {
+        const file = createWorkflowFileFromParts({
+          title: String((response as Record<string, unknown>).title || __('AI workflow', textDomain)),
+          category: String((response as Record<string, unknown>).category || ''),
+          status: 'draft',
+          workflow_content: content as ExportedWorkflowFile['workflow_content'],
+        });
+
+        applyWorkflowFile(file, 0);
+        debugLogger.log('workflow:generate-ai-complete', {
+          nodes: content.length,
+        });
+
+        return { ok: true, response };
+      }
+
+      return {
+        ok: false,
+        message: String((response as Record<string, unknown>)?.message || __('The AI could not generate the workflow.', textDomain)),
+      };
+    } finally {
+      loading.value.create = false;
+    }
+  }
+
   async function loadBootstrapFromServer(nextPostId = postId.value) {
     loading.value.bootstrap = true;
     debugLogger.log('bootstrap:load-start', {
@@ -1552,6 +1592,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     createEmptyWorkflowFile,
     createWorkflowFromScratch,
     createWorkflowFromTemplate,
+    generateWorkflowFromAi,
     loadWorkflowFile,
     loadBootstrapFromServer,
     loadWorkflowFromServer,

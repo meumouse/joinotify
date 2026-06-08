@@ -5,7 +5,7 @@ defineProps({
   creating: { type: Boolean, default: false },
 });
 
-defineEmits(['scratch', 'template', 'import', 'back']);
+defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
 </script>
 
 <template>
@@ -14,6 +14,7 @@ defineEmits(['scratch', 'template', 'import', 'back']);
     @scratch="$emit('scratch')"
     @template="$emit('template')"
     @import="$emit('import')"
+    @ai="$emit('ai')"
     @back="$emit('back')"
   />
 </template>

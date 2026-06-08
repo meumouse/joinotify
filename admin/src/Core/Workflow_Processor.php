@@ -7,6 +7,8 @@ use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
+use MeuMouse\Joinotify\AI\AI_Manager;
+use MeuMouse\Joinotify\AI\AI_Request;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -322,6 +324,7 @@ class Workflow_Processor {
             'condition' => fn() => self::process_condition_action( $action, $post_id, $event_data ),
             'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data, $post_id ),
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data, $post_id ),
+            'send_whatsapp_ai_message' => fn() => self::send_whatsapp_ai_message( $action_data, $event_data, $post_id ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
             'stop_funnel' => fn() => self::stop_funnel(),
@@ -576,6 +579,135 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send message. Response: " . print_r( $response, true ), 'ERROR' );
             }
         }
+    }
+
+
+    /**
+     * Generate a message with AI at trigger time and send it via WhatsApp.
+     *
+     * The prompt and system message support placeholders, so the trigger
+     * context (customer name, order data, etc.) is injected before generation.
+     *
+     * @since 2.0.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @param int $post_id | Workflow post ID
+     * @return void
+     */
+    public static function send_whatsapp_ai_message( $action_data, $payload, $post_id = 0 ) {
+        $sender = $action_data['sender'] ?? '';
+        $receiver = joinotify_prepare_receiver( $action_data['receiver'] ?? '', $payload );
+
+        // resolve placeholders so the trigger context is injected into the prompt
+        $prompt = joinotify_prepare_message( $action_data['ai_prompt'] ?? '', $payload );
+        $system = self::build_ai_system_message( $action_data, $payload );
+
+        if ( '' === trim( $prompt ) ) {
+            Logger::register_log( 'Skipping AI WhatsApp message: empty prompt.', 'WARNING' );
+
+            return;
+        }
+
+        $temperature = isset( $action_data['ai_temperature'] ) && is_numeric( $action_data['ai_temperature'] )
+            ? (float) $action_data['ai_temperature']
+            : null;
+
+        // generate the message text with the active AI provider
+        $ai_response = AI_Manager::generate( new AI_Request( array(
+            'system' => $system,
+            'prompt' => $prompt,
+            'model' => $action_data['ai_model'] ?? '',
+            'temperature' => $temperature,
+            'context' => array(
+                'intent' => 'whatsapp_message',
+                'workflow_id' => $post_id,
+            ),
+        )));
+
+        if ( ! $ai_response->is_successful() ) {
+            $error = $ai_response->get_error();
+            $error_message = $error ? $error->get_error_message() : 'unknown error';
+
+            Logger::register_log( "AI WhatsApp message generation failed: $error_message", 'ERROR' );
+
+            return;
+        }
+
+        $message = $ai_response->get_text();
+
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
+        // send the generated message
+        $response = Controller::send_message_text( $sender, $receiver, $message );
+
+        Message_History::clear_context();
+
+        if ( 201 !== $response ) {
+            // check connection state and notify user if disconnected
+            Controller::get_connection_state( $sender );
+        }
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            if ( 201 === $response ) {
+                Logger::register_log( "AI message sent successfully to: $receiver" );
+            } else {
+                Logger::register_log( "Failed to send AI message. Response: " . print_r( $response, true ), 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * Build the system message for an AI message action.
+     *
+     * Combines the node's system instructions (with placeholders resolved) and
+     * the tone/length directives selected on the node.
+     *
+     * @since 2.0.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @return string
+     */
+    protected static function build_ai_system_message( $action_data, $payload ) {
+        $system = joinotify_prepare_message( $action_data['ai_system'] ?? '', $payload );
+
+        $tone_map = array(
+            'formal' => __( 'Use a formal and professional tone.', 'joinotify' ),
+            'casual' => __( 'Use a casual and relaxed tone.', 'joinotify' ),
+            'friendly' => __( 'Use a warm and friendly tone.', 'joinotify' ),
+        );
+
+        $length_map = array(
+            'short' => __( 'Keep the message very short, one or two sentences.', 'joinotify' ),
+            'medium' => __( 'Keep the message concise, around two to four sentences.', 'joinotify' ),
+            'long' => __( 'You may write a longer, detailed message.', 'joinotify' ),
+        );
+
+        $tone = isset( $action_data['ai_tone'] ) ? sanitize_key( (string) $action_data['ai_tone'] ) : '';
+        $length = isset( $action_data['ai_length'] ) ? sanitize_key( (string) $action_data['ai_length'] ) : '';
+
+        $directives = array();
+
+        if ( isset( $tone_map[ $tone ] ) ) {
+            $directives[] = $tone_map[ $tone ];
+        }
+
+        if ( isset( $length_map[ $length ] ) ) {
+            $directives[] = $length_map[ $length ];
+        }
+
+        // always produce plain WhatsApp-ready text
+        $directives[] = __( 'Write a WhatsApp message in plain text. Reply with the message content only, without any preamble.', 'joinotify' );
+
+        $parts = array_filter( array_merge( array( $system ), $directives ), static function( $part ) {
+            return '' !== trim( (string) $part );
+        });
+
+        return implode( "\n\n", $parts );
     }
 
 

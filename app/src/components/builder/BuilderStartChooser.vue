@@ -6,7 +6,7 @@ defineProps({
   creating: { type: Boolean, default: false },
 });
 
-defineEmits(['scratch', 'template', 'import', 'back']);
+defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
 </script>
 
 <template>
@@ -20,7 +20,7 @@ defineEmits(['scratch', 'template', 'import', 'back']);
       </p>
     </div>
 
-    <div class="mt-14 grid w-full gap-6 lg:grid-cols-3">
+    <div class="mt-14 grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
       <StartOptionCard
         :title="__('Start from scratch', textDomain)"
         :description="__('Create your automation workflow from scratch.', textDomain)"
@@ -65,6 +65,20 @@ defineEmits(['scratch', 'template', 'import', 'back']);
             <path d="M9 3l3 3 3-3" />
             <path d="M9 12h6" />
             <path d="M10 15l2-2 2 2" />
+          </svg>
+        </template>
+      </StartOptionCard>
+
+      <StartOptionCard
+        :title="__('Create with AI', textDomain)"
+        :description="__('Describe what you want and let AI build the workflow for you.', textDomain)"
+        :cta="__('Generate with AI', textDomain)"
+        :disabled="creating"
+        @click="$emit('ai')"
+      >
+        <template #icon>
+          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="currentColor" aria-hidden="true">
+            <path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z" />
           </svg>
         </template>
       </StartOptionCard>

@@ -22,6 +22,7 @@ class Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Builder_Workflow',
 		'\MeuMouse\Joinotify\Rest\Builder_Create',
 		'\MeuMouse\Joinotify\Rest\Builder_Import',
+		'\MeuMouse\Joinotify\Rest\Builder_Ai_Generate',
 		'\MeuMouse\Joinotify\Rest\Builder_Templates',
 		'\MeuMouse\Joinotify\Rest\Builder_Export',
 		'\MeuMouse\Joinotify\Rest\Builder_Test',
