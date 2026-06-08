@@ -7,7 +7,7 @@
  *
  * @since 1.4.7
  */
-import { computed, ref } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { GitRepoForked } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 import FlowCanvas, { type FlowCanvasExpose } from '../flow/FlowCanvas.vue';
@@ -84,7 +84,51 @@ const triggerDescription = computed(() =>
 );
 
 const flowCanvasRef = ref<FlowCanvasExpose | null>(null);
-const showFlowLoader = computed(() => props.loading || !props.flowReady);
+
+/**
+ * The loader stays up until the canvas is fully ready (trigger + actions +
+ * senders). Those are data-readiness checks, not loading states, so if any
+ * dependency never resolves (e.g. a workflow whose trigger failed to hydrate)
+ * the loader would otherwise spin forever.
+ *
+ * A watchdog guards against that: once the loader has been pending past a
+ * bounded wait it is force-dismissed, revealing the canvas's real state — the
+ * empty-canvas placeholder when no trigger is present — instead of an endless
+ * spinner. The timer resets whenever the pending state toggles, so a genuinely
+ * slow-but-progressing load is never cut off mid-flight.
+ */
+const LOADER_WATCHDOG_MS = 8000;
+const loaderWatchdogElapsed = ref(false);
+let loaderWatchdogTimer: ReturnType<typeof setTimeout> | null = null;
+
+const loaderPending = computed(() => props.loading || !props.flowReady);
+const showFlowLoader = computed(() => loaderPending.value && !loaderWatchdogElapsed.value);
+
+function clearLoaderWatchdog() {
+  if (loaderWatchdogTimer !== null) {
+    clearTimeout(loaderWatchdogTimer);
+    loaderWatchdogTimer = null;
+  }
+}
+
+watch(
+  loaderPending,
+  (pending) => {
+    clearLoaderWatchdog();
+    loaderWatchdogElapsed.value = false;
+
+    if (!pending) {
+      return;
+    }
+
+    loaderWatchdogTimer = setTimeout(() => {
+      loaderWatchdogElapsed.value = true;
+    }, LOADER_WATCHDOG_MS);
+  },
+  { immediate: true }
+);
+
+onBeforeUnmount(clearLoaderWatchdog);
 
 /**
  * Loader stages, in order. Each stage maps to a real data dependency and is
