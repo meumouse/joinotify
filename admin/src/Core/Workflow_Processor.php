@@ -440,15 +440,28 @@ class Workflow_Processor {
      */
     protected static function get_state_meta_key( $payload ) {
         $integration = $payload['integration'] ?? '';
+        $state_key = null;
 
         if ( $integration === 'woocommerce'
             && ! empty( $payload['order_id'] )
             && Admin::get_setting( 'enable_ignore_processed_actions' ) === 'yes'
         ) {
-            return 'joinotify_workflow_state_' . $payload['order_id'];
+            $state_key = 'joinotify_workflow_state_' . $payload['order_id'];
         }
 
-        return null;
+        /**
+         * Filter the idempotency state meta key for a runtime payload.
+         *
+         * Return a stable, per-instance meta key (e.g. built from user_id/post_id/
+         * cart_id) to enable processed/pending dedup for integrations other than
+         * the built-in WooCommerce opt-in. Return null (default) to stay stateless;
+         * the cron continuation still resumes correctly without it.
+         *
+         * @since 2.0.0
+         * @param string|null $state_key Default state key (null = stateless).
+         * @param array       $payload   Runtime payload.
+         */
+        return apply_filters( 'Joinotify/Workflow_Processor/State_Meta_Key', $state_key, $payload );
     }
 
 
