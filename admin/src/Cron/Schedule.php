@@ -20,8 +20,17 @@ defined('ABSPATH') || exit;
 class Schedule {
 
     /**
+     * Action Scheduler group used for all Joinotify scheduled segments.
+     *
+     * @since 2.0.0
+     * @var string
+     */
+    const AS_GROUP = 'joinotify';
+
+
+    /**
      * Construct function
-     * 
+     *
      * @since 1.0.0
      * @version 1.4.7
      * @return void
@@ -59,10 +68,26 @@ class Schedule {
         $crons = _get_cron_array();
 
         if ( ! empty( $crons ) ) {
-            return true; 
+            return true;
         }
 
         return false;
+    }
+
+
+    /**
+     * Whether Action Scheduler is available in this install.
+     *
+     * Action Scheduler ships with WooCommerce (and many other plugins). When it
+     * is present we prefer it over WP-Cron for scheduling delayed segments: it
+     * stores actions in dedicated tables, dedupes reliably and keeps running even
+     * when DISABLE_WP_CRON is set (via its own queue runner / system cron).
+     *
+     * @since 2.0.0
+     * @return bool
+     */
+    public static function is_action_scheduler_available() {
+        return function_exists('as_schedule_single_action') && function_exists('as_unschedule_all_actions');
     }
 
 
@@ -98,7 +123,17 @@ class Schedule {
             'unique_key' => $unique_key,
         );
 
-        // clear Cron ghost
+        // Prefer Action Scheduler when available: more reliable execution and
+        // dedup than WP-Cron, and it survives DISABLE_WP_CRON.
+        if ( self::is_action_scheduler_available() ) {
+            // Replace any identical pending continuation before re-scheduling so a
+            // re-fired trigger resets the timer instead of stacking duplicates.
+            as_unschedule_all_actions( $hook, $args, self::AS_GROUP );
+
+            return as_schedule_single_action( $timestamp, $hook, $args, self::AS_GROUP ) > 0;
+        }
+
+        // WP-Cron fallback: clear the ghost event, then schedule a single event.
         if ( function_exists('wp_clear_scheduled_hook') ) {
             wp_clear_scheduled_hook( $hook, $args );
         } else {

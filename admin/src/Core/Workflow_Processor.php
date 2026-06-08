@@ -408,9 +408,11 @@ class Workflow_Processor {
      * @return bool
      */
     protected static function schedule_continuation( $post_id, $payload, $delay, $node, $state_key ) {
-        if ( ! Schedule::is_wp_cron_active() ) {
+        // Only warn when there is no reliable scheduler at all: Action Scheduler
+        // absent AND WP-Cron inactive.
+        if ( ! Schedule::is_action_scheduler_available() && ! Schedule::is_wp_cron_active() ) {
             Logger::register_log(
-                sprintf( 'WP-Cron appears inactive; scheduled action for workflow %d may not fire on time. Consider a real system cron.', $post_id ),
+                sprintf( 'No active scheduler (Action Scheduler unavailable and WP-Cron inactive); scheduled action for workflow %d may not fire on time. Consider a real system cron.', $post_id ),
                 'WARNING'
             );
         }
@@ -740,6 +742,14 @@ class Workflow_Processor {
     public static function process_scheduled_action( $post_id, $payload, $action_data ) {
         // Start every scheduled segment with a clean stop flag.
         self::$funnel_stopped = false;
+
+        // Never resume a workflow that is no longer published (trashed/draft/
+        // deleted): a pending delay must not fire for a disabled automation.
+        if ( get_post_status( $post_id ) !== 'publish' ) {
+            Logger::register_log( sprintf( 'Skipping scheduled action: workflow %d is not published.', $post_id ), 'WARNING' );
+
+            return;
+        }
 
         $state_key = self::get_state_meta_key( $payload );
         $state = self::load_state( $post_id, $state_key );
