@@ -112,7 +112,13 @@ const canvasHasSenders = computed(() => {
   });
 });
 const canvasFlowReady = computed(() => canvasHasTrigger.value && canvasHasActions.value && canvasHasSenders.value);
-const hideCanvasNavbar = computed(() => store.loading.workflow || !canvasFlowReady.value);
+// The navbar must not share the loader's full readiness gate: `canvasFlowReady`
+// stays false whenever no sender is connected, which would hide the entire
+// header (back, save, test, Add action) forever. The full-screen canvas loader
+// is an opaque overlay that already covers the navbar during a genuine load, so
+// gating only on the real workflow-loading flag is enough — once loading ends
+// the navbar is revealed regardless of whether the flow is fully configured.
+const hideCanvasNavbar = computed(() => store.loading.workflow);
 const actionSidebarOpen = computed(() => Boolean(actionModalOpen.value));
 const isSavingTitle = computed(() => titleSaving.value || store.loading.save);
 const isUpdatingStatus = computed(() => Boolean(store.loading.status));
