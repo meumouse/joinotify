@@ -1182,6 +1182,15 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       keys: Object.keys(patch || {}),
     });
 
+    // Capture the previous context before the patch is merged: the settings
+    // drawer emits the full node draft on every change (context included), so
+    // we must only react to a genuine context switch — otherwise saving any
+    // trigger setting would re-run setWorkflowCategory and wipe trigger/description.
+    const previousNode = findWorkflowNodeLocation(workflowContent.value, nodeId)?.node;
+    const previousContext = previousNode?.type === 'trigger'
+      ? String(previousNode.data?.context || '')
+      : '';
+
     if (!replaceWorkflowNodeData(workflowContent.value, nodeId, patch)) {
       return;
     }
@@ -1192,7 +1201,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
 
     if (node.type === 'trigger') {
-      if (typeof patch.context === 'string') {
+      if (typeof patch.context === 'string' && patch.context !== previousContext) {
         setWorkflowCategory(patch.context);
       }
 
