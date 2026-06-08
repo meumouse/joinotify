@@ -6,6 +6,7 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\Core\Notification_Queue;
+use MeuMouse\Joinotify\Core\Message_History;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -136,7 +137,7 @@ class Controller {
      *
      * @return bool True if the parameter is a string, false otherwise.
      */
-    public function validate_string( $param, WP_REST_Request $request = null, $key = '' ) {
+    public function validate_string( $param, ?WP_REST_Request $request = null, $key = '' ) {
         return is_string( $param );
     }
 
@@ -432,8 +433,40 @@ class Controller {
 
 
     /**
+     * Record a dispatch in the message history and return the original value.
+     *
+     * Centralizes history logging across every return path of the send methods,
+     * so success, queued and failed dispatches are all captured uniformly while
+     * preserving each method's original return contract (details array or code).
+     *
+     * @since 2.0.0
+     * @param array $fields | Message fields (sender, receiver, message_type, media_type, content, media_url, attempts).
+     * @param array $details | Normalized response details from build_response_details().
+     * @param bool $return_details | Whether the caller expects the details array.
+     * @return int|array
+     */
+    private static function record_and_return( $fields, $details, $return_details ) {
+        if ( ! empty( $details['success'] ) ) {
+            $status = 'sent';
+        } elseif ( ! empty( $details['queued'] ) ) {
+            $status = 'queued';
+        } else {
+            $status = 'failed';
+        }
+
+        Message_History::record( array_merge( $fields, array(
+            'status' => $status,
+            'response_code' => (int) ( $details['response_code'] ?? 0 ),
+            'error' => (string) ( $details['error'] ?? '' ),
+        )));
+
+        return $return_details ? $details : (int) ( $details['response_code'] ?? 0 );
+    }
+
+
+    /**
      * Send messsage text on WhatsApp
-     * 
+     *
      * @since 1.0.0
      * @version 1.4.7
      * @param string $sender | Instance phone number
@@ -448,6 +481,14 @@ class Controller {
         $sender = preg_replace( '/\D/', '', $sender );
         $receiver = joinotify_prepare_receiver( $receiver );
 
+        // history fields recorded on every return path
+        $fields = array(
+            'message_type' => 'text',
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'content' => $message,
+        );
+
         // check if sender is registered
         if ( ! Helpers::allowed_sender( $sender ) ) {
             if ( self::$debug_mode ) {
@@ -455,7 +496,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, false, 'invalid_sender' );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         if ( ! License::is_valid() ) {
@@ -475,7 +516,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $server_details = self::get_server_details( $sender );
@@ -493,7 +534,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         // get endpoint for send message text
@@ -529,7 +570,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $response_body = wp_remote_retrieve_body( $response );
@@ -555,7 +596,7 @@ class Controller {
 
         $details = self::build_response_details( $response_code, $success, $retryable, $success ? '' : 'http_' . $response_code, $queued );
 
-        return $return_details ? $details : $response_code;
+        return self::record_and_return( $fields, $details, $return_details );
     }
 
 
@@ -578,6 +619,16 @@ class Controller {
         $sender = preg_replace( '/\D/', '', $sender );
         $receiver = joinotify_prepare_receiver( $receiver );
 
+        // history fields recorded on every return path
+        $fields = array(
+            'message_type' => 'media',
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'media_type' => $media_type,
+            'media_url' => $media,
+            'content' => $caption,
+        );
+
         // check if sender is registered
         if ( ! Helpers::allowed_sender( $sender ) ) {
             if ( self::$debug_mode ) {
@@ -585,7 +636,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, false, 'invalid_sender' );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         // Chek if media type is audio and change request url
@@ -612,7 +663,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $server_details = self::get_server_details( $sender );
@@ -632,7 +683,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         // get endpoint for send message media
@@ -671,7 +722,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $response_body = wp_remote_retrieve_body( $response );
@@ -699,7 +750,7 @@ class Controller {
 
         $details = self::build_response_details( $response_code, $success, $retryable, $success ? '' : 'http_' . $response_code, $queued );
 
-        return $return_details ? $details : $response_code;
+        return self::record_and_return( $fields, $details, $return_details );
     }
 
 
@@ -720,6 +771,15 @@ class Controller {
         $sender = preg_replace( '/\D/', '', $sender );
         $receiver = joinotify_prepare_receiver( $receiver );
 
+        // history fields recorded on every return path
+        $fields = array(
+            'message_type' => 'audio',
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'media_type' => 'audio',
+            'media_url' => $audio,
+        );
+
         // check if sender is registered
         if ( ! Helpers::allowed_sender( $sender ) ) {
             if ( self::$debug_mode ) {
@@ -727,7 +787,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, false, 'invalid_sender' );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         if ( ! License::is_valid() ) {
@@ -747,7 +807,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $server_details = self::get_server_details( $sender );
@@ -765,7 +825,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         // get endpoint for send message audio
@@ -801,7 +861,7 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
-            return $return_details ? $details : 0;
+            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $response_body = wp_remote_retrieve_body( $response );
@@ -827,7 +887,7 @@ class Controller {
 
         $details = self::build_response_details( $response_code, $success, $retryable, $success ? '' : 'http_' . $response_code, $queued );
 
-        return $return_details ? $details : $response_code;
+        return self::record_and_return( $fields, $details, $return_details );
     }
     /**
      * Send OTP messsage text on WhatsApp

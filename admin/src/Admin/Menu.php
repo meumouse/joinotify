@@ -66,6 +66,15 @@ class Menu {
             );
         }
 
+        add_submenu_page(
+            'joinotify-workflows',
+            esc_html__( 'Message history', 'joinotify' ),
+            esc_html__( 'History', 'joinotify' ),
+            'manage_options',
+            'joinotify-history',
+            array( $this, 'render_history_page' )
+        );
+
         // The Vue settings shell must remain reachable even when the license is inactive.
         add_submenu_page(
             'joinotify-workflows',
@@ -126,6 +135,22 @@ class Menu {
         }
 
         do_action( 'Joinotify/Admin/Builder_Page' );
+    }
+
+
+    /**
+     * Display the Vue message-history screen.
+     *
+     * @since 2.0.0
+     * @return void
+     */
+    public function render_history_page() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
+        }
+
+        // The Vue app fetches its bootstrap payload over REST (admin/history/bootstrap).
+        include JOINOTIFY_SRC . 'Views/History.php';
     }
 
 

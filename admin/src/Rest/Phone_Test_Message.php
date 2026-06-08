@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Core\Message_History;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
@@ -39,7 +40,11 @@ class Phone_Test_Message extends Abstract_Route {
         $receiver = isset( $payload['receiver'] ) ? sanitize_text_field( $payload['receiver'] ) : '';
         $message = isset( $payload['message'] ) ? sanitize_textarea_field( $payload['message'] ) : '';
 
+        Message_History::set_context( array( 'source' => 'test' ) );
+
         $result = Controller::send_message_text( $sender, $receiver, $message );
+
+        Message_History::clear_context();
 
         if ( 201 === $result ) {
             return rest_ensure_response( array(

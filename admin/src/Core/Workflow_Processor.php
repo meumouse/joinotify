@@ -305,19 +305,28 @@ class Workflow_Processor {
 
         /**
          * Filter for enqueue function callback for each action
-         * 
+         *
+         * The map is keyed by action slug; each value is a callable returning bool. Third parties
+         * can register a handler for a custom action slug here. The action item, workflow post ID
+         * and the runtime event payload are passed as extra arguments so custom closures can run
+         * with real data (see Api\Extensions::register_action_handler()).
+         *
          * @since 1.0.0
-         * @param array $actions
+         * @version 1.4.7
+         * @param array $actions    Map of action_slug => callable.
+         * @param array $action     Full action item ({id,type,data,children}).
+         * @param int   $post_id    Workflow post ID.
+         * @param array $event_data Runtime trigger payload.
          */
         $actions = apply_filters( 'Joinotify/Workflow_Processor/Handle_Actions', array(
             'condition' => fn() => self::process_condition_action( $action, $post_id, $event_data ),
-            'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data ),
-            'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data ),
+            'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data, $post_id ),
+            'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data, $post_id ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
             'stop_funnel' => fn() => self::stop_funnel(),
         //  'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
-        ));
+        ), $action, $post_id, $event_data );
 
         // check if is action
         if ( ! isset( $actions[ $action_data['action'] ] ) ) {
@@ -497,13 +506,21 @@ class Workflow_Processor {
      * @param array $payload | Payload data
      * @return void
      */
-    public static function send_whatsapp_message_text( $action_data, $payload ) {
+    public static function send_whatsapp_message_text( $action_data, $payload, $post_id = 0 ) {
         $sender = $action_data['sender'];
         $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
         $message = joinotify_prepare_message( $action_data['message'], $payload );
 
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
         // send message
         $response = Controller::send_message_text( $sender, $receiver, $message );
+
+        Message_History::clear_context();
 
         if ( 201 !== $response ) {
             // check connection state and notify user if disconnected
@@ -529,15 +546,23 @@ class Workflow_Processor {
      * @param array $payload | Payload data
      * @return void
      */
-    public static function send_whatsapp_message_media( $action_data, $payload ) {
+    public static function send_whatsapp_message_media( $action_data, $payload, $post_id = 0 ) {
         $sender = $action_data['sender'];
         $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
         $media_type = $action_data['media_type'];
         $media = $action_data['media_url'];
         $caption = joinotify_prepare_message( $action_data['caption'] ?? '', $payload );
 
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
         // send message
         $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
+
+        Message_History::clear_context();
 
         if ( 201 !== $response ) {
             // check connection state and notify user if disconnected

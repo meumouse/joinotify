@@ -225,6 +225,29 @@ class Notification_Queue {
         $type = $item['type'];
         $payload = $item['payload'];
 
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'queue',
+            'attempts' => (int) ( $item['attempts'] ?? 0 ),
+        ));
+
+        $result = self::dispatch_item_request( $type, $payload );
+
+        Message_History::clear_context();
+
+        return $result;
+    }
+
+
+    /**
+     * Perform the API request for a queue item by type.
+     *
+     * @since 2.0.0
+     * @param string $type Queue type.
+     * @param array $payload Queue payload.
+     * @return array
+     */
+    private static function dispatch_item_request( $type, $payload ) {
         switch ( $type ) {
             case 'text':
                 $result = Controller::send_message_text(

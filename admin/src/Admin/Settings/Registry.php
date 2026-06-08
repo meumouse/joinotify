@@ -167,6 +167,24 @@ class Registry {
                                 esc_html__( 'Developer integration', 'joinotify' ),
                                 esc_html__( 'Maintains support integrations and advanced contracts available.', 'joinotify' )
                             ),
+                            self::field_toggle(
+                                'enable_message_history',
+                                esc_html__( 'Message history', 'joinotify' ),
+                                esc_html__( 'Record every dispatched WhatsApp message so it can be audited from the History screen.', 'joinotify' )
+                            ),
+                            self::field_select(
+                                'message_history_retention_days',
+                                esc_html__( 'History retention', 'joinotify' ),
+                                esc_html__( 'Automatically delete history records older than the selected period.', 'joinotify' ),
+                                array(
+                                    array( 'value' => '0', 'label' => esc_html__( 'Keep forever', 'joinotify' ) ),
+                                    array( 'value' => '30', 'label' => esc_html__( '30 days', 'joinotify' ) ),
+                                    array( 'value' => '60', 'label' => esc_html__( '60 days', 'joinotify' ) ),
+                                    array( 'value' => '90', 'label' => esc_html__( '90 days', 'joinotify' ) ),
+                                    array( 'value' => '180', 'label' => esc_html__( '180 days', 'joinotify' ) ),
+                                    array( 'value' => '365', 'label' => esc_html__( '365 days', 'joinotify' ) ),
+                                )
+                            ),
                         ),
                     ),
                     array(

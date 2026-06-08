@@ -19,6 +19,7 @@ export default defineConfig({
         license: resolve(__dirname, 'src/entries/license.js'),
         builder: resolve(__dirname, 'src/entries/builder.js'),
         workflows: resolve(__dirname, 'src/entries/workflows.js'),
+        history: resolve(__dirname, 'src/entries/history.js'),
       },
       output: {
         entryFileNames: '[name]/app.js',
