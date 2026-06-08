@@ -47,7 +47,37 @@ class Scripts {
             'script' => ! empty( $entry['file'] ) ? self::get_asset_url( $entry['file'] ) : '',
             'styles' => $styles,
             'imports' => ! empty( $entry['imports'] ) && is_array( $entry['imports'] ) ? $entry['imports'] : array(),
+            'version' => ! empty( $entry['file'] ) ? self::get_asset_version( $entry['file'] ) : null,
         );
+    }
+
+
+    /**
+     * Resolve a cache-busting version for a built Vite asset.
+     *
+     * The Vite entry script and its stylesheet keep fixed file names
+     * (e.g. `builder/app.js`, `styles/*.css`), so without a version query
+     * browsers serve a stale bundle after every rebuild. Use the file
+     * modification time so each rebuild produces a fresh URL.
+     *
+     * @since 2.0.0
+     * @param string $relative_path Manifest asset path, relative to the dist root.
+     * @return string|null
+     */
+    public static function get_asset_version( $relative_path ) {
+        if ( empty( $relative_path ) || ! is_string( $relative_path ) ) {
+            return null;
+        }
+
+        $absolute_path = trailingslashit( JOINOTIFY_DIR ) . self::DIST_URL_PATH . ltrim( $relative_path, '/' );
+
+        if ( ! file_exists( $absolute_path ) ) {
+            return null;
+        }
+
+        $modified_time = filemtime( $absolute_path );
+
+        return $modified_time ? (string) $modified_time : null;
     }
 
 

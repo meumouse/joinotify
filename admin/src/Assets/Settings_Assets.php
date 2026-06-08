@@ -66,13 +66,17 @@ class Settings_Assets extends Abstract_Assets {
 
         $this->dequeue_legacy_assets();
 
+        // Vite emits fixed entry/style file names, so version the URLs by build
+        // mtime to bust the browser cache after every rebuild.
+        $asset_version = ! empty( $assets['version'] ) ? $assets['version'] : null;
+
         if ( ! empty( $assets['styles'] ) && is_array( $assets['styles'] ) ) {
             foreach ( $assets['styles'] as $index => $style_url ) {
                 wp_enqueue_style(
                     'joinotify-vue-' . sanitize_key( $page ) . '-' . $index,
                     $style_url,
                     array(),
-                    null
+                    $asset_version
                 );
             }
         }
@@ -83,7 +87,7 @@ class Settings_Assets extends Abstract_Assets {
             $handle,
             $assets['script'],
             array( 'wp-i18n' ),
-            null,
+            $asset_version,
             true
         );
 

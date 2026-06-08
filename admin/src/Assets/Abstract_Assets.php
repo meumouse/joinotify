@@ -181,6 +181,7 @@ abstract class Abstract_Assets {
 
 		$entry = $manifest[ $entry_key ];
 		$asset_root = trailingslashit( defined( 'JOINOTIFY_URL' ) ? JOINOTIFY_URL : plugin_dir_url( JOINOTIFY_FILE ) ) . trim( $asset_root_relative_path, '/' ) . '/';
+		$asset_dir = trailingslashit( defined( 'JOINOTIFY_DIR' ) ? JOINOTIFY_DIR : plugin_dir_path( JOINOTIFY_FILE ) ) . trim( $asset_root_relative_path, '/' ) . '/';
 		$entry_file = $entry['file'] ?? '';
 
 		if ( $entry_file ) {
@@ -188,7 +189,7 @@ abstract class Abstract_Assets {
 				$handle,
 				$asset_root . ltrim( $entry_file, '/' ),
 				array(),
-				$this->version,
+				$this->resolve_built_asset_version( $asset_dir . ltrim( $entry_file, '/' ) ),
 				true
 			);
 			wp_script_add_data( $handle, 'type', 'module' );
@@ -219,8 +220,34 @@ abstract class Abstract_Assets {
 				$handle . '-css-' . $index,
 				$asset_root . ltrim( $css_file, '/' ),
 				array(),
-				$this->version
+				$this->resolve_built_asset_version( $asset_dir . ltrim( $css_file, '/' ) )
 			);
 		}
+	}
+
+
+	/**
+	 * Resolve a cache-busting version for a built Vite asset.
+	 *
+	 * The Vite entry script and its stylesheet keep fixed file names
+	 * (`builder/app.js`, `styles/*.css`), so a static plugin version would let
+	 * browsers serve a stale bundle after every rebuild. Use the file
+	 * modification time so each rebuild produces a fresh URL, falling back to
+	 * the plugin version when the file cannot be read.
+	 *
+	 * @since 2.0.0
+	 * @param string $absolute_path Absolute filesystem path to the built asset.
+	 * @return string
+	 */
+	protected function resolve_built_asset_version( $absolute_path ) {
+		if ( is_string( $absolute_path ) && file_exists( $absolute_path ) ) {
+			$modified_time = filemtime( $absolute_path );
+
+			if ( $modified_time ) {
+				return (string) $modified_time;
+			}
+		}
+
+		return $this->version;
 	}
 }
