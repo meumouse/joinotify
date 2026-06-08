@@ -986,7 +986,8 @@ class Ajax_Workflows {
                     $timestamp = strtotime( $d['date_value'] . ' ' . ( $d['time_value'] ?? '00:00' ) );
 
                     if ( $timestamp ) {
-                        $new_action['data']['delay_timestamp'] = $timestamp;
+                        // Store a RELATIVE delay (seconds from now) so Schedule::schedule_actions() fires at the right time.
+                        $new_action['data']['delay_timestamp'] = max( 0, (int) $timestamp - time() );
                     }
                 }
 

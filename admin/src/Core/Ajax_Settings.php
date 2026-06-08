@@ -492,7 +492,8 @@ class Ajax_Settings {
                 $timestamp = strtotime( $date_value . ' ' . $time_value );
 
                 if ( $timestamp ) {
-                    $action_data['data']['delay_timestamp'] = $timestamp;
+                    // Store a RELATIVE delay (seconds from now) so Schedule::schedule_actions() fires at the right time.
+                    $action_data['data']['delay_timestamp'] = max( 0, (int) $timestamp - time() );
                 }
             }
         }

@@ -1339,7 +1339,8 @@ class Registry {
 			$time_value = isset( $data['time_value'] ) ? sanitize_text_field( (string) $data['time_value'] ) : '00:00';
 			$timestamp = $date_value ? strtotime( $date_value . ' ' . $time_value ) : 0;
 
-			return $timestamp ? (int) $timestamp : 0;
+			// Return a RELATIVE delay (seconds from now) so Schedule::schedule_actions() fires at the right time.
+			return $timestamp ? max( 0, (int) $timestamp - time() ) : 0;
 		}
 
 		$delay_value = isset( $data['delay_value'] ) ? (int) $data['delay_value'] : 0;
