@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import BaseButton from '../base/BaseButton.vue';
 import BaseInput from '../base/BaseInput.vue';
-import BaseSelect from '../base/BaseSelect.vue';
+import BaseListboxSelect from '../base/BaseListboxSelect.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BaseTextarea from '../base/BaseTextarea.vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -155,7 +155,7 @@ const inputType = computed(() => {
         :disabled="disabled"
       />
 
-      <BaseSelect
+      <BaseListboxSelect
         v-else-if="field.component === 'select'"
         v-model="fieldValue"
         :options="field.options || []"
