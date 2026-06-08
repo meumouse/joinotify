@@ -296,7 +296,7 @@ onBeforeUnmount(() => {
               >
                 <EmojiPicker
                   :native="true"
-                  :hide-search="false"
+                  :hide-search="true"
                   :display-recent="true"
                   theme="light"
                   @select="handleEmojiSelect"
