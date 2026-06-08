@@ -56,6 +56,9 @@ class Wordpress extends Integrations_Base {
             // on password reset
             add_action( 'password_reset', array( $this, 'process_workflow_password_reset' ), 10, 2 );
 
+            // on password reset request (when the reset key/link is generated)
+            add_action( 'retrieve_password_key', array( $this, 'process_workflow_retrieve_password' ), 10, 2 );
+
             // on change post status
             add_action( 'transition_post_status', array( $this, 'process_workflow_change_post_status' ), 10, 3 );
         }
@@ -107,7 +110,13 @@ class Wordpress extends Integrations_Base {
             array(
                 'data_trigger' => 'password_reset',
                 'title' => esc_html__( 'Recuperação de senha do usuário', 'joinotify' ),
-                'description' => esc_html__( 'This trigger fires when a user requests a password reset on the site.', 'joinotify' ),
+                'description' => esc_html__( 'This trigger fires after a user resets their password on the site.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'retrieve_password',
+                'title' => esc_html__( 'Solicitação de redefinição de senha', 'joinotify' ),
+                'description' => esc_html__( 'This trigger fires when a user requests a password reset link, allowing you to send the reset link.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
@@ -282,6 +291,16 @@ class Wordpress extends Integrations_Base {
             ),
         );
 
+        // password reset link (available only on the password reset request trigger)
+        $placeholders['wordpress']['{{ reset_password_link }}'] = array(
+            'triggers' => array( 'retrieve_password' ),
+            'description' => esc_html__( 'To retrieve the password reset link', 'joinotify' ),
+            'replacement' => array(
+                'production' => isset( $payload['reset_password_link'] ) ? $payload['reset_password_link'] : '',
+                'sandbox' => trailingslashit( get_site_url() ) . 'wp-login.php?action=rp&key=EXAMPLEKEY&login=user',
+            ),
+        );
+
         return $placeholders;
     }
 
@@ -316,6 +335,16 @@ class Wordpress extends Integrations_Base {
                 ),
             ),
             'password_reset' => array(
+                'user_meta' => array(
+                    'title' => __( 'User metadata', 'joinotify' ),
+                    'description' => __( 'Allows checking specific metadata for the user who requested the password reset.', 'joinotify' ),
+                ),
+            ),
+            'retrieve_password' => array(
+                'user_role' => array(
+                    'title' => __( 'User role', 'joinotify' ),
+                    'description' => __( 'Allows checking the role of the user who requested the password reset.', 'joinotify' ),
+                ),
                 'user_meta' => array(
                     'title' => __( 'User metadata', 'joinotify' ),
                     'description' => __( 'Allows checking specific metadata for the user who requested the password reset.', 'joinotify' ),
@@ -409,6 +438,46 @@ class Wordpress extends Integrations_Base {
             'hook' => 'password_reset',
             'integration' => 'wordpress',
             'user_id' => $user->ID,
+        ));
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow content on password reset request
+     *
+     * Fires when a user requests a password reset and the reset key has just been
+     * generated, exposing the reset link through the {{ reset_password_link }} placeholder.
+     *
+     * @since 2.0.0
+     * @param string $user_login | User login that requested the reset
+     * @param string $key | Generated password reset key
+     * @return void
+     */
+    public function process_workflow_retrieve_password( $user_login, $key ) {
+        $user = get_user_by( 'login', $user_login );
+
+        // bail if the user could not be resolved
+        if ( ! $user ) {
+            return;
+        }
+
+        // build the reset link the same way WordPress core does in retrieve_password()
+        $reset_link = network_site_url( 'wp-login.php?action=rp&key=' . $key . '&login=' . rawurlencode( $user_login ), 'login' );
+
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.0.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/Retrieve_Password', array(
+            'type' => 'trigger',
+            'hook' => 'retrieve_password',
+            'integration' => 'wordpress',
+            'user_id' => $user->ID,
+            'reset_password_link' => $reset_link,
         ));
 
         Workflow_Processor::process_workflows( $payload );
