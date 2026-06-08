@@ -32,6 +32,9 @@ class Schedule {
 
         // update coupon expiration
         add_action( 'joinotify_update_coupon_expiration', array( $this, 'update_coupon_expiration' ), 10, 1 );
+
+        // backfill the trigger-hook index for existing workflows after an upgrade
+        add_action( 'Joinotify/Upgraded', array( '\MeuMouse\Joinotify\Admin\Builder\Registry', 'backfill_trigger_hook_index' ) );
     }
 
 
@@ -74,19 +77,25 @@ class Schedule {
      * @param array $action_data | Actions for execute
      * @return bool
      */
-    public static function schedule_actions( $post_id, $context, $delay_time, $action_data ) {
+    public static function schedule_actions( $post_id, $context, $delay_time, $action_data, $unique_key = null ) {
         // clean all that object from context payload
         $context = Helpers::strip_objects( $context );
 
-        $timestamp = time() + $delay_time;
+        $timestamp = time() + max( 0, (int) $delay_time );
         $hook = 'joinotify_scheduled_actions_event';
+
+        // A stable, caller-provided key lets re-scheduling the same continuation
+        // replace the previous event (cleared below) instead of duplicating it.
+        if ( null === $unique_key || '' === $unique_key ) {
+            $unique_key = $action_data['id'] ?? uniqid( 'action_', true );
+        }
 
         // Cron args
         $args = array(
             'post_id' => $post_id,
             'context' => $context,
             'action_data' => $action_data, // next actions
-            'unique_key' => $action_data['id'] ?? uniqid( 'action_', true ),
+            'unique_key' => $unique_key,
         );
 
         // clear Cron ghost
@@ -212,6 +221,56 @@ class Schedule {
         }
 
         return max( 0, $target - $now );
+    }
+
+
+    /**
+     * Resolve a delay action into seconds-from-now, computed AT RUNTIME.
+     *
+     * For absolute ('date') and time-of-day ('scheduled') delays the offset must be
+     * calculated when the trigger fires — never baked at save time — otherwise a
+     * workflow saved today but fired weeks later would anchor to the wrong moment.
+     * Pure durations ('period') are time-invariant, so they resolve identically
+     * whenever computed. A legacy node that only carries a precomputed
+     * `delay_timestamp` (no raw fields) falls back to that value.
+     *
+     * @since 2.0.0
+     * @param array $action_data | The time_delay node data
+     * @return int Seconds from now (never negative).
+     */
+    public static function resolve_delay_seconds( $action_data ) {
+        if ( ! is_array( $action_data ) ) {
+            return 0;
+        }
+
+        $has_raw = isset( $action_data['delay_type'] ) || isset( $action_data['delay_value'] ) || isset( $action_data['date_value'] );
+
+        // Legacy fallback: only a precomputed timestamp is available.
+        if ( ! $has_raw && isset( $action_data['delay_timestamp'] ) && is_numeric( $action_data['delay_timestamp'] ) ) {
+            return max( 0, (int) $action_data['delay_timestamp'] );
+        }
+
+        $delay_type = isset( $action_data['delay_type'] ) ? sanitize_text_field( (string) $action_data['delay_type'] ) : 'period';
+
+        if ( 'date' === $delay_type ) {
+            $date_value = isset( $action_data['date_value'] ) ? sanitize_text_field( (string) $action_data['date_value'] ) : '';
+            $time_value = isset( $action_data['time_value'] ) ? sanitize_text_field( (string) $action_data['time_value'] ) : '00:00';
+            $timestamp = $date_value ? strtotime( $date_value . ' ' . $time_value ) : 0;
+
+            // Past dates resolve to 0 -> fire immediately rather than never.
+            return $timestamp ? max( 0, (int) $timestamp - time() ) : 0;
+        }
+
+        $delay_value = isset( $action_data['delay_value'] ) ? (int) $action_data['delay_value'] : 0;
+        $delay_period = isset( $action_data['delay_period'] ) ? sanitize_text_field( (string) $action_data['delay_period'] ) : 'seconds';
+
+        if ( 'scheduled' === $delay_type ) {
+            $time_value = isset( $action_data['time_value'] ) ? sanitize_text_field( (string) $action_data['time_value'] ) : '00:00';
+
+            return (int) self::get_scheduled_delay_timestamp( $delay_value, $delay_period, $time_value );
+        }
+
+        return (int) self::get_delay_timestamp( $delay_value, $delay_period );
     }
 
 

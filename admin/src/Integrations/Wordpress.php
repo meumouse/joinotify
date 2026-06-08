@@ -394,7 +394,9 @@ class Wordpress extends Integrations_Base {
          */
         $payload = apply_filters( 'Joinotify/Process_Workflows/Wordpress/User_Login', array(
             'type' => 'trigger',
-            'hook' => 'user_login',
+            // Must match the builder trigger id ('wp_login'); the previous
+            // 'user_login' value never matched any workflow's stored trigger.
+            'hook' => 'wp_login',
             'integration' => 'wordpress',
             'user_id' => $user->ID,
         ));

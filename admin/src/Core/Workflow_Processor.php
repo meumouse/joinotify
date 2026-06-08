@@ -53,9 +53,16 @@ class Workflow_Processor {
 
 
     /**
-     * Returns published posts that have a specific hook in the content
+     * Returns published posts whose trigger fires on a specific hook.
+     *
+     * Primary lookup uses the dedicated, indexed meta key `_joinotify_trigger_hook`
+     * written on save (see Admin\Builder\Registry). For workflows that have not yet
+     * been migrated/saved since the upgrade, a `LIKE` fallback over the serialized
+     * content is kept so no live workflow is missed. The migration on
+     * `Joinotify/Upgraded` backfills the index, after which only the exact match runs.
      *
      * @since 1.0.0
+     * @version 2.0.0
      * @param string $hook_name | Name of the hook to search for
      * @return array | List of posts that have the specified hook
      */
@@ -65,10 +72,25 @@ class Workflow_Processor {
             'post_status' => 'publish',
             'numberposts' => -1,
             'meta_query' => array(
+                'relation' => 'OR',
+                // Fast path: exact match on the indexed trigger-hook meta.
                 array(
-                    'key' => 'joinotify_workflow_content',
+                    'key' => '_joinotify_trigger_hook',
                     'value' => $hook_name,
-                    'compare' => 'LIKE',
+                    'compare' => '=',
+                ),
+                // Legacy fallback: workflow not migrated yet (no index meta) -> content LIKE.
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => '_joinotify_trigger_hook',
+                        'compare' => 'NOT EXISTS',
+                    ),
+                    array(
+                        'key' => 'joinotify_workflow_content',
+                        'value' => $hook_name,
+                        'compare' => 'LIKE',
+                    ),
                 ),
             ),
         );
@@ -146,7 +168,7 @@ class Workflow_Processor {
 
         /**
          * Before process Joinotify workflows
-         * 
+         *
          * @since 1.2.0
          * @param array $workflow_content | Workflow content
          * @param int $post_id | Post ID
@@ -154,130 +176,323 @@ class Workflow_Processor {
          */
         do_action( 'Joinotify/Workflow_Processor/Process_Workflow_Content', $workflow_content, $post_id, $payload );
 
-        $state = null;
-        $integration = $payload['integration'] ?? '';
-
-        // get trigger data
-        $trigger_data = array_filter( $workflow_content, function ( $item ) {
-            return isset( $item['type'] ) && $item['type'] === 'trigger';
-        });
-
-        // get first array item
-        $trigger_data = reset( $trigger_data );
-
-        // check restrictions for woocommerce integration
-        if ( $integration === 'woocommerce' ) {
-            if ( Admin::get_setting('enable_ignore_processed_actions') === 'yes' ) {
-                $state = get_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], true );
-            }
-
-            $order = wc_get_order( $payload['order_id'] );
-
-            if ( ! $order ) {
-                return;
-            }
-
-            $order_status = str_replace( 'wc-', '', $order->get_status() ); // remove prefix "wc-"
-            
-            // check order status
-            if ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
-                // remove prefix "wc-" fron workflow trigger settings
-                $trigger_order_status = isset( $trigger_data['data']['settings']['order_status'] ) && is_scalar( $trigger_data['data']['settings']['order_status'] )
-                    ? str_replace( 'wc-', '', (string) $trigger_data['data']['settings']['order_status'] )
-                    : '';
-
-                // check order status only if is setted different of "none" => all statuses
-                if ( $trigger_order_status !== 'none' && $trigger_order_status !== $order_status ) {
-                    return;
-                }
-            }
-        }
-        
-        // check restrictions for wpforms integration
-        if ( $integration === 'wpforms' ) {
-            // check wpforms form id
-            if ( $payload['id'] !== absint( $trigger_data['data']['settings']['form_id'] ) ) {
-                return;
-            }
+        if ( ! is_array( $workflow_content ) ) {
+            return;
         }
 
-        if ( $integration === 'wordpress' ) {
-            if ( isset( $payload['hook'], $payload['post_id'], $payload['post_status'], $trigger_data['data']['settings']['post_status'] ) 
-                && ( $payload['hook'] === 'change_post_status' || $payload['hook'] === 'transition_post_status' ) 
-                && get_post_type( $payload['post_id'] ) === 'post' 
-            ) {
-                $trigger_post_status = $trigger_data['data']['settings']['post_status'];
+        // resolve the trigger node (guard against malformed/trigger-less content)
+        $trigger_data = self::get_trigger_node( $workflow_content );
 
-                if ( $trigger_post_status !== 'none' && $payload['post_status'] !== $trigger_post_status ) {
-                    return;
-                }
-            }
+        if ( empty( $trigger_data ) ) {
+            Logger::register_log( sprintf( 'Workflow %d skipped: no trigger node found.', $post_id ), 'WARNING' );
+
+            return;
         }
 
-        if ( $integration === 'elementor' ) {
-            $trigger_form_id = $trigger_data['data']['settings']['form_id'] ?? '';
-
-            if ( empty( $trigger_form_id ) || (string) $payload['id'] !== (string) $trigger_form_id ) {
-                return;
-            }
+        // only run when this trigger actually matches the runtime payload
+        if ( ! self::matches_trigger( $trigger_data, $payload ) ) {
+            return;
         }
 
-        // Remove triggers from flow content
+        // top-level linear actions (siblings); conditions carry their own branches
         $workflow_actions = array_values( array_filter( $workflow_content, function ( $item ) {
             return isset( $item['type'] ) && $item['type'] !== 'trigger';
         }));
 
-        if ( empty( $state ) || ! is_array( $state ) ) {
-            $state = array(
-                'processed_actions' => array(),
-                'pending_actions' => $workflow_actions,
-            );
+        // per-instance idempotency state (null = stateless; cron continuation handles resume)
+        $state_key = self::get_state_meta_key( $payload );
+        $state = self::load_state( $post_id, $state_key );
+
+        // Always walk from the top; processed_actions skips leaves already executed
+        // for the same instance, so re-firing a trigger never double-sends.
+        $state['pending_actions'] = $workflow_actions;
+        self::persist_state( $post_id, $state_key, $state );
+
+        // run the flow through the unified walker
+        self::run_segment( $workflow_actions, $post_id, $payload, $state, $state_key );
+    }
+
+
+    /**
+     * Extract the (single) trigger node from a workflow content array.
+     *
+     * @since 2.0.0
+     * @param array $workflow_content | Workflow content
+     * @return array Trigger node, or empty array when absent.
+     */
+    protected static function get_trigger_node( $workflow_content ) {
+        foreach ( $workflow_content as $item ) {
+            if ( isset( $item['type'] ) && $item['type'] === 'trigger' ) {
+                return $item;
+            }
         }
-    
-        // Processes pending actions
-        foreach ( $state['pending_actions'] as $index => $action ) {
-            // A previous action requested the funnel to stop.
+
+        return array();
+    }
+
+
+    /**
+     * Decide whether a workflow's trigger matches the runtime payload.
+     *
+     * The built-in integrations (WooCommerce/WPForms/WordPress/Elementor) declare
+     * their matching rules here as the default. Third parties can refine or replace
+     * the decision for their own triggers through the filter below, keeping the
+     * runtime matching extensible instead of hardcoded per integration.
+     *
+     * @since 2.0.0
+     * @param array $trigger_data | Trigger node ({id,type,data})
+     * @param array $payload | Runtime trigger payload
+     * @return bool
+     */
+    protected static function matches_trigger( $trigger_data, $payload ) {
+        $integration = $payload['integration'] ?? '';
+        $settings = $trigger_data['data']['settings'] ?? array();
+
+        $trigger_hook = isset( $trigger_data['data']['trigger'] ) ? (string) $trigger_data['data']['trigger'] : '';
+        $payload_hook = isset( $payload['hook'] ) ? (string) $payload['hook'] : '';
+
+        // Authoritative gate: the workflow only runs when its trigger node matches
+        // the fired hook. This makes the _joinotify_trigger_hook index a pure
+        // optimization and prevents any content-LIKE false positive from dispatching.
+        $match = ( '' !== $trigger_hook && $trigger_hook === $payload_hook );
+
+        if ( $integration === 'woocommerce' ) {
+            if ( isset( $payload['order_id'] ) ) {
+                $order = wc_get_order( $payload['order_id'] );
+
+                if ( ! $order ) {
+                    $match = false;
+                } elseif ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_status_changed' ) {
+                    $order_status = str_replace( 'wc-', '', $order->get_status() );
+                    $trigger_order_status = isset( $settings['order_status'] ) && is_scalar( $settings['order_status'] )
+                        ? str_replace( 'wc-', '', (string) $settings['order_status'] )
+                        : '';
+
+                    // "none" => any status
+                    if ( $trigger_order_status !== 'none' && $trigger_order_status !== $order_status ) {
+                        $match = false;
+                    }
+                }
+            }
+        } elseif ( $integration === 'wpforms' ) {
+            if ( ! isset( $payload['id'] ) || (int) $payload['id'] !== absint( $settings['form_id'] ?? 0 ) ) {
+                $match = false;
+            }
+        } elseif ( $integration === 'wordpress' ) {
+            if ( isset( $payload['hook'], $payload['post_id'], $payload['post_status'], $settings['post_status'] )
+                && ( $payload['hook'] === 'change_post_status' || $payload['hook'] === 'transition_post_status' )
+                && get_post_type( $payload['post_id'] ) === 'post'
+            ) {
+                $trigger_post_status = $settings['post_status'];
+
+                if ( $trigger_post_status !== 'none' && $payload['post_status'] !== $trigger_post_status ) {
+                    $match = false;
+                }
+            }
+        } elseif ( $integration === 'elementor' ) {
+            $trigger_form_id = $settings['form_id'] ?? '';
+
+            if ( empty( $trigger_form_id ) || (string) ( $payload['id'] ?? '' ) !== (string) $trigger_form_id ) {
+                $match = false;
+            }
+        }
+
+        /**
+         * Filter the trigger matching decision.
+         *
+         * Lets third-party integrations declare whether their registered trigger
+         * should fire for the current payload, without editing the core matcher.
+         *
+         * @since 2.0.0
+         * @param bool  $match        Current match decision from the built-in rules.
+         * @param array $trigger_data Trigger node ({id,type,data}).
+         * @param array $payload      Runtime trigger payload.
+         */
+        return (bool) apply_filters( 'Joinotify/Workflow_Processor/Trigger_Matches', $match, $trigger_data, $payload );
+    }
+
+
+    /**
+     * Run a list of actions through the unified flow walker.
+     *
+     * This single engine powers both the initial trigger run and the cron resume.
+     * It treats the flow as an ordered queue:
+     *   - a `condition` node is evaluated and its chosen branch is prepended to the
+     *     queue, so branch actions (and any nested conditions) run in place;
+     *   - a `time_delay` node schedules the ENTIRE remaining queue as its
+     *     continuation and stops the segment, so nothing after a delay is ever lost,
+     *     even when the delay sits inside a condition branch;
+     *   - any other (leaf) action is dispatched immediately via handle_action().
+     *
+     * @since 2.0.0
+     * @param array  $queue      Ordered list of action nodes to process.
+     * @param int    $post_id    Workflow post ID.
+     * @param array  $payload    Runtime payload (passed by reference so dynamic
+     *                           placeholders/AI variables propagate to later actions).
+     * @param array  $state      Idempotency state (processed_actions/pending_actions), by ref.
+     * @param string|null $state_key Post-meta key for persistence, or null when stateless.
+     * @return void
+     */
+    protected static function run_segment( array $queue, $post_id, &$payload, array &$state, $state_key ) {
+        while ( ! empty( $queue ) ) {
+            // a previous action requested the funnel to stop
             if ( self::$funnel_stopped ) {
                 break;
             }
 
-            $action_id = $action['id'] ?? null;
-            $action_data = $action['data'] ?? array();
+            $node = array_shift( $queue );
 
-            // Ignore trigger or already processed actions for woocommerce hooks
-            if ( $integration === 'woocommerce' && Admin::get_setting('enable_ignore_processed_actions') === 'yes' && in_array( $action_id, $state['processed_actions'], true ) ) {
+            if ( ! is_array( $node ) ) {
                 continue;
             }
 
-            if ( $action_data['action'] === 'time_delay' ) {
-                // Collect all actions after this delay
-                $next_actions = array_slice( $state['pending_actions'], $index + 1 );
-                $action['data']['next_actions'] = $next_actions;
+            $node_id = $node['id'] ?? null;
+            $node_data = $node['data'] ?? array();
+            $action = $node_data['action'] ?? '';
 
-                // Schedule the cron event with next_actions in payload
-                Schedule::schedule_actions( $post_id, $payload, $action_data['delay_timestamp'], $action );
-
-                // Mark this delay as processed and replace pending with next_actions
-                $state['processed_actions'][] = $action_id;
-                $state['pending_actions'] = $next_actions;
-
-                break;
+            // skip leaves already executed for this instance (idempotency)
+            if ( $state_key && $node_id && in_array( $node_id, $state['processed_actions'], true ) ) {
+                continue;
             }
-    
-            // For all non-delay actions, execute immediately
-            if ( self::handle_action( $action, $post_id, $payload ) ) {
-                // Mark as processed
-                $state['processed_actions'][] = $action_id;
 
-                // Remove from pending and reindex
-                unset( $state['pending_actions'][$index] );
-                $state['pending_actions'] = array_values( $state['pending_actions'] );
+            // delay: schedule the remaining queue as continuation, then stop here
+            if ( $action === 'time_delay' ) {
+                $delay = Schedule::resolve_delay_seconds( $node_data );
 
-                // Update state in the database for woocommerce hooks
-                if ( $payload['integration'] === 'woocommerce' ) {
-                    update_post_meta( $post_id, 'joinotify_workflow_state_' . $payload['order_id'], $state );
+                // the continuation is everything still queued after this delay
+                $node['data']['next_actions'] = array_values( $queue );
+
+                self::schedule_continuation( $post_id, $payload, $delay, $node, $state_key );
+
+                // remember what is still pending; the delay node is marked processed
+                // only when the continuation actually resumes (process_scheduled_action)
+                $state['pending_actions'] = array_values( $queue );
+                self::persist_state( $post_id, $state_key, $state );
+
+                return;
+            }
+
+            // condition: evaluate and splice the chosen branch into the queue
+            if ( $action === 'condition' ) {
+                $branch = self::evaluate_condition( $node, $post_id, $payload );
+                $queue = array_merge( array_values( $branch ), $queue );
+
+                if ( $node_id ) {
+                    $state['processed_actions'][] = $node_id;
+                    self::persist_state( $post_id, $state_key, $state );
+                }
+
+                continue;
+            }
+
+            // leaf action: dispatch immediately
+            if ( self::handle_action( $node, $post_id, $payload ) ) {
+                if ( $node_id ) {
+                    $state['processed_actions'][] = $node_id;
+                    self::persist_state( $post_id, $state_key, $state );
                 }
             }
+        }
+    }
+
+
+    /**
+     * Schedule a delayed continuation, guarding against an inactive WP-Cron.
+     *
+     * @since 2.0.0
+     * @param int    $post_id    Workflow post ID.
+     * @param array  $payload    Runtime payload (serialized into the cron event).
+     * @param int    $delay      Delay in seconds from now.
+     * @param array  $node       The time_delay node (carries data.next_actions).
+     * @param string|null $state_key Instance state key, used to derive a stable cron key.
+     * @return bool
+     */
+    protected static function schedule_continuation( $post_id, $payload, $delay, $node, $state_key ) {
+        if ( ! Schedule::is_wp_cron_active() ) {
+            Logger::register_log(
+                sprintf( 'WP-Cron appears inactive; scheduled action for workflow %d may not fire on time. Consider a real system cron.', $post_id ),
+                'WARNING'
+            );
+        }
+
+        // a stable key (instance + node) so re-scheduling the same continuation
+        // replaces the previous event instead of duplicating it
+        $unique_key = ( $state_key ?: 'run' ) . ':' . ( $node['id'] ?? uniqid( 'delay_', true ) );
+
+        return Schedule::schedule_actions( $post_id, $payload, $delay, $node, $unique_key );
+    }
+
+
+    /**
+     * Resolve the idempotency state meta key for a payload.
+     *
+     * Returns null for stateless runs (the cron continuation already carries the
+     * remaining work, so resume never needs the DB). Currently persists state only
+     * for the opt-in WooCommerce "ignore processed actions" feature, keyed by order.
+     * Centralized here so coverage can be extended to other integrations with a
+     * stable instance key without touching the engine.
+     *
+     * @since 2.0.0
+     * @param array $payload | Runtime payload
+     * @return string|null
+     */
+    protected static function get_state_meta_key( $payload ) {
+        $integration = $payload['integration'] ?? '';
+
+        if ( $integration === 'woocommerce'
+            && ! empty( $payload['order_id'] )
+            && Admin::get_setting( 'enable_ignore_processed_actions' ) === 'yes'
+        ) {
+            return 'joinotify_workflow_state_' . $payload['order_id'];
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Load (or initialize) the idempotency state for a workflow instance.
+     *
+     * @since 2.0.0
+     * @param int $post_id | Workflow post ID
+     * @param string|null $state_key | Meta key, or null for a fresh in-memory state
+     * @return array
+     */
+    protected static function load_state( $post_id, $state_key ) {
+        $default = array(
+            'processed_actions' => array(),
+            'pending_actions' => array(),
+        );
+
+        if ( ! $state_key ) {
+            return $default;
+        }
+
+        $state = get_post_meta( $post_id, $state_key, true );
+
+        if ( ! is_array( $state ) ) {
+            return $default;
+        }
+
+        $state['processed_actions'] = isset( $state['processed_actions'] ) && is_array( $state['processed_actions'] ) ? $state['processed_actions'] : array();
+        $state['pending_actions'] = isset( $state['pending_actions'] ) && is_array( $state['pending_actions'] ) ? $state['pending_actions'] : array();
+
+        return $state;
+    }
+
+
+    /**
+     * Persist the idempotency state when running with a state key.
+     *
+     * @since 2.0.0
+     * @param int $post_id | Workflow post ID
+     * @param string|null $state_key | Meta key, or null to skip persistence
+     * @param array $state | State to persist
+     * @return void
+     */
+    protected static function persist_state( $post_id, $state_key, $state ) {
+        if ( $state_key ) {
+            update_post_meta( $post_id, $state_key, $state );
         }
     }
 
@@ -299,10 +514,14 @@ class Workflow_Processor {
             return false;
         }
 
-        // process time delay action before all the actions
+        // Delays are normally owned by run_segment() (which captures the continuation).
+        // This branch is a safety net for any direct/legacy call to handle_action():
+        // it still schedules with a delay computed at runtime (never the stale,
+        // save-time delay_timestamp), preserving any continuation already attached.
         if ( $action_data['action'] === 'time_delay' ) {
-            // schedule the Cron, with next_actions array and return bool
-            return Schedule::schedule_actions( $post_id, $event_data, $action_data['delay_timestamp'], $action );
+            $delay = Schedule::resolve_delay_seconds( $action_data );
+
+            return Schedule::schedule_actions( $post_id, $event_data, $delay, $action );
         }
 
         // AI smart variable: generate a value and store it on the payload (by reference) so the
@@ -363,7 +582,7 @@ class Workflow_Processor {
             'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data, $post_id ),
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data, $post_id ),
             'send_whatsapp_ai_message' => fn() => self::send_whatsapp_ai_message( $action_data, $event_data, $post_id ),
-            'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data ),
+            'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data, $post_id ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
             'stop_funnel' => fn() => self::stop_funnel(),
         //  'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
@@ -417,6 +636,38 @@ class Workflow_Processor {
      * @return bool Returns true if the action is processed successfully
      */
     public static function process_condition_action( $action, $post_id, $payload ) {
+        // Evaluate then run the chosen branch through the unified walker so that
+        // delays/nested conditions inside the branch behave consistently. Kept as a
+        // backward-compatible entry point; the main flow uses evaluate_condition()
+        // directly and splices the branch into its own queue.
+        $branch = self::evaluate_condition( $action, $post_id, $payload );
+
+        $state = array(
+            'processed_actions' => array(),
+            'pending_actions' => array(),
+        );
+
+        self::run_segment( array_values( $branch ), $post_id, $payload, $state, null );
+
+        return true;
+    }
+
+
+    /**
+     * Evaluate a condition node and return the matching branch's action list.
+     *
+     * Pure decision: it never executes the branch. The walker prepends the returned
+     * list onto its queue so branch actions run in place. Works on a local copy of
+     * the payload for the comparison so condition metadata never leaks into the
+     * payload seen by later actions.
+     *
+     * @since 2.0.0
+     * @param array $action | Condition node ({id,type,data,children})
+     * @param int $post_id | Workflow post ID
+     * @param array $payload | Runtime payload (by value)
+     * @return array Chosen branch (action_true or action_false), possibly empty.
+     */
+    protected static function evaluate_condition( $action, $post_id, $payload ) {
         if ( JOINOTIFY_DEV_MODE ) {
             error_log( "Processing condition action: " . print_r( $action, true ) );
             error_log( "Post ID: " . print_r( $post_id, true ) );
@@ -425,9 +676,10 @@ class Workflow_Processor {
 
         $action_data = $action['data'] ?? array();
 
-        // Ensure that condition content exists
+        // No condition configured: fall back to the "false" branch instead of
+        // dropping the rest of the flow silently.
         if ( empty( $action_data['condition_content'] ) ) {
-            return false;
+            return $action['children']['action_false'] ?? array();
         }
 
         // Extract condition details
@@ -471,17 +723,7 @@ class Workflow_Processor {
             error_log( "Next actions: " . print_r( $next_actions, true ) );
         }
 
-        // Process the resulting actions based on the condition outcome
-        foreach ( $next_actions as $child_action ) {
-            self::handle_action( $child_action, $post_id, $payload );
-
-            // Stop dispatching this branch (and the outer funnel) on stop_funnel.
-            if ( self::$funnel_stopped ) {
-                break;
-            }
-        }
-
-        return true;
+        return is_array( $next_actions ) ? $next_actions : array();
     }
 
 
@@ -499,69 +741,27 @@ class Workflow_Processor {
         // Start every scheduled segment with a clean stop flag.
         self::$funnel_stopped = false;
 
-        // get saved state for woocommerce hooks
-        if ( $payload['integration'] === 'woocommerce' ) {
-            $meta_key = 'joinotify_workflow_state_' . $payload['order_id'];
-            $state = get_post_meta( $post_id, $meta_key, true );
-        } else {
-            $state = array();
-        }
+        $state_key = self::get_state_meta_key( $payload );
+        $state = self::load_state( $post_id, $state_key );
 
-        if ( ! is_array( $state ) ) {
-            $state = array(
-                'processed_actions' => array(),
-                'pending_actions' => array(),
-            );
-        }
+        $delay_id = $action_data['id'] ?? null;
 
-        $action_id = $action_data['id'] ?? null;
-
-        // if has processed, then stop
-        if ( $action_id && in_array( $action_id, $state['processed_actions'], true ) ) {
+        // Guard against a duplicate cron fire resuming the same continuation twice.
+        if ( $state_key && $delay_id && in_array( $delay_id, $state['processed_actions'], true ) ) {
             return;
         }
 
-        // set this delay as processed
-        if ( $action_id ) {
-            $state['processed_actions'][] = $action_id;
+        // The delay node is considered processed now that its continuation resumes.
+        if ( $delay_id ) {
+            $state['processed_actions'][] = $delay_id;
+            self::persist_state( $post_id, $state_key, $state );
         }
 
-        // execute next actions
+        // Resume with the continuation captured at schedule time. The same unified
+        // walker handles further delays (reschedules) and conditions consistently.
         $next_actions = $action_data['data']['next_actions'] ?? array();
 
-        // loop for each next actions
-        foreach ( $next_actions as $idx => $next_action ) {
-            // A previous action requested the funnel to stop.
-            if ( self::$funnel_stopped ) {
-                break;
-            }
-
-            $next_id = $next_action['id'] ?? null;
-            $next_type = $next_action['data']['action'] ?? '';
-
-            if ( $next_type === 'time_delay' ) {
-                // reschedule next delays, including only actions after this
-                $remaining = array_slice( $next_actions, $idx + 1 );
-                $next_action['data']['next_actions'] = $remaining;
-
-                Schedule::schedule_actions( $post_id, $payload, $next_action['data']['delay_timestamp'], $next_action );
-
-                // stop process loop, next actions be are processed on next cron event
-                break;
-            } else {
-                // execute action right now
-                self::handle_action( $next_action, $post_id, $payload );
-
-                if ( $next_id ) {
-                    $state['processed_actions'][] = $next_id;
-                }
-            }
-        }
-
-        // save state for woocommerce hooks
-        if ( isset( $meta_key ) ) {
-            update_post_meta( $post_id, $meta_key, $state );
-        }
+        self::run_segment( array_values( $next_actions ), $post_id, $payload, $state, $state_key );
     }
 
 
@@ -842,21 +1042,44 @@ class Workflow_Processor {
      * @param array $payload | Payload data
      * @return void
      */
-    public static function execute_wc_coupon_action( $action_data, $payload ) {
-        $create_coupon = Woocommerce::generate_wc_coupon( $action_data['settings'] );
-        $payload['settings'] = $action_data['settings'];
-        $payload['settings']['coupon_code'] = $create_coupon['coupon_code'];
+    public static function execute_wc_coupon_action( $action_data, $payload, $post_id = 0 ) {
+        $settings = isset( $action_data['settings'] ) && is_array( $action_data['settings'] ) ? $action_data['settings'] : array();
 
-        // send message
-        $send_message = self::send_whatsapp_message_text( $action_data['settings']['message'], $payload );
+        $create_coupon = Woocommerce::generate_wc_coupon( $settings );
+
+        // Bail out cleanly when the coupon could not be created (missing data,
+        // duplicate code, etc.) instead of treating a WP_Error as an array.
+        if ( is_wp_error( $create_coupon ) ) {
+            Logger::register_log( 'Failed to create coupon: ' . $create_coupon->get_error_message(), 'ERROR' );
+
+            return false;
+        }
+
+        // expose the generated coupon details to the message placeholders
+        $payload['settings'] = $settings;
+        $payload['settings']['coupon_code'] = $create_coupon['coupon_code'] ?? '';
+
+        // The message config is stored as {sender, receiver, message} under
+        // settings.message, which is exactly the shape send_whatsapp_message_text()
+        // expects as its action_data argument.
+        $message = isset( $settings['message'] ) && is_array( $settings['message'] ) ? $settings['message'] : array();
+
+        if ( self::is_config_value_empty( $message['sender'] ?? null ) || self::is_config_value_empty( $message['receiver'] ?? null ) ) {
+            Logger::register_log( 'Coupon created but notification skipped: missing sender/receiver.', 'WARNING' );
+
+            return true;
+        }
+
+        // pass the workflow post ID so the dispatch is tagged in the message history
+        self::send_whatsapp_message_text( $message, $payload, $post_id );
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-            if ( $create_coupon['coupon_id'] > 0 ) {
-                Logger::register_log( "Coupon created successfully." );
-            } else {
-                Logger::register_log( "Failed to create coupon.", 'ERROR' );
-            }
+            $coupon_id = (int) ( $create_coupon['coupon_id'] ?? 0 );
+
+            Logger::register_log( $coupon_id > 0 ? 'Coupon created successfully.' : 'Failed to create coupon.', $coupon_id > 0 ? 'INFO' : 'ERROR' );
         }
+
+        return true;
     }
 
 

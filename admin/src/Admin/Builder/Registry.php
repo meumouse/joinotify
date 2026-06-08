@@ -24,6 +24,16 @@ defined('ABSPATH') || exit;
 class Registry {
 
 	/**
+	 * Workflow content schema version, stamped on every saved workflow so future
+	 * upgrades can detect and migrate older structures deterministically.
+	 *
+	 * @since 2.0.0
+	 * @var string
+	 */
+	const WORKFLOW_SCHEMA_VERSION = '2.0.0';
+
+
+	/**
 	 * Build the Vue bootstrap payload for the workflow builder.
 	 *
 	 * @since 1.4.7
@@ -971,6 +981,17 @@ class Registry {
 		$status = in_array( $status, array( 'publish', 'draft', 'trash' ), true ) ? $status : $post->post_status;
 		$content = isset( $normalized['workflow_content'] ) && is_array( $normalized['workflow_content'] ) ? self::sanitize_workflow_content( $normalized['workflow_content'] ) : array();
 
+		// Validate before persisting so the runtime never has to process a broken flow.
+		$validation = self::validate_workflow_content( $content );
+		$forced_draft = false;
+
+		// A structurally invalid workflow is never published; it is kept as a draft
+		// and the validation errors are returned so the builder can surface them.
+		if ( 'publish' === $status && self::has_blocking_errors( $validation ) ) {
+			$status = 'draft';
+			$forced_draft = true;
+		}
+
 		$updated = wp_update_post( array(
 			'ID' => $post_id,
 			'post_title' => $title,
@@ -986,9 +1007,16 @@ class Registry {
 
 		Helpers::update_workflow_content_meta( $post_id, $content );
 
+		// Keep the trigger-hook index and schema version in sync on every save.
+		self::update_workflow_indexes( $post_id, $content );
+
 		return array(
 			'status' => 'success',
-			'message' => esc_html__( 'Workflow saved.', 'joinotify' ),
+			'message' => $forced_draft
+				? esc_html__( 'Workflow saved as draft: fix the reported issues before publishing.', 'joinotify' )
+				: esc_html__( 'Workflow saved.', 'joinotify' ),
+			'validation' => $validation,
+			'forced_draft' => $forced_draft,
 			'workflow' => self::get_workflow_state( $post_id ),
 			'workflow_file' => self::build_exported_workflow_file( self::get_workflow_state( $post_id ), $post_id ),
 		);
@@ -1051,6 +1079,9 @@ class Registry {
 		}
 
 		Helpers::update_workflow_content_meta( $post_id, $content );
+
+		// index the imported workflow's trigger hook + schema version
+		self::update_workflow_indexes( $post_id, $content );
 
 		return array(
 			'status' => 'success',
@@ -1170,6 +1201,208 @@ class Registry {
 		}
 
 		return Helpers::decode_emoji_deep( $sanitized );
+	}
+
+
+	/**
+	 * Keep the per-workflow runtime indexes in sync with the saved content.
+	 *
+	 * Writes the dedicated, queryable `_joinotify_trigger_hook` meta (so the
+	 * runtime can select workflows by an indexed exact match instead of a fragile
+	 * LIKE over serialized content) and stamps the schema version.
+	 *
+	 * @since 2.0.0
+	 * @param int $post_id Workflow post ID.
+	 * @param array<int,mixed> $content Sanitized workflow content.
+	 * @return void
+	 */
+	private static function update_workflow_indexes( $post_id, $content ) {
+		$hook = self::extract_trigger_hook( $content );
+
+		if ( '' !== $hook ) {
+			update_post_meta( $post_id, '_joinotify_trigger_hook', $hook );
+		} else {
+			delete_post_meta( $post_id, '_joinotify_trigger_hook' );
+		}
+
+		update_post_meta( $post_id, '_joinotify_workflow_schema_version', self::WORKFLOW_SCHEMA_VERSION );
+	}
+
+
+	/**
+	 * Extract the trigger hook (data.trigger) from a workflow content array.
+	 *
+	 * @since 2.0.0
+	 * @param array<int,mixed> $content Workflow content.
+	 * @return string The trigger hook, or '' when absent/unconfigured.
+	 */
+	private static function extract_trigger_hook( $content ) {
+		if ( ! is_array( $content ) ) {
+			return '';
+		}
+
+		foreach ( $content as $node ) {
+			if ( is_array( $node ) && isset( $node['type'] ) && 'trigger' === $node['type'] ) {
+				$hook = $node['data']['trigger'] ?? '';
+
+				return is_string( $hook ) ? sanitize_text_field( $hook ) : '';
+			}
+		}
+
+		return '';
+	}
+
+
+	/**
+	 * Validate a workflow content structure before persistence.
+	 *
+	 * Returns a list of issues (each: code/severity/message[/node_id]). Blocking
+	 * errors prevent publishing (see save_workflow), so the runtime only ever sees
+	 * structurally sound flows: exactly one configured trigger and conditions that
+	 * carry their true/false branch containers.
+	 *
+	 * @since 2.0.0
+	 * @param array<int,mixed> $content Sanitized workflow content.
+	 * @return array<int,array<string,string>>
+	 */
+	public static function validate_workflow_content( $content ) {
+		$errors = array();
+
+		if ( ! is_array( $content ) ) {
+			$errors[] = array(
+				'code' => 'invalid_content',
+				'severity' => 'error',
+				'message' => esc_html__( 'The workflow content is invalid.', 'joinotify' ),
+			);
+
+			return $errors;
+		}
+
+		$triggers = array_values( array_filter( $content, function ( $node ) {
+			return is_array( $node ) && isset( $node['type'] ) && 'trigger' === $node['type'];
+		}));
+
+		if ( 0 === count( $triggers ) ) {
+			$errors[] = array(
+				'code' => 'missing_trigger',
+				'severity' => 'error',
+				'message' => esc_html__( 'The workflow has no trigger.', 'joinotify' ),
+			);
+		} elseif ( count( $triggers ) > 1 ) {
+			$errors[] = array(
+				'code' => 'multiple_triggers',
+				'severity' => 'error',
+				'message' => esc_html__( 'The workflow has more than one trigger.', 'joinotify' ),
+			);
+		} elseif ( '' === self::extract_trigger_hook( $content ) ) {
+			$errors[] = array(
+				'code' => 'trigger_not_configured',
+				'severity' => 'error',
+				'message' => esc_html__( 'The workflow trigger is not configured.', 'joinotify' ),
+			);
+		}
+
+		self::collect_node_errors( $content, $errors );
+
+		return $errors;
+	}
+
+
+	/**
+	 * Recursively collect node-level validation issues.
+	 *
+	 * @since 2.0.0
+	 * @param array<int,mixed> $nodes Nodes to inspect.
+	 * @param array<int,array<string,string>> $errors Accumulator (by reference).
+	 * @return void
+	 */
+	private static function collect_node_errors( $nodes, &$errors ) {
+		if ( ! is_array( $nodes ) ) {
+			return;
+		}
+
+		foreach ( $nodes as $node ) {
+			if ( ! is_array( $node ) ) {
+				continue;
+			}
+
+			$type = $node['type'] ?? '';
+			$action = $node['data']['action'] ?? '';
+			$children = $node['children'] ?? array();
+
+			if ( 'condition' === $type || 'condition' === $action ) {
+				if ( ! self::is_branch_container( $children ) ) {
+					$errors[] = array(
+						'code' => 'condition_missing_branches',
+						'severity' => 'error',
+						'message' => esc_html__( 'A condition is missing its branches.', 'joinotify' ),
+						'node_id' => isset( $node['id'] ) ? (string) $node['id'] : '',
+					);
+
+					continue;
+				}
+
+				self::collect_node_errors( $children['action_true'] ?? array(), $errors );
+				self::collect_node_errors( $children['action_false'] ?? array(), $errors );
+
+				continue;
+			}
+
+			// defensive: recurse into any linear children
+			if ( is_array( $children ) && ! self::is_branch_container( $children ) ) {
+				self::collect_node_errors( $children, $errors );
+			}
+		}
+	}
+
+
+	/**
+	 * Whether a validation result contains at least one blocking error.
+	 *
+	 * @since 2.0.0
+	 * @param array<int,array<string,string>> $errors Validation result.
+	 * @return bool
+	 */
+	private static function has_blocking_errors( $errors ) {
+		foreach ( (array) $errors as $error ) {
+			if ( 'error' === ( $error['severity'] ?? 'error' ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Backfill the trigger-hook index for every existing workflow.
+	 *
+	 * Hooked on `Joinotify/Upgraded` so workflows saved before the index existed
+	 * get a `_joinotify_trigger_hook` meta, after which get_workflows_by_hook()
+	 * resolves them via the fast, exact-match path instead of the LIKE fallback.
+	 *
+	 * @since 2.0.0
+	 * @return void
+	 */
+	public static function backfill_trigger_hook_index() {
+		$workflows = get_posts( array(
+			'post_type' => 'joinotify-workflow',
+			'post_status' => 'any',
+			'numberposts' => -1,
+			'fields' => 'ids',
+		));
+
+		if ( empty( $workflows ) ) {
+			return;
+		}
+
+		foreach ( $workflows as $workflow_id ) {
+			$content = Helpers::get_workflow_content_meta( $workflow_id );
+
+			if ( is_array( $content ) ) {
+				self::update_workflow_indexes( $workflow_id, $content );
+			}
+		}
 	}
 
 
@@ -1332,27 +1565,11 @@ class Registry {
 	 * @return int
 	 */
 	private static function build_delay_timestamp( $data ) {
-		$delay_type = isset( $data['delay_type'] ) ? sanitize_text_field( (string) $data['delay_type'] ) : 'period';
-
-		if ( 'date' === $delay_type ) {
-			$date_value = isset( $data['date_value'] ) ? sanitize_text_field( (string) $data['date_value'] ) : '';
-			$time_value = isset( $data['time_value'] ) ? sanitize_text_field( (string) $data['time_value'] ) : '00:00';
-			$timestamp = $date_value ? strtotime( $date_value . ' ' . $time_value ) : 0;
-
-			// Return a RELATIVE delay (seconds from now) so Schedule::schedule_actions() fires at the right time.
-			return $timestamp ? max( 0, (int) $timestamp - time() ) : 0;
-		}
-
-		$delay_value = isset( $data['delay_value'] ) ? (int) $data['delay_value'] : 0;
-		$delay_period = isset( $data['delay_period'] ) ? sanitize_text_field( (string) $data['delay_period'] ) : 'seconds';
-
-		if ( 'scheduled' === $delay_type ) {
-			$time_value = isset( $data['time_value'] ) ? sanitize_text_field( (string) $data['time_value'] ) : '00:00';
-
-			return (int) Schedule::get_scheduled_delay_timestamp( $delay_value, $delay_period, $time_value );
-		}
-
-		return (int) Schedule::get_delay_timestamp( $delay_value, $delay_period );
+		// Cache a best-effort value at save time for display/back-compat, but the
+		// runtime always recomputes the delay at trigger time via the same helper
+		// (Schedule::resolve_delay_seconds) so absolute/scheduled delays never go
+		// stale. Keeping a single source of truth here avoids save/runtime drift.
+		return (int) Schedule::resolve_delay_seconds( $data );
 	}
 
 
