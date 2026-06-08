@@ -65,7 +65,10 @@ class Settings_Assets extends Abstract_Assets {
             return;
         }
 
-        $this->dequeue_legacy_assets();
+        // The builder relies on the WordPress media modal for media pickers.
+        if ( 'joinotify-workflows-builder' === $page ) {
+            wp_enqueue_media();
+        }
 
         // Vite emits fixed entry/style file names, so version the URLs by build
         // mtime to bust the browser cache after every rebuild.
@@ -159,28 +162,6 @@ class Settings_Assets extends Abstract_Assets {
         }
 
         return sanitize_text_field( wp_unslash( $_GET['page'] ) );
-    }
-
-
-    /**
-     * Remove the legacy asset handles when the Vite build is available.
-     *
-     * @since 1.4.7
-     * @version 1.4.7
-     * @return void
-     */
-    private function dequeue_legacy_assets() {
-        wp_dequeue_style( 'joinotify-styles' );
-        wp_dequeue_script( 'joinotify-scripts' );
-    //    wp_dequeue_style( 'bootstrap-grid' );
-    //    wp_dequeue_style( 'bootstrap-utilities' );
-        wp_dequeue_style( 'joinotify-workflows-table-styles' );
-        wp_dequeue_script( 'joinotify-workflows-table-scripts' );
-
-        wp_deregister_style( 'joinotify-styles' );
-        wp_deregister_script( 'joinotify-scripts' );
-        wp_deregister_style( 'joinotify-workflows-table-styles' );
-        wp_deregister_script( 'joinotify-workflows-table-scripts' );
     }
 
 

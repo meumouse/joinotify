@@ -7,7 +7,6 @@ use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
-use MeuMouse\Joinotify\Builder\Components as Builder_Components;
 
 use WC_Session_Handler;
 use WC_Cart;
@@ -781,108 +780,10 @@ class Woocommerce extends Integrations_Base {
             'icon' => '<svg class="icon icon-lg icon-dark coupon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 6.75L4.5 6H20.25L21 6.75V10.7812H20.25C19.5769 10.7812 19.0312 11.3269 19.0312 12C19.0312 12.6731 19.5769 13.2188 20.25 13.2188H21V17.25L20.25 18L4.5 18L3.75 17.25V13.2188H4.5C5.1731 13.2188 5.71875 12.6731 5.71875 12C5.71875 11.3269 5.1731 10.7812 4.5 10.7812H3.75V6.75ZM5.25 7.5V9.38602C6.38677 9.71157 7.21875 10.7586 7.21875 12C7.21875 13.2414 6.38677 14.2884 5.25 14.614V16.5L9 16.5L9 7.5H5.25ZM10.5 7.5V16.5L19.5 16.5V14.614C18.3632 14.2884 17.5312 13.2414 17.5312 12C17.5312 10.7586 18.3632 9.71157 19.5 9.38602V7.5H10.5Z"></path></g></svg>',
             'external_icon' => false,
             'has_settings' => true,
-            'settings' => self::create_coupon_action(),
             'priority' => 60,
         );
 
         return $actions;
-    }
-
-
-    /**
-     * Render coupon action settings on sidebar action
-     * 
-     * @since 1.1.0
-     * @param array $settings | Current settings
-     * @return string
-     */
-    public static function create_coupon_action( $settings = array() ) {
-        ob_start(); ?>
-
-        <div class="coupon-action-group">
-            <div class="coupon-action-item d-flex align-items-center">
-                <label class="form-label me-3"><?php esc_html_e( 'Generate coupon automatically', 'joinotify' ) ?></label>
-                <input type="checkbox" class="toggle-switch generate-coupon-code validate-required-settings" <?php checked( isset( $settings['settings']['generate_coupon'] ) && $settings['settings']['generate_coupon'] === 'yes' ) ?>>
-            </div>
-
-            <div class="coupon-action-item coupon-code-wrapper">
-                <label class="form-label"><?php esc_html_e( 'Coupon code: *', 'joinotify' ) ?></label>
-                <input type="text" class="form-control set-coupon-code required-setting" value="<?php echo esc_attr( $settings['settings']['coupon_code'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'EXCLUSIVE_COUPON', 'joinotify' ) ?>"/>
-            </div>
-
-            <div class="coupon-action-item">
-                <label class="form-label"><?php esc_html_e( 'Coupon description (optional)', 'joinotify' ) ?></label>
-                <input type="text" class="form-control set-coupon-description" value="<?php echo esc_attr( $settings['settings']['coupon_description'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'Coupon for purchase recovery', 'joinotify' ) ?>"/>
-            </div>
-
-            <div class="coupon-action-item">
-                <label class="form-label"><?php esc_html_e( 'Discount type and amount: *', 'joinotify' ) ?></label>
-                
-                <div class="input-group">
-                    <select class="form-select set-coupon-discount-type">
-                        <option value="fixed_cart" <?php selected( $settings['settings']['discount_type'] ?? '', 'fixed_cart', true ) ?> ><?php esc_html_e( 'Fixed discount', 'joinotify' ) ?></option>
-                        <option value="percent" <?php selected( $settings['settings']['discount_type'] ?? '', 'percent', true ) ?> ><?php esc_html_e( 'Percentage', 'joinotify' ) ?></option>
-                    </select>
-
-                    <input type="text" class="form-control set-coupon-discount-value required-setting" value="<?php echo esc_attr( $settings['settings']['coupon_amount'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'Discount amount', 'joinotify' ) ?>"/>
-                </div>
-            </div>
-
-            <div class="coupon-action-item d-flex align-items-center">
-                <label class="form-label me-3"><?php esc_html_e( 'Allow free shipping', 'joinotify' ) ?></label>
-                <input type="checkbox" class="toggle-switch allow-free-shipping" <?php checked( isset( $settings['settings']['free_shipping'] ) && $settings['settings']['free_shipping'] === 'yes' ) ?>>
-            </div>
-
-            <div class="coupon-action-item d-flex align-items-center">
-                <label class="form-label me-3"><?php esc_html_e( 'Set coupon expiration', 'joinotify' ) ?></label>
-                <input type="checkbox" class="toggle-switch set-expires-coupon validate-required-settings" <?php checked( isset( $settings['settings']['coupon_expiry'] ) && $settings['settings']['coupon_expiry'] === 'yes' ) ?>>
-            </div>
-
-            <div class="coupon-action-item select-time-delay-container d-none">
-                <label class="form-label" for="set-time-delay-type"><?php esc_html_e( 'Select the expiration type', 'joinotify' ) ?></label>
-                
-                <select class="form-select set-time-delay-type">
-                    <option value="period" <?php selected( $settings['settings']['expiry_data']['type'] ?? '', 'period', true ) ?> ><?php esc_html_e( 'Wait time', 'joinotify' ) ?></option>
-                    <option value="date" <?php selected( $settings['settings']['expiry_data']['type'] ?? '', 'date', true ) ?> ><?php esc_html_e( 'Wait until a date', 'joinotify' ) ?></option>
-                </select>
-            </div>
-
-            <div class="coupon-action-item wait-date-container d-none">
-                <label class="form-label"><?php esc_html_e( 'Wait until', 'joinotify' ) ?></label>
-                
-                <div class="input-group">
-                    <input type="text" class="form-control dateselect get-date-value" value="<?php echo esc_attr( $settings['settings']['expiry_data']['date_value'] ?? '' ) ?>" placeholder="<?php esc_attr_e( 'Select a date', 'joinotify' ) ?>"/>
-                    <input type="time" class="form-control get-time-value" value="<?php echo esc_attr( $settings['settings']['expiry_data']['time_value'] ?? '' ) ?>"/>
-                </div>
-            </div>
-
-            <div class="coupon-action-item wait-time-period-container d-none">
-                <label class="form-label"><?php esc_html_e( 'Wait for', 'joinotify' ) ?></label>
-                
-                <div class="input-group">
-                    <input type="number" class="form-control get-wait-value" value="<?php echo esc_attr( $settings['settings']['expiry_data']['delay_value'] ?? '' ) ?>"/>
-
-                    <select class="form-select get-wait-period">
-                        <?php foreach ( Builder_Components::get_time_delay_options() as $option => $title ) : ?>
-                            <option value="<?php echo esc_attr( $option ) ?>" <?php selected( $settings['settings']['expiry_data']['delay_period'] ?? '', $option, true ) ?>><?php echo esc_html( $title ) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-
-            <div class="border-bottom divider my-5"></div>
-
-            <div class="coupon-action-item">
-                <?php echo Whatsapp::whatsapp_message_text_action( $settings['settings']['message'] ?? array() ); ?>
-            </div>
-
-            <div class="border-top divider mt-5 pt-4 coupon-placeholders">
-                <label class="form-label"><?php esc_html_e( 'Text variables:', 'joinotify' ) ?></label>
-                <?php echo Builder_Components::render_coupon_placeholders(); ?>
-            </div>
-        </div>
-
-        <?php return ob_get_clean();
     }
 
 

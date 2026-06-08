@@ -9,7 +9,7 @@
 import { computed, onBeforeUnmount, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue } from '../../utils/object';
-import { createAjaxClient } from '../../utils/api';
+import { createApiClient } from '../../utils/api';
 import SettingsHeader from '../settings/components/SettingsHeader.vue';
 import BaseButton from '../../components/buttons/BaseButton.vue';
 import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
@@ -21,7 +21,12 @@ const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
 });
 
-const ajax = createAjaxClient(props.bootstrap);
+const api = createApiClient(props.bootstrap);
+const LICENSE_ROUTES = {
+  activate: '/admin/settings/license/activate',
+  deactivate: '/admin/settings/license/deactivate',
+  sync: '/admin/settings/license/sync',
+};
 const initialLicense = cloneValue(props.bootstrap?.license || {});
 const license = ref(initialLicense);
 const form = reactive({
@@ -96,6 +101,26 @@ function normalizeValue(value, prefixes = []) {
 
 function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Post to a license REST route and surface backend errors.
+ *
+ * The REST endpoints answer with HTTP 200 and a { status: 'error', message }
+ * body on failure, so translate that into a thrown error for the callers.
+ *
+ * @param {string} route - Relative REST endpoint path.
+ * @param {Object} [body={}] - Request payload.
+ * @return {Promise<Object>} Parsed response body.
+ */
+async function requestLicense(route, body = {}) {
+  const response = await api.post(route, body);
+
+  if (response?.status === 'error') {
+    throw new Error(response.message || __('Request failed.', textDomain));
+  }
+
+  return response;
 }
 
 function normalizeTone(tone) {
@@ -205,7 +230,7 @@ async function activateLicense() {
   busyAction.value = 'activate';
 
   try {
-    const response = await ajax.post(license.value?.activate_action || 'joinotify_active_license', {
+    const response = await requestLicense(LICENSE_ROUTES.activate, {
       license_key: licenseKey,
     });
 
@@ -227,7 +252,7 @@ async function syncLicense(showToast = true) {
   busyAction.value = busyAction.value || 'sync';
 
   try {
-    const response = await ajax.post(license.value?.sync_action || 'joinotify_sync_license', {});
+    const response = await requestLicense(LICENSE_ROUTES.sync, {});
 
     if (response?.license_data) {
       replaceLicenseData(response.license_data);
@@ -249,7 +274,7 @@ async function deactivateLicense() {
   busyAction.value = 'deactivate';
 
   try {
-    const response = await ajax.post(license.value?.deactivate_action || 'joinotify_deactive_license', {});
+    const response = await requestLicense(LICENSE_ROUTES.deactivate, {});
 
     if (response?.license_data) {
       replaceLicenseData(response.license_data);
