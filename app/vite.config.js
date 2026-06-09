@@ -9,10 +9,10 @@ export default defineConfig({
   base: './',
   plugins: [vue()],
   build: {
-    outDir: resolve(__dirname, '../dist'),
+    outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
     manifest: true,
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
       input: {
         settings: resolve(__dirname, 'src/entries/settings.js'),

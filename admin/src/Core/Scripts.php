@@ -17,14 +17,14 @@ class Scripts {
      *
      * @var string
      */
-    const MANIFEST_PATH = 'dist/.vite/manifest.json';
+    const MANIFEST_PATH = 'app/dist/.vite/manifest.json';
 
     /**
      * Relative URL path to the Vite build output.
      *
      * @var string
      */
-    const DIST_URL_PATH = 'dist/';
+    const DIST_URL_PATH = 'app/dist/';
 
 
     /**
