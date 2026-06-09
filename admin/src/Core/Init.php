@@ -2,17 +2,15 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-use ReflectionException;
-use ReflectionClass;
-use Exception;
+use Throwable;
 
 defined('ABSPATH') || exit;
 
 /**
  * Initialize plugin classes
- * 
+ *
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.0.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -114,6 +112,12 @@ class Init {
 		add_action( 'init', array( $this, 'instance_init_classes' ), 10 );
 		add_action( 'admin_init', array( $this, 'instance_admin_init_classes' ), 10 );
 		add_action( 'wp_loaded', array( $this, 'instance_wp_loaded_classes' ), 10 );
+
+		// REST controllers only register routes during a REST request, so they
+		// are deferred to rest_api_init instead of being instantiated on every
+		// front-end, admin, AJAX and cron request. Priority 5 runs before the
+		// route classes register themselves at the default priority 10.
+		add_action( 'rest_api_init', array( $this, 'instance_rest_classes' ), 5 );
 
 		// Add settings link on plugins list.
 		add_filter( 'plugin_action_links_' . $this->basename, array( $this, 'add_action_plugin_links' ), 10, 4 );
@@ -227,9 +231,15 @@ class Init {
 
 	/**
 	 * Instance only the explicitly allowed classes on init.
-	 * 
+	 *
+	 * REST controllers are no longer listed here; they are deferred to the
+	 * rest_api_init hook (see instance_rest_classes) so they are not built on
+	 * non-REST requests. Admin-screen classes are only instantiated for admin
+	 * requests, but still on `init` because the admin menu (admin_menu) is
+	 * built before admin_init fires.
+	 *
 	 * @since 1.4.6
-	 * @version 1.4.7
+	 * @version 2.0.0
 	 * @return void
 	 */
 	public function instance_init_classes() {
@@ -237,19 +247,56 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
 			'MeuMouse\\Joinotify\\Builder\\Custom_Variables',
-			'MeuMouse\\Joinotify\\Admin\\Menu',
-			'MeuMouse\\Joinotify\\Admin\\Builder\\Rest_Controller',
-			'MeuMouse\\Joinotify\\Admin\\Workflows\\Rest_Controller',
-			'MeuMouse\\Joinotify\\Rest\\Extensions_Controller',
-			'MeuMouse\\Joinotify\\Assets\\Settings_Assets',
 			'MeuMouse\\Joinotify\\Api\\Controller',
-			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Core\\Notification_Queue',
 			'MeuMouse\\Joinotify\\Core\\Message_History',
-			'MeuMouse\\Joinotify\\Admin\\History\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Cron\\Schedule',
 			'MeuMouse\\Joinotify\\Cron\\Routines',
 			'MeuMouse\\Joinotify\\Core\\Debug',
+		));
+
+		// Admin-screen classes only register hooks that fire inside wp-admin
+		// (admin_menu, admin_enqueue_scripts), so skip them entirely on
+		// front-end, REST and cron requests.
+		if ( is_admin() ) {
+			$admin_classes = apply_filters( 'Joinotify/Init/Admin_Screen_Classes', array(
+				'MeuMouse\\Joinotify\\Admin\\Menu',
+				'MeuMouse\\Joinotify\\Assets\\Settings_Assets',
+			));
+
+			if ( is_array( $admin_classes ) ) {
+				$classes = array_merge( $classes, $admin_classes );
+			}
+		}
+
+		if ( ! is_array( $classes ) || empty( $classes ) ) {
+			return;
+		}
+
+		foreach ( $classes as $class ) {
+			$this->safe_instance_class( $class );
+		}
+	}
+
+
+	/**
+	 * Instance the REST controllers when WordPress builds the REST API.
+	 *
+	 * Each controller instantiates its route classes, which in turn register
+	 * their endpoints on rest_api_init. Because this callback already runs on
+	 * rest_api_init at an earlier priority (5), those default-priority (10)
+	 * registrations still fire within the same dispatch cycle.
+	 *
+	 * @since 2.0.0
+	 * @return void
+	 */
+	public function instance_rest_classes() {
+		$classes = apply_filters( 'Joinotify/Init/Rest_Classes', array(
+			'MeuMouse\\Joinotify\\Admin\\Builder\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\Workflows\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\History\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Rest\\Extensions_Controller',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
@@ -319,9 +366,15 @@ class Init {
 
 	/**
 	 * Safely instance a single class with validation.
-	 * 
+	 *
+	 * Only first-party Joinotify classes (parameterless constructors) reach
+	 * this method, so they are instantiated directly with `new`. This avoids
+	 * building a ReflectionClass for every bootstrapped class on every request;
+	 * the try/catch still shields the bootstrap from abstract classes,
+	 * constructor-argument mismatches and runtime errors.
+	 *
 	 * @since 1.4.3
-	 * @version 1.4.7
+	 * @version 2.0.0
 	 * @param string $class Full class name with namespace.
 	 * @return mixed|null Returns the class instance or null on failure.
 	 */
@@ -345,40 +398,22 @@ class Init {
 		}
 
 		try {
-			$reflection = new ReflectionClass( $class );
-
-			if ( ! $reflection->isInstantiable() ) {
-				return null;
-			}
-
-			$constructor = $reflection->getConstructor();
-
-			if ( $constructor && $constructor->getNumberOfRequiredParameters() > 0 ) {
-				error_log( 'Joinotify: Class requires constructor parameters: ' . $class );
-				return null;
-			}
-
-			$instance = $reflection->newInstance();
+			$instance = new $class();
 
 			$this->instantiated_classes[ $class ] = $instance;
 
-			if ( method_exists( $instance, 'init' ) ) {
-				$init_method = $reflection->getMethod( 'init' );
-
-				if ( $init_method->isPublic() && ! $init_method->isStatic() ) {
-					$instance->init();
-				}
+			// Run the optional init() lifecycle method. is_callable() returns
+			// false for private/protected methods, mirroring the previous
+			// public, non-static reflection guard.
+			if ( is_callable( array( $instance, 'init' ) ) ) {
+				$instance->init();
 			}
 
 			return $instance;
 
-		} catch ( ReflectionException $e ) {
-			error_log( 'Joinotify: Reflection error for class ' . $class . ': ' . $e->getMessage() );
-			
-			return null;
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			error_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
-			
+
 			return null;
 		}
 	}
