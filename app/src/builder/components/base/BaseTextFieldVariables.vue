@@ -19,7 +19,11 @@ interface PlaceholderItem {
   placeholder: string;
   description?: string;
   replacement?: Record<string, unknown>;
+  available?: boolean;
 }
+
+// Shown when a known variable is not provided by the current trigger's context.
+const UNAVAILABLE_TIP = __('This text variable may not work in this context', textDomain);
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
@@ -52,7 +56,7 @@ function normalizeKey(placeholder: string): string {
 }
 
 const lookup = computed(() => {
-  const map = new Map<string, string>();
+  const map = new Map<string, { tip: string; available: boolean }>();
 
   for (const raw of Array.isArray(props.placeholders) ? props.placeholders : []) {
     const item = typeof raw === 'string' ? { placeholder: raw } : raw;
@@ -78,7 +82,10 @@ const lookup = computed(() => {
       parts.push(`${__('Example', textDomain)}: ${sandbox}`);
     }
 
-    map.set(normalizeKey(item.placeholder), parts.join(' — '));
+    map.set(normalizeKey(item.placeholder), {
+      tip: parts.join(' — '),
+      available: item.available !== false,
+    });
   }
 
   return map;
@@ -97,11 +104,17 @@ const mirrorHtml = computed(() => {
   }
 
   return escaped.replace(/\{\{[\s\S]*?\}\}/g, (match) => {
-    const tip = lookup.value.get(normalizeKey(match)) || '';
+    const entry = lookup.value.get(normalizeKey(match));
+    const unavailable = Boolean(entry) && !entry!.available;
+
+    const baseTip = entry?.tip || '';
+    const tip = unavailable ? (baseTip ? `${baseTip} — ${UNAVAILABLE_TIP}` : UNAVAILABLE_TIP) : baseTip;
+
     const interactive = tip ? ' pointer-events-auto cursor-help' : '';
     const tipAttr = tip ? ` data-tip="${escapeHtml(tip)}"` : '';
+    const colors = unavailable ? 'bg-amber-100 text-amber-800' : 'bg-primary-50 text-primary-800';
 
-    return `<span class="joinotify-var rounded bg-primary-50 text-primary-800${interactive}"${tipAttr}>${match}</span>`;
+    return `<span class="joinotify-var rounded ${colors}${interactive}"${tipAttr}>${match}</span>`;
   });
 });
 

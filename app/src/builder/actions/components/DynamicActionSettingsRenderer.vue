@@ -19,7 +19,12 @@ const definition = computed(() => registry.get(props.action));
 const settingsComponent = computed(() => definition.value?.settingsComponent);
 const placeholderItems = computed(() => {
   const source = Array.isArray(props.availablePlaceholders) ? props.availablePlaceholders : [];
-  const items: Array<{ placeholder: string; description?: string }> = [];
+  const items: Array<{ placeholder: string; description?: string; available?: boolean }> = [];
+
+  // Preserve the context-availability flag computed upstream so unavailable
+  // variables keep their warning style/tooltip in the action settings fields.
+  const readAvailable = (entry: Record<string, unknown>): boolean | undefined =>
+    typeof entry.available === 'boolean' ? entry.available : undefined;
 
   for (const entry of source as Array<Record<string, unknown> | string>) {
     if (typeof entry === 'string') {
@@ -39,6 +44,7 @@ const placeholderItems = computed(() => {
           items.push({
             placeholder,
             description: String((nested as Record<string, unknown>).description || ''),
+            available: readAvailable(nested as Record<string, unknown>),
           });
         }
       }
@@ -50,6 +56,7 @@ const placeholderItems = computed(() => {
       items.push({
         placeholder,
         description: String(entry.description || ''),
+        available: readAvailable(entry),
       });
     }
   }

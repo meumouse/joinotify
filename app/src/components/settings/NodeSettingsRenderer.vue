@@ -60,14 +60,31 @@ function updateSettingField(key: string, value: unknown) {
   };
 }
 
-const placeholderItems = computed(() =>
-  (store.placeholderCatalog || []).flatMap((group) =>
-    (group.items || []).map((item) => ({
-      placeholder: item.placeholder,
-      description: item.description,
-    }))
-  )
+// The workflow's trigger slug, used to flag placeholders that are valid tokens
+// but not provided by the current trigger's context.
+const currentTriggerSlug = computed(() =>
+  String(store.triggerNode?.data?.trigger || store.selectedTrigger || '').trim()
 );
+
+const placeholderItems = computed(() => {
+  const trigger = currentTriggerSlug.value;
+
+  return (store.placeholderCatalog || []).flatMap((group) =>
+    (group.items || []).map((item) => {
+      const triggers = Array.isArray(item.triggers) ? item.triggers : [];
+      // An empty `triggers` list means a global placeholder, available in every
+      // context. Otherwise it resolves only when the current trigger is listed.
+      // When the trigger is still unknown, assume available so we never warn blindly.
+      const available = !trigger || triggers.length === 0 || triggers.includes(trigger);
+
+      return {
+        placeholder: item.placeholder,
+        description: item.description,
+        available,
+      };
+    })
+  );
+});
 
 watch(
   () => props.node,

@@ -29,7 +29,11 @@ interface PlaceholderItem {
   placeholder: string;
   description?: string;
   replacement?: Record<string, unknown>;
+  available?: boolean;
 }
+
+// Shown when a known variable is not provided by the current trigger's context.
+const UNAVAILABLE_TIP = __('This text variable may not work in this context', textDomain);
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
@@ -82,7 +86,7 @@ function normalizeKey(placeholder: string): string {
 }
 
 const lookup = computed(() => {
-  const map = new Map<string, string>();
+  const map = new Map<string, { tip: string; available: boolean }>();
 
   for (const raw of Array.isArray(props.placeholders) ? props.placeholders : []) {
     const item = typeof raw === 'string' ? { placeholder: raw } : raw;
@@ -108,7 +112,10 @@ const lookup = computed(() => {
       parts.push(`${__('Example', textDomain)}: ${sandbox}`);
     }
 
-    map.set(normalizeKey(item.placeholder), parts.join(' — '));
+    map.set(normalizeKey(item.placeholder), {
+      tip: parts.join(' — '),
+      available: item.available !== false,
+    });
   }
 
   return map;
@@ -117,15 +124,23 @@ const lookup = computed(() => {
 /**
  * Render a single {{ variable }} token as a non-editable chip carrying the raw
  * token (so it can be serialized back) and, when known, the tooltip sample.
+ * Variables not provided by the current trigger's context get a warning style
+ * and message instead of the default highlight.
  */
 function chipHtml(raw: string): string {
   const key = normalizeKey(raw);
-  const tip = lookup.value.get(key) || '';
+  const entry = lookup.value.get(key);
+  const unavailable = Boolean(entry) && !entry!.available;
+
+  const baseTip = entry?.tip || '';
+  const tip = unavailable ? (baseTip ? `${baseTip} — ${UNAVAILABLE_TIP}` : UNAVAILABLE_TIP) : baseTip;
+
   const cursor = tip ? ' cursor-help' : '';
   const tipAttr = tip ? ` data-tip="${escapeHtml(tip)}"` : '';
+  const colors = unavailable ? 'bg-amber-100 text-amber-800' : 'bg-primary-50 text-primary-800';
 
   return (
-    `<span class="joinotify-var inline-block rounded bg-primary-50 px-1 font-semibold text-primary-800${cursor}"` +
+    `<span class="joinotify-var inline-block rounded px-1 font-semibold ${colors}${cursor}"` +
     ` contenteditable="false" data-var="${escapeHtml(raw)}"${tipAttr}>${escapeHtml(raw)}</span>`
   );
 }

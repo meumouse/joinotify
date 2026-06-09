@@ -16,7 +16,11 @@ interface PlaceholderItem {
   placeholder: string;
   description?: string;
   replacement?: Record<string, unknown>;
+  available?: boolean;
 }
+
+// Shown when a known variable is not provided by the current trigger's context.
+const UNAVAILABLE_TIP = __('This text variable may not work in this context', textDomain);
 
 const props = defineProps({
   value: { type: String, default: '' },
@@ -46,7 +50,7 @@ function normalizeKey(placeholder: string): string {
 }
 
 const lookup = computed(() => {
-  const map = new Map<string, string>();
+  const map = new Map<string, { tip: string; available: boolean }>();
 
   for (const raw of Array.isArray(props.placeholders) ? props.placeholders : []) {
     const item = typeof raw === 'string' ? { placeholder: raw } : raw;
@@ -72,7 +76,10 @@ const lookup = computed(() => {
       parts.push(`${__('Example', textDomain)}: ${sandbox}`);
     }
 
-    map.set(normalizeKey(item.placeholder), parts.join(' — '));
+    map.set(normalizeKey(item.placeholder), {
+      tip: parts.join(' — '),
+      available: item.available !== false,
+    });
   }
 
   return map;
@@ -82,12 +89,20 @@ const html = computed(() => {
   const sanitized = sanitizePreviewHtml(String(props.value || ''));
 
   return sanitized.replace(/\{\{[\s\S]*?\}\}/g, (match) => {
-    const tip = lookup.value.get(normalizeKey(match)) || '';
-    const known = lookup.value.has(normalizeKey(match));
+    const entry = lookup.value.get(normalizeKey(match));
+    const known = Boolean(entry);
+    const unavailable = known && !entry!.available;
+
+    // Append the context warning to the variable's own tooltip (or use it alone
+    // when the variable has no description/example of its own).
+    const baseTip = entry?.tip || '';
+    const tip = unavailable ? (baseTip ? `${baseTip} — ${UNAVAILABLE_TIP}` : UNAVAILABLE_TIP) : baseTip;
+
     const tipAttr = tip ? ` data-tip="${escapeHtml(tip)}"` : '';
     const cursor = tip ? ' cursor-help' : '';
+    const colors = unavailable ? 'bg-amber-100 text-amber-800' : 'bg-primary-50 text-primary-800';
 
-    return `<span class="joinotify-var rounded bg-primary-50 px-1 font-semibold text-primary-800${cursor}"${tipAttr} data-known="${known}">${escapeHtml(match)}</span>`;
+    return `<span class="joinotify-var rounded px-1 font-semibold ${colors}${cursor}"${tipAttr} data-known="${known}">${escapeHtml(match)}</span>`;
   });
 });
 
