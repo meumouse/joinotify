@@ -42,6 +42,38 @@ class Settings_Assets extends Abstract_Assets {
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
         add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
+        add_filter( 'load_script_translation_file', array( $this, 'resolve_script_translation_file' ), 10, 3 );
+    }
+
+
+    /**
+     * Point WordPress at our handle-named JSON translation files.
+     *
+     * Core resolves script translations as "{domain}-{locale}-{md5(src)}.json",
+     * but the languages pipeline emits "{domain}-{locale}-{handle}.json". Without
+     * this remap WP never finds the JSON, wp.i18n keeps the original strings, and
+     * the Vue apps render untranslated. Vite hashes the entry paths, so a stable
+     * md5-based name cannot be generated ahead of the build.
+     *
+     * @since 2.0.0
+     * @param string|false $file   Translation file path resolved by core.
+     * @param string       $handle Script handle being translated.
+     * @param string       $domain Text domain.
+     * @return string|false
+     */
+    public function resolve_script_translation_file( $file, $handle, $domain ) {
+        if ( 'joinotify' !== $domain ) {
+            return $file;
+        }
+
+        $locale = determine_locale();
+        $candidate = trailingslashit( JOINOTIFY_DIR ) . "languages/joinotify-{$locale}-{$handle}.json";
+
+        if ( is_readable( $candidate ) ) {
+            return $candidate;
+        }
+
+        return $file;
     }
 
 

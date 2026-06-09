@@ -18,6 +18,8 @@ const SCRIPT_HANDLES = [
   "joinotify-settings-app",
   "joinotify-license-app",
   "joinotify-builder-app",
+  "joinotify-workflows-app",
+  "joinotify-history-app",
 ];
 const POT_FILE = path.join(__dirname, `${TEXT_DOMAIN}.pot`);
 const BATCH_SIZE = 50;
