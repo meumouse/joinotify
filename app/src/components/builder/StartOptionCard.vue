@@ -12,12 +12,12 @@ defineEmits(['click']);
 </script>
 
 <template>
-  <article class="flex h-full flex-col items-center rounded-lg border border-slate-200 bg-white px-8 py-10 text-center transition hover:border-primary-200">
+  <article class="flex h-full flex-col items-center rounded-lg border border-slate-200 bg-white px-8 py-10 text-center transition hover:border-primary-200 lg:px-10 lg:py-12">
     <div class="mb-7 flex h-14 w-14 items-center justify-center rounded-lg border border-dashed border-primary-200 bg-primary-50 text-primary-700">
       <slot name="icon" />
     </div>
     <h3 class="text-[20px] font-semibold tracking-tight text-slate-900">{{ title }}</h3>
-    <p class="mt-3 max-w-[18rem] text-sm leading-6 text-slate-500">{{ description }}</p>
+    <p class="mt-3 max-w-[20rem] text-sm leading-6 text-slate-500">{{ description }}</p>
     <div class="mt-7">
       <BaseButton class="min-w-[148px]" :title="cta" variant="secondary" :disabled="disabled" @click="$emit('click')" />
     </div>

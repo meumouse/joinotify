@@ -10,7 +10,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
 </script>
 
 <template>
-  <section class="mx-auto flex min-h-full w-full max-w-6xl flex-col items-center justify-center px-4 py-10">
+  <section class="mx-auto flex min-h-full w-full max-w-7xl flex-col items-center justify-center px-4 py-10 sm:px-6 lg:px-8 2xl:max-w-[88rem]">
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-[32px] font-semibold tracking-tight text-slate-900 sm:text-[34px]">
         {{ __('How would you like to create your new workflow?', textDomain) }}
@@ -20,7 +20,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
       </p>
     </div>
 
-    <div class="mt-14 grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="mt-14 grid w-full gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-8">
       <StartOptionCard
         :title="__('Start from scratch', textDomain)"
         :description="__('Create your automation workflow from scratch.', textDomain)"
