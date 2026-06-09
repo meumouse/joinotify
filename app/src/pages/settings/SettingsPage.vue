@@ -42,6 +42,8 @@ const debugLogs = ref([]);
 const logsOpen = ref(false);
 const logsLoading = ref(false);
 const saving = ref(false);
+const exporting = ref(false);
+const importing = ref(false);
 const refreshingSenderPhone = ref('');
 const senderActionLoading = ref(false);
 const proxyConfigOpen = ref(false);
@@ -316,6 +318,75 @@ async function saveSettings() {
   } finally {
     saving.value = false;
   }
+}
+
+async function exportSettings() {
+  if (exporting.value) {
+    return;
+  }
+
+  exporting.value = true;
+  debugLogger.log('settings:export-start');
+
+  try {
+    const response = await api.get('/admin/settings/export');
+    const payload = response.payload || {};
+    const filename = response.filename || 'joinotify-settings.json';
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    toast(__('Settings exported.', textDomain), 'success', __('Export', textDomain));
+    debugLogger.log('settings:export-complete', { filename });
+  } catch (error) {
+    toast(error.message || __('Could not export the settings.', textDomain), 'danger', __('Export', textDomain));
+    debugLogger.log('settings:export-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    exporting.value = false;
+  }
+}
+
+function confirmImportSettings(payload) {
+  debugLogger.log('settings:import-confirm-open');
+  confirm.open = true;
+  confirm.title = __('Import settings', textDomain);
+  confirm.description = __('The configuration in the file will be merged into your current settings. This cannot be undone.', textDomain);
+  confirm.action = async () => {
+    importing.value = true;
+
+    try {
+      const response = await api.post('/admin/settings/import', { payload });
+
+      if (response.bootstrap) {
+        bootstrap.value = cloneValue(response.bootstrap);
+        syncSettings(bootstrap.value.settings || {});
+        await loadPhoneCandidates();
+      }
+
+      toast(response.message || __('Settings imported.', textDomain), 'success', __('Import', textDomain));
+      debugLogger.log('settings:import-complete', response.imported || {});
+    } catch (error) {
+      toast(error.message || __('Could not import the settings.', textDomain), 'danger', __('Import', textDomain));
+      debugLogger.log('settings:import-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    } finally {
+      importing.value = false;
+    }
+  };
+}
+
+function onImportError(message) {
+  toast(message || __('Invalid file.', textDomain), 'danger', __('Import', textDomain));
 }
 
 async function checkUpdates() {
@@ -732,11 +803,16 @@ function canConfigureIntegration(integration) {
             :system="system"
             :version="pluginVersion"
             :update-state="updateState"
+            :exporting="exporting"
+            :importing="importing"
             @update-setting="updateSetting"
             @open-logs="openLogs"
             @reset="confirmReset"
             @clear-logs="confirmClearLogs"
             @check-updates="checkUpdates"
+            @export="exportSettings"
+            @import="confirmImportSettings"
+            @import-error="onImportError"
           />
         </div>
 

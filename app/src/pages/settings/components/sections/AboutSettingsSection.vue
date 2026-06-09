@@ -10,6 +10,7 @@ import { __, textDomain } from '../../../../utils/i18n';
 import FieldRow from '../../../../components/fields/FieldRow.vue';
 import FieldControl from '../../../../components/fields/FieldControl.vue';
 import SystemStatusPanel from '../cards/SystemStatusPanel.vue';
+import ImportExportSettings from '../cards/ImportExportSettings.vue';
 import DangerZone from '../cards/DangerZone.vue';
 
 defineProps({
@@ -19,9 +20,11 @@ defineProps({
   system: { type: Object, default: () => ({}) },
   version: { type: String, default: '' },
   updateState: { type: Object, default: () => ({}) },
+  exporting: { type: Boolean, default: false },
+  importing: { type: Boolean, default: false },
 });
 
-defineEmits(['update-setting', 'open-logs', 'reset', 'clear-logs', 'check-updates']);
+defineEmits(['update-setting', 'open-logs', 'reset', 'clear-logs', 'check-updates', 'export', 'import', 'import-error']);
 </script>
 
 <template>
@@ -92,6 +95,16 @@ defineEmits(['update-setting', 'open-logs', 'reset', 'clear-logs', 'check-update
 
     <div class="mt-6">
       <SystemStatusPanel :system="system" />
+    </div>
+
+    <div class="mt-8">
+      <ImportExportSettings
+        :exporting="exporting"
+        :importing="importing"
+        @export="$emit('export')"
+        @import="$emit('import', $event)"
+        @error="$emit('import-error', $event)"
+      />
     </div>
 
     <div class="mt-8">

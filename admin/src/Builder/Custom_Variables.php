@@ -153,6 +153,72 @@ class Custom_Variables {
 
 
     /**
+     * Merge a list of imported variables into the stored set.
+     *
+     * Variables are matched by token: an incoming token that already exists is
+     * updated in place (keeping its id), a brand new token is appended with a
+     * fresh id, and tokens that collide with a built-in placeholder are skipped.
+     *
+     * @since 2.0.0
+     * @param array<int,mixed> $incoming Imported variables.
+     * @return array{imported:int,skipped:int}
+     */
+    public static function import( $incoming ) {
+        if ( ! is_array( $incoming ) ) {
+            return array( 'imported' => 0, 'skipped' => 0 );
+        }
+
+        $variables = self::get_all();
+        $by_token = array();
+
+        foreach ( $variables as $index => $existing ) {
+            $by_token[ $existing['token'] ] = $index;
+        }
+
+        $imported = 0;
+        $skipped = 0;
+
+        foreach ( $incoming as $raw ) {
+            $variable = self::normalize( $raw );
+
+            if ( '' === $variable['token'] || '' === $variable['post_type'] || '' === $variable['meta_key'] ) {
+                $skipped++;
+                continue;
+            }
+
+            // update an existing custom variable that uses the same token
+            if ( isset( $by_token[ $variable['token'] ] ) ) {
+                $index = $by_token[ $variable['token'] ];
+                $variable['id'] = $variables[ $index ]['id'];
+                $variables[ $index ] = $variable;
+                $imported++;
+                continue;
+            }
+
+            // skip tokens that clash with a built-in placeholder
+            if ( self::token_exists( $variable['token'] ) ) {
+                $skipped++;
+                continue;
+            }
+
+            $variable['id'] = uniqid( 'jcv_', false );
+            $variables[] = $variable;
+            $by_token[ $variable['token'] ] = count( $variables ) - 1;
+            $imported++;
+        }
+
+        if ( $imported > 0 ) {
+            update_option( self::OPTION, array_values( $variables ) );
+        }
+
+        return array(
+            'imported' => $imported,
+            'skipped'  => $skipped,
+        );
+    }
+
+
+    /**
      * Delete a custom variable by id.
      *
      * @since 2.0.0

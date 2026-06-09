@@ -29,6 +29,8 @@ class Rest_Controller extends Abstract_Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Debug_Clear',
         '\MeuMouse\Joinotify\Rest\Debug_Download',
         '\MeuMouse\Joinotify\Rest\Settings_Reset',
+        '\MeuMouse\Joinotify\Rest\Settings_Export',
+        '\MeuMouse\Joinotify\Rest\Settings_Import',
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Save',
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Delete',
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Meta_Keys',
