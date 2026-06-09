@@ -15,6 +15,7 @@ import {
   getTriggersForContext,
   setTriggerCatalog,
 } from '../registries/triggerRegistry';
+import { setConditionsCatalog } from '../builder/actions/utils/conditionsCatalog';
 import { getTriggerSettingsSchema } from '../utils/triggerSettings';
 import {
   createWorkflowFileFromParts,
@@ -382,6 +383,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   function setApiFromBootstrap(value: BuilderBootstrap) {
     bootstrap.value = cloneSerializable(value || {});
     api.value = createWorkflowApiClient(bootstrap.value);
+
+    // Mirror the conditions catalog so the pure node-description builders can
+    // resolve translated condition titles, operators and value labels.
+    setConditionsCatalog((bootstrap.value as Record<string, unknown> | undefined)?.conditions);
     debugLogger.log('bootstrap:api-ready', {
       debug_mode: Boolean(bootstrap.value?.debug_mode),
       post_id: Number(bootstrap.value?.workflow?.post_id || 0) || 0,
