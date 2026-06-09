@@ -481,6 +481,9 @@ class Controller {
         $sender = preg_replace( '/\D/', '', $sender );
         $receiver = joinotify_prepare_receiver( $receiver );
 
+        // Convert rich text HTML formatting (e.g. <strong>) into WhatsApp markdown (e.g. *bold*)
+        $message = joinotify_convert_html_to_whatsapp( $message );
+
         // history fields recorded on every return path
         $fields = array(
             'message_type' => 'text',
@@ -618,6 +621,9 @@ class Controller {
     public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
         $sender = preg_replace( '/\D/', '', $sender );
         $receiver = joinotify_prepare_receiver( $receiver );
+
+        // Convert rich text HTML formatting (e.g. <strong>) into WhatsApp markdown (e.g. *bold*)
+        $caption = joinotify_convert_html_to_whatsapp( $caption );
 
         // history fields recorded on every return path
         $fields = array(

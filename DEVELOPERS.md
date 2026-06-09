@@ -239,6 +239,7 @@ thin, documented wrappers over the internal classes, so you never have to couple
 |---|---|---|
 | `joinotify_replace_placeholders($message, $payload, $mode)` | `Placeholders::replace_placeholders` | `string` |
 | `joinotify_prepare_message($message, $payload)` | `Placeholders` + `{{ ai:NAME }}` | `string` |
+| `joinotify_convert_html_to_whatsapp($message)` | rich text HTML → WhatsApp markdown | `string` |
 | `joinotify_prepare_receiver($receiver, $payload)` | placeholders + phone format | `string` (digits) |
 | `joinotify_get_placeholders($integration, $trigger, $context)` | `Placeholders::get_placeholders_list` | `array` |
 | `joinotify_get_workflows($args)` | `get_posts()` (post type locked) | `WP_Post[]`/`int[]` |

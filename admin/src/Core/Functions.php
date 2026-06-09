@@ -177,6 +177,55 @@ function joinotify_format_plain_text( $content ) {
 
 
 /**
+ * Convert the HTML formatting produced by the builder rich text field into
+ * WhatsApp markdown syntax.
+ *
+ * The rich text editor stores inline formatting as HTML tags (e.g.
+ * <strong>word</strong>), but WhatsApp expects its own markers. This maps:
+ * bold -> *word*, italic -> _word_, strikethrough -> ~word~. WhatsApp has no
+ * underline, so <u> is dropped while keeping its text. Nested tags collapse
+ * from the inside out (e.g. <strong><em>x</em></strong> -> *_x_*).
+ *
+ * Safe on plain messages: when no HTML tag is present the input is returned
+ * untouched, which also makes the conversion idempotent.
+ *
+ * @since 2.0.0
+ * @param string $message | Message text, possibly containing HTML formatting
+ * @return string Message using WhatsApp markdown
+ */
+function joinotify_convert_html_to_whatsapp( $message ) {
+	$message = is_scalar( $message ) ? (string) $message : '';
+
+	// Nothing to convert when there is no markup.
+	if ( false === strpos( $message, '<' ) ) {
+		return $message;
+	}
+
+	// Normalize <br> variants to line breaks (pasted content may include them).
+	$message = preg_replace( '/<br\s*\/?>/i', "\n", $message );
+
+	// Map inline formatting tags to WhatsApp markers. Patterns run in sequence,
+	// so nested tags collapse from the inside out.
+	$message = preg_replace( array(
+		'/<(?:strong|b)(?:\s[^>]*)?>(.*?)<\/(?:strong|b)>/is',         // bold
+		'/<(?:em|i)(?:\s[^>]*)?>(.*?)<\/(?:em|i)>/is',                 // italic
+		'/<(?:del|s|strike)(?:\s[^>]*)?>(.*?)<\/(?:del|s|strike)>/is', // strikethrough
+		'/<u(?:\s[^>]*)?>(.*?)<\/u>/is',                               // underline (unsupported by WhatsApp)
+	), array(
+		'*$1*',
+		'_$1_',
+		'~$1~',
+		'$1',
+	), $message );
+
+	// Drop any leftover style wrappers the editor may emit, keeping their text.
+	$message = preg_replace( '/<\/?(?:span|font)(?:\s[^>]*)?>/i', '', $message );
+
+	return $message;
+}
+
+
+/**
  * Get first sender phone number
  *
  * @since 1.3.0
