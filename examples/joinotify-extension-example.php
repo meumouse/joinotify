@@ -77,8 +77,9 @@ add_action( 'plugins_loaded', function() {
 
 		// Runtime handler — runs when a workflow reaches this action.
 		'handler' => function( $action_data, $action, $post_id, $event_data ) {
-			$to      = \MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders( $action_data['to'] ?? '', $event_data );
-			$message = \MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders( $action_data['message'] ?? '', $event_data );
+			// Resolve {{ ... }} tokens with the runtime helper (see DEVELOPERS.md → Runtime helpers).
+			$to      = joinotify_replace_placeholders( $action_data['to'] ?? '', $event_data );
+			$message = joinotify_replace_placeholders( $action_data['message'] ?? '', $event_data );
 
 			// Replace with a real SMS gateway call.
 			if ( defined( 'JOINOTIFY_DEV_MODE' ) && JOINOTIFY_DEV_MODE ) {

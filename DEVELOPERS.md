@@ -229,6 +229,53 @@ joinotify_register_rest_route([
 
 ---
 
+## Runtime helpers
+
+Besides the `joinotify_register_*()` registration facade, Joinotify ships read/resolve helpers you
+can call anywhere at runtime (inside action handlers, your own hooks, REST callbacks, …). They are
+thin, documented wrappers over the internal classes, so you never have to couple to namespaced code.
+
+| Helper | Wraps | Returns |
+|---|---|---|
+| `joinotify_replace_placeholders($message, $payload, $mode)` | `Placeholders::replace_placeholders` | `string` |
+| `joinotify_prepare_message($message, $payload)` | `Placeholders` + `{{ ai:NAME }}` | `string` |
+| `joinotify_prepare_receiver($receiver, $payload)` | placeholders + phone format | `string` (digits) |
+| `joinotify_get_placeholders($integration, $trigger, $context)` | `Placeholders::get_placeholders_list` | `array` |
+| `joinotify_get_workflows($args)` | `get_posts()` (post type locked) | `WP_Post[]`/`int[]` |
+| `joinotify_get_workflow_content($post_id)` | `Helpers::get_workflow_content_meta` | `array` |
+| `joinotify_get_workflow_context($post_id)` | `Utils::get_context_from_post` | `string\|null` |
+| `joinotify_find_workflow_item($content, $item_id)` | `Utils::find_workflow_item_by_id` | `array\|null` |
+| `joinotify_workflow_has_content($post_id, $type)` | `Utils::check_workflow_content` | `bool` |
+| `joinotify_get_senders()` | `Phone_Manager::get_senders` | `array` |
+| `joinotify_is_valid_sender($sender)` | `Helpers::allowed_sender` | `bool` |
+| `joinotify_format_phone($phone)` | `Helpers::validate_and_format_phone` | `string` |
+| `joinotify_get_first_sender()` | first connected sender | `string\|null` |
+| `joinotify_get_setting($key)` | `Admin::get_setting` | `mixed` (false if unset) |
+| `joinotify_get_message_history($args)` | `Message_History::get_items` | `array` |
+| `joinotify_send_whatsapp_message_text($sender, $receiver, $message, $delay)` | `Controller::send_message_text` | `int` |
+| `joinotify_send_whatsapp_message_media($sender, $receiver, $media_type, $media, $caption, $delay)` | `Controller::send_message_media` | `int` |
+
+```php
+// Resolve {{ ... }} tokens against a payload (eg: inside a custom action handler).
+$text = joinotify_replace_placeholders( '{{ wc_billing_first_name }}, your order is ready!', $event_data );
+
+// Send a WhatsApp message from the first connected sender.
+$sender = joinotify_get_first_sender();
+
+if ( $sender && joinotify_is_valid_sender( $sender ) ) {
+    joinotify_send_whatsapp_message_text( $sender, joinotify_format_phone( '11999998888' ), $text );
+}
+
+// Introspect workflows: find every WooCommerce workflow that has at least one action.
+foreach ( joinotify_get_workflows( array( 'fields' => 'ids' ) ) as $id ) {
+    if ( joinotify_get_workflow_context( $id ) === 'woocommerce' && joinotify_workflow_has_content( $id, 'action' ) ) {
+        // ... do something with $id ...
+    }
+}
+```
+
+---
+
 ## Notes & gotchas
 
 - **Register early.** Hook your registrations on `plugins_loaded`/`init` so the filters are wired
@@ -237,7 +284,8 @@ joinotify_register_rest_route([
   registered **and enabled** (its `setting_key` option is `'yes'`).
 - **Handler return value.** Action handlers must return `bool`. Returning a non‑bool may stop the
   funnel unexpectedly.
-- **Placeholder replacement.** Use `MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders( $text, $payload )`
-  inside your handler to resolve `{{ ... }}` tokens.
+- **Placeholder replacement.** Use `joinotify_replace_placeholders( $text, $payload )` (or the
+  underlying `MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders()`) inside your handler
+  to resolve `{{ ... }}` tokens. See the [Runtime helpers](#runtime-helpers) table for the full set.
 - **No JavaScript required.** The action library modal renders your category tab and your
   `settings_schema` fields automatically — you never touch the Vue frontend.

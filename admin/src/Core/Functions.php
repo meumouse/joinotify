@@ -10,7 +10,10 @@ use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Extensions;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Placeholders;
+use MeuMouse\Joinotify\Builder\Utils;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Phone_Manager;
+use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
@@ -191,6 +194,191 @@ function joinotify_get_first_sender() {
 	}
 
 	return $current_senders[0];
+}
+
+
+/**
+ * ---------------------------------------------------------------------------
+ * Developer runtime helpers.
+ *
+ * Public, discoverable wrappers over Joinotify's internal classes (Placeholders, Utils,
+ * Phone_Manager, Helpers, Admin, Message_History) so third parties can read and resolve data
+ * at runtime without coupling to namespaced classes. Full reference: DEVELOPERS.md.
+ * ---------------------------------------------------------------------------
+ */
+
+/**
+ * Replace Joinotify placeholders ({{ ... }}) in a string.
+ *
+ * Direct public wrapper over Placeholders::replace_placeholders(). Resolves static placeholders,
+ * field tokens ({{ field_id=[ID] }}), WooCommerce checkout fields ({{ wc_checkout_field=[ID] }})
+ * and user meta tokens ({{ user_meta[KEY] }}). For messages that may also contain AI smart
+ * variables ({{ ai:NAME }}), use joinotify_prepare_message() instead.
+ *
+ * @since 2.0.0
+ * @param string $message | Text containing placeholders.
+ * @param array  $payload | Context payload (integration, trigger, fields, order_id, user_id, ...).
+ * @param string $mode    | 'production' (send time) or 'sandbox' (builder preview). Default 'production'.
+ * @return string Text with placeholders replaced.
+ */
+function joinotify_replace_placeholders( $message, $payload = array(), $mode = 'production' ) {
+	return Placeholders::replace_placeholders( $message, $payload, $mode );
+}
+
+
+/**
+ * Get the list of available placeholders for an integration/trigger.
+ *
+ * @since 2.0.0
+ * @param string $integration | Integration/context slug. Empty returns only global placeholders.
+ * @param string $trigger     | Trigger slug to filter by. Empty returns all of the integration.
+ * @param array  $context     | Optional context passed to the Placeholders_List filter.
+ * @return array Map of '{{ token }}' => {triggers, description, replacement}.
+ */
+function joinotify_get_placeholders( $integration = '', $trigger = '', $context = array() ) {
+	return Placeholders::get_placeholders_list( $integration, $trigger, $context );
+}
+
+
+/**
+ * Query Joinotify workflows.
+ *
+ * Thin wrapper over get_posts() locked to the 'joinotify-workflow' post type. Pass any WP_Query
+ * arg (post_status, posts_per_page, meta_query, fields, ...); the post_type is always enforced.
+ *
+ * @since 2.0.0
+ * @param array $args | Extra WP_Query args merged over the defaults.
+ * @return array List of WP_Post objects (or IDs when 'fields' => 'ids').
+ */
+function joinotify_get_workflows( $args = array() ) {
+	$args = is_array( $args ) ? $args : array();
+
+	$query_args = array_merge( array(
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+	), $args );
+
+	// Always enforce the workflow post type.
+	$query_args['post_type'] = 'joinotify-workflow';
+
+	return get_posts( $query_args );
+}
+
+
+/**
+ * Get the decoded workflow content (tree of triggers/actions) of a workflow.
+ *
+ * @since 2.0.0
+ * @param int $post_id | Workflow post ID.
+ * @return array Workflow content tree, or empty array when none.
+ */
+function joinotify_get_workflow_content( $post_id ) {
+	$content = Helpers::get_workflow_content_meta( $post_id );
+
+	return is_array( $content ) ? $content : array();
+}
+
+
+/**
+ * Get the trigger context (integration slug) of a workflow.
+ *
+ * @since 2.0.0
+ * @param int $post_id | Workflow post ID.
+ * @return string|null Context slug (eg: 'woocommerce') or null when not found.
+ */
+function joinotify_get_workflow_context( $post_id ) {
+	return Utils::get_context_from_post( $post_id );
+}
+
+
+/**
+ * Find a single trigger/action item inside a workflow content tree by its ID.
+ *
+ * Searches recursively, including condition branches (action_true / action_false).
+ *
+ * @since 2.0.0
+ * @param array  $workflow_content | Workflow content tree (see joinotify_get_workflow_content()).
+ * @param string $item_id          | Trigger or action ID to locate.
+ * @return array|null The matching item, or null when not found.
+ */
+function joinotify_find_workflow_item( $workflow_content, $item_id ) {
+	$workflow_content = is_array( $workflow_content ) ? $workflow_content : array();
+
+	return Utils::find_workflow_item_by_id( $workflow_content, $item_id );
+}
+
+
+/**
+ * Check whether a workflow contains at least one item of the given type.
+ *
+ * @since 2.0.0
+ * @param int    $post_id | Workflow post ID.
+ * @param string $type    | Item type to look for ('trigger' or 'action').
+ * @return bool
+ */
+function joinotify_workflow_has_content( $post_id, $type = '' ) {
+	return Utils::check_workflow_content( $post_id, $type );
+}
+
+
+/**
+ * Get the list of connected WhatsApp sender phone numbers.
+ *
+ * @since 2.0.0
+ * @return array List of sender phone numbers.
+ */
+function joinotify_get_senders() {
+	return Phone_Manager::get_senders();
+}
+
+
+/**
+ * Check whether a phone number is a connected/allowed Joinotify sender.
+ *
+ * @since 2.0.0
+ * @param string $sender | Sender phone number.
+ * @return bool
+ */
+function joinotify_is_valid_sender( $sender ) {
+	return Helpers::allowed_sender( $sender );
+}
+
+
+/**
+ * Validate and format a phone number to the international format used by Joinotify.
+ *
+ * Falls back to the plugin's default country code (Settings) when the number has no country code.
+ *
+ * @since 2.0.0
+ * @param string $phone | Raw phone number.
+ * @return string Formatted phone number.
+ */
+function joinotify_format_phone( $phone ) {
+	return Helpers::validate_and_format_phone( $phone );
+}
+
+
+/**
+ * Get a Joinotify plugin setting value.
+ *
+ * @since 2.0.0
+ * @param string $key | Setting key.
+ * @return mixed Setting value, or false when the key is not set.
+ */
+function joinotify_get_setting( $key ) {
+	return Admin::get_setting( $key );
+}
+
+
+/**
+ * Get message history records.
+ *
+ * @since 2.0.0
+ * @param array $args | Filter args (status, sender, receiver, per_page, page, ...).
+ * @return array List of history rows (associative arrays).
+ */
+function joinotify_get_message_history( $args = array() ) {
+	return Message_History::get_items( is_array( $args ) ? $args : array() );
 }
 
 
