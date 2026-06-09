@@ -39,6 +39,7 @@ import {
   isConditionNode,
 } from '../../utils/workflowTree';
 import { getTriggerSettingsSchema, triggerNeedsSetup } from '../../utils/triggerSettings';
+import { actionNeedsSetup } from '../../utils/actionSettings';
 import type { WorkflowNode } from '../../types/workflowBuilder';
 
 interface NodeEditEvent {
@@ -201,6 +202,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
     config: getVisibleNodeConfig(node),
     icon,
     iconSvg,
+    needsSetup: actionNeedsSetup(node, actionDefinition),
     onEdit: handleNodeEdit,
     onRequestDelete: handleRemoveRequest,
     onSelect: handleNodeSelect,
