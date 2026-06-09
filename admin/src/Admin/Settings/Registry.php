@@ -42,14 +42,14 @@ class Registry {
         $schema = array(
             array(
                 'id' => 'general',
-                'title' => esc_html__( 'General', 'joinotify' ),
-                'description' => esc_html__( "Plugin's basic preferences, sending proxy, and WhatsApp notifications.", 'joinotify' ),
+                'title' => __( 'General', 'joinotify' ),
+                'description' => __( "Plugin's basic preferences, sending proxy, and WhatsApp notifications.", 'joinotify' ),
                 'layout' => 'cards',
                 'cards' => array(
                     array(
                         'id' => 'general-localization',
-                        'title' => esc_html__( 'Location and phone numbers', 'joinotify' ),
-                        'description' => esc_html__( 'Defines the default country used to format numbers and populate support options.', 'joinotify' ),
+                        'title' => __( 'Location and phone numbers', 'joinotify' ),
+                        'description' => __( 'Defines the default country used to format numbers and populate support options.', 'joinotify' ),
                         'fields' => array(
                             self::field_select(
                                 'joinotify_default_country_code',
@@ -74,8 +74,8 @@ class Registry {
                     ),
                     array(
                         'id' => 'general-proxy',
-                        'title' => esc_html__( 'Proxy API', 'joinotify' ),
-                        'description' => esc_html__( 'Activate and configure the endpoints used to process external API requests.', 'joinotify' ),
+                        'title' => __( 'Proxy API', 'joinotify' ),
+                        'description' => __( 'Activate and configure the endpoints used to process external API requests.', 'joinotify' ),
                         'fields' => array(
                             self::field_toggle(
                                 'enable_proxy_api',
@@ -112,55 +112,55 @@ class Registry {
             ),
             array(
                 'id' => 'phones',
-                'title' => esc_html__( 'Phones', 'joinotify' ),
-                'description' => esc_html__( 'Manage senders, validate new connections, and send test messages.', 'joinotify' ),
+                'title' => __( 'Phones', 'joinotify' ),
+                'description' => __( 'Manage senders, validate new connections, and send test messages.', 'joinotify' ),
                 'layout' => 'custom',
                 'cards' => array(
                     array(
                         'id' => 'phones-senders',
-                        'title' => esc_html__( 'Registered senders', 'joinotify' ),
-                        'description' => esc_html__( 'Phones already validated and available for use in workflows.', 'joinotify' ),
+                        'title' => __( 'Registered senders', 'joinotify' ),
+                        'description' => __( 'Phones already validated and available for use in workflows.', 'joinotify' ),
                         'component' => 'phone-sender-list',
                     ),
                     array(
                         'id' => 'phones-actions',
-                        'title' => esc_html__( 'Quick Tools', 'joinotify' ),
-                        'description' => esc_html__( 'Actions to add a new sender and send a test message.', 'joinotify' ),
+                        'title' => __( 'Quick Tools', 'joinotify' ),
+                        'description' => __( 'Actions to add a new sender and send a test message.', 'joinotify' ),
                         'component' => 'phone-actions',
                     ),
                 ),
             ),
             array(
                 'id' => 'integrations',
-                'title' => esc_html__( 'Integrations', 'joinotify' ),
-                'description' => esc_html__( 'Enable integrations, manage dependencies, and adjust advanced options for each service.', 'joinotify' ),
+                'title' => __( 'Integrations', 'joinotify' ),
+                'description' => __( 'Enable integrations, manage dependencies, and adjust advanced options for each service.', 'joinotify' ),
                 'layout' => 'cards',
                 'cards' => self::get_integration_cards(),
             ),
             array(
                 'id' => 'builder',
-                'title' => esc_html__( 'Builder', 'joinotify' ),
-                'description' => esc_html__( 'Create custom text variables mapped to post type meta keys to reuse in the flow builder.', 'joinotify' ),
+                'title' => __( 'Builder', 'joinotify' ),
+                'description' => __( 'Create custom text variables mapped to post type meta keys to reuse in the flow builder.', 'joinotify' ),
                 'layout' => 'custom',
                 'cards' => array(
                     array(
                         'id' => 'builder-variables',
-                        'title' => esc_html__( 'Custom variables', 'joinotify' ),
-                        'description' => esc_html__( 'Map an entity and meta key to a named variable available in the builder.', 'joinotify' ),
+                        'title' => __( 'Custom variables', 'joinotify' ),
+                        'description' => __( 'Map an entity and meta key to a named variable available in the builder.', 'joinotify' ),
                         'component' => 'builder-variables',
                     ),
                 ),
             ),
             array(
                 'id' => 'about',
-                'title' => esc_html__( 'About', 'joinotify' ),
-                'description' => esc_html__( 'Maintenance, logs, updates, and environment details.', 'joinotify' ),
+                'title' => __( 'About', 'joinotify' ),
+                'description' => __( 'Maintenance, logs, updates, and environment details.', 'joinotify' ),
                 'layout' => 'custom',
                 'cards' => array(
                     array(
                         'id' => 'about-maintenance',
-                        'title' => esc_html__( 'Maintenance and preference', 'joinotify' ),
-                        'description' => esc_html__( 'Operational plugin settings and development flags.', 'joinotify' ),
+                        'title' => __( 'Maintenance and preference', 'joinotify' ),
+                        'description' => __( 'Operational plugin settings and development flags.', 'joinotify' ),
                         'fields' => array(
                             self::field_toggle(
                                 'enable_debug_mode',
@@ -192,26 +192,26 @@ class Registry {
                                 esc_html__( 'History retention', 'joinotify' ),
                                 esc_html__( 'Automatically delete history records older than the selected period.', 'joinotify' ),
                                 array(
-                                    array( 'value' => '0', 'label' => esc_html__( 'Keep forever', 'joinotify' ) ),
-                                    array( 'value' => '30', 'label' => esc_html__( '30 days', 'joinotify' ) ),
-                                    array( 'value' => '60', 'label' => esc_html__( '60 days', 'joinotify' ) ),
-                                    array( 'value' => '90', 'label' => esc_html__( '90 days', 'joinotify' ) ),
-                                    array( 'value' => '180', 'label' => esc_html__( '180 days', 'joinotify' ) ),
-                                    array( 'value' => '365', 'label' => esc_html__( '365 days', 'joinotify' ) ),
+                                    array( 'value' => '0', 'label' => __( 'Keep forever', 'joinotify' ) ),
+                                    array( 'value' => '30', 'label' => __( '30 days', 'joinotify' ) ),
+                                    array( 'value' => '60', 'label' => __( '60 days', 'joinotify' ) ),
+                                    array( 'value' => '90', 'label' => __( '90 days', 'joinotify' ) ),
+                                    array( 'value' => '180', 'label' => __( '180 days', 'joinotify' ) ),
+                                    array( 'value' => '365', 'label' => __( '365 days', 'joinotify' ) ),
                                 )
                             ),
                         ),
                     ),
                     array(
                         'id' => 'about-system',
-                        'title' => esc_html__( 'System status', 'joinotify' ),
-                        'description' => esc_html__( 'A quick overview of the WordPress environment, PHP, and critical extensions.', 'joinotify' ),
+                        'title' => __( 'System status', 'joinotify' ),
+                        'description' => __( 'A quick overview of the WordPress environment, PHP, and critical extensions.', 'joinotify' ),
                         'component' => 'system-status',
                     ),
                     array(
                         'id' => 'about-danger',
-                        'title' => esc_html__( 'Danger zone', 'joinotify' ),
-                        'description' => esc_html__( 'Irreversible actions and configuration cleanup.', 'joinotify' ),
+                        'title' => __( 'Danger zone', 'joinotify' ),
+                        'description' => __( 'Irreversible actions and configuration cleanup.', 'joinotify' ),
                         'component' => 'danger-zone',
                     ),
                 ),
@@ -232,31 +232,31 @@ class Registry {
         $tabs = array(
             array(
                 'id' => 'general',
-                'name' => esc_html__( 'General', 'joinotify' ),
+                'name' => __( 'General', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon"><path d="M7.5 14.5c-1.58 0-2.903 1.06-3.337 2.5H2v2h2.163c.434 1.44 1.757 2.5 3.337 2.5s2.903-1.06 3.337-2.5H22v-2H10.837c-.434-1.44-1.757-2.5-3.337-2.5zm0 5c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5S9 17.173 9 18s-.673 1.5-1.5 1.5zm9-11c-1.58 0-2.903 1.06-3.337 2.5H2v2h11.163c.434 1.44 1.757 2.5 3.337 2.5s2.903-1.06 3.337-2.5H22v-2h-2.163c-.434-1.44-1.757-2.5-3.337-2.5zm0 5c-.827 0-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5 1.5.673 1.5 1.5-.673 1.5-1.5 1.5z"></path><path d="M12.837 5C12.403 3.56 11.08 2.5 9.5 2.5S6.597 3.56 6.163 5H2v2h4.163C6.597 8.44 7.92 9.5 9.5 9.5s2.903-1.06 3.337-2.5h9.288V5h-9.288zM9.5 7.5C8.673 7.5 8 6.827 8 6s.673-1.5 1.5-1.5S11 5.173 11 6s-.673 1.5-1.5 1.5z"></path></svg>',
                 'section' => 'general',
             ),
             array(
                 'id' => 'phones',
-                'name' => esc_html__( 'Phones', 'joinotify' ),
+                'name' => __( 'Phones', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg"><path d="M17.707 12.293a.999.999 0 0 0-1.414 0l-1.594 1.594c-.739-.22-2.118-.72-2.992-1.594s-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a.999.999 0 0 0-1.414 0L3.581 5.005c-.38.38-.594.902-.586 1.435.023 1.424.4 6.37 4.298 10.268s8.844 4.274 10.269 4.298h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-4-4.001zm-.127 6.712c-1.248-.021-5.518-.356-8.873-3.712-3.366-3.366-3.692-7.651-3.712-8.874L7 4.414 9.586 7 8.293 8.293a1 1 0 0 0-.272.912c.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.991.991 0 0 0 .912-.271L17 14.414 19.586 17l-2.006 2.005z"></path></svg>',
                 'section' => 'phones',
             ),
             array(
                 'id' => 'integrations',
-                'name' => esc_html__( 'Integrations', 'joinotify' ),
-                'icon' => '<svg class="joinotify-tab-icon"><path d="M3 8h2v5c0 2.206 1.794 4 4 4h2v5h2v-5h2c2.206 0 4-1.794 4-4V8h2V6H3v2zm4 0h10v5c0 1.103-.897 2-2 2H9c-1.103 0-2-.897-2-2V8zm0-6h2v3H7zm8 0h2v3h-2z"></path></svg>',
+                'name' => __( 'Applications', 'joinotify' ),
+                'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" ><path d="M4.5 11h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5C3.67 3 3 3.67 3 4.5v5c0 .83.67 1.5 1.5 1.5M5 5h4v4H5zm14.5-2h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5M19 9h-4V5h4zM4.5 21h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5m.5-6h4v4H5zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path></svg>',
                 'section' => 'integrations',
             ),
             array(
                 'id' => 'builder',
-                'name' => esc_html__( 'Builder', 'joinotify' ),
+                'name' => __( 'Builder', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 5.63l-2.34-2.34a1 1 0 0 0-1.41 0l-3.12 3.12-1.83-1.81-1.41 1.41 1.41 1.41L4 16.42V20h3.58l7.01-7.01 1.41 1.41 1.41-1.41-1.81-1.83 3.12-3.12a1 1 0 0 0-.01-1.41zM6.75 18H6v-.75l6.96-6.96.75.75L6.75 18zm9.96-9.96-1.41-1.41 1.41-1.41 1.41 1.41-1.41 1.41z"></path></svg>',
                 'section' => 'builder',
             ),
             array(
                 'id' => 'about',
-                'name' => esc_html__( 'About', 'joinotify' ),
+                'name' => __( 'About', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path></svg>',
                 'section' => 'about',
             ),
@@ -390,76 +390,76 @@ class Registry {
         return array(
             'wordpress' => array(
                 array(
-                    'label' => esc_html__( 'WordPress version', 'joinotify' ),
+                    'label' => __( 'WordPress version', 'joinotify' ),
                     'value' => get_bloginfo( 'version' ),
                     'status' => 'info',
                 ),
                 array(
-                    'label' => esc_html__( 'WordPress Multisite', 'joinotify' ),
+                    'label' => __( 'WordPress Multisite', 'joinotify' ),
                     'value' => is_multisite() ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'No', 'joinotify' ),
                     'status' => 'info',
                 ),
                 array(
-                    'label' => esc_html__( 'WP_DEBUG', 'joinotify' ),
+                    'label' => __( 'WP_DEBUG', 'joinotify' ),
                     'value' => defined( 'WP_DEBUG' ) && WP_DEBUG ? esc_html__( 'Enabled', 'joinotify' ) : esc_html__( 'Disabled', 'joinotify' ),
                     'status' => defined( 'WP_DEBUG' ) && WP_DEBUG ? 'warning' : 'success',
                 ),
             ),
             'plugin' => array(
                 array(
-                    'label' => esc_html__( 'Joinotify version', 'joinotify' ),
+                    'label' => __( 'Joinotify version', 'joinotify' ),
                     'value' => JOINOTIFY_VERSION,
                     'status' => 'info',
                 ),
             ),
             'server' => array(
                 array(
-                    'label' => esc_html__( 'PHP version', 'joinotify' ),
+                    'label' => __( 'PHP version', 'joinotify' ),
                     'value' => PHP_VERSION,
                     'status' => version_compare( PHP_VERSION, '7.4', '>=' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => esc_html__( 'DOMDocument', 'joinotify' ),
+                    'label' => __( 'DOMDocument', 'joinotify' ),
                     'value' => class_exists( 'DOMDocument' ) ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'No', 'joinotify' ),
                     'status' => class_exists( 'DOMDocument' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => esc_html__( 'cURL ', 'joinotify' ),
+                    'label' => __( 'cURL ', 'joinotify' ),
                     'value' => extension_loaded( 'curl' ) ? curl_version()['version'] : esc_html__( 'No', 'joinotify' ),
                     'status' => extension_loaded( 'curl' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => esc_html__( 'OpenSSL extension', 'joinotify' ),
+                    'label' => __( 'OpenSSL extension', 'joinotify' ),
                     'value' => extension_loaded( 'openssl' ) ? OPENSSL_VERSION_TEXT : esc_html__( 'No', 'joinotify' ),
                     'status' => extension_loaded( 'openssl' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => esc_html__( 'post_max_size', 'joinotify' ),
+                    'label' => __( 'post_max_size', 'joinotify' ),
                     'value' => $post_max_size,
                     'status' => function_exists( 'wp_convert_hr_to_bytes' ) && wp_convert_hr_to_bytes( $post_max_size ) < 64000000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => esc_html__( 'max_execution_time', 'joinotify' ),
+                    'label' => __( 'max_execution_time', 'joinotify' ),
                     'value' => $max_execution_time,
                     'status' => (int) $max_execution_time < 180 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => esc_html__( 'max_input_vars', 'joinotify' ),
+                    'label' => __( 'max_input_vars', 'joinotify' ),
                     'value' => $max_input_vars,
                     'status' => (int) $max_input_vars < 10000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => esc_html__( 'memory_limit', 'joinotify' ),
+                    'label' => __( 'memory_limit', 'joinotify' ),
                     'value' => $memory_limit,
                     'status' => function_exists( 'wp_convert_hr_to_bytes' ) && wp_convert_hr_to_bytes( $memory_limit ) < 128000000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => esc_html__( 'upload_max_filesize', 'joinotify' ),
+                    'label' => __( 'upload_max_filesize', 'joinotify' ),
                     'value' => $upload_max_filesize,
                     'status' => function_exists( 'wp_convert_hr_to_bytes' ) && wp_convert_hr_to_bytes( $upload_max_filesize ) < 64000000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => esc_html__( 'allow_url_fopen', 'joinotify' ),
+                    'label' => __( 'allow_url_fopen', 'joinotify' ),
                     'value' => ! ini_get( 'allow_url_fopen' ) ? esc_html__( 'Off', 'joinotify' ) : esc_html__( 'On', 'joinotify' ),
                     'status' => ! ini_get( 'allow_url_fopen' ) ? 'danger' : 'success',
                 ),
@@ -512,8 +512,8 @@ class Registry {
                 'triggers_filter' => 'Joinotify/Builder/Get_All_Triggers',
             ),
             'i18n' => array(
-                'saved' => esc_html__( 'Settings saved.', 'joinotify' ),
-                'error' => esc_html__( 'Could not complete the operation.', 'joinotify' ),
+                'saved' => __( 'Settings saved.', 'joinotify' ),
+                'error' => __( 'Could not complete the operation.', 'joinotify' ),
             ),
         ) );
     }
@@ -572,7 +572,7 @@ class Registry {
             'support_label' => $is_valid
                 ? sprintf( esc_html__( 'Support up to: %s', 'joinotify' ), $support_text )
                 : esc_html__( 'Support up to: Not available', 'joinotify' ),
-            'key_label' => esc_html__( 'Your license key:', 'joinotify' ) . ' ' . self::mask_license_key( $license_key ),
+            'key_label' => __( 'Your license key:', 'joinotify' ) . ' ' . self::mask_license_key( $license_key ),
             'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
             'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
             'support_renew_link' => is_object( $license_object ) && ! empty( $license_object->support_renew_link ) ? esc_url_raw( $license_object->support_renew_link ) : '',
@@ -667,7 +667,7 @@ class Registry {
         $options = array(
             array(
                 'value' => '0',
-                'label' => esc_html__( 'None', 'joinotify' ),
+                'label' => __( 'None', 'joinotify' ),
             ),
         );
 

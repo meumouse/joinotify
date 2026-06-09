@@ -509,6 +509,7 @@ return [
 		'Enter your license below to unlock all features.' => 'Enter your license below to unlock all features.',
 		'Enter your license to start using Joinotify' => 'Enter your license to start using Joinotify',
 		'Enter a phone number to receive test messages in the builder. Use the international format, numbers only: 5541987111527' => 'Enter a phone number to receive test messages in the builder. Use the international format, numbers only: 5541987111527',
+		'Applications' => 'Applications',
 		'Install plugin' => 'Install plugin',
 		'Integrations' => 'Integrations',
 		'Invalid' => 'Invalid',

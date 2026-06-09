@@ -2218,6 +2218,10 @@ msgstr "Instalar plugin"
 msgid "Integrations"
 msgstr "Integraciones"
 
+#: admin/src/Admin/Settings/Registry.php:247
+msgid "Applications"
+msgstr "Aplicaciones"
+
 #: inc/Views/License.php:41
 msgid "Invalid"
 msgstr "Inválida"

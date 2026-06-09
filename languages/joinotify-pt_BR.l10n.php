@@ -57,6 +57,7 @@ return [
 		'Andorra' => 'Andorra',
 		'Angola' => 'Angola',
 		'API key' => 'Chave de API',
+		'Applications' => 'Aplicativos',
 		'Are you sure you want to clear the debug logs?' => 'Tem certeza de que deseja limpar os registros de depuração?',
 		'Are you sure you want to deactivate this license? This will disable premium features.' => 'Tem certeza de que deseja desativar esta licença? Isso desativará os recursos premium.',
 		'Are you sure you want to remove this sender?' => 'Tem certeza de que deseja remover este remetente?',

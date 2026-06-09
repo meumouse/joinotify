@@ -2992,11 +2992,14 @@ msgstr ""
 msgid "Integration:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:135
 #: admin/src/Admin/Settings/Registry.php:247
+#: release/joinotify/admin/src/Admin/Settings/Registry.php:247
+msgid "Applications"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:135
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 #: release/joinotify/admin/src/Admin/Settings/Registry.php:135
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:247
 msgid "Integrations"
 msgstr ""
 

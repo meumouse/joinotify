@@ -2183,6 +2183,10 @@ msgstr ""
 msgid "Install plugin"
 msgstr "Install plugin"
 
+#: admin/src/Admin/Settings/Registry.php:247
+msgid "Applications"
+msgstr "Applications"
+
 #: inc/Admin/Components.php:139
 msgid "Integrations"
 msgstr "Integrations"

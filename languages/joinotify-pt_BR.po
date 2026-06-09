@@ -223,6 +223,10 @@ msgstr "Angola"
 msgid "API key"
 msgstr "Chave de API"
 
+#: admin/src/Admin/Settings/Registry.php:247
+msgid "Applications"
+msgstr "Aplicativos"
+
 #: app/src/pages/settings/SettingsPage.vue:381
 msgid "Are you sure you want to clear the debug logs?"
 msgstr "Tem certeza de que deseja limpar os registros de depuração?"
