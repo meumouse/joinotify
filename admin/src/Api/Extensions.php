@@ -500,4 +500,43 @@ class Extensions {
 			return $classes;
 		}, 10, 1 );
 	}
+
+
+	/**
+	 * ---------------------------------------------------------------------
+	 * Notification channels
+	 * ---------------------------------------------------------------------
+	 */
+
+	/**
+	 * Register a notification delivery channel (WhatsApp, Telegram, e-mail, SMS, ...).
+	 *
+	 * The class (or instance) must implement
+	 * MeuMouse\Joinotify\Notifications\Channel_Interface. Once registered it can be
+	 * targeted by setting Notification_Message->channel to its id and dispatched
+	 * through Channel_Manager (see joinotify_dispatch_notification()).
+	 *
+	 * @since 2.1.0
+	 * @param string        $id    Unique channel id (eg: 'telegram').
+	 * @param string|object $class Class name or instance implementing Channel_Interface.
+	 * @param int           $priority add_filter priority. Default 10.
+	 * @return void
+	 */
+	public static function register_notification_channel( $id, $class, $priority = 10 ) {
+		$id = is_string( $id ) ? trim( $id ) : '';
+
+		if ( '' === $id || empty( $class ) ) {
+			return;
+		}
+
+		add_filter( 'Joinotify/Notifications/Channels', function( $channels ) use ( $id, $class ) {
+			if ( ! is_array( $channels ) ) {
+				$channels = array();
+			}
+
+			$channels[ $id ] = $class;
+
+			return $channels;
+		}, $priority, 1 );
+	}
 }

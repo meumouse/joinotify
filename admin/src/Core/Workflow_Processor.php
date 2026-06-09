@@ -9,6 +9,8 @@ use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 use MeuMouse\Joinotify\AI\AI_Manager;
 use MeuMouse\Joinotify\AI\AI_Request;
+use MeuMouse\Joinotify\Notifications\Channel_Manager;
+use MeuMouse\Joinotify\Notifications\Notification_Message;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -808,21 +810,31 @@ class Workflow_Processor {
             'workflow_id' => $post_id,
         ));
 
-        // send message
-        $response = Controller::send_message_text( $sender, $receiver, $message );
+        // send message through the notification channel layer
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => 'whatsapp',
+            'type' => 'text',
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'content' => $message,
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
 
         Message_History::clear_context();
 
-        if ( 201 !== $response ) {
+        if ( ! $result->is_success() ) {
             // check connection state and notify user if disconnected
             Controller::get_connection_state( $sender );
         }
-        
+
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-            if ( 201 === $response ) {
+            if ( $result->is_success() ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send message. Response: " . print_r( $response, true ), 'ERROR' );
+                Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
             }
         }
     }
@@ -850,21 +862,33 @@ class Workflow_Processor {
             'workflow_id' => $post_id,
         ));
 
-        // send message
-        $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
+        // send message through the notification channel layer
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => 'whatsapp',
+            'type' => ( 'audio' === $media_type ) ? 'audio' : 'media',
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'media_type' => $media_type,
+            'media_url' => $media,
+            'caption' => $caption,
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
 
         Message_History::clear_context();
 
-        if ( 201 !== $response ) {
+        if ( ! $result->is_success() ) {
             // check connection state and notify user if disconnected
             Controller::get_connection_state( $sender );
         }
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-            if ( 201 === $response ) {
+            if ( $result->is_success() ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send message. Response: " . print_r( $response, true ), 'ERROR' );
+                Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
             }
         }
     }

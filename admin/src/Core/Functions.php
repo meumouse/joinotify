@@ -15,6 +15,8 @@ use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Notifications\Channel_Manager;
+use MeuMouse\Joinotify\Notifications\Notification_Message;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -614,5 +616,39 @@ function joinotify_register_settings_section( $section ) {
  */
 function joinotify_register_rest_route( $route ) {
 	Extensions::register_rest_route( $route );
+}
+
+
+/**
+ * Register a notification delivery channel (WhatsApp, Telegram, e-mail, SMS, ...).
+ *
+ * The class (or instance) must implement
+ * MeuMouse\Joinotify\Notifications\Channel_Interface.
+ *
+ * @since 2.1.0
+ * @param string        $id    Unique channel id (eg: 'telegram').
+ * @param string|object $class Class name or instance implementing Channel_Interface.
+ * @return void
+ */
+function joinotify_register_notification_channel( $id, $class ) {
+	Extensions::register_notification_channel( $id, $class );
+}
+
+
+/**
+ * Dispatch a notification through the channel layer.
+ *
+ * Builds a Notification_Message from $args and routes it through Channel_Manager,
+ * which resolves the target channel (from $args['channel'] or the default),
+ * validates it, and delivers. Always returns a normalized Channel_Result.
+ *
+ * @since 2.1.0
+ * @param array<string,mixed> $args Message properties (channel, type, sender,
+ *                                  receiver, content, media_type, media_url,
+ *                                  caption, delay, context, meta).
+ * @return \MeuMouse\Joinotify\Notifications\Channel_Result
+ */
+function joinotify_dispatch_notification( $args ) {
+	return Channel_Manager::dispatch( Notification_Message::from_array( is_array( $args ) ? $args : array() ) );
 }
 

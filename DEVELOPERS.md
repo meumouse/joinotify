@@ -342,6 +342,103 @@ validates `is_configured()`/`supports()`, dispatches, and logs failures.
 
 ---
 
+## Notification delivery channels
+
+Workflow notifications are delivered through a pluggable **channel** layer
+(`MeuMouse\Joinotify\Notifications`). WhatsApp (Evolution/slots proxy) ships by
+default; you can add WhatsApp Official (Cloud API), Telegram, e‑mail, SMS or any
+other transport by implementing `Channel_Interface` and registering it on the
+`Joinotify/Notifications/Channels` filter — no core edits, no JavaScript.
+
+This is the general-purpose sibling of the OTP channel layer above: OTP channels
+deliver login codes (`Otp_Message`), notification channels deliver arbitrary
+workflow messages (`Notification_Message`).
+
+```php
+use MeuMouse\Joinotify\Notifications\Channel_Interface;
+use MeuMouse\Joinotify\Notifications\Notification_Message;
+use MeuMouse\Joinotify\Notifications\Channel_Result;
+
+class My_Telegram_Channel implements Channel_Interface {
+
+    public function get_id() {
+        return 'telegram';
+    }
+
+    public function get_label() {
+        return __( 'Telegram', 'my-textdomain' );
+    }
+
+    public function is_configured() {
+        return '' !== get_option( 'my_telegram_bot_token', '' );
+    }
+
+    public function get_capabilities() {
+        return array( 'text', 'media' );
+    }
+
+    public function supports( Notification_Message $message ) {
+        // Telegram needs a chat id (carried in meta) and a supported type.
+        return '' !== (string) $message->get_meta( 'chat_id' )
+            && in_array( $message->type, $this->get_capabilities(), true );
+    }
+
+    public function send( Notification_Message $message ) {
+        $ok = my_telegram_send( $message->get_meta( 'chat_id' ), $message->content );
+
+        return $ok
+            ? Channel_Result::success( $this->get_id() )
+            : Channel_Result::failure( $this->get_id(), 'telegram_failed', true );
+    }
+}
+
+// 1 class + 1 filter line — that's it.
+add_filter( 'Joinotify/Notifications/Channels', function( $channels ) {
+    $channels['telegram'] = My_Telegram_Channel::class;
+
+    return $channels;
+});
+
+// or, with the global helper:
+joinotify_register_notification_channel( 'telegram', My_Telegram_Channel::class );
+```
+
+`Notification_Message` carries everything a channel needs: `channel`, `type`
+(`text|media|audio`), `sender`, `receiver`, `content`, `media_type`, `media_url`,
+`caption`, `delay`, a `context` array (e.g. `source`, `workflow_id`) and a
+free‑form `meta` array for service‑specific fields (e‑mail subject, Telegram
+`chat_id`, template params, ...). Read meta with `$message->get_meta( $key )`.
+
+Send a notification through the layer with the global helper, which returns a
+normalized `Channel_Result` (`is_success()`, `response_code`, `retryable`,
+`queued`, `error`):
+
+```php
+$result = joinotify_dispatch_notification( array(
+    'channel'  => 'telegram',  // omit to use the default channel (WhatsApp)
+    'type'     => 'text',
+    'receiver' => '123456',
+    'content'  => 'Hello!',
+    'meta'     => array( 'chat_id' => '123456' ),
+) );
+
+if ( $result->is_success() ) { /* ... */ }
+```
+
+`Channel_Manager::dispatch()` resolves the target channel (from the message or
+the `Joinotify/Notifications/Default_Channel` filter), validates
+`is_configured()`/`supports()`, dispatches, and logs failures. The default
+WhatsApp channel delegates to `Api\Controller`, so its retry queue and message
+history are preserved unchanged.
+
+**Related filters/actions:** `Joinotify/Notifications/Channels` (registry),
+`Joinotify/Notifications/Default_Channel` (fallback channel id),
+`Joinotify/Notifications/Message_Before_Send` (mutate the message before send),
+and the `Joinotify/Notifications/Message_Sent` action (fired after every
+dispatch attempt, success or failure).
+
+---
+
 ## Notes & gotchas
 
 - **Register early.** Hook your registrations on `plugins_loaded`/`init` so the filters are wired
