@@ -7388,20 +7388,20 @@ msgstr "Use um modelo"
 #: admin/src/Core/Workflow_Processor.php:993
 #: release/joinotify/admin/src/Core/Workflow_Processor.php:969
 msgid "Use a warm and friendly tone."
-msgstr "Use a warm and friendly tone."
+msgstr "Use um tom caloroso e amigável."
 
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:27
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:38
 msgid "Use default model"
-msgstr "Use default model"
+msgstr "Usar modelo padrão"
 
 #: templates/otp-login/shared/otp-login-form.php:32
 msgid "Use email and password"
-msgstr "Use email and password"
+msgstr "Usar e-mail e senha"
 
 #: admin/src/Integrations/Otp_Login.php:171
 msgid "Use the first available sender"
-msgstr "Use the first available sender"
+msgstr "Usar o primeiro remetente disponível"
 
 #: admin/src/Integrations/Whatsapp.php:68
 #: release/joinotify/admin/src/Integrations/Whatsapp.php:68
@@ -7409,24 +7409,24 @@ msgid ""
 "Use the world's largest messaging service to notify your customers about "
 "events on your website."
 msgstr ""
-"Use the world's largest messaging service to notify your customers about "
-"events on your website."
+"Use o maior serviço de mensagens do mundo para notificar seus clientes "
+"sobre eventos em seu site."
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:49
 msgid "Use this media"
-msgstr "Use this media"
+msgstr "Usar este mídia"
 
 #: templates/otp-login/myaccount/form-login.php:39
 msgid "Use your phone number to receive a login code and continue."
-msgstr "Use your phone number to receive a login code and continue."
+msgstr "Use seu número de telefone para receber um código de login e continuar."
 
 #: admin/src/Otp_Login/Woocommerce_Login.php:129
 msgid ""
 "Use your phone number to receive the code or sign in with email and "
 "password."
 msgstr ""
-"Use your phone number to receive the code or sign in with email and "
-"password."
+"Use seu número de telefone para receber o código ou faça login com e-mail e "
+"senha."
 
 #: admin/src/Integrations/Wordpress.php:92
 #: release/joinotify/admin/src/Integrations/Wordpress.php:92
