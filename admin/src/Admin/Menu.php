@@ -32,7 +32,7 @@ class Menu {
      * Add admin menu.
      *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.0.0
      * @return void
      */
     public function add_admin_menu() {
@@ -103,6 +103,16 @@ class Menu {
                 'joinotify-workflows-builder',
                 array( $this, 'render_builder_page' )
             );
+
+            /**
+             * A submenu registered under a `null` parent is intentionally hidden, but it
+             * never lands in the global $submenu array. As a result core's
+             * get_admin_page_title() cannot resolve a title and leaves the global $title
+             * null, which admin-header.php then passes to strip_tags() (deprecated on
+             * PHP 8.1+). Seed the title here, before the admin header renders, so the
+             * value is already a string.
+             */
+            $GLOBALS['title'] = esc_html__( 'Edit workflow', 'joinotify' );
         }
     }
 
