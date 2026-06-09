@@ -1,7 +1,7 @@
 {
 	"name": "joinotify",
 	"private": true,
-	"version": "1.4.7",
+	"version": "2.0.0",
 	"scripts": {
 		"build": "node scripts/build.mjs",
 		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",

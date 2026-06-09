@@ -315,13 +315,7 @@ class Custom_Variables {
                             return '';
                         }
 
-                        $value = get_post_meta( $post_id, $meta_key, true );
-
-                        if ( is_array( $value ) ) {
-                            return implode( ', ', $value );
-                        }
-
-                        return is_scalar( $value ) ? (string) $value : '';
+                        return self::read_meta( $post_id, $meta_key, $post_type );
                     },
                 ),
             );
@@ -364,16 +358,110 @@ class Custom_Variables {
 
 
     /**
-     * Build the list of public post types for the settings UI.
+     * Check whether a post type is a WooCommerce order type.
+     *
+     * Order types (shop_order, shop_subscription, ...) are not standard posts:
+     * under HPOS their meta lives in custom tables, so they must be read through
+     * the WooCommerce CRUD API instead of get_post_meta().
+     *
+     * @since 2.0.0
+     * @param string $post_type Post type slug.
+     * @return bool
+     */
+    protected static function is_order_type( $post_type ) {
+        return function_exists( 'wc_get_order_types' ) && in_array( $post_type, (array) wc_get_order_types(), true );
+    }
+
+
+    /**
+     * Read a single meta value for a given object, supporting WooCommerce orders.
+     *
+     * @since 2.0.0
+     * @param int $post_id Object id (post or order).
+     * @param string $meta_key Meta key.
+     * @param string $post_type Target post type.
+     * @return string
+     */
+    protected static function read_meta( $post_id, $meta_key, $post_type ) {
+        $value = '';
+
+        if ( self::is_order_type( $post_type ) && function_exists( 'wc_get_order' ) ) {
+            $order = wc_get_order( $post_id );
+
+            if ( $order ) {
+                // standard fields are exposed via getters (works on HPOS too)
+                $getter = 'get_' . ltrim( (string) $meta_key, '_' );
+
+                if ( is_callable( array( $order, $getter ) ) ) {
+                    $value = $order->{$getter}();
+                } else {
+                    $value = $order->get_meta( $meta_key );
+                }
+            }
+        } else {
+            $value = get_post_meta( $post_id, $meta_key, true );
+        }
+
+        /**
+         * Filter the resolved value of a custom variable before output.
+         *
+         * @since 2.0.0
+         * @param mixed $value Resolved meta value.
+         * @param int $post_id Object id.
+         * @param string $meta_key Meta key.
+         * @param string $post_type Target post type.
+         */
+        $value = apply_filters( 'Joinotify/Builder/Custom_Variable_Meta_Value', $value, $post_id, $meta_key, $post_type );
+
+        if ( is_array( $value ) ) {
+            return implode( ', ', array_map( 'strval', $value ) );
+        }
+
+        return is_scalar( $value ) ? (string) $value : '';
+    }
+
+
+    /**
+     * Build the list of selectable post types (entities) for the settings UI.
+     *
+     * Includes public and admin-visible post types, plus WooCommerce order
+     * types which are registered as non-public but are valid meta entities.
      *
      * @since 2.0.0
      * @return array<int,array{value:string,label:string}>
      */
     public static function get_public_post_types() {
-        $post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $objects = get_post_types( array(), 'objects' );
+        $exclude = array(
+            'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset',
+            'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part',
+            'wp_global_styles', 'wp_navigation', 'wp_font_family', 'wp_font_face',
+        );
+        $allowed = array();
+
+        foreach ( $objects as $post_type ) {
+            if ( in_array( $post_type->name, $exclude, true ) ) {
+                continue;
+            }
+
+            // public content types or anything manageable from the admin UI
+            if ( $post_type->public || $post_type->show_ui ) {
+                $allowed[ $post_type->name ] = $post_type;
+            }
+        }
+
+        // ensure WooCommerce order types are always available, even when non-public
+        if ( function_exists( 'wc_get_order_types' ) ) {
+            foreach ( (array) wc_get_order_types() as $order_type ) {
+                if ( isset( $objects[ $order_type ] ) && ! isset( $allowed[ $order_type ] ) && ! in_array( $order_type, $exclude, true ) ) {
+                    $allowed[ $order_type ] = $objects[ $order_type ];
+                }
+            }
+        }
+
         $options = array();
 
-        foreach ( $post_types as $post_type ) {
+        foreach ( $allowed as $post_type ) {
             $label = isset( $post_type->labels->singular_name ) && '' !== $post_type->labels->singular_name
                 ? $post_type->labels->singular_name
                 : $post_type->label;
@@ -384,7 +472,13 @@ class Custom_Variables {
             );
         }
 
-        return $options;
+        /**
+         * Filter the selectable entities for custom builder variables.
+         *
+         * @since 2.0.0
+         * @param array<int,array{value:string,label:string}> $options Entity options.
+         */
+        return apply_filters( 'Joinotify/Builder/Custom_Variable_Entities', $options );
     }
 
 
@@ -399,6 +493,12 @@ class Custom_Variables {
     public static function get_example_meta_keys( $post_type, $post_id = 0 ) {
         $post_type = sanitize_key( (string) $post_type );
         $post_id = absint( $post_id );
+        $is_order = self::is_order_type( $post_type );
+
+        // WooCommerce order types: read through the CRUD API (HPOS safe)
+        if ( $is_order ) {
+            return self::get_example_order_meta_keys( $post_type, $post_id );
+        }
 
         if ( $post_id > 0 ) {
             $post = get_post( $post_id );
@@ -408,7 +508,7 @@ class Custom_Variables {
             }
         }
 
-        // fall back to the latest published post of the requested type
+        // fall back to the latest post of the requested type
         if ( $post_id < 1 && '' !== $post_type ) {
             $latest = get_posts( array(
                 'post_type'      => $post_type,
@@ -439,16 +539,9 @@ class Custom_Variables {
                 $value = is_array( $values ) && isset( $values[0] ) ? $values[0] : '';
                 $value = maybe_unserialize( $value );
 
-                if ( is_array( $value ) ) {
-                    $value = implode( ', ', array_map( 'strval', $value ) );
-                }
-
-                $value = is_scalar( $value ) ? (string) $value : '';
-                $sample = mb_substr( trim( $value ), 0, 80 );
-
                 $keys[] = array(
                     'key'    => (string) $key,
-                    'sample' => $sample,
+                    'sample' => self::format_sample( $value ),
                 );
             }
         }
@@ -457,5 +550,102 @@ class Custom_Variables {
             'post_id' => $post_id,
             'keys'    => $keys,
         );
+    }
+
+
+    /**
+     * List example meta keys for a WooCommerce order type using the CRUD API.
+     *
+     * @since 2.0.0
+     * @param string $post_type Order post type.
+     * @param int $post_id Optional specific order id to sample.
+     * @return array{post_id:int,keys:array<int,array{key:string,sample:string}>}
+     */
+    protected static function get_example_order_meta_keys( $post_type, $post_id = 0 ) {
+        if ( ! function_exists( 'wc_get_order' ) ) {
+            return array( 'post_id' => 0, 'keys' => array() );
+        }
+
+        // pick a sample order id when none is provided
+        if ( $post_id < 1 && function_exists( 'wc_get_orders' ) ) {
+            $orders = wc_get_orders( array(
+                'type'    => $post_type,
+                'limit'   => 1,
+                'orderby' => 'date',
+                'order'   => 'DESC',
+                'return'  => 'ids',
+            ) );
+
+            if ( ! empty( $orders ) ) {
+                $post_id = absint( is_array( $orders ) ? reset( $orders ) : $orders );
+            }
+        }
+
+        $order = $post_id > 0 ? wc_get_order( $post_id ) : false;
+
+        if ( ! $order ) {
+            return array( 'post_id' => 0, 'keys' => array() );
+        }
+
+        $keys = array();
+
+        // common standard fields exposed via getters (resolve at runtime too)
+        $standard = array(
+            'billing_first_name', 'billing_last_name', 'billing_company', 'billing_email',
+            'billing_phone', 'billing_address_1', 'billing_city', 'billing_state',
+            'billing_postcode', 'billing_country', 'shipping_first_name', 'shipping_last_name',
+            'order_number', 'status', 'total', 'currency', 'payment_method_title',
+        );
+
+        foreach ( $standard as $field ) {
+            $getter = 'get_' . $field;
+
+            if ( is_callable( array( $order, $getter ) ) ) {
+                $keys[] = array(
+                    'key'    => $field,
+                    'sample' => self::format_sample( $order->{$getter}() ),
+                );
+            }
+        }
+
+        // custom meta stored on the order
+        if ( is_callable( array( $order, 'get_meta_data' ) ) ) {
+            foreach ( $order->get_meta_data() as $meta ) {
+                $data = is_callable( array( $meta, 'get_data' ) ) ? $meta->get_data() : array();
+                $key = isset( $data['key'] ) ? (string) $data['key'] : '';
+
+                if ( '' === $key ) {
+                    continue;
+                }
+
+                $keys[] = array(
+                    'key'    => $key,
+                    'sample' => self::format_sample( isset( $data['value'] ) ? $data['value'] : '' ),
+                );
+            }
+        }
+
+        return array(
+            'post_id' => $post_id,
+            'keys'    => $keys,
+        );
+    }
+
+
+    /**
+     * Format a meta value into a short human readable sample string.
+     *
+     * @since 2.0.0
+     * @param mixed $value Raw value.
+     * @return string
+     */
+    protected static function format_sample( $value ) {
+        if ( is_array( $value ) ) {
+            $value = implode( ', ', array_map( 'strval', $value ) );
+        }
+
+        $value = is_scalar( $value ) ? (string) $value : '';
+
+        return mb_substr( trim( $value ), 0, 80 );
     }
 }
