@@ -85,9 +85,9 @@ const lookup = computed(() => {
 });
 
 /**
- * Mirrored markup rendered on top of the input. Variables are colored only (no
- * bold/background/padding) so glyph widths stay identical to the underlying
- * input text and the caret keeps aligned.
+ * Mirrored markup rendered on top of the input. Variables get the same blue
+ * background chip used by the message field, but without bold/padding so glyph
+ * widths stay identical to the underlying input text and the caret keeps aligned.
  */
 const mirrorHtml = computed(() => {
   const escaped = escapeHtml(String(props.modelValue ?? ''));
@@ -101,7 +101,7 @@ const mirrorHtml = computed(() => {
     const interactive = tip ? ' pointer-events-auto cursor-help' : '';
     const tipAttr = tip ? ` data-tip="${escapeHtml(tip)}"` : '';
 
-    return `<span class="joinotify-var text-primary-700${interactive}"${tipAttr}>${match}</span>`;
+    return `<span class="joinotify-var rounded bg-primary-50 text-primary-800${interactive}"${tipAttr}>${match}</span>`;
   });
 });
 
@@ -248,7 +248,7 @@ onBeforeUnmount(() => {
             :value="modelValue"
             :placeholder="placeholder"
             :disabled="disabled"
-            class="relative w-full border-0 bg-transparent px-4 py-3 text-sm leading-6 text-transparent caret-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-0 disabled:cursor-not-allowed disabled:bg-slate-50"
+            class="joinotify-input-group__control relative w-full border-0 bg-transparent px-4 py-3 text-sm leading-6 text-transparent caret-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-0 disabled:cursor-not-allowed disabled:bg-slate-50"
             @input="handleInput"
             @change="handleChange"
             @focus="syncSelection"
