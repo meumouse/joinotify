@@ -6,7 +6,7 @@
  *
  * @since 1.4.7
  */
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Cog, DotsVerticalRounded, Repeat, Trash } from '@boxicons/vue';
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
@@ -62,6 +62,40 @@ const contextIconUrl = computed(() => String(props.data.contextIconUrl || '').tr
 const displayIcon = computed(() => String(props.data.icon || fallbackConfig.value?.icon || '').trim());
 const resolvedBoxiconClass = computed(() => normalizeBoxiconClass(displayIcon.value));
 const displayColorClass = computed(() => fallbackConfig.value?.color || 'bg-slate-500');
+
+// Inline media preview for the WhatsApp media-message node: render the configured
+// image/video/audio/document so the canvas shows the actual attachment.
+const isMediaAction = computed(() => String(props.data.actionId || '').trim() === 'send_whatsapp_message_media');
+const mediaConfig = computed(() => (props.data.config || {}) as Record<string, unknown>);
+const mediaType = computed(() => String(mediaConfig.value.media_type || 'image').trim().toLowerCase());
+const mediaUrl = computed(() => String(mediaConfig.value.media_url || '').trim());
+const hasCaption = computed(() => Boolean(String(mediaConfig.value.caption || '').trim()));
+const previewError = ref(false);
+const hasMediaPreview = computed(() => isMediaAction.value && Boolean(mediaUrl.value) && !previewError.value);
+// Hide the generic "Media: image" line when the preview already conveys it,
+// but keep a caption (or the configure hint when nothing is set yet).
+const showDescription = computed(() => Boolean(props.data.description) && !(hasMediaPreview.value && !hasCaption.value));
+const mediaFileName = computed(() => {
+  const url = mediaUrl.value;
+
+  if (!url) {
+    return '';
+  }
+
+  const path = url.split('?')[0].split('#')[0];
+  const name = path.slice(path.lastIndexOf('/') + 1);
+
+  try {
+    return decodeURIComponent(name) || url;
+  } catch {
+    return name || url;
+  }
+});
+
+// Reset the failed-load flag whenever the source changes so a new URL retries.
+watch(mediaUrl, () => {
+  previewError.value = false;
+});
 
 // Integration/group label shown below the title for actions tied to an integration.
 const ACTION_GROUP_LABELS: Record<string, string> = {
@@ -271,7 +305,48 @@ function normalizeBoxiconClass(value: string) {
       </div>
     </div>
 
-    <div v-if="data.description" class="px-3 py-2.5">
+    <div v-if="hasMediaPreview" class="px-3 pt-2.5" :class="showDescription ? '' : 'pb-2.5'">
+      <img
+        v-if="mediaType === 'image'"
+        :src="mediaUrl"
+        :alt="data.label"
+        class="max-h-44 w-full rounded-lg bg-slate-100 object-cover"
+        loading="lazy"
+        @error="previewError = true"
+      />
+      <video
+        v-else-if="mediaType === 'video'"
+        :src="mediaUrl"
+        class="nodrag max-h-44 w-full rounded-lg bg-black object-cover"
+        controls
+        muted
+        preload="metadata"
+        @click.stop
+        @error="previewError = true"
+      />
+      <audio
+        v-else-if="mediaType === 'audio'"
+        :src="mediaUrl"
+        class="nodrag w-full"
+        controls
+        preload="none"
+        @click.stop
+        @error="previewError = true"
+      />
+      <a
+        v-else
+        :href="mediaUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="nodrag flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600 transition-colors hover:bg-slate-100"
+        @click.stop
+      >
+        <i class="bx bx-file shrink-0 text-base text-slate-400" />
+        <span class="truncate">{{ mediaFileName }}</span>
+      </a>
+    </div>
+
+    <div v-if="showDescription" class="px-3 py-2.5">
       <!-- Descriptions are plugin-generated HTML (bold spans, placeholder pills, <br>). -->
       <div
         class="builder-node-description line-clamp-3 whitespace-pre-line text-xs leading-relaxed text-slate-400"
