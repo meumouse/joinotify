@@ -17,6 +17,7 @@ import GeneralSettingsSection from './components/sections/GeneralSettingsSection
 import PhonesSettingsSection from './components/sections/PhonesSettingsSection.vue';
 import IntegrationsSettingsSection from './components/sections/IntegrationsSettingsSection.vue';
 import AboutSettingsSection from './components/sections/AboutSettingsSection.vue';
+import BuilderSettingsSection from './components/sections/BuilderSettingsSection.vue';
 import SettingsActionBar from './components/SettingsActionBar.vue';
 import ProxySettingsModal from './components/modals/ProxySettingsModal.vue';
 import IntegrationSettingsModal from './components/modals/IntegrationSettingsModal.vue';
@@ -58,6 +59,7 @@ const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
 const system = computed(() => bootstrap.value.system || {});
+const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
 const pluginVersion = computed(() => bootstrap.value.version || '');
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
@@ -435,6 +437,53 @@ function syncPhones(nextPhones) {
   bootstrap.value = { ...bootstrap.value, phones: cloneValue(nextPhones) };
 }
 
+function syncBuilderVariables(items) {
+  bootstrap.value = {
+    ...bootstrap.value,
+    builder_variables: {
+      ...(bootstrap.value.builder_variables || {}),
+      items: cloneValue(items || []),
+    },
+  };
+}
+
+async function saveBuilderVariable(variable) {
+  try {
+    const response = await api.post('/admin/builder-variables', { variable });
+    syncBuilderVariables(response.items || []);
+    toast(response.message || __('Variable saved.', textDomain), 'success', __('Builder', textDomain));
+    return true;
+  } catch (error) {
+    toast(error.message || __('Could not save the variable.', textDomain), 'danger', __('Builder', textDomain));
+    return false;
+  }
+}
+
+function deleteBuilderVariable(variable) {
+  confirm.open = true;
+  confirm.title = __('Remove variable', textDomain);
+  confirm.description = __('Are you sure you want to remove this variable? Workflows that use it will no longer resolve it.', textDomain);
+  confirm.action = async () => {
+    try {
+      const response = await api.post('/admin/builder-variables/delete', { id: variable.id });
+      syncBuilderVariables(response.items || []);
+      toast(response.message || __('Variable removed.', textDomain), 'success', __('Builder', textDomain));
+    } catch (error) {
+      toast(error.message || __('Could not remove the variable.', textDomain), 'danger', __('Builder', textDomain));
+    }
+  };
+}
+
+async function loadBuilderMetaKeys({ post_type, post_id }) {
+  const params = new URLSearchParams({ post_type: post_type || '' });
+
+  if (post_id) {
+    params.set('post_id', String(post_id));
+  }
+
+  return api.get(`/admin/builder-variables/meta-keys?${params.toString()}`);
+}
+
 function confirmRemoveSender(phone) {
   debugLogger.log('phones:remove-confirm-open', {
     phone,
@@ -663,6 +712,15 @@ function canConfigureIntegration(integration) {
             :settings="settings"
             @toggle="toggleSetting"
             @configure="openIntegrationConfig"
+          />
+
+          <BuilderSettingsSection
+            v-else-if="activeSectionId === 'builder'"
+            :items="builderVariables.items || []"
+            :post-types="builderVariables.post_types || []"
+            :save-variable="saveBuilderVariable"
+            :delete-variable="deleteBuilderVariable"
+            :load-meta-keys="loadBuilderMetaKeys"
           />
 
           <AboutSettingsSection

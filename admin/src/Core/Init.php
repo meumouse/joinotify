@@ -239,6 +239,7 @@ class Init {
 		$classes = apply_filters( 'Joinotify/Init/Init_Classes', array(
 			'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
+			'MeuMouse\\Joinotify\\Builder\\Custom_Variables',
 			'MeuMouse\\Joinotify\\Admin\\Menu',
 			'MeuMouse\\Joinotify\\Admin\\Builder\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\Workflows\\Rest_Controller',

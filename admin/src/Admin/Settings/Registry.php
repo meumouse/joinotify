@@ -7,6 +7,7 @@ use MeuMouse\Joinotify\Admin\Default_Options;
 use MeuMouse\Joinotify\Api\License;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
+use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
 
 defined('ABSPATH') || exit;
@@ -137,6 +138,20 @@ class Registry {
                 'cards' => self::get_integration_cards(),
             ),
             array(
+                'id' => 'builder',
+                'title' => esc_html__( 'Builder', 'joinotify' ),
+                'description' => esc_html__( 'Create custom text variables mapped to post type meta keys to reuse in the flow builder.', 'joinotify' ),
+                'layout' => 'custom',
+                'cards' => array(
+                    array(
+                        'id' => 'builder-variables',
+                        'title' => esc_html__( 'Custom variables', 'joinotify' ),
+                        'description' => esc_html__( 'Map an entity and meta key to a named variable available in the builder.', 'joinotify' ),
+                        'component' => 'builder-variables',
+                    ),
+                ),
+            ),
+            array(
                 'id' => 'about',
                 'title' => esc_html__( 'About', 'joinotify' ),
                 'description' => esc_html__( 'Maintenance, logs, updates, and environment details.', 'joinotify' ),
@@ -232,6 +247,12 @@ class Registry {
                 'name' => esc_html__( 'Integrations', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon"><path d="M3 8h2v5c0 2.206 1.794 4 4 4h2v5h2v-5h2c2.206 0 4-1.794 4-4V8h2V6H3v2zm4 0h10v5c0 1.103-.897 2-2 2H9c-1.103 0-2-.897-2-2V8zm0-6h2v3H7zm8 0h2v3h-2z"></path></svg>',
                 'section' => 'integrations',
+            ),
+            array(
+                'id' => 'builder',
+                'name' => esc_html__( 'Builder', 'joinotify' ),
+                'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 5.63l-2.34-2.34a1 1 0 0 0-1.41 0l-3.12 3.12-1.83-1.81-1.41 1.41 1.41 1.41L4 16.42V20h3.58l7.01-7.01 1.41 1.41 1.41-1.41-1.81-1.83 3.12-3.12a1 1 0 0 0-.01-1.41zM6.75 18H6v-.75l6.96-6.96.75.75L6.75 18zm9.96-9.96-1.41-1.41 1.41-1.41 1.41 1.41-1.41 1.41z"></path></svg>',
+                'section' => 'builder',
             ),
             array(
                 'id' => 'about',
@@ -462,6 +483,10 @@ class Registry {
             'section_tabs' => self::get_section_tabs(),
             'integrations' => self::get_integration_cards(),
             'phones' => self::get_phone_state(),
+            'builder_variables' => array(
+                'items' => Custom_Variables::get_all(),
+                'post_types' => Custom_Variables::get_public_post_types(),
+            ),
             'system' => self::get_system_status(),
             'license' => self::get_license_state(),
             'links' => array(
