@@ -67,9 +67,6 @@ class Init {
 	 * @var array
 	 */
 	private $deferred_classes = array(
-		'elementor/init' => array(
-			'MeuMouse\\Joinotify\\Integrations\\Elementor_Forms',
-		),
 		'woocommerce_loaded' => array(
 			'MeuMouse\\Joinotify\\Integrations\\Woo_Subscriptions',
 		),
