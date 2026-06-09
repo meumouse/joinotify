@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  *
  * Mirrors Otp_Login\Channel_Manager.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @package MeuMouse\Joinotify\Notifications
  * @author MeuMouse.com
  */
@@ -26,7 +26,7 @@ class Channel_Manager {
     /**
      * Get the default channel id.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return string
      */
     public static function get_default_channel_id() {
@@ -34,7 +34,7 @@ class Channel_Manager {
          * Filter the default notification channel id used when a message does
          * not specify one.
          *
-         * @since 2.1.0
+         * @since 2.0.0
          * @param string $channel_id
          */
         $id = apply_filters( 'Joinotify/Notifications/Default_Channel', 'whatsapp' );
@@ -46,7 +46,7 @@ class Channel_Manager {
     /**
      * Resolve the channel that should handle the given message.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param Notification_Message $message | Message to deliver.
      * @return Channel_Interface|null
      */
@@ -63,7 +63,7 @@ class Channel_Manager {
      * Always returns a Channel_Result (never throws), so callers can branch on
      * the normalized outcome regardless of the channel.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param Notification_Message $message | Message to deliver.
      * @return Channel_Result
      */
@@ -93,7 +93,7 @@ class Channel_Manager {
         /**
          * Filter the message right before delivery.
          *
-         * @since 2.1.0
+         * @since 2.0.0
          * @param Notification_Message $message
          * @param Channel_Interface    $channel
          */
@@ -113,7 +113,7 @@ class Channel_Manager {
         /**
          * Fires after a notification dispatch attempt (success or failure).
          *
-         * @since 2.1.0
+         * @since 2.0.0
          * @param Channel_Result       $result
          * @param Notification_Message $message
          * @param Channel_Interface    $channel

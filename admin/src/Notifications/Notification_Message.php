@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
  * chat id, template params, ...), so each channel only has to decide how to
  * transport it. Mirrors Otp_Login\Otp_Message.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @package MeuMouse\Joinotify\Notifications
  * @author MeuMouse.com
  */
@@ -23,7 +23,7 @@ class Notification_Message {
     /**
      * Target channel id (e.g. 'whatsapp'). Empty falls back to the default channel.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $channel = '';
@@ -31,7 +31,7 @@ class Notification_Message {
     /**
      * Message type: 'text', 'media' or 'audio'.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $type = 'text';
@@ -39,7 +39,7 @@ class Notification_Message {
     /**
      * Sender identifier (e.g. instance phone number / from address).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $sender = '';
@@ -47,7 +47,7 @@ class Notification_Message {
     /**
      * Recipient identifier (phone number, e-mail, chat id, ...).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $receiver = '';
@@ -55,7 +55,7 @@ class Notification_Message {
     /**
      * Text body (for text messages).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $content = '';
@@ -63,7 +63,7 @@ class Notification_Message {
     /**
      * Media type for media messages (image, audio, video, document).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $media_type = '';
@@ -71,7 +71,7 @@ class Notification_Message {
     /**
      * Media URL for media messages.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $media_url = '';
@@ -79,7 +79,7 @@ class Notification_Message {
     /**
      * Optional caption for media messages.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $caption = '';
@@ -87,7 +87,7 @@ class Notification_Message {
     /**
      * Delay in milliseconds before delivery (when the channel supports it).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var int
      */
     public $delay = 0;
@@ -95,7 +95,7 @@ class Notification_Message {
     /**
      * Dispatch context for history/telemetry (e.g. source, workflow_id).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var array<string,mixed>
      */
     public $context = array();
@@ -103,7 +103,7 @@ class Notification_Message {
     /**
      * Free-form, channel-specific extras (subject, chat_id, template params, ...).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var array<string,mixed>
      */
     public $meta = array();
@@ -111,7 +111,7 @@ class Notification_Message {
     /**
      * Construct function.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $args | Message properties.
      * @return void
      */
@@ -169,7 +169,7 @@ class Notification_Message {
     /**
      * Build a message from an associative array.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $args | Message properties.
      * @return self
      */
@@ -181,7 +181,7 @@ class Notification_Message {
     /**
      * Read a single metadata value.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $key | Metadata key.
      * @param mixed  $default | Fallback when the key is absent.
      * @return mixed

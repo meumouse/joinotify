@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * REST APIs return 200, some clients return a boolean). It also carries whether
  * the failure is retryable and whether the item was enqueued for retry.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @package MeuMouse\Joinotify\Notifications
  * @author MeuMouse.com
  */
@@ -22,7 +22,7 @@ class Channel_Result {
     /**
      * Whether the dispatch succeeded.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var bool
      */
     public $success = false;
@@ -30,7 +30,7 @@ class Channel_Result {
     /**
      * Channel that produced this result.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $channel = '';
@@ -38,7 +38,7 @@ class Channel_Result {
     /**
      * Transport response code (HTTP status when available, 0 otherwise).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var int
      */
     public $response_code = 0;
@@ -46,7 +46,7 @@ class Channel_Result {
     /**
      * Whether a failed dispatch can be retried.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var bool
      */
     public $retryable = false;
@@ -54,7 +54,7 @@ class Channel_Result {
     /**
      * Whether the message was enqueued for a later retry.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var bool
      */
     public $queued = false;
@@ -62,7 +62,7 @@ class Channel_Result {
     /**
      * Failure reason (empty on success).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     public $error = '';
@@ -70,7 +70,7 @@ class Channel_Result {
     /**
      * Raw transport payload for debugging (optional).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var mixed
      */
     public $raw = null;
@@ -78,7 +78,7 @@ class Channel_Result {
     /**
      * Construct function.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $args | Result properties.
      * @return void
      */
@@ -120,7 +120,7 @@ class Channel_Result {
     /**
      * Build a success result.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $channel | Channel id.
      * @param int    $response_code | Transport response code.
      * @return self
@@ -137,7 +137,7 @@ class Channel_Result {
     /**
      * Build a failure result.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $channel | Channel id.
      * @param string $error | Failure reason.
      * @param bool   $retryable | Whether the failure can be retried.
@@ -159,7 +159,7 @@ class Channel_Result {
      * Build a result from the details array returned by Api\Controller send methods
      * (see Controller::build_response_details()).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $details | Controller details array.
      * @param string              $channel | Channel id.
      * @return self
@@ -182,7 +182,7 @@ class Channel_Result {
     /**
      * Whether the dispatch succeeded.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return bool
      */
     public function is_success() {
@@ -193,7 +193,7 @@ class Channel_Result {
     /**
      * Export the result as an associative array.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return array<string,mixed>
      */
     public function to_array() {

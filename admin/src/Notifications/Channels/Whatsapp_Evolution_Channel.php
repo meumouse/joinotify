@@ -21,7 +21,7 @@ defined('ABSPATH') || exit;
  * be added later by implementing Channel_Interface and registering them on the
  * `Joinotify/Notifications/Channels` filter, with no change to the dispatcher.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @package MeuMouse\Joinotify\Notifications\Channels
  * @author MeuMouse.com
  */
@@ -30,7 +30,7 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
     /**
      * Channel identifier.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return string
      */
     public function get_id() {
@@ -41,7 +41,7 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
     /**
      * Channel label.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return string
      */
     public function get_label() {
@@ -52,7 +52,7 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
     /**
      * Message types this channel can deliver.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return array<int,string>
      */
     public function get_capabilities() {
@@ -63,7 +63,7 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
     /**
      * Whether the channel can operate: valid license and a registered sender.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return bool
      */
     public function is_configured() {
@@ -78,7 +78,7 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
     /**
      * Whether the message has a recipient and a supported type.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param Notification_Message $message | Message to deliver.
      * @return bool
      */
@@ -94,7 +94,7 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
     /**
      * Deliver the message, delegating to Api\Controller.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param Notification_Message $message | Message to deliver.
      * @return Channel_Result
      */

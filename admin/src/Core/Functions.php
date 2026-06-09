@@ -625,7 +625,7 @@ function joinotify_register_rest_route( $route ) {
  * The class (or instance) must implement
  * MeuMouse\Joinotify\Notifications\Channel_Interface.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @param string        $id    Unique channel id (eg: 'telegram').
  * @param string|object $class Class name or instance implementing Channel_Interface.
  * @return void
@@ -642,7 +642,7 @@ function joinotify_register_notification_channel( $id, $class ) {
  * which resolves the target channel (from $args['channel'] or the default),
  * validates it, and delivers. Always returns a normalized Channel_Result.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @param array<string,mixed> $args Message properties (channel, type, sender,
  *                                  receiver, content, media_type, media_url,
  *                                  caption, delay, context, meta).

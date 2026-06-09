@@ -516,7 +516,7 @@ class Extensions {
 	 * targeted by setting Notification_Message->channel to its id and dispatched
 	 * through Channel_Manager (see joinotify_dispatch_notification()).
 	 *
-	 * @since 2.1.0
+	 * @since 2.0.0
 	 * @param string        $id    Unique channel id (eg: 'telegram').
 	 * @param string|object $class Class name or instance implementing Channel_Interface.
 	 * @param int           $priority add_filter priority. Default 10.

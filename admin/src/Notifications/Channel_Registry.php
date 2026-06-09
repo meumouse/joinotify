@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * instance) implementing Channel_Interface. Mirrors AI\Provider_Registry and
  * Otp_Login\Channel_Registry.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @package MeuMouse\Joinotify\Notifications
  * @author MeuMouse.com
  */
@@ -24,7 +24,7 @@ class Channel_Registry {
     /**
      * Instantiated channels cache (id => Channel_Interface).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var array<string,Channel_Interface>
      */
     protected static $instances = array();
@@ -32,7 +32,7 @@ class Channel_Registry {
     /**
      * Return the registered channel map (id => class|instance).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return array<string,mixed>
      */
     public static function get_channels() {
@@ -45,7 +45,7 @@ class Channel_Registry {
          *
          * Map an id to a class name or instance implementing Channel_Interface.
          *
-         * @since 2.1.0
+         * @since 2.0.0
          * @param array<string,mixed> $channels
          */
         $channels = apply_filters( 'Joinotify/Notifications/Channels', $channels );
@@ -57,7 +57,7 @@ class Channel_Registry {
     /**
      * Resolve a channel instance by id.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $id | Channel identifier.
      * @return Channel_Interface|null
      */
@@ -99,7 +99,7 @@ class Channel_Registry {
     /**
      * Build the channel options for a settings dropdown.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return array<int,array{value:string,label:string}>
      */
     public static function get_channel_options() {
