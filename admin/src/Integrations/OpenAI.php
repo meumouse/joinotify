@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
-use MeuMouse\Joinotify\AI\Provider_Registry;
 use MeuMouse\Joinotify\AI\Providers\OpenAI_Provider;
 
 // Exit if accessed directly.
@@ -71,15 +70,6 @@ class OpenAI extends Integrations_Base {
         $openai_models = ( new OpenAI_Provider() )->get_models();
 
         return array(
-            self::field_select(
-                'ai_provider',
-                esc_html__( 'AI provider', 'joinotify' ),
-                esc_html__( 'Language model engine used to generate content. New providers can be added by extensions.', 'joinotify' ),
-                Provider_Registry::get_provider_options(),
-                array(
-                    'default' => 'openai',
-                )
-            ),
             self::field_text(
                 'openai_api_key',
                 esc_html__( 'OpenAI API key', 'joinotify' ),
@@ -92,10 +82,11 @@ class OpenAI extends Integrations_Base {
             self::field_select(
                 'openai_default_model',
                 esc_html__( 'Default model', 'joinotify' ),
-                esc_html__( 'Model used when a workflow node does not override it.', 'joinotify' ),
+                esc_html__( 'Model used when a workflow node does not override it. The list is fetched from OpenAI and can be refreshed.', 'joinotify' ),
                 $openai_models,
                 array(
                     'default' => 'gpt-4o-mini',
+                    'component' => 'openai-model-select',
                 )
             ),
             self::field_text(

@@ -9,6 +9,7 @@ import InputButtonField from './InputButtonField.vue';
 import OtpField from './OtpField.vue';
 import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
+import OpenAiModelField from './OpenAiModelField.vue';
 
 const registry = new Map();
 
@@ -48,6 +49,7 @@ registerAlias('color-picker', ColorPickerField);
 registerAlias('color-picker-field', ColorPickerField);
 registerAlias('color-scale', ColorScaleField);
 registerAlias('color-scale-field', ColorScaleField);
+registerAlias('openai-model-select', OpenAiModelField);
 
 function toCamelCase(key) {
   return String(key || '').replace(/[_-](\w)/g, (_, character) => character.toUpperCase());

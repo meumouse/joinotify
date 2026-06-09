@@ -9,6 +9,7 @@ use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
+use MeuMouse\Joinotify\AI\Provider_Registry;
 
 defined('ABSPATH') || exit;
 
@@ -104,6 +105,22 @@ class Registry {
                                 esc_html__( 'Key used to authenticate Proxy API calls.', 'joinotify' ),
                                 array(
                                     'placeholder' => '',
+                                )
+                            ),
+                        ),
+                    ),
+                    array(
+                        'id' => 'general-ai',
+                        'title' => __( 'Artificial Intelligence', 'joinotify' ),
+                        'description' => __( 'Choose the engine used to generate AI content. Provider credentials and defaults are configured in the Applications tab.', 'joinotify' ),
+                        'fields' => array(
+                            self::field_select(
+                                'ai_provider',
+                                esc_html__( 'AI provider', 'joinotify' ),
+                                esc_html__( 'Language model engine used to generate content. New providers can be added by extensions.', 'joinotify' ),
+                                Provider_Registry::get_provider_options(),
+                                array(
+                                    'default' => 'openai',
                                 )
                             ),
                         ),
@@ -251,7 +268,7 @@ class Registry {
             array(
                 'id' => 'builder',
                 'name' => __( 'Builder', 'joinotify' ),
-                'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 5.63l-2.34-2.34a1 1 0 0 0-1.41 0l-3.12 3.12-1.83-1.81-1.41 1.41 1.41 1.41L4 16.42V20h3.58l7.01-7.01 1.41 1.41 1.41-1.41-1.81-1.83 3.12-3.12a1 1 0 0 0-.01-1.41zM6.75 18H6v-.75l6.96-6.96.75.75L6.75 18zm9.96-9.96-1.41-1.41 1.41-1.41 1.41 1.41-1.41 1.41z"></path></svg>',
+                'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" fill-rule="evenodd"><g><path d="M8.75 11v2A2.25 2.25 0 0 0 11 15.25h2A2.25 2.25 0 0 0 15.25 13v-2A2.25 2.25 0 0 0 13 8.75h-2A2.25 2.25 0 0 0 8.75 11zm1.5 0c0-.199.079-.39.22-.53a.747.747 0 0 1 .53-.22h2c.199 0 .39.079.53.22.141.14.22.331.22.53v2c0 .199-.079.39-.22.53a.747.747 0 0 1-.53.22h-2a.747.747 0 0 1-.53-.22.747.747 0 0 1-.22-.53zM1.25 3.5v2A2.25 2.25 0 0 0 3.5 7.75h2A2.25 2.25 0 0 0 7.75 5.5v-2A2.25 2.25 0 0 0 5.5 1.25h-2A2.25 2.25 0 0 0 1.25 3.5zm1.5 0c0-.199.079-.39.22-.53a.747.747 0 0 1 .53-.22h2c.199 0 .39.079.53.22.141.14.22.331.22.53v2c0 .199-.079.39-.22.53a.747.747 0 0 1-.53.22h-2a.747.747 0 0 1-.53-.22.747.747 0 0 1-.22-.53zM16.25 18.5v2a2.25 2.25 0 0 0 2.25 2.25h2a2.25 2.25 0 0 0 2.25-2.25v-2a2.25 2.25 0 0 0-2.25-2.25h-2a2.25 2.25 0 0 0-2.25 2.25zm1.5 0c0-.199.079-.39.22-.53a.747.747 0 0 1 .53-.22h2c.199 0 .39.079.53.22.141.14.22.331.22.53v2c0 .199-.079.39-.22.53a.747.747 0 0 1-.53.22h-2a.747.747 0 0 1-.53-.22.747.747 0 0 1-.22-.53z" class=""></path><path d="M7 5.25h13a1.252 1.252 0 0 1 1.25 1.25V10A1.252 1.252 0 0 1 20 11.25h-3a.75.75 0 0 0 0 1.5h3c.729 0 1.429-.29 1.945-.805A2.755 2.755 0 0 0 22.75 10V6.5c0-.729-.29-1.429-.805-1.945A2.755 2.755 0 0 0 20 3.75H7a.75.75 0 0 0 0 1.5zM13 18.75H4a1.252 1.252 0 0 1-1.25-1.25V14A1.252 1.252 0 0 1 4 12.75h5.5a.75.75 0 0 0 0-1.5H4c-.729 0-1.429.29-1.945.805A2.755 2.755 0 0 0 1.25 14v3.5c0 .729.29 1.429.805 1.945A2.755 2.755 0 0 0 4 20.25h9a.75.75 0 0 0 0-1.5z"></path><path d="M19.53 13.47 18.061 12l1.469-1.47a.749.749 0 1 0-1.06-1.06l-2 2a.749.749 0 0 0 0 1.06l2 2a.749.749 0 1 0 1.06-1.06zM12.53 22.03l2-2a.749.749 0 0 0 0-1.06l-2-2a.749.749 0 1 0-1.06 1.06l1.469 1.47-1.469 1.47a.749.749 0 1 0 1.06 1.06z"></path></g></svg>',
                 'section' => 'builder',
             ),
             array(
@@ -653,6 +670,7 @@ class Registry {
             'color-picker-field',
             'color-scale',
             'color-scale-field',
+            'openai-model-select',
         );
     }
 

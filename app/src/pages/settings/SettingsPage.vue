@@ -6,7 +6,7 @@
  * @since 1.4.7
  * @version 1.4.7
  */
-import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue, deepEqual } from '../../utils/object';
 import { generateHexToken } from '../../utils/random';
@@ -32,6 +32,7 @@ const props = defineProps({
 
 const docsUrl = props.bootstrap?.docs_url || props.bootstrap?.docs || 'https://ajuda.meumouse.com/docs/joinotify/overview';
 const api = createApiClient(props.bootstrap);
+provide('joinotifyApi', api);
 const bootstrap = ref(cloneValue(props.bootstrap));
 const debugLogger = createDebugLogger('Settings', () => Boolean(bootstrap.value?.debug_mode));
 const settings = reactive({});
@@ -63,7 +64,7 @@ const builderVariables = computed(() => bootstrap.value.builder_variables || { i
 const pluginVersion = computed(() => bootstrap.value.version || '');
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
-const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'enable_send_disconnect_notifications']));
+const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'enable_send_disconnect_notifications', 'ai_provider']));
 const aboutVisibleFields = computed(() => filterFields(['enable_auto_updates', 'enable_update_notice']));
 const proxyToggleField = computed(() => fieldFor('enable_proxy_api'));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
