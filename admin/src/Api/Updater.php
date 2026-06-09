@@ -361,12 +361,15 @@ class Updater {
     public static function auto_update_plugin() {
         delete_transient('joinotify_api_request_cache');
         delete_transient('joinotify_api_response_cache');
-        delete_transient( $this->cache_key );
-        delete_transient( $this->cache_data_base_key );
 
-        $update_data = $this->request();
+        $updater = new self();
 
-        if ( ! $update_data || ! isset( $update_data->download_url ) || version_compare( $this->version, $update_data->version, '>=' ) ) {
+        delete_transient( $updater->cache_key );
+        delete_transient( $updater->cache_data_base_key );
+
+        $update_data = $updater->request();
+
+        if ( ! $update_data || ! isset( $update_data->download_url ) || version_compare( $updater->version, $update_data->version, '>=' ) ) {
             return;
         }
 
@@ -376,12 +379,12 @@ class Updater {
 
         error_log( "[AUTO UPDATE] Downloading update from remote repository." );
 
-        if ( ! $this->download_and_extract( $download_url ) ) {
+        if ( ! $updater->download_and_extract( $download_url ) ) {
             error_log( '[AUTO UPDATE] Falha na extração do plugin Joinotify.' );
             return;
         }
 
-        activate_plugin("{$this->plugin_slug}/{$this->plugin_slug}.php");
+        activate_plugin("{$updater->plugin_slug}/{$updater->plugin_slug}.php");
 
         error_log( "[AUTO UPDATE] Joinotify plugin updated to version {$update_data->version}" );
 
