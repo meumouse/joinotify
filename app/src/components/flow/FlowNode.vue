@@ -262,7 +262,9 @@ function normalizeBoxiconClass(value: string) {
           <span
             v-if="needsSetup"
             class="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5"
-            aria-hidden="true"
+            :title="__('There are required settings not configured', textDomain)"
+            role="img"
+            :aria-label="__('There are required settings not configured', textDomain)"
           >
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
             <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
