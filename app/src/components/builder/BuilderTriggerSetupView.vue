@@ -48,6 +48,10 @@ function getContextLogo(contextId) {
   return props.contexts.find((item) => item.id === contextId)?.icon_svg || '';
 }
 
+function getContextLabel(contextId) {
+  return props.contexts.find((item) => item.id === contextId)?.label || contextId;
+}
+
 const triggerGridClass = computed(() => 'builder-trigger-grid grid gap-4 overflow-y-auto');
 
 const skeletonCards = computed(() => Array.from({ length: 4 }, (_, index) => index));
@@ -177,7 +181,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
                 :key="item.id"
                 :title="item.label"
                 :description="item.description"
-                :context-label="item.contexts?.[0] || context"
+                :context-label="getContextLabel(item.contexts?.[0] || context)"
                 :context-icon-svg="getContextLogo(item.contexts?.[0] || context)"
                 :icon="item.icon"
                 :icon-svg="item.iconSvg || item.icon_svg || ''"
