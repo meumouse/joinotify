@@ -71,6 +71,16 @@ function getSelectedEngine() {
   return engine;
 }
 
+function getRetranslateIdentical() {
+  const args = process.argv.slice(2);
+
+  return (
+    args.includes("--retranslate-identical") ||
+    args.includes("-r") ||
+    process.env.RETRANSLATE_IDENTICAL === "1"
+  );
+}
+
 function getSelectedLanguages() {
   const args = process.argv.slice(2);
   const langFlagIndex = args.findIndex((arg) => arg === "--lang" || arg === "-l");
@@ -121,14 +131,33 @@ function extractMsgIds(poData) {
   return msgIds;
 }
 
-function findStringsToTranslate(potMsgIds, existingPoData) {
+function findStringsToTranslate(
+  potMsgIds,
+  existingPoData,
+  { retranslateIdentical = false, isEnglishTarget = false } = {}
+) {
   const toTranslate = [];
   const existingTranslations = existingPoData?.translations?.[""] || {};
 
   for (const [msgid, potEntry] of potMsgIds) {
     const existing = existingTranslations[msgid];
 
-    if (!existing || !existing.msgstr || existing.msgstr[0] === "") {
+    const isEmpty = !existing || !existing.msgstr || existing.msgstr[0] === "";
+
+    // For non-English targets, a translation equal to the source string is
+    // almost always an untranslated passthrough left by a previous run. The
+    // default incremental check treats a non-empty msgstr as "done" and would
+    // skip it forever, so opt in to re-queueing those entries. (Legitimately
+    // identical strings — brand/country names — are re-sent but returned
+    // unchanged by the engine, so this only costs a few extra tokens.)
+    const isIdenticalPassthrough =
+      retranslateIdentical &&
+      !isEnglishTarget &&
+      existing &&
+      existing.msgstr &&
+      existing.msgstr[0] === msgid;
+
+    if (isEmpty || isIdenticalPassthrough) {
       toTranslate.push({
         msgid,
         comments: potEntry.comments,
@@ -301,9 +330,13 @@ function writeTranslationArtifacts(poData, poPath, moPath, phpPath, jsonPaths, l
 
 async function main() {
   const engine = getSelectedEngine();
+  const retranslateIdentical = getRetranslateIdentical();
   const engineLabel = engine === "openai" ? "OpenAI (AI)" : "Google Cloud Translation";
 
   console.log(`Joinotify Translation Script (${engineLabel})`);
+  if (retranslateIdentical) {
+    console.log("Mode: re-translating entries whose translation equals the source string");
+  }
   console.log("===========================================================\n");
 
   const selectedLanguages = getSelectedLanguages();
@@ -340,7 +373,10 @@ async function main() {
       }
     }
 
-    const stringsToTranslate = findStringsToTranslate(potMsgIds, existingPoData);
+    const stringsToTranslate = findStringsToTranslate(potMsgIds, existingPoData, {
+      retranslateIdentical,
+      isEnglishTarget: langInfo.code === "en",
+    });
     let poData;
 
     if (stringsToTranslate.length === 0) {
