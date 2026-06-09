@@ -43,7 +43,7 @@ class Builder_Groups extends Abstract_Route {
         if ( ! $fetch_groups || ( isset( $fetch_groups['status'] ) && $fetch_groups['status'] === 404 ) ) {
             return rest_ensure_response( array(
                 'status'  => 'error',
-                'message' => esc_html__( 'Could not retrieve group information.', 'joinotify' ),
+                'message' => __( 'Could not retrieve group information.', 'joinotify' ),
                 'groups'  => array(),
             ) );
         }

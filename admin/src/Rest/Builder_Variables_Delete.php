@@ -44,7 +44,7 @@ class Builder_Variables_Delete extends Abstract_Route {
         }
 
         return $this->success_response( array(
-            'message' => esc_html__( 'Variable removed successfully.', 'joinotify' ),
+            'message' => __( 'Variable removed successfully.', 'joinotify' ),
             'items'   => Custom_Variables::get_all(),
         ) );
     }

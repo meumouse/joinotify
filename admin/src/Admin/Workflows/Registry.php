@@ -196,7 +196,7 @@ class Registry {
 		if ( ! in_array( $action, self::ALLOWED_ACTIONS, true ) ) {
 			return array(
 				'processed' => 0,
-				'error' => esc_html__( 'Invalid workflow action.', 'joinotify' ),
+				'error' => __( 'Invalid workflow action.', 'joinotify' ),
 			);
 		}
 

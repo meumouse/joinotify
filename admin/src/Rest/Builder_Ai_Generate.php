@@ -61,7 +61,7 @@ class Builder_Ai_Generate extends Abstract_Route {
             default:
                 $result = array(
                     'status' => 'error',
-                    'message' => esc_html__( 'Unsupported AI intent.', 'joinotify' ),
+                    'message' => __( 'Unsupported AI intent.', 'joinotify' ),
                 );
                 break;
         }

@@ -45,7 +45,7 @@ class User_Dismiss_Tip extends Abstract_Route {
         if ( $updated ) {
             return rest_ensure_response( array(
                 'status'   => 'success',
-                'message'  => esc_html__( 'Tip dismissed.', 'joinotify' ),
+                'message'  => __( 'Tip dismissed.', 'joinotify' ),
                 'meta_key' => $meta_key,
                 'value'    => get_user_meta( $user_id, $meta_key, true ),
             ) );
@@ -53,7 +53,7 @@ class User_Dismiss_Tip extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status'  => 'error',
-            'message' => esc_html__( 'Could not dismiss the tip.', 'joinotify' ),
+            'message' => __( 'Could not dismiss the tip.', 'joinotify' ),
         ) );
     }
 }

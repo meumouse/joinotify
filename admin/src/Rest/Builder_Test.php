@@ -46,7 +46,7 @@ class Builder_Test extends Abstract_Route {
         if ( ! $post_id || get_post_type( $post_id ) !== 'joinotify-workflow' ) {
             return rest_ensure_response( array(
                 'status'  => 'error',
-                'message' => esc_html__( 'Workflow not found.', 'joinotify' ),
+                'message' => __( 'Workflow not found.', 'joinotify' ),
             ) );
         }
 
@@ -56,14 +56,14 @@ class Builder_Test extends Abstract_Route {
         if ( empty( $receiver ) ) {
             return rest_ensure_response( array(
                 'status'  => 'error',
-                'message' => esc_html__( 'No test phone number registered.', 'joinotify' ),
+                'message' => __( 'No test phone number registered.', 'joinotify' ),
             ) );
         }
 
         if ( empty( $workflow_content ) || ! is_array( $workflow_content ) ) {
             return rest_ensure_response( array(
                 'status'  => 'error',
-                'message' => esc_html__( 'The workflow has no content to test.', 'joinotify' ),
+                'message' => __( 'The workflow has no content to test.', 'joinotify' ),
             ) );
         }
 
@@ -93,7 +93,7 @@ class Builder_Test extends Abstract_Route {
 
                     return rest_ensure_response( array(
                         'status'  => 'error',
-                        'message' => esc_html__( 'Could not send the test message.', 'joinotify' ),
+                        'message' => __( 'Could not send the test message.', 'joinotify' ),
                     ) );
                 }
             } elseif ( $action === 'send_whatsapp_message_media' ) {
@@ -108,7 +108,7 @@ class Builder_Test extends Abstract_Route {
 
                     return rest_ensure_response( array(
                         'status'  => 'error',
-                        'message' => esc_html__( 'Could not send one or more test messages.', 'joinotify' ),
+                        'message' => __( 'Could not send one or more test messages.', 'joinotify' ),
                     ) );
                 }
             }
@@ -116,7 +116,7 @@ class Builder_Test extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status'  => 'success',
-            'message' => esc_html__( 'All test messages were sent successfully.', 'joinotify' ),
+            'message' => __( 'All test messages were sent successfully.', 'joinotify' ),
         ) );
     }
 }

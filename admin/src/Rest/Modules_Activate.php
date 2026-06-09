@@ -49,7 +49,7 @@ class Modules_Activate extends Abstract_Route {
         }
 
         return $this->success_response( array(
-            'message' => esc_html__( 'Plugin activated successfully.', 'joinotify' ),
+            'message' => __( 'Plugin activated successfully.', 'joinotify' ),
         ) );
     }
 }

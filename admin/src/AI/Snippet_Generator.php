@@ -40,14 +40,14 @@ class Snippet_Generator {
         if ( '' === $instructions ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'Describe what the snippet should do.', 'joinotify' ),
+                'message' => __( 'Describe what the snippet should do.', 'joinotify' ),
             );
         }
 
         if ( ! AI_Manager::is_available() ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'No AI provider is configured. Set it up in Settings → Integrations.', 'joinotify' ),
+                'message' => __( 'No AI provider is configured. Set it up in Settings → Integrations.', 'joinotify' ),
             );
         }
 
@@ -71,7 +71,7 @@ class Snippet_Generator {
         if ( '' === $code ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'The AI returned an empty snippet. Please try again.', 'joinotify' ),
+                'message' => __( 'The AI returned an empty snippet. Please try again.', 'joinotify' ),
             );
         }
 

@@ -40,7 +40,7 @@ class Phone_Check_Connection extends Abstract_Route {
         if ( empty( $phone ) ) {
             return rest_ensure_response( array(
                 'status' => 'error',
-                'message' => esc_html__( 'Invalid phone number.', 'joinotify' ),
+                'message' => __( 'Invalid phone number.', 'joinotify' ),
             ) );
         }
 

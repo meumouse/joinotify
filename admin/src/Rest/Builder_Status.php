@@ -43,14 +43,14 @@ class Builder_Status extends Abstract_Route {
         if ( ! $post_id || get_post_type( $post_id ) !== 'joinotify-workflow' ) {
             return rest_ensure_response( array(
                 'status'  => 'error',
-                'message' => esc_html__( 'Workflow not found or invalid post type.', 'joinotify' ),
+                'message' => __( 'Workflow not found or invalid post type.', 'joinotify' ),
             ) );
         }
 
         if ( ! current_user_can( 'edit_posts' ) ) {
             return rest_ensure_response( array(
                 'status'  => 'error',
-                'message' => esc_html__( 'You do not have permission to edit workflows.', 'joinotify' ),
+                'message' => __( 'You do not have permission to edit workflows.', 'joinotify' ),
             ) );
         }
 
@@ -68,7 +68,7 @@ class Builder_Status extends Abstract_Route {
 
         return rest_ensure_response( array(
             'status'          => 'success',
-            'message'         => esc_html__( 'Workflow status updated successfully.', 'joinotify' ),
+            'message'         => __( 'Workflow status updated successfully.', 'joinotify' ),
             'workflow_status' => get_post_status( $post_id ),
         ) );
     }

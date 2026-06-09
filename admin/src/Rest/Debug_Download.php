@@ -46,7 +46,7 @@ class Debug_Download extends Abstract_Route {
         $content = file_get_contents( $log_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
         return $this->success_response( array(
-            'message'  => esc_html__( 'Log file ready for download.', 'joinotify' ),
+            'message'  => __( 'Log file ready for download.', 'joinotify' ),
             'filename' => 'joinotify-debug-logs.txt',
             'content'  => $content !== false ? $content : '',
         ) );

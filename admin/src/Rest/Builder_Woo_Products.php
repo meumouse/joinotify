@@ -39,7 +39,7 @@ class Builder_Woo_Products extends Abstract_Route {
         if ( ! class_exists( 'WooCommerce' ) ) {
             return rest_ensure_response( array(
                 'status'   => 'error',
-                'message'  => esc_html__( 'WooCommerce is not active.', 'joinotify' ),
+                'message'  => __( 'WooCommerce is not active.', 'joinotify' ),
                 'products' => array(),
             ) );
         }

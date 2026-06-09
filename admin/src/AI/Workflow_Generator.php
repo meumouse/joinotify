@@ -37,14 +37,14 @@ class Workflow_Generator {
         if ( '' === $instructions ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'Describe the automation you want to generate.', 'joinotify' ),
+                'message' => __( 'Describe the automation you want to generate.', 'joinotify' ),
             );
         }
 
         if ( ! AI_Manager::is_available() ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'No AI provider is configured. Set it up in Settings → Integrations.', 'joinotify' ),
+                'message' => __( 'No AI provider is configured. Set it up in Settings → Integrations.', 'joinotify' ),
             );
         }
 
@@ -69,7 +69,7 @@ class Workflow_Generator {
         if ( ! is_array( $decoded ) ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'The AI returned an invalid workflow. Please try again.', 'joinotify' ),
+                'message' => __( 'The AI returned an invalid workflow. Please try again.', 'joinotify' ),
             );
         }
 
@@ -78,7 +78,7 @@ class Workflow_Generator {
         if ( ! is_array( $raw_content ) || empty( $raw_content ) ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'The AI did not produce any workflow steps. Try refining the description.', 'joinotify' ),
+                'message' => __( 'The AI did not produce any workflow steps. Try refining the description.', 'joinotify' ),
             );
         }
 
@@ -88,7 +88,7 @@ class Workflow_Generator {
         if ( empty( $content ) || ! self::has_trigger_node( $content ) ) {
             return array(
                 'status' => 'error',
-                'message' => esc_html__( 'The generated workflow is missing a valid trigger. Try again with more detail.', 'joinotify' ),
+                'message' => __( 'The generated workflow is missing a valid trigger. Try again with more detail.', 'joinotify' ),
             );
         }
 

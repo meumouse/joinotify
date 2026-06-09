@@ -63,7 +63,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->start_controls_section(
 				'joinotify_section',
 				[
-					'label' => esc_html__( 'Joinotify', 'joinotify' ),
+					'label' => __( 'Joinotify', 'joinotify' ),
 					'condition' => [
 						'submit_actions' => $this->get_name(),
 					],
@@ -84,7 +84,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_sender',
 				[
-					'label' => esc_html__( 'Sender', 'joinotify' ),
+					'label' => __( 'Sender', 'joinotify' ),
 					'type' => Controls_Manager::SELECT,
 					'options' => $phone_options,
 					'default' => ! empty( $senders[0] ) ? $senders[0] : '',
@@ -94,9 +94,9 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_receiver',
 				[
-					'label' => esc_html__( 'Recipient field ID', 'joinotify' ),
+					'label' => __( 'Recipient field ID', 'joinotify' ),
 					'type' => Controls_Manager::TEXT,
-					'description' => esc_html__( 'Enter the field ID that collects the recipient\'s phone number.', 'joinotify' ),
+					'description' => __( 'Enter the field ID that collects the recipient\'s phone number.', 'joinotify' ),
 					'ai' => [
 						'active' => false,
 					],
@@ -106,9 +106,9 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_form_id',
 				[
-					'label' => esc_html__( 'Form ID', 'joinotify' ),
+					'label' => __( 'Form ID', 'joinotify' ),
 					'type' => Controls_Manager::TEXT,
-					'description' => esc_html__( 'Enter this form\'s ID to validate data processing. Available in the form\'s additional information.', 'joinotify' ),
+					'description' => __( 'Enter this form\'s ID to validate data processing. Available in the form\'s additional information.', 'joinotify' ),
 					'ai' => [
 						'active' => false,
 					],
@@ -118,10 +118,10 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_send_text',
 				[
-					'label' => esc_html__( 'Send text message', 'joinotify' ),
+					'label' => __( 'Send text message', 'joinotify' ),
 					'type' => Controls_Manager::SWITCHER,
-					'label_on' => esc_html__( 'Yes', 'joinotify' ),
-					'label_off' => esc_html__( 'No', 'joinotify' ),
+					'label_on' => __( 'Yes', 'joinotify' ),
+					'label_off' => __( 'No', 'joinotify' ),
 					'return_value' => 'yes',
 					'default' => 'yes',
 				]
@@ -130,12 +130,12 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_send_text_message',
 				[
-					'label' => esc_html__( 'Text message', 'joinotify' ),
+					'label' => __( 'Text message', 'joinotify' ),
 					'type' => Controls_Manager::TEXTAREA,
 					'rows' => 10,
-					'description' => esc_html__( 'Add your text to be sent to the WhatsApp user. Add text variables to replace information. Use {{ field_id=[FIELD_ID] }} replacing FIELD_ID with the corresponding field ID to retrieve field information.', 'joinotify' ),
-					'placeholder' => esc_html__( 'Hello {{ field_id=[FIELD_ID] }}!', 'joinotify' ),
-					'default' => esc_html__( 'Hello {{ field_id=[name] }}! We have received your information, and a representative will contact you shortly.', 'joinotify' ),
+					'description' => __( 'Add your text to be sent to the WhatsApp user. Add text variables to replace information. Use {{ field_id=[FIELD_ID] }} replacing FIELD_ID with the corresponding field ID to retrieve field information.', 'joinotify' ),
+					'placeholder' => __( 'Hello {{ field_id=[FIELD_ID] }}!', 'joinotify' ),
+					'default' => __( 'Hello {{ field_id=[name] }}! We have received your information, and a representative will contact you shortly.', 'joinotify' ),
 					'condition' => [
 						'joinotify_send_text' => 'yes',
 					],
@@ -153,18 +153,18 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 				[
 					'type' => Controls_Manager::ALERT,
 					'alert_type' => 'success',
-					'heading' => esc_html__( 'Tip', 'joinotify' ),
-					'content' => esc_html__( 'Replace information with ', 'joinotify' ) . ' <a href="https://ajuda.meumouse.com/docs/joinotify/placeholders">' . esc_html__( 'text variables', 'joinotify' ) . '</a>',
+					'heading' => __( 'Tip', 'joinotify' ),
+					'content' => __( 'Replace information with ', 'joinotify' ) . ' <a href="https://ajuda.meumouse.com/docs/joinotify/placeholders">' . esc_html__( 'text variables', 'joinotify' ) . '</a>',
 				]
 			);
 
 			$widget->add_control(
 				'joinotify_send_media_message',
 				[
-					'label' => esc_html__( 'Send media', 'joinotify' ),
+					'label' => __( 'Send media', 'joinotify' ),
 					'type' => Controls_Manager::SWITCHER,
-					'label_on' => esc_html__( 'Yes', 'joinotify' ),
-					'label_off' => esc_html__( 'No', 'joinotify' ),
+					'label_on' => __( 'Yes', 'joinotify' ),
+					'label_off' => __( 'No', 'joinotify' ),
 					'return_value' => 'yes',
 					'default' => 'no',
 				]
@@ -179,7 +179,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotidy_media_type',
 				[
-					'label' => esc_html__( 'Media type', 'joinotify' ),
+					'label' => __( 'Media type', 'joinotify' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'image',
 					'options' => $media_type,
@@ -192,7 +192,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_media_url',
 				[
-					'label' => esc_html__( 'Add media', 'joinotify' ),
+					'label' => __( 'Add media', 'joinotify' ),
 					'type' => Controls_Manager::MEDIA,
 					'condition' => [
 						'joinotify_send_media_message' => 'yes',
@@ -203,11 +203,11 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			$widget->add_control(
 				'joinotify_media_caption',
 				[
-					'label' => esc_html__( 'Media caption', 'joinotify' ),
+					'label' => __( 'Media caption', 'joinotify' ),
 					'type' => Controls_Manager::TEXTAREA,
 					'rows' => 5,
-					'description' => esc_html__( 'Add a caption to accompany the sent media. Supports text variables (placeholders).', 'joinotify' ),
-					'placeholder' => esc_html__( 'Hello {{ field_id=[nome] }}, check out this file!', 'joinotify' ),
+					'description' => __( 'Add a caption to accompany the sent media. Supports text variables (placeholders).', 'joinotify' ),
+					'placeholder' => __( 'Hello {{ field_id=[nome] }}, check out this file!', 'joinotify' ),
 					'condition' => [
 						'joinotify_send_media_message' => 'yes',
 					],

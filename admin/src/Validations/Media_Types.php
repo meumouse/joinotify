@@ -35,10 +35,10 @@ class Media_Types {
      */
     public static function get_media_types() {
         return apply_filters( 'Joinotify/Validations/Get_Media_Types', array(
-            'image' => esc_html__( 'Image', 'joinotify' ),
-            'video' => esc_html__( 'Video', 'joinotify' ),
-            'document' => esc_html__( 'Document', 'joinotify' ),
-            'audio' => esc_html__( 'Audio', 'joinotify' ),
+            'image' => __( 'Image', 'joinotify' ),
+            'video' => __( 'Video', 'joinotify' ),
+            'document' => __( 'Document', 'joinotify' ),
+            'audio' => __( 'Audio', 'joinotify' ),
         ));
     }
 

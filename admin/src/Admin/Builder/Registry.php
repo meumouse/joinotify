@@ -49,7 +49,7 @@ class Registry {
 			'version' => JOINOTIFY_VERSION,
 			'debug_mode' => defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : false,
 			'page' => 'builder',
-			'title' => esc_html__( 'Workflow builder', 'joinotify' ),
+			'title' => __( 'Workflow builder', 'joinotify' ),
 			'settings' => Settings_Registry::get_settings(),
 			'phones' => Settings_Registry::get_phone_state(),
 			'workflow' => $workflow_state,
@@ -77,15 +77,15 @@ class Registry {
 				'url' => admin_url( 'admin-ajax.php' ),
 			),
 			'i18n' => array(
-				'saved' => esc_html__( 'Workflow saved.', 'joinotify' ),
-				'saving' => esc_html__( 'Saving workflow...', 'joinotify' ),
-				'create_from_scratch' => esc_html__( 'Create from scratch', 'joinotify' ),
-				'create_from_template' => esc_html__( 'Create from template', 'joinotify' ),
-				'import_template' => esc_html__( 'Import template', 'joinotify' ),
-				'load_workflow' => esc_html__( 'Load workflow', 'joinotify' ),
-				'workflow_missing' => esc_html__( 'Workflow not found.', 'joinotify' ),
-				'unsaved_changes' => esc_html__( 'You have unsaved changes.', 'joinotify' ),
-				'error' => esc_html__( 'Could not complete the operation.', 'joinotify' ),
+				'saved' => __( 'Workflow saved.', 'joinotify' ),
+				'saving' => __( 'Saving workflow...', 'joinotify' ),
+				'create_from_scratch' => __( 'Create from scratch', 'joinotify' ),
+				'create_from_template' => __( 'Create from template', 'joinotify' ),
+				'import_template' => __( 'Import template', 'joinotify' ),
+				'load_workflow' => __( 'Load workflow', 'joinotify' ),
+				'workflow_missing' => __( 'Workflow not found.', 'joinotify' ),
+				'unsaved_changes' => __( 'You have unsaved changes.', 'joinotify' ),
+				'error' => __( 'Could not complete the operation.', 'joinotify' ),
 			),
 		) );
 	}
@@ -318,18 +318,18 @@ class Registry {
 				return array(
 					array(
 						'key' => 'delay_type',
-						'label' => esc_html__( 'Delay type', 'joinotify' ),
+						'label' => __( 'Delay type', 'joinotify' ),
 						'component' => 'select',
 						'required' => true,
 						'options' => array(
-							array( 'label' => esc_html__( 'Period', 'joinotify' ), 'value' => 'period' ),
-							array( 'label' => esc_html__( 'Date', 'joinotify' ), 'value' => 'date' ),
-							array( 'label' => esc_html__( 'Scheduled', 'joinotify' ), 'value' => 'scheduled' ),
+							array( 'label' => __( 'Period', 'joinotify' ), 'value' => 'period' ),
+							array( 'label' => __( 'Date', 'joinotify' ), 'value' => 'date' ),
+							array( 'label' => __( 'Scheduled', 'joinotify' ), 'value' => 'scheduled' ),
 						),
 					),
 					array(
 						'key' => 'delay_value',
-						'label' => esc_html__( 'Amount', 'joinotify' ),
+						'label' => __( 'Amount', 'joinotify' ),
 						'component' => 'number',
 						'componentProps' => array(
 							'min' => 1,
@@ -337,26 +337,26 @@ class Registry {
 					),
 					array(
 						'key' => 'delay_period',
-						'label' => esc_html__( 'Period', 'joinotify' ),
+						'label' => __( 'Period', 'joinotify' ),
 						'component' => 'select',
 						'options' => array(
-							array( 'label' => esc_html__( 'Seconds', 'joinotify' ), 'value' => 'seconds' ),
-							array( 'label' => esc_html__( 'Minutes', 'joinotify' ), 'value' => 'minute' ),
-							array( 'label' => esc_html__( 'Hours', 'joinotify' ), 'value' => 'hours' ),
-							array( 'label' => esc_html__( 'Days', 'joinotify' ), 'value' => 'day' ),
-							array( 'label' => esc_html__( 'Weeks', 'joinotify' ), 'value' => 'week' ),
-							array( 'label' => esc_html__( 'Months', 'joinotify' ), 'value' => 'month' ),
-							array( 'label' => esc_html__( 'Years', 'joinotify' ), 'value' => 'year' ),
+							array( 'label' => __( 'Seconds', 'joinotify' ), 'value' => 'seconds' ),
+							array( 'label' => __( 'Minutes', 'joinotify' ), 'value' => 'minute' ),
+							array( 'label' => __( 'Hours', 'joinotify' ), 'value' => 'hours' ),
+							array( 'label' => __( 'Days', 'joinotify' ), 'value' => 'day' ),
+							array( 'label' => __( 'Weeks', 'joinotify' ), 'value' => 'week' ),
+							array( 'label' => __( 'Months', 'joinotify' ), 'value' => 'month' ),
+							array( 'label' => __( 'Years', 'joinotify' ), 'value' => 'year' ),
 						),
 					),
 					array(
 						'key' => 'date_value',
-						'label' => esc_html__( 'Date', 'joinotify' ),
+						'label' => __( 'Date', 'joinotify' ),
 						'component' => 'date',
 					),
 					array(
 						'key' => 'time_value',
-						'label' => esc_html__( 'Time', 'joinotify' ),
+						'label' => __( 'Time', 'joinotify' ),
 						'component' => 'time',
 					),
 				);
@@ -365,34 +365,34 @@ class Registry {
 				return array(
 					array(
 						'key' => 'condition',
-						'label' => esc_html__( 'Condition type', 'joinotify' ),
+						'label' => __( 'Condition type', 'joinotify' ),
 						'component' => 'select',
 						'required' => true,
 					),
 					array(
 						'key' => 'condition_type',
-						'label' => esc_html__( 'Operator', 'joinotify' ),
+						'label' => __( 'Operator', 'joinotify' ),
 						'component' => 'select',
 						'required' => true,
 					),
 					array(
 						'key' => 'field_id',
-						'label' => esc_html__( 'Field ID', 'joinotify' ),
+						'label' => __( 'Field ID', 'joinotify' ),
 						'component' => 'input',
 					),
 					array(
 						'key' => 'meta_key',
-						'label' => esc_html__( 'Meta key', 'joinotify' ),
+						'label' => __( 'Meta key', 'joinotify' ),
 						'component' => 'input',
 					),
 					array(
 						'key' => 'value_text',
-						'label' => esc_html__( 'Value', 'joinotify' ),
+						'label' => __( 'Value', 'joinotify' ),
 						'component' => 'textarea',
 					),
 					array(
 						'key' => 'type_text',
-						'label' => esc_html__( 'Type label', 'joinotify' ),
+						'label' => __( 'Type label', 'joinotify' ),
 						'component' => 'input',
 					),
 				);
@@ -401,7 +401,7 @@ class Registry {
 				return array(
 					array(
 						'key' => 'snippet_php',
-						'label' => esc_html__( 'PHP code', 'joinotify' ),
+						'label' => __( 'PHP code', 'joinotify' ),
 						'component' => 'code',
 						'required' => true,
 						'rows' => 12,
@@ -923,7 +923,7 @@ class Registry {
 		if ( ! is_array( $templates ) || ! isset( $templates[ $template_file ] ) ) {
 			return array(
 				'status' => 'error',
-				'message' => esc_html__( 'The selected template was not found.', 'joinotify' ),
+				'message' => __( 'The selected template was not found.', 'joinotify' ),
 			);
 		}
 
@@ -932,7 +932,7 @@ class Registry {
 		if ( ! is_array( $decoded ) ) {
 			return array(
 				'status' => 'error',
-				'message' => esc_html__( 'Invalid template file.', 'joinotify' ),
+				'message' => __( 'Invalid template file.', 'joinotify' ),
 			);
 		}
 
@@ -982,7 +982,7 @@ class Registry {
 		if ( ! $post || 'joinotify-workflow' !== $post->post_type ) {
 			return array(
 				'status' => 'error',
-				'message' => esc_html__( 'Workflow not found.', 'joinotify' ),
+				'message' => __( 'Workflow not found.', 'joinotify' ),
 			);
 		}
 
@@ -1047,7 +1047,7 @@ class Registry {
 		if ( empty( $state['post_id'] ) ) {
 			return array(
 				'status' => 'error',
-				'message' => esc_html__( 'Workflow not found.', 'joinotify' ),
+				'message' => __( 'Workflow not found.', 'joinotify' ),
 			);
 		}
 
@@ -1284,7 +1284,7 @@ class Registry {
 			$errors[] = array(
 				'code' => 'invalid_content',
 				'severity' => 'error',
-				'message' => esc_html__( 'The workflow content is invalid.', 'joinotify' ),
+				'message' => __( 'The workflow content is invalid.', 'joinotify' ),
 			);
 
 			return $errors;
@@ -1298,19 +1298,19 @@ class Registry {
 			$errors[] = array(
 				'code' => 'missing_trigger',
 				'severity' => 'error',
-				'message' => esc_html__( 'The workflow has no trigger.', 'joinotify' ),
+				'message' => __( 'The workflow has no trigger.', 'joinotify' ),
 			);
 		} elseif ( count( $triggers ) > 1 ) {
 			$errors[] = array(
 				'code' => 'multiple_triggers',
 				'severity' => 'error',
-				'message' => esc_html__( 'The workflow has more than one trigger.', 'joinotify' ),
+				'message' => __( 'The workflow has more than one trigger.', 'joinotify' ),
 			);
 		} elseif ( '' === self::extract_trigger_hook( $content ) ) {
 			$errors[] = array(
 				'code' => 'trigger_not_configured',
 				'severity' => 'error',
-				'message' => esc_html__( 'The workflow trigger is not configured.', 'joinotify' ),
+				'message' => __( 'The workflow trigger is not configured.', 'joinotify' ),
 			);
 		}
 
@@ -1347,7 +1347,7 @@ class Registry {
 					$errors[] = array(
 						'code' => 'condition_missing_branches',
 						'severity' => 'error',
-						'message' => esc_html__( 'A condition is missing its branches.', 'joinotify' ),
+						'message' => __( 'A condition is missing its branches.', 'joinotify' ),
 						'node_id' => isset( $node['id'] ) ? (string) $node['id'] : '',
 					);
 
@@ -1438,14 +1438,14 @@ class Registry {
 	public static function get_conditions_catalog() {
 		// Canonical operator labels — single source of truth for the builder.
 		$operator_labels = apply_filters( 'Joinotify/Builder/Condition_Operators', array(
-			'is' => esc_html__( 'Is equal to', 'joinotify' ),
-			'is_not' => esc_html__( 'Is not equal to', 'joinotify' ),
-			'contains' => esc_html__( 'Contains', 'joinotify' ),
-			'not_contain' => esc_html__( 'Does not contain', 'joinotify' ),
-			'empty' => esc_html__( 'Is empty', 'joinotify' ),
-			'not_empty' => esc_html__( 'Is not empty', 'joinotify' ),
-			'bigger_than' => esc_html__( 'Greater than', 'joinotify' ),
-			'less_than' => esc_html__( 'Less than', 'joinotify' ),
+			'is' => __( 'Is equal to', 'joinotify' ),
+			'is_not' => __( 'Is not equal to', 'joinotify' ),
+			'contains' => __( 'Contains', 'joinotify' ),
+			'not_contain' => __( 'Does not contain', 'joinotify' ),
+			'empty' => __( 'Is empty', 'joinotify' ),
+			'not_empty' => __( 'Is not empty', 'joinotify' ),
+			'bigger_than' => __( 'Greater than', 'joinotify' ),
+			'less_than' => __( 'Less than', 'joinotify' ),
 		));
 
 		// Value-input hints per condition key, so the builder renders the right

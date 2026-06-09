@@ -50,9 +50,9 @@ class OpenAI extends Integrations_Base {
                 'action_hook' => 'Joinotify/Settings/Tabs/Integrations/OpenAI',
                 'settings' => self::get_integration_settings(),
                 'modal' => array(
-                    'title' => esc_html__( 'Artificial Intelligence settings', 'joinotify' ),
-                    'description' => esc_html__( 'Configure the AI provider, credentials, and the default behavior used to generate messages.', 'joinotify' ),
-                    'button_label' => esc_html__( 'Configure', 'joinotify' ),
+                    'title' => __( 'Artificial Intelligence settings', 'joinotify' ),
+                    'description' => __( 'Configure the AI provider, credentials, and the default behavior used to generate messages.', 'joinotify' ),
+                    'button_label' => __( 'Configure', 'joinotify' ),
                 ),
             )
         );
@@ -113,7 +113,7 @@ class OpenAI extends Integrations_Base {
                 esc_html__( 'Global persona / system prompt', 'joinotify' ),
                 esc_html__( 'Brand voice and rules inherited by every AI generation. Example: "You are the support agent for Store X, be cordial and concise.".', 'joinotify' ),
                 array(
-                    'placeholder' => esc_html__( 'You are a helpful assistant for my store...', 'joinotify' ),
+                    'placeholder' => __( 'You are a helpful assistant for my store...', 'joinotify' ),
                     'rows' => 4,
                 )
             ),

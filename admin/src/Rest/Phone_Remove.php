@@ -45,7 +45,7 @@ class Phone_Remove extends Abstract_Route {
         do_action( 'Joinotify/Remove_Phone/Success', $phone );
 
         return $this->success_response( array(
-            'message' => esc_html__( 'The sender phone number was removed successfully!', 'joinotify' ),
+            'message' => __( 'The sender phone number was removed successfully!', 'joinotify' ),
             'phones'  => Registry::get_phone_state(),
         ) );
     }

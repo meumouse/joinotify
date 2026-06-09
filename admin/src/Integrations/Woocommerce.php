@@ -97,9 +97,9 @@ class Woocommerce extends Integrations_Base {
                 ),
                 'settings' => self::get_integration_settings(),
                 'modal' => array(
-                    'title' => esc_html__( 'WooCommerce settings', 'joinotify' ),
-                    'description' => esc_html__( 'Configure discount coupons and checkout field formatting with the native integration fields.', 'joinotify' ),
-                    'button_label' => esc_html__( 'Configure', 'joinotify' ),
+                    'title' => __( 'WooCommerce settings', 'joinotify' ),
+                    'description' => __( 'Configure discount coupons and checkout field formatting with the native integration fields.', 'joinotify' ),
+                    'button_label' => __( 'Configure', 'joinotify' ),
                 ),
             )
         );
@@ -167,47 +167,47 @@ class Woocommerce extends Integrations_Base {
         $triggers['woocommerce'] = array(
             array(
                 'data_trigger' => 'woocommerce_new_order',
-                'title' => esc_html__( 'New order', 'joinotify' ),
-                'description' => esc_html__( 'This trigger is activated when a new order is received in WooCommerce with any status.', 'joinotify' ),
+                'title' => __( 'New order', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a new order is received in WooCommerce with any status.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_checkout_order_processed',
-                'title' => esc_html__( 'New order (Processing)', 'joinotify' ),
-                'description' => esc_html__( 'This trigger is activated when a new order is received in WooCommerce with a processing status.', 'joinotify' ),
+                'title' => __( 'New order (Processing)', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a new order is received in WooCommerce with a processing status.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_status_completed',
-                'title' => esc_html__( 'Order completed', 'joinotify' ),
-                'description' => esc_html__( "This action is triggered when an order's status is changed to completed.", 'joinotify' ),
+                'title' => __( 'Order completed', 'joinotify' ),
+                'description' => __( "This action is triggered when an order's status is changed to completed.", 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_fully_refunded',
-                'title' => esc_html__( 'Order fully refunded', 'joinotify' ),
-                'description' => esc_html__( 'This action is triggered when an order is fully refunded.', 'joinotify' ),
+                'title' => __( 'Order fully refunded', 'joinotify' ),
+                'description' => __( 'This action is triggered when an order is fully refunded.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_partially_refunded',
-                'title' => esc_html__( 'Order partially refunded', 'joinotify' ),
-                'description' => esc_html__( 'This action is triggered when an order is partially refunded.', 'joinotify' ),
+                'title' => __( 'Order partially refunded', 'joinotify' ),
+                'description' => __( 'This action is triggered when an order is partially refunded.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_order_status_changed',
-                'title' => esc_html__( 'Order status changed', 'joinotify' ),
-                'description' => esc_html__( "This action is triggered when an order's status changes.", 'joinotify' ),
+                'title' => __( 'Order status changed', 'joinotify' ),
+                'description' => __( "This action is triggered when an order's status changes.", 'joinotify' ),
                 'require_settings' => true,
                 'settings' => array(
                     array(
                         'key' => 'order_status',
-                        'label' => esc_html__( 'Order status', 'joinotify' ),
+                        'label' => __( 'Order status', 'joinotify' ),
                         'component' => 'select',
                         'required' => true,
-                        'description' => esc_html__( 'Choose which order status should start this workflow. Select "Any status" to run on every status change.', 'joinotify' ),
-                        'placeholder' => esc_html__( 'Select an order status', 'joinotify' ),
+                        'description' => __( 'Choose which order status should start this workflow. Select "Any status" to run on every status change.', 'joinotify' ),
+                        'placeholder' => __( 'Select an order status', 'joinotify' ),
                         'options' => self::get_order_status_options(),
                     ),
                 ),
@@ -227,7 +227,7 @@ class Woocommerce extends Integrations_Base {
     public static function get_order_status_options() {
         $options = array(
             array(
-                'label' => esc_html__( 'Any status', 'joinotify' ),
+                'label' => __( 'Any status', 'joinotify' ),
                 'value' => 'none',
             ),
         );
@@ -296,7 +296,7 @@ class Woocommerce extends Integrations_Base {
         $placeholders['woocommerce'] = array(
             '{{ wc_billing_first_name }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the customer billing first name from the WooCommerce order', 'joinotify' ),
+                'description' => __( 'To retrieve the customer billing first name from the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_billing_first_name() : '',
                     'sandbox' => $current_user->exists() ? $current_user->first_name : esc_html__( 'John', 'joinotify' ),
@@ -304,7 +304,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_last_name }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the customer billing last name from the WooCommerce order', 'joinotify' ),
+                'description' => __( 'To retrieve the customer billing last name from the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_billing_last_name() : '',
                     'sandbox' => $current_user->exists() ? $current_user->last_name : esc_html__( 'Doe', 'joinotify' ),
@@ -312,7 +312,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_email }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the customer billing email from the WooCommerce order', 'joinotify' ),
+                'description' => __( 'To retrieve the customer billing email from the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ?  $order->get_billing_email() : '',
                     'sandbox' => $current_user->exists() ? $current_user->user_email : esc_html__( 'user@example.com', 'joinotify' ),
@@ -320,39 +320,39 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_phone }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the billing phone from the WooCommerce order', 'joinotify' ),
+                'description' => __( 'To retrieve the billing phone from the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_billing_phone() : '',
-                    'sandbox' => esc_html__( '+55 11 91234-5678', 'joinotify' ),
+                    'sandbox' => __( '+55 11 91234-5678', 'joinotify' ),
                 ),
             ),
             '{{ wc_shipping_phone }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the shipping phone from the WooCommerce order', 'joinotify' ),
+                'description' => __( 'To retrieve the shipping phone from the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_shipping_phone() : '',
-                    'sandbox' => esc_html__( '+55 41 91234-5678', 'joinotify' ),
+                    'sandbox' => __( '+55 41 91234-5678', 'joinotify' ),
                 ),
             ),
             '{{ wc_order_number }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce order number', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce order number', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_order_number() : '',
-                    'sandbox' => esc_html__( '12345', 'joinotify' ),
+                    'sandbox' => __( '12345', 'joinotify' ),
                 ),
             ),
             '{{ wc_order_status }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce order status', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce order status', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ?  wc_get_order_status_name( $order->get_status() ) : '',
-                    'sandbox' => esc_html__( 'Completed', 'joinotify' ),
+                    'sandbox' => __( 'Completed', 'joinotify' ),
                 ),
             ),
             '{{ wc_order_date }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce order date', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce order date', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? date_i18n( get_option('date_format'), strtotime( $order->get_date_created() ) ) : '',
                     'sandbox' => date( get_option('date_format') ),
@@ -360,23 +360,23 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_billing_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Retrieve the user\'s full billing address (format configurable in the WooCommerce options).', 'joinotify' ),
+                'description' => __( 'Retrieve the user\'s full billing address (format configurable in the WooCommerce options).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'billing' ) : '',
-                    'sandbox' => esc_html__( 'Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)', 'joinotify' ),
+                    'sandbox' => __( 'Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)', 'joinotify' ),
                 ),
             ),
             '{{ wc_shipping_full_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'Retrieve the user\'s full shipping address (format configurable in the WooCommerce options).', 'joinotify' ),
+                'description' => __( 'Retrieve the user\'s full shipping address (format configurable in the WooCommerce options).', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_full_address( $order, 'shipping' ) : '',
-                    'sandbox' => esc_html__( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
+                    'sandbox' => __( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
                 ),
             ),
             '{{ wc_purchased_items }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve each purchased product and quantity from the order, separated by line', 'joinotify' ),
+                'description' => __( 'To retrieve each purchased product and quantity from the order, separated by line', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? self::get_purchased_items( $order ) : '',
                     'sandbox' => sprintf( '%s %s %s', esc_html__( '1x - Men\'s cotton T-shirt (Sample product)', 'joinotify' ), "\n",  esc_html__( '1x - Sunglasses with UV protection (Sample product)', 'joinotify' ) ),
@@ -384,7 +384,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_payment_url }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the order payment URL', 'joinotify' ),
+                'description' => __( 'To retrieve the order payment URL', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_checkout_payment_url() : '',
                     'sandbox' => sprintf( esc_html__( '%s/checkout/pay/order/12345', 'joinotify' ), get_site_url() ),
@@ -392,7 +392,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_currency_symbol }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the order currency symbol', 'joinotify' ),
+                'description' => __( 'To retrieve the order currency symbol', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? get_woocommerce_currency_symbol( $order->get_currency() ) : '',
                     'sandbox' => get_woocommerce_currency_symbol(),
@@ -400,7 +400,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_order_total }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce order total', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce order total', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? joinotify_format_plain_text( $order->get_total() ) : '',
                     'sandbox' => joinotify_format_plain_text( wc_price( 150 ) ),
@@ -408,7 +408,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_total_discount }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce total discount', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce total discount', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? joinotify_format_plain_text( $order->get_total_discount() ) : '',
                     'sandbox' => joinotify_format_plain_text( wc_price( 20 ) ),
@@ -416,7 +416,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_total_tax }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce total tax', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce total tax', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? joinotify_format_plain_text( $order->get_total_tax() ) : '',
                     'sandbox' => joinotify_format_plain_text( wc_price( 15 ) ),
@@ -424,7 +424,7 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_total_refunded }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce total refunded amount', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce total refunded amount', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? joinotify_format_plain_text( $order->get_total_refunded() ) : '',
                     'sandbox' => joinotify_format_plain_text( wc_price( 10 ) ),
@@ -432,15 +432,15 @@ class Woocommerce extends Integrations_Base {
             ),
             '{{ wc_coupon_codes }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the coupon codes used in the WooCommerce order', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon codes used in the WooCommerce order', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? implode(', ', $order->get_coupon_codes()) : '',
-                    'sandbox' => esc_html__( 'CUPOM10, FREESHIPPING', 'joinotify' ),
+                    'sandbox' => __( 'CUPOM10, FREESHIPPING', 'joinotify' ),
                 ),
             ),
             '{{ wc_payment_method_title }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce order payment method title', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce order payment method title', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? (function ( $order ) {
                         $id = $order->get_payment_method();
@@ -450,20 +450,20 @@ class Woocommerce extends Integrations_Base {
                             ? joinotify_format_plain_text( $gateways[ $id ]->get_title() )
                             : '';
                     })( $order ) : '',
-                    'sandbox' => esc_html__( 'Credit card', 'joinotify' ),
+                    'sandbox' => __( 'Credit card', 'joinotify' ),
                 ),
             ),
             '{{ wc_shipping_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the WooCommerce order shipping address', 'joinotify' ),
+                'description' => __( 'To retrieve the WooCommerce order shipping address', 'joinotify' ),
                 'replacement' => array(
                     'production' => $order ? $order->get_shipping_to_display() : '',
-                    'sandbox' => esc_html__( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
+                    'sandbox' => __( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
                 ),
             ),
             '{{ wc_checkout_field=[FIELD_ID] }}' => array(
                 'triggers' => $trigger_names,
-                'description' => esc_html__( 'To retrieve the value of a specific checkout field in the WooCommerce order. Replace FIELD_ID with the checkout field ID, for example: billing_email.', 'joinotify' ),
+                'description' => __( 'To retrieve the value of a specific checkout field in the WooCommerce order. Replace FIELD_ID with the checkout field ID, for example: billing_email.', 'joinotify' ),
                 'replacement' => array(), // dynamic replacement is make on Placeholders::replace_placeholders()
             ),
         );
@@ -752,7 +752,7 @@ class Woocommerce extends Integrations_Base {
     public function add_woocommerce_category( $categories ) {
         $categories[] = array(
             'id' => 'woocommerce',
-            'label' => esc_html__( 'WooCommerce', 'joinotify' ),
+            'label' => __( 'WooCommerce', 'joinotify' ),
             'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zm10 0c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zM7.334 14h9.591c.748 0 1.404-.494 1.611-1.213l1.917-6.708A.5.5 0 0 0 19.96 5.4H6.21l-.94-2.342A1 1 0 0 0 4.34 2.4H2v2h1.66l3.6 8.99-1.35 2.448C5.16 17.227 5.99 18.6 7.334 18.6H19v-2H7.334l1.1-2z"></path></svg>',
             'priority' => 30,
         );
@@ -771,8 +771,8 @@ class Woocommerce extends Integrations_Base {
     public function add_coupon_action( $actions ) {
         $actions[] = array(
             'action' => 'create_coupon',
-            'title' => esc_html__( 'Discount coupon', 'joinotify' ),
-            'description' => esc_html__( 'Send a discount coupon to your user via WhatsApp text message.', 'joinotify' ),
+            'title' => __( 'Discount coupon', 'joinotify' ),
+            'description' => __( 'Send a discount coupon to your user via WhatsApp text message.', 'joinotify' ),
             'context' => array(
                 'woocommerce',
             ),
@@ -940,27 +940,27 @@ class Woocommerce extends Integrations_Base {
         // add coupon placeholders on array
         $placeholders = apply_filters( 'Joinotify/Builder/Components/Coupon_Placeholders', array(
             '{{ joinotify_coupon_code }}' => array(
-                'description' => esc_html__( 'To retrieve the coupon discount code.', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon discount code.', 'joinotify' ),
                 'replacement' => $coupon_code,
             ),
             '{{ joinotify_coupon_description }}' => array(
-                'description' => esc_html__( 'To retrieve the coupon description.', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon description.', 'joinotify' ),
                 'replacement' => isset( $settings['coupon_description'] ) ? $settings['coupon_description'] : '',
             ),
             '{{ joinotify_coupon_discount_type }}' => array(
-                'description' => esc_html__( 'To retrieve the coupon discount type. Example: Percentage or fixed amount.', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon discount type. Example: Percentage or fixed amount.', 'joinotify' ),
                 'replacement' => isset( $settings['discount_type'] ) && $settings['discount_type'] === 'percent' ? esc_html__( 'Percentage', 'joinotify' ) : esc_html__( 'Fixed amount', 'joinotify' ),
             ),
             '{{ joinotify_coupon_discount_value }}' => array(
-                'description' => esc_html__( 'To retrieve the coupon discount amount.', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon discount amount.', 'joinotify' ),
                 'replacement' => isset( $settings['coupon_amount'] ) ? $settings['coupon_amount'] : '',
             ),
             '{{ joinotify_coupon_discount_formatted }}' => array(
-                'description' => esc_html__( 'To retrieve the coupon discount amount formatted with a currency symbol or percentage. Example: 10%.', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon discount amount formatted with a currency symbol or percentage. Example: 10%.', 'joinotify' ),
                 'replacement' => $formatted_discount,
             ),
             '{{ joinotify_coupon_expires }}' => array(
-                'description' => esc_html__( 'To retrieve the coupon expiration. Example: Expires in 1 hour.', 'joinotify' ),
+                'description' => __( 'To retrieve the coupon expiration. Example: Expires in 1 hour.', 'joinotify' ),
                 'replacement' => $formatted_expires,
             ),
         ));

@@ -54,7 +54,7 @@ class License_Sync extends Abstract_Route {
             License::persist_status_from_response( $response_obj );
 
             return $this->success_response( array(
-                'message'      => esc_html__( 'License information updated successfully.', 'joinotify' ),
+                'message'      => __( 'License information updated successfully.', 'joinotify' ),
                 'license_data' => Registry::get_license_state(),
             ) );
         }

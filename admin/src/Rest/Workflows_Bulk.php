@@ -51,7 +51,7 @@ class Workflows_Bulk extends Abstract_Route {
 		}
 
 		return $this->success_response( array(
-			'message' => esc_html__( 'Bulk action completed.', 'joinotify' ),
+			'message' => __( 'Bulk action completed.', 'joinotify' ),
 			'processed' => (int) $result['processed'],
 			'workflows' => Registry::get_items(),
 			'counts' => Registry::get_counts(),

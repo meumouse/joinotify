@@ -61,7 +61,7 @@ class License_Activate extends Abstract_Route {
 
             if ( License::is_valid() ) {
                 return $this->success_response( array(
-                    'message'      => esc_html__( 'License activated successfully.', 'joinotify' ),
+                    'message'      => __( 'License activated successfully.', 'joinotify' ),
                     'license_data' => Registry::get_license_state(),
                 ) );
             }

@@ -64,7 +64,7 @@ class Send_Text_Message extends Proxy_Message_Route {
 
         if ( 201 === Controller::send_message_text( $sender, $receiver, $message, $delay ) ) {
             return $this->success_response( array(
-                'message' => esc_html__( 'Text message sent successfully.', 'joinotify' ),
+                'message' => __( 'Text message sent successfully.', 'joinotify' ),
             ) );
         }
 

@@ -53,7 +53,7 @@ class Phone_Validate_Otp extends Abstract_Route {
         Controller::get_connection_state( $phone );
 
         return $this->success_response( array(
-            'message' => esc_html__( 'Your WhatsApp was verified successfully!', 'joinotify' ),
+            'message' => __( 'Your WhatsApp was verified successfully!', 'joinotify' ),
             'phones'  => Registry::get_phone_state(),
         ) );
     }

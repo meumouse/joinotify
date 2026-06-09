@@ -101,14 +101,14 @@ class Custom_Variables {
         if ( '' === $variable['token'] ) {
             return array(
                 'success' => false,
-                'message' => esc_html__( 'Provide a valid variable name.', 'joinotify' ),
+                'message' => __( 'Provide a valid variable name.', 'joinotify' ),
             );
         }
 
         if ( '' === $variable['post_type'] || '' === $variable['meta_key'] ) {
             return array(
                 'success' => false,
-                'message' => esc_html__( 'Select an entity and inform the meta key.', 'joinotify' ),
+                'message' => __( 'Select an entity and inform the meta key.', 'joinotify' ),
             );
         }
 
@@ -146,7 +146,7 @@ class Custom_Variables {
 
         return array(
             'success'  => true,
-            'message'  => esc_html__( 'Variable saved successfully.', 'joinotify' ),
+            'message'  => __( 'Variable saved successfully.', 'joinotify' ),
             'variable' => $variable,
         );
     }

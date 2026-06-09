@@ -387,7 +387,7 @@ abstract class Integrations_Base {
         return wp_parse_args( $modal, array(
             'title'              => '',
             'description'        => '',
-            'button_label'       => esc_html__( 'Configure', 'joinotify' ),
+            'button_label'       => __( 'Configure', 'joinotify' ),
             'render_button'      => true,
             'show_when_disabled' => false,
             'size'               => 'medium',
@@ -793,9 +793,9 @@ abstract class Integrations_Base {
      */
     public static function render_integration_settings_modal( $slug, $args = array(), $content_callback = null ) {
         $defaults = array(
-            'title'                 => esc_html__( 'Integration settings', 'joinotify' ),
+            'title'                 => __( 'Integration settings', 'joinotify' ),
             'description'           => '',
-            'button_label'          => esc_html__( 'Configure', 'joinotify' ),
+            'button_label'          => __( 'Configure', 'joinotify' ),
             'setting_key'           => '',
             'action_hook'           => self::get_integration_action_hook( $slug ),
             'modal_size_class'      => 'popup-lg',

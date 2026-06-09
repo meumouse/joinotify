@@ -97,11 +97,11 @@ class Utils {
      */
     public static function get_template_categories() {
         return apply_filters( 'Joinotify/Builder/Get_Template_Categories', array(
-            'wordpress' => esc_html__( 'WordPress', 'joinotify' ),
-            'woocommerce' => esc_html__( 'WooCommerce', 'joinotify' ),
-            'flexify_checkout' => esc_html__( 'Flexify Checkout', 'joinotify' ),
-            'elementor' => esc_html__( 'Elementor', 'joinotify' ),
-            'wpforms' => esc_html__( 'WPForms', 'joinotify' ),
+            'wordpress' => __( 'WordPress', 'joinotify' ),
+            'woocommerce' => __( 'WooCommerce', 'joinotify' ),
+            'flexify_checkout' => __( 'Flexify Checkout', 'joinotify' ),
+            'elementor' => __( 'Elementor', 'joinotify' ),
+            'wpforms' => __( 'WPForms', 'joinotify' ),
         ));
     }
 

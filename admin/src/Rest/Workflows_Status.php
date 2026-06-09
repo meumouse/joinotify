@@ -60,7 +60,7 @@ class Workflows_Status extends Abstract_Route {
 		}
 
 		return $this->success_response( array(
-			'message' => esc_html__( 'Workflow status updated successfully.', 'joinotify' ),
+			'message' => __( 'Workflow status updated successfully.', 'joinotify' ),
 			'workflow_status' => get_post_status( $post_id ) ?: 'deleted',
 			'counts' => Registry::get_counts(),
 		) );

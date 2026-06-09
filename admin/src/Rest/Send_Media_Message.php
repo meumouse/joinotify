@@ -70,7 +70,7 @@ class Send_Media_Message extends Proxy_Message_Route {
 
         if ( 201 === Controller::send_message_media( $sender, $receiver, $media_type, $media_url, $caption, $delay ) ) {
             return $this->success_response( array(
-                'message' => esc_html__( 'Media message sent successfully.', 'joinotify' ),
+                'message' => __( 'Media message sent successfully.', 'joinotify' ),
             ) );
         }
 

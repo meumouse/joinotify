@@ -39,7 +39,7 @@ class Settings_Save extends Abstract_Route {
         $saved = Repository::save_settings( $settings );
 
         return $this->success_response( array(
-            'message'  => esc_html__( 'Settings saved.', 'joinotify' ),
+            'message'  => __( 'Settings saved.', 'joinotify' ),
             'settings' => $saved,
         ) );
     }

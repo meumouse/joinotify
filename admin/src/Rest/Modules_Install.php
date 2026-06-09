@@ -64,7 +64,7 @@ class Modules_Install extends Abstract_Route {
         }
 
         return $this->success_response( array(
-            'message' => esc_html__( 'Plugin installed and activated successfully.', 'joinotify' ),
+            'message' => __( 'Plugin installed and activated successfully.', 'joinotify' ),
         ) );
     }
 }

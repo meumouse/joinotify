@@ -47,7 +47,7 @@ class Phone_Register extends Abstract_Route {
         }
 
         return $this->success_response( array(
-            'message'   => esc_html__( 'Code sent successfully.', 'joinotify' ),
+            'message'   => __( 'Code sent successfully.', 'joinotify' ),
             'phone'     => $phone,
             'countdown' => 60,
         ) );

@@ -41,7 +41,7 @@ class Debug_Clear extends Abstract_Route {
         }
 
         return $this->success_response( array(
-            'message' => esc_html__( 'Debug logs cleared successfully!', 'joinotify' ),
+            'message' => __( 'Debug logs cleared successfully!', 'joinotify' ),
         ) );
     }
 }

@@ -45,7 +45,7 @@ class Builder_Variables_Meta_Keys extends Abstract_Route {
             return $this->success_response( array(
                 'post_id' => $result['post_id'],
                 'keys'    => array(),
-                'empty_message' => esc_html__( 'No example post or meta keys were found for this entity.', 'joinotify' ),
+                'empty_message' => __( 'No example post or meta keys were found for this entity.', 'joinotify' ),
             ) );
         }
 
