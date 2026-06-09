@@ -2,6 +2,7 @@ import WhatsappMediaSettings from '../settings/WhatsappMediaSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { WHATSAPP_ICON } from './actionIcons';
 import { __, sprintf, textDomain } from '../../../utils/i18n';
 
 function normalizeWhatsappMediaData(data: Record<string, unknown>): Record<string, unknown> {
@@ -25,6 +26,7 @@ export const whatsappMediaDefinition: ActionDefinition = {
   title: __('WhatsApp: Media message', textDomain),
   description: __('Send a WhatsApp media message.', textDomain),
   icon: 'image',
+  iconSvg: WHATSAPP_ICON,
   category: 'messages',
   hasSettings: true,
   priority: 99,

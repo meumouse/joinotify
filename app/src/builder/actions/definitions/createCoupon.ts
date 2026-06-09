@@ -1,6 +1,7 @@
 import CreateCouponSettings from '../settings/CreateCouponSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import type { ActionDefinition } from '../registry/types';
+import { COUPON_ICON } from './actionIcons';
 import { __, sprintf, textDomain } from '../../../utils/i18n';
 
 function asRecord(value: unknown): Record<string, unknown> {
@@ -46,6 +47,7 @@ export const createCouponDefinition: ActionDefinition = {
   title: __('Discount coupon', textDomain),
   description: __('Generate a WooCommerce coupon and notify the customer.', textDomain),
   icon: 'purchase-tag',
+  iconSvg: COUPON_ICON,
   context: ['woocommerce'],
   category: 'woocommerce',
   hasSettings: true,

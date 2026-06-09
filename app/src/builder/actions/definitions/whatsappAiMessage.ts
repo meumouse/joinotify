@@ -2,6 +2,7 @@ import WhatsappAiMessageSettings from '../settings/WhatsappAiMessageSettings.vue
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { WHATSAPP_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeWhatsappAiMessageData(data: Record<string, unknown>): Record<string, unknown> {
@@ -25,6 +26,7 @@ export const whatsappAiMessageDefinition: ActionDefinition = {
   title: __('WhatsApp: AI message', textDomain),
   description: __('Generate a message with AI at trigger time and send it via WhatsApp.', textDomain),
   icon: 'message-rounded',
+  iconSvg: WHATSAPP_ICON,
   category: 'ai',
   hasSettings: true,
   priority: 45,

@@ -2,6 +2,7 @@ import TimeDelaySettings from '../settings/TimeDelaySettings.vue';
 import { describeTimeDelayAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { TIME_DELAY_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeTimeDelayData(data: Record<string, unknown>): Record<string, unknown> {
@@ -27,6 +28,7 @@ export const timeDelayDefinition: ActionDefinition = {
   title: __('Delay', textDomain),
   description: __('Pause the workflow before the next step.', textDomain),
   icon: 'clock',
+  iconSvg: TIME_DELAY_ICON,
   hasSettings: true,
   priority: 90,
   isExpansible: false,

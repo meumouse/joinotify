@@ -2,6 +2,7 @@ import ConditionSettings from '../settings/ConditionSettings.vue';
 import { describeConditionAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { CONDITION_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -61,6 +62,7 @@ export const conditionDefinition: ActionDefinition = {
   title: __('Condition', textDomain),
   description: __('Split the workflow into true and false branches.', textDomain),
   icon: 'git-branch',
+  iconSvg: CONDITION_ICON,
   hasSettings: true,
   priority: 100,
   isExpansible: true,

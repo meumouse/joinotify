@@ -7,7 +7,7 @@
  * @since 1.4.7
  */
 import { computed, ref, watch } from 'vue';
-import { Cog, DotsVerticalRounded, Repeat, Trash } from '@boxicons/vue';
+import { Cog, DotsVerticalRounded, File, Repeat, Trash } from '@boxicons/vue';
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
@@ -343,7 +343,7 @@ function normalizeBoxiconClass(value: string) {
         class="nodrag flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600 transition-colors hover:bg-slate-100"
         @click.stop
       >
-        <i class="bx bx-file shrink-0 text-base text-slate-400" />
+        <File class="shrink-0 text-slate-400" :width="16" :height="16" />
         <span class="truncate">{{ mediaFileName }}</span>
       </a>
     </div>

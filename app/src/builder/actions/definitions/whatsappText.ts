@@ -2,6 +2,7 @@ import WhatsappTextSettings from '../settings/WhatsappTextSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { WHATSAPP_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeWhatsappTextData(data: Record<string, unknown>): Record<string, unknown> {
@@ -22,6 +23,7 @@ export const whatsappTextDefinition: ActionDefinition = {
   title: __('WhatsApp: Text message', textDomain),
   description: __('Send a WhatsApp text message.', textDomain),
   icon: 'message-rounded',
+  iconSvg: WHATSAPP_ICON,
   category: 'messages',
   hasSettings: true,
   priority: 100,

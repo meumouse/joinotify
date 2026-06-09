@@ -1,6 +1,7 @@
 import StopFunnelSettings from '../settings/StopFunnelSettings.vue';
 import { describeStopAction, truncateDescription } from '../utils/actionDescription';
 import type { ActionDefinition } from '../registry/types';
+import { STOP_FUNNEL_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeStopFunnelData(data: Record<string, unknown>): Record<string, unknown> {
@@ -17,6 +18,7 @@ export const stopFunnelDefinition: ActionDefinition = {
   title: __('Stop funnel', textDomain),
   description: __('End the workflow at this point.', textDomain),
   icon: 'ban',
+  iconSvg: STOP_FUNNEL_ICON,
   hasSettings: false,
   priority: 40,
   isExpansible: false,

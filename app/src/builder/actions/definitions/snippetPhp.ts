@@ -2,6 +2,7 @@ import SnippetPhpSettings from '../settings/SnippetPhpSettings.vue';
 import { describeSnippetAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { SNIPPET_PHP_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeSnippetPhpData(data: Record<string, unknown>): Record<string, unknown> {
@@ -19,6 +20,7 @@ export const snippetPhpDefinition: ActionDefinition = {
   title: __('PHP Snippet', textDomain),
   description: __('Run a PHP snippet during the workflow.', textDomain),
   icon: 'code',
+  iconSvg: SNIPPET_PHP_ICON,
   category: 'advanced',
   hasSettings: true,
   priority: 80,

@@ -2,6 +2,7 @@ import DynamicPlaceholderSettings from '../settings/DynamicPlaceholderSettings.v
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
+import { SMART_VARIABLE_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
 function normalizeDynamicPlaceholderData(data: Record<string, unknown>): Record<string, unknown> {
@@ -22,6 +23,7 @@ export const dynamicPlaceholderDefinition: ActionDefinition = {
   title: __('AI: Smart variable', textDomain),
   description: __('Generate a named value with AI and reuse it in later messages.', textDomain),
   icon: 'code',
+  iconSvg: SMART_VARIABLE_ICON,
   category: 'ai',
   hasSettings: true,
   priority: 60,
