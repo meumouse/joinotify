@@ -41,7 +41,6 @@ const metaKeysMessage = ref('');
 const postTypeField = computed(() => ({
   options: props.postTypes || [],
   placeholder: __('Select an entity', textDomain),
-  searchable: true,
   searchPlaceholder: __('Search entity…', textDomain),
 }));
 
@@ -213,7 +212,7 @@ function onDelete(item) {
         <code class="rounded bg-white px-2 py-1 text-[12px] font-semibold text-primary-700 ring-1 ring-slate-200">{{ tokenPreview }}</code>
       </div>
 
-      <div class="grid gap-5 md:grid-cols-2">
+      <div class="grid items-start gap-5 md:grid-cols-2">
         <label class="block">
           <span class="mb-1 block text-[13px] font-medium text-slate-700">{{ __('Variable name', textDomain) }}</span>
           <input
