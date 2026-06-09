@@ -22,7 +22,7 @@ function toLegacyActionDefinition(definition: ActionDefinition): WorkflowRegistr
     iconSvg: definition.iconSvg || '',
     context: Array.isArray(definition.context) ? [...definition.context] : [],
     contexts: Array.isArray(definition.context) ? [...definition.context] : [],
-    category: '',
+    category: definition.category || '',
     schema: definition.settingsSchema || [],
     settingsComponent: definition.settingsComponent ? (definition.settingsComponent as unknown as string) : '',
     defaultData: definition.defaultData || {},

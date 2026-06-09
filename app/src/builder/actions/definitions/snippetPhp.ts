@@ -19,6 +19,7 @@ export const snippetPhpDefinition: ActionDefinition = {
   title: __('PHP Snippet', textDomain),
   description: __('Run a PHP snippet during the workflow.', textDomain),
   icon: 'code',
+  category: 'advanced',
   hasSettings: true,
   priority: 80,
   isExpansible: true,

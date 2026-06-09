@@ -25,7 +25,7 @@ export const whatsappMediaDefinition: ActionDefinition = {
   title: __('WhatsApp: Media message', textDomain),
   description: __('Send a WhatsApp media message.', textDomain),
   icon: 'image',
-  category: 'whatsapp',
+  category: 'messages',
   hasSettings: true,
   priority: 99,
   isExpansible: false,
