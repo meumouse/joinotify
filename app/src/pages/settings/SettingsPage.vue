@@ -46,6 +46,7 @@ const proxyConfigOpen = ref(false);
 const integrationConfigOpen = ref(false);
 const selectedIntegration = ref(null);
 const toasts = ref([]);
+const updateState = reactive({ loading: false, checked: false, available: false, latestVersion: '', updateUrl: '' });
 const confirm = reactive({ open: false, title: '', description: '', action: null });
 const isHydrated = ref(false);
 const toastTimers = new Map();
@@ -57,6 +58,7 @@ const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
 const system = computed(() => bootstrap.value.system || {});
+const pluginVersion = computed(() => bootstrap.value.version || '');
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
 const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'enable_send_disconnect_notifications']));
@@ -310,6 +312,37 @@ async function saveSettings() {
     });
   } finally {
     saving.value = false;
+  }
+}
+
+async function checkUpdates() {
+  if (updateState.loading) {
+    return;
+  }
+
+  updateState.loading = true;
+  debugLogger.log('updates:check-start', {
+    current_version: pluginVersion.value,
+  });
+
+  try {
+    const response = await api.post('/admin/settings/check-updates', {});
+    updateState.checked = true;
+    updateState.available = Boolean(response.update_available);
+    updateState.latestVersion = response.latest_version || '';
+    updateState.updateUrl = response.update_url || '';
+    toast(response.message || __('Update check completed.', textDomain), updateState.available ? 'info' : 'success', __('Updates', textDomain));
+    debugLogger.log('updates:check-complete', {
+      update_available: updateState.available,
+      latest_version: updateState.latestVersion,
+    });
+  } catch (error) {
+    toast(error.message || __('Could not check for updates.', textDomain), 'danger', __('Updates', textDomain));
+    debugLogger.log('updates:check-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    updateState.loading = false;
   }
 }
 
@@ -638,10 +671,13 @@ function canConfigureIntegration(integration) {
             :debug-toggle-field="debugToggleField"
             :settings="settings"
             :system="system"
+            :version="pluginVersion"
+            :update-state="updateState"
             @update-setting="updateSetting"
             @open-logs="openLogs"
             @reset="confirmReset"
             @clear-logs="confirmClearLogs"
+            @check-updates="checkUpdates"
           />
         </div>
 

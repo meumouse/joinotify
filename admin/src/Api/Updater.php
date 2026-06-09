@@ -426,6 +426,72 @@ class Updater {
 
 
     /**
+     * Check for updates on demand and return a structured status.
+     *
+     * Purges the update caches, fetches fresh data from the remote server and
+     * compares versions. Used by the "Check for updates" action on the
+     * settings About tab.
+     *
+     * @since 2.0.0
+     * @return array{checked:bool,update_available:bool,current_version:string,latest_version:string,update_url:string}
+     */
+    public static function check_for_updates() {
+        // purge cache before requesting the remote server
+        delete_transient('joinotify_api_request_cache');
+        delete_transient('joinotify_api_response_cache');
+        delete_transient('joinotify_check_updates');
+        delete_transient('joinotify_remote_data');
+        wp_cache_delete('joinotify_check_updates');
+
+        // instantiate so the dev-mode SSL filters and request caching apply
+        $updater = new self();
+        $remote_data = $updater->request();
+        $current_version = JOINOTIFY_VERSION;
+
+        if ( ! $remote_data || empty( $remote_data->version ) ) {
+            return array(
+                'checked' => false,
+                'update_available' => false,
+                'current_version' => $current_version,
+                'latest_version' => '',
+                'update_url' => '',
+            );
+        }
+
+        $latest_version = $remote_data->version;
+        $update_available = version_compare( $current_version, $latest_version, '<' );
+
+        // force WordPress to re-check the plugin update transient so the
+        // one-click update URL points to the freshly discovered package
+        if ( $update_available ) {
+            delete_site_transient('update_plugins');
+        }
+
+        $plugin_file = $updater->plugin_slug . '/' . $updater->plugin_slug . '.php';
+        $update_url = '';
+
+        if ( $update_available ) {
+            $update_url = esc_url_raw( add_query_arg(
+                array(
+                    'action' => 'upgrade-plugin',
+                    'plugin' => $plugin_file,
+                    '_wpnonce' => wp_create_nonce( 'upgrade-plugin_' . $plugin_file ),
+                ),
+                self_admin_url('update.php')
+            ) );
+        }
+
+        return array(
+            'checked' => true,
+            'update_available' => $update_available,
+            'current_version' => $current_version,
+            'latest_version' => $latest_version,
+            'update_url' => $update_url,
+        );
+    }
+
+
+    /**
      * Display update notice in the admin panel
      *
      * @since 1.2.0

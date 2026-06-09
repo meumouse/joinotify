@@ -29,6 +29,7 @@ class Rest_Controller extends Abstract_Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Debug_Clear',
         '\MeuMouse\Joinotify\Rest\Debug_Download',
         '\MeuMouse\Joinotify\Rest\Settings_Reset',
+        '\MeuMouse\Joinotify\Rest\Check_Updates',
         '\MeuMouse\Joinotify\Rest\License_Activate',
         '\MeuMouse\Joinotify\Rest\License_Deactivate',
         '\MeuMouse\Joinotify\Rest\License_Sync',
