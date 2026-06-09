@@ -23,10 +23,12 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const rootEl = ref(null);
+const dropdownEl = ref(null);
 const searchEl = ref(null);
 const isOpen = ref(false);
 const query = ref('');
 const activeIndex = ref(0);
+const dropdownStyle = ref({});
 const uid = `joinotify-select-${Math.random().toString(36).slice(2, 10)}`;
 
 const options = computed(() => Array.isArray(props.field.options) ? props.field.options : []);
@@ -86,11 +88,18 @@ watch(isOpen, (value) => {
     query.value = '';
     activeIndex.value = Math.max(0, filteredOptions.value.findIndex((option) => isSelected(option)));
 
+    updatePosition();
+    startTracking();
+
     window.requestAnimationFrame(() => {
+      updatePosition();
+
       if (showSearch.value && searchEl.value) {
         searchEl.value.focus();
       }
     });
+  } else {
+    stopTracking();
   }
 });
 
@@ -179,9 +188,63 @@ function handleOutsideClick(event) {
     return;
   }
 
-  if (!rootEl.value.contains(event.target)) {
+  const insideRoot = rootEl.value.contains(event.target);
+  const insideDropdown = dropdownEl.value && dropdownEl.value.contains(event.target);
+
+  if (!insideRoot && !insideDropdown) {
     close();
   }
+}
+
+// Position the teleported dropdown next to the trigger using fixed coordinates,
+// so it escapes any ancestor `overflow` clipping (e.g. settings modals).
+function updatePosition() {
+  if (!rootEl.value || typeof window === 'undefined') {
+    return;
+  }
+
+  const rect = rootEl.value.getBoundingClientRect();
+  const gap = 8;
+  const cap = 320;
+  const viewportHeight = window.innerHeight;
+  const spaceBelow = viewportHeight - rect.bottom - gap;
+  const spaceAbove = rect.top - gap;
+  const openUp = spaceBelow < Math.min(cap, 240) && spaceAbove > spaceBelow;
+  const maxHeight = Math.max(160, Math.min(cap, openUp ? spaceAbove : spaceBelow));
+
+  const style = {
+    position: 'fixed',
+    left: `${Math.round(rect.left)}px`,
+    width: `${Math.round(rect.width)}px`,
+    maxHeight: `${Math.round(maxHeight)}px`,
+    zIndex: 10000,
+  };
+
+  if (openUp) {
+    style.bottom = `${Math.round(viewportHeight - rect.top + gap)}px`;
+  } else {
+    style.top = `${Math.round(rect.bottom + gap)}px`;
+  }
+
+  dropdownStyle.value = style;
+}
+
+function startTracking() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.addEventListener('scroll', updatePosition, true);
+  window.addEventListener('resize', updatePosition);
+}
+
+function stopTracking() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.removeEventListener('scroll', updatePosition, true);
+  window.removeEventListener('resize', updatePosition);
 }
 
 onMounted(() => {
@@ -190,6 +253,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousedown', handleOutsideClick);
+  stopTracking();
 });
 </script>
 
@@ -225,40 +289,43 @@ onBeforeUnmount(() => {
       </svg>
     </button>
 
-    <transition
-      enter-active-class="transition duration-150 ease-out"
-      enter-from-class="opacity-0 translate-y-1 scale-95"
-      enter-to-class="opacity-100 translate-y-0 scale-100"
-      leave-active-class="transition duration-100 ease-in"
-      leave-from-class="opacity-100 translate-y-0 scale-100"
-      leave-to-class="opacity-0 translate-y-1 scale-95"
-    >
-      <div
-        v-if="isOpen"
-        :id="listboxId"
-        class="absolute z-30 mt-2 w-full overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
-        :class="dropdownClass"
+    <Teleport to="body">
+      <transition
+        enter-active-class="transition duration-150 ease-out"
+        enter-from-class="opacity-0 translate-y-1 scale-95"
+        enter-to-class="opacity-100 translate-y-0 scale-100"
+        leave-active-class="transition duration-100 ease-in"
+        leave-from-class="opacity-100 translate-y-0 scale-100"
+        leave-to-class="opacity-0 translate-y-1 scale-95"
       >
-        <div v-if="showSearch" class="border-b border-slate-100 p-2">
-          <input
-            ref="searchEl"
-            v-model="query"
-            type="text"
-            class="w-full rounded-[6px] border border-slate-200 bg-slate-50 px-3 py-2 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100"
-            :placeholder="field.searchPlaceholder || __('Search...', textDomain)"
-          />
-        </div>
-
-        <ul
-          :id="listId"
-          role="listbox"
-          :aria-labelledby="buttonId"
-          class="max-h-64 overflow-auto p-2"
-          @keydown.down.prevent="moveActive(1)"
-          @keydown.up.prevent="moveActive(-1)"
-          @keydown.enter.prevent="commitActive"
-          @keydown.esc.prevent="close"
+        <div
+          v-if="isOpen"
+          :id="listboxId"
+          ref="dropdownEl"
+          class="fixed flex flex-col overflow-hidden rounded-[8px] border border-slate-200 bg-white shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
+          :class="dropdownClass"
+          :style="dropdownStyle"
         >
+          <div v-if="showSearch" class="shrink-0 border-b border-slate-100 p-2">
+            <input
+              ref="searchEl"
+              v-model="query"
+              type="text"
+              class="w-full rounded-[6px] border border-slate-200 bg-slate-50 px-3 py-2 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100"
+              :placeholder="field.searchPlaceholder || __('Search...', textDomain)"
+            />
+          </div>
+
+          <ul
+            :id="listId"
+            role="listbox"
+            :aria-labelledby="buttonId"
+            class="min-h-0 flex-1 overflow-auto p-2"
+            @keydown.down.prevent="moveActive(1)"
+            @keydown.up.prevent="moveActive(-1)"
+            @keydown.enter.prevent="commitActive"
+            @keydown.esc.prevent="close"
+          >
           <li
             v-if="showEmpty"
             class="rounded-[8px] px-3 py-2 text-[14px] text-slate-400"
@@ -296,8 +363,9 @@ onBeforeUnmount(() => {
               <path d="M4.5 10.5L8 14L15.5 6.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </li>
-        </ul>
-      </div>
-    </transition>
+          </ul>
+        </div>
+      </transition>
+    </Teleport>
   </div>
 </template>
