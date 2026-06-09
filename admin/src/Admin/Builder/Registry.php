@@ -764,6 +764,15 @@ class Registry {
 			$post['category'] = isset( $legacy_workflow['category'] ) ? sanitize_key( (string) $legacy_workflow['category'] ) : '';
 		}
 
+		$plugin_version = isset( $file['plugin_version'] ) ? sanitize_text_field( (string) $file['plugin_version'] ) : JOINOTIFY_VERSION;
+
+		// Convert legacy structures up to the current schema before the content is
+		// sanitized and persisted. This is the single conversion point shared by
+		// both the import endpoint and the builder save, so a pre-2.0.0 flow becomes
+		// canonical regardless of how it entered. Idempotent and version-gated, so a
+		// current-schema payload passes through untouched.
+		$content = Workflow_Migrator::migrate_content( $content, $plugin_version );
+
 		if ( empty( $post['category'] ) ) {
 			$trigger_data = self::get_primary_trigger_data( self::sanitize_workflow_content( $content ) );
 			if ( ! empty( $trigger_data['context'] ) ) {
@@ -772,7 +781,7 @@ class Registry {
 		}
 
 		return array(
-			'plugin_version' => isset( $file['plugin_version'] ) ? sanitize_text_field( (string) $file['plugin_version'] ) : JOINOTIFY_VERSION,
+			'plugin_version' => $plugin_version,
 			'post' => $post,
 			'workflow_content' => $content,
 		);
@@ -1059,6 +1068,7 @@ class Registry {
 	 * @return array<string,mixed>
 	 */
 	public static function import_workflow( $payload ) {
+		// normalize_workflow_file_payload() runs the legacy->current schema migration.
 		$normalized = self::normalize_workflow_file_payload( $payload );
 		$title = isset( $normalized['post']['title'] ) ? sanitize_text_field( $normalized['post']['title'] ) : '';
 		$content = isset( $normalized['workflow_content'] ) && is_array( $normalized['workflow_content'] ) ? self::sanitize_workflow_content( $normalized['workflow_content'] ) : array();
@@ -1218,7 +1228,7 @@ class Registry {
 	 * @param array<int,mixed> $content Sanitized workflow content.
 	 * @return void
 	 */
-	private static function update_workflow_indexes( $post_id, $content ) {
+	public static function update_workflow_indexes( $post_id, $content ) {
 		$hook = self::extract_trigger_hook( $content );
 
 		if ( '' !== $hook ) {
