@@ -217,7 +217,14 @@ class Custom_Variables {
         $groups = apply_filters( 'Joinotify/Builder/Placeholders_List', array(), array() );
 
         if ( is_array( $groups ) ) {
-            foreach ( $groups as $group_placeholders ) {
+            foreach ( $groups as $group_key => $group_placeholders ) {
+                // the custom group is the variables stored here; it is already
+                // checked above with $exclude_id, so skip it to avoid a
+                // variable colliding with itself while being edited.
+                if ( 'custom' === $group_key ) {
+                    continue;
+                }
+
                 if ( ! is_array( $group_placeholders ) ) {
                     continue;
                 }
