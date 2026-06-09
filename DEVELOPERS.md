@@ -277,6 +277,71 @@ foreach ( joinotify_get_workflows( array( 'fields' => 'ids' ) ) as $id ) {
 
 ---
 
+## OTP login delivery channels
+
+The passwordless login feature delivers verification codes through a pluggable
+**channel** layer. WhatsApp ships by default; you can add e‑mail, Telegram, SMS
+or any other transport by implementing `Channel_Interface` and registering it on
+the `Joinotify/Otp_Login/Channels` filter — no core edits, no JavaScript. The
+channel you register becomes selectable in the OTP Login integration modal
+("Delivery channel").
+
+```php
+use MeuMouse\Joinotify\Otp_Login\Channel_Interface;
+use MeuMouse\Joinotify\Otp_Login\Otp_Message;
+
+class My_Email_Channel implements Channel_Interface {
+
+    public function get_id() {
+        return 'email';
+    }
+
+    public function get_label() {
+        return __( 'E-mail', 'my-textdomain' );
+    }
+
+    public function is_configured() {
+        // Everything an e-mail send needs is always available.
+        return true;
+    }
+
+    public function supports( Otp_Message $message ) {
+        // This channel needs a destination e-mail address.
+        return '' !== trim( (string) $message->email );
+    }
+
+    public function send( Otp_Message $message ) {
+        $sent = wp_mail(
+            $message->email,
+            __( 'Your verification code', 'my-textdomain' ),
+            $message->body
+        );
+
+        return $sent ? true : new WP_Error( 'email_failed', __( 'Could not send the e-mail.', 'my-textdomain' ) );
+    }
+}
+
+add_filter( 'Joinotify/Otp_Login/Channels', function( $channels ) {
+    $channels['email'] = My_Email_Channel::class;
+
+    return $channels;
+});
+```
+
+`Otp_Message` carries everything a channel needs: `code`, `phone`, `email`,
+`user` (the resolved `WP_User`, when any), `expiry_seconds`, the already‑composed
+`body`, and a `context` array. The active channel is chosen by the
+`otp_login_channel` setting and resolved through `Channel_Manager::send()`, which
+validates `is_configured()`/`supports()`, dispatches, and logs failures.
+
+**Related filters:** `Joinotify/Otp_Login/Message` (code message body),
+`Joinotify/Otp_Login/Otp_Length`, `Joinotify/Otp_Login/Otp_Expiry_Time`,
+`Joinotify/Otp_Login/Max_Attempts`, `Joinotify/Otp_Login/Sender` (WhatsApp sender),
+`Joinotify/Otp_Login/Phone_Meta_Keys` (account lookup), and the
+`Joinotify/Otp_Login/Code_Sent` action (fired after a successful delivery).
+
+---
+
 ## Notes & gotchas
 
 - **Register early.** Hook your registrations on `plugins_loaded`/`init` so the filters are wired

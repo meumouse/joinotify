@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply text-slate-900;
+  }
+}
+
+@layer components {
+  .joinotify-otp-login .iti {
+    @apply w-full;
+    --iti-flag-width: 32px;
+    --iti-border-radius: 0.375rem;
+    --iti-flag-height: 24px;
+  }
+
+  .joinotify-otp-login .iti__flag {
+    background-image: var(--iti-path-flags-2x);
+    border-radius: 0.225rem;
+  }
+
+  .joinotify-otp-login .iti__selected-country,
+  .joinotify-otp-login .iti__search-input {
+    outline: none;
+  }
+
+  .joinotify-otp-login__surface {
+    border-radius: var(--joinotify-radius, 0.375rem);
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+  }
+
+  .joinotify-otp-login__orb--primary {
+    background: color-mix(in srgb, var(--joinotify-primary) 22%, white);
+  }
+
+  .joinotify-otp-login__orb--secondary {
+    background: color-mix(in srgb, var(--joinotify-primary) 12%, white);
+  }
+
+  .joinotify-otp-login__input.joinotify-otp-login__phone-input {
+    padding-left: 5rem !important;
+  }
+
+  .joinotify-otp-login .iti__search-input {
+    padding-left: 2rem !important;
+  }
+
+  .joinotify-otp-login__input {
+    border-radius: var(--joinotify-radius, 0.375rem);
+  }
+
+  .joinotify-otp-login__input:focus {
+    border-color: var(--joinotify-primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--joinotify-primary) 16%, transparent);
+  }
+
+  .joinotify-otp-login__button {
+    border-radius: var(--joinotify-radius, 0.375rem);
+    background: var(--joinotify-primary);
+    box-shadow: 0 18px 36px color-mix(in srgb, var(--joinotify-primary) 24%, transparent);
+  }
+
+  .joinotify-otp-login__button:hover {
+    background: color-mix(in srgb, var(--joinotify-primary) 88%, black);
+  }
+
+  .joinotify-otp-login__button:focus {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--joinotify-primary) 18%, transparent);
+  }
+
+  .joinotify-otp-login__button-secondary {
+    border-radius: var(--joinotify-radius, 0.375rem);
+    border-style: solid;
+  }
+
+  .joinotify-otp-login__button-secondary:hover {
+    border-color: color-mix(in srgb, var(--joinotify-primary) 18%, #cbd5e1);
+    background-color: color-mix(in srgb, var(--joinotify-primary) 4%, white);
+  }
+
+  .joinotify-otp-login__button-secondary:focus {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--joinotify-primary) 10%, transparent);
+  }
+
+  .joinotify-otp-login__checkbox-box {
+    border-color: color-mix(in srgb, var(--joinotify-primary) 18%, #cbd5e1);
+  }
+
+  .joinotify-otp-login__checkbox .peer:focus-visible + .joinotify-otp-login__checkbox-box,
+  .joinotify-otp-login__checkbox .peer:focus + .joinotify-otp-login__checkbox-box {
+    border-color: var(--joinotify-primary);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--joinotify-primary) 20%, transparent);
+  }
+
+  .joinotify-otp-login__checkbox:hover .joinotify-otp-login__checkbox-box {
+    border-color: color-mix(in srgb, var(--joinotify-primary) 35%, #cbd5e1);
+  }
+
+  .joinotify-otp-login__checkbox .peer:checked + .joinotify-otp-login__checkbox-box {
+    border-color: var(--joinotify-primary);
+    background-color: var(--joinotify-primary);
+  }
+
+  .joinotify-otp-login__checkbox .peer:disabled + .joinotify-otp-login__checkbox-box {
+    border-color: #f1f5f9;
+    background-color: #f8fafc;
+  }
+
+  .joinotify-otp-login__forgot-link {
+    color: var(--joinotify-primary);
+  }
+
+  .joinotify-otp-login__forgot-link:hover {
+    color: color-mix(in srgb, var(--joinotify-primary) 84%, black);
+  }
+}
+
+.joinotify-otp-settings {
+  --joinotify-settings-accent: #4f46e5;
+}
+
+.joinotify-otp-settings__hero {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+  margin-top: 24px;
+}
+
+.joinotify-otp-settings__hero-copy,
+.joinotify-otp-settings__hero-card,
+.joinotify-otp-settings__panel,
+.joinotify-otp-settings__palette {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+}
+
+.joinotify-otp-settings__hero-copy {
+  padding: 28px;
+}
+
+.joinotify-otp-settings__hero-copy h2 {
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 10px 0 12px;
+}
+
+.joinotify-otp-settings__eyebrow {
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.joinotify-otp-settings__hero-card {
+  padding: 20px;
+}
+
+.joinotify-otp-settings__preview {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--joinotify-preview-color) 18%, white), white);
+  border-radius: var(--joinotify-preview-radius, 28px);
+  border: 1px solid color-mix(in srgb, var(--joinotify-preview-color) 22%, #e2e8f0);
+  min-height: 240px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.joinotify-otp-settings__preview-header {
+  align-items: center;
+  color: #475569;
+  display: flex;
+  font-weight: 600;
+  gap: 10px;
+}
+
+.joinotify-otp-settings__preview-dot {
+  background: var(--joinotify-preview-color);
+  border-radius: 999px;
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+}
+
+.joinotify-otp-settings__preview-body strong {
+  color: #0f172a;
+  display: block;
+  font-size: 28px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.joinotify-otp-settings__preview-body span {
+  color: #64748b;
+  display: block;
+  line-height: 1.6;
+}
+
+.joinotify-otp-settings__form {
+  margin-top: 24px;
+}
+
+.joinotify-otp-settings__grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.joinotify-otp-settings__panel,
+.joinotify-otp-settings__palette {
+  padding: 24px;
+}
+
+.joinotify-otp-settings__panel h3,
+.joinotify-otp-settings__palette h3 {
+  margin-top: 0;
+}
+
+.joinotify-otp-settings__palette {
+  margin-top: 24px;
+}
+
+.joinotify-otp-settings__palette-list {
+  display: grid;
+  gap: 12px;
+}
+
+.joinotify-otp-settings__palette-row {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 52px 1fr 160px;
+}
+
+.joinotify-otp-settings__palette-step {
+  color: #475569;
+  font-weight: 600;
+}
+
+.joinotify-otp-settings__palette-swatch {
+  background: var(--joinotify-swatch);
+  border-radius: 999px;
+  height: 24px;
+}
+
+.joinotify-otp-settings__palette-row input {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .joinotify-otp-settings__hero,
+  .joinotify-otp-settings__grid {
+    grid-template-columns: 1fr;
+  }
+}

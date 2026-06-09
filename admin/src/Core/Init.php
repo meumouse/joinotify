@@ -297,6 +297,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\History\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Rest\\Extensions_Controller',
+			'MeuMouse\\Joinotify\\Otp_Login\\Rest_Controller',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
@@ -349,6 +350,10 @@ class Init {
 			'MeuMouse\\Joinotify\\Integrations\\Woocommerce',
 			'MeuMouse\\Joinotify\\Integrations\\Wpforms',
 			'MeuMouse\\Joinotify\\Integrations\\Wordpress',
+			'MeuMouse\\Joinotify\\Integrations\\Otp_Login',
+			'MeuMouse\\Joinotify\\Otp_Login\\Frontend_Assets',
+			'MeuMouse\\Joinotify\\Otp_Login\\Shortcode',
+			'MeuMouse\\Joinotify\\Otp_Login\\Woocommerce_Login',
 			'MeuMouse\\Joinotify\\Api\\Updater',
 			'MeuMouse\\Joinotify\\Core\\Logger',
 			'MeuMouse\\Joinotify\\Api\\License',
