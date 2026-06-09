@@ -617,6 +617,12 @@ async function continueFromTriggerSetup() {
   if (changingTrigger.value) {
     changingTrigger.value = false;
     setChangeTriggerUrl(false);
+    // The new trigger/context (and its action catalog) were applied in memory by
+    // selectTriggerContext/selectTrigger and are not persisted yet. Mark the route
+    // as already loaded so the step watcher does NOT reload the bootstrap from the
+    // server on the way back to the canvas — that reload re-hydrates the saved
+    // (old) context and would revert the trigger change and stale the action catalog.
+    routeWorkflowLoaded.value = true;
     debugLogger.log('trigger:changed-in-place', {
       node_id: store.triggerNode?.id || '',
       trigger: store.selectedTrigger,
