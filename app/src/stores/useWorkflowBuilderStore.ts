@@ -15,6 +15,7 @@ import {
   getTriggersForContext,
   setTriggerCatalog,
 } from '../registries/triggerRegistry';
+import { getTriggerSettingsSchema } from '../utils/triggerSettings';
 import {
   createWorkflowFileFromParts,
   normalizeWorkflowFile,
@@ -535,9 +536,76 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     editingNodeId.value = selectedNodeId.value;
   }
 
+  // A pre-fix builder bug (commit 86f8a44) could persist a trigger node with an empty
+  // `trigger` slug while keeping its context and settings. Such nodes lose their
+  // definition lookup, so the settings modal shows "no additional settings" and the
+  // trigger can no longer be configured. Recover the slug deterministically from the
+  // saved settings keys (each trigger's settings schema is unique within a context),
+  // falling back to a title match, so legacy workflows become editable again.
+  function recoverTriggerNodeSlug(): boolean {
+    const node = triggerNode.value;
+
+    if (!node || node.type !== 'trigger') {
+      return false;
+    }
+
+    const context = String(node.data?.context || '');
+
+    if (!context || String(node.data?.trigger || '')) {
+      return false;
+    }
+
+    const candidates = getTriggersForContext(context);
+
+    if (!candidates.length) {
+      return false;
+    }
+
+    const settings = node.data?.settings && typeof node.data.settings === 'object'
+      ? (node.data.settings as Record<string, unknown>)
+      : {};
+    const settingsKeys = Object.keys(settings);
+
+    let match: WorkflowRegistryItem | undefined;
+
+    // Deterministic: the saved settings keys match exactly one trigger's schema.
+    if (settingsKeys.length) {
+      match = candidates.find((candidate) => {
+        const schemaKeys = getTriggerSettingsSchema(candidate).map((field) => field.key);
+        return schemaKeys.length > 0 && settingsKeys.every((key) => schemaKeys.includes(key));
+      });
+    }
+
+    // Fallback: the node title still matches a trigger label in this context.
+    if (!match) {
+      const title = String(node.data?.title || '').trim().toLowerCase();
+
+      if (title) {
+        match = candidates.find((candidate) => String(candidate.label || '').trim().toLowerCase() === title);
+      }
+    }
+
+    if (!match) {
+      return false;
+    }
+
+    node.data = {
+      ...node.data,
+      trigger: match.id,
+    };
+    debugLogger.log('trigger:slug-recovered', {
+      node_id: node.id,
+      context,
+      trigger: match.id,
+    });
+
+    return true;
+  }
+
   function applyWorkflowFile(value: ExportedWorkflowFile, nextPostId = postId.value, forceCanvas = false) {
     const normalized = normalizeWorkflowFile(value);
     file.value = normalized;
+    const recovered = recoverTriggerNodeSlug();
 
     if (Number(nextPostId) > 0) {
       postId.value = Number(nextPostId);
@@ -551,6 +619,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     warnings.value = [];
     markBaseline();
     resetHistory();
+
+    // A recovered trigger slug is an in-memory repair only; flag it as unsaved so
+    // saving persists the fix and rebuilds the runtime trigger-hook index (a workflow
+    // with an empty trigger never fires until re-saved).
+    if (recovered) {
+      baseline.value = '';
+    }
     void loadCanvasActionsFromServer(activeContext.value);
   }
 
@@ -1154,12 +1229,17 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       return;
     }
 
+    // Capture the previous context before merging: a settings payload carries the
+    // context string on every save, so only react to a genuine context switch —
+    // otherwise setWorkflowCategory would wipe the trigger/description (see updateNodeData).
+    const previousContext = String(trigger.data?.context || '');
+
     trigger.data = {
       ...trigger.data,
       ...cloneSerializable(patch),
     };
 
-    if (typeof patch.context === 'string') {
+    if (typeof patch.context === 'string' && patch.context !== previousContext) {
       setWorkflowCategory(patch.context);
     }
 
