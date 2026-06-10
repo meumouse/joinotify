@@ -52,14 +52,14 @@ function getContextLabel(contextId) {
   return props.contexts.find((item) => item.id === contextId)?.label || contextId;
 }
 
-const triggerGridClass = computed(() => 'builder-trigger-grid grid gap-4 overflow-y-auto');
+const triggerGridClass = computed(() => 'builder-trigger-grid grid gap-4');
 
 const skeletonCards = computed(() => Array.from({ length: 4 }, (_, index) => index));
 const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => index));
 </script>
 
 <template>
-  <section class="relative min-h-[calc(100vh-72px)] w-full bg-white">
+  <section class="relative flex h-full w-full flex-col overflow-hidden bg-white">
     <button
       v-if="showClose"
       type="button"
@@ -71,8 +71,8 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
       <span class="sr-only">{{ __('Close', textDomain) }}</span>
     </button>
 
-    <div class="flex min-h-[calc(100vh-72px)] w-full">
-      <aside class="hidden w-[360px] shrink-0 border-r border-slate-200 bg-slate-50/80 px-7 py-10 xl:block">
+    <div class="flex min-h-0 w-full flex-1">
+      <aside class="hidden w-[360px] shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50/80 px-7 py-10 xl:block">
         <div class="max-w-[300px]">
           <template v-if="loading">
             <div class="h-8 w-4/5 animate-pulse rounded-full bg-slate-200" />
@@ -134,35 +134,37 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
         </div>
       </aside>
 
-      <div class="min-w-0 flex-1 px-6 py-12 sm:px-8 lg:px-12 xl:px-16">
-        <div class="mx-auto flex w-full max-w-[1440px] flex-col">
-          <div class="max-w-3xl">
-            <template v-if="loading">
-              <div class="h-9 w-3/5 animate-pulse rounded-full bg-slate-200" />
-              <div class="mt-3 h-5 w-4/5 animate-pulse rounded-full bg-slate-200" />
-            </template>
-            <template v-else>
-              <p class="text-[32px] font-semibold tracking-tight text-slate-900">
-                {{ __('Define a name for this flow', textDomain) }}
-              </p>
-              <p class="mt-3 text-[15px] leading-7 text-slate-500">
-                {{ __('The name is used only for internal workflow tracking.', textDomain) }}
-              </p>
-            </template>
+      <div class="flex min-w-0 flex-1 flex-col">
+        <div class="mx-auto flex w-full max-w-[1440px] min-h-0 flex-1 flex-col px-6 pt-12 sm:px-8 lg:px-12 xl:px-16">
+          <div class="shrink-0">
+            <div class="max-w-3xl">
+              <template v-if="loading">
+                <div class="h-9 w-3/5 animate-pulse rounded-full bg-slate-200" />
+                <div class="mt-3 h-5 w-4/5 animate-pulse rounded-full bg-slate-200" />
+              </template>
+              <template v-else>
+                <p class="text-[32px] font-semibold tracking-tight text-slate-900">
+                  {{ __('Define a name for this flow', textDomain) }}
+                </p>
+                <p class="mt-3 text-[15px] leading-7 text-slate-500">
+                  {{ __('The name is used only for internal workflow tracking.', textDomain) }}
+                </p>
+              </template>
+            </div>
+
+            <div class="mt-7 w-full">
+              <div v-if="loading" class="h-[52px] rounded-[12px] border border-slate-200 bg-slate-100 animate-pulse" />
+              <WorkflowNameField
+                v-else
+                :model-value="title"
+                :label="__('Workflow name', textDomain)"
+                :placeholder="__('My automation #129720', textDomain)"
+                @update:model-value="$emit('update:title', $event)"
+              />
+            </div>
           </div>
 
-          <div class="mt-7 w-full">
-            <div v-if="loading" class="h-[52px] rounded-[12px] border border-slate-200 bg-slate-100 animate-pulse" />
-            <WorkflowNameField
-              v-else
-              :model-value="title"
-              :label="__('Workflow name', textDomain)"
-              :placeholder="__('My automation #129720', textDomain)"
-              @update:model-value="$emit('update:title', $event)"
-            />
-          </div>
-
-          <div class="mt-10 w-full">
+          <div class="mt-10 min-h-0 w-full flex-1 overflow-y-auto pb-8">
             <div v-if="loading" :class="triggerGridClass">
               <div
                 v-for="index in skeletonCards"
@@ -193,8 +195,10 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
               {{ __('No triggers available for this integration.', textDomain) }}
             </div>
           </div>
+        </div>
 
-          <div class="mt-auto w-full py-8">
+        <div class="shrink-0 border-t border-slate-200 bg-white/75 backdrop-blur-md backdrop-saturate-150">
+          <div class="mx-auto w-full max-w-[1440px] px-6 py-4 sm:px-8 lg:px-12 xl:px-16">
             <TriggerStepFooter :disabled="!ready" :continuing="continuing" @continue="$emit('continue')" @back="$emit('back')" />
           </div>
         </div>
@@ -205,9 +209,28 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
 
 <style scoped>
 .builder-trigger-grid {
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  max-height: min(720px, calc(100vh - 320px));
+  grid-template-columns: 1fr;
   align-content: start;
+}
+
+@media (min-width: 640px) {
+  .builder-trigger-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Up to 1366px (and the mid-range) → 3 cards per row. */
+@media (min-width: 1024px) and (max-width: 1600px) {
+  .builder-trigger-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Larger than 1600px → 4 cards per row. */
+@media (min-width: 1601px) {
+  .builder-trigger-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .builder-context-icon :deep(svg) {

@@ -11,7 +11,7 @@ defineEmits(['continue', 'back']);
 </script>
 
 <template>
-  <div class="flex items-center justify-between gap-4 pt-6">
+  <div class="flex items-center justify-between gap-4">
     <button
       type="button"
       class="inline-flex items-center gap-2 text-[15px] font-medium text-slate-500 transition hover:text-slate-900"
