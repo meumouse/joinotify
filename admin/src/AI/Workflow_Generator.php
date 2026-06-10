@@ -113,32 +113,51 @@ class Workflow_Generator {
      * @return string
      */
     protected static function build_system_prompt( $extra_system = '', $context = '' ) {
+        $context = sanitize_key( (string) $context );
         $triggers = self::build_triggers_reference( $context );
         $actions = self::build_actions_reference();
+        $conditions = self::build_conditions_reference();
+        $placeholders = self::build_placeholders_reference( $context );
 
         $lines = array();
         $lines[] = 'You are an automation builder for the Joinotify WhatsApp automation plugin.';
         $lines[] = 'Given a natural-language description, output ONE workflow as a JSON object.';
         $lines[] = '';
         $lines[] = 'Respond with a JSON object with exactly these keys:';
-        $lines[] = '- "title": a short title for the workflow.';
+        $lines[] = '- "title": a short, human title for the workflow.';
         $lines[] = '- "category": the trigger context slug (e.g. "woocommerce", "wordpress").';
         $lines[] = '- "workflow_content": an array of nodes.';
         $lines[] = '';
-        $lines[] = 'Node shape: { "type": "trigger"|"action", "data": { ... }, "children": [] }.';
+        $lines[] = 'NODE SHAPE: { "type": "trigger"|"action", "data": { ... }, "children": [] }.';
         $lines[] = 'The FIRST node MUST be the trigger: data = { "title", "description", "context", "trigger" }.';
-        $lines[] = 'Action node: data = { "title", "action", ...action-specific keys }.';
-        $lines[] = 'Linear steps go in the parent "children" array (nested). A simple flow can be a flat array where each next step is the next array item.';
-        $lines[] = 'Condition nodes (action "condition") store branches in "children" as { "action_true": [ ...nodes ], "action_false": [ ...nodes ] }.';
-        $lines[] = 'Do NOT include canvas_position or connection_from — the editor lays out and connects nodes automatically.';
-        $lines[] = 'For WhatsApp sender fields, use an empty string "" (the user selects the sender). For recipients and message variables, use placeholders like {{ wc_billing_phone }}, {{ wc_billing_first_name }}, {{ order_id }} when relevant.';
-        $lines[] = 'Use ONLY the triggers and actions listed below. Never invent slugs.';
+        $lines[] = '  - "context" is the integration slug; "trigger" is the trigger slug (the part after the slash in the triggers list below).';
+        $lines[] = '  - If the chosen trigger lists settings, add each setting key inside data with one of the allowed values.';
+        $lines[] = 'Action node: data = { "title", "action", ...action-specific keys }. "action" is the action slug from the actions list.';
+        $lines[] = '  - Fill the action data keys using the field schema shown for each action (use one of the allowed values when a field lists options).';
+        $lines[] = 'Linear steps are nested: each step goes in the previous node\'s "children" array. (A flat top-level array where each item is the next step is also accepted.)';
+        $lines[] = 'CONDITION nodes use action "condition" and BRANCH: "children" MUST be an object { "action_true": [ ...nodes ], "action_false": [ ...nodes ] } (each branch is an array of nodes, possibly empty).';
+        $lines[] = '  Condition data keys: { "title", "action": "condition", "condition": <condition key>, "condition_type": <operator>, "value_text": <value to compare>, "meta_key": <only when the condition requires meta_key>, "field_id": <only when the condition requires field_id> }.';
+        $lines[] = '  Pick "condition" + "condition_type" only from the CONDITIONS list for the chosen trigger below. Put the compared value in "value_text".';
         $lines[] = '';
-        $lines[] = 'AVAILABLE TRIGGERS (context/trigger — description):';
+        $lines[] = 'RULES:';
+        $lines[] = '- Use ONLY the triggers, actions, conditions and placeholders listed below. NEVER invent slugs, keys, operators or placeholders.';
+        $lines[] = '- All actions must be compatible with the chosen trigger context (an action only appears here because it is available in this ecosystem).';
+        $lines[] = '- Do NOT include canvas_position or connection_from — the editor lays out and connects nodes automatically.';
+        $lines[] = '- For WhatsApp sender fields, use an empty string "" (the user selects the sender afterwards).';
+        $lines[] = '- For recipients (receiver) and message text, prefer the placeholders listed below (e.g. {{ wc_billing_phone }}, {{ first_name }}) so the message is personalized at send time.';
+        $lines[] = '- Keep message copy in the same language as the user description.';
+        $lines[] = '';
+        $lines[] = 'AVAILABLE TRIGGERS (context/trigger — description [settings]):';
         $lines[] = $triggers;
         $lines[] = '';
-        $lines[] = 'AVAILABLE ACTIONS (slug — data keys):';
+        $lines[] = 'AVAILABLE ACTIONS (slug [category] — description; fields):';
         $lines[] = $actions;
+        $lines[] = '';
+        $lines[] = 'AVAILABLE CONDITIONS (per trigger — usable inside "condition" nodes):';
+        $lines[] = $conditions;
+        $lines[] = '';
+        $lines[] = 'AVAILABLE PLACEHOLDERS (token — description):';
+        $lines[] = $placeholders;
 
         $extra_system = is_string( $extra_system ) ? trim( $extra_system ) : '';
 
@@ -163,6 +182,11 @@ class Workflow_Generator {
         $catalog = Registry::get_triggers_catalog();
         $lines = array();
 
+        // List the preferred context first so the model favors it.
+        if ( '' !== $preferred_context && isset( $catalog[ $preferred_context ] ) ) {
+            $catalog = array( $preferred_context => $catalog[ $preferred_context ] ) + $catalog;
+        }
+
         foreach ( $catalog as $ctx => $triggers ) {
             if ( ! is_array( $triggers ) ) {
                 continue;
@@ -175,16 +199,54 @@ class Workflow_Generator {
                     continue;
                 }
 
+                $label = self::shorten( (string) ( $trigger['title'] ?? $slug ) );
+                $description = self::shorten( (string) ( $trigger['description'] ?? '' ) );
+                $text = '' !== $description ? $label . ': ' . $description : $label;
+                $settings = self::describe_trigger_settings( $trigger );
+
                 $lines[] = sprintf(
-                    '- %s/%s — %s',
+                    '- %s/%s — %s%s',
                     (string) $ctx,
                     (string) $slug,
-                    self::shorten( (string) ( $trigger['title'] ?? $slug ) )
+                    $text,
+                    '' !== $settings ? ' [' . $settings . ']' : ''
                 );
             }
         }
 
         return implode( "\n", $lines );
+    }
+
+
+    /**
+     * Describe a trigger's required settings (field key + allowed option values).
+     *
+     * @since 2.0.0
+     * @param array<string,mixed> $trigger | Trigger catalog entry.
+     * @return string
+     */
+    protected static function describe_trigger_settings( $trigger ) {
+        $settings = isset( $trigger['settings'] ) && is_array( $trigger['settings'] ) ? $trigger['settings'] : array();
+
+        if ( empty( $settings ) ) {
+            return '';
+        }
+
+        $fields = array();
+
+        foreach ( $settings as $field ) {
+            if ( ! is_array( $field ) || empty( $field['key'] ) ) {
+                continue;
+            }
+
+            $fields[] = self::describe_schema_field( $field );
+        }
+
+        if ( empty( $fields ) ) {
+            return '';
+        }
+
+        return 'settings: ' . implode( ', ', $fields );
     }
 
 
@@ -205,20 +267,238 @@ class Workflow_Generator {
                 continue;
             }
 
-            $default_data = isset( $action['default_data'] ) && is_array( $action['default_data'] ) ? $action['default_data'] : array();
-            $keys = array_values( array_filter( array_keys( $default_data ), static function( $key ) {
-                return ! in_array( $key, array( 'title', 'description', 'action' ), true );
-            }));
+            $label = self::shorten( (string) ( $action['title'] ?? $slug ) );
+            $description = self::shorten( (string) ( $action['description'] ?? '' ) );
+            $category = isset( $action['category'] ) ? (string) $action['category'] : '';
+            $fields = self::describe_action_fields( $action );
 
             $lines[] = sprintf(
-                '- %s (%s)%s',
+                '- %s%s — %s%s',
                 (string) $slug,
-                self::shorten( (string) ( $action['title'] ?? $slug ) ),
-                empty( $keys ) ? '' : ' — keys: ' . implode( ', ', $keys )
+                '' !== $category ? ' [' . $category . ']' : '',
+                '' !== $description ? $description : $label,
+                '' !== $fields ? '; fields: ' . $fields : ''
             );
         }
 
         return implode( "\n", $lines );
+    }
+
+
+    /**
+     * Describe an action's configurable fields, preferring the settings schema
+     * (with field types/options) and falling back to the default-data keys.
+     *
+     * @since 2.0.0
+     * @param array<string,mixed> $action | Action catalog entry.
+     * @return string
+     */
+    protected static function describe_action_fields( $action ) {
+        $schema = isset( $action['settings_schema'] ) && is_array( $action['settings_schema'] ) ? $action['settings_schema'] : array();
+        $fields = array();
+
+        foreach ( $schema as $field ) {
+            if ( ! is_array( $field ) || empty( $field['key'] ) ) {
+                continue;
+            }
+
+            $fields[] = self::describe_schema_field( $field );
+        }
+
+        if ( ! empty( $fields ) ) {
+            return implode( ', ', $fields );
+        }
+
+        // Fallback: raw data keys when the action has no declarative schema.
+        $default_data = isset( $action['default_data'] ) && is_array( $action['default_data'] ) ? $action['default_data'] : array();
+        $keys = array_values( array_filter( array_keys( $default_data ), static function( $key ) {
+            return ! in_array( $key, array( 'title', 'description', 'action' ), true );
+        }));
+
+        return implode( ', ', $keys );
+    }
+
+
+    /**
+     * Render a single schema field as "key(component, required) options: a|b".
+     *
+     * @since 2.0.0
+     * @param array<string,mixed> $field | Schema field.
+     * @return string
+     */
+    protected static function describe_schema_field( $field ) {
+        $key = sanitize_key( (string) ( $field['key'] ?? '' ) );
+        $meta = array();
+
+        if ( ! empty( $field['component'] ) ) {
+            $meta[] = (string) $field['component'];
+        }
+
+        if ( ! empty( $field['required'] ) ) {
+            $meta[] = 'required';
+        }
+
+        $rendered = $key;
+
+        if ( ! empty( $meta ) ) {
+            $rendered .= '(' . implode( ', ', $meta ) . ')';
+        }
+
+        $values = self::extract_option_values( $field['options'] ?? array() );
+
+        if ( ! empty( $values ) ) {
+            $rendered .= ' values: ' . implode( '|', $values );
+        }
+
+        return $rendered;
+    }
+
+
+    /**
+     * Extract the allowed values from an options array (limited for prompt size).
+     *
+     * @since 2.0.0
+     * @param mixed $options | Options array (each: {label,value} or value).
+     * @return array<int,string>
+     */
+    protected static function extract_option_values( $options ) {
+        if ( ! is_array( $options ) ) {
+            return array();
+        }
+
+        $values = array();
+
+        foreach ( $options as $option ) {
+            if ( is_array( $option ) && isset( $option['value'] ) ) {
+                $values[] = (string) $option['value'];
+            } elseif ( is_scalar( $option ) ) {
+                $values[] = (string) $option;
+            }
+
+            if ( count( $values ) >= 12 ) {
+                $values[] = '...';
+                break;
+            }
+        }
+
+        return $values;
+    }
+
+
+    /**
+     * Build the conditions reference block, grouped per trigger.
+     *
+     * @since 2.0.0
+     * @return string
+     */
+    protected static function build_conditions_reference() {
+        $catalog = Registry::get_conditions_catalog();
+        $operators = isset( $catalog['operators'] ) && is_array( $catalog['operators'] ) ? $catalog['operators'] : array();
+        $triggers = isset( $catalog['triggers'] ) && is_array( $catalog['triggers'] ) ? $catalog['triggers'] : array();
+
+        if ( empty( $triggers ) ) {
+            return '(no conditions available)';
+        }
+
+        $lines = array();
+
+        if ( ! empty( $operators ) ) {
+            $lines[] = 'Operators (condition_type): ' . implode( ', ', array_keys( $operators ) ) . '.';
+        }
+
+        foreach ( $triggers as $trigger_id => $conditions ) {
+            if ( ! is_array( $conditions ) || empty( $conditions ) ) {
+                continue;
+            }
+
+            $lines[] = sprintf( 'Trigger "%s":', (string) $trigger_id );
+
+            foreach ( $conditions as $condition ) {
+                if ( ! is_array( $condition ) || empty( $condition['key'] ) ) {
+                    continue;
+                }
+
+                $ops = isset( $condition['operators'] ) && is_array( $condition['operators'] ) ? $condition['operators'] : array();
+                $requires = isset( $condition['requires'] ) && is_array( $condition['requires'] ) ? $condition['requires'] : array();
+                $values = self::extract_option_values( $condition['options'] ?? array() );
+
+                $parts = array( sprintf( '  - %s', (string) $condition['key'] ) );
+
+                if ( ! empty( $condition['title'] ) ) {
+                    $parts[0] .= ': ' . self::shorten( (string) $condition['title'] );
+                }
+
+                if ( ! empty( $ops ) ) {
+                    $parts[] = 'operators: ' . implode( '|', $ops );
+                }
+
+                if ( ! empty( $values ) ) {
+                    $parts[] = 'values: ' . implode( '|', $values );
+                }
+
+                if ( ! empty( $requires ) ) {
+                    $parts[] = 'requires: ' . implode( ', ', $requires );
+                }
+
+                $lines[] = implode( ' — ', $parts );
+            }
+        }
+
+        return implode( "\n", $lines );
+    }
+
+
+    /**
+     * Build the placeholders reference block.
+     *
+     * Lists the global placeholders plus the ones belonging to the preferred
+     * context (or every context when none is given), so generated messages use
+     * real tokens instead of invented ones.
+     *
+     * @since 2.0.0
+     * @param string $preferred_context | Optional context slug to scope tokens.
+     * @return string
+     */
+    protected static function build_placeholders_reference( $preferred_context = '' ) {
+        $grouped = apply_filters( 'Joinotify/Builder/Placeholders_List', array(), array() );
+
+        if ( ! is_array( $grouped ) || empty( $grouped ) ) {
+            return '(no placeholders available)';
+        }
+
+        $lines = array();
+        $seen = array();
+
+        foreach ( $grouped as $group => $placeholders ) {
+            if ( ! is_array( $placeholders ) ) {
+                continue;
+            }
+
+            foreach ( $placeholders as $token => $details ) {
+                if ( ! is_array( $details ) || isset( $seen[ $token ] ) ) {
+                    continue;
+                }
+
+                $token_triggers = isset( $details['triggers'] ) && is_array( $details['triggers'] ) ? $details['triggers'] : array();
+                $is_global = empty( $token_triggers );
+
+                // When a context is preferred, keep globals + that context only.
+                if ( '' !== $preferred_context && ! $is_global && (string) $group !== $preferred_context ) {
+                    continue;
+                }
+
+                $seen[ $token ] = true;
+                $description = self::shorten( (string) ( $details['description'] ?? '' ) );
+
+                $lines[] = sprintf(
+                    '- %s%s',
+                    (string) $token,
+                    '' !== $description ? ' — ' . $description : ''
+                );
+            }
+        }
+
+        return empty( $lines ) ? '(no placeholders available)' : implode( "\n", $lines );
     }
 
 
