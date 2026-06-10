@@ -1,3 +1,27 @@
+Versão 2.0.0 (10/06/2026)
+* Novo construtor de fluxos: interface totalmente redesenhada em formato de canvas visual, com arrastar e soltar, conectar etapas, zoom, ajuste automático à tela e botões de desfazer/refazer
+* Novo recurso: Inteligência Artificial no construtor de fluxos
+     - Criação de fluxos completos automaticamente a partir de uma descrição em texto
+     - Geração de mensagens dinâmicas do WhatsApp com IA
+     - Geração de variáveis inteligentes com IA
+     - Criação de snippets PHP com auxílio da IA
+* Novo recurso: Variáveis de texto personalizadas, criadas pelo próprio usuário a partir de tipos de conteúdo e campos do site (inclui suporte a pedidos do WooCommerce)
+* Novo recurso: Histórico de mensagens enviadas, com filtros e seletor de data por mês e ano
+* Novo recurso: Login sem senha por código (OTP) enviado via WhatsApp, com suporte a novos canais no futuro
+* Novo recurso: Exportar e importar todas as configurações do plugin em arquivo JSON
+* Novo recurso: Acionamento "Solicitação de redefinição de senha", com variável do link de redefinição
+* Novo editor de mensagens com formatação visual (negrito, itálico, emojis) convertida automaticamente para o padrão do WhatsApp
+* Melhoria: pré-visualização de mídia diretamente na etapa de mensagem de mídia do WhatsApp
+* Melhoria: variáveis de texto destacadas e clicáveis dentro dos campos, com aviso quando indisponíveis no acionamento escolhido
+* Melhoria: ações sinalizam quando há configurações obrigatórias pendentes
+* Melhoria: catálogo de condições mais completo, com seleção por lista e seletor de produtos nos valores
+* Melhoria: agendamento de mensagens com data e hora específicas (tempo de espera), com fila e reprocessamento de notificações que falharam
+* Melhoria: aba "Integrações" renomeada para "Aplicativos"
+* Melhoria: verificação manual de atualização na aba "Sobre"
+* Melhoria: migração automática dos fluxos das versões anteriores ao atualizar o plugin
+* Otimizações de desempenho no carregamento do plugin e nas telas administrativas
+* Suporte aprimorado a traduções (português, inglês e espanhol)
+
 Versão 1.4.7 (12/04/2026)
 * Recurso adicionado: Fila para processamento de mensagens
 * Mudança de tecnologia do frontend para Vue.js, Vite e Tailwind CSS
