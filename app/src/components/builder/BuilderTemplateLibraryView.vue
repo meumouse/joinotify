@@ -12,6 +12,7 @@ defineProps({
   categoryOptions: { type: Array, default: () => [] },
   templates: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },
+  importingTemplate: { type: String, default: '' },
 });
 
 defineEmits(['update:search', 'update:category', 'select-template', 'back']);
@@ -44,7 +45,12 @@ const backLabel = computed(() => __('Back', textDomain));
     </div>
 
     <div class="mt-12">
-      <TemplateGrid :templates="templates" :loading="loading" @select="$emit('select-template', $event)" />
+      <TemplateGrid
+        :templates="templates"
+        :loading="loading"
+        :importing-template="importingTemplate"
+        @select="$emit('select-template', $event)"
+      />
     </div>
 
     <div class="mt-12 flex justify-center">

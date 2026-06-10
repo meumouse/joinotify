@@ -30,6 +30,7 @@ const store = useWorkflowBuilderStore();
 const bootstrap = ref(cloneValue(props.bootstrap || {}));
 const templateSearch = ref('');
 const templateCategory = ref('all');
+const importingTemplate = ref('');
 const importJson = ref('');
 const importFileName = ref('');
 const importError = ref('');
@@ -665,33 +666,43 @@ async function openTemplateLibrary() {
 }
 
 async function openTemplate(template) {
+  if (importingTemplate.value) {
+    return;
+  }
+
   debugLogger.log('templates:select-template', {
     title: template?.title || '',
     file: template?.file || '',
   });
 
-  if (template.file) {
-    await store.createWorkflowFromTemplate(template.file, template.title || '');
-  } else if (Array.isArray(template.workflow_content)) {
-    store.loadWorkflowFile(
-      createWorkflowFileFromParts({
-        plugin_version: bootstrap.value.version || '1.0.0',
-        post: {
-          type: 'joinotify-workflow',
-          title: template.title || __('Template', textDomain),
-          date: template.date || new Date().toISOString().slice(0, 19).replace('T', ' '),
-          status: 'draft',
-          modified: template.modified || new Date().toISOString().slice(0, 19).replace('T', ' '),
-          category: template.category || '',
-        },
-        workflow_content: template.workflow_content,
-      })
-    );
-  }
+  importingTemplate.value = template.file || template.title || '';
 
-  syncBuilderUrl(store.postId);
-  routeWorkflowLoaded.value = false;
-  goCanvas();
+  try {
+    if (template.file) {
+      await store.createWorkflowFromTemplate(template.file, template.title || '');
+    } else if (Array.isArray(template.workflow_content)) {
+      store.loadWorkflowFile(
+        createWorkflowFileFromParts({
+          plugin_version: bootstrap.value.version || '1.0.0',
+          post: {
+            type: 'joinotify-workflow',
+            title: template.title || __('Template', textDomain),
+            date: template.date || new Date().toISOString().slice(0, 19).replace('T', ' '),
+            status: 'draft',
+            modified: template.modified || new Date().toISOString().slice(0, 19).replace('T', ' '),
+            category: template.category || '',
+          },
+          workflow_content: template.workflow_content,
+        })
+      );
+    }
+
+    syncBuilderUrl(store.postId);
+    routeWorkflowLoaded.value = false;
+    goCanvas();
+  } finally {
+    importingTemplate.value = '';
+  }
 }
 
 function handleImportFile(file) {
@@ -1007,6 +1018,7 @@ function setChangeTriggerUrl(active) {
         :category-options="categoryOptions"
         :templates="filteredTemplates"
         :loading="store.loading.templates"
+        :importing-template="importingTemplate"
         @select-template="openTemplate"
         @back="goStart"
       />

@@ -5,6 +5,7 @@ import TemplateCard from './TemplateCard.vue';
 defineProps({
   templates: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },
+  importingTemplate: { type: String, default: '' },
 });
 
 defineEmits(['select']);
@@ -42,6 +43,8 @@ const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
           :integration="template.integration"
           :trigger="template.trigger"
           :available="template.available"
+          :importing="!!importingTemplate && importingTemplate === (template.file || template.title)"
+          :busy="!!importingTemplate"
           @click="$emit('select', template)"
         />
       </template>

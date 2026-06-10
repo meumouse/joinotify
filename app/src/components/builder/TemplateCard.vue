@@ -8,6 +8,8 @@ defineProps({
   integration: { type: String, default: '' },
   trigger: { type: String, default: '' },
   available: { type: Boolean, default: false },
+  importing: { type: Boolean, default: false },
+  busy: { type: Boolean, default: false },
 });
 
 defineEmits(['click']);
@@ -37,9 +39,10 @@ defineEmits(['click']);
     <div class="mt-auto pt-5 flex justify-center">
       <BaseButton
         class="min-w-[142px]"
-        :title="__('Import workflow', textDomain)"
+        :title="importing ? __('Importing...', textDomain) : __('Import workflow', textDomain)"
         variant="secondary"
-        :disabled="!available"
+        :loading="importing"
+        :disabled="!available || (busy && !importing)"
         @click="$emit('click')"
       />
     </div>
