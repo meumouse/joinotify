@@ -60,6 +60,16 @@ export function useMessageHistory(bootstrap = {}) {
     () => items.value.length > 0 && items.value.every((item) => selectedIds.value.has(String(item.id)))
   );
 
+  const partiallyVisibleSelected = computed(() => {
+    if (!items.value.length) {
+      return false;
+    }
+
+    const selectedVisibleCount = items.value.filter((item) => selectedIds.value.has(String(item.id))).length;
+
+    return selectedVisibleCount > 0 && selectedVisibleCount < items.value.length;
+  });
+
   const pageSummary = computed(() => {
     const total = pagination.value.total_items;
 
@@ -253,6 +263,7 @@ export function useMessageHistory(bootstrap = {}) {
     statusTabs,
     totalSelected,
     allVisibleSelected,
+    partiallyVisibleSelected,
     pageSummary,
     fetchItems,
     reload: fetchItems,

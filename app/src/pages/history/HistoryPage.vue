@@ -11,6 +11,7 @@ import BaseButton from '../../components/base/BaseButton.vue';
 import BaseListboxSelect from '../../components/base/BaseListboxSelect.vue';
 import BaseDatePicker from '../../components/base/BaseDatePicker.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
+import BaseCheckbox from '../../components/buttons/checkbox/BaseCheckbox.vue';
 import HistoryDetailsModal from './components/HistoryDetailsModal.vue';
 
 const props = defineProps({
@@ -28,6 +29,7 @@ const {
   statusTabs,
   totalSelected,
   allVisibleSelected,
+  partiallyVisibleSelected,
   pageSummary,
   reload,
   setStatusFilter,
@@ -277,7 +279,12 @@ const confirmDescription = computed(() =>
               <thead>
                 <tr class="text-[12px] uppercase tracking-wide text-slate-400">
                   <th class="px-3 py-3">
-                    <input type="checkbox" :checked="allVisibleSelected" @change="toggleSelectAll($event.target.checked)" />
+                    <BaseCheckbox
+                      :model-value="allVisibleSelected"
+                      :indeterminate="partiallyVisibleSelected"
+                      :aria-label="__('Select all visible messages', textDomain)"
+                      @change="toggleSelectAll($event)"
+                    />
                   </th>
                   <th class="px-3 py-3 font-medium">{{ __('Date', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Recipient', textDomain) }}</th>
@@ -296,10 +303,10 @@ const confirmDescription = computed(() =>
                   @click="openDetails(entry)"
                 >
                   <td class="px-3 py-3" @click.stop>
-                    <input
-                      type="checkbox"
-                      :checked="selectedIds.has(String(entry.id))"
-                      @change="toggleSelected(entry.id, $event.target.checked)"
+                    <BaseCheckbox
+                      :model-value="selectedIds.has(String(entry.id))"
+                      :aria-label="`${__('Select', textDomain)} ${entry.receiver || entry.id}`"
+                      @change="toggleSelected(entry.id, $event)"
                     />
                   </td>
                   <td class="whitespace-nowrap px-3 py-3 text-slate-500">{{ entry.created_at || '—' }}</td>
