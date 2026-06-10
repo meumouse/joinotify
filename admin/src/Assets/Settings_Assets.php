@@ -221,9 +221,18 @@ class Settings_Assets extends Abstract_Assets {
     /**
      * Mark Vite entry scripts as ES modules.
      *
+     * WordPress passes the whole printed block for this handle through
+     * `script_loader_tag` — the main `<script>` tag PLUS any translation/inline
+     * scripts it prepended (notably the `wp.i18n.setLocaleData` block emitted by
+     * `wp_set_script_translations`). Rebuilding the tag from scratch dropped those
+     * inline scripts, so JS translations never reached `wp.i18n` and the Vue apps
+     * rendered untranslated. Instead, inject `type="module"` only into this
+     * handle's own `<script>` tag (matched by its exact `id`), leaving the
+     * surrounding inline scripts intact.
+     *
      * @since 1.4.7
-     * @version 1.4.7
-     * @param string $tag Script tag HTML.
+     * @version 2.0.0
+     * @param string $tag Script tag HTML (may include translation/inline scripts).
      * @param string $handle Script handle.
      * @param string $src Script URL.
      * @return string
@@ -243,14 +252,14 @@ class Settings_Assets extends Abstract_Assets {
             return $tag;
         }
 
-        if ( false !== strpos( $tag, 'type=' ) ) {
-            return $tag;
-        }
+        // Match only this handle's main tag (id="{handle}-js"), and only when it
+        // doesn't already declare a type. The trailing quote backreference keeps
+        // sibling scripts (…-js-translations, …-js-before/after) from matching.
+        $pattern = '#<script\b(?![^>]*\stype=)([^>]*\sid=(["\'])'
+            . preg_quote( $handle, '#' ) . '-js\2[^>]*)>#';
 
-        return sprintf(
-            '<script type="module" src="%s" id="%s-js"></script>' . "\n",
-            esc_url( $src ),
-            esc_attr( $handle )
-        );
+        $result = preg_replace( $pattern, '<script type="module"$1>', $tag, 1 );
+
+        return null === $result ? $tag : $result;
     }
 }
