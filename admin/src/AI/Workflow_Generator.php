@@ -82,6 +82,12 @@ class Workflow_Generator {
             );
         }
 
+        // Defensive: the runtime walks linear steps as top-level siblings and only
+        // descends into condition branches. LLMs sometimes nest linear steps inside
+        // a node's "children" despite the instructions, which the runtime would skip.
+        // Flatten those back into siblings before sanitizing so the flow always runs.
+        $raw_content = self::flatten_linear_nodes( $raw_content );
+
         // run through the same sanitizer the import path uses
         $content = Registry::sanitize_workflow_content( $raw_content );
 
@@ -134,8 +140,9 @@ class Workflow_Generator {
         $lines[] = '  - If the chosen trigger lists settings, add each setting key inside data with one of the allowed values.';
         $lines[] = 'Action node: data = { "title", "action", ...action-specific keys }. "action" is the action slug from the actions list.';
         $lines[] = '  - Fill the action data keys using the field schema shown for each action (use one of the allowed values when a field lists options).';
-        $lines[] = 'Linear steps are nested: each step goes in the previous node\'s "children" array. (A flat top-level array where each item is the next step is also accepted.)';
-        $lines[] = 'CONDITION nodes use action "condition" and BRANCH: "children" MUST be an object { "action_true": [ ...nodes ], "action_false": [ ...nodes ] } (each branch is an array of nodes, possibly empty).';
+        $lines[] = 'LINEAR STEPS ARE SIBLINGS: list the trigger first, then each action in order as items of the SAME top-level "workflow_content" array. Do NOT nest a linear step inside another node\'s "children".';
+        $lines[] = 'Every non-condition node MUST set "children" to an empty array [].';
+        $lines[] = 'CONDITION nodes are the ONLY nodes that use "children": action "condition" BRANCHES, so its "children" MUST be an object { "action_true": [ ...nodes ], "action_false": [ ...nodes ] }. Each branch is a flat array of sibling nodes in order (possibly empty); steps that run only when the condition matches go inside the matching branch.';
         $lines[] = '  Condition data keys: { "title", "action": "condition", "condition": <condition key>, "condition_type": <operator>, "value_text": <value to compare>, "meta_key": <only when the condition requires meta_key>, "field_id": <only when the condition requires field_id> }.';
         $lines[] = '  Pick "condition" + "condition_type" only from the CONDITIONS list for the chosen trigger below. Put the compared value in "value_text".';
         $lines[] = '';
@@ -517,6 +524,62 @@ class Workflow_Generator {
         }
 
         return false;
+    }
+
+
+    /**
+     * Flatten linearly-nested nodes into top-level siblings.
+     *
+     * Non-condition nodes that carry a linear "children" list have those children
+     * lifted out (recursively) and appended as siblings, matching the runtime's
+     * flat-sibling model. Condition nodes keep their branch container, but each
+     * branch array is flattened the same way.
+     *
+     * @since 2.0.0
+     * @param array<int,mixed> $nodes | List of workflow nodes.
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function flatten_linear_nodes( $nodes ) {
+        if ( ! is_array( $nodes ) ) {
+            return array();
+        }
+
+        $result = array();
+
+        foreach ( $nodes as $node ) {
+            if ( ! is_array( $node ) ) {
+                continue;
+            }
+
+            $children = isset( $node['children'] ) && is_array( $node['children'] ) ? $node['children'] : array();
+            $is_condition = ( isset( $node['type'] ) && 'condition' === $node['type'] )
+                || ( isset( $node['data']['action'] ) && 'condition' === $node['data']['action'] );
+            $is_branch_container = array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children );
+
+            if ( $is_condition && $is_branch_container ) {
+                // keep the branch container, but flatten inside each branch
+                $node['children'] = array(
+                    'action_true' => self::flatten_linear_nodes( $children['action_true'] ?? array() ),
+                    'action_false' => self::flatten_linear_nodes( $children['action_false'] ?? array() ),
+                );
+
+                $result[] = $node;
+
+                continue;
+            }
+
+            // linear node: lift its children out as siblings
+            $node['children'] = array();
+            $result[] = $node;
+
+            if ( ! empty( $children ) && ! $is_branch_container ) {
+                foreach ( self::flatten_linear_nodes( $children ) as $descendant ) {
+                    $result[] = $descendant;
+                }
+            }
+        }
+
+        return $result;
     }
 
 

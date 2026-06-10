@@ -235,24 +235,53 @@ class Actions {
      */
     public static function extract_all_actions( $workflow_content ) {
         $actions = array();
-    
-        foreach ( $workflow_content as $item ) {
-            if ( $item['type'] === 'action' ) {
-                $actions[] = $item;
+
+        self::collect_actions( $workflow_content, $actions );
+
+        return $actions;
+    }
+
+
+    /**
+     * Recursively collect action nodes from a node list.
+     *
+     * Handles both children shapes: linear nested children ([ node, node, ... ])
+     * and condition branch containers ({ action_true: [...], action_false: [...] }).
+     *
+     * @since 1.4.7
+     * @param mixed $nodes | List of workflow nodes
+     * @param array $actions | Accumulator (by reference)
+     * @return void
+     */
+    private static function collect_actions( $nodes, &$actions ) {
+        if ( ! is_array( $nodes ) ) {
+            return;
+        }
+
+        foreach ( $nodes as $node ) {
+            if ( ! is_array( $node ) ) {
+                continue;
             }
-    
-            if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
-                foreach ( $item['children'] as $child_group ) {
-                    foreach ( $child_group as $child_action ) {
-                        if ( $child_action['type'] === 'action' ) {
-                            $actions[] = $child_action;
-                        }
-                    }
-                }
+
+            if ( isset( $node['type'] ) && $node['type'] === 'action' ) {
+                $actions[] = $node;
+            }
+
+            if ( ! isset( $node['children'] ) || ! is_array( $node['children'] ) ) {
+                continue;
+            }
+
+            $children = $node['children'];
+
+            // condition branches: { action_true: [...], action_false: [...] }
+            if ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) ) {
+                self::collect_actions( $children['action_true'] ?? array(), $actions );
+                self::collect_actions( $children['action_false'] ?? array(), $actions );
+            } else {
+                // linear nested children: [ node, node, ... ]
+                self::collect_actions( $children, $actions );
             }
         }
-    
-        return $actions;
     }
 
 
