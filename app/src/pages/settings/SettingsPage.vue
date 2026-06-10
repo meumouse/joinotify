@@ -67,7 +67,7 @@ const pluginVersion = computed(() => bootstrap.value.version || '');
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
 const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'enable_send_disconnect_notifications', 'ai_provider']));
-const aboutVisibleFields = computed(() => filterFields(['enable_auto_updates', 'enable_update_notice']));
+const aboutVisibleFields = computed(() => filterFields(['enable_auto_updates', 'enable_update_notice', 'enable_message_history']));
 const proxyToggleField = computed(() => fieldFor('enable_proxy_api'));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
 const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
