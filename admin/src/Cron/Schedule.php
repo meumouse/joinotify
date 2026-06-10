@@ -223,17 +223,18 @@ class Schedule {
             $unique_key = $action_data['id'] ?? uniqid( 'action_', true );
         }
 
-        // Cron args
-        $args = array(
-            'post_id' => $post_id,
-            'context' => $context,
-            'action_data' => $action_data, // next actions
-            'unique_key' => $unique_key,
-        );
-
         // Prefer Action Scheduler when available: more reliable execution and
-        // dedup than WP-Cron, and it survives DISABLE_WP_CRON.
+        // dedup than WP-Cron, and it survives DISABLE_WP_CRON. Action Scheduler
+        // fires the hook positionally (via array_values()), so a NAMED-key args
+        // array is safe here and lets us dedupe/cancel by readable keys.
         if ( self::is_action_scheduler_available() ) {
+            $args = array(
+                'post_id' => $post_id,
+                'context' => $context,
+                'action_data' => $action_data, // next actions
+                'unique_key' => $unique_key,
+            );
+
             $group = self::get_group( $post_id );
 
             // Replace any identical pending continuation before re-scheduling so a
@@ -243,7 +244,17 @@ class Schedule {
             return as_schedule_single_action( $timestamp, $hook, $args, $group ) > 0;
         }
 
-        // WP-Cron fallback: clear the ghost event, then schedule a single event.
+        // WP-Cron fallback: store POSITIONAL args. Core resumes the event via
+        // do_action_ref_array( $hook, $event['args'] ), which on PHP 8 forwards
+        // string-keyed args as NAMED parameters — those would fatally fail to
+        // match process_scheduled_action( $post_id, $payload, $action_data )
+        // ("Unknown named parameter $context"). Positional args map cleanly to
+        // ($post_id, $context => $payload, $action_data); the trailing
+        // $unique_key keeps the event signature distinct for dedup and is
+        // dropped by the callback's accepted_args (3).
+        $args = array( $post_id, $context, $action_data, $unique_key );
+
+        // Clear the ghost event, then schedule a single event.
         if ( function_exists('wp_clear_scheduled_hook') ) {
             wp_clear_scheduled_hook( $hook, $args );
         } else {
