@@ -1,184 +1,180 @@
 # Joinotify
 
-Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.
+**Aumente a satisfação do seu cliente automatizando o envio de mensagens via WhatsApp com o Joinotify.**
+
+O Joinotify é um plugin para WordPress que permite criar **fluxos de automação de mensagens**
+em um construtor visual de arrastar e soltar. Conecte gatilhos do seu site (pedidos do
+WooCommerce, envios de formulários, ações de usuário, etc.) a ações como envio de mensagens
+de WhatsApp, condições, atrasos e muito mais — tudo sem escrever código.
 
 ---
 
-#### Propriedade intelectual:
-O software Joinotify ® é uma propriedade registrada da MEUMOUSE.COM® – SOLUÇÕES DIGITAIS LTDA, em conformidade com o §2°, art. 2° da Lei 9.609, de 19 de Fevereiro de 1998.
-É expressamente proibido a distribuição ou cópia ilegal deste software, sujeita a penalidades conforme as leis de direitos autorais vigentes.
+#### Propriedade intelectual
+
+O software Joinotify ® é uma propriedade registrada da MEUMOUSE.COM® – SOLUÇÕES DIGITAIS LTDA,
+em conformidade com o §2°, art. 2° da Lei 9.609, de 19 de Fevereiro de 1998.
+É expressamente proibido a distribuição ou cópia ilegal deste software, sujeita a penalidades
+conforme as leis de direitos autorais vigentes. Consulte o arquivo [`license.md`](license.md).
 
 ---
 
-### Instalação:
+## Principais recursos
 
-#### Instalação via painel de administração:
-
-Você pode instalar um plugin WordPress de duas maneiras: via o painel de administração do WordPress ou via FTP. Aqui estão as etapas para ambos os métodos:
-
-* Acesse o painel de administração do seu site WordPress.
-* Vá para “Plugins” e clique em “Adicionar Novo”.
-* Digite o nome do plugin que você deseja instalar na barra de pesquisa ou carregue o arquivo ZIP do plugin baixado.
-* Clique em “Instalar Agora” e espere até que o plugin seja instalado.
-* Clique em “Ativar Plugin”.
-
-#### Instalação via FTP:
-
-* Baixe o arquivo ZIP do plugin que você deseja instalar.
-* Descompacte o arquivo ZIP em seu computador.
-* Conecte-se ao seu servidor via FTP.
-* Navegue até a pasta “wp-content/plugins”.
-* Envie a pasta do plugin descompactada para a pasta “plugins” no seu servidor.
-* Acesse o painel de administração do seu site WordPress.
-* Vá para “Plugins” e clique em “Plugins Instalados”.
-* Localize o plugin que você acabou de instalar e clique em “Ativar”.
-* Após seguir essas etapas, o plugin deve estar instalado e funcionando corretamente em seu site WordPress.
+- **Construtor de fluxos visual** — interface em formato de canvas, com arrastar e soltar,
+  conectar etapas, zoom, ajuste automático à tela e desfazer/refazer.
+- **Mensagens de WhatsApp** — texto e mídia (com legenda e pré-visualização), formatação
+  visual (negrito, itálico, emojis) convertida automaticamente para o padrão do WhatsApp.
+- **Inteligência Artificial no construtor** — geração de fluxos completos a partir de uma
+  descrição em texto, mensagens dinâmicas, variáveis inteligentes e snippets PHP assistidos.
+- **Variáveis de texto** — placeholders `{{ ... }}` substituídos em tempo de envio, incluindo
+  variáveis personalizadas criadas pelo usuário a partir de tipos de conteúdo e campos do site.
+- **Condições e ramificações** — fluxos com lógica condicional (catálogo de condições por
+  gatilho, seleção por lista e seletor de produtos).
+- **Atrasos e agendamento** — tempo de espera com data/hora específicas, fila de
+  processamento e reprocessamento de notificações que falharam.
+- **Histórico de mensagens** — com filtros e seletor de data por mês e ano.
+- **Login sem senha (OTP)** — código de verificação enviado via WhatsApp, com arquitetura
+  pronta para novos canais.
+- **Exportar/importar configurações** — todas as configurações do plugin em arquivo JSON.
+- **Integrações** — WooCommerce, WooCommerce Subscriptions, WordPress (core), WPForms,
+  Elementor e Flexify Checkout. Veja [`docs/integrations.md`](docs/integrations.md).
+- **Extensível só com PHP** — terceiros adicionam ações, gatilhos, integrações, condições,
+  placeholders, abas de configuração e rotas REST sem editar o core e sem JavaScript.
+  Veja [`DEVELOPERS.md`](DEVELOPERS.md).
+- **Multilíngue** — português, inglês e espanhol incluídos.
 
 ---
 
-### Registro de alterações (Changelogs):
+## Instalação
 
-Versão 1.4.6 (10/02/2026)
-* Otimizações
-* Correção de bugs
-     - Erro fatal devido a falta da classe ElementorPro\Modules\Forms\Classes\Action_Base
+### Via painel de administração
 
-Versão 1.4.5 (24/01/2026)
-* Correção de bugs
-     - Erro fatal ao carregar página "Todos os fluxos": Call to undefined function convert_to_screen()
-* Otimizações
-* Recurso adicionado: WooCommerce -> Formato do endereço completo (faturamento e entrega)
+1. Acesse o painel de administração do seu site WordPress.
+2. Vá em **Plugins → Adicionar novo**.
+3. Envie o arquivo ZIP do plugin (ou pesquise pelo nome) e clique em **Instalar agora**.
+4. Clique em **Ativar plugin**.
 
-Versão 1.4.4 (12/12/2025)
-* Otimizações
-     - Melhorias em segurança no instanciamento de classes
+### Via FTP
 
-Versão 1.4.3 (08/12/2025)
-* Correção de bugs
-     - Verificar se o pedido foi pago
-     - Criptografia de emojis em mensagens
-     - Contagem de posts na tabela Todos os fluxos
+1. Baixe e descompacte o arquivo ZIP do plugin.
+2. Conecte-se ao servidor via FTP e navegue até `wp-content/plugins`.
+3. Envie a pasta descompactada do plugin.
+4. No painel, vá em **Plugins → Plugins instalados**, localize o Joinotify e clique em **Ativar**.
 
-Versão 1.4.2 (27/11/2025)
-* Correção de bugs
-     - Erro na validação de string com Proxy API
-* Otimizações
+### Requisitos
 
-Versão 1.4.1 (28/10/2025)
-* Alteração na API de consulta de atualizações
+- WordPress (testado até 7.0)
+- PHP **7.4+**
 
-Versão 1.4.0 (29/08/2025)
-* Otimizações
-* Recurso adicionado: Legenda para mensagens de mídia do WhatsApp
-* Recurso adicionado Variáveis de texto {{ post_title }}, {{ post_date }}, {{ post_content }}, {{ post_link }}, {{ post_tags }}, {{ post_categories }} e {{ post_featured_image }}
+---
 
-Versão 1.3.7 (13/08/2025)
-* Correção de bugs
-     - Incapacidade de editar fluxos com plugin Academy LMS e similares
+## Arquitetura
 
-Versão 1.3.6 (11/07/2025)
-* Correção de bugs
-     - Prioridade e argumentos da função add_action() na classe Woo_Subscriptions informados fora do array de callback
-     - Falha na verificação de status de pagamento de pedidos
+A partir da versão **2.0.0**, o Joinotify separa claramente frontend e backend:
 
-Versão 1.3.5 (09/07/2025)
-* Correção de bugs
-     - Erro fatal ao alterar status de pedido: Uncaught Error: Class name must be a valid object or a string in /woocommerce/src/Internal/DataStores/Orders/OrdersTableDataStore.php:1524
-* Recurso adicionado: Validação de status do post no acionamento "Post tem status alterado"
+```
+joinotify/
+├── joinotify.php          # Bootstrap do plugin (carrega o autoloader + Init)
+├── admin/                 # Backend PHP (PSR-4, namespace MeuMouse\Joinotify\)
+│   ├── src/               #   AI, Admin, Api, Assets, Builder, Core, Cron,
+│   │                      #   Integrations, Notifications, Otp_Login, Rest, Validations, Views
+│   └── vendor/            #   Dependências Composer (gerado no build)
+├── app/                   # Frontend Vue 3 + Vite  → ver app/README.md
+│   ├── src/               #   Apps por página (builder, workflows, settings, license, history, otp-login)
+│   └── dist/              #   Build de produção (gerado)
+├── languages/             # Pipeline de i18n (Node) → ver languages/README.md
+├── assets/                # Assets estáticos (marca, etc.)
+├── templates/             # Templates PHP (ex.: login OTP)
+├── docs/                  # Documentação adicional (integrations.md)
+├── examples/              # Exemplo de extensão de terceiros
+├── scripts/build.mjs      # Pipeline de build/empacotamento
+├── DEVELOPERS.md          # API de extensão (PHP)
+├── changelogs.md          # Histórico de versões
+└── license.md             # Licença proprietária
+```
 
-Versão 1.3.4 (16/06/2025)
-* Correção de bugs
-     - Link de recuperação do carrinho é vazio (Flexify Checkout - Recuperação de carrinhos abandonados)
-* Otimizações
-     - Melhorias na responsividade em desktop
-* Recurso adicionado: Mostrar notificações de atualização de versão
+- **Backend (PHP):** atua apenas como API (REST sob o namespace `joinotify/v1`) e fornecedor
+  de esquemas de dados. Sem injeção de HTML nem jQuery.
+- **Frontend (Vue):** consome tudo via REST; cada tela administrativa é uma aplicação Vue
+  independente. Detalhes em [`app/README.md`](app/README.md).
+- **Motor de fluxos:** os fluxos são uma árvore de nós (gatilho → ações/condições) salva no
+  *post meta* `joinotify_workflow_content` do CPT `joinotify-workflow` e executada por
+  `admin/src/Core/Workflow_Processor.php`.
 
-Versão 1.3.3 (10/06/2025)
-* Recurso adicionado: Receber avisos quando WhatsApp estiver desconectado
-* Recurso removido: Ao entrar na etapa 1 da integração Flexify Checkout
-* Recurso removido: Ao entrar na etapa 2 da integração Flexify Checkout
-* Recurso removido: Ao entrar na etapa 3 da integração Flexify Checkout
-* Recurso adicionado: Variáveis de texto: {{ fcrc_first_name }}, {{ fcrc_last_name }}, {{ fcrc_phone }}, {{ fcrc_email }}, {{ fcrc_cart_total }} (Flexify Checkout - Recuperação de carrinhos abandonados)
-* Recurso adicionado: Acionamento: Coleta de lead via modal (Flexify Checkout - Recuperação de carrinhos abandonados)
-* Recurso adicionado: Acionamento: Coleta de lead via checkout (Flexify Checkout - Recuperação de carrinhos abandonados)
+---
 
-Versão 1.3.2 (29/05/2025)
-* Correção de bugs
-     - Método set_default_options() indefinido na classe Helpers na linha 171
-* Otimizações
-     - Preencher o remetente ao importar um fluxo
+## Desenvolvimento
 
-Versão 1.3.1 (26/05/2025)
-* Correção de bugs
-     - Ação de Tempo de espera
+Instale as dependências de cada parte:
 
-Versão 1.3.0 (08/05/2025)
-* Correção de bugs
-* Otimizações
-* Correção de segurança se remetente está registrado no site
-* Mudança na API de envio de mensagens via WhatsApp
+```bash
+# Frontend
+cd app && npm install
 
-Versão 1.2.5 (24/03/2025)
-* Correção de bugs
-     - Correção na chamada de ganchos da integração Woo Subscriptions
-* Otimizações
+# Traduções
+cd ../languages && npm install
 
-Versão 1.2.2 (17/03/2025)
-* Correção de bugs:
-     - Variáveis de texto em acionamentos para WooCommerce em modo testes não estavam sendo substituídas corretamente.
-* Otimizações
-* Recurso modificado: Variáveis de texto {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, agora retornam valores com símbolo de moeda formatados.
-* Recurso removido: Condição "Status do pedido" no acionamento "Novo pedido"
-* Recurso adicionado: Adição de ações entre ações existentes no fluxo
-* Recurso adicionado: Formatação de textos com variáveis do WhatsApp
-* Recurso adicionado: Tradução para o idioma inglês (en-US)
-* Recurso adicionado: Tradução para o idioma espanhol (es-ES)
+# Backend (na pasta admin)
+cd ../admin && composer install
+```
 
-Versão 1.2.0 (12/03/2025)
-* Correção de bugs
-* Otimizações
-* Recurso adicionado: Biblioteca "giggsey/libphonenumber-for-php" para formatação e validação de telefones em formato internacional
-* Recurso adicionado: Biblioteca "Selectize" para multi seleção de elementos
-* Recurso removido: Variável de texto {{ post_id }}
-* Recurso adicionado: Condições "Método de pagamento", "Método de entrega" e "Pedido pago"
-* Recurso adicionado: Acionamentos: "Pagamento processado pelo PayPal"
-* Recurso adicionado: Classe "Routines" para execução de rotinas; E adicionado rotina de verificação de conexão do telefones e atualizações
-* Recurso adicionado: Variáveis de texto {{ fc_inter_pix_copia_cola }}, {{ fc_inter_pix_expiration_time }}, {{ fc_inter_bank_slip_url }} e {{ fcrc_recovery_link }}
+Durante o desenvolvimento do frontend:
 
-Versão 1.1.2 (24/02/2025)
-* Correção de bugs
+```bash
+cd app && npm run dev      # Vite com HMR
+```
 
-Versão 1.1.1 (24/02/2025)
-* Correção de bugs
+---
 
-Versão 1.1.0 (24/02/2025)
-* Correção de bugs
-* Otimizações
-* Recurso adicionado: Ativar modo depuração
-* Recurso adicionado: Integração com formulários do Elementor
-* Recurso removido: Variáveis de texto {{ br }} e {{ phone }}
-* Recurso removido: Atualização de configurações automáticas
-* Recurso adicionado: Variáveis de texto {{ wc_billing_first_name }}, {{ wc_billing_last_name }}, {{ wc_billing_email }}, {{ wc_billing_phone }}, {{ wc_shipping_phone }}, {{ wc_order_status }}, {{ wc_billing_full_address }}, {{ wc_shipping_full_address }}, {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, {{ wc_coupon_codes }}, {{ wc_payment_method_title }}, {{ wc_shipping_address }}, {{ wc_checkout_field=[FIELD_ID] }}
-* Recurso adicionado: Ativar atualizações automáticas
-* Recurso adicionado: Ação "Snippet PHP" no construtor de fluxos
-* Recurso adicionado: Ação "Cupom de desconto " no construtor de fluxos para integração com WooCommerce
-* Recurso adicionado: Obter informações de grupos do WhatsApp
-* Recurso modificado: Alteração da biblioteca de emojis (Picmo -> EmojioneArea)
+## Build e empacotamento
 
-Versão 1.0.5 (05/12/2024)
-* Correção de compatibilidade com PHP 7.4
+O pipeline completo é orquestrado por [`scripts/build.mjs`](scripts/build.mjs), a partir da
+raiz do plugin:
 
-Versão 1.0.4 (22/11/2024)
-* Correção de bugs
+```bash
+npm install        # instala o archiver (dependência do build)
+npm run build      # build completo + ZIP em release/joinotify-<versão>.zip
+```
 
-Versão 1.0.3 (22/11/2024)
-* Correção de bugs
+O build executa, em ordem:
 
-Versão 1.0.2 (22/11/2024)
-* Correção de bugs
+1. **Frontend** — `app/` → `app/dist/` (Vite).
+2. **Dependências PHP** — `composer install --no-dev` em `admin/` → `admin/vendor`.
+3. **Traduções** — gera `.pot`, compila `.mo` e `.l10n.php` (`languages/`).
+4. **Staging** — copia apenas os arquivos de runtime para `release/joinotify/`.
+5. **ZIP** — empacota em `release/joinotify-<versão>.zip` (pronto para upload no WordPress).
 
-Versão 1.0.1 (21/11/2024)
-* Correção de bugs
+### Scripts de build
 
-Versão 1.0.0 (20/11/2024)
-* Versão inicial
+| Comando | Descrição |
+|---------|-----------|
+| `npm run build` | Build completo + ZIP. |
+| `npm run build:fast` | Reaproveita artefatos existentes (pula app, composer e traduções). |
+| `npm run build:translate` | Re-traduz os `.po` via IA antes de compilar (requer `OPENAI_API_KEY`). |
+| `npm run build:app` | Apenas o build do frontend (`app/dist`). |
+
+Flags úteis do `build.mjs`: `--skip-app`, `--skip-composer`, `--skip-translations`,
+`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`.
+
+---
+
+## Documentação
+
+| Documento | Conteúdo |
+|-----------|----------|
+| [`app/README.md`](app/README.md) | Frontend Vue 3 + Vite: stack, entries, bootstrap, builder, i18n. |
+| [`languages/README.md`](languages/README.md) | Pipeline de i18n: geração de `.pot`, tradução (IA/Google), compilação. |
+| [`DEVELOPERS.md`](DEVELOPERS.md) | API de extensão em PHP (ações, gatilhos, integrações, condições, placeholders, REST). |
+| [`docs/integrations.md`](docs/integrations.md) | Integrações disponíveis e seus gatilhos. |
+| [`changelogs.md`](changelogs.md) | Histórico completo de versões. |
+| [`license.md`](license.md) | Termos de licença. |
+
+---
+
+## Histórico de versões
+
+O registro completo de alterações está em [`changelogs.md`](changelogs.md).
+
+---
+
+© 2026 MeuMouse.com — Soluções Digitais LTDA. Todos os direitos reservados.
