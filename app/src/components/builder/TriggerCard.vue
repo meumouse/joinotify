@@ -15,13 +15,13 @@ defineEmits(['click']);
 <template>
   <button
     type="button"
-    class="flex min-h-[154px] flex-col rounded-xl border bg-white p-5 text-left transition"
+    class="flex min-h-[154px] flex-col rounded-xl border-2 bg-white p-5 text-left transition"
     :class="selected
-      ? 'border-blue-600 bg-blue-600 text-white ring-2 ring-blue-500/30'
-      : 'border-slate-200 hover:border-blue-200'"
+      ? 'border-primary-700/60'
+      : 'border-slate-200 hover:border-primary-200'"
     @click="$emit('click')"
   >
-    <div class="mx-auto flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border" :class="selected ? 'border-white/20 bg-white/10' : 'border-slate-200 bg-slate-50'">
+    <div class="mx-auto flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50">
       <span
         v-if="contextIconSvg"
         class="trigger-context-icon flex h-full w-full items-center justify-center p-1.5"
@@ -32,11 +32,11 @@ defineEmits(['click']);
         class="trigger-icon flex h-full w-full items-center justify-center p-2"
         v-html="iconSvg"
       />
-      <span v-else class="text-sm font-semibold uppercase tracking-[0.18em]" :class="selected ? 'text-white' : 'text-slate-500'">
+      <span v-else class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
         {{ icon }}
       </span>
     </div>
-    <p v-if="contextLabel" class="mt-3 text-center text-[11px] font-semibold uppercase tracking-[0.18em]" :class="selected ? 'text-white/70' : 'text-slate-400'">
+    <p v-if="contextLabel" class="mt-3 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
       {{ contextLabel }}
     </p>
     <h3 class="mt-4 text-center text-[17px] font-semibold leading-6 text-slate-900">
