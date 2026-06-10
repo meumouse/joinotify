@@ -2942,7 +2942,7 @@
         "Cor primária"
       ],
       "Processing queue": [
-        "Processando fila"
+        "Fila de processamentos"
       ],
       "Product search is unavailable.": [
         "A pesquisa de produtos está indisponível."
@@ -3303,6 +3303,9 @@
       ],
       "Select a workflow action to configure it.": [
         "Selecione uma ação de fluxo de trabalho para configurá-la."
+      ],
+      "Select all visible messages": [
+        "Selecionar todas as mensagens visíveis"
       ],
       "Select all visible workflows": [
         "Selecionar todos os fluxos de trabalho visíveis"

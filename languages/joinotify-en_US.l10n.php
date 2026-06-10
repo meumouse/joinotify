@@ -1105,6 +1105,7 @@ return [
 		'Select a sender' => 'Select a sender',
 		'Select a value' => 'Select a value',
 		'Select a workflow action to configure it.' => 'Select a workflow action to configure it.',
+		'Select all visible messages' => 'Select all visible messages',
 		'Select all visible workflows' => 'Select all visible workflows',
 		'Select an available phone for registration and validation.' => 'Select an available phone for registration and validation.',
 		'Select an entity' => 'Select an entity',

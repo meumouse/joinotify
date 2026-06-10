@@ -85,7 +85,7 @@ msgstr ""
 msgid "<style>%s</style>"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:67
+#: app/src/composables/useMessageHistory.ts:77
 #: app/src/composables/useProcessingQueue.ts:58
 #: app/src/composables/useWorkflows.ts:138
 msgid "0 results"
@@ -121,7 +121,7 @@ msgid "41912345678"
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:1161
-#: app/src/pages/history/HistoryPage.vue:222
+#: app/src/pages/history/HistoryPage.vue:224
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/components/cards/PhoneActions.vue:247
 msgid "5541987111527"
@@ -665,11 +665,11 @@ msgstr ""
 
 #: admin/src/Validations/Media_Types.php:41
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:25
-#: app/src/pages/history/HistoryPage.vue:77
+#: app/src/pages/history/HistoryPage.vue:79
 msgid "Audio"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:157
+#: app/src/pages/history/HistoryPage.vue:159
 msgid ""
 "Audit every WhatsApp message dispatched by Joinotify, including workflow "
 "sends, retries and test messages."
@@ -1075,11 +1075,11 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:262
+#: app/src/pages/history/HistoryPage.vue:264
 msgid "Clear all"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:141
+#: app/src/pages/history/HistoryPage.vue:143
 msgid "Clear all history"
 msgstr ""
 
@@ -1087,7 +1087,7 @@ msgstr ""
 msgid "Clear date"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:233
+#: app/src/pages/history/HistoryPage.vue:235
 #: app/src/pages/queue/QueuePage.vue:202
 msgid "Clear filters"
 msgstr ""
@@ -1261,7 +1261,7 @@ msgid "Contains"
 msgstr ""
 
 #: app/src/pages/history/components/HistoryDetailsModal.vue:67
-#: app/src/pages/history/HistoryPage.vue:288
+#: app/src/pages/history/HistoryPage.vue:295
 msgid "Content"
 msgstr ""
 
@@ -1308,8 +1308,8 @@ msgstr ""
 msgid "Could not clear the debug logs."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:224
-#: app/src/composables/useMessageHistory.ts:232
+#: app/src/composables/useMessageHistory.ts:234
+#: app/src/composables/useMessageHistory.ts:242
 msgid "Could not clear the history."
 msgstr ""
 
@@ -1339,8 +1339,8 @@ msgstr ""
 msgid "Could not delete the action."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:198
-#: app/src/composables/useMessageHistory.ts:206
+#: app/src/composables/useMessageHistory.ts:208
+#: app/src/composables/useMessageHistory.ts:216
 msgid "Could not delete the selected records."
 msgstr ""
 
@@ -1368,8 +1368,8 @@ msgstr ""
 msgid "Could not load actions."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:102
-#: app/src/composables/useMessageHistory.ts:110
+#: app/src/composables/useMessageHistory.ts:112
+#: app/src/composables/useMessageHistory.ts:120
 msgid "Could not load the message history."
 msgstr ""
 
@@ -1681,7 +1681,7 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:21
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:132
 #: app/src/pages/history/components/HistoryDetailsModal.vue:23
-#: app/src/pages/history/HistoryPage.vue:282
+#: app/src/pages/history/HistoryPage.vue:289
 msgid "Date"
 msgstr ""
 
@@ -1796,7 +1796,7 @@ msgid "Delay until a fixed date"
 msgstr ""
 
 #: app/src/components/flow/FlowNode.vue:304
-#: app/src/pages/history/HistoryPage.vue:351
+#: app/src/pages/history/HistoryPage.vue:358
 #: app/src/pages/workflows/WorkflowsPage.vue:75
 msgid "Delete"
 msgstr ""
@@ -1812,11 +1812,11 @@ msgstr ""
 msgid "Delete permanently"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:254
+#: app/src/pages/history/HistoryPage.vue:256
 msgid "Delete selected"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:141
+#: app/src/pages/history/HistoryPage.vue:143
 msgid "Delete selected records"
 msgstr ""
 
@@ -2107,7 +2107,7 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:212
+#: app/src/pages/history/HistoryPage.vue:214
 msgid "End date"
 msgstr ""
 
@@ -2244,7 +2244,7 @@ msgstr ""
 msgid "Every 6 hours"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:145
+#: app/src/pages/history/HistoryPage.vue:147
 msgid ""
 "Every history record will be permanently removed. This action cannot be "
 "undone."
@@ -2340,7 +2340,7 @@ msgid "Exporting…"
 msgstr ""
 
 #: app/src/composables/useMessageHistory.ts:53
-#: app/src/pages/history/HistoryPage.vue:60
+#: app/src/pages/history/HistoryPage.vue:62
 msgid "Failed"
 msgstr ""
 
@@ -2525,7 +2525,7 @@ msgstr ""
 msgid "Friendly"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:198
+#: app/src/pages/history/HistoryPage.vue:200
 msgid "From"
 msgstr ""
 
@@ -3292,7 +3292,7 @@ msgstr ""
 msgid "Loading trigger..."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:271
+#: app/src/pages/history/HistoryPage.vue:273
 #: app/src/pages/queue/QueuePage.vue:245
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
@@ -3449,7 +3449,7 @@ msgid "Measurement unit applied to the border radius value."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:85
-#: app/src/pages/history/HistoryPage.vue:76
+#: app/src/pages/history/HistoryPage.vue:78
 msgid "Media"
 msgstr ""
 
@@ -3509,11 +3509,11 @@ msgstr ""
 #: admin/src/Admin/History/Registry.php:144
 #: admin/src/Admin/Menu.php:71
 #: admin/src/Admin/Settings/Registry.php:204
-#: app/src/pages/history/HistoryPage.vue:155
+#: app/src/pages/history/HistoryPage.vue:157
 msgid "Message history"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:166
+#: app/src/pages/history/HistoryPage.vue:168
 msgid ""
 "Message history recording is disabled. Enable it in Settings → About to "
 "start logging new messages."
@@ -3822,7 +3822,7 @@ msgstr ""
 msgid "No flow found."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:324
+#: app/src/pages/history/HistoryPage.vue:331
 msgid "No history records match the current filters."
 msgstr ""
 
@@ -3850,7 +3850,7 @@ msgstr ""
 msgid "No logs available."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:323
+#: app/src/pages/history/HistoryPage.vue:330
 msgid "No messages found"
 msgstr ""
 
@@ -3989,7 +3989,7 @@ msgid ""
 msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:21
-#: app/src/composables/useMessageHistory.ts:73
+#: app/src/composables/useMessageHistory.ts:83
 #: app/src/composables/useProcessingQueue.ts:64
 #: app/src/composables/useWorkflows.ts:143
 msgid "of"
@@ -4507,7 +4507,7 @@ msgid "Qatar"
 msgstr ""
 
 #: app/src/composables/useMessageHistory.ts:54
-#: app/src/pages/history/HistoryPage.vue:61
+#: app/src/pages/history/HistoryPage.vue:63
 msgid "Queued"
 msgstr ""
 
@@ -4527,7 +4527,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:36
 #: app/src/pages/history/components/HistoryDetailsModal.vue:27
-#: app/src/pages/history/HistoryPage.vue:283
+#: app/src/pages/history/HistoryPage.vue:290
 #: app/src/pages/queue/QueuePage.vue:256
 #: app/src/pages/settings/components/cards/PhoneActions.vue:236
 msgid "Recipient"
@@ -4904,7 +4904,7 @@ msgstr ""
 msgid "Search products"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:218
+#: app/src/pages/history/HistoryPage.vue:220
 msgid "Search recipient or sender"
 msgstr ""
 
@@ -4972,6 +4972,7 @@ msgstr ""
 
 #: app/src/components/workflows/WorkflowTable.vue:58
 #: app/src/components/workflows/WorkflowTableRow.vue:33
+#: app/src/pages/history/HistoryPage.vue:308
 msgid "Select"
 msgstr ""
 
@@ -5001,6 +5002,10 @@ msgstr ""
 
 #: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:74
 msgid "Select a workflow action to configure it."
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:285
+msgid "Select all visible messages"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowTableHeader.vue:21
@@ -5125,7 +5130,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:24
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:28
 #: app/src/pages/history/components/HistoryDetailsModal.vue:26
-#: app/src/pages/history/HistoryPage.vue:284
+#: app/src/pages/history/HistoryPage.vue:291
 #: app/src/pages/settings/components/cards/PhoneActions.vue:223
 msgid "Sender"
 msgstr ""
@@ -5151,7 +5156,7 @@ msgid "Senegal"
 msgstr ""
 
 #: app/src/composables/useMessageHistory.ts:52
-#: app/src/pages/history/HistoryPage.vue:59
+#: app/src/pages/history/HistoryPage.vue:61
 msgid "Sent"
 msgstr ""
 
@@ -5257,8 +5262,8 @@ msgid "Somalia"
 msgstr ""
 
 #: app/src/pages/history/components/HistoryDetailsModal.vue:25
-#: app/src/pages/history/HistoryPage.vue:189
-#: app/src/pages/history/HistoryPage.vue:286
+#: app/src/pages/history/HistoryPage.vue:191
+#: app/src/pages/history/HistoryPage.vue:293
 msgid "Source"
 msgstr ""
 
@@ -5290,7 +5295,7 @@ msgstr ""
 msgid "Start automating your site from a template"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:202
+#: app/src/pages/history/HistoryPage.vue:204
 msgid "Start date"
 msgstr ""
 
@@ -5308,7 +5313,7 @@ msgstr ""
 
 #: app/src/components/workflows/WorkflowTableHeader.vue:28
 #: app/src/pages/history/components/HistoryDetailsModal.vue:24
-#: app/src/pages/history/HistoryPage.vue:287
+#: app/src/pages/history/HistoryPage.vue:294
 #: app/src/pages/queue/QueuePage.vue:257
 msgid "Status"
 msgstr ""
@@ -5476,7 +5481,7 @@ msgstr ""
 msgid "Test sender"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:75
+#: app/src/pages/history/HistoryPage.vue:77
 msgid "Text"
 msgstr ""
 
@@ -5649,7 +5654,7 @@ msgstr ""
 msgid "The selected OTP delivery channel is not configured."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:146
+#: app/src/pages/history/HistoryPage.vue:148
 msgid ""
 "The selected records will be permanently removed. This action cannot be "
 "undone."
@@ -5941,7 +5946,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:208
+#: app/src/pages/history/HistoryPage.vue:210
 msgid "To"
 msgstr ""
 
@@ -6238,7 +6243,7 @@ msgstr ""
 msgid "True branch"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:241
+#: app/src/pages/history/HistoryPage.vue:243
 #: app/src/pages/queue/QueuePage.vue:215
 #: app/src/pages/workflows/WorkflowsPage.vue:70
 msgid "Try again"
@@ -6274,7 +6279,7 @@ msgstr ""
 
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:82
 #: app/src/pages/history/components/HistoryDetailsModal.vue:28
-#: app/src/pages/history/HistoryPage.vue:285
+#: app/src/pages/history/HistoryPage.vue:292
 msgid "Type"
 msgstr ""
 

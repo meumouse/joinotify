@@ -1105,6 +1105,7 @@ return [
 		'Select a sender' => 'Selecciona un remitente',
 		'Select a value' => 'Selecciona un valor',
 		'Select a workflow action to configure it.' => 'Selecciona una acción de flujo de trabajo para configurarla.',
+		'Select all visible messages' => 'Seleccionar todos los mensajes visibles',
 		'Select all visible workflows' => 'Selecciona todos los flujos de trabajo visibles',
 		'Select an available phone for registration and validation.' => 'Selecciona un teléfono disponible para registro y validación.',
 		'Select an entity' => 'Selecciona una entidad',
