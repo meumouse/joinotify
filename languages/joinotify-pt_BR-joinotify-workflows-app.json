@@ -16,6 +16,12 @@
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} ou +5511999990000"
       ],
+      "%1$s at %2$s": [
+        "%1$s em %2$s"
+      ],
+      "%d scheduled item was cancelled.": [
+        "%d item agendado foi cancelado."
+      ],
       "%s %s: %s": [
         "%s %s: %s"
       ],
@@ -127,6 +133,9 @@
       "Action": [
         "Ação"
       ],
+      "Actions": [
+        "Ações"
+      ],
       "Actions menu": [
         "Menu de ações"
       ],
@@ -203,7 +212,7 @@
         "Adicionar novo telefone"
       ],
       "Add new workflow": [
-        "Adicionar novo fluxo de trabalho"
+        "Adicionar novo fluxo"
       ],
       "Add test phone number": [
         "Adicionar número de telefone de teste"
@@ -284,7 +293,7 @@
         "Todas as mensagens de teste foram enviadas com sucesso."
       ],
       "All workflows": [
-        "Todos os fluxos de trabalho"
+        "Todos os fluxos"
       ],
       "Allow free shipping": [
         "Permitir frete grátis"
@@ -586,6 +595,18 @@
       "Cancel": [
         "Cancelar"
       ],
+      "Cancel all": [
+        "Cancelar tudo"
+      ],
+      "Cancel all scheduled items": [
+        "Cancelar todos os itens agendados"
+      ],
+      "Cancel item": [
+        "Cancelar item"
+      ],
+      "Cancel scheduled item": [
+        "Cancelar item agendado"
+      ],
       "Candidate phone": [
         "Telefone do candidato"
       ],
@@ -811,6 +832,9 @@
       "Could not activate the license.": [
         "Não foi possível ativar a licença."
       ],
+      "Could not cancel the scheduled item.": [
+        "Não foi possível cancelar o item agendado."
+      ],
       "Could not check for updates for the <strong>Joinotify</strong> plugin": [
         "Não foi possível verificar atualizações para o plugin <strong>Joinotify.</strong>"
       ],
@@ -828,6 +852,9 @@
       ],
       "Could not clear the logs.": [
         "Não foi possível limpar os registros."
+      ],
+      "Could not clear the queue.": [
+        "Não foi possível limpar a fila."
       ],
       "Could not complete the operation.": [
         "Não foi possível completar a operação."
@@ -865,6 +892,9 @@
       "Could not load the message history.": [
         "Não foi possível carregar o histórico de mensagens."
       ],
+      "Could not load the processing queue.": [
+        "Não foi possível carregar a fila de processamento."
+      ],
       "Could not load workflow.": [
         "Não foi possível carregar o fluxo de trabalho."
       ],
@@ -897,6 +927,9 @@
       ],
       "Could not retrieve the user last name": [
         "Não foi possível recuperar o sobrenome do usuário"
+      ],
+      "Could not run the scheduled item.": [
+        "Não foi possível executar o item agendado."
       ],
       "Could not run the workflow test.": [
         "Não foi possível executar o teste do fluxo de trabalho."
@@ -1072,6 +1105,9 @@
       "day": [
         "dia"
       ],
+      "day(s)": [
+        "dia(s)"
+      ],
       "days": [
         "dias"
       ],
@@ -1213,6 +1249,9 @@
       "Discount: %s": [
         "Desconto: %s"
       ],
+      "Dispatch now": [
+        "Despachar agora"
+      ],
       "Displays notifications when a new version is available.": [
         "Exibe notificações quando uma nova versão está disponível."
       ],
@@ -1242,6 +1281,9 @@
       ],
       "Drag and drop the template JSON file or click to browse. The format must match a real Joinotify export.": [
         "Arraste e solte o arquivo JSON do modelo ou clique para navegar. O formato deve corresponder a uma exportação real do Joinotify."
+      ],
+      "Due": [
+        "Vencido"
       ],
       "Dutch Caribbean": [
         "Caribe Holandês"
@@ -1329,6 +1371,9 @@
       ],
       "End date": [
         "Data de término"
+      ],
+      "End of workflow": [
+        "Fim do fluxo de trabalho"
       ],
       "End the workflow at this point.": [
         "Encerre o fluxo de trabalho neste ponto."
@@ -1422,6 +1467,9 @@
       ],
       "Every history record will be permanently removed. This action cannot be undone.": [
         "Cada registro de histórico será removido permanentemente. Esta ação não pode ser desfeita."
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Todos os itens agendados pendentes serão removidos e nunca serão executados. Isso não pode ser desfeito."
       ],
       "Example": [
         "Exemplo"
@@ -1731,6 +1779,9 @@
       ],
       "hour": [
         "hora"
+      ],
+      "hour(s)": [
+        "hora(s)"
       ],
       "hours": [
         "horas"
@@ -2287,6 +2338,9 @@
       "minute": [
         "minuto"
       ],
+      "minute(s)": [
+        "minuto(s)"
+      ],
       "minutes": [
         "minutos"
       ],
@@ -2320,11 +2374,17 @@
       "month": [
         "mês"
       ],
+      "month(s)": [
+        "mês(es)"
+      ],
       "months": [
         "meses"
       ],
       "Months": [
         "Meses"
+      ],
+      "more": [
+        "mais"
       ],
       "Morocco": [
         "Marrocos"
@@ -2394,6 +2454,9 @@
       ],
       "Next": [
         "Próximo"
+      ],
+      "Next action": [
+        "Próxima ação"
       ],
       "Next month": [
         "Próximo mês"
@@ -2503,6 +2566,9 @@
       "No records selected.": [
         "Nenhum registro selecionado."
       ],
+      "No scheduled item selected.": [
+        "Nenhum item agendado selecionado."
+      ],
       "No sender available": [
         "Nenhum remetente disponível"
       ],
@@ -2523,6 +2589,9 @@
       ],
       "No variables available.": [
         "Nenhuma variável disponível."
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "Nenhum passo do fluxo de trabalho está aguardando para ser executado."
       ],
       "No workflows found": [
         "Nenhum fluxo de trabalho encontrado"
@@ -2556,6 +2625,9 @@
       ],
       "Not available": [
         "Não disponível"
+      ],
+      "Nothing in the queue": [
+        "Nada na fila"
       ],
       "Notify when WhatsApp disconnects": [
         "Notificar quando o WhatsApp desconectar"
@@ -2869,6 +2941,9 @@
       "Primary color": [
         "Cor primária"
       ],
+      "Processing queue": [
+        "Processando fila"
+      ],
       "Product search is unavailable.": [
         "A pesquisa de produtos está indisponível."
       ],
@@ -3133,6 +3208,12 @@
       "Scheduled delay": [
         "Atraso agendado"
       ],
+      "Scheduled for": [
+        "Agendado para"
+      ],
+      "Scheduler": [
+        "Agendador"
+      ],
       "Search": [
         "Pesquisar"
       ],
@@ -3163,6 +3244,9 @@
       "Search variables...": [
         "Pesquisar variáveis..."
       ],
+      "Search workflow, recipient or action": [
+        "Pesquisar fluxo de trabalho, destinatário ou ação"
+      ],
       "Search workflows": [
         "Pesquisar fluxos de trabalho"
       ],
@@ -3177,6 +3261,9 @@
       ],
       "second": [
         "segundo"
+      ],
+      "second(s)": [
+        "segundo(s)"
       ],
       "seconds": [
         "segundos"
@@ -3634,6 +3721,21 @@
       "The plugin was installed but could not be activated.": [
         "O plugin foi instalado, mas não pôde ser ativado."
       ],
+      "The related workflow is not published, so it cannot run.": [
+        "O fluxo de trabalho relacionado não está publicado, portanto não pode ser executado."
+      ],
+      "The related workflow no longer exists; the schedule was removed.": [
+        "O fluxo de trabalho relacionado não existe mais; o agendamento foi removido."
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "As ações restantes serão executadas agora, pulando a espera agendada. Isso não pode ser desfeito."
+      ],
+      "The scheduled actions were dispatched.": [
+        "As ações agendadas foram despachadas."
+      ],
+      "The scheduled item was cancelled.": [
+        "O item agendado foi cancelado."
+      ],
       "The selected channel cannot reach this recipient.": [
         "O canal selecionado não pode alcançar este destinatário."
       ],
@@ -3682,6 +3784,9 @@
       "The workflow has no trigger.": [
         "O fluxo de trabalho não tem gatilho."
       ],
+      "The workflow is not published.": [
+        "O fluxo de trabalho não está publicado."
+      ],
       "The workflow trigger is not configured.": [
         "O gatilho do fluxo de trabalho não está configurado."
       ],
@@ -3729,6 +3834,12 @@
       ],
       "This plugin needs to be installed and active to enable this integration.": [
         "Este plugin precisa ser instalado e ativo para habilitar esta integração."
+      ],
+      "This scheduled item no longer exists.": [
+        "Este item agendado não existe mais."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "Este item agendado será removido e nunca será executado. Isso não pode ser desfeito."
       ],
       "This site exposes endpoints to process Joinotify requests.": [
         "Este site expõe endpoints para processar solicitações do Joinotify."
@@ -4054,6 +4165,9 @@
       "Type label": [
         "Digite o rótulo"
       ],
+      "Type to filter…": [
+        "Digite para filtrar…"
+      ],
       "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}": [
         "Digite sua mensagem... Use {{ placeholders }} e {{ joinotify_coupon_code }}"
       ],
@@ -4288,6 +4402,9 @@
       "week": [
         "semana"
       ],
+      "week(s)": [
+        "semana(s)"
+      ],
       "weeks": [
         "semanas"
       ],
@@ -4402,6 +4519,9 @@
       "Workflow status updated successfully.": [
         "Status do fluxo de trabalho atualizado com sucesso."
       ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Passos do fluxo de trabalho aguardando um atraso antes de serem executados. Despache um agora para pular a espera ou cancele para parar o processamento."
+      ],
       "Workflow test queued.": [
         "Teste do fluxo de trabalho na fila."
       ],
@@ -4422,6 +4542,9 @@
       ],
       "year": [
         "ano"
+      ],
+      "year(s)": [
+        "ano(s)"
       ],
       "years": [
         "anos"

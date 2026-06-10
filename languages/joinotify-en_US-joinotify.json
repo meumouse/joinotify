@@ -16,6 +16,12 @@
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} or +5511999990000"
       ],
+      "%1$s at %2$s": [
+        "%1$s at %2$s"
+      ],
+      "%d scheduled item was cancelled.": [
+        "%d scheduled item was cancelled."
+      ],
       "%s %s: %s": [
         "%s %s: %s"
       ],
@@ -126,6 +132,9 @@
       ],
       "Action": [
         "Action"
+      ],
+      "Actions": [
+        "Actions"
       ],
       "Actions menu": [
         "Actions menu"
@@ -586,6 +595,18 @@
       "Cancel": [
         "Cancel"
       ],
+      "Cancel all": [
+        "Cancel all"
+      ],
+      "Cancel all scheduled items": [
+        "Cancel all scheduled items"
+      ],
+      "Cancel item": [
+        "Cancel item"
+      ],
+      "Cancel scheduled item": [
+        "Cancel scheduled item"
+      ],
       "Candidate phone": [
         "Candidate phone"
       ],
@@ -811,6 +832,9 @@
       "Could not activate the license.": [
         "Could not activate the license."
       ],
+      "Could not cancel the scheduled item.": [
+        "Could not cancel the scheduled item."
+      ],
       "Could not check for updates for the <strong>Joinotify</strong> plugin": [
         "Could not check for updates for the <strong>Joinotify</strong> plugin"
       ],
@@ -828,6 +852,9 @@
       ],
       "Could not clear the logs.": [
         "Could not clear the logs."
+      ],
+      "Could not clear the queue.": [
+        "Could not clear the queue."
       ],
       "Could not complete the operation.": [
         "Could not complete the operation."
@@ -865,6 +892,9 @@
       "Could not load the message history.": [
         "Could not load the message history."
       ],
+      "Could not load the processing queue.": [
+        "Could not load the processing queue."
+      ],
       "Could not load workflow.": [
         "Could not load workflow."
       ],
@@ -897,6 +927,9 @@
       ],
       "Could not retrieve the user last name": [
         "Could not retrieve the user last name"
+      ],
+      "Could not run the scheduled item.": [
+        "Could not run the scheduled item."
       ],
       "Could not run the workflow test.": [
         "Could not run the workflow test."
@@ -1072,6 +1105,9 @@
       "day": [
         "day"
       ],
+      "day(s)": [
+        "day(s)"
+      ],
       "days": [
         "days"
       ],
@@ -1213,6 +1249,9 @@
       "Discount: %s": [
         "Discount: %s"
       ],
+      "Dispatch now": [
+        "Dispatch now"
+      ],
       "Displays notifications when a new version is available.": [
         "Displays notifications when a new version is available."
       ],
@@ -1242,6 +1281,9 @@
       ],
       "Drag and drop the template JSON file or click to browse. The format must match a real Joinotify export.": [
         "Drag and drop the template JSON file or click to browse. The format must match a real Joinotify export."
+      ],
+      "Due": [
+        "Due"
       ],
       "Dutch Caribbean": [
         "Dutch Caribbean"
@@ -1329,6 +1371,9 @@
       ],
       "End date": [
         "End date"
+      ],
+      "End of workflow": [
+        "End of workflow"
       ],
       "End the workflow at this point.": [
         "End the workflow at this point."
@@ -1422,6 +1467,9 @@
       ],
       "Every history record will be permanently removed. This action cannot be undone.": [
         "Every history record will be permanently removed. This action cannot be undone."
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Every pending scheduled item will be removed and will never run. This cannot be undone."
       ],
       "Example": [
         "Example"
@@ -1731,6 +1779,9 @@
       ],
       "hour": [
         "hour"
+      ],
+      "hour(s)": [
+        "hour(s)"
       ],
       "hours": [
         "hours"
@@ -2287,6 +2338,9 @@
       "minute": [
         "minute"
       ],
+      "minute(s)": [
+        "minute(s)"
+      ],
       "minutes": [
         "minutes"
       ],
@@ -2320,11 +2374,17 @@
       "month": [
         "month"
       ],
+      "month(s)": [
+        "month(s)"
+      ],
       "months": [
         "months"
       ],
       "Months": [
         "Months"
+      ],
+      "more": [
+        "more"
       ],
       "Morocco": [
         "Morocco"
@@ -2394,6 +2454,9 @@
       ],
       "Next": [
         "Next"
+      ],
+      "Next action": [
+        "Next action"
       ],
       "Next month": [
         "Next month"
@@ -2503,6 +2566,9 @@
       "No records selected.": [
         "No records selected."
       ],
+      "No scheduled item selected.": [
+        "No scheduled item selected."
+      ],
       "No sender available": [
         "No sender available"
       ],
@@ -2523,6 +2589,9 @@
       ],
       "No variables available.": [
         "No variables available."
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "No workflow steps are currently waiting to run."
       ],
       "No workflows found": [
         "No workflows found"
@@ -2556,6 +2625,9 @@
       ],
       "Not available": [
         "Not available"
+      ],
+      "Nothing in the queue": [
+        "Nothing in the queue"
       ],
       "Notify when WhatsApp disconnects": [
         "Notify when WhatsApp disconnects"
@@ -2869,6 +2941,9 @@
       "Primary color": [
         "Primary color"
       ],
+      "Processing queue": [
+        "Processing queue"
+      ],
       "Product search is unavailable.": [
         "Product search is unavailable."
       ],
@@ -3133,6 +3208,12 @@
       "Scheduled delay": [
         "Scheduled delay"
       ],
+      "Scheduled for": [
+        "Scheduled for"
+      ],
+      "Scheduler": [
+        "Scheduler"
+      ],
       "Search": [
         "Search"
       ],
@@ -3163,6 +3244,9 @@
       "Search variables...": [
         "Search variables..."
       ],
+      "Search workflow, recipient or action": [
+        "Search workflow, recipient or action"
+      ],
       "Search workflows": [
         "Search workflows"
       ],
@@ -3177,6 +3261,9 @@
       ],
       "second": [
         "second"
+      ],
+      "second(s)": [
+        "second(s)"
       ],
       "seconds": [
         "seconds"
@@ -3634,6 +3721,21 @@
       "The plugin was installed but could not be activated.": [
         "The plugin was installed but could not be activated."
       ],
+      "The related workflow is not published, so it cannot run.": [
+        "The related workflow is not published, so it cannot run."
+      ],
+      "The related workflow no longer exists; the schedule was removed.": [
+        "The related workflow no longer exists; the schedule was removed."
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone."
+      ],
+      "The scheduled actions were dispatched.": [
+        "The scheduled actions were dispatched."
+      ],
+      "The scheduled item was cancelled.": [
+        "The scheduled item was cancelled."
+      ],
       "The selected channel cannot reach this recipient.": [
         "The selected channel cannot reach this recipient."
       ],
@@ -3682,6 +3784,9 @@
       "The workflow has no trigger.": [
         "The workflow has no trigger."
       ],
+      "The workflow is not published.": [
+        "The workflow is not published."
+      ],
       "The workflow trigger is not configured.": [
         "The workflow trigger is not configured."
       ],
@@ -3729,6 +3834,12 @@
       ],
       "This plugin needs to be installed and active to enable this integration.": [
         "This plugin needs to be installed and active to enable this integration."
+      ],
+      "This scheduled item no longer exists.": [
+        "This scheduled item no longer exists."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "This scheduled item will be removed and will never run. This cannot be undone."
       ],
       "This site exposes endpoints to process Joinotify requests.": [
         "This site exposes endpoints to process Joinotify requests."
@@ -4054,6 +4165,9 @@
       "Type label": [
         "Type label"
       ],
+      "Type to filter…": [
+        "Type to filter…"
+      ],
       "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}": [
         "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}"
       ],
@@ -4288,6 +4402,9 @@
       "week": [
         "week"
       ],
+      "week(s)": [
+        "week(s)"
+      ],
       "weeks": [
         "weeks"
       ],
@@ -4402,6 +4519,9 @@
       "Workflow status updated successfully.": [
         "Workflow status updated successfully."
       ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing."
+      ],
       "Workflow test queued.": [
         "Workflow test queued."
       ],
@@ -4422,6 +4542,9 @@
       ],
       "year": [
         "year"
+      ],
+      "year(s)": [
+        "year(s)"
       ],
       "years": [
         "years"

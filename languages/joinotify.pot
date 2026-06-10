@@ -21,6 +21,16 @@ msgstr ""
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:253
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: admin/src/Rest/Queue_Cancel.php:50
+msgid "%d scheduled item was cancelled."
+msgid_plural "%d scheduled items were cancelled."
+msgstr[0] ""
+msgstr[1] ""
+
 #: admin/src/Builder/Messages.php:170
 msgid "%s %s: %s"
 msgstr ""
@@ -76,6 +86,7 @@ msgid "<style>%s</style>"
 msgstr ""
 
 #: app/src/composables/useMessageHistory.ts:67
+#: app/src/composables/useProcessingQueue.ts:58
 #: app/src/composables/useWorkflows.ts:138
 msgid "0 results"
 msgstr ""
@@ -180,6 +191,10 @@ msgstr ""
 #: app/src/components/settings/NodeSettingsDrawer.vue:33
 #: app/src/stores/useWorkflowBuilderStore.ts:1334
 msgid "Action"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:258
+msgid "Actions"
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:89
@@ -394,6 +409,7 @@ msgstr ""
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
 #: app/src/composables/useMessageHistory.ts:51
+#: app/src/composables/useProcessingQueue.ts:49
 msgid "All"
 msgstr ""
 
@@ -419,6 +435,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:51
 #: admin/src/Admin/Menu.php:52
+#: admin/src/Admin/Queue/Registry.php:387
 #: app/src/components/builder/TemplateCategorySelect.vue:14
 msgid "All workflows"
 msgstr ""
@@ -888,10 +905,27 @@ msgstr ""
 #: app/src/components/workflows/ConfirmActionModal.vue:8
 #: app/src/pages/builder/BuilderPage.vue:1135
 #: app/src/pages/builder/BuilderPage.vue:1173
+#: app/src/pages/queue/QueuePage.vue:310
 #: app/src/pages/settings/components/cards/PhoneActions.vue:282
 #: app/src/pages/settings/components/cards/PhoneActions.vue:350
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:255
 msgid "Cancel"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:227
+msgid "Cancel all"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:120
+msgid "Cancel all scheduled items"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:139
+msgid "Cancel item"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:123
+msgid "Cancel scheduled item"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneActions.vue:313
@@ -1054,6 +1088,7 @@ msgid "Clear date"
 msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:233
+#: app/src/pages/queue/QueuePage.vue:202
 msgid "Clear filters"
 msgstr ""
 
@@ -1160,8 +1195,8 @@ msgstr ""
 msgid "Configuration component not available for this action."
 msgstr ""
 
-#: admin/src/Core/Init.php:490
-#: admin/src/Core/Init.php:494
+#: admin/src/Core/Init.php:491
+#: admin/src/Core/Init.php:495
 #: admin/src/Integrations/Integrations_Base.php:390
 #: admin/src/Integrations/Integrations_Base.php:798
 #: admin/src/Integrations/OpenAI.php:54
@@ -1253,6 +1288,10 @@ msgstr ""
 msgid "Could not activate the license."
 msgstr ""
 
+#: app/src/composables/useProcessingQueue.ts:195
+msgid "Could not cancel the scheduled item."
+msgstr ""
+
 #: admin/src/Api/Updater.php:250
 msgid "Could not check for updates for the <strong>Joinotify</strong> plugin"
 msgstr ""
@@ -1276,6 +1315,10 @@ msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:659
 msgid "Could not clear the logs."
+msgstr ""
+
+#: app/src/composables/useProcessingQueue.ts:199
+msgid "Could not clear the queue."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:88
@@ -1330,6 +1373,11 @@ msgstr ""
 msgid "Could not load the message history."
 msgstr ""
 
+#: app/src/composables/useProcessingQueue.ts:105
+#: app/src/composables/useProcessingQueue.ts:110
+msgid "Could not load the processing queue."
+msgstr ""
+
 #: app/src/stores/useWorkflowBuilderStore.ts:816
 msgid "Could not load workflow."
 msgstr ""
@@ -1375,6 +1423,10 @@ msgstr ""
 
 #: admin/src/Integrations/Wordpress.php:173
 msgid "Could not retrieve the user last name"
+msgstr ""
+
+#: app/src/composables/useProcessingQueue.ts:191
+msgid "Could not run the scheduled item."
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:912
@@ -1637,6 +1689,10 @@ msgstr ""
 msgid "day"
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:242
+msgid "day(s)"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:39
 msgid "days"
 msgstr ""
@@ -1867,6 +1923,13 @@ msgstr ""
 msgid "Discount: %s"
 msgstr ""
 
+#: app/src/pages/queue/QueuePage.vue:116
+#: app/src/pages/queue/QueuePage.vue:139
+#: app/src/pages/queue/QueuePage.vue:299
+#: app/src/pages/queue/QueuePage.vue:302
+msgid "Dispatch now"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:195
 msgid "Displays notifications when a new version is available."
 msgstr ""
@@ -1880,7 +1943,7 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: admin/src/Core/Init.php:516
+#: admin/src/Core/Init.php:517
 msgid "Documentation"
 msgstr ""
 
@@ -1911,6 +1974,11 @@ msgstr ""
 msgid ""
 "Drag and drop the template JSON file or click to browse. The format must "
 "match a real Joinotify export."
+msgstr ""
+
+#: app/src/composables/useProcessingQueue.ts:50
+#: app/src/pages/queue/QueuePage.vue:287
+msgid "Due"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:177
@@ -1958,9 +2026,9 @@ msgstr ""
 msgid "Edit variable"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:100
-#: admin/src/Admin/Menu.php:101
-#: admin/src/Admin/Menu.php:115
+#: admin/src/Admin/Menu.php:109
+#: admin/src/Admin/Menu.php:110
+#: admin/src/Admin/Menu.php:124
 msgid "Edit workflow"
 msgstr ""
 
@@ -2041,6 +2109,10 @@ msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:212
 msgid "End date"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:75
+msgid "End of workflow"
 msgstr ""
 
 #: app/src/builder/actions/definitions/stopFunnel.ts:19
@@ -2176,6 +2248,12 @@ msgstr ""
 msgid ""
 "Every history record will be permanently removed. This action cannot be "
 "undone."
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:132
+msgid ""
+"Every pending scheduled item will be removed and will never run. This "
+"cannot be undone."
 msgstr ""
 
 #: app/src/builder/components/base/BaseTextFieldVariables.vue:82
@@ -2620,6 +2698,10 @@ msgstr ""
 msgid "hour"
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:241
+msgid "hour(s)"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:38
 msgid "hours"
 msgstr ""
@@ -2725,6 +2807,7 @@ msgstr ""
 #: app/src/components/builder/BuilderNavbar.vue:79
 #: app/src/components/workflows/WorkflowTableRow.vue:20
 #: app/src/composables/useWorkflows.ts:127
+#: app/src/pages/queue/QueuePage.vue:290
 msgid "Inactive"
 msgstr ""
 
@@ -3104,8 +3187,8 @@ msgstr ""
 msgid "Libya"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:90
-#: admin/src/Admin/Menu.php:91
+#: admin/src/Admin/Menu.php:99
+#: admin/src/Admin/Menu.php:100
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
 #: app/src/pages/license/LicensePage.vue:226
 #: app/src/pages/license/LicensePage.vue:239
@@ -3210,6 +3293,7 @@ msgid "Loading trigger..."
 msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:271
+#: app/src/pages/queue/QueuePage.vue:245
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
 msgstr ""
@@ -3458,6 +3542,10 @@ msgstr ""
 msgid "minute"
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:240
+msgid "minute(s)"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:37
 msgid "minutes"
 msgstr ""
@@ -3510,6 +3598,10 @@ msgstr ""
 msgid "month"
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:244
+msgid "month(s)"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:41
 msgid "months"
 msgstr ""
@@ -3520,6 +3612,10 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
 msgid "Months"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:273
+msgid "more"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:72
@@ -3624,6 +3720,10 @@ msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:27
 msgid "Next"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:255
+msgid "Next action"
 msgstr ""
 
 #: app/src/components/base/BaseDatePicker.vue:359
@@ -3782,6 +3882,11 @@ msgstr ""
 msgid "No records selected."
 msgstr ""
 
+#: admin/src/Rest/Queue_Cancel.php:56
+#: admin/src/Rest/Queue_Run.php:45
+msgid "No scheduled item selected."
+msgstr ""
+
 #: app/src/pages/settings/components/cards/PhoneActions.vue:226
 msgid "No sender available"
 msgstr ""
@@ -3808,6 +3913,10 @@ msgstr ""
 
 #: app/src/components/base/VariablePicker.vue:139
 msgid "No variables available."
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:322
+msgid "No workflow steps are currently waiting to run."
 msgstr ""
 
 #: app/src/components/workflows/EmptyState.vue:6
@@ -3865,6 +3974,10 @@ msgstr ""
 msgid "Not available"
 msgstr ""
 
+#: app/src/pages/queue/QueuePage.vue:321
+msgid "Nothing in the queue"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:63
 msgid "Notify when WhatsApp disconnects"
 msgstr ""
@@ -3877,6 +3990,7 @@ msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:21
 #: app/src/composables/useMessageHistory.ts:73
+#: app/src/composables/useProcessingQueue.ts:64
 #: app/src/composables/useWorkflows.ts:143
 msgid "of"
 msgstr ""
@@ -4349,6 +4463,13 @@ msgstr ""
 msgid "Primary color"
 msgstr ""
 
+#: admin/src/Admin/Menu.php:80
+#: admin/src/Admin/Menu.php:81
+#: admin/src/Admin/Queue/Registry.php:420
+#: app/src/pages/queue/QueuePage.vue:148
+msgid "Processing queue"
+msgstr ""
+
 #: app/src/builder/actions/settings/ConditionProductsField.vue:55
 msgid "Product search is unavailable."
 msgstr ""
@@ -4407,6 +4528,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:36
 #: app/src/pages/history/components/HistoryDetailsModal.vue:27
 #: app/src/pages/history/HistoryPage.vue:283
+#: app/src/pages/queue/QueuePage.vue:256
 #: app/src/pages/settings/components/cards/PhoneActions.vue:236
 msgid "Recipient"
 msgstr ""
@@ -4444,6 +4566,7 @@ msgid "Redo (Ctrl+Shift+Z)"
 msgstr ""
 
 #: app/src/components/fields/OpenAiModelField.vue:94
+#: app/src/pages/queue/QueuePage.vue:237
 msgid "Refresh"
 msgstr ""
 
@@ -4730,6 +4853,8 @@ msgstr ""
 #: admin/src/Admin/Builder/Registry.php:327
 #: app/src/builder/actions/definitions/timeDelay.ts:41
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:22
+#: app/src/composables/useProcessingQueue.ts:51
+#: app/src/pages/queue/QueuePage.vue:287
 msgid "Scheduled"
 msgstr ""
 
@@ -4739,6 +4864,14 @@ msgstr ""
 
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:104
 msgid "Scheduled delay"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:254
+msgid "Scheduled for"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:154
+msgid "Scheduler"
 msgstr ""
 
 #: app/src/components/base/BaseSearchInput.vue:7
@@ -4783,6 +4916,10 @@ msgstr ""
 msgid "Search variables..."
 msgstr ""
 
+#: app/src/pages/queue/QueuePage.vue:187
+msgid "Search workflow, recipient or action"
+msgstr ""
+
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:20
 msgid "Search workflows"
 msgstr ""
@@ -4802,6 +4939,10 @@ msgstr ""
 
 #: admin/src/Core/Helpers.php:36
 msgid "second"
+msgstr ""
+
+#: admin/src/Admin/Queue/Registry.php:239
+msgid "second(s)"
 msgstr ""
 
 #: admin/src/Core/Helpers.php:36
@@ -5026,8 +5167,8 @@ msgstr ""
 msgid "Set an expiration"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:81
-#: admin/src/Admin/Menu.php:82
+#: admin/src/Admin/Menu.php:90
+#: admin/src/Admin/Menu.php:91
 #: app/src/components/builder/BuilderCanvasTrigger.vue:67
 #: app/src/components/flow/FlowNode.vue:295
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -5168,6 +5309,7 @@ msgstr ""
 #: app/src/components/workflows/WorkflowTableHeader.vue:28
 #: app/src/pages/history/components/HistoryDetailsModal.vue:24
 #: app/src/pages/history/HistoryPage.vue:287
+#: app/src/pages/queue/QueuePage.vue:257
 msgid "Status"
 msgstr ""
 
@@ -5477,6 +5619,28 @@ msgstr ""
 msgid "The plugin was installed but could not be activated."
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:514
+msgid "The related workflow is not published, so it cannot run."
+msgstr ""
+
+#: admin/src/Admin/Queue/Registry.php:510
+msgid "The related workflow no longer exists; the schedule was removed."
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:128
+msgid ""
+"The remaining actions will be executed right now, skipping the scheduled "
+"wait. This cannot be undone."
+msgstr ""
+
+#: admin/src/Admin/Queue/Registry.php:523
+msgid "The scheduled actions were dispatched."
+msgstr ""
+
+#: admin/src/Admin/Queue/Registry.php:543
+msgid "The scheduled item was cancelled."
+msgstr ""
+
 #: admin/src/Otp_Login/Channel_Manager.php:98
 msgid "The selected channel cannot reach this recipient."
 msgstr ""
@@ -5548,6 +5712,10 @@ msgstr ""
 msgid "The workflow has no trigger."
 msgstr ""
 
+#: app/src/pages/queue/QueuePage.vue:299
+msgid "The workflow is not published."
+msgstr ""
+
 #: admin/src/Admin/Builder/Registry.php:1313
 msgid "The workflow trigger is not configured."
 msgstr ""
@@ -5617,6 +5785,17 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:349
 msgid "This plugin needs to be installed and active to enable this integration."
+msgstr ""
+
+#: admin/src/Admin/Queue/Registry.php:501
+#: admin/src/Admin/Queue/Registry.php:538
+msgid "This scheduled item no longer exists."
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:135
+msgid ""
+"This scheduled item will be removed and will never run. This cannot be "
+"undone."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:84
@@ -6060,6 +6239,7 @@ msgid "True branch"
 msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:241
+#: app/src/pages/queue/QueuePage.vue:215
 #: app/src/pages/workflows/WorkflowsPage.vue:70
 msgid "Try again"
 msgstr ""
@@ -6105,6 +6285,10 @@ msgstr ""
 #: admin/src/Admin/Builder/Registry.php:395
 #: app/src/builder/actions/definitions/condition.ts:82
 msgid "Type label"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:191
+msgid "Type to filter…"
 msgstr ""
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:190
@@ -6449,6 +6633,10 @@ msgstr ""
 msgid "week"
 msgstr ""
 
+#: admin/src/Admin/Queue/Registry.php:243
+msgid "week(s)"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:40
 msgid "weeks"
 msgstr ""
@@ -6567,6 +6755,8 @@ msgstr ""
 
 #: admin/src/Admin/History/Registry.php:124
 #: app/src/pages/history/components/HistoryDetailsModal.vue:59
+#: app/src/pages/queue/QueuePage.vue:178
+#: app/src/pages/queue/QueuePage.vue:253
 msgid "Workflow"
 msgstr ""
 
@@ -6635,6 +6825,12 @@ msgstr ""
 msgid "Workflow status updated successfully."
 msgstr ""
 
+#: app/src/pages/queue/QueuePage.vue:150
+msgid ""
+"Workflow steps waiting on a delay before they run. Dispatch one now to skip "
+"the wait, or cancel it to stop the processing."
+msgstr ""
+
 #: app/src/pages/builder/BuilderPage.vue:906
 #: app/src/pages/builder/BuilderPage.vue:947
 #: app/src/stores/useWorkflowBuilderStore.ts:1524
@@ -6651,7 +6847,7 @@ msgstr ""
 msgid "workflows"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:128
+#: admin/src/Admin/Menu.php:137
 msgid "Workflows per page"
 msgstr ""
 
@@ -6669,6 +6865,10 @@ msgstr ""
 
 #: admin/src/Core/Helpers.php:42
 msgid "year"
+msgstr ""
+
+#: admin/src/Admin/Queue/Registry.php:245
+msgid "year(s)"
 msgstr ""
 
 #: admin/src/Core/Helpers.php:42
@@ -6711,9 +6911,10 @@ msgstr ""
 msgid "You are the support agent for Store X. Be cordial and concise."
 msgstr ""
 
-#: admin/src/Admin/Menu.php:144
-#: admin/src/Admin/Menu.php:159
-#: admin/src/Admin/Menu.php:198
+#: admin/src/Admin/Menu.php:153
+#: admin/src/Admin/Menu.php:168
+#: admin/src/Admin/Menu.php:184
+#: admin/src/Admin/Menu.php:223
 msgid "You do not have permission to access this page."
 msgstr ""
 
