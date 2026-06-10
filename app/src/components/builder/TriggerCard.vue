@@ -15,12 +15,21 @@ defineEmits(['click']);
 <template>
   <button
     type="button"
-    class="flex min-h-[154px] flex-col rounded-xl border-2 bg-white p-5 text-left transition"
+    class="relative flex min-h-[154px] flex-col rounded-xl border-2 bg-white p-5 text-left transition"
     :class="selected
-      ? 'border-primary-700/60'
+      ? 'border-primary-700'
       : 'border-slate-200 hover:border-primary-200'"
     @click="$emit('click')"
   >
+    <span
+      v-if="selected"
+      class="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-700 text-white"
+      aria-hidden="true"
+    >
+      <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3.5 8.5l3 3 6-7" />
+      </svg>
+    </span>
     <div class="mx-auto flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50">
       <span
         v-if="contextIconSvg"

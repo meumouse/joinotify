@@ -349,15 +349,22 @@ function handleTriggerBack() {
   goStart();
 }
 
-// Close (X) on the trigger screen: only available while changing an existing
-// flow's trigger, so it just dismisses the screen and returns to the canvas.
+// Close (X) on the trigger screen. When changing an existing flow's trigger it
+// returns to the canvas; for a new, unsaved flow (opened from the builder
+// without a persisted id) it dismisses back to the start screen.
 function closeTriggerSetup() {
   debugLogger.log('trigger:change-cancelled', {
     node_id: store.triggerNode?.id || '',
   });
-  changingTrigger.value = false;
-  setChangeTriggerUrl(false);
-  goCanvas();
+
+  if (changingTrigger.value) {
+    changingTrigger.value = false;
+    setChangeTriggerUrl(false);
+    goCanvas();
+    return;
+  }
+
+  goStart();
 }
 
 function handleNodeUpdate(payload) {
@@ -1034,7 +1041,7 @@ function setChangeTriggerUrl(active) {
         :loading="store.loading.bootstrap"
         :ready="store.canContinue"
         :continuing="triggerContinuing"
-        :show-close="changingTrigger"
+        :show-close="true"
         @update:title="store.setWorkflowTitle"
         @update:context="store.selectTriggerContext"
         @select-trigger="store.selectTrigger"

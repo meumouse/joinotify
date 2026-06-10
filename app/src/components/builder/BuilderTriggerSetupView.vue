@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
+import BrandMark from '../brand/BrandMark.vue';
 import TriggerCard from './TriggerCard.vue';
 import TriggerStepFooter from './TriggerStepFooter.vue';
 import WorkflowNameField from './WorkflowNameField.vue';
@@ -14,21 +15,29 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   ready: { type: Boolean, default: false },
   continuing: { type: Boolean, default: false },
-  // Shows a top-right close (X) button. Enabled when the view was opened to
-  // change an existing flow's trigger (from the canvas node menu), so the user
-  // can dismiss the screen and return to the canvas.
+  // Shows a top-right close (X) button. It dismisses the screen and returns to
+  // the place the trigger choice was opened from (the canvas when changing an
+  // existing flow's trigger, or the start screen for a new, unsaved flow).
   showClose: { type: Boolean, default: false },
 });
 
 defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'back', 'update:continuing', 'close']);
 
-const closeButtonStyle = {
-  backgroundImage:
-    'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\' fill=\'%23000\'%3e%3cpath d=\'M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 1 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 1 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z\'/%3e%3c/svg%3e")',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: '0.85rem auto',
-};
+const search = ref('');
+
+const filteredContexts = computed(() => {
+  const term = search.value.trim().toLowerCase();
+
+  if (!term) {
+    return props.contexts;
+  }
+
+  return props.contexts.filter((item) => {
+    const haystack = `${item.label || ''} ${item.id || ''}`.toLowerCase();
+
+    return haystack.includes(term);
+  });
+});
 
 function getContextFallbackLabel(item) {
   const source = String(item.label || item.id || '')
@@ -63,32 +72,52 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
     <button
       v-if="showClose"
       type="button"
-      class="btn-close absolute right-5 top-5 z-20 box-content flex h-5 w-5 shrink-0 items-center justify-center p-2 text-slate-500 opacity-70 shadow-sm transition hover:opacity-100 focus:opacity-100 focus:outline-none"
-      :style="closeButtonStyle"
+      class="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:text-slate-700 focus:text-slate-700 focus:outline-none"
       :aria-label="__('Close', textDomain)"
       @click="$emit('close')"
     >
+      <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M1 1l14 14M15 1L1 15" />
+      </svg>
       <span class="sr-only">{{ __('Close', textDomain) }}</span>
     </button>
 
-    <div class="flex min-h-0 w-full flex-1">
-      <aside class="hidden w-[360px] shrink-0 overflow-y-auto border-r border-slate-200 bg-slate-50/80 px-7 py-10 xl:block">
+    <div class="flex min-h-0 w-full flex-1 flex-col overflow-y-auto xl:flex-row xl:overflow-hidden">
+      <aside class="w-full shrink-0 border-b border-slate-200 bg-slate-50/80 px-6 py-8 xl:w-[360px] xl:border-b-0 xl:border-r xl:overflow-y-auto xl:px-7 xl:py-10">
         <div class="max-w-[300px]">
+          <BrandMark class="mb-6" :size="32" variant="primary" />
+
           <template v-if="loading">
             <div class="h-8 w-4/5 animate-pulse rounded-full bg-slate-200" />
             <div class="mt-3 h-5 w-2/3 animate-pulse rounded-full bg-slate-200" />
           </template>
 
           <template v-else>
-            <h2 class="text-[30px] font-semibold tracking-tight text-slate-900">{{ __('Choose trigger type', textDomain) }}</h2>
+            <h2 class="text-[28px] font-semibold tracking-tight text-slate-900">{{ __('Choose the source', textDomain) }}</h2>
 
             <p class="mt-3 text-[15px] leading-7 text-slate-500">
-              {{ __('The name is used only for internal workflow tracking.', textDomain) }}
+              {{ __('Where the trigger fires from. Select an integration to see its available triggers.', textDomain) }}
             </p>
           </template>
         </div>
 
-        <div class="mt-10 space-y-4">
+        <div class="relative mt-8">
+          <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true">
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <circle cx="9" cy="9" r="6" />
+              <path d="M14 14l4 4" />
+            </svg>
+          </span>
+          <input
+            v-model="search"
+            type="search"
+            :placeholder="__('Search integration', textDomain)"
+            :aria-label="__('Search integration', textDomain)"
+            class="w-full rounded-[12px] border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10"
+          >
+        </div>
+
+        <div class="mt-5 space-y-3">
           <template v-if="loading">
             <div
               v-for="index in skeletonContexts"
@@ -101,12 +130,12 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
           </template>
           <template v-else>
             <button
-              v-for="item in contexts"
+              v-for="item in filteredContexts"
               :key="item.id"
               type="button"
               class="flex w-full items-center gap-4 rounded-[12px] border px-4 py-4 text-left transition"
               :class="context === item.id
-                ? 'border-blue-600 bg-blue-600 text-white shadow-[0_10px_22px_rgba(37,99,235,0.22)]'
+                ? 'border-blue-600 bg-blue-600 text-white'
                 : 'border-transparent bg-[#e8edf5] text-slate-600 hover:border-slate-300 hover:bg-white'"
               @click="$emit('update:context', item.id)"
             >
@@ -130,41 +159,50 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
                 </span>
               </span>
             </button>
+
+            <p v-if="!filteredContexts.length" class="px-1 py-2 text-sm text-slate-400">
+              {{ __('No integrations found.', textDomain) }}
+            </p>
           </template>
         </div>
       </aside>
 
-      <div class="flex min-w-0 flex-1 flex-col">
-        <div class="mx-auto flex w-full max-w-[1440px] min-h-0 flex-1 flex-col px-6 pt-12 sm:px-8 lg:px-12 xl:px-16">
+      <div class="flex min-w-0 flex-1 flex-col xl:overflow-hidden">
+        <div class="mx-auto flex w-full max-w-[1440px] min-h-0 flex-1 flex-col px-6 pt-10 sm:px-8 lg:px-12 xl:px-16 xl:overflow-hidden">
           <div class="shrink-0">
-            <div class="max-w-3xl">
+            <div class="max-w-3xl pr-12">
               <template v-if="loading">
                 <div class="h-9 w-3/5 animate-pulse rounded-full bg-slate-200" />
                 <div class="mt-3 h-5 w-4/5 animate-pulse rounded-full bg-slate-200" />
               </template>
               <template v-else>
-                <p class="text-[32px] font-semibold tracking-tight text-slate-900">
-                  {{ __('Define a name for this flow', textDomain) }}
+                <p class="text-[30px] font-semibold tracking-tight text-slate-900 sm:text-[32px]">
+                  {{ __('Choose the trigger', textDomain) }}
                 </p>
                 <p class="mt-3 text-[15px] leading-7 text-slate-500">
-                  {{ __('The name is used only for internal workflow tracking.', textDomain) }}
+                  {{ __('The trigger that starts this flow.', textDomain) }}
                 </p>
               </template>
             </div>
 
             <div class="mt-7 w-full">
               <div v-if="loading" class="h-[52px] rounded-[12px] border border-slate-200 bg-slate-100 animate-pulse" />
-              <WorkflowNameField
-                v-else
-                :model-value="title"
-                :label="__('Workflow name', textDomain)"
-                :placeholder="__('My automation #129720', textDomain)"
-                @update:model-value="$emit('update:title', $event)"
-              />
+              <div v-else class="flex flex-col gap-1.5">
+                <span class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                  {{ __('Flow name', textDomain) }}
+                  <span class="font-normal normal-case tracking-normal text-slate-400">· {{ __('internal use', textDomain) }}</span>
+                </span>
+                <WorkflowNameField
+                  :model-value="title"
+                  label=""
+                  :placeholder="__('My automation #129720', textDomain)"
+                  @update:model-value="$emit('update:title', $event)"
+                />
+              </div>
             </div>
           </div>
 
-          <div class="mt-10 min-h-0 w-full flex-1 overflow-y-auto pb-8">
+          <div class="mt-8 min-h-0 w-full flex-1 pb-8 xl:overflow-y-auto">
             <div v-if="loading" :class="triggerGridClass">
               <div
                 v-for="index in skeletonCards"
@@ -196,12 +234,12 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="shrink-0 border-t border-slate-200 bg-white/75 backdrop-blur-md backdrop-saturate-150">
-          <div class="mx-auto w-full max-w-[1440px] px-6 py-4 sm:px-8 lg:px-12 xl:px-16">
-            <TriggerStepFooter :disabled="!ready" :continuing="continuing" @continue="$emit('continue')" @back="$emit('back')" />
-          </div>
-        </div>
+    <div class="shrink-0 border-t border-slate-200 bg-white/75 backdrop-blur-md backdrop-saturate-150">
+      <div class="mx-auto w-full max-w-[1440px] px-6 py-4 sm:px-8 lg:px-12 xl:px-16">
+        <TriggerStepFooter :disabled="!ready" :continuing="continuing" @continue="$emit('continue')" @back="$emit('back')" />
       </div>
     </div>
   </section>
