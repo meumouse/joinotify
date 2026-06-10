@@ -75,6 +75,15 @@ class Menu {
             array( $this, 'render_history_page' )
         );
 
+        add_submenu_page(
+            'joinotify-workflows',
+            esc_html__( 'Processing queue', 'joinotify' ),
+            esc_html__( 'Processing queue', 'joinotify' ),
+            'manage_options',
+            'joinotify-queue',
+            array( $this, 'render_queue_page' )
+        );
+
         // The Vue settings shell must remain reachable even when the license is inactive.
         add_submenu_page(
             'joinotify-workflows',
@@ -161,6 +170,22 @@ class Menu {
 
         // The Vue app fetches its bootstrap payload over REST (admin/history/bootstrap).
         include JOINOTIFY_SRC . 'Views/History.php';
+    }
+
+
+    /**
+     * Display the Vue processing-queue screen.
+     *
+     * @since 2.0.0
+     * @return void
+     */
+    public function render_queue_page() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
+        }
+
+        // The Vue app fetches its bootstrap payload over REST (admin/queue/bootstrap).
+        include JOINOTIFY_SRC . 'Views/Queue.php';
     }
 
 

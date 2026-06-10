@@ -27,6 +27,7 @@ class Settings_Assets extends Abstract_Assets {
         'joinotify-workflows-builder' => 'src/entries/builder.js',
         'joinotify-workflows'         => 'src/entries/workflows.js',
         'joinotify-history'           => 'src/entries/history.js',
+        'joinotify-queue'             => 'src/entries/queue.js',
     );
 
 
@@ -159,6 +160,7 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify-workflows-builder' => array( 'page' => 'builder', 'endpoint' => 'admin/builder' ),
             'joinotify-workflows'         => array( 'page' => 'workflows', 'endpoint' => 'admin/workflows/bootstrap' ),
             'joinotify-history'           => array( 'page' => 'history', 'endpoint' => 'admin/history/bootstrap' ),
+            'joinotify-queue'             => array( 'page' => 'queue', 'endpoint' => 'admin/queue/bootstrap' ),
         );
 
         if ( ! isset( $map[ $page ] ) ) {
@@ -212,6 +214,7 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify-workflows-builder' => 'joinotify-builder-app',
             'joinotify-workflows'         => 'joinotify-workflows-app',
             'joinotify-history'           => 'joinotify-history-app',
+            'joinotify-queue'             => 'joinotify-queue-app',
         );
 
         return isset( $handles[ $page ] ) ? $handles[ $page ] : 'joinotify-vite-app';
@@ -245,6 +248,7 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify-builder-app',
             'joinotify-workflows-app',
             'joinotify-history-app',
+            'joinotify-queue-app',
             'joinotify-vite-app',
         );
 

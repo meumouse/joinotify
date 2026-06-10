@@ -20,6 +20,7 @@ export default defineConfig({
         builder: resolve(__dirname, 'src/entries/builder.js'),
         workflows: resolve(__dirname, 'src/entries/workflows.js'),
         history: resolve(__dirname, 'src/entries/history.js'),
+        queue: resolve(__dirname, 'src/entries/queue.js'),
         'otp-login': resolve(__dirname, 'src/entries/otp-login.js'),
       },
       output: {

@@ -296,6 +296,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Admin\\Workflows\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\History\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\Queue\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Rest\\Extensions_Controller',
 			'MeuMouse\\Joinotify\\Otp_Login\\Rest_Controller',
 		));
