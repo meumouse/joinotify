@@ -109,7 +109,7 @@ msgstr ""
 msgid "41912345678"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1142
+#: app/src/pages/builder/BuilderPage.vue:1161
 #: app/src/pages/history/HistoryPage.vue:222
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/components/cards/PhoneActions.vue:247
@@ -299,7 +299,7 @@ msgstr ""
 msgid "Add new workflow"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1124
+#: app/src/pages/builder/BuilderPage.vue:1143
 msgid "Add test phone number"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "AI smart variable"
 msgstr ""
 
-#: admin/src/AI/Workflow_Generator.php:100
+#: admin/src/AI/Workflow_Generator.php:106
 #: app/src/stores/useWorkflowBuilderStore.ts:1000
 msgid "AI workflow"
 msgstr ""
@@ -397,7 +397,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:129
+#: app/src/pages/builder/BuilderPage.vue:130
 msgid "All categories"
 msgstr ""
 
@@ -706,7 +706,7 @@ msgid "Azerbaijan"
 msgstr ""
 
 #: app/src/components/builder/BuilderImportView.vue:33
-#: app/src/components/builder/BuilderTemplateLibraryView.vue:20
+#: app/src/components/builder/BuilderTemplateLibraryView.vue:21
 #: app/src/components/builder/TriggerStepFooter.vue:21
 msgid "Back"
 msgstr ""
@@ -824,18 +824,18 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:159
 #: admin/src/Admin/Settings/Registry.php:270
-#: app/src/pages/builder/BuilderPage.vue:445
-#: app/src/pages/builder/BuilderPage.vue:550
-#: app/src/pages/builder/BuilderPage.vue:570
-#: app/src/pages/builder/BuilderPage.vue:587
-#: app/src/pages/builder/BuilderPage.vue:599
-#: app/src/pages/builder/BuilderPage.vue:812
-#: app/src/pages/builder/BuilderPage.vue:821
-#: app/src/pages/builder/BuilderPage.vue:848
-#: app/src/pages/builder/BuilderPage.vue:890
-#: app/src/pages/builder/BuilderPage.vue:896
-#: app/src/pages/builder/BuilderPage.vue:931
-#: app/src/pages/builder/BuilderPage.vue:937
+#: app/src/pages/builder/BuilderPage.vue:453
+#: app/src/pages/builder/BuilderPage.vue:558
+#: app/src/pages/builder/BuilderPage.vue:578
+#: app/src/pages/builder/BuilderPage.vue:595
+#: app/src/pages/builder/BuilderPage.vue:607
+#: app/src/pages/builder/BuilderPage.vue:830
+#: app/src/pages/builder/BuilderPage.vue:839
+#: app/src/pages/builder/BuilderPage.vue:866
+#: app/src/pages/builder/BuilderPage.vue:908
+#: app/src/pages/builder/BuilderPage.vue:914
+#: app/src/pages/builder/BuilderPage.vue:949
+#: app/src/pages/builder/BuilderPage.vue:955
 #: app/src/pages/settings/SettingsPage.vue:526
 #: app/src/pages/settings/SettingsPage.vue:529
 #: app/src/pages/settings/SettingsPage.vue:542
@@ -886,8 +886,8 @@ msgstr ""
 #: app/src/components/builder/BuilderImportModal.vue:35
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:8
-#: app/src/pages/builder/BuilderPage.vue:1116
-#: app/src/pages/builder/BuilderPage.vue:1154
+#: app/src/pages/builder/BuilderPage.vue:1135
+#: app/src/pages/builder/BuilderPage.vue:1173
 #: app/src/pages/settings/components/cards/PhoneActions.vue:282
 #: app/src/pages/settings/components/cards/PhoneActions.vue:350
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:255
@@ -1016,8 +1016,12 @@ msgid ""
 "message."
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:83
-msgid "Choose trigger type"
+#: app/src/components/builder/BuilderTriggerSetupView.vue:96
+msgid "Choose the source"
+msgstr ""
+
+#: app/src/components/builder/BuilderTriggerSetupView.vue:180
+msgid "Choose the trigger"
 msgstr ""
 
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:78
@@ -1075,8 +1079,8 @@ msgstr ""
 #: app/src/builder/actions/components/ActionLibraryModal.vue:290
 #: app/src/components/base/BaseDrawer.vue:21
 #: app/src/components/builder/BuilderActionPickerModal.vue:34
-#: app/src/components/builder/BuilderTriggerSetupView.vue:68
-#: app/src/components/builder/BuilderTriggerSetupView.vue:71
+#: app/src/components/builder/BuilderTriggerSetupView.vue:76
+#: app/src/components/builder/BuilderTriggerSetupView.vue:82
 #: app/src/components/modals/ModalDialog.vue:54
 #: app/src/components/toasts/ToastStack.vue:80
 #: app/src/components/toasts/ToastStack.vue:88
@@ -1156,8 +1160,8 @@ msgstr ""
 msgid "Configuration component not available for this action."
 msgstr ""
 
-#: admin/src/Core/Init.php:489
-#: admin/src/Core/Init.php:493
+#: admin/src/Core/Init.php:490
+#: admin/src/Core/Init.php:494
 #: admin/src/Integrations/Integrations_Base.php:390
 #: admin/src/Integrations/Integrations_Base.php:798
 #: admin/src/Integrations/OpenAI.php:54
@@ -1279,7 +1283,7 @@ msgstr ""
 msgid "Could not complete the operation."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:644
+#: app/src/pages/builder/BuilderPage.vue:652
 msgid "Could not create the workflow."
 msgstr ""
 
@@ -1288,7 +1292,7 @@ msgstr ""
 msgid "Could not deactivate the license."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:846
+#: app/src/pages/builder/BuilderPage.vue:864
 msgid "Could not delete the action."
 msgstr ""
 
@@ -1340,7 +1344,7 @@ msgstr ""
 msgid "Could not open the logs."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:709
+#: app/src/pages/builder/BuilderPage.vue:727
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:54
 msgid "Could not read the selected file."
 msgstr ""
@@ -1373,15 +1377,15 @@ msgstr ""
 msgid "Could not retrieve the user last name"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:894
+#: app/src/pages/builder/BuilderPage.vue:912
 msgid "Could not run the workflow test."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:655
+#: app/src/pages/builder/BuilderPage.vue:663
 msgid "Could not save the selected trigger."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:935
+#: app/src/pages/builder/BuilderPage.vue:953
 msgid "Could not save the test phone number."
 msgstr ""
 
@@ -1390,7 +1394,7 @@ msgstr ""
 msgid "Could not save the variable."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:819
+#: app/src/pages/builder/BuilderPage.vue:837
 msgid "Could not save the workflow."
 msgstr ""
 
@@ -1428,11 +1432,11 @@ msgstr ""
 msgid "Could not update the status."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:579
+#: app/src/pages/builder/BuilderPage.vue:587
 msgid "Could not update the workflow status."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:597
+#: app/src/pages/builder/BuilderPage.vue:605
 msgid "Could not update the workflow status. Please try again."
 msgstr ""
 
@@ -1679,10 +1683,6 @@ msgstr ""
 msgid "Default temperature"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:146
-msgid "Define a name for this flow"
-msgstr ""
-
 #: app/src/components/builder/BuilderCanvasView.vue:82
 #: app/src/components/flow/FlowCanvas.vue:173
 msgid "Define the trigger that starts the workflow"
@@ -1880,7 +1880,7 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: admin/src/Core/Init.php:515
+#: admin/src/Core/Init.php:516
 msgid "Documentation"
 msgstr ""
 
@@ -1965,7 +1965,7 @@ msgid "Edit workflow"
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:103
-#: app/src/pages/builder/BuilderPage.vue:1112
+#: app/src/pages/builder/BuilderPage.vue:1131
 msgid "Edit workflow title"
 msgstr ""
 
@@ -2055,7 +2055,7 @@ msgstr ""
 msgid "Enter a password to create the account."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1134
+#: app/src/pages/builder/BuilderPage.vue:1153
 #: app/src/pages/settings/components/cards/PhoneActions.vue:164
 msgid ""
 "Enter a phone number to receive test messages from the builder. Use "
@@ -2387,6 +2387,10 @@ msgstr ""
 msgid "Flexify Checkout for WooCommerce"
 msgstr ""
 
+#: app/src/components/builder/BuilderTriggerSetupView.vue:192
+msgid "Flow name"
+msgstr ""
+
 #: admin/src/Integrations/Woocommerce.php:366
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr ""
@@ -2697,12 +2701,16 @@ msgstr ""
 msgid "Import template"
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:40
+#: app/src/components/builder/TemplateCard.vue:42
 msgid "Import workflow"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:1078
 msgid "Imported automation #%s"
+msgstr ""
+
+#: app/src/components/builder/TemplateCard.vue:42
+msgid "Importing..."
 msgstr ""
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:87
@@ -2779,7 +2787,7 @@ msgstr ""
 msgid "Integration settings"
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:28
+#: app/src/components/builder/TemplateCard.vue:30
 msgid "Integration:"
 msgstr ""
 
@@ -2796,6 +2804,10 @@ msgstr ""
 #: app/src/registries/triggerRegistry.ts:200
 #: app/src/registries/triggerRegistry.ts:229
 msgid "Internal summary"
+msgstr ""
+
+#: app/src/components/builder/BuilderTriggerSetupView.vue:193
+msgid "internal use"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:570
@@ -2816,7 +2828,7 @@ msgstr ""
 msgid "Invalid data."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:724
+#: app/src/pages/builder/BuilderPage.vue:742
 #: app/src/pages/settings/SettingsPage.vue:389
 #: app/src/parsers/workflowParser.ts:378
 msgid "Invalid file."
@@ -2952,7 +2964,7 @@ msgstr ""
 #: app/src/components/brand/BrandMark.vue:6
 #: app/src/components/brand/BrandMark.vue:8
 #: app/src/components/workflows/PageHeader.vue:19
-#: app/src/pages/builder/BuilderPage.vue:514
+#: app/src/pages/builder/BuilderPage.vue:522
 #: app/src/pages/license/LicensePage.vue:136
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
 #: app/src/pages/settings/SettingsPage.vue:221
@@ -3540,7 +3552,7 @@ msgstr ""
 msgid "My automation #%s"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:160
+#: app/src/components/builder/BuilderTriggerSetupView.vue:198
 msgid "My automation #129720"
 msgstr ""
 
@@ -3601,8 +3613,8 @@ msgid "New variable"
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:66
-#: app/src/pages/builder/BuilderPage.vue:543
-#: app/src/pages/builder/BuilderPage.vue:605
+#: app/src/pages/builder/BuilderPage.vue:551
+#: app/src/pages/builder/BuilderPage.vue:613
 msgid "New workflow"
 msgstr ""
 
@@ -3714,8 +3726,12 @@ msgstr ""
 msgid "No history records match the current filters."
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:29
+#: app/src/components/builder/TemplateCard.vue:31
 msgid "No integration"
+msgstr ""
+
+#: app/src/components/builder/BuilderTriggerSetupView.vue:164
+msgid "No integrations found."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:518
@@ -3770,7 +3786,7 @@ msgstr ""
 msgid "No sender available"
 msgstr ""
 
-#: app/src/components/builder/TemplateGrid.vue:52
+#: app/src/components/builder/TemplateGrid.vue:55
 msgid "No templates available."
 msgstr ""
 
@@ -3778,11 +3794,11 @@ msgstr ""
 msgid "No test phone number registered."
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:33
+#: app/src/components/builder/TemplateCard.vue:35
 msgid "No trigger"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:193
+#: app/src/components/builder/BuilderTriggerSetupView.vue:233
 msgid "No triggers available for this integration."
 msgstr ""
 
@@ -4675,11 +4691,11 @@ msgstr ""
 msgid "Saudi Arabia"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1117
+#: app/src/pages/builder/BuilderPage.vue:1136
 msgid "Save"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1160
+#: app/src/pages/builder/BuilderPage.vue:1179
 msgid "Save and run test"
 msgstr ""
 
@@ -4691,7 +4707,7 @@ msgstr ""
 msgid "Save flow"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:568
+#: app/src/pages/builder/BuilderPage.vue:576
 msgid "Save the workflow before activating it."
 msgstr ""
 
@@ -4746,6 +4762,11 @@ msgstr ""
 msgid "Search flows"
 msgstr ""
 
+#: app/src/components/builder/BuilderTriggerSetupView.vue:114
+#: app/src/components/builder/BuilderTriggerSetupView.vue:115
+msgid "Search integration"
+msgstr ""
+
 #: app/src/builder/actions/settings/ConditionProductsField.vue:95
 msgid "Search products"
 msgstr ""
@@ -4762,7 +4783,7 @@ msgstr ""
 msgid "Search variables..."
 msgstr ""
 
-#: app/src/components/builder/BuilderTemplateLibraryView.vue:19
+#: app/src/components/builder/BuilderTemplateLibraryView.vue:20
 msgid "Search workflows"
 msgstr ""
 
@@ -5292,7 +5313,7 @@ msgstr ""
 msgid "Temperature"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:681
+#: app/src/pages/builder/BuilderPage.vue:696
 msgid "Template"
 msgstr ""
 
@@ -5304,7 +5325,7 @@ msgstr ""
 msgid "Test phone"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1131
+#: app/src/pages/builder/BuilderPage.vue:1150
 #: app/src/pages/settings/components/cards/PhoneActions.vue:162
 msgid "Test phone number"
 msgstr ""
@@ -5350,12 +5371,12 @@ msgid "The AI could not generate the snippet."
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:63
-#: app/src/pages/builder/BuilderPage.vue:448
+#: app/src/pages/builder/BuilderPage.vue:456
 #: app/src/stores/useWorkflowBuilderStore.ts:1016
 msgid "The AI could not generate the workflow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:434
+#: app/src/pages/builder/BuilderPage.vue:442
 msgid "The AI could not generate the workflow. Please try again."
 msgstr ""
 
@@ -5413,7 +5434,7 @@ msgid ""
 "request."
 msgstr ""
 
-#: admin/src/AI/Workflow_Generator.php:91
+#: admin/src/AI/Workflow_Generator.php:97
 msgid ""
 "The generated workflow is missing a valid trigger. Try again with more "
 "detail."
@@ -5425,11 +5446,6 @@ msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneActions.vue:260
 msgid "The message is prefilled and can be adjusted before sending the test."
-msgstr ""
-
-#: app/src/components/builder/BuilderTriggerSetupView.vue:86
-#: app/src/components/builder/BuilderTriggerSetupView.vue:149
-msgid "The name is used only for internal workflow tracking."
 msgstr ""
 
 #: admin/src/Otp_Login/Auth_Flow_Service.php:58
@@ -5501,6 +5517,10 @@ msgstr ""
 
 #: admin/src/Rest/Phone_Test_Message.php:52
 msgid "The test message was sent successfully!"
+msgstr ""
+
+#: app/src/components/builder/BuilderTriggerSetupView.vue:183
+msgid "The trigger that starts this flow."
 msgstr ""
 
 #: admin/src/Builder/Custom_Variables.php:121
@@ -6023,7 +6043,7 @@ msgstr ""
 msgid "Trigger when an order status changes."
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:32
+#: app/src/components/builder/TemplateCard.vue:34
 msgid "Trigger:"
 msgstr ""
 
@@ -6501,6 +6521,12 @@ msgstr ""
 msgid "WhatsApp: Text message"
 msgstr ""
 
+#: app/src/components/builder/BuilderTriggerSetupView.vue:99
+msgid ""
+"Where the trigger fires from. Select an integration to see its available "
+"triggers."
+msgstr ""
+
 #: app/src/pages/workflows/WorkflowsPage.vue:215
 msgid "will be moved to trash."
 msgstr ""
@@ -6544,7 +6570,7 @@ msgstr ""
 msgid "Workflow"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:584
+#: app/src/pages/builder/BuilderPage.vue:592
 msgid "Workflow activated."
 msgstr ""
 
@@ -6556,23 +6582,22 @@ msgstr ""
 msgid "Workflow builder"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:585
+#: app/src/pages/builder/BuilderPage.vue:593
 msgid "Workflow deactivated."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:443
+#: app/src/pages/builder/BuilderPage.vue:451
 msgid "Workflow generated. Review the steps and click Save flow to keep it."
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:159
-#: app/src/pages/builder/BuilderPage.vue:1114
+#: app/src/pages/builder/BuilderPage.vue:1133
 #: app/src/registries/triggerRegistry.ts:170
 #: app/src/registries/triggerRegistry.ts:199
 #: app/src/registries/triggerRegistry.ts:228
 msgid "Workflow name"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:550
+#: app/src/pages/builder/BuilderPage.vue:558
 msgid "Workflow name updated. Click Save flow to persist changes."
 msgstr ""
 
@@ -6596,7 +6621,7 @@ msgstr ""
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:810
+#: app/src/pages/builder/BuilderPage.vue:828
 msgid "Workflow saved successfully."
 msgstr ""
 
@@ -6610,8 +6635,8 @@ msgstr ""
 msgid "Workflow status updated successfully."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:888
-#: app/src/pages/builder/BuilderPage.vue:929
+#: app/src/pages/builder/BuilderPage.vue:906
+#: app/src/pages/builder/BuilderPage.vue:947
 #: app/src/stores/useWorkflowBuilderStore.ts:1524
 msgid "Workflow test queued."
 msgstr ""

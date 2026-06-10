@@ -670,8 +670,11 @@
       "Choose the sender and review the message before sending a test WhatsApp message.": [
         "Choose the sender and review the message before sending a test WhatsApp message."
       ],
-      "Choose trigger type": [
-        "Choose trigger type"
+      "Choose the source": [
+        "Choose the source"
+      ],
+      "Choose the trigger": [
+        "Choose the trigger"
       ],
       "Choose whether the workflow should wait for a period, a fixed date, or a relative offset at a specific time.": [
         "Choose whether the workflow should wait for a period, a fixed date, or a relative offset at a specific time."
@@ -1098,9 +1101,6 @@
       ],
       "Default temperature": [
         "Default temperature"
-      ],
-      "Define a name for this flow": [
-        "Define a name for this flow"
       ],
       "Define the trigger that starts the workflow": [
         "Define the trigger that starts the workflow"
@@ -1567,6 +1567,9 @@
       "Flexify Checkout for WooCommerce": [
         "Flexify Checkout for WooCommerce"
       ],
+      "Flow name": [
+        "Flow name"
+      ],
       "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)": [
         "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
       ],
@@ -1783,6 +1786,9 @@
       "Imported automation #%s": [
         "Imported automation #%s"
       ],
+      "Importing...": [
+        "Importing..."
+      ],
       "Importing…": [
         "Importing…"
       ],
@@ -1842,6 +1848,9 @@
       ],
       "Internal summary": [
         "Internal summary"
+      ],
+      "internal use": [
+        "internal use"
       ],
       "Invalid": [
         "Invalid"
@@ -2454,6 +2463,9 @@
       ],
       "No integration": [
         "No integration"
+      ],
+      "No integrations found.": [
+        "No integrations found."
       ],
       "No item purchased.": [
         "No item purchased."
@@ -3136,6 +3148,9 @@
       "Search flows": [
         "Search flows"
       ],
+      "Search integration": [
+        "Search integration"
+      ],
       "Search products": [
         "Search products"
       ],
@@ -3601,9 +3616,6 @@
       "The message is prefilled and can be adjusted before sending the test.": [
         "The message is prefilled and can be adjusted before sending the test."
       ],
-      "The name is used only for internal workflow tracking.": [
-        "The name is used only for internal workflow tracking."
-      ],
       "The OTP login form is currently disabled.": [
         "The OTP login form is currently disabled."
       ],
@@ -3648,6 +3660,9 @@
       ],
       "The test message was sent successfully!": [
         "The test message was sent successfully!"
+      ],
+      "The trigger that starts this flow.": [
+        "The trigger that starts this flow."
       ],
       "The variable \"%s\" already exists. Choose another name.": [
         "The variable \"%s\" already exists. Choose another name."
@@ -4314,6 +4329,9 @@
       ],
       "WhatsApp: Text message": [
         "WhatsApp: Text message"
+      ],
+      "Where the trigger fires from. Select an integration to see its available triggers.": [
+        "Where the trigger fires from. Select an integration to see its available triggers."
       ],
       "will be moved to trash.": [
         "will be moved to trash."

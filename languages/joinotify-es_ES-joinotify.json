@@ -670,8 +670,11 @@
       "Choose the sender and review the message before sending a test WhatsApp message.": [
         "Elige el remitente y revisa el mensaje antes de enviar un mensaje de prueba por WhatsApp."
       ],
-      "Choose trigger type": [
-        "Elige el tipo de desencadenador"
+      "Choose the source": [
+        "Elige la fuente"
+      ],
+      "Choose the trigger": [
+        "Elige el desencadenante"
       ],
       "Choose whether the workflow should wait for a period, a fixed date, or a relative offset at a specific time.": [
         "Elige si el flujo de trabajo debe esperar un período, una fecha fija o un desplazamiento relativo a una hora específica."
@@ -1098,9 +1101,6 @@
       ],
       "Default temperature": [
         "Temperatura predeterminada"
-      ],
-      "Define a name for this flow": [
-        "Define un nombre para este flujo"
       ],
       "Define the trigger that starts the workflow": [
         "Define el desencadenante que inicia el flujo de trabajo"
@@ -1567,6 +1567,9 @@
       "Flexify Checkout for WooCommerce": [
         "Flexify Checkout para WooCommerce"
       ],
+      "Flow name": [
+        "Nombre del flujo"
+      ],
       "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)": [
         "Flower Street, 123 - Curitiba/PR - Brasil (C.P.: 80000-000)"
       ],
@@ -1783,6 +1786,9 @@
       "Imported automation #%s": [
         "Automatización importada #%s"
       ],
+      "Importing...": [
+        "Importando..."
+      ],
       "Importing…": [
         "Importando…"
       ],
@@ -1842,6 +1848,9 @@
       ],
       "Internal summary": [
         "Resumen interno"
+      ],
+      "internal use": [
+        "uso interno"
       ],
       "Invalid": [
         "Inválida"
@@ -2454,6 +2463,9 @@
       ],
       "No integration": [
         "Sin integración"
+      ],
+      "No integrations found.": [
+        "No se encontraron integraciones."
       ],
       "No item purchased.": [
         "Ningún artículo adquirido."
@@ -3136,6 +3148,9 @@
       "Search flows": [
         "Buscar flujos"
       ],
+      "Search integration": [
+        "Buscar integración"
+      ],
       "Search products": [
         "Buscar productos"
       ],
@@ -3601,9 +3616,6 @@
       "The message is prefilled and can be adjusted before sending the test.": [
         "El mensaje está prellenado y se puede ajustar antes de enviar la prueba."
       ],
-      "The name is used only for internal workflow tracking.": [
-        "El nombre se utiliza solo para el seguimiento interno del flujo de trabajo."
-      ],
       "The OTP login form is currently disabled.": [
         "El formulario de inicio de sesión OTP está actualmente deshabilitado."
       ],
@@ -3648,6 +3660,9 @@
       ],
       "The test message was sent successfully!": [
         "¡El mensaje de prueba se envió con éxito!"
+      ],
+      "The trigger that starts this flow.": [
+        "El desencadenante que inicia este flujo."
       ],
       "The variable \"%s\" already exists. Choose another name.": [
         "La variable \"%s\" ya existe. Elige otro nombre."
@@ -4314,6 +4329,9 @@
       ],
       "WhatsApp: Text message": [
         "WhatsApp: Mensaje de texto"
+      ],
+      "Where the trigger fires from. Select an integration to see its available triggers.": [
+        "Desde dónde se activa el desencadenante. Selecciona una integración para ver sus desencadenantes disponibles."
       ],
       "will be moved to trash.": [
         "será movido a la papelera."
