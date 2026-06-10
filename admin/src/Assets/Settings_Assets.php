@@ -74,6 +74,18 @@ class Settings_Assets extends Abstract_Assets {
             return $candidate;
         }
 
+        // Fallback to the canonical base file. Every per-handle JSON the languages
+        // pipeline emits is an identical full copy of the translation table, so any
+        // Joinotify script can be served the base file. This means a new admin page
+        // (i.e. a new script handle such as joinotify-queue-app) receives its
+        // translations automatically, without adding it to the pipeline's handle
+        // list or shipping a dedicated JSON for it.
+        $base = trailingslashit( JOINOTIFY_DIR ) . "languages/joinotify-{$locale}-joinotify.json";
+
+        if ( is_readable( $base ) ) {
+            return $base;
+        }
+
         return $file;
     }
 
