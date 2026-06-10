@@ -417,7 +417,7 @@ class Registry {
                     'status' => 'info',
                 ),
                 array(
-                    'label' => __( 'WP_DEBUG', 'joinotify' ),
+                    'label' => 'WP_DEBUG',
                     'value' => defined( 'WP_DEBUG' ) && WP_DEBUG ? esc_html__( 'Enabled', 'joinotify' ) : esc_html__( 'Disabled', 'joinotify' ),
                     'status' => defined( 'WP_DEBUG' ) && WP_DEBUG ? 'warning' : 'success',
                 ),
@@ -436,12 +436,12 @@ class Registry {
                     'status' => version_compare( PHP_VERSION, '7.4', '>=' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => __( 'DOMDocument', 'joinotify' ),
+                    'label' => 'DOMDocument',
                     'value' => class_exists( 'DOMDocument' ) ? esc_html__( 'Yes', 'joinotify' ) : esc_html__( 'No', 'joinotify' ),
                     'status' => class_exists( 'DOMDocument' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => __( 'cURL ', 'joinotify' ),
+                    'label' => 'cURL',
                     'value' => extension_loaded( 'curl' ) ? curl_version()['version'] : esc_html__( 'No', 'joinotify' ),
                     'status' => extension_loaded( 'curl' ) ? 'success' : 'danger',
                 ),
@@ -451,32 +451,32 @@ class Registry {
                     'status' => extension_loaded( 'openssl' ) ? 'success' : 'danger',
                 ),
                 array(
-                    'label' => __( 'post_max_size', 'joinotify' ),
+                    'label' => 'post_max_size',
                     'value' => $post_max_size,
                     'status' => function_exists( 'wp_convert_hr_to_bytes' ) && wp_convert_hr_to_bytes( $post_max_size ) < 64000000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => __( 'max_execution_time', 'joinotify' ),
+                    'label' => 'max_execution_time',
                     'value' => $max_execution_time,
                     'status' => (int) $max_execution_time < 180 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => __( 'max_input_vars', 'joinotify' ),
+                    'label' => 'max_input_vars',
                     'value' => $max_input_vars,
                     'status' => (int) $max_input_vars < 10000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => __( 'memory_limit', 'joinotify' ),
+                    'label' => 'memory_limit',
                     'value' => $memory_limit,
                     'status' => function_exists( 'wp_convert_hr_to_bytes' ) && wp_convert_hr_to_bytes( $memory_limit ) < 128000000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => __( 'upload_max_filesize', 'joinotify' ),
+                    'label' => 'upload_max_filesize',
                     'value' => $upload_max_filesize,
                     'status' => function_exists( 'wp_convert_hr_to_bytes' ) && wp_convert_hr_to_bytes( $upload_max_filesize ) < 64000000 ? 'danger' : 'success',
                 ),
                 array(
-                    'label' => __( 'allow_url_fopen', 'joinotify' ),
+                    'label' => 'allow_url_fopen',
                     'value' => ! ini_get( 'allow_url_fopen' ) ? esc_html__( 'Off', 'joinotify' ) : esc_html__( 'On', 'joinotify' ),
                     'status' => ! ini_get( 'allow_url_fopen' ) ? 'danger' : 'success',
                 ),

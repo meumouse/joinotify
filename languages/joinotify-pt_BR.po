@@ -7,7 +7,6 @@ msgstr ""
 "x-domain: joinotify\n"
 
 #: admin/src/Integrations/Woocommerce.php:342
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:342
 msgid "12345"
 msgstr "12345"
 
@@ -23,7 +22,6 @@ msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr "{{ wc_billing_phone }} ou +5511999990000"
 
 #: admin/src/Builder/Messages.php:170
-#: release/joinotify/admin/src/Builder/Messages.php:170
 msgid "%s %s: %s"
 msgstr "%s %s: %s"
 
@@ -32,7 +30,6 @@ msgid "%s is required."
 msgstr "%s é obrigatório."
 
 #: admin/src/Integrations/Flexify_Checkout.php:224
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:224
 msgid "%s minutes"
 msgstr "%s minutos"
 
@@ -41,42 +38,34 @@ msgid "%s settings"
 msgstr "configurações de %s"
 
 #: admin/src/Integrations/Woocommerce.php:390
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:390
 msgid "%s/checkout/pay/order/12345"
 msgstr "%s/finalizar compra/pagar/pedido/12345"
 
 #: admin/src/Integrations/Woocommerce.php:911
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:911
 msgid "%s%%"
 msgstr "%s%%"
 
 #: admin/src/Integrations/Woocommerce.php:326
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:326
 msgid "+55 11 91234-5678"
 msgstr "+55 11 91234-5678"
 
 #: admin/src/Integrations/Woocommerce.php:334
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:334
 msgid "+55 41 91234-5678"
 msgstr "+55 41 91234-5678"
 
 #: admin/src/Builder/Messages.php:167
-#: release/joinotify/admin/src/Builder/Messages.php:167
 msgid "<span class=\"builder-placeholder\">%s</span> %s: %s"
 msgstr "<span class=\"builder-placeholder\">%s</span> %s: %s"
 
 #: admin/src/Builder/Messages.php:163
-#: release/joinotify/admin/src/Builder/Messages.php:163
 msgid "<span class=\"builder-placeholder\">%s</span> is empty"
 msgstr "<span class=\"builder-placeholder\">%s</span> é vazio"
 
 #: admin/src/Builder/Messages.php:165
-#: release/joinotify/admin/src/Builder/Messages.php:165
 msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr "<span class=\"builder-placeholder\">%s</span> não é vazio"
 
 #: admin/src/Core/Init.php:226
-#: release/joinotify/admin/src/Core/Init.php:226
 msgid ""
 "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your "
 "hosting support to upgrade."
@@ -85,7 +74,6 @@ msgstr ""
 "suporte da sua hospedagem para realizar a atualização."
 
 #: admin/src/Core/Debug.php:88
-#: release/joinotify/admin/src/Core/Debug.php:88
 msgid "<style>%s</style>"
 msgstr "<style>%s</style>"
 
@@ -95,39 +83,31 @@ msgid "0 results"
 msgstr "0 resultados"
 
 #: admin/src/Admin/Settings/Registry.php:216
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:199
 msgid "180 days"
 msgstr "180 dias"
 
 #: admin/src/Integrations/Woocommerce.php:382
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:382
 msgid "1x - Men's cotton T-shirt (Sample product)"
 msgstr "1x - Camiseta de algodão masculina (Produto exemplo)"
 
 #: admin/src/Integrations/Woocommerce.php:382
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:382
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr "1x - Óculos de sol com proteção UV (Produto exemplo)"
 
 #: admin/src/Admin/Settings/Registry.php:213
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:196
 msgid "30 days"
 msgstr "30 dias"
 
 #: admin/src/Integrations/Flexify_Checkout.php:225
 #: admin/src/Integrations/Flexify_Checkout.php:233
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:225
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:233
 msgid "30 minutes"
 msgstr "30 minutos"
 
 #: admin/src/Admin/Settings/Registry.php:217
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:200
 msgid "365 days"
 msgstr "365 dias"
 
 #: admin/src/Integrations/Flexify_Checkout.php:288
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:288
 msgid "41912345678"
 msgstr "41912345678"
 
@@ -139,22 +119,18 @@ msgid "5541987111527"
 msgstr "5541987111527"
 
 #: admin/src/Admin/Settings/Registry.php:214
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:197
 msgid "60 days"
 msgstr "60 dias"
 
 #: admin/src/Admin/Settings/Registry.php:215
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:198
 msgid "90 days"
 msgstr "90 dias"
 
 #: admin/src/Admin/Builder/Registry.php:1350
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1340
 msgid "A condition is missing its branches."
 msgstr "Uma condição está faltando seus ramos."
 
 #: admin/src/Rest/Check_Updates.php:53
-#: release/joinotify/admin/src/Rest/Check_Updates.php:53
 msgid "A new version (%s) is available!"
 msgstr "Uma nova versão (%s) está disponível!"
 
@@ -163,7 +139,6 @@ msgid "A new version is available:"
 msgstr "Uma nova versão está disponível:"
 
 #: admin/src/Api/Updater.php:526
-#: release/joinotify/admin/src/Api/Updater.php:526
 msgid ""
 "A new version of the <strong>Joinotify</strong> plugin (%s) is available. "
 "<a href=\"%s\">Update now</a>."
@@ -172,24 +147,19 @@ msgstr ""
 "<a href=\"%s\">Atualize agora</a>."
 
 #: admin/src/Api/Updater.php:229
-#: release/joinotify/admin/src/Api/Updater.php:229
 msgid "A new version of the <strong>Joinotify</strong> plugin is available."
 msgstr "Uma nova versão do plugin <strong>Joinotify</strong> está disponível."
 
 #: admin/src/Admin/Settings/Registry.php:225
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:208
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr "Uma visão geral rápida do ambiente WordPress, PHP e extensões críticas."
 
 #: admin/src/Integrations/Flexify_Checkout.php:134
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:134
 msgid "Abandoned cart is recovered"
 msgstr "Carrinho abandonado é recuperado"
 
 #: admin/src/Admin/Settings/Registry.php:173
 #: admin/src/Admin/Settings/Registry.php:276
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:156
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:259
 msgid "About"
 msgstr "Sobre"
 
@@ -221,19 +191,16 @@ msgid "Actions menu"
 msgstr "Menu de ações"
 
 #: admin/src/Admin/Settings/Registry.php:145
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:128
 msgid "Actions to add a new sender and send a test message."
 msgstr "Ações para adicionar um novo remetente e enviar uma mensagem de teste."
 
 #: admin/src/Admin/Settings/Registry.php:79
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:78
 msgid "Activate and configure the endpoints used to process external API requests."
 msgstr ""
 "Ative e configure os endpoints usados para processar solicitações de API "
 "externas."
 
 #: admin/src/Integrations/Woocommerce.php:121
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:121
 msgid "Activate discount coupon action"
 msgstr "Ativar ação de cupom de desconto"
 
@@ -245,7 +212,6 @@ msgid "Activate license"
 msgstr "Ativar licença"
 
 #: admin/src/Integrations/Integrations_Base.php:908
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:908
 msgid "Activate plugin"
 msgstr "Ativar plugin"
 
@@ -254,13 +220,11 @@ msgid "Activate the license to unlock Joinotify premium features."
 msgstr "Ative a licença para desbloquear os recursos premium do Joinotify."
 
 #: admin/src/Admin/Settings/Registry.php:572
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:555
 msgid "Activate your license"
 msgstr "Ative sua licença"
 
 #: admin/src/Admin/Settings/Registry.php:558
 #: app/src/pages/license/LicensePage.vue:212
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:541
 msgid "Activate your license to unlock premium features."
 msgstr "Ative sua licença para desbloquear recursos premium."
 
@@ -271,7 +235,6 @@ msgid "Active"
 msgstr "Ativo"
 
 #: admin/src/Admin/Settings/Registry.php:572
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:555
 msgid "Active license"
 msgstr "Licença ativa"
 
@@ -284,7 +247,6 @@ msgid "Add"
 msgstr "Adicionar"
 
 #: admin/src/Integrations/Elementor_Forms.php:209
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:209
 msgid ""
 "Add a caption to accompany the sent media. Supports text variables "
 "(placeholders)."
@@ -293,7 +255,6 @@ msgstr ""
 "texto (placeholders)."
 
 #: admin/src/Builder/Actions.php:69
-#: release/joinotify/admin/src/Builder/Actions.php:69
 msgid "Add a function, set of actions, and/or filters in PHP."
 msgstr "Adicione uma função, conjunto de ações e ou filtros em PHP."
 
@@ -328,12 +289,10 @@ msgid "Add item"
 msgstr "Adicionar item"
 
 #: admin/src/Integrations/Elementor_Forms.php:195
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:195
 msgid "Add media"
 msgstr "Adicionar mídia"
 
 #: admin/src/Core/Workflow_Post_Type.php:43
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:43
 msgid "Add new flow"
 msgstr "Adicionar novo fluxo"
 
@@ -345,8 +304,6 @@ msgstr "Adicionar novo telefone"
 #: admin/src/Admin/Menu.php:62
 #: app/src/components/workflows/EmptyState.vue:8
 #: app/src/pages/workflows/WorkflowsPage.vue:67
-#: release/joinotify/admin/src/Admin/Menu.php:61
-#: release/joinotify/admin/src/Admin/Menu.php:62
 msgid "Add new workflow"
 msgstr "Adicionar novo fluxo de trabalho"
 
@@ -360,7 +317,6 @@ msgid "Add variable"
 msgstr "Adicionar variável"
 
 #: admin/src/Integrations/Elementor_Forms.php:136
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:136
 msgid ""
 "Add your text to be sent to the WhatsApp user. Add text variables to "
 "replace information. Use {{ field_id=[FIELD_ID] }} replacing FIELD_ID with "
@@ -376,7 +332,6 @@ msgid "Added"
 msgstr "Adicionado"
 
 #: admin/src/Integrations/Woocommerce.php:122
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:122
 msgid ""
 "Adds the coupon action to WooCommerce workflows so a workflow can create "
 "and send a discount coupon."
@@ -397,7 +352,6 @@ msgstr ""
 "selecionada (por exemplo, +1 dia às 09:00)."
 
 #: admin/src/Builder/Actions.php:127
-#: release/joinotify/admin/src/Builder/Actions.php:127
 msgid "Advanced"
 msgstr "Avançado"
 
@@ -411,17 +365,14 @@ msgid "Advanced: extra instructions / documentation"
 msgstr "Avançado: instruções / documentação extras"
 
 #: admin/src/Validations/Country_Codes.php:67
-#: release/joinotify/admin/src/Validations/Country_Codes.php:67
 msgid "Afghanistan"
 msgstr "Afeganistão"
 
 #: admin/src/Rest/Builder_Ai_Generate.php:71
-#: release/joinotify/admin/src/Rest/Builder_Ai_Generate.php:71
 msgid "AI generation failed."
 msgstr "Falha na geração de IA."
 
 #: admin/src/Admin/Settings/Registry.php:119
-#: release/joinotify/admin/src/Integrations/OpenAI.php:76
 msgid "AI provider"
 msgstr "Fornecedor de IA"
 
@@ -431,7 +382,6 @@ msgstr "Variável inteligente de IA"
 
 #: admin/src/AI/Workflow_Generator.php:100
 #: app/src/stores/useWorkflowBuilderStore.ts:1000
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:100
 msgid "AI workflow"
 msgstr "Fluxo de trabalho de IA"
 
@@ -443,23 +393,18 @@ msgstr "Mensagem do WhatsApp gerada por IA"
 #: admin/src/Integrations/AI_Messaging.php:103
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:10
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:23
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:93
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:103
 msgid "AI: Smart variable"
 msgstr "IA: Variável inteligente"
 
 #: admin/src/Validations/Country_Codes.php:136
-#: release/joinotify/admin/src/Validations/Country_Codes.php:136
 msgid "Åland Islands"
 msgstr "Ilhas Åland"
 
 #: admin/src/Validations/Country_Codes.php:133
-#: release/joinotify/admin/src/Validations/Country_Codes.php:133
 msgid "Albania"
 msgstr "Albânia"
 
 #: admin/src/Validations/Country_Codes.php:73
-#: release/joinotify/admin/src/Validations/Country_Codes.php:73
 msgid "Algeria"
 msgstr "Argélia"
 
@@ -473,7 +418,6 @@ msgid "All categories"
 msgstr "Todas as categorias"
 
 #: admin/src/Core/Workflow_Post_Type.php:47
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:47
 msgid "All flows"
 msgstr "Todos os fluxos"
 
@@ -482,20 +426,16 @@ msgid "All options will return to the plugin defaults."
 msgstr "Todas as opções retornarão aos valores padrão do plugin."
 
 #: admin/src/Admin/History/Registry.php:123
-#: release/joinotify/admin/src/Admin/History/Registry.php:123
 msgid "All sources"
 msgstr "Todas as fontes"
 
 #: admin/src/Rest/Builder_Test.php:119
-#: release/joinotify/admin/src/Rest/Builder_Test.php:119
 msgid "All test messages were sent successfully."
 msgstr "Todas as mensagens de teste foram enviadas com sucesso."
 
 #: admin/src/Admin/Menu.php:51
 #: admin/src/Admin/Menu.php:52
 #: app/src/components/builder/TemplateCategorySelect.vue:14
-#: release/joinotify/admin/src/Admin/Menu.php:51
-#: release/joinotify/admin/src/Admin/Menu.php:52
 msgid "All workflows"
 msgstr "Todos os fluxos de trabalho"
 
@@ -503,23 +443,15 @@ msgstr "Todos os fluxos de trabalho"
 msgid "Allow free shipping"
 msgstr "Permitir frete grátis"
 
-#: admin/src/Admin/Settings/Registry.php:479
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:462
-msgid "allow_url_fopen"
-msgstr "permitir_url_fopen"
-
 #: admin/src/Integrations/Wpforms.php:198
-#: release/joinotify/admin/src/Integrations/Wpforms.php:198
 msgid "Allows checking a specific value from a submitted form field."
 msgstr "Permite verificar um valor específico de um campo de formulário enviado."
 
 #: admin/src/Integrations/Elementor.php:151
-#: release/joinotify/admin/src/Integrations/Elementor.php:151
 msgid "Allows checking a specific value of a submitted form field."
 msgstr "Permite verificar um valor específico de um campo do formulário enviado."
 
 #: admin/src/Integrations/Wordpress.php:310
-#: release/joinotify/admin/src/Integrations/Wordpress.php:310
 msgid "Allows checking specific metadata for the user that fired the trigger."
 msgstr ""
 "Permite verificar metadados específicos para o usuário que acionou o "
@@ -528,9 +460,6 @@ msgstr ""
 #: admin/src/Integrations/Wordpress.php:320
 #: admin/src/Integrations/Wordpress.php:326
 #: admin/src/Integrations/Wordpress.php:336
-#: release/joinotify/admin/src/Integrations/Wordpress.php:320
-#: release/joinotify/admin/src/Integrations/Wordpress.php:326
-#: release/joinotify/admin/src/Integrations/Wordpress.php:336
 msgid ""
 "Allows checking specific metadata for the user who requested the password "
 "reset."
@@ -540,8 +469,6 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor.php:155
 #: admin/src/Integrations/Flexify_Checkout.php:342
-#: release/joinotify/admin/src/Integrations/Elementor.php:155
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:342
 msgid ""
 "Allows checking specific metadata of the user who requested the password "
 "reset."
@@ -551,98 +478,78 @@ msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:1009
 #: admin/src/Integrations/Wpforms.php:202
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1009
-#: release/joinotify/admin/src/Integrations/Wpforms.php:202
 msgid "Allows checking specific user metadata."
 msgstr "Permite verificar metadados específicos do usuário."
 
 #: admin/src/Integrations/Flexify_Checkout.php:334
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:334
 msgid "Allows checking the abandoned cart total amount."
 msgstr "Permite verificar o valor total do carrinho abandonado."
 
 #: admin/src/Integrations/Woocommerce.php:1013
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1013
 msgid "Allows checking the customer email for the order."
 msgstr "Permite verificar o e-mail do cliente para o pedido."
 
 #: admin/src/Integrations/Flexify_Checkout.php:338
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:338
 msgid "Allows checking the items present in the abandoned cart."
 msgstr "Permite verificar os itens presentes no carrinho abandonado."
 
 #: admin/src/Integrations/Woocommerce.php:1001
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1001
 msgid "Allows checking the order payment method."
 msgstr "Permite verificar a forma de pagamento do pedido."
 
 #: admin/src/Integrations/Woocommerce.php:1017
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1017
 msgid "Allows checking the order refund amount."
 msgstr "Permite verificar o valor do reembolso do pedido."
 
 #: admin/src/Integrations/Woocommerce.php:1005
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1005
 msgid "Allows checking the order shipping method."
 msgstr "Permite verificar a forma de entrega do pedido."
 
 #: admin/src/Integrations/Woocommerce.php:985
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:985
 msgid "Allows checking the order status."
 msgstr "Permite verificar o status do pedido."
 
 #: admin/src/Integrations/Woocommerce.php:989
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:989
 msgid "Allows checking the order total."
 msgstr "Permite verificar o total do pedido."
 
 #: admin/src/Integrations/Wordpress.php:342
-#: release/joinotify/admin/src/Integrations/Wordpress.php:342
 msgid "Allows checking the post type that was published."
 msgstr "Permite verificar o tipo de post que foi publicado."
 
 #: admin/src/Integrations/Woocommerce.php:997
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:997
 msgid "Allows checking the products purchased in the order."
 msgstr "Permite verificar os produtos adquiridos no pedido."
 
 #: admin/src/Integrations/Wordpress.php:316
-#: release/joinotify/admin/src/Integrations/Wordpress.php:316
 msgid "Allows checking the role of the user who logged in."
 msgstr "Permite verificar a função do usuário que fez o login."
 
 #: admin/src/Integrations/Wordpress.php:332
-#: release/joinotify/admin/src/Integrations/Wordpress.php:332
 msgid "Allows checking the role of the user who requested the password reset."
 msgstr "Permite verificar o papel do usuário que solicitou a redefinição de senha."
 
 #: admin/src/Integrations/Woocommerce.php:1021
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1021
 msgid "Allows checking the status of the created subscription."
 msgstr "Permite verificar o status da assinatura criada."
 
 #: admin/src/Integrations/Wordpress.php:306
-#: release/joinotify/admin/src/Integrations/Wordpress.php:306
 msgid "Allows checking the user role that fired the trigger."
 msgstr "Permite verificar o papel do usuário que acionou o gatilho."
 
 #: admin/src/Integrations/Flexify_Checkout.php:346
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:346
 msgid "Allows checking whether the abandoned cart was recovered."
 msgstr "Permite verificar se o carrinho abandonado foi recuperado."
 
 #: admin/src/Integrations/Woocommerce.php:993
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:993
 msgid "Allows checking whether the order was paid."
 msgstr "Permite verificar se o pedido foi pago."
 
 #: admin/src/Admin/Settings/Registry.php:190
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:173
 msgid "Allows the plugin to update automatically whenever possible."
 msgstr "Permite que o plugin seja atualizado automaticamente sempre que possível."
 
 #: admin/src/Builder/Actions.php:33
-#: release/joinotify/admin/src/Builder/Actions.php:33
 msgid "Allows you to set a waiting time before the action is executed."
 msgstr "Permite definir um tempo de espera antes que a ação seja executada."
 
@@ -658,7 +565,6 @@ msgstr "Já tem uma conta?"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:145
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:90
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:110
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:332
 msgid "Amount"
 msgstr "Quantidade"
 
@@ -671,7 +577,6 @@ msgid "An account is already registered with this phone number."
 msgstr "Uma conta já está registrada com este número de telefone."
 
 #: admin/src/Api/License.php:281
-#: release/joinotify/admin/src/Api/License.php:281
 msgid ""
 "An error occurred while connecting to the license verification server. "
 "Check the error in the WooCommerce logs."
@@ -680,27 +585,22 @@ msgstr ""
 "Verifique o erro nos logs do WooCommerce."
 
 #: admin/src/Rest/Settings_Reset.php:44
-#: release/joinotify/admin/src/Rest/Settings_Reset.php:44
 msgid "An error occurred while resetting the settings."
 msgstr "Ocorreu um erro ao redefinir as configurações."
 
 #: admin/src/Validations/Country_Codes.php:144
-#: release/joinotify/admin/src/Validations/Country_Codes.php:144
 msgid "Andorra"
 msgstr "Andorra"
 
 #: admin/src/Validations/Country_Codes.php:100
-#: release/joinotify/admin/src/Validations/Country_Codes.php:100
 msgid "Angola"
 msgstr "Angola"
 
 #: admin/src/Integrations/Woocommerce.php:230
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:230
 msgid "Any status"
 msgstr "Qualquer status"
 
 #: admin/src/Admin/History/Registry.php:128
-#: release/joinotify/admin/src/Admin/History/Registry.php:128
 msgid "API"
 msgstr "API"
 
@@ -710,8 +610,6 @@ msgstr "Cliente da API não inicializado."
 
 #: admin/src/Admin/Settings/Registry.php:104
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:140
-#: examples/joinotify-extension-example.php:188
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:103
 msgid "API key"
 msgstr "Chave de API"
 
@@ -748,28 +646,23 @@ msgstr ""
 "que a utilizam não a resolverão mais."
 
 #: admin/src/Validations/Country_Codes.php:48
-#: release/joinotify/admin/src/Validations/Country_Codes.php:48
 msgid "Argentina"
 msgstr "Argentina"
 
 #: admin/src/Validations/Country_Codes.php:142
-#: release/joinotify/admin/src/Validations/Country_Codes.php:142
 msgid "Armenia"
 msgstr "Armênia"
 
 #: admin/src/Admin/Settings/Registry.php:114
 #: admin/src/Integrations/AI_Messaging.php:48
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:48
 msgid "Artificial Intelligence"
 msgstr "Inteligência Artificial"
 
 #: admin/src/Integrations/OpenAI.php:52
-#: release/joinotify/admin/src/Integrations/OpenAI.php:53
 msgid "Artificial Intelligence settings"
 msgstr "Configurações de Inteligência Artificial"
 
 #: admin/src/Validations/Country_Codes.php:125
-#: release/joinotify/admin/src/Validations/Country_Codes.php:125
 msgid "Aruba"
 msgstr "Aruba"
 
@@ -784,7 +677,6 @@ msgstr "Tentativas"
 #: admin/src/Validations/Media_Types.php:41
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:25
 #: app/src/pages/history/HistoryPage.vue:77
-#: release/joinotify/admin/src/Validations/Media_Types.php:41
 msgid "Audio"
 msgstr "Áudio"
 
@@ -797,26 +689,18 @@ msgstr ""
 "de fluxo de trabalho, tentativas e mensagens de teste."
 
 #: admin/src/Validations/Country_Codes.php:54
-#: release/joinotify/admin/src/Validations/Country_Codes.php:54
 msgid "Australia"
 msgstr "Austrália"
 
 #: admin/src/Validations/Country_Codes.php:38
-#: release/joinotify/admin/src/Validations/Country_Codes.php:38
 msgid "Austria"
 msgstr "Áustria"
 
 #: admin/src/Integrations/Wordpress.php:64
-#: release/joinotify/admin/src/Integrations/Wordpress.php:64
 msgid "Automate message delivery for WordPress event triggers."
 msgstr "Automatize a entrega de mensagens para gatilhos de eventos do WordPress."
 
-#: examples/joinotify-extension-example.php:108
-msgid "Automate messages for Example App events."
-msgstr "Automatize mensagens para eventos do Example App."
-
 #: admin/src/Integrations/Wpforms.php:60
-#: release/joinotify/admin/src/Integrations/Wpforms.php:60
 msgid ""
 "Automate sending messages when you receive a WPForms form with a phone "
 "number. Keep your customers informed in real time."
@@ -826,7 +710,6 @@ msgstr ""
 "tempo real."
 
 #: admin/src/Admin/Settings/Registry.php:189
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:172
 msgid "Automatic updates"
 msgstr "Atualizações automáticas"
 
@@ -835,14 +718,12 @@ msgid "Automatic updates and license synchronization"
 msgstr "Atualizações automáticas e sincronização de licenças"
 
 #: admin/src/Admin/Settings/Registry.php:210
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:193
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 "Excluir automaticamente registros de histórico mais antigos do que o "
 "período selecionado."
 
 #: admin/src/Builder/Messages.php:268
-#: release/joinotify/admin/src/Builder/Messages.php:268
 msgid "Automatically generated"
 msgstr "Gerado automaticamente"
 
@@ -856,7 +737,6 @@ msgid "Available placeholders"
 msgstr "Placeholders disponíveis"
 
 #: admin/src/Validations/Country_Codes.php:225
-#: release/joinotify/admin/src/Validations/Country_Codes.php:225
 msgid "Azerbaijan"
 msgstr "Azerbaijão"
 
@@ -876,12 +756,10 @@ msgid "Back to WhatsApp"
 msgstr "Voltar para o WhatsApp"
 
 #: admin/src/Validations/Country_Codes.php:218
-#: release/joinotify/admin/src/Validations/Country_Codes.php:218
 msgid "Bahrain"
 msgstr "Bahrein"
 
 #: admin/src/Validations/Country_Codes.php:204
-#: release/joinotify/admin/src/Validations/Country_Codes.php:204
 msgid "Bangladesh"
 msgstr "Bangladesh"
 
@@ -899,32 +777,26 @@ msgstr ""
 "de tons é derivada automaticamente."
 
 #: admin/src/Validations/Country_Codes.php:143
-#: release/joinotify/admin/src/Validations/Country_Codes.php:143
 msgid "Belarus"
 msgstr "Bielorrússia"
 
 #: admin/src/Validations/Country_Codes.php:31
-#: release/joinotify/admin/src/Validations/Country_Codes.php:31
 msgid "Belgium"
 msgstr "Bélgica"
 
 #: admin/src/Validations/Country_Codes.php:159
-#: release/joinotify/admin/src/Validations/Country_Codes.php:159
 msgid "Belize"
 msgstr "Belize"
 
 #: admin/src/Validations/Country_Codes.php:85
-#: release/joinotify/admin/src/Validations/Country_Codes.php:85
 msgid "Benin"
 msgstr "Benim"
 
 #: admin/src/Validations/Country_Codes.php:220
-#: release/joinotify/admin/src/Validations/Country_Codes.php:220
 msgid "Bhutan"
 msgstr "Butão"
 
 #: admin/src/Integrations/Woocommerce.php:134
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:134
 msgid "Billing full address format"
 msgstr "Formato do endereço completo de cobrança"
 
@@ -934,7 +806,6 @@ msgid "Bold"
 msgstr "Negrito"
 
 #: admin/src/Validations/Country_Codes.php:169
-#: release/joinotify/admin/src/Validations/Country_Codes.php:169
 msgid "Bolivia"
 msgstr "Bolívia"
 
@@ -947,12 +818,10 @@ msgid "Border radius unit"
 msgstr "Unidade do raio da borda"
 
 #: admin/src/Validations/Country_Codes.php:153
-#: release/joinotify/admin/src/Validations/Country_Codes.php:153
 msgid "Bosnia and Herzegovina"
 msgstr "Bósnia e Herzegovina"
 
 #: admin/src/Validations/Country_Codes.php:121
-#: release/joinotify/admin/src/Validations/Country_Codes.php:121
 msgid "Botswana"
 msgstr "Botsuana"
 
@@ -961,7 +830,6 @@ msgid "Branching action"
 msgstr "Ação de ramificação"
 
 #: admin/src/Integrations/OpenAI.php:105
-#: release/joinotify/admin/src/Integrations/OpenAI.php:114
 msgid ""
 "Brand voice and rules inherited by every AI generation. Example: \"You are "
 "the support agent for Store X, be cordial and concise.\"."
@@ -970,12 +838,10 @@ msgstr ""
 "agente de suporte da Loja X, seja cordial e conciso.\""
 
 #: admin/src/Validations/Country_Codes.php:49
-#: release/joinotify/admin/src/Validations/Country_Codes.php:49
 msgid "Brazil"
 msgstr "Brasil"
 
 #: admin/src/Validations/Country_Codes.php:102
-#: release/joinotify/admin/src/Validations/Country_Codes.php:102
 msgid "British Indian Ocean Territory"
 msgstr "Território Britânico do Oceano Índico"
 
@@ -996,7 +862,6 @@ msgstr ""
 "paginação e troca rápida de status."
 
 #: admin/src/Validations/Country_Codes.php:180
-#: release/joinotify/admin/src/Validations/Country_Codes.php:180
 msgid "Brunei"
 msgstr "Brunei"
 
@@ -1018,18 +883,14 @@ msgstr "Brunei"
 #: app/src/pages/settings/SettingsPage.vue:529
 #: app/src/pages/settings/SettingsPage.vue:542
 #: app/src/pages/settings/SettingsPage.vue:544
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:142
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:253
 msgid "Builder"
 msgstr "Construtor"
 
 #: admin/src/Validations/Country_Codes.php:137
-#: release/joinotify/admin/src/Validations/Country_Codes.php:137
 msgid "Bulgaria"
 msgstr "Bulgária"
 
 #: admin/src/Rest/Workflows_Bulk.php:54
-#: release/joinotify/admin/src/Rest/Workflows_Bulk.php:54
 msgid "Bulk action completed."
 msgstr "Ação em massa concluída."
 
@@ -1040,12 +901,10 @@ msgid "Bulk actions"
 msgstr "Ações em massa"
 
 #: admin/src/Validations/Country_Codes.php:82
-#: release/joinotify/admin/src/Validations/Country_Codes.php:82
 msgid "Burkina Faso"
 msgstr "Burkina Faso"
 
 #: admin/src/Validations/Country_Codes.php:112
-#: release/joinotify/admin/src/Validations/Country_Codes.php:112
 msgid "Burundi"
 msgstr "Burundi"
 
@@ -1055,17 +914,14 @@ msgid "Buy license"
 msgstr "Comprar licença"
 
 #: admin/src/Validations/Country_Codes.php:202
-#: release/joinotify/admin/src/Validations/Country_Codes.php:202
 msgid "Cambodia"
 msgstr "Camboja"
 
 #: admin/src/Validations/Country_Codes.php:93
-#: release/joinotify/admin/src/Validations/Country_Codes.php:93
 msgid "Cameroon"
 msgstr "Camarões"
 
 #: admin/src/Validations/Country_Codes.php:25
-#: release/joinotify/admin/src/Validations/Country_Codes.php:25
 msgid "Canada"
 msgstr "Canadá"
 
@@ -1086,7 +942,6 @@ msgid "Candidate phone"
 msgstr "Telefone do candidato"
 
 #: admin/src/Validations/Country_Codes.php:94
-#: release/joinotify/admin/src/Validations/Country_Codes.php:94
 msgid "Cape Verde"
 msgstr "Cabo Verde"
 
@@ -1096,22 +951,18 @@ msgid "Caption"
 msgstr "Legenda"
 
 #: admin/src/Integrations/Flexify_Checkout.php:124
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:124
 msgid "Cart abandoned"
 msgstr "Carrinho abandonado"
 
 #: admin/src/Integrations/Flexify_Checkout.php:337
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:337
 msgid "Cart items"
 msgstr "Itens do carrinho"
 
 #: admin/src/Integrations/Flexify_Checkout.php:345
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:345
 msgid "Cart recovered"
 msgstr "Carrinho recuperado"
 
 #: admin/src/Integrations/Flexify_Checkout.php:333
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:333
 msgid "Cart total"
 msgstr "Total do carrinho"
 
@@ -1120,17 +971,14 @@ msgid "Casual"
 msgstr "Casual"
 
 #: admin/src/Integrations/Wordpress.php:267
-#: release/joinotify/admin/src/Integrations/Wordpress.php:267
 msgid "Category 1, Category 2"
 msgstr "Categoria 1, Categoria 2"
 
 #: admin/src/Validations/Country_Codes.php:92
-#: release/joinotify/admin/src/Validations/Country_Codes.php:92
 msgid "Central African Republic"
 msgstr "República Centro-Africana"
 
 #: admin/src/Validations/Country_Codes.php:91
-#: release/joinotify/admin/src/Validations/Country_Codes.php:91
 msgid "Chad"
 msgstr "Chade"
 
@@ -1152,12 +1000,10 @@ msgstr ""
 
 #: admin/src/Api/Updater.php:289
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:64
-#: release/joinotify/admin/src/Api/Updater.php:289
 msgid "Check for updates"
 msgstr "Verificar atualizações"
 
 #: admin/src/Builder/Messages.php:150
-#: release/joinotify/admin/src/Builder/Messages.php:150
 msgid "Check if the order was not paid"
 msgstr "Verificar se o pedido não foi pago"
 
@@ -1165,12 +1011,7 @@ msgstr "Verificar se o pedido não foi pago"
 msgid "Check the backend registry, the selected context, or the search term."
 msgstr "Verifique o registro do backend, o contexto selecionado ou o termo de busca."
 
-#: examples/joinotify-extension-example.php:135
-msgid "Check the customer plan attached to the order."
-msgstr "Verifique o plano do cliente anexado ao pedido."
-
 #: admin/src/Builder/Messages.php:150
-#: release/joinotify/admin/src/Builder/Messages.php:150
 msgid "Check whether the order was paid"
 msgstr "Verifique se o pedido foi pago"
 
@@ -1179,12 +1020,10 @@ msgid "Checking…"
 msgstr "Verificando…"
 
 #: admin/src/Validations/Country_Codes.php:50
-#: release/joinotify/admin/src/Validations/Country_Codes.php:50
 msgid "Chile"
 msgstr "Chile"
 
 #: admin/src/Validations/Country_Codes.php:63
-#: release/joinotify/admin/src/Validations/Country_Codes.php:63
 msgid "China"
 msgstr "China"
 
@@ -1211,7 +1050,6 @@ msgstr ""
 "do provedor são configurados na aba Aplicações."
 
 #: admin/src/Admin/Settings/Registry.php:58
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:57
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
@@ -1244,7 +1082,6 @@ msgstr ""
 "ou um deslocamento relativo em um horário específico."
 
 #: admin/src/Integrations/Woocommerce.php:209
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:209
 msgid ""
 "Choose which order status should start this workflow. Select \"Any status\" "
 "to run on every status change."
@@ -1301,7 +1138,6 @@ msgstr "Clique aqui para fazer login"
 #: app/src/components/toasts/ToastStack.vue:80
 #: app/src/components/toasts/ToastStack.vue:88
 #: app/src/pages/history/components/HistoryDetailsModal.vue:81
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:835
 msgid "Close"
 msgstr "Fechar"
 
@@ -1329,12 +1165,10 @@ msgstr "Dígito de código %s"
 
 #: admin/src/Rest/Phone_Register.php:50
 #: app/src/pages/settings/SettingsPage.vue:447
-#: release/joinotify/admin/src/Rest/Phone_Register.php:50
 msgid "Code sent successfully."
 msgstr "Código enviado com sucesso."
 
 #: admin/src/Validations/Country_Codes.php:51
-#: release/joinotify/admin/src/Validations/Country_Codes.php:51
 msgid "Colombia"
 msgstr "Colômbia"
 
@@ -1343,12 +1177,10 @@ msgid "Coming soon"
 msgstr "Em breve"
 
 #: admin/src/Validations/Country_Codes.php:123
-#: release/joinotify/admin/src/Validations/Country_Codes.php:123
 msgid "Comoros"
 msgstr "Comores"
 
 #: admin/src/Integrations/Woocommerce.php:350
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:350
 msgid "Completed"
 msgstr "Concluído"
 
@@ -1359,8 +1191,6 @@ msgstr "Concluído"
 #: app/src/builder/actions/settings/ConditionSettings.vue:150
 #: app/src/builder/actions/utils/actionDescription.ts:110
 #: app/src/stores/useWorkflowBuilderStore.ts:1322
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:461
-#: release/joinotify/admin/src/Builder/Actions.php:44
 msgid "Condition"
 msgstr "Condição"
 
@@ -1372,7 +1202,6 @@ msgstr "Regra de condição"
 #: app/src/builder/actions/definitions/condition.ts:77
 #: app/src/builder/actions/definitions/condition.ts:88
 #: app/src/builder/actions/settings/ConditionSettings.vue:156
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:368
 msgid "Condition type"
 msgstr "Tipo de condição"
 
@@ -1393,17 +1222,10 @@ msgstr "Componente de configuração não disponível para esta ação."
 #: admin/src/Integrations/Woocommerce.php:102
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:48
-#: release/joinotify/admin/src/Core/Init.php:484
-#: release/joinotify/admin/src/Core/Init.php:488
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:390
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:798
-#: release/joinotify/admin/src/Integrations/OpenAI.php:55
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:102
 msgid "Configure"
 msgstr "Configurar"
 
 #: admin/src/Integrations/Woocommerce.php:101
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:101
 msgid ""
 "Configure discount coupons and checkout field formatting with the native "
 "integration fields."
@@ -1424,7 +1246,6 @@ msgid "Configure Proxy API"
 msgstr "Configurar API de proxy"
 
 #: admin/src/Integrations/OpenAI.php:53
-#: release/joinotify/admin/src/Integrations/OpenAI.php:54
 msgid ""
 "Configure the AI provider, credentials, and the default behavior used to "
 "generate messages."
@@ -1450,10 +1271,6 @@ msgstr "Confirmar"
 msgid "Confirmation"
 msgstr "Confirmação"
 
-#: examples/joinotify-extension-example.php:183
-msgid "Connect your Example App account."
-msgstr "Conecte sua conta do Example App."
-
 #: app/src/pages/settings/components/cards/PhoneActions.vue:47
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:63
 msgid "Connected"
@@ -1464,7 +1281,6 @@ msgid "Connection updated."
 msgstr "Conexão atualizada."
 
 #: admin/src/Admin/Builder/Registry.php:1443
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1433
 msgid "Contains"
 msgstr "Contém"
 
@@ -1478,7 +1294,6 @@ msgid "Continue"
 msgstr "Continuar"
 
 #: admin/src/Validations/Country_Codes.php:189
-#: release/joinotify/admin/src/Validations/Country_Codes.php:189
 msgid "Cook Islands"
 msgstr "Ilhas Cook"
 
@@ -1489,18 +1304,15 @@ msgid "Copy code"
 msgstr "Copiar código"
 
 #: admin/src/Validations/Country_Codes.php:164
-#: release/joinotify/admin/src/Validations/Country_Codes.php:164
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
 #: admin/src/Rest/License_Activate.php:71
 #: app/src/pages/license/LicensePage.vue:245
-#: release/joinotify/admin/src/Rest/License_Activate.php:71
 msgid "Could not activate the license."
 msgstr "Não foi possível ativar a licença."
 
 #: admin/src/Api/Updater.php:250
-#: release/joinotify/admin/src/Api/Updater.php:250
 msgid "Could not check for updates for the <strong>Joinotify</strong> plugin"
 msgstr ""
 "Não foi possível verificar atualizações para o plugin "
@@ -1511,14 +1323,12 @@ msgid "Could not check for updates."
 msgstr "Não foi possível verificar se há atualizações."
 
 #: admin/src/Rest/Check_Updates.php:43
-#: release/joinotify/admin/src/Rest/Check_Updates.php:43
 msgid "Could not check for updates. Please try again later."
 msgstr ""
 "Não foi possível verificar se há atualizações. Por favor, tente novamente "
 "mais tarde."
 
 #: admin/src/Rest/Debug_Clear.php:40
-#: release/joinotify/admin/src/Rest/Debug_Clear.php:40
 msgid "Could not clear the debug logs."
 msgstr "Não foi possível limpar os logs de depuração."
 
@@ -1533,8 +1343,6 @@ msgstr "Não foi possível limpar os registros."
 
 #: admin/src/Admin/Builder/Registry.php:88
 #: admin/src/Admin/Settings/Registry.php:533
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:88
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:516
 msgid "Could not complete the operation."
 msgstr "Não foi possível completar a operação."
 
@@ -1544,7 +1352,6 @@ msgstr "Não foi possível criar o fluxo de trabalho."
 
 #: admin/src/Rest/License_Deactivate.php:49
 #: app/src/pages/license/LicensePage.vue:287
-#: release/joinotify/admin/src/Rest/License_Deactivate.php:49
 msgid "Could not deactivate the license."
 msgstr "Não foi possível desativar a licença."
 
@@ -1558,7 +1365,6 @@ msgid "Could not delete the selected records."
 msgstr "Não foi possível excluir os registros selecionados."
 
 #: admin/src/Rest/User_Dismiss_Tip.php:56
-#: release/joinotify/admin/src/Rest/User_Dismiss_Tip.php:56
 msgid "Could not dismiss the tip."
 msgstr "Não foi possível descartar a dica."
 
@@ -1567,12 +1373,10 @@ msgid "Could not export the settings."
 msgstr "Não foi possível exportar as configurações."
 
 #: admin/src/Rest/Phone_Remove.php:42
-#: release/joinotify/admin/src/Rest/Phone_Remove.php:42
 msgid "Could not find the provided phone number."
 msgstr "Não foi possível encontrar o número de telefone fornecido."
 
 #: admin/src/Rest/Builder_Variables_Delete.php:43
-#: release/joinotify/admin/src/Rest/Builder_Variables_Delete.php:43
 msgid "Could not find the variable to remove."
 msgstr "Não foi possível encontrar a variável para remover."
 
@@ -1621,22 +1425,18 @@ msgid "Could not reset."
 msgstr "Não foi possível reiniciar."
 
 #: admin/src/Rest/Builder_Groups.php:46
-#: release/joinotify/admin/src/Rest/Builder_Groups.php:46
 msgid "Could not retrieve group information."
 msgstr "Não foi possível recuperar as informações do grupo."
 
 #: admin/src/Integrations/Wordpress.php:181
-#: release/joinotify/admin/src/Integrations/Wordpress.php:181
 msgid "Could not retrieve the user email"
 msgstr "Não foi possível recuperar o e-mail do usuário"
 
 #: admin/src/Integrations/Wordpress.php:165
-#: release/joinotify/admin/src/Integrations/Wordpress.php:165
 msgid "Could not retrieve the user first name"
 msgstr "Não foi possível recuperar o primeiro nome do usuário"
 
 #: admin/src/Integrations/Wordpress.php:173
-#: release/joinotify/admin/src/Integrations/Wordpress.php:173
 msgid "Could not retrieve the user last name"
 msgstr "Não foi possível recuperar o sobrenome do usuário"
 
@@ -1654,7 +1454,6 @@ msgstr "Não foi possível salvar o número de telefone de teste."
 
 #: admin/src/Rest/Builder_Variables_Save.php:46
 #: app/src/pages/settings/SettingsPage.vue:529
-#: release/joinotify/admin/src/Rest/Builder_Variables_Save.php:46
 msgid "Could not save the variable."
 msgstr "Não foi possível salvar a variável."
 
@@ -1667,24 +1466,19 @@ msgid "Could not save."
 msgstr "Não foi possível salvar."
 
 #: admin/src/Rest/Builder_Test.php:111
-#: release/joinotify/admin/src/Rest/Builder_Test.php:111
 msgid "Could not send one or more test messages."
 msgstr "Não foi possível enviar uma ou mais mensagens de teste."
 
 #: admin/src/Rest/Builder_Test.php:96
 #: admin/src/Rest/Phone_Test_Message.php:60
-#: release/joinotify/admin/src/Rest/Builder_Test.php:96
-#: release/joinotify/admin/src/Rest/Phone_Test_Message.php:60
 msgid "Could not send the test message."
 msgstr "Não foi possível enviar a mensagem de teste."
 
 #: admin/src/Rest/Phone_Register.php:46
-#: release/joinotify/admin/src/Rest/Phone_Register.php:46
 msgid "Could not send the verification code."
 msgstr "Não foi possível enviar o código de verificação."
 
 #: admin/src/Rest/License_Sync.php:63
-#: release/joinotify/admin/src/Rest/License_Sync.php:63
 msgid "Could not sync the license information."
 msgstr "Não foi possível sincronizar as informações da licença."
 
@@ -1712,7 +1506,6 @@ msgstr ""
 "novamente."
 
 #: admin/src/Rest/Workflows_Status.php:57
-#: release/joinotify/admin/src/Rest/Workflows_Status.php:57
 msgid "Could not update the workflow."
 msgstr "Não foi possível atualizar o fluxo de trabalho."
 
@@ -1725,12 +1518,10 @@ msgid "Coupon code"
 msgstr "Código do cupom"
 
 #: admin/src/Integrations/Woocommerce.php:937
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:937
 msgid "Coupon does not expire"
 msgstr "Cupom não expira"
 
 #: admin/src/Builder/Messages.php:277
-#: release/joinotify/admin/src/Builder/Messages.php:277
 msgid "Coupon expires: %s"
 msgstr "Cupom expira: %s"
 
@@ -1739,7 +1530,6 @@ msgid "Coupon message"
 msgstr "Mensagem do cupom"
 
 #: admin/src/Integrations/Woocommerce.php:126
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:126
 msgid "Coupon prefix"
 msgstr "Prefixo do cupom"
 
@@ -1756,7 +1546,6 @@ msgid "Create a new workflow to start automating your processes."
 msgstr "Crie um novo fluxo de trabalho para começar a automatizar seus processos."
 
 #: admin/src/Admin/Settings/Registry.php:160
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:143
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
@@ -1765,7 +1554,6 @@ msgstr ""
 "post para reutilizar no construtor de fluxo."
 
 #: admin/src/Integrations/OpenAI.php:45
-#: release/joinotify/admin/src/Integrations/OpenAI.php:46
 msgid ""
 "Create dynamic messages for your automations in a simple and direct way "
 "using ChatGPT."
@@ -1774,14 +1562,11 @@ msgstr ""
 "usando ChatGPT."
 
 #: admin/src/Admin/Builder/Registry.php:82
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:82
 msgid "Create from scratch"
 msgstr "Criar do zero"
 
 #: admin/src/Admin/Builder/Registry.php:83
 #: admin/src/Builder/Workflow_Manager.php:92
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:83
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:92
 msgid "Create from template"
 msgstr "Criar a partir de modelo"
 
@@ -1801,13 +1586,11 @@ msgstr "Criar fluxo de trabalho com IA"
 
 #: admin/src/Builder/Workflow_Manager.php:97
 #: app/src/components/builder/BuilderStartChooser.vue:57
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:97
 msgid "Create your automation workflow by importing a file."
 msgstr "Crie seu fluxo de trabalho de automação importando um arquivo."
 
 #: admin/src/Builder/Workflow_Manager.php:91
 #: app/src/components/builder/BuilderStartChooser.vue:41
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:91
 msgid "Create your automation workflow from a template you choose."
 msgstr ""
 "Crie seu fluxo de trabalho de automação a partir de um modelo que você "
@@ -1815,7 +1598,6 @@ msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:85
 #: app/src/components/builder/BuilderStartChooser.vue:26
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:85
 msgid "Create your automation workflow from scratch."
 msgstr "Crie seu fluxo de trabalho de automação do zero."
 
@@ -1837,21 +1619,14 @@ msgid "Creativity from 0 to 2. Leave empty to use the default."
 msgstr "Criatividade de 0 a 2. Deixe em branco para usar o padrão."
 
 #: admin/src/Integrations/OpenAI.php:95
-#: release/joinotify/admin/src/Integrations/OpenAI.php:104
 msgid "Creativity of the responses, from 0 (deterministic) to 2 (more creative)."
 msgstr "Criatividade das respostas, de 0 (determinístico) a 2 (mais criativo)."
 
-#: examples/joinotify-extension-example.php:182
-msgid "Credentials"
-msgstr "Credenciais"
-
 #: admin/src/Integrations/Woocommerce.php:453
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:453
 msgid "Credit card"
 msgstr "Cartão de crédito"
 
 #: admin/src/Validations/Country_Codes.php:151
-#: release/joinotify/admin/src/Validations/Country_Codes.php:151
 msgid "Croatia"
 msgstr "Croácia"
 
@@ -1860,34 +1635,23 @@ msgid "Cron unavailable"
 msgstr "Cron indisponível"
 
 #: admin/src/Validations/Country_Codes.php:47
-#: release/joinotify/admin/src/Validations/Country_Codes.php:47
 msgid "Cuba"
 msgstr "Cuba"
 
 #: admin/src/Integrations/Woocommerce.php:438
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:438
 msgid "CUPOM10, FREESHIPPING"
 msgstr "CUPOM10, FRETEGRATIS"
 
 #: admin/src/Validations/Country_Codes.php:177
-#: release/joinotify/admin/src/Validations/Country_Codes.php:177
 msgid "Curaçao"
 msgstr "Curaçao"
 
-#: admin/src/Admin/Settings/Registry.php:444
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:427
-msgid "cURL "
-msgstr "cURL "
-
 #: admin/src/Api/License.php:377
 #: admin/src/Api/License.php:430
-#: release/joinotify/admin/src/Api/License.php:377
-#: release/joinotify/admin/src/Api/License.php:430
 msgid "cURL Error 35: SSL/TLS communication issue."
 msgstr "Erro cURL 35: Problema de comunicação SSL/TLS."
 
 #: admin/src/Api/License.php:432
-#: release/joinotify/admin/src/Api/License.php:432
 msgid "cURL Error: %s"
 msgstr "Erro cURL: %s"
 
@@ -1897,45 +1661,36 @@ msgstr "Bloco personalizado não disponível."
 
 #: admin/src/Admin/Settings/Registry.php:165
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:80
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:148
 msgid "Custom variables"
 msgstr "Variáveis personalizadas"
 
 #: admin/src/Integrations/Woocommerce.php:1012
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1012
 msgid "Customer email"
 msgstr "E-mail do cliente"
 
 #: admin/src/Validations/Country_Codes.php:135
-#: release/joinotify/admin/src/Validations/Country_Codes.php:135
 msgid "Cyprus"
 msgstr "Chipre"
 
 #: admin/src/Validations/Country_Codes.php:155
-#: release/joinotify/admin/src/Validations/Country_Codes.php:155
 msgid "Czech Republic"
 msgstr "República Tcheca"
 
 #: admin/src/Integrations/Flexify_Checkout.php:280
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:280
 msgid "da Silva"
 msgstr "da Silva"
 
 #: admin/src/Cron/Routines.php:92
-#: release/joinotify/admin/src/Cron/Routines.php:92
 msgid "Daily"
 msgstr "Diariamente"
 
 #: admin/src/Integrations/Woocommerce.php:374
 #: admin/src/Integrations/Woocommerce.php:461
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:374
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:461
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr "Daisy Avenue, 450 - Curitiba/PR - Brasil (CEP: 80000-100)"
 
 #: admin/src/Admin/Settings/Registry.php:230
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:213
 msgid "Danger zone"
 msgstr "Zona de perigo"
 
@@ -1950,18 +1705,14 @@ msgstr "Zona de perigo"
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:132
 #: app/src/pages/history/components/HistoryDetailsModal.vue:23
 #: app/src/pages/history/HistoryPage.vue:282
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:326
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:354
 msgid "Date"
 msgstr "Data"
 
 #: admin/src/Core/Helpers.php:39
-#: release/joinotify/admin/src/Core/Helpers.php:39
 msgid "day"
 msgstr "dia"
 
 #: admin/src/Core/Helpers.php:39
-#: release/joinotify/admin/src/Core/Helpers.php:39
 msgid "days"
 msgstr "dias"
 
@@ -1970,7 +1721,6 @@ msgstr "dias"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:36
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:29
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:37
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:346
 msgid "Days"
 msgstr "Dias"
 
@@ -1984,12 +1734,10 @@ msgid "Debug logs"
 msgstr "Registros de depuração"
 
 #: admin/src/Rest/Debug_Clear.php:44
-#: release/joinotify/admin/src/Rest/Debug_Clear.php:44
 msgid "Debug logs cleared successfully!"
 msgstr "Logs de depuração limpos com sucesso!"
 
 #: admin/src/Admin/Settings/Registry.php:184
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:167
 msgid "Debug mode"
 msgstr "Modo de depuração"
 
@@ -1999,17 +1747,14 @@ msgid "Default"
 msgstr "Padrão"
 
 #: admin/src/Admin/Settings/Registry.php:57
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:56
 msgid "Default country code"
 msgstr "Código padrão do país"
 
 #: admin/src/Integrations/OpenAI.php:84
-#: release/joinotify/admin/src/Integrations/OpenAI.php:94
 msgid "Default model"
 msgstr "Modelo padrão"
 
 #: admin/src/Integrations/OpenAI.php:94
-#: release/joinotify/admin/src/Integrations/OpenAI.php:103
 msgid "Default temperature"
 msgstr "Temperatura padrão"
 
@@ -2023,7 +1768,6 @@ msgid "Define the trigger that starts the workflow"
 msgstr "Defina o gatilho que inicia o fluxo de trabalho"
 
 #: admin/src/Admin/Settings/Registry.php:53
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:52
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2040,7 +1784,6 @@ msgid "Defines the endpoint used to send text messages through the Proxy API."
 msgstr "Define o endpoint usado para enviar mensagens de texto através da API Proxy."
 
 #: admin/src/Integrations/Woocommerce.php:135
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:135
 msgid ""
 "Defines the value used in the billing full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
@@ -2051,7 +1794,6 @@ msgstr ""
 "state }}, e {{ postcode }}."
 
 #: admin/src/Integrations/Woocommerce.php:144
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:144
 msgid ""
 "Defines the value used in the shipping full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
@@ -2068,8 +1810,6 @@ msgstr ""
 #: app/src/builder/actions/utils/actionDescription.ts:33
 #: app/src/builder/actions/utils/actionDescription.ts:46
 #: app/src/builder/actions/utils/actionDescription.ts:54
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:449
-#: release/joinotify/admin/src/Builder/Actions.php:32
 msgid "Delay"
 msgstr "Tempo de espera"
 
@@ -2079,7 +1819,6 @@ msgstr "Modo de atraso"
 
 #: admin/src/Admin/Builder/Registry.php:321
 #: app/src/builder/actions/definitions/timeDelay.ts:38
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:321
 msgid "Delay type"
 msgstr "Tipo de atraso"
 
@@ -2117,12 +1856,10 @@ msgid "Delivery channel"
 msgstr "Canal de entrega"
 
 #: admin/src/Validations/Country_Codes.php:99
-#: release/joinotify/admin/src/Validations/Country_Codes.php:99
 msgid "Democratic Republic of the Congo"
 msgstr "República Democrática do Congo"
 
 #: admin/src/Validations/Country_Codes.php:40
-#: release/joinotify/admin/src/Validations/Country_Codes.php:40
 msgid "Denmark"
 msgstr "Dinamarca"
 
@@ -2135,7 +1872,6 @@ msgstr ""
 "passos; você revisa e ajusta antes de salvar."
 
 #: admin/src/AI/Workflow_Generator.php:40
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:40
 msgid "Describe the automation you want to generate."
 msgstr "Descreva a automação que você deseja gerar."
 
@@ -2156,7 +1892,6 @@ msgstr ""
 "contexto do gatilho."
 
 #: admin/src/AI/Snippet_Generator.php:43
-#: release/joinotify/admin/src/AI/Snippet_Generator.php:43
 msgid "Describe what the snippet should do."
 msgstr "Descreva o que o snippet deve fazer."
 
@@ -2186,12 +1921,10 @@ msgid "Description (optional)"
 msgstr "Descrição (opcional)"
 
 #: admin/src/Admin/Settings/Registry.php:199
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:182
 msgid "Developer integration"
 msgstr "Integração do desenvolvedor"
 
 #: admin/src/Integrations/Developer_Mode.php:40
-#: release/joinotify/admin/src/Integrations/Developer_Mode.php:40
 msgid "Developer mode"
 msgstr "Modo desenvolvedor"
 
@@ -2200,7 +1933,6 @@ msgid "Diagnostics"
 msgstr "Diagnóstico"
 
 #: admin/src/Admin/Settings/Registry.php:421
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:404
 msgid "Disabled"
 msgstr "Desativado"
 
@@ -2217,13 +1949,10 @@ msgstr "Desconto"
 #: admin/src/Integrations/Woocommerce.php:774
 #: app/src/builder/actions/definitions/createCoupon.ts:18
 #: app/src/builder/actions/definitions/createCoupon.ts:47
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:511
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:774
 msgid "Discount coupon"
 msgstr "Cupom de desconto"
 
 #: admin/src/Builder/Messages.php:273
-#: release/joinotify/admin/src/Builder/Messages.php:273
 msgid "Discount coupon: <span class=\"builder-placeholder\">%s</span>"
 msgstr "Cupom de desconto: <span class=\"builder-placeholder\">%s</span>"
 
@@ -2232,47 +1961,34 @@ msgid "Discount type"
 msgstr "Tipo de desconto"
 
 #: admin/src/Builder/Messages.php:275
-#: release/joinotify/admin/src/Builder/Messages.php:275
 msgid "Discount: %s"
 msgstr "Desconto: %s"
 
 #: admin/src/Admin/Settings/Registry.php:195
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:178
 msgid "Displays notifications when a new version is available."
 msgstr "Exibe notificações quando uma nova versão está disponível."
 
 #: admin/src/Validations/Country_Codes.php:108
-#: release/joinotify/admin/src/Validations/Country_Codes.php:108
 msgid "Djibouti"
 msgstr "Djibuti"
 
 #: admin/src/Validations/Media_Types.php:40
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:24
-#: release/joinotify/admin/src/Validations/Media_Types.php:40
 msgid "Document"
 msgstr "Documento"
 
 #: admin/src/Core/Init.php:515
-#: release/joinotify/admin/src/Core/Init.php:510
 msgid "Documentation"
 msgstr "Documentação"
 
 #: admin/src/Integrations/Woocommerce.php:310
 #: admin/src/Integrations/Wordpress.php:174
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:310
-#: release/joinotify/admin/src/Integrations/Wordpress.php:174
 msgid "Doe"
 msgstr "Doe"
 
 #: admin/src/Admin/Builder/Registry.php:1444
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1434
 msgid "Does not contain"
 msgstr "Não contém"
-
-#: admin/src/Admin/Settings/Registry.php:439
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:422
-msgid "DOMDocument"
-msgstr "Documento DOM"
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:67
 msgid ""
@@ -2299,7 +2015,6 @@ msgstr ""
 "deve corresponder a uma exportação real do Joinotify."
 
 #: admin/src/Validations/Country_Codes.php:177
-#: release/joinotify/admin/src/Validations/Country_Codes.php:177
 msgid "Dutch Caribbean"
 msgstr "Caribe Holandês"
 
@@ -2329,12 +2044,10 @@ msgid "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
 msgstr "ex. Escreva uma saudação de uma linha para {{ wc_billing_first_name }}."
 
 #: admin/src/Validations/Country_Codes.php:178
-#: release/joinotify/admin/src/Validations/Country_Codes.php:178
 msgid "East Timor"
 msgstr "Timor-Leste"
 
 #: admin/src/Validations/Country_Codes.php:171
-#: release/joinotify/admin/src/Validations/Country_Codes.php:171
 msgid "Ecuador"
 msgstr "Equador"
 
@@ -2344,7 +2057,6 @@ msgid "Edit"
 msgstr "Editar"
 
 #: admin/src/Core/Workflow_Post_Type.php:45
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:45
 msgid "Edit flow"
 msgstr "Editar fluxo"
 
@@ -2355,8 +2067,6 @@ msgstr "Editar variável"
 #: admin/src/Admin/Menu.php:100
 #: admin/src/Admin/Menu.php:101
 #: admin/src/Admin/Menu.php:115
-#: release/joinotify/admin/src/Admin/Menu.php:100
-#: release/joinotify/admin/src/Admin/Menu.php:101
 msgid "Edit workflow"
 msgstr "Editar fluxo de trabalho"
 
@@ -2366,21 +2076,16 @@ msgid "Edit workflow title"
 msgstr "Editar título do fluxo de trabalho"
 
 #: admin/src/Validations/Country_Codes.php:27
-#: release/joinotify/admin/src/Validations/Country_Codes.php:27
 msgid "Egypt"
 msgstr "Egito"
 
 #: admin/src/Validations/Country_Codes.php:161
-#: release/joinotify/admin/src/Validations/Country_Codes.php:161
 msgid "El Salvador"
 msgstr "El Salvador"
 
 #: admin/src/Builder/Utils.php:103
 #: admin/src/Integrations/Elementor.php:54
 #: admin/src/Integrations/Elementor.php:100
-#: release/joinotify/admin/src/Builder/Utils.php:103
-#: release/joinotify/admin/src/Integrations/Elementor.php:54
-#: release/joinotify/admin/src/Integrations/Elementor.php:100
 msgid "Elementor"
 msgstr "Elementor"
 
@@ -2406,7 +2111,6 @@ msgid "Empty canvas"
 msgstr "Canvas vazio"
 
 #: admin/src/Api/License.php:340
-#: release/joinotify/admin/src/Api/License.php:340
 msgid "Empty response."
 msgstr "Resposta vazia."
 
@@ -2415,7 +2119,6 @@ msgid "Enable debug mode"
 msgstr "Ativar o modo de depuração"
 
 #: admin/src/Admin/Settings/Registry.php:153
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:136
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -2431,7 +2134,6 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:83
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:35
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:82
 msgid "Enable Proxy API"
 msgstr "Ativar Proxy API"
 
@@ -2440,12 +2142,10 @@ msgid "Enable the integration to access its settings."
 msgstr "Habilite a integração para acessar as configurações."
 
 #: admin/src/Admin/Settings/Registry.php:185
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:168
 msgid "Enable to log additional error and process details."
 msgstr "Ative para registrar detalhes adicionais de erro e processo."
 
 #: admin/src/Admin/Settings/Registry.php:421
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:404
 msgid "Enabled"
 msgstr "Ligado"
 
@@ -2515,12 +2215,10 @@ msgid "Enter the destination phone number that will receive the test message."
 msgstr "Digite o número de telefone de destino que receberá a mensagem de teste."
 
 #: admin/src/Integrations/Elementor_Forms.php:99
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:99
 msgid "Enter the field ID that collects the recipient's phone number."
 msgstr "Informe o ID do campo que coleta o telefone de destinatário do formulário."
 
 #: admin/src/Admin/Settings/Registry.php:575
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:558
 msgid "Enter the license code to unlock premium features."
 msgstr "Digite o código de licença para desbloquear recursos premium."
 
@@ -2529,7 +2227,6 @@ msgid "Enter the verification code you received."
 msgstr "Digite o código de verificação que você recebeu."
 
 #: admin/src/Integrations/Elementor_Forms.php:111
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:111
 msgid ""
 "Enter this form's ID to validate data processing. Available in the form's "
 "additional information."
@@ -2559,7 +2256,6 @@ msgid "Entity (post type)"
 msgstr "Entidade (tipo de post)"
 
 #: admin/src/Validations/Country_Codes.php:96
-#: release/joinotify/admin/src/Validations/Country_Codes.php:96
 msgid "Equatorial Guinea"
 msgstr "Guiné Equatorial"
 
@@ -2573,27 +2269,22 @@ msgid "Error"
 msgstr "Erro"
 
 #: admin/src/Validations/Country_Codes.php:140
-#: release/joinotify/admin/src/Validations/Country_Codes.php:140
 msgid "Estonia"
 msgstr "Estônia"
 
 #: admin/src/Validations/Country_Codes.php:122
-#: release/joinotify/admin/src/Validations/Country_Codes.php:122
 msgid "Eswatini (Swaziland)"
 msgstr "Eswatini (Suazilândia)"
 
 #: admin/src/Validations/Country_Codes.php:106
-#: release/joinotify/admin/src/Validations/Country_Codes.php:106
 msgid "Ethiopia"
 msgstr "Etiópia"
 
 #: admin/src/Core/Notification_Queue.php:78
-#: release/joinotify/admin/src/Core/Notification_Queue.php:78
 msgid "Every 5 minutes"
 msgstr "A cada 5 minutos"
 
 #: admin/src/Cron/Routines.php:87
-#: release/joinotify/admin/src/Cron/Routines.php:87
 msgid "Every 6 hours"
 msgstr "A cada 6 horas"
 
@@ -2612,23 +2303,11 @@ msgstr ""
 msgid "Example"
 msgstr "Exemplo"
 
-#: examples/joinotify-extension-example.php:35
-#: examples/joinotify-extension-example.php:107
-#: examples/joinotify-extension-example.php:170
-#: examples/joinotify-extension-example.php:177
-msgid "Example App"
-msgstr "Aplicativo Exemplo"
-
-#: examples/joinotify-extension-example.php:115
-msgid "Example App: order paid"
-msgstr "Aplicativo Exemplo: pedido pago"
-
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:212
 msgid "Example keys"
 msgstr "Chaves de exemplo"
 
 #: admin/src/Integrations/Wordpress.php:240
-#: release/joinotify/admin/src/Integrations/Wordpress.php:240
 msgid "Example post content"
 msgstr "Conteúdo do post de exemplo"
 
@@ -2637,7 +2316,6 @@ msgid "Example post ID (optional)"
 msgstr "ID do post de exemplo (opcional)"
 
 #: admin/src/Integrations/Wordpress.php:222
-#: release/joinotify/admin/src/Integrations/Wordpress.php:222
 msgid "Example post title"
 msgstr "Título do post de exemplo"
 
@@ -2649,11 +2327,6 @@ msgstr "Valor de exemplo (opcional)"
 msgid "Example: CM-0000-0000-0000"
 msgstr "Exemplo: CM-0000-0000-0000"
 
-#: examples/joinotify-extension-example.php:47
-#: examples/joinotify-extension-example.php:57
-msgid "Example: Send SMS"
-msgstr "Exemplo: Enviar SMS"
-
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:127
 msgid "Expiration"
 msgstr "Expiração"
@@ -2663,28 +2336,21 @@ msgid "Expiration mode"
 msgstr "Modo de expiração"
 
 #: admin/src/Api/License.php:935
-#: release/joinotify/admin/src/Api/License.php:935
 msgid "Expired license"
 msgstr "Licença expirada"
 
 #: admin/src/Builder/Messages.php:295
 #: admin/src/Integrations/Woocommerce.php:933
-#: release/joinotify/admin/src/Builder/Messages.php:295
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:933
 msgid "Expires in %s"
 msgstr "Expira em %s"
 
 #: admin/src/Builder/Messages.php:293
 #: admin/src/Integrations/Woocommerce.php:931
-#: release/joinotify/admin/src/Builder/Messages.php:293
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:931
 msgid "Expires in %s - %s"
 msgstr "Expira em %s - %s"
 
 #: admin/src/Builder/Messages.php:287
 #: admin/src/Integrations/Woocommerce.php:925
-#: release/joinotify/admin/src/Builder/Messages.php:287
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:925
 msgid "Expires in %s %s"
 msgstr "Expira em %s %s"
 
@@ -2703,7 +2369,7 @@ msgstr "Exportar"
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:79
 msgid "Export settings"
-msgstr "Configurações de exportação"
+msgstr "Exportar configurações"
 
 #: app/src/components/builder/BuilderNavbar.vue:111
 msgid "Export workflow"
@@ -2719,14 +2385,11 @@ msgid "Failed"
 msgstr "Falhou"
 
 #: admin/src/Rest/Modules_Install.php:56
-#: release/joinotify/admin/src/Rest/Modules_Install.php:56
 msgid "Failed to install or update the plugin."
 msgstr "Falha ao instalar ou atualizar o plugin."
 
 #: admin/src/Api/Controller.php:301
 #: admin/src/Rest/Send_Media_Message.php:77
-#: release/joinotify/admin/src/Api/Controller.php:301
-#: release/joinotify/admin/src/Rest/Send_Media_Message.php:77
 msgid "Failed to send media message."
 msgstr "Falha ao enviar mensagem de mídia."
 
@@ -2740,13 +2403,10 @@ msgstr "Falha no envio do OTP."
 
 #: admin/src/Api/Controller.php:269
 #: admin/src/Rest/Send_Text_Message.php:71
-#: release/joinotify/admin/src/Api/Controller.php:269
-#: release/joinotify/admin/src/Rest/Send_Text_Message.php:71
 msgid "Failed to send text message."
 msgstr "Falha ao enviar mensagem de texto."
 
 #: admin/src/Validations/Country_Codes.php:158
-#: release/joinotify/admin/src/Validations/Country_Codes.php:158
 msgid "Falkland Islands (Malvinas)"
 msgstr "Ilhas Malvinas (Falkland Islands)"
 
@@ -2759,24 +2419,20 @@ msgid "False branch"
 msgstr "Ramo falso"
 
 #: admin/src/Validations/Country_Codes.php:126
-#: release/joinotify/admin/src/Validations/Country_Codes.php:126
 msgid "Faroe Islands"
 msgstr "Ilhas Faroé"
 
 #: admin/src/Validations/Country_Codes.php:197
-#: release/joinotify/admin/src/Validations/Country_Codes.php:197
 msgid "Federated States of Micronesia"
 msgstr "Estados Federados da Micronésia"
 
 #: admin/src/Admin/Builder/Registry.php:380
 #: app/src/builder/actions/definitions/condition.ts:79
 #: app/src/builder/actions/settings/ConditionSettings.vue:185
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:380
 msgid "Field ID"
 msgstr "ID do campo"
 
 #: admin/src/Builder/Messages.php:159
-#: release/joinotify/admin/src/Builder/Messages.php:159
 msgid ""
 "Field with ID <span class=\"builder-placeholder\">%s</span> %s: <span "
 "class=\"builder-placeholder\">%s</span>"
@@ -2785,17 +2441,14 @@ msgstr ""
 "class=\"builder-placeholder\">%s</span>"
 
 #: admin/src/Builder/Messages.php:155
-#: release/joinotify/admin/src/Builder/Messages.php:155
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is empty"
 msgstr "Campo com ID <span class=\"builder-placeholder\">%s</span> é vazio"
 
 #: admin/src/Builder/Messages.php:157
-#: release/joinotify/admin/src/Builder/Messages.php:157
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr "Campo com ID <span class=\"builder-placeholder\">%s</span> não é vazio"
 
 #: admin/src/Validations/Country_Codes.php:186
-#: release/joinotify/admin/src/Validations/Country_Codes.php:186
 msgid "Fiji"
 msgstr "Fiji"
 
@@ -2804,7 +2457,6 @@ msgid "Fill in the email or username and password."
 msgstr "Preencha o e-mail ou nome de usuário e a senha."
 
 #: admin/src/Rest/Phone_Validate_Otp.php:45
-#: release/joinotify/admin/src/Rest/Phone_Validate_Otp.php:45
 msgid "Fill in the phone number and OTP code."
 msgstr "Preencha o número de telefone e o código OTP."
 
@@ -2813,13 +2465,8 @@ msgid "Fill in the phone number and the code you received."
 msgstr "Preencha o número de telefone e o código que você recebeu."
 
 #: admin/src/Validations/Country_Codes.php:136
-#: release/joinotify/admin/src/Validations/Country_Codes.php:136
 msgid "Finland"
 msgstr "Finlândia"
-
-#: examples/joinotify-extension-example.php:116
-msgid "Fires when an Example App order is paid."
-msgstr "Dispara quando um pedido do Example App é pago."
 
 #: app/src/components/workflows/PaginationControls.vue:25
 msgid "First"
@@ -2836,8 +2483,6 @@ msgstr "Visualização ajustada"
 
 #: admin/src/Builder/Messages.php:269
 #: admin/src/Integrations/Woocommerce.php:952
-#: release/joinotify/admin/src/Builder/Messages.php:269
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:952
 msgid "Fixed amount"
 msgstr "Valor fixo"
 
@@ -2847,13 +2492,10 @@ msgstr "Desconto fixo no carrinho"
 
 #: admin/src/Builder/Utils.php:102
 #: admin/src/Integrations/Flexify_Checkout.php:177
-#: release/joinotify/admin/src/Builder/Utils.php:102
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:177
 msgid "Flexify Checkout"
 msgstr "Flexibilize o checkout"
 
 #: admin/src/Integrations/Flexify_Checkout.php:96
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:96
 msgid "Flexify Checkout - Abandoned cart recovery"
 msgstr "Flexify Checkout - Recuperação de carrinhos abandonados"
 
@@ -2862,12 +2504,10 @@ msgid "Flexify checkout events."
 msgstr "Eventos de checkout do Flexify."
 
 #: admin/src/Integrations/Flexify_Checkout.php:71
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:71
 msgid "Flexify Checkout for WooCommerce"
 msgstr "Flexify Checkout para WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:366
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:366
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
 
@@ -2876,17 +2516,14 @@ msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
 #: admin/src/Integrations/Wpforms.php:197
-#: release/joinotify/admin/src/Integrations/Wpforms.php:197
 msgid "Form field value"
 msgstr "Valor do campo do formulário"
 
 #: admin/src/Integrations/Elementor_Forms.php:109
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:109
 msgid "Form ID"
 msgstr "ID do formulário"
 
 #: admin/src/Integrations/Wpforms.php:87
-#: release/joinotify/admin/src/Integrations/Wpforms.php:87
 msgid "Form is sent"
 msgstr "Formulário enviado"
 
@@ -2899,7 +2536,6 @@ msgid "Form submissions and sends."
 msgstr "Envios e envios do formulário."
 
 #: admin/src/Integrations/Elementor.php:80
-#: release/joinotify/admin/src/Integrations/Elementor.php:80
 msgid "Form submitted"
 msgstr "Formulário é enviado"
 
@@ -2908,22 +2544,18 @@ msgid "Formal"
 msgstr "Formal"
 
 #: admin/src/Validations/Country_Codes.php:32
-#: release/joinotify/admin/src/Validations/Country_Codes.php:32
 msgid "France"
 msgstr "França"
 
 #: admin/src/Builder/Messages.php:276
-#: release/joinotify/admin/src/Builder/Messages.php:276
 msgid "Free shipping: %s"
 msgstr "Frete grátis: %s"
 
 #: admin/src/Validations/Country_Codes.php:172
-#: release/joinotify/admin/src/Validations/Country_Codes.php:172
 msgid "French Guiana"
 msgstr "Guiana Francesa"
 
 #: admin/src/Validations/Country_Codes.php:195
-#: release/joinotify/admin/src/Validations/Country_Codes.php:195
 msgid "French Polynesia"
 msgstr "Polinésia Francesa"
 
@@ -2936,12 +2568,10 @@ msgid "From"
 msgstr "De"
 
 #: admin/src/Validations/Country_Codes.php:97
-#: release/joinotify/admin/src/Validations/Country_Codes.php:97
 msgid "Gabon"
 msgstr "Gabão"
 
 #: admin/src/Validations/Country_Codes.php:76
-#: release/joinotify/admin/src/Validations/Country_Codes.php:76
 msgid "Gambia"
 msgstr "Gâmbia"
 
@@ -2951,20 +2581,15 @@ msgstr "Gâmbia"
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
 #: app/src/stores/useWorkflowBuilderStore.ts:126
 #: app/src/stores/useWorkflowBuilderStore.ts:221
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:45
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:235
-#: release/joinotify/admin/src/Builder/Actions.php:121
 msgid "General"
 msgstr "Geral"
 
 #: admin/src/Integrations/AI_Messaging.php:68
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:27
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:68
 msgid "Generate a message with AI at trigger time and send it via WhatsApp."
 msgstr "Gere uma mensagem com IA no momento do gatilho e envie-a via WhatsApp."
 
 #: admin/src/Integrations/AI_Messaging.php:94
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:94
 msgid ""
 "Generate a named value with AI and reuse it in later messages with {{ "
 "ai:NAME }}."
@@ -3008,87 +2633,70 @@ msgid "Generate workflow"
 msgstr "Gerar fluxo de trabalho"
 
 #: admin/src/Validations/Country_Codes.php:226
-#: release/joinotify/admin/src/Validations/Country_Codes.php:226
 msgid "Georgia"
 msgstr "Geórgia"
 
 #: admin/src/Validations/Country_Codes.php:44
-#: release/joinotify/admin/src/Validations/Country_Codes.php:44
 msgid "Germany"
 msgstr "Alemanha"
 
 #: admin/src/Validations/Country_Codes.php:89
-#: release/joinotify/admin/src/Validations/Country_Codes.php:89
 msgid "Ghana"
 msgstr "Gana"
 
 #: admin/src/Validations/Country_Codes.php:128
-#: release/joinotify/admin/src/Validations/Country_Codes.php:128
 msgid "Gibraltar"
 msgstr "Gibraltar"
 
 #: admin/src/Integrations/OpenAI.php:104
-#: release/joinotify/admin/src/Integrations/OpenAI.php:113
 msgid "Global persona / system prompt"
 msgstr "Persona global / prompt do sistema"
 
 #: admin/src/Admin/Builder/Registry.php:1447
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1437
 msgid "Greater than"
 msgstr "Maior que"
 
 #: admin/src/Builder/Messages.php:152
-#: release/joinotify/admin/src/Builder/Messages.php:152
 msgid "Greater than <span class=\"builder-placeholder\">%s</span>"
 msgstr "Maior que <span class=\"builder-placeholder\">%s</span>"
 
 #: admin/src/Validations/Country_Codes.php:29
-#: release/joinotify/admin/src/Validations/Country_Codes.php:29
 msgid "Greece"
 msgstr "Grécia"
 
 #: admin/src/Validations/Country_Codes.php:127
-#: release/joinotify/admin/src/Validations/Country_Codes.php:127
 msgid "Greenland"
 msgstr "Groenlândia"
 
 #: admin/src/Validations/Country_Codes.php:168
-#: release/joinotify/admin/src/Validations/Country_Codes.php:168
 msgid "Guadeloupe"
 msgstr "Guadalupe"
 
 #: admin/src/Validations/Country_Codes.php:160
-#: release/joinotify/admin/src/Validations/Country_Codes.php:160
 msgid "Guatemala"
 msgstr "Guatemala"
 
 #: admin/src/Validations/Country_Codes.php:80
-#: release/joinotify/admin/src/Validations/Country_Codes.php:80
 msgid "Guinea"
 msgstr "Guiné"
 
 #: admin/src/Validations/Country_Codes.php:101
-#: release/joinotify/admin/src/Validations/Country_Codes.php:101
 msgid "Guinea-Bissau"
 msgstr "Guiné-Bissau"
 
 #: admin/src/Validations/Country_Codes.php:170
-#: release/joinotify/admin/src/Validations/Country_Codes.php:170
 msgid "Guyana"
 msgstr "Guiana"
 
 #: admin/src/Validations/Country_Codes.php:167
-#: release/joinotify/admin/src/Validations/Country_Codes.php:167
 msgid "Haiti"
 msgstr "Haiti"
 
 #: admin/src/Integrations/Elementor_Forms.php:137
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:137
 msgid "Hello {{ field_id=[FIELD_ID] }}!"
 msgstr "Olá {{ field_id=[FIELD_ID] }}!"
 
 #: admin/src/Integrations/Elementor_Forms.php:138
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:138
 msgid ""
 "Hello {{ field_id=[name] }}! We have received your information, and a "
 "representative will contact you shortly."
@@ -3097,7 +2705,6 @@ msgstr ""
 "atendente retornará o contato."
 
 #: admin/src/Integrations/Elementor_Forms.php:210
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:210
 msgid "Hello {{ field_id=[nome] }}, check out this file!"
 msgstr "Olá {{ field_id=[nome] }}, veja esse arquivo!"
 
@@ -3114,32 +2721,26 @@ msgid "Hide password"
 msgstr "Ocultar senha"
 
 #: admin/src/Admin/Menu.php:72
-#: release/joinotify/admin/src/Admin/Menu.php:72
 msgid "History"
 msgstr "Histórico"
 
 #: admin/src/Admin/Settings/Registry.php:209
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:192
 msgid "History retention"
 msgstr "Retenção de histórico"
 
 #: admin/src/Validations/Country_Codes.php:162
-#: release/joinotify/admin/src/Validations/Country_Codes.php:162
 msgid "Honduras"
 msgstr "Honduras"
 
 #: admin/src/Validations/Country_Codes.php:200
-#: release/joinotify/admin/src/Validations/Country_Codes.php:200
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
 #: admin/src/Core/Helpers.php:38
-#: release/joinotify/admin/src/Core/Helpers.php:38
 msgid "hour"
 msgstr "hora"
 
 #: admin/src/Core/Helpers.php:38
-#: release/joinotify/admin/src/Core/Helpers.php:38
 msgid "hours"
 msgstr "horas"
 
@@ -3147,7 +2748,6 @@ msgstr "horas"
 #: app/src/builder/actions/definitions/timeDelay.ts:47
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:35
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:28
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:345
 msgid "Hours"
 msgstr "Horas"
 
@@ -3164,12 +2764,10 @@ msgid "How would you like to create your new workflow?"
 msgstr "Como você gostaria de criar seu novo fluxo de trabalho?"
 
 #: admin/src/Validations/Country_Codes.php:34
-#: release/joinotify/admin/src/Validations/Country_Codes.php:34
 msgid "Hungary"
 msgstr "Hungria"
 
 #: admin/src/Validations/Country_Codes.php:132
-#: release/joinotify/admin/src/Validations/Country_Codes.php:132
 msgid "Iceland"
 msgstr "Islândia"
 
@@ -3182,13 +2780,11 @@ msgstr ""
 "obter o status mais recente do servidor."
 
 #: admin/src/Integrations/Woocommerce.php:152
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:152
 msgid "Ignore actions already processed."
 msgstr "Ignorar ações já processadas."
 
 #: admin/src/Validations/Media_Types.php:38
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:22
-#: release/joinotify/admin/src/Validations/Media_Types.php:38
 msgid "Image"
 msgstr "Imagem"
 
@@ -3211,13 +2807,11 @@ msgstr "Importar uma exportação real do Joinotify"
 
 #: admin/src/Builder/Workflow_Manager.php:96
 #: app/src/components/builder/BuilderStartChooser.vue:56
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:96
 msgid "Import a template"
 msgstr "Importar um modelo"
 
 #: admin/src/Builder/Workflow_Manager.php:98
 #: app/src/components/builder/BuilderStartChooser.vue:58
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:98
 msgid "Import file"
 msgstr "Importar arquivo"
 
@@ -3228,7 +2822,6 @@ msgstr "Importar configurações"
 
 #: admin/src/Admin/Builder/Registry.php:84
 #: app/src/components/builder/BuilderImportModal.vue:18
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:84
 msgid "Import template"
 msgstr "Importar modelo"
 
@@ -3237,7 +2830,6 @@ msgid "Import workflow"
 msgstr "Importar fluxo de trabalho"
 
 #: admin/src/Admin/Builder/Registry.php:1078
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1068
 msgid "Imported automation #%s"
 msgstr "Automação importada #%s"
 
@@ -3265,7 +2857,6 @@ msgid "Include the country code so the number is normalized correctly."
 msgstr "Inclua o código do país para que o número seja normalizado corretamente."
 
 #: admin/src/Core/Init.php:173
-#: release/joinotify/admin/src/Core/Init.php:173
 msgid ""
 "Increase customer satisfaction by automating WhatsApp messaging with "
 "Joinotify."
@@ -3283,12 +2874,10 @@ msgstr ""
 "nosso site."
 
 #: admin/src/Validations/Country_Codes.php:65
-#: release/joinotify/admin/src/Validations/Country_Codes.php:65
 msgid "India"
 msgstr "Índia"
 
 #: admin/src/Validations/Country_Codes.php:55
-#: release/joinotify/admin/src/Validations/Country_Codes.php:55
 msgid "Indonesia"
 msgstr "Indonésia"
 
@@ -3298,7 +2887,6 @@ msgstr "informações"
 
 #: admin/src/Views/Builder.php:224
 #: app/src/components/builder/BuilderCanvasView.vue:145
-#: release/joinotify/admin/src/Views/Builder.php:224
 msgid "Initializing builder"
 msgstr "Inicializando construtor"
 
@@ -3312,18 +2900,15 @@ msgid "Insert variable"
 msgstr "Inserir variável"
 
 #: admin/src/Integrations/Integrations_Base.php:912
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:912
 msgid "Install plugin"
 msgstr "Instalar plugin"
 
 #: admin/src/Integrations/Woocommerce.php:802
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:802
 msgid "Insufficient data to create the coupon."
 msgstr "Dados insuficientes para criar o cupom."
 
 #: admin/src/Integrations/Integrations_Base.php:796
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:99
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:796
 msgid "Integration settings"
 msgstr "Configurações de integração"
 
@@ -3333,8 +2918,6 @@ msgstr "Integração:"
 
 #: admin/src/Admin/Settings/Registry.php:152
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:135
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:247
 msgid "Integrations"
 msgstr "Integrações"
 
@@ -3351,12 +2934,10 @@ msgstr "Resumo interno"
 #: admin/src/Admin/Settings/Registry.php:570
 #: app/src/pages/license/LicensePage.vue:48
 #: app/src/pages/license/LicensePage.vue:207
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:553
 msgid "Invalid"
 msgstr "Inválida"
 
 #: admin/src/AI/AI_Manager.php:78
-#: release/joinotify/admin/src/AI/AI_Manager.php:78
 msgid "Invalid AI request."
 msgstr "Solicitação de IA inválida."
 
@@ -3365,7 +2946,6 @@ msgid "Invalid country code"
 msgstr "Código de país inválido"
 
 #: admin/src/Api/License.php:755
-#: release/joinotify/admin/src/Api/License.php:755
 msgid "Invalid data."
 msgstr "Dados inválidos."
 
@@ -3389,21 +2969,16 @@ msgid "Invalid number"
 msgstr "Número inválido"
 
 #: admin/src/Rest/Phone_Validate_Otp.php:49
-#: release/joinotify/admin/src/Rest/Phone_Validate_Otp.php:49
 msgid "Invalid or expired OTP code."
 msgstr "Código OTP inválido ou expirado."
 
 #: admin/src/Api/Controller.php:162
 #: admin/src/Rest/Proxy_Message_Route.php:58
-#: release/joinotify/admin/src/Api/Controller.php:162
-#: release/joinotify/admin/src/Rest/Proxy_Message_Route.php:58
 msgid "Invalid or missing API key."
 msgstr "Chave de API inválida ou ausente."
 
 #: admin/src/Rest/Phone_Check_Connection.php:43
 #: admin/src/Rest/Phone_Register.php:42
-#: release/joinotify/admin/src/Rest/Phone_Check_Connection.php:43
-#: release/joinotify/admin/src/Rest/Phone_Register.php:42
 msgid "Invalid phone number."
 msgstr "Número de telefone inválido."
 
@@ -3412,32 +2987,26 @@ msgid "Invalid request nonce."
 msgstr "Nonce de solicitação inválido."
 
 #: admin/src/Admin/Builder/Registry.php:935
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:926
 msgid "Invalid template file."
 msgstr "Arquivo de modelo inválido."
 
 #: admin/src/Admin/Workflows/Registry.php:199
-#: release/joinotify/admin/src/Admin/Workflows/Registry.php:199
 msgid "Invalid workflow action."
 msgstr "Ação de fluxo de trabalho inválida."
 
 #: admin/src/Rest/Workflows_Status.php:51
-#: release/joinotify/admin/src/Rest/Workflows_Status.php:51
 msgid "Invalid workflow status."
 msgstr "Status de fluxo de trabalho inválido."
 
 #: admin/src/Validations/Country_Codes.php:70
-#: release/joinotify/admin/src/Validations/Country_Codes.php:70
 msgid "Iran"
 msgstr "Irã"
 
 #: admin/src/Validations/Country_Codes.php:210
-#: release/joinotify/admin/src/Validations/Country_Codes.php:210
 msgid "Iraq"
 msgstr "Iraque"
 
 #: admin/src/Validations/Country_Codes.php:131
-#: release/joinotify/admin/src/Validations/Country_Codes.php:131
 msgid "Ireland"
 msgstr "Irlanda"
 
@@ -3446,7 +3015,6 @@ msgid "Irreversible"
 msgstr "Irreversível"
 
 #: admin/src/Admin/Settings/Registry.php:231
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:214
 msgid "Irreversible actions and configuration cleanup."
 msgstr "Ações irreversíveis e limpeza de configuração."
 
@@ -3455,32 +3023,26 @@ msgid "Irreversible actions for clearing configuration and logs."
 msgstr "Ações irreversíveis para limpar a configuração e os registros."
 
 #: admin/src/Admin/Builder/Registry.php:1445
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1435
 msgid "Is empty"
 msgstr "Está vazio"
 
 #: admin/src/Admin/Builder/Registry.php:1441
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1431
 msgid "Is equal to"
 msgstr "É igual a"
 
 #: admin/src/Admin/Builder/Registry.php:1446
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1436
 msgid "Is not empty"
 msgstr "Não está vazio"
 
 #: admin/src/Admin/Builder/Registry.php:1442
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1432
 msgid "Is not equal to"
 msgstr "Não é igual a"
 
 #: admin/src/Validations/Country_Codes.php:217
-#: release/joinotify/admin/src/Validations/Country_Codes.php:217
 msgid "Israel"
 msgstr "Israel"
 
 #: admin/src/Builder/Actions.php:45
-#: release/joinotify/admin/src/Builder/Actions.php:45
 msgid "It allows you to define a condition for an action to be executed."
 msgstr "Permite definir uma condição para que uma ação seja executada."
 
@@ -3490,7 +3052,6 @@ msgid "Italic"
 msgstr "Itálico"
 
 #: admin/src/Validations/Country_Codes.php:35
-#: release/joinotify/admin/src/Validations/Country_Codes.php:35
 msgid "Italy"
 msgstr "Itália"
 
@@ -3499,26 +3060,20 @@ msgid "items"
 msgstr "itens"
 
 #: admin/src/Validations/Country_Codes.php:81
-#: release/joinotify/admin/src/Validations/Country_Codes.php:81
 msgid "Ivory Coast"
 msgstr "Costa do Marfim"
 
 #: admin/src/Validations/Country_Codes.php:60
-#: release/joinotify/admin/src/Validations/Country_Codes.php:60
 msgid "Japan"
 msgstr "Japão"
 
 #: admin/src/Integrations/Flexify_Checkout.php:272
 #: admin/src/Integrations/Woocommerce.php:302
 #: admin/src/Integrations/Wordpress.php:166
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:272
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:302
-#: release/joinotify/admin/src/Integrations/Wordpress.php:166
 msgid "John"
 msgstr "João"
 
 #: admin/src/Integrations/Flexify_Checkout.php:296
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:296
 msgid "johndoe@email.com"
 msgstr "joaodasilva@email.com"
 
@@ -3534,16 +3089,10 @@ msgstr "joaodasilva@email.com"
 #: app/src/pages/license/LicensePage.vue:136
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
 #: app/src/pages/settings/SettingsPage.vue:221
-#: release/joinotify/admin/src/Admin/Menu.php:40
-#: release/joinotify/admin/src/Admin/Menu.php:41
-#: release/joinotify/admin/src/Core/Init.php:172
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:50
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:66
 msgid "Joinotify"
 msgstr "Joinotify"
 
 #: admin/src/Rest/Check_Updates.php:57
-#: release/joinotify/admin/src/Rest/Check_Updates.php:57
 msgid "Joinotify is up to date."
 msgstr "Joinotify está atualizado."
 
@@ -3552,7 +3101,6 @@ msgid "Joinotify messaging helpers are unavailable."
 msgstr "Os auxiliares de mensagens do Joinotify estão indisponíveis."
 
 #: admin/src/Admin/Settings/Registry.php:427
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:410
 msgid "Joinotify version"
 msgstr "Versão do Joinotify"
 
@@ -3561,57 +3109,46 @@ msgid "Joinotify: Automate your notifications. Simplify your communication."
 msgstr "Joinotify: Automatize suas notificações. Simplifique sua comunicação."
 
 #: admin/src/Validations/Country_Codes.php:208
-#: release/joinotify/admin/src/Validations/Country_Codes.php:208
 msgid "Jordan"
 msgstr "Jordânia"
 
 #: admin/src/Api/License.php:304
-#: release/joinotify/admin/src/Api/License.php:304
 msgid "JSON Error: %s"
 msgstr "Erro JSON: %s"
 
 #: admin/src/Validations/Country_Codes.php:26
-#: release/joinotify/admin/src/Validations/Country_Codes.php:26
 msgid "Kazakhstan"
 msgstr "Cazaquistão"
 
 #: admin/src/Admin/Settings/Registry.php:212
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:195
 msgid "Keep forever"
 msgstr "Manter para sempre"
 
 #: admin/src/Core/Workflow_Processor.php:998
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:974
 msgid "Keep the message concise, around two to four sentences."
 msgstr "Mantenha a mensagem concisa, em torno de duas a quatro frases."
 
 #: admin/src/Core/Workflow_Processor.php:997
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:973
 msgid "Keep the message very short, one or two sentences."
 msgstr "Mantenha a mensagem muito curta, uma ou duas frases."
 
 #: admin/src/Validations/Country_Codes.php:109
-#: release/joinotify/admin/src/Validations/Country_Codes.php:109
 msgid "Kenya"
 msgstr "Quênia"
 
 #: admin/src/Admin/Settings/Registry.php:105
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:104
 msgid "Key used to authenticate Proxy API calls."
 msgstr "Chave usada para autenticar chamadas da API Proxy."
 
 #: admin/src/Validations/Country_Codes.php:192
-#: release/joinotify/admin/src/Validations/Country_Codes.php:192
 msgid "Kiribati"
 msgstr "Kiribati"
 
 #: admin/src/Validations/Country_Codes.php:211
-#: release/joinotify/admin/src/Validations/Country_Codes.php:211
 msgid "Kuwait"
 msgstr "Kuwait"
 
 #: admin/src/Validations/Country_Codes.php:227
-#: release/joinotify/admin/src/Validations/Country_Codes.php:227
 msgid "Kyrgyzstan"
 msgstr "Quirguistão"
 
@@ -3620,7 +3157,6 @@ msgid "Label (optional)"
 msgstr "Rótulo (opcional)"
 
 #: admin/src/Admin/Settings/Registry.php:120
-#: release/joinotify/admin/src/Integrations/OpenAI.php:77
 msgid ""
 "Language model engine used to generate content. New providers can be added "
 "by extensions."
@@ -3629,7 +3165,6 @@ msgstr ""
 "adicionados por extensões."
 
 #: admin/src/Validations/Country_Codes.php:203
-#: release/joinotify/admin/src/Validations/Country_Codes.php:203
 msgid "Lao"
 msgstr "Lao"
 
@@ -3642,22 +3177,18 @@ msgid "latest post"
 msgstr "último post"
 
 #: admin/src/Validations/Country_Codes.php:139
-#: release/joinotify/admin/src/Validations/Country_Codes.php:139
 msgid "Latvia"
 msgstr "Letônia"
 
 #: admin/src/Integrations/Flexify_Checkout.php:114
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:114
 msgid "Lead capture via checkout"
 msgstr "Captura de leads via checkout"
 
 #: admin/src/Integrations/Flexify_Checkout.php:104
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:104
 msgid "Lead capture via modal"
 msgstr "Captura de leads via modal"
 
 #: admin/src/Validations/Country_Codes.php:207
-#: release/joinotify/admin/src/Validations/Country_Codes.php:207
 msgid "Lebanon"
 msgstr "Líbano"
 
@@ -3667,17 +3198,14 @@ msgid "Length"
 msgstr "Comprimento"
 
 #: admin/src/Validations/Country_Codes.php:120
-#: release/joinotify/admin/src/Validations/Country_Codes.php:120
 msgid "Lesotho"
 msgstr "Lesoto"
 
 #: admin/src/Admin/Builder/Registry.php:1448
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1438
 msgid "Less than"
 msgstr "Menor que"
 
 #: admin/src/Builder/Messages.php:152
-#: release/joinotify/admin/src/Builder/Messages.php:152
 msgid "Less than <span class=\"builder-placeholder\">%s</span>"
 msgstr "Menor que <span class=\"builder-placeholder\">%s</span>"
 
@@ -3691,7 +3219,6 @@ msgstr ""
 "senha."
 
 #: admin/src/Validations/Country_Codes.php:87
-#: release/joinotify/admin/src/Validations/Country_Codes.php:87
 msgid "Liberia"
 msgstr "Libéria"
 
@@ -3700,7 +3227,6 @@ msgid "Library"
 msgstr "Biblioteca"
 
 #: admin/src/Validations/Country_Codes.php:75
-#: release/joinotify/admin/src/Validations/Country_Codes.php:75
 msgid "Libya"
 msgstr "Líbia"
 
@@ -3715,20 +3241,16 @@ msgstr "Líbia"
 #: app/src/pages/license/LicensePage.vue:285
 #: app/src/pages/license/LicensePage.vue:287
 #: app/src/pages/license/LicensePage.vue:347
-#: release/joinotify/admin/src/Admin/Menu.php:90
-#: release/joinotify/admin/src/Admin/Menu.php:91
 msgid "License"
 msgstr "Licença"
 
 #: admin/src/Rest/License_Activate.php:64
 #: app/src/pages/license/LicensePage.vue:239
 #: app/src/pages/license/LicensePage.vue:242
-#: release/joinotify/admin/src/Rest/License_Activate.php:64
 msgid "License activated successfully."
 msgstr "Licença ativada com sucesso."
 
 #: admin/src/Rest/License_Deactivate.php:44
-#: release/joinotify/admin/src/Rest/License_Deactivate.php:44
 msgid "License deactivated successfully."
 msgstr "Licença desativada com sucesso."
 
@@ -3741,12 +3263,10 @@ msgid "License details"
 msgstr "Detalhes da licença"
 
 #: admin/src/Admin/Settings/Registry.php:587
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:570
 msgid "License expires in: %s"
 msgstr "Licença expira em: %s"
 
 #: admin/src/Admin/Settings/Registry.php:588
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:571
 msgid "License expires in: Not available"
 msgstr "Licença expira em: Não disponível"
 
@@ -3756,7 +3276,6 @@ msgstr "Informações sobre a licença"
 
 #: admin/src/Rest/License_Sync.php:57
 #: app/src/pages/license/LicensePage.vue:262
-#: release/joinotify/admin/src/Rest/License_Sync.php:57
 msgid "License information updated successfully."
 msgstr "Informações da licença atualizadas com sucesso."
 
@@ -3765,7 +3284,6 @@ msgid "License key"
 msgstr "Chave de licença"
 
 #: admin/src/Rest/License_Activate.php:46
-#: release/joinotify/admin/src/Rest/License_Activate.php:46
 msgid "License key is required."
 msgstr "Chave de licença é necessária."
 
@@ -3774,12 +3292,10 @@ msgid "License status"
 msgstr "Situação da licença"
 
 #: admin/src/Validations/Country_Codes.php:157
-#: release/joinotify/admin/src/Validations/Country_Codes.php:157
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
 #: admin/src/Validations/Country_Codes.php:138
-#: release/joinotify/admin/src/Validations/Country_Codes.php:138
 msgid "Lithuania"
 msgstr "Lituânia"
 
@@ -3788,7 +3304,6 @@ msgid "Load keys"
 msgstr "Carregar chaves"
 
 #: admin/src/Admin/Builder/Registry.php:85
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:85
 msgid "Load workflow"
 msgstr "Carregar fluxo de trabalho"
 
@@ -3826,12 +3341,10 @@ msgid "Loading…"
 msgstr "Carregando…"
 
 #: admin/src/Admin/Settings/Registry.php:52
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:51
 msgid "Location and phone numbers"
 msgstr "Localização e números de telefone"
 
 #: admin/src/Rest/Debug_Download.php:49
-#: release/joinotify/admin/src/Rest/Debug_Download.php:49
 msgid "Log file ready for download."
 msgstr "Arquivo de log pronto para download."
 
@@ -3873,7 +3386,6 @@ msgid "Long"
 msgstr "Longo"
 
 #: admin/src/Integrations/Flexify_Checkout.php:154
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:154
 msgid "Lost cart"
 msgstr "Carrinho perdido"
 
@@ -3882,68 +3394,55 @@ msgid "Lowercase letters, numbers, and underscores. Used as the token below."
 msgstr "Letras minúsculas, números e sublinhados. Usado como o token abaixo."
 
 #: admin/src/Validations/Country_Codes.php:130
-#: release/joinotify/admin/src/Validations/Country_Codes.php:130
 msgid "Luxembourg"
 msgstr "Luxemburgo"
 
 #: admin/src/Validations/Country_Codes.php:201
-#: release/joinotify/admin/src/Validations/Country_Codes.php:201
 msgid "Macau"
 msgstr "Macau"
 
 #: admin/src/Validations/Country_Codes.php:115
-#: release/joinotify/admin/src/Validations/Country_Codes.php:115
 msgid "Madagascar"
 msgstr "Madagáscar"
 
 #: admin/src/Admin/Settings/Registry.php:200
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:183
 msgid "Maintains support integrations and advanced contracts available."
 msgstr "Mantém integrações de suporte e contratos avançados disponíveis."
 
 #: admin/src/Admin/Settings/Registry.php:179
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:162
 msgid "Maintenance and preference"
 msgstr "Manutenção e preferência"
 
 #: admin/src/Admin/Settings/Registry.php:174
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:157
 msgid "Maintenance, logs, updates, and environment details."
 msgstr "Manutenção, logs, atualizações e detalhes do ambiente."
 
 #: admin/src/Validations/Country_Codes.php:119
-#: release/joinotify/admin/src/Validations/Country_Codes.php:119
 msgid "Malawi"
 msgstr "Malawi"
 
 #: admin/src/Validations/Country_Codes.php:53
-#: release/joinotify/admin/src/Validations/Country_Codes.php:53
 msgid "Malaysia"
 msgstr "Malásia"
 
 #: admin/src/Validations/Country_Codes.php:206
-#: release/joinotify/admin/src/Validations/Country_Codes.php:206
 msgid "Maldives"
 msgstr "Maldivas"
 
 #: admin/src/Validations/Country_Codes.php:79
-#: release/joinotify/admin/src/Validations/Country_Codes.php:79
 msgid "Mali"
 msgstr "Mali"
 
 #: admin/src/Validations/Country_Codes.php:134
-#: release/joinotify/admin/src/Validations/Country_Codes.php:134
 msgid "Malta"
 msgstr "Malta"
 
 #: admin/src/Admin/Settings/Registry.php:133
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:116
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr "Gerenciar remetentes, validar novas conexões e enviar mensagens de teste."
 
 #: admin/src/Admin/Workflows/Registry.php:63
 #: app/src/pages/workflows/WorkflowsPage.vue:63
-#: release/joinotify/admin/src/Admin/Workflows/Registry.php:63
 msgid "Manage workflows"
 msgstr "Gerenciar fluxos de trabalho"
 
@@ -3959,7 +3458,6 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:166
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:149
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
 "Mapear uma entidade e chave meta para uma variável nomeada disponível no "
@@ -3974,37 +3472,22 @@ msgid "Mark as inactive"
 msgstr "Marcar como inativo"
 
 #: admin/src/Validations/Country_Codes.php:198
-#: release/joinotify/admin/src/Validations/Country_Codes.php:198
 msgid "Marshall Islands"
 msgstr "Ilhas Marshall"
 
 #: admin/src/Validations/Country_Codes.php:174
-#: release/joinotify/admin/src/Validations/Country_Codes.php:174
 msgid "Martinique"
 msgstr "Martinica"
 
 #: admin/src/Validations/Country_Codes.php:78
-#: release/joinotify/admin/src/Validations/Country_Codes.php:78
 msgid "Mauritania"
 msgstr "Mauritânia"
 
 #: admin/src/Validations/Country_Codes.php:86
-#: release/joinotify/admin/src/Validations/Country_Codes.php:86
 msgid "Mauritius"
 msgstr "Maurício"
 
-#: admin/src/Admin/Settings/Registry.php:459
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:442
-msgid "max_execution_time"
-msgstr "tempo_máximo_de_execução"
-
-#: admin/src/Admin/Settings/Registry.php:464
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:447
-msgid "max_input_vars"
-msgstr "variáveis_máximas_de_entrada"
-
 #: admin/src/Validations/Country_Codes.php:116
-#: release/joinotify/admin/src/Validations/Country_Codes.php:116
 msgid "Mayotte"
 msgstr "Mayotte"
 
@@ -4018,7 +3501,6 @@ msgid "Media"
 msgstr "Mídia"
 
 #: admin/src/Integrations/Elementor_Forms.php:206
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:206
 msgid "Media caption"
 msgstr "Legenda da mídia"
 
@@ -4032,20 +3514,16 @@ msgstr "Rota de mensagem de mídia"
 
 #: admin/src/Api/Controller.php:296
 #: admin/src/Rest/Send_Media_Message.php:73
-#: release/joinotify/admin/src/Api/Controller.php:296
-#: release/joinotify/admin/src/Rest/Send_Media_Message.php:73
 msgid "Media message sent successfully."
 msgstr "Mensagem de mídia enviada com sucesso."
 
 #: admin/src/Admin/Settings/Registry.php:96
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:95
 msgid "Media route"
 msgstr "Rota da mídia"
 
 #: admin/src/Integrations/Elementor_Forms.php:182
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:89
 #: app/src/pages/history/components/HistoryDetailsModal.vue:29
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:182
 msgid "Media type"
 msgstr "Tipo de mídia"
 
@@ -4063,17 +3541,11 @@ msgstr "Mídia: %s"
 msgid "Medium"
 msgstr "Médio"
 
-#: admin/src/Admin/Settings/Registry.php:469
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:452
-msgid "memory_limit"
-msgstr "limite_de_memória"
-
 #: app/src/builder/actions/definitions/whatsappText.ts:38
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:188
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 #: app/src/pages/settings/components/cards/PhoneActions.vue:258
-#: examples/joinotify-extension-example.php:71
 msgid "Message"
 msgstr "Mensagem"
 
@@ -4085,9 +3557,6 @@ msgstr "Detalhes da mensagem"
 #: admin/src/Admin/Menu.php:71
 #: admin/src/Admin/Settings/Registry.php:204
 #: app/src/pages/history/HistoryPage.vue:155
-#: release/joinotify/admin/src/Admin/History/Registry.php:144
-#: release/joinotify/admin/src/Admin/Menu.php:71
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:187
 msgid "Message history"
 msgstr "Histórico de mensagens"
 
@@ -4104,7 +3573,6 @@ msgid "Message sent."
 msgstr "Mensagem enviada."
 
 #: admin/src/Integrations/Whatsapp.php:49
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:49
 msgid "Messages"
 msgstr "Mensagens"
 
@@ -4112,22 +3580,18 @@ msgstr "Mensagens"
 #: app/src/builder/actions/definitions/condition.ts:80
 #: app/src/builder/actions/settings/ConditionSettings.vue:179
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:385
 msgid "Meta key"
 msgstr "Chave do meta dado"
 
 #: admin/src/Validations/Country_Codes.php:46
-#: release/joinotify/admin/src/Validations/Country_Codes.php:46
 msgid "Mexico"
 msgstr "México"
 
 #: admin/src/Core/Helpers.php:37
-#: release/joinotify/admin/src/Core/Helpers.php:37
 msgid "minute"
 msgstr "minuto"
 
 #: admin/src/Core/Helpers.php:37
-#: release/joinotify/admin/src/Core/Helpers.php:37
 msgid "minutes"
 msgstr "minutos"
 
@@ -4135,7 +3599,6 @@ msgstr "minutos"
 #: app/src/builder/actions/definitions/timeDelay.ts:46
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:34
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:27
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:344
 msgid "Minutes"
 msgstr "Minutos"
 
@@ -4154,10 +3617,6 @@ msgstr "Campo workflow_content ausente."
 msgid "Model"
 msgstr "Modelo"
 
-#: release/joinotify/admin/src/Integrations/OpenAI.php:95
-msgid "Model used when a workflow node does not override it."
-msgstr "Modelo usado quando um nó de fluxo de trabalho não o substitui."
-
 #: admin/src/Integrations/OpenAI.php:85
 msgid ""
 "Model used when a workflow node does not override it. The list is fetched "
@@ -4167,32 +3626,26 @@ msgstr ""
 "buscada no OpenAI e pode ser atualizada."
 
 #: admin/src/Validations/Country_Codes.php:141
-#: release/joinotify/admin/src/Validations/Country_Codes.php:141
 msgid "Moldova"
 msgstr "Moldávia"
 
 #: admin/src/Validations/Country_Codes.php:145
-#: release/joinotify/admin/src/Validations/Country_Codes.php:145
 msgid "Monaco"
 msgstr "Mônaco"
 
 #: admin/src/Validations/Country_Codes.php:221
-#: release/joinotify/admin/src/Validations/Country_Codes.php:221
 msgid "Mongolia"
 msgstr "Mongólia"
 
 #: admin/src/Validations/Country_Codes.php:150
-#: release/joinotify/admin/src/Validations/Country_Codes.php:150
 msgid "Montenegro"
 msgstr "Montenegro"
 
 #: admin/src/Core/Helpers.php:41
-#: release/joinotify/admin/src/Core/Helpers.php:41
 msgid "month"
 msgstr "mês"
 
 #: admin/src/Core/Helpers.php:41
-#: release/joinotify/admin/src/Core/Helpers.php:41
 msgid "months"
 msgstr "meses"
 
@@ -4201,12 +3654,10 @@ msgstr "meses"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:38
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:348
 msgid "Months"
 msgstr "Meses"
 
 #: admin/src/Validations/Country_Codes.php:72
-#: release/joinotify/admin/src/Validations/Country_Codes.php:72
 msgid "Morocco"
 msgstr "Marrocos"
 
@@ -4218,7 +3669,6 @@ msgid "Move to trash"
 msgstr "Mover para lixeira"
 
 #: admin/src/Validations/Country_Codes.php:113
-#: release/joinotify/admin/src/Validations/Country_Codes.php:113
 msgid "Mozambique"
 msgstr "Moçambique"
 
@@ -4234,8 +3684,6 @@ msgstr "Minha automação"
 
 #: admin/src/Admin/Builder/Registry.php:102
 #: admin/src/Admin/Builder/Registry.php:877
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:102
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:868
 msgid "My automation #%s"
 msgstr "Minha automação #%s"
 
@@ -4244,7 +3692,6 @@ msgid "My automation #129720"
 msgstr "Minha automação #129720"
 
 #: admin/src/Validations/Country_Codes.php:69
-#: release/joinotify/admin/src/Validations/Country_Codes.php:69
 msgid "Myanmar"
 msgstr "Myanmar"
 
@@ -4253,57 +3700,46 @@ msgid "Name"
 msgstr "Nome"
 
 #: admin/src/Validations/Country_Codes.php:118
-#: release/joinotify/admin/src/Validations/Country_Codes.php:118
 msgid "Namibia"
 msgstr "Namíbia"
 
 #: admin/src/Validations/Country_Codes.php:181
-#: release/joinotify/admin/src/Validations/Country_Codes.php:181
 msgid "Nauru"
 msgstr "Nauru"
 
 #: admin/src/Validations/Country_Codes.php:222
-#: release/joinotify/admin/src/Validations/Country_Codes.php:222
 msgid "Nepal"
 msgstr "Nepal"
 
 #: admin/src/Validations/Country_Codes.php:30
-#: release/joinotify/admin/src/Validations/Country_Codes.php:30
 msgid "Netherlands"
 msgstr "Holanda"
 
 #: admin/src/Api/License.php:926
-#: release/joinotify/admin/src/Api/License.php:926
 msgid "Never expires"
 msgstr "Nunca expira"
 
 #: admin/src/Validations/Country_Codes.php:193
-#: release/joinotify/admin/src/Validations/Country_Codes.php:193
 msgid "New Caledonia"
 msgstr "Nova Caledônia"
 
 #: admin/src/Core/Workflow_Post_Type.php:44
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:44
 msgid "New flow"
 msgstr "Novo fluxo"
 
 #: admin/src/Integrations/Woocommerce.php:170
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:170
 msgid "New order"
 msgstr "Novo pedido"
 
 #: admin/src/Integrations/Woocommerce.php:176
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:176
 msgid "New order (Processing)"
 msgstr "Novo pedido (Processando)"
 
 #: admin/src/Integrations/Woo_Subscriptions.php:69
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:69
 msgid "New subscription created"
 msgstr "Nova assinatura criada"
 
 #: admin/src/Integrations/Wordpress.php:86
-#: release/joinotify/admin/src/Integrations/Wordpress.php:86
 msgid "New user registration"
 msgstr "Novo registro de usuário"
 
@@ -4318,7 +3754,6 @@ msgid "New workflow"
 msgstr "Novo fluxo de trabalho"
 
 #: admin/src/Validations/Country_Codes.php:57
-#: release/joinotify/admin/src/Validations/Country_Codes.php:57
 msgid "New Zealand"
 msgstr "Nova Zelândia"
 
@@ -4331,22 +3766,18 @@ msgid "Next month"
 msgstr "Próximo mês"
 
 #: admin/src/Validations/Country_Codes.php:163
-#: release/joinotify/admin/src/Validations/Country_Codes.php:163
 msgid "Nicaragua"
 msgstr "Nicarágua"
 
 #: admin/src/Validations/Country_Codes.php:83
-#: release/joinotify/admin/src/Validations/Country_Codes.php:83
 msgid "Niger"
 msgstr "Níger"
 
 #: admin/src/Validations/Country_Codes.php:90
-#: release/joinotify/admin/src/Validations/Country_Codes.php:90
 msgid "Nigeria"
 msgstr "Nigéria"
 
 #: admin/src/Validations/Country_Codes.php:190
-#: release/joinotify/admin/src/Validations/Country_Codes.php:190
 msgid "Niue"
 msgstr "Niue"
 
@@ -4360,14 +3791,6 @@ msgstr "Niue"
 #: admin/src/Integrations/Elementor_Forms.php:167
 #: app/src/builder/actions/settings/ConditionSettings.vue:94
 #: app/src/builder/actions/utils/actionDescription.ts:91
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:399
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:423
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:428
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:433
-#: release/joinotify/admin/src/Builder/Messages.php:270
-#: release/joinotify/admin/src/Builder/Messages.php:271
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:124
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:167
 msgid "No"
 msgstr "Não"
 
@@ -4376,7 +3799,6 @@ msgid "No action selected"
 msgstr "Nenhuma ação selecionada"
 
 #: admin/src/Builder/Actions.php:57
-#: release/joinotify/admin/src/Builder/Actions.php:57
 msgid "No action will be taken upon reaching this point."
 msgstr "Nenhuma ação será tomada ao atingir este ponto."
 
@@ -4385,21 +3807,17 @@ msgid "No actions available."
 msgstr "Nenhuma ação disponível."
 
 #: admin/src/AI/AI_Manager.php:87
-#: release/joinotify/admin/src/AI/AI_Manager.php:87
 msgid "No AI provider is available."
 msgstr "Nenhum provedor de IA está disponível."
 
 #: admin/src/AI/Snippet_Generator.php:50
 #: admin/src/AI/Workflow_Generator.php:47
-#: release/joinotify/admin/src/AI/Snippet_Generator.php:50
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:47
 msgid "No AI provider is configured. Set it up in Settings → Integrations."
 msgstr ""
 "Nenhum provedor de IA está configurado. Configure-o em Configurações → "
 "Integrações."
 
 #: admin/src/Rest/Phone_Candidates.php:64
-#: release/joinotify/admin/src/Rest/Phone_Candidates.php:64
 msgid ""
 "No available phone number was found for registration. Register it using the "
 "link: %s"
@@ -4408,17 +3826,14 @@ msgstr ""
 "Registre-o usando o link: %s"
 
 #: admin/src/Builder/Messages.php:314
-#: release/joinotify/admin/src/Builder/Messages.php:314
 msgid "No code available."
 msgstr "Nenhum código disponível."
 
 #: admin/src/Validations/Conditions.php:35
-#: release/joinotify/admin/src/Validations/Conditions.php:35
 msgid "No condition available for this action"
 msgstr "Nenhuma condição disponível para esta ação"
 
 #: admin/src/Validations/Conditions.php:36
-#: release/joinotify/admin/src/Validations/Conditions.php:36
 msgid "No condition has been set for this action."
 msgstr "Nenhuma condição foi definida para esta ação."
 
@@ -4437,17 +3852,14 @@ msgstr ""
 "criar a sua primeira."
 
 #: admin/src/Rest/Builder_Variables_Meta_Keys.php:48
-#: release/joinotify/admin/src/Rest/Builder_Variables_Meta_Keys.php:48
 msgid "No example post or meta keys were found for this entity."
 msgstr "Nenhum post de exemplo ou chaves meta foram encontrados para esta entidade."
 
 #: admin/src/Core/Workflow_Post_Type.php:51
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:51
 msgid "No flow found in trash."
 msgstr "Nenhum fluxo encontrado na lixeira."
 
 #: admin/src/Core/Workflow_Post_Type.php:50
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:50
 msgid "No flow found."
 msgstr "Nenhum fluxo encontrado."
 
@@ -4460,7 +3872,6 @@ msgid "No integration"
 msgstr "Nenhuma integração"
 
 #: admin/src/Integrations/Woocommerce.php:518
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:518
 msgid "No item purchased."
 msgstr "Nenhum item adquirido."
 
@@ -4469,7 +3880,6 @@ msgid "No Joinotify sender is configured to deliver the code."
 msgstr "Nenhum remetente Joinotify está configurado para entregar o código."
 
 #: admin/src/Rest/License_Sync.php:48
-#: release/joinotify/admin/src/Rest/License_Sync.php:48
 msgid "No license key found to sync."
 msgstr "Nenhuma chave de licença encontrada para sincronizar."
 
@@ -4506,7 +3916,6 @@ msgid "No products selected yet."
 msgstr "Nenhum produto selecionado ainda."
 
 #: admin/src/Rest/History_Delete.php:51
-#: release/joinotify/admin/src/Rest/History_Delete.php:51
 msgid "No records selected."
 msgstr "Nenhum registro selecionado."
 
@@ -4519,7 +3928,6 @@ msgid "No templates available."
 msgstr "Nenhum modelo disponível."
 
 #: admin/src/Rest/Builder_Test.php:59
-#: release/joinotify/admin/src/Rest/Builder_Test.php:59
 msgid "No test phone number registered."
 msgstr "Nenhum número de telefone de teste registrado."
 
@@ -4553,7 +3961,6 @@ msgstr ""
 "de trabalho ou mude de aba para ver outros resultados."
 
 #: admin/src/Rest/Workflows_Bulk.php:44
-#: release/joinotify/admin/src/Rest/Workflows_Bulk.php:44
 msgid "No workflows selected."
 msgstr "Nenhum fluxo de trabalho selecionado."
 
@@ -4562,7 +3969,6 @@ msgid "Node settings"
 msgstr "Configurações do nó"
 
 #: admin/src/Admin/Settings/Registry.php:688
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:670
 msgid "None"
 msgstr "Nenhum"
 
@@ -4571,22 +3977,18 @@ msgid "None selected"
 msgstr "Nenhum selecionado"
 
 #: admin/src/Validations/Country_Codes.php:179
-#: release/joinotify/admin/src/Validations/Country_Codes.php:179
 msgid "Norfolk Island"
 msgstr "Ilha Norfolk"
 
 #: admin/src/Validations/Country_Codes.php:199
-#: release/joinotify/admin/src/Validations/Country_Codes.php:199
 msgid "North Korea"
 msgstr "Coréia do Norte"
 
 #: admin/src/Validations/Country_Codes.php:154
-#: release/joinotify/admin/src/Validations/Country_Codes.php:154
 msgid "North Macedonia"
 msgstr "Macedônia do Norte"
 
 #: admin/src/Validations/Country_Codes.php:42
-#: release/joinotify/admin/src/Validations/Country_Codes.php:42
 msgid "Norway"
 msgstr "Noruega"
 
@@ -4599,21 +4001,14 @@ msgstr "Noruega"
 #: app/src/pages/license/LicensePage.vue:99
 #: app/src/pages/license/LicensePage.vue:211
 #: app/src/pages/license/LicensePage.vue:216
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:543
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:548
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:567
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:715
-#: release/joinotify/admin/src/Api/License.php:910
 msgid "Not available"
 msgstr "Não disponível"
 
 #: admin/src/Admin/Settings/Registry.php:63
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:62
 msgid "Notify when WhatsApp disconnects"
 msgstr "Notificar quando o WhatsApp desconectar"
 
 #: admin/src/Admin/Settings/Registry.php:69
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:68
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
@@ -4628,7 +4023,6 @@ msgid "of"
 msgstr "de"
 
 #: admin/src/Admin/Settings/Registry.php:480
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:463
 msgid "Off"
 msgstr "Desligado"
 
@@ -4637,12 +4031,10 @@ msgid "ok"
 msgstr "OK"
 
 #: admin/src/Validations/Country_Codes.php:214
-#: release/joinotify/admin/src/Validations/Country_Codes.php:214
 msgid "Oman"
 msgstr "Omã"
 
 #: admin/src/Admin/Settings/Registry.php:480
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:463
 msgid "On"
 msgstr "Ligado"
 
@@ -4667,18 +4059,15 @@ msgid "Open trigger actions"
 msgstr "Abrir ações do gatilho"
 
 #: admin/src/Integrations/OpenAI.php:44
-#: release/joinotify/admin/src/Integrations/OpenAI.php:45
 msgid "OpenAI"
 msgstr "OpenAI"
 
 #: admin/src/Integrations/OpenAI.php:75
-#: release/joinotify/admin/src/Integrations/OpenAI.php:85
 msgid "OpenAI API key"
 msgstr "Chave da API OpenAI"
 
 #: admin/src/AI/Providers/OpenAI_Provider.php:151
 #: admin/src/AI/Providers/OpenAI_Provider.php:380
-#: release/joinotify/admin/src/AI/Providers/OpenAI_Provider.php:155
 msgid "OpenAI API key is not configured."
 msgstr "A chave da API OpenAI não está configurada."
 
@@ -4688,22 +4077,18 @@ msgstr "OpenAI não retornou nenhum modelo compatível."
 
 #: admin/src/AI/Providers/OpenAI_Provider.php:189
 #: admin/src/AI/Providers/OpenAI_Provider.php:450
-#: release/joinotify/admin/src/AI/Providers/OpenAI_Provider.php:225
 msgid "OpenAI request failed with status %d."
 msgstr "A solicitação OpenAI falhou com status %d."
 
 #: admin/src/AI/Providers/OpenAI_Provider.php:465
-#: release/joinotify/admin/src/AI/Providers/OpenAI_Provider.php:240
 msgid "OpenAI returned an empty response."
 msgstr "OpenAI retornou uma resposta vazia."
 
 #: admin/src/Admin/Settings/Registry.php:449
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:432
 msgid "OpenSSL extension"
 msgstr "Extensão OpenSSL"
 
 #: admin/src/Admin/Settings/Registry.php:180
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:163
 msgid "Operational plugin settings and development flags."
 msgstr "Configurações operacionais do plugin e flags de desenvolvimento."
 
@@ -4711,7 +4096,6 @@ msgstr "Configurações operacionais do plugin e flags de desenvolvimento."
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:89
 #: app/src/builder/actions/settings/ConditionSettings.vue:163
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:374
 msgid "Operator"
 msgstr "Operador"
 
@@ -4752,7 +4136,6 @@ msgid "Or sign in with email"
 msgstr "Ou faça login com e-mail"
 
 #: admin/src/Integrations/Flexify_Checkout.php:144
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:144
 msgid "Order abandoned"
 msgstr "Pedido abandonado"
 
@@ -4760,29 +4143,23 @@ msgstr "Pedido abandonado"
 #: app/src/registries/triggerRegistry.ts:165
 #: app/src/registries/triggerRegistry.ts:176
 #: app/src/registries/triggerRegistry.ts:183
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:182
 msgid "Order completed"
 msgstr "Pedido concluído"
 
 #: admin/src/Integrations/Woocommerce.php:188
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:188
 msgid "Order fully refunded"
 msgstr "Pedido totalmente reembolsado"
 
 #: admin/src/Integrations/Woocommerce.php:992
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:992
 msgid "Order paid"
 msgstr "Pedido pago"
 
 #: admin/src/Integrations/Woocommerce.php:194
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:194
 msgid "Order partially refunded"
 msgstr "Pedido parcialmente reembolsado"
 
 #: admin/src/Integrations/Woocommerce.php:206
 #: admin/src/Integrations/Woocommerce.php:984
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:206
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:984
 msgid "Order status"
 msgstr "Status do pedido"
 
@@ -4790,12 +4167,10 @@ msgstr "Status do pedido"
 #: app/src/registries/triggerRegistry.ts:194
 #: app/src/registries/triggerRegistry.ts:205
 #: app/src/registries/triggerRegistry.ts:212
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:200
 msgid "Order status changed"
 msgstr "Status de um pedido alterado"
 
 #: admin/src/Integrations/Woocommerce.php:988
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:988
 msgid "Order total"
 msgstr "Total do pedido"
 
@@ -4808,7 +4183,6 @@ msgid "Other"
 msgstr "Outro"
 
 #: admin/src/Admin/History/Registry.php:127
-#: release/joinotify/admin/src/Admin/History/Registry.php:127
 msgid "OTP"
 msgstr "OTP"
 
@@ -4826,37 +4200,30 @@ msgid "Page"
 msgstr "Página"
 
 #: admin/src/Validations/Country_Codes.php:66
-#: release/joinotify/admin/src/Validations/Country_Codes.php:66
 msgid "Pakistan"
 msgstr "Paquistão"
 
 #: admin/src/Validations/Country_Codes.php:187
-#: release/joinotify/admin/src/Validations/Country_Codes.php:187
 msgid "Palau"
 msgstr "Palau"
 
 #: admin/src/Validations/Country_Codes.php:215
-#: release/joinotify/admin/src/Validations/Country_Codes.php:215
 msgid "Palestine"
 msgstr "Palestina"
 
 #: admin/src/Validations/Country_Codes.php:165
-#: release/joinotify/admin/src/Validations/Country_Codes.php:165
 msgid "Panama"
 msgstr "Panamá"
 
 #: admin/src/Validations/Country_Codes.php:182
-#: release/joinotify/admin/src/Validations/Country_Codes.php:182
 msgid "Papua New Guinea"
 msgstr "Papua Nova Guiné"
 
 #: admin/src/Validations/Country_Codes.php:173
-#: release/joinotify/admin/src/Validations/Country_Codes.php:173
 msgid "Paraguay"
 msgstr "Paraguai"
 
 #: admin/src/Core/Workflow_Post_Type.php:49
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:49
 msgid "Parent flow:"
 msgstr "Fluxo pai:"
 
@@ -4866,7 +4233,6 @@ msgid "Password"
 msgstr "Senha"
 
 #: admin/src/Integrations/Wordpress.php:104
-#: release/joinotify/admin/src/Integrations/Wordpress.php:104
 msgid "Password reset request"
 msgstr "Solicitação de redefinição de senha"
 
@@ -4891,7 +4257,6 @@ msgstr ""
 "para desbloquear todos os recursos."
 
 #: admin/src/Admin/Settings/Registry.php:97
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:96
 msgid "Path of the route used to send messages with media."
 msgstr "Caminho da rota usada para enviar mensagens com mídia."
 
@@ -4900,20 +4265,16 @@ msgid "Pause the workflow before the next step."
 msgstr "Pausar o fluxo de trabalho antes do próximo passo."
 
 #: admin/src/Integrations/Woocommerce.php:1000
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1000
 msgid "Payment method"
 msgstr "Forma de pagamento"
 
 #: admin/src/Integrations/Wpforms.php:93
-#: release/joinotify/admin/src/Integrations/Wpforms.php:93
 msgid "Payment processed by PayPal"
 msgstr "Pagamento processado pelo PayPal"
 
 #: admin/src/Builder/Messages.php:269
 #: admin/src/Integrations/Otp_Login.php:142
 #: admin/src/Integrations/Woocommerce.php:952
-#: release/joinotify/admin/src/Builder/Messages.php:269
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:952
 msgid "Percentage"
 msgstr "Percentual"
 
@@ -4932,8 +4293,6 @@ msgstr "Desconto percentual"
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:20
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:97
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:117
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:325
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:340
 msgid "Period"
 msgstr "Período"
 
@@ -4947,12 +4306,10 @@ msgid "Persona / system message"
 msgstr "Mensagem de persona / sistema"
 
 #: admin/src/Validations/Country_Codes.php:45
-#: release/joinotify/admin/src/Validations/Country_Codes.php:45
 msgid "Peru"
 msgstr "Peru"
 
 #: admin/src/Validations/Country_Codes.php:56
-#: release/joinotify/admin/src/Validations/Country_Codes.php:56
 msgid "Philippines"
 msgstr "Filipinas"
 
@@ -4994,18 +4351,14 @@ msgstr "Telefone validado."
 #: app/src/pages/settings/SettingsPage.vue:575
 #: app/src/pages/settings/SettingsPage.vue:596
 #: app/src/pages/settings/SettingsPage.vue:601
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:115
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:241
 msgid "Phones"
 msgstr "Telefones"
 
 #: admin/src/Admin/Settings/Registry.php:139
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:122
 msgid "Phones already validated and available for use in workflows."
 msgstr "Telefones já validados e disponíveis para uso em fluxos de trabalho."
 
 #: admin/src/Admin/Builder/Registry.php:404
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:404
 msgid "PHP code"
 msgstr "Código PHP"
 
@@ -5022,8 +4375,6 @@ msgstr "Snippet PHP"
 #: app/src/builder/actions/definitions/snippetPhp.ts:10
 #: app/src/builder/actions/definitions/snippetPhp.ts:20
 #: app/src/builder/actions/settings/SnippetPhpSettings.vue:89
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:474
-#: release/joinotify/admin/src/Builder/Actions.php:68
 msgid "PHP Snippet"
 msgstr "Snippet PHP"
 
@@ -5036,7 +4387,6 @@ msgstr ""
 "trabalho. Apenas administradores confiáveis devem editar este código."
 
 #: admin/src/Admin/Settings/Registry.php:434
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:417
 msgid "PHP version"
 msgstr "Versão PHP"
 
@@ -5077,22 +4427,18 @@ msgid "Please wait before requesting another code."
 msgstr "Por favor, aguarde antes de solicitar outro código."
 
 #: admin/src/Rest/Modules_Activate.php:52
-#: release/joinotify/admin/src/Rest/Modules_Activate.php:52
 msgid "Plugin activated successfully."
 msgstr "Plugin ativado com sucesso."
 
 #: admin/src/Rest/Modules_Install.php:67
-#: release/joinotify/admin/src/Rest/Modules_Install.php:67
 msgid "Plugin installed and activated successfully."
 msgstr "Plugin instalado e ativado com sucesso."
 
 #: admin/src/Rest/Modules_Install.php:44
-#: release/joinotify/admin/src/Rest/Modules_Install.php:44
 msgid "Plugin slug and URL are required."
 msgstr "Slug do plugin e URL são obrigatórios."
 
 #: admin/src/Rest/Modules_Activate.php:42
-#: release/joinotify/admin/src/Rest/Modules_Activate.php:42
 msgid "Plugin slug is required."
 msgstr "Slug do plugin é obrigatório."
 
@@ -5105,17 +4451,14 @@ msgid "plugin_version missing; version normalized automatically."
 msgstr "plugin_version ausente; versão normalizada automaticamente."
 
 #: admin/src/Admin/Settings/Registry.php:47
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:46
 msgid "Plugin's basic preferences, sending proxy, and WhatsApp notifications."
 msgstr "Preferências básicas do plugin, proxy de envio e notificações do WhatsApp."
 
 #: admin/src/Validations/Country_Codes.php:43
-#: release/joinotify/admin/src/Validations/Country_Codes.php:43
 msgid "Poland"
 msgstr "Polônia"
 
 #: admin/src/Validations/Country_Codes.php:129
-#: release/joinotify/admin/src/Validations/Country_Codes.php:129
 msgid "Portugal"
 msgstr "Portugal"
 
@@ -5126,32 +4469,18 @@ msgid "Post published"
 msgstr "Postagem publicada"
 
 #: admin/src/Integrations/Wordpress.php:110
-#: release/joinotify/admin/src/Integrations/Wordpress.php:110
 msgid "Post status changed"
 msgstr "Post tem status alterado"
 
 #: admin/src/Integrations/Wordpress.php:341
-#: release/joinotify/admin/src/Integrations/Wordpress.php:341
 msgid "Post type"
 msgstr "Tipo de post"
 
-#: admin/src/Admin/Settings/Registry.php:454
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:437
-msgid "post_max_size"
-msgstr "post_max_size"
-
 #: admin/src/Integrations/Woocommerce.php:127
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:127
 msgid "Prefix used when Joinotify generates a coupon code automatically."
 msgstr "Prefixo usado quando o Joinotify gera um código de cupom automaticamente."
 
-#: examples/joinotify-extension-example.php:157
-#: examples/joinotify-extension-example.php:158
-msgid "Premium"
-msgstr "Premium"
-
 #: admin/src/Integrations/Woocommerce.php:153
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:153
 msgid ""
 "Prevents the same action from being processed again when the trigger is "
 "repeated."
@@ -5192,22 +4521,18 @@ msgid "Prompt / instructions"
 msgstr "Prompt / instruções"
 
 #: admin/src/Builder/Custom_Variables.php:104
-#: release/joinotify/admin/src/Builder/Custom_Variables.php:104
 msgid "Provide a valid variable name."
 msgstr "Forneça um nome de variável válido."
 
 #: admin/src/Admin/Settings/Registry.php:78
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:77
 msgid "Proxy API"
 msgstr "API de proxy"
 
 #: admin/src/Integrations/Woocommerce.php:996
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:996
 msgid "Purchased products"
 msgstr "Produtos comprados"
 
 #: admin/src/Validations/Country_Codes.php:219
-#: release/joinotify/admin/src/Validations/Country_Codes.php:219
 msgid "Qatar"
 msgstr "Catar"
 
@@ -5221,7 +4546,6 @@ msgid "Quick help"
 msgstr "Ajuda rápida"
 
 #: admin/src/Admin/Settings/Registry.php:144
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:127
 msgid "Quick Tools"
 msgstr "Ferramentas Rápidas"
 
@@ -5235,12 +4559,10 @@ msgstr "Ferramentas Rápidas"
 #: app/src/pages/history/components/HistoryDetailsModal.vue:27
 #: app/src/pages/history/HistoryPage.vue:283
 #: app/src/pages/settings/components/cards/PhoneActions.vue:236
-#: examples/joinotify-extension-example.php:64
 msgid "Recipient"
 msgstr "Destinatário"
 
 #: admin/src/Integrations/Elementor_Forms.php:97
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:97
 msgid "Recipient field ID"
 msgstr "ID do campo de destinatário"
 
@@ -5249,7 +4571,6 @@ msgid "Recipient phone"
 msgstr "Telefone do destinatário"
 
 #: admin/src/Admin/Settings/Registry.php:205
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:188
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
 "History screen."
@@ -5258,7 +4579,6 @@ msgstr ""
 "tela de Histórico."
 
 #: admin/src/Integrations/Flexify_Checkout.php:72
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:72
 msgid ""
 "Recover unfinished sales, send the Pix code via WhatsApp and optimize "
 "checkout, ensuring more conversions."
@@ -5267,7 +4587,6 @@ msgstr ""
 "checkout, garantindo mais conversões."
 
 #: admin/src/Integrations/Flexify_Checkout.php:301
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:301
 msgid "Recovery link from abandoned cart"
 msgstr "Link de recuperação do carrinho abandonado."
 
@@ -5297,7 +4616,6 @@ msgid "Refreshing connection"
 msgstr "Conexão revigorante"
 
 #: admin/src/Integrations/Woocommerce.php:1016
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1016
 msgid "Refund amount"
 msgstr "Valor do reembolso"
 
@@ -5324,7 +4642,6 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:138
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:25
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:121
 msgid "Registered senders"
 msgstr "Remetentes cadastrados"
 
@@ -5352,22 +4669,18 @@ msgid "Remove variable"
 msgstr "Remover variável"
 
 #: admin/src/Integrations/Woo_Subscriptions.php:87
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:87
 msgid "Renewal payment failed"
 msgstr "Pagamento da renovação falhou"
 
 #: admin/src/Integrations/Woo_Subscriptions.php:81
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:81
 msgid "Renewal payment received"
 msgstr "Pagamento da renovação recebido"
 
 #: admin/src/Integrations/Elementor_Forms.php:157
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:157
 msgid "Replace information with "
 msgstr "Substitua informações com "
 
 #: admin/src/Validations/Country_Codes.php:98
-#: release/joinotify/admin/src/Validations/Country_Codes.php:98
 msgid "Republic of the Congo"
 msgstr "República do Congo"
 
@@ -5420,32 +4733,26 @@ msgid "Restore default"
 msgstr "Restaurar padrão"
 
 #: admin/src/Integrations/Flexify_Checkout.php:293
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:293
 msgid "Retrieve the cart contact's email address."
 msgstr "Recuperar o endereço de e-mail do contato do carrinho."
 
 #: admin/src/Integrations/Flexify_Checkout.php:269
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:269
 msgid "Retrieve the cart contact's first name."
 msgstr "Recuperar o primeiro nome do contato do carrinho."
 
 #: admin/src/Integrations/Flexify_Checkout.php:277
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:277
 msgid "Retrieve the cart contact's last name."
 msgstr "Recuperar o sobrenome do contato do carrinho."
 
 #: admin/src/Integrations/Flexify_Checkout.php:285
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:285
 msgid "Retrieve the cart contact's phone number."
 msgstr "Recuperar o número de telefone do contato do carrinho."
 
 #: admin/src/Integrations/Flexify_Checkout.php:309
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:309
 msgid "Retrieve the cart total amount."
 msgstr "Recuperar o valor total do carrinho."
 
 #: admin/src/Integrations/Woocommerce.php:363
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:363
 msgid ""
 "Retrieve the user's full billing address (format configurable in the "
 "WooCommerce options)."
@@ -5454,7 +4761,6 @@ msgstr ""
 "configurável nas opções do WooCommerce)."
 
 #: admin/src/Integrations/Woocommerce.php:371
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:371
 msgid ""
 "Retrieve the user's full shipping address (format configurable in the "
 "WooCommerce options)."
@@ -5463,12 +4769,10 @@ msgstr ""
 "configurável nas opções do WooCommerce)."
 
 #: admin/src/Admin/History/Registry.php:125
-#: release/joinotify/admin/src/Admin/History/Registry.php:125
 msgid "Retry queue"
 msgstr "Repetir fila"
 
 #: admin/src/Validations/Country_Codes.php:116
-#: release/joinotify/admin/src/Validations/Country_Codes.php:116
 msgid "Réunion"
 msgstr "Reunião"
 
@@ -5481,7 +4785,6 @@ msgid "Review your current license status and refresh it whenever needed."
 msgstr "Verifique o status atual da sua licença e atualize-a sempre que necessário."
 
 #: admin/src/Validations/Country_Codes.php:36
-#: release/joinotify/admin/src/Validations/Country_Codes.php:36
 msgid "Romania"
 msgstr "Romênia"
 
@@ -5490,7 +4793,6 @@ msgid "Rounding applied to cards, buttons, and form fields."
 msgstr "Arredondamento aplicado a cartões, botões e campos de formulário."
 
 #: admin/src/Admin/Settings/Registry.php:89
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:88
 msgid "Route path used to send text messages."
 msgstr "Caminho da rota usado para enviar mensagens de texto."
 
@@ -5507,37 +4809,30 @@ msgid "Run test"
 msgstr "Rodar teste"
 
 #: admin/src/Validations/Country_Codes.php:26
-#: release/joinotify/admin/src/Validations/Country_Codes.php:26
 msgid "Russia"
 msgstr "Rússia"
 
 #: admin/src/Validations/Country_Codes.php:105
-#: release/joinotify/admin/src/Validations/Country_Codes.php:105
 msgid "Rwanda"
 msgstr "Ruanda"
 
 #: admin/src/Validations/Country_Codes.php:168
-#: release/joinotify/admin/src/Validations/Country_Codes.php:168
 msgid "Saint Barthélemy"
 msgstr "Saint Barthelemy"
 
 #: admin/src/Validations/Country_Codes.php:124
-#: release/joinotify/admin/src/Validations/Country_Codes.php:124
 msgid "Saint Helena"
 msgstr "Santa Helena"
 
 #: admin/src/Validations/Country_Codes.php:168
-#: release/joinotify/admin/src/Validations/Country_Codes.php:168
 msgid "Saint Martin"
 msgstr "São Martinho"
 
 #: admin/src/Validations/Country_Codes.php:166
-#: release/joinotify/admin/src/Validations/Country_Codes.php:166
 msgid "Saint Pierre and Miquelon"
 msgstr "São Pedro e Miquelão"
 
 #: admin/src/Validations/Country_Codes.php:191
-#: release/joinotify/admin/src/Validations/Country_Codes.php:191
 msgid "Samoa"
 msgstr "Samoa"
 
@@ -5546,17 +4841,14 @@ msgid "Sample value shown in the builder"
 msgstr "Valor de exemplo mostrado no construtor"
 
 #: admin/src/Validations/Country_Codes.php:146
-#: release/joinotify/admin/src/Validations/Country_Codes.php:146
 msgid "San Marino"
 msgstr "São Marino"
 
 #: admin/src/Validations/Country_Codes.php:95
-#: release/joinotify/admin/src/Validations/Country_Codes.php:95
 msgid "São Tomé and Príncipe"
 msgstr "São Tomé e Príncipe"
 
 #: admin/src/Validations/Country_Codes.php:212
-#: release/joinotify/admin/src/Validations/Country_Codes.php:212
 msgid "Saudi Arabia"
 msgstr "Arábia Saudita"
 
@@ -5585,7 +4877,6 @@ msgid "Saved"
 msgstr "Salvo"
 
 #: admin/src/Admin/Builder/Registry.php:81
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:81
 msgid "Saving workflow..."
 msgstr "Salvando fluxo de trabalho..."
 
@@ -5600,7 +4891,6 @@ msgstr "Salvando…"
 #: admin/src/Admin/Builder/Registry.php:327
 #: app/src/builder/actions/definitions/timeDelay.ts:41
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:22
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:327
 msgid "Scheduled"
 msgstr "Agendado"
 
@@ -5630,7 +4920,6 @@ msgid "Search entity…"
 msgstr "Buscar entidade…"
 
 #: admin/src/Core/Workflow_Post_Type.php:48
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:48
 msgid "Search flows"
 msgstr "Pesquisar fluxos"
 
@@ -5668,12 +4957,10 @@ msgid "Searching…"
 msgstr "Pesquisando…"
 
 #: admin/src/Core/Helpers.php:36
-#: release/joinotify/admin/src/Core/Helpers.php:36
 msgid "second"
 msgstr "segundo"
 
 #: admin/src/Core/Helpers.php:36
-#: release/joinotify/admin/src/Core/Helpers.php:36
 #: templates/otp-login/shared/otp-login-form.php:38
 msgid "seconds"
 msgstr "segundos"
@@ -5681,12 +4968,10 @@ msgstr "segundos"
 #: admin/src/Admin/Builder/Registry.php:343
 #: app/src/builder/actions/definitions/timeDelay.ts:45
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:26
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:343
 msgid "Seconds"
 msgstr "Segundos"
 
 #: admin/src/Integrations/OpenAI.php:76
-#: release/joinotify/admin/src/Integrations/OpenAI.php:86
 msgid ""
 "Secret key used to authenticate requests to OpenAI. Find it at "
 "platform.openai.com."
@@ -5748,7 +5033,6 @@ msgid "Select an entity"
 msgstr "Selecionar uma entidade"
 
 #: admin/src/Builder/Custom_Variables.php:111
-#: release/joinotify/admin/src/Builder/Custom_Variables.php:111
 msgid "Select an entity and inform the meta key."
 msgstr "Selecione uma entidade e informe a chave meta."
 
@@ -5762,7 +5046,6 @@ msgid "Select an option"
 msgstr "Selecione uma opção"
 
 #: admin/src/Integrations/Woocommerce.php:210
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:210
 msgid "Select an order status"
 msgstr "Selecionar um status de pedido"
 
@@ -5797,21 +5080,18 @@ msgid "Send"
 msgstr "Enviar"
 
 #: admin/src/Integrations/Woocommerce.php:775
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:775
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr ""
 "Envie um cupom de desconto para seu usuário através de mensagem de texto do "
 "WhatsApp."
 
 #: admin/src/Integrations/Whatsapp.php:103
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:103
 msgid "Send a media message (image, file, document, and audio) with WhatsApp."
 msgstr ""
 "Envie uma mensagem de mídia (imagem, arquivo, documento e áudio) pelo "
 "WhatsApp."
 
 #: admin/src/Integrations/Whatsapp.php:90
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:90
 msgid "Send a text message via WhatsApp."
 msgstr "Envie uma mensagem de texto com o WhatsApp."
 
@@ -5823,17 +5103,11 @@ msgstr "Envie uma mensagem de mídia pelo WhatsApp."
 msgid "Send a WhatsApp text message."
 msgstr "Envie uma mensagem de texto pelo WhatsApp."
 
-#: examples/joinotify-extension-example.php:48
-msgid "Send an SMS through the Example App gateway."
-msgstr "Envie um SMS através do gateway Example App."
-
 #: admin/src/Integrations/Elementor_Forms.php:164
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:164
 msgid "Send media"
 msgstr "Enviar mídia"
 
 #: admin/src/Integrations/Woocommerce.php:89
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:89
 msgid ""
 "Send messages regarding new orders, cancellations, refunds, and recovery of "
 "unpaid orders. Keep your customers updated."
@@ -5842,7 +5116,6 @@ msgstr ""
 "recuperação de pedidos não pagos. Mantenha seus clientes atualizados."
 
 #: admin/src/Integrations/Elementor.php:55
-#: release/joinotify/admin/src/Integrations/Elementor.php:55
 msgid ""
 "Send messages when an Elementor form with a phone number field is "
 "submitted. Connect with your customers instantly."
@@ -5856,7 +5129,6 @@ msgid "Send test message"
 msgstr "Enviar mensagem de teste"
 
 #: admin/src/Integrations/Elementor_Forms.php:121
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:121
 msgid "Send text message"
 msgstr "Enviar mensagem de texto"
 
@@ -5882,7 +5154,6 @@ msgstr "enviar-mensagem/texto"
 #: app/src/pages/history/components/HistoryDetailsModal.vue:26
 #: app/src/pages/history/HistoryPage.vue:284
 #: app/src/pages/settings/components/cards/PhoneActions.vue:223
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:87
 msgid "Sender"
 msgstr "Remetente"
 
@@ -5899,12 +5170,10 @@ msgid "Sending..."
 msgstr "Enviando..."
 
 #: admin/src/Admin/Settings/Registry.php:64
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:63
 msgid "Sends a notification to the sender when the connection is not established."
 msgstr "Envia uma notificação ao remetente quando a conexão não é estabelecida."
 
 #: admin/src/Validations/Country_Codes.php:77
-#: release/joinotify/admin/src/Validations/Country_Codes.php:77
 msgid "Senegal"
 msgstr "Senegal"
 
@@ -5914,7 +5183,6 @@ msgid "Sent"
 msgstr "Enviado"
 
 #: admin/src/Validations/Country_Codes.php:149
-#: release/joinotify/admin/src/Validations/Country_Codes.php:149
 msgid "Serbia"
 msgstr "Sérvia"
 
@@ -5931,8 +5199,6 @@ msgstr "Definir uma expiração"
 #: app/src/components/builder/BuilderCanvasTrigger.vue:67
 #: app/src/components/flow/FlowNode.vue:295
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: release/joinotify/admin/src/Admin/Menu.php:81
-#: release/joinotify/admin/src/Admin/Menu.php:82
 msgid "Settings"
 msgstr "Configurações"
 
@@ -5953,19 +5219,15 @@ msgid "Settings imported."
 msgstr "Configurações importadas."
 
 #: admin/src/Rest/Settings_Reset.php:43
-#: release/joinotify/admin/src/Rest/Settings_Reset.php:43
 msgid "Settings reset successfully!"
 msgstr "Configurações redefinidas com sucesso!"
 
 #: admin/src/Admin/Settings/Registry.php:532
 #: admin/src/Rest/Settings_Save.php:42
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:515
-#: release/joinotify/admin/src/Rest/Settings_Save.php:42
 msgid "Settings saved."
 msgstr "Configurações salvas."
 
 #: admin/src/Validations/Country_Codes.php:103
-#: release/joinotify/admin/src/Validations/Country_Codes.php:103
 msgid "Seychelles"
 msgstr "Seicheles"
 
@@ -5974,12 +5236,10 @@ msgid "Shade %s"
 msgstr "Sombra %s"
 
 #: admin/src/Integrations/Woocommerce.php:143
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:143
 msgid "Shipping full address format"
 msgstr "Formato do endereço completo de envio"
 
 #: admin/src/Integrations/Woocommerce.php:1004
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1004
 msgid "Shipping method"
 msgstr "Forma de entrega"
 
@@ -5996,7 +5256,6 @@ msgid "Shown in the variable picker"
 msgstr "Exibido no seletor de variáveis"
 
 #: admin/src/Validations/Country_Codes.php:88
-#: release/joinotify/admin/src/Validations/Country_Codes.php:88
 msgid "Sierra Leone"
 msgstr "Serra Leoa"
 
@@ -6005,27 +5264,22 @@ msgid "Sign in"
 msgstr "Entrar"
 
 #: admin/src/Validations/Country_Codes.php:58
-#: release/joinotify/admin/src/Validations/Country_Codes.php:58
 msgid "Singapore"
 msgstr "Cingapura"
 
 #: admin/src/Validations/Country_Codes.php:156
-#: release/joinotify/admin/src/Validations/Country_Codes.php:156
 msgid "Slovakia"
 msgstr "Eslováquia"
 
 #: admin/src/Validations/Country_Codes.php:152
-#: release/joinotify/admin/src/Validations/Country_Codes.php:152
 msgid "Slovenia"
 msgstr "Eslovênia"
 
 #: admin/src/Validations/Country_Codes.php:184
-#: release/joinotify/admin/src/Validations/Country_Codes.php:184
 msgid "Solomon Islands"
 msgstr "Ilhas Salomão"
 
 #: admin/src/Validations/Country_Codes.php:107
-#: release/joinotify/admin/src/Validations/Country_Codes.php:107
 msgid "Somalia"
 msgstr "Somália"
 
@@ -6036,22 +5290,18 @@ msgid "Source"
 msgstr "Fonte"
 
 #: admin/src/Validations/Country_Codes.php:28
-#: release/joinotify/admin/src/Validations/Country_Codes.php:28
 msgid "South Africa"
 msgstr "África do Sul"
 
 #: admin/src/Validations/Country_Codes.php:61
-#: release/joinotify/admin/src/Validations/Country_Codes.php:61
 msgid "South Korea"
 msgstr "Coréia do Sul"
 
 #: admin/src/Validations/Country_Codes.php:71
-#: release/joinotify/admin/src/Validations/Country_Codes.php:71
 msgid "South Sudan"
 msgstr "Sudão do Sul"
 
 #: admin/src/Validations/Country_Codes.php:33
-#: release/joinotify/admin/src/Validations/Country_Codes.php:33
 msgid "Spain"
 msgstr "Espanha"
 
@@ -6060,7 +5310,6 @@ msgid "Split the workflow into true and false branches."
 msgstr "Divida o fluxo de trabalho em ramos verdadeiro e falso."
 
 #: admin/src/Validations/Country_Codes.php:68
-#: release/joinotify/admin/src/Validations/Country_Codes.php:68
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
 
@@ -6076,14 +5325,11 @@ msgstr "Data de início"
 #: admin/src/Builder/Workflow_Manager.php:86
 #: app/src/components/builder/BuilderStartChooser.vue:25
 #: app/src/components/builder/BuilderStartChooser.vue:27
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:84
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:86
 msgid "Start from scratch"
 msgstr "Começar do zero"
 
 #: admin/src/Builder/Workflow_Manager.php:90
 #: app/src/components/builder/BuilderStartChooser.vue:40
-#: release/joinotify/admin/src/Builder/Workflow_Manager.php:90
 msgid "Start with a template"
 msgstr "Começar com um modelo"
 
@@ -6111,8 +5357,6 @@ msgstr "Passo 2: Insira o código de verificação."
 
 #: admin/src/Admin/Builder/Registry.php:482
 #: admin/src/Builder/Actions.php:56
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:482
-#: release/joinotify/admin/src/Builder/Actions.php:56
 msgid "Stop automation"
 msgstr "Parar automação"
 
@@ -6130,41 +5374,30 @@ msgid "Subscription"
 msgstr "Subscrição"
 
 #: admin/src/Integrations/Woo_Subscriptions.php:99
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:99
 msgid "Subscription canceled"
 msgstr "Assinatura cancelada"
 
 #: admin/src/Integrations/Woo_Subscriptions.php:75
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:75
 msgid "Subscription is activated"
 msgstr "Assinatura é ativada"
 
-#: examples/joinotify-extension-example.php:134
-msgid "Subscription plan"
-msgstr "Plano de assinatura"
-
 #: admin/src/Integrations/Woo_Subscriptions.php:93
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:93
 msgid "Subscription renewal expired"
 msgstr "Renovação da assinatura expirou"
 
 #: admin/src/Integrations/Woocommerce.php:1020
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1020
 msgid "Subscription status"
 msgstr "Status da assinatura"
 
 #: admin/src/Admin/Settings/Registry.php:556
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:539
 msgid "Subscription: %s"
 msgstr "Assinatura: %s"
 
 #: admin/src/Admin/Settings/Registry.php:555
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:538
 msgid "Subscription: Club M - %s"
 msgstr "Assinatura: Clube M - %s"
 
 #: admin/src/Validations/Country_Codes.php:104
-#: release/joinotify/admin/src/Validations/Country_Codes.php:104
 msgid "Sudan"
 msgstr "Sudão"
 
@@ -6181,27 +5414,22 @@ msgid "Support until: Not available"
 msgstr "Suporte até: Não disponível"
 
 #: admin/src/Admin/Settings/Registry.php:590
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:573
 msgid "Support up to: %s"
 msgstr "Suporte até: %s"
 
 #: admin/src/Admin/Settings/Registry.php:591
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:574
 msgid "Support up to: Not available"
 msgstr "Suporte até: Não disponível"
 
 #: admin/src/Validations/Country_Codes.php:175
-#: release/joinotify/admin/src/Validations/Country_Codes.php:175
 msgid "Suriname"
 msgstr "Suriname"
 
 #: admin/src/Validations/Country_Codes.php:41
-#: release/joinotify/admin/src/Validations/Country_Codes.php:41
 msgid "Sweden"
 msgstr "Suécia"
 
 #: admin/src/Validations/Country_Codes.php:37
-#: release/joinotify/admin/src/Validations/Country_Codes.php:37
 msgid "Switzerland"
 msgstr "Suíça"
 
@@ -6214,7 +5442,6 @@ msgid "Sync license"
 msgstr "Licença de sincronização"
 
 #: admin/src/Validations/Country_Codes.php:209
-#: release/joinotify/admin/src/Validations/Country_Codes.php:209
 msgid "Syria"
 msgstr "Síria"
 
@@ -6224,7 +5451,6 @@ msgid "System message"
 msgstr "Mensagem do sistema"
 
 #: admin/src/Admin/Settings/Registry.php:224
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:207
 msgid "System status"
 msgstr "Status do sistema"
 
@@ -6233,22 +5459,18 @@ msgid "System status:"
 msgstr "Estado do sistema:"
 
 #: admin/src/Integrations/Wordpress.php:258
-#: release/joinotify/admin/src/Integrations/Wordpress.php:258
 msgid "tag1, tag2"
 msgstr "tag1, tag2"
 
 #: admin/src/Validations/Country_Codes.php:205
-#: release/joinotify/admin/src/Validations/Country_Codes.php:205
 msgid "Taiwan"
 msgstr "Taiwan"
 
 #: admin/src/Validations/Country_Codes.php:223
-#: release/joinotify/admin/src/Validations/Country_Codes.php:223
 msgid "Tajikistan"
 msgstr "Tadjiquistão"
 
 #: admin/src/Validations/Country_Codes.php:110
-#: release/joinotify/admin/src/Validations/Country_Codes.php:110
 msgid "Tanzania"
 msgstr "Tanzânia"
 
@@ -6264,12 +5486,10 @@ msgid "Template"
 msgstr "Modelo"
 
 #: admin/src/Admin/History/Registry.php:126
-#: release/joinotify/admin/src/Admin/History/Registry.php:126
 msgid "Test message"
 msgstr "Mensagem de teste"
 
 #: admin/src/Admin/Settings/Registry.php:68
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:67
 msgid "Test phone"
 msgstr "Telefone de teste"
 
@@ -6287,7 +5507,6 @@ msgid "Text"
 msgstr "Texto"
 
 #: admin/src/Integrations/Elementor_Forms.php:133
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:133
 msgid "Text message"
 msgstr "Mensagem de texto"
 
@@ -6297,23 +5516,18 @@ msgstr "Rota de mensagem de texto"
 
 #: admin/src/Api/Controller.php:264
 #: admin/src/Rest/Send_Text_Message.php:67
-#: release/joinotify/admin/src/Api/Controller.php:264
-#: release/joinotify/admin/src/Rest/Send_Text_Message.php:67
 msgid "Text message sent successfully."
 msgstr "Mensagem de texto enviada com sucesso."
 
 #: admin/src/Admin/Settings/Registry.php:88
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:87
 msgid "Text route"
 msgstr "Rota de texto"
 
 #: admin/src/Integrations/Elementor_Forms.php:157
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:157
 msgid "text variables"
 msgstr "variáveis de texto"
 
 #: admin/src/Validations/Country_Codes.php:59
-#: release/joinotify/admin/src/Validations/Country_Codes.php:59
 msgid "Thailand"
 msgstr "Tailândia"
 
@@ -6321,14 +5535,12 @@ msgstr "Tailândia"
 #: app/src/builder/actions/settings/SnippetPhpSettings.vue:39
 #: app/src/stores/useWorkflowBuilderStore.ts:1037
 #: app/src/stores/useWorkflowBuilderStore.ts:1042
-#: release/joinotify/admin/src/AI/Snippet_Generator.php:65
 msgid "The AI could not generate the snippet."
 msgstr "A IA não conseguiu gerar o trecho."
 
 #: admin/src/AI/Workflow_Generator.php:63
 #: app/src/pages/builder/BuilderPage.vue:448
 #: app/src/stores/useWorkflowBuilderStore.ts:1016
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:63
 msgid "The AI could not generate the workflow."
 msgstr "A IA não conseguiu gerar o fluxo de trabalho."
 
@@ -6337,19 +5549,16 @@ msgid "The AI could not generate the workflow. Please try again."
 msgstr "A IA não conseguiu gerar o fluxo de trabalho. Por favor, tente novamente."
 
 #: admin/src/AI/Workflow_Generator.php:81
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:81
 msgid "The AI did not produce any workflow steps. Try refining the description."
 msgstr ""
 "A IA não produziu nenhum passo do fluxo de trabalho. Tente refinar a "
 "descrição."
 
 #: admin/src/AI/Snippet_Generator.php:74
-#: release/joinotify/admin/src/AI/Snippet_Generator.php:74
 msgid "The AI returned an empty snippet. Please try again."
 msgstr "A IA retornou um trecho vazio. Por favor, tente novamente."
 
 #: admin/src/AI/Workflow_Generator.php:72
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:72
 msgid "The AI returned an invalid workflow. Please try again."
 msgstr "A IA retornou um fluxo de trabalho inválido. Por favor, tente novamente."
 
@@ -6371,22 +5580,15 @@ msgstr ""
 "não pode ser desfeito."
 
 #: admin/src/Integrations/Woocommerce.php:825
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:825
 msgid "The coupon already exists."
 msgstr "O cupom já existe."
 
 #: admin/src/Api/License.php:397
-#: release/joinotify/admin/src/Api/License.php:397
 msgid "The cURL extension is missing."
 msgstr "A extensão cURL está faltando."
 
-#: examples/joinotify-extension-example.php:155
-msgid "The customer plan name."
-msgstr "O nome do plano do cliente."
-
 #: admin/src/Rest/Debug_Logs.php:40
 #: app/src/pages/settings/SettingsPage.vue:620
-#: release/joinotify/admin/src/Rest/Debug_Logs.php:40
 msgid "The debug log is empty."
 msgstr "O log de depuração está vazio."
 
@@ -6399,7 +5601,6 @@ msgid "The file does not contain any settings to import."
 msgstr "O arquivo não contém nenhuma configuração para importar."
 
 #: admin/src/AI/Snippet_Generator.php:84
-#: release/joinotify/admin/src/AI/Snippet_Generator.php:84
 msgid ""
 "The generated snippet uses a blocked function (%s). Please refine the "
 "request."
@@ -6408,7 +5609,6 @@ msgstr ""
 "solicitação."
 
 #: admin/src/AI/Workflow_Generator.php:91
-#: release/joinotify/admin/src/AI/Workflow_Generator.php:91
 msgid ""
 "The generated workflow is missing a valid trigger. Try again with more "
 "detail."
@@ -6417,7 +5617,6 @@ msgstr ""
 "com mais detalhes."
 
 #: admin/src/Rest/Debug_Download.php:43
-#: release/joinotify/admin/src/Rest/Debug_Download.php:43
 msgid "The log file was not found."
 msgstr "O arquivo de log não foi encontrado."
 
@@ -6446,22 +5645,18 @@ msgstr ""
 "extras durante a edição."
 
 #: admin/src/Rest/Phone_Check_Connection.php:54
-#: release/joinotify/admin/src/Rest/Phone_Check_Connection.php:54
 msgid "The phone is connected."
 msgstr "O telefone está conectado."
 
 #: admin/src/Rest/Phone_Check_Connection.php:55
-#: release/joinotify/admin/src/Rest/Phone_Check_Connection.php:55
 msgid "The phone is disconnected."
 msgstr "O telefone está desconectado."
 
 #: admin/src/Api/Updater.php:243
-#: release/joinotify/admin/src/Api/Updater.php:243
 msgid "The plugin version <strong>Joinotify</strong> is up to date."
 msgstr "A versão do plugin <strong>Joinotify</strong> é a mais recente."
 
 #: admin/src/Rest/Modules_Install.php:63
-#: release/joinotify/admin/src/Rest/Modules_Install.php:63
 msgid "The plugin was installed but could not be activated."
 msgstr "O plugin foi instalado, mas não pôde ser ativado."
 
@@ -6482,7 +5677,6 @@ msgstr ""
 "pode ser desfeita."
 
 #: admin/src/Admin/Builder/Registry.php:926
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:917
 msgid "The selected template was not found."
 msgstr "O modelo selecionado não foi encontrado."
 
@@ -6501,7 +5695,6 @@ msgstr ""
 "ação não pode ser desfeita."
 
 #: admin/src/Rest/Phone_Remove.php:48
-#: release/joinotify/admin/src/Rest/Phone_Remove.php:48
 msgid "The sender phone number was removed successfully!"
 msgstr "O número de telefone do remetente foi removido com sucesso!"
 
@@ -6514,12 +5707,10 @@ msgstr ""
 "senha agora está integrado ao Joinotify."
 
 #: admin/src/Rest/Phone_Test_Message.php:52
-#: release/joinotify/admin/src/Rest/Phone_Test_Message.php:52
 msgid "The test message was sent successfully!"
 msgstr "A mensagem de teste foi enviada com sucesso!"
 
 #: admin/src/Builder/Custom_Variables.php:121
-#: release/joinotify/admin/src/Builder/Custom_Variables.php:121
 msgid "The variable \"%s\" already exists. Choose another name."
 msgstr "A variável \"%s\" já existe. Escolha outro nome."
 
@@ -6529,27 +5720,22 @@ msgid "The workflow"
 msgstr "O fluxo de trabalho"
 
 #: admin/src/Admin/Builder/Registry.php:1287
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1277
 msgid "The workflow content is invalid."
 msgstr "O conteúdo do fluxo de trabalho é inválido."
 
 #: admin/src/Admin/Builder/Registry.php:1307
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1297
 msgid "The workflow has more than one trigger."
 msgstr "O fluxo de trabalho tem mais de um gatilho."
 
 #: admin/src/Rest/Builder_Test.php:66
-#: release/joinotify/admin/src/Rest/Builder_Test.php:66
 msgid "The workflow has no content to test."
 msgstr "O fluxo de trabalho não tem conteúdo para testar."
 
 #: admin/src/Admin/Builder/Registry.php:1301
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1291
 msgid "The workflow has no trigger."
 msgstr "O fluxo de trabalho não tem gatilho."
 
 #: admin/src/Admin/Builder/Registry.php:1313
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1303
 msgid "The workflow trigger is not configured."
 msgstr "O gatilho do fluxo de trabalho não está configurado."
 
@@ -6575,22 +5761,18 @@ msgstr ""
 "disponível. O fluxo de trabalho ainda pode ser salvo com segurança."
 
 #: admin/src/Integrations/Woocommerce.php:189
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:189
 msgid "This action is triggered when an order is fully refunded."
 msgstr "Esta ação é acionada quando um pedido é totalmente reembolsado."
 
 #: admin/src/Integrations/Woocommerce.php:195
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:195
 msgid "This action is triggered when an order is partially refunded."
 msgstr "Esta ação é acionada quando um pedido é parcialmente reembolsado."
 
 #: admin/src/Integrations/Woocommerce.php:201
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:201
 msgid "This action is triggered when an order's status changes."
 msgstr "Esta ação é acionada quando o status de um pedido muda."
 
 #: admin/src/Integrations/Woocommerce.php:183
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:183
 msgid "This action is triggered when an order's status is changed to completed."
 msgstr "Esta ação é acionada quando o status de um pedido é alterado para concluído."
 
@@ -6609,7 +5791,6 @@ msgstr ""
 "reporta cron como disponível."
 
 #: admin/src/Integrations/Integrations_Base.php:899
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:899
 msgid "This feature will be released soon."
 msgstr "Este recurso será lançado em breve."
 
@@ -6630,12 +5811,10 @@ msgid "This integration will be available soon."
 msgstr "Esta integração estará disponível em breve."
 
 #: admin/src/Admin/Settings/Registry.php:349
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:332
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr "Este plugin precisa ser instalado e ativo para habilitar esta integração."
 
 #: admin/src/Admin/Settings/Registry.php:84
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:83
 msgid "This site exposes endpoints to process Joinotify requests."
 msgstr "Este site expõe endpoints para processar solicitações do Joinotify."
 
@@ -6647,8 +5826,6 @@ msgstr "Esta variável de texto pode não funcionar neste contexto"
 
 #: admin/src/Integrations/Integrations_Base.php:906
 #: admin/src/Integrations/Integrations_Base.php:910
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:906
-#: release/joinotify/admin/src/Integrations/Integrations_Base.php:910
 msgid "This trigger depends on a plugin"
 msgstr "Este acionamento depende de um plugin"
 
@@ -6657,27 +5834,22 @@ msgid "This trigger does not expose any conditions to evaluate."
 msgstr "Este gatilho não expõe nenhuma condição para avaliar."
 
 #: admin/src/Integrations/Wordpress.php:99
-#: release/joinotify/admin/src/Integrations/Wordpress.php:99
 msgid "This trigger fires after a user resets their password on the site."
 msgstr "Este gatilho é acionado após um usuário redefinir sua senha no site."
 
 #: admin/src/Integrations/Wordpress.php:87
-#: release/joinotify/admin/src/Integrations/Wordpress.php:87
 msgid "This trigger fires when a new user registration is received."
 msgstr "Esse gatilho é acionado quando um novo registro de usuário é recebido."
 
 #: admin/src/Integrations/Wordpress.php:111
-#: release/joinotify/admin/src/Integrations/Wordpress.php:111
 msgid "This trigger fires when a post status changes on the site."
 msgstr "Esse gatilho é acionado quando o status de uma postagem muda no site."
 
 #: admin/src/Integrations/Wordpress.php:93
-#: release/joinotify/admin/src/Integrations/Wordpress.php:93
 msgid "This trigger fires when a user logs in to the site."
 msgstr "Esse gatilho é acionado quando um usuário faz login no site."
 
 #: admin/src/Integrations/Wordpress.php:105
-#: release/joinotify/admin/src/Integrations/Wordpress.php:105
 msgid ""
 "This trigger fires when a user requests a password reset link, allowing you "
 "to send the reset link."
@@ -6686,12 +5858,10 @@ msgstr ""
 "senha, permitindo que você envie o link de redefinição."
 
 #: admin/src/Integrations/Wpforms.php:88
-#: release/joinotify/admin/src/Integrations/Wpforms.php:88
 msgid "This trigger fires when a WPForms form is submitted."
 msgstr "Esse gatilho é acionado quando um formulário do WPForms é enviado."
 
 #: admin/src/Integrations/Wpforms.php:94
-#: release/joinotify/admin/src/Integrations/Wpforms.php:94
 msgid "This trigger fires when a WPForms payment form is processed using PayPal."
 msgstr ""
 "Esse gatilho é acionado quando um formulário de pagamento do WPForms é "
@@ -6706,7 +5876,6 @@ msgstr ""
 "menu do nó para escolher um diferente."
 
 #: admin/src/Integrations/Woocommerce.php:177
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:177
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "a processing status."
@@ -6715,7 +5884,6 @@ msgstr ""
 "status de processamento."
 
 #: admin/src/Integrations/Woocommerce.php:171
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:171
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "any status."
@@ -6724,19 +5892,16 @@ msgstr ""
 "qualquer status."
 
 #: admin/src/Integrations/Flexify_Checkout.php:155
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:155
 msgid "This trigger is fired when a cart is considered lost."
 msgstr "Este acionamento é disparado quando um carrinho é considerado perdido."
 
 #: admin/src/Integrations/Woo_Subscriptions.php:70
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:70
 msgid "This trigger is fired when a new subscription is created in WooCommerce."
 msgstr ""
 "Este acionamento é disparado quando uma nova assinatura é criada no "
 "WooCommerce."
 
 #: admin/src/Integrations/Woo_Subscriptions.php:88
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:88
 msgid ""
 "This trigger is fired when a recurring subscription payment fails or is "
 "declined."
@@ -6745,60 +5910,50 @@ msgstr ""
 "pagamento falhado ou recusado."
 
 #: admin/src/Integrations/Woo_Subscriptions.php:82
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:82
 msgid "This trigger is fired when a recurring subscription payment is received."
 msgstr ""
 "Este acionamento é disparado quando uma assinatura recorrente tem o "
 "pagamento recebido."
 
 #: admin/src/Integrations/Woo_Subscriptions.php:76
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:76
 msgid "This trigger is fired when a subscription status changes to active."
 msgstr ""
 "Este acionamento é disparado quando uma assinatura tem seu status alterado "
 "para ativo."
 
 #: admin/src/Integrations/Woo_Subscriptions.php:94
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:94
 msgid "This trigger is fired when a subscription term has expired."
 msgstr "Este acionamento é disparado quando o prazo de um assinatura expirou."
 
 #: admin/src/Integrations/Flexify_Checkout.php:135
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:135
 msgid "This trigger is fired when an abandoned cart is recovered."
 msgstr "Este acionamento é disparado quando um carrinho abandonado é recuperado."
 
 #: admin/src/Integrations/Elementor.php:81
-#: release/joinotify/admin/src/Integrations/Elementor.php:81
 msgid "This trigger is fired when an Elementor form is submitted."
 msgstr "Este acionamento é disparado quando um formulário do Elementor é enviado."
 
 #: admin/src/Integrations/Flexify_Checkout.php:145
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:145
 msgid "This trigger is fired when an order is abandoned."
 msgstr "Este acionamento é disparado quando um pedido é abandonado."
 
 #: admin/src/Integrations/Woo_Subscriptions.php:100
-#: release/joinotify/admin/src/Integrations/Woo_Subscriptions.php:100
 msgid "This trigger is fired when the subscription status changes to canceled."
 msgstr ""
 "Este acionamento é disparado quando a assinatura tem seu status alterado "
 "para cancelado."
 
 #: admin/src/Integrations/Flexify_Checkout.php:125
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:125
 msgid "This trigger is fired when the user abandons the cart."
 msgstr "Este acionamento é disparado quando o usuário abandona o carrinho."
 
 #: admin/src/Integrations/Flexify_Checkout.php:115
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:115
 msgid "This trigger is fired when the user provides your contact on checkout"
 msgstr ""
 "Este acionamento é disparado quando o usuário fornece seus dados de contato "
 "pelo checkout."
 
 #: admin/src/Integrations/Flexify_Checkout.php:105
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:105
 msgid "This trigger is fired when the user provides your contact on modal"
 msgstr ""
 "Este acionamento é disparado quando o usuário fornece seus dados de contato "
@@ -6811,17 +5966,14 @@ msgstr ""
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:166
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:123
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:137
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:359
 msgid "Time"
 msgstr "Hora"
 
 #: admin/src/Integrations/Elementor_Forms.php:156
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:156
 msgid "Tip"
 msgstr "Dica"
 
 #: admin/src/Rest/User_Dismiss_Tip.php:48
-#: release/joinotify/admin/src/Rest/User_Dismiss_Tip.php:48
 msgid "Tip dismissed."
 msgstr "Dica dispensada."
 
@@ -6834,7 +5986,6 @@ msgid "To"
 msgstr "Para"
 
 #: admin/src/Integrations/Wordpress.php:211
-#: release/joinotify/admin/src/Integrations/Wordpress.php:211
 msgid ""
 "To retrieve a user meta value. Replace META_KEY with the key you want to "
 "retrieve. Example: billing_phone"
@@ -6843,7 +5994,6 @@ msgstr ""
 "que você deseja recuperar. Exemplo: billing_phone"
 
 #: admin/src/Integrations/Woocommerce.php:379
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:379
 msgid ""
 "To retrieve each purchased product and quantity from the order, separated "
 "by line"
@@ -6852,7 +6002,6 @@ msgstr ""
 "por linha"
 
 #: admin/src/Integrations/Wpforms.php:142
-#: release/joinotify/admin/src/Integrations/Wpforms.php:142
 msgid ""
 "To retrieve information from a WPForms form field. Replace FIELD_ID with "
 "the corresponding field ID."
@@ -6861,7 +6010,6 @@ msgstr ""
 "FIELD_ID pelo ID do campo correspondente."
 
 #: admin/src/Integrations/Elementor.php:130
-#: release/joinotify/admin/src/Integrations/Elementor.php:130
 msgid ""
 "To retrieve information from an Elementor form field. Replace FIELD_ID with "
 "the respective ID."
@@ -6870,22 +6018,18 @@ msgstr ""
 "Substitua FIELD_ID pelo id respectivo."
 
 #: admin/src/Integrations/Woocommerce.php:323
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:323
 msgid "To retrieve the billing phone from the WooCommerce order"
 msgstr "Para recuperar o telefone de cobrança do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:435
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:435
 msgid "To retrieve the coupon codes used in the WooCommerce order"
 msgstr "Para recuperar os códigos de cupom utilizados no pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:947
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:947
 msgid "To retrieve the coupon description."
 msgstr "Para recuperar a descrição do cupom."
 
 #: admin/src/Integrations/Woocommerce.php:959
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:959
 msgid ""
 "To retrieve the coupon discount amount formatted with a currency symbol or "
 "percentage. Example: 10%."
@@ -6894,71 +6038,58 @@ msgstr ""
 "moeda ou porcentagem. Exemplo: 10%."
 
 #: admin/src/Integrations/Woocommerce.php:955
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:955
 msgid "To retrieve the coupon discount amount."
 msgstr "Para recuperar o valor do desconto do cupom."
 
 #: admin/src/Integrations/Woocommerce.php:943
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:943
 msgid "To retrieve the coupon discount code."
 msgstr "Para recuperar o código de desconto do cupom."
 
 #: admin/src/Integrations/Woocommerce.php:951
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:951
 msgid "To retrieve the coupon discount type. Example: Percentage or fixed amount."
 msgstr ""
 "Para recuperar o tipo de desconto do cupom. Exemplo: Percentual ou valor "
 "fixo."
 
 #: admin/src/Integrations/Woocommerce.php:963
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:963
 msgid "To retrieve the coupon expiration. Example: Expires in 1 hour."
 msgstr "Para recuperar a expiração do cupom. Exemplo: Expira em 1 hora."
 
 #: admin/src/Integrations/Wordpress.php:203
-#: release/joinotify/admin/src/Integrations/Wordpress.php:203
 msgid "To retrieve the current date"
 msgstr "Para recuperar a data atual"
 
 #: admin/src/Integrations/Woocommerce.php:315
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:315
 msgid "To retrieve the customer billing email from the WooCommerce order"
 msgstr "Para recuperar o e-mail de cobrança do cliente do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:299
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:299
 msgid "To retrieve the customer billing first name from the WooCommerce order"
 msgstr ""
 "Para recuperar o primeiro nome de cobrança do cliente do pedido do "
 "WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:307
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:307
 msgid "To retrieve the customer billing last name from the WooCommerce order"
 msgstr "Para recuperar o sobrenome de cobrança do cliente do pedido do WooCommerce"
 
 #: admin/src/Integrations/Wordpress.php:273
-#: release/joinotify/admin/src/Integrations/Wordpress.php:273
 msgid "To retrieve the featured image URL of the post"
 msgstr "Para recuperar a URL da imagem destacada do post"
 
 #: admin/src/Integrations/Woocommerce.php:395
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:395
 msgid "To retrieve the order currency symbol"
 msgstr "Para recuperar o símbolo de moeda do pedido"
 
 #: admin/src/Integrations/Woocommerce.php:387
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:387
 msgid "To retrieve the order payment URL"
 msgstr "Para recuperar a URL de pagamento do pedido"
 
 #: admin/src/Integrations/Wordpress.php:283
-#: release/joinotify/admin/src/Integrations/Wordpress.php:283
 msgid "To retrieve the password reset link"
 msgstr "Para recuperar o link de redefinição de senha"
 
 #: admin/src/Integrations/Flexify_Checkout.php:214
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:214
 msgid ""
 "To retrieve the Pix Copia e Cola code from the order. Through the Flexify "
 "Checkout - Inter addon integration"
@@ -6968,8 +6099,6 @@ msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:222
 #: admin/src/Integrations/Flexify_Checkout.php:230
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:222
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:230
 msgid ""
 "To retrieve the Pix Copia e Cola expiration time. Through the Flexify "
 "Checkout - Inter addon integration"
@@ -6978,72 +6107,58 @@ msgstr ""
 "integração Flexify Checkout - Inter addon"
 
 #: admin/src/Integrations/Wordpress.php:264
-#: release/joinotify/admin/src/Integrations/Wordpress.php:264
 msgid "To retrieve the post categories, separated by commas"
 msgstr "Para recuperar as categorias do post, separadas por vírgulas"
 
 #: admin/src/Integrations/Wordpress.php:237
-#: release/joinotify/admin/src/Integrations/Wordpress.php:237
 msgid "To retrieve the post content (text only)"
 msgstr "Para recuperar o conteúdo do post (apenas texto)"
 
 #: admin/src/Integrations/Wordpress.php:246
-#: release/joinotify/admin/src/Integrations/Wordpress.php:246
 msgid "To retrieve the post link"
 msgstr "Para recuperar o link do post"
 
 #: admin/src/Integrations/Wordpress.php:228
-#: release/joinotify/admin/src/Integrations/Wordpress.php:228
 msgid "To retrieve the post publish date"
 msgstr "Para recuperar a data de publicação do post"
 
 #: admin/src/Integrations/Wordpress.php:255
-#: release/joinotify/admin/src/Integrations/Wordpress.php:255
 msgid "To retrieve the post tags, separated by commas"
 msgstr "Para recuperar as tags do post, separadas por vírgulas"
 
 #: admin/src/Integrations/Wordpress.php:219
-#: release/joinotify/admin/src/Integrations/Wordpress.php:219
 msgid "To retrieve the post title"
 msgstr "Para recuperar o título do post"
 
 #: admin/src/Integrations/Woocommerce.php:331
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:331
 msgid "To retrieve the shipping phone from the WooCommerce order"
 msgstr "Para recuperar o telefone de entrega do pedido do WooCommerce"
 
 #: admin/src/Integrations/Wordpress.php:195
-#: release/joinotify/admin/src/Integrations/Wordpress.php:195
 msgid "To retrieve the site name"
 msgstr "Para recuperar o nome do site"
 
 #: admin/src/Integrations/Wordpress.php:187
-#: release/joinotify/admin/src/Integrations/Wordpress.php:187
 msgid "To retrieve the site URL"
 msgstr "Para recuperar a URL do site"
 
 #: admin/src/Integrations/Wordpress.php:179
-#: release/joinotify/admin/src/Integrations/Wordpress.php:179
 msgid "To retrieve the user email"
 msgstr "Para recuperar o e-mail do usuário"
 
 #: admin/src/Integrations/Wordpress.php:163
-#: release/joinotify/admin/src/Integrations/Wordpress.php:163
 msgid "To retrieve the user first name"
 msgstr "Para recuperar o primeiro nome do usuário"
 
 #: admin/src/Integrations/Wordpress.php:171
-#: release/joinotify/admin/src/Integrations/Wordpress.php:171
 msgid "To retrieve the user last name"
 msgstr "Para recuperar o sobrenome do usuário"
 
 #: admin/src/Integrations/Woocommerce.php:1344
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1344
 msgid "To retrieve the value of %s"
 msgstr "Para recuperar o valor de %s"
 
 #: admin/src/Integrations/Woocommerce.php:466
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:466
 msgid ""
 "To retrieve the value of a specific checkout field in the WooCommerce "
 "order. Replace FIELD_ID with the checkout field ID, for example: "
@@ -7054,47 +6169,38 @@ msgstr ""
 "billing_email."
 
 #: admin/src/Integrations/Woocommerce.php:355
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:355
 msgid "To retrieve the WooCommerce order date"
 msgstr "Para recuperar a data do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:339
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:339
 msgid "To retrieve the WooCommerce order number"
 msgstr "Para recuperar o número do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:443
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:443
 msgid "To retrieve the WooCommerce order payment method title"
 msgstr "Para recuperar o título do método de pagamento do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:458
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:458
 msgid "To retrieve the WooCommerce order shipping address"
 msgstr "Para recuperar o endereço de entrega do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:347
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:347
 msgid "To retrieve the WooCommerce order status"
 msgstr "Para recuperar o status do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:403
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:403
 msgid "To retrieve the WooCommerce order total"
 msgstr "Para recuperar o total do pedido do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:411
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:411
 msgid "To retrieve the WooCommerce total discount"
 msgstr "Para recuperar o desconto total do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:427
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:427
 msgid "To retrieve the WooCommerce total refunded amount"
 msgstr "Para recuperar o valor total reembolsado do WooCommerce"
 
 #: admin/src/Integrations/Woocommerce.php:419
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:419
 msgid "To retrieve the WooCommerce total tax"
 msgstr "Para recuperar o total de impostos do WooCommerce"
 
@@ -7112,12 +6218,10 @@ msgid "Toggle workflow status"
 msgstr "Alternar status do fluxo de trabalho"
 
 #: admin/src/Validations/Country_Codes.php:84
-#: release/joinotify/admin/src/Validations/Country_Codes.php:84
 msgid "Togo"
 msgstr "Ir"
 
 #: admin/src/Validations/Country_Codes.php:196
-#: release/joinotify/admin/src/Validations/Country_Codes.php:196
 msgid "Tokelau"
 msgstr "Tokelau"
 
@@ -7135,7 +6239,6 @@ msgstr ""
 "persona global das configurações."
 
 #: admin/src/Validations/Country_Codes.php:183
-#: release/joinotify/admin/src/Validations/Country_Codes.php:183
 msgid "Tonga"
 msgstr "Tonga"
 
@@ -7206,17 +6309,14 @@ msgid "Try again"
 msgstr "Tente novamente"
 
 #: admin/src/Validations/Country_Codes.php:74
-#: release/joinotify/admin/src/Validations/Country_Codes.php:74
 msgid "Tunisia"
 msgstr "Tunísia"
 
 #: admin/src/Validations/Country_Codes.php:64
-#: release/joinotify/admin/src/Validations/Country_Codes.php:64
 msgid "Turkey"
 msgstr "Peru"
 
 #: admin/src/Validations/Country_Codes.php:224
-#: release/joinotify/admin/src/Validations/Country_Codes.php:224
 msgid "Turkmenistan"
 msgstr "Turcomenistão"
 
@@ -7237,7 +6337,6 @@ msgstr ""
 "solicitações da API Joinotify."
 
 #: admin/src/Validations/Country_Codes.php:194
-#: release/joinotify/admin/src/Validations/Country_Codes.php:194
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
@@ -7253,7 +6352,6 @@ msgstr "Digite pelo menos 2 caracteres…"
 
 #: admin/src/Admin/Builder/Registry.php:395
 #: app/src/builder/actions/definitions/condition.ts:82
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:395
 msgid "Type label"
 msgstr "Digite o rótulo"
 
@@ -7270,17 +6368,14 @@ msgid "Type your test message..."
 msgstr "Digite sua mensagem de teste..."
 
 #: admin/src/Builder/Messages.php:274
-#: release/joinotify/admin/src/Builder/Messages.php:274
 msgid "Type: %s"
 msgstr "Tipo: %s"
 
 #: admin/src/Validations/Country_Codes.php:111
-#: release/joinotify/admin/src/Validations/Country_Codes.php:111
 msgid "Uganda"
 msgstr "Uganda"
 
 #: admin/src/Validations/Country_Codes.php:148
-#: release/joinotify/admin/src/Validations/Country_Codes.php:148
 msgid "Ukraine"
 msgstr "Ucrânia"
 
@@ -7298,32 +6393,26 @@ msgid "Undo (Ctrl+Z)"
 msgstr "Desfazer (Ctrl+Z)"
 
 #: admin/src/Validations/Country_Codes.php:216
-#: release/joinotify/admin/src/Validations/Country_Codes.php:216
 msgid "United Arab Emirates"
 msgstr "Emirados Árabes Unidos"
 
 #: admin/src/Validations/Country_Codes.php:39
-#: release/joinotify/admin/src/Validations/Country_Codes.php:39
 msgid "United Kingdom"
 msgstr "Reino Unido"
 
 #: admin/src/Validations/Country_Codes.php:25
-#: release/joinotify/admin/src/Validations/Country_Codes.php:25
 msgid "United States"
 msgstr "Estados Unidos"
 
 #: admin/src/AI/AI_Manager.php:120
-#: release/joinotify/admin/src/AI/AI_Manager.php:120
 msgid "Unknown AI error."
 msgstr "Erro desconhecido de IA."
 
 #: admin/src/Api/License.php:315
-#: release/joinotify/admin/src/Api/License.php:315
 msgid "Unknown response"
 msgstr "Resposta desconhecida"
 
 #: admin/src/Rest/Builder_Ai_Generate.php:64
-#: release/joinotify/admin/src/Rest/Builder_Ai_Generate.php:64
 msgid "Unsupported AI intent."
 msgstr "Intenção de IA não suportada."
 
@@ -7340,7 +6429,6 @@ msgid "Update logs"
 msgstr "Registros de atualização"
 
 #: admin/src/Admin/Settings/Registry.php:194
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:177
 msgid "Update notices"
 msgstr "Avisos de atualização"
 
@@ -7361,23 +6449,15 @@ msgstr "Atualizações"
 msgid "Updating…"
 msgstr "Atualizando…"
 
-#: admin/src/Admin/Settings/Registry.php:474
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:457
-msgid "upload_max_filesize"
-msgstr "tamanho_máximo_do_arquivo_para_carregar"
-
 #: admin/src/Validations/Country_Codes.php:176
-#: release/joinotify/admin/src/Validations/Country_Codes.php:176
 msgid "Uruguay"
 msgstr "Uruguai"
 
 #: admin/src/Core/Workflow_Processor.php:992
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:968
 msgid "Use a casual and relaxed tone."
 msgstr "Use um tom casual e relaxado."
 
 #: admin/src/Core/Workflow_Processor.php:991
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:967
 msgid "Use a formal and professional tone."
 msgstr "Use um tom formal e profissional."
 
@@ -7386,7 +6466,6 @@ msgid "Use a template"
 msgstr "Use um modelo"
 
 #: admin/src/Core/Workflow_Processor.php:993
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:969
 msgid "Use a warm and friendly tone."
 msgstr "Use um tom caloroso e amigável."
 
@@ -7404,7 +6483,6 @@ msgid "Use the first available sender"
 msgstr "Usar o primeiro remetente disponível"
 
 #: admin/src/Integrations/Whatsapp.php:68
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:68
 msgid ""
 "Use the world's largest messaging service to notify your customers about "
 "events on your website."
@@ -7429,7 +6507,6 @@ msgstr ""
 "senha."
 
 #: admin/src/Integrations/Wordpress.php:92
-#: release/joinotify/admin/src/Integrations/Wordpress.php:92
 msgid "User login"
 msgstr "Login do usuário"
 
@@ -7441,35 +6518,21 @@ msgstr "Login do usuário"
 #: admin/src/Integrations/Wordpress.php:325
 #: admin/src/Integrations/Wordpress.php:335
 #: admin/src/Integrations/Wpforms.php:201
-#: release/joinotify/admin/src/Integrations/Elementor.php:154
-#: release/joinotify/admin/src/Integrations/Flexify_Checkout.php:341
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:1008
-#: release/joinotify/admin/src/Integrations/Wordpress.php:309
-#: release/joinotify/admin/src/Integrations/Wordpress.php:319
-#: release/joinotify/admin/src/Integrations/Wordpress.php:325
-#: release/joinotify/admin/src/Integrations/Wordpress.php:335
-#: release/joinotify/admin/src/Integrations/Wpforms.php:201
 msgid "User metadata"
 msgstr "Meta dados do usuário"
 
 #: admin/src/Integrations/Wordpress.php:98
-#: release/joinotify/admin/src/Integrations/Wordpress.php:98
 msgid "User password recovery"
 msgstr "Recuperação de senha do usuário"
 
 #: admin/src/Integrations/Wordpress.php:305
 #: admin/src/Integrations/Wordpress.php:315
 #: admin/src/Integrations/Wordpress.php:331
-#: release/joinotify/admin/src/Integrations/Wordpress.php:305
-#: release/joinotify/admin/src/Integrations/Wordpress.php:315
-#: release/joinotify/admin/src/Integrations/Wordpress.php:331
 msgid "User role"
 msgstr "Função do usuário"
 
 #: admin/src/Integrations/Woocommerce.php:318
 #: admin/src/Integrations/Wordpress.php:182
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:318
-#: release/joinotify/admin/src/Integrations/Wordpress.php:182
 msgid "user@example.com"
 msgstr "usuario@exemplo.com"
 
@@ -7478,13 +6541,11 @@ msgid "Username"
 msgstr "Nome de usuário"
 
 #: admin/src/Validations/Country_Codes.php:228
-#: release/joinotify/admin/src/Validations/Country_Codes.php:228
 msgid "Uzbekistan"
 msgstr "Uzbequistão"
 
 #: admin/src/Admin/Settings/Registry.php:570
 #: app/src/pages/license/LicensePage.vue:48
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:553
 msgid "Valid"
 msgstr "Válida"
 
@@ -7501,12 +6562,10 @@ msgstr "A validação falhou."
 #: app/src/builder/actions/settings/ConditionSettings.vue:199
 #: app/src/builder/actions/settings/ConditionSettings.vue:206
 #: app/src/builder/actions/settings/ConditionSettings.vue:213
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:390
 msgid "Value"
 msgstr "Valor"
 
 #: admin/src/Integrations/Elementor.php:150
-#: release/joinotify/admin/src/Integrations/Elementor.php:150
 msgid "Value of a form field"
 msgstr "Valor de um campo do formulário"
 
@@ -7515,7 +6574,6 @@ msgid "Values used by the condition engine."
 msgstr "Valores usados pelo mecanismo de condição."
 
 #: admin/src/Validations/Country_Codes.php:185
-#: release/joinotify/admin/src/Validations/Country_Codes.php:185
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
@@ -7527,7 +6585,6 @@ msgid "Variable name"
 msgstr "Nome da variável"
 
 #: admin/src/Rest/Builder_Variables_Delete.php:47
-#: release/joinotify/admin/src/Rest/Builder_Variables_Delete.php:47
 msgid "Variable removed successfully."
 msgstr "Variável removida com sucesso."
 
@@ -7536,7 +6593,6 @@ msgid "Variable removed."
 msgstr "Variável removida."
 
 #: admin/src/Builder/Custom_Variables.php:149
-#: release/joinotify/admin/src/Builder/Custom_Variables.php:149
 msgid "Variable saved successfully."
 msgstr "Variável salva com sucesso."
 
@@ -7553,12 +6609,10 @@ msgstr ""
 "Clique em uma para inseri-la."
 
 #: admin/src/Validations/Country_Codes.php:147
-#: release/joinotify/admin/src/Validations/Country_Codes.php:147
 msgid "Vatican City"
 msgstr "Cidade do Vaticano"
 
 #: admin/src/Validations/Country_Codes.php:52
-#: release/joinotify/admin/src/Validations/Country_Codes.php:52
 msgid "Venezuela"
 msgstr "Venezuela"
 
@@ -7572,12 +6626,10 @@ msgstr "Verificando..."
 
 #: admin/src/Validations/Media_Types.php:39
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:23
-#: release/joinotify/admin/src/Validations/Media_Types.php:39
 msgid "Video"
 msgstr "Vídeo"
 
 #: admin/src/Validations/Country_Codes.php:62
-#: release/joinotify/admin/src/Validations/Country_Codes.php:62
 msgid "Vietnam"
 msgstr "Vietnã"
 
@@ -7586,7 +6638,6 @@ msgid "View debug logs"
 msgstr "Exibir registros de depuração"
 
 #: admin/src/Core/Workflow_Post_Type.php:46
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:46
 msgid "View flow"
 msgstr "Ver fluxo"
 
@@ -7595,32 +6646,26 @@ msgid "View the recent events recorded by the plugin."
 msgstr "Veja os eventos recentes registrados pelo plugin."
 
 #: admin/src/Builder/Messages.php:118
-#: release/joinotify/admin/src/Builder/Messages.php:118
 msgid "Wait %s %s"
 msgstr "Aguarde %s %s"
 
 #: admin/src/Builder/Messages.php:116
-#: release/joinotify/admin/src/Builder/Messages.php:116
 msgid "Wait %s %s and run at %s"
 msgstr "Aguarde %s %s e execute em %s"
 
 #: admin/src/Builder/Messages.php:97
-#: release/joinotify/admin/src/Builder/Messages.php:97
 msgid "Wait for %s %s"
 msgstr "Esperar por %s %s"
 
 #: admin/src/Builder/Messages.php:105
-#: release/joinotify/admin/src/Builder/Messages.php:105
 msgid "Wait until %s"
 msgstr "Esperar até %s"
 
 #: admin/src/Builder/Messages.php:103
-#: release/joinotify/admin/src/Builder/Messages.php:103
 msgid "Wait until %s - %s"
 msgstr "Esperar até %s - %s"
 
 #: admin/src/Validations/Country_Codes.php:188
-#: release/joinotify/admin/src/Validations/Country_Codes.php:188
 msgid "Wallis and Futuna"
 msgstr "Wallis e Futuna"
 
@@ -7661,12 +6706,10 @@ msgid "We sent a code to %s."
 msgstr "Enviamos um código para %s."
 
 #: admin/src/Core/Helpers.php:40
-#: release/joinotify/admin/src/Core/Helpers.php:40
 msgid "week"
 msgstr "semana"
 
 #: admin/src/Core/Helpers.php:40
-#: release/joinotify/admin/src/Core/Helpers.php:40
 msgid "weeks"
 msgstr "semanas"
 
@@ -7675,12 +6718,10 @@ msgstr "semanas"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:37
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:30
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:38
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:347
 msgid "Weeks"
 msgstr "Semanas"
 
 #: admin/src/Validations/Country_Codes.php:72
-#: release/joinotify/admin/src/Validations/Country_Codes.php:72
 msgid "Western Sahara"
 msgstr "Saara Ocidental"
 
@@ -7695,12 +6736,10 @@ msgstr "O que você desbloqueia"
 #: admin/src/Integrations/Whatsapp.php:67
 #: admin/src/Notifications/Channels/Whatsapp_Evolution_Channel.php:48
 #: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:43
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:67
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
 #: admin/src/Core/Workflow_Post_Type.php:56
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:56
 msgid "WhatsApp automation workflows created with Joinotify."
 msgstr "Fluxos de trabalho de automação do WhatsApp criados com Joinotify."
 
@@ -7725,8 +6764,6 @@ msgstr "Mensagem de texto do WhatsApp"
 #: admin/src/Integrations/AI_Messaging.php:77
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:10
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:26
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:67
-#: release/joinotify/admin/src/Integrations/AI_Messaging.php:77
 msgid "WhatsApp: AI message"
 msgstr "WhatsApp: mensagem de IA"
 
@@ -7734,8 +6771,6 @@ msgstr "WhatsApp: mensagem de IA"
 #: admin/src/Integrations/Whatsapp.php:102
 #: app/src/builder/actions/definitions/whatsappMedia.ts:13
 #: app/src/builder/actions/definitions/whatsappMedia.ts:26
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:499
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:102
 msgid "WhatsApp: Media message"
 msgstr "WhatsApp: Mensagem de mídia"
 
@@ -7743,8 +6778,6 @@ msgstr "WhatsApp: Mensagem de mídia"
 #: admin/src/Integrations/Whatsapp.php:89
 #: app/src/builder/actions/definitions/whatsappText.ts:12
 #: app/src/builder/actions/definitions/whatsappText.ts:23
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:489
-#: release/joinotify/admin/src/Integrations/Whatsapp.php:89
 msgid "WhatsApp: Text message"
 msgstr "WhatsApp: Mensagem de texto"
 
@@ -7760,20 +6793,14 @@ msgstr "será removido permanentemente."
 #: admin/src/Integrations/Woocommerce.php:88
 #: admin/src/Integrations/Woocommerce.php:257
 #: admin/src/Integrations/Woocommerce.php:755
-#: release/joinotify/admin/src/Builder/Utils.php:101
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:88
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:257
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:755
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
 #: admin/src/Rest/Builder_Woo_Products.php:42
-#: release/joinotify/admin/src/Rest/Builder_Woo_Products.php:42
 msgid "WooCommerce is not active."
 msgstr "WooCommerce não está ativo."
 
 #: admin/src/Integrations/Woocommerce.php:100
-#: release/joinotify/admin/src/Integrations/Woocommerce.php:100
 msgid "WooCommerce settings"
 msgstr "Configurações do WooCommerce"
 
@@ -7781,25 +6808,19 @@ msgstr "Configurações do WooCommerce"
 #: admin/src/Integrations/Wordpress.php:63
 #: admin/src/Integrations/Wordpress.php:129
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:47
-#: release/joinotify/admin/src/Builder/Utils.php:100
-#: release/joinotify/admin/src/Integrations/Wordpress.php:63
-#: release/joinotify/admin/src/Integrations/Wordpress.php:129
 msgid "WordPress"
 msgstr "WordPress"
 
 #: admin/src/Admin/Settings/Registry.php:415
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:398
 msgid "WordPress Multisite"
 msgstr "WordPress Multisite"
 
 #: admin/src/Admin/Settings/Registry.php:410
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:393
 msgid "WordPress version"
 msgstr "Versão do WordPress"
 
 #: admin/src/Admin/History/Registry.php:124
 #: app/src/pages/history/components/HistoryDetailsModal.vue:59
-#: release/joinotify/admin/src/Admin/History/Registry.php:124
 msgid "Workflow"
 msgstr "Fluxo de trabalho"
 
@@ -7812,7 +6833,6 @@ msgid "Workflow API is not available."
 msgstr "API do fluxo de trabalho não está disponível."
 
 #: admin/src/Admin/Builder/Registry.php:52
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:52
 msgid "Workflow builder"
 msgstr "Construtor de fluxo de trabalho"
 
@@ -7842,8 +6862,6 @@ msgstr ""
 
 #: admin/src/Rest/Builder_Status.php:46
 #: admin/src/Rest/Workflows_Status.php:47
-#: release/joinotify/admin/src/Rest/Builder_Status.php:46
-#: release/joinotify/admin/src/Rest/Workflows_Status.php:47
 msgid "Workflow not found or invalid post type."
 msgstr "Fluxo de trabalho não encontrado ou tipo de post inválido."
 
@@ -7851,10 +6869,6 @@ msgstr "Fluxo de trabalho não encontrado ou tipo de post inválido."
 #: admin/src/Admin/Builder/Registry.php:985
 #: admin/src/Admin/Builder/Registry.php:1050
 #: admin/src/Rest/Builder_Test.php:49
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:86
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:976
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1041
-#: release/joinotify/admin/src/Rest/Builder_Test.php:49
 msgid "Workflow not found."
 msgstr "Fluxo de trabalho não encontrado."
 
@@ -7863,7 +6877,6 @@ msgid "Workflow not saved yet."
 msgstr "Fluxo de trabalho ainda não salvo."
 
 #: admin/src/Admin/Builder/Registry.php:1027
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1018
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 "Fluxo de trabalho salvo como rascunho: corrija os problemas relatados antes "
@@ -7875,15 +6888,11 @@ msgstr "Fluxo de trabalho salvo com sucesso."
 
 #: admin/src/Admin/Builder/Registry.php:80
 #: admin/src/Admin/Builder/Registry.php:1028
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:80
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:1019
 msgid "Workflow saved."
 msgstr "Fluxo de trabalho salvo."
 
 #: admin/src/Rest/Builder_Status.php:71
 #: admin/src/Rest/Workflows_Status.php:63
-#: release/joinotify/admin/src/Rest/Builder_Status.php:71
-#: release/joinotify/admin/src/Rest/Workflows_Status.php:63
 msgid "Workflow status updated successfully."
 msgstr "Status do fluxo de trabalho atualizado com sucesso."
 
@@ -7904,26 +6913,16 @@ msgid "workflows"
 msgstr "fluxos de trabalho"
 
 #: admin/src/Admin/Menu.php:128
-#: release/joinotify/admin/src/Admin/Menu.php:118
 msgid "Workflows per page"
 msgstr "Fluxos de trabalho por página"
-
-#: admin/src/Admin/Settings/Registry.php:420
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:403
-msgid "WP_DEBUG"
-msgstr "WP_DEBUG"
 
 #: admin/src/Builder/Utils.php:104
 #: admin/src/Integrations/Wpforms.php:59
 #: admin/src/Integrations/Wpforms.php:112
-#: release/joinotify/admin/src/Builder/Utils.php:104
-#: release/joinotify/admin/src/Integrations/Wpforms.php:59
-#: release/joinotify/admin/src/Integrations/Wpforms.php:112
 msgid "WPForms"
 msgstr "WPForms"
 
 #: admin/src/Core/Workflow_Processor.php:1016
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:992
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -7932,12 +6931,10 @@ msgstr ""
 "conteúdo da mensagem, sem qualquer preâmbulo."
 
 #: admin/src/Core/Helpers.php:42
-#: release/joinotify/admin/src/Core/Helpers.php:42
 msgid "year"
 msgstr "ano"
 
 #: admin/src/Core/Helpers.php:42
-#: release/joinotify/admin/src/Core/Helpers.php:42
 msgid "years"
 msgstr "anos"
 
@@ -7946,12 +6943,10 @@ msgstr "anos"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:39
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:32
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:40
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:349
 msgid "Years"
 msgstr "Anos"
 
 #: admin/src/Validations/Country_Codes.php:213
-#: release/joinotify/admin/src/Validations/Country_Codes.php:213
 msgid "Yemen"
 msgstr "Iémen"
 
@@ -7963,17 +6958,10 @@ msgstr "Iémen"
 #: admin/src/Integrations/Elementor_Forms.php:166
 #: app/src/builder/actions/settings/ConditionSettings.vue:93
 #: app/src/builder/actions/utils/actionDescription.ts:87
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:399
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:423
-#: release/joinotify/admin/src/Builder/Messages.php:270
-#: release/joinotify/admin/src/Builder/Messages.php:271
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:123
-#: release/joinotify/admin/src/Integrations/Elementor_Forms.php:166
 msgid "Yes"
 msgstr "Sim"
 
 #: admin/src/Integrations/OpenAI.php:107
-#: release/joinotify/admin/src/Integrations/OpenAI.php:116
 msgid "You are a helpful assistant for my store..."
 msgstr "Você é um assistente útil para minha loja..."
 
@@ -7989,24 +6977,18 @@ msgstr "Você é o agente de suporte da Loja X. Seja cordial e conciso."
 #: admin/src/Admin/Menu.php:144
 #: admin/src/Admin/Menu.php:159
 #: admin/src/Admin/Menu.php:198
-#: release/joinotify/admin/src/Admin/Menu.php:134
-#: release/joinotify/admin/src/Admin/Menu.php:149
-#: release/joinotify/admin/src/Admin/Menu.php:188
 msgid "You do not have permission to access this page."
 msgstr "Você não tem permissão para acessar esta página."
 
 #: admin/src/Rest/Builder_Status.php:53
-#: release/joinotify/admin/src/Rest/Builder_Status.php:53
 msgid "You do not have permission to edit workflows."
 msgstr "Você não tem permissão para editar fluxos de trabalho."
 
 #: admin/src/Admin/Builder/Registry.php:87
-#: release/joinotify/admin/src/Admin/Builder/Registry.php:87
 msgid "You have unsaved changes."
 msgstr "Você tem alterações não salvas."
 
 #: admin/src/Core/Workflow_Processor.php:999
-#: release/joinotify/admin/src/Core/Workflow_Processor.php:975
 msgid "You may write a longer, detailed message."
 msgstr "Você pode escrever uma mensagem mais longa e detalhada."
 
@@ -8015,7 +6997,6 @@ msgid "Your access code is: %1$s. This code expires in %2$d minutes."
 msgstr "Seu código de acesso é: %1$s. Este código expira em %2$d minutos."
 
 #: admin/src/Admin/Settings/Registry.php:574
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:557
 msgid "Your installation is now ready for full use."
 msgstr "Sua instalação está pronta para uso completo."
 
@@ -8036,7 +7017,6 @@ msgid "Your license key"
 msgstr "Sua chave de licença"
 
 #: admin/src/Admin/Settings/Registry.php:592
-#: release/joinotify/admin/src/Admin/Settings/Registry.php:575
 msgid "Your license key:"
 msgstr "Sua chave de licença:"
 
@@ -8049,17 +7029,14 @@ msgid "Your plugin is up to date."
 msgstr "Seu plugin está atualizado."
 
 #: admin/src/Rest/Phone_Validate_Otp.php:56
-#: release/joinotify/admin/src/Rest/Phone_Validate_Otp.php:56
 msgid "Your WhatsApp was verified successfully!"
 msgstr "Seu WhatsApp foi verificado com sucesso!"
 
 #: admin/src/Validations/Country_Codes.php:114
-#: release/joinotify/admin/src/Validations/Country_Codes.php:114
 msgid "Zambia"
 msgstr "Zâmbia"
 
 #: admin/src/Validations/Country_Codes.php:117
-#: release/joinotify/admin/src/Validations/Country_Codes.php:117
 msgid "Zimbabwe"
 msgstr "Zimbábue"
 
@@ -8074,31 +7051,26 @@ msgid "Zoom out"
 msgstr "Afastar"
 
 #: admin/src/Core/Workflow_Post_Type.php:42
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:42
 msgctxt "fluxo"
 msgid "Add new"
 msgstr ""
 
 #: admin/src/Core/Workflow_Post_Type.php:41
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:41
 msgctxt "add new on admin bar"
 msgid "Flow"
 msgstr ""
 
 #: admin/src/Core/Workflow_Post_Type.php:39
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:39
 msgctxt "post type singular name"
 msgid "Flow"
 msgstr ""
 
 #: admin/src/Core/Workflow_Post_Type.php:40
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:40
 msgctxt "admin menu"
 msgid "Flows"
 msgstr ""
 
 #: admin/src/Core/Workflow_Post_Type.php:38
-#: release/joinotify/admin/src/Core/Workflow_Post_Type.php:38
 msgctxt "post type general name"
 msgid "Flows"
 msgstr ""

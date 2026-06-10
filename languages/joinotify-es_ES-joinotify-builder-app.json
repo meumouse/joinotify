@@ -289,9 +289,6 @@
       "Allow free shipping": [
         "Permitir envío gratis"
       ],
-      "allow_url_fopen": [
-        "allow_url_fopen"
-      ],
       "Allows checking a specific value from a submitted form field.": [
         "Permite comprobar un valor específico de un campo de formulario enviado."
       ],
@@ -453,9 +450,6 @@
       ],
       "Automate message delivery for WordPress event triggers.": [
         "Automatiza la entrega de mensajes para los disparadores de eventos de WordPress."
-      ],
-      "Automate messages for Example App events.": [
-        "Automatiza mensajes para eventos de la Aplicación de Ejemplo."
       ],
       "Automate sending messages when you receive a WPForms form with a phone number. Keep your customers informed in real time.": [
         "Automatiza el envío de mensajes cuando recibes un formulario de WPForms con un número de teléfono. Mantén a tus clientes informados en tiempo real."
@@ -643,9 +637,6 @@
       "Check the backend registry, the selected context, or the search term.": [
         "Verifica el registro del backend, el contexto seleccionado o el término de búsqueda."
       ],
-      "Check the customer plan attached to the order.": [
-        "Verifica el plan del cliente asociado al pedido."
-      ],
       "Check whether the order was paid": [
         "Verifica si el pedido fue pagado"
       ],
@@ -789,9 +780,6 @@
       ],
       "Confirmation": [
         "Confirmación"
-      ],
-      "Connect your Example App account.": [
-        "Conecta tu cuenta de Example App."
       ],
       "Connected": [
         "Conectado"
@@ -1024,9 +1012,6 @@
       "Creativity of the responses, from 0 (deterministic) to 2 (more creative).": [
         "Creatividad de las respuestas, de 0 (determinista) a 2 (más creativa)."
       ],
-      "Credentials": [
-        "Credenciales"
-      ],
       "Credit card": [
         "Tarjeta de crédito"
       ],
@@ -1044,9 +1029,6 @@
       ],
       "Curaçao": [
         "Curazao"
-      ],
-      "cURL ": [
-        "cURL "
       ],
       "cURL Error 35: SSL/TLS communication issue.": [
         "Error cURL 35: Problema de comunicación SSL/TLS."
@@ -1249,9 +1231,6 @@
       "Does not contain": [
         "No contiene"
       ],
-      "DOMDocument": [
-        "DOMDocument"
-      ],
       "Download the plugin configuration as a JSON file or import it on another site. API keys and license data are not included in the export.": [
         "Descarga la configuración del plugin como un archivo JSON o impórtala en otro sitio. Las claves API y los datos de licencia no están incluidos en la exportación."
       ],
@@ -1447,12 +1426,6 @@
       "Example": [
         "Ejemplo"
       ],
-      "Example App": [
-        "Aplicación Ejemplo"
-      ],
-      "Example App: order paid": [
-        "Aplicación Ejemplo: pedido pagado"
-      ],
       "Example keys": [
         "Claves de ejemplo"
       ],
@@ -1470,9 +1443,6 @@
       ],
       "Example: CM-0000-0000-0000": [
         "Ejemplo: CM-0000-0000-0000"
-      ],
-      "Example: Send SMS": [
-        "Ejemplo: Enviar SMS"
       ],
       "Expiration": [
         "Expiración"
@@ -1569,9 +1539,6 @@
       ],
       "Finland": [
         "Finlandia"
-      ],
-      "Fires when an Example App order is paid.": [
-        "Se activa cuando se paga un pedido de la aplicación de ejemplo."
       ],
       "First": [
         "Primero"
@@ -2248,12 +2215,6 @@
       "Mauritius": [
         "Mauricio"
       ],
-      "max_execution_time": [
-        "max_execution_time"
-      ],
-      "max_input_vars": [
-        "max_input_vars"
-      ],
       "Mayotte": [
         "Mayotte"
       ],
@@ -2289,9 +2250,6 @@
       ],
       "Medium": [
         "Medio"
-      ],
-      "memory_limit": [
-        "memory_limit"
       ],
       "Message": [
         "Mensaje"
@@ -2334,9 +2292,6 @@
       ],
       "Model": [
         "Modelo"
-      ],
-      "Model used when a workflow node does not override it.": [
-        "Modelo utilizado cuando un nodo de flujo de trabajo no lo anula."
       ],
       "Model used when a workflow node does not override it. The list is fetched from OpenAI and can be refreshed.": [
         "Modelo utilizado cuando un nodo de flujo de trabajo no lo anula. La lista se obtiene de OpenAI y se puede actualizar."
@@ -2887,14 +2842,8 @@
       "Post type": [
         "Tipo de publicación"
       ],
-      "post_max_size": [
-        "post_max_size"
-      ],
       "Prefix used when Joinotify generates a coupon code automatically.": [
         "Prefijo utilizado cuando Joinotify genera un código de cupón automáticamente."
-      ],
-      "Premium": [
-        "Premium"
       ],
       "Prevents the same action from being processed again when the trigger is repeated.": [
         "Evita que la misma acción se procese de nuevo cuando se repite el disparador."
@@ -3310,9 +3259,6 @@
       "Send a WhatsApp text message.": [
         "Enviar un mensaje de texto de WhatsApp."
       ],
-      "Send an SMS through the Example App gateway.": [
-        "Enviar un SMS a través de la puerta de enlace de Example App."
-      ],
       "Send media": [
         "Enviar medio"
       ],
@@ -3493,9 +3439,6 @@
       "Subscription is activated": [
         "La suscripción está activada"
       ],
-      "Subscription plan": [
-        "Plan de suscripción"
-      ],
       "Subscription renewal expired": [
         "La renovación de la suscripción ha expirado"
       ],
@@ -3636,9 +3579,6 @@
       ],
       "The cURL extension is missing.": [
         "Falta la extensión cURL."
-      ],
-      "The customer plan name.": [
-        "El nombre del plan del cliente."
       ],
       "The debug log is empty.": [
         "El registro de depuración está vacío."
@@ -4168,9 +4108,6 @@
       "Updating…": [
         "Actualizando…"
       ],
-      "upload_max_filesize": [
-        "upload_max_filesize"
-      ],
       "Uruguay": [
         "Uruguay"
       ],
@@ -4458,9 +4395,6 @@
       ],
       "Workflows per page": [
         "Flujos de trabajo por página"
-      ],
-      "WP_DEBUG": [
-        "WP_DEBUG"
       ],
       "WPForms": [
         "WPForms"

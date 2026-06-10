@@ -18,6 +18,11 @@ const IGNORED_DIRECTORIES = new Set([
   "node_modules",
   "vendor",
   "languages",
+  // Packaged build copy (full plugin duplicate + zip) — scanning it double-
+  // extracts every string and resurrects ones already removed from source.
+  "release",
+  // Developer sample extension, not part of the shipped UI.
+  "examples",
 ]);
 
 const SUPPORTED_FUNCTIONS = new Set([
