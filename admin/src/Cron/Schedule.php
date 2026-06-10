@@ -42,10 +42,9 @@ class Schedule {
         // update coupon expiration
         add_action( 'joinotify_update_coupon_expiration', array( $this, 'update_coupon_expiration' ), 10, 1 );
 
-        // convert legacy workflows to the current schema and rebuild the trigger-hook
-        // index for every stored workflow after a plugin upgrade (subsumes the
-        // standalone index backfill)
-        add_action( 'Joinotify/Upgraded', array( '\MeuMouse\Joinotify\Admin\Builder\Workflow_Migrator', 'migrate_stored_workflows' ), 10, 2 );
+        // Legacy workflow conversion + trigger-hook index rebuild on upgrade is
+        // owned by Core\Upgrader (runs Workflow_Migrator::migrate_stored_workflows
+        // as a tracked, retryable routine), so it is no longer hooked here.
 
         // cancel pending scheduled segments when a workflow is disabled or removed
         add_action( 'transition_post_status', array( $this, 'clear_on_status_change' ), 10, 3 );

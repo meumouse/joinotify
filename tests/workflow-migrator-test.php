@@ -147,8 +147,32 @@ $trigger = find_trigger_node( $content );
 check( 'trigger slug preserved (woocommerce_order_status_completed)', $trigger['data']['trigger'] === 'woocommerce_order_status_completed' );
 check( 'first action is a whatsapp text', $content[1]['data']['action'] === 'send_whatsapp_message_text' );
 
+echo "\n== fixture 146 (1.4.6 subscription, delay + nested condition branches) ==\n";
+$file = load_fixture( 'joinotify-workflow-146.json' );
+check( 'fixture is plugin 1.4.6', $file['plugin_version'] === '1.4.6' );
+$migrated = Workflow_Migrator::migrate_file( $file );
+$content = $migrated['workflow_content'];
+$trigger = find_trigger_node( $content );
+
+check( 'subscription trigger slug preserved (woocommerce_subscription_status_cancelled)', $trigger['data']['trigger'] === 'woocommerce_subscription_status_cancelled' );
+check( 'legacy trigger gains a settings container', isset( $trigger['data']['settings'] ) && is_array( $trigger['data']['settings'] ) );
+
+$delay = find_action_node( $content, 'time_delay' );
+check( 'delay node preserved', $delay !== null );
+check( 'stale delay_timestamp dropped', ! isset( $delay['data']['delay_timestamp'] ) );
+check( 'delay_period preserved (day)', $delay['data']['delay_period'] === 'day' );
+
+$condition = find_action_node( $content, 'condition' );
+check( 'condition node preserved', $condition !== null );
+check( 'condition flat key lifted (customer_phone)', ( $condition['data']['condition'] ?? null ) === 'customer_phone' );
+check( 'condition_type lifted from legacy type (not_empty)', ( $condition['data']['condition_type'] ?? null ) === 'not_empty' );
+check( 'condition_content preserved', isset( $condition['data']['condition_content'] ) && is_array( $condition['data']['condition_content'] ) );
+check( 'nested true branch has whatsapp text', find_action_node( $condition['children']['action_true'], 'send_whatsapp_message_text' ) !== null );
+check( 'nested false branch has stop_funnel', find_action_node( $condition['children']['action_false'], 'stop_funnel' ) !== null );
+check( 'user_meta placeholder untouched in branch', find_action_node( $condition['children']['action_true'], 'send_whatsapp_message_text' )['data']['receiver'] === '{{ user_meta[billing_phone] }}' );
+
 echo "\n== idempotency (migrate twice == migrate once) ==\n";
-foreach ( array( 'joinotify-workflow-725.json', 'joinotify-workflow-727.json', 'joinotify-workflow-729.json' ) as $fixture ) {
+foreach ( array( 'joinotify-workflow-725.json', 'joinotify-workflow-727.json', 'joinotify-workflow-729.json', 'joinotify-workflow-146.json' ) as $fixture ) {
 	$once = Workflow_Migrator::migrate_file( load_fixture( $fixture ) );
 	$twice = Workflow_Migrator::migrate_content( $once['workflow_content'], $once['plugin_version'] );
 	check( "{$fixture}: re-running migration is a no-op", $once['workflow_content'] === $twice );

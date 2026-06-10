@@ -319,6 +319,7 @@ class Init {
 	public function instance_admin_init_classes() {
 		$classes = apply_filters( 'Joinotify/Init/Admin_Init_Classes', array(
 			'MeuMouse\\Joinotify\\Admin\\Admin',
+			'MeuMouse\\Joinotify\\Core\\Upgrader',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
