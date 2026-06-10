@@ -63,7 +63,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
     <button
       v-if="showClose"
       type="button"
-      class="btn-close absolute right-5 top-5 z-20 box-content flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white p-2 text-slate-500 opacity-70 shadow-sm transition hover:opacity-100 focus:opacity-100 focus:outline-none"
+      class="btn-close absolute right-5 top-5 z-20 box-content flex h-5 w-5 shrink-0 items-center justify-center p-2 text-slate-500 opacity-70 shadow-sm transition hover:opacity-100 focus:opacity-100 focus:outline-none"
       :style="closeButtonStyle"
       :aria-label="__('Close', textDomain)"
       @click="$emit('close')"
