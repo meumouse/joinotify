@@ -1,7 +1,8 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { __, textDomain } from '../../utils/i18n';
+import { __, sprintf, textDomain } from '../../utils/i18n';
 import BaseButton from '../../components/base/BaseButton.vue';
+import BaseAlert from '../../builder/components/base/BaseAlert.vue';
 import ModalDialog from '../../components/modals/ModalDialog.vue';
 import BaseInput from '../../components/base/BaseInput.vue';
 import PhoneField from '../../components/fields/PhoneField.vue';
@@ -57,12 +58,69 @@ const testPhoneDraft = ref('');
 const testPhoneSaving = ref(false);
 const routeWorkflowLoaded = ref(false);
 const autoOpenedTriggerSetupId = ref('');
+// Warns the user when the loaded flow's trigger/integration is unavailable. The
+// `handledKey` makes the modal fire once per distinct trigger+reason so dismissing
+// it does not re-open on unrelated canvas re-renders.
+const triggerWarningModalOpen = ref(false);
+const triggerWarningHandledKey = ref('');
 const toasts = ref([]);
 const toastTimers = new Map();
 
 const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
 const docsUrl = computed(() => bootstrap.value?.links?.docs_url || '#');
+const settingsUrl = computed(() => store.bootstrap?.links?.settings_url || bootstrap.value?.links?.settings_url || '#');
+// Backend-authoritative assessment of the loaded flow's trigger: the frontend
+// catalog re-injects core contexts as enabled, so only the server can reliably
+// tell whether the trigger's integration is actually active and registered.
+const triggerAvailability = computed(() => {
+  const data = store.bootstrap?.trigger_availability;
+  return data && typeof data === 'object' ? data : null;
+});
+const triggerWarningTitle = computed(() => {
+  const reason = triggerAvailability.value?.reason || '';
+
+  if (reason === 'trigger_not_found') {
+    return __('Trigger no longer available', textDomain);
+  }
+
+  return __('Integration not active', textDomain);
+});
+const triggerWarningMessage = computed(() => {
+  const availability = triggerAvailability.value;
+
+  if (!availability) {
+    return '';
+  }
+
+  const label = String(availability.integration_label || '').trim();
+
+  switch (availability.reason) {
+    case 'plugin_inactive':
+      return sprintf(
+        // translators: %s is the integration name (e.g. WooCommerce).
+        __('The %s plugin this trigger depends on is not installed or active. This flow will not be processed until the plugin is active again.', textDomain),
+        label
+      );
+    case 'integration_disabled':
+      return sprintf(
+        // translators: %s is the integration name (e.g. WooCommerce).
+        __('The %s integration that this flow\'s trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.', textDomain),
+        label
+      );
+    case 'trigger_not_found':
+      return __('The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger.', textDomain);
+    case 'integration_unavailable':
+    default:
+      return label
+        ? sprintf(
+            // translators: %s is the integration name (e.g. WooCommerce).
+            __('The %s integration that this flow\'s trigger depends on is not available. This flow will not be processed until the integration is available again.', textDomain),
+            label
+          )
+        : __('The integration that this flow\'s trigger depends on is not available. This flow will not be processed until the integration is available again.', textDomain);
+  }
+});
 const debugMode = computed(() => Boolean(bootstrap.value?.debug_mode));
 const debugLogger = createDebugLogger('Builder', () => debugMode.value);
 const isRunningTest = computed(() => store.loading.test || testPhoneSaving.value);
@@ -247,6 +305,39 @@ watch(
   { immediate: true }
 );
 
+// Warn once when an existing flow is opened on the canvas with a trigger whose
+// integration is disabled/unavailable or whose trigger is no longer registered —
+// such a flow runs into nothing, so the user needs to know it may fail.
+watch(
+  () => [store.step, store.loading.workflow, triggerAvailability.value],
+  () => {
+    if (store.step !== 'canvas' || store.loading.workflow) {
+      return;
+    }
+
+    const availability = triggerAvailability.value;
+
+    if (!availability || !availability.has_trigger || availability.available) {
+      return;
+    }
+
+    const handledKey = `${availability.context}:${availability.trigger}:${availability.reason}`;
+
+    if (triggerWarningHandledKey.value === handledKey) {
+      return;
+    }
+
+    triggerWarningHandledKey.value = handledKey;
+    triggerWarningModalOpen.value = true;
+    debugLogger.log('trigger:unavailable-warning', {
+      context: availability.context,
+      trigger: availability.trigger,
+      reason: availability.reason,
+    });
+  },
+  { immediate: true, deep: true }
+);
+
 function isEditableTarget(target) {
   const element = target instanceof HTMLElement ? target : null;
 
@@ -336,6 +427,28 @@ function goChangeTrigger() {
   changingTrigger.value = true;
   setChangeTriggerUrl(true);
   store.step = 'trigger';
+}
+
+function closeTriggerWarning() {
+  triggerWarningModalOpen.value = false;
+}
+
+function changeTriggerFromWarning() {
+  triggerWarningModalOpen.value = false;
+  goChangeTrigger();
+}
+
+function openIntegrationsSettings() {
+  // Land directly on the integrations tab: the settings SPA restores its active
+  // section from this storage key on load (it has no URL-param routing).
+  try {
+    window.localStorage.setItem('joinotify-settings-active-section', 'integrations');
+  } catch (error) {
+    // Ignore storage failures (private mode, disabled storage): the user can
+    // still navigate to the integrations tab manually.
+  }
+
+  window.location.href = settingsUrl.value;
 }
 
 function handleTriggerBack() {
@@ -1181,6 +1294,24 @@ function setChangeTriggerUrl(active) {
           :disabled="!String(testPhoneDraft || '').trim()"
           @click="saveTestPhoneAndRun"
         />
+      </div>
+    </div>
+  </ModalDialog>
+
+  <ModalDialog
+    :open="triggerWarningModalOpen"
+    :title="triggerWarningTitle"
+    :eyebrow="__('Trigger warning', textDomain)"
+    sizeClass="max-w-xl"
+    @close="closeTriggerWarning"
+  >
+    <div class="space-y-6">
+      <BaseAlert tone="warning" :message="triggerWarningMessage" />
+
+      <div class="flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
+        <BaseButton :title="__('Dismiss', textDomain)" variant="ghost" @click="closeTriggerWarning" />
+        <BaseButton :title="__('Open integration settings', textDomain)" variant="secondary" @click="openIntegrationsSettings" />
+        <BaseButton :title="__('Change trigger', textDomain)" @click="changeTriggerFromWarning" />
       </div>
     </div>
   </ModalDialog>

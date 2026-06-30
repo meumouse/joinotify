@@ -57,11 +57,13 @@ class Registry {
 			'start_templates' => Workflow_Manager::get_start_templates(),
 			'triggers' => self::get_triggers_catalog(),
 			'trigger_contexts' => self::get_trigger_contexts_catalog(),
+			'trigger_availability' => self::get_workflow_trigger_availability( $workflow_state ),
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
 			'conditions' => self::get_conditions_catalog(),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
 				'dashboard_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
+				'settings_url' => admin_url( 'admin.php?page=joinotify-settings' ),
 				'docs_url' => esc_url_raw( JOINOTIFY_DOCS_URL ),
 				'import_url' => rest_url( 'joinotify/v1/admin/builder/import' ),
 			),
@@ -612,6 +614,90 @@ class Registry {
 		}
 
 		return $contexts;
+	}
+
+
+	/**
+	 * Evaluate whether the trigger used by a workflow is currently available.
+	 *
+	 * A workflow can be built while an integration is active and later become
+	 * unprocessable if that integration is disabled, its required plugin is
+	 * deactivated/uninstalled, or the trigger itself is no longer registered.
+	 * The builder uses this assessment to warn the user that the flow may fail
+	 * to process before it runs silently into nothing.
+	 *
+	 * @since 2.0.0
+	 * @param array<string,mixed> $workflow_state Normalized workflow state payload.
+	 * @return array<string,mixed>
+	 */
+	public static function get_workflow_trigger_availability( $workflow_state ) {
+		$context = '';
+		$trigger = '';
+
+		if ( ! empty( $workflow_state['content'][0]['data']['context'] ) ) {
+			$context = (string) $workflow_state['content'][0]['data']['context'];
+		}
+
+		if ( ! empty( $workflow_state['content'][0]['data']['trigger'] ) ) {
+			$trigger = (string) $workflow_state['content'][0]['data']['trigger'];
+		}
+
+		// No trigger configured yet (new/empty flow): nothing to warn about.
+		if ( '' === $context || '' === $trigger ) {
+			return array(
+				'has_trigger' => false,
+				'available' => true,
+				'context' => $context,
+				'trigger' => $trigger,
+				'integration_label' => '',
+				'reason' => '',
+			);
+		}
+
+		$integration = null;
+
+		foreach ( Settings_Registry::get_integration_cards() as $card ) {
+			if ( isset( $card['slug'] ) && (string) $card['slug'] === $context ) {
+				$integration = $card;
+				break;
+			}
+		}
+
+		$integration_label = ! empty( $integration['title'] )
+			? (string) $integration['title']
+			: ucwords( str_replace( array( '_', '-' ), ' ', $context ) );
+		$integration_enabled = $integration ? ! empty( $integration['enabled'] ) : false;
+		$requires_plugin = $integration ? ! empty( $integration['requires_plugin'] ) : false;
+		$plugin_active = $integration ? ! empty( $integration['plugin_active'] ) : false;
+		$trigger_exists = Triggers::get_trigger( $context, $trigger ) !== null;
+
+		// Resolve a single, most-actionable reason. The order matters: a missing
+		// integration/plugin is the root cause and should be surfaced before the
+		// downstream "trigger not registered" symptom it produces.
+		$reason = '';
+
+		if ( ! $integration ) {
+			$reason = 'integration_unavailable';
+		} elseif ( $requires_plugin && ! $plugin_active ) {
+			$reason = 'plugin_inactive';
+		} elseif ( ! $integration_enabled ) {
+			$reason = 'integration_disabled';
+		} elseif ( ! $trigger_exists ) {
+			$reason = 'trigger_not_found';
+		}
+
+		return array(
+			'has_trigger' => true,
+			'available' => ( '' === $reason ),
+			'context' => $context,
+			'trigger' => $trigger,
+			'integration_label' => $integration_label,
+			'integration_enabled' => $integration_enabled,
+			'requires_plugin' => $requires_plugin,
+			'plugin_active' => $plugin_active,
+			'trigger_exists' => $trigger_exists,
+			'reason' => $reason,
+		);
 	}
 
 

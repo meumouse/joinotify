@@ -235,6 +235,7 @@ export interface BuilderBootstrap {
   actions?: Array<Record<string, unknown>>;
   triggers?: Record<string, Array<Record<string, unknown>>>;
   trigger_contexts?: Array<Record<string, unknown>>;
+  trigger_availability?: Record<string, unknown>;
   placeholders?: Record<string, unknown> | Array<Record<string, unknown>>;
   links?: Record<string, string>;
   permissions?: Record<string, unknown>;
