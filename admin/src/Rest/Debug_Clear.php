@@ -2,13 +2,17 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
+use MeuMouse\Joinotify\Core\Debug_Log;
 use MeuMouse\Joinotify\Core\Logger;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
 
 /**
- * Clear the current debug log file.
+ * Clear the debug logs (structured table + flat file).
+ *
+ * @since 1.1.0
+ * @version 2.1.0
  */
 class Debug_Clear extends Abstract_Route {
 
@@ -34,9 +38,10 @@ class Debug_Clear extends Abstract_Route {
      * @return \WP_REST_Response
      */
     public function handle( WP_REST_Request $request ) {
+        Debug_Log::clear_all();
         Logger::clear_log();
 
-        if ( Logger::has_logs() ) {
+        if ( Debug_Log::has_logs() ) {
             return $this->error_response( esc_html__( 'Could not clear the debug logs.', 'joinotify' ) );
         }
 

@@ -47,6 +47,8 @@ class Default_Options {
             'enable_send_disconnect_notifications' => 'yes',
             'enable_message_history' => 'yes',
             'message_history_retention_days' => '90',
+            'enable_debug_logs' => 'yes',
+            'debug_logs_retention_days' => '30',
             'enable_update_notice' => 'yes',
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',

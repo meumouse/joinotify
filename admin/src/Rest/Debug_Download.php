@@ -2,15 +2,16 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
-use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Core\Debug_Log;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
 
 /**
- * Return the raw debug log file content for download.
+ * Return the debug log content for download, rendered from the structured table.
  *
  * @since 1.4.7
+ * @version 2.1.0
  */
 class Debug_Download extends Abstract_Route {
 
@@ -36,19 +37,16 @@ class Debug_Download extends Abstract_Route {
      * @return \WP_REST_Response
      */
     public function handle( WP_REST_Request $request ) {
-        $upload_dir = wp_upload_dir();
-        $log_file   = trailingslashit( $upload_dir['basedir'] ) . 'joinotify/logs.txt';
+        $content = Debug_Log::render_text();
 
-        if ( ! file_exists( $log_file ) ) {
-            return $this->error_response( esc_html__( 'The log file was not found.', 'joinotify' ) );
+        if ( '' === $content ) {
+            return $this->error_response( esc_html__( 'The debug log is empty.', 'joinotify' ) );
         }
 
-        $content = file_get_contents( $log_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-
         return $this->success_response( array(
-            'message'  => __( 'Log file ready for download.', 'joinotify' ),
+            'message' => __( 'Log file ready for download.', 'joinotify' ),
             'filename' => 'joinotify-debug-logs.txt',
-            'content'  => $content !== false ? $content : '',
+            'content' => $content,
         ) );
     }
 }

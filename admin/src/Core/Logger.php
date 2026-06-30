@@ -47,14 +47,27 @@ class Logger {
 
 
     /**
-     * Register message on log file
+     * Register message on both the structured debug table and the log file.
+     *
+     * The dedicated table (see {@see Debug_Log}) is the primary, queryable
+     * store; the flat file is still written for external tailing and backwards
+     * compatibility. Existing call sites keep working unchanged.
      *
      * @since 1.1.0
-     * @param string $message | Message for register
+     * @version 2.1.0
+     * @param mixed  $message | Message (string, array or WP_Error) for register
      * @param string $level | Log level (INFO, WARNING, ERROR)
      */
     public static function register_log( $message, $level = 'INFO' ) {
-        // Ensure the message is a string
+        // Forward to the structured store first (it can normalize WP_Error/arrays).
+        if ( class_exists( Debug_Log::class ) ) {
+            Debug_Log::record( array(
+                'message' => $message,
+                'level' => Debug_Log::normalize_level( $level ),
+            ) );
+        }
+
+        // Ensure the message is a string for the flat file.
         if ( ! is_string( $message ) ) {
             $message = print_r( $message, true );
         }

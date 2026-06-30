@@ -217,6 +217,23 @@ class Registry {
                                     array( 'value' => '365', 'label' => __( '365 days', 'joinotify' ) ),
                                 )
                             ),
+                            self::field_toggle(
+                                'enable_debug_logs',
+                                esc_html__( 'Debug logs', 'joinotify' ),
+                                esc_html__( 'Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen.', 'joinotify' )
+                            ),
+                            self::field_select(
+                                'debug_logs_retention_days',
+                                esc_html__( 'Debug logs retention', 'joinotify' ),
+                                esc_html__( 'Automatically delete debug log records older than the selected period.', 'joinotify' ),
+                                array(
+                                    array( 'value' => '0', 'label' => __( 'Keep forever', 'joinotify' ) ),
+                                    array( 'value' => '7', 'label' => __( '7 days', 'joinotify' ) ),
+                                    array( 'value' => '30', 'label' => __( '30 days', 'joinotify' ) ),
+                                    array( 'value' => '60', 'label' => __( '60 days', 'joinotify' ) ),
+                                    array( 'value' => '90', 'label' => __( '90 days', 'joinotify' ) ),
+                                )
+                            ),
                         ),
                     ),
                     array(

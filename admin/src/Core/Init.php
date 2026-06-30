@@ -250,6 +250,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Api\\Controller',
 			'MeuMouse\\Joinotify\\Core\\Notification_Queue',
 			'MeuMouse\\Joinotify\\Core\\Message_History',
+			'MeuMouse\\Joinotify\\Core\\Debug_Log',
 			'MeuMouse\\Joinotify\\Cron\\Schedule',
 			'MeuMouse\\Joinotify\\Cron\\Routines',
 			'MeuMouse\\Joinotify\\Core\\Debug',

@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Api;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Core\Debug_Log;
 use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Core\Message_History;
 
@@ -454,13 +455,39 @@ class Controller {
             $status = 'failed';
         }
 
+        $response_code = (int) ( $details['response_code'] ?? 0 );
+
         Message_History::record( array_merge( $fields, array(
             'status' => $status,
-            'response_code' => (int) ( $details['response_code'] ?? 0 ),
+            'response_code' => $response_code,
             'error' => (string) ( $details['error'] ?? '' ),
         )));
 
-        return $return_details ? $details : (int) ( $details['response_code'] ?? 0 );
+        // Capture failed dispatches in the structured debug log (queued retries
+        // are warnings, definitive failures are errors).
+        if ( 'sent' !== $status ) {
+            Debug_Log::record( array(
+                'level' => 'queued' === $status ? 'warning' : 'error',
+                'channel' => 'api',
+                'message' => sprintf(
+                    'WhatsApp dispatch %s for %s (HTTP %d)',
+                    $status,
+                    $fields['receiver'] ?? '',
+                    $response_code
+                ),
+                'code' => (string) ( $details['error'] ?? '' ),
+                'response_code' => $response_code,
+                'context' => array(
+                    'sender' => $fields['sender'] ?? '',
+                    'receiver' => $fields['receiver'] ?? '',
+                    'message_type' => $fields['message_type'] ?? '',
+                    'queued' => ! empty( $details['queued'] ),
+                    'retryable' => ! empty( $details['retryable'] ),
+                ),
+            ));
+        }
+
+        return $return_details ? $details : $response_code;
     }
 
 

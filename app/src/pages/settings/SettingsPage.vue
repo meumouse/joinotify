@@ -39,6 +39,7 @@ const settings = reactive({});
 const savedSettings = ref(cloneValue(props.bootstrap?.settings || {}));
 const phoneCandidates = ref([]);
 const debugLogs = ref([]);
+const debugItems = ref([]);
 const logsOpen = ref(false);
 const logsLoading = ref(false);
 const saving = ref(false);
@@ -615,12 +616,13 @@ async function loadDebugLogs() {
   try {
     const response = await api.get('/admin/settings/debug/logs');
     debugLogs.value = response.content || [];
+    debugItems.value = response.items || [];
 
-    if (logsOpen.value && !debugLogs.value.length) {
+    if (logsOpen.value && !debugItems.value.length) {
       toast(response.message || __('The debug log is empty.', textDomain), 'info', __('Logs', textDomain));
     }
     debugLogger.log('logs:load-complete', {
-      count: debugLogs.value.length,
+      count: debugItems.value.length,
     });
   } catch (error) {
     toast(error.message || __('Could not open the logs.', textDomain), 'danger', __('Logs', textDomain));
@@ -653,6 +655,7 @@ function confirmClearLogs() {
     try {
       const response = await api.post('/admin/settings/debug/clear', {});
       debugLogs.value = [];
+      debugItems.value = [];
       toast(response.message || __('Logs cleared successfully.', textDomain), 'success', __('Logs', textDomain));
       debugLogger.log('logs:clear-complete');
     } catch (error) {
@@ -846,6 +849,7 @@ function canConfigureIntegration(integration) {
 
     <DebugLogModal
       :open="logsOpen"
+      :items="debugItems"
       :logs="debugLogs"
       :loading="logsLoading"
       @close="logsOpen = false"
