@@ -14,6 +14,8 @@
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
 import ModalDialog from '../../../../components/modals/ModalDialog.vue';
+import BaseListboxSelect from '../../../../components/base/BaseListboxSelect.vue';
+import BaseSearchInput from '../../../../components/base/BaseSearchInput.vue';
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -43,6 +45,19 @@ const availableChannels = computed(() => {
   props.items.forEach((item) => item.channel && set.add(item.channel));
   return Array.from(set).sort();
 });
+
+const levelOptions = [
+  { value: 'debug', label: __('Debug', textDomain) },
+  { value: 'info', label: __('Info', textDomain) },
+  { value: 'notice', label: __('Notice', textDomain) },
+  { value: 'warning', label: __('Warning', textDomain) },
+  { value: 'error', label: __('Error', textDomain) },
+  { value: 'critical', label: __('Critical', textDomain) },
+];
+
+const channelOptions = computed(() =>
+  availableChannels.value.map((channel) => ({ value: channel, label: channel }))
+);
 
 const filteredItems = computed(() => {
   const term = search.value.trim().toLowerCase();
@@ -109,33 +124,25 @@ function isExpanded(id) {
       </div>
 
       <template v-else>
-        <div class="flex flex-wrap items-center gap-2">
-          <input
+        <div class="flex flex-wrap items-end gap-2">
+          <BaseSearchInput
             v-model="search"
-            type="search"
             :placeholder="__('Search message, context or hook…', textDomain)"
-            class="min-w-[14rem] flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-shell-500 focus:outline-none"
+            class="min-w-[14rem] flex-1"
           />
-          <select
+          <BaseListboxSelect
             v-model="levelFilter"
-            class="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-shell-500 focus:outline-none"
-          >
-            <option value="">{{ __('All levels', textDomain) }}</option>
-            <option value="debug">{{ __('Debug', textDomain) }}</option>
-            <option value="info">{{ __('Info', textDomain) }}</option>
-            <option value="notice">{{ __('Notice', textDomain) }}</option>
-            <option value="warning">{{ __('Warning', textDomain) }}</option>
-            <option value="error">{{ __('Error', textDomain) }}</option>
-            <option value="critical">{{ __('Critical', textDomain) }}</option>
-          </select>
-          <select
+            :options="levelOptions"
+            :placeholder="__('All levels', textDomain)"
+            class="w-44"
+          />
+          <BaseListboxSelect
             v-if="availableChannels.length"
             v-model="channelFilter"
-            class="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-shell-500 focus:outline-none"
-          >
-            <option value="">{{ __('All channels', textDomain) }}</option>
-            <option v-for="channel in availableChannels" :key="channel" :value="channel">{{ channel }}</option>
-          </select>
+            :options="channelOptions"
+            :placeholder="__('All channels', textDomain)"
+            class="w-44"
+          />
         </div>
 
         <div class="max-h-[34rem] overflow-auto rounded-lg border border-slate-200">
