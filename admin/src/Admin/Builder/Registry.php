@@ -1782,24 +1782,58 @@ class Registry {
 			'field_id' => $field_id,
 		);
 
-		$products = isset( $legacy['products'] ) && is_array( $legacy['products'] ) ? $legacy['products'] : ( isset( $data['products'] ) && is_array( $data['products'] ) ? $data['products'] : array() );
+		// Accept the products list from either the flat key (the builder UI binds
+		// to data.products) or the nested condition_content.products (runtime/
+		// canonical copy), so the selection survives regardless of which copy a
+		// given payload carries.
+		$products = isset( $data['products'] ) && is_array( $data['products'] ) ? $data['products'] : ( isset( $legacy['products'] ) && is_array( $legacy['products'] ) ? $legacy['products'] : array() );
+		$products = self::sanitize_condition_products( $products );
 
 		if ( ! empty( $products ) ) {
-			$content['products'] = array();
-
-			foreach ( $products as $product ) {
-				if ( ! is_array( $product ) ) {
-					continue;
-				}
-
-				$content['products'][] = array(
-					'id' => isset( $product['id'] ) ? (int) $product['id'] : 0,
-					'title' => isset( $product['title'] ) ? sanitize_text_field( (string) $product['title'] ) : '',
-				);
-			}
+			$content['products'] = $products;
 		}
 
 		return $content;
+	}
+
+
+	/**
+	 * Normalize a condition products list to the canonical [{ id:int, title:string }] shape.
+	 *
+	 * Shared by sanitize_node_data() (flat key) and build_condition_content_payload()
+	 * (nested key) so both copies are always well-formed and identical. Products
+	 * without a positive id are dropped, since the runtime matches purchased
+	 * products by id.
+	 *
+	 * @since 2.0.0
+	 * @param mixed $products Raw products list.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private static function sanitize_condition_products( $products ) {
+		if ( ! is_array( $products ) ) {
+			return array();
+		}
+
+		$clean = array();
+
+		foreach ( $products as $product ) {
+			if ( ! is_array( $product ) ) {
+				continue;
+			}
+
+			$id = isset( $product['id'] ) ? (int) $product['id'] : 0;
+
+			if ( $id <= 0 ) {
+				continue;
+			}
+
+			$clean[] = array(
+				'id' => $id,
+				'title' => isset( $product['title'] ) ? sanitize_text_field( (string) $product['title'] ) : '',
+			);
+		}
+
+		return $clean;
 	}
 
 
@@ -1862,6 +1896,16 @@ class Registry {
 			// Preserve the boolean flag without coercing it into "1"/"" strings.
 			if ( 'connection_break_before' === $key ) {
 				$clean[ $key ] = is_null( $value ) ? null : (bool) $value;
+				continue;
+			}
+
+			// Condition "products" is a structured list the runtime reads by id
+			// (products_purchased). Canonicalize it explicitly so the id stays an
+			// int and the title is sanitized, instead of letting the generic array
+			// recursion stringify the id. This keeps the flat and nested copies in
+			// sync and prevents the selection from being silently malformed.
+			if ( 'products' === $key && is_array( $value ) ) {
+				$clean[ $key ] = self::sanitize_condition_products( $value );
 				continue;
 			}
 
