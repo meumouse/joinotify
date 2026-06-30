@@ -141,11 +141,12 @@ class Messages {
         // open condition description message
         $description = '<div class="condition-description">';
             if ( $get_condition === 'products_purchased' ) {
+                $products = ( isset( $condition_content['products'] ) && is_array( $condition_content['products'] ) ) ? $condition_content['products'] : array();
                 $product_titles = array_map( function( $product ) {
-                    return $product['title'];
-                }, $condition_content['products'] );
-            
-                $description .= sprintf( '%s: %s', $condition_content['type_text'], implode( ', ', $product_titles ) );
+                    return is_array( $product ) && isset( $product['title'] ) ? $product['title'] : '';
+                }, $products );
+
+                $description .= sprintf( '%s: %s', $condition_content['type_text'] ?? '', implode( ', ', $product_titles ) );
             } elseif ( $get_condition === 'order_paid' ) {
                 $description .= $condition_type === 'is' ? esc_html__( 'Check whether the order was paid', 'joinotify' ) : esc_html__( 'Check if the order was not paid', 'joinotify' );
             } elseif ( $get_condition === 'order_total' ) {
