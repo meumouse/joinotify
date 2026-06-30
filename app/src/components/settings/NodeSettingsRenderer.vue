@@ -86,16 +86,23 @@ const placeholderItems = computed(() => {
   );
 });
 
+// Re-sync the edit buffer only when the *selected node changes identity* — not on
+// every deep mutation of the current node's data. The canvas continuously syncs
+// node positions (canvas_position) into the store while this modal is open; with a
+// deep watcher, such a background mutation lands in the same flush as a keystroke,
+// runs first, flips isSyncingFromNode true (across its `await nextTick`), and the
+// draft watcher below then skips emitting the user's edit — silently dropping it.
+// Keying on node id keeps the buffer authoritative for the open node.
 watch(
-  () => props.node,
-  async (node) => {
+  () => props.node?.id || null,
+  async () => {
     isSyncingFromNode.value = true;
-    draft.value = cloneSerializable(node?.data || {});
+    draft.value = cloneSerializable(props.node?.data || {});
     lastEmittedSnapshot.value = JSON.stringify(draft.value || {});
     await nextTick();
     isSyncingFromNode.value = false;
   },
-  { immediate: true, deep: true }
+  { immediate: true }
 );
 
 watch(
