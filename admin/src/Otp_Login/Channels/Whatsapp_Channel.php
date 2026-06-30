@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Otp_Login\Channels;
 use MeuMouse\Joinotify\Otp_Login\Channel_Interface;
 use MeuMouse\Joinotify\Otp_Login\Otp_Message;
 use MeuMouse\Joinotify\Otp_Login\Settings;
+use MeuMouse\Joinotify\Api\Controller;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -79,7 +80,7 @@ class Whatsapp_Channel implements Channel_Interface {
      * @return bool|\WP_Error
      */
     public function send( Otp_Message $message ) {
-        if ( ! function_exists( 'joinotify_send_whatsapp_message_text' ) ) {
+        if ( ! class_exists( Controller::class ) ) {
             return new \WP_Error( 'joinotify_otp_helpers_missing', __( 'Joinotify messaging helpers are unavailable.', 'joinotify' ) );
         }
 
@@ -93,7 +94,10 @@ class Whatsapp_Channel implements Channel_Interface {
             ? joinotify_prepare_receiver( preg_replace( '/\s+/', '', (string) $message->phone ) )
             : preg_replace( '/\D+/', '', (string) $message->phone );
 
-        $result = joinotify_send_whatsapp_message_text( $sender, $receiver, $message->body );
+        // OTP codes expire within minutes, so a deferred retry would deliver an
+        // already-invalid code. Send a single attempt and never enqueue it for
+        // the notification retry queue ($queue_on_failure = false).
+        $result = Controller::send_message_text( $sender, $receiver, $message->body, 0, false );
 
         return ( true === $result || 201 === $result || '201' === $result );
     }
