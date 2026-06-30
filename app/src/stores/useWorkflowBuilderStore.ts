@@ -1408,6 +1408,22 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     });
   }
 
+  function stripNodeLayoutMetadata(node: WorkflowNode) {
+    if (node.data && typeof node.data === 'object') {
+      delete node.data.canvas_position;
+      delete node.data.connection_from;
+      delete node.data.connection_mode;
+      delete node.data.connection_break_before;
+    }
+
+    (node.children || []).forEach((child) => stripNodeLayoutMetadata(child));
+
+    if (node.branches) {
+      node.branches.action_true.forEach((child) => stripNodeLayoutMetadata(child));
+      node.branches.action_false.forEach((child) => stripNodeLayoutMetadata(child));
+    }
+  }
+
   function duplicateNode(nodeId: string) {
     const location = findWorkflowNodeLocation(workflowContent.value, nodeId);
 
@@ -1421,6 +1437,20 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
 
     const clone = cloneWorkflowNode(location.node);
     clone.id = createWorkflowNodeId(clone.type);
+
+    // Drop layout/connection metadata from the whole cloned subtree so the
+    // duplicate does not land exactly on top of the original (the clone keeps a
+    // copy of canvas_position otherwise). The top-level clone then gets a fresh
+    // floating position offset from the original, matching the add-action flow;
+    // nested children fall back to the canvas auto-layout.
+    stripNodeLayoutMetadata(clone);
+    clone.data = {
+      ...clone.data,
+      connection_from: null,
+      connection_mode: 'floating',
+      connection_break_before: null,
+      canvas_position: resolveFloatingNodePosition(nodeId),
+    };
 
     if (location.parent && location.branchKey && location.parent.data.action === 'condition' && location.parent.branches) {
       const branch = getBranchCollection(location.parent)[location.branchKey];

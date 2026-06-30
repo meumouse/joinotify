@@ -82,6 +82,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'add-action', payload?: { afterNodeId?: string; branchKey?: string }): void;
   (e: 'remove-node', nodeId: string): void;
+  (e: 'duplicate-node', nodeId: string): void;
   (e: 'select-node', nodeId: string): void;
   (e: 'change-trigger', nodeId: string): void;
   (e: 'select-action', payload: DroppedActionPayload): void;
@@ -205,6 +206,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
     needsSetup: actionNeedsSetup(node, actionDefinition),
     onEdit: handleNodeEdit,
     onRequestDelete: handleRemoveRequest,
+    onDuplicate: handleDuplicateRequest,
     onSelect: handleNodeSelect,
     onAddAction: handleAddAction,
   };
@@ -470,6 +472,14 @@ function handleRemoveRequest(nodeId: string) {
   }
 
   emit('remove-node', nodeId);
+}
+
+function handleDuplicateRequest(nodeId: string) {
+  if (!nodeId) {
+    return;
+  }
+
+  emit('duplicate-node', nodeId);
 }
 
 function handleRemoveEdge(payload: FlowEdgeRemovePayload | string) {

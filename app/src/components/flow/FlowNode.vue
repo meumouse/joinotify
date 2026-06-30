@@ -7,7 +7,7 @@
  * @since 1.4.7
  */
 import { computed, ref, watch } from 'vue';
-import { Cog, DotsVerticalRounded, File, Repeat, Trash } from '@boxicons/vue';
+import { Cog, Copy, DotsVerticalRounded, File, Repeat, Trash } from '@boxicons/vue';
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
@@ -29,6 +29,7 @@ export interface FlowNodeData {
   hasSettings?: boolean;
   needsSetup?: boolean;
   onRequestDelete?: (id: string) => void;
+  onDuplicate?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
   onSelect?: (id: string) => void;
   onChangeTrigger?: (id: string) => void;
@@ -128,6 +129,11 @@ function changeTrigger() {
 
 function requestDelete() {
   props.data.onRequestDelete?.(props.id);
+  menuOpen.value = false;
+}
+
+function requestDuplicate() {
+  props.data.onDuplicate?.(props.id);
   menuOpen.value = false;
 }
 
@@ -293,6 +299,15 @@ function normalizeBoxiconClass(value: string) {
           >
             <Cog :width="13" :height="13" />
             {{ __('Settings', textDomain) }}
+          </button>
+          <button
+            v-if="!isTrigger"
+            type="button"
+            class="flex w-full items-center gap-2 px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+            @click="requestDuplicate"
+          >
+            <Copy :width="13" :height="13" />
+            {{ __('Duplicate', textDomain) }}
           </button>
           <button
             v-if="!isTrigger"
