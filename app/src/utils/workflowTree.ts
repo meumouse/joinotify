@@ -102,8 +102,16 @@ export function createTriggerNode(payload: Partial<Record<string, unknown>> = {}
 
 export function createActionNode(actionId = '', payload: Partial<Record<string, unknown>> = {}, definition?: WorkflowRegistryItem | null): WorkflowNode {
   const defaults = isRecord(definition?.defaultData) ? cloneSerializable(definition?.defaultData) : {};
+  // Carry the caller's action-specific fields (delay_value, delay_period,
+  // date_value, coupon/ai/snippet keys, …) into baseData so the definition's
+  // normalize step sees the real values. Without this, only the hardcoded keys
+  // below survived and every other field silently reset to its default on save
+  // (e.g. a delay amount reverting to 1). `id`/`children` are structural and
+  // handled separately, so they're kept out of node data.
+  const { id: _payloadId, children: _payloadChildren, ...payloadData } = payload as Record<string, unknown>;
   const baseData = {
     ...defaults,
+    ...cloneSerializable(payloadData),
     title: typeof payload.title === 'string' ? payload.title : definition?.label || 'Action',
     description: typeof payload.description === 'string' ? payload.description : '',
     action: actionId,
