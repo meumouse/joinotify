@@ -166,6 +166,7 @@ export interface ConditionNodeData extends Record<string, unknown> {
   meta_key?: string;
   value_text?: string;
   type_text?: string;
+  products?: Array<Record<string, unknown>>;
   condition_content?: Record<string, unknown>;
   settings?: Record<string, unknown>;
 }

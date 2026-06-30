@@ -39,7 +39,7 @@ function normalizeConditionContent(data: Record<string, unknown>): Record<string
 function normalizeConditionData(data: Record<string, unknown>): Record<string, unknown> {
   const conditionContent = normalizeConditionContent(data);
 
-  return {
+  const normalized: Record<string, unknown> = {
     title: String(data.title || __('Condition', textDomain)),
     description: String(data.description || ''),
     action: 'condition',
@@ -55,6 +55,15 @@ function normalizeConditionData(data: Record<string, unknown>): Record<string, u
     condition_content: conditionContent,
     settings: data.settings && typeof data.settings === 'object' ? data.settings : {},
   };
+
+  // The products picker binds to a flat `products` key; mirror it from
+  // condition_content so the selection survives the save/reload round-trip
+  // (this function is both serializeData and normalizeData).
+  if (Array.isArray(conditionContent.products)) {
+    normalized.products = conditionContent.products;
+  }
+
+  return normalized;
 }
 
 export const conditionDefinition: ActionDefinition = {
