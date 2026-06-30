@@ -134,8 +134,16 @@ export function createActionNode(actionId = '', payload: Partial<Record<string, 
 
 export function createConditionNode(payload: Partial<Record<string, unknown>> = {}, definition?: WorkflowRegistryItem | null): WorkflowNode {
   const defaults = isRecord(definition?.defaultData) ? cloneSerializable(definition?.defaultData) : {};
+  // Carry the caller's condition-specific fields (products, condition_content,
+  // value, …) into baseData so the definition's normalize step keeps them.
+  // Without this, only the hardcoded keys below survived and the products
+  // selection was dropped on save, so a "products_purchased" condition matched
+  // against an empty list and always took the false branch. `id`/`children`/
+  // `branches` are structural and handled separately.
+  const { id: _id, children: _children, branches: _branches, ...payloadData } = payload as Record<string, unknown>;
   const baseData = {
     ...defaults,
+    ...cloneSerializable(payloadData),
     title: typeof payload.title === 'string' ? payload.title : definition?.label || 'Condition',
     description: typeof payload.description === 'string' ? payload.description : '',
     action: 'condition',

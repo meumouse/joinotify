@@ -113,6 +113,7 @@ function normalizeNodeData(
 
   if (action === 'condition') {
     const base = createConditionNode({
+      ...data,
       id: nodeId,
       title: typeof data.title === 'string' ? data.title : '',
       description: typeof data.description === 'string' ? data.description : '',
