@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseNumberField.vue
+ *
+ * Thin wrapper around BaseTextField that fixes the input type to "number" and
+ * exposes min, max and step props, providing a numeric field with v-model
+ * support for builder settings.
+ *
+ * @since 2.0.0
+ */
 import BaseTextField from './BaseTextField.vue';
 
 defineProps({

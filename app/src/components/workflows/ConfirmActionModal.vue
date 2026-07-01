@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * ConfirmActionModal.vue
+ *
+ * Reusable confirmation dialog teleported to <body>, used to gate destructive
+ * workflow actions (trash, restore, permanent delete). Emits "confirm" or
+ * "cancel" and shows a loading spinner while the parent processes the action.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 defineProps({
   open: { type: Boolean, default: false },

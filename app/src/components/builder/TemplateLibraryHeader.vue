@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * TemplateLibraryHeader.vue
+ *
+ * Static, centered heading and subtitle displayed at the top of the template
+ * library screen. Presentation only; renders localized copy inviting the user
+ * to start from a template.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 </script>
 

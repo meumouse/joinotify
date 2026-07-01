@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseInputGroupField.vue
+ *
+ * Labelled text input that can display a static prefix and/or suffix affixed to
+ * the control (e.g. units or currency symbols). Supports v-model and emits input
+ * and change events for use in builder settings.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -14,14 +23,33 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
 
+/**
+ * Resolve the input element id, generating a random fallback when no id prop is
+ * supplied so the label stays associated with its control.
+ *
+ * @since 2.0.0
+ * @returns {string} The id to apply to the input element.
+ */
 const inputId = computed(() => props.id || `input-group-${Math.random().toString(36).slice(2, 10)}`);
 
+/**
+ * Handle input events, syncing the v-model and emitting the input event.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native input event from the field.
+ */
 function handleInput(event: Event) {
   const target = event.target as HTMLInputElement;
   emit('update:modelValue', target.value);
   emit('input', target.value);
 }
 
+/**
+ * Handle the change event, forwarding the committed value.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native change event from the field.
+ */
 function handleChange(event: Event) {
   const target = event.target as HTMLInputElement;
   emit('change', target.value);

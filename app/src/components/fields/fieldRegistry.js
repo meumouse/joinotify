@@ -1,3 +1,14 @@
+/**
+ * fieldRegistry.js
+ *
+ * Central registry that maps field type/component names to their Vue field
+ * components. Provides normalization and alias helpers, prop-building for
+ * schema-driven fields, and a resolver used to look up the right component for
+ * a given field definition. Also exposes the registry on window for external
+ * registration.
+ *
+ * @since 2.0.0
+ */
 import ToggleSwitch from '../toggles/ToggleSwitch.vue';
 import TextField from './TextField.vue';
 import TextAreaField from './TextAreaField.vue';
@@ -13,6 +24,13 @@ import OpenAiModelField from './OpenAiModelField.vue';
 
 const registry = new Map();
 
+/**
+ * Normalize a field name into a lookup key (trimmed, lowercased, separators removed).
+ *
+ * @since 2.0.0
+ * @param {string} name Raw field type or component name.
+ * @returns {string} Normalized registry key.
+ */
 function normalizeName(name) {
   return String(name || '')
     .trim()
@@ -20,6 +38,14 @@ function normalizeName(name) {
     .replace(/[\s_-]+/g, '');
 }
 
+/**
+ * Register a component under a normalized alias in the local registry.
+ *
+ * @since 2.0.0
+ * @param {string} name Alias name to register.
+ * @param {object} component Vue component to associate with the alias.
+ * @returns {void}
+ */
 function registerAlias(name, component) {
   const key = normalizeName(name);
 
@@ -51,10 +77,25 @@ registerAlias('color-scale', ColorScaleField);
 registerAlias('color-scale-field', ColorScaleField);
 registerAlias('openai-model-select', OpenAiModelField);
 
+/**
+ * Convert a snake_case or kebab-case key into camelCase.
+ *
+ * @since 2.0.0
+ * @param {string} key Key to transform.
+ * @returns {string} camelCase version of the key.
+ */
 function toCamelCase(key) {
   return String(key || '').replace(/[_-](\w)/g, (_, character) => character.toUpperCase());
 }
 
+/**
+ * Return a copy of an object with additional camelCase aliases for any
+ * snake_case or kebab-case keys, without overriding existing keys.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} value Source object of settings.
+ * @returns {Record<string, unknown>} Object with camelCase aliases added.
+ */
 function withCamelCaseAliases(value) {
   return Object.entries(value).reduce((accumulator, [key, entry]) => {
     accumulator[key] = entry;
@@ -69,6 +110,16 @@ function withCamelCaseAliases(value) {
   }, {});
 }
 
+/**
+ * Build the resolved prop set for a schema-driven field, merging defaults,
+ * component_props, input-group items, and explicit overrides, then adding
+ * camelCase aliases.
+ *
+ * @since 2.0.0
+ * @param {object} field Field definition from the schema.
+ * @param {Record<string, unknown>} [overrides] Values that override the derived settings.
+ * @returns {Record<string, unknown>} Props object ready to bind to the field component.
+ */
 export function buildFieldProps(field, overrides = {}) {
   const componentProps = field?.component_props && typeof field.component_props === 'object' ? field.component_props : {};
   const inputGroupItems = Array.isArray(field?.items) ? field.items : [];
@@ -100,6 +151,13 @@ export function buildFieldProps(field, overrides = {}) {
   return withCamelCaseAliases(settings);
 }
 
+/**
+ * Expose the registry API and current components on the global window object so
+ * external code can register and resolve field components.
+ *
+ * @since 2.0.0
+ * @returns {object|null} The global registry object, or null when window is unavailable.
+ */
 function syncWindowRegistry() {
   if (typeof window === 'undefined') {
     return null;
@@ -114,6 +172,14 @@ function syncWindowRegistry() {
   return window.JoinotifyFieldComponents;
 }
 
+/**
+ * Register a field component by name in both the local and global registries.
+ *
+ * @since 2.0.0
+ * @param {string} name Field type or component name.
+ * @param {object} component Vue component to register.
+ * @returns {void}
+ */
 export function registerFieldComponent(name, component) {
   const key = normalizeName(name);
 
@@ -131,6 +197,14 @@ export function registerFieldComponent(name, component) {
   }
 }
 
+/**
+ * Resolve the field component for a field definition, checking its explicit
+ * component name first and then its type.
+ *
+ * @since 2.0.0
+ * @param {object} field Field definition with optional component and type.
+ * @returns {object|null} The matching Vue component, or null when none is found.
+ */
 export function resolveFieldComponent(field) {
   if (!field || typeof field !== 'object') {
     return null;
@@ -157,6 +231,12 @@ export function resolveFieldComponent(field) {
   return null;
 }
 
+/**
+ * Get a plain object snapshot of all registered field components keyed by alias.
+ *
+ * @since 2.0.0
+ * @returns {Record<string, object>} Map of registry keys to components.
+ */
 export function getRegisteredFieldComponents() {
   return Array.from(registry.entries()).reduce((accumulator, [key, component]) => {
     accumulator[key] = component;
@@ -164,10 +244,22 @@ export function getRegisteredFieldComponents() {
   }, {});
 }
 
+/**
+ * List the field type identifiers supported by the registry.
+ *
+ * @since 2.0.0
+ * @returns {string[]} Supported field type names.
+ */
 export function getSupportedFieldTypes() {
   return ['toggle', 'text', 'textarea', 'richtext', 'select', 'phone', 'color', 'color-scale', 'input-group'];
 }
 
+/**
+ * List the field component identifiers supported by the registry.
+ *
+ * @since 2.0.0
+ * @returns {string[]} Supported field component names.
+ */
 export function getSupportedFieldComponents() {
   return ['toggle', 'text', 'textarea', 'richtext', 'select', 'phone', 'input-group', 'input-button', 'otp', 'color-picker', 'color-scale'];
 }

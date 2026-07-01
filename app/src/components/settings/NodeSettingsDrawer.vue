@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * NodeSettingsDrawer.vue
+ *
+ * Modal dialog that hosts the settings editor for a selected workflow node.
+ * Derives the dialog title from the node's trigger or action definition and
+ * renders NodeSettingsRenderer, forwarding close and update events.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import ModalDialog from '../modals/ModalDialog.vue';
 import NodeSettingsRenderer from './NodeSettingsRenderer.vue';

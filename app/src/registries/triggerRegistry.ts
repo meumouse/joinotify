@@ -1,3 +1,13 @@
+/**
+ * triggerRegistry.ts
+ *
+ * Registry for workflow triggers and their contexts. Normalizes backend trigger
+ * records into the builder's registry item shape, merges them with built-in
+ * fallbacks, and exposes lookup helpers for contexts, trigger catalogs, and
+ * individual trigger definitions.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../utils/i18n';
 import { cloneSerializable } from '../utils/workflowTree';
 import { TRIGGER_CONTEXTS } from './triggerContexts';
@@ -5,6 +15,13 @@ import type { WorkflowContextDefinition, WorkflowFieldCondition, WorkflowFieldSc
 
 type BackendTriggerRecord = Record<string, unknown>;
 
+/**
+ * Coerces a value into an array of non-empty strings.
+ *
+ * @since 2.0.0
+ * @param {unknown} value The value to coerce.
+ * @returns {string[]} The resulting string array.
+ */
 function ensureArray(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.map((item) => String(item)).filter(Boolean);
@@ -17,6 +34,13 @@ function ensureArray(value: unknown): string[] {
   return [];
 }
 
+/**
+ * Normalizes a raw field option into a consistent option shape.
+ *
+ * @since 2.0.0
+ * @param {unknown} option The raw option.
+ * @returns {Object|null} The normalized option, or null when invalid.
+ */
 function normalizeFieldOption(option: unknown) {
   if (!option || typeof option !== 'object') {
     return null;
@@ -38,6 +62,13 @@ function normalizeFieldOption(option: unknown) {
   };
 }
 
+/**
+ * Normalizes a raw field into a WorkflowFieldSchema, recursing into nested fields.
+ *
+ * @since 2.0.0
+ * @param {unknown} field The raw field.
+ * @returns {WorkflowFieldSchema|null} The normalized schema, or null when invalid.
+ */
 function normalizeFieldSchema(field: unknown): WorkflowFieldSchema | null {
   if (!field || typeof field !== 'object') {
     return null;
@@ -77,6 +108,13 @@ function normalizeFieldSchema(field: unknown): WorkflowFieldSchema | null {
   };
 }
 
+/**
+ * Normalizes a list of raw fields into a schema array.
+ *
+ * @since 2.0.0
+ * @param {unknown} fields The raw fields.
+ * @returns {WorkflowFieldSchema[]} The normalized schema array.
+ */
 function normalizeSchema(fields: unknown): WorkflowFieldSchema[] {
   if (!Array.isArray(fields)) {
     return [];
@@ -85,6 +123,14 @@ function normalizeSchema(fields: unknown): WorkflowFieldSchema[] {
   return fields.map(normalizeFieldSchema).filter(Boolean) as WorkflowFieldSchema[];
 }
 
+/**
+ * Returns the primary schema, or a clone of the fallback when primary is empty.
+ *
+ * @since 2.0.0
+ * @param {WorkflowFieldSchema[]|undefined} primary The preferred schema.
+ * @param {WorkflowFieldSchema[]} fallback The fallback schema.
+ * @returns {WorkflowFieldSchema[]} The resolved schema.
+ */
 function mergeSchema(primary: WorkflowFieldSchema[] | undefined, fallback: WorkflowFieldSchema[]): WorkflowFieldSchema[] {
   if (!primary || primary.length === 0) {
     return cloneSerializable(fallback);
@@ -93,6 +139,13 @@ function mergeSchema(primary: WorkflowFieldSchema[] | undefined, fallback: Workf
   return primary;
 }
 
+/**
+ * Normalizes a raw context value into an array of context IDs.
+ *
+ * @since 2.0.0
+ * @param {unknown} rawContext The raw context value.
+ * @returns {string[]} The normalized context IDs.
+ */
 function normalizeContexts(rawContext: unknown): string[] {
   if (Array.isArray(rawContext)) {
     return rawContext.map((item) => String(item)).filter(Boolean);
@@ -105,6 +158,19 @@ function normalizeContexts(rawContext: unknown): string[] {
   return [];
 }
 
+/**
+ * Builds a trigger registry item from primitive parts and options.
+ *
+ * @since 2.0.0
+ * @param {string} id The trigger ID.
+ * @param {string} label The display label.
+ * @param {string} description The description.
+ * @param {string} icon The icon identifier.
+ * @param {string} context The context ID.
+ * @param {WorkflowFieldSchema[]} [schema] The settings schema.
+ * @param {Partial<WorkflowRegistryItem>} [options] Additional options/hooks.
+ * @returns {WorkflowRegistryItem} The trigger definition.
+ */
 function createTriggerDefinition(
   id: string,
   label: string,
@@ -134,6 +200,13 @@ function createTriggerDefinition(
   };
 }
 
+/**
+ * Deep-clones a trigger definition, preserving context array/string shape.
+ *
+ * @since 2.0.0
+ * @param {WorkflowRegistryItem} definition The definition to clone.
+ * @returns {WorkflowRegistryItem} The cloned definition.
+ */
 function cloneTriggerDefinition(definition: WorkflowRegistryItem): WorkflowRegistryItem {
   return {
     ...definition,
@@ -147,6 +220,14 @@ function cloneTriggerDefinition(definition: WorkflowRegistryItem): WorkflowRegis
   };
 }
 
+/**
+ * Merges trigger data over defaults, coercing core string fields.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data The trigger data.
+ * @param {Record<string, unknown>} defaults The default values.
+ * @returns {Record<string, unknown>} The normalized trigger data.
+ */
 function normalizeTriggerData(data: Record<string, unknown>, defaults: Record<string, unknown>) {
   return {
     ...cloneSerializable(defaults),
@@ -249,6 +330,13 @@ const TRIGGER_FALLBACKS: WorkflowRegistryItem[] = [
   ),
 ];
 
+/**
+ * Normalizes a raw backend record into a trigger context definition.
+ *
+ * @since 2.0.0
+ * @param {BackendTriggerRecord} raw The raw backend record.
+ * @returns {WorkflowContextDefinition|null} The context, or null when invalid.
+ */
 function normalizeContextDefinition(raw: BackendTriggerRecord): WorkflowContextDefinition | null {
   const id = String(raw.id || raw.slug || raw.context || raw.category || '').trim();
 
@@ -268,6 +356,14 @@ function normalizeContextDefinition(raw: BackendTriggerRecord): WorkflowContextD
   };
 }
 
+/**
+ * Normalizes a raw backend trigger record into a registry item, merging fallbacks.
+ *
+ * @since 2.0.0
+ * @param {string} context The context ID the trigger belongs to.
+ * @param {BackendTriggerRecord} raw The raw trigger record.
+ * @returns {WorkflowRegistryItem|null} The registry item, or null when invalid.
+ */
 function normalizeTriggerRecord(context: string, raw: BackendTriggerRecord): WorkflowRegistryItem | null {
   const triggerId = String(raw.data_trigger || raw.trigger || raw.id || raw.slug || '').trim();
 
@@ -302,6 +398,14 @@ function normalizeTriggerRecord(context: string, raw: BackendTriggerRecord): Wor
 let activeTriggerCatalog: Record<string, WorkflowRegistryItem[]> = {};
 let activeTriggerContexts: WorkflowContextDefinition[] = TRIGGER_CONTEXTS.map((item) => cloneSerializable(item));
 
+/**
+ * Normalizes backend triggers and contexts into a grouped catalog plus context list.
+ *
+ * @since 2.0.0
+ * @param {Record<string, Array<Record<string, unknown>>>} [rawTriggers] Triggers grouped by context.
+ * @param {Array<Record<string, unknown>>} [rawContexts] Raw context records.
+ * @returns {{ catalog: Record<string, WorkflowRegistryItem[]>, contexts: WorkflowContextDefinition[] }} The normalized catalog and contexts.
+ */
 export function normalizeTriggerCatalog(rawTriggers: Record<string, Array<Record<string, unknown>>> = {}, rawContexts: Array<Record<string, unknown>> = []) {
   const grouped: Record<string, WorkflowRegistryItem[]> = {};
   const allContexts: WorkflowContextDefinition[] = [];
@@ -383,6 +487,13 @@ export function normalizeTriggerCatalog(rawTriggers: Record<string, Array<Record
   };
 }
 
+/**
+ * Normalizes and stores the active trigger catalog and contexts.
+ *
+ * @since 2.0.0
+ * @param {Record<string, Array<Record<string, unknown>>>} [rawTriggers] Triggers grouped by context.
+ * @param {Array<Record<string, unknown>>} [rawContexts] Raw context records.
+ */
 export function setTriggerCatalog(
   rawTriggers: Record<string, Array<Record<string, unknown>>> = {},
   rawContexts: Array<Record<string, unknown>> = []
@@ -392,16 +503,35 @@ export function setTriggerCatalog(
   activeTriggerContexts = normalized.contexts;
 }
 
+/**
+ * Returns a deep-cloned copy of the active trigger catalog.
+ *
+ * @since 2.0.0
+ * @returns {Record<string, WorkflowRegistryItem[]>} The cloned catalog.
+ */
 export function getTriggerCatalog(): Record<string, WorkflowRegistryItem[]> {
   return Object.fromEntries(
     Object.entries(activeTriggerCatalog).map(([key, value]) => [key, value.map((item) => cloneTriggerDefinition(item))])
   );
 }
 
+/**
+ * Returns a clone of the active trigger contexts (or built-in defaults).
+ *
+ * @since 2.0.0
+ * @returns {WorkflowContextDefinition[]} The trigger contexts.
+ */
 export function getTriggerContextsCatalog(): WorkflowContextDefinition[] {
   return cloneSerializable(activeTriggerContexts.length ? activeTriggerContexts : TRIGGER_CONTEXTS);
 }
 
+/**
+ * Finds a trigger context definition by ID.
+ *
+ * @since 2.0.0
+ * @param {string} contextId The context ID.
+ * @returns {WorkflowContextDefinition|undefined} The context, or undefined.
+ */
 export function getTriggerContextDefinition(contextId: string): WorkflowContextDefinition | undefined {
   const safeContextId = String(contextId || '').trim();
 
@@ -414,6 +544,13 @@ export function getTriggerContextDefinition(contextId: string): WorkflowContextD
 
 export const TRIGGER_REGISTRY: WorkflowRegistryItem[] = TRIGGER_FALLBACKS;
 
+/**
+ * Returns the triggers available for a context, falling back to built-ins.
+ *
+ * @since 2.0.0
+ * @param {string} context The context ID (empty returns all triggers).
+ * @returns {WorkflowRegistryItem[]} The matching triggers.
+ */
 export function getTriggersForContext(context: string): WorkflowRegistryItem[] {
   const safeContext = String(context || '').trim();
 
@@ -426,6 +563,14 @@ export function getTriggersForContext(context: string): WorkflowRegistryItem[] {
     : TRIGGER_FALLBACKS.filter((item) => ensureArray(item.context).includes(safeContext)).map((item) => cloneTriggerDefinition(item));
 }
 
+/**
+ * Finds a trigger definition by context and trigger ID, falling back to built-ins.
+ *
+ * @since 2.0.0
+ * @param {string} context The context ID.
+ * @param {string} triggerId The trigger ID.
+ * @returns {WorkflowRegistryItem|undefined} The definition, or undefined.
+ */
 export function getTriggerDefinition(context: string, triggerId: string): WorkflowRegistryItem | undefined {
   const safeContext = String(context || '').trim();
   const safeTrigger = String(triggerId || '').trim();
@@ -440,6 +585,13 @@ export function getTriggerDefinition(context: string, triggerId: string): Workfl
   return TRIGGER_FALLBACKS.find((item) => item.id === safeTrigger && ensureArray(item.context).includes(safeContext));
 }
 
+/**
+ * Resolves a trigger definition from a node's context/trigger data.
+ *
+ * @since 2.0.0
+ * @param {{ data?: Record<string, unknown> }|null|undefined} node The trigger node.
+ * @returns {WorkflowRegistryItem|undefined} The definition, or undefined.
+ */
 export function getTriggerDefinitionFromNode(node: { data?: Record<string, unknown> } | null | undefined): WorkflowRegistryItem | undefined {
   const context = String(node?.data?.context || '');
   const trigger = String(node?.data?.trigger || '');

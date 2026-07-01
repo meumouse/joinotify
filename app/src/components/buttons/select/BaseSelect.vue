@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseSelect.vue
+ *
+ * Lightweight wrapper around the native <select> element that adds a label,
+ * placeholder, and v-model support. Renders options from an array and emits
+ * change events so it can be reused as a simple form control.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -15,6 +24,13 @@ const emit = defineEmits(['update:modelValue', 'change']);
 
 const inputId = computed(() => props.id || `select-${Math.random().toString(36).slice(2, 10)}`);
 
+/**
+ * Handle the native select change event and propagate the selected value.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native change event fired by the select element.
+ * @returns {void}
+ */
 function handleChange(event) {
   emit('update:modelValue', event.target.value);
   emit('change', event.target.value);

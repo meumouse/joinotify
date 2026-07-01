@@ -1,4 +1,14 @@
 <script setup lang="ts">
+/**
+ * SchemaFieldRenderer.vue
+ *
+ * Recursive renderer that turns a workflow field schema into the appropriate
+ * base control (input, textarea, select, switch) and supports nested group and
+ * repeater fields. Evaluates conditional visibility and emits immutable patches
+ * for object and array values.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import BaseButton from '../base/BaseButton.vue';
 import BaseInput from '../base/BaseInput.vue';
@@ -24,12 +34,27 @@ const fieldValue = computed({
   set: (value) => emit('update:modelValue', value),
 });
 
+/**
+ * Resolve the root object used to evaluate field conditions, falling back to
+ * the current model value when no rootValue prop is provided.
+ *
+ * @since 2.0.0
+ * @returns {Record<string, unknown>} Object used as the source for condition lookups.
+ */
 function getRootValue(): Record<string, unknown> {
   return props.rootValue || (typeof props.modelValue === 'object' && props.modelValue && !Array.isArray(props.modelValue)
     ? (props.modelValue as Record<string, unknown>)
     : {});
 }
 
+/**
+ * Read a value from a source object by key, supporting dot-delimited nested paths.
+ *
+ * @since 2.0.0
+ * @param {string} path Key or dot-delimited path to read.
+ * @param {Record<string, unknown>} source Object to read from.
+ * @returns {unknown} The resolved value, or undefined when the path is missing.
+ */
 function readValue(path: string, source: Record<string, unknown>) {
   if (!path.includes('.')) {
     return source[path];
@@ -44,6 +69,14 @@ function readValue(path: string, source: Record<string, unknown>) {
   }, source);
 }
 
+/**
+ * Evaluate a single field condition against a source object using its operator.
+ *
+ * @since 2.0.0
+ * @param {WorkflowFieldCondition} condition Condition with key, value, and operator.
+ * @param {Record<string, unknown>} source Object to test the condition against.
+ * @returns {boolean} True when the condition is satisfied.
+ */
 function matchesCondition(condition: WorkflowFieldCondition, source: Record<string, unknown>): boolean {
   const value = readValue(condition.key, source);
   const expected = condition.value;
@@ -66,6 +99,13 @@ function matchesCondition(condition: WorkflowFieldCondition, source: Record<stri
   }
 }
 
+/**
+ * Determine whether a field should be visible based on all of its conditions.
+ *
+ * @since 2.0.0
+ * @param {WorkflowFieldSchema} field Field whose conditions are evaluated.
+ * @returns {boolean} True when the field has no conditions or all conditions pass.
+ */
 function fieldVisible(field: WorkflowFieldSchema): boolean {
   if (!field.condition || !field.condition.length) {
     return true;
@@ -75,6 +115,14 @@ function fieldVisible(field: WorkflowFieldSchema): boolean {
   return field.condition.every((condition) => matchesCondition(condition, source));
 }
 
+/**
+ * Emit an immutable copy of the model object with a single key updated.
+ *
+ * @since 2.0.0
+ * @param {string} key Object key to set.
+ * @param {unknown} value New value for the key.
+ * @returns {void}
+ */
 function emitObjectPatch(key: string, value: unknown) {
   const current = props.modelValue && typeof props.modelValue === 'object' && !Array.isArray(props.modelValue)
     ? { ...(props.modelValue as Record<string, unknown>) }
@@ -84,22 +132,51 @@ function emitObjectPatch(key: string, value: unknown) {
   emit('update:modelValue', current);
 }
 
+/**
+ * Emit an updated array value for a repeater field.
+ *
+ * @since 2.0.0
+ * @param {unknown[]} value New array to emit.
+ * @returns {void}
+ */
 function emitArrayPatch(value: unknown[]) {
   emit('update:modelValue', value);
 }
 
+/**
+ * Append a new empty item to the repeater array.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function addRepeaterItem() {
   const current = Array.isArray(props.modelValue) ? [...props.modelValue] : [];
   current.push({});
   emitArrayPatch(current);
 }
 
+/**
+ * Remove the repeater item at the given index.
+ *
+ * @since 2.0.0
+ * @param {number} index Index of the item to remove.
+ * @returns {void}
+ */
 function removeRepeaterItem(index: number) {
   const current = Array.isArray(props.modelValue) ? [...props.modelValue] : [];
   current.splice(index, 1);
   emitArrayPatch(current);
 }
 
+/**
+ * Update a single key of the repeater item at the given index immutably.
+ *
+ * @since 2.0.0
+ * @param {number} index Index of the repeater item to update.
+ * @param {string} key Key within the item to set.
+ * @param {unknown} value New value for the key.
+ * @returns {void}
+ */
 function updateRepeaterItem(index: number, key: string, value: unknown) {
   const current = Array.isArray(props.modelValue) ? [...props.modelValue] : [];
   const item = current[index] && typeof current[index] === 'object' && !Array.isArray(current[index])

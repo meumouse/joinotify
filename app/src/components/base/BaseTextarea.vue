@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseTextarea.vue
+ *
+ * Styled multi-line text input with an optional label and configurable row
+ * count. Syncs its value through v-model and re-emits native input and change
+ * events for callers that need them.
+ *
+ * @since 2.0.0
+ */
 const props = defineProps({
   modelValue: { type: String, default: '' },
   id: { type: String, default: '' },
@@ -11,11 +20,23 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
 
+/**
+ * Handle input events, updating the bound model value and re-emitting "input".
+ *
+ * @since 2.0.0
+ * @param {Event} event The native input event.
+ */
 function handleInput(event) {
   emit('update:modelValue', event.target.value);
   emit('input', event.target.value);
 }
 
+/**
+ * Handle change events by re-emitting the current value as "change".
+ *
+ * @since 2.0.0
+ * @param {Event} event The native change event.
+ */
 function handleChange(event) {
   emit('change', event.target.value);
 }

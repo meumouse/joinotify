@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseTextareaField.vue
+ *
+ * Thin wrapper around the shared BaseTextarea that adapts the multi-line text
+ * control for builder settings, forwarding common props including the row count
+ * and relaying input and change events.
+ *
+ * @since 2.0.0
+ */
 import BaseTextarea from '../../../components/base/BaseTextarea.vue';
 
 defineProps({

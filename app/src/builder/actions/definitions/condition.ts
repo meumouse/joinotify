@@ -1,3 +1,13 @@
+/**
+ * condition.ts
+ *
+ * Builder action definition for the "Condition" action, which splits the
+ * workflow into true/false branches. Provides data normalization/serialization
+ * (bridging the flat keys the UI binds to and the nested condition_content the
+ * runtime reads), the settings schema, description builder, and validation.
+ *
+ * @since 2.0.0
+ */
 import ConditionSettings from '../settings/ConditionSettings.vue';
 import { describeConditionAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
@@ -5,10 +15,26 @@ import type { ActionDefinition } from '../registry/types';
 import { CONDITION_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
+/**
+ * Type guard for a plain object (non-null, non-array).
+ *
+ * @since 2.0.0
+ * @param {unknown} value Value to test.
+ * @returns {boolean} True when value is a plain record.
+ */
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value);
 }
 
+/**
+ * Builds the nested condition_content object from flat and legacy data,
+ * reading each field from the flat key first and falling back to the legacy
+ * condition_content shape.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized condition_content object.
+ */
 function normalizeConditionContent(data: Record<string, unknown>): Record<string, unknown> {
   const legacy = isRecord(data.condition_content) ? data.condition_content : {};
   const condition = String(data.condition || legacy.condition || '');
@@ -36,6 +62,15 @@ function normalizeConditionContent(data: Record<string, unknown>): Record<string
   return content;
 }
 
+/**
+ * Normalizes/serializes the full condition action payload, mirroring the
+ * flat UI keys and the nested condition_content so the selection round-trips
+ * through save/reload. Used as both normalizeData and serializeData.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized condition action data.
+ */
 function normalizeConditionData(data: Record<string, unknown>): Record<string, unknown> {
   const conditionContent = normalizeConditionContent(data);
 

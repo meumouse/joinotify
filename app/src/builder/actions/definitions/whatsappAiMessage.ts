@@ -1,3 +1,13 @@
+/**
+ * whatsappAiMessage.ts
+ *
+ * Builder action definition for the "WhatsApp: AI message" action, which
+ * generates a message with AI at trigger time and sends it via WhatsApp.
+ * Provides data normalization (sender, receiver, and AI settings), description
+ * builder, and validation for the sender and prompt.
+ *
+ * @since 2.0.0
+ */
 import WhatsappAiMessageSettings from '../settings/WhatsappAiMessageSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
@@ -5,6 +15,14 @@ import type { ActionDefinition } from '../registry/types';
 import { WHATSAPP_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
+/**
+ * Normalizes/serializes the WhatsApp AI message action payload, applying
+ * defaults for sender, receiver, and the AI generation settings.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized WhatsApp AI message action data.
+ */
 function normalizeWhatsappAiMessageData(data: Record<string, unknown>): Record<string, unknown> {
   return {
     title: String(data.title || __('WhatsApp: AI message', textDomain)),

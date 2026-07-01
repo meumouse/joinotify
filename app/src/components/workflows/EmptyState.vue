@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * EmptyState.vue
+ *
+ * Placeholder shown when the workflows list has no items, offering a title,
+ * description, and a call-to-action button that links to create a new
+ * workflow.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 

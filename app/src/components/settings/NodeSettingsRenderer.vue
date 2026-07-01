@@ -1,4 +1,14 @@
 <script setup lang="ts">
+/**
+ * NodeSettingsRenderer.vue
+ *
+ * Renders the settings editor for the selected workflow node. Keeps a local
+ * draft buffer of the node's data, resolves the trigger or action definition,
+ * renders schema-driven trigger fields or the dynamic action settings, and
+ * emits update events back to the store while avoiding feedback loops.
+ *
+ * @since 2.0.0
+ */
 import { computed, nextTick, ref, watch } from 'vue';
 import SchemaFieldRenderer from './SchemaFieldRenderer.vue';
 import DynamicActionSettingsRenderer from '../../builder/actions/components/DynamicActionSettingsRenderer.vue';
@@ -50,6 +60,14 @@ const draftSettings = computed<Record<string, unknown>>(() =>
     : {}
 );
 
+/**
+ * Update a single key within the draft's settings object immutably.
+ *
+ * @since 2.0.0
+ * @param {string} key Settings key to update.
+ * @param {unknown} value New value for the key.
+ * @returns {void}
+ */
 function updateSettingField(key: string, value: unknown) {
   draft.value = {
     ...draft.value,
@@ -124,10 +142,24 @@ watch(
   { deep: true }
 );
 
+/**
+ * Replace the entire draft buffer with a serializable clone of the given value.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} value New node data to store in the draft.
+ * @returns {void}
+ */
 function replaceDraft(value: Record<string, unknown>) {
   draft.value = cloneSerializable(value || {});
 }
 
+/**
+ * Copy a placeholder token to the clipboard, ignoring failures in restricted contexts.
+ *
+ * @since 2.0.0
+ * @param {string} placeholder Placeholder token to copy.
+ * @returns {Promise<void>} Resolves once the copy attempt completes.
+ */
 async function copyPlaceholder(placeholder: string) {
   if (!placeholder || typeof navigator === 'undefined' || !navigator.clipboard) {
     return;

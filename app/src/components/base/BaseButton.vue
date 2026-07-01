@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseButton.vue
+ *
+ * Themeable button/link component with variant and size options plus loading
+ * and disabled states. Renders as an <a> when an href is provided, otherwise a
+ * <button>, and blocks clicks while disabled or loading.
+ *
+ * @since 2.0.0
+ */
 const props = defineProps({
   title: { type: String, required: true },
   href: { type: String, default: '' },
@@ -31,6 +40,13 @@ const sizeClasses = {
   md: 'px-4 py-2.5 text-sm',
 };
 
+/**
+ * Handle a click on the button, suppressing it while disabled or loading and
+ * otherwise emitting the "click" event.
+ *
+ * @since 2.0.0
+ * @param {MouseEvent} event The native click event.
+ */
 function handleClick(event) {
   if (props.disabled || props.loading) {
     event.preventDefault();

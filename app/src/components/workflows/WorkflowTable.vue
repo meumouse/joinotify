@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * WorkflowTable.vue
+ *
+ * Presentational container for the workflows list, rendering a full table on
+ * desktop and collapsible cards on mobile. Forwards selection, status, and
+ * row-action events from its child rows up to the parent view.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
 import WorkflowTableHeader from './WorkflowTableHeader.vue';

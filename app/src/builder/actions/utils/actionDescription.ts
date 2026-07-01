@@ -1,3 +1,13 @@
+/**
+ * actionDescription.ts
+ *
+ * Pure helpers that build the short, human-readable summary shown on each
+ * builder node for its action data. Covers time-delay, condition, PHP snippet,
+ * stop and generic fallback actions, resolving translated labels from the
+ * conditions catalog cache.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../../utils/i18n';
 import {
   findCatalogCondition,
@@ -9,22 +19,57 @@ import {
 // Operators that compare against no value (mirrors ConditionSettings.vue).
 const OPERATORS_WITHOUT_VALUE = ['empty', 'not_empty'];
 
+/**
+ * Coerce any value to a trimmed string with collapsed whitespace.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Value to clean.
+ * @returns {string} Normalized string.
+ */
 function cleanText(value: unknown): string {
   return String(value ?? '').replace(/\s+/g, ' ').trim();
 }
 
+/**
+ * Join non-empty segments with a middle-dot separator.
+ *
+ * @since 2.0.0
+ * @param {Array} parts Segments to join.
+ * @returns {string} Joined string.
+ */
 function joinSegments(parts: string[]): string {
   return parts.filter(Boolean).join(' · ');
 }
 
+/**
+ * Type guard for a plain, non-array object.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Value to test.
+ * @returns {boolean} True when the value is a plain record.
+ */
 function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value);
 }
 
+/**
+ * Join non-empty items with a comma separator.
+ *
+ * @since 2.0.0
+ * @param {Array} items Items to join.
+ * @returns {string} Comma-separated list.
+ */
 function formatList(items: string[]): string {
   return items.filter(Boolean).join(', ');
 }
 
+/**
+ * Build the summary for a time-delay action (period, date or scheduled).
+ *
+ * @since 2.0.0
+ * @param {Object} data Time-delay action data.
+ * @returns {string} Human-readable delay summary.
+ */
 export function describeTimeDelayAction(data: Record<string, unknown>): string {
   const mode = cleanText(data.delay_type || 'period');
 
@@ -54,8 +99,17 @@ export function describeTimeDelayAction(data: Record<string, unknown>): string {
   return joinSegments([__('Delay', textDomain), amount ? `${amount} ${period}` : period]);
 }
 
-// Resolve the human-readable comparison value for a condition (product names,
-// status label, Yes/No, or the raw value) using the catalog metadata.
+/**
+ * Resolve the human-readable comparison value for a condition.
+ *
+ * Resolves product names, a status label, Yes/No, or the raw value using the
+ * catalog metadata.
+ *
+ * @since 2.0.0
+ * @param {Object} data Condition action data.
+ * @param {CatalogCondition|null} condition Matched catalog condition, if any.
+ * @returns {string} Display value for the condition.
+ */
 function describeConditionValue(data: Record<string, unknown>, condition: CatalogCondition | null): string {
   const valueType = String(condition?.value_type || 'text');
 
@@ -95,6 +149,15 @@ function describeConditionValue(data: Record<string, unknown>, condition: Catalo
   return raw;
 }
 
+/**
+ * Build the summary for a condition action (e.g. "Order status: Is equal to
+ * Processing"), falling back to a key-based label when the catalog is
+ * unavailable.
+ *
+ * @since 2.0.0
+ * @param {Object} data Condition action data.
+ * @returns {string} Human-readable condition summary.
+ */
 export function describeConditionAction(data: Record<string, unknown>): string {
   const conditionKey = cleanText(data.condition || '');
   const operator = cleanText(data.condition_type || '');
@@ -126,6 +189,14 @@ export function describeConditionAction(data: Record<string, unknown>): string {
   return tail ? `${title}: ${tail}` : title;
 }
 
+/**
+ * Build the summary for a PHP snippet action, previewing the first characters
+ * of the code.
+ *
+ * @since 2.0.0
+ * @param {Object} data Snippet action data.
+ * @returns {string} Human-readable snippet summary.
+ */
 export function describeSnippetAction(data: Record<string, unknown>): string {
   const snippet = cleanText(data.snippet_php || '');
 
@@ -136,10 +207,26 @@ export function describeSnippetAction(data: Record<string, unknown>): string {
   return joinSegments([__('PHP snippet', textDomain), snippet.slice(0, 48)]);
 }
 
+/**
+ * Build the summary for a stop action.
+ *
+ * @since 2.0.0
+ * @returns {string} Human-readable stop summary.
+ */
 export function describeStopAction(): string {
   return __('Stops the workflow immediately', textDomain);
 }
 
+/**
+ * Build a generic fallback summary from the action data or its title and
+ * description.
+ *
+ * @since 2.0.0
+ * @param {string} title Action title.
+ * @param {string} description Action description.
+ * @param {Object} data Action data.
+ * @returns {string} Human-readable fallback summary.
+ */
 export function describeFallbackAction(title: string, description: string, data: Record<string, unknown>): string {
   const candidate = cleanText(data.description || data.message || data.summary || '');
 
@@ -150,6 +237,14 @@ export function describeFallbackAction(title: string, description: string, data:
   return joinSegments([cleanText(title), cleanText(description)]);
 }
 
+/**
+ * Truncate a description to a maximum length, appending an ellipsis when cut.
+ *
+ * @since 2.0.0
+ * @param {string} value Text to truncate.
+ * @param {number} maxLength Maximum length before truncation.
+ * @returns {string} Truncated text.
+ */
 export function truncateDescription(value: string, maxLength = 120): string {
   const text = cleanText(value);
 

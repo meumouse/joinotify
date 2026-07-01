@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * (uploads/joinotify/logs.txt) is still written by {@see Logger} for external
  * tailing and backwards compatibility.
  *
- * @since 2.1.0
+ * @since 2.0.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Debug_Log {
     /**
      * Table base name (without the WordPress table prefix).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     const TABLE = 'joinotify_debug_logs';
@@ -35,7 +35,7 @@ class Debug_Log {
     /**
      * Schema version. Bump to trigger a dbDelta migration.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     const DB_VERSION = '1.0.0';
@@ -43,7 +43,7 @@ class Debug_Log {
     /**
      * Option key that stores the installed schema version.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     const DB_VERSION_OPTION = 'joinotify_debug_logs_db_version';
@@ -51,7 +51,7 @@ class Debug_Log {
     /**
      * Cron hook for the retention purge.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string
      */
     const PURGE_HOOK = 'joinotify_purge_debug_logs_event';
@@ -59,7 +59,7 @@ class Debug_Log {
     /**
      * Allowed log levels, ordered from least to most severe.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var string[]
      */
     const LEVELS = array( 'debug', 'info', 'notice', 'warning', 'error', 'critical' );
@@ -67,7 +67,7 @@ class Debug_Log {
     /**
      * Numeric severity map used by the persistence threshold.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var array<string,int>
      */
     const SEVERITY = array(
@@ -85,7 +85,7 @@ class Debug_Log {
      * Keeps the "hooks used" capture bounded to one row per distinct hook per
      * request instead of one row per fire.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @var array<string,bool>
      */
     private static $recorded_hooks = array();
@@ -94,7 +94,7 @@ class Debug_Log {
     /**
      * Construct function.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return void
      */
     public function __construct() {
@@ -120,7 +120,7 @@ class Debug_Log {
     /**
      * Get the fully-qualified debug log table name.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return string
      */
     public static function get_table_name() {
@@ -133,7 +133,7 @@ class Debug_Log {
     /**
      * Whether the plugin debug mode is currently enabled.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return bool
      */
     public static function debug_mode_enabled() {
@@ -144,7 +144,7 @@ class Debug_Log {
     /**
      * Create or upgrade the debug log table, guarded by the stored schema version.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return void
      */
     public static function maybe_create_table() {
@@ -191,7 +191,7 @@ class Debug_Log {
      * is off only warning-and-above events are kept, so production stays quiet
      * while still capturing problems; with debug mode on everything is stored.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $level Normalized log level.
      * @return bool
      */
@@ -213,7 +213,7 @@ class Debug_Log {
     /**
      * Record a structured debug entry.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $entry Recognized keys: level, channel,
      *        message, context, code, hook, request_url, response_code, file,
      *        line. Missing source file/line/channel are auto-detected from the
@@ -285,7 +285,7 @@ class Debug_Log {
         /**
          * Allow short-circuiting a debug record before it is written.
          *
-         * @since 2.1.0
+         * @since 2.0.0
          * @param bool $should_record Whether to record this entry.
          * @param array $data Normalized entry data.
          */
@@ -325,7 +325,7 @@ class Debug_Log {
     /**
      * Record an entry at the "error" level.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param mixed $message Message or WP_Error.
      * @param array $entry Additional fields (channel, context, code, ...).
      * @return int|false
@@ -338,7 +338,7 @@ class Debug_Log {
     /**
      * Record an entry at the "warning" level.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param mixed $message Message or WP_Error.
      * @param array $entry Additional fields.
      * @return int|false
@@ -351,7 +351,7 @@ class Debug_Log {
     /**
      * Record an entry at the "info" level.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param mixed $message Message or WP_Error.
      * @param array $entry Additional fields.
      * @return int|false
@@ -364,7 +364,7 @@ class Debug_Log {
     /**
      * Map a legacy Logger level label to a normalized level.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $level Legacy level (INFO, WARNING, ERROR, ...).
      * @return string Normalized level.
      */
@@ -393,7 +393,7 @@ class Debug_Log {
      * recursion. The `all` callback receives the original hook's arguments, not
      * its name, so the current hook is resolved via current_filter().
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return void
      */
     public static function capture_hook() {
@@ -429,7 +429,7 @@ class Debug_Log {
      * Only runs while debug mode is on. Existing handlers are preserved so the
      * normal WordPress/PHP error flow is never short-circuited.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return void
      */
     public static function register_error_handlers() {
@@ -441,7 +441,7 @@ class Debug_Log {
     /**
      * Capture plugin-originated PHP warnings/notices without suppressing them.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param int $errno Error level.
      * @param string $errstr Error message.
      * @param string $errfile File where the error occurred.
@@ -477,7 +477,7 @@ class Debug_Log {
     /**
      * Capture a fatal error originating in plugin code on shutdown.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return void
      */
     public static function handle_shutdown() {
@@ -505,7 +505,7 @@ class Debug_Log {
     /**
      * Build the WHERE clause and prepared args from query filters.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $args Filter args.
      * @return array{0:string,1:array} SQL fragment and prepare args.
      */
@@ -555,7 +555,7 @@ class Debug_Log {
     /**
      * Get a paginated list of log items.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $args Filter + pagination args.
      * @return array<int,array<string,mixed>>
      */
@@ -582,7 +582,7 @@ class Debug_Log {
     /**
      * Count log items matching the given filters.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $args Filter args.
      * @return int
      */
@@ -605,7 +605,7 @@ class Debug_Log {
     /**
      * Count log items grouped by level.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return array<string,int>
      */
     public static function get_counts_by_level() {
@@ -640,7 +640,7 @@ class Debug_Log {
     /**
      * Distinct channels currently present in the table.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return string[]
      */
     public static function get_channels() {
@@ -656,7 +656,7 @@ class Debug_Log {
     /**
      * Render the whole table (newest last) as flat log lines for export.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return string
      */
     public static function render_text() {
@@ -682,7 +682,7 @@ class Debug_Log {
     /**
      * Format a single row as a flat log line.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param array<string,mixed> $row Row data.
      * @return string
      */
@@ -709,7 +709,7 @@ class Debug_Log {
     /**
      * Delete log rows by ID.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param int[] $ids Row IDs.
      * @return int Number of rows deleted.
      */
@@ -732,7 +732,7 @@ class Debug_Log {
     /**
      * Delete every log row.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return int Number of rows deleted.
      */
     public static function clear_all() {
@@ -747,7 +747,7 @@ class Debug_Log {
     /**
      * Whether the table currently holds any rows.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return bool
      */
     public static function has_logs() {
@@ -762,7 +762,7 @@ class Debug_Log {
     /**
      * Purge records older than the configured retention window.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return int Number of rows deleted.
      */
     public static function purge_old() {
@@ -773,7 +773,7 @@ class Debug_Log {
         /**
          * Filter the debug log retention window (in days). 0 disables auto-purge.
          *
-         * @since 2.1.0
+         * @since 2.0.0
          * @param int $days Retention window in days.
          */
         $days = (int) apply_filters( 'Joinotify/Debug_Log/Retention_Days', $days );
@@ -792,7 +792,7 @@ class Debug_Log {
     /**
      * Convert any value to a storable string (JSON for structured data).
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param mixed $value Value to stringify.
      * @return string
      */
@@ -814,7 +814,7 @@ class Debug_Log {
     /**
      * Inspect the backtrace to find the first non-logger caller.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @return array{file:string,line:int,channel:string}
      */
     private static function detect_caller() {
@@ -842,7 +842,7 @@ class Debug_Log {
     /**
      * Derive a channel from a fully-qualified class name.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $class Class name.
      * @return string
      */
@@ -872,7 +872,7 @@ class Debug_Log {
     /**
      * Whether a file path lives inside the plugin directory.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $file Absolute file path.
      * @return bool
      */
@@ -895,7 +895,7 @@ class Debug_Log {
     /**
      * Reduce an absolute plugin path to a path relative to the plugin root.
      *
-     * @since 2.1.0
+     * @since 2.0.0
      * @param string $file Absolute file path.
      * @return string
      */

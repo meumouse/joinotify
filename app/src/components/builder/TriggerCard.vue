@@ -1,4 +1,14 @@
 <script setup>
+/**
+ * TriggerCard.vue
+ *
+ * Selectable card representing a single trigger in the trigger setup screen.
+ * Renders the trigger's context/icon avatar, context label, title and
+ * description, shows a checkmark when selected, and emits a click event when
+ * pressed.
+ *
+ * @since 2.0.0
+ */
 const props = defineProps({
   title: { type: String, required: true },
   description: { type: String, default: '' },

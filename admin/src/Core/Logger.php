@@ -54,7 +54,7 @@ class Logger {
      * compatibility. Existing call sites keep working unchanged.
      *
      * @since 1.1.0
-     * @version 2.1.0
+     * @version 2.0.0
      * @param mixed  $message | Message (string, array or WP_Error) for register
      * @param string $level | Log level (INFO, WARNING, ERROR)
      */

@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseAccordion.vue
+ *
+ * Lightweight collapsible section built on the native <details>/<summary>
+ * elements. Renders a titled panel whose default slot content can be shown or
+ * hidden, used to group builder settings into expandable blocks.
+ *
+ * @since 2.0.0
+ */
 defineProps({
   title: { type: String, default: '' },
   open: { type: Boolean, default: true },

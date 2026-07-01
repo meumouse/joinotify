@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * WorkflowTableHeader.vue
+ *
+ * Table head for the desktop workflows table, providing the select-all
+ * checkbox (with indeterminate state) and the Name, Created, and Status column
+ * labels. Emits "toggleAll" when the header checkbox changes.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
 

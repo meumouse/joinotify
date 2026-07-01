@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseCodeEditorField.vue
+ *
+ * Monospaced, dark-themed textarea intended for editing raw code or markup in
+ * the builder. Provides a labelled control with v-model support and emits input
+ * and change events so parents can react to edits.
+ *
+ * @since 2.0.0
+ */
 const props = defineProps({
   modelValue: { type: String, default: '' },
   label: { type: String, default: '' },
@@ -9,12 +18,24 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
 
+/**
+ * Handle textarea input, syncing the v-model and emitting the input event.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native input event from the textarea.
+ */
 function handleInput(event: Event) {
   const target = event.target as HTMLTextAreaElement;
   emit('update:modelValue', target.value);
   emit('input', target.value);
 }
 
+/**
+ * Handle the textarea change event, forwarding the committed value.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native change event from the textarea.
+ */
 function handleChange(event: Event) {
   const target = event.target as HTMLTextAreaElement;
   emit('change', target.value);

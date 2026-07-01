@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseSwitch.vue
+ *
+ * Toggle switch control with optional label, disabled and loading states, and a
+ * customizable active color. Emits its boolean state through v-model and ignores
+ * interaction while disabled or loading.
+ *
+ * @since 2.0.0
+ */
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
   label: { type: String, default: '' },
@@ -9,6 +18,12 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'change']);
 
+/**
+ * Toggle the switch state, emitting the inverted value unless disabled or
+ * loading.
+ *
+ * @since 2.0.0
+ */
 function toggle() {
   if (props.disabled || props.loading) return;
   emit('update:modelValue', !props.modelValue);

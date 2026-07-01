@@ -1,10 +1,25 @@
 <script setup>
+/**
+ * BaseFileDropzone.vue
+ *
+ * Drag-and-drop file input zone that also supports selecting a file through a
+ * hidden native input. Accepts JSON files and emits the chosen file via the
+ * "file" event, used for importing workflows in the builder.
+ *
+ * @since 2.0.0
+ */
 import { ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 
 const emit = defineEmits(['file']);
 const inputRef = ref(null);
 
+/**
+ * Handle a file dropped onto the zone, emitting the first dropped file.
+ *
+ * @since 2.0.0
+ * @param {DragEvent} event The native drop event.
+ */
 function handleDrop(event) {
   event.preventDefault();
   const file = event.dataTransfer?.files?.[0];
@@ -13,6 +28,12 @@ function handleDrop(event) {
   }
 }
 
+/**
+ * Handle a file chosen through the native file picker, emitting the first file.
+ *
+ * @since 2.0.0
+ * @param {Event} event The native change event from the file input.
+ */
 function handlePick(event) {
   const file = event.target.files?.[0];
   if (file) {

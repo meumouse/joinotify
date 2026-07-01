@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseAlert.vue
+ *
+ * Themed inline notice box used to surface contextual messages in the builder.
+ * Supports several tones (info, success, warning, danger, neutral) that map to
+ * distinct color schemes, plus an optional title, message and default slot.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -15,6 +24,13 @@ const toneMap: Record<string, string> = {
   neutral: 'border-slate-200 bg-slate-50 text-slate-900',
 };
 
+/**
+ * Resolve the Tailwind class string for the current tone, falling back to the
+ * info tone when an unknown tone is provided.
+ *
+ * @since 2.0.0
+ * @returns {string} Tailwind utility classes for the alert container.
+ */
 const classes = computed(() => toneMap[props.tone] || toneMap.info);
 </script>
 

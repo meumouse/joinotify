@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseDrawer.vue
+ *
+ * Slide-in panel anchored to the right edge of the viewport, teleported to the
+ * document body and shown as an overlay. Displays a title and slotted content,
+ * and emits a "close" event when the backdrop or close controls are clicked.
+ *
+ * @since 2.0.0
+ */
 import { Teleport } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 

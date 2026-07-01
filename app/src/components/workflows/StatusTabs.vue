@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * StatusTabs.vue
+ *
+ * Renders the status filter tabs (e.g. all, published, draft, trash) above the
+ * workflows list, each with a count badge. Emits "select" with the chosen tab
+ * value when a tab is clicked.
+ *
+ * @since 2.0.0
+ */
 defineProps({
   tabs: { type: Array, default: () => [] },
   activeStatus: { type: String, default: '' },

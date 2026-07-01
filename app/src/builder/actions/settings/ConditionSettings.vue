@@ -1,4 +1,14 @@
 <script setup lang="ts">
+/**
+ * ConditionSettings.vue
+ *
+ * Settings panel for the branching Condition action. Reads the conditions
+ * catalog exposed by the backend bootstrap to show only the conditions,
+ * operators and value inputs supported by the current workflow trigger, and
+ * writes the chosen rule back into the action model.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import BaseAlert from '../../components/base/BaseAlert.vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
@@ -98,7 +108,14 @@ const hasTrigger = computed(() => triggerId.value !== '');
 const hasConditions = computed(() => triggerConditions.value.length > 0);
 const isProductsValue = computed(() => valueType.value === 'products');
 
-// Changing the condition family invalidates the chosen operator and value.
+/**
+ * Handle a change of the condition family, resetting the operator and value.
+ *
+ * Changing the condition family invalidates the chosen operator and value.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Newly selected condition key.
+ */
 function onConditionChange(value: unknown) {
   emit('update:modelValue', {
     ...model.value,
@@ -109,8 +126,15 @@ function onConditionChange(value: unknown) {
   });
 }
 
-// Write the canonical comparison value (read by the runtime as
-// condition_content.value) and keep value_text in sync for legacy/display.
+/**
+ * Persist the comparison value chosen for the condition.
+ *
+ * Writes the canonical comparison value (read by the runtime as
+ * condition_content.value) and keeps value_text in sync for legacy/display.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Comparison value entered or selected by the user.
+ */
 function setValue(value: unknown) {
   emit('update:modelValue', {
     ...model.value,

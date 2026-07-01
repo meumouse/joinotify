@@ -1,3 +1,14 @@
+/**
+ * actionRegistry.ts
+ *
+ * Central registry of builder action definitions. Bootstraps the core actions,
+ * registers/merges frontend and backend definitions, normalizes their shape,
+ * and exposes lookup helpers (definition, defaults, settings component, branch
+ * keys, description) plus catalog/context queries and a reactive revision
+ * counter used to trigger recomputation in consuming components.
+ *
+ * @since 2.0.0
+ */
 import type { Component } from 'vue';
 import { ref } from 'vue';
 import { describeFallbackAction, truncateDescription } from '../utils/actionDescription';
@@ -17,10 +28,23 @@ const bootstrapped = ref(false);
 const bootstrapping = ref(false);
 const registryRevision = ref(0);
 
+/**
+ * Increments the registry revision counter to signal reactive consumers.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function bumpRegistryRevision(): void {
   registryRevision.value += 1;
 }
 
+/**
+ * Coerces a raw context value into a trimmed, non-empty string array.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Raw context (string or array).
+ * @returns {string[]} Normalized list of context slugs.
+ */
 function cleanContext(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.map((entry) => String(entry).trim()).filter(Boolean);
@@ -33,11 +57,27 @@ function cleanContext(value: unknown): string[] {
   return [];
 }
 
+/**
+ * Parses a priority value into a finite number, falling back when invalid.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Raw priority value.
+ * @param {number} [fallback=0] Value returned when parsing fails.
+ * @returns {number} The parsed priority.
+ */
 function cleanPriority(value: unknown, fallback = 0): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+/**
+ * Produces a shallow clone of a definition with its array/object fields copied,
+ * so stored definitions are not mutated by callers.
+ *
+ * @since 2.0.0
+ * @param {ActionDefinition} definition Definition to clone.
+ * @returns {ActionDefinition} A defensive copy of the definition.
+ */
 function cloneDefinition(definition: ActionDefinition): ActionDefinition {
   return {
     ...definition,
@@ -50,6 +90,16 @@ function cloneDefinition(definition: ActionDefinition): ActionDefinition {
   };
 }
 
+/**
+ * Merges a new definition over an existing one, preferring the new values but
+ * preserving current fields (context, components, callbacks) when the new
+ * definition omits them.
+ *
+ * @since 2.0.0
+ * @param {ActionDefinition|undefined} current Existing definition, if any.
+ * @param {ActionDefinition} next Incoming definition to merge.
+ * @returns {ActionDefinition} The merged, cloned definition.
+ */
 function mergeDefinition(current: ActionDefinition | undefined, next: ActionDefinition): ActionDefinition {
   return cloneDefinition({
     ...current,
@@ -76,6 +126,12 @@ function mergeDefinition(current: ActionDefinition | undefined, next: ActionDefi
   });
 }
 
+/**
+ * Registers the core actions once, guarding against re-entrant bootstrapping.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function ensureBootstrapped(): void {
   if (bootstrapped.value || bootstrapping.value) {
     return;
@@ -87,6 +143,15 @@ function ensureBootstrapped(): void {
   bootstrapped.value = true;
 }
 
+/**
+ * Normalizes a frontend or backend definition into the canonical
+ * ActionDefinition shape, reconciling camelCase and snake_case keys and
+ * resolving the icon markup.
+ *
+ * @since 2.0.0
+ * @param {ActionDefinition|BackendActionDefinition} definition Raw definition.
+ * @returns {ActionDefinition|null} The normalized definition, or null when it lacks an action slug.
+ */
 function normalizeDefinition(definition: ActionDefinition | BackendActionDefinition): ActionDefinition | null {
   const action = String(definition.action || definition.slug || definition.id || '').trim();
 
@@ -126,6 +191,15 @@ function normalizeDefinition(definition: ActionDefinition | BackendActionDefinit
   });
 }
 
+/**
+ * Builds a placeholder definition for an unknown action, using any provided
+ * metadata and sensible defaults so the workflow can still render/save.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @param {Partial<ActionDefinition>} [metadata={}] Optional partial metadata.
+ * @returns {ActionDefinition} The fallback definition.
+ */
 function createFallbackDefinition(action: string, metadata: Partial<ActionDefinition> = {}): ActionDefinition {
   return cloneDefinition({
     action,
@@ -153,6 +227,14 @@ function createFallbackDefinition(action: string, metadata: Partial<ActionDefini
   });
 }
 
+/**
+ * Registers (or merges into an existing) a single action definition and bumps
+ * the registry revision.
+ *
+ * @since 2.0.0
+ * @param {ActionDefinition|BackendActionDefinition} definition Definition to register.
+ * @returns {ActionDefinition|null} A clone of the stored definition, or null when invalid.
+ */
 export function registerBuilderAction(definition: ActionDefinition | BackendActionDefinition): ActionDefinition | null {
   const normalized = normalizeDefinition(definition);
 
@@ -167,10 +249,25 @@ export function registerBuilderAction(definition: ActionDefinition | BackendActi
   return cloneDefinition(merged);
 }
 
+/**
+ * Registers many action definitions, ignoring any that fail to normalize.
+ *
+ * @since 2.0.0
+ * @param {Array<ActionDefinition|BackendActionDefinition>} definitions Definitions to register.
+ * @returns {ActionDefinition[]} The successfully registered definitions.
+ */
 export function registerBuilderActions(definitions: Array<ActionDefinition | BackendActionDefinition>): ActionDefinition[] {
   return definitions.map((definition) => registerBuilderAction(definition)).filter(Boolean) as ActionDefinition[];
 }
 
+/**
+ * Registers action definitions received from the backend, falling back to the
+ * current catalog when the input is empty or invalid.
+ *
+ * @since 2.0.0
+ * @param {Array<Record<string, unknown>>} definitions Backend definitions.
+ * @returns {ActionDefinition[]} The hydrated definitions, or the existing catalog.
+ */
 export function hydrateBuilderActionsFromBackend(definitions: Array<Record<string, unknown>>): ActionDefinition[] {
   if (!Array.isArray(definitions)) {
     return getBuilderActions();
@@ -180,6 +277,13 @@ export function hydrateBuilderActionsFromBackend(definitions: Array<Record<strin
   return hydrated.length ? hydrated : getBuilderActions();
 }
 
+/**
+ * Looks up a single action definition by slug (bootstrapping if needed).
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {ActionDefinition|null} A clone of the definition, or null when absent.
+ */
 export function getBuilderAction(action: string): ActionDefinition | null {
   ensureBootstrapped();
   const definition = registry.get(String(action || '').trim());
@@ -187,6 +291,13 @@ export function getBuilderAction(action: string): ActionDefinition | null {
   return definition ? cloneDefinition(definition) : null;
 }
 
+/**
+ * Returns all enabled action definitions, sorted by descending priority and
+ * then by title.
+ *
+ * @since 2.0.0
+ * @returns {ActionDefinition[]} The sorted list of enabled definitions.
+ */
 export function getBuilderActions(): ActionDefinition[] {
   ensureBootstrapped();
 
@@ -196,6 +307,14 @@ export function getBuilderActions(): ActionDefinition[] {
     .sort((left, right) => right.priority - left.priority || left.title.localeCompare(right.title));
 }
 
+/**
+ * Returns enabled definitions available in the given context (context-less
+ * actions are always included).
+ *
+ * @since 2.0.0
+ * @param {BuilderActionContext} context Context slug to filter by.
+ * @returns {ActionDefinition[]} Definitions available in that context.
+ */
 export function getBuilderActionsByContext(context: BuilderActionContext): ActionDefinition[] {
   const safeContext = String(context || '').trim();
 
@@ -210,11 +329,28 @@ export function getBuilderActionsByContext(context: BuilderActionContext): Actio
   });
 }
 
+/**
+ * Returns a copy of the default data for an action, or a minimal object with
+ * just the action slug when none is registered.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {Record<string, unknown>} Default data for the action.
+ */
 export function getBuilderActionDefaults(action: string): Record<string, unknown> {
   const definition = getBuilderAction(action);
   return definition?.defaultData ? { ...definition.defaultData } : { action };
 }
 
+/**
+ * Builds a truncated, human-readable description for an action from its data,
+ * using the definition's builder when available or a fallback otherwise.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @param {Record<string, unknown>} data Action data payload.
+ * @returns {string} The generated description.
+ */
 export function buildActionDescription(action: string, data: Record<string, unknown>): string {
   const definition = getBuilderAction(action);
 
@@ -229,22 +365,59 @@ export function buildActionDescription(action: string, data: Record<string, unkn
   return truncateDescription(describeFallbackAction(definition.title, definition.description, data || {}));
 }
 
+/**
+ * Returns the settings component registered for an action, if any.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {Component|undefined} The settings component.
+ */
 export function getBuilderActionSettingsComponent(action: string): Component | undefined {
   return getBuilderAction(action)?.settingsComponent;
 }
 
+/**
+ * Returns the card component registered for an action, if any.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {Component|undefined} The card component.
+ */
 export function getBuilderActionCardComponent(action: string): Component | undefined {
   return getBuilderAction(action)?.cardComponent;
 }
 
+/**
+ * Indicates whether an action exposes configurable settings.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {boolean} True when the action has settings.
+ */
 export function hasBuilderActionSettings(action: string): boolean {
   return Boolean(getBuilderAction(action)?.hasSettings);
 }
 
+/**
+ * Returns the branch keys declared by an action (empty when none).
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {string[]} The action's branch keys.
+ */
 export function getBuilderActionBranchKeys(action: string): string[] {
   return getBuilderAction(action)?.branchKeys || [];
 }
 
+/**
+ * Resolves an action definition, returning a fallback definition when the
+ * action is not registered.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @param {Partial<ActionDefinition>} [metadata={}] Optional metadata for the fallback.
+ * @returns {ActionDefinition} The resolved or fallback definition.
+ */
 export function resolveBuilderAction(action: string, metadata: Partial<ActionDefinition> = {}): ActionDefinition {
   const definition = getBuilderAction(action);
 
@@ -255,6 +428,15 @@ export function resolveBuilderAction(action: string, metadata: Partial<ActionDef
   return createFallbackDefinition(action, metadata);
 }
 
+/**
+ * Creates a workflow action item for an action, normalizing its data and
+ * assigning a generated id when none is provided.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @param {Record<string, unknown>} [data={}] Initial action data.
+ * @returns {WorkflowActionItem} The constructed workflow action item.
+ */
 export function toWorkflowActionItem(action: string, data: Record<string, unknown> = {}): WorkflowActionItem {
   const definition = resolveBuilderAction(action);
   const nextData = definition.normalizeData ? definition.normalizeData({ ...definition.defaultData, ...data, action }) : { ...definition.defaultData, ...data, action };
@@ -267,32 +449,78 @@ export function toWorkflowActionItem(action: string, data: Record<string, unknow
   };
 }
 
+/**
+ * Bootstraps the registry and hydrates it from a raw backend catalog.
+ *
+ * @since 2.0.0
+ * @param {Array<Record<string, unknown>>} [rawActions=[]] Raw backend action list.
+ * @returns {ActionDefinition[]} The resulting catalog.
+ */
 export function setActionCatalog(rawActions: Array<Record<string, unknown>> = []): ActionDefinition[] {
   ensureBootstrapped();
   return hydrateBuilderActionsFromBackend(rawActions);
 }
 
+/**
+ * Returns the full enabled action catalog.
+ *
+ * @since 2.0.0
+ * @returns {ActionDefinition[]} The action catalog.
+ */
 export function getActionCatalog(): ActionDefinition[] {
   return getBuilderActions();
 }
 
+/**
+ * Alias for getBuilderAction: returns a single action definition by slug.
+ *
+ * @since 2.0.0
+ * @param {string} action Action slug.
+ * @returns {ActionDefinition|null} The definition, or null when absent.
+ */
 export function getActionDefinition(action: string): ActionDefinition | null {
   return getBuilderAction(action);
 }
 
+/**
+ * Alias for getBuilderActionsByContext: lists actions for a context.
+ *
+ * @since 2.0.0
+ * @param {BuilderActionContext} context Context slug.
+ * @returns {ActionDefinition[]} Definitions available in that context.
+ */
 export function getActionsForContext(context: BuilderActionContext): ActionDefinition[] {
   return getBuilderActionsByContext(context);
 }
 
+/**
+ * Builds the description preview for a workflow node from its action data.
+ *
+ * @since 2.0.0
+ * @param {{ data?: Record<string, unknown> }} node Workflow node with optional data.
+ * @returns {string} The preview description.
+ */
 export function getActionRegistryPreview(node: { data?: Record<string, unknown> }): string {
   const action = String(node?.data?.action || '');
   return buildActionDescription(action, node?.data || {});
 }
 
+/**
+ * Ensures the action registry has been bootstrapped.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 export function ensureActionRegistry(): void {
   ensureBootstrapped();
 }
 
+/**
+ * Returns the current registry revision counter (bootstrapping if needed).
+ *
+ * @since 2.0.0
+ * @returns {number} The current revision value.
+ */
 export function getActionRegistryRevision(): number {
   ensureBootstrapped();
   return registryRevision.value;

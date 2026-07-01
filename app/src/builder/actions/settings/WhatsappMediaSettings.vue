@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * WhatsappMediaSettings.vue
+ *
+ * Settings panel for the "WhatsApp media" action. Configures the sender,
+ * recipient, media type and URL (with a WordPress media library picker) and an
+ * optional caption for image, video, document or audio messages.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
@@ -31,6 +40,12 @@ const isAudio = computed(() => String((props.modelValue as Record<string, unknow
 
 const { update } = useActionSettingsUpdate(props, emit);
 
+/**
+ * Open the WordPress media library frame and store the selected attachment URL
+ * on the action model.
+ *
+ * @since 2.0.0
+ */
 function openMediaLibrary() {
   const wpMedia = (window as Window & {
     wp?: {

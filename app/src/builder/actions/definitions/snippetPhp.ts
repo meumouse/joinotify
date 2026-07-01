@@ -1,3 +1,12 @@
+/**
+ * snippetPhp.ts
+ *
+ * Builder action definition for the "PHP Snippet" action, which runs a PHP
+ * snippet during the workflow. Provides data normalization, the settings
+ * schema, description builder, and validation for the required snippet.
+ *
+ * @since 2.0.0
+ */
 import SnippetPhpSettings from '../settings/SnippetPhpSettings.vue';
 import { describeSnippetAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
@@ -5,6 +14,14 @@ import type { ActionDefinition } from '../registry/types';
 import { SNIPPET_PHP_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
+/**
+ * Normalizes/serializes the PHP snippet action payload, applying defaults for
+ * the title, snippet code, and settings object.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized snippet action data.
+ */
 function normalizeSnippetPhpData(data: Record<string, unknown>): Record<string, unknown> {
   return {
     title: String(data.title || __('PHP Snippet', textDomain)),

@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * SnippetPhpSettings.vue
+ *
+ * Settings panel for the "PHP snippet" action. Lets an administrator edit the
+ * PHP code executed by the workflow runtime and optionally generate it from a
+ * natural-language prompt via the AI helper on the store.
+ *
+ * @since 2.0.0
+ */
 import { ref } from 'vue';
 import BaseAlert from '../../components/base/BaseAlert.vue';
 import BaseCodeEditorField from '../../components/base/BaseCodeEditorField.vue';
@@ -22,6 +31,13 @@ const aiPrompt = ref('');
 const aiLoading = ref(false);
 const aiError = ref('');
 
+/**
+ * Ask the AI helper to generate a PHP snippet from the entered instructions and
+ * write the result into the action model.
+ *
+ * @since 2.0.0
+ * @returns {Promise<void>}
+ */
 async function generateWithAi() {
   const instructions = aiPrompt.value.trim();
 

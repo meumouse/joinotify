@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * WorkflowRowActions.vue
+ *
+ * Renders the per-row action links for a single workflow, showing edit and
+ * move-to-trash for active rows and restore/delete-permanently for trashed
+ * rows. Emits the matching action event with the workflow payload.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 
 defineProps({

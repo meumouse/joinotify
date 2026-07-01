@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * WorkflowsPage.vue
+ *
+ * Admin "Workflows" listing screen: renders the status tabs, search, bulk
+ * actions toolbar, paginated table and single/bulk trash-delete confirmation
+ * modal, backed by the useWorkflows composable for data and state.
+ *
+ * @since 2.0.0
+ */
 import { computed, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { useWorkflows } from '../../composables/useWorkflows';
@@ -78,10 +87,25 @@ const confirmLabel = computed(() => __('Confirm', textDomain));
 const wordpressDateFormat = computed(() => props.bootstrap?.date_format || 'F j, Y');
 const wordpressTimeFormat = computed(() => props.bootstrap?.time_format || 'g:i a');
 
+/**
+ * Zero-pad a number to two digits.
+ *
+ * @since 2.0.0
+ * @param {number} value Value to pad.
+ * @returns {string} Zero-padded string.
+ */
 function pad(value) {
   return String(value).padStart(2, '0');
 }
 
+/**
+ * Format a date using a WordPress date-format token string (e.g. 'F j, Y').
+ *
+ * @since 2.0.0
+ * @param {Date} date Date to format.
+ * @param {string} format WordPress date-format tokens.
+ * @returns {string} Formatted date part.
+ */
 function formatWordPressPart(date, format) {
   const monthNamesLong = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -133,6 +157,13 @@ function formatWordPressPart(date, format) {
   return output;
 }
 
+/**
+ * Format a raw MySQL-style datetime string using the site's date/time formats.
+ *
+ * @since 2.0.0
+ * @param {string} value Raw datetime value (e.g. '2026-07-01 10:00:00').
+ * @returns {string} Formatted date and time, or a fallback dash/raw value.
+ */
 function formatDate(value) {
   if (!value) {
     return '-';
@@ -150,6 +181,11 @@ function formatDate(value) {
   return [date, time].filter(Boolean).join(' ').trim();
 }
 
+/**
+ * Reset the trash/delete confirmation modal state.
+ *
+ * @since 2.0.0
+ */
 function resetConfirmation() {
   confirmState.open = false;
   confirmState.title = '';
@@ -159,6 +195,11 @@ function resetConfirmation() {
   confirmState.workflowId = '';
 }
 
+/**
+ * Apply the pending bulk/single action from the confirmation modal.
+ *
+ * @since 2.0.0
+ */
 function confirmSelectionAction() {
   if (!confirmState.action) {
     return;
@@ -170,6 +211,12 @@ function confirmSelectionAction() {
   });
 }
 
+/**
+ * Apply a bulk action, opening the confirmation modal first when destructive.
+ *
+ * @since 2.0.0
+ * @param {string} action Bulk action value (e.g. 'trash', 'delete_permanently').
+ */
 function openBulkConfirmation(action) {
   if (!bulkSelection.selectedIds.value.length || !action) {
     return;
@@ -194,18 +241,43 @@ function openBulkConfirmation(action) {
   });
 }
 
+/**
+ * Select or deselect all currently visible workflows.
+ *
+ * @since 2.0.0
+ * @param {boolean} checked Whether to select (true) or clear (false) the visible set.
+ */
 function handleSelectAll(checked) {
   bulkSelection.setVisibleSelected(visibleWorkflows.value, checked);
 }
 
+/**
+ * Select or deselect a single workflow row.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow Workflow row being toggled.
+ * @param {boolean} checked Whether the row is now selected.
+ */
 function handleRowSelect(workflow, checked) {
   bulkSelection.setSelected(workflow.id, checked);
 }
 
+/**
+ * Navigate to the builder to edit a workflow.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow Workflow to edit.
+ */
 function handleEdit(workflow) {
   navigateTo(workflow.edit_url);
 }
 
+/**
+ * Open the confirmation modal to move a single workflow to trash.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow Workflow to trash.
+ */
 function handleTrash(workflow) {
   confirmState.open = true;
   confirmState.kind = 'single';
@@ -215,10 +287,22 @@ function handleTrash(workflow) {
   confirmState.description = `${__('The workflow', textDomain)} "${workflow.name}" ${__('will be moved to trash.', textDomain)}`;
 }
 
+/**
+ * Restore a trashed workflow.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow Workflow to restore.
+ */
 function handleRestore(workflow) {
   applyBulkAction('restore', [String(workflow.id)]);
 }
 
+/**
+ * Open the confirmation modal to permanently delete a single workflow.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow Workflow to delete.
+ */
 function handleDeletePermanent(workflow) {
   confirmState.open = true;
   confirmState.kind = 'single';
@@ -228,6 +312,13 @@ function handleDeletePermanent(workflow) {
   confirmState.description = `${__('The workflow', textDomain)} "${workflow.name}" ${__('will be removed permanently.', textDomain)}`;
 }
 
+/**
+ * Toggle a workflow between active and inactive status.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow Workflow being toggled.
+ * @param {string} nextStatus Status to switch to.
+ */
 function handleToggleStatus(workflow, nextStatus) {
   if (workflow.status === 'trash' || nextStatus === workflow.status) {
     return;

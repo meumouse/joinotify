@@ -1,4 +1,14 @@
 <script setup lang="ts">
+/**
+ * DynamicActionSettingsRenderer.vue
+ *
+ * Resolves the current action's registry definition and renders its
+ * registered settings component dynamically. Normalizes the available
+ * placeholder list (flat, grouped, or string entries) into a uniform shape
+ * and forwards model-value and placeholder events to the parent editor.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import { useActionRegistry } from '../composables/useActionRegistry';
 import BaseAlert from '../../components/base/BaseAlert.vue';
@@ -23,6 +33,13 @@ const placeholderItems = computed(() => {
 
   // Preserve the context-availability flag computed upstream so unavailable
   // variables keep their warning style/tooltip in the action settings fields.
+  /**
+   * Reads the optional context-availability flag from a placeholder entry.
+   *
+   * @since 2.0.0
+   * @param {Record<string, unknown>} entry Raw placeholder entry.
+   * @returns {boolean|undefined} The availability flag when present, otherwise undefined.
+   */
   const readAvailable = (entry: Record<string, unknown>): boolean | undefined =>
     typeof entry.available === 'boolean' ? entry.available : undefined;
 

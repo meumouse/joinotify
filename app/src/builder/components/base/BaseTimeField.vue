@@ -1,4 +1,12 @@
 <script setup lang="ts">
+/**
+ * BaseTimeField.vue
+ *
+ * Thin wrapper around BaseTextField that fixes the input type to "time",
+ * providing a labelled time picker with v-model support for builder settings.
+ *
+ * @since 2.0.0
+ */
 import BaseTextField from './BaseTextField.vue';
 
 defineProps({

@@ -1,3 +1,14 @@
+/**
+ * useWorkflowBuilderStore.ts
+ *
+ * Pinia store that owns all workflow builder state and orchestration: bootstrap
+ * hydration, the active workflow file, undo/redo history, node CRUD (add, move,
+ * duplicate, remove, update), trigger/context/action selection, placeholder
+ * catalogs, and REST persistence (load, save, import/export, status, AI). It is
+ * the central source of truth the builder UI binds to.
+ *
+ * @since 2.0.0
+ */
 import { defineStore } from 'pinia';
 import { computed, nextTick, ref, watch } from 'vue';
 import {
@@ -63,6 +74,14 @@ import {
 } from '../utils/workflowTree';
 import { createWorkflowNodeId } from '../utils/workflowIds';
 
+/**
+ * Normalizes a single placeholder entry into a placeholder group.
+ *
+ * @since 2.0.0
+ * @param {string} placeholder The placeholder token.
+ * @param {unknown} details The raw placeholder details.
+ * @returns {WorkflowPlaceholderGroup|null} The normalized group, or null.
+ */
 function normalizePlaceholderEntry(placeholder: string, details: unknown): WorkflowPlaceholderGroup | null {
   if (!placeholder || !details || typeof details !== 'object') {
     return null;
@@ -102,6 +121,13 @@ function normalizePlaceholderEntry(placeholder: string, details: unknown): Workf
   };
 }
 
+/**
+ * Normalizes a raw placeholders catalog (array or keyed object) into groups.
+ *
+ * @since 2.0.0
+ * @param {unknown} raw The raw placeholders catalog.
+ * @returns {WorkflowPlaceholderGroup[]} The normalized placeholder groups.
+ */
 function normalizePlaceholdersCatalog(raw: unknown): WorkflowPlaceholderGroup[] {
   if (!raw) {
     return [];
@@ -229,10 +255,24 @@ function normalizePlaceholdersCatalog(raw: unknown): WorkflowPlaceholderGroup[] 
   return [];
 }
 
+/**
+ * Resolves the default trigger context from a catalog.
+ *
+ * @since 2.0.0
+ * @param {WorkflowContextDefinition[]} catalog The context catalog.
+ * @returns {string} The default context ID.
+ */
 function resolveDefaultContext(catalog: WorkflowContextDefinition[]): string {
   return catalog[0]?.id || TRIGGER_CONTEXTS[0]?.id || 'woocommerce';
 }
 
+/**
+ * Coerces a value to a finite number, or null when not possible.
+ *
+ * @since 2.0.0
+ * @param {unknown} value The value to coerce.
+ * @returns {number|null} The finite number, or null.
+ */
 function toFiniteNumber(value: unknown): number | null {
   if (typeof value === 'number' && Number.isFinite(value)) {
     return value;
@@ -248,6 +288,12 @@ function toFiniteNumber(value: unknown): number | null {
   return null;
 }
 
+/**
+ * Defines the workflow builder Pinia store.
+ *
+ * @since 2.0.0
+ * @returns {Object} The store's reactive state, getters, and actions.
+ */
 export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', () => {
   const bootstrap = ref<BuilderBootstrap>({});
   const api = ref<ReturnType<typeof createWorkflowApiClient> | null>(null);
@@ -319,6 +365,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return getActionDefinition(String(node.data.action || ''));
   });
 
+  /**
+   * Finds a node in the current workflow by ID.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node ID.
+   * @returns {WorkflowNode|null} The node, or null.
+   */
   function getNodeById(nodeId: string) {
     if (!nodeId) {
       return null;
@@ -327,6 +380,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return findWorkflowNodeLocation(workflowContent.value, nodeId)?.node || null;
   }
 
+  /**
+   * Returns a node's canvas position when both coordinates are finite.
+   *
+   * @since 2.0.0
+   * @param {WorkflowNode|null|undefined} node The node.
+   * @returns {{x: number, y: number}|null} The position, or null.
+   */
   function getNodeCanvasPosition(node: WorkflowNode | null | undefined) {
     const candidate = node?.data?.canvas_position;
     const source = candidate && typeof candidate === 'object' ? (candidate as Record<string, unknown>) : null;
@@ -343,6 +403,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return null;
   }
 
+  /**
+   * Computes an offset canvas position for a new floating node.
+   *
+   * @since 2.0.0
+   * @param {string} referenceId The reference node ID to offset from.
+   * @returns {{x: number, y: number}} The computed floating position.
+   */
   function resolveFloatingNodePosition(referenceId: string) {
     const referenceNode = getNodeById(referenceId) || triggerNode.value || selectedNode.value;
     const referencePosition = getNodeCanvasPosition(referenceNode) || { x: 320, y: 80 };
@@ -380,6 +447,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const triggerOptions = computed(() => getTriggersForContext(activeContext.value || ''));
   const triggerContexts = computed(() => triggerContextsCache.value.length ? triggerContextsCache.value : TRIGGER_CONTEXTS);
 
+  /**
+   * Initializes the API client and registry catalogs from a bootstrap payload.
+   *
+   * @since 2.0.0
+   * @param {BuilderBootstrap} value The bootstrap payload.
+   */
   function setApiFromBootstrap(value: BuilderBootstrap) {
     bootstrap.value = cloneSerializable(value || {});
     api.value = createWorkflowApiClient(bootstrap.value);
@@ -406,10 +479,20 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     actionsCatalogContext.value = '';
   }
 
+  /**
+   * Records the current file as the saved baseline for dirty tracking.
+   *
+   * @since 2.0.0
+   */
   function markBaseline() {
     baseline.value = serializeWorkflowToJson(file.value);
   }
 
+  /**
+   * Clears undo/redo history and resets the last snapshot.
+   *
+   * @since 2.0.0
+   */
   function resetHistory() {
     if (historyDebounceTimer) {
       clearTimeout(historyDebounceTimer);
@@ -422,6 +505,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     lastHistorySnapshot = serializeWorkflowToJson(file.value);
   }
 
+  /**
+   * Pushes the last snapshot onto the undo stack when content changed.
+   *
+   * @since 2.0.0
+   */
   function commitHistorySnapshot() {
     if (isTimeTraveling.value) {
       return;
@@ -443,6 +531,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     lastHistorySnapshot = current;
   }
 
+  /**
+   * Restores the workflow file from a serialized history snapshot.
+   *
+   * @since 2.0.0
+   * @param {string} json The serialized snapshot.
+   * @returns {boolean} True when the snapshot was applied.
+   */
   function applyHistorySnapshot(json: string) {
     const parsed = parseWorkflowFromJson(json);
 
@@ -467,6 +562,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return true;
   }
 
+  /**
+   * Undoes the last change by restoring the previous history snapshot.
+   *
+   * @since 2.0.0
+   * @returns {boolean} True when an undo was applied.
+   */
   function undo() {
     if (!undoStack.value.length) {
       return false;
@@ -489,6 +590,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return applyHistorySnapshot(previous);
   }
 
+  /**
+   * Redoes the last undone change by restoring the next history snapshot.
+   *
+   * @since 2.0.0
+   * @returns {boolean} True when a redo was applied.
+   */
   function redo() {
     if (!redoStack.value.length) {
       return false;
@@ -530,6 +637,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   );
 
+  /**
+   * Syncs active context, selected trigger, and node selection from the file.
+   *
+   * @since 2.0.0
+   */
   function syncSelectionFromFile() {
     const currentTrigger = triggerNode.value;
 
@@ -547,6 +659,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   // trigger can no longer be configured. Recover the slug deterministically from the
   // saved settings keys (each trigger's settings schema is unique within a context),
   // falling back to a title match, so legacy workflows become editable again.
+  /**
+   * Recovers a missing trigger slug from saved settings or a title match.
+   *
+   * @since 2.0.0
+   * @returns {boolean} True when a slug was recovered.
+   */
   function recoverTriggerNodeSlug(): boolean {
     const node = triggerNode.value;
 
@@ -607,6 +725,14 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return true;
   }
 
+  /**
+   * Applies a workflow file to the store, resetting selection, history, and baseline.
+   *
+   * @since 2.0.0
+   * @param {ExportedWorkflowFile} value The workflow file.
+   * @param {number} [nextPostId] The post ID to associate.
+   * @param {boolean} [forceCanvas] Force the canvas step regardless of trigger.
+   */
   function applyWorkflowFile(value: ExportedWorkflowFile, nextPostId = postId.value, forceCanvas = false) {
     const normalized = normalizeWorkflowFile(value);
     file.value = normalized;
@@ -634,6 +760,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     void loadCanvasActionsFromServer(activeContext.value);
   }
 
+  /**
+   * Hydrates the store from a bootstrap payload, loading or creating a workflow.
+   *
+   * @since 2.0.0
+   * @param {BuilderBootstrap} value The bootstrap payload.
+   */
   function hydrateFromBootstrap(value: BuilderBootstrap) {
     const previousStep = step.value;
     loading.value.bootstrap = true;
@@ -680,6 +812,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Loads the action catalog for a context from the server (cached per context).
+   *
+   * @since 2.0.0
+   * @param {string} [nextContext] The context to load actions for.
+   * @returns {Promise<Object>} The load result.
+   */
   async function loadCanvasActionsFromServer(nextContext = activeContext.value) {
     const context = String(nextContext || '').trim();
 
@@ -732,6 +871,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Loads and registers a single action definition from the server.
+   *
+   * @since 2.0.0
+   * @param {string} actionId The action ID.
+   * @returns {Promise<Object>} The load result.
+   */
   async function loadActionDefinitionFromServer(actionId: string) {
     const normalizedAction = String(actionId || '').trim();
 
@@ -774,6 +920,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Loads a workflow from the server by post ID and applies it.
+   *
+   * @since 2.0.0
+   * @param {number} [nextPostId] The workflow post ID.
+   * @returns {Promise<Object>} The load result.
+   */
   async function loadWorkflowFromServer(nextPostId = postId.value) {
     const resolvedPostId = Number(nextPostId || 0) || 0;
 
@@ -825,6 +978,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Creates an empty workflow file with a single trigger node.
+   *
+   * @since 2.0.0
+   * @param {string} [title] The workflow title.
+   * @returns {ExportedWorkflowFile} The created file.
+   */
   function createEmptyWorkflowFile(title = __('My automation', textDomain)) {
     const context = resolveDefaultContext(triggerContexts.value);
     debugLogger.log('workflow:create-empty', {
@@ -861,6 +1021,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return file.value;
   }
 
+  /**
+   * Resets the entire builder session to its initial empty state.
+   *
+   * @since 2.0.0
+   */
   function resetWorkflowSession() {
     debugLogger.log('workflow:reset-session');
     postId.value = 0;
@@ -882,10 +1047,24 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     resetHistory();
   }
 
+  /**
+   * Loads a workflow file into the store.
+   *
+   * @since 2.0.0
+   * @param {ExportedWorkflowFile} value The workflow file.
+   * @param {number} [nextPostId] The post ID to associate.
+   */
   function loadWorkflowFile(value: ExportedWorkflowFile, nextPostId = 0) {
     applyWorkflowFile(value, nextPostId);
   }
 
+  /**
+   * Creates a new workflow locally from scratch and enters the trigger step.
+   *
+   * @since 2.0.0
+   * @param {string} [title] The workflow title.
+   * @returns {Object} The creation result with the workflow file.
+   */
   function createWorkflowFromScratch(title = file.value.post.title || __('My automation', textDomain)) {
     debugLogger.log('workflow:create-from-scratch-start', {
       title,
@@ -902,6 +1081,16 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return { ok: true, workflow_file: file.value };
   }
 
+  /**
+   * Creates a workflow on the server from a selected trigger and context.
+   *
+   * @since 2.0.0
+   * @param {string} [title] The workflow title.
+   * @param {string} [context] The trigger context.
+   * @param {string} [trigger] The trigger ID.
+   * @param {Record<string, unknown>} [settings] The trigger settings.
+   * @returns {Promise<Object>} The creation response.
+   */
   async function createWorkflowFromTrigger(
     title = file.value.post.title || __('My automation', textDomain),
     context = activeContext.value,
@@ -954,6 +1143,14 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Creates a workflow on the server from a template file.
+   *
+   * @since 2.0.0
+   * @param {string} templateFile The template file identifier.
+   * @param {string} [title] The workflow title.
+   * @returns {Promise<Object>} The creation response.
+   */
   async function createWorkflowFromTemplate(templateFile: string, title = '') {
     loading.value.create = true;
     debugLogger.log('workflow:create-from-template-start', {
@@ -980,6 +1177,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Generates a full workflow via AI and applies the result.
+   *
+   * @since 2.0.0
+   * @param {Record<string, unknown>} [payload] The generation payload.
+   * @returns {Promise<Object>} The generation result.
+   */
   async function generateWorkflowFromAi(payload: Record<string, unknown> = {}) {
     loading.value.create = true;
     debugLogger.log('workflow:generate-ai-start', {
@@ -1020,6 +1224,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Generates a PHP snippet via AI.
+   *
+   * @since 2.0.0
+   * @param {Record<string, unknown>} [payload] The generation payload.
+   * @returns {Promise<Object>} The generation result with the code.
+   */
   async function generateAiSnippet(payload: Record<string, unknown> = {}) {
     debugLogger.log('snippet:generate-ai-start');
 
@@ -1044,6 +1255,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Loads the builder bootstrap payload from the server and hydrates the store.
+   *
+   * @since 2.0.0
+   * @param {number} [nextPostId] The workflow post ID.
+   * @returns {Promise<Object>} The bootstrap response.
+   */
   async function loadBootstrapFromServer(nextPostId = postId.value) {
     loading.value.bootstrap = true;
     debugLogger.log('bootstrap:load-start', {
@@ -1066,6 +1284,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Loads workflow templates from the server (cached unless forced).
+   *
+   * @since 2.0.0
+   * @param {boolean} [force] Force a reload even when cached.
+   * @returns {Promise<Object>} The templates response.
+   */
   async function loadTemplatesFromServer(force = false) {
     if (!force && Array.isArray(templateCatalog.value) && templateCatalog.value.length > 0) {
       return { templates: templateCatalog.value };
@@ -1092,6 +1317,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Sets the workflow title, also syncing the trigger node's title.
+   *
+   * @since 2.0.0
+   * @param {string} title The new title.
+   */
   function setWorkflowTitle(title: string) {
     file.value.post.title = title;
 
@@ -1104,14 +1335,32 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Sets the workflow's publication status locally.
+   *
+   * @since 2.0.0
+   * @param {string} status The new status.
+   */
   function setWorkflowStatus(status: string) {
     file.value.post.status = status;
   }
 
+  /**
+   * Marks the current file as saved by updating the baseline.
+   *
+   * @since 2.0.0
+   */
   function markWorkflowSaved() {
     baseline.value = serializeWorkflowToJson(file.value);
   }
 
+  /**
+   * Updates the workflow status on the server.
+   *
+   * @since 2.0.0
+   * @param {string} status The new status.
+   * @returns {Promise<Object>} The update response.
+   */
   async function updateWorkflowStatus(status: string) {
     if (loading.value.status) {
       return { ok: false };
@@ -1155,6 +1404,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Sets the workflow category/context, resetting the trigger and reloading actions.
+   *
+   * @since 2.0.0
+   * @param {string} category The new category/context.
+   */
   function setWorkflowCategory(category: string) {
     file.value.post.category = category;
     activeContext.value = category;
@@ -1172,6 +1427,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Selects a trigger context, resetting the trigger and reloading actions.
+   *
+   * @since 2.0.0
+   * @param {string} context The context to select.
+   */
   function selectTriggerContext(context: string) {
     debugLogger.log('trigger:context-selected', {
       context,
@@ -1192,6 +1453,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Selects a trigger, creating or updating the trigger node accordingly.
+   *
+   * @since 2.0.0
+   * @param {string} triggerId The trigger ID.
+   */
   function selectTrigger(triggerId: string) {
     debugLogger.log('trigger:selected', {
       context: activeContext.value,
@@ -1227,6 +1494,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     };
   }
 
+  /**
+   * Merges a patch into the trigger node, reacting to context/trigger/title changes.
+   *
+   * @since 2.0.0
+   * @param {Record<string, unknown>} patch The data patch.
+   */
   function updateTriggerNode(patch: Record<string, unknown>) {
     const trigger = triggerNode.value;
 
@@ -1257,6 +1530,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Merges a patch into a node's data, handling trigger-specific side effects.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node ID.
+   * @param {Record<string, unknown>} patch The data patch.
+   */
   function updateNodeData(nodeId: string, patch: Record<string, unknown>) {
     if (!nodeId) {
       return;
@@ -1300,6 +1580,16 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Adds an action or condition node, either into a branch or as a floating node.
+   *
+   * @since 2.0.0
+   * @param {string} [actionId] The action ID to create.
+   * @param {string} [afterNodeId] The node to insert after.
+   * @param {WorkflowBranchKey} [branchKey] The branch to insert into.
+   * @param {Record<string, unknown>|null} [actionDefinition] Optional definition to register.
+   * @returns {WorkflowNode} The inserted node.
+   */
   function addActionNode(
     actionId = 'send_whatsapp_message_text',
     afterNodeId = selectedNodeId.value,
@@ -1378,14 +1668,38 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return inserted || node;
   }
 
+  /**
+   * Adds a node below a given node.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node to insert after.
+   * @param {string} actionId The action ID to create.
+   * @param {WorkflowBranchKey} [branchKey] The branch to insert into.
+   * @returns {WorkflowNode} The inserted node.
+   */
   function addNodeBelow(nodeId: string, actionId: string, branchKey?: WorkflowBranchKey) {
     return addActionNode(actionId, nodeId, branchKey);
   }
 
+  /**
+   * Adds a node into a specific branch of a condition node.
+   *
+   * @since 2.0.0
+   * @param {string} conditionId The condition node ID.
+   * @param {WorkflowBranchKey} branchKey The branch to insert into.
+   * @param {string} actionId The action ID to create.
+   * @returns {WorkflowNode} The inserted node.
+   */
   function addNodeToBranch(conditionId: string, branchKey: WorkflowBranchKey, actionId: string) {
     return addActionNode(actionId, conditionId, branchKey);
   }
 
+  /**
+   * Removes a node (except the trigger) and updates the selection.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node ID to remove.
+   */
   function removeNode(nodeId: string) {
     if (!nodeId || triggerNode.value?.id === nodeId) {
       return;
@@ -1408,6 +1722,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     });
   }
 
+  /**
+   * Recursively removes layout/connection metadata from a node subtree.
+   *
+   * @since 2.0.0
+   * @param {WorkflowNode} node The root node of the subtree.
+   */
   function stripNodeLayoutMetadata(node: WorkflowNode) {
     if (node.data && typeof node.data === 'object') {
       delete node.data.canvas_position;
@@ -1424,6 +1744,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Duplicates a node subtree with a fresh ID and floating position.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node ID to duplicate.
+   * @returns {WorkflowNode|null} The cloned node, or null when not found.
+   */
   function duplicateNode(nodeId: string) {
     const location = findWorkflowNodeLocation(workflowContent.value, nodeId);
 
@@ -1469,6 +1796,14 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return clone;
   }
 
+  /**
+   * Moves a node up or down within its container.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node ID.
+   * @param {'up'|'down'} direction The move direction.
+   * @returns {boolean} True when the node was moved.
+   */
   function moveNode(nodeId: string, direction: 'up' | 'down') {
     debugLogger.log('node:move-requested', {
       node_id: nodeId,
@@ -1477,6 +1812,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return moveWorkflowNode(workflowContent.value, nodeId, direction);
   }
 
+  /**
+   * Opens the settings drawer for a node in a given mode.
+   *
+   * @since 2.0.0
+   * @param {string} nodeId The node ID.
+   * @param {'settings'|'context'|'menu'} [mode] The drawer mode.
+   */
   function openNodeSettings(nodeId: string, mode: 'settings' | 'context' | 'menu' = 'settings') {
     debugLogger.log('node:open-settings', {
       node_id: nodeId,
@@ -1488,11 +1830,23 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     drawerOpen.value = true;
   }
 
+  /**
+   * Closes the settings drawer.
+   *
+   * @since 2.0.0
+   */
   function closeNodeSettings() {
     drawerOpen.value = false;
     editingNodeId.value = '';
   }
 
+  /**
+   * Imports a workflow from a JSON string and applies it on success.
+   *
+   * @since 2.0.0
+   * @param {string} json The JSON source.
+   * @returns {Object} The import result.
+   */
   function importWorkflowFromJson(json: string) {
     debugLogger.log('workflow:import-requested', {
       input_length: json?.length || 0,
@@ -1517,6 +1871,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return parsed;
   }
 
+  /**
+   * Imports a workflow from JSON while toggling the import loading flag.
+   *
+   * @since 2.0.0
+   * @param {string} json The JSON source.
+   * @returns {Promise<Object>} The import result.
+   */
   async function importWorkflowFromServer(json: string) {
     loading.value.import = true;
     debugLogger.log('workflow:import-from-server-start');
@@ -1527,19 +1888,44 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Serializes the current workflow file to JSON and caches the result.
+   *
+   * @since 2.0.0
+   * @returns {string} The serialized JSON.
+   */
   function exportWorkflowToJson() {
     lastExportJson.value = serializeWorkflowToJson(file.value);
     return lastExportJson.value;
   }
 
+  /**
+   * Serializes the current workflow file to an export object.
+   *
+   * @since 2.0.0
+   * @returns {ExportedWorkflowFile} The serialized file.
+   */
   function serializeWorkflow() {
     return serializeWorkflowFile(file.value);
   }
 
+  /**
+   * Parses a raw input into a workflow import result.
+   *
+   * @since 2.0.0
+   * @param {unknown} input The raw input.
+   * @returns {Object} The parse result.
+   */
   function parseWorkflow(input: unknown) {
     return parseWorkflowFile(input);
   }
 
+  /**
+   * Queues a test execution of the current workflow.
+   *
+   * @since 2.0.0
+   * @returns {Promise<Object>} The test response.
+   */
   async function runWorkflowTest() {
     loading.value.test = true;
     debugLogger.log('workflow:test-start', {
@@ -1557,6 +1943,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Saves plugin settings and mirrors the returned settings into bootstrap.
+   *
+   * @since 2.0.0
+   * @param {Object} settings The settings payload.
+   * @returns {Promise<Object>} The save response.
+   */
   async function saveSettings(settings) {
     if (!api.value) {
       throw new Error(__('API client not initialized.', textDomain));
@@ -1574,6 +1967,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     return response;
   }
 
+  /**
+   * Saves the current workflow, creating it first when it has no post ID.
+   *
+   * @since 2.0.0
+   * @returns {Promise<Object>} The save response.
+   */
   async function saveWorkflow() {
     loading.value.save = true;
     debugLogger.log('workflow:save-start', {
@@ -1632,6 +2031,13 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     }
   }
 
+  /**
+   * Saves a provided workflow snapshot, creating the workflow when needed.
+   *
+   * @since 2.0.0
+   * @param {ExportedWorkflowFile} workflowFile The workflow snapshot to save.
+   * @returns {Promise<Object>} The save response.
+   */
   async function saveWorkflowSnapshot(workflowFile: ExportedWorkflowFile) {
     loading.value.save = true;
     debugLogger.log('workflow:save-snapshot-start', {

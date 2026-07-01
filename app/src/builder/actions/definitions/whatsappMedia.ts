@@ -1,3 +1,13 @@
+/**
+ * whatsappMedia.ts
+ *
+ * Builder action definition for the "WhatsApp: Media message" action, which
+ * sends a WhatsApp media message (image, etc.) with an optional caption.
+ * Provides data normalization, description builder, and validation for the
+ * sender and media URL.
+ *
+ * @since 2.0.0
+ */
 import WhatsappMediaSettings from '../settings/WhatsappMediaSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
@@ -5,6 +15,14 @@ import type { ActionDefinition } from '../registry/types';
 import { WHATSAPP_ICON } from './actionIcons';
 import { __, sprintf, textDomain } from '../../../utils/i18n';
 
+/**
+ * Normalizes/serializes the WhatsApp media message action payload, applying
+ * defaults for media type/URL, caption, sender, and receiver.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized WhatsApp media message action data.
+ */
 function normalizeWhatsappMediaData(data: Record<string, unknown>): Record<string, unknown> {
   const caption = String(data.caption || '');
   const mediaType = String(data.media_type || 'image');

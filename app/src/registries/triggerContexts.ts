@@ -1,3 +1,11 @@
+/**
+ * triggerContexts.ts
+ *
+ * Static catalog of built-in trigger contexts (WordPress, WooCommerce, and
+ * supported integrations) used as defaults/fallbacks by the trigger registry.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../utils/i18n';
 import type { WorkflowContextDefinition } from '../types/workflowBuilder';
 
@@ -39,6 +47,13 @@ export const TRIGGER_CONTEXTS: WorkflowContextDefinition[] = [
   },
 ];
 
+/**
+ * Finds a built-in trigger context by its ID.
+ *
+ * @since 2.0.0
+ * @param {string} id The context ID.
+ * @returns {WorkflowContextDefinition|undefined} The context, or undefined.
+ */
 export function getTriggerContextById(id: string): WorkflowContextDefinition | undefined {
   return TRIGGER_CONTEXTS.find((item) => item.id === id);
 }

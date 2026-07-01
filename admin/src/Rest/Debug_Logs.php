@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Return the structured debug log entries (filterable + paginated).
  *
  * @since 1.1.0
- * @version 2.1.0
+ * @version 2.0.0
  */
 class Debug_Logs extends Abstract_Route {
 

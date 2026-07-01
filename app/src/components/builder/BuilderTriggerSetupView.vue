@@ -1,4 +1,15 @@
 <script setup>
+/**
+ * BuilderTriggerSetupView.vue
+ *
+ * Trigger setup screen for the workflow builder. Presents a searchable list of
+ * integration sources (contexts) in the sidebar and the triggers available for
+ * the selected source in the main area, along with the flow name field and the
+ * step footer. Emits selection and navigation events so the parent can advance
+ * the builder flow.
+ *
+ * @since 2.0.0
+ */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BrandMark from '../brand/BrandMark.vue';
@@ -25,6 +36,15 @@ defineEmits(['update:title', 'update:context', 'select-trigger', 'continue', 'ba
 
 const search = ref('');
 
+/**
+ * Contexts (integration sources) filtered by the sidebar search term.
+ *
+ * Matches the trimmed, lowercased search value against each context's label
+ * and id; returns the full list when the search term is empty.
+ *
+ * @since 2.0.0
+ * @returns {Array} The list of contexts matching the current search term.
+ */
 const filteredContexts = computed(() => {
   const term = search.value.trim().toLowerCase();
 
@@ -39,6 +59,14 @@ const filteredContexts = computed(() => {
   });
 });
 
+/**
+ * Builds a short uppercase abbreviation from a context's label or id, used as a
+ * fallback avatar when the context has no icon SVG.
+ *
+ * @since 2.0.0
+ * @param {Object} item Context object providing a label and/or id.
+ * @returns {string} Up to three uppercase initials derived from the source text.
+ */
 function getContextFallbackLabel(item) {
   const source = String(item.label || item.id || '')
     .replace(/[^a-z0-9]+/gi, ' ')
@@ -53,17 +81,50 @@ function getContextFallbackLabel(item) {
     .toUpperCase();
 }
 
+/**
+ * Resolves the icon SVG markup for a given context id.
+ *
+ * @since 2.0.0
+ * @param {string} contextId The context identifier to look up.
+ * @returns {string} The context's icon SVG, or an empty string when not found.
+ */
 function getContextLogo(contextId) {
   return props.contexts.find((item) => item.id === contextId)?.icon_svg || '';
 }
 
+/**
+ * Resolves the display label for a given context id.
+ *
+ * @since 2.0.0
+ * @param {string} contextId The context identifier to look up.
+ * @returns {string} The context's label, or the id itself when no label exists.
+ */
 function getContextLabel(contextId) {
   return props.contexts.find((item) => item.id === contextId)?.label || contextId;
 }
 
+/**
+ * CSS class string applied to the trigger cards grid.
+ *
+ * @since 2.0.0
+ * @returns {string} The grid class names.
+ */
 const triggerGridClass = computed(() => 'builder-trigger-grid grid gap-4');
 
+/**
+ * Placeholder indices used to render trigger card skeletons while loading.
+ *
+ * @since 2.0.0
+ * @returns {number[]} An array of index values for the skeleton cards.
+ */
 const skeletonCards = computed(() => Array.from({ length: 4 }, (_, index) => index));
+
+/**
+ * Placeholder indices used to render context row skeletons while loading.
+ *
+ * @since 2.0.0
+ * @returns {number[]} An array of index values for the skeleton context rows.
+ */
 const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => index));
 </script>
 

@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * TriggerStepFooter.vue
+ *
+ * Footer for the trigger setup step containing a back link and a primary
+ * continue button. The continue button reflects the disabled and continuing
+ * (loading) states, and both controls emit their respective navigation events.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 

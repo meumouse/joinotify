@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
  * Return the debug log content for download, rendered from the structured table.
  *
  * @since 1.4.7
- * @version 2.1.0
+ * @version 2.0.0
  */
 class Debug_Download extends Abstract_Route {
 

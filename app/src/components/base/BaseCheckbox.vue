@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseCheckbox.vue
+ *
+ * Accessible custom checkbox with support for indeterminate state and an
+ * optional label. Uses a visually hidden native input for accessibility while
+ * rendering a styled box and check mark, and syncs its value via v-model.
+ *
+ * @since 2.0.0
+ */
 import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
@@ -26,6 +35,12 @@ watch(
   { immediate: true }
 );
 
+/**
+ * Handle a change on the native checkbox, emitting the new checked state.
+ *
+ * @since 2.0.0
+ * @param {Event} event The native change event.
+ */
 function handleChange(event) {
   const checked = event.target.checked;
   emit('update:modelValue', checked);

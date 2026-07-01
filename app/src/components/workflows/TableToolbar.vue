@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * TableToolbar.vue
+ *
+ * Composes the workflows table toolbar by combining the BulkActions selector
+ * and PaginationControls into one row, forwarding their props and re-emitting
+ * their events up to the parent.
+ *
+ * @since 2.0.0
+ */
 import BulkActions from './BulkActions.vue';
 import PaginationControls from './PaginationControls.vue';
 

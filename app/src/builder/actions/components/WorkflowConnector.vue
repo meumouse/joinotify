@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * WorkflowConnector.vue
+ *
+ * Small presentational connector rendered between workflow nodes on the
+ * builder canvas. Draws the vertical link line and an optional pill label
+ * (with branch key) to visually indicate the relationship between steps.
+ *
+ * @since 2.0.0
+ */
 defineProps({
   label: { type: String, default: '' },
   branchKey: { type: String, default: '' },

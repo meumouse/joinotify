@@ -1,13 +1,38 @@
+/**
+ * createCoupon.ts
+ *
+ * Builder action definition for the "Discount coupon" action, which generates
+ * a WooCommerce coupon and notifies the customer. Provides data normalization
+ * (with nested expiry and message settings), the WooCommerce context/category,
+ * and the description builder.
+ *
+ * @since 2.0.0
+ */
 import CreateCouponSettings from '../settings/CreateCouponSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import type { ActionDefinition } from '../registry/types';
 import { COUPON_ICON } from './actionIcons';
 import { __, sprintf, textDomain } from '../../../utils/i18n';
 
+/**
+ * Coerces a value into a plain record, returning an empty object otherwise.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Value to coerce.
+ * @returns {Record<string, unknown>} The value as a record, or an empty object.
+ */
 function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
 }
 
+/**
+ * Normalizes/serializes the coupon action payload, applying defaults for the
+ * coupon settings and its nested expiry and message objects.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized coupon action data.
+ */
 function normalizeCreateCouponData(data: Record<string, unknown>): Record<string, unknown> {
   const settings = asRecord(data.settings);
   const expiry = asRecord(settings.expiry_data);

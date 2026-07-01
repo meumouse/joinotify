@@ -1,3 +1,13 @@
+/**
+ * timeDelay.ts
+ *
+ * Builder action definition for the "Delay" action, which pauses the workflow
+ * before the next step. Supports period, date, and scheduled delay types with
+ * data normalization, the settings schema, description builder, and type-aware
+ * validation.
+ *
+ * @since 2.0.0
+ */
 import TimeDelaySettings from '../settings/TimeDelaySettings.vue';
 import { describeTimeDelayAction, truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
@@ -5,6 +15,14 @@ import type { ActionDefinition } from '../registry/types';
 import { TIME_DELAY_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
 
+/**
+ * Normalizes/serializes the delay action payload, applying defaults for the
+ * delay type, value, period, date/time, and optional timestamp.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data Raw action data.
+ * @returns {Record<string, unknown>} Normalized delay action data.
+ */
 function normalizeTimeDelayData(data: Record<string, unknown>): Record<string, unknown> {
   const delayValue = data.delay_value ?? 1;
   const delayTimestamp = data.delay_timestamp ?? '';

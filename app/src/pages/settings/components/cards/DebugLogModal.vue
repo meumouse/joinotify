@@ -9,7 +9,7 @@
  * payload is available.
  *
  * @since 1.4.7
- * @version 2.1.0
+ * @version 2.0.0
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';

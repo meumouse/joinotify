@@ -1,3 +1,12 @@
+<!--
+  LoadingState.vue
+
+  Static skeleton placeholder for the workflows screen, rendered while the
+  list is loading. Shows shimmering blocks that mimic the toolbar, table
+  header, and rows for both the desktop table and mobile card layouts.
+
+  @since 2.0.0
+-->
 <template>
   <div class="space-y-4">
     <div class="h-12 w-56 rounded-[8px] bg-shell-100" />

@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * StopFunnelSettings.vue
+ *
+ * Settings panel for the "Stop funnel" action. The action halts the workflow
+ * immediately and exposes no editable settings, so this panel only renders an
+ * informational notice.
+ *
+ * @since 2.0.0
+ */
 import BaseAlert from '../../components/base/BaseAlert.vue';
 import { __, textDomain } from '../../../utils/i18n';
 

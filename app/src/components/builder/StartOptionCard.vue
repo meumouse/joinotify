@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * StartOptionCard.vue
+ *
+ * Presentational card used on the builder start screen to offer a single way to
+ * begin a workflow (e.g. from scratch or from a template). Renders an icon slot,
+ * title, description and a call-to-action button that emits a click event.
+ *
+ * @since 2.0.0
+ */
 import BaseButton from '../base/BaseButton.vue';
 
 defineProps({

@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseCheckbox.vue
+ *
+ * Accessible, styled checkbox that wraps a visually hidden native input with a
+ * custom check indicator. Supports v-model, an indeterminate state, and label
+ * text so it can be reused across forms and settings screens.
+ *
+ * @since 2.0.0
+ */
 import { computed, ref, watch } from 'vue';
 
 const props = defineProps({
@@ -26,6 +35,13 @@ watch(
   { immediate: true }
 );
 
+/**
+ * Handle the native input change event and propagate the checked state.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native change event fired by the checkbox input.
+ * @returns {void}
+ */
 function handleChange(event) {
   const checked = event.target.checked;
   emit('update:modelValue', checked);

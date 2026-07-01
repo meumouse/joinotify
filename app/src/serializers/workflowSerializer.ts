@@ -1,3 +1,13 @@
+/**
+ * workflowSerializer.ts
+ *
+ * Serializes the in-memory workflow node tree back into the persisted export
+ * file format. Applies registry serialize hooks, preserves editor metadata,
+ * flattens condition branches into stored shapes, and realigns node order with
+ * the authoritative connection wiring before output.
+ *
+ * @since 2.0.0
+ */
 import { getActionDefinition } from '../registries/actionRegistry';
 import { getTriggerDefinition } from '../registries/triggerRegistry';
 import {
@@ -23,6 +33,13 @@ const EDITOR_META_KEYS = [
   'canvas_position',
 ] as const;
 
+/**
+ * Extracts editor-only metadata keys from node data.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data The node data.
+ * @returns {Record<string, unknown>} The cloned editor metadata.
+ */
 function pickEditorMeta(data: Record<string, unknown>): Record<string, unknown> {
   const meta: Record<string, unknown> = {};
 
@@ -35,6 +52,13 @@ function pickEditorMeta(data: Record<string, unknown>): Record<string, unknown> 
   return meta;
 }
 
+/**
+ * Serializes a node's data using its registry serialize hook when available.
+ *
+ * @since 2.0.0
+ * @param {WorkflowNode} node The node to serialize.
+ * @returns {Record<string, unknown>} The serialized node data.
+ */
 function serializeNodeData(node: WorkflowNode): Record<string, unknown> {
   const data = isRecord(node.data) ? cloneSerializable(node.data) : {};
   const editorMeta = pickEditorMeta(data);
@@ -73,10 +97,24 @@ function serializeNodeData(node: WorkflowNode): Record<string, unknown> {
   };
 }
 
+/**
+ * Serializes a linear list of child nodes.
+ *
+ * @since 2.0.0
+ * @param {WorkflowNode[]} children The child nodes.
+ * @returns {WorkflowNode[]} The serialized children.
+ */
 function serializeLinearChildren(children: WorkflowNode[]): WorkflowNode[] {
   return (children || []).map((child) => serializeWorkflowNode(child));
 }
 
+/**
+ * Serializes the true/false branches of a condition node.
+ *
+ * @since 2.0.0
+ * @param {WorkflowBranches} branches The branches to serialize.
+ * @returns {Record<string, WorkflowNode[]>} The serialized branch children.
+ */
 function serializeBranchChildren(branches: WorkflowBranches): Record<string, WorkflowNode[]> {
   return {
     action_true: serializeLinearChildren(branches.action_true || []),
@@ -84,6 +122,13 @@ function serializeBranchChildren(branches: WorkflowBranches): Record<string, Wor
   };
 }
 
+/**
+ * Serializes a single workflow node, including its children or branches.
+ *
+ * @since 2.0.0
+ * @param {WorkflowNode} node The node to serialize.
+ * @returns {Record<string, unknown>} The serialized node payload.
+ */
 export function serializeWorkflowNode(node: WorkflowNode): Record<string, unknown> {
   const payload: Record<string, unknown> = {
     ...cloneSerializable(node),
@@ -105,6 +150,13 @@ export function serializeWorkflowNode(node: WorkflowNode): Record<string, unknow
   return payload;
 }
 
+/**
+ * Serializes a full workflow file, normalizing metadata and realigning node order.
+ *
+ * @since 2.0.0
+ * @param {ExportedWorkflowFile} file The workflow file to serialize.
+ * @returns {ExportedWorkflowFile} The serialized file.
+ */
 export function serializeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkflowFile {
   const normalized = normalizeWorkflowFile(file);
   const post: WorkflowPostMeta = {
@@ -132,6 +184,13 @@ export function serializeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkf
   };
 }
 
+/**
+ * Serializes a workflow file to a pretty-printed JSON string.
+ *
+ * @since 2.0.0
+ * @param {ExportedWorkflowFile} file The workflow file.
+ * @returns {string} The JSON representation.
+ */
 export function serializeWorkflowToJson(file: ExportedWorkflowFile): string {
   return JSON.stringify(serializeWorkflowFile(file), null, 2);
 }

@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * PlaceholderList.vue
+ *
+ * Displays the available message placeholders as clickable chips and emits a
+ * select event with the chosen placeholder token, letting the user insert it
+ * into a field. Shows an empty state when no placeholders are provided.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../../utils/i18n';
 
 defineProps({

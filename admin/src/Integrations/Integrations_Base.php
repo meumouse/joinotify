@@ -861,7 +861,7 @@ abstract class Integrations_Base {
      * 
      * @since 1.1.0
      * @param string $slug | Integration slug (eg: 'wordpress')
-     * @param string $name | Integration name (eg: esc_html__( 'WordPress', 'text-domain' ) )
+     * @param string $name | Integration name (eg: esc_html__( 'WordPress', 'joinotify' ) )
      * @param string $icon_svg | SVG icon code
      * @return void
      */

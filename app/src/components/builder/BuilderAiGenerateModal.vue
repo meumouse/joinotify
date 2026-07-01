@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderAiGenerateModal.vue
+ *
+ * Modal for creating a workflow from a natural-language description. It collects
+ * the user's instructions (plus optional advanced context) and emits a generate
+ * event so the AI can build the trigger and steps for review.
+ *
+ * @since 2.0.0
+ */
 import { ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import ModalDialog from '../modals/ModalDialog.vue';
@@ -26,6 +35,13 @@ watch(
   },
 );
 
+/**
+ * Validate the instructions and emit the generate event with the trimmed
+ * instructions and optional system context. No-ops while loading or empty.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function submit() {
   const value = instructions.value.trim();
 

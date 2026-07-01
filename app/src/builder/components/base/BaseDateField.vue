@@ -1,4 +1,12 @@
 <script setup lang="ts">
+/**
+ * BaseDateField.vue
+ *
+ * Thin wrapper around BaseTextField that fixes the input type to "date",
+ * providing a labelled date picker with v-model support for builder settings.
+ *
+ * @since 2.0.0
+ */
 import BaseTextField from './BaseTextField.vue';
 
 defineProps({

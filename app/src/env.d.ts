@@ -1,3 +1,12 @@
+/**
+ * env.d.ts
+ *
+ * Ambient TypeScript declarations for the Vite build. Declares the `*.vue`
+ * single-file component module type and third-party modules that ship without
+ * their own type definitions.
+ *
+ * @since 2.0.0
+ */
 /// <reference types="vite/client" />
 
 declare module '*.vue' {

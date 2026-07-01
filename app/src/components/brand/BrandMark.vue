@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BrandMark.vue
+ *
+ * Renders the Joinotify logo image, resolving the SVG source from a color
+ * variant (white, dark, primary) and computing its pixel height from a size
+ * keyword or explicit number. Used for consistent brand display across the UI.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 
@@ -28,7 +37,20 @@ const sizeMap = {
   xl: 56,
 };
 
+/**
+ * Resolve the logo image source URL for the current variant.
+ *
+ * @since 2.0.0
+ * @returns {string} Full path to the variant's SVG file.
+ */
 const src = computed(() => `${props.basePath}/${variants[props.variant]}`);
+
+/**
+ * Resolve the logo height in pixels from a numeric size or size keyword.
+ *
+ * @since 2.0.0
+ * @returns {number} Height in pixels, defaulting to the medium size.
+ */
 const height = computed(() => {
   if (typeof props.size === 'number') {
     return props.size;

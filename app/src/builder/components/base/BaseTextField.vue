@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseTextField.vue
+ *
+ * Thin wrapper around the shared BaseInput that adapts the text input for
+ * builder settings. Serves as the base control for the date, time and number
+ * field variants, forwarding common props and relaying input and change events.
+ *
+ * @since 2.0.0
+ */
 import BaseInput from '../../../components/base/BaseInput.vue';
 
 defineProps({

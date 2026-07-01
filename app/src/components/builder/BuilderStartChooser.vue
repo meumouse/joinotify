@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderStartChooser.vue
+ *
+ * Landing screen that lets the user pick how to create a new workflow: from
+ * scratch, from a template, by importing a file, or with AI. Each option card
+ * emits the corresponding event to start that creation flow.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import StartOptionCard from './StartOptionCard.vue';
 

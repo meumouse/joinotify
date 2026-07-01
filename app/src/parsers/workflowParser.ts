@@ -1,3 +1,13 @@
+/**
+ * workflowParser.ts
+ *
+ * Parses and normalizes imported/stored workflow files into the in-memory node
+ * tree used by the builder. Handles legacy formats, node data normalization via
+ * the trigger/action registries, condition branch reconstruction, and editor
+ * metadata preservation. Exposes helpers to validate and build workflow files.
+ *
+ * @since 2.0.0
+ */
 import { getActionDefinition } from '../registries/actionRegistry';
 import { TRIGGER_CONTEXTS, getTriggerContextById } from '../registries/triggerContexts';
 import { getTriggerDefinition } from '../registries/triggerRegistry';
@@ -27,10 +37,23 @@ import type {
   WorkflowPostMeta,
 } from '../types/workflowBuilder';
 
+/**
+ * Returns the current date/time as a `YYYY-MM-DD HH:mm:ss` string.
+ *
+ * @since 2.0.0
+ * @returns {string} The formatted timestamp.
+ */
 function nowString(): string {
   return new Date().toISOString().slice(0, 19).replace('T', ' ');
 }
 
+/**
+ * Clones the source and removes internal/editor-only root fields.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} source The raw root object.
+ * @returns {Record<string, unknown>} A clone without internal root fields.
+ */
 function stripInternalRootFields(source: Record<string, unknown>) {
   const extra = cloneSerializable(source);
 
@@ -51,6 +74,14 @@ function stripInternalRootFields(source: Record<string, unknown>) {
   return extra;
 }
 
+/**
+ * Normalizes post metadata, filling defaults for title, status, date, and category.
+ *
+ * @since 2.0.0
+ * @param {unknown} value The raw post metadata.
+ * @param {string} [fallbackCategory] Category used when none is present.
+ * @returns {WorkflowPostMeta} The normalized post metadata.
+ */
 function normalizePostMeta(value: unknown, fallbackCategory = ''): WorkflowPostMeta {
   const source = isRecord(value) ? value : {};
   const extra = stripInternalRootFields(source);
@@ -69,6 +100,15 @@ function normalizePostMeta(value: unknown, fallbackCategory = ''): WorkflowPostM
   };
 }
 
+/**
+ * Normalizes a node's data payload using the matching registry definition.
+ *
+ * @since 2.0.0
+ * @param {unknown} rawData The raw node data.
+ * @param {'trigger'|'action'} type The node kind.
+ * @param {string} nodeId The node ID used when building base data.
+ * @returns {Record<string, unknown>} The normalized node data.
+ */
 function normalizeNodeData(
   rawData: unknown,
   type: 'trigger' | 'action',
@@ -165,6 +205,13 @@ function normalizeNodeData(
   };
 }
 
+/**
+ * Coerces a value to a finite number, or null when not possible.
+ *
+ * @since 2.0.0
+ * @param {unknown} value The value to coerce.
+ * @returns {number|null} The finite number, or null.
+ */
 function toFiniteNumber(value: unknown): number | null {
   if (typeof value === 'number' && Number.isFinite(value)) {
     return value;
@@ -180,6 +227,13 @@ function toFiniteNumber(value: unknown): number | null {
   return null;
 }
 
+/**
+ * Extracts editor-only metadata (connection wiring, canvas position) from node data.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} data The node data.
+ * @returns {Record<string, unknown>} The extracted editor metadata.
+ */
 function pickEditorMeta(data: Record<string, unknown>): Record<string, unknown> {
   const meta: Record<string, unknown> = {};
 
@@ -211,6 +265,13 @@ function pickEditorMeta(data: Record<string, unknown>): Record<string, unknown> 
   return meta;
 }
 
+/**
+ * Normalizes a linear list of child nodes.
+ *
+ * @since 2.0.0
+ * @param {unknown} children The raw children value.
+ * @returns {WorkflowNode[]} The normalized child nodes.
+ */
 function normalizeLinearChildren(children: unknown): WorkflowNode[] {
   if (!Array.isArray(children)) {
     return [];
@@ -221,6 +282,14 @@ function normalizeLinearChildren(children: unknown): WorkflowNode[] {
     .filter(Boolean) as WorkflowNode[];
 }
 
+/**
+ * Normalizes a list of nodes belonging to a specific condition branch.
+ *
+ * @since 2.0.0
+ * @param {unknown[]} nodes The raw branch nodes.
+ * @param {WorkflowBranchKey} branchKey The branch key to assign.
+ * @returns {WorkflowNode[]} The normalized branch nodes.
+ */
 function normalizeBranchNodes(nodes: unknown[], branchKey: WorkflowBranchKey): WorkflowNode[] {
   if (!Array.isArray(nodes)) {
     return [];
@@ -231,6 +300,14 @@ function normalizeBranchNodes(nodes: unknown[], branchKey: WorkflowBranchKey): W
     .filter(Boolean) as WorkflowNode[];
 }
 
+/**
+ * Reconstructs a condition node's true/false branches from various stored shapes.
+ *
+ * @since 2.0.0
+ * @param {Record<string, unknown>} source The raw condition node object.
+ * @param {string} fallbackNodeId The node ID used as a fallback.
+ * @returns {WorkflowBranches} The normalized branches.
+ */
 function normalizeConditionBranches(source: Record<string, unknown>, fallbackNodeId: string): WorkflowBranches {
   const rawBranches = isRecord(source.branches) ? source.branches : null;
   const rawChildren = rawBranches || source.children;
@@ -273,10 +350,25 @@ function normalizeConditionBranches(source: Record<string, unknown>, fallbackNod
   return branches;
 }
 
+/**
+ * Determines whether a value is a legacy connector node that should be dropped.
+ *
+ * @since 2.0.0
+ * @param {unknown} value The value to test.
+ * @returns {boolean} True when the value is a legacy connector node.
+ */
 function isLegacyConnectorNode(value: unknown): boolean {
   return isRecord(value) && typeof value.type === 'string' && value.type.startsWith('connector');
 }
 
+/**
+ * Normalizes a single raw node into a WorkflowNode, or null when invalid.
+ *
+ * @since 2.0.0
+ * @param {unknown} input The raw node.
+ * @param {WorkflowBranchKey} [branchKey] Branch key when the node lives in a branch.
+ * @returns {WorkflowNode|null} The normalized node, or null.
+ */
 export function normalizeWorkflowNode(input: unknown, branchKey?: WorkflowBranchKey): WorkflowNode | null {
   if (!isRecord(input) || isLegacyConnectorNode(input)) {
     return null;
@@ -311,6 +403,13 @@ export function normalizeWorkflowNode(input: unknown, branchKey?: WorkflowBranch
   return node;
 }
 
+/**
+ * Normalizes a list (or wrapping object) into an array of WorkflowNodes.
+ *
+ * @since 2.0.0
+ * @param {unknown} value The raw list or wrapper.
+ * @returns {WorkflowNode[]} The normalized node list.
+ */
 function normalizeWorkflowNodesList(value: unknown): WorkflowNode[] {
   if (Array.isArray(value)) {
     return value.map((item) => normalizeWorkflowNode(item)).filter(Boolean) as WorkflowNode[];
@@ -323,6 +422,13 @@ function normalizeWorkflowNodesList(value: unknown): WorkflowNode[] {
   return [];
 }
 
+/**
+ * Detects the workflow category from its first trigger's context.
+ *
+ * @since 2.0.0
+ * @param {WorkflowNode[]} workflowContent The workflow node tree.
+ * @returns {string} The detected category, or the first available context.
+ */
 function detectCategory(workflowContent: WorkflowNode[]): string {
   for (const node of workflowContent) {
     if (node.type !== 'trigger') {
@@ -338,6 +444,13 @@ function detectCategory(workflowContent: WorkflowNode[]): string {
   return TRIGGER_CONTEXTS[0]?.id || '';
 }
 
+/**
+ * Normalizes a raw exported file (including legacy shapes) into ExportedWorkflowFile.
+ *
+ * @since 2.0.0
+ * @param {unknown} input The raw file object.
+ * @returns {ExportedWorkflowFile} The normalized exported file.
+ */
 function normalizeExportedFile(input: unknown): ExportedWorkflowFile {
   const source = isRecord(input) ? input : {};
   const candidate = isRecord(source.workflow_file) ? source.workflow_file : source;
@@ -371,6 +484,13 @@ function normalizeExportedFile(input: unknown): ExportedWorkflowFile {
   };
 }
 
+/**
+ * Validates and parses a raw workflow file object into an import result.
+ *
+ * @since 2.0.0
+ * @param {unknown} input The raw file object.
+ * @returns {WorkflowImportResult} The parse result with errors/warnings.
+ */
 export function parseWorkflowFile(input: unknown): WorkflowImportResult {
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -410,6 +530,13 @@ export function parseWorkflowFile(input: unknown): WorkflowImportResult {
   return { ok: true, file, errors, warnings };
 }
 
+/**
+ * Parses a JSON string into a workflow import result.
+ *
+ * @since 2.0.0
+ * @param {string} json The JSON source.
+ * @returns {WorkflowImportResult} The parse result.
+ */
 export function parseWorkflowFromJson(json: string): WorkflowImportResult {
   try {
     const parsed = JSON.parse(json);
@@ -419,6 +546,13 @@ export function parseWorkflowFromJson(json: string): WorkflowImportResult {
   }
 }
 
+/**
+ * Builds a normalized ExportedWorkflowFile from partial parts.
+ *
+ * @since 2.0.0
+ * @param {Object} [payload] Partial file data plus optional title/category/status.
+ * @returns {ExportedWorkflowFile} The assembled, normalized file.
+ */
 export function createWorkflowFileFromParts(
   payload: Partial<ExportedWorkflowFile> & { title?: string; category?: string; status?: string } = {}
 ): ExportedWorkflowFile {
@@ -443,10 +577,25 @@ export function createWorkflowFileFromParts(
   });
 }
 
+/**
+ * Re-normalizes an existing exported workflow file.
+ *
+ * @since 2.0.0
+ * @param {ExportedWorkflowFile} file The file to normalize.
+ * @returns {ExportedWorkflowFile} The normalized file.
+ */
 export function normalizeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkflowFile {
   return normalizeExportedFile(file);
 }
 
+/**
+ * Creates a new workflow node from a registry definition.
+ *
+ * @since 2.0.0
+ * @param {'trigger'|'action'} nodeType The node kind to create.
+ * @param {Record<string, unknown>} [payload] Initial node data.
+ * @returns {WorkflowNode} The created node.
+ */
 export function createWorkflowNodeFromRegistry(
   nodeType: 'trigger' | 'action',
   payload: Record<string, unknown> = {}

@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BulkActions.vue
+ *
+ * Renders the bulk-action selector and apply button for the workflows list.
+ * Emits the chosen action via v-model and an "apply" event so the parent can
+ * run an action against every selected workflow at once.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
@@ -15,6 +24,13 @@ const props = defineProps({
 
 defineEmits(['update:modelValue', 'apply']);
 
+/**
+ * Builds the field descriptor consumed by SelectField, normalizing the
+ * incoming options and resolving the placeholder/label text.
+ *
+ * @since 2.0.0
+ * @returns {{ label: string, placeholder: string, options: Array, searchable: boolean }} Field configuration for SelectField.
+ */
 const field = computed(() => ({
   label: __('Bulk actions', textDomain),
   placeholder: props.placeholder || __('Bulk actions', textDomain),

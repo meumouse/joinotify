@@ -1,4 +1,12 @@
 <script setup lang="ts">
+/**
+ * BaseMultiSelectField.vue
+ *
+ * Labelled native multi-select control that lets the user pick several options
+ * at once. Binds to an array via v-model and emits the full selection on change.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -11,8 +19,20 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'change']);
 
+/**
+ * Normalize the model value into an array, guarding against non-array input.
+ *
+ * @since 2.0.0
+ * @returns {Array} The currently selected values.
+ */
 const selectedValues = computed(() => Array.isArray(props.modelValue) ? props.modelValue : []);
 
+/**
+ * Collect the selected options from the change event and emit them as an array.
+ *
+ * @since 2.0.0
+ * @param {Event} event Native change event from the select element.
+ */
 function handleChange(event: Event) {
   const target = event.target as HTMLSelectElement;
   const values = Array.from(target.selectedOptions).map((option) => option.value);

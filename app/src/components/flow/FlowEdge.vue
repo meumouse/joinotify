@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * FlowEdge.vue
+ *
+ * Custom Vue Flow edge that draws a bezier connection between two nodes and
+ * reveals a delete button at the edge midpoint on hover. Clicking the button
+ * invokes the onRemove callback supplied via edge data to remove the connection.
+ *
+ * @since 2.0.0
+ */
 import { computed, onBeforeUnmount, ref } from 'vue';
 import TrashAlt from '@boxicons/vue/TrashAlt';
 import { __, textDomain } from '../../utils/i18n';
@@ -43,6 +52,12 @@ const labelX = computed(() => bezier.value[1]);
 const labelY = computed(() => bezier.value[2]);
 const showRemoveButton = computed(() => hovered.value || hoveringButton.value);
 
+/**
+ * Cancel any pending hover hide timer.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function clearHoverTimer() {
   if (hideHoverTimer) {
     window.clearTimeout(hideHoverTimer);
@@ -50,11 +65,24 @@ function clearHoverTimer() {
   }
 }
 
+/**
+ * Mark the edge as hovered when the pointer enters it.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function handleMouseEnter() {
   clearHoverTimer();
   hovered.value = true;
 }
 
+/**
+ * Clear the hover state after a short delay when the pointer leaves the edge,
+ * allowing the pointer to reach the delete button without flicker.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function handleMouseLeave() {
   clearHoverTimer();
   hideHoverTimer = window.setTimeout(() => {
@@ -63,16 +91,35 @@ function handleMouseLeave() {
   }, 80);
 }
 
+/**
+ * Track that the pointer is over the delete button so it stays visible.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function handleButtonEnter() {
   clearHoverTimer();
   hoveringButton.value = true;
 }
 
+/**
+ * Hide the delete button and clear the edge hover state when the pointer leaves the button.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function handleButtonLeave() {
   hoveringButton.value = false;
   hovered.value = false;
 }
 
+/**
+ * Invoke the onRemove callback with the edge and its endpoints so the parent
+ * can delete this connection.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function removeTargetNode() {
   const edgeId = String(props.data?.edgeId || props.id || '').trim();
 

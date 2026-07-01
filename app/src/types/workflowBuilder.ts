@@ -1,13 +1,29 @@
+/**
+ * workflowBuilder.ts
+ *
+ * Core TypeScript types for the workflow builder: node kinds and branches,
+ * field schemas, registry item shapes, trigger/action node data, placeholders,
+ * import/export file structures, and the builder bootstrap payload.
+ *
+ * @since 2.0.0
+ */
+
+/** Publication status of a workflow. */
 export type WorkflowStatus = 'publish' | 'draft' | 'trash';
 
+/** The active step of the builder wizard. */
 export type BuilderStep = 'start' | 'library' | 'import' | 'trigger' | 'canvas';
 
+/** Whether a node is a trigger or an action. */
 export type WorkflowNodeKind = 'trigger' | 'action';
 
+/** The branch key for a condition node's true/false path. */
 export type WorkflowBranchKey = 'action_true' | 'action_false';
 
+/** The key of a container that holds child nodes. */
 export type WorkflowContainerKey = 'children' | WorkflowBranchKey;
 
+/** Supported field editor component types. */
 export type WorkflowFieldComponent =
   | 'input'
   | 'textarea'
@@ -22,6 +38,7 @@ export type WorkflowFieldComponent =
   | 'placeholder'
   | 'custom';
 
+/** A selectable option for a field. */
 export interface WorkflowFieldOption {
   label: string;
   value: string | number | boolean;
@@ -30,12 +47,14 @@ export interface WorkflowFieldOption {
   icon?: string;
 }
 
+/** A visibility condition evaluated against other field values. */
 export interface WorkflowFieldCondition {
   key: string;
   value: unknown;
   operator?: 'eq' | 'neq' | 'in' | 'not_in' | 'truthy' | 'falsy';
 }
 
+/** Declarative schema describing a single settings field. */
 export interface WorkflowFieldSchema {
   key: string;
   label: string;
@@ -55,11 +74,13 @@ export interface WorkflowFieldSchema {
   componentProps?: Record<string, unknown>;
 }
 
+/** A validation error tied to a specific field key. */
 export interface WorkflowFieldValidationError {
   key: string;
   message: string;
 }
 
+/** A registered trigger or action definition and its behavior hooks. */
 export interface WorkflowRegistryItem {
   id: string;
   label: string;
@@ -85,6 +106,7 @@ export interface WorkflowRegistryItem {
   isExpansible?: boolean;
 }
 
+/** A trigger context (integration/source) definition. */
 export interface WorkflowContextDefinition {
   id: string;
   label: string;
@@ -96,11 +118,13 @@ export interface WorkflowContextDefinition {
   enabled?: boolean;
 }
 
+/** The true/false child branches of a condition node. */
 export interface WorkflowBranches {
   action_true: WorkflowNode[];
   action_false: WorkflowNode[];
 }
 
+/** A single node in the workflow tree. */
 export interface WorkflowNode {
   id: string;
   type: WorkflowNodeKind;
@@ -112,6 +136,7 @@ export interface WorkflowNode {
   [key: string]: unknown;
 }
 
+/** The resolved location of a node within its parent container. */
 export interface WorkflowNodeLocation {
   node: WorkflowNode;
   parent: WorkflowNode | null;
@@ -121,6 +146,7 @@ export interface WorkflowNodeLocation {
   branchKey?: WorkflowBranchKey;
 }
 
+/** Post metadata attached to an exported workflow. */
 export interface WorkflowPostMeta {
   type: 'joinotify-workflow';
   title: string;
@@ -131,6 +157,7 @@ export interface WorkflowPostMeta {
   [key: string]: unknown;
 }
 
+/** The structure of an exported/importable workflow file. */
 export interface ExportedWorkflowFile {
   plugin_version: string;
   post: WorkflowPostMeta;
@@ -138,6 +165,7 @@ export interface ExportedWorkflowFile {
   [key: string]: unknown;
 }
 
+/** Data payload for a trigger node. */
 export interface TriggerNodeData extends Record<string, unknown> {
   title: string;
   description: string;
@@ -146,6 +174,7 @@ export interface TriggerNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
+/** Data payload for a message/action node. */
 export interface ActionNodeData extends Record<string, unknown> {
   title: string;
   description: string;
@@ -156,6 +185,7 @@ export interface ActionNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
+/** Data payload for a condition node. */
 export interface ConditionNodeData extends Record<string, unknown> {
   title?: string;
   description?: string;
@@ -171,6 +201,7 @@ export interface ConditionNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
+/** Data payload for a time-delay node. */
 export interface DelayNodeData extends Record<string, unknown> {
   title?: string;
   description?: string;
@@ -184,6 +215,7 @@ export interface DelayNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
+/** Data payload for a dynamic-placeholder node. */
 export interface PlaceholderNodeData extends Record<string, unknown> {
   title?: string;
   description?: string;
@@ -193,6 +225,7 @@ export interface PlaceholderNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
+/** Data payload for a PHP-snippet node. */
 export interface SnippetNodeData extends Record<string, unknown> {
   title?: string;
   description?: string;
@@ -201,6 +234,7 @@ export interface SnippetNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
+/** A single dynamic placeholder available for messages. */
 export interface WorkflowPlaceholderItem {
   placeholder: string;
   description: string;
@@ -211,6 +245,7 @@ export interface WorkflowPlaceholderItem {
   [key: string]: unknown;
 }
 
+/** A named group of related placeholders. */
 export interface WorkflowPlaceholderGroup {
   id: string;
   label: string;
@@ -218,6 +253,7 @@ export interface WorkflowPlaceholderGroup {
   items: WorkflowPlaceholderItem[];
 }
 
+/** The outcome of parsing an imported workflow file. */
 export interface WorkflowImportResult {
   ok: boolean;
   file?: ExportedWorkflowFile;
@@ -225,6 +261,7 @@ export interface WorkflowImportResult {
   warnings: string[];
 }
 
+/** The bootstrap payload injected into the builder page. */
 export interface BuilderBootstrap {
   version?: string;
   page?: string;

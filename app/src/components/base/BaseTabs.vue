@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BaseTabs.vue
+ *
+ * Horizontal tab bar rendered from an array of { id, label } items. Highlights
+ * the item matching the bound value and emits the selected id through v-model
+ * when a tab is clicked.
+ *
+ * @since 2.0.0
+ */
 defineProps({
   items: { type: Array, default: () => [] },
   modelValue: { type: String, default: '' },

@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderCanvasTrigger.vue
+ *
+ * Card that represents the workflow's trigger at the top of the builder canvas.
+ * It shows the trigger title/description and exposes a menu for editing its
+ * settings, emitting click and edit events to the parent.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import { ref } from 'vue';
 
@@ -14,10 +23,22 @@ defineProps({
 defineEmits(['click', 'edit']);
 const menuOpen = ref(false);
 
+/**
+ * Toggle the trigger actions menu open or closed.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function toggleMenu() {
   menuOpen.value = !menuOpen.value;
 }
 
+/**
+ * Close the trigger actions menu.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function closeMenu() {
   menuOpen.value = false;
 }

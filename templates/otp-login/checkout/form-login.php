@@ -6,7 +6,7 @@
  *
  * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 10.0.0
+ * @version 2.0.0
  *
  * @since 2.0.0
  */

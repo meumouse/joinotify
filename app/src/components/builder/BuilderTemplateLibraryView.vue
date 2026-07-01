@@ -1,4 +1,14 @@
 <script setup>
+/**
+ * BuilderTemplateLibraryView.vue
+ *
+ * Full-page template library screen shown when starting a workflow from a
+ * template. Composes the header, search input, category filter and template
+ * grid, and relays user interactions (search/category changes, template
+ * selection, back navigation) to the parent via emitted events.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseSearchInput from '../base/BaseSearchInput.vue';
@@ -17,7 +27,20 @@ defineProps({
 
 defineEmits(['update:search', 'update:category', 'select-template', 'back']);
 
+/**
+ * Localized placeholder for the workflow search input.
+ *
+ * @since 2.0.0
+ * @returns {string} Translated "Search workflows" placeholder text.
+ */
 const searchPlaceholder = computed(() => __('Search workflows', textDomain));
+
+/**
+ * Localized label for the back navigation button.
+ *
+ * @since 2.0.0
+ * @returns {string} Translated "Back" label text.
+ */
 const backLabel = computed(() => __('Back', textDomain));
 </script>
 

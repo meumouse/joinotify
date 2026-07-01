@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseSelectField.vue
+ *
+ * Thin wrapper around the shared BaseListboxSelect that adapts the styled
+ * dropdown for builder settings, forwarding options, label and placeholder props
+ * and relaying v-model and change events.
+ *
+ * @since 2.0.0
+ */
 import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
 
 defineProps({

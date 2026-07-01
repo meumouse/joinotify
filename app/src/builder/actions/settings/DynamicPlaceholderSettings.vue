@@ -1,4 +1,14 @@
 <script setup lang="ts">
+/**
+ * DynamicPlaceholderSettings.vue
+ *
+ * Settings panel for the "Dynamic placeholder" action, which asks the AI to
+ * generate a value and stores it under a named variable reusable later via an
+ * {{ ai:name }} token. Configures the variable name, prompt, persona and an
+ * optional per-node model override.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
 import BaseTextareaField from '../../components/base/BaseTextareaField.vue';
@@ -32,6 +42,13 @@ const modelOptions = computed(() => [
   { label: 'o4-mini', value: 'o4-mini' },
 ]);
 
+/**
+ * Update a single key on the action model and emit the merged result.
+ *
+ * @since 2.0.0
+ * @param {string} key Model key to update.
+ * @param {unknown} value New value for the key.
+ */
 function update(key: string, value: unknown) {
   emit('update:modelValue', {
     ...(props.modelValue as Record<string, unknown>),

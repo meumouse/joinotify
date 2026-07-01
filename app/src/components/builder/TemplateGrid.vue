@@ -1,4 +1,14 @@
 <script setup>
+/**
+ * TemplateGrid.vue
+ *
+ * Responsive grid that renders the template library results. Shows skeleton
+ * placeholders while loading, an empty-state message when there are no
+ * templates, and a TemplateCard for each template otherwise. Forwards the
+ * selected template through a `select` event.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import TemplateCard from './TemplateCard.vue';
 
@@ -10,6 +20,12 @@ defineProps({
 
 defineEmits(['select']);
 
+/**
+ * Placeholder indices used to render template card skeletons while loading.
+ *
+ * @since 2.0.0
+ * @type {number[]}
+ */
 const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
 </script>
 

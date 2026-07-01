@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * BaseSwitchField.vue
+ *
+ * Thin wrapper around the shared BaseSwitch that adapts the toggle control for
+ * builder settings, forwarding label, disabled and loading props and relaying
+ * v-model and change events.
+ *
+ * @since 2.0.0
+ */
 import BaseSwitch from '../../../components/base/BaseSwitch.vue';
 
 defineProps({

@@ -165,10 +165,10 @@ class Messages {
                 } elseif ( $condition_type === 'not_empty' ) {
                     $description .= sprintf( __( '<span class="builder-placeholder">%s</span> is not empty', 'joinotify' ), mb_strtolower( $condition_content['meta_key'] ?? '', 'UTF-8' ) );
                 } else {
-                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> %s: %s' ), $condition_content['meta_key'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
+                    $description .= sprintf( __( '<span class="builder-placeholder">%s</span> %s: %s', 'joinotify' ), $condition_content['meta_key'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
                 }
             } else {
-                $description .= sprintf( __( '%s %s: %s' ), $condition_data['title'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
+                $description .= sprintf( __( '%s %s: %s', 'joinotify' ), $condition_data['title'] ?? '', mb_strtolower( $condition_content['type_text'] ?? '', 'UTF-8' ), $condition_content['value_text'] ?? '' );
             }
         $description .= '</div>';
 

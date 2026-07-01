@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * WorkflowTableRow.vue
+ *
+ * Renders a single workflow row in the desktop table, including its selection
+ * checkbox, name link, creation date, status switch, and row actions. Emits
+ * selection, status, and action events for the parent table to handle.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
@@ -14,6 +23,13 @@ const props = defineProps({
 
 const emit = defineEmits(['select', 'edit', 'trash', 'restore', 'deletePermanent', 'toggleStatus']);
 
+/**
+ * Maps the workflow's raw status to a localized, human-readable label,
+ * falling back to the raw status when no mapping exists.
+ *
+ * @since 2.0.0
+ * @returns {string} Localized status label for display.
+ */
 const statusLabel = computed(() => {
   const labels = {
     publish: __('Active', textDomain),

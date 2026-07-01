@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * WorkflowSearch.vue
+ *
+ * Search input for filtering the workflows list, bound via v-model, with a
+ * clear button that resets the query. Emits "update:modelValue" on input and
+ * "clear" when the clear button is pressed.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 

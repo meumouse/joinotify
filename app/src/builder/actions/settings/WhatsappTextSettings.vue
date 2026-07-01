@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * WhatsappTextSettings.vue
+ *
+ * Settings panel for the "WhatsApp text message" action. Configures the sender,
+ * recipient and the message body (with placeholder support) that will be sent
+ * as a plain WhatsApp text message.
+ *
+ * @since 2.0.0
+ */
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
 import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';

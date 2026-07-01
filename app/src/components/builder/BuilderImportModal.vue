@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderImportModal.vue
+ *
+ * Modal for importing a workflow from an exported Joinotify JSON file. It lets
+ * the user drop or browse for a file and emits file/import events so the parent
+ * can parse and load the template.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 import ModalDialog from '../modals/ModalDialog.vue';

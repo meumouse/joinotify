@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderImportView.vue
+ *
+ * Full-page import view where the user can paste exported JSON or drop a .json
+ * file to load a real Joinotify export. It emits update/import/file/back events
+ * so the parent can manage the JSON text and import flow.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 import BaseFileDropzone from '../base/BaseFileDropzone.vue';

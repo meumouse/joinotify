@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * WhatsappAiMessageSettings.vue
+ *
+ * Settings panel for the "WhatsApp AI message" action. Configures the sender,
+ * recipient, prompt, persona, tone/length and an optional per-node model
+ * override used to generate and send an AI-written WhatsApp message.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';

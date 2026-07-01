@@ -1,4 +1,15 @@
 <script setup>
+/**
+ * TemplateCard.vue
+ *
+ * Presentational card for a single workflow template in the template library.
+ * Displays the template title, description, integration and trigger details,
+ * and an import button whose label and enabled/loading state reflect the
+ * template's availability and the current import progress. Emits a click event
+ * when the import button is pressed.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 

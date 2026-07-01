@@ -1,3 +1,13 @@
+/**
+ * types.ts
+ *
+ * Shared TypeScript types for the builder action registry: the workflow action
+ * item shape, action categories, the canonical ActionDefinition contract, and
+ * the more permissive BackendActionDefinition that accepts both camelCase and
+ * snake_case keys coming from the backend.
+ *
+ * @since 2.0.0
+ */
 import type { Component } from 'vue';
 import type { WorkflowFieldSchema } from '../../../types/workflowBuilder';
 

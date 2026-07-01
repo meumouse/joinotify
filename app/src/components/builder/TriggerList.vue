@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * TriggerList.vue
+ *
+ * Renders a vertical list of TriggerCard components for the provided triggers,
+ * marking the currently selected one and emitting a `select` event with the
+ * chosen trigger id.
+ *
+ * @since 2.0.0
+ */
 import TriggerCard from './TriggerCard.vue';
 
 defineProps({

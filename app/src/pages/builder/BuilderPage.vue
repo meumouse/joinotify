@@ -1,4 +1,14 @@
 <script setup>
+/**
+ * BuilderPage.vue
+ *
+ * Top-level page component for the workflow builder. Orchestrates the multi-step
+ * flow (start, template library, trigger setup, canvas), wires the builder store
+ * to child views, and owns page-level concerns: URL sync, unsaved-changes guards,
+ * undo/redo shortcuts, toasts, import/AI/title/test modals, and status changes.
+ *
+ * @since 2.0.0
+ */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { __, sprintf, textDomain } from '../../utils/i18n';
 import BaseButton from '../../components/base/BaseButton.vue';

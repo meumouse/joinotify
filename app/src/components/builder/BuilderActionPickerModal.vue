@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderActionPickerModal.vue
+ *
+ * Modal that lists the available workflow actions as selectable cards. It is
+ * opened when the user wants to insert a new action below the currently
+ * selected block, emitting the chosen action id back to the builder.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 import ModalDialog from '../modals/ModalDialog.vue';

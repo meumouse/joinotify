@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderLoader.vue
+ *
+ * Full-screen loading indicator shown while the builder initializes. It renders
+ * the animated Joinotify logo and a circular progress spinner with accessible
+ * status labels.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 </script>
 

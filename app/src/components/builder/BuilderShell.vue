@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderShell.vue
+ *
+ * Fixed full-viewport layout wrapper for the builder. It provides named slots
+ * for the navbar, main content, and overlays, and adjusts its height when the
+ * navbar is hidden or debug mode is active.
+ *
+ * @since 2.0.0
+ */
 import { computed } from 'vue';
 
 defineProps({

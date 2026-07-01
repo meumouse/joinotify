@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * Clear the debug logs (structured table + flat file).
  *
  * @since 1.1.0
- * @version 2.1.0
+ * @version 2.0.0
  */
 class Debug_Clear extends Abstract_Route {
 

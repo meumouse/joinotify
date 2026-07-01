@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * RichTextAreaField.vue
+ *
+ * Schema-driven field wrapper that adapts a workflow field definition to the
+ * BaseRichTextArea component. Maps the field's label, description, placeholder,
+ * and rows into props and forwards v-model/input/change events upward.
+ *
+ * @since 2.0.0
+ */
 import BaseRichTextArea from '../base/BaseRichTextArea.vue';
 
 defineProps({

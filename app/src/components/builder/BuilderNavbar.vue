@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * BuilderNavbar.vue
+ *
+ * Sticky top navigation bar for the workflow builder. It displays the workflow
+ * title and status, exposes save/test/status controls, and provides an actions
+ * menu (edit title, export, new, back) via emitted events.
+ *
+ * @since 2.0.0
+ */
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import BaseBadge from '../base/BaseBadge.vue';
@@ -21,20 +30,45 @@ defineEmits(['update:status', 'test', 'new', 'back', 'export', 'edit-title', 'sa
 
 const menuOpen = ref(false);
 
+/**
+ * Toggle the actions menu open or closed.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function toggleMenu() {
   menuOpen.value = !menuOpen.value;
 }
 
+/**
+ * Close the actions menu.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 function closeMenu() {
   menuOpen.value = false;
 }
 
+/**
+ * Close the actions menu when a click occurs outside of it.
+ *
+ * @since 2.0.0
+ * @param {MouseEvent} event The window click event.
+ * @returns {void}
+ */
 function handleWindowClick(event) {
   if (!event.target.closest?.('[data-builder-menu]')) {
     closeMenu();
   }
 }
 
+/**
+ * Compute the CSS classes for the status badge based on the workflow status.
+ *
+ * @since 2.0.0
+ * @returns {string} The Tailwind classes for the badge.
+ */
 function badgeClass() {
   return props.status === 'publish'
     ? 'border-emerald-200 bg-emerald-50 text-emerald-600'

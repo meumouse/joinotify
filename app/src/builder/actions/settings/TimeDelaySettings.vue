@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * TimeDelaySettings.vue
+ *
+ * Settings panel for the "Time delay" action. Lets the user pause the workflow
+ * for a relative period, until a fixed date, or by a scheduled day-based offset
+ * anchored to a time of day, writing the chosen delay onto the action model.
+ *
+ * @since 2.0.0
+ */
 import BaseAlert from '../../components/base/BaseAlert.vue';
 import BaseDateField from '../../components/base/BaseDateField.vue';
 import BaseNumberField from '../../components/base/BaseNumberField.vue';
@@ -40,6 +49,13 @@ const scheduledPeriodOptions = [
   { label: __('Years', textDomain), value: 'year' },
 ];
 
+/**
+ * Update a single key on the action model and emit the merged result.
+ *
+ * @since 2.0.0
+ * @param {string} key Model key to update.
+ * @param {unknown} value New value for the key.
+ */
 function update(key: string, value: unknown) {
   emit('update:modelValue', {
     ...(props.modelValue as Record<string, unknown>),
@@ -47,6 +63,13 @@ function update(key: string, value: unknown) {
   });
 }
 
+/**
+ * Change the delay mode, coercing incompatible period units when switching to
+ * the scheduled (day-based) mode.
+ *
+ * @since 2.0.0
+ * @param {unknown} value New delay type ('period', 'date' or 'scheduled').
+ */
 function changeDelayType(value: unknown) {
   const next = {
     ...(props.modelValue as Record<string, unknown>),

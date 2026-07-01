@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * ConditionProductsField.vue
+ *
+ * Multi-select field for picking WooCommerce products used by product-based
+ * workflow conditions. Provides a debounced remote search against the builder
+ * REST endpoint and renders the current selection as removable chips.
+ *
+ * @since 2.0.0
+ */
 import { ref, computed } from 'vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
@@ -35,6 +44,12 @@ const selected = computed<ProductItem[]>(() =>
 
 let debounceTimer: ReturnType<typeof setTimeout> | undefined;
 
+/**
+ * Handle input in the search box, debouncing the remote lookup.
+ *
+ * @since 2.0.0
+ * @param {unknown} value Raw value emitted by the text field.
+ */
 function onSearchInput(value: unknown) {
   search.value = String(value ?? '');
 
@@ -50,6 +65,13 @@ function onSearchInput(value: unknown) {
   debounceTimer = setTimeout(runSearch, 350);
 }
 
+/**
+ * Query the builder REST endpoint for matching WooCommerce products and
+ * populate the results list.
+ *
+ * @since 2.0.0
+ * @returns {Promise<void>}
+ */
 async function runSearch() {
   if (!store.bootstrap?.rest?.root) {
     errorMsg.value = __('Product search is unavailable.', textDomain);
@@ -71,10 +93,23 @@ async function runSearch() {
   }
 }
 
+/**
+ * Determine whether a product id is already part of the selection.
+ *
+ * @since 2.0.0
+ * @param {number} id Product identifier.
+ * @returns {boolean} True when the product is already selected.
+ */
 function isSelected(id: number) {
   return selected.value.some((p) => p.id === id);
 }
 
+/**
+ * Add a product to the selection and emit the updated model value.
+ *
+ * @since 2.0.0
+ * @param {ProductItem} item Product to add.
+ */
 function addProduct(item: ProductItem) {
   if (isSelected(item.id)) {
     return;
@@ -83,6 +118,12 @@ function addProduct(item: ProductItem) {
   emit('update:modelValue', [...selected.value, item]);
 }
 
+/**
+ * Remove a product from the selection and emit the updated model value.
+ *
+ * @since 2.0.0
+ * @param {number} id Identifier of the product to remove.
+ */
 function removeProduct(id: number) {
   emit('update:modelValue', selected.value.filter((p) => p.id !== id));
 }

@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/**
+ * FieldGroup.vue
+ *
+ * Card-style container that groups related builder settings under an optional
+ * title and description, rendering its fields via the default slot with
+ * consistent spacing.
+ *
+ * @since 2.0.0
+ */
 defineProps({
   title: { type: String, default: '' },
   description: { type: String, default: '' },

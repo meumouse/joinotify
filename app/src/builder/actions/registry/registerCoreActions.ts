@@ -1,3 +1,12 @@
+/**
+ * registerCoreActions.ts
+ *
+ * Registers the built-in builder action definitions (delay, condition, stop,
+ * PHP snippet, WhatsApp text/media/AI messages, smart variable, and coupon)
+ * into the action registry during bootstrap.
+ *
+ * @since 2.0.0
+ */
 import { conditionDefinition } from '../definitions/condition';
 import { createCouponDefinition } from '../definitions/createCoupon';
 import { dynamicPlaceholderDefinition } from '../definitions/dynamicPlaceholder';
@@ -9,6 +18,12 @@ import { whatsappMediaDefinition } from '../definitions/whatsappMedia';
 import { whatsappTextDefinition } from '../definitions/whatsappText';
 import { registerBuilderAction } from './actionRegistry';
 
+/**
+ * Registers all core action definitions into the builder action registry.
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
 export function registerCoreActions(): void {
   registerBuilderAction(timeDelayDefinition);
   registerBuilderAction(conditionDefinition);

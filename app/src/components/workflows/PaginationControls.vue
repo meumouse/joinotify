@@ -1,4 +1,13 @@
 <script setup>
+/**
+ * PaginationControls.vue
+ *
+ * Displays the pagination summary and first/previous/next/last navigation
+ * buttons for the workflows list. Emits a navigation event per button so the
+ * parent can load the corresponding page.
+ *
+ * @since 2.0.0
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 

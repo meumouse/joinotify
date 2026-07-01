@@ -1,3 +1,13 @@
+/**
+ * useWorkflows.ts
+ *
+ * Composable powering the workflows listing screen. Manages loading, status
+ * filtering, search, pagination, bulk selection, per-item status toggling, and
+ * bulk actions against the REST API, with a mock-data fallback when no API is
+ * available.
+ *
+ * @since 2.0.0
+ */
 import { computed, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
@@ -50,10 +60,24 @@ const MOCK_WORKFLOWS = [
   },
 ];
 
+/**
+ * Normalizes a workflow status, defaulting to 'publish' when unknown.
+ *
+ * @since 2.0.0
+ * @param {string} status The raw status.
+ * @returns {string} A valid status value.
+ */
 function normalizeStatus(status) {
   return ['publish', 'draft', 'trash'].includes(status) ? status : 'publish';
 }
 
+/**
+ * Normalizes a raw workflow record, filling default fields.
+ *
+ * @since 2.0.0
+ * @param {Object} workflow The raw workflow.
+ * @returns {Object} The normalized workflow.
+ */
 function normalizeWorkflow(workflow) {
   return {
     id: workflow.id,
@@ -68,6 +92,13 @@ function normalizeWorkflow(workflow) {
   };
 }
 
+/**
+ * Counts workflows grouped by status.
+ *
+ * @since 2.0.0
+ * @param {Array} items The workflows.
+ * @returns {Object} Counts keyed by status.
+ */
 function countWorkflows(items) {
   return items.reduce(
     (accumulator, workflow) => {
@@ -78,16 +109,37 @@ function countWorkflows(items) {
   );
 }
 
+/**
+ * Clones and normalizes a list of workflows.
+ *
+ * @since 2.0.0
+ * @param {Array} items The raw workflows.
+ * @returns {Array} The cloned, normalized workflows.
+ */
 function cloneWorkflows(items) {
   return items.map((workflow) => normalizeWorkflow(workflow));
 }
 
+/**
+ * Returns a promise that resolves after a simulated latency delay.
+ *
+ * @since 2.0.0
+ * @param {number} [duration] Delay in milliseconds.
+ * @returns {Promise<void>} A promise resolving after the delay.
+ */
 function simulateLatency(duration = 300) {
   return new Promise((resolve) => {
     window.setTimeout(resolve, duration);
   });
 }
 
+/**
+ * Provides state and actions for the workflows listing screen.
+ *
+ * @since 2.0.0
+ * @param {Object} [bootstrap] Bootstrap payload from the workflows screen.
+ * @returns {Object} Listing state, computed values, and action methods.
+ */
 export function useWorkflows(bootstrap = {}) {
   const api = createApiClient(bootstrap);
   const hasApi = Boolean(bootstrap?.rest?.root);
@@ -153,6 +205,12 @@ export function useWorkflows(bootstrap = {}) {
     bulkSelection.clearSelection();
   });
 
+  /**
+   * Fetches workflows from the API, or uses mock data when no API is present.
+   *
+   * @since 2.0.0
+   * @returns {Promise<void>} Resolves once workflows are loaded.
+   */
   async function fetchWorkflows() {
     if (!hasApi) {
       workflows.value = cloneWorkflows(initialSnapshot);
@@ -179,6 +237,12 @@ export function useWorkflows(bootstrap = {}) {
     }
   });
 
+  /**
+   * Reloads the workflow list, resetting selection and pagination.
+   *
+   * @since 2.0.0
+   * @returns {Promise<void>} Resolves once the reload completes.
+   */
   async function reload() {
     loading.value = true;
     error.value = '';
@@ -194,18 +258,44 @@ export function useWorkflows(bootstrap = {}) {
     }
   }
 
+  /**
+   * Sets the active status filter tab.
+   *
+   * @since 2.0.0
+   * @param {string} status The status to filter by.
+   */
   function setStatusFilter(status) {
     selectedStatus.value = normalizeStatus(status);
   }
 
+  /**
+   * Sets the search query.
+   *
+   * @since 2.0.0
+   * @param {string} value The search string.
+   */
   function setSearchQuery(value) {
     searchQuery.value = value || '';
   }
 
+  /**
+   * Finds a workflow by ID.
+   *
+   * @since 2.0.0
+   * @param {string|number} id The workflow ID.
+   * @returns {Object|undefined} The workflow, or undefined.
+   */
   function findWorkflow(id) {
     return workflows.value.find((workflow) => String(workflow.id) === String(id));
   }
 
+  /**
+   * Locally updates a workflow's status, tracking its previous status.
+   *
+   * @since 2.0.0
+   * @param {string|number} id The workflow ID.
+   * @param {string} nextStatus The new status.
+   */
   function setWorkflowStatus(id, nextStatus) {
     workflows.value = workflows.value.map((workflow) =>
       String(workflow.id) === String(id)
@@ -218,6 +308,14 @@ export function useWorkflows(bootstrap = {}) {
     );
   }
 
+  /**
+   * Toggles (or forces) a workflow's active/inactive status via the API.
+   *
+   * @since 2.0.0
+   * @param {string|number} id The workflow ID.
+   * @param {string} [forcedStatus] Force a specific status instead of toggling.
+   * @returns {Promise<void>} Resolves once the status update completes.
+   */
   async function toggleWorkflowStatus(id, forcedStatus = '') {
     const workflow = findWorkflow(id);
 
@@ -253,6 +351,13 @@ export function useWorkflows(bootstrap = {}) {
     }
   }
 
+  /**
+   * Applies a bulk action to the local workflow list (mock/no-API mode).
+   *
+   * @since 2.0.0
+   * @param {string} action The bulk action key.
+   * @param {Array} ids The affected workflow IDs (as strings).
+   */
   function applyBulkActionLocally(action, ids) {
     if (action === 'delete_permanently') {
       workflows.value = workflows.value.filter((workflow) => !ids.includes(String(workflow.id)));
@@ -288,6 +393,14 @@ export function useWorkflows(bootstrap = {}) {
     });
   }
 
+  /**
+   * Applies a bulk action to the selected workflows via the API or locally.
+   *
+   * @since 2.0.0
+   * @param {string} action The bulk action key.
+   * @param {Array} [ids] The affected workflow IDs (defaults to selection).
+   * @returns {Promise<void>} Resolves once the action completes.
+   */
   async function applyBulkAction(action, ids = bulkSelection.selectedIds.value) {
     if (!action || !ids.length) {
       return;
@@ -322,6 +435,12 @@ export function useWorkflows(bootstrap = {}) {
     }
   }
 
+  /**
+   * Navigates the browser to a URL.
+   *
+   * @since 2.0.0
+   * @param {string} url The destination URL.
+   */
   function navigateTo(url) {
     if (!url || typeof window === 'undefined') {
       return;
