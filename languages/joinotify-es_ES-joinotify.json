@@ -91,6 +91,9 @@
       "60 days": [
         "60 días"
       ],
+      "7 days": [
+        "7 días"
+      ],
       "90 days": [
         "90 días"
       ],
@@ -153,6 +156,9 @@
       ],
       "Activate plugin": [
         "Activar plugin"
+      ],
+      "Activate premium features, review your subscription status and keep your license in sync. If you need help, visit our ": [
+        "Activa funciones premium, revisa el estado de tu suscripción y mantén tu licencia sincronizada. Si necesitas ayuda, visita nuestro "
       ],
       "Activate the license to unlock Joinotify premium features.": [
         "Activar la licencia para desbloquear funciones premium de Joinotify."
@@ -280,8 +286,14 @@
       "All categories": [
         "Todas las categorías"
       ],
+      "All channels": [
+        "Todos los canales"
+      ],
       "All flows": [
         "Todos los flujos"
+      ],
+      "All levels": [
+        "Todos los niveles"
       ],
       "All options will return to the plugin defaults.": [
         "Todas las opciones volverán a los valores predeterminados del plugin."
@@ -469,6 +481,9 @@
       "Automatic updates and license synchronization": [
         "Actualizaciones automáticas y sincronización de licencias"
       ],
+      "Automatically delete debug log records older than the selected period.": [
+        "Elimina automáticamente los registros del log de depuración que sean más antiguos que el período seleccionado."
+      ],
       "Automatically delete history records older than the selected period.": [
         "Elimina automáticamente los registros de historial más antiguos que el período seleccionado."
       ],
@@ -649,6 +664,9 @@
       "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
         "Cambiar el color base regenera la paleta. Los tonos individuales aún se pueden anular."
       ],
+      "Channel": [
+        "Canal"
+      ],
       "Check for updates": [
         "Verificar actualizaciones"
       ],
@@ -790,6 +808,9 @@
       "Configure Proxy API": [
         "Configurar Proxy API"
       ],
+      "Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ": [
+        "Configura los remitentes, integraciones, el constructor y el comportamiento general del plugin. Si necesitas ayuda, visita nuestro "
+      ],
       "Configure the AI provider, credentials, and the default behavior used to generate messages.": [
         "Configura el proveedor de IA, las credenciales y el comportamiento predeterminado utilizado para generar mensajes."
       ],
@@ -816,6 +837,9 @@
       ],
       "Content": [
         "Contenido"
+      ],
+      "Context": [
+        "Contexto"
       ],
       "Continue": [
         "Continuar"
@@ -1051,6 +1075,9 @@
       "Credit card": [
         "Tarjeta de crédito"
       ],
+      "Critical": [
+        "Crítico"
+      ],
       "Croatia": [
         "Croacia"
       ],
@@ -1117,11 +1144,17 @@
       "Deactivate license": [
         "Desactivar licencia"
       ],
+      "Debug": [
+        "Depurar"
+      ],
       "Debug logs": [
         "Registros de depuración"
       ],
       "Debug logs cleared successfully!": [
         "¡Registros de depuración borrados con éxito!"
+      ],
+      "Debug logs retention": [
+        "Retención de logs de depuración"
       ],
       "Debug mode": [
         "Modo de depuración"
@@ -1249,6 +1282,9 @@
       "Discount: %s": [
         "Descuento: %s"
       ],
+      "Dismiss": [
+        "Descartar"
+      ],
       "Dispatch now": [
         "Enviar ahora"
       ],
@@ -1284,6 +1320,9 @@
       ],
       "Due": [
         "Vencido"
+      ],
+      "Duplicate": [
+        "Duplicar"
       ],
       "Dutch Caribbean": [
         "Caribe Neerlandés"
@@ -1777,6 +1816,9 @@
       "Hong Kong": [
         "Hong Kong"
       ],
+      "Hook": [
+        "Gancho"
+      ],
       "hour": [
         "hora"
       ],
@@ -1858,9 +1900,6 @@
       "Increase customer satisfaction by automating WhatsApp messaging with Joinotify.": [
         "Aumenta la satisfacción del cliente automatizando los mensajes de WhatsApp con Joinotify."
       ],
-      "Increase customer satisfaction by automating WhatsApp messaging with Joinotify. If you need help setting it up, visit our ": [
-        "Aumenta la satisfacción del cliente automatizando los mensajes de WhatsApp con Joinotify. Si necesitas ayuda para configurarlo, visita nuestro "
-      ],
       "India": [
         "India"
       ],
@@ -1869,6 +1908,9 @@
       ],
       "info": [
         "info"
+      ],
+      "Info": [
+        "Información"
       ],
       "Initializing builder": [
         "Inicializando constructor"
@@ -1884,6 +1926,9 @@
       ],
       "Insufficient data to create the coupon.": [
         "Datos insuficientes para crear el cupón."
+      ],
+      "Integration not active": [
+        "Integración no activa"
       ],
       "Integration settings": [
         "Configuraciones de integración"
@@ -2017,9 +2062,6 @@
       "Joinotify version": [
         "Versión de Joinotify"
       ],
-      "Joinotify: Automate your notifications. Simplify your communication.": [
-        "Joinotify: Automatiza tus notificaciones. Simplifica tu comunicación."
-      ],
       "Jordan": [
         "Jordania"
       ],
@@ -2077,6 +2119,12 @@
       "Lead capture via modal": [
         "Captura de leads a través de modal"
       ],
+      "Leave without saving": [
+        "¿Salir sin guardar?"
+      ],
+      "Leave without saving?": [
+        "¿Salir sin guardar?"
+      ],
       "Lebanon": [
         "Líbano"
       ],
@@ -2094,6 +2142,9 @@
       ],
       "Let your users log in securely with a verification code sent through Joinotify, offering a fast passwordless experience.": [
         "Permite que tus usuarios inicien sesión de forma segura con un código de verificación enviado a través de Joinotify, ofreciendo una experiencia rápida sin contraseña."
+      ],
+      "Level": [
+        "Nivel"
       ],
       "Liberia": [
         "Liberia"
@@ -2512,6 +2563,9 @@
       "No custom variable yet. Click “Add variable” to create your first one.": [
         "Aún no hay variable personalizada. Haz clic en “Agregar variable” para crear la tuya primera."
       ],
+      "No entries match the current filters.": [
+        "No hay entradas que coincidan con los filtros actuales."
+      ],
       "No example post or meta keys were found for this entity.": [
         "No se encontraron publicaciones de ejemplo ni claves meta para esta entidad."
       ],
@@ -2629,6 +2683,9 @@
       "Nothing in the queue": [
         "Nada en la cola"
       ],
+      "Notice": [
+        "Aviso"
+      ],
       "Notify when WhatsApp disconnects": [
         "Notificar cuando WhatsApp se desconecte"
       ],
@@ -2658,6 +2715,9 @@
       ],
       "Open help center": [
         "Abrir centro de ayuda"
+      ],
+      "Open integration settings": [
+        "Abrir configuración de integración"
       ],
       "Open trigger actions": [
         "Abrir acciones del desencadenador"
@@ -3058,6 +3118,9 @@
       "Republic of the Congo": [
         "República del Congo"
       ],
+      "Request": [
+        "Solicitud"
+      ],
       "Request failed.": [
         "Solicitud fallida."
       ],
@@ -3175,6 +3238,9 @@
       "Save": [
         "Guardar"
       ],
+      "Save and leave": [
+        "Guardar y salir"
+      ],
       "Save and run test": [
         "Guardar y ejecutar prueba"
       ],
@@ -3231,6 +3297,9 @@
       ],
       "Search integration": [
         "Buscar integración"
+      ],
+      "Search message, context or hook…": [
+        "Buscar mensaje, contexto o gancho…"
       ],
       "Search products": [
         "Buscar productos"
@@ -3535,6 +3604,9 @@
       "Stops the workflow immediately": [
         "Detiene el flujo de trabajo inmediatamente"
       ],
+      "Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen.": [
+        "Almacenar errores, advertencias y solicitudes fallidas en una tabla dedicada visible desde la pantalla de registros de depuración."
+      ],
       "Subscription": [
         "Suscripción"
       ],
@@ -3652,6 +3724,15 @@
       "Thailand": [
         "Tailandia"
       ],
+      "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.": [
+        "La integración %s de la que depende el disparador de este flujo está actualmente desactivada. Este flujo no se procesará hasta que la integración se active nuevamente."
+      ],
+      "The %s integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
+        "La integración %s de la que depende el disparador de este flujo no está disponible. Este flujo no se procesará hasta que la integración esté disponible nuevamente."
+      ],
+      "The %s plugin this trigger depends on is not installed or active. This flow will not be processed until the plugin is active again.": [
+        "El plugin %s del que depende este disparador no está instalado o activo. Este flujo no se procesará hasta que el plugin esté activo nuevamente."
+      ],
       "The AI could not generate the snippet.": [
         "La IA no pudo generar el fragmento."
       ],
@@ -3700,8 +3781,8 @@
       "The generated workflow is missing a valid trigger. Try again with more detail.": [
         "El flujo de trabajo generado carece de un disparador válido. Intenta de nuevo con más detalles."
       ],
-      "The log file was not found.": [
-        "El archivo de registro no fue encontrado."
+      "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
+        "La integración de la que depende el disparador de este flujo no está disponible. Este flujo no se procesará hasta que la integración esté disponible nuevamente."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "El mensaje está prellenado y se puede ajustar antes de enviar la prueba."
@@ -3768,6 +3849,9 @@
       ],
       "The trigger that starts this flow.": [
         "El desencadenante que inicia este flujo."
+      ],
+      "The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger.": [
+        "El disparador utilizado por este flujo ya no está registrado. Este flujo no se procesará hasta que selecciones un disparador disponible."
       ],
       "The variable \"%s\" already exists. Choose another name.": [
         "La variable \"%s\" ya existe. Elige otro nombre."
@@ -3924,6 +4008,9 @@
       ],
       "This trigger is fired when the user provides your contact on modal": [
         "Este disparador se activa cuando el usuario proporciona sus datos de contacto a través del modal."
+      ],
+      "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
+        "Este flujo de trabajo tiene cambios no guardados. Si sales ahora, tus cambios se perderán."
       ],
       "Time": [
         "Hora"
@@ -4114,8 +4201,14 @@
       "Trigger": [
         "Disparador"
       ],
+      "Trigger no longer available": [
+        "Disparador ya no disponible"
+      ],
       "Trigger settings": [
         "Configuraciones del disparador"
+      ],
+      "Trigger warning": [
+        "Advertencia de disparador"
       ],
       "Trigger when a WordPress post is published.": [
         "Disparar cuando se publique una entrada de WordPress."
@@ -4212,6 +4305,9 @@
       ],
       "Unknown response": [
         "Respuesta desconocida"
+      ],
+      "Unsaved changes": [
+        "Cambios no guardados"
       ],
       "Unsupported AI intent.": [
         "Intención de IA no soportada."
@@ -4383,6 +4479,9 @@
       ],
       "warning": [
         "advertencia"
+      ],
+      "Warning": [
+        "Advertencia"
       ],
       "We could not authenticate with that username or email and password.": [
         "No pudimos autenticar con ese nombre de usuario o correo electrónico y contraseña."

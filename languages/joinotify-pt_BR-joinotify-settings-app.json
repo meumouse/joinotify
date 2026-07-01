@@ -91,6 +91,9 @@
       "60 days": [
         "60 dias"
       ],
+      "7 days": [
+        "7 dias"
+      ],
       "90 days": [
         "90 dias"
       ],
@@ -153,6 +156,9 @@
       ],
       "Activate plugin": [
         "Ativar plugin"
+      ],
+      "Activate premium features, review your subscription status and keep your license in sync. If you need help, visit our ": [
+        "Ative recursos premium, revise o status da sua assinatura e mantenha sua licença sincronizada. Se precisar de ajuda, visite nosso "
       ],
       "Activate the license to unlock Joinotify premium features.": [
         "Ative a licença para desbloquear os recursos premium do Joinotify."
@@ -280,8 +286,14 @@
       "All categories": [
         "Todas as categorias"
       ],
+      "All channels": [
+        "Todos os canais"
+      ],
       "All flows": [
         "Todos os fluxos"
+      ],
+      "All levels": [
+        "Todos os níveis"
       ],
       "All options will return to the plugin defaults.": [
         "Todas as opções retornarão aos valores padrão do plugin."
@@ -469,6 +481,9 @@
       "Automatic updates and license synchronization": [
         "Atualizações automáticas e sincronização de licenças"
       ],
+      "Automatically delete debug log records older than the selected period.": [
+        "Excluir automaticamente registros de log de depuração mais antigos do que o período selecionado."
+      ],
       "Automatically delete history records older than the selected period.": [
         "Excluir automaticamente registros de histórico mais antigos do que o período selecionado."
       ],
@@ -649,6 +664,9 @@
       "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
         "Alterar a cor base regenera a paleta. Tons individuais ainda podem ser substituídos."
       ],
+      "Channel": [
+        "Canal"
+      ],
       "Check for updates": [
         "Verificar atualizações"
       ],
@@ -790,6 +808,9 @@
       "Configure Proxy API": [
         "Configurar API de proxy"
       ],
+      "Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ": [
+        "Configure remetentes, integrações, o construtor e o comportamento geral do plugin. Se precisar de ajuda, visite nosso "
+      ],
       "Configure the AI provider, credentials, and the default behavior used to generate messages.": [
         "Configure o provedor de IA, credenciais e o comportamento padrão usado para gerar mensagens."
       ],
@@ -816,6 +837,9 @@
       ],
       "Content": [
         "Conteúdo"
+      ],
+      "Context": [
+        "Contexto"
       ],
       "Continue": [
         "Continuar"
@@ -1051,6 +1075,9 @@
       "Credit card": [
         "Cartão de crédito"
       ],
+      "Critical": [
+        "Crítico"
+      ],
       "Croatia": [
         "Croácia"
       ],
@@ -1117,11 +1144,17 @@
       "Deactivate license": [
         "Desativar licença"
       ],
+      "Debug": [
+        "Depuração"
+      ],
       "Debug logs": [
         "Registros de depuração"
       ],
       "Debug logs cleared successfully!": [
         "Logs de depuração limpos com sucesso!"
+      ],
+      "Debug logs retention": [
+        "Retenção de logs de depuração"
       ],
       "Debug mode": [
         "Modo de depuração"
@@ -1249,6 +1282,9 @@
       "Discount: %s": [
         "Desconto: %s"
       ],
+      "Dismiss": [
+        "Descartar"
+      ],
       "Dispatch now": [
         "Despachar agora"
       ],
@@ -1284,6 +1320,9 @@
       ],
       "Due": [
         "Vencido"
+      ],
+      "Duplicate": [
+        "Duplicar"
       ],
       "Dutch Caribbean": [
         "Caribe Holandês"
@@ -1777,6 +1816,9 @@
       "Hong Kong": [
         "Hong Kong"
       ],
+      "Hook": [
+        "Gatilho"
+      ],
       "hour": [
         "hora"
       ],
@@ -1858,9 +1900,6 @@
       "Increase customer satisfaction by automating WhatsApp messaging with Joinotify.": [
         "Aumente a satisfação do cliente automatizando o envio de mensagens pelo WhatsApp com o Joinotify."
       ],
-      "Increase customer satisfaction by automating WhatsApp messaging with Joinotify. If you need help setting it up, visit our ": [
-        "Aumente a satisfação do cliente automatizando o envio de mensagens pelo WhatsApp com o Joinotify. Se precisar de ajuda para configurar, visite nosso site."
-      ],
       "India": [
         "Índia"
       ],
@@ -1869,6 +1908,9 @@
       ],
       "info": [
         "informações"
+      ],
+      "Info": [
+        "Informação"
       ],
       "Initializing builder": [
         "Inicializando construtor"
@@ -1884,6 +1926,9 @@
       ],
       "Insufficient data to create the coupon.": [
         "Dados insuficientes para criar o cupom."
+      ],
+      "Integration not active": [
+        "Integração não ativa"
       ],
       "Integration settings": [
         "Configurações de integração"
@@ -2017,9 +2062,6 @@
       "Joinotify version": [
         "Versão do Joinotify"
       ],
-      "Joinotify: Automate your notifications. Simplify your communication.": [
-        "Joinotify: Automatize suas notificações. Simplifique sua comunicação."
-      ],
       "Jordan": [
         "Jordânia"
       ],
@@ -2077,6 +2119,12 @@
       "Lead capture via modal": [
         "Captura de leads via modal"
       ],
+      "Leave without saving": [
+        "Sair sem salvar"
+      ],
+      "Leave without saving?": [
+        "Sair sem salvar?"
+      ],
       "Lebanon": [
         "Líbano"
       ],
@@ -2094,6 +2142,9 @@
       ],
       "Let your users log in securely with a verification code sent through Joinotify, offering a fast passwordless experience.": [
         "Permita que seus usuários façam login com segurança com um código de verificação enviado pelo Joinotify, oferecendo uma experiência rápida sem senha."
+      ],
+      "Level": [
+        "Nível"
       ],
       "Liberia": [
         "Libéria"
@@ -2512,6 +2563,9 @@
       "No custom variable yet. Click “Add variable” to create your first one.": [
         "Nenhuma variável personalizada ainda. Clique em “Adicionar variável” para criar a sua primeira."
       ],
+      "No entries match the current filters.": [
+        "Nenhuma entrada corresponde aos filtros atuais."
+      ],
       "No example post or meta keys were found for this entity.": [
         "Nenhum post de exemplo ou chaves meta foram encontrados para esta entidade."
       ],
@@ -2629,6 +2683,9 @@
       "Nothing in the queue": [
         "Nada na fila"
       ],
+      "Notice": [
+        "Aviso"
+      ],
       "Notify when WhatsApp disconnects": [
         "Notificar quando o WhatsApp desconectar"
       ],
@@ -2658,6 +2715,9 @@
       ],
       "Open help center": [
         "Abra a central de ajuda"
+      ],
+      "Open integration settings": [
+        "Abrir configurações de integração"
       ],
       "Open trigger actions": [
         "Abrir ações do gatilho"
@@ -3058,6 +3118,9 @@
       "Republic of the Congo": [
         "República do Congo"
       ],
+      "Request": [
+        "Solicitar"
+      ],
       "Request failed.": [
         "Solicitação falhou."
       ],
@@ -3175,6 +3238,9 @@
       "Save": [
         "Salvar"
       ],
+      "Save and leave": [
+        "Salvar e sair"
+      ],
       "Save and run test": [
         "Salvar e executar teste"
       ],
@@ -3231,6 +3297,9 @@
       ],
       "Search integration": [
         "Buscar integração"
+      ],
+      "Search message, context or hook…": [
+        "Pesquisar mensagem, contexto ou hook…"
       ],
       "Search products": [
         "Buscar produtos"
@@ -3535,6 +3604,9 @@
       "Stops the workflow immediately": [
         "Para o fluxo de trabalho imediatamente"
       ],
+      "Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen.": [
+        "Armazenar erros, avisos e solicitações falhadas em uma tabela dedicada visível na tela de logs de depuração."
+      ],
       "Subscription": [
         "Subscrição"
       ],
@@ -3652,6 +3724,15 @@
       "Thailand": [
         "Tailândia"
       ],
+      "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.": [
+        "A integração %s da qual o gatilho deste fluxo depende está atualmente desativada. Este fluxo não será processado até que a integração seja ativada novamente."
+      ],
+      "The %s integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
+        "A integração %s da qual o gatilho deste fluxo depende não está disponível. Este fluxo não será processado até que a integração esteja disponível novamente."
+      ],
+      "The %s plugin this trigger depends on is not installed or active. This flow will not be processed until the plugin is active again.": [
+        "O plugin %s do qual este gatilho depende não está instalado ou ativo. Este fluxo não será processado até que o plugin esteja ativo novamente."
+      ],
       "The AI could not generate the snippet.": [
         "A IA não conseguiu gerar o trecho."
       ],
@@ -3700,8 +3781,8 @@
       "The generated workflow is missing a valid trigger. Try again with more detail.": [
         "O fluxo de trabalho gerado está faltando um gatilho válido. Tente novamente com mais detalhes."
       ],
-      "The log file was not found.": [
-        "O arquivo de log não foi encontrado."
+      "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
+        "A integração da qual o gatilho deste fluxo depende não está disponível. Este fluxo não será processado até que a integração esteja disponível novamente."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "A mensagem já vem preenchida e pode ser ajustada antes do envio do teste."
@@ -3768,6 +3849,9 @@
       ],
       "The trigger that starts this flow.": [
         "O gatilho que inicia este fluxo."
+      ],
+      "The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger.": [
+        "O gatilho usado por este fluxo não está mais registrado. Este fluxo não será processado até que você selecione um gatilho disponível."
       ],
       "The variable \"%s\" already exists. Choose another name.": [
         "A variável \"%s\" já existe. Escolha outro nome."
@@ -3924,6 +4008,9 @@
       ],
       "This trigger is fired when the user provides your contact on modal": [
         "Este acionamento é disparado quando o usuário fornece seus dados de contato via modal."
+      ],
+      "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
+        "Este fluxo tem alterações não salvas. Se você sair agora, suas alterações serão perdidas."
       ],
       "Time": [
         "Hora"
@@ -4114,8 +4201,14 @@
       "Trigger": [
         "Acionar"
       ],
+      "Trigger no longer available": [
+        "Gatilho não disponível"
+      ],
       "Trigger settings": [
         "Configurações de acionamento"
+      ],
+      "Trigger warning": [
+        "Aviso de gatilho"
       ],
       "Trigger when a WordPress post is published.": [
         "Acionar quando um post do WordPress for publicado."
@@ -4212,6 +4305,9 @@
       ],
       "Unknown response": [
         "Resposta desconhecida"
+      ],
+      "Unsaved changes": [
+        "Alterações não salvas"
       ],
       "Unsupported AI intent.": [
         "Intenção de IA não suportada."
@@ -4383,6 +4479,9 @@
       ],
       "warning": [
         "aviso"
+      ],
+      "Warning": [
+        "Aviso"
       ],
       "We could not authenticate with that username or email and password.": [
         "Não conseguimos autenticar com esse nome de usuário ou e-mail e senha."
