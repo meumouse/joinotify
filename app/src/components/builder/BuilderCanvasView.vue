@@ -196,6 +196,7 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
       @undo="$emit('undo')"
       @redo="$emit('redo')"
       @remove-node="$emit('remove-node', $event)"
+      @duplicate-node="$emit('duplicate-node', $event)"
       @select-node="$emit('select-node', $event)"
       @change-trigger="$emit('change-trigger', $event)"
       @select-action="$emit('select-action', $event)"
