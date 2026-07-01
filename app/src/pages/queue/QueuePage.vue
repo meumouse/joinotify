@@ -13,6 +13,7 @@ import { useProcessingQueue } from '../../composables/useProcessingQueue';
 import BaseButton from '../../components/base/BaseButton.vue';
 import BaseListboxSelect from '../../components/base/BaseListboxSelect.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
+import PageHeader from '../../components/layout/PageHeader.vue';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -143,17 +144,16 @@ const confirmLabel = computed(() =>
 <template>
   <div class="joinotify-settings min-h-screen p-4">
     <div class="w-full">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 class="text-[22px] font-semibold text-slate-800">{{ __('Processing queue', textDomain) }}</h1>
-          <p class="mt-1 max-w-2xl text-[13px] leading-5 text-slate-500">
-            {{ __('Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.', textDomain) }}
-          </p>
-        </div>
-        <span class="self-start rounded-full bg-slate-100 px-3 py-1 text-[12px] font-medium text-slate-500">
-          {{ __('Scheduler', textDomain) }}: {{ backendLabel }}
-        </span>
-      </div>
+      <PageHeader
+        :title="__('Processing queue', textDomain)"
+        :description="__('Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.', textDomain)"
+      >
+        <template #actions>
+          <span class="self-start rounded-full bg-slate-100 px-3 py-1 text-[12px] font-medium text-slate-500">
+            {{ __('Scheduler', textDomain) }}: {{ backendLabel }}
+          </span>
+        </template>
+      </PageHeader>
 
       <div class="mt-6 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
         <div class="flex flex-col gap-4 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-6">

@@ -1,4 +1,17 @@
 <script setup>
+/**
+ * PageHeader.vue — standardized admin page header.
+ *
+ * Renders the shared "Joinotify" eyebrow, brand mark, page title and an
+ * optional description. Every admin page uses it so the headers stay
+ * consistent, each passing its own title/description.
+ *
+ * Slots:
+ * - description: rich description content (overrides the `description` prop),
+ *   useful when the copy needs inline links.
+ * - actions: custom right-aligned content (overrides the built-in action
+ *   button), e.g. a status badge.
+ */
 import { __, textDomain } from '../../utils/i18n';
 import BaseButton from '../base/BaseButton.vue';
 import BrandMark from '../brand/BrandMark.vue';
@@ -21,18 +34,20 @@ defineProps({
         <BrandMark size="md" variant="primary" />
         <h1 class="text-3xl font-semibold tracking-tight text-ink">{{ title }}</h1>
       </div>
-      <p v-if="description" class="max-w-3xl text-sm leading-6 text-shell-500">
-        {{ description }}
+      <p v-if="$slots.description || description" class="max-w-3xl text-sm leading-6 text-shell-500">
+        <slot name="description">{{ description }}</slot>
       </p>
     </div>
 
-    <BaseButton
-      v-if="actionLabel"
-      :disabled="actionDisabled"
-      :href="actionHref"
-      :loading="loading"
-      :title="actionLabel"
-      variant="primary"
-    />
+    <slot name="actions">
+      <BaseButton
+        v-if="actionLabel"
+        :disabled="actionDisabled"
+        :href="actionHref"
+        :loading="loading"
+        :title="actionLabel"
+        variant="primary"
+      />
+    </slot>
   </header>
 </template>

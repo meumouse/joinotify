@@ -11,7 +11,7 @@ import { __, textDomain } from '../../utils/i18n';
 import { cloneValue, deepEqual } from '../../utils/object';
 import { generateHexToken } from '../../utils/random';
 import { createApiClient } from '../../utils/api';
-import SettingsHeader from './components/SettingsHeader.vue';
+import PageHeader from '../../components/layout/PageHeader.vue';
 import SectionTabs from './components/SectionTabs.vue';
 import GeneralSettingsSection from './components/sections/GeneralSettingsSection.vue';
 import PhonesSettingsSection from './components/sections/PhonesSettingsSection.vue';
@@ -745,7 +745,14 @@ function canConfigureIntegration(integration) {
 <template>
   <div class="joinotify-settings min-h-screen">
     <div class="w-full">
-      <SettingsHeader :docs-url="docsUrl" />
+      <PageHeader :title="__('Settings', textDomain)">
+        <template #description>
+          {{ __('Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ', textDomain) }}
+          <a class="font-semibold text-primary-700 underline underline-offset-4" :href="docsUrl" target="_blank" rel="noreferrer">
+            {{ __('Help Center', textDomain) }}
+          </a>
+        </template>
+      </PageHeader>
 
       <SectionTabs
         :sections="sections"

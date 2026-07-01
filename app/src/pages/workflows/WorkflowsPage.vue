@@ -6,7 +6,7 @@ import BaseButton from '../../components/base/BaseButton.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
 import EmptyState from '../../components/workflows/EmptyState.vue';
 import LoadingState from '../../components/workflows/LoadingState.vue';
-import PageHeader from '../../components/workflows/PageHeader.vue';
+import PageHeader from '../../components/layout/PageHeader.vue';
 import StatusTabs from '../../components/workflows/StatusTabs.vue';
 import TableToolbar from '../../components/workflows/TableToolbar.vue';
 import WorkflowSearch from '../../components/workflows/WorkflowSearch.vue';

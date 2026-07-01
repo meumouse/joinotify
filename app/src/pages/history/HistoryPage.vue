@@ -12,6 +12,7 @@ import BaseListboxSelect from '../../components/base/BaseListboxSelect.vue';
 import BaseDatePicker from '../../components/base/BaseDatePicker.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
 import BaseCheckbox from '../../components/buttons/checkbox/BaseCheckbox.vue';
+import PageHeader from '../../components/layout/PageHeader.vue';
 import HistoryDetailsModal from './components/HistoryDetailsModal.vue';
 
 const props = defineProps({
@@ -152,14 +153,10 @@ const confirmDescription = computed(() =>
 <template>
   <div class="joinotify-settings min-h-screen p-4">
     <div class="w-full">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 class="text-[22px] font-semibold text-slate-800">{{ __('Message history', textDomain) }}</h1>
-          <p class="mt-1 max-w-2xl text-[13px] leading-5 text-slate-500">
-            {{ __('Audit every WhatsApp message dispatched by Joinotify, including workflow sends, retries and test messages.', textDomain) }}
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        :title="__('Message history', textDomain)"
+        :description="__('Audit every WhatsApp message dispatched by Joinotify, including workflow sends, retries and test messages.', textDomain)"
+      />
 
       <div
         v-if="!enabled"

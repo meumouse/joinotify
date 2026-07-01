@@ -10,7 +10,7 @@ import { computed, onBeforeUnmount, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue } from '../../utils/object';
 import { createApiClient } from '../../utils/api';
-import SettingsHeader from '../settings/components/SettingsHeader.vue';
+import PageHeader from '../../components/layout/PageHeader.vue';
 import BaseButton from '../../components/buttons/BaseButton.vue';
 import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
 import StatusBadge from '../../components/cards/StatusBadge.vue';
@@ -337,7 +337,14 @@ onBeforeUnmount(() => {
 <template>
   <div class="joinotify-settings min-h-screen">
     <div class="w-full">
-      <SettingsHeader :docs-url="docsUrl" />
+      <PageHeader :title="__('License', textDomain)">
+        <template #description>
+          {{ __('Activate premium features, review your subscription status and keep your license in sync. If you need help, visit our ', textDomain) }}
+          <a class="font-semibold text-primary-700 underline underline-offset-4" :href="docsUrl" target="_blank" rel="noreferrer">
+            {{ __('Help Center', textDomain) }}
+          </a>
+        </template>
+      </PageHeader>
 
       <section class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
         <div class="px-10 py-12">
