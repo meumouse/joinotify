@@ -182,6 +182,13 @@ class Workflow_Processor {
             return;
         }
 
+        // Rebuild the execution order/nesting from the authoritative wiring
+        // (connection_from) so a branch whose stored array drifted out of sync
+        // (e.g. a delay saved after the message it should precede) still runs in
+        // the real connected order. No-op for already well-formed content and a
+        // safe fallback for legacy nodes without connection_from.
+        $workflow_content = self::reorder_by_connections( $workflow_content );
+
         // resolve the trigger node (guard against malformed/trigger-less content)
         $trigger_data = self::get_trigger_node( $workflow_content );
 
@@ -230,6 +237,237 @@ class Workflow_Processor {
         }
 
         return array();
+    }
+
+
+    /**
+     * Rebuild a workflow's execution order and branch nesting from the wiring
+     * stored on each node (`data.connection_from`).
+     *
+     * The visual builder keeps a node's real connection (source node + output
+     * handle) in `connection_from`, which is authoritative. The nested
+     * `children`/branch arrays are a derived convenience that can drift out of
+     * sync after edits (reordering, inserting a delay before a nested condition,
+     * duplicating nodes), leaving a branch whose array order no longer matches the
+     * drawn flow. When that happens the queue walker runs nodes in the wrong
+     * order — e.g. sending a message before the delay that should precede it.
+     *
+     * Reconstruction is two-phase: (1) follow the wiring from the trigger outward
+     * to rebuild the connected skeleton in true execution order, nesting each
+     * condition's branches; (2) graft any node that carries no wiring (typically a
+     * branch leaf) back into the exact container it was stored in, preserving its
+     * original relative order. Content with no wiring at all therefore rebuilds
+     * identically to what was stored (safe no-op). If any node cannot be placed
+     * exactly once, the original is returned untouched.
+     *
+     * @since 2.0.0
+     * @param array $workflow_content | Stored workflow content
+     * @return array Reordered content, or the original when it cannot be rebuilt safely.
+     */
+    protected static function reorder_by_connections( array $workflow_content ) {
+        $triggers = array();
+        $non_triggers = array();
+
+        foreach ( $workflow_content as $node ) {
+            if ( isset( $node['type'] ) && $node['type'] === 'trigger' ) {
+                $triggers[] = $node;
+            } else {
+                $non_triggers[] = $node;
+            }
+        }
+
+        // Without a trigger to anchor the walk there is nothing to rebuild from.
+        if ( empty( $triggers ) ) {
+            return $workflow_content;
+        }
+
+        // Flatten every non-trigger node (at any depth) into a pool keyed by id,
+        // remembering each node's original container (parent + branch) and order.
+        $pool = array();
+        $meta = array();
+        $order = array();
+        self::collect_flow_nodes( $non_triggers, '', '', $pool, $meta, $order );
+
+        $used = array();
+        $rebuilt = array();
+
+        // Each trigger is a root; its connected chain (plus any un-wired top-level
+        // nodes grafted home) follows as top-level siblings.
+        foreach ( $triggers as $trigger ) {
+            $rebuilt[] = $trigger;
+            $trigger_id = isset( $trigger['id'] ) ? (string) $trigger['id'] : '';
+
+            foreach ( self::build_branch( $trigger_id, 'output', '', '', $pool, $meta, $order, $used ) as $child ) {
+                $rebuilt[] = $child;
+            }
+        }
+
+        // Every pooled node must be placed exactly once; otherwise keep the stored
+        // structure rather than risk dropping or duplicating an action.
+        if ( count( $used ) !== count( $pool ) ) {
+            return $workflow_content;
+        }
+
+        return $rebuilt;
+    }
+
+
+    /**
+     * Flatten workflow nodes (condition branches and any linear children, at any
+     * depth) into a flat pool keyed by node id, recording each node's original
+     * container (parent id + branch key) and pre-order position so the rebuild can
+     * graft un-wired nodes back where they were stored.
+     *
+     * @since 2.0.0
+     * @param array $nodes | Node list to flatten
+     * @param string $parent_id | Id of the containing condition ('' at top level)
+     * @param string $branch_key | 'action_true' / 'action_false' ('' at top level)
+     * @param array $pool | Pool accumulator (by ref), keyed by node id
+     * @param array $meta | Original-home accumulator (by ref): id => {parent,branch}
+     * @param array $order | Pre-order id list (by ref) for stable grafting
+     * @return void
+     */
+    protected static function collect_flow_nodes( $nodes, $parent_id, $branch_key, array &$pool, array &$meta, array &$order ) {
+        if ( ! is_array( $nodes ) ) {
+            return;
+        }
+
+        foreach ( $nodes as $node ) {
+            if ( ! is_array( $node ) || ! isset( $node['id'] ) ) {
+                continue;
+            }
+
+            $id = (string) $node['id'];
+            $children = $node['children'] ?? array();
+            $branches = $node['branches'] ?? array();
+
+            // strip structural containers; the rebuild reattaches them
+            unset( $node['children'], $node['branches'] );
+            $pool[ $id ] = $node;
+            $meta[ $id ] = array( 'parent' => (string) $parent_id, 'branch' => (string) $branch_key );
+            $order[] = $id;
+
+            // condition branches can live under children (object form) or branches
+            $true_children = array();
+            $false_children = array();
+
+            if ( is_array( $children ) && ( isset( $children['action_true'] ) || isset( $children['action_false'] ) ) ) {
+                $true_children = $children['action_true'] ?? array();
+                $false_children = $children['action_false'] ?? array();
+            } elseif ( is_array( $branches ) && ( isset( $branches['action_true'] ) || isset( $branches['action_false'] ) ) ) {
+                $true_children = $branches['action_true'] ?? array();
+                $false_children = $branches['action_false'] ?? array();
+            } elseif ( is_array( $children ) ) {
+                // Linear children (rare in this model); keep them tied to this exact
+                // parent so they can only ever graft back here.
+                self::collect_flow_nodes( $children, $id, 'children', $pool, $meta, $order );
+            }
+
+            self::collect_flow_nodes( $true_children, $id, 'action_true', $pool, $meta, $order );
+            self::collect_flow_nodes( $false_children, $id, 'action_false', $pool, $meta, $order );
+        }
+    }
+
+
+    /**
+     * Build one container (top-level list or a condition branch) in execution order.
+     *
+     * First it follows the wiring from ($wire_source, $wire_handle), appending each
+     * connected node in turn (recursing into conditions via materialize_node()).
+     * Then it grafts back any not-yet-placed node whose original home is exactly
+     * ($home_parent, $home_branch) — i.e. leaves that carry no wiring — keeping
+     * their stored relative order. Nodes are consumed from the shared pool (tracked
+     * in $used) so each is placed exactly once.
+     *
+     * @since 2.0.0
+     * @param string $wire_source | Id whose output handle we follow for the chain
+     * @param string $wire_handle | Output handle to follow ('output' / 'true' / 'false')
+     * @param string $home_parent | Original parent id used to graft un-wired nodes
+     * @param string $home_branch | Original branch key used to graft un-wired nodes
+     * @param array $pool | Flat pool of candidate nodes, keyed by id
+     * @param array $meta | Original-home map: id => {parent,branch}
+     * @param array $order | Pre-order id list for stable grafting
+     * @param array $used | Ids already placed (by ref)
+     * @return array Ordered container (conditions carry nested `children`).
+     */
+    protected static function build_branch( $wire_source, $wire_handle, $home_parent, $home_branch, array &$pool, array &$meta, array &$order, array &$used ) {
+        $result = array();
+
+        // 1) connected chain: follow the wiring from the current output handle.
+        $current_source = (string) $wire_source;
+        $current_handle = (string) $wire_handle;
+
+        while ( true ) {
+            $next_id = null;
+
+            foreach ( $pool as $id => $node ) {
+                if ( isset( $used[ $id ] ) ) {
+                    continue;
+                }
+
+                $from = $node['data']['connection_from'] ?? array();
+                $from_source = isset( $from['source_id'] ) ? (string) $from['source_id'] : '';
+                $from_handle = isset( $from['source_handle'] ) ? (string) $from['source_handle'] : 'output';
+
+                if ( '' !== $from_source && $from_source === $current_source && $from_handle === $current_handle ) {
+                    $next_id = $id;
+
+                    break;
+                }
+            }
+
+            if ( null === $next_id ) {
+                break;
+            }
+
+            $result[] = self::materialize_node( $next_id, $pool, $meta, $order, $used );
+            $current_source = $next_id;
+            $current_handle = 'output';
+        }
+
+        // 2) graft un-wired nodes stored directly in this container, in order.
+        foreach ( $order as $id ) {
+            if ( isset( $used[ $id ] ) ) {
+                continue;
+            }
+
+            if ( ( $meta[ $id ]['parent'] ?? '' ) === (string) $home_parent && ( $meta[ $id ]['branch'] ?? '' ) === (string) $home_branch ) {
+                $result[] = self::materialize_node( $id, $pool, $meta, $order, $used );
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Place a single node into the rebuilt tree, nesting its branches when it is a
+     * condition (each branch built via build_branch(), which mixes the connected
+     * chain with any un-wired leaves grafted home).
+     *
+     * @since 2.0.0
+     * @param string $id | Node id to materialize (must exist in $pool)
+     * @param array $pool | Flat pool of candidate nodes, keyed by id
+     * @param array $meta | Original-home map: id => {parent,branch}
+     * @param array $order | Pre-order id list for stable grafting
+     * @param array $used | Ids already placed (by ref)
+     * @return array The node with its `children` rebuilt.
+     */
+    protected static function materialize_node( $id, array &$pool, array &$meta, array &$order, array &$used ) {
+        $used[ $id ] = true;
+        $node = $pool[ $id ];
+
+        // conditions nest their branches; linear nodes continue via siblings
+        if ( ( $node['data']['action'] ?? '' ) === 'condition' ) {
+            $node['children'] = array(
+                'action_true' => self::build_branch( $id, 'true', $id, 'action_true', $pool, $meta, $order, $used ),
+                'action_false' => self::build_branch( $id, 'false', $id, 'action_false', $pool, $meta, $order, $used ),
+            );
+        } else {
+            $node['children'] = array();
+        }
+
+        return $node;
     }
 
 

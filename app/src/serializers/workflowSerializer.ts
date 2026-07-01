@@ -1,6 +1,12 @@
 import { getActionDefinition } from '../registries/actionRegistry';
 import { getTriggerDefinition } from '../registries/triggerRegistry';
-import { cloneSerializable, isConditionNode, isRecord, ensureBranchesOnNode } from '../utils/workflowTree';
+import {
+  cloneSerializable,
+  isConditionNode,
+  isRecord,
+  ensureBranchesOnNode,
+  reconcileWorkflowContentFromConnections,
+} from '../utils/workflowTree';
 import { normalizeWorkflowFile } from '../parsers/workflowParser';
 import { __, textDomain } from '../utils/i18n';
 import type {
@@ -111,13 +117,18 @@ export function serializeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkf
     category: typeof normalized.post.category === 'string' ? normalized.post.category : '',
   };
 
+  // Realign the stored tree with the authoritative wiring before serializing, so
+  // a branch whose array order drifted from the drawn connections is persisted in
+  // the real execution order (idempotent; no-op for already well-formed content).
+  const reconciled = reconcileWorkflowContentFromConnections(normalized.workflow_content);
+
   return {
     ...cloneSerializable(normalized),
     plugin_version: typeof normalized.plugin_version === 'string' && normalized.plugin_version.trim()
       ? normalized.plugin_version
       : '1.0.0',
     post,
-    workflow_content: normalized.workflow_content.map((node) => serializeWorkflowNode(node)) as WorkflowNode[],
+    workflow_content: reconciled.map((node) => serializeWorkflowNode(node)) as WorkflowNode[],
   };
 }
 

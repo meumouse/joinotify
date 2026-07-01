@@ -414,6 +414,194 @@ export function isConditionNode(node: WorkflowNode | null | undefined): boolean 
   return !!node && node.type === 'action' && isConditionAction(node.data);
 }
 
+interface NodeHome {
+  parent: string;
+  branch: string;
+}
+
+function collectFlowNodes(
+  nodes: WorkflowNode[],
+  parentId: string,
+  branchKey: string,
+  pool: Map<string, WorkflowNode>,
+  meta: Map<string, NodeHome>,
+  order: string[]
+): void {
+  nodes.forEach((node) => {
+    if (!isWorkflowNode(node)) {
+      return;
+    }
+
+    const children = Array.isArray(node.children) ? node.children : [];
+    const branches = node.branches;
+
+    // shallow copy without the structural containers; the rebuild reattaches them
+    pool.set(node.id, { ...node, children: [], branches: undefined, branchKey: undefined });
+    meta.set(node.id, { parent: parentId, branch: branchKey });
+    order.push(node.id);
+
+    if (branches) {
+      collectFlowNodes(Array.isArray(branches.action_true) ? branches.action_true : [], node.id, 'action_true', pool, meta, order);
+      collectFlowNodes(Array.isArray(branches.action_false) ? branches.action_false : [], node.id, 'action_false', pool, meta, order);
+    } else if (children.length) {
+      // Linear children (rare in this model); keep them tied to this exact parent
+      // so they can only ever graft back here.
+      collectFlowNodes(children, node.id, 'children', pool, meta, order);
+    }
+  });
+}
+
+function getConnectionSource(node: WorkflowNode): { sourceId: string; sourceHandle: string } {
+  const from = node.data?.connection_from;
+
+  if (!isRecord(from)) {
+    return { sourceId: '', sourceHandle: 'output' };
+  }
+
+  return {
+    sourceId: String(from.source_id || ''),
+    sourceHandle: String(from.source_handle || 'output'),
+  };
+}
+
+interface ReconcileContext {
+  pool: Map<string, WorkflowNode>;
+  meta: Map<string, NodeHome>;
+  order: string[];
+  used: Set<string>;
+}
+
+function materializeNode(id: string, branchKey: WorkflowBranchKey | undefined, ctx: ReconcileContext): WorkflowNode {
+  ctx.used.add(id);
+  const node = ctx.pool.get(id) as WorkflowNode;
+
+  if (branchKey) {
+    node.branchKey = branchKey;
+  } else {
+    delete node.branchKey;
+  }
+
+  // conditions nest their branches; linear nodes continue via siblings
+  if (isConditionAction(node.data)) {
+    node.children = [];
+    node.branches = {
+      action_true: buildBranch(id, 'true', id, 'action_true', 'action_true', ctx),
+      action_false: buildBranch(id, 'false', id, 'action_false', 'action_false', ctx),
+    };
+  } else {
+    node.children = [];
+    node.branches = undefined;
+  }
+
+  return node;
+}
+
+function buildBranch(
+  wireSource: string,
+  wireHandle: string,
+  homeParent: string,
+  homeBranch: string,
+  branchKey: WorkflowBranchKey | undefined,
+  ctx: ReconcileContext
+): WorkflowNode[] {
+  const result: WorkflowNode[] = [];
+
+  // 1) connected chain: follow the wiring from the current output handle
+  let currentSource = wireSource;
+  let currentHandle = wireHandle;
+
+  for (;;) {
+    let nextId: string | null = null;
+
+    for (const [id, node] of ctx.pool) {
+      if (ctx.used.has(id)) {
+        continue;
+      }
+
+      const { sourceId, sourceHandle } = getConnectionSource(node);
+
+      if (sourceId !== '' && sourceId === currentSource && sourceHandle === currentHandle) {
+        nextId = id;
+        break;
+      }
+    }
+
+    if (nextId === null) {
+      break;
+    }
+
+    result.push(materializeNode(nextId, branchKey, ctx));
+    currentSource = nextId;
+    currentHandle = 'output';
+  }
+
+  // 2) graft un-wired nodes stored directly in this container, in order
+  ctx.order.forEach((id) => {
+    if (ctx.used.has(id)) {
+      return;
+    }
+
+    const home = ctx.meta.get(id);
+
+    if (home && home.parent === homeParent && home.branch === homeBranch) {
+      result.push(materializeNode(id, branchKey, ctx));
+    }
+  });
+
+  return result;
+}
+
+/**
+ * Rebuild the workflow's execution order and branch nesting from each node's
+ * stored wiring (`data.connection_from`), which is authoritative.
+ *
+ * The nested arrays that back the canvas can drift out of sync with the drawn
+ * connections after edits (reordering, inserting a delay before a nested
+ * condition, duplicating nodes), leaving a branch whose array order no longer
+ * matches the flow. Persisting that drift makes the runtime walker execute nodes
+ * in the wrong order (e.g. a message firing before the delay meant to precede it).
+ *
+ * Reconstruction is two-phase: follow the wiring to rebuild the connected
+ * skeleton in execution order, then graft any un-wired node (typically a branch
+ * leaf) back into the exact container it was stored in. Content with no wiring
+ * rebuilds identically to what was stored (safe no-op); if any node cannot be
+ * placed exactly once, the input is returned untouched.
+ */
+export function reconcileWorkflowContentFromConnections(nodes: WorkflowNode[]): WorkflowNode[] {
+  if (!Array.isArray(nodes) || nodes.length === 0) {
+    return nodes;
+  }
+
+  const triggers = nodes.filter((node) => node.type === 'trigger');
+
+  if (triggers.length === 0) {
+    return nodes;
+  }
+
+  const ctx: ReconcileContext = {
+    pool: new Map<string, WorkflowNode>(),
+    meta: new Map<string, NodeHome>(),
+    order: [],
+    used: new Set<string>(),
+  };
+
+  collectFlowNodes(nodes.filter((node) => node.type !== 'trigger'), '', '', ctx.pool, ctx.meta, ctx.order);
+
+  const rebuilt: WorkflowNode[] = [];
+
+  triggers.forEach((trigger) => {
+    rebuilt.push(trigger);
+    buildBranch(trigger.id, 'output', '', '', undefined, ctx).forEach((node) => rebuilt.push(node));
+  });
+
+  // every pooled node must be placed exactly once, else keep the stored structure
+  if (ctx.used.size !== ctx.pool.size) {
+    return nodes;
+  }
+
+  return rebuilt;
+}
+
 export function isStopNode(node: WorkflowNode | null | undefined): boolean {
   return !!node && node.type === 'action' && isStopAction(node.data);
 }
