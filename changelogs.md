@@ -1,4 +1,4 @@
-Versão 2.0.0 (10/06/2026)
+Versão 2.0.0 (01/07/2026)
 * Novo construtor de fluxos: interface totalmente redesenhada em formato de canvas visual, com arrastar e soltar, conectar etapas, zoom, ajuste automático à tela e botões de desfazer/refazer
 * Novo recurso: Inteligência Artificial no construtor de fluxos
      - Criação de fluxos completos automaticamente a partir de uma descrição em texto
