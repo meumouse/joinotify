@@ -1539,6 +1539,8 @@ class Registry {
 		$value_types = apply_filters( 'Joinotify/Builder/Condition_Value_Types', array(
 			'order_status' => array( 'type' => 'order_status' ),
 			'subscription_status' => array( 'type' => 'text' ),
+			'payment_method' => array( 'type' => 'payment_method' ),
+			'shipping_method' => array( 'type' => 'shipping_method' ),
 			'products_purchased' => array( 'type' => 'products' ),
 			'order_paid' => array( 'type' => 'boolean' ),
 			'cart_recovered' => array( 'type' => 'boolean' ),
@@ -1556,6 +1558,8 @@ class Registry {
 		$options_map = apply_filters( 'Joinotify/Builder/Condition_Options', array(
 			'order_status' => self::get_order_status_condition_options(),
 			'subscription_status' => self::get_subscription_status_condition_options(),
+			'payment_method' => self::get_payment_method_condition_options(),
+			'shipping_method' => self::get_shipping_method_condition_options(),
 		));
 
 		// Per-trigger condition map populated by each integration's add_conditions().
@@ -1645,6 +1649,63 @@ class Registry {
 			$options[] = array(
 				'label' => (string) $label,
 				'value' => str_replace( 'wc-', '', (string) $key ),
+			);
+		}
+
+		return $options;
+	}
+
+
+	/**
+	 * Payment-method options for the `payment_method` condition value.
+	 *
+	 * Values are the gateway IDs because the runtime compares them against
+	 * WC_Order::get_payment_method() (which returns the gateway ID).
+	 *
+	 * @since 2.0.0
+	 * @return array<int,array<string,string>>
+	 */
+	private static function get_payment_method_condition_options() {
+		if ( ! function_exists( 'WC' ) || ! WC()->payment_gateways() ) {
+			return array();
+		}
+
+		$options = array();
+
+		foreach ( WC()->payment_gateways()->payment_gateways() as $id => $gateway ) {
+			$title = $gateway->get_title();
+
+			$options[] = array(
+				'label' => (string) ( '' !== $title ? $title : $gateway->get_method_title() ),
+				'value' => (string) $id,
+			);
+		}
+
+		return $options;
+	}
+
+
+	/**
+	 * Shipping-method options for the `shipping_method` condition value.
+	 *
+	 * Values are the registered method IDs (e.g. `flat_rate`, `free_shipping`)
+	 * because the runtime compares them against the base of the order shipping
+	 * item method ID (the part before the `:instance` suffix).
+	 *
+	 * @since 2.0.0
+	 * @return array<int,array<string,string>>
+	 */
+	private static function get_shipping_method_condition_options() {
+		if ( ! function_exists( 'WC' ) || ! WC()->shipping() ) {
+			return array();
+		}
+
+		$options = array();
+
+		foreach ( WC()->shipping()->get_shipping_methods() as $id => $method ) {
+			$options[] = array(
+				'label' => (string) $method->get_method_title(),
+				'value' => (string) $id,
 			);
 		}
 
