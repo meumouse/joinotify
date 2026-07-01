@@ -63,6 +63,13 @@ const autoOpenedTriggerSetupId = ref('');
 // it does not re-open on unrelated canvas re-renders.
 const triggerWarningModalOpen = ref(false);
 const triggerWarningHandledKey = ref('');
+// Confirmation shown when the user tries to leave the builder while the flow has
+// unsaved changes (store.dirty). Offers save-and-leave, leave-anyway, or cancel.
+const leaveConfirmOpen = ref(false);
+const leaving = ref(false);
+// Set right before we intentionally navigate away from a dirty flow so the
+// beforeunload guard does not additionally raise the native browser prompt.
+const skipUnloadGuard = ref(false);
 const toasts = ref([]);
 const toastTimers = new Map();
 
@@ -381,10 +388,12 @@ function handleHistoryShortcut(event) {
 
 onMounted(() => {
   window.addEventListener('keydown', handleHistoryShortcut);
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleHistoryShortcut);
+  window.removeEventListener('beforeunload', handleBeforeUnload);
 
   toastTimers.forEach((timers) => {
     if (timers.hide) {
@@ -509,11 +518,77 @@ function openActionSidebar(afterNodeId) {
   void store.loadCanvasActionsFromServer(store.activeContext);
 }
 
-function goBack() {
+// Warns the browser (tab close / reload / native back) about unsaved changes.
+// Skipped once we deliberately leave a dirty flow via the confirmation modal so
+// the user is not prompted twice.
+function handleBeforeUnload(event) {
+  if (!store.dirty || skipUnloadGuard.value) {
+    return;
+  }
+
+  event.preventDefault();
+  // Legacy browsers require returnValue to be set to trigger the prompt.
+  event.returnValue = '';
+  return '';
+}
+
+function performBack() {
   debugLogger.log('navigation:back', {
     url: backUrl.value,
   });
+  // Bypass the beforeunload guard: the user already confirmed leaving.
+  skipUnloadGuard.value = true;
   window.location.href = backUrl.value;
+}
+
+function goBack() {
+  if (store.dirty) {
+    debugLogger.log('navigation:back-blocked-dirty');
+    leaveConfirmOpen.value = true;
+    return;
+  }
+
+  performBack();
+}
+
+function cancelLeave() {
+  if (leaving.value) {
+    return;
+  }
+
+  leaveConfirmOpen.value = false;
+}
+
+function confirmLeaveWithoutSaving() {
+  debugLogger.log('navigation:leave-without-saving');
+  leaveConfirmOpen.value = false;
+  performBack();
+}
+
+async function saveAndLeave() {
+  if (leaving.value) {
+    return;
+  }
+
+  leaving.value = true;
+  debugLogger.log('workflow:save-and-leave-requested');
+
+  try {
+    const response = await store.saveWorkflow();
+    syncBuilderUrl(response?.workflow?.post_id || store.postId);
+    leaveConfirmOpen.value = false;
+    performBack();
+  } catch (error) {
+    leaving.value = false;
+    pushToast(
+      error instanceof Error ? error.message : __('Could not save the workflow.', textDomain),
+      'error',
+      __('Builder', textDomain)
+    );
+    debugLogger.log('workflow:save-and-leave-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 }
 
 function openImportModal() {
@@ -1312,6 +1387,26 @@ function setChangeTriggerUrl(active) {
         <BaseButton :title="__('Dismiss', textDomain)" variant="ghost" @click="closeTriggerWarning" />
         <BaseButton :title="__('Open integration settings', textDomain)" variant="secondary" @click="openIntegrationsSettings" />
         <BaseButton :title="__('Change trigger', textDomain)" @click="changeTriggerFromWarning" />
+      </div>
+    </div>
+  </ModalDialog>
+
+  <ModalDialog
+    :open="leaveConfirmOpen"
+    :title="__('Leave without saving?', textDomain)"
+    :eyebrow="__('Unsaved changes', textDomain)"
+    sizeClass="max-w-lg"
+    @close="cancelLeave"
+  >
+    <div class="space-y-6">
+      <p class="text-[13px] leading-5 text-slate-500">
+        {{ __('This workflow has unsaved changes. If you leave now, your changes will be lost.', textDomain) }}
+      </p>
+
+      <div class="flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
+        <BaseButton :title="__('Cancel', textDomain)" variant="ghost" :disabled="leaving" @click="cancelLeave" />
+        <BaseButton :title="__('Leave without saving', textDomain)" variant="secondary" :disabled="leaving" @click="confirmLeaveWithoutSaving" />
+        <BaseButton :title="__('Save and leave', textDomain)" :loading="leaving" @click="saveAndLeave" />
       </div>
     </div>
   </ModalDialog>
