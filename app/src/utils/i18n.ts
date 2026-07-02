@@ -38,6 +38,26 @@ export function __(text: string, domain = textDomain): string {
 }
 
 /**
+ * Translates and pluralizes a string using the WordPress i18n runtime.
+ *
+ * @since 2.0.0
+ * @param {string} single The singular form.
+ * @param {string} plural The plural form.
+ * @param {number} number The number deciding which form to use.
+ * @param {string} [domain] The text domain.
+ * @returns {string} The translated singular or plural form.
+ */
+export function _n(single: string, plural: string, number: number, domain = textDomain): string {
+  const translator = getWpI18n()?._n;
+
+  if (typeof translator === 'function') {
+    return translator(single, plural, number, domain);
+  }
+
+  return number === 1 ? single : plural;
+}
+
+/**
  * Formats a string using the WordPress i18n sprintf implementation.
  *
  * @since 2.0.0

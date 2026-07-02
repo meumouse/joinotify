@@ -22,6 +22,34 @@
       "%d scheduled item was cancelled.": [
         "%d scheduled item was cancelled."
       ],
+      "%d second": [
+        "%d second",
+        "%d seconds"
+      ],
+      "%d minute": [
+        "%d minute",
+        "%d minutes"
+      ],
+      "%d hour": [
+        "%d hour",
+        "%d hours"
+      ],
+      "%d day": [
+        "%d day",
+        "%d days"
+      ],
+      "%d week": [
+        "%d week",
+        "%d weeks"
+      ],
+      "%d month": [
+        "%d month",
+        "%d months"
+      ],
+      "%d year": [
+        "%d year",
+        "%d years"
+      ],
       "%s %s: %s": [
         "%s %s: %s"
       ],

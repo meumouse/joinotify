@@ -30,6 +30,48 @@ msgid "%d scheduled item was cancelled."
 msgid_plural "%d scheduled items were cancelled."
 msgstr[0] "%d elemento programado fue cancelado."
 
+#: app/src/builder/actions/utils/actionDescription.ts:88
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d día"
+msgstr[1] "%d días"
+
+#: app/src/builder/actions/utils/actionDescription.ts:86
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d hora"
+msgstr[1] "%d horas"
+
+#: app/src/builder/actions/utils/actionDescription.ts:84
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuto"
+msgstr[1] "%d minutos"
+
+#: app/src/builder/actions/utils/actionDescription.ts:90
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d mes"
+msgstr[1] "%d meses"
+
+#: app/src/builder/actions/utils/actionDescription.ts:82
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d segundo"
+msgstr[1] "%d segundos"
+
+#: app/src/builder/actions/utils/actionDescription.ts:89
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d semana"
+msgstr[1] "%d semanas"
+
+#: app/src/builder/actions/utils/actionDescription.ts:92
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d año"
+msgstr[1] "%d años"
+
 #: admin/src/Builder/Messages.php:171
 msgid "%s %s: %s"
 msgstr "%s %s: %s"

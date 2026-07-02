@@ -8,7 +8,7 @@
  *
  * @since 2.0.0
  */
-import { __, textDomain } from '../../../utils/i18n';
+import { __, _n, sprintf, textDomain } from '../../../utils/i18n';
 import {
   findCatalogCondition,
   getConditionOperatorLabel,
@@ -64,6 +64,47 @@ function formatList(items: string[]): string {
 }
 
 /**
+ * Build the translated, pluralized "amount + period" phrase for a delay (e.g.
+ * "2 dias", "1 hora"). Falls back to the raw "amount period" text for unknown
+ * periods so nothing is silently dropped.
+ *
+ * @since 2.0.0
+ * @param {string} amount The delay amount as text.
+ * @param {string} period The delay period key (seconds, minute, hours, …).
+ * @returns {string} The localized delay offset.
+ */
+function describeDelayOffset(amount: string, period: string): string {
+  if (!amount) {
+    return period;
+  }
+
+  const count = Number.parseInt(amount, 10);
+
+  if (!Number.isFinite(count)) {
+    return `${amount} ${period}`;
+  }
+
+  switch (period) {
+    case 'seconds':
+      return sprintf(_n('%d second', '%d seconds', count, textDomain), count);
+    case 'minute':
+      return sprintf(_n('%d minute', '%d minutes', count, textDomain), count);
+    case 'hours':
+      return sprintf(_n('%d hour', '%d hours', count, textDomain), count);
+    case 'day':
+      return sprintf(_n('%d day', '%d days', count, textDomain), count);
+    case 'week':
+      return sprintf(_n('%d week', '%d weeks', count, textDomain), count);
+    case 'month':
+      return sprintf(_n('%d month', '%d months', count, textDomain), count);
+    case 'year':
+      return sprintf(_n('%d year', '%d years', count, textDomain), count);
+    default:
+      return `${amount} ${period}`;
+  }
+}
+
+/**
  * Build the summary for a time-delay action (period, date or scheduled).
  *
  * @since 2.0.0
@@ -85,7 +126,7 @@ export function describeTimeDelayAction(data: Record<string, unknown>): string {
     const amount = cleanText(data.delay_value || '');
     const period = cleanText(data.delay_period || 'day');
     const time = cleanText(data.time_value || '');
-    const offset = amount ? `${amount} ${period}` : period;
+    const offset = describeDelayOffset(amount, period);
 
     return joinSegments([
       __('Delay', textDomain),
@@ -96,7 +137,7 @@ export function describeTimeDelayAction(data: Record<string, unknown>): string {
 
   const amount = cleanText(data.delay_value || '');
   const period = cleanText(data.delay_period || 'minute');
-  return joinSegments([__('Delay', textDomain), amount ? `${amount} ${period}` : period]);
+  return joinSegments([__('Delay', textDomain), describeDelayOffset(amount, period)]);
 }
 
 /**
