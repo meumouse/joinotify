@@ -382,6 +382,18 @@ class Woocommerce extends Integrations_Base {
                     'sandbox' => sprintf( '%s %s %s', esc_html__( '1x - Men\'s cotton T-shirt (Sample product)', 'joinotify' ), "\n",  esc_html__( '1x - Sunglasses with UV protection (Sample product)', 'joinotify' ) ),
                 ),
             ),
+            '{{ wc_review_links }}' => array(
+                'triggers' => $trigger_names,
+                'description' => __( 'To retrieve the review link for each purchased product from the order, separated by line', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_review_links( $order ) : '',
+                    'sandbox' => sprintf( '%s %s %s',
+                        sprintf( esc_html__( 'Men\'s cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews', 'joinotify' ), get_site_url() ),
+                        "\n",
+                        sprintf( esc_html__( 'Sunglasses with UV protection (Sample product): %s/product/sample-sunglasses/#reviews', 'joinotify' ), get_site_url() )
+                    ),
+                ),
+            ),
             '{{ wc_payment_url }}' => array(
                 'triggers' => $trigger_names,
                 'description' => __( 'To retrieve the order payment URL', 'joinotify' ),
@@ -516,6 +528,44 @@ class Woocommerce extends Integrations_Base {
         }
 
         return ! empty( $purchased_items ) ? implode( "\n", $purchased_items ) : esc_html__( 'No item purchased.', 'joinotify' );
+    }
+
+
+    /**
+     * Returns the review link for each purchased product in the order
+     *
+     * @since 2.0.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Review links formatted on separate lines
+     */
+    public static function get_review_links( $order ) {
+        $items = $order->get_items();
+        $review_links = array();
+        $processed = array();
+
+        foreach ( $items as $item ) {
+            // use the parent product id so variations point to the same review page
+            $product_id = $item->get_product_id();
+
+            // skip empty or already processed products to avoid duplicate links
+            if ( ! $product_id || in_array( $product_id, $processed, true ) ) {
+                continue;
+            }
+
+            $processed[] = $product_id;
+
+            $product = wc_get_product( $product_id );
+
+            // skip products that no longer exist or don't accept reviews
+            if ( ! $product || ! comments_open( $product_id ) ) {
+                continue;
+            }
+
+            $review_url = get_permalink( $product_id ) . '#reviews';
+            $review_links[] = sprintf( '%s: %s', $product->get_name(), $review_url );
+        }
+
+        return ! empty( $review_links ) ? implode( "\n", $review_links ) : esc_html__( 'No item purchased.', 'joinotify' );
     }
 
 
