@@ -73,6 +73,8 @@ import {
   replaceWorkflowNodeData,
 } from '../utils/workflowTree';
 import { createWorkflowNodeId } from '../utils/workflowIds';
+import { createEditorNote, normalizeEditorNote } from '../utils/editorNotes';
+import type { WorkflowEditorNote } from '../types/workflowBuilder';
 
 /**
  * Normalizes a single placeholder entry into a placeholder group.
@@ -340,6 +342,11 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   const triggerContextsCache = ref<WorkflowContextDefinition[]>(getTriggerContextsCatalog());
 
   const workflowContent = computed(() => file.value.workflow_content || []);
+
+  // Visual-only canvas sticky notes. Kept in the file's top-level editor_notes
+  // array so they persist and participate in undo/redo/dirty via the serialized
+  // file, while staying fully decoupled from the execution tree.
+  const editorNotes = computed(() => file.value.editor_notes || []);
 
   const triggerNode = computed(() => workflowContent.value.find((node) => node.type === 'trigger') || null);
 
@@ -1318,21 +1325,18 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   /**
-   * Sets the workflow title, also syncing the trigger node's title.
+   * Sets the workflow title.
+   *
+   * The workflow name (post.title) is intentionally decoupled from the trigger
+   * node's title: the trigger node always displays its trigger definition label
+   * (set by selectTrigger), so renaming the workflow must not overwrite it, and
+   * changing the trigger must not rename the workflow.
    *
    * @since 2.0.0
    * @param {string} title The new title.
    */
   function setWorkflowTitle(title: string) {
     file.value.post.title = title;
-
-    const trigger = triggerNode.value;
-    if (trigger) {
-      trigger.data = {
-        ...trigger.data,
-        title,
-      };
-    }
   }
 
   /**
@@ -1525,9 +1529,8 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       selectedTrigger.value = patch.trigger;
     }
 
-    if (typeof patch.title === 'string') {
-      setWorkflowTitle(patch.title);
-    }
+    // The trigger node title is decoupled from the workflow name; a title patch
+    // here updates only the node (merged above), never post.title.
   }
 
   /**
@@ -1574,9 +1577,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         selectedTrigger.value = patch.trigger;
       }
 
-      if (typeof patch.title === 'string') {
-        file.value.post.title = patch.title;
-      }
+      // The trigger node's title mirrors its trigger definition label, not the
+      // workflow name — do not propagate it into post.title (changing the
+      // trigger must not rename the workflow).
     }
   }
 
@@ -1810,6 +1813,77 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       direction,
     });
     return moveWorkflowNode(workflowContent.value, nodeId, direction);
+  }
+
+  /**
+   * Ensures the file has a mutable editor_notes array and returns it.
+   *
+   * @since 2.0.0
+   * @returns {WorkflowEditorNote[]} The notes array on the current file.
+   */
+  function ensureEditorNotes(): WorkflowEditorNote[] {
+    if (!Array.isArray(file.value.editor_notes)) {
+      file.value.editor_notes = [];
+    }
+
+    return file.value.editor_notes;
+  }
+
+  /**
+   * Adds a new sticky note to the canvas at the given position.
+   *
+   * @since 2.0.0
+   * @param {{x:number,y:number}} [position] The canvas position for the note.
+   * @returns {WorkflowEditorNote} The created note.
+   */
+  function addEditorNote(position?: { x: number; y: number }): WorkflowEditorNote {
+    const note = createEditorNote({ position });
+
+    ensureEditorNotes().push(note);
+    debugLogger.log('note:add', { id: note.id });
+
+    return note;
+  }
+
+  /**
+   * Merges a patch into an existing sticky note.
+   *
+   * @since 2.0.0
+   * @param {string} id The note ID.
+   * @param {Partial<WorkflowEditorNote>} patch The fields to update.
+   */
+  function updateEditorNote(id: string, patch: Partial<WorkflowEditorNote>) {
+    if (!id) {
+      return;
+    }
+
+    const notes = ensureEditorNotes();
+    const index = notes.findIndex((note) => note.id === id);
+
+    if (index === -1) {
+      return;
+    }
+
+    const normalized = normalizeEditorNote({ ...notes[index], ...patch, id });
+
+    if (normalized) {
+      notes.splice(index, 1, normalized);
+    }
+  }
+
+  /**
+   * Removes a sticky note from the canvas.
+   *
+   * @since 2.0.0
+   * @param {string} id The note ID.
+   */
+  function removeEditorNote(id: string) {
+    if (!id || !Array.isArray(file.value.editor_notes)) {
+      return;
+    }
+
+    file.value.editor_notes = file.value.editor_notes.filter((note) => note.id !== id);
+    debugLogger.log('note:remove', { id });
   }
 
   /**
@@ -2133,6 +2207,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     hasErrors,
     canContinue,
     workflowContent,
+    editorNotes,
     triggerNode,
     selectedNode,
     selectedNodeDefinition,
@@ -2169,6 +2244,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     removeNode,
     duplicateNode,
     moveNode,
+    addEditorNote,
+    updateEditorNote,
+    removeEditorNote,
     openNodeSettings,
     closeNodeSettings,
     importWorkflowFromJson,

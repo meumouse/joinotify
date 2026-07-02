@@ -15,13 +15,14 @@ import BuilderLoader from './BuilderLoader.vue';
 import ActionLibraryModal from '../../builder/actions/components/ActionLibraryModal.vue';
 import NodeSettingsDrawer from '../settings/NodeSettingsDrawer.vue';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
-import type { WorkflowContextDefinition, WorkflowNode } from '../../types/workflowBuilder';
+import type { WorkflowContextDefinition, WorkflowEditorNote, WorkflowNode } from '../../types/workflowBuilder';
 
 type BuilderAction = Record<string, unknown>;
 
 interface BuilderCanvasProps {
   triggerNode: WorkflowNode | null;
   nodes: WorkflowNode[];
+  editorNotes: WorkflowEditorNote[];
   selectedNodeId: string;
   selectedNode: WorkflowNode | null;
   contexts: WorkflowContextDefinition[];
@@ -50,6 +51,9 @@ const emit = defineEmits([
   'move-node',
   'open-actions',
   'update-node',
+  'add-note',
+  'update-note',
+  'remove-note',
   'close-drawer',
   'test',
   'export',
@@ -189,6 +193,7 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
       :trigger-label="triggerLabel"
       :trigger-description="triggerDescription"
       :workflow-nodes="nodes"
+      :editor-notes="editorNotes"
       :selected-node-id="selectedNodeId"
       :can-undo="canUndo"
       :can-redo="canRedo"
@@ -201,6 +206,9 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
       @change-trigger="$emit('change-trigger', $event)"
       @select-action="$emit('select-action', $event)"
       @update-node="$emit('update-node', $event)"
+      @add-note="$emit('add-note', $event)"
+      @update-note="$emit('update-note', $event)"
+      @remove-note="$emit('remove-note', $event)"
     />
 
     <Transition name="flow-loader-fade">

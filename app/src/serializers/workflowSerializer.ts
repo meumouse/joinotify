@@ -18,6 +18,7 @@ import {
   reconcileWorkflowContentFromConnections,
 } from '../utils/workflowTree';
 import { normalizeWorkflowFile } from '../parsers/workflowParser';
+import { normalizeEditorNotes } from '../utils/editorNotes';
 import { __, textDomain } from '../utils/i18n';
 import type {
   ExportedWorkflowFile,
@@ -181,6 +182,7 @@ export function serializeWorkflowFile(file: ExportedWorkflowFile): ExportedWorkf
       : '1.0.0',
     post,
     workflow_content: reconciled.map((node) => serializeWorkflowNode(node)) as WorkflowNode[],
+    editor_notes: normalizeEditorNotes(normalized.editor_notes),
   };
 }
 

@@ -27,6 +27,7 @@ import {
   isWorkflowNode,
   normalizeBranchKey,
 } from '../utils/workflowTree';
+import { normalizeEditorNotes } from '../utils/editorNotes';
 import type {
   BuilderBootstrap,
   ExportedWorkflowFile,
@@ -61,6 +62,7 @@ function stripInternalRootFields(source: Record<string, unknown>) {
   delete extra.workflow;
   delete extra.content;
   delete extra.post;
+  delete extra.editor_notes;
   delete extra.plugin_version;
   delete extra.post_id;
   delete extra.selected_node_id;
@@ -465,6 +467,9 @@ function normalizeExportedFile(input: unknown): ExportedWorkflowFile {
           ? legacyWorkflow.content
           : [];
   const workflowContent = normalizeWorkflowNodesList(content);
+  const editorNotes = normalizeEditorNotes(
+    Array.isArray(candidate.editor_notes) ? candidate.editor_notes : source.editor_notes,
+  );
   const postSource = isRecord(candidate.post) ? candidate.post : isRecord(source.post) ? source.post : legacyWorkflow.post || legacyWorkflow;
   const post = normalizePostMeta(postSource, detectCategory(workflowContent));
 
@@ -481,6 +486,7 @@ function normalizeExportedFile(input: unknown): ExportedWorkflowFile {
         : '1.0.0',
     post,
     workflow_content: workflowContent,
+    editor_notes: editorNotes,
   };
 }
 

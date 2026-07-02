@@ -1291,6 +1291,7 @@ function setChangeTriggerUrl(active) {
       <BuilderCanvasView
         :trigger-node="store.triggerNode"
         :nodes="store.workflowContent"
+        :editor-notes="store.editorNotes"
         :selected-node-id="store.selectedNodeId"
         :selected-node="store.selectedNode"
         :contexts="store.triggerContexts"
@@ -1315,6 +1316,9 @@ function setChangeTriggerUrl(active) {
         @remove-node="handleRemoveNode"
         @move-node="({ nodeId, direction }) => store.moveNode(nodeId, direction)"
         @update-node="handleNodeUpdate"
+        @add-note="(position) => store.addEditorNote(position)"
+        @update-note="({ id, patch }) => store.updateEditorNote(id, patch)"
+        @remove-note="(id) => store.removeEditorNote(id)"
         @close-drawer="store.closeNodeSettings"
         @test="runTest"
         @export="exportWorkflow"

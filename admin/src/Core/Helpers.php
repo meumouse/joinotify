@@ -364,4 +364,36 @@ class Helpers {
 
         return self::decode_emoji_deep( $workflow_content );
     }
+
+
+    /**
+     * Update the visual-only canvas sticky notes (editor_notes) metadata.
+     *
+     * These notes document the flow and never affect execution.
+     *
+     * @since 2.0.0
+     * @param int   $post_id | Post ID
+     * @param array $editor_notes | Sticky notes data
+     * @return bool|int
+     */
+    public static function update_workflow_editor_notes_meta( $post_id, $editor_notes ) {
+        $prepared_notes = self::encode_emoji_deep( is_array( $editor_notes ) ? $editor_notes : array() );
+
+        return update_post_meta( $post_id, 'joinotify_editor_notes', $prepared_notes );
+    }
+
+
+    /**
+     * Get the visual-only canvas sticky notes (editor_notes) metadata.
+     *
+     * @since 2.0.0
+     * @param int $post_id | Post ID
+     * @return array
+     */
+    public static function get_workflow_editor_notes_meta( $post_id ) {
+        $editor_notes = get_post_meta( $post_id, 'joinotify_editor_notes', true );
+        $editor_notes = self::decode_emoji_deep( $editor_notes );
+
+        return is_array( $editor_notes ) ? $editor_notes : array();
+    }
 }

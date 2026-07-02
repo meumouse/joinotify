@@ -157,11 +157,30 @@ export interface WorkflowPostMeta {
   [key: string]: unknown;
 }
 
+/**
+ * A visual-only sticky note (label) placed on the builder canvas.
+ *
+ * Notes document the flow in markdown and never affect execution: they live in
+ * a top-level `editor_notes` array, fully decoupled from `workflow_content`.
+ */
+export interface WorkflowEditorNote {
+  id: string;
+  /** Markdown source text rendered on the canvas. */
+  content: string;
+  /** Hex color for the note background/border. */
+  color: string;
+  position: { x: number; y: number };
+  width: number;
+  height: number;
+}
+
 /** The structure of an exported/importable workflow file. */
 export interface ExportedWorkflowFile {
   plugin_version: string;
   post: WorkflowPostMeta;
   workflow_content: WorkflowNode[];
+  /** Visual-only canvas annotations; ignored by the execution engine. */
+  editor_notes?: WorkflowEditorNote[];
   [key: string]: unknown;
 }
 

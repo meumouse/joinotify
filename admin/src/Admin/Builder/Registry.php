@@ -139,12 +139,14 @@ class Registry {
 		$content = Helpers::get_workflow_content_meta( $post_id );
 		$content = is_array( $content ) ? self::sanitize_workflow_content( $content ) : array();
 		$selected_node_id = self::find_first_node_id( $content );
+		$editor_notes = self::sanitize_editor_notes( Helpers::get_workflow_editor_notes_meta( $post_id ) );
 
 		return array(
 			'post_id' => $post_id,
 			'title' => get_the_title( $post ),
 			'status' => $post->post_status,
 			'content' => $content,
+			'editor_notes' => $editor_notes,
 			'selected_node_id' => $selected_node_id,
 			'created_at' => get_post_time( 'Y-m-d H:i:s', false, $post ),
 			'updated_at' => get_post_modified_time( 'Y-m-d H:i:s', false, $post ),
@@ -816,6 +818,12 @@ class Registry {
 			$category = sanitize_key( $trigger_data['context'] );
 		}
 
+		$editor_notes = array();
+
+		if ( isset( $workflow_state['editor_notes'] ) && is_array( $workflow_state['editor_notes'] ) ) {
+			$editor_notes = self::sanitize_editor_notes( $workflow_state['editor_notes'] );
+		}
+
 		return array(
 			'plugin_version' => JOINOTIFY_VERSION,
 			'post' => array(
@@ -827,6 +835,7 @@ class Registry {
 				'category' => $category,
 			),
 			'workflow_content' => $content,
+			'editor_notes' => $editor_notes,
 		);
 	}
 
@@ -851,6 +860,8 @@ class Registry {
 		} elseif ( isset( $legacy_workflow['content'] ) && is_array( $legacy_workflow['content'] ) ) {
 			$content = $legacy_workflow['content'];
 		}
+
+		$editor_notes = isset( $file['editor_notes'] ) && is_array( $file['editor_notes'] ) ? $file['editor_notes'] : array();
 
 		$post = array(
 			'type' => 'joinotify-workflow',
@@ -891,6 +902,7 @@ class Registry {
 			'plugin_version' => $plugin_version,
 			'post' => $post,
 			'workflow_content' => $content,
+			'editor_notes' => $editor_notes,
 		);
 	}
 
@@ -1116,6 +1128,11 @@ class Registry {
 
 		Helpers::update_workflow_content_meta( $post_id, $content );
 
+		// Persist the visual-only sticky notes alongside the content. They never
+		// take part in execution, so they are stored in their own meta key.
+		$editor_notes = isset( $normalized['editor_notes'] ) && is_array( $normalized['editor_notes'] ) ? self::sanitize_editor_notes( $normalized['editor_notes'] ) : array();
+		Helpers::update_workflow_editor_notes_meta( $post_id, $editor_notes );
+
 		// Keep the trigger-hook index and schema version in sync on every save.
 		self::update_workflow_indexes( $post_id, $content );
 
@@ -1189,6 +1206,10 @@ class Registry {
 		}
 
 		Helpers::update_workflow_content_meta( $post_id, $content );
+
+		// Carry over the imported sticky notes (visual-only documentation).
+		$editor_notes = isset( $normalized['editor_notes'] ) && is_array( $normalized['editor_notes'] ) ? self::sanitize_editor_notes( $normalized['editor_notes'] ) : array();
+		Helpers::update_workflow_editor_notes_meta( $post_id, $editor_notes );
 
 		// index the imported workflow's trigger hook + schema version
 		self::update_workflow_indexes( $post_id, $content );
@@ -1265,6 +1286,49 @@ class Registry {
 			}
 
 			$sanitized[] = self::sanitize_workflow_node( $item );
+		}
+
+		return Helpers::decode_emoji_deep( $sanitized );
+	}
+
+
+	/**
+	 * Sanitize the visual-only canvas sticky notes (editor_notes).
+	 *
+	 * Notes are documentation labels rendered as markdown on the builder canvas
+	 * and never take part in execution, so they are stored and returned verbatim
+	 * apart from field-level sanitization.
+	 *
+	 * @since 2.0.0
+	 * @param array<int,mixed> $notes Raw notes list.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function sanitize_editor_notes( $notes ) {
+		if ( ! is_array( $notes ) ) {
+			return array();
+		}
+
+		$sanitized = array();
+
+		foreach ( $notes as $note ) {
+			if ( ! is_array( $note ) ) {
+				continue;
+			}
+
+			$position = isset( $note['position'] ) && is_array( $note['position'] ) ? $note['position'] : array();
+			$color = isset( $note['color'] ) ? sanitize_hex_color( (string) $note['color'] ) : '';
+
+			$sanitized[] = array(
+				'id' => isset( $note['id'] ) ? sanitize_key( (string) $note['id'] ) : '',
+				'content' => isset( $note['content'] ) ? sanitize_textarea_field( (string) $note['content'] ) : '',
+				'color' => $color ? $color : '#fde68a',
+				'position' => array(
+					'x' => isset( $position['x'] ) ? (float) $position['x'] : 0,
+					'y' => isset( $position['y'] ) ? (float) $position['y'] : 0,
+				),
+				'width' => isset( $note['width'] ) ? max( 160, (float) $note['width'] ) : 260,
+				'height' => isset( $note['height'] ) ? max( 80, (float) $note['height'] ) : 160,
+			);
 		}
 
 		return Helpers::decode_emoji_deep( $sanitized );

@@ -24,10 +24,16 @@ import {
 import { Background, BackgroundVariant } from '@vue-flow/background';
 import { Controls } from '@vue-flow/controls';
 import { MiniMap } from '@vue-flow/minimap';
-import { ChevronLeft, ChevronRight, Plus } from '@boxicons/vue';
+import { ChevronLeft, ChevronRight, Note, Plus } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 import FlowEdge from './FlowEdge.vue';
 import FlowNode, { type FlowNodeData } from './FlowNode.vue';
+import StickyNote from './StickyNote.vue';
+import {
+  DEFAULT_NOTE_HEIGHT,
+  DEFAULT_NOTE_WIDTH,
+} from '../../utils/editorNotes';
+import type { WorkflowEditorNote } from '../../types/workflowBuilder';
 import {
   getActionDefinition,
   getActionRegistryPreview,
@@ -74,6 +80,7 @@ const props = defineProps<{
   triggerLabel?: string;
   triggerDescription?: string;
   workflowNodes?: WorkflowNode[];
+  editorNotes?: WorkflowEditorNote[];
   selectedNodeId?: string;
   canUndo?: boolean;
   canRedo?: boolean;
@@ -87,12 +94,15 @@ const emit = defineEmits<{
   (e: 'change-trigger', nodeId: string): void;
   (e: 'select-action', payload: DroppedActionPayload): void;
   (e: 'update-node', payload: NodeEditEvent): void;
+  (e: 'add-note', position: { x: number; y: number }): void;
+  (e: 'update-note', payload: { id: string; patch: Record<string, unknown> }): void;
+  (e: 'remove-note', id: string): void;
   (e: 'undo'): void;
   (e: 'redo'): void;
 }>();
 
 const canvasRef = ref<HTMLDivElement | null>(null);
-const { zoomIn, zoomOut, fitView } = useVueFlow();
+const { zoomIn, zoomOut, fitView, screenToFlowCoordinate } = useVueFlow();
 const flowPositionCache = ref<Record<string, { x: number; y: number }>>({});
 const syncedPositionCache = ref<Record<string, { x: number; y: number }>>({});
 const actionRegistryRevision = computed(() => getActionRegistryRevision());
@@ -105,7 +115,10 @@ const defaultEdgeOptions: Partial<Edge> = {
   markerEnd: MarkerType.ArrowClosed,
 };
 
-const nodeTypes = { flowNode: markRaw(FlowNode) } as unknown as NodeTypesObject;
+const nodeTypes = {
+  flowNode: markRaw(FlowNode),
+  stickyNote: markRaw(StickyNote),
+} as unknown as NodeTypesObject;
 const edgeTypes = { flowEdge: markRaw(FlowEdge) } as unknown as EdgeTypesObject;
 
 function resolveActionIcon(actionId: string) {
@@ -323,6 +336,8 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
         selected: workflowNode.id === props.selectedNodeId,
         draggable: true,
         connectable: true,
+        // Keep action nodes above sticky notes so notes read as a background layer.
+        zIndex: 1,
         data: buildNodeData(workflowNode),
       });
       flowPositionCache.value[workflowNode.id] = {
@@ -403,6 +418,52 @@ const graph = computed(() => {
     edges: nextGraph.edges,
   };
 });
+
+function handleNoteUpdate(id: string, patch: Record<string, unknown>) {
+  emit('update-note', { id, patch });
+}
+
+function handleNoteRemove(id: string) {
+  emit('remove-note', id);
+}
+
+// Sticky notes are rendered as a separate node type that never participates in
+// the workflow tree, wiring, or serialization; they sit on a lower z-index layer.
+const noteNodes = computed<Node[]>(() => (props.editorNotes || []).map((note) => ({
+  id: note.id,
+  type: 'stickyNote',
+  position: { x: Number(note.position?.x) || 0, y: Number(note.position?.y) || 0 },
+  draggable: true,
+  selectable: true,
+  connectable: false,
+  zIndex: 0,
+  data: {
+    content: note.content,
+    color: note.color,
+    width: note.width,
+    height: note.height,
+    onUpdate: handleNoteUpdate,
+    onRemove: handleNoteRemove,
+  },
+})));
+
+const noteIds = computed(() => new Set(noteNodes.value.map((node) => String(node.id))));
+
+// Notes first so they render behind the action nodes (z-index reinforces this).
+const allNodes = computed<Node[]>(() => [...noteNodes.value, ...graph.value.nodes]);
+
+function handleAddNote() {
+  const rect = canvasRef.value?.getBoundingClientRect();
+  const screenPoint = rect
+    ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+    : { x: 240, y: 240 };
+  const flowPoint = screenToFlowCoordinate(screenPoint);
+
+  emit('add-note', {
+    x: Math.round(flowPoint.x - DEFAULT_NOTE_WIDTH / 2),
+    y: Math.round(flowPoint.y - DEFAULT_NOTE_HEIGHT / 2),
+  });
+}
 
 watch(
   graph,
@@ -605,6 +666,20 @@ function onNodeDragStop({ node }: NodeDragEvent) {
     return;
   }
 
+  // Sticky notes persist their own position (editor_notes), not canvas_position.
+  if (node.type === 'stickyNote' || noteIds.value.has(String(node.id))) {
+    emit('update-note', {
+      id: String(node.id),
+      patch: {
+        position: {
+          x: Math.round(Number(node.position.x)),
+          y: Math.round(Number(node.position.y)),
+        },
+      },
+    });
+    return;
+  }
+
   syncNodePosition(String(node.id), Number(node.position.x), Number(node.position.y));
 }
 
@@ -613,6 +688,11 @@ function onNodesChange(changes: NodeChange[]) {
     const source = change as NodeChange & { id?: string; type?: string; position?: { x?: number; y?: number } };
 
     if (source.type !== 'position' || !source.id || !source.position) {
+      return;
+    }
+
+    // Note positions are committed on drag stop; skip the mid-drag stream here.
+    if (noteIds.value.has(String(source.id))) {
       return;
     }
 
@@ -649,7 +729,7 @@ function handleZoomFit() {
 <template>
   <div ref="canvasRef" class="relative flex h-full w-full flex-col overflow-hidden">
     <VueFlow
-      :nodes="graph.nodes"
+      :nodes="allNodes"
       :edges="graph.edges"
       :node-types="nodeTypes"
       :edge-types="edgeTypes"
@@ -738,14 +818,26 @@ function handleZoomFit() {
         </button>
       </div>
 
-      <button
-        type="button"
-        class="flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-primary-700"
-        @click="openAddAction"
-      >
-        <Plus :width="15" :height="15" />
-        {{ __('Add action', textDomain) }}
-      </button>
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          class="flex items-center gap-2 rounded-lg border border-slate-300 bg-white/95 px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100"
+          :title="__('Add a documentation note', textDomain)"
+          @click="handleAddNote"
+        >
+          <Note :width="15" :height="15" />
+          {{ __('Add note', textDomain) }}
+        </button>
+
+        <button
+          type="button"
+          class="flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-primary-700"
+          @click="openAddAction"
+        >
+          <Plus :width="15" :height="15" />
+          {{ __('Add action', textDomain) }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
