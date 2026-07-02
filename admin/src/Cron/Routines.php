@@ -122,8 +122,8 @@ class Routines {
      * @return void
      */
     public function fetch_templates_count() {
-        // get templates count
-        $template_count = Workflow_Templates::get_templates_count( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
+        // get templates count from the templates API
+        $template_count = Workflow_Templates::get_templates_count();
 
         if ( $template_count !== null ) {
             update_option( 'joinotify_get_templates_count', $template_count );

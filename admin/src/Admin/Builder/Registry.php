@@ -163,34 +163,31 @@ class Registry {
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_templates_catalog() {
-		$templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
+		$items = Workflow_Templates::get_catalog();
 		$catalog = array();
 
-		if ( ! is_array( $templates ) ) {
+		if ( ! is_array( $items ) ) {
 			return $catalog;
 		}
 
-		foreach ( $templates as $filename => $content ) {
-			$decoded = json_decode( (string) $content, true );
-
-			if ( ! is_array( $decoded ) ) {
+		foreach ( $items as $item ) {
+			if ( ! is_array( $item ) ) {
 				continue;
 			}
 
-			$trigger_data = self::get_template_trigger_data( $decoded['workflow_content'] ?? array() );
-			$category = isset( $decoded['post']['category'] ) ? (string) $decoded['post']['category'] : '';
-			$integration = self::get_integration_label( $trigger_data['context'] ?? '' );
-			$trigger = self::get_trigger_label( $trigger_data['context'] ?? '', $trigger_data['trigger'] ?? '' );
+			// The API catalog exposes the trigger context as `category` and the
+			// trigger key as `trigger`; both drive the labels and availability.
+			$context = isset( $item['category'] ) ? sanitize_key( (string) $item['category'] ) : '';
+			$trigger_key = isset( $item['trigger'] ) ? sanitize_key( (string) $item['trigger'] ) : '';
 
 			$catalog[] = array(
-				'file' => $filename,
-				'title' => isset( $decoded['post']['title'] ) ? sanitize_text_field( $decoded['post']['title'] ) : sanitize_text_field( $filename ),
-				'category' => $category,
-				'integration' => $integration,
-				'trigger' => $trigger,
-				'available' => self::is_template_trigger_available( $decoded ),
-				'description' => isset( $decoded['post']['description'] ) ? sanitize_text_field( $decoded['post']['description'] ) : '',
-				'workflow_content' => isset( $decoded['workflow_content'] ) && is_array( $decoded['workflow_content'] ) ? self::sanitize_workflow_content( $decoded['workflow_content'] ) : array(),
+				'file' => isset( $item['file'] ) ? sanitize_text_field( (string) $item['file'] ) : '',
+				'title' => isset( $item['title'] ) ? sanitize_text_field( (string) $item['title'] ) : '',
+				'category' => $context,
+				'integration' => self::get_integration_label( $context ),
+				'trigger' => self::get_trigger_label( $context, $trigger_key ),
+				'available' => ! empty( Triggers::get_trigger( $context, $trigger_key ) ),
+				'description' => isset( $item['description'] ) ? sanitize_text_field( (string) $item['description'] ) : '',
 			);
 		}
 
@@ -315,7 +312,17 @@ class Registry {
 	 * @return array<int,array<string,mixed>>
 	 */
 	private static function get_action_settings_schema( $action, $item = array() ) {
-		switch ( sanitize_key( (string) $action ) ) {
+		$action = sanitize_key( (string) $action );
+
+		// A definition that ships its own settings_schema always wins — a single catalog
+		// source of truth that lets third-party actions (and filtered built-ins) drive the
+		// settings UI from PHP. The hardcoded cases below remain a backward-compatible
+		// fallback for the built-ins that don't carry an inline schema.
+		if ( ! empty( $item['settings_schema'] ) && is_array( $item['settings_schema'] ) ) {
+			return apply_filters( 'Joinotify/Builder/Action_Settings_Schema', $item['settings_schema'], $action, $item );
+		}
+
+		switch ( $action ) {
 			case 'time_delay':
 				return array(
 					array(
@@ -444,6 +451,20 @@ class Registry {
 	private static function get_action_default_data( $action, $item = array() ) {
 		$action = sanitize_key( (string) $action );
 		$base_title = isset( $item['title'] ) ? (string) $item['title'] : '';
+
+		// Inline default_data from the (filterable) catalog entry takes precedence, keeping
+		// a single source of truth. Built-in cases below act as a backward-compatible fallback.
+		if ( ! empty( $item['default_data'] ) && is_array( $item['default_data'] ) ) {
+			/**
+			 * Filter the default workflow data seeded when an action is dropped on the canvas.
+			 *
+			 * @since 2.0.0
+			 * @param array  $default_data Default data map for the action.
+			 * @param string $action       Action slug.
+			 * @param array  $item         Raw action definition.
+			 */
+			return apply_filters( 'Joinotify/Builder/Action_Default_Data', $item['default_data'], $action, $item );
+		}
 
 		switch ( $action ) {
 			case 'time_delay':
@@ -1004,21 +1025,12 @@ class Registry {
 	 */
 	public static function create_workflow_from_template( $template_file, $title = '' ) {
 		$template_file = sanitize_text_field( $template_file );
-		$templates = Workflow_Templates::get_templates( 'meumouse', 'joinotify', 'dist/templates', 'main', null );
-
-		if ( ! is_array( $templates ) || ! isset( $templates[ $template_file ] ) ) {
-			return array(
-				'status' => 'error',
-				'message' => __( 'The selected template was not found.', 'joinotify' ),
-			);
-		}
-
-		$decoded = json_decode( (string) $templates[ $template_file ], true );
+		$decoded = Workflow_Templates::get_template( $template_file );
 
 		if ( ! is_array( $decoded ) ) {
 			return array(
 				'status' => 'error',
-				'message' => __( 'Invalid template file.', 'joinotify' ),
+				'message' => __( 'The selected template was not found.', 'joinotify' ),
 			);
 		}
 
@@ -1186,49 +1198,6 @@ class Registry {
 			'workflow' => self::get_workflow_state( $post_id ),
 			'workflow_file' => self::build_exported_workflow_file( self::get_workflow_state( $post_id ), $post_id ),
 		);
-	}
-
-
-	/**
-	 * Resolve the trigger data from a template payload.
-	 *
-	 * @since 1.4.7
-	 * @param array<string,mixed> $workflow_content Workflow content.
-	 * @return array{context:string,trigger:string}|null
-	 */
-	private static function get_template_trigger_data( $workflow_content ) {
-		if ( ! is_array( $workflow_content ) ) {
-			return null;
-		}
-
-		foreach ( $workflow_content as $item ) {
-			if ( isset( $item['type'] ) && 'trigger' === $item['type'] && isset( $item['data']['context'], $item['data']['trigger'] ) ) {
-				return array(
-					'context' => sanitize_key( (string) $item['data']['context'] ),
-					'trigger' => sanitize_key( (string) $item['data']['trigger'] ),
-				);
-			}
-		}
-
-		return null;
-	}
-
-
-	/**
-	 * Check if the template trigger can be used on the current install.
-	 *
-	 * @since 1.4.7
-	 * @param array<string,mixed> $workflow_data Template payload.
-	 * @return bool
-	 */
-	private static function is_template_trigger_available( $workflow_data ) {
-		$trigger_data = self::get_template_trigger_data( $workflow_data['workflow_content'] ?? array() );
-
-		if ( ! $trigger_data ) {
-			return false;
-		}
-
-		return ! empty( Triggers::get_trigger( $trigger_data['context'], $trigger_data['trigger'] ) );
 	}
 
 

@@ -6,139 +6,287 @@ namespace MeuMouse\Joinotify\Api;
 defined('ABSPATH') || exit;
 
 /**
- * Get workflow templates for import on builder
- * 
+ * Fetch workflow templates from the Joinotify Templates API.
+ *
+ * Replaces the previous GitHub Contents API integration (which downloaded the
+ * JSON files from `meumouse/joinotify/dist/templates`) with the dedicated
+ * templates service served at https://templates.joinotify.com. The service
+ * exposes a paginated catalog of published templates and per-template JSON
+ * content using the same `{ plugin_version, post, workflow_content }` contract
+ * the builder exports/imports.
+ *
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.0.0
  * @package MeuMouse\Joinotify\API
  * @author MeuMouse.com
  */
 class Workflow_Templates {
 
     /**
-     * Get JSON files on Joinotify repository
+     * Default base URL of the Joinotify Templates API (no trailing slash).
      *
-     * @since 1.0.0
-     * @param string $owner | The repository owner
-     * @param string $repository | The repository name
-     * @param string $path | Path for repository
-     * @param string $ref | The branch name or commit hash
-     * @param string $token | (Optional) Access token for auth requests
+     * Override with the JOINOTIFY_TEMPLATES_API_URL constant to point at a
+     * different environment (e.g. http://localhost:3333 in development).
      *
-     * @return array An associative array where the keys are the names of the files and values are the JSON content
+     * @since 2.0.0
+     * @var string
      */
-    public static function get_templates( $owner, $repository, $path, $ref = 'main', $token = null ) {
-        $api_url = "https://api.github.com/repos/$owner/$repository/contents/$path?ref=$ref";
+    const DEFAULT_API_URL = 'https://templates.joinotify.com';
 
-        $ch = curl_init( $api_url );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        // The Github API requires a user agent
-        curl_setopt( $ch, CURLOPT_USERAGENT, 'Joinotify' );
+    /**
+     * Items requested per catalog page. The API hard-caps `per_page` at 100.
+     *
+     * @since 2.0.0
+     * @var int
+     */
+    const PER_PAGE = 100;
 
-        if ( $token ) {
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Authorization: token ' . $token ) );
+    /**
+     * Safety cap on the number of catalog pages walked in a single fetch.
+     *
+     * @since 2.0.0
+     * @var int
+     */
+    const MAX_PAGES = 50;
+
+    /**
+     * Transient key for the cached catalog list.
+     *
+     * @since 2.0.0
+     * @var string
+     */
+    const CATALOG_CACHE_KEY = 'joinotify_templates_catalog';
+
+    /**
+     * Transient key prefix for cached per-template content.
+     *
+     * @since 2.0.0
+     * @var string
+     */
+    const TEMPLATE_CACHE_PREFIX = 'joinotify_template_';
+
+
+    /**
+     * Resolve the base URL of the templates API (no trailing slash).
+     *
+     * @since 2.0.0
+     * @return string
+     */
+    public static function get_base_url() {
+        $url = defined('JOINOTIFY_TEMPLATES_API_URL') && JOINOTIFY_TEMPLATES_API_URL
+            ? JOINOTIFY_TEMPLATES_API_URL
+            : self::DEFAULT_API_URL;
+
+        /**
+         * Filter the Joinotify Templates API base URL.
+         *
+         * @since 2.0.0
+         * @param string $url Base URL without trailing slash.
+         */
+        $url = apply_filters( 'Joinotify/Api/Templates_Base_Url', $url );
+
+        return untrailingslashit( (string) $url );
+    }
+
+
+    /**
+     * Cache lifetime for catalog/content responses, in seconds.
+     *
+     * @since 2.0.0
+     * @return int
+     */
+    protected static function cache_ttl() {
+        /**
+         * Filter the cache lifetime (in seconds) for templates API responses.
+         *
+         * @since 2.0.0
+         * @param int $ttl Lifetime in seconds. Default 1 hour.
+         */
+        return (int) apply_filters( 'Joinotify/Api/Templates_Cache_Ttl', HOUR_IN_SECONDS );
+    }
+
+
+    /**
+     * Perform a GET request against the templates API and decode the JSON body.
+     *
+     * @since 2.0.0
+     * @param string $path Path starting with a slash (e.g. `/v1/templates`).
+     * @param array<string,mixed> $query Optional query args appended to the URL.
+     * @return array<string,mixed>|null Decoded body, or null on transport/HTTP error.
+     */
+    protected static function request( $path, $query = array() ) {
+        $url = self::get_base_url() . '/v1' . $path;
+
+        if ( ! empty( $query ) ) {
+            // add_query_arg() url-encodes the values for us.
+            $url = add_query_arg( $query, $url );
         }
 
-        $response = curl_exec( $ch );
-        $http_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+        $response = wp_remote_get( $url, array(
+            'timeout' => 15,
+            'headers' => array(
+                'Accept' => 'application/json',
+                'User-Agent' => 'Joinotify/' . ( defined('JOINOTIFY_VERSION') ? JOINOTIFY_VERSION : '' ),
+            ),
+        ));
 
-        if ( $http_code != 200 ) {
-            // Handle error
-            curl_close( $ch );
-            return array();
+        if ( is_wp_error( $response ) ) {
+            return null;
         }
 
-        $directory_contents = json_decode( $response, true );
-        curl_close( $ch );
+        if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+            return null;
+        }
 
-        $json_files = array();
+        $decoded = json_decode( wp_remote_retrieve_body( $response ), true );
 
-        foreach ( $directory_contents as $item ) {
-            if ( $item['type'] == 'file' && pathinfo( $item['name'], PATHINFO_EXTENSION ) === 'json' ) {
-                // Download file content
-                $file_content = file_get_contents( $item['download_url'] );
+        return is_array( $decoded ) ? $decoded : null;
+    }
 
-                if ( $file_content !== false ) {
-                    $json_files[ $item['name'] ] = $file_content;
+
+    /**
+     * Get the full published template catalog (metadata only).
+     *
+     * Walks every page of `GET /v1/templates` and returns the flattened list of
+     * catalog items. Each item carries `id`, `file` (`{id}.json`), `title`,
+     * `description`, `category`, `trigger`, `tags`, `status`, `min_plugin_version`,
+     * `downloads`, `version` and `checksum`. The result is cached in a transient.
+     *
+     * @since 2.0.0
+     * @param bool $force Bypass the cache and refetch.
+     * @return array<int,array<string,mixed>>
+     */
+    public static function get_catalog( $force = false ) {
+        if ( ! $force ) {
+            $cached = get_transient( self::CATALOG_CACHE_KEY );
+
+            if ( is_array( $cached ) ) {
+                return $cached;
+            }
+        }
+
+        $items = array();
+        $page = 1;
+
+        do {
+            $response = self::request( '/templates', array(
+                'page' => (string) $page,
+                'per_page' => (string) self::PER_PAGE,
+            ));
+
+            if ( ! is_array( $response ) || ! isset( $response['items'] ) || ! is_array( $response['items'] ) ) {
+                // On the first page a failure means we have nothing to cache; on
+                // later pages we keep whatever we already collected.
+                break;
+            }
+
+            foreach ( $response['items'] as $item ) {
+                if ( is_array( $item ) ) {
+                    $items[] = $item;
                 }
             }
+
+            $total_pages = isset( $response['pagination']['total_pages'] ) ? (int) $response['pagination']['total_pages'] : 1;
+            $page++;
+        } while ( $page <= $total_pages && $page <= self::MAX_PAGES );
+
+        // Only cache successful, non-empty fetches so a transient outage doesn't
+        // pin an empty catalog for the whole TTL.
+        if ( ! empty( $items ) ) {
+            set_transient( self::CATALOG_CACHE_KEY, $items, self::cache_ttl() );
         }
 
-        return $json_files;
+        return $items;
     }
 
 
     /**
-     * Get list of JSON template file names on Joinotify repository without downloading the content
+     * Get the number of published templates.
      *
      * @since 1.0.1
-     * @version 1.4.7
-     * @param string $owner | The repository owner
-     * @param string $repository | The repository name
-     * @param string $path | Path for repository
-     * @param string $ref | The branch name or commit hash
-     * @param string $token | (Optional) Access token for auth requests
-     *
-     * @return array An array of file names of the JSON templates
+     * @version 2.0.0
+     * @return int|null Count, or null when the request fails.
      */
-    public static function get_templates_list( $owner, $repository, $path, $ref = 'main', $token = null ) {
-        $api_url = "https://api.github.com/repos/$owner/$repository/contents/$path?ref=$ref";
-    
-        $ch = curl_init( $api_url );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt( $ch, CURLOPT_USERAGENT, 'Joinotify' );
-    
-        if ( $token ) {
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Authorization: token ' . $token ) );
+    public static function get_templates_count() {
+        $response = self::request( '/templates/count' );
+
+        if ( ! is_array( $response ) || ! isset( $response['count'] ) ) {
+            return null;
         }
-    
-        $response = curl_exec( $ch );
-        $http_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-        curl_close( $ch );
-    
-        if ( $http_code !== 200 ) {
-            return array(); // Return an empty array on error
+
+        return (int) $response['count'];
+    }
+
+
+    /**
+     * Get the full JSON of a single template by its identifier.
+     *
+     * Accepts either the raw UUID or the catalog `file` value (`{id}.json`).
+     * Returns the builder-compatible template payload
+     * (`{ plugin_version, post, workflow_content }`), cached in a transient.
+     *
+     * @since 2.0.0
+     * @param string $id_or_file Template UUID or `{id}.json` filename.
+     * @param bool $force Bypass the cache and refetch.
+     * @return array<string,mixed>|null Decoded template, or null when not found.
+     */
+    public static function get_template( $id_or_file, $force = false ) {
+        $id = self::normalize_id( $id_or_file );
+
+        if ( '' === $id ) {
+            return null;
         }
-    
-        $directory_contents = json_decode( $response, true );
-    
-        if ( ! is_array( $directory_contents ) ) {
-            return array(); // Return an empty array if the response is not valid
-        }
-    
-        $template_files = array();
-    
-        foreach ( $directory_contents as $item ) {
-            if ( $item['type'] == 'file' && pathinfo( $item['name'], PATHINFO_EXTENSION ) === 'json' ) {
-                $template_files[] = $item['name'];
+
+        $cache_key = self::TEMPLATE_CACHE_PREFIX . md5( $id );
+
+        if ( ! $force ) {
+            $cached = get_transient( $cache_key );
+
+            if ( is_array( $cached ) ) {
+                return $cached;
             }
         }
 
-        return $template_files;
+        $response = self::request( '/templates/' . rawurlencode( $id ) );
+
+        if ( ! is_array( $response ) || ! isset( $response['template'] ) || ! is_array( $response['template'] ) ) {
+            return null;
+        }
+
+        set_transient( $cache_key, $response['template'], self::cache_ttl() );
+
+        return $response['template'];
     }
 
 
     /**
-     * Get the count of JSON templates available in the repository
+     * Normalize a catalog `file` value (`{id}.json`) down to the template UUID.
      *
-     * @since 1.0.1
-     * @version 1.4.7
-     * @param string $owner | The repository owner
-     * @param string $repository | The repository name
-     * @param string $path | Path for repository
-     * @param string $ref | The branch name or commit hash
-     * @param string $token | (Optional) Access token for auth requests
-     *
-     * @return int The number of JSON templates available
+     * @since 2.0.0
+     * @param string $id_or_file Template UUID or `{id}.json` filename.
+     * @return string Sanitized identifier, or an empty string when invalid.
      */
-    public static function get_templates_count( $owner, $repository, $path, $ref = 'main', $token = null ) {
-        $template_files = self::get_templates_list( $owner, $repository, $path, $ref, $token );
-    
-        // Ensure $template_files is an array
-        if ( ! is_array( $template_files ) ) {
-            return 0; // Return 0 if no templates are found or an error occurred
+    protected static function normalize_id( $id_or_file ) {
+        $id = trim( (string) $id_or_file );
+        $id = preg_replace( '/\.json$/i', '', $id );
+
+        // The public identifier is a UUID; reject anything else so it can't be
+        // used to build arbitrary request paths.
+        if ( ! preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', (string) $id ) ) {
+            return '';
         }
-    
-        return count( $template_files );
+
+        return strtolower( $id );
+    }
+
+
+    /**
+     * Flush the cached catalog and template content.
+     *
+     * @since 2.0.0
+     * @return void
+     */
+    public static function flush_cache() {
+        delete_transient( self::CATALOG_CACHE_KEY );
     }
 }
