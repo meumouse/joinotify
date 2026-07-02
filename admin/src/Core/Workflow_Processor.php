@@ -574,6 +574,30 @@ class Workflow_Processor {
      * @return void
      */
     protected static function run_segment( array $queue, $post_id, &$payload, array &$state, $state_key ) {
+        /**
+         * Action slugs treated as "delaying" — they schedule the remaining queue as a
+         * continuation and pause the segment. Defaults to the built-in 'time_delay'.
+         * Third parties can register a custom delaying action (reusing the same
+         * delay-resolution data shape) by adding their slug here.
+         *
+         * @since 2.0.0
+         * @param array $slugs Delaying action slugs.
+         */
+        $delaying_actions = apply_filters( 'Joinotify/Workflow_Processor/Delaying_Actions', array( 'time_delay' ) );
+        $delaying_actions = is_array( $delaying_actions ) ? $delaying_actions : array( 'time_delay' );
+
+        /**
+         * Action slugs treated as "branching" — they evaluate and splice a chosen branch
+         * into the queue. Defaults to the built-in 'condition'. Third parties can register
+         * a custom branching action (reusing the same condition-evaluation data shape) by
+         * adding their slug here.
+         *
+         * @since 2.0.0
+         * @param array $slugs Branching action slugs.
+         */
+        $branching_actions = apply_filters( 'Joinotify/Workflow_Processor/Branching_Actions', array( 'condition' ) );
+        $branching_actions = is_array( $branching_actions ) ? $branching_actions : array( 'condition' );
+
         while ( ! empty( $queue ) ) {
             // a previous action requested the funnel to stop
             if ( self::$funnel_stopped ) {
@@ -596,7 +620,7 @@ class Workflow_Processor {
             }
 
             // delay: schedule the remaining queue as continuation, then stop here
-            if ( $action === 'time_delay' ) {
+            if ( in_array( $action, $delaying_actions, true ) ) {
                 $delay = Schedule::resolve_delay_seconds( $node_data );
 
                 // the continuation is everything still queued after this delay
@@ -613,7 +637,7 @@ class Workflow_Processor {
             }
 
             // condition: evaluate and splice the chosen branch into the queue
-            if ( $action === 'condition' ) {
+            if ( in_array( $action, $branching_actions, true ) ) {
                 $branch = self::evaluate_condition( $node, $post_id, $payload );
                 $queue = array_merge( array_values( $branch ), $queue );
 

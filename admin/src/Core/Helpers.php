@@ -172,11 +172,28 @@ class Helpers {
      */
     public static function get_switch_options() {
         $default_options = Default_Options::set_default_options();
-        
+
         // filter only the indices that have 'yes' or 'no' as value
-        return array_keys( array_filter( $default_options, function( $value ) {
+        $keys = array_keys( array_filter( $default_options, function( $value ) {
             return in_array( $value, ['yes', 'no'], true );
         }));
+
+        // Also include toggle keys declared only in the (filterable) settings schema — e.g.
+        // third-party integration toggles that are not in Default_Options — so they get the
+        // same "unchecked => 'no'" reset semantics on save regardless of the payload shape.
+        $registry = '\MeuMouse\Joinotify\Admin\Settings\Registry';
+
+        if ( class_exists( $registry ) && method_exists( $registry, 'get_field_definitions' ) ) {
+            foreach ( $registry::get_field_definitions() as $field_key => $field ) {
+                $field_type = is_array( $field ) && isset( $field['type'] ) ? $field['type'] : '';
+
+                if ( in_array( $field_type, array( 'toggle', 'switch' ), true ) && ! in_array( $field_key, $keys, true ) ) {
+                    $keys[] = (string) $field_key;
+                }
+            }
+        }
+
+        return $keys;
     }
 
 

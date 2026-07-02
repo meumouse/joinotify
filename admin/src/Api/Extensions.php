@@ -43,6 +43,19 @@ class Extensions {
 		}
 
 		add_filter( 'Joinotify/Builder/Action_Categories', function( $categories ) use ( $category ) {
+			if ( ! is_array( $categories ) ) {
+				$categories = array();
+			}
+
+			// Skip when a category with the same id is already registered, so auto-registration
+			// (from register_action) and an explicit register_action_category() call never
+			// produce two tabs for the same id.
+			foreach ( $categories as $existing ) {
+				if ( is_array( $existing ) && isset( $existing['id'] ) && $existing['id'] === $category['id'] ) {
+					return $categories;
+				}
+			}
+
 			$categories[] = $category;
 
 			return $categories;
@@ -76,13 +89,33 @@ class Extensions {
 		$handler = isset( $definition['handler'] ) && is_callable( $definition['handler'] ) ? $definition['handler'] : null;
 		$description = isset( $definition['description'] ) && is_callable( $definition['description'] ) ? $definition['description'] : null;
 		$fill_sender = ! empty( $definition['fill_sender'] );
-		unset( $definition['handler'], $definition['description'], $definition['fill_sender'] );
+
+		// Optional inline category: when a label is supplied, the action's category tab is
+		// auto-registered so a single register_action() call can create its own tab. Devs
+		// who manage categories separately (register_action_category) simply omit these keys.
+		$category_id = isset( $definition['category'] ) ? sanitize_key( (string) $definition['category'] ) : '';
+		$category_label = isset( $definition['category_label'] ) ? (string) $definition['category_label'] : '';
+		$category_icon = isset( $definition['category_icon'] ) ? (string) $definition['category_icon'] : '';
+		$category_priority = isset( $definition['category_priority'] ) ? (int) $definition['category_priority'] : $priority;
+
+		unset( $definition['handler'], $definition['description'], $definition['fill_sender'], $definition['category_label'], $definition['category_icon'], $definition['category_priority'] );
 
 		add_filter( 'Joinotify/Builder/Actions', function( $actions ) use ( $definition ) {
 			$actions[] = $definition;
 
 			return $actions;
 		}, $priority, 1 );
+
+		// Auto-register the category tab when both an id and a label are available. The
+		// dedup guard in register_action_category() prevents a duplicate tab if the same
+		// id is also registered explicitly.
+		if ( '' !== $category_id && '' !== $category_label ) {
+			self::register_action_category( array(
+				'id'    => $category_id,
+				'label' => $category_label,
+				'icon'  => $category_icon,
+			), $category_priority );
+		}
 
 		if ( $handler ) {
 			self::register_action_handler( $slug, $handler );
@@ -380,6 +413,41 @@ class Extensions {
 			$list[ $integration ] = array_merge( $list[ $integration ], $placeholders );
 
 			return $list;
+		}, $priority, 2 );
+	}
+
+
+	/**
+	 * Register a resolver for a custom parametric/bracket-style placeholder token.
+	 *
+	 * Use this for tokens that carry an argument and cannot be expressed as a static
+	 * "{{ name }}" entry — e.g. "{{ my_field=[id] }}" or "{{ my_meta[key] }}". The
+	 * callback receives ($matches, $payload): $matches is the preg_match_callback
+	 * result (so $matches[1] is the first capture group of your pattern) and $payload
+	 * is the runtime placeholder payload. Return the replacement string, or null (or
+	 * any non-scalar) to leave the token untouched.
+	 *
+	 * @since 2.0.0
+	 * @param string   $pattern  PCRE pattern matching the token (with delimiters).
+	 * @param callable $callback Resolver: function( array $matches, array $payload ): string|null.
+	 * @param int      $priority add_filter priority. Default 10.
+	 * @return void
+	 */
+	public static function register_dynamic_placeholder( $pattern, $callback, $priority = 10 ) {
+		$pattern = is_string( $pattern ) ? $pattern : '';
+
+		if ( '' === $pattern || ! is_callable( $callback ) ) {
+			return;
+		}
+
+		add_filter( 'Joinotify/Builder/Resolve_Dynamic_Token', function( $resolvers, $payload = array() ) use ( $pattern, $callback ) {
+			if ( ! is_array( $resolvers ) ) {
+				$resolvers = array();
+			}
+
+			$resolvers[ $pattern ] = $callback;
+
+			return $resolvers;
 		}, $priority, 2 );
 	}
 

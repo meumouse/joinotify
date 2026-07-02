@@ -173,6 +173,34 @@ function syncWindowRegistry() {
 }
 
 /**
+ * Signal (once) that the field-component registry is ready to accept external
+ * registrations. Dispatches the `joinotify:field-registry-ready` event with the
+ * global registry as its detail, and sets `window.JoinotifyFieldComponents.ready`
+ * so listeners attached AFTER the event still know the registry is available.
+ *
+ * This is the documented, race-safe entry point for third-party bundles that ship
+ * a custom field/modal component (see DEVELOPERS.md → "Custom field components").
+ *
+ * @since 2.0.0
+ * @returns {void}
+ */
+function announceFieldRegistryReady() {
+  const globalRegistry = syncWindowRegistry();
+
+  if (!globalRegistry || typeof window === 'undefined') {
+    return;
+  }
+
+  globalRegistry.ready = true;
+
+  if (typeof window.CustomEvent === 'function' && typeof window.dispatchEvent === 'function') {
+    window.dispatchEvent(new window.CustomEvent('joinotify:field-registry-ready', {
+      detail: globalRegistry,
+    }));
+  }
+}
+
+/**
  * Register a field component by name in both the local and global registries.
  *
  * @since 2.0.0
@@ -264,4 +292,4 @@ export function getSupportedFieldComponents() {
   return ['toggle', 'text', 'textarea', 'richtext', 'select', 'phone', 'input-group', 'input-button', 'otp', 'color-picker', 'color-scale'];
 }
 
-syncWindowRegistry();
+announceFieldRegistryReady();

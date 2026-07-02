@@ -32,13 +32,16 @@ There are two equivalent ways to extend it:
 | `joinotify_register_condition_operators($type, $ops)` | `Joinotify/Conditions/Check_Condition_Type` | `['is','is_not',...]` |
 | `joinotify_register_condition_value($type, $cb)` | `Joinotify/Conditions/Get_Compare_Value` | `cb($value_map, $type, $payload): mixed` |
 | `joinotify_register_placeholders($integration, $ph)` | `Joinotify/Builder/Placeholders_List` | `{'{{ x }}': {triggers, description, replacement}}` |
+| `joinotify_register_dynamic_placeholder($pattern, $cb)` | `Joinotify/Builder/Resolve_Dynamic_Token` | `cb($matches, $payload): string\|null` |
 | `joinotify_register_settings_tab($tab)` | `Joinotify/Admin/Settings/Section_Tabs` | `{id, name, icon, section}` |
 | `joinotify_register_settings_section($section)` | `Joinotify/Admin/Settings/Schema` | `{id, title, layout?, cards}` |
 | `joinotify_register_rest_route($route)` | `Joinotify/Rest/Routes` | `{route, methods?, callback, permission?, args?}` |
 
-Other useful filters: `Joinotify/Builder/Action_Settings_Schema` (custom action settings schema
-fallback), `Joinotify/Builder/Trigger_Context_Icons`, `Joinotify/Download_Template/Fill_Sender_Actions`,
-`Joinotify/Init/{Init,Admin_Init,WP_Loaded}_Classes`.
+Other useful filters: `Joinotify/Builder/Action_Settings_Schema` (custom/overridden action settings
+schema), `Joinotify/Builder/Action_Default_Data` (custom/overridden action default data),
+`Joinotify/Workflow_Processor/Delaying_Actions` and `Joinotify/Workflow_Processor/Branching_Actions`
+(register structural — delay/branch — actions), `Joinotify/Builder/Trigger_Context_Icons`,
+`Joinotify/Download_Template/Fill_Sender_Actions`, `Joinotify/Init/{Init,Admin_Init,WP_Loaded}_Classes`.
 
 ---
 
@@ -50,6 +53,8 @@ settings schema), a **runtime handler**, and a **canvas description**.
 
 ```php
 // 1) A category = a tab in the "Add an action" modal.
+// Optional: you can skip this call and pass `category_label`/`category_icon` to
+// joinotify_register_action() below to have the tab auto-created (deduped by id).
 joinotify_register_action_category([
     'id'       => 'my_app',
     'label'    => __( 'My App', 'my-textdomain' ),
@@ -80,7 +85,10 @@ joinotify_register_action([
     ],
 
     // Convenience keys (auto-wired to their own filters):
-    'fill_sender' => false, // set true to auto-fill a WhatsApp sender on template import
+    'fill_sender'     => false, // set true to auto-fill a WhatsApp sender on template import
+    'category_label'  => __( 'My App', 'my-textdomain' ), // when set, the category tab is auto-created
+    'category_icon'   => '<svg ...>...</svg>',            // optional icon for the auto-created tab
+    // 'category_priority' => 40,                          // optional sort order for the auto-created tab
 
     // 3) Runtime handler — runs when the workflow reaches this action.
     'handler' => function( $action_data, $action, $post_id, $event_data ) {
@@ -103,8 +111,49 @@ joinotify_register_action_description( 'my_app_send_sms', function( $data, $work
 ```
 
 **Settings field components** (`settings_schema[].component`): `input`, `textarea`, `number`,
-`select` (with `options: [{label, value}]`), `date`, `time`, `code`. Common keys: `key`, `label`,
-`component`, `required`, `placeholder`, `options`, `rows`, `description`, `componentProps`.
+`select` (with `options: [{label, value}]`), `date`, `time`, `code`, `switch`, plus nested `group`
+and `repeater`. Common keys: `key`, `label`, `component`, `required`, `placeholder`, `options`,
+`rows`, `description`, `componentProps`, and `condition` (an array of `{key, value, operator}` for
+conditional visibility — operators: `eq`, `neq`, `in`, `not_in`, `truthy`, `falsy`).
+
+**How the settings form is rendered (no JavaScript).** When your action has **no** registered Vue
+settings component, Joinotify renders your `settings_schema` **generically** — the exact same
+schema-driven renderer the trigger settings use. So a standard action needs only PHP: declare
+`settings_schema` and the fields appear in the node settings drawer, bound to flat top-level keys of
+the action data (e.g. `to`, `message`). No frontend build required.
+
+> **Advanced (optional).** A built-in-quality, bespoke settings UI (custom widgets, live previews)
+> can still ship a Vue `settings_component`. When present it takes precedence over the schema; when
+> absent the schema fallback above is used. This is opt-in and only needed for non-standard controls —
+> see [Custom field components](#custom-field-components).
+
+**Schema/defaults precedence.** For every action, an inline `settings_schema` / `default_data` on the
+catalog entry is the single source of truth and can even **override a built-in action's** schema or
+defaults (via the `Joinotify/Builder/Actions`, `Joinotify/Builder/Action_Settings_Schema` and
+`Joinotify/Builder/Action_Default_Data` filters). Built-in hardcoded values remain only as a fallback.
+
+### Structural actions (delay / branch)
+
+Leaf actions run through the handler map above. The two **structural** behaviors — pausing the funnel
+(delay) and splicing a branch (condition) — are dispatched by capability lists so third parties can add
+their own. Register your slug on the relevant filter; it then reuses the same delay-resolution /
+condition-evaluation data shape as the built-ins:
+
+```php
+// A custom delaying action (reuses delay_type/delay_value/delay_period/date_value/time_value data).
+add_filter( 'Joinotify/Workflow_Processor/Delaying_Actions', function( $slugs ) {
+    $slugs[] = 'my_app_wait';
+
+    return $slugs;
+});
+
+// A custom branching action (reuses the condition-evaluation data shape).
+add_filter( 'Joinotify/Workflow_Processor/Branching_Actions', function( $slugs ) {
+    $slugs[] = 'my_app_switch';
+
+    return $slugs;
+});
+```
 
 ---
 
@@ -181,6 +230,28 @@ joinotify_register_placeholders( 'my_app', [
 ]);
 ```
 
+> The `production` value may also be a **callable** `fn( $payload )` resolved at send time.
+> Tokens are matched whitespace-tolerantly, so `{{ my_app_plan }}` and `{{my_app_plan}}` both resolve.
+
+### Parametric (bracket-syntax) tokens
+
+Static `{{ name }}` tokens cover most cases. For tokens that carry an **argument** — e.g.
+`{{ my_app_field=[order_total] }}` or `{{ my_app_meta[plan] }}` — register a **resolver** with a PCRE
+pattern. The callback receives the `preg_match` result and the runtime payload, and returns the
+replacement (or `null` to leave the token untouched):
+
+```php
+joinotify_register_dynamic_placeholder( '/\{\{\s*my_app_field=\[(.+?)\]\s*\}\}/', function( $matches, $payload ) {
+    $field_id = $matches[1]; // first capture group
+
+    return $payload['fields'][ $field_id ] ?? null; // null keeps the original token
+});
+```
+
+Registered resolvers run **before** the built-in bracket handlers (`{{ field_id=[...] }}`,
+`{{ wc_checkout_field=[...] }}`, `{{ user_meta[...] }}`), so you can also override those for your own
+context. The built-ins remain as a backward-compatible fallback.
+
 ---
 
 ## Settings
@@ -208,6 +279,42 @@ joinotify_register_settings_section([
     ]],
 ]);
 ```
+
+**Standard field types (no JavaScript):** `toggle`, `text`, `textarea`, `richtext`, `select`,
+`phone`, `color`, `color-scale`, `input-group`, `input-button`. Integration cards (Settings →
+Integrations) are declared the same way through `joinotify_register_integration()` (see
+[Triggers & integrations](#triggers--integrations)); a card with these fields and an HTML `modal` is
+fully configurable from PHP alone. Toggle keys declared only in your schema (not in the plugin's
+default options) are still reset correctly to `'no'` when unchecked.
+
+### Custom field components
+
+Standard fields need no JavaScript. If your app needs a **custom control** (an OAuth "Connect"
+widget, a provider-specific picker, a bespoke modal block), you can ship a Vue component and register
+it in the global field registry — then reference it from PHP by `component` name. The registry is
+race-safe: it exposes `window.JoinotifyFieldComponents` and fires a `joinotify:field-registry-ready`
+event once it is ready (and sets `.ready = true` for listeners that attach later).
+
+```js
+// my-app-fields.js — enqueue this AFTER the Joinotify settings bundle.
+function registerMyAppFields( api ) {
+    api.register( 'my-app-connect', MyAppConnectComponent ); // Vue component
+}
+
+if ( window.JoinotifyFieldComponents && window.JoinotifyFieldComponents.ready ) {
+    registerMyAppFields( window.JoinotifyFieldComponents );
+} else {
+    window.addEventListener( 'joinotify:field-registry-ready', ( event ) => registerMyAppFields( event.detail ) );
+}
+```
+
+```php
+// Reference it from a settings field or an integration modal block:
+[ 'type' => 'my-app-connect', 'key' => 'my_app_connection', 'label' => __( 'Connection', 'my-textdomain' ) ]
+```
+
+If a referenced `component` is not registered, the field degrades gracefully (a plain text field /
+"custom block not available" notice) instead of breaking the page.
 
 ---
 
@@ -450,5 +557,11 @@ dispatch attempt, success or failure).
 - **Placeholder replacement.** Use `joinotify_replace_placeholders( $text, $payload )` (or the
   underlying `MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders()`) inside your handler
   to resolve `{{ ... }}` tokens. See the [Runtime helpers](#runtime-helpers) table for the full set.
-- **No JavaScript required.** The action library modal renders your category tab and your
-  `settings_schema` fields automatically — you never touch the Vue frontend.
+- **No JavaScript required for standard cases.** The action library modal renders your category tab,
+  and the node settings drawer renders your `settings_schema` fields generically (the same renderer
+  the triggers use) — you never touch the Vue frontend. A bespoke Vue `settings_component` (actions)
+  or a [custom field component](#custom-field-components) (settings/integrations) is **optional** and
+  only needed for non-standard widgets.
+- **Backward compatible by design.** Every new extension point is additive: built-in schemas,
+  defaults, structural (delay/branch) slugs and bracket-token handlers all still work exactly as
+  before and act as the fallback when you don't override them.

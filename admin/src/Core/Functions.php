@@ -584,6 +584,23 @@ function joinotify_register_placeholders( $integration, $placeholders ) {
 
 
 /**
+ * Register a resolver for a custom parametric/bracket-style placeholder token.
+ *
+ * For tokens carrying an argument (e.g. "{{ my_field=[id] }}") that cannot be a
+ * static "{{ name }}" entry. The callback receives ( array $matches, array $payload )
+ * and returns the replacement string (or null to leave the token untouched).
+ *
+ * @since 2.0.0
+ * @param string   $pattern  PCRE pattern matching the token (with delimiters).
+ * @param callable $callback Resolver: function( array $matches, array $payload ): string|null.
+ * @return void
+ */
+function joinotify_register_dynamic_placeholder( $pattern, $callback ) {
+	Extensions::register_dynamic_placeholder( $pattern, $callback );
+}
+
+
+/**
  * Register a settings navigation tab.
  *
  * @since 1.4.7

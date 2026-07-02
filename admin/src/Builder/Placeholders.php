@@ -73,6 +73,45 @@ class Placeholders {
      */
     public static function replace_placeholders( $message, $payload = array(), $mode = 'production' ) {
         $message = is_scalar( $message ) ? (string) $message : '';
+        $payload = is_array( $payload ) ? $payload : array();
+
+        /**
+         * Custom dynamic token resolvers registered by third parties.
+         *
+         * Lets add-ons resolve their own parametric/bracket-style tokens (e.g.
+         * "{{ my_field=[id] }}") WITHOUT editing this method. The map is keyed by a
+         * PCRE pattern; each value is a callable( array $matches, array $payload ) that
+         * returns the replacement string, or null/non-scalar to leave the token
+         * untouched (so an unresolved token never blanks out the message).
+         *
+         * Registered resolvers run FIRST, so an add-on can also override the built-in
+         * bracket handlers below for its own context. The built-in branches remain as
+         * a backward-compatible fallback for any token a resolver did not replace.
+         *
+         * @since 2.0.0
+         * @param array $resolvers Map of PCRE pattern => callable( array $matches, array $payload ): string|null.
+         * @param array $payload   Runtime placeholder payload.
+         */
+        $custom_resolvers = apply_filters( 'Joinotify/Builder/Resolve_Dynamic_Token', array(), $payload );
+
+        if ( is_array( $custom_resolvers ) ) {
+            foreach ( $custom_resolvers as $pattern => $resolver ) {
+                if ( ! is_string( $pattern ) || '' === $pattern || ! is_callable( $resolver ) ) {
+                    continue;
+                }
+
+                $replaced = preg_replace_callback( $pattern, function( $matches ) use ( $resolver, $payload ) {
+                    $resolved = call_user_func( $resolver, $matches, $payload );
+
+                    return is_scalar( $resolved ) ? (string) $resolved : $matches[0];
+                }, $message );
+
+                // preg_replace_callback returns null on error (e.g. bad pattern); keep the previous message in that case.
+                if ( is_string( $replaced ) ) {
+                    $message = $replaced;
+                }
+            }
+        }
 
         // First, replace field placeholders dynamically
         $message = preg_replace_callback('/\{\{\s*field_id=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
@@ -113,7 +152,25 @@ class Placeholders {
                     $replacement = '';
                 }
 
+                // Exact match first (backward compatible): the builder inserts tokens as "{{ token }}".
                 $message = str_replace( $placeholder, $replacement, $message );
+
+                // Then a whitespace-tolerant pass so "{{token}}" and "{{  token  }}" also resolve,
+                // matching the tolerance the parametric bracket branches below already have. The
+                // replacement is returned via a callback so "$" / "\" inside values are never treated
+                // as regex backreferences.
+                if ( preg_match( '/^\{\{\s*(.+?)\s*\}\}$/', (string) $placeholder, $token_match ) ) {
+                    $tolerant_pattern = '/\{\{\s*' . preg_quote( $token_match[1], '/' ) . '\s*\}\}/';
+                    $replacement_value = (string) $replacement;
+
+                    $tolerant_message = preg_replace_callback( $tolerant_pattern, function() use ( $replacement_value ) {
+                        return $replacement_value;
+                    }, $message );
+
+                    if ( is_string( $tolerant_message ) ) {
+                        $message = $tolerant_message;
+                    }
+                }
             }
         }
 
