@@ -85,8 +85,22 @@ const toastTimers = new Map();
 
 const templates = computed(() => store.templateCatalog || []);
 const backUrl = computed(() => bootstrap.value?.links?.back_url || '#');
+const dashboardUrl = computed(() => bootstrap.value?.links?.dashboard_url || bootstrap.value?.links?.back_url || '#');
 const docsUrl = computed(() => bootstrap.value?.links?.docs_url || '#');
 const settingsUrl = computed(() => store.bootstrap?.links?.settings_url || bootstrap.value?.links?.settings_url || '#');
+// URL for starting a fresh workflow: the current builder page without the
+// workflow-specific query params. Mirrors what createNewWorkflow() does in the
+// SPA, but as a real href so the item can be opened in a new tab.
+const newWorkflowUrl = computed(() => {
+  if (typeof window === 'undefined') {
+    return '#';
+  }
+
+  const url = new URL(window.location.href);
+  url.searchParams.delete('id');
+  url.searchParams.delete('change_trigger');
+  return url.toString();
+});
 // Backend-authoritative assessment of the loaded flow's trigger: the frontend
 // catalog re-injects core contexts as enabled, so only the server can reliably
 // tell whether the trigger's integration is actually active and registered.
@@ -1255,6 +1269,10 @@ function setChangeTriggerUrl(active) {
         :title="store.file.post.title"
         :status="store.file.post.status"
         :docs-url="docsUrl"
+        :new-url="newWorkflowUrl"
+        :back-url="backUrl"
+        :dashboard-url="dashboardUrl"
+        :settings-url="settingsUrl"
         :loading="isRunningTest"
         :saving="store.loading.save || titleSaving"
         :dirty="store.dirty"
