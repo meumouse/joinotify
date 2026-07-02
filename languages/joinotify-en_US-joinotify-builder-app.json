@@ -19,6 +19,22 @@
       "%1$s at %2$s": [
         "%1$s at %2$s"
       ],
+      "%d day": [
+        "%d day",
+        "%d days"
+      ],
+      "%d hour": [
+        "%d hour",
+        "%d hours"
+      ],
+      "%d minute": [
+        "%d minute",
+        "%d minutes"
+      ],
+      "%d month": [
+        "%d month",
+        "%d months"
+      ],
       "%d scheduled item was cancelled.": [
         "%d scheduled item was cancelled."
       ],
@@ -26,25 +42,9 @@
         "%d second",
         "%d seconds"
       ],
-      "%d minute": [
-        "%d minute",
-        "%d minutes"
-      ],
-      "%d hour": [
-        "%d hour",
-        "%d hours"
-      ],
-      "%d day": [
-        "%d day",
-        "%d days"
-      ],
       "%d week": [
         "%d week",
         "%d weeks"
-      ],
-      "%d month": [
-        "%d month",
-        "%d months"
       ],
       "%d year": [
         "%d year",
@@ -85,9 +85,6 @@
       ],
       "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade.": [
         "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade."
-      ],
-      "<style>%s</style>": [
-        "<style>%s</style>"
       ],
       "0 results": [
         "0 results"
@@ -212,6 +209,9 @@
       "Add a caption to accompany the sent media. Supports text variables (placeholders).": [
         "Add a caption to accompany the sent media. Supports text variables (placeholders)."
       ],
+      "Add a documentation note": [
+        "Add a documentation note"
+      ],
       "Add a function, set of actions, and/or filters in PHP.": [
         "Add a function, set of actions, and/or filters in PHP."
       ],
@@ -247,6 +247,9 @@
       ],
       "Add new workflow": [
         "Add new workflow"
+      ],
+      "Add note": [
+        "Add note"
       ],
       "Add test phone number": [
         "Add test phone number"
@@ -682,6 +685,9 @@
       ],
       "Chad": [
         "Chad"
+      ],
+      "Change color": [
+        "Change color"
       ],
       "Change number": [
         "Change number"
@@ -1130,6 +1136,9 @@
       "Custom block not available.": [
         "Custom block not available."
       ],
+      "Custom color": [
+        "Custom color"
+      ],
       "Custom variables": [
         "Custom variables"
       ],
@@ -1235,6 +1244,9 @@
       "Delete connection": [
         "Delete connection"
       ],
+      "Delete note": [
+        "Delete note"
+      ],
       "Delete permanently": [
         "Delete permanently"
       ],
@@ -1333,6 +1345,9 @@
       ],
       "Does not contain": [
         "Does not contain"
+      ],
+      "Double-click to write a note in markdown": [
+        "Double-click to write a note in markdown"
       ],
       "Download the plugin configuration as a JSON file or import it on another site. API keys and license data are not included in the export.": [
         "Download the plugin configuration as a JSON file or import it on another site. API keys and license data are not included in the export."
@@ -2012,9 +2027,6 @@
       "Invalid request nonce.": [
         "Invalid request nonce."
       ],
-      "Invalid template file.": [
-        "Invalid template file."
-      ],
       "Invalid workflow action.": [
         "Invalid workflow action."
       ],
@@ -2389,6 +2401,9 @@
       ],
       "Medium": [
         "Medium"
+      ],
+      "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews": [
+        "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews"
       ],
       "Message": [
         "Message"
@@ -2984,6 +2999,9 @@
       "Plugin installed and activated successfully.": [
         "Plugin installed and activated successfully."
       ],
+      "Plugin settings": [
+        "Plugin settings"
+      ],
       "Plugin slug and URL are required.": [
         "Plugin slug and URL are required."
       ],
@@ -3169,6 +3187,9 @@
       ],
       "Reset settings": [
         "Reset settings"
+      ],
+      "Resize": [
+        "Resize"
       ],
       "Response code": [
         "Response code"
@@ -3659,6 +3680,9 @@
       "Sudan": [
         "Sudan"
       ],
+      "Sunglasses with UV protection (Sample product): %s/product/sample-sunglasses/#reviews": [
+        "Sunglasses with UV protection (Sample product): %s/product/sample-sunglasses/#reviews"
+      ],
       "Support access and subscription updates": [
         "Support access and subscription updates"
       ],
@@ -4139,6 +4163,9 @@
       "To retrieve the post title": [
         "To retrieve the post title"
       ],
+      "To retrieve the review link for each purchased product from the order, separated by line": [
+        "To retrieve the review link for each purchased product from the order, separated by line"
+      ],
       "To retrieve the shipping phone from the WooCommerce order": [
         "To retrieve the shipping phone from the WooCommerce order"
       ],
@@ -4478,6 +4505,9 @@
       "Vietnam": [
         "Vietnam"
       ],
+      "View all workflows": [
+        "View all workflows"
+      ],
       "View debug logs": [
         "View debug logs"
       ],
@@ -4669,6 +4699,9 @@
       ],
       "Write a WhatsApp message in plain text. Reply with the message content only, without any preamble.": [
         "Write a WhatsApp message in plain text. Reply with the message content only, without any preamble."
+      ],
+      "Write in markdown to document your flow…": [
+        "Write in markdown to document your flow…"
       ],
       "year": [
         "year"

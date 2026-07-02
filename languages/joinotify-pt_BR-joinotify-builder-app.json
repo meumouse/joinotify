@@ -19,6 +19,22 @@
       "%1$s at %2$s": [
         "%1$s em %2$s"
       ],
+      "%d day": [
+        "%d dia",
+        "%d dias"
+      ],
+      "%d hour": [
+        "%d hora",
+        "%d horas"
+      ],
+      "%d minute": [
+        "%d minuto",
+        "%d minutos"
+      ],
+      "%d month": [
+        "%d mês",
+        "%d meses"
+      ],
       "%d scheduled item was cancelled.": [
         "%d item agendado foi cancelado."
       ],
@@ -26,25 +42,9 @@
         "%d segundo",
         "%d segundos"
       ],
-      "%d minute": [
-        "%d minuto",
-        "%d minutos"
-      ],
-      "%d hour": [
-        "%d hora",
-        "%d horas"
-      ],
-      "%d day": [
-        "%d dia",
-        "%d dias"
-      ],
       "%d week": [
         "%d semana",
         "%d semanas"
-      ],
-      "%d month": [
-        "%d mês",
-        "%d meses"
       ],
       "%d year": [
         "%d ano",
@@ -85,9 +85,6 @@
       ],
       "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade.": [
         "<strong>Joinotify</strong> requer a versão do PHP 7.4 ou maior. Contate o suporte da sua hospedagem para realizar a atualização."
-      ],
-      "<style>%s</style>": [
-        "<style>%s</style>"
       ],
       "0 results": [
         "0 resultados"
@@ -212,6 +209,9 @@
       "Add a caption to accompany the sent media. Supports text variables (placeholders).": [
         "Adicione uma legenda para acompanhar a mídia enviada. Suporta variáveis de texto (placeholders)."
       ],
+      "Add a documentation note": [
+        "Adicionar uma nota de documentação"
+      ],
       "Add a function, set of actions, and/or filters in PHP.": [
         "Adicione uma função, conjunto de ações e ou filtros em PHP."
       ],
@@ -247,6 +247,9 @@
       ],
       "Add new workflow": [
         "Adicionar novo fluxo"
+      ],
+      "Add note": [
+        "Adicionar nota"
       ],
       "Add test phone number": [
         "Adicionar número de telefone de teste"
@@ -533,12 +536,6 @@
       "Back to dashboard": [
         "Voltar para o painel"
       ],
-      "View all workflows": [
-        "Ver todos os fluxos"
-      ],
-      "Plugin settings": [
-        "Configurações do plugin"
-      ],
       "Back to WhatsApp": [
         "Voltar para o WhatsApp"
       ],
@@ -688,6 +685,9 @@
       ],
       "Chad": [
         "Chade"
+      ],
+      "Change color": [
+        "Mudar cor"
       ],
       "Change number": [
         "Alterar número"
@@ -1136,6 +1136,9 @@
       "Custom block not available.": [
         "Bloco personalizado não disponível."
       ],
+      "Custom color": [
+        "Cor personalizada"
+      ],
       "Custom variables": [
         "Variáveis personalizadas"
       ],
@@ -1241,6 +1244,9 @@
       "Delete connection": [
         "Excluir conexão"
       ],
+      "Delete note": [
+        "Excluir nota"
+      ],
       "Delete permanently": [
         "Excluir permanentemente"
       ],
@@ -1339,6 +1345,9 @@
       ],
       "Does not contain": [
         "Não contém"
+      ],
+      "Double-click to write a note in markdown": [
+        "Clique duas vezes para escrever uma nota em markdown"
       ],
       "Download the plugin configuration as a JSON file or import it on another site. API keys and license data are not included in the export.": [
         "Baixe a configuração do plugin como um arquivo JSON ou importe em outro site. Chaves de API e dados de licença não estão incluídos na exportação."
@@ -2018,9 +2027,6 @@
       "Invalid request nonce.": [
         "Nonce de solicitação inválido."
       ],
-      "Invalid template file.": [
-        "Arquivo de modelo inválido."
-      ],
       "Invalid workflow action.": [
         "Ação de fluxo de trabalho inválida."
       ],
@@ -2395,6 +2401,9 @@
       ],
       "Medium": [
         "Médio"
+      ],
+      "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews": [
+        "Camiseta de algodão masculina (Produto de exemplo): %s/product/sample-t-shirt/#reviews"
       ],
       "Message": [
         "Mensagem"
@@ -2990,6 +2999,9 @@
       "Plugin installed and activated successfully.": [
         "Plugin instalado e ativado com sucesso."
       ],
+      "Plugin settings": [
+        "Configurações do plugin"
+      ],
       "Plugin slug and URL are required.": [
         "Slug do plugin e URL são obrigatórios."
       ],
@@ -3175,6 +3187,9 @@
       ],
       "Reset settings": [
         "Redefinir configurações"
+      ],
+      "Resize": [
+        "Redimensionar"
       ],
       "Response code": [
         "Código de resposta"
@@ -3665,6 +3680,9 @@
       "Sudan": [
         "Sudão"
       ],
+      "Sunglasses with UV protection (Sample product): %s/product/sample-sunglasses/#reviews": [
+        "Óculos de sol com proteção UV (Produto de exemplo): %s/product/sample-sunglasses/#reviews"
+      ],
       "Support access and subscription updates": [
         "Suporte, acesso e atualizações de assinatura"
       ],
@@ -4145,6 +4163,9 @@
       "To retrieve the post title": [
         "Para recuperar o título do post"
       ],
+      "To retrieve the review link for each purchased product from the order, separated by line": [
+        "Para recuperar o link de avaliação de cada produto comprado do pedido, separado por linha"
+      ],
       "To retrieve the shipping phone from the WooCommerce order": [
         "Para recuperar o telefone de entrega do pedido do WooCommerce"
       ],
@@ -4484,6 +4505,9 @@
       "Vietnam": [
         "Vietnã"
       ],
+      "View all workflows": [
+        "Ver todos os fluxos de trabalho"
+      ],
       "View debug logs": [
         "Exibir registros de depuração"
       ],
@@ -4675,6 +4699,9 @@
       ],
       "Write a WhatsApp message in plain text. Reply with the message content only, without any preamble.": [
         "Escreva uma mensagem do WhatsApp em texto simples. Responda apenas com o conteúdo da mensagem, sem qualquer preâmbulo."
+      ],
+      "Write in markdown to document your flow…": [
+        "Escreva em markdown para documentar seu fluxo…"
       ],
       "year": [
         "ano"
