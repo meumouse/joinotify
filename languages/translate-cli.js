@@ -30,11 +30,11 @@ const LANGUAGES = {
   en_US: { code: "en", name: "English (United States)" },
   es_ES: { code: "es", name: "Spanish (Spain)" },
   pt_BR: { code: "pt", name: "Portuguese (Brazil)" },
-//  de_DE: { code: "de", name: "German (Germany)" },
-//  fr_FR: { code: "fr", name: "French (France)" },
-//  it_IT: { code: "it", name: "Italian (Italy)" },
+  pt_PT: { code: "pt-PT", name: "Portuguese (Portugal)" },
+  de_DE: { code: "de", name: "German (Germany)" },
+  fr_FR: { code: "fr", name: "French (France)" },
+  it_IT: { code: "it", name: "Italian (Italy)" },
 //  nl_NL: { code: "nl", name: "Dutch (Netherlands)" },
-//  pt_PT: { code: "pt-PT", name: "Portuguese (Portugal)" },
 //  zh_CN: { code: "zh-CN", name: "Chinese (Simplified)" },
 };
 
