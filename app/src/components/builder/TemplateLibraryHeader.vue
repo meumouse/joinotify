@@ -22,7 +22,7 @@ import { __, textDomain } from '../../utils/i18n';
       {{ __('Automation templates', textDomain) }}
     </span>
 
-    <h2 class="mt-6 text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-[42px]">
+    <h2 class="mt-6 text-3xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-[42px]">
       {{ __('Start automating your site from a template', textDomain) }}
     </h2>
 
