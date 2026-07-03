@@ -1,0 +1,15 @@
+{
+	"name": "joinotify",
+	"private": true,
+	"version": "2.0.0",
+	"scripts": {
+		"build": "node scripts/build.mjs",
+		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",
+		"build:translate": "node scripts/build.mjs --translate",
+		"build:app": "npm run build --prefix app",
+		"release": "node scripts/build.mjs"
+	},
+	"devDependencies": {
+		"archiver": "^7.0.1"
+	}
+}

@@ -1,0 +1,87 @@
+{
+  "plugin_version": "1.4.6",
+  "post": {
+    "type": "joinotify-workflow",
+    "title": "Aviso de assinatura cancelada com atraso e condicao",
+    "date": "2025-02-01 09:00:00",
+    "status": "publish",
+    "modified": "2025-02-01 09:00:00",
+    "category": "woocommerce"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_146aaa0001",
+      "type": "trigger",
+      "data": {
+        "title": "Assinatura cancelada",
+        "description": "",
+        "trigger": "woocommerce_subscription_status_cancelled",
+        "context": "woocommerce"
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_146aaa0002",
+      "type": "action",
+      "data": {
+        "title": "Aguardar",
+        "description": "Aguardar 1 dia",
+        "action": "time_delay",
+        "delay_type": "after",
+        "delay_value": "1",
+        "delay_period": "day",
+        "date_value": "",
+        "time_value": "",
+        "delay_timestamp": 1738400000
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_146aaa0003",
+      "type": "action",
+      "data": {
+        "title": "Condicao",
+        "description": "Se o telefone do cliente nao estiver vazio",
+        "action": "condition",
+        "condition_content": {
+          "condition": "customer_phone",
+          "type": "not_empty",
+          "type_text": "nao esta vazio",
+          "value": "",
+          "value_text": "",
+          "meta_key": "",
+          "field_id": ""
+        }
+      },
+      "children": {
+        "action_true": [
+          {
+            "id": "joinotify_action_146aaa0004",
+            "type": "action",
+            "data": {
+              "title": "WhatsApp: Mensagem de texto",
+              "description": "Sentimos sua falta, <span class=\"builder-placeholder\">{{ first_name }}</span>!",
+              "action": "send_whatsapp_message_text",
+              "message": "Sentimos sua falta, {{ first_name }}!",
+              "sender": "",
+              "receiver": "{{ user_meta[billing_phone] }}"
+            },
+            "children": []
+          }
+        ],
+        "action_false": [
+          {
+            "id": "joinotify_action_146aaa0005",
+            "type": "action",
+            "data": {
+              "title": "Parar funil",
+              "description": "Interromper o funil",
+              "action": "stop_funnel"
+            },
+            "children": []
+          }
+        ]
+      }
+    }
+  ]
+}

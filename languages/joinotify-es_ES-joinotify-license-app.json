@@ -1,0 +1,4786 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "12345": [
+        "12345"
+      ],
+      "": {
+        "domain": "joinotify",
+        "lang": "es_ES",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "— Select a sender —": [
+        "— Selecciona un remitente —"
+      ],
+      "{{ wc_billing_phone }} or +5511999990000": [
+        "{{ wc_billing_phone }} o +5511999990000"
+      ],
+      "%1$s at %2$s": [
+        "%1$s en %2$s"
+      ],
+      "%d day": [
+        "%d día",
+        "%d días"
+      ],
+      "%d hour": [
+        "%d hora",
+        "%d horas"
+      ],
+      "%d minute": [
+        "%d minuto",
+        "%d minutos"
+      ],
+      "%d month": [
+        "%d mes",
+        "%d meses"
+      ],
+      "%d scheduled item was cancelled.": [
+        "%d elemento programado fue cancelado."
+      ],
+      "%d second": [
+        "%d segundo",
+        "%d segundos"
+      ],
+      "%d week": [
+        "%d semana",
+        "%d semanas"
+      ],
+      "%d year": [
+        "%d año",
+        "%d años"
+      ],
+      "%s %s: %s": [
+        "%s %s: %s"
+      ],
+      "%s is required.": [
+        "%s es obligatorio."
+      ],
+      "%s minutes": [
+        "%s minutos"
+      ],
+      "%s settings": [
+        "%s ajustes"
+      ],
+      "%s/checkout/pay/order/12345": [
+        "%s/checkout/pay/order/12345"
+      ],
+      "%s%%": [
+        "%s%%"
+      ],
+      "+55 11 91234-5678": [
+        "+55 11 91234-5678"
+      ],
+      "+55 41 91234-5678": [
+        "+55 41 91234-5678"
+      ],
+      "<span class=\"builder-placeholder\">%s</span> %s: %s": [
+        "<span class=\"builder-placeholder\">%s</span> %s: %s"
+      ],
+      "<span class=\"builder-placeholder\">%s</span> is empty": [
+        "<span class=\"builder-placeholder\">%s</span> está vacío"
+      ],
+      "<span class=\"builder-placeholder\">%s</span> is not empty": [
+        "<span class=\"builder-placeholder\">%s</span> no está vacío"
+      ],
+      "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade.": [
+        "<strong>Joinotify</strong> requiere la versión de PHP 7.4 o superior. Contacta con el soporte de tu alojamiento para realizar la actualización."
+      ],
+      "0 results": [
+        "0 resultados"
+      ],
+      "180 days": [
+        "180 días"
+      ],
+      "1x - Men's cotton T-shirt (Sample product)": [
+        "1x - Camiseta de algodón masculina (Producto de ejemplo)"
+      ],
+      "1x - Sunglasses with UV protection (Sample product)": [
+        "1x - Gafas de sol con protección UV (Producto de ejemplo)"
+      ],
+      "30 days": [
+        "30 días"
+      ],
+      "30 minutes": [
+        "30 minutos"
+      ],
+      "365 days": [
+        "365 días"
+      ],
+      "41912345678": [
+        "41912345678"
+      ],
+      "5541987111527": [
+        "5541987111527"
+      ],
+      "60 days": [
+        "60 días"
+      ],
+      "7 days": [
+        "7 días"
+      ],
+      "90 days": [
+        "90 días"
+      ],
+      "A condition is missing its branches.": [
+        "Falta una rama en una condición."
+      ],
+      "A new version (%s) is available!": [
+        "¡Una nueva versión (%s) está disponible!"
+      ],
+      "A new version is available:": [
+        "Está disponible una nueva versión:"
+      ],
+      "A new version of the <strong>Joinotify</strong> plugin (%s) is available. <a href=\"%s\">Update now</a>.": [
+        "Una nueva versión del plugin <strong>Joinotify</strong> (%s) está disponible. <a href=\"%s\">Actualice ahora</a>."
+      ],
+      "A new version of the <strong>Joinotify</strong> plugin is available.": [
+        "Una nueva versión del plugin <strong>Joinotify</strong> está disponible."
+      ],
+      "A quick overview of the WordPress environment, PHP, and critical extensions.": [
+        "Una visión general rápida del entorno de WordPress, PHP y extensiones críticas."
+      ],
+      "Abandoned cart is recovered": [
+        "El carrito abandonado es recuperado"
+      ],
+      "About": [
+        "Acerca de"
+      ],
+      "Access validation and premium feature unlocking": [
+        "Validación de acceso y desbloqueo de funciones premium"
+      ],
+      "Account created successfully.": [
+        "Cuenta creada con éxito."
+      ],
+      "Account registration is currently disabled.": [
+        "El registro de cuentas está actualmente deshabilitado."
+      ],
+      "Account status": [
+        "Estado de la cuenta"
+      ],
+      "Action": [
+        "Acción"
+      ],
+      "Actions": [
+        "Acciones"
+      ],
+      "Actions menu": [
+        "Menú de acciones"
+      ],
+      "Actions to add a new sender and send a test message.": [
+        "Acciones para añadir un nuevo remitente y enviar un mensaje de prueba."
+      ],
+      "Activate and configure the endpoints used to process external API requests.": [
+        "Activar y configurar los puntos finales utilizados para procesar solicitudes de API externas."
+      ],
+      "Activate discount coupon action": [
+        "Activar acción de cupón de descuento"
+      ],
+      "Activate license": [
+        "Activar licencia"
+      ],
+      "Activate plugin": [
+        "Activar plugin"
+      ],
+      "Activate premium features, review your subscription status and keep your license in sync. If you need help, visit our ": [
+        "Activa funciones premium, revisa el estado de tu suscripción y mantén tu licencia sincronizada. Si necesitas ayuda, visita nuestro "
+      ],
+      "Activate the license to unlock Joinotify premium features.": [
+        "Activar la licencia para desbloquear funciones premium de Joinotify."
+      ],
+      "Activate your license": [
+        "Activar tu licencia"
+      ],
+      "Activate your license to unlock premium features.": [
+        "Activar tu licencia para desbloquear funciones premium."
+      ],
+      "Active": [
+        "Activo"
+      ],
+      "Active license": [
+        "Licencia activa"
+      ],
+      "Active workflow": [
+        "Flujo de trabajo activo"
+      ],
+      "Add": [
+        "Añadir"
+      ],
+      "Add a caption to accompany the sent media. Supports text variables (placeholders).": [
+        "Añadir un pie de foto para acompañar el medio enviado. Soporta variables de texto (placeholders)."
+      ],
+      "Add a documentation note": [
+        "Añadir una nota de documentación"
+      ],
+      "Add a function, set of actions, and/or filters in PHP.": [
+        "Añade una función, conjunto de acciones y/o filtros en PHP."
+      ],
+      "Add action": [
+        "Añadir acción"
+      ],
+      "Add action (False)": [
+        "Añadir acción (Falso)"
+      ],
+      "Add action (True)": [
+        "Añadir acción (Verdadero)"
+      ],
+      "Add action to the false branch": [
+        "Añadir acción a la rama falsa"
+      ],
+      "Add action to the true branch": [
+        "Añadir acción a la rama verdadera"
+      ],
+      "Add an action": [
+        "Añadir una acción"
+      ],
+      "Add item": [
+        "Añadir elemento"
+      ],
+      "Add media": [
+        "Añadir medio"
+      ],
+      "Add new flow": [
+        "Añadir nuevo flujo"
+      ],
+      "Add new phone": [
+        "Añadir nuevo teléfono"
+      ],
+      "Add new workflow": [
+        "Añadir nuevo flujo de trabajo"
+      ],
+      "Add note": [
+        "Añadir nota"
+      ],
+      "Add test phone number": [
+        "Añadir número de teléfono de prueba"
+      ],
+      "Add variable": [
+        "Añadir variable"
+      ],
+      "Add your text to be sent to the WhatsApp user. Add text variables to replace information. Use {{ field_id=[FIELD_ID] }} replacing FIELD_ID with the corresponding field ID to retrieve field information.": [
+        "Añade tu texto para enviar al usuario de WhatsApp. Añade variables de texto para reemplazar información. Usa {{ field_id=[FIELD_ID] }} reemplazando FIELD_ID con el ID del campo correspondiente para recuperar la información de un campo."
+      ],
+      "Added": [
+        "Añadido"
+      ],
+      "Adds the coupon action to WooCommerce workflows so a workflow can create and send a discount coupon.": [
+        "Añade la acción de cupón a los flujos de trabajo de WooCommerce para que un flujo de trabajo pueda crear y enviar un cupón de descuento."
+      ],
+      "Adjust the routes and API key used by the proxy.": [
+        "Ajusta las rutas y la clave API utilizadas por el proxy."
+      ],
+      "Advance the date by the chosen offset, then run at the selected time of day (e.g. +1 day at 09:00).": [
+        "Avanza la fecha por el desplazamiento elegido, luego ejecuta a la hora del día seleccionada (por ejemplo, +1 día a las 09:00)."
+      ],
+      "Advanced": [
+        "Avanzado"
+      ],
+      "Advanced (model override)": [
+        "Avanzado (sobrescritura de modelo)"
+      ],
+      "Advanced: extra instructions / documentation": [
+        "Avanzado: instrucciones / documentación adicionales"
+      ],
+      "Afghanistan": [
+        "Afganistán"
+      ],
+      "AI generation failed.": [
+        "La generación de IA falló."
+      ],
+      "AI provider": [
+        "Proveedor de IA"
+      ],
+      "AI smart variable": [
+        "Variable inteligente de IA"
+      ],
+      "AI workflow": [
+        "Flujo de trabajo de IA"
+      ],
+      "AI-generated WhatsApp message": [
+        "Mensaje de WhatsApp generado por IA"
+      ],
+      "AI: Smart variable": [
+        "IA: Variable inteligente"
+      ],
+      "Åland Islands": [
+        "Islas Åland"
+      ],
+      "Albania": [
+        "Albania"
+      ],
+      "Algeria": [
+        "Argelia"
+      ],
+      "All": [
+        "Todo"
+      ],
+      "All categories": [
+        "Todas las categorías"
+      ],
+      "All channels": [
+        "Todos los canales"
+      ],
+      "All flows": [
+        "Todos los flujos"
+      ],
+      "All levels": [
+        "Todos los niveles"
+      ],
+      "All options will return to the plugin defaults.": [
+        "Todas las opciones volverán a los valores predeterminados del plugin."
+      ],
+      "All sources": [
+        "Todas las fuentes"
+      ],
+      "All test messages were sent successfully.": [
+        "Todos los mensajes de prueba se enviaron correctamente."
+      ],
+      "All workflows": [
+        "Todos los flujos de trabajo"
+      ],
+      "Allow free shipping": [
+        "Permitir envío gratis"
+      ],
+      "Allows checking a specific value from a submitted form field.": [
+        "Permite comprobar un valor específico de un campo de formulario enviado."
+      ],
+      "Allows checking a specific value of a submitted form field.": [
+        "Permite verificar un valor específico de un campo del formulario enviado."
+      ],
+      "Allows checking specific metadata for the user that fired the trigger.": [
+        "Permite comprobar metadatos específicos del usuario que activó el disparador."
+      ],
+      "Allows checking specific metadata for the user who requested the password reset.": [
+        "Permite comprobar metadatos específicos del usuario que solicitó el restablecimiento de la contraseña."
+      ],
+      "Allows checking specific metadata of the user who requested the password reset.": [
+        "Permite verificar metadatos específicos del usuario que solicitó la redefinición de contraseña."
+      ],
+      "Allows checking specific user metadata.": [
+        "Permite verificar metadatos específicos del usuario."
+      ],
+      "Allows checking the abandoned cart total amount.": [
+        "Permite comprobar el importe total del carrito abandonado."
+      ],
+      "Allows checking the customer email for the order.": [
+        "Permite comprobar el correo electrónico del cliente para el pedido."
+      ],
+      "Allows checking the items present in the abandoned cart.": [
+        "Permite comprobar los artículos presentes en el carrito abandonado."
+      ],
+      "Allows checking the order payment method.": [
+        "Permite verificar la forma de pago del pedido."
+      ],
+      "Allows checking the order refund amount.": [
+        "Permite verificar el valor del reembolso del pedido."
+      ],
+      "Allows checking the order shipping method.": [
+        "Permite verificar la forma de entrega del pedido."
+      ],
+      "Allows checking the order status.": [
+        "Permite verificar el estado del pedido."
+      ],
+      "Allows checking the order total.": [
+        "Permite comprobar el total del pedido."
+      ],
+      "Allows checking the post type that was published.": [
+        "Permite comprobar el tipo de publicación que se publicó."
+      ],
+      "Allows checking the products purchased in the order.": [
+        "Permite verificar los productos adquiridos en el pedido."
+      ],
+      "Allows checking the role of the user who logged in.": [
+        "Permite verificar la función del usuario que inició sesión."
+      ],
+      "Allows checking the role of the user who requested the password reset.": [
+        "Permite comprobar el rol del usuario que solicitó el restablecimiento de la contraseña."
+      ],
+      "Allows checking the status of the created subscription.": [
+        "Permite verificar el estado de la suscripción creada."
+      ],
+      "Allows checking the user role that fired the trigger.": [
+        "Permite comprobar el rol del usuario que activó el disparador."
+      ],
+      "Allows checking whether the abandoned cart was recovered.": [
+        "Permite comprobar si se recuperó el carrito abandonado."
+      ],
+      "Allows checking whether the order was paid.": [
+        "Permite comprobar si el pedido fue pagado."
+      ],
+      "Allows the plugin to update automatically whenever possible.": [
+        "Permite que el plugin se actualice automáticamente siempre que sea posible."
+      ],
+      "Allows you to set a waiting time before the action is executed.": [
+        "Te permite establecer un tiempo de espera antes de que se ejecute la acción."
+      ],
+      "Already have an account?": [
+        "¿Ya tienes una cuenta?"
+      ],
+      "Amount": [
+        "Cantidad"
+      ],
+      "An account is already registered with this email address.": [
+        "Ya hay una cuenta registrada con esta dirección de correo electrónico."
+      ],
+      "An account is already registered with this phone number.": [
+        "Ya hay una cuenta registrada con este número de teléfono."
+      ],
+      "An error occurred while connecting to the license verification server. Check the error in the WooCommerce logs.": [
+        "Ocurrió un error en la conexión con el servidor de verificación de licencias. Verifique el error en los registros de WooCommerce."
+      ],
+      "An error occurred while resetting the settings.": [
+        "Ocurrió un error al restablecer la configuración."
+      ],
+      "Andorra": [
+        "Andorra"
+      ],
+      "Angola": [
+        "Angola"
+      ],
+      "Any status": [
+        "Cualquier estado"
+      ],
+      "API": [
+        "API"
+      ],
+      "API client not initialized.": [
+        "Cliente de API no inicializado."
+      ],
+      "API key": [
+        "Clave de API"
+      ],
+      "Applications": [
+        "Aplicaciones"
+      ],
+      "Apply": [
+        "Aplicar"
+      ],
+      "Are you sure you want to clear the debug logs?": [
+        "¿Está seguro de que desea limpiar los registros de depuración?"
+      ],
+      "Are you sure you want to deactivate this license? This will disable premium features.": [
+        "¿Estás seguro de que quieres desactivar esta licencia? Esto desactivará las funciones premium."
+      ],
+      "Are you sure you want to remove this sender?": [
+        "¿Está seguro de que desea eliminar este remitente?"
+      ],
+      "Are you sure you want to remove this variable? Workflows that use it will no longer resolve it.": [
+        "¿Estás seguro de que quieres eliminar esta variable? Los flujos de trabajo que la utilizan ya no la resolverán."
+      ],
+      "Argentina": [
+        "Argentina"
+      ],
+      "Armenia": [
+        "Armenia"
+      ],
+      "Artificial Intelligence": [
+        "Inteligencia Artificial"
+      ],
+      "Artificial Intelligence settings": [
+        "Configuraciones de Inteligencia Artificial"
+      ],
+      "Aruba": [
+        "Aruba"
+      ],
+      "at": [
+        "en"
+      ],
+      "Attempts": [
+        "Intentos"
+      ],
+      "Audio": [
+        "Audio"
+      ],
+      "Audit every WhatsApp message dispatched by Joinotify, including workflow sends, retries and test messages.": [
+        "Audita cada mensaje de WhatsApp enviado por Joinotify, incluyendo envíos de flujos de trabajo, reintentos y mensajes de prueba."
+      ],
+      "Australia": [
+        "Australia"
+      ],
+      "Austria": [
+        "Austria"
+      ],
+      "Automate message delivery for WordPress event triggers.": [
+        "Automatiza la entrega de mensajes para los disparadores de eventos de WordPress."
+      ],
+      "Automate sending messages when you receive a WPForms form with a phone number. Keep your customers informed in real time.": [
+        "Automatiza el envío de mensajes cuando recibes un formulario de WPForms con un número de teléfono. Mantén a tus clientes informados en tiempo real."
+      ],
+      "Automatic updates": [
+        "Actualizaciones automáticas"
+      ],
+      "Automatic updates and license synchronization": [
+        "Actualizaciones automáticas y sincronización de licencias"
+      ],
+      "Automatically delete debug log records older than the selected period.": [
+        "Elimina automáticamente los registros del log de depuración que sean más antiguos que el período seleccionado."
+      ],
+      "Automatically delete history records older than the selected period.": [
+        "Elimina automáticamente los registros de historial más antiguos que el período seleccionado."
+      ],
+      "Automatically generated": [
+        "Generado automáticamente"
+      ],
+      "Available actions": [
+        "Acciones disponibles"
+      ],
+      "Available placeholders": [
+        "Marcadores de posición disponibles"
+      ],
+      "Azerbaijan": [
+        "Azerbaiyán"
+      ],
+      "Back": [
+        "Volver"
+      ],
+      "Back to dashboard": [
+        "Volver al panel"
+      ],
+      "Back to WhatsApp": [
+        "Volver a WhatsApp"
+      ],
+      "Bahrain": [
+        "Baréin"
+      ],
+      "Bangladesh": [
+        "Bangladés"
+      ],
+      "Base": [
+        "Base"
+      ],
+      "Base color used to theme the login form. The full shade palette is derived automatically.": [
+        "Color base utilizada para tematizar el formulario de inicio de sesión. La paleta de tonos completa se deriva automáticamente."
+      ],
+      "Belarus": [
+        "Bielorrusia"
+      ],
+      "Belgium": [
+        "Bélgica"
+      ],
+      "Belize": [
+        "Belice"
+      ],
+      "Benin": [
+        "Benín"
+      ],
+      "Bhutan": [
+        "Bután"
+      ],
+      "Billing full address format": [
+        "Formato de dirección completa de facturación"
+      ],
+      "Bold": [
+        "Negrita"
+      ],
+      "Bolivia": [
+        "Bolivia"
+      ],
+      "Border radius": [
+        "Radio de borde"
+      ],
+      "Border radius unit": [
+        "Unidad de radio de borde"
+      ],
+      "Bosnia and Herzegovina": [
+        "Bosnia y Herzegovina"
+      ],
+      "Botswana": [
+        "Botsuana"
+      ],
+      "Branching action": [
+        "Acción de ramificación"
+      ],
+      "Brand voice and rules inherited by every AI generation. Example: \"You are the support agent for Store X, be cordial and concise.\".": [
+        "Voz y reglas de marca heredadas por cada generación de IA. Ejemplo: \"Eres el agente de soporte de la Tienda X, sé cordial y conciso.\""
+      ],
+      "Brazil": [
+        "Brasil"
+      ],
+      "British Indian Ocean Territory": [
+        "Territorio Británico del Océano Índico"
+      ],
+      "Browse the action library by category and pick a step to add to your workflow.": [
+        "Navega por la biblioteca de acciones por categoría y elige un paso para añadir a tu flujo de trabajo."
+      ],
+      "Browse, filter and manage workflows with bulk selection, pagination and quick status switching.": [
+        "Navega, filtra y gestiona flujos de trabajo con selección masiva, paginación y cambio rápido de estado."
+      ],
+      "Brunei": [
+        "Brunéi"
+      ],
+      "Builder": [
+        "Constructor"
+      ],
+      "Bulgaria": [
+        "Bulgaria"
+      ],
+      "Bulk action completed.": [
+        "Acción masiva completada."
+      ],
+      "Bulk actions": [
+        "Acciones masivas"
+      ],
+      "Burkina Faso": [
+        "Burkina Faso"
+      ],
+      "Burundi": [
+        "Burundi"
+      ],
+      "Buy license": [
+        "Comprar licencia"
+      ],
+      "Cambodia": [
+        "Camboya"
+      ],
+      "Cameroon": [
+        "Camerún"
+      ],
+      "Canada": [
+        "Canadá"
+      ],
+      "Cancel": [
+        "Cancelar"
+      ],
+      "Cancel all": [
+        "Cancelar todo"
+      ],
+      "Cancel all scheduled items": [
+        "Cancelar todos los elementos programados"
+      ],
+      "Cancel item": [
+        "Cancelar elemento"
+      ],
+      "Cancel scheduled item": [
+        "Cancelar elemento programado"
+      ],
+      "Candidate phone": [
+        "Teléfono del candidato"
+      ],
+      "Cape Verde": [
+        "Cabo Verde"
+      ],
+      "Caption": [
+        "Título"
+      ],
+      "Cart abandoned": [
+        "Carrito abandonado"
+      ],
+      "Cart items": [
+        "Artículos del carrito"
+      ],
+      "Cart recovered": [
+        "Carrito recuperado"
+      ],
+      "Cart total": [
+        "Total del carrito"
+      ],
+      "Casual": [
+        "Casual"
+      ],
+      "Category 1, Category 2": [
+        "Categoría 1, Categoría 2"
+      ],
+      "Central African Republic": [
+        "República Centroafricana"
+      ],
+      "Chad": [
+        "Chad"
+      ],
+      "Change color": [
+        "Cambiar color"
+      ],
+      "Change number": [
+        "Cambiar número"
+      ],
+      "Change trigger": [
+        "Cambiar desencadenador"
+      ],
+      "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
+        "Cambiar el color base regenera la paleta. Los tonos individuales aún se pueden anular."
+      ],
+      "Channel": [
+        "Canal"
+      ],
+      "Check for updates": [
+        "Verificar actualizaciones"
+      ],
+      "Check if the order was not paid": [
+        "Verificar si el pedido no fue pagado"
+      ],
+      "Check the backend registry, the selected context, or the search term.": [
+        "Verifica el registro del backend, el contexto seleccionado o el término de búsqueda."
+      ],
+      "Check whether the order was paid": [
+        "Verifica si el pedido fue pagado"
+      ],
+      "Checking…": [
+        "Comprobando…"
+      ],
+      "Chile": [
+        "Chile"
+      ],
+      "China": [
+        "China"
+      ],
+      "Choose an action to insert below the selected block.": [
+        "Elige una acción para insertar debajo del bloque seleccionado."
+      ],
+      "Choose and configure the workflow trigger before adding conditions.": [
+        "Elige y configura el desencadenador del flujo de trabajo antes de agregar condiciones."
+      ],
+      "Choose one of the validated senders available in your account.": [
+        "Elige uno de los remitentes validados disponibles en tu cuenta."
+      ],
+      "Choose the engine used to generate AI content. Provider credentials and defaults are configured in the Applications tab.": [
+        "Elige el motor utilizado para generar contenido de IA. Las credenciales y configuraciones predeterminadas del proveedor se configuran en la pestaña Aplicaciones."
+      ],
+      "Choose the fallback country when the phone number does not include a country code.": [
+        "Elige el país de respaldo cuando el número de teléfono no incluya un código de país."
+      ],
+      "Choose the option you prefer to start building the workflow.": [
+        "Elige la opción que prefieras para comenzar a construir el flujo de trabajo."
+      ],
+      "Choose the sender and review the message before sending a test WhatsApp message.": [
+        "Elige el remitente y revisa el mensaje antes de enviar un mensaje de prueba por WhatsApp."
+      ],
+      "Choose the source": [
+        "Elige la fuente"
+      ],
+      "Choose the trigger": [
+        "Elige el desencadenante"
+      ],
+      "Choose whether the workflow should wait for a period, a fixed date, or a relative offset at a specific time.": [
+        "Elige si el flujo de trabajo debe esperar un período, una fecha fija o un desplazamiento relativo a una hora específica."
+      ],
+      "Choose which order status should start this workflow. Select \"Any status\" to run on every status change.": [
+        "Elige qué estado del pedido debe iniciar este flujo de trabajo. Selecciona \"Cualquier estado\" para ejecutarse en cada cambio de estado."
+      ],
+      "Clear": [
+        "Limpiar"
+      ],
+      "Clear all": [
+        "Limpiar todo"
+      ],
+      "Clear all history": [
+        "Borrar todo el historial"
+      ],
+      "Clear date": [
+        "Borrar fecha"
+      ],
+      "Clear filters": [
+        "Borrar filtros"
+      ],
+      "Clear logs": [
+        "Limpiar registros"
+      ],
+      "Clear search": [
+        "Borrar búsqueda"
+      ],
+      "Clear shade %s": [
+        "Borrar sombra %s"
+      ],
+      "Click here to log in": [
+        "Haz clic aquí para iniciar sesión"
+      ],
+      "Close": [
+        "Cerrar"
+      ],
+      "Close dialog": [
+        "Cerrar diálogo"
+      ],
+      "Close drawer": [
+        "Cerrar cajón"
+      ],
+      "Close panel": [
+        "Cerrar panel"
+      ],
+      "Code digit %d": [
+        "Dígito del código %d"
+      ],
+      "Code digit %s": [
+        "Dígito del código %s"
+      ],
+      "Code sent successfully.": [
+        "Código enviado con éxito."
+      ],
+      "Colombia": [
+        "Colombia"
+      ],
+      "Coming soon": [
+        "Próximamente"
+      ],
+      "Comoros": [
+        "Comoras"
+      ],
+      "Completed": [
+        "Completado"
+      ],
+      "Condition": [
+        "Condición"
+      ],
+      "Condition rule": [
+        "Regla de condición"
+      ],
+      "Condition type": [
+        "Tipo de condición"
+      ],
+      "Configuration component not available": [
+        "Componente de configuración no disponible"
+      ],
+      "Configuration component not available for this action.": [
+        "Componente de configuración no disponible para esta acción."
+      ],
+      "Configure": [
+        "Configurar"
+      ],
+      "Configure discount coupons and checkout field formatting with the native integration fields.": [
+        "Configura cupones de descuento y el formato de los campos de pago con los campos de integración nativa."
+      ],
+      "Configure how verification codes are delivered, the visual theme, and the sender used for the login form.": [
+        "Configura cómo se entregan los códigos de verificación, el tema visual y el remitente utilizado para el formulario de inicio de sesión."
+      ],
+      "Configure Proxy API": [
+        "Configurar Proxy API"
+      ],
+      "Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ": [
+        "Configura los remitentes, integraciones, el constructor y el comportamiento general del plugin. Si necesitas ayuda, visita nuestro "
+      ],
+      "Configure the AI provider, credentials, and the default behavior used to generate messages.": [
+        "Configura el proveedor de IA, las credenciales y el comportamiento predeterminado utilizado para generar mensajes."
+      ],
+      "Configure the trigger first": [
+        "Configura primero el disparador"
+      ],
+      "Configure the WooCommerce coupon generated by this action.": [
+        "Configura el cupón de WooCommerce generado por esta acción."
+      ],
+      "Confirm": [
+        "Confirmar"
+      ],
+      "Confirmation": [
+        "Confirmación"
+      ],
+      "Connected": [
+        "Conectado"
+      ],
+      "Connection updated.": [
+        "Conexión actualizada."
+      ],
+      "Contains": [
+        "Contiene"
+      ],
+      "Content": [
+        "Contenido"
+      ],
+      "Context": [
+        "Contexto"
+      ],
+      "Continue": [
+        "Continuar"
+      ],
+      "Cook Islands": [
+        "Islas Cook"
+      ],
+      "Copy code": [
+        "Copiar código"
+      ],
+      "Costa Rica": [
+        "Costa Rica"
+      ],
+      "Could not activate the license.": [
+        "No se pudo activar la licencia."
+      ],
+      "Could not cancel the scheduled item.": [
+        "No se pudo cancelar el elemento programado."
+      ],
+      "Could not check for updates for the <strong>Joinotify</strong> plugin": [
+        "No se pudo verificar actualizaciones para el plugin <strong>Joinotify.</strong>"
+      ],
+      "Could not check for updates.": [
+        "No se pudo comprobar si hay actualizaciones."
+      ],
+      "Could not check for updates. Please try again later.": [
+        "No se pudo comprobar si hay actualizaciones. Por favor, inténtalo de nuevo más tarde."
+      ],
+      "Could not clear the debug logs.": [
+        "No se pudo borrar los registros de depuración."
+      ],
+      "Could not clear the history.": [
+        "No se pudo borrar el historial."
+      ],
+      "Could not clear the logs.": [
+        "No se pudo borrar los registros."
+      ],
+      "Could not clear the queue.": [
+        "No se pudo limpiar la cola."
+      ],
+      "Could not complete the operation.": [
+        "No se pudo completar la operación."
+      ],
+      "Could not create the workflow.": [
+        "No se pudo crear el flujo de trabajo."
+      ],
+      "Could not deactivate the license.": [
+        "No se pudo desactivar la licencia."
+      ],
+      "Could not delete the action.": [
+        "No se pudo eliminar la acción."
+      ],
+      "Could not delete the selected records.": [
+        "No se pudo eliminar los registros seleccionados."
+      ],
+      "Could not dismiss the tip.": [
+        "No se pudo descartar el consejo."
+      ],
+      "Could not export the settings.": [
+        "No se pudieron exportar los ajustes."
+      ],
+      "Could not find the provided phone number.": [
+        "No se pudo encontrar el número de teléfono proporcionado."
+      ],
+      "Could not find the variable to remove.": [
+        "No se pudo encontrar la variable para eliminar."
+      ],
+      "Could not import the settings.": [
+        "No se pudieron importar los ajustes."
+      ],
+      "Could not load actions.": [
+        "No se pudieron cargar las acciones."
+      ],
+      "Could not load the message history.": [
+        "No se pudo cargar el historial de mensajes."
+      ],
+      "Could not load the processing queue.": [
+        "No se pudo cargar la cola de procesamiento."
+      ],
+      "Could not load workflow.": [
+        "No se pudo cargar el flujo de trabajo."
+      ],
+      "Could not load workflows.": [
+        "No se pudieron cargar los flujos de trabajo."
+      ],
+      "Could not open the logs.": [
+        "No se pudieron abrir los registros."
+      ],
+      "Could not read the selected file.": [
+        "No se pudo leer el archivo seleccionado."
+      ],
+      "Could not remove the variable.": [
+        "No se pudo eliminar la variable."
+      ],
+      "Could not remove.": [
+        "No se pudo eliminar."
+      ],
+      "Could not reset.": [
+        "No se pudo restablecer."
+      ],
+      "Could not retrieve group information.": [
+        "No se pudo recuperar la información del grupo."
+      ],
+      "Could not retrieve the user email": [
+        "No se pudo recuperar el correo electrónico del usuario."
+      ],
+      "Could not retrieve the user first name": [
+        "No se pudo recuperar el nombre del usuario."
+      ],
+      "Could not retrieve the user last name": [
+        "No se pudo recuperar el apellido del usuario."
+      ],
+      "Could not run the scheduled item.": [
+        "No se pudo ejecutar el elemento programado."
+      ],
+      "Could not run the workflow test.": [
+        "No se pudo ejecutar la prueba del flujo de trabajo."
+      ],
+      "Could not save the selected trigger.": [
+        "No se pudo guardar el disparador seleccionado."
+      ],
+      "Could not save the test phone number.": [
+        "No se pudo guardar el número de teléfono de prueba."
+      ],
+      "Could not save the variable.": [
+        "No se pudo guardar la variable."
+      ],
+      "Could not save the workflow.": [
+        "No se pudo guardar el flujo de trabajo."
+      ],
+      "Could not save.": [
+        "No se pudo guardar."
+      ],
+      "Could not send one or more test messages.": [
+        "No se pudo enviar uno o más mensajes de prueba."
+      ],
+      "Could not send the test message.": [
+        "No se pudo enviar el mensaje de prueba."
+      ],
+      "Could not send the verification code.": [
+        "No se pudo enviar el código de verificación."
+      ],
+      "Could not sync the license information.": [
+        "No se pudo sincronizar la información de la licencia."
+      ],
+      "Could not sync the license.": [
+        "No se pudo sincronizar la licencia."
+      ],
+      "Could not update the connection.": [
+        "No se pudo actualizar la conexión."
+      ],
+      "Could not update the status.": [
+        "No se pudo actualizar el estado."
+      ],
+      "Could not update the workflow status.": [
+        "No se pudo actualizar el estado del flujo de trabajo."
+      ],
+      "Could not update the workflow status. Please try again.": [
+        "No se pudo actualizar el estado del flujo de trabajo. Por favor, inténtalo de nuevo."
+      ],
+      "Could not update the workflow.": [
+        "No se pudo actualizar el flujo de trabajo."
+      ],
+      "Coupon": [
+        "Cupón"
+      ],
+      "Coupon code": [
+        "Código de cupón"
+      ],
+      "Coupon does not expire": [
+        "El cupón no expira"
+      ],
+      "Coupon expires: %s": [
+        "El cupón expira: %s"
+      ],
+      "Coupon message": [
+        "Mensaje del cupón"
+      ],
+      "Coupon prefix": [
+        "Prefijo del cupón"
+      ],
+      "Coupon: %s": [
+        "Cupón: %s"
+      ],
+      "Create a new workflow": [
+        "Crear un nuevo flujo"
+      ],
+      "Create a new workflow to start automating your processes.": [
+        "Crea un nuevo flujo de trabajo para comenzar a automatizar tus procesos."
+      ],
+      "Create custom text variables mapped to post type meta keys to reuse in the flow builder.": [
+        "Crea variables de texto personalizadas mapeadas a claves meta de tipo de publicación para reutilizar en el generador de flujos."
+      ],
+      "Create dynamic messages for your automations in a simple and direct way using ChatGPT.": [
+        "Crea mensajes dinámicos para tus automatizaciones de forma sencilla y directa utilizando ChatGPT."
+      ],
+      "Create from scratch": [
+        "Crear desde cero"
+      ],
+      "Create from template": [
+        "Crear a partir de una plantilla"
+      ],
+      "Create or import a workflow, choose a trigger, and start adding actions.": [
+        "Crea o importa un flujo de trabajo, elige un desencadenante y comienza a añadir acciones."
+      ],
+      "Create with AI": [
+        "Crear con IA"
+      ],
+      "Create workflow with AI": [
+        "Crear flujo de trabajo con IA"
+      ],
+      "Create your automation workflow by importing a file.": [
+        "Crea tu flujo de trabajo de automatización importando un archivo."
+      ],
+      "Create your automation workflow from a template you choose.": [
+        "Crea tu flujo de trabajo de automatización a partir de una plantilla que elijas."
+      ],
+      "Create your automation workflow from scratch.": [
+        "Crea tu flujo de trabajo de automatización desde cero."
+      ],
+      "Created": [
+        "Creado"
+      ],
+      "Creativity from 0 (deterministic) to 2 (more creative). Leave empty to use the default.": [
+        "Creatividad de 0 (determinista) a 2 (más creativa). Deja vacío para usar el valor predeterminado."
+      ],
+      "Creativity from 0 to 2. Leave empty to use the default.": [
+        "Creatividad de 0 a 2. Deja vacío para usar el valor predeterminado."
+      ],
+      "Creativity of the responses, from 0 (deterministic) to 2 (more creative).": [
+        "Creatividad de las respuestas, de 0 (determinista) a 2 (más creativa)."
+      ],
+      "Credit card": [
+        "Tarjeta de crédito"
+      ],
+      "Critical": [
+        "Crítico"
+      ],
+      "Croatia": [
+        "Croacia"
+      ],
+      "Cron unavailable": [
+        "Cron no disponible"
+      ],
+      "Cuba": [
+        "Cuba"
+      ],
+      "CUPOM10, FREESHIPPING": [
+        "CUPOM10, FRETEGRATIS"
+      ],
+      "Curaçao": [
+        "Curazao"
+      ],
+      "cURL Error 35: SSL/TLS communication issue.": [
+        "Error cURL 35: Problema de comunicación SSL/TLS."
+      ],
+      "cURL Error: %s": [
+        "Error cURL: %s"
+      ],
+      "Custom block not available.": [
+        "Bloque personalizado no disponible."
+      ],
+      "Custom color": [
+        "Color personalizado"
+      ],
+      "Custom variables": [
+        "Variables personalizadas"
+      ],
+      "Customer email": [
+        "Correo electrónico del cliente"
+      ],
+      "Cyprus": [
+        "Chipre"
+      ],
+      "Czech Republic": [
+        "República Checa"
+      ],
+      "da Silva": [
+        "da Silva"
+      ],
+      "Daily": [
+        "Diariamente"
+      ],
+      "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)": [
+        "Daisy Avenue, 450 - Curitiba/PR - Brasil (C.P.: 80000-100)"
+      ],
+      "Danger zone": [
+        "Zona de peligro"
+      ],
+      "Date": [
+        "Fecha"
+      ],
+      "day": [
+        "día"
+      ],
+      "day(s)": [
+        "día(s)"
+      ],
+      "days": [
+        "días"
+      ],
+      "Days": [
+        "Días"
+      ],
+      "Deactivate license": [
+        "Desactivar licencia"
+      ],
+      "Debug": [
+        "Depurar"
+      ],
+      "Debug logs": [
+        "Registros de depuración"
+      ],
+      "Debug logs cleared successfully!": [
+        "¡Registros de depuración borrados con éxito!"
+      ],
+      "Debug logs retention": [
+        "Retención de logs de depuración"
+      ],
+      "Debug mode": [
+        "Modo de depuración"
+      ],
+      "Default": [
+        "Predeterminado"
+      ],
+      "Default country code": [
+        "Código predeterminado del país"
+      ],
+      "Default model": [
+        "Modelo predeterminado"
+      ],
+      "Default temperature": [
+        "Temperatura predeterminada"
+      ],
+      "Define the trigger that starts the workflow": [
+        "Define el desencadenante que inicia el flujo de trabajo"
+      ],
+      "Defines the default country used to format numbers and populate support options.": [
+        "Define el país predeterminado utilizado para formatear números y poblar opciones de soporte."
+      ],
+      "Defines the endpoint used to send media through the Proxy API.": [
+        "Define el endpoint utilizado para enviar medios a través de la API Proxy."
+      ],
+      "Defines the endpoint used to send text messages through the Proxy API.": [
+        "Define el endpoint utilizado para enviar mensajes de texto a través de la API Proxy."
+      ],
+      "Defines the value used in the billing full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.": [
+        "Define el valor utilizado en la variable de dirección completa de facturación. Puedes combinar marcadores de posición como {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, y {{ postcode }}."
+      ],
+      "Defines the value used in the shipping full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.": [
+        "Define el valor utilizado en la variable de dirección completa de envío. Puedes combinar marcadores de posición como {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, y {{ postcode }}."
+      ],
+      "Delay": [
+        "Tiempo de espera"
+      ],
+      "Delay mode": [
+        "Modo de retraso"
+      ],
+      "Delay type": [
+        "Tipo de retraso"
+      ],
+      "Delay until a fixed date": [
+        "Retrasar hasta una fecha fija"
+      ],
+      "Delete": [
+        "Eliminar"
+      ],
+      "Delete connection": [
+        "Eliminar conexión"
+      ],
+      "Delete note": [
+        "Eliminar nota"
+      ],
+      "Delete permanently": [
+        "Eliminar permanentemente"
+      ],
+      "Delete selected": [
+        "Eliminar seleccionados"
+      ],
+      "Delete selected records": [
+        "Eliminar registros seleccionados"
+      ],
+      "Delivery channel": [
+        "Canal de entrega"
+      ],
+      "Democratic Republic of the Congo": [
+        "República Democrática del Congo"
+      ],
+      "Denmark": [
+        "Dinamarca"
+      ],
+      "Describe the automation in plain language. The AI builds the trigger and steps; you review and adjust before saving.": [
+        "Describe la automatización en lenguaje sencillo. La IA construye el desencadenante y los pasos; tú revisas y ajustas antes de guardar."
+      ],
+      "Describe the automation you want to generate.": [
+        "Describe la automatización que quieres generar."
+      ],
+      "Describe the value to generate. Use {{ placeholders }} to inject the trigger context.": [
+        "Describe el valor a generar. Usa {{ placeholders }} para inyectar el contexto del disparador."
+      ],
+      "Describe what the AI should write. Use {{ placeholders }} to inject the trigger context.": [
+        "Describe lo que la IA debería escribir. Usa {{ placeholders }} para inyectar el contexto del disparador."
+      ],
+      "Describe what the snippet should do.": [
+        "Describe lo que debería hacer el fragmento."
+      ],
+      "Describe what the snippet should do. The runtime exposes $payload with the trigger context.": [
+        "Describe lo que debería hacer el fragmento. El tiempo de ejecución expone $payload con el contexto del disparador."
+      ],
+      "Describe what you want and let AI build the workflow for you.": [
+        "Describe lo que quieres y deja que la IA construya el flujo de trabajo por ti."
+      ],
+      "Description": [
+        "Descripción"
+      ],
+      "Description (optional)": [
+        "Descripción (opcional)"
+      ],
+      "Developer integration": [
+        "Integración del desarrollador"
+      ],
+      "Developer mode": [
+        "Modo desarrollador"
+      ],
+      "Diagnostics": [
+        "Diagnósticos"
+      ],
+      "Disabled": [
+        "Desactivado"
+      ],
+      "Disconnected": [
+        "Desconectado"
+      ],
+      "Discount": [
+        "Descuento"
+      ],
+      "Discount coupon": [
+        "Cupón de descuento"
+      ],
+      "Discount coupon: <span class=\"builder-placeholder\">%s</span>": [
+        "Cupón de descuento: <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Discount type": [
+        "Tipo de descuento"
+      ],
+      "Discount: %s": [
+        "Descuento: %s"
+      ],
+      "Dismiss": [
+        "Descartar"
+      ],
+      "Dispatch now": [
+        "Enviar ahora"
+      ],
+      "Displays notifications when a new version is available.": [
+        "Muestra notificaciones cuando hay una nueva versión disponible."
+      ],
+      "Djibouti": [
+        "Yibuti"
+      ],
+      "Document": [
+        "Documento"
+      ],
+      "Documentation": [
+        "Documentación"
+      ],
+      "Doe": [
+        "Doe"
+      ],
+      "Does not contain": [
+        "No contiene"
+      ],
+      "Double-click to write a note in markdown": [
+        "Haz doble clic para escribir una nota en markdown"
+      ],
+      "Download the plugin configuration as a JSON file or import it on another site. API keys and license data are not included in the export.": [
+        "Descarga la configuración del plugin como un archivo JSON o impórtala en otro sitio. Las claves API y los datos de licencia no están incluidos en la exportación."
+      ],
+      "Drag and drop a .json file": [
+        "Arrastra y suelta un archivo .json"
+      ],
+      "Drag and drop the file here": [
+        "Arrastra y suelta el archivo aquí"
+      ],
+      "Drag and drop the template JSON file or click to browse. The format must match a real Joinotify export.": [
+        "Arrastra y suelta el archivo JSON de la plantilla o haz clic para buscar. El formato debe coincidir con una exportación real de Joinotify."
+      ],
+      "Due": [
+        "Vencido"
+      ],
+      "Duplicate": [
+        "Duplicar"
+      ],
+      "Dutch Caribbean": [
+        "Caribe Neerlandés"
+      ],
+      "e.g. greeting": [
+        "p. ej. saludo"
+      ],
+      "e.g. Thank {{ wc_billing_first_name }} for order #{{ order_id }} and confirm it is being prepared.": [
+        "p. ej. Agradece a {{ wc_billing_first_name }} por el pedido #{{ order_id }} y confirma que se está preparando."
+      ],
+      "e.g. When a WooCommerce order is completed, wait 1 hour, then send the customer a WhatsApp thank-you message with the order number.": [
+        "p. ej. Cuando un pedido de WooCommerce se complete, espera 1 hora, luego envía al cliente un mensaje de agradecimiento por WhatsApp con el número de pedido."
+      ],
+      "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
+        "p. ej. Escribe un saludo de una línea para {{ wc_billing_first_name }}."
+      ],
+      "East Timor": [
+        "Timor Oriental"
+      ],
+      "Ecuador": [
+        "Ecuador"
+      ],
+      "Edit": [
+        "Editar"
+      ],
+      "Edit flow": [
+        "Editar flujo"
+      ],
+      "Edit variable": [
+        "Editar variable"
+      ],
+      "Edit workflow": [
+        "Editar flujo de trabajo"
+      ],
+      "Edit workflow title": [
+        "Editar título del flujo de trabajo"
+      ],
+      "Egypt": [
+        "Egipto"
+      ],
+      "El Salvador": [
+        "El Salvador"
+      ],
+      "Elementor": [
+        "Elementor"
+      ],
+      "EM": [
+        "EM"
+      ],
+      "Email": [
+        "Correo electrónico"
+      ],
+      "Email or username": [
+        "Correo electrónico o nombre de usuario"
+      ],
+      "Emojis": [
+        "Emojis"
+      ],
+      "Empty canvas": [
+        "Lienzo vacío"
+      ],
+      "Empty response.": [
+        "Respuesta vacía."
+      ],
+      "Enable debug mode": [
+        "Activar modo de depuración"
+      ],
+      "Enable integrations, manage dependencies, and adjust advanced options for each service.": [
+        "Habilita integraciones, gestiona dependencias y ajusta opciones avanzadas para cada servicio."
+      ],
+      "Enable JavaScript to log in with a verification code or email and password.": [
+        "Habilita JavaScript para iniciar sesión con un código de verificación o correo electrónico y contraseña."
+      ],
+      "Enable Proxy API": [
+        "Activar Proxy API"
+      ],
+      "Enable the integration to access its settings.": [
+        "Habilita la integración para acceder a su configuración."
+      ],
+      "Enable to log additional error and process details.": [
+        "Habilita para registrar detalles adicionales de errores y procesos."
+      ],
+      "Enabled": [
+        "Encendido"
+      ],
+      "End date": [
+        "Fecha de finalización"
+      ],
+      "End of workflow": [
+        "Fin del flujo de trabajo"
+      ],
+      "End the workflow at this point.": [
+        "Finaliza el flujo de trabajo en este punto."
+      ],
+      "Enter a license key before activating.": [
+        "Introduce una clave de licencia antes de activar."
+      ],
+      "Enter a password to create the account.": [
+        "Introduce una contraseña para crear la cuenta."
+      ],
+      "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
+        "Introduce un número de teléfono para recibir mensajes de prueba del creador. Usa el formato internacional y solo números."
+      ],
+      "Enter a valid email address.": [
+        "Introduce una dirección de correo electrónico válida."
+      ],
+      "Enter a valid phone number with country code.": [
+        "Introduce un número de teléfono válido con el código de país."
+      ],
+      "Enter a valid phone number. The country code will be detected automatically.": [
+        "Introduce un número de teléfono válido. El código de país se detectará automáticamente."
+      ],
+      "Enter a valid username or email address.": [
+        "Introduce un nombre de usuario o dirección de correo electrónico válida."
+      ],
+      "Enter phone number": [
+        "Introduce el número de teléfono"
+      ],
+      "Enter the %d-digit code sent to your WhatsApp.": [
+        "Introduce el código de %d dígitos enviado a tu WhatsApp."
+      ],
+      "Enter the access code": [
+        "Introduce el código de acceso"
+      ],
+      "Enter the code received on the selected phone.": [
+        "Introduce el código recibido en el teléfono seleccionado."
+      ],
+      "Enter the destination phone number that will receive the test message.": [
+        "Introduce el número de teléfono de destino que recibirá el mensaje de prueba."
+      ],
+      "Enter the field ID that collects the recipient's phone number.": [
+        "Proporciona el ID del campo que recoge el teléfono del destinatario del formulario."
+      ],
+      "Enter the license code to unlock premium features.": [
+        "Introduce el código de licencia para desbloquear funciones premium."
+      ],
+      "Enter the verification code you received.": [
+        "Introduce el código de verificación que recibiste."
+      ],
+      "Enter this form's ID to validate data processing. Available in the form's additional information.": [
+        "Proporciona el ID de este formulario para validar el procesamiento de la información. Disponible en la información adicional del formulario."
+      ],
+      "Enter your email or username": [
+        "Introduce tu correo electrónico o nombre de usuario"
+      ],
+      "Enter your license key to unlock premium features.": [
+        "Introduce tu clave de licencia para desbloquear funciones premium."
+      ],
+      "Enter your password": [
+        "Introduce tu contraseña"
+      ],
+      "Enter your password.": [
+        "Introduce tu contraseña."
+      ],
+      "Entity (post type)": [
+        "Entidad (tipo de publicación)"
+      ],
+      "Equatorial Guinea": [
+        "Guinea Ecuatorial"
+      ],
+      "error": [
+        "error"
+      ],
+      "Error": [
+        "Error"
+      ],
+      "Estonia": [
+        "Estonia"
+      ],
+      "Eswatini (Swaziland)": [
+        "Eswatini (Suazilandia)"
+      ],
+      "Ethiopia": [
+        "Etiopía"
+      ],
+      "Every 5 minutes": [
+        "Cada 5 minutos"
+      ],
+      "Every 6 hours": [
+        "Cada 6 horas"
+      ],
+      "Every history record will be permanently removed. This action cannot be undone.": [
+        "Cada registro de historial será eliminado permanentemente. Esta acción no se puede deshacer."
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Todos los elementos programados pendientes serán eliminados y nunca se ejecutarán. Esto no se puede deshacer."
+      ],
+      "Example": [
+        "Ejemplo"
+      ],
+      "Example keys": [
+        "Claves de ejemplo"
+      ],
+      "Example post content": [
+        "Contenido de publicación de ejemplo"
+      ],
+      "Example post ID (optional)": [
+        "ID de publicación de ejemplo (opcional)"
+      ],
+      "Example post title": [
+        "Título de publicación de ejemplo"
+      ],
+      "Example value (optional)": [
+        "Valor de ejemplo (opcional)"
+      ],
+      "Example: CM-0000-0000-0000": [
+        "Ejemplo: CM-0000-0000-0000"
+      ],
+      "Expiration": [
+        "Expiración"
+      ],
+      "Expiration mode": [
+        "Modo de expiración"
+      ],
+      "Expired license": [
+        "Licencia expirada"
+      ],
+      "Expires in %s": [
+        "Expira en %s"
+      ],
+      "Expires in %s - %s": [
+        "Expira en %s - %s"
+      ],
+      "Expires in %s %s": [
+        "Expira en %s %s"
+      ],
+      "Expires on": [
+        "Expira el"
+      ],
+      "Expires on: Not available": [
+        "Expira el: No disponible"
+      ],
+      "Export": [
+        "Exportar"
+      ],
+      "Export settings": [
+        "Configuraciones de exportación"
+      ],
+      "Export workflow": [
+        "Exportar flujo de trabajo"
+      ],
+      "Exporting…": [
+        "Exportando…"
+      ],
+      "Failed": [
+        "Fallido"
+      ],
+      "Failed to install or update the plugin.": [
+        "No se pudo instalar o actualizar el plugin."
+      ],
+      "Failed to send media message.": [
+        "Error al enviar mensaje de medio."
+      ],
+      "Failed to send message.": [
+        "Error al enviar el mensaje."
+      ],
+      "Failed to send OTP.": [
+        "Error al enviar el OTP."
+      ],
+      "Failed to send text message.": [
+        "Error al enviar mensaje de texto."
+      ],
+      "Falkland Islands (Malvinas)": [
+        "Islas Malvinas (Falkland)"
+      ],
+      "False": [
+        "Falso"
+      ],
+      "False branch": [
+        "Rama falsa"
+      ],
+      "Faroe Islands": [
+        "Islas Feroe"
+      ],
+      "Federated States of Micronesia": [
+        "Estados Federados de Micronesia"
+      ],
+      "Field ID": [
+        "ID del campo"
+      ],
+      "Field with ID <span class=\"builder-placeholder\">%s</span> %s: <span class=\"builder-placeholder\">%s</span>": [
+        "Campo con ID <span class=\"builder-placeholder\">%s</span> %s: <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Field with ID <span class=\"builder-placeholder\">%s</span> is empty": [
+        "Campo con ID <span class=\"builder-placeholder\">%s</span> está vacío"
+      ],
+      "Field with ID <span class=\"builder-placeholder\">%s</span> is not empty": [
+        "Campo con ID <span class=\"builder-placeholder\">%s</span> no está vacío"
+      ],
+      "Fiji": [
+        "Fiyi"
+      ],
+      "Fill in the email or username and password.": [
+        "Rellena el correo electrónico o nombre de usuario y la contraseña."
+      ],
+      "Fill in the phone number and OTP code.": [
+        "Rellena el número de teléfono y el código OTP."
+      ],
+      "Fill in the phone number and the code you received.": [
+        "Rellena el número de teléfono y el código que recibiste."
+      ],
+      "Finland": [
+        "Finlandia"
+      ],
+      "First": [
+        "Primero"
+      ],
+      "Fit": [
+        "Ajustar"
+      ],
+      "Fit view": [
+        "Vista ajustada"
+      ],
+      "Fixed amount": [
+        "Valor fijo"
+      ],
+      "Fixed cart discount": [
+        "Descuento fijo en el carrito"
+      ],
+      "Flexify Checkout": [
+        "Flexify Checkout"
+      ],
+      "Flexify Checkout - Abandoned cart recovery": [
+        "Flexify Checkout - Recuperación de carritos abandonados"
+      ],
+      "Flexify checkout events.": [
+        "Eventos de Flexify Checkout."
+      ],
+      "Flexify Checkout for WooCommerce": [
+        "Flexify Checkout para WooCommerce"
+      ],
+      "Flow name": [
+        "Nombre del flujo"
+      ],
+      "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)": [
+        "Flower Street, 123 - Curitiba/PR - Brasil (C.P.: 80000-000)"
+      ],
+      "Forgot your password?": [
+        "¿Olvidaste tu contraseña?"
+      ],
+      "Form field value": [
+        "Valor del campo del formulario"
+      ],
+      "Form ID": [
+        "ID del formulario"
+      ],
+      "Form is sent": [
+        "Formulario enviado"
+      ],
+      "Form submissions and responses.": [
+        "Envíos y respuestas del formulario."
+      ],
+      "Form submissions and sends.": [
+        "Envíos y envíos del formulario."
+      ],
+      "Form submitted": [
+        "Formulario es enviado"
+      ],
+      "Formal": [
+        "Formal"
+      ],
+      "France": [
+        "Francia"
+      ],
+      "Free shipping: %s": [
+        "Envío gratis: %s"
+      ],
+      "French Guiana": [
+        "Guayana Francesa"
+      ],
+      "French Polynesia": [
+        "Polinesia Francesa"
+      ],
+      "Friendly": [
+        "Amigable"
+      ],
+      "From": [
+        "De"
+      ],
+      "Gabon": [
+        "Gabón"
+      ],
+      "Gambia": [
+        "Gambia"
+      ],
+      "General": [
+        "General"
+      ],
+      "Generate a message with AI at trigger time and send it via WhatsApp.": [
+        "Genera un mensaje con IA en el momento del disparador y envíalo a través de WhatsApp."
+      ],
+      "Generate a named value with AI and reuse it in later messages with {{ ai:NAME }}.": [
+        "Genera un valor nombrado con IA y reutilízalo en mensajes posteriores con {{ ai:NAME }}."
+      ],
+      "Generate a named value with AI and reuse it in later messages.": [
+        "Genera un valor nombrado con IA y reutilízalo en mensajes posteriores."
+      ],
+      "Generate a new key": [
+        "Genera una nueva clave"
+      ],
+      "Generate a new key to authenticate Proxy API calls.": [
+        "Genera una nueva clave para autenticar las llamadas a la API Proxy."
+      ],
+      "Generate a unique coupon automatically": [
+        "Genera un cupón único automáticamente"
+      ],
+      "Generate a WooCommerce coupon and notify the customer.": [
+        "Genera un cupón de WooCommerce y notifica al cliente."
+      ],
+      "Generate snippet": [
+        "Generar fragmento"
+      ],
+      "Generate with AI": [
+        "Generar con IA"
+      ],
+      "Generate workflow": [
+        "Generar flujo de trabajo"
+      ],
+      "Georgia": [
+        "Georgia"
+      ],
+      "Germany": [
+        "Alemania"
+      ],
+      "Ghana": [
+        "Ghana"
+      ],
+      "Gibraltar": [
+        "Gibraltar"
+      ],
+      "Global persona / system prompt": [
+        "Persona global / aviso del sistema"
+      ],
+      "Greater than": [
+        "Mayor que"
+      ],
+      "Greater than <span class=\"builder-placeholder\">%s</span>": [
+        "Mayor que <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Greece": [
+        "Grecia"
+      ],
+      "Greenland": [
+        "Groenlandia"
+      ],
+      "Guadeloupe": [
+        "Guadalupe"
+      ],
+      "Guatemala": [
+        "Guatemala"
+      ],
+      "Guinea": [
+        "Guinea"
+      ],
+      "Guinea-Bissau": [
+        "Guinea-Bisáu"
+      ],
+      "Guyana": [
+        "Guyana"
+      ],
+      "Haiti": [
+        "Haití"
+      ],
+      "Hello {{ field_id=[FIELD_ID] }}!": [
+        "Hola {{ field_id=[FIELD_ID] }}!"
+      ],
+      "Hello {{ field_id=[name] }}! We have received your information, and a representative will contact you shortly.": [
+        "Hola {{ field_id=[nombre] }}! Recibimos su información, pronto un agente le responderá."
+      ],
+      "Hello {{ field_id=[nome] }}, check out this file!": [
+        "Hola {{ field_id=[nome] }}, ¡mira este archivo!"
+      ],
+      "Hello, this is a test message.": [
+        "Hola, este es un mensaje de prueba."
+      ],
+      "Help Center": [
+        "Centro de ayuda"
+      ],
+      "Hide password": [
+        "Ocultar contraseña"
+      ],
+      "History": [
+        "Historial"
+      ],
+      "History retention": [
+        "Retención del historial"
+      ],
+      "Honduras": [
+        "Honduras"
+      ],
+      "Hong Kong": [
+        "Hong Kong"
+      ],
+      "Hook": [
+        "Gancho"
+      ],
+      "hour": [
+        "hora"
+      ],
+      "hour(s)": [
+        "hora(s)"
+      ],
+      "hours": [
+        "horas"
+      ],
+      "Hours": [
+        "Horas"
+      ],
+      "How the verification code is sent to the user. New channels (e-mail, Telegram) can be added by extensions.": [
+        "Cómo se envía el código de verificación al usuario. Se pueden añadir nuevos canales (correo electrónico, Telegram) mediante extensiones."
+      ],
+      "How would you like to create your new workflow?": [
+        "¿Cómo te gustaría crear tu nuevo flujo de trabajo?"
+      ],
+      "Hungary": [
+        "Hungría"
+      ],
+      "Iceland": [
+        "Islandia"
+      ],
+      "If the license does not update immediately, click Sync to fetch the latest status from the server.": [
+        "Si la licencia no se actualiza de inmediato, haz clic en Sincronizar para obtener el estado más reciente del servidor."
+      ],
+      "Ignore actions already processed.": [
+        "Ignorar acciones ya procesadas."
+      ],
+      "Image": [
+        "Imagen"
+      ],
+      "Import": [
+        "Importar"
+      ],
+      "Import / export settings": [
+        "Importar / exportar configuraciones"
+      ],
+      "Import a real Joinotify export": [
+        "Importar una exportación real de Joinotify"
+      ],
+      "Import a template": [
+        "Importar un modelo"
+      ],
+      "Import file": [
+        "Importar archivo"
+      ],
+      "Import settings": [
+        "Importar configuraciones"
+      ],
+      "Import template": [
+        "Importar modelo"
+      ],
+      "Import workflow": [
+        "Importar flujo de trabajo"
+      ],
+      "Imported automation #%s": [
+        "Automatización importada #%s"
+      ],
+      "Importing...": [
+        "Importando..."
+      ],
+      "Importing…": [
+        "Importando…"
+      ],
+      "In trash": [
+        "En la papelera"
+      ],
+      "Inactive": [
+        "Inactivo"
+      ],
+      "Inactive workflow": [
+        "Flujo de trabajo inactivo"
+      ],
+      "Include the country code so the number is normalized correctly.": [
+        "Incluye el código de país para que el número se normalice correctamente."
+      ],
+      "Increase customer satisfaction by automating WhatsApp messaging with Joinotify.": [
+        "Aumenta la satisfacción del cliente automatizando los mensajes de WhatsApp con Joinotify."
+      ],
+      "India": [
+        "India"
+      ],
+      "Indonesia": [
+        "Indonesia"
+      ],
+      "info": [
+        "info"
+      ],
+      "Info": [
+        "Información"
+      ],
+      "Initializing builder": [
+        "Inicializando constructor"
+      ],
+      "Insert a text variable": [
+        "Insertar una variable de texto"
+      ],
+      "Insert variable": [
+        "Insertar variable"
+      ],
+      "Install plugin": [
+        "Instalar plugin"
+      ],
+      "Insufficient data to create the coupon.": [
+        "Datos insuficientes para crear el cupón."
+      ],
+      "Integration not active": [
+        "Integración no activa"
+      ],
+      "Integration settings": [
+        "Configuraciones de integración"
+      ],
+      "Integration:": [
+        "Integración:"
+      ],
+      "Integrations": [
+        "Integraciones"
+      ],
+      "Internal coupon description": [
+        "Descripción interna del cupón"
+      ],
+      "Internal summary": [
+        "Resumen interno"
+      ],
+      "internal use": [
+        "uso interno"
+      ],
+      "Invalid": [
+        "Inválida"
+      ],
+      "Invalid AI request.": [
+        "Solicitud de IA no válida."
+      ],
+      "Invalid country code": [
+        "Código de país no válido"
+      ],
+      "Invalid data.": [
+        "Datos inválidos."
+      ],
+      "Invalid file.": [
+        "Archivo no válido."
+      ],
+      "Invalid file. Could not read the configuration.": [
+        "Archivo no válido. No se pudo leer la configuración."
+      ],
+      "Invalid JSON.": [
+        "JSON no válido."
+      ],
+      "Invalid number": [
+        "Número no válido"
+      ],
+      "Invalid or expired OTP code.": [
+        "Código OTP no válido o expirado."
+      ],
+      "Invalid or missing API key.": [
+        "Clave de API inválida o ausente."
+      ],
+      "Invalid phone number.": [
+        "Número de teléfono no válido."
+      ],
+      "Invalid request nonce.": [
+        "Nonce de solicitud no válido."
+      ],
+      "Invalid workflow action.": [
+        "Acción de flujo de trabajo no válida."
+      ],
+      "Invalid workflow status.": [
+        "Estado de flujo de trabajo no válido."
+      ],
+      "Iran": [
+        "Irán"
+      ],
+      "Iraq": [
+        "Irak"
+      ],
+      "Ireland": [
+        "Irlanda"
+      ],
+      "Irreversible": [
+        "Irreversible"
+      ],
+      "Irreversible actions and configuration cleanup.": [
+        "Acciones irreversibles y limpieza de configuración."
+      ],
+      "Irreversible actions for clearing configuration and logs.": [
+        "Acciones irreversibles para limpiar la configuración y los registros."
+      ],
+      "Is empty": [
+        "Está vacío"
+      ],
+      "Is equal to": [
+        "Es igual a"
+      ],
+      "Is not empty": [
+        "No está vacío"
+      ],
+      "Is not equal to": [
+        "No es igual a"
+      ],
+      "Israel": [
+        "Israel"
+      ],
+      "It allows you to define a condition for an action to be executed.": [
+        "Te permite definir una condición para que se ejecute una acción."
+      ],
+      "Italic": [
+        "Cursiva"
+      ],
+      "Italy": [
+        "Italia"
+      ],
+      "items": [
+        "elementos"
+      ],
+      "Ivory Coast": [
+        "Costa de Marfil"
+      ],
+      "Japan": [
+        "Japón"
+      ],
+      "John": [
+        "Juan"
+      ],
+      "johndoe@email.com": [
+        "joaodasilva@email.com"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Joinotify is up to date.": [
+        "Joinotify está actualizado."
+      ],
+      "Joinotify messaging helpers are unavailable.": [
+        "Los ayudantes de mensajería de Joinotify no están disponibles."
+      ],
+      "Joinotify version": [
+        "Versión de Joinotify"
+      ],
+      "Jordan": [
+        "Jordania"
+      ],
+      "JSON Error: %s": [
+        "Error JSON: %s"
+      ],
+      "Kazakhstan": [
+        "Kazajistán"
+      ],
+      "Keep forever": [
+        "Mantener para siempre"
+      ],
+      "Keep the message concise, around two to four sentences.": [
+        "Mantén el mensaje conciso, alrededor de dos a cuatro oraciones."
+      ],
+      "Keep the message very short, one or two sentences.": [
+        "Mantén el mensaje muy corto, una o dos oraciones."
+      ],
+      "Kenya": [
+        "Kenia"
+      ],
+      "Key used to authenticate Proxy API calls.": [
+        "Clave utilizada para autenticar llamadas a la API Proxy."
+      ],
+      "Kiribati": [
+        "Kiribati"
+      ],
+      "Kuwait": [
+        "Kuwait"
+      ],
+      "Kyrgyzstan": [
+        "Kirguistán"
+      ],
+      "Label (optional)": [
+        "Etiqueta (opcional)"
+      ],
+      "Language model engine used to generate content. New providers can be added by extensions.": [
+        "Motor de modelo de lenguaje utilizado para generar contenido. Se pueden añadir nuevos proveedores mediante extensiones."
+      ],
+      "Lao": [
+        "Laos"
+      ],
+      "Last": [
+        "Último"
+      ],
+      "latest post": [
+        "última publicación"
+      ],
+      "Latvia": [
+        "Letonia"
+      ],
+      "Lead capture via checkout": [
+        "Captura de leads a través del checkout"
+      ],
+      "Lead capture via modal": [
+        "Captura de leads a través de modal"
+      ],
+      "Leave without saving": [
+        "¿Salir sin guardar?"
+      ],
+      "Leave without saving?": [
+        "¿Salir sin guardar?"
+      ],
+      "Lebanon": [
+        "Líbano"
+      ],
+      "Length": [
+        "Longitud"
+      ],
+      "Lesotho": [
+        "Lesoto"
+      ],
+      "Less than": [
+        "Menor que"
+      ],
+      "Less than <span class=\"builder-placeholder\">%s</span>": [
+        "Menor que <span class=\"builder-placeholder\">%s</span>"
+      ],
+      "Let your users log in securely with a verification code sent through Joinotify, offering a fast passwordless experience.": [
+        "Permite que tus usuarios inicien sesión de forma segura con un código de verificación enviado a través de Joinotify, ofreciendo una experiencia rápida sin contraseña."
+      ],
+      "Level": [
+        "Nivel"
+      ],
+      "Liberia": [
+        "Liberia"
+      ],
+      "Library": [
+        "Biblioteca"
+      ],
+      "Libya": [
+        "Libia"
+      ],
+      "License": [
+        "Licencia"
+      ],
+      "License activated successfully.": [
+        "Licencia activada con éxito."
+      ],
+      "License deactivated successfully.": [
+        "Licencia desactivada con éxito."
+      ],
+      "License deactivated.": [
+        "Licencia desactivada."
+      ],
+      "License details": [
+        "Detalles de la licencia"
+      ],
+      "License expires in: %s": [
+        "La licencia expira en: %s"
+      ],
+      "License expires in: Not available": [
+        "La licencia expira en: No disponible"
+      ],
+      "License information": [
+        "Información de la licencia"
+      ],
+      "License information updated successfully.": [
+        "Información de la licencia actualizada con éxito."
+      ],
+      "License key": [
+        "Clave de licencia"
+      ],
+      "License key is required.": [
+        "Se requiere clave de licencia."
+      ],
+      "License status": [
+        "Estado de la licencia"
+      ],
+      "Liechtenstein": [
+        "Liechtenstein"
+      ],
+      "Lithuania": [
+        "Lituania"
+      ],
+      "Load keys": [
+        "Cargar claves"
+      ],
+      "Load workflow": [
+        "Cargar flujo de trabajo"
+      ],
+      "Loading actions...": [
+        "Cargando acciones..."
+      ],
+      "Loading flow canvas": [
+        "Cargando lienzo de flujo"
+      ],
+      "Loading senders...": [
+        "Cargando remitentes..."
+      ],
+      "Loading the builder": [
+        "Cargando el constructor"
+      ],
+      "Loading the license interface...": [
+        "Cargando la interfaz de licencia..."
+      ],
+      "Loading the settings interface...": [
+        "Cargando la interfaz de configuración..."
+      ],
+      "Loading trigger...": [
+        "Cargando activador..."
+      ],
+      "Loading…": [
+        "Cargando…"
+      ],
+      "Location and phone numbers": [
+        "Ubicación y números de teléfono"
+      ],
+      "Log file ready for download.": [
+        "Archivo de registro listo para descargar."
+      ],
+      "Log in": [
+        "Iniciar sesión"
+      ],
+      "Log in to continue": [
+        "Inicia sesión para continuar"
+      ],
+      "Log in with a verification code": [
+        "Iniciar sesión con un código de verificación"
+      ],
+      "Log in with WhatsApp": [
+        "Iniciar sesión con WhatsApp"
+      ],
+      "Login successful.": [
+        "Inicio de sesión exitoso."
+      ],
+      "Logs": [
+        "Registros"
+      ],
+      "Logs cleared successfully.": [
+        "Registros borrados con éxito."
+      ],
+      "Long": [
+        "Largo"
+      ],
+      "Lost cart": [
+        "Carrito perdido"
+      ],
+      "Lowercase letters, numbers, and underscores. Used as the token below.": [
+        "Letras minúsculas, números y guiones bajos. Usado como el token a continuación."
+      ],
+      "Luxembourg": [
+        "Luxemburgo"
+      ],
+      "Macau": [
+        "Macao"
+      ],
+      "Madagascar": [
+        "Madagascar"
+      ],
+      "Maintains support integrations and advanced contracts available.": [
+        "Mantiene integraciones de soporte y contratos avanzados disponibles."
+      ],
+      "Maintenance and preference": [
+        "Mantenimiento y preferencias"
+      ],
+      "Maintenance, logs, updates, and environment details.": [
+        "Mantenimiento, registros, actualizaciones y detalles del entorno."
+      ],
+      "Malawi": [
+        "Malaui"
+      ],
+      "Malaysia": [
+        "Malasia"
+      ],
+      "Maldives": [
+        "Maldivas"
+      ],
+      "Mali": [
+        "Malí"
+      ],
+      "Malta": [
+        "Malta"
+      ],
+      "Manage senders, validate new connections, and send test messages.": [
+        "Gestionar remitentes, validar nuevas conexiones y enviar mensajes de prueba."
+      ],
+      "Manage workflows": [
+        "Gestionar flujos de trabajo"
+      ],
+      "Map an entity (post type) and a meta key to a named variable. The variable becomes available in the flow builder and is replaced at runtime with the matching post meta value.": [
+        "Mapear una entidad (tipo de publicación) y una clave meta a una variable nombrada. La variable se vuelve disponible en el generador de flujos y se reemplaza en tiempo de ejecución con el valor meta de publicación correspondiente."
+      ],
+      "Map an entity and meta key to a named variable available in the builder.": [
+        "Mapear una entidad y clave meta a una variable nombrada disponible en el generador."
+      ],
+      "Mark as active": [
+        "Marcar como activo"
+      ],
+      "Mark as inactive": [
+        "Marcar como inactivo"
+      ],
+      "Marshall Islands": [
+        "Islas Marshall"
+      ],
+      "Martinique": [
+        "Martinica"
+      ],
+      "Mauritania": [
+        "Mauritania"
+      ],
+      "Mauritius": [
+        "Mauricio"
+      ],
+      "Mayotte": [
+        "Mayotte"
+      ],
+      "Measurement unit applied to the border radius value.": [
+        "Unidad de medida aplicada al valor del radio de borde."
+      ],
+      "Media": [
+        "Medios"
+      ],
+      "Media caption": [
+        "Subtítulo de medios"
+      ],
+      "Media caption... Use {{ placeholders }}": [
+        "Subtítulo de medios... Usa {{ placeholders }}"
+      ],
+      "Media message route": [
+        "Ruta del mensaje de medios"
+      ],
+      "Media message sent successfully.": [
+        "Mensaje de medios enviado con éxito."
+      ],
+      "Media route": [
+        "Ruta de medios"
+      ],
+      "Media type": [
+        "Tipo de medio"
+      ],
+      "Media URL": [
+        "URL del medio"
+      ],
+      "Media: %s": [
+        "Medios: %s"
+      ],
+      "Medium": [
+        "Medio"
+      ],
+      "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews": [
+        "Camiseta de algodón para hombre (Producto de muestra): %s/product/sample-t-shirt/#reviews"
+      ],
+      "Message": [
+        "Mensaje"
+      ],
+      "Message details": [
+        "Detalles del mensaje"
+      ],
+      "Message history": [
+        "Historial de mensajes"
+      ],
+      "Message history recording is disabled. Enable it in Settings → About to start logging new messages.": [
+        "La grabación del historial de mensajes está desactivada. Actívala en Configuración → Acerca de para comenzar a registrar nuevos mensajes."
+      ],
+      "Message sent.": [
+        "Mensaje enviado."
+      ],
+      "Messages": [
+        "Mensajes"
+      ],
+      "Meta key": [
+        "Clave del meta dato"
+      ],
+      "Mexico": [
+        "México"
+      ],
+      "minute": [
+        "minuto"
+      ],
+      "minute(s)": [
+        "minuto(s)"
+      ],
+      "minutes": [
+        "minutos"
+      ],
+      "Minutes": [
+        "Minutos"
+      ],
+      "Missing post field.": [
+        "Campo de publicación faltante."
+      ],
+      "Missing workflow_content field.": [
+        "Campo workflow_content faltante."
+      ],
+      "Model": [
+        "Modelo"
+      ],
+      "Model used when a workflow node does not override it. The list is fetched from OpenAI and can be refreshed.": [
+        "Modelo utilizado cuando un nodo de flujo de trabajo no lo anula. La lista se obtiene de OpenAI y se puede actualizar."
+      ],
+      "Moldova": [
+        "Moldavia"
+      ],
+      "Monaco": [
+        "Mónaco"
+      ],
+      "Mongolia": [
+        "Mongolia"
+      ],
+      "Montenegro": [
+        "Montenegro"
+      ],
+      "month": [
+        "mes"
+      ],
+      "month(s)": [
+        "mes(es)"
+      ],
+      "months": [
+        "meses"
+      ],
+      "Months": [
+        "Meses"
+      ],
+      "more": [
+        "más"
+      ],
+      "Morocco": [
+        "Marruecos"
+      ],
+      "Move to trash": [
+        "Mover a la papelera"
+      ],
+      "Mozambique": [
+        "Mozambique"
+      ],
+      "My automation": [
+        "Mi automatización"
+      ],
+      "My automation #%s": [
+        "Mi automatización #%s"
+      ],
+      "My automation #129720": [
+        "Mi automatización #129720"
+      ],
+      "Myanmar": [
+        "Myanmar"
+      ],
+      "Name": [
+        "Nombre"
+      ],
+      "Namibia": [
+        "Namibia"
+      ],
+      "Nauru": [
+        "Nauru"
+      ],
+      "Nepal": [
+        "Nepal"
+      ],
+      "Netherlands": [
+        "Países Bajos"
+      ],
+      "Never expires": [
+        "Nunca expira"
+      ],
+      "New Caledonia": [
+        "Nueva Caledonia"
+      ],
+      "New flow": [
+        "Nuevo flujo"
+      ],
+      "New order": [
+        "Nuevo pedido"
+      ],
+      "New order (Processing)": [
+        "Nuevo pedido (Procesando)"
+      ],
+      "New subscription created": [
+        "Nueva suscripción creada"
+      ],
+      "New user registration": [
+        "Nuevo registro de usuario"
+      ],
+      "New variable": [
+        "Nueva variable"
+      ],
+      "New workflow": [
+        "Nuevo flujo de trabajo"
+      ],
+      "New Zealand": [
+        "Nueva Zelanda"
+      ],
+      "Next": [
+        "Siguiente"
+      ],
+      "Next action": [
+        "Siguiente acción"
+      ],
+      "Next month": [
+        "Próximo mes"
+      ],
+      "Nicaragua": [
+        "Nicaragua"
+      ],
+      "Niger": [
+        "Níger"
+      ],
+      "Nigeria": [
+        "Nigeria"
+      ],
+      "Niue": [
+        "Niue"
+      ],
+      "No": [
+        "No"
+      ],
+      "No action selected": [
+        "No se ha seleccionado ninguna acción"
+      ],
+      "No action will be taken upon reaching this point.": [
+        "No se tomará ninguna acción al llegar a este punto."
+      ],
+      "No actions available.": [
+        "No hay acciones disponibles."
+      ],
+      "No AI provider is available.": [
+        "No hay proveedor de IA disponible."
+      ],
+      "No AI provider is configured. Set it up in Settings → Integrations.": [
+        "No hay proveedor de IA configurado. Configúralo en Ajustes → Integraciones."
+      ],
+      "No available phone number was found for registration. Register it using the link: %s": [
+        "No se encontró ningún número de teléfono disponible para el registro. Regístralo utilizando el enlace: %s"
+      ],
+      "No code available.": [
+        "Ningún código disponible."
+      ],
+      "No condition available for this action": [
+        "Ninguna condición disponible para esta acción"
+      ],
+      "No condition has been set for this action.": [
+        "Ninguna condición fue definida para esta acción."
+      ],
+      "No conditions for this trigger": [
+        "No hay condiciones para este desencadenador"
+      ],
+      "No configuration required": [
+        "No se requiere configuración"
+      ],
+      "No custom variable yet. Click “Add variable” to create your first one.": [
+        "Aún no hay variable personalizada. Haz clic en “Agregar variable” para crear la tuya primera."
+      ],
+      "No entries match the current filters.": [
+        "No hay entradas que coincidan con los filtros actuales."
+      ],
+      "No example post or meta keys were found for this entity.": [
+        "No se encontraron publicaciones de ejemplo ni claves meta para esta entidad."
+      ],
+      "No flow found in trash.": [
+        "Ningún flujo encontrado en la papelera."
+      ],
+      "No flow found.": [
+        "Ningún flujo encontrado."
+      ],
+      "No history records match the current filters.": [
+        "No hay registros de historial que coincidan con los filtros actuales."
+      ],
+      "No integration": [
+        "Sin integración"
+      ],
+      "No integrations found.": [
+        "No se encontraron integraciones."
+      ],
+      "No item purchased.": [
+        "Ningún artículo adquirido."
+      ],
+      "No Joinotify sender is configured to deliver the code.": [
+        "No hay un remitente de Joinotify configurado para entregar el código."
+      ],
+      "No license key found to sync.": [
+        "No se encontró ninguna clave de licencia para sincronizar."
+      ],
+      "No logs available.": [
+        "No hay registros disponibles."
+      ],
+      "No messages found": [
+        "No se encontraron mensajes"
+      ],
+      "No meta keys were found for this entity.": [
+        "No se encontraron claves meta para esta entidad."
+      ],
+      "No options available": [
+        "No hay opciones disponibles"
+      ],
+      "No OTP delivery channel is available.": [
+        "No hay canal de entrega de OTP disponible."
+      ],
+      "No phone available": [
+        "No hay teléfono disponible"
+      ],
+      "No placeholders available.": [
+        "No hay marcadores de posición disponibles."
+      ],
+      "No products selected yet.": [
+        "No se han seleccionado productos aún."
+      ],
+      "No records selected.": [
+        "No se han seleccionado registros."
+      ],
+      "No scheduled item selected.": [
+        "No se ha seleccionado ningún elemento programado."
+      ],
+      "No sender available": [
+        "No hay remitente disponible"
+      ],
+      "No templates available.": [
+        "No hay plantillas disponibles."
+      ],
+      "No test phone number registered.": [
+        "No hay número de teléfono de prueba registrado."
+      ],
+      "No trigger": [
+        "Sin desencadenador"
+      ],
+      "No triggers available for this integration.": [
+        "No hay desencadenadores disponibles para esta integración."
+      ],
+      "No validated sender yet.": [
+        "No hay remitente validado aún."
+      ],
+      "No variables available.": [
+        "No hay variables disponibles."
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "No hay pasos de flujo de trabajo esperando para ejecutarse."
+      ],
+      "No workflows found": [
+        "No se encontraron flujos de trabajo"
+      ],
+      "No workflows match the current filters. Create a new workflow or switch tabs to see other results.": [
+        "No hay flujos de trabajo que coincidan con los filtros actuales. Crea un nuevo flujo de trabajo o cambia de pestaña para ver otros resultados."
+      ],
+      "No workflows selected.": [
+        "No se han seleccionado flujos de trabajo."
+      ],
+      "Node settings": [
+        "Configuración del nodo"
+      ],
+      "None": [
+        "Ninguno"
+      ],
+      "None selected": [
+        "Ninguno seleccionado"
+      ],
+      "Norfolk Island": [
+        "Isla Norfolk"
+      ],
+      "North Korea": [
+        "Corea del Norte"
+      ],
+      "North Macedonia": [
+        "Macedonia del Norte"
+      ],
+      "Norway": [
+        "Noruega"
+      ],
+      "Not available": [
+        "No disponible"
+      ],
+      "Nothing in the queue": [
+        "Nada en la cola"
+      ],
+      "Notice": [
+        "Aviso"
+      ],
+      "Notify when WhatsApp disconnects": [
+        "Notificar cuando WhatsApp se desconecte"
+      ],
+      "Number used as the default destination in test mailings. Please only include numbers with country code + area code.": [
+        "Número utilizado como destino predeterminado en los envíos de prueba. Por favor, incluye solo números con código de país + código de área."
+      ],
+      "of": [
+        "de"
+      ],
+      "Off": [
+        "Apagar"
+      ],
+      "ok": [
+        "ok"
+      ],
+      "Oman": [
+        "Omán"
+      ],
+      "On": [
+        "Encender"
+      ],
+      "Only conditions and operators supported by the engine for this trigger are shown.": [
+        "Solo se muestran las condiciones y operadores compatibles con el motor para este desencadenador."
+      ],
+      "Open documentation": [
+        "Abrir documentación"
+      ],
+      "Open help center": [
+        "Abrir centro de ayuda"
+      ],
+      "Open integration settings": [
+        "Abrir configuración de integración"
+      ],
+      "Open trigger actions": [
+        "Abrir acciones del desencadenador"
+      ],
+      "OpenAI": [
+        "OpenAI"
+      ],
+      "OpenAI API key": [
+        "Clave API de OpenAI"
+      ],
+      "OpenAI API key is not configured.": [
+        "La clave API de OpenAI no está configurada."
+      ],
+      "OpenAI did not return any compatible models.": [
+        "OpenAI no devolvió ningún modelo compatible."
+      ],
+      "OpenAI request failed with status %d.": [
+        "La solicitud a OpenAI falló con el estado %d."
+      ],
+      "OpenAI returned an empty response.": [
+        "OpenAI devolvió una respuesta vacía."
+      ],
+      "OpenSSL extension": [
+        "Extensión OpenSSL"
+      ],
+      "Operational plugin settings and development flags.": [
+        "Configuraciones operativas del plugin y banderas de desarrollo."
+      ],
+      "Operator": [
+        "Operador"
+      ],
+      "Optional rules or context for the AI (brand voice, constraints, product details).": [
+        "Reglas opcionales o contexto para la IA (voz de marca, restricciones, detalles del producto)."
+      ],
+      "Optional rules, tone, and context for the AI.": [
+        "Reglas opcionales, tono y contexto para la IA."
+      ],
+      "Optional text sent together with the media.": [
+        "Texto opcional enviado junto con el medio."
+      ],
+      "Options": [
+        "Opciones"
+      ],
+      "Options have been reset.": [
+        "Las opciones han sido restablecidas."
+      ],
+      "Or click to choose the exported Joinotify file.": [
+        "O haga clic para elegir el archivo exportado de Joinotify."
+      ],
+      "Or click to select the template file.": [
+        "O haga clic para seleccionar el archivo de plantilla."
+      ],
+      "Or sign in with email": [
+        "O inicie sesión con correo electrónico"
+      ],
+      "Order abandoned": [
+        "Pedido abandonado"
+      ],
+      "Order completed": [
+        "Pedido completado"
+      ],
+      "Order fully refunded": [
+        "Pedido totalmente reembolsado"
+      ],
+      "Order paid": [
+        "Pedido pagado"
+      ],
+      "Order partially refunded": [
+        "Pedido parcialmente reembolsado"
+      ],
+      "Order status": [
+        "Estado del pedido"
+      ],
+      "Order status changed": [
+        "Estado de un pedido cambiado"
+      ],
+      "Order total": [
+        "Total del pedido"
+      ],
+      "Orders, status changes and purchase events.": [
+        "Pedidos, cambios de estado y eventos de compra."
+      ],
+      "Other": [
+        "Otro"
+      ],
+      "OTP": [
+        "OTP"
+      ],
+      "OTP Login - Passwordless authentication": [
+        "Inicio de sesión OTP - Autenticación sin contraseña"
+      ],
+      "Override the default model for this node only.": [
+        "Sobrescribir el modelo predeterminado solo para este nodo."
+      ],
+      "Page": [
+        "Página"
+      ],
+      "Pakistan": [
+        "Pakistán"
+      ],
+      "Palau": [
+        "Palaos"
+      ],
+      "Palestine": [
+        "Palestina"
+      ],
+      "Panama": [
+        "Panamá"
+      ],
+      "Papua New Guinea": [
+        "Papúa Nueva Guinea"
+      ],
+      "Paraguay": [
+        "Paraguay"
+      ],
+      "Parent flow:": [
+        "Flujo padre:"
+      ],
+      "Password": [
+        "Contraseña"
+      ],
+      "Password reset request": [
+        "Solicitud de restablecimiento de contraseña"
+      ],
+      "Passwordless login settings": [
+        "Configuración de inicio de sesión sin contraseña"
+      ],
+      "Paste the code you received after purchase.": [
+        "Pega el código que recibiste después de la compra."
+      ],
+      "Paste the exported JSON here": [
+        "Pega el JSON exportado aquí"
+      ],
+      "Paste the license key you received after purchase and click Activate to unlock all features.": [
+        "Pega la clave de licencia que recibiste después de la compra y haz clic en Activar para desbloquear todas las funciones."
+      ],
+      "Path of the route used to send messages with media.": [
+        "Ruta utilizada para enviar mensajes con medios."
+      ],
+      "Pause the workflow before the next step.": [
+        "Pausa el flujo de trabajo antes del siguiente paso."
+      ],
+      "Payment method": [
+        "Forma de pago"
+      ],
+      "Payment processed by PayPal": [
+        "Pago procesado por PayPal"
+      ],
+      "Percentage": [
+        "Porcentual"
+      ],
+      "Percentage discount": [
+        "Descuento porcentual"
+      ],
+      "Period": [
+        "Período"
+      ],
+      "Period delay": [
+        "Retraso del período"
+      ],
+      "Persona / system message": [
+        "Mensaje de persona / sistema"
+      ],
+      "Peru": [
+        "Perú"
+      ],
+      "Philippines": [
+        "Filipinas"
+      ],
+      "Phone number": [
+        "Número de teléfono"
+      ],
+      "Phone number or a placeholder that resolves to one.": [
+        "Número de teléfono o un marcador de posición que se resuelve en uno."
+      ],
+      "Phone number that will receive the test WhatsApp message.": [
+        "Número de teléfono que recibirá el mensaje de prueba de WhatsApp."
+      ],
+      "Phone numbers already validated and available for use in flows.": [
+        "Números de teléfono ya validados y disponibles para su uso en flujos."
+      ],
+      "Phone validated.": [
+        "Teléfono validado."
+      ],
+      "Phones": [
+        "Teléfonos"
+      ],
+      "Phones already validated and available for use in workflows.": [
+        "Teléfonos ya validados y disponibles para su uso en flujos de trabajo."
+      ],
+      "PHP code": [
+        "Código PHP"
+      ],
+      "PHP snippet": [
+        "Fragmento PHP"
+      ],
+      "PHP Snippet": [
+        "Snippet PHP"
+      ],
+      "PHP snippets execute inside the workflow runtime. Only trusted administrators should edit this code.": [
+        "Los fragmentos PHP se ejecutan dentro del tiempo de ejecución del flujo de trabajo. Solo los administradores de confianza deben editar este código."
+      ],
+      "PHP version": [
+        "Versión de PHP"
+      ],
+      "Pick a color": [
+        "Elige un color"
+      ],
+      "Pick base color": [
+        "Elige el color base"
+      ],
+      "Pick base shade": [
+        "Elige el tono base"
+      ],
+      "Pick shade %s": [
+        "Elige el tono %s"
+      ],
+      "Pixel": [
+        "Píxel"
+      ],
+      "Placeholders": [
+        "Marcadores de posición"
+      ],
+      "Please enter a number": [
+        "Por favor, introduce un número"
+      ],
+      "Please wait a moment while we load the data.": [
+        "Por favor, espera un momento mientras cargamos los datos."
+      ],
+      "Please wait before requesting another code.": [
+        "Por favor, espera antes de solicitar otro código."
+      ],
+      "Plugin activated successfully.": [
+        "Plugin activado con éxito."
+      ],
+      "Plugin installed and activated successfully.": [
+        "Plugin instalado y activado con éxito."
+      ],
+      "Plugin settings": [
+        "Configuración del plugin"
+      ],
+      "Plugin slug and URL are required.": [
+        "Se requieren el slug y la URL del plugin."
+      ],
+      "Plugin slug is required.": [
+        "Se requiere el slug del plugin."
+      ],
+      "Plugin updates": [
+        "Actualizaciones del plugin"
+      ],
+      "plugin_version missing; version normalized automatically.": [
+        "plugin_version faltante; versión normalizada automáticamente."
+      ],
+      "Plugin's basic preferences, sending proxy, and WhatsApp notifications.": [
+        "Preferencias básicas del plugin, envío de proxy y notificaciones de WhatsApp."
+      ],
+      "Poland": [
+        "Polonia"
+      ],
+      "Portugal": [
+        "Portugal"
+      ],
+      "Post published": [
+        "Publicación realizada"
+      ],
+      "Post status changed": [
+        "La publicación tiene el estado cambiado"
+      ],
+      "Post type": [
+        "Tipo de publicación"
+      ],
+      "Prefix used when Joinotify generates a coupon code automatically.": [
+        "Prefijo utilizado cuando Joinotify genera un código de cupón automáticamente."
+      ],
+      "Prevents the same action from being processed again when the trigger is repeated.": [
+        "Evita que la misma acción se procese de nuevo cuando se repite el disparador."
+      ],
+      "Previous": [
+        "Anterior"
+      ],
+      "Previous month": [
+        "Mes anterior"
+      ],
+      "Primary color": [
+        "Color primario"
+      ],
+      "Processing queue": [
+        "Procesando cola"
+      ],
+      "Product search is unavailable.": [
+        "La búsqueda de productos no está disponible."
+      ],
+      "Product SKU": [
+        "SKU del producto"
+      ],
+      "Prompt": [
+        "Sugerencia"
+      ],
+      "Prompt / instructions": [
+        "Sugerencia / instrucciones"
+      ],
+      "Provide a valid variable name.": [
+        "Proporciona un nombre de variable válido."
+      ],
+      "Proxy API": [
+        "API proxy"
+      ],
+      "Purchased products": [
+        "Productos comprados"
+      ],
+      "Qatar": [
+        "Catar"
+      ],
+      "Queued": [
+        "En cola"
+      ],
+      "Quick help": [
+        "Ayuda rápida"
+      ],
+      "Quick Tools": [
+        "Herramientas rápidas"
+      ],
+      "Recipient": [
+        "Destinatario"
+      ],
+      "Recipient field ID": [
+        "ID del campo de destinatario"
+      ],
+      "Recipient phone": [
+        "Teléfono del destinatario"
+      ],
+      "Record every dispatched WhatsApp message so it can be audited from the History screen.": [
+        "Registra cada mensaje de WhatsApp enviado para que pueda ser auditado desde la pantalla de Historial."
+      ],
+      "Recover unfinished sales, send the Pix code via WhatsApp and optimize checkout, ensuring more conversions.": [
+        "Recupera ventas no finalizadas, envía el código Pix a través de WhatsApp y optimiza el proceso de pago, asegurando más conversiones."
+      ],
+      "Recovery link from abandoned cart": [
+        "Enlace de recuperación de carrito abandonado."
+      ],
+      "Redo": [
+        "Rehacer"
+      ],
+      "Redo (Ctrl+Shift+Z)": [
+        "Rehacer (Ctrl+Shift+Z)"
+      ],
+      "Refresh": [
+        "Actualizar"
+      ],
+      "Refresh connection": [
+        "Actualizar conexión"
+      ],
+      "Refresh models": [
+        "Actualizar modelos"
+      ],
+      "Refreshing connection": [
+        "Actualizando conexión"
+      ],
+      "Refund amount": [
+        "Valor del reembolso"
+      ],
+      "Register": [
+        "Registrar"
+      ],
+      "Register new phone": [
+        "Registrar nuevo teléfono"
+      ],
+      "Register phone": [
+        "Registrar teléfono"
+      ],
+      "Registered Joinotify number used to deliver OTP codes. Leave on the first available sender to use the default.": [
+        "Número de Joinotify registrado utilizado para enviar códigos OTP. Deja en el primer remitente disponible para usar el predeterminado."
+      ],
+      "Registered senders": [
+        "Remitentes registrados"
+      ],
+      "REM": [
+        "REM"
+      ],
+      "Remember me": [
+        "Recuérdame"
+      ],
+      "Remove": [
+        "Eliminar"
+      ],
+      "Remove sender": [
+        "Eliminar remitente"
+      ],
+      "Remove variable": [
+        "Eliminar variable"
+      ],
+      "Renewal payment failed": [
+        "El pago de la renovación falló"
+      ],
+      "Renewal payment received": [
+        "Pago de la renovación recibido"
+      ],
+      "Replace information with ": [
+        "Reemplace información con "
+      ],
+      "Republic of the Congo": [
+        "República del Congo"
+      ],
+      "Request": [
+        "Solicitud"
+      ],
+      "Request failed.": [
+        "Solicitud fallida."
+      ],
+      "Required configuration for this trigger to run correctly.": [
+        "Configuración requerida para que este disparador funcione correctamente."
+      ],
+      "Resend code": [
+        "Reenviar código"
+      ],
+      "Resend code in": [
+        "Reenviar código en"
+      ],
+      "Reset": [
+        "Restablecer"
+      ],
+      "Reset base shade override": [
+        "Restablecer anulación de tono base"
+      ],
+      "Reset settings": [
+        "Restablecer configuraciones"
+      ],
+      "Resize": [
+        "Redimensionar"
+      ],
+      "Response code": [
+        "Código de respuesta"
+      ],
+      "Restore": [
+        "Restaurar"
+      ],
+      "Restore default": [
+        "Restaurar predeterminado"
+      ],
+      "Retrieve the cart contact's email address.": [
+        "Recuperar la dirección de correo electrónico del contacto del carrito."
+      ],
+      "Retrieve the cart contact's first name.": [
+        "Recuperar el nombre del contacto del carrito."
+      ],
+      "Retrieve the cart contact's last name.": [
+        "Recuperar el apellido del contacto del carrito."
+      ],
+      "Retrieve the cart contact's phone number.": [
+        "Recuperar el número de teléfono del contacto del carrito."
+      ],
+      "Retrieve the cart total amount.": [
+        "Recuperar el importe total del carrito."
+      ],
+      "Retrieve the user's full billing address (format configurable in the WooCommerce options).": [
+        "Recuperar la dirección de facturación completa del usuario (formato configurable en las opciones de WooCommerce)."
+      ],
+      "Retrieve the user's full shipping address (format configurable in the WooCommerce options).": [
+        "Recuperar la dirección de envío completa del usuario (formato configurable en las opciones de WooCommerce)."
+      ],
+      "Retry queue": [
+        "Reintentar cola"
+      ],
+      "Réunion": [
+        "Reunión"
+      ],
+      "Reuse the generated value in any later message with:": [
+        "Reutilizar el valor generado en cualquier mensaje posterior con:"
+      ],
+      "Review your current license status and refresh it whenever needed.": [
+        "Revisa el estado actual de tu licencia y actualízalo siempre que sea necesario."
+      ],
+      "Romania": [
+        "Rumania"
+      ],
+      "Rounding applied to cards, buttons, and form fields.": [
+        "Redondeo aplicado a tarjetas, botones y campos de formulario."
+      ],
+      "Route path used to send text messages.": [
+        "Ruta utilizada para enviar mensajes de texto."
+      ],
+      "Rule data": [
+        "Datos de la regla"
+      ],
+      "Run a PHP snippet during the workflow.": [
+        "Ejecutar un fragmento de PHP durante el flujo de trabajo."
+      ],
+      "Run test": [
+        "Ejecutar prueba"
+      ],
+      "Russia": [
+        "Rusia"
+      ],
+      "Rwanda": [
+        "Ruanda"
+      ],
+      "Saint Barthélemy": [
+        "San Bartolomé"
+      ],
+      "Saint Helena": [
+        "Santa Elena"
+      ],
+      "Saint Martin": [
+        "San Martín"
+      ],
+      "Saint Pierre and Miquelon": [
+        "San Pedro y Miquelón"
+      ],
+      "Samoa": [
+        "Samoa"
+      ],
+      "Sample value shown in the builder": [
+        "Valor de muestra mostrado en el constructor"
+      ],
+      "San Marino": [
+        "San Marino"
+      ],
+      "São Tomé and Príncipe": [
+        "Santo Tomé y Príncipe"
+      ],
+      "Saudi Arabia": [
+        "Arabia Saudita"
+      ],
+      "Save": [
+        "Guardar"
+      ],
+      "Save and leave": [
+        "Guardar y salir"
+      ],
+      "Save and run test": [
+        "Guardar y ejecutar prueba"
+      ],
+      "Save changes": [
+        "Guardar cambios"
+      ],
+      "Save flow": [
+        "Guardar flujo"
+      ],
+      "Save the workflow before activating it.": [
+        "Guarda el flujo de trabajo antes de activarlo."
+      ],
+      "Saved": [
+        "Guardado"
+      ],
+      "Saving workflow...": [
+        "Guardando flujo de trabajo..."
+      ],
+      "Saving...": [
+        "Guardando..."
+      ],
+      "Saving…": [
+        "Guardando…"
+      ],
+      "Scheduled": [
+        "Programado"
+      ],
+      "Scheduled date": [
+        "Fecha programada"
+      ],
+      "Scheduled delay": [
+        "Retraso programado"
+      ],
+      "Scheduled for": [
+        "Programado para"
+      ],
+      "Scheduler": [
+        "Programador"
+      ],
+      "Search": [
+        "Buscar"
+      ],
+      "Search actions": [
+        "Buscar acciones"
+      ],
+      "Search by categories or names.": [
+        "Busque por categorías o nombres."
+      ],
+      "Search entity…": [
+        "Buscar entidad…"
+      ],
+      "Search flows": [
+        "Buscar flujos"
+      ],
+      "Search integration": [
+        "Buscar integración"
+      ],
+      "Search message, context or hook…": [
+        "Buscar mensaje, contexto o gancho…"
+      ],
+      "Search products": [
+        "Buscar productos"
+      ],
+      "Search recipient or sender": [
+        "Buscar destinatario o remitente"
+      ],
+      "Search templates": [
+        "Buscar plantillas"
+      ],
+      "Search variables...": [
+        "Buscar variables..."
+      ],
+      "Search workflow, recipient or action": [
+        "Buscar flujo de trabajo, destinatario o acción"
+      ],
+      "Search workflows": [
+        "Buscar flujos de trabajo"
+      ],
+      "Search workflows...": [
+        "Buscar flujos de trabajo..."
+      ],
+      "Search...": [
+        "Buscar..."
+      ],
+      "Searching…": [
+        "Buscando…"
+      ],
+      "second": [
+        "segundo"
+      ],
+      "second(s)": [
+        "segundo(s)"
+      ],
+      "seconds": [
+        "segundos"
+      ],
+      "Seconds": [
+        "Segundos"
+      ],
+      "Secret key used to authenticate requests to OpenAI. Find it at platform.openai.com.": [
+        "Clave secreta utilizada para autenticar solicitudes a OpenAI. Encuéntrala en platform.openai.com."
+      ],
+      "Secure access": [
+        "Acceso seguro"
+      ],
+      "Security warning": [
+        "Advertencia de seguridad"
+      ],
+      "Select": [
+        "Seleccionar"
+      ],
+      "Select a condition": [
+        "Seleccione una condición"
+      ],
+      "Select a date": [
+        "Seleccione una fecha"
+      ],
+      "Select a node to edit its settings.": [
+        "Selecciona un nodo para editar su configuración."
+      ],
+      "Select a phone": [
+        "Selecciona un teléfono"
+      ],
+      "Select a sender": [
+        "Selecciona un remitente"
+      ],
+      "Select a value": [
+        "Selecciona un valor"
+      ],
+      "Select a workflow action to configure it.": [
+        "Selecciona una acción de flujo de trabajo para configurarla."
+      ],
+      "Select all visible messages": [
+        "Seleccionar todos los mensajes visibles"
+      ],
+      "Select all visible workflows": [
+        "Selecciona todos los flujos de trabajo visibles"
+      ],
+      "Select an available phone for registration and validation.": [
+        "Selecciona un teléfono disponible para registro y validación."
+      ],
+      "Select an entity": [
+        "Selecciona una entidad"
+      ],
+      "Select an entity and inform the meta key.": [
+        "Selecciona una entidad e informa la clave meta."
+      ],
+      "Select an operator": [
+        "Selecciona un operador"
+      ],
+      "Select an option": [
+        "Selecciona una opción"
+      ],
+      "Select an order status": [
+        "Selecciona un estado de pedido"
+      ],
+      "Select file": [
+        "Seleccionar archivo"
+      ],
+      "Select media": [
+        "Seleccionar medio"
+      ],
+      "Select month": [
+        "Selecciona mes"
+      ],
+      "Select the WhatsApp sender that will be used to deliver this test message.": [
+        "Selecciona el remitente de WhatsApp que se utilizará para enviar este mensaje de prueba."
+      ],
+      "Select year": [
+        "Selecciona año"
+      ],
+      "Selected file:": [
+        "Archivo seleccionado:"
+      ],
+      "Send": [
+        "Enviar"
+      ],
+      "Send a discount coupon to your user via WhatsApp text message.": [
+        "Envía un cupón de descuento a tu usuario a través de un mensaje de texto de WhatsApp."
+      ],
+      "Send a media message (image, file, document, and audio) with WhatsApp.": [
+        "Envía un mensaje multimedia (imagen, archivo, documento y audio) con WhatsApp."
+      ],
+      "Send a text message via WhatsApp.": [
+        "Envía un mensaje de texto con WhatsApp."
+      ],
+      "Send a WhatsApp media message.": [
+        "Enviar un mensaje multimedia de WhatsApp."
+      ],
+      "Send a WhatsApp text message.": [
+        "Enviar un mensaje de texto de WhatsApp."
+      ],
+      "Send media": [
+        "Enviar medio"
+      ],
+      "Send messages regarding new orders, cancellations, refunds, and recovery of unpaid orders. Keep your customers updated.": [
+        "Enviar mensajes sobre nuevos pedidos, cancelaciones, reembolsos y recuperación de pedidos no pagados. Mantén a tus clientes informados."
+      ],
+      "Send messages when an Elementor form with a phone number field is submitted. Connect with your customers instantly.": [
+        "Enviar mensajes cuando se envía un formulario de Elementor con un campo de número de teléfono. Conéctate con tus clientes al instante."
+      ],
+      "Send test message": [
+        "Enviar mensaje de prueba"
+      ],
+      "Send text message": [
+        "Enviar mensaje de texto"
+      ],
+      "send-message/media": [
+        "send-message/media"
+      ],
+      "send-message/text": [
+        "send-message/text"
+      ],
+      "Sender": [
+        "Remitente"
+      ],
+      "Sender phone": [
+        "Teléfono del remitente"
+      ],
+      "Sender removed.": [
+        "Remitente eliminado."
+      ],
+      "Sending...": [
+        "Enviando..."
+      ],
+      "Sends a notification to the sender when the connection is not established.": [
+        "Envía una notificación al remitente cuando la conexión no se establece."
+      ],
+      "Senegal": [
+        "Senegal"
+      ],
+      "Sent": [
+        "Enviado"
+      ],
+      "Serbia": [
+        "Serbia"
+      ],
+      "Server": [
+        "Servidor"
+      ],
+      "Set an expiration": [
+        "Establecer una expiración"
+      ],
+      "Settings": [
+        "Configuraciones"
+      ],
+      "Settings exported.": [
+        "Configuraciones exportadas."
+      ],
+      "Settings have been saved.": [
+        "Las configuraciones han sido guardadas."
+      ],
+      "Settings imported successfully.": [
+        "Configuraciones importadas con éxito."
+      ],
+      "Settings imported.": [
+        "Configuraciones importadas."
+      ],
+      "Settings reset successfully!": [
+        "¡Configuraciones restablecidas con éxito!"
+      ],
+      "Settings saved.": [
+        "Configuraciones guardadas."
+      ],
+      "Seychelles": [
+        "Seychelles"
+      ],
+      "Shade %s": [
+        "Sombra %s"
+      ],
+      "Shipping full address format": [
+        "Formato de dirección completa de envío"
+      ],
+      "Shipping method": [
+        "Forma de entrega"
+      ],
+      "Short": [
+        "Corto"
+      ],
+      "Show password": [
+        "Mostrar contraseña"
+      ],
+      "Shown in the variable picker": [
+        "Mostrado en el selector de variables"
+      ],
+      "Sierra Leone": [
+        "Sierra Leona"
+      ],
+      "Sign in": [
+        "Iniciar sesión"
+      ],
+      "Singapore": [
+        "Singapur"
+      ],
+      "Slovakia": [
+        "Eslovaquia"
+      ],
+      "Slovenia": [
+        "Eslovenia"
+      ],
+      "Solomon Islands": [
+        "Islas Salomón"
+      ],
+      "Somalia": [
+        "Somalia"
+      ],
+      "Source": [
+        "Fuente"
+      ],
+      "South Africa": [
+        "Sudáfrica"
+      ],
+      "South Korea": [
+        "Corea del Sur"
+      ],
+      "South Sudan": [
+        "Sudán del Sur"
+      ],
+      "Spain": [
+        "España"
+      ],
+      "Split the workflow into true and false branches.": [
+        "Divide el flujo de trabajo en ramas verdaderas y falsas."
+      ],
+      "Sri Lanka": [
+        "Sri Lanka"
+      ],
+      "Start automating your site from a template": [
+        "Comienza a automatizar tu sitio a partir de un modelo"
+      ],
+      "Start date": [
+        "Fecha de inicio"
+      ],
+      "Start from scratch": [
+        "Comenzar desde cero"
+      ],
+      "Start with a template": [
+        "Comenzar con un modelo"
+      ],
+      "Status": [
+        "Estado"
+      ],
+      "Step 1: Select an available phone": [
+        "Paso 1: Selecciona un teléfono disponible"
+      ],
+      "Step 1: Select an available phone.": [
+        "Paso 1: Selecciona un teléfono disponible."
+      ],
+      "Step 2: Enter the verification code": [
+        "Paso 2: Introduce el código de verificación"
+      ],
+      "Step 2: Enter the verification code.": [
+        "Paso 2: Introduce el código de verificación."
+      ],
+      "Stop automation": [
+        "Detener automatización"
+      ],
+      "Stop funnel": [
+        "Detener embudo"
+      ],
+      "Stops the workflow immediately": [
+        "Detiene el flujo de trabajo inmediatamente"
+      ],
+      "Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen.": [
+        "Almacenar errores, advertencias y solicitudes fallidas en una tabla dedicada visible desde la pantalla de registros de depuración."
+      ],
+      "Subscription": [
+        "Suscripción"
+      ],
+      "Subscription canceled": [
+        "Suscripción cancelada"
+      ],
+      "Subscription is activated": [
+        "La suscripción está activada"
+      ],
+      "Subscription renewal expired": [
+        "La renovación de la suscripción ha expirado"
+      ],
+      "Subscription status": [
+        "Estado de la suscripción"
+      ],
+      "Subscription: %s": [
+        "Suscripción: %s"
+      ],
+      "Subscription: Club M - %s": [
+        "Suscripción: Club M - %s"
+      ],
+      "Sudan": [
+        "Sudán"
+      ],
+      "Sunglasses with UV protection (Sample product): %s/product/sample-sunglasses/#reviews": [
+        "Gafas de sol con protección UV (Producto de muestra): %s/product/sample-sunglasses/#reviews"
+      ],
+      "Support access and subscription updates": [
+        "Acceso al soporte y actualizaciones de suscripción"
+      ],
+      "Support until": [
+        "Soporte hasta"
+      ],
+      "Support until: Not available": [
+        "Soporte hasta: No disponible"
+      ],
+      "Support up to: %s": [
+        "Soporte hasta: %s"
+      ],
+      "Support up to: Not available": [
+        "Soporte hasta: No disponible"
+      ],
+      "Suriname": [
+        "Surinam"
+      ],
+      "Sweden": [
+        "Suecia"
+      ],
+      "Switzerland": [
+        "Suiza"
+      ],
+      "Sync": [
+        "Sincronizar"
+      ],
+      "Sync license": [
+        "Sincronizar licencia"
+      ],
+      "Syria": [
+        "Siria"
+      ],
+      "System message": [
+        "Mensaje del sistema"
+      ],
+      "System status": [
+        "Estado del sistema"
+      ],
+      "System status:": [
+        "Estado del sistema:"
+      ],
+      "tag1, tag2": [
+        "tag1, tag2"
+      ],
+      "Taiwan": [
+        "Taiwán"
+      ],
+      "Tajikistan": [
+        "Tayikistán"
+      ],
+      "Tanzania": [
+        "Tanzania"
+      ],
+      "Temperature": [
+        "Temperatura"
+      ],
+      "Template": [
+        "Plantilla"
+      ],
+      "Test message": [
+        "Mensaje de prueba"
+      ],
+      "Test phone": [
+        "Teléfono para pruebas"
+      ],
+      "Test phone number": [
+        "Número de teléfono de prueba"
+      ],
+      "Test sender": [
+        "Remitente de prueba"
+      ],
+      "Text": [
+        "Texto"
+      ],
+      "Text message": [
+        "Mensaje de texto"
+      ],
+      "Text message route": [
+        "Ruta de mensaje de texto"
+      ],
+      "Text message sent successfully.": [
+        "Mensaje de texto enviado con éxito."
+      ],
+      "Text route": [
+        "Ruta de texto"
+      ],
+      "text variables": [
+        "variables de texto"
+      ],
+      "Thailand": [
+        "Tailandia"
+      ],
+      "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.": [
+        "La integración %s de la que depende el disparador de este flujo está actualmente desactivada. Este flujo no se procesará hasta que la integración se active nuevamente."
+      ],
+      "The %s integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
+        "La integración %s de la que depende el disparador de este flujo no está disponible. Este flujo no se procesará hasta que la integración esté disponible nuevamente."
+      ],
+      "The %s plugin this trigger depends on is not installed or active. This flow will not be processed until the plugin is active again.": [
+        "El plugin %s del que depende este disparador no está instalado o activo. Este flujo no se procesará hasta que el plugin esté activo nuevamente."
+      ],
+      "The AI could not generate the snippet.": [
+        "La IA no pudo generar el fragmento."
+      ],
+      "The AI could not generate the workflow.": [
+        "La IA no pudo generar el flujo de trabajo."
+      ],
+      "The AI could not generate the workflow. Please try again.": [
+        "La IA no pudo generar el flujo de trabajo. Por favor, inténtalo de nuevo."
+      ],
+      "The AI did not produce any workflow steps. Try refining the description.": [
+        "La IA no produjo ningún paso del flujo de trabajo. Intenta refinando la descripción."
+      ],
+      "The AI returned an empty snippet. Please try again.": [
+        "La IA devolvió un fragmento vacío. Por favor, inténtalo de nuevo."
+      ],
+      "The AI returned an invalid workflow. Please try again.": [
+        "La IA devolvió un flujo de trabajo no válido. Por favor, inténtalo de nuevo."
+      ],
+      "The bulk action failed.": [
+        "La acción masiva falló."
+      ],
+      "The code you entered is invalid or has expired.": [
+        "El código que ingresaste no es válido o ha expirado."
+      ],
+      "The configuration in the file will be merged into your current settings. This cannot be undone.": [
+        "La configuración en el archivo se fusionará con tus ajustes actuales. Esto no se puede deshacer."
+      ],
+      "The coupon already exists.": [
+        "El cupón ya existe."
+      ],
+      "The cURL extension is missing.": [
+        "Falta la extensión cURL."
+      ],
+      "The debug log is empty.": [
+        "El registro de depuración está vacío."
+      ],
+      "The field is required. Keep the code self-contained and deterministic.": [
+        "El campo es obligatorio. Mantén el código autocontenido y determinista."
+      ],
+      "The file does not contain any settings to import.": [
+        "El archivo no contiene ninguna configuración para importar."
+      ],
+      "The generated snippet uses a blocked function (%s). Please refine the request.": [
+        "El fragmento generado utiliza una función bloqueada (%s). Por favor, refina la solicitud."
+      ],
+      "The generated workflow is missing a valid trigger. Try again with more detail.": [
+        "El flujo de trabajo generado carece de un disparador válido. Intenta de nuevo con más detalles."
+      ],
+      "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
+        "La integración de la que depende el disparador de este flujo no está disponible. Este flujo no se procesará hasta que la integración esté disponible nuevamente."
+      ],
+      "The message is prefilled and can be adjusted before sending the test.": [
+        "El mensaje está prellenado y se puede ajustar antes de enviar la prueba."
+      ],
+      "The OTP login form is currently disabled.": [
+        "El formulario de inicio de sesión OTP está actualmente deshabilitado."
+      ],
+      "The parser accepts plugin_version, post and workflow_content and preserves extra fields during editing.": [
+        "El analizador acepta plugin_version, post y workflow_content y preserva campos adicionales durante la edición."
+      ],
+      "The phone is connected.": [
+        "El teléfono está conectado."
+      ],
+      "The phone is disconnected.": [
+        "El teléfono está desconectado."
+      ],
+      "The plugin version <strong>Joinotify</strong> is up to date.": [
+        "La versión del plugin <strong>Joinotify</strong> es la más reciente."
+      ],
+      "The plugin was installed but could not be activated.": [
+        "El plugin fue instalado pero no se pudo activar."
+      ],
+      "The related workflow is not published, so it cannot run.": [
+        "El flujo de trabajo relacionado no está publicado, por lo que no puede ejecutarse."
+      ],
+      "The related workflow no longer exists; the schedule was removed.": [
+        "El flujo de trabajo relacionado ya no existe; la programación fue eliminada."
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "Las acciones restantes se ejecutarán ahora mismo, omitiendo la espera programada. Esto no se puede deshacer."
+      ],
+      "The scheduled actions were dispatched.": [
+        "Las acciones programadas han sido enviadas."
+      ],
+      "The scheduled item was cancelled.": [
+        "El elemento programado fue cancelado."
+      ],
+      "The selected channel cannot reach this recipient.": [
+        "El canal seleccionado no puede alcanzar a este destinatario."
+      ],
+      "The selected OTP delivery channel is not configured.": [
+        "El canal de entrega de OTP seleccionado no está configurado."
+      ],
+      "The selected records will be permanently removed. This action cannot be undone.": [
+        "Los registros seleccionados se eliminarán permanentemente. Esta acción no se puede deshacer."
+      ],
+      "The selected template was not found.": [
+        "La plantilla seleccionada no fue encontrada."
+      ],
+      "The selected workflows will be moved to trash and can be restored later.": [
+        "Los flujos de trabajo seleccionados se moverán a la papelera y se pueden restaurar más tarde."
+      ],
+      "The selected workflows will be removed permanently and this action cannot be undone.": [
+        "Los flujos de trabajo seleccionados se eliminarán permanentemente y esta acción no se puede deshacer."
+      ],
+      "The sender phone number was removed successfully!": [
+        "¡El número de teléfono del remitente se eliminó con éxito!"
+      ],
+      "The standalone \"Joinotify OTP Login\" plugin was deactivated because passwordless login is now built into Joinotify.": [
+        "El plugin independiente \"Joinotify OTP Login\" fue desactivado porque el inicio de sesión sin contraseña ahora está integrado en Joinotify."
+      ],
+      "The test message was sent successfully!": [
+        "¡El mensaje de prueba se envió con éxito!"
+      ],
+      "The trigger that starts this flow.": [
+        "El desencadenante que inicia este flujo."
+      ],
+      "The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger.": [
+        "El disparador utilizado por este flujo ya no está registrado. Este flujo no se procesará hasta que selecciones un disparador disponible."
+      ],
+      "The variable \"%s\" already exists. Choose another name.": [
+        "La variable \"%s\" ya existe. Elige otro nombre."
+      ],
+      "The workflow": [
+        "El flujo de trabajo"
+      ],
+      "The workflow content is invalid.": [
+        "El contenido del flujo de trabajo no es válido."
+      ],
+      "The workflow has more than one trigger.": [
+        "El flujo de trabajo tiene más de un desencadenador."
+      ],
+      "The workflow has no content to test.": [
+        "El flujo de trabajo no tiene contenido para probar."
+      ],
+      "The workflow has no trigger.": [
+        "El flujo de trabajo no tiene desencadenador."
+      ],
+      "The workflow is not published.": [
+        "El flujo de trabajo no está publicado."
+      ],
+      "The workflow trigger is not configured.": [
+        "El desencadenador del flujo de trabajo no está configurado."
+      ],
+      "There are required settings not configured": [
+        "Hay configuraciones requeridas que no están configuradas"
+      ],
+      "This action creates true and false branches. Each branch can contain its own nested actions.": [
+        "Esta acción crea ramas verdaderas y falsas. Cada rama puede contener sus propias acciones anidadas."
+      ],
+      "This action is registered, but the frontend component is not available yet. The workflow can still be saved safely.": [
+        "Esta acción está registrada, pero el componente del frontend aún no está disponible. El flujo de trabajo aún se puede guardar de forma segura."
+      ],
+      "This action is triggered when an order is fully refunded.": [
+        "Esta acción se activa cuando un pedido es reembolsado completamente."
+      ],
+      "This action is triggered when an order is partially refunded.": [
+        "Esta acción se activa cuando un pedido es reembolsado parcialmente."
+      ],
+      "This action is triggered when an order's status changes.": [
+        "Esta acción se activa cuando cambia el estado de un pedido."
+      ],
+      "This action is triggered when an order's status is changed to completed.": [
+        "Esta acción se activa cuando el estado de un pedido cambia a completado."
+      ],
+      "This action stops the workflow immediately. There are no editable settings.": [
+        "Esta acción detiene el flujo de trabajo inmediatamente. No hay configuraciones editables."
+      ],
+      "This delay uses scheduled execution. The workflow environment does not report cron as available.": [
+        "Este retraso utiliza ejecución programada. El entorno del flujo de trabajo no informa que cron está disponible."
+      ],
+      "This feature will be released soon.": [
+        "Esta función se lanzará pronto."
+      ],
+      "This file is not a valid Joinotify settings export.": [
+        "Este archivo no es una exportación de configuraciones válida de Joinotify."
+      ],
+      "This integration depends on an installed and active plugin.": [
+        "Esta integración depende de un plugin instalado y activo."
+      ],
+      "This integration has no additional settings.": [
+        "Esta integración no tiene configuraciones adicionales."
+      ],
+      "This integration will be available soon.": [
+        "Esta integración estará disponible pronto."
+      ],
+      "This plugin needs to be installed and active to enable this integration.": [
+        "Este plugin necesita estar instalado y activo para habilitar esta integración."
+      ],
+      "This scheduled item no longer exists.": [
+        "Este elemento programado ya no existe."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "Este elemento programado será eliminado y nunca se ejecutará. Esto no se puede deshacer."
+      ],
+      "This site exposes endpoints to process Joinotify requests.": [
+        "Este sitio expone endpoints para procesar solicitudes de Joinotify."
+      ],
+      "This text variable may not work in this context": [
+        "Esta variable de texto puede no funcionar en este contexto"
+      ],
+      "This trigger depends on a plugin": [
+        "Este activador depende de un plugin"
+      ],
+      "This trigger does not expose any conditions to evaluate.": [
+        "Este disparador no expone ninguna condición para evaluar."
+      ],
+      "This trigger fires after a user resets their password on the site.": [
+        "Este disparador se activa después de que un usuario restablece su contraseña en el sitio."
+      ],
+      "This trigger fires when a new user registration is received.": [
+        "Este disparador se activa cuando se recibe un nuevo registro de usuario."
+      ],
+      "This trigger fires when a post status changes on the site.": [
+        "Este disparador se activa cuando cambia el estado de una publicación en el sitio."
+      ],
+      "This trigger fires when a user logs in to the site.": [
+        "Este disparador se activa cuando un usuario inicia sesión en el sitio."
+      ],
+      "This trigger fires when a user requests a password reset link, allowing you to send the reset link.": [
+        "Este disparador se activa cuando un usuario solicita un enlace para restablecer la contraseña, permitiéndote enviar el enlace de restablecimiento."
+      ],
+      "This trigger fires when a WPForms form is submitted.": [
+        "Este disparador se activa cuando se envía un formulario de WPForms."
+      ],
+      "This trigger fires when a WPForms payment form is processed using PayPal.": [
+        "Este disparador se activa cuando se procesa un formulario de pago de WPForms utilizando PayPal."
+      ],
+      "This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one.": [
+        "Este disparador no tiene configuraciones adicionales. Usa “Cambiar disparador” en el menú del nodo para elegir uno diferente."
+      ],
+      "This trigger is activated when a new order is received in WooCommerce with a processing status.": [
+        "Este disparador se activa cuando se recibe un nuevo pedido en WooCommerce con un estado de procesamiento."
+      ],
+      "This trigger is activated when a new order is received in WooCommerce with any status.": [
+        "Este disparador se activa cuando se recibe un nuevo pedido en WooCommerce con cualquier estado."
+      ],
+      "This trigger is fired when a cart is considered lost.": [
+        "Este activador se dispara cuando un carrito se considera perdido."
+      ],
+      "This trigger is fired when a new subscription is created in WooCommerce.": [
+        "Este activador se dispara cuando se crea una nueva suscripción en WooCommerce."
+      ],
+      "This trigger is fired when a recurring subscription payment fails or is declined.": [
+        "Este activador se dispara cuando una suscripción recurrente tiene su pago fallido o rechazado."
+      ],
+      "This trigger is fired when a recurring subscription payment is received.": [
+        "Este activador se dispara cuando una suscripción recurrente tiene el pago recibido."
+      ],
+      "This trigger is fired when a subscription status changes to active.": [
+        "Este activador se dispara cuando una suscripción tiene su estado cambiado a activo."
+      ],
+      "This trigger is fired when a subscription term has expired.": [
+        "Este activador se dispara cuando el plazo de una suscripción ha expirado."
+      ],
+      "This trigger is fired when an abandoned cart is recovered.": [
+        "Este activador se dispara cuando un carrito abandonado es recuperado."
+      ],
+      "This trigger is fired when an Elementor form is submitted.": [
+        "Este activador se dispara cuando se envía un formulario de Elementor."
+      ],
+      "This trigger is fired when an order is abandoned.": [
+        "Este activador se dispara cuando un pedido es abandonado."
+      ],
+      "This trigger is fired when the subscription status changes to canceled.": [
+        "Este activador se dispara cuando la suscripción tiene su estado cambiado a cancelado."
+      ],
+      "This trigger is fired when the user abandons the cart.": [
+        "Este activador se dispara cuando el usuario abandona el carrito."
+      ],
+      "This trigger is fired when the user provides your contact on checkout": [
+        "Este disparador se activa cuando el usuario proporciona sus datos de contacto en el momento del pago."
+      ],
+      "This trigger is fired when the user provides your contact on modal": [
+        "Este disparador se activa cuando el usuario proporciona sus datos de contacto a través del modal."
+      ],
+      "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
+        "Este flujo de trabajo tiene cambios no guardados. Si sales ahora, tus cambios se perderán."
+      ],
+      "Time": [
+        "Hora"
+      ],
+      "Tip": [
+        "Consejo"
+      ],
+      "Tip dismissed.": [
+        "Consejo desestimado."
+      ],
+      "Title": [
+        "Título"
+      ],
+      "To": [
+        "Para"
+      ],
+      "To retrieve a user meta value. Replace META_KEY with the key you want to retrieve. Example: billing_phone": [
+        "Para recuperar un valor de meta de usuario. Reemplaza META_KEY con la clave que deseas recuperar. Ejemplo: billing_phone"
+      ],
+      "To retrieve each purchased product and quantity from the order, separated by line": [
+        "Para recuperar cada producto comprado y cantidad del pedido, separados por línea"
+      ],
+      "To retrieve information from a WPForms form field. Replace FIELD_ID with the corresponding field ID.": [
+        "Para recuperar información de un campo de formulario de WPForms. Reemplaza FIELD_ID con el ID de campo correspondiente."
+      ],
+      "To retrieve information from an Elementor form field. Replace FIELD_ID with the respective ID.": [
+        "Para recuperar la información de un campo del formulario de Elementor. Reemplace FIELD_ID con el ID respectivo."
+      ],
+      "To retrieve the billing phone from the WooCommerce order": [
+        "Para recuperar el teléfono de facturación del pedido de WooCommerce"
+      ],
+      "To retrieve the coupon codes used in the WooCommerce order": [
+        "Para recuperar los códigos de cupón utilizados en el pedido de WooCommerce"
+      ],
+      "To retrieve the coupon description.": [
+        "Para recuperar la descripción del cupón."
+      ],
+      "To retrieve the coupon discount amount formatted with a currency symbol or percentage. Example: 10%.": [
+        "Para recuperar el monto del descuento del cupón formateado con un símbolo de moneda o porcentaje. Ejemplo: 10%."
+      ],
+      "To retrieve the coupon discount amount.": [
+        "Para recuperar el monto del descuento del cupón."
+      ],
+      "To retrieve the coupon discount code.": [
+        "Para recuperar el código de descuento del cupón."
+      ],
+      "To retrieve the coupon discount type. Example: Percentage or fixed amount.": [
+        "Para recuperar el tipo de descuento del cupón. Ejemplo: Porcentaje o monto fijo."
+      ],
+      "To retrieve the coupon expiration. Example: Expires in 1 hour.": [
+        "Para recuperar la fecha de caducidad del cupón. Ejemplo: Caduca en 1 hora."
+      ],
+      "To retrieve the current date": [
+        "Para recuperar la fecha actual"
+      ],
+      "To retrieve the customer billing email from the WooCommerce order": [
+        "Para recuperar el correo electrónico de facturación del cliente del pedido de WooCommerce"
+      ],
+      "To retrieve the customer billing first name from the WooCommerce order": [
+        "Para recuperar el nombre de pila de facturación del cliente del pedido de WooCommerce"
+      ],
+      "To retrieve the customer billing last name from the WooCommerce order": [
+        "Para recuperar el apellido de facturación del cliente del pedido de WooCommerce"
+      ],
+      "To retrieve the featured image URL of the post": [
+        "Para recuperar la URL de la imagen destacada de la publicación"
+      ],
+      "To retrieve the order currency symbol": [
+        "Para recuperar el símbolo de moneda del pedido"
+      ],
+      "To retrieve the order payment URL": [
+        "Para recuperar la URL de pago del pedido"
+      ],
+      "To retrieve the password reset link": [
+        "Para recuperar el enlace de restablecimiento de contraseña"
+      ],
+      "To retrieve the Pix Copia e Cola code from the order. Through the Flexify Checkout - Inter addon integration": [
+        "Para recuperar el código Pix Copia y Pega del pedido. A través de la integración Flexify Checkout - Inter addon"
+      ],
+      "To retrieve the Pix Copia e Cola expiration time. Through the Flexify Checkout - Inter addon integration": [
+        "Para recuperar el tiempo de expiración del Pix Copia y Pega. A través de la integración Flexify Checkout - Inter addon"
+      ],
+      "To retrieve the post categories, separated by commas": [
+        "Para recuperar las categorías de la publicación, separadas por comas"
+      ],
+      "To retrieve the post content (text only)": [
+        "Para recuperar el contenido de la publicación (solo texto)"
+      ],
+      "To retrieve the post link": [
+        "Para recuperar el enlace de la publicación"
+      ],
+      "To retrieve the post publish date": [
+        "Para recuperar la fecha de publicación de la publicación"
+      ],
+      "To retrieve the post tags, separated by commas": [
+        "Para recuperar las etiquetas de la publicación, separadas por comas"
+      ],
+      "To retrieve the post title": [
+        "Para recuperar el título de la publicación"
+      ],
+      "To retrieve the review link for each purchased product from the order, separated by line": [
+        "Para recuperar el enlace de la reseña de cada producto comprado del pedido, separado por línea"
+      ],
+      "To retrieve the shipping phone from the WooCommerce order": [
+        "Para recuperar el teléfono de envío del pedido de WooCommerce"
+      ],
+      "To retrieve the site name": [
+        "Para recuperar el nombre del sitio"
+      ],
+      "To retrieve the site URL": [
+        "Para recuperar la URL del sitio"
+      ],
+      "To retrieve the user email": [
+        "Para recuperar el correo electrónico del usuario"
+      ],
+      "To retrieve the user first name": [
+        "Para recuperar el nombre del usuario"
+      ],
+      "To retrieve the user last name": [
+        "Para recuperar el apellido del usuario"
+      ],
+      "To retrieve the value of %s": [
+        "Para recuperar el valor de %s"
+      ],
+      "To retrieve the value of a specific checkout field in the WooCommerce order. Replace FIELD_ID with the checkout field ID, for example: billing_email.": [
+        "Para recuperar el valor de un campo específico del checkout en el pedido de WooCommerce. Reemplace FIELD_ID con el ID del campo del checkout, por ejemplo: billing_email."
+      ],
+      "To retrieve the WooCommerce order date": [
+        "Para recuperar la fecha del pedido de WooCommerce"
+      ],
+      "To retrieve the WooCommerce order number": [
+        "Para recuperar el número del pedido de WooCommerce"
+      ],
+      "To retrieve the WooCommerce order payment method title": [
+        "Para recuperar el título del método de pago del pedido de WooCommerce"
+      ],
+      "To retrieve the WooCommerce order shipping address": [
+        "Para recuperar la dirección de entrega del pedido de WooCommerce"
+      ],
+      "To retrieve the WooCommerce order status": [
+        "Para recuperar el estado del pedido de WooCommerce"
+      ],
+      "To retrieve the WooCommerce order total": [
+        "Para recuperar el total del pedido de WooCommerce"
+      ],
+      "To retrieve the WooCommerce total discount": [
+        "Para recuperar el descuento total de WooCommerce"
+      ],
+      "To retrieve the WooCommerce total refunded amount": [
+        "Para recuperar el monto total reembolsado de WooCommerce"
+      ],
+      "To retrieve the WooCommerce total tax": [
+        "Para recuperar el total de impuestos de WooCommerce"
+      ],
+      "Toggle %s": [
+        "Alternar %s"
+      ],
+      "Toggle status for": [
+        "Alternar estado para"
+      ],
+      "Toggle workflow status": [
+        "Alternar estado del flujo de trabajo"
+      ],
+      "Togo": [
+        "Togo"
+      ],
+      "Tokelau": [
+        "Tokelau"
+      ],
+      "Tone": [
+        "Tono"
+      ],
+      "Tone, personality, and brand rules for the AI. Optional — it adds to the global persona from settings.": [
+        "Tono, personalidad y reglas de marca para la IA. Opcional: añade a la persona global de la configuración."
+      ],
+      "Tonga": [
+        "Tonga"
+      ],
+      "Too long": [
+        "Demasiado largo"
+      ],
+      "Too many code requests. Please wait a few minutes and try again.": [
+        "Demasiadas solicitudes de código. Por favor, espera unos minutos y vuelve a intentarlo."
+      ],
+      "Too short": [
+        "Demasiado corto"
+      ],
+      "Trash": [
+        "Papelera"
+      ],
+      "Trigger": [
+        "Disparador"
+      ],
+      "Trigger no longer available": [
+        "Disparador ya no disponible"
+      ],
+      "Trigger settings": [
+        "Configuraciones del disparador"
+      ],
+      "Trigger warning": [
+        "Advertencia de disparador"
+      ],
+      "Trigger when a WordPress post is published.": [
+        "Disparar cuando se publique una entrada de WordPress."
+      ],
+      "Trigger when an order reaches completed status.": [
+        "Disparar cuando un pedido alcance el estado completado."
+      ],
+      "Trigger when an order status changes.": [
+        "Disparar cuando cambie el estado de un pedido."
+      ],
+      "Trigger:": [
+        "Disparador:"
+      ],
+      "Triggers for the WordPress core.": [
+        "Disparadores para el núcleo de WordPress."
+      ],
+      "True": [
+        "Verdadero"
+      ],
+      "True branch": [
+        "Rama verdadera"
+      ],
+      "Try again": [
+        "Intenta de nuevo"
+      ],
+      "Tunisia": [
+        "Túnez"
+      ],
+      "Turkey": [
+        "Turquía"
+      ],
+      "Turkmenistan": [
+        "Turkmenistán"
+      ],
+      "Turn this on to enable debug mode and inspect errors and other relevant information.": [
+        "Activa esto para habilitar el modo de depuración e inspeccionar errores y otra información relevante."
+      ],
+      "Turn this on to expose endpoints on this site for processing Joinotify API requests.": [
+        "Activa esto para exponer puntos finales en este sitio para procesar solicitudes de la API de Joinotify."
+      ],
+      "Tuvalu": [
+        "Tuvalu"
+      ],
+      "Type": [
+        "Tipo"
+      ],
+      "Type at least 2 characters…": [
+        "Escribe al menos 2 caracteres…"
+      ],
+      "Type label": [
+        "Escribe la etiqueta"
+      ],
+      "Type to filter…": [
+        "Escribe para filtrar…"
+      ],
+      "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}": [
+        "Escribe tu mensaje... Usa {{ placeholders }} y {{ joinotify_coupon_code }}"
+      ],
+      "Type your message... Use {{ placeholders }} and *bold*": [
+        "Escribe tu mensaje... Usa {{ placeholders }} y *negrita*"
+      ],
+      "Type your test message...": [
+        "Escribe tu mensaje de prueba..."
+      ],
+      "Type: %s": [
+        "Tipo: %s"
+      ],
+      "Uganda": [
+        "Uganda"
+      ],
+      "Ukraine": [
+        "Ucrania"
+      ],
+      "Underline": [
+        "Subrayar"
+      ],
+      "Undo": [
+        "Deshacer"
+      ],
+      "Undo (Ctrl+Z)": [
+        "Deshacer (Ctrl+Z)"
+      ],
+      "United Arab Emirates": [
+        "Emiratos Árabes Unidos"
+      ],
+      "United Kingdom": [
+        "Reino Unido"
+      ],
+      "United States": [
+        "Estados Unidos"
+      ],
+      "Unknown AI error.": [
+        "Error desconocido de IA."
+      ],
+      "Unknown response": [
+        "Respuesta desconocida"
+      ],
+      "Unsaved changes": [
+        "Cambios no guardados"
+      ],
+      "Unsupported AI intent.": [
+        "Intención de IA no soportada."
+      ],
+      "Untitled workflow": [
+        "Flujo de trabajo sin título"
+      ],
+      "Update check completed.": [
+        "Comprobación de actualización completada."
+      ],
+      "Update logs": [
+        "Registros de actualización"
+      ],
+      "Update notices": [
+        "Avisos de actualización"
+      ],
+      "Update now": [
+        "Actualizar ahora"
+      ],
+      "Update variable": [
+        "Actualizar variable"
+      ],
+      "Updates": [
+        "Actualizaciones"
+      ],
+      "Updating…": [
+        "Actualizando…"
+      ],
+      "Uruguay": [
+        "Uruguay"
+      ],
+      "Use a casual and relaxed tone.": [
+        "Usa un tono casual y relajado."
+      ],
+      "Use a formal and professional tone.": [
+        "Usa un tono formal y profesional."
+      ],
+      "Use a template": [
+        "Usa una plantilla"
+      ],
+      "Use a warm and friendly tone.": [
+        "Usa un tono cálido y amigable."
+      ],
+      "Use default model": [
+        "Usar modelo predeterminado"
+      ],
+      "Use email and password": [
+        "Usar correo electrónico y contraseña"
+      ],
+      "Use the first available sender": [
+        "Usar el primer remitente disponible"
+      ],
+      "Use the world's largest messaging service to notify your customers about events on your website.": [
+        "Utiliza el servicio de mensajería más grande del mundo para notificar a tus clientes sobre eventos en tu sitio web."
+      ],
+      "Use this media": [
+        "Usar este medio"
+      ],
+      "Use your phone number to receive a login code and continue.": [
+        "Usa tu número de teléfono para recibir un código de inicio de sesión y continuar."
+      ],
+      "Use your phone number to receive the code or sign in with email and password.": [
+        "Usa tu número de teléfono para recibir el código o inicia sesión con correo electrónico y contraseña."
+      ],
+      "User login": [
+        "Inicio de sesión del usuario"
+      ],
+      "User metadata": [
+        "Metadatos del usuario"
+      ],
+      "User password recovery": [
+        "Recuperación de contraseña del usuario"
+      ],
+      "User role": [
+        "Función del usuario"
+      ],
+      "user@example.com": [
+        "usuario@ejemplo.com"
+      ],
+      "Username": [
+        "Nombre de usuario"
+      ],
+      "Uzbekistan": [
+        "Uzbekistán"
+      ],
+      "Valid": [
+        "Válida"
+      ],
+      "Validate and save": [
+        "Validar y guardar"
+      ],
+      "Validation failed.": [
+        "La validación ha fallado."
+      ],
+      "Value": [
+        "Valor"
+      ],
+      "Value of a form field": [
+        "Valor de un campo del formulario"
+      ],
+      "Values used by the condition engine.": [
+        "Valores utilizados por el motor de condiciones."
+      ],
+      "Vanuatu": [
+        "Vanuatu"
+      ],
+      "Variable name": [
+        "Nombre de variable"
+      ],
+      "Variable removed successfully.": [
+        "Variable eliminada con éxito."
+      ],
+      "Variable removed.": [
+        "Variable eliminada."
+      ],
+      "Variable saved successfully.": [
+        "Variable guardada con éxito."
+      ],
+      "Variable saved.": [
+        "Variable guardada."
+      ],
+      "Variables are replaced with real data when the message is sent. Click one to insert it.": [
+        "Las variables se reemplazan con datos reales cuando se envía el mensaje. Haz clic en una para insertarla."
+      ],
+      "Vatican City": [
+        "Ciudad del Vaticano"
+      ],
+      "Venezuela": [
+        "Venezuela"
+      ],
+      "Verify OTP": [
+        "Verificar OTP"
+      ],
+      "Verifying...": [
+        "Verificando..."
+      ],
+      "Video": [
+        "Vídeo"
+      ],
+      "Vietnam": [
+        "Vietnam"
+      ],
+      "View all workflows": [
+        "Ver todos los flujos de trabajo"
+      ],
+      "View debug logs": [
+        "Ver registros de depuración"
+      ],
+      "View flow": [
+        "Ver flujo"
+      ],
+      "View the recent events recorded by the plugin.": [
+        "Ver los eventos recientes registrados por el plugin."
+      ],
+      "Wait %s %s": [
+        "Espera %s %s"
+      ],
+      "Wait %s %s and run at %s": [
+        "Espera %s %s y ejecuta a las %s"
+      ],
+      "Wait for %s %s": [
+        "Esperar por %s %s"
+      ],
+      "Wait until %s": [
+        "Esperar hasta %s"
+      ],
+      "Wait until %s - %s": [
+        "Esperar hasta %s - %s"
+      ],
+      "Wallis and Futuna": [
+        "Wallis y Futuna"
+      ],
+      "warning": [
+        "advertencia"
+      ],
+      "Warning": [
+        "Advertencia"
+      ],
+      "We could not authenticate with that username or email and password.": [
+        "No pudimos autenticar con ese nombre de usuario o correo electrónico y contraseña."
+      ],
+      "We could not complete the request right now. Please try again.": [
+        "No pudimos completar la solicitud en este momento. Por favor, inténtalo de nuevo."
+      ],
+      "We could not deliver the verification code right now. Please try again.": [
+        "No pudimos entregar el código de verificación en este momento. Por favor, inténtalo de nuevo."
+      ],
+      "We could not find an account for this phone number.": [
+        "No pudimos encontrar una cuenta para este número de teléfono."
+      ],
+      "We could not find an account with this phone number. Use email and password to log in.": [
+        "No pudimos encontrar una cuenta con este número de teléfono. Usa el correo electrónico y la contraseña para iniciar sesión."
+      ],
+      "We sent a code to %s.": [
+        "Hemos enviado un código a %s."
+      ],
+      "week": [
+        "semana"
+      ],
+      "week(s)": [
+        "semana(s)"
+      ],
+      "weeks": [
+        "semanas"
+      ],
+      "Weeks": [
+        "Semanas"
+      ],
+      "Western Sahara": [
+        "Sáhara Occidental"
+      ],
+      "What should this workflow do?": [
+        "¿Qué debería hacer este flujo de trabajo?"
+      ],
+      "What you unlock": [
+        "Lo que desbloqueas"
+      ],
+      "WhatsApp": [
+        "WhatsApp"
+      ],
+      "WhatsApp automation workflows created with Joinotify.": [
+        "Flujos de trabajo de automatización de WhatsApp creados con Joinotify."
+      ],
+      "WhatsApp message sent with the generated coupon.": [
+        "Mensaje de WhatsApp enviado con el cupón generado."
+      ],
+      "WhatsApp number that will send the media.": [
+        "Número de WhatsApp que enviará el medio."
+      ],
+      "WhatsApp number that will send the message.": [
+        "Número de WhatsApp que enviará el mensaje."
+      ],
+      "WhatsApp text message": [
+        "Mensaje de texto de WhatsApp"
+      ],
+      "WhatsApp: AI message": [
+        "WhatsApp: mensaje de IA"
+      ],
+      "WhatsApp: Media message": [
+        "WhatsApp: Mensaje de medios"
+      ],
+      "WhatsApp: Text message": [
+        "WhatsApp: Mensaje de texto"
+      ],
+      "Where the trigger fires from. Select an integration to see its available triggers.": [
+        "Desde dónde se activa el desencadenante. Selecciona una integración para ver sus desencadenantes disponibles."
+      ],
+      "will be moved to trash.": [
+        "será movido a la papelera."
+      ],
+      "will be removed permanently.": [
+        "será eliminado permanentemente."
+      ],
+      "WooCommerce": [
+        "WooCommerce"
+      ],
+      "WooCommerce is not active.": [
+        "WooCommerce no está activo."
+      ],
+      "WooCommerce settings": [
+        "Configuraciones de WooCommerce"
+      ],
+      "WordPress": [
+        "WordPress"
+      ],
+      "WordPress Multisite": [
+        "WordPress Multisite"
+      ],
+      "WordPress version": [
+        "Versión de WordPress"
+      ],
+      "Workflow": [
+        "Flujo de trabajo"
+      ],
+      "Workflow activated.": [
+        "Flujo de trabajo activado."
+      ],
+      "Workflow API is not available.": [
+        "La API de flujo de trabajo no está disponible."
+      ],
+      "Workflow builder": [
+        "Constructor de flujo de trabajo"
+      ],
+      "Workflow deactivated.": [
+        "Flujo de trabajo desactivado."
+      ],
+      "Workflow generated. Review the steps and click Save flow to keep it.": [
+        "Flujo de trabajo generado. Revisa los pasos y haz clic en Guardar flujo para mantenerlo."
+      ],
+      "Workflow name": [
+        "Nombre del flujo de trabajo"
+      ],
+      "Workflow name updated. Click Save flow to persist changes.": [
+        "Nombre del flujo de trabajo actualizado. Haz clic en Guardar flujo para persistir los cambios."
+      ],
+      "Workflow not found or invalid post type.": [
+        "Flujo de trabajo no encontrado o tipo de publicación no válido."
+      ],
+      "Workflow not found.": [
+        "Flujo de trabajo no encontrado."
+      ],
+      "Workflow not saved yet.": [
+        "Flujo de trabajo aún no guardado."
+      ],
+      "Workflow saved as draft: fix the reported issues before publishing.": [
+        "Flujo de trabajo guardado como borrador: corrige los problemas reportados antes de publicar."
+      ],
+      "Workflow saved successfully.": [
+        "Flujo de trabajo guardado con éxito."
+      ],
+      "Workflow saved.": [
+        "Flujo de trabajo guardado."
+      ],
+      "Workflow status updated successfully.": [
+        "Estado del flujo de trabajo actualizado con éxito."
+      ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Pasos del flujo de trabajo esperando un retraso antes de ejecutarse. Envía uno ahora para omitir la espera, o cancélalo para detener el procesamiento."
+      ],
+      "Workflow test queued.": [
+        "Prueba de flujo de trabajo en cola."
+      ],
+      "Workflow title": [
+        "Título del flujo de trabajo"
+      ],
+      "workflows": [
+        "flujos de trabajo"
+      ],
+      "Workflows per page": [
+        "Flujos de trabajo por página"
+      ],
+      "WPForms": [
+        "WPForms"
+      ],
+      "Write a WhatsApp message in plain text. Reply with the message content only, without any preamble.": [
+        "Escribe un mensaje de WhatsApp en texto plano. Responde solo con el contenido del mensaje, sin preámbulos."
+      ],
+      "Write in markdown to document your flow…": [
+        "Escribe en markdown para documentar tu flujo…"
+      ],
+      "year": [
+        "año"
+      ],
+      "year(s)": [
+        "año(s)"
+      ],
+      "years": [
+        "años"
+      ],
+      "Years": [
+        "Años"
+      ],
+      "Yemen": [
+        "Yemen"
+      ],
+      "Yes": [
+        "Sí"
+      ],
+      "You are a helpful assistant for my store...": [
+        "Eres un asistente útil para mi tienda..."
+      ],
+      "You are currently using version": [
+        "Actualmente estás usando la versión"
+      ],
+      "You are the support agent for Store X. Be cordial and concise.": [
+        "Eres el agente de soporte para la Tienda X. Sé cordial y conciso."
+      ],
+      "You do not have permission to access this page.": [
+        "No tienes permiso para acceder a esta página."
+      ],
+      "You do not have permission to edit workflows.": [
+        "No tienes permiso para editar flujos de trabajo."
+      ],
+      "You have unsaved changes.": [
+        "Tienes cambios no guardados."
+      ],
+      "You may write a longer, detailed message.": [
+        "Puedes escribir un mensaje más largo y detallado."
+      ],
+      "Your access code is: %1$s. This code expires in %2$d minutes.": [
+        "Tu código de acceso es: %1$s. Este código expira en %2$d minutos."
+      ],
+      "Your installation is now ready for full use.": [
+        "Tu instalación ya está lista para su uso completo."
+      ],
+      "Your installation is unlocked for full use.": [
+        "Tu instalación está desbloqueada para su uso completo."
+      ],
+      "Your license is active. You can keep it synced here whenever the status changes on the server.": [
+        "Tu licencia está activa. Puedes mantenerla sincronizada aquí siempre que el estado cambie en el servidor."
+      ],
+      "Your license key": [
+        "Tu clave de licencia"
+      ],
+      "Your license key:": [
+        "Su clave de licencia:"
+      ],
+      "Your license key: Not available": [
+        "Tu clave de licencia: No disponible"
+      ],
+      "Your plugin is up to date.": [
+        "Tu plugin está actualizado."
+      ],
+      "Your WhatsApp was verified successfully!": [
+        "¡Tu WhatsApp se verificó con éxito!"
+      ],
+      "Zambia": [
+        "Zambia"
+      ],
+      "Zimbabwe": [
+        "Zimbabue"
+      ],
+      "Zoom in": [
+        "Acercar"
+      ],
+      "Zoom out": [
+        "Alejar"
+      ]
+    }
+  }
+}
