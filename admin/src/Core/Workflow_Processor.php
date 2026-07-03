@@ -1190,6 +1190,7 @@ class Workflow_Processor {
         $ai_response = AI_Manager::generate( new AI_Request( array(
             'system' => $system,
             'prompt' => $prompt,
+            'provider' => $action_data['ai_provider'] ?? '',
             'model' => $action_data['ai_model'] ?? '',
             'temperature' => $temperature,
             'context' => array(
@@ -1491,6 +1492,7 @@ class Workflow_Processor {
         $response = AI_Manager::generate( new AI_Request( array(
             'system' => $system,
             'prompt' => $prompt,
+            'provider' => $action_data['ai_provider'] ?? '',
             'model' => $action_data['ai_model'] ?? '',
             'temperature' => $temperature,
             'context' => array(

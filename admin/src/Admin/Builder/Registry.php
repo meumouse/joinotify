@@ -14,6 +14,7 @@ use MeuMouse\Joinotify\Builder\Workflow_Manager;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Admin\Settings\Registry as Settings_Registry;
+use MeuMouse\Joinotify\AI\AI_Manager;
 
 defined('ABSPATH') || exit;
 
@@ -60,6 +61,7 @@ class Registry {
 			'trigger_availability' => self::get_workflow_trigger_availability( $workflow_state ),
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
 			'conditions' => self::get_conditions_catalog(),
+			'ai' => AI_Manager::get_routing_config(),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
 				'dashboard_url' => admin_url( 'admin.php?page=joinotify-workflows' ),

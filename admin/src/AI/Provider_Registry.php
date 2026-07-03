@@ -120,4 +120,35 @@ class Provider_Registry {
 
         return $options;
     }
+
+
+    /**
+     * List the providers that are ready to use (credentials configured).
+     *
+     * Each entry carries the provider id, label and selectable models, so the
+     * builder can offer per-node provider routing when more than one engine is
+     * available.
+     *
+     * @since 2.1.0
+     * @return array<int,array{value:string,label:string,models:array<int,array{value:string,label:string}>}>
+     */
+    public static function get_active_providers() {
+        $active = array();
+
+        foreach ( array_keys( self::get_providers() ) as $id ) {
+            $provider = self::get_provider( $id );
+
+            if ( ! $provider instanceof Provider_Interface || ! $provider->is_configured() ) {
+                continue;
+            }
+
+            $active[] = array(
+                'value' => $provider->get_id(),
+                'label' => $provider->get_label(),
+                'models' => $provider->get_models(),
+            );
+        }
+
+        return $active;
+    }
 }
