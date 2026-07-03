@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\AI\Providers\OpenAI_Provider;
-use MeuMouse\Joinotify\AI\Providers\Anthropic_Provider;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -69,7 +68,6 @@ class OpenAI extends Integrations_Base {
      */
     public static function get_integration_settings() {
         $openai_models = ( new OpenAI_Provider() )->get_models();
-        $anthropic_models = ( new Anthropic_Provider() )->get_models();
 
         return array(
             self::field_text(
@@ -83,30 +81,12 @@ class OpenAI extends Integrations_Base {
             ),
             self::field_select(
                 'openai_default_model',
-                esc_html__( 'OpenAI default model', 'joinotify' ),
+                esc_html__( 'Default model', 'joinotify' ),
                 esc_html__( 'Model used when a workflow node does not override it. The list is fetched from OpenAI and can be refreshed.', 'joinotify' ),
                 $openai_models,
                 array(
                     'default' => 'gpt-4o-mini',
                     'component' => 'openai-model-select',
-                )
-            ),
-            self::field_text(
-                'anthropic_api_key',
-                esc_html__( 'Anthropic API key', 'joinotify' ),
-                esc_html__( 'Secret key used to authenticate requests to Anthropic (Claude). Find it at console.anthropic.com.', 'joinotify' ),
-                array(
-                    'placeholder' => 'sk-ant-...',
-                    'autocomplete' => 'off',
-                )
-            ),
-            self::field_select(
-                'anthropic_default_model',
-                esc_html__( 'Anthropic default model', 'joinotify' ),
-                esc_html__( 'Claude model used when a workflow node does not override it. The list is fetched from Anthropic when the API key is set.', 'joinotify' ),
-                $anthropic_models,
-                array(
-                    'default' => 'claude-haiku-4-5',
                 )
             ),
             self::field_text(

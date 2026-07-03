@@ -347,6 +347,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
 			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
 			'MeuMouse\\Joinotify\\Integrations\\OpenAI',
+			'MeuMouse\\Joinotify\\Integrations\\Anthropic',
 			'MeuMouse\\Joinotify\\Integrations\\AI_Messaging',
 			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
 			'MeuMouse\\Joinotify\\Integrations\\Elementor',
