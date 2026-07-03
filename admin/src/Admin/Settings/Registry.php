@@ -355,6 +355,7 @@ class Registry {
                 'title' => $item['title'] ?? ucfirst( $slug ),
                 'description' => $item['description'] ?? '',
                 'icon' => $item['icon'] ?? '',
+                'category' => ! empty( $item['category'] ) ? sanitize_key( (string) $item['category'] ) : 'others',
                 'setting_key' => $setting_key,
                 'enabled' => $setting_key ? ( ( $settings[ $setting_key ] ?? 'no' ) === 'yes' ) : false,
                 'requires_plugin' => $requires_plugin,
@@ -377,7 +378,49 @@ class Registry {
         return $cards;
     }
 
-    
+
+    /**
+     * Build the normalized Applications categories catalog for the frontend.
+     *
+     * Sanitizes ids, drops entries without an id, and sorts by priority so the
+     * Applications tab renders the category sections in a stable order.
+     *
+     * @since 2.1.0
+     * @return array<int,array<string,mixed>>
+     */
+    public static function get_integration_categories() {
+        $categories = Integrations_Base::get_integration_categories();
+        $normalized = array();
+
+        foreach ( (array) $categories as $category ) {
+            if ( ! is_array( $category ) ) {
+                continue;
+            }
+
+            $id = isset( $category['id'] ) ? sanitize_key( (string) $category['id'] ) : '';
+
+            if ( '' === $id ) {
+                continue;
+            }
+
+            $normalized[ $id ] = array(
+                'id' => $id,
+                'label' => isset( $category['label'] ) ? (string) $category['label'] : ucfirst( str_replace( '_', ' ', $id ) ),
+                'icon' => isset( $category['icon'] ) ? (string) $category['icon'] : '',
+                'priority' => isset( $category['priority'] ) ? (int) $category['priority'] : 0,
+            );
+        }
+
+        $normalized = array_values( $normalized );
+
+        usort( $normalized, static function( $a, $b ) {
+            return $a['priority'] <=> $b['priority'];
+        } );
+
+        return $normalized;
+    }
+
+
     /**
      * Current sender list and supporting phone metadata.
      *
@@ -516,6 +559,7 @@ class Registry {
             'schema' => self::get_schema(),
             'section_tabs' => self::get_section_tabs(),
             'integrations' => self::get_integration_cards(),
+            'integration_categories' => self::get_integration_categories(),
             'phones' => self::get_phone_state(),
             'builder_variables' => array(
                 'items' => Custom_Variables::get_all(),
@@ -539,6 +583,7 @@ class Registry {
                 'schema_filter' => 'Joinotify/Admin/Settings/Schema',
                 'section_tabs_filter' => 'Joinotify/Admin/Settings/Section_Tabs',
                 'integration_filter' => 'Joinotify/Settings/Tabs/Integrations',
+                'integration_categories_filter' => 'Joinotify/Settings/Integrations/Categories',
                 'integration_field_types' => self::get_supported_integration_field_types(),
                 'integration_field_components' => self::get_supported_integration_field_components(),
                 'integration_modal_block_types' => array( 'html', 'component' ),

@@ -105,6 +105,7 @@ class Resend extends Integrations_Base {
             esc_html__( 'Send e-mail notifications for your automations through the Resend API.', 'joinotify' ),
             '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000" style="max-width: 4.5rem;"><title>Resend icon</title><path d="M2 21V3h8.5c1.7 0 3.1.5 4.1 1.6 1 1 1.6 2.3 1.6 3.9 0 1.2-.3 2.2-.9 3.1-.6.9-1.4 1.5-2.5 1.9L22 21h-5.2l-4.6-6.9H6.9V21H2zm4.9-10.6h3c.8 0 1.4-.2 1.8-.6.4-.4.6-.9.6-1.6 0-.7-.2-1.2-.6-1.6-.4-.4-1-.6-1.8-.6h-3v4.4z"/></svg>',
             array(
+                'category' => 'channels',
                 'setting_key' => 'enable_resend_integration',
                 'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Resend',
                 'settings' => self::get_integration_settings(),

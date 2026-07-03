@@ -22,6 +22,7 @@ $integrations['minha_integracao'] = array(
     'title' => esc_html__( 'Minha Integracao', 'joinotify-minha-integracao' ),
     'description' => esc_html__( 'Descricao curta da integracao.', 'joinotify-minha-integracao' ),
     'icon' => '<svg>...</svg>',
+    'category' => 'channels',
     'setting_key' => 'enable_minha_integracao',
     'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Minha_Integracao',
     'settings' => array(
@@ -56,6 +57,46 @@ $integrations['minha_integracao'] = array(
     ),
 );
 ```
+
+## Categorias (aba Aplicativos)
+
+A aba **Settings > Applications** agrupa os cards em secoes por categoria. Cada integracao declara a categoria a que pertence pela chave `category`:
+
+```php
+'category' => 'channels',
+```
+
+Categorias nativas (id => rotulo):
+
+- `channels` — Communication channels (WhatsApp, Telegram, Resend)
+- `ai` — Artificial Intelligence (OpenAI, Anthropic)
+- `ecommerce` — E-commerce (WooCommerce, Flexify Checkout)
+- `forms` — Forms & page builders (WPForms, Elementor)
+- `content` — Content & CMS (WordPress)
+- `security` — Authentication (OTP Login)
+- `developer` — Advanced
+- `others` — fallback usado quando `category` esta ausente ou nao registrada
+
+Se `category` for omitida, o card cai automaticamente em `others`. Secoes sem nenhum card sao ocultadas, e categorias declaradas nos cards mas nao registradas no catalogo aparecem por ultimo (com rotulo derivado do id).
+
+### Registrar uma categoria propria
+
+O catalogo e exposto pelo filtro `Joinotify/Settings/Integrations/Categories`, no mesmo padrao das categorias de acoes do builder. Cada item aceita `id`, `label`, `icon` (SVG) e `priority` (ordena as secoes):
+
+```php
+add_filter( 'Joinotify/Settings/Integrations/Categories', function( $categories ) {
+    $categories[] = array(
+        'id' => 'crm',
+        'label' => esc_html__( 'CRM', 'joinotify-minha-integracao' ),
+        'icon' => '<svg viewBox="0 0 24 24" fill="currentColor">...</svg>',
+        'priority' => 35,
+    );
+
+    return $categories;
+} );
+```
+
+Depois basta os cards apontarem `'category' => 'crm'`.
 
 ## Tipos de campos suportados
 

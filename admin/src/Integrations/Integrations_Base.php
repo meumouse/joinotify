@@ -78,6 +78,80 @@ abstract class Integrations_Base {
 
 
     /**
+     * Return the catalog of integration (Applications) categories.
+     *
+     * Each integration card declares a `category` id; the Applications tab groups
+     * the cards under these sections following the declared `priority`. Third
+     * parties can register their own categories through the
+     * "Joinotify/Settings/Integrations/Categories" filter, mirroring the builder
+     * action categories contract.
+     *
+     * @since 2.1.0
+     * @return array<int,array<string,mixed>>
+     */
+    public static function get_integration_categories() {
+        $categories = array(
+            array(
+                'id'       => 'channels',
+                'label'    => __( 'Communication channels', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l5.333-4H20c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm0 14H6.667L4 18V4h16v12z"></path><path d="M7 7h10v2H7zm0 4h7v2H7z"></path></svg>',
+                'priority' => 10,
+            ),
+            array(
+                'id'       => 'ai',
+                'label'    => __( 'Artificial Intelligence', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a2 2 0 0 0-2 2v1H7a3 3 0 0 0-3 3v1H3a1 1 0 0 0 0 2h1v2H3a1 1 0 0 0 0 2h1v1a3 3 0 0 0 3 3h1v1a1 1 0 0 0 2 0v-1h2v1a1 1 0 0 0 2 0v-1h1a3 3 0 0 0 3-3v-1h1a1 1 0 0 0 0-2h-1v-2h1a1 1 0 0 0 0-2h-1V8a3 3 0 0 0-3-3h-1V4a2 2 0 0 0-2-2zm-5 6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8zm3 1a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1zm4 0a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1z"></path></svg>',
+                'priority' => 20,
+            ),
+            array(
+                'id'       => 'ecommerce',
+                'label'    => __( 'E-commerce', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.822 7.431A1 1 0 0 0 21 7H7.333L6.179 4.23A1.994 1.994 0 0 0 4.333 3H2v2h2.333l3.75 9.001a1 1 0 0 0 .923.615h8.324a1 1 0 0 0 .923-.615l3.583-8.6a1 1 0 0 0-.014-.97zM16.667 12.615H9.673l-2.5-6.001h11.32l-1.826 6.001zM8.5 22a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path></svg>',
+                'priority' => 30,
+            ),
+            array(
+                'id'       => 'forms',
+                'label'    => __( 'Forms & page builders', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 2H5c-1.103 0-2 .897-2 2v16c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM5 20V4h14l.002 16H5z"></path><path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"></path></svg>',
+                'priority' => 40,
+            ),
+            array(
+                'id'       => 'content',
+                'label'    => __( 'Content & CMS', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V7h16l.002 12H4z"></path><path d="M6 9h12v2H6zm0 4h12v2H6z"></path></svg>',
+                'priority' => 50,
+            ),
+            array(
+                'id'       => 'security',
+                'label'    => __( 'Authentication', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 5v6c0 5.055 3.418 9.774 8 11 4.582-1.226 8-5.945 8-11V5l-8-3zm0 2.15 6 2.25V11c0 3.86-2.462 7.407-6 8.641C8.462 18.407 6 14.86 6 11V6.4l6-2.25z"></path><path d="M11 13.586l-2.293-2.293-1.414 1.414L11 16.414l5.707-5.707-1.414-1.414z"></path></svg>',
+                'priority' => 60,
+            ),
+            array(
+                'id'       => 'developer',
+                'label'    => __( 'Advanced', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="m9.4 16.6-4.2-4.2 4.2-4.2L8 6.8 2.4 12.4 8 18l1.4-1.4zm5.2 0 4.2-4.2-4.2-4.2L16 6.8l5.6 5.6L16 18l-1.4-1.4z"></path></svg>',
+                'priority' => 70,
+            ),
+            array(
+                'id'       => 'others',
+                'label'    => __( 'Others', 'joinotify' ),
+                'icon'     => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 0h6v6h-6v-6z"></path></svg>',
+                'priority' => 100,
+            ),
+        );
+
+        /**
+         * Filter the Applications categories catalog.
+         *
+         * @since 2.1.0
+         * @param array<int,array<string,mixed>> $categories | Current categories (id/label/icon/priority)
+         */
+        return apply_filters( 'Joinotify/Settings/Integrations/Categories', $categories );
+    }
+
+
+    /**
      * Build a normalized integration card payload.
      *
      * This helper gives external plugins a small, consistent contract for
@@ -107,6 +181,7 @@ abstract class Integrations_Base {
             'title'         => $title,
             'description'   => $description,
             'icon'          => $icon,
+            'category'      => 'others',
             'setting_key'   => '',
             'action_hook'   => self::get_integration_action_hook( $slug ),
             'is_plugin'     => false,
@@ -192,6 +267,7 @@ abstract class Integrations_Base {
             'title'         => '',
             'description'   => '',
             'icon'          => '',
+            'category'      => 'others',
             'setting_key'   => '',
             'action_hook'   => self::get_integration_action_hook( $slug ),
             'is_plugin'     => false,
@@ -205,6 +281,11 @@ abstract class Integrations_Base {
         ) );
 
         $normalized['slug'] = $slug;
+        $normalized['category'] = sanitize_key( (string) $normalized['category'] );
+
+        if ( empty( $normalized['category'] ) ) {
+            $normalized['category'] = 'others';
+        }
         $normalized['settings'] = self::normalize_integration_settings( $normalized['settings'] );
         $normalized['fields'] = $normalized['settings'];
         $normalized['defaults'] = self::normalize_integration_defaults( $normalized['defaults'], $normalized['settings'] );
