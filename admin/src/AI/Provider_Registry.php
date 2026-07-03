@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\AI;
 
 use MeuMouse\Joinotify\AI\Providers\OpenAI_Provider;
+use MeuMouse\Joinotify\AI\Providers\Anthropic_Provider;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -36,6 +37,7 @@ class Provider_Registry {
     public static function get_providers() {
         $providers = array(
             'openai' => OpenAI_Provider::class,
+            'anthropic' => Anthropic_Provider::class,
         );
 
         /**

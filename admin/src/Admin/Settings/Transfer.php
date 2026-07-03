@@ -52,6 +52,7 @@ class Transfer {
         return apply_filters( 'Joinotify/Admin/Settings/Transfer/Sensitive_Keys', array(
             'proxy_api_key',
             'openai_api_key',
+            'anthropic_api_key',
         ) );
     }
 

@@ -57,6 +57,8 @@ class Default_Options {
             'openai_api_key' => '',
             'openai_default_model' => 'gpt-4o-mini',
             'openai_default_temperature' => '0.7',
+            'anthropic_api_key' => '',
+            'anthropic_default_model' => 'claude-haiku-4-5',
             'ai_global_system_prompt' => '',
         );
 
