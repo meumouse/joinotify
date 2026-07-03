@@ -688,6 +688,7 @@ class Registry {
             'color-scale',
             'color-scale-field',
             'openai-model-select',
+            'anthropic-model-select',
         );
     }
 

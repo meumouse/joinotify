@@ -79,10 +79,14 @@ class Anthropic extends Integrations_Base {
             self::field_select(
                 'anthropic_default_model',
                 esc_html__( 'Default model', 'joinotify' ),
-                esc_html__( 'Claude model used when a workflow node does not override it. The list is fetched from Anthropic once the API key is set.', 'joinotify' ),
+                esc_html__( 'Claude model used when a workflow node does not override it. The list is fetched from Anthropic and can be refreshed.', 'joinotify' ),
                 $anthropic_models,
                 array(
                     'default' => 'claude-haiku-4-5',
+                    'component' => 'anthropic-model-select',
+                    'component_props' => array(
+                        'endpoint' => 'admin/ai/anthropic-models',
+                    ),
                 )
             ),
         );

@@ -20,7 +20,7 @@ import InputButtonField from './InputButtonField.vue';
 import OtpField from './OtpField.vue';
 import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
-import OpenAiModelField from './OpenAiModelField.vue';
+import AiModelField from './AiModelField.vue';
 
 const registry = new Map();
 
@@ -75,7 +75,9 @@ registerAlias('color-picker', ColorPickerField);
 registerAlias('color-picker-field', ColorPickerField);
 registerAlias('color-scale', ColorScaleField);
 registerAlias('color-scale-field', ColorScaleField);
-registerAlias('openai-model-select', OpenAiModelField);
+registerAlias('openai-model-select', AiModelField);
+registerAlias('anthropic-model-select', AiModelField);
+registerAlias('ai-model-select', AiModelField);
 
 /**
  * Convert a snake_case or kebab-case key into camelCase.

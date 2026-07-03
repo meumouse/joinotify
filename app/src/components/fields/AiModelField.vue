@@ -1,11 +1,12 @@
 <script setup>
 
 /**
- * OpenAiModelField.vue frontend component.
+ * AiModelField.vue frontend component.
  *
- * Renders the OpenAI default-model select and a button that refreshes the
- * available models from the OpenAI API, so newly released models appear
- * without a plugin update.
+ * Renders an AI default-model select plus a button that refreshes the available
+ * models from the provider API, so newly released models appear without a plugin
+ * update. The provider endpoint is read from `field.component_props.endpoint`
+ * (defaults to OpenAI), which keeps the component reusable across providers.
  *
  * @since 2.0.0
  */
@@ -28,6 +29,13 @@ const options = ref(Array.isArray(props.field.options) ? [...props.field.options
 const loading = ref(false);
 const errorMsg = ref('');
 
+// Provider REST endpoint that returns the model list; defaults to OpenAI so the
+// existing `openai-model-select` wiring keeps working without an endpoint.
+const endpoint = computed(() => {
+  const configured = props.field?.component_props?.endpoint;
+  return typeof configured === 'string' && configured.trim() ? configured.trim() : 'admin/ai/openai-models';
+});
+
 const selectField = computed(() => ({
   ...props.field,
   options: options.value,
@@ -43,7 +51,8 @@ async function refresh() {
   errorMsg.value = '';
 
   try {
-    const res = await api.get('admin/ai/openai-models?refresh=1');
+    const separator = endpoint.value.includes('?') ? '&' : '?';
+    const res = await api.get(`${endpoint.value}${separator}refresh=1`);
 
     if (Array.isArray(res?.models)) {
       options.value = res.models;
