@@ -1,4 +1,4 @@
-Versão 2.0.0 (01/07/2026)
+Versão 2.0.0 (02/07/2026)
 * Novo construtor de fluxos: interface totalmente redesenhada em formato de canvas visual, com arrastar e soltar, conectar etapas, zoom, ajuste automático à tela e botões de desfazer/refazer
 * Novo recurso: Inteligência Artificial no construtor de fluxos
      - Criação de fluxos completos automaticamente a partir de uma descrição em texto
@@ -21,6 +21,7 @@ Versão 2.0.0 (01/07/2026)
 * Melhoria: migração automática dos fluxos das versões anteriores ao atualizar o plugin
 * Otimizações de desempenho no carregamento do plugin e nas telas administrativas
 * Suporte aprimorado a traduções (português, inglês e espanhol)
+* Novos idiomas adicionados: Francês, Italiano, Alemão e Português de Portugal
 
 Versão 1.4.7 (12/04/2026)
 * Recurso adicionado: Fila para processamento de mensagens
