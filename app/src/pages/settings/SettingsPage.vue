@@ -1,0 +1,876 @@
+<script setup>
+
+/**
+ * SettingsPage.vue frontend component.
+ *
+ * @since 1.4.7
+ * @version 1.4.7
+ */
+import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, watch } from 'vue';
+import { __, textDomain } from '../../utils/i18n';
+import { cloneValue, deepEqual } from '../../utils/object';
+import { generateHexToken } from '../../utils/random';
+import { createApiClient } from '../../utils/api';
+import PageHeader from '../../components/layout/PageHeader.vue';
+import SectionTabs from './components/SectionTabs.vue';
+import GeneralSettingsSection from './components/sections/GeneralSettingsSection.vue';
+import PhonesSettingsSection from './components/sections/PhonesSettingsSection.vue';
+import IntegrationsSettingsSection from './components/sections/IntegrationsSettingsSection.vue';
+import AboutSettingsSection from './components/sections/AboutSettingsSection.vue';
+import BuilderSettingsSection from './components/sections/BuilderSettingsSection.vue';
+import SettingsActionBar from './components/SettingsActionBar.vue';
+import ProxySettingsModal from './components/modals/ProxySettingsModal.vue';
+import IntegrationSettingsModal from './components/modals/IntegrationSettingsModal.vue';
+import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
+import ToastStack from '../../components/toasts/ToastStack.vue';
+import DebugLogModal from './components/cards/DebugLogModal.vue';
+import { createDebugLogger } from '../../utils/debug';
+
+const props = defineProps({
+  bootstrap: { type: Object, default: () => ({}) },
+});
+
+const docsUrl = props.bootstrap?.docs_url || props.bootstrap?.docs || 'https://ajuda.meumouse.com/docs/joinotify/overview';
+const api = createApiClient(props.bootstrap);
+provide('joinotifyApi', api);
+const bootstrap = ref(cloneValue(props.bootstrap));
+const debugLogger = createDebugLogger('Settings', () => Boolean(bootstrap.value?.debug_mode));
+const settings = reactive({});
+const savedSettings = ref(cloneValue(props.bootstrap?.settings || {}));
+const phoneCandidates = ref([]);
+const debugLogs = ref([]);
+const debugItems = ref([]);
+const logsOpen = ref(false);
+const logsLoading = ref(false);
+const saving = ref(false);
+const exporting = ref(false);
+const importing = ref(false);
+const refreshingSenderPhone = ref('');
+const senderActionLoading = ref(false);
+const proxyConfigOpen = ref(false);
+const integrationConfigOpen = ref(false);
+const selectedIntegration = ref(null);
+const toasts = ref([]);
+const updateState = reactive({ loading: false, checked: false, available: false, latestVersion: '', updateUrl: '' });
+const confirm = reactive({ open: false, title: '', description: '', action: null });
+const isHydrated = ref(false);
+const toastTimers = new Map();
+const activeSectionStorageKey = 'joinotify-settings-active-section';
+
+syncSettings(bootstrap.value.settings || {});
+
+const sections = computed(() => bootstrap.value.section_tabs || []);
+const integrations = computed(() => bootstrap.value.integrations || []);
+const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
+const system = computed(() => bootstrap.value.system || {});
+const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
+const pluginVersion = computed(() => bootstrap.value.version || '');
+const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
+
+const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'enable_send_disconnect_notifications', 'ai_provider']));
+const aboutVisibleFields = computed(() => filterFields(['enable_auto_updates', 'enable_update_notice', 'enable_message_history']));
+const proxyToggleField = computed(() => fieldFor('enable_proxy_api'));
+const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
+const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
+const proxyDefaults = {
+  send_text_proxy_api_route: 'send-message/text',
+  send_media_proxy_api_route: 'send-message/media',
+  proxy_api_key: '',
+};
+
+const activeSectionId = ref(getInitialActiveSectionId());
+const selectedIntegrationModalSize = computed(() => {
+  return (
+    selectedIntegration.value?.modal?.size ||
+    selectedIntegration.value?.modal?.modal_size ||
+    selectedIntegration.value?.modal?.modal_size_class ||
+    selectedIntegration.value?.modal_size ||
+    selectedIntegration.value?.modal_size_class ||
+    'medium'
+  );
+});
+
+watch(
+  sections,
+  (value) => {
+    if (!value.length) {
+      return;
+    }
+
+    if (!value.some((section) => (section.section || section.id) === activeSectionId.value)) {
+      activeSectionId.value = value[0].section || value[0].id;
+    }
+  },
+  { immediate: true }
+);
+
+watch(activeSectionId, (value) => {
+  debugLogger.log('navigation:section-changed', {
+    section: value,
+  });
+  persistActiveSectionId(value);
+});
+
+loadPhoneCandidates();
+
+onMounted(() => {
+  debugLogger.log('page:mounted', {
+    debug_mode: Boolean(bootstrap.value?.debug_mode),
+    active_section: activeSectionId.value,
+  });
+  window.setTimeout(() => {
+    isHydrated.value = true;
+  }, 300);
+});
+
+
+
+function flattenFields(schema) {
+  const fields = {};
+
+  schema.forEach((section) => {
+    (section.cards || []).forEach((card) => {
+      (card.fields || []).forEach((field) => {
+        fields[field.key] = field;
+      });
+    });
+  });
+
+  return fields;
+}
+
+function fieldFor(key) {
+  return settingsFields.value[key] || { key, type: 'toggle', label: key, description: '' };
+}
+
+function filterFields(keys) {
+  return keys.map((key) => fieldFor(key)).filter(Boolean);
+}
+
+function getInitialActiveSectionId() {
+  const fallbackSection = (props.bootstrap?.section_tabs || [])[0];
+  const fallback = fallbackSection?.section || fallbackSection?.id || 'general';
+
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+
+  const saved = window.localStorage.getItem(activeSectionStorageKey);
+
+  if (!saved) {
+    return fallback;
+  }
+
+  const schema = props.bootstrap?.section_tabs || [];
+  const isValid = schema.some((section) => (section.section || section.id) === saved);
+
+  return isValid ? saved : fallback;
+}
+
+function persistActiveSectionId(sectionId) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  if (!sectionId) {
+    window.localStorage.removeItem(activeSectionStorageKey);
+    return;
+  }
+
+  window.localStorage.setItem(activeSectionStorageKey, sectionId);
+}
+
+function syncSettings(nextSettings) {
+  Object.keys(settings).forEach((key) => delete settings[key]);
+  Object.assign(settings, cloneValue(nextSettings));
+  savedSettings.value = cloneValue(nextSettings);
+}
+
+
+
+function normalizeToastTone(tone) {
+  if (tone === 'danger') return 'error';
+  if (tone === 'success' || tone === 'warning' || tone === 'error' || tone === 'info') return tone;
+  return 'info';
+}
+
+function clearToastTimers(id) {
+  const timers = toastTimers.get(id);
+
+  if (!timers) return;
+
+  if (timers.hide) {
+    window.clearTimeout(timers.hide);
+  }
+
+  if (timers.remove) {
+    window.clearTimeout(timers.remove);
+  }
+
+  toastTimers.delete(id);
+}
+
+function removeToast(id) {
+  clearToastTimers(id);
+  toasts.value = toasts.value.filter((item) => item.id !== id);
+}
+
+function setToastClosing(id, closing) {
+  toasts.value = toasts.value.map((item) => (item.id === id ? { ...item, closing } : item));
+}
+
+function toast(message, tone = 'info', title = __('Joinotify', textDomain)) {
+  const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const normalizedTone = normalizeToastTone(tone);
+
+  toasts.value.push({ id, title, message, tone: normalizedTone, closing: false });
+
+  const hideTimer = window.setTimeout(() => {
+    setToastClosing(id, true);
+  }, 3000);
+
+  const removeTimer = window.setTimeout(() => {
+    removeToast(id);
+  }, 3500);
+
+  toastTimers.set(id, { hide: hideTimer, remove: removeTimer });
+}
+
+function dismissToast(id) {
+  clearToastTimers(id);
+  setToastClosing(id, true);
+
+  const removeTimer = window.setTimeout(() => {
+    toasts.value = toasts.value.filter((item) => item.id !== id);
+  }, 180);
+
+  toastTimers.set(id, { hide: null, remove: removeTimer });
+}
+
+function isEnabled(key) {
+  return (settings[key] || 'no') === 'yes';
+}
+
+function toggleSetting(key) {
+  if (!key) return;
+  debugLogger.log('setting:toggled', {
+    key,
+    previous: isEnabled(key) ? 'yes' : 'no',
+    next: isEnabled(key) ? 'no' : 'yes',
+  });
+  settings[key] = isEnabled(key) ? 'no' : 'yes';
+}
+
+function updateSetting(key, value) {
+  debugLogger.log('setting:updated', {
+    key,
+    value_type: Array.isArray(value) ? 'array' : typeof value,
+  });
+  settings[key] = value;
+}
+
+function resetProxyField(key) {
+  if (!(key in proxyDefaults)) {
+    return;
+  }
+
+  debugLogger.log('proxy:reset-field', {
+    key,
+  });
+  updateSetting(key, proxyDefaults[key]);
+}
+
+function generateProxyApiKey() {
+  const generated = generateHexToken(32);
+  debugLogger.log('proxy:generate-key');
+  updateSetting('proxy_api_key', generated);
+}
+
+
+
+onBeforeUnmount(() => {
+  toastTimers.forEach((timer) => window.clearTimeout(timer));
+  toastTimers.clear();
+});
+
+async function saveSettings() {
+  if (!hasUnsavedChanges.value) {
+    return;
+  }
+
+  saving.value = true;
+  debugLogger.log('settings:save-start', {
+    changes_pending: true,
+  });
+
+  try {
+    const response = await api.post('/admin/settings', { settings });
+    syncSettings(response.settings || {});
+    bootstrap.value = { ...bootstrap.value, settings: cloneValue(response.settings || {}) };
+    toast(response.message || __('Settings have been saved.', textDomain), 'success', __('Saved', textDomain));
+    debugLogger.log('settings:save-complete', {
+      saved_keys: Object.keys(settings),
+    });
+  } catch (error) {
+    toast(error.message || __('Could not save.', textDomain), 'danger', __('Error', textDomain));
+    debugLogger.log('settings:save-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    saving.value = false;
+  }
+}
+
+async function exportSettings() {
+  if (exporting.value) {
+    return;
+  }
+
+  exporting.value = true;
+  debugLogger.log('settings:export-start');
+
+  try {
+    const response = await api.get('/admin/settings/export');
+    const payload = response.payload || {};
+    const filename = response.filename || 'joinotify-settings.json';
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+
+    toast(__('Settings exported.', textDomain), 'success', __('Export', textDomain));
+    debugLogger.log('settings:export-complete', { filename });
+  } catch (error) {
+    toast(error.message || __('Could not export the settings.', textDomain), 'danger', __('Export', textDomain));
+    debugLogger.log('settings:export-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    exporting.value = false;
+  }
+}
+
+function confirmImportSettings(payload) {
+  debugLogger.log('settings:import-confirm-open');
+  confirm.open = true;
+  confirm.title = __('Import settings', textDomain);
+  confirm.description = __('The configuration in the file will be merged into your current settings. This cannot be undone.', textDomain);
+  confirm.action = async () => {
+    importing.value = true;
+
+    try {
+      const response = await api.post('/admin/settings/import', { payload });
+
+      if (response.bootstrap) {
+        bootstrap.value = cloneValue(response.bootstrap);
+        syncSettings(bootstrap.value.settings || {});
+        await loadPhoneCandidates();
+      }
+
+      toast(response.message || __('Settings imported.', textDomain), 'success', __('Import', textDomain));
+      debugLogger.log('settings:import-complete', response.imported || {});
+    } catch (error) {
+      toast(error.message || __('Could not import the settings.', textDomain), 'danger', __('Import', textDomain));
+      debugLogger.log('settings:import-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    } finally {
+      importing.value = false;
+    }
+  };
+}
+
+function onImportError(message) {
+  toast(message || __('Invalid file.', textDomain), 'danger', __('Import', textDomain));
+}
+
+async function checkUpdates() {
+  if (updateState.loading) {
+    return;
+  }
+
+  updateState.loading = true;
+  debugLogger.log('updates:check-start', {
+    current_version: pluginVersion.value,
+  });
+
+  try {
+    const response = await api.post('/admin/settings/check-updates', {});
+    updateState.checked = true;
+    updateState.available = Boolean(response.update_available);
+    updateState.latestVersion = response.latest_version || '';
+    updateState.updateUrl = response.update_url || '';
+    toast(response.message || __('Update check completed.', textDomain), updateState.available ? 'info' : 'success', __('Updates', textDomain));
+    debugLogger.log('updates:check-complete', {
+      update_available: updateState.available,
+      latest_version: updateState.latestVersion,
+    });
+  } catch (error) {
+    toast(error.message || __('Could not check for updates.', textDomain), 'danger', __('Updates', textDomain));
+    debugLogger.log('updates:check-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    updateState.loading = false;
+  }
+}
+
+async function loadPhoneCandidates() {
+  debugLogger.log('phones:candidates-load-start');
+  try {
+    const response = await api.get('/admin/settings/phones/candidates');
+    phoneCandidates.value = response.candidates || [];
+    debugLogger.log('phones:candidates-load-complete', {
+      count: phoneCandidates.value.length,
+    });
+  } catch (error) {
+    phoneCandidates.value = [];
+    debugLogger.log('phones:candidates-load-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+}
+
+async function registerPhone(phone) {
+  senderActionLoading.value = true;
+  debugLogger.log('phones:register-start', {
+    phone,
+  });
+
+  try {
+    const response = await api.post('/admin/settings/phones/register', { phone });
+    toast(response.message || __('Code sent successfully.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:register-complete', {
+      phone,
+    });
+  } catch (error) {
+    toast(error.message || __('Failed to send OTP.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:register-failed', {
+      phone,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    senderActionLoading.value = false;
+  }
+}
+
+async function validateOtp(payload) {
+  senderActionLoading.value = true;
+  debugLogger.log('phones:validate-start', {
+    phone: payload?.phone || '',
+  });
+
+  try {
+    const response = await api.post('/admin/settings/phones/validate-otp', payload);
+    syncPhones(response.phones || {});
+    await loadPhoneCandidates();
+    toast(response.message || __('Phone validated.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:validate-complete', {
+      phone: payload?.phone || '',
+    });
+  } catch (error) {
+    toast(error.message || __('Validation failed.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:validate-failed', {
+      phone: payload?.phone || '',
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    senderActionLoading.value = false;
+  }
+}
+
+async function sendTestMessage(payload) {
+  debugLogger.log('phones:test-message-start', {
+    phone: payload?.phone || '',
+  });
+  try {
+    const response = await api.post('/admin/settings/phones/test-message', payload);
+    toast(response.message || __('Message sent.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:test-message-complete', {
+      phone: payload?.phone || '',
+    });
+    return true;
+  } catch (error) {
+    toast(error.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:test-message-failed', {
+      phone: payload?.phone || '',
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return false;
+  }
+}
+
+function syncPhones(nextPhones) {
+  bootstrap.value = { ...bootstrap.value, phones: cloneValue(nextPhones) };
+}
+
+function syncBuilderVariables(items) {
+  bootstrap.value = {
+    ...bootstrap.value,
+    builder_variables: {
+      ...(bootstrap.value.builder_variables || {}),
+      items: cloneValue(items || []),
+    },
+  };
+}
+
+async function saveBuilderVariable(variable) {
+  try {
+    const response = await api.post('/admin/builder-variables', { variable });
+    syncBuilderVariables(response.items || []);
+    toast(response.message || __('Variable saved.', textDomain), 'success', __('Builder', textDomain));
+    return true;
+  } catch (error) {
+    toast(error.message || __('Could not save the variable.', textDomain), 'danger', __('Builder', textDomain));
+    return false;
+  }
+}
+
+function deleteBuilderVariable(variable) {
+  confirm.open = true;
+  confirm.title = __('Remove variable', textDomain);
+  confirm.description = __('Are you sure you want to remove this variable? Workflows that use it will no longer resolve it.', textDomain);
+  confirm.action = async () => {
+    try {
+      const response = await api.post('/admin/builder-variables/delete', { id: variable.id });
+      syncBuilderVariables(response.items || []);
+      toast(response.message || __('Variable removed.', textDomain), 'success', __('Builder', textDomain));
+    } catch (error) {
+      toast(error.message || __('Could not remove the variable.', textDomain), 'danger', __('Builder', textDomain));
+    }
+  };
+}
+
+async function loadBuilderMetaKeys({ post_type, post_id }) {
+  const params = new URLSearchParams({ post_type: post_type || '' });
+
+  if (post_id) {
+    params.set('post_id', String(post_id));
+  }
+
+  return api.get(`/admin/builder-variables/meta-keys?${params.toString()}`);
+}
+
+function confirmRemoveSender(phone) {
+  debugLogger.log('phones:remove-confirm-open', {
+    phone,
+  });
+  confirm.open = true;
+  confirm.title = __('Remove sender', textDomain);
+  confirm.description = __('Are you sure you want to remove this sender?', textDomain);
+  confirm.action = async () => {
+    senderActionLoading.value = true;
+
+    try {
+      const response = await api.post('/admin/settings/phones/remove', { phone });
+      syncPhones(response.phones || {});
+      await loadPhoneCandidates();
+      toast(response.message || __('Sender removed.', textDomain), 'success', __('Phones', textDomain));
+    } catch (error) {
+      toast(error.message || __('Could not remove.', textDomain), 'danger', __('Phones', textDomain));
+    } finally {
+      senderActionLoading.value = false;
+    }
+  };
+}
+
+async function refreshSenderConnection(phone) {
+  refreshingSenderPhone.value = phone;
+  debugLogger.log('phones:refresh-connection-start', {
+    phone,
+  });
+
+  try {
+    const response = await api.post('/admin/settings/phones/check-connection', { phone });
+    syncPhones({
+      ...(phones.value || {}),
+      senders: (phones.value.senders || []).map((item) =>
+        item.phone === phone ? { ...item, connection: response.connection?.connection || item.connection } : item
+      ),
+    });
+    toast(response.message || __('Connection updated.', textDomain), 'info', __('Phones', textDomain));
+    debugLogger.log('phones:refresh-connection-complete', {
+      phone,
+    });
+  } catch (error) {
+    toast(error.message || __('Could not update the connection.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:refresh-connection-failed', {
+      phone,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    refreshingSenderPhone.value = '';
+  }
+}
+
+async function loadDebugLogs() {
+  logsLoading.value = true;
+  debugLogger.log('logs:load-start');
+
+  try {
+    const response = await api.get('/admin/settings/debug/logs');
+    debugLogs.value = response.content || [];
+    debugItems.value = response.items || [];
+
+    if (logsOpen.value && !debugItems.value.length) {
+      toast(response.message || __('The debug log is empty.', textDomain), 'info', __('Logs', textDomain));
+    }
+    debugLogger.log('logs:load-complete', {
+      count: debugItems.value.length,
+    });
+  } catch (error) {
+    toast(error.message || __('Could not open the logs.', textDomain), 'danger', __('Logs', textDomain));
+    debugLogger.log('logs:load-failed', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    logsLoading.value = false;
+  }
+}
+
+function openLogs() {
+  debugLogger.log('logs:open');
+  logsOpen.value = true;
+  debugLogs.value = [];
+  void loadDebugLogs();
+}
+
+function refreshLogs() {
+  debugLogger.log('logs:refresh');
+  void loadDebugLogs();
+}
+
+function confirmClearLogs() {
+  debugLogger.log('logs:clear-confirm-open');
+  confirm.open = true;
+  confirm.title = __('Clear logs', textDomain);
+  confirm.description = __('Are you sure you want to clear the debug logs?', textDomain);
+  confirm.action = async () => {
+    try {
+      const response = await api.post('/admin/settings/debug/clear', {});
+      debugLogs.value = [];
+      debugItems.value = [];
+      toast(response.message || __('Logs cleared successfully.', textDomain), 'success', __('Logs', textDomain));
+      debugLogger.log('logs:clear-complete');
+    } catch (error) {
+      toast(error.message || __('Could not clear the logs.', textDomain), 'danger', __('Logs', textDomain));
+      debugLogger.log('logs:clear-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  };
+}
+
+function confirmReset() {
+  debugLogger.log('settings:reset-confirm-open');
+  confirm.open = true;
+  confirm.title = __('Reset settings', textDomain);
+  confirm.description = __('All options will return to the plugin defaults.', textDomain);
+  confirm.action = async () => {
+    try {
+      const response = await api.post('/admin/settings/reset', {});
+      bootstrap.value = cloneValue(response.bootstrap || {});
+      syncSettings(bootstrap.value.settings || {});
+      await loadPhoneCandidates();
+      toast(response.message || __('Options have been reset.', textDomain), 'success', __('Reset', textDomain));
+      debugLogger.log('settings:reset-complete');
+    } catch (error) {
+      toast(error.message || __('Could not reset.', textDomain), 'danger', __('Reset', textDomain));
+      debugLogger.log('settings:reset-failed', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  };
+}
+
+function openIntegrationConfig(slug) {
+  const integration = integrations.value.find((item) => item.slug === slug) || null;
+
+  if (!canConfigureIntegration(integration)) {
+    return;
+  }
+
+  debugLogger.log('integrations:open-config', {
+    slug,
+  });
+  selectedIntegration.value = integration;
+  integrationConfigOpen.value = true;
+}
+
+function closeIntegrationConfig() {
+  debugLogger.log('integrations:close-config');
+  integrationConfigOpen.value = false;
+  selectedIntegration.value = null;
+}
+
+async function runConfirm() {
+  const action = confirm.action;
+
+  if (typeof action === 'function') {
+    try {
+      await action();
+    } finally {
+      cancelConfirm();
+    }
+    return;
+  }
+
+  cancelConfirm();
+}
+
+function cancelConfirm() {
+  confirm.open = false;
+  confirm.title = '';
+  confirm.description = '';
+  confirm.action = null;
+}
+
+function canConfigureIntegration(integration) {
+  if (!integration) {
+    return false;
+  }
+
+  const fields = Array.isArray(integration.settings) ? integration.settings : integration.fields;
+
+  return isEnabled(integration.setting_key) && Array.isArray(fields) && fields.length > 0;
+}
+</script>
+
+<template>
+  <div class="joinotify-settings min-h-screen">
+    <div class="w-full">
+      <PageHeader :title="__('Settings', textDomain)">
+        <template #description>
+          {{ __('Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ', textDomain) }}
+          <a class="font-semibold text-primary-700 underline underline-offset-4" :href="docsUrl" target="_blank" rel="noreferrer">
+            {{ __('Help Center', textDomain) }}
+          </a>
+        </template>
+      </PageHeader>
+
+      <SectionTabs
+        :sections="sections"
+        :active-section-id="activeSectionId"
+        @select="activeSectionId = $event"
+      />
+
+      <section class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
+        <div class="px-10 py-12">
+          <GeneralSettingsSection
+            v-if="activeSectionId === 'general'"
+            :general-visible-fields="generalVisibleFields"
+            :proxy-toggle-field="proxyToggleField"
+            :settings="settings"
+            @update-setting="updateSetting"
+            @open-proxy-config="proxyConfigOpen = true"
+          />
+
+          <PhonesSettingsSection
+            v-else-if="activeSectionId === 'phones'"
+            :model-value="settings.test_number_phone"
+            :phone-candidates="phoneCandidates"
+            :phones="phones"
+            :locale="phones.locale"
+            :default-country="phones.default_country_iso2"
+            :refreshing-sender-phone="refreshingSenderPhone"
+            :sender-action-loading="senderActionLoading"
+            :send-test-message="sendTestMessage"
+            @update:model-value="updateSetting('test_number_phone', $event)"
+            @register="registerPhone"
+            @validate="validateOtp"
+            @remove="confirmRemoveSender"
+            @refresh="refreshSenderConnection"
+          />
+
+          <IntegrationsSettingsSection
+            v-else-if="activeSectionId === 'integrations'"
+            :integrations="integrations"
+            :settings="settings"
+            @toggle="toggleSetting"
+            @configure="openIntegrationConfig"
+          />
+
+          <BuilderSettingsSection
+            v-else-if="activeSectionId === 'builder'"
+            :items="builderVariables.items || []"
+            :post-types="builderVariables.post_types || []"
+            :save-variable="saveBuilderVariable"
+            :delete-variable="deleteBuilderVariable"
+            :load-meta-keys="loadBuilderMetaKeys"
+          />
+
+          <AboutSettingsSection
+            v-else-if="activeSectionId === 'about'"
+            :about-visible-fields="aboutVisibleFields"
+            :debug-toggle-field="debugToggleField"
+            :settings="settings"
+            :system="system"
+            :version="pluginVersion"
+            :update-state="updateState"
+            :exporting="exporting"
+            :importing="importing"
+            @update-setting="updateSetting"
+            @open-logs="openLogs"
+            @reset="confirmReset"
+            @clear-logs="confirmClearLogs"
+            @check-updates="checkUpdates"
+            @export="exportSettings"
+            @import="confirmImportSettings"
+            @import-error="onImportError"
+          />
+        </div>
+
+        <SettingsActionBar
+          :saving="saving"
+          :has-unsaved-changes="hasUnsavedChanges"
+          @save="saveSettings"
+        />
+      </section>
+    </div>
+
+    <ToastStack :toasts="toasts" @dismiss="dismissToast" />
+
+    <ProxySettingsModal
+      :open="proxyConfigOpen"
+      :settings="settings"
+      @close="proxyConfigOpen = false"
+      @update-setting="updateSetting"
+      @reset-field="resetProxyField"
+      @generate-key="generateProxyApiKey"
+    />
+
+    <IntegrationSettingsModal
+      :open="integrationConfigOpen && canConfigureIntegration(selectedIntegration)"
+      :integration="selectedIntegration"
+      :settings="settings"
+      :modal-size="selectedIntegrationModalSize"
+      @close="closeIntegrationConfig"
+      @update-setting="updateSetting"
+    />
+
+    <DebugLogModal
+      :open="logsOpen"
+      :items="debugItems"
+      :logs="debugLogs"
+      :loading="logsLoading"
+      @close="logsOpen = false"
+      @update-logs="refreshLogs"
+      @clear="confirmClearLogs"
+    />
+
+    <ConfirmDialog
+      :open="confirm.open"
+      :title="confirm.title"
+      :description="confirm.description"
+      :loading="senderActionLoading"
+      @confirm="runConfirm"
+      @cancel="cancelConfirm"
+    />
+  </div>
+</template>

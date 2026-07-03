@@ -1,0 +1,37 @@
+{
+  "plugin_version": "1.2.5",
+  "post": {
+    "type": "joinotify-workflow",
+    "title": "Enviar mensagem de boas vindas ao receber registro de usuário",
+    "date": "2025-04-01 07:34:41",
+    "status": "draft",
+    "modified": "2025-04-01 07:34:41",
+    "category": "wordpress"
+  },
+  "workflow_content": [
+    {
+      "id": "joinotify_trigger_67ebc14171748",
+      "type": "trigger",
+      "data": {
+        "title": "Enviar mensagem de boas vindas ao receber registro de usuário",
+        "description": "",
+        "trigger": "user_register",
+        "context": "wordpress"
+      },
+      "children": []
+    },
+    {
+      "id": "joinotify_action_67ebc63b1e9d9",
+      "type": "action",
+      "data": {
+        "title": "WhatsApp: Mensagem de texto",
+        "description": "Olá, <span class=\"builder-placeholder\">{{ first_name }}</span>! Seja muito bem-vindo(a) à <span style=\"font-weight: bold;\"><span class=\"builder-placeholder\">{{ site_name }}</span>!</span> 🎉<br><br>Estamos felizes em ter você com a gente. A partir de agora, você poderá acompanhar seus pedidos, receber ofertas exclusivas e aproveitar todos os benefícios da nossa plataforma.<br><br>Se precisar de ajuda, é só chamar por aqui mesmo. Estamos sempre prontos para te atender! 💬<br><br>Boas compras e aproveite ao máximo!<br>Equipe <span class=\"builder-placeholder\">{{ site_name }}</span>",
+        "action": "send_whatsapp_message_text",
+        "message": "Olá, {{ first_name }}! Seja muito bem-vindo(a) à *{{ site_name }}!* 🎉\n\nEstamos felizes em ter você com a gente. A partir de agora, você poderá acompanhar seus pedidos, receber ofertas exclusivas e aproveitar todos os benefícios da nossa plataforma.\n\nSe precisar de ajuda, é só chamar por aqui mesmo. Estamos sempre prontos para te atender! 💬\n\nBoas compras e aproveite ao máximo!\nEquipe {{ site_name }}",
+        "sender": "",
+        "receiver": "{{ user_meta[billing_phone] }}"
+      },
+      "children": []
+    }
+  ]
+}
