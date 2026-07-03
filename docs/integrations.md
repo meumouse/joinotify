@@ -98,6 +98,10 @@ add_filter( 'Joinotify/Settings/Integrations/Categories', function( $categories 
 
 Depois basta os cards apontarem `'category' => 'crm'`.
 
+### Icones das categorias
+
+A aba Aplicativos possui uma barra superior com filtro por categoria e seletor de modo de exibicao (`Exibir todos` / `Exibir por categoria`), mantendo todos os apps visiveis por padrao. Os icones dos chips e cabecalhos usam glifos do **Boxicons** mapeados pelo `id` da categoria no frontend (`app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue`). Para categorias nativas o mapa ja cobre os ids; para uma categoria propria sem mapeamento, o frontend usa o SVG informado em `icon` como fallback e, na ausencia dele, um icone de grade generico.
+
 ## Tipos de campos suportados
 
 Os campos declarativos podem usar os tipos nativos abaixo:
