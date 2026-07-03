@@ -29,6 +29,8 @@ function pickFile() {
   fileInput.value?.click();
 }
 
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+
 function onFileSelected(event) {
   const file = event.target?.files?.[0];
 
@@ -36,6 +38,13 @@ function onFileSelected(event) {
   event.target.value = '';
 
   if (!file) {
+    return;
+  }
+
+  // A settings export is a few KB; reject oversized files before reading them into
+  // a string and JSON.parsing on the main thread, which would freeze the tab.
+  if (file.size > MAX_FILE_BYTES) {
+    emit('error', __('File is too large. The maximum size is 5 MB.', textDomain));
     return;
   }
 

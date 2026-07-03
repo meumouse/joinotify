@@ -118,7 +118,7 @@ class Placeholders {
             $field_id = $matches[1];
 
             // check integration
-            if ( $payload['integration'] === 'wpforms' ) {
+            if ( isset( $payload['integration'] ) && $payload['integration'] === 'wpforms' ) {
                 if ( isset( $payload['fields'][$field_id]['value'] ) ) {
                     return $payload['fields'][$field_id]['value'];
                 }

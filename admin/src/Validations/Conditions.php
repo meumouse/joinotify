@@ -190,10 +190,10 @@ class Conditions {
         // Standard cases for other conditions
         switch ( $condition ) {
             case 'is':
-                return $value === $value_compare;
-    
+                return self::values_are_equal( $value, $value_compare );
+
             case 'is_not':
-                return $value !== $value_compare;
+                return ! self::values_are_equal( $value, $value_compare );
     
             case 'empty':
                 return empty( $value );
@@ -216,6 +216,30 @@ class Conditions {
             default:
                 return false;
         }
+    }
+
+
+    /**
+     * Compare two condition values for equality in a type-aware way.
+     *
+     * The runtime value ($value) is frequently a real int/float (e.g. cart item
+     * count, order total, a login timestamp) while the user-configured target
+     * ($value_compare) always arrives as a string (Workflow_Processor casts it to
+     * (string) before dispatch). A strict === between an int and its string form
+     * ("3" vs 3) would never match, so numeric operands are compared numerically
+     * and everything else (including already-coerced booleans) as strings.
+     *
+     * @since 1.4.7
+     * @param mixed $value | Runtime value
+     * @param mixed $value_compare | Configured value to compare against
+     * @return bool
+     */
+    private static function values_are_equal( $value, $value_compare ) {
+        if ( is_numeric( $value ) && is_numeric( $value_compare ) ) {
+            return (float) $value === (float) $value_compare;
+        }
+
+        return (string) $value === (string) $value_compare;
     }
     
 

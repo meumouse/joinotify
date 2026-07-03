@@ -18,7 +18,7 @@ defineProps({
   importing: { type: Boolean, default: false },
 });
 
-defineEmits(['update:jsonText', 'import', 'file', 'back']);
+defineEmits(['update:jsonText', 'import', 'file', 'back', 'error']);
 </script>
 
 <template>
@@ -31,7 +31,7 @@ defineEmits(['update:jsonText', 'import', 'file', 'back']);
 
     <div class="mt-6 grid gap-4 lg:grid-cols-[1fr_340px]">
       <BaseTextarea :model-value="jsonText" rows="18" :placeholder="__('Paste the exported JSON here', textDomain)" @update:model-value="$emit('update:jsonText', $event)" />
-      <BaseFileDropzone @file="$emit('file', $event)">
+      <BaseFileDropzone @file="$emit('file', $event)" @error="$emit('error', $event)">
         <p class="text-sm font-semibold text-slate-900">{{ __('Drag and drop a .json file', textDomain) }}</p>
         <p class="mt-2 text-sm leading-6 text-slate-500">{{ __('Or click to choose the exported Joinotify file.', textDomain) }}</p>
       </BaseFileDropzone>

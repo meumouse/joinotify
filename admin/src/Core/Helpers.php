@@ -79,19 +79,18 @@ class Helpers {
         // Remove all non-numeric characters
         $phone = preg_replace('/\D/', '', $phone);
 
-        // Check if the number starts with the default country code
-        if ( ! preg_match( '/^' . preg_quote( $default_country_code ) . '/', $phone ) ) {
-            $phone = $default_country_code . $phone;
-        }
-
         try {
-            // Parse again, now with the country code added
-            $numberProto = $phoneUtil->parse('+' . $phone, null);
+            // The number has no country code, so parse it as a NATIONAL number for
+            // the configured default region (e.g. "BR"). libphonenumber then applies
+            // the correct dialing prefix. The previous approach prepended the ISO
+            // region letters ("BR") to a digit string and parsed "+BR55..." — which
+            // always threw and returned the number without a country code.
+            $numberProto = $phoneUtil->parse( $phone, $default_country_code );
 
             // Return the formatted phone number in INTERNATIONAL format
             return $phoneUtil->format( $numberProto, PhoneNumberFormat::INTERNATIONAL );
         } catch ( NumberParseException $e ) {
-            // If parsing fails again, return the original phone number
+            // If parsing fails again, return the original digits
             return $phone;
         }
     }

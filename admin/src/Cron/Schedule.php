@@ -366,11 +366,21 @@ class Schedule {
 
         $now = time();
 
-        // advance the calendar date by the requested offset
-        $base_date = strtotime( "+{$delay_value} {$unit}", $now );
+        // Resolve the target in the SITE timezone: WordPress pins PHP's default
+        // timezone to UTC, so strtotime()/date() would anchor the time of day to
+        // UTC and fire the message off by the site's UTC offset. wp_timezone()
+        // interprets "+N days at HH:MM" as the wall-clock time the user configured.
+        try {
+            $target_dt = new \DateTime( 'now', wp_timezone() );
+            $target_dt->modify( "+{$delay_value} {$unit}" );
 
-        // anchor to the requested time of day on that date
-        $target = $base_date ? strtotime( date( 'Y-m-d', $base_date ) . ' ' . $time_value ) : 0;
+            $parts = array_map( 'intval', array_pad( explode( ':', $time_value ), 3, 0 ) );
+            $target_dt->setTime( $parts[0], $parts[1], $parts[2] );
+
+            $target = $target_dt->getTimestamp();
+        } catch ( \Exception $e ) {
+            $target = 0;
+        }
 
         if ( ! $target ) {
             return 0;
@@ -411,7 +421,21 @@ class Schedule {
         if ( 'date' === $delay_type ) {
             $date_value = isset( $action_data['date_value'] ) ? sanitize_text_field( (string) $action_data['date_value'] ) : '';
             $time_value = isset( $action_data['time_value'] ) ? sanitize_text_field( (string) $action_data['time_value'] ) : '00:00';
-            $timestamp = $date_value ? strtotime( $date_value . ' ' . $time_value ) : 0;
+
+            // Interpret the configured date/time in the SITE timezone rather than
+            // UTC (WordPress fixes PHP's default TZ to UTC), otherwise an absolute
+            // "date" delay fires off by the site's UTC offset — and a same-day date
+            // could be pushed into the past and dispatched immediately.
+            $timestamp = 0;
+
+            if ( $date_value ) {
+                try {
+                    $date_dt = new \DateTime( $date_value . ' ' . $time_value, wp_timezone() );
+                    $timestamp = $date_dt->getTimestamp();
+                } catch ( \Exception $e ) {
+                    $timestamp = 0;
+                }
+            }
 
             // Past dates resolve to 0 -> fire immediately rather than never.
             return $timestamp ? max( 0, (int) $timestamp - time() ) : 0;
