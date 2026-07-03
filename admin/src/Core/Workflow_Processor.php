@@ -827,6 +827,8 @@ class Workflow_Processor {
         $required_config = apply_filters( 'Joinotify/Workflow_Processor/Action_Required_Config', array(
             'send_whatsapp_message_text' => array( 'sender', 'receiver', 'message' ),
             'send_whatsapp_message_media' => array( 'sender', 'receiver', 'media_type', 'media_url' ),
+            'send_telegram_message_text' => array( 'receiver', 'message' ),
+            'send_resend_email' => array( 'receiver', 'subject', 'message' ),
             'create_coupon' => array( 'settings' ),
         ), $action, $post_id, $event_data );
 
@@ -861,6 +863,8 @@ class Workflow_Processor {
             'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data, $post_id ),
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data, $post_id ),
             'send_whatsapp_ai_message' => fn() => self::send_whatsapp_ai_message( $action_data, $event_data, $post_id ),
+            'send_telegram_message_text' => fn() => self::send_telegram_message_text( $action_data, $event_data, $post_id ),
+            'send_resend_email' => fn() => self::send_resend_email( $action_data, $event_data, $post_id ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data, $post_id ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
             'stop_funnel' => fn() => self::stop_funnel(),
@@ -1151,6 +1155,104 @@ class Workflow_Processor {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
                 Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * Send a text message on Telegram.
+     *
+     * The chat id (receiver) and message support placeholders. The chat id is
+     * resolved with the generic placeholder resolver — not joinotify_prepare_receiver,
+     * which strips non-digits and would corrupt negative group ids / @usernames.
+     *
+     * @since 2.1.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @param int $post_id | Workflow post ID
+     * @return void
+     */
+    public static function send_telegram_message_text( $action_data, $payload, $post_id = 0 ) {
+        $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
+        $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
+
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
+        // send message through the notification channel layer
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => 'telegram',
+            'type' => 'text',
+            'receiver' => $receiver,
+            'content' => $message,
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
+
+        Message_History::clear_context();
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            if ( $result->is_success() ) {
+                Logger::register_log( "Telegram message sent successfully to: $receiver" );
+            } else {
+                Logger::register_log( "Failed to send Telegram message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * Send an e-mail through Resend.
+     *
+     * Recipient, subject and body support placeholders. The recipient is resolved
+     * with the generic placeholder resolver (not joinotify_prepare_receiver, which
+     * is phone-oriented). The subject travels in the message meta bag.
+     *
+     * @since 2.1.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @param int $post_id | Workflow post ID
+     * @return void
+     */
+    public static function send_resend_email( $action_data, $payload, $post_id = 0 ) {
+        $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
+        $subject = joinotify_prepare_message( $action_data['subject'] ?? '', $payload );
+        $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
+
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
+        // send message through the notification channel layer
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => 'resend',
+            'type' => 'text',
+            'receiver' => $receiver,
+            'content' => $message,
+            'meta' => array(
+                'subject' => $subject,
+            ),
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
+
+        Message_History::clear_context();
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            if ( $result->is_success() ) {
+                Logger::register_log( "Resend e-mail sent successfully to: $receiver" );
+            } else {
+                Logger::register_log( "Failed to send Resend e-mail. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
             }
         }
     }

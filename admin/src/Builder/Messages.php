@@ -46,6 +46,14 @@ class Messages {
                 $message = self::build_whatsapp_media_description( $workflow_action['data'] );
 
                 break;
+            case 'send_telegram_message_text':
+                $message = self::build_telegram_text_description( $workflow_action['data'] );
+
+                break;
+            case 'send_resend_email':
+                $message = self::build_resend_email_description( $workflow_action['data'] );
+
+                break;
             case 'create_coupon':
                 $message = self::build_coupon_description( $workflow_action['data'] );
 
@@ -258,8 +266,48 @@ class Messages {
 
 
     /**
+     * Build a message for Telegram text actions
+     *
+     * Reuses the WhatsApp text formatter for the body (bold/italic/placeholders),
+     * since the builder message syntax is shared across channels.
+     *
+     * @since 2.1.0
+     * @param array $data | Message data
+     * @return string
+     */
+    public static function build_telegram_text_description( $data ) {
+        return self::build_whatsapp_text_description( $data );
+    }
+
+
+    /**
+     * Build a message for Resend e-mail actions
+     *
+     * @since 2.1.0
+     * @param array $data | Message data
+     * @return string
+     */
+    public static function build_resend_email_description( $data ) {
+        $subject = isset( $data['subject'] ) && is_scalar( $data['subject'] ) ? (string) $data['subject'] : '';
+        $message = '';
+
+        if ( $subject !== '' ) {
+            $subject = preg_replace_callback( '/\{\{\s*(.*?)\s*\}\}/', function( $matches ) {
+                return '<span class="builder-placeholder">{{ '. $matches[1] .' }}</span>';
+            }, $subject );
+
+            $message .= sprintf( '<div class="email-subject">'. __( 'Subject: %s', 'joinotify' ) .'</div>', $subject );
+        }
+
+        $message .= '<div class="email-body">'. self::build_whatsapp_text_description( $data ) .'</div>';
+
+        return $message;
+    }
+
+
+    /**
      * Build workflow description
-     * 
+     *
      * @since 1.1.0
      * @param array $data | Message data
      * @return string

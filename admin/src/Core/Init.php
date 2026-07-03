@@ -348,6 +348,8 @@ class Init {
 			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
 			'MeuMouse\\Joinotify\\Integrations\\OpenAI',
 			'MeuMouse\\Joinotify\\Integrations\\Anthropic',
+			'MeuMouse\\Joinotify\\Integrations\\Telegram',
+			'MeuMouse\\Joinotify\\Integrations\\Resend',
 			'MeuMouse\\Joinotify\\Integrations\\AI_Messaging',
 			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
 			'MeuMouse\\Joinotify\\Integrations\\Elementor',
