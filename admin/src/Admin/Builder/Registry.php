@@ -174,6 +174,11 @@ class Registry {
 			return $catalog;
 		}
 
+		// Resolve the registered integration icon (SVG markup) keyed by context
+		// slug so each template card can render the same brand icon used on the
+		// integration settings screen instead of a hardcoded frontend fallback.
+		$integration_icons = self::get_integration_icons();
+
 		foreach ( $items as $item ) {
 			if ( ! is_array( $item ) ) {
 				continue;
@@ -189,6 +194,7 @@ class Registry {
 				'title' => isset( $item['title'] ) ? sanitize_text_field( (string) $item['title'] ) : '',
 				'category' => $context,
 				'integration' => self::get_integration_label( $context ),
+				'icon' => isset( $integration_icons[ $context ] ) ? $integration_icons[ $context ] : '',
 				'trigger' => self::get_trigger_label( $context, $trigger_key ),
 				'available' => ! empty( Triggers::get_trigger( $context, $trigger_key ) ),
 				'description' => isset( $item['description'] ) ? sanitize_text_field( (string) $item['description'] ) : '',
@@ -196,6 +202,32 @@ class Registry {
 		}
 
 		return $catalog;
+	}
+
+
+	/**
+	 * Map each registered integration slug to its icon SVG markup.
+	 *
+	 * Mirrors the icons rendered on the integration settings cards so the
+	 * template library can display the authoritative brand icon per context.
+	 *
+	 * @since 2.1.0
+	 * @return array<string,string> Icon SVG markup keyed by integration slug.
+	 */
+	private static function get_integration_icons() {
+		$icons = array();
+
+		foreach ( Settings_Registry::get_integration_cards() as $integration ) {
+			$slug = isset( $integration['slug'] ) ? sanitize_key( (string) $integration['slug'] ) : '';
+
+			if ( '' === $slug || empty( $integration['icon'] ) ) {
+				continue;
+			}
+
+			$icons[ $slug ] = (string) $integration['icon'];
+		}
+
+		return $icons;
 	}
 
 

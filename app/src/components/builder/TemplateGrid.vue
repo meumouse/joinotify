@@ -60,6 +60,7 @@ const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
           :description="template.description"
           :category="template.category"
           :integration="template.integration"
+          :icon="template.icon"
           :trigger="template.trigger"
           :available="template.available"
           :importing="!!importingTemplate && importingTemplate === (template.file || template.title)"
