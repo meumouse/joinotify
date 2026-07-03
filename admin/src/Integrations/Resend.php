@@ -26,7 +26,7 @@ class Resend extends Integrations_Base {
      * @since 2.1.0
      * @var string
      */
-    const ACTION_ICON = '<svg class="icon icon-lg resend" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm0 2v.511l-8 6.223-8-6.222V6h16zM4 18V9.044l7.386 5.745a.994.994 0 0 0 1.228 0L20 9.044 20.002 18H4z"></path></svg>';
+    const ACTION_ICON = '<svg class="icon icon-lg resend" xmlns="http://www.w3.org/2000/svg" width="1800" height="1800" viewBox="0 0 1800 1800" fill="none"><path d="M1000.46 450C1174.77 450 1278.43 553.669 1278.43 691.282C1278.43 828.896 1174.77 932.563 1000.46 932.563H912.382L1350 1350H1040.82L707.794 1033.48C683.944 1011.47 672.936 985.781 672.935 963.765C672.935 932.572 694.959 905.049 737.161 893.122L908.712 847.244C973.85 829.812 1018.81 779.353 1018.81 713.298C1018.8 632.567 952.745 585.78 871.095 585.78H450V450H1000.46Z" fill="black"/></svg>';
 
     /**
      * Construct function
@@ -83,7 +83,7 @@ class Resend extends Integrations_Base {
         $categories[] = array(
             'id' => 'messages',
             'label' => __( 'Messages', 'joinotify' ),
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l5.333-4H20c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm0 14H6.667L4 18V4h16v12z"></path><path d="M7 7h10v2H7zm0 4h7v2H7z"></path></svg>',
+            'icon' => '<svg class="icon icon-lg resend" xmlns="http://www.w3.org/2000/svg" width="1800" height="1800" viewBox="0 0 1800 1800" fill="none"><path d="M1000.46 450C1174.77 450 1278.43 553.669 1278.43 691.282C1278.43 828.896 1174.77 932.563 1000.46 932.563H912.382L1350 1350H1040.82L707.794 1033.48C683.944 1011.47 672.936 985.781 672.935 963.765C672.935 932.572 694.959 905.049 737.161 893.122L908.712 847.244C973.85 829.812 1018.81 779.353 1018.81 713.298C1018.8 632.567 952.745 585.78 871.095 585.78H450V450H1000.46Z" fill="black"/></svg>',
             'priority' => 20,
         );
 
@@ -103,7 +103,7 @@ class Resend extends Integrations_Base {
             'resend',
             esc_html__( 'Resend', 'joinotify' ),
             esc_html__( 'Send e-mail notifications for your automations through the Resend API.', 'joinotify' ),
-            '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000" style="max-width: 4.5rem;"><title>Resend icon</title><path d="M2 21V3h8.5c1.7 0 3.1.5 4.1 1.6 1 1 1.6 2.3 1.6 3.9 0 1.2-.3 2.2-.9 3.1-.6.9-1.4 1.5-2.5 1.9L22 21h-5.2l-4.6-6.9H6.9V21H2zm4.9-10.6h3c.8 0 1.4-.2 1.8-.6.4-.4.6-.9.6-1.6 0-.7-.2-1.2-.6-1.6-.4-.4-1-.6-1.8-.6h-3v4.4z"/></svg>',
+            '<svg class="icon icon-lg resend" xmlns="http://www.w3.org/2000/svg" width="1800" height="1800" viewBox="0 0 1800 1800" fill="none"><path d="M1000.46 450C1174.77 450 1278.43 553.669 1278.43 691.282C1278.43 828.896 1174.77 932.563 1000.46 932.563H912.382L1350 1350H1040.82L707.794 1033.48C683.944 1011.47 672.936 985.781 672.935 963.765C672.935 932.572 694.959 905.049 737.161 893.122L908.712 847.244C973.85 829.812 1018.81 779.353 1018.81 713.298C1018.8 632.567 952.745 585.78 871.095 585.78H450V450H1000.46Z" fill="black"/></svg>',
             array(
                 'category' => 'channels',
                 'setting_key' => 'enable_resend_integration',
