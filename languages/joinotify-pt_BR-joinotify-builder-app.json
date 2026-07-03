@@ -314,8 +314,17 @@
       "All": [
         "Todos"
       ],
+      "All": [
+        "Todas"
+      ],
       "All categories": [
         "Todas as categorias"
+      ],
+      "Automation templates": [
+        "Modelos de automação"
+      ],
+      "Choose a ready-made flow, import it with one click, and adjust it your way. Search by categories or names.": [
+        "Escolha um fluxo pronto, importe com um clique e ajuste do seu jeito. Procure por categorias ou nomes."
       ],
       "All channels": [
         "Todos os canais"

@@ -30,22 +30,24 @@ const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
 </script>
 
 <template>
-  <div class="mx-auto grid w-full max-w-5xl gap-4 md:grid-cols-2 xl:grid-cols-3">
+  <div class="mx-auto grid w-full max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
     <template v-if="loading">
       <article
         v-for="index in skeletonCards"
         :key="`template-skeleton-${index}`"
-        class="flex h-full min-h-[228px] flex-col rounded-[10px] border border-slate-200 bg-white p-5"
+        class="flex h-full min-h-[260px] flex-col rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm"
       >
-        <div class="h-6 w-2/3 animate-pulse rounded-full bg-slate-100" />
-        <div class="mt-4 h-4 w-full animate-pulse rounded-full bg-slate-100" />
-        <div class="mt-2 h-4 w-11/12 animate-pulse rounded-full bg-slate-100" />
-        <div class="mt-6 space-y-2">
-          <div class="h-4 w-5/6 animate-pulse rounded-full bg-slate-100" />
-          <div class="h-4 w-2/3 animate-pulse rounded-full bg-slate-100" />
+        <div class="flex items-center justify-between">
+          <div class="h-11 w-11 animate-pulse rounded-xl bg-slate-100" />
+          <div class="h-6 w-24 animate-pulse rounded-full bg-slate-100" />
         </div>
-        <div class="mt-auto flex justify-center pt-5">
-          <div class="h-10 w-[142px] animate-pulse rounded-[10px] bg-slate-100" />
+        <div class="mt-5 h-5 w-2/3 animate-pulse rounded-full bg-slate-100" />
+        <div class="mt-3 h-4 w-full animate-pulse rounded-full bg-slate-100" />
+        <div class="mt-2 h-4 w-11/12 animate-pulse rounded-full bg-slate-100" />
+        <div class="mt-auto">
+          <div class="mt-5 border-t border-dashed border-slate-200" />
+          <div class="mt-4 h-4 w-5/6 animate-pulse rounded-full bg-slate-100" />
+          <div class="mt-5 h-11 w-full animate-pulse rounded-xl bg-slate-100" />
         </div>
       </article>
     </template>
@@ -56,6 +58,7 @@ const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
           :key="template.file || template.title"
           :title="template.title"
           :description="template.description"
+          :category="template.category"
           :integration="template.integration"
           :trigger="template.trigger"
           :available="template.available"
@@ -66,7 +69,7 @@ const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
       </template>
       <div
         v-else
-        class="col-span-full flex min-h-[240px] items-center justify-center rounded-[10px] border border-dashed border-slate-200 bg-slate-50 px-6 py-10 text-center text-sm text-slate-500"
+        class="col-span-full flex min-h-[240px] items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 py-10 text-center text-sm text-slate-500"
       >
         {{ __('No templates available.', textDomain) }}
       </div>
