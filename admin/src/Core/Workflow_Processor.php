@@ -204,6 +204,29 @@ class Workflow_Processor {
             return;
         }
 
+        // Carry the trigger slug on the payload so the placeholder resolver can scope the
+        // catalog the same way the builder does. Integrations only set 'hook', so without
+        // this Placeholders::get_placeholders_list() takes the "no trigger" branch and
+        // returns the whole integration group, resolving tokens that do not belong to this
+        // trigger. The gate above guarantees the slug equals the fired hook.
+        /**
+         * Filter whether the placeholder catalog is scoped to the trigger at runtime.
+         *
+         * Third-party placeholders registered with a "triggers" list that does not match
+         * their dispatched slug used to resolve anyway, because the catalog was never
+         * filtered. Returning false restores that behaviour for a single workflow.
+         *
+         * @since 2.1.0
+         * @param bool  $scope        Whether to carry the trigger slug on the payload.
+         * @param array $trigger_data Trigger node ({id,type,data}).
+         * @param array $payload      Runtime trigger payload.
+         */
+        $scope_placeholders = apply_filters( 'Joinotify/Workflow_Processor/Scope_Placeholders_By_Trigger', true, $trigger_data, $payload );
+
+        if ( $scope_placeholders && ! isset( $payload['trigger'] ) && isset( $trigger_data['data']['trigger'] ) ) {
+            $payload['trigger'] = (string) $trigger_data['data']['trigger'];
+        }
+
         // top-level linear actions (siblings); conditions carry their own branches
         $workflow_actions = array_values( array_filter( $workflow_content, function ( $item ) {
             return isset( $item['type'] ) && $item['type'] !== 'trigger';
