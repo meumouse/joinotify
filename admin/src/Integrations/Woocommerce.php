@@ -382,7 +382,8 @@ class Woocommerce extends Integrations_Base {
         $trigger_names = Triggers::get_trigger_names('woocommerce');
         $download_triggers = self::get_download_trigger_names();
 
-        // if is refund, get parent order
+        // No first-party trigger puts a refund in order_id, but a third-party payload still can
+        // and a refund exposes no billing data of its own, so resolve against the parent order.
         if ( $order instanceof \WC_Order_Refund ) {
             $order = wc_get_order( $order->get_parent_id() ); 
         }
@@ -1659,12 +1660,12 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is partially refunded
      * 
      * @since 1.0.0
-     * @version 1.4.7
-     * @param bool $is_partially_refunded | Is partially refunded
+     * @version 2.1.0
      * @param int $order_id  | Order ID
+     * @param int $refund_id | Refund ID
      * @return void
      */
-    public function process_workflow_order_partially_refunded( $is_partially_refunded, $order_id ) {
+    public function process_workflow_order_partially_refunded( $order_id, $refund_id ) {
         /**
          * Filter the payload before processing workflows
          * 
@@ -1675,8 +1676,8 @@ class Woocommerce extends Integrations_Base {
             'type' => 'trigger',
             'hook' => 'woocommerce_order_partially_refunded',
             'integration' => 'woocommerce',
-            'is_partially_refunded' => $is_partially_refunded,
             'order_id' => $order_id,
+            'refund_id' => $refund_id,
         ));
 
         Workflow_Processor::process_workflows( $payload );

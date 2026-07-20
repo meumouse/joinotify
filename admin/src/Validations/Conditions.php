@@ -80,7 +80,7 @@ class Conditions {
      * Gets comparison value based on condition type and context
      *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.1.0
      * @param string $condition_type | Condition type (e.g. 'order_total', 'user_role')
      * @param array $payload | Payload data
      * @return mixed Returns the value for comparison or null if not found
@@ -116,6 +116,12 @@ class Conditions {
         }
 
         $shipping_items = $context instanceof \WC_Order ? $context->get_items('shipping') : array();
+
+        // The partial refund trigger is scoped to a single refund, so refund_amount reports that
+        // refund's own amount. Every other trigger reports the order's cumulative refunded total.
+        $refund = isset( $payload['refund_id'], $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_partially_refunded'
+            ? wc_get_order( $payload['refund_id'] )
+            : null;
     
         // Map condition types to their respective value retrieval methods
         $value_map = apply_filters( 'Joinotify/Conditions/Get_Compare_Value', array(
@@ -129,7 +135,7 @@ class Conditions {
             'order_paid'            => $context instanceof \WC_Order ? (bool) $context->is_paid() : null,
             'products_purchased'    => $context instanceof \WC_Order ? array_values( array_map( fn( $item ) => $item->get_product_id(), $context->get_items('line_item') ) ) : null,
             'customer_email'        => $context instanceof \WC_Order ? $context->get_billing_email() : null,
-            'refund_amount'         => $context instanceof \WC_Order_Refund ? abs( $context->get_amount() ) : ( $context instanceof \WC_Order ? $context->get_total_refunded() : null ),
+            'refund_amount'         => $refund instanceof \WC_Order_Refund ? abs( $refund->get_amount() ) : ( $context instanceof \WC_Order_Refund ? abs( $context->get_amount() ) : ( $context instanceof \WC_Order ? $context->get_total_refunded() : null ) ),
             'subscription_status'   => $context instanceof \WC_Subscription ? $context->get_status() : null,
             'cart_total'            => $context instanceof \WC_Cart ? $context->get_cart_contents_total() : null,
             'items_in_cart'         => $context instanceof \WC_Cart ? count( $context->get_cart() ) : null,
