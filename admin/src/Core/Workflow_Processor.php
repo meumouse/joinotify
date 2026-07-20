@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Core;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Cron\Schedule;
+use MeuMouse\Joinotify\Builder\Attachments;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 use MeuMouse\Joinotify\AI\AI_Manager;
@@ -1270,6 +1271,7 @@ class Workflow_Processor {
         $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
         $subject = joinotify_prepare_message( $action_data['subject'] ?? '', $payload );
         $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
+        $attachments = Attachments::resolve( $action_data['attachments'] ?? array(), $payload );
 
         // tag the dispatch origin for the message history
         Message_History::set_context( array(
@@ -1283,6 +1285,7 @@ class Workflow_Processor {
             'type' => 'text',
             'receiver' => $receiver,
             'content' => $message,
+            'attachments' => $attachments,
             'meta' => array(
                 'subject' => $subject,
             ),

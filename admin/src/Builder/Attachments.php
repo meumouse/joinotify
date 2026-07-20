@@ -198,7 +198,13 @@ class Attachments {
                 continue;
             }
 
-            $files[] = self::build_file_from_path( $stored_file, (string) ( $item['file']['name'] ?? '' ) );
+            $file = self::build_file_from_path( $stored_file, (string) ( $item['file']['name'] ?? '' ) );
+
+            // keep the permission link so a channel that cannot carry the file itself
+            // (size limits, unsupported type) can still point the customer at it
+            $file['link'] = (string) ( $item['download_url'] ?? '' );
+
+            $files[] = $file;
         }
 
         return array_values( array_filter( $files ) );

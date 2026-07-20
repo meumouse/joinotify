@@ -11,6 +11,7 @@
 import ResendEmailSettings from '../settings/ResendEmailSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
+import { normalizeAttachments } from '../utils/attachments';
 import type { ActionDefinition } from '../registry/types';
 import { RESEND_ICON } from './actionIcons';
 import { __, textDomain } from '../../../utils/i18n';
@@ -33,6 +34,7 @@ function normalizeResendEmailData(data: Record<string, unknown>): Record<string,
     receiver: String(data.receiver || ''),
     subject: String(data.subject || ''),
     message,
+    attachments: normalizeAttachments(data.attachments),
   };
 }
 

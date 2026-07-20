@@ -11,6 +11,7 @@
 import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
 import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
+import AttachmentsField from '../../components/base/AttachmentsField.vue';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { __, textDomain } from '../../../utils/i18n';
 
@@ -55,6 +56,17 @@ const { update } = useActionSettingsUpdate(props, emit);
         :placeholder="__('Type your e-mail... Use {{ placeholders }} and *bold*', textDomain)"
         :placeholders="availablePlaceholders"
         @update:model-value="update('message', $event)"
+      />
+    </FieldGroup>
+
+    <FieldGroup
+      :title="__('Attachments', textDomain)"
+      :description="__('Files delivered with the e-mail. Large files are replaced by their download link so the message still goes out.', textDomain)"
+    >
+      <AttachmentsField
+        :model-value="Array.isArray(modelValue.attachments) ? modelValue.attachments : []"
+        :available-placeholders="availablePlaceholders"
+        @update:model-value="update('attachments', $event)"
       />
     </FieldGroup>
   </div>
