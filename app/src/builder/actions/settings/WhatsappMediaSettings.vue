@@ -14,6 +14,7 @@ import BaseTextField from '../../components/base/BaseTextField.vue';
 import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
 import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
+import AttachmentsField from '../../components/base/AttachmentsField.vue';
 import { useSenderOptions } from '../../../composables/useSenderOptions';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { ImagePlus } from '@boxicons/vue';
@@ -123,6 +124,18 @@ function openMediaLibrary() {
           {{ __('Library', textDomain) }}
         </button>
       </div>
+    </FieldGroup>
+
+    <FieldGroup
+      v-if="!isAudio"
+      :title="__('Attachments', textDomain)"
+      :description="__('Files sent instead of the media URL above. Each file goes out as its own message, and the caption rides on the first one.', textDomain)"
+    >
+      <AttachmentsField
+        :model-value="Array.isArray(modelValue.attachments) ? modelValue.attachments : []"
+        :available-placeholders="availablePlaceholders"
+        @update:model-value="update('attachments', $event)"
+      />
     </FieldGroup>
 
     <FieldGroup v-if="!isAudio" :title="__('Caption', textDomain)" :description="__('Optional text sent together with the media.', textDomain)">

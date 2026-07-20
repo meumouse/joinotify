@@ -645,7 +645,7 @@ class Controller {
      * @param bool $return_details | Return normalized details instead response code
      * @return int|array
      */
-    public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
+    public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0, $queue_on_failure = true, $return_details = false, $file_name = '' ) {
         $sender = preg_replace( '/\D/', '', $sender );
         $receiver = joinotify_prepare_receiver( $receiver );
 
@@ -692,6 +692,7 @@ class Controller {
                     'media' => $media,
                     'caption' => $caption,
                     'delay' => $timestamp_delay,
+                    'file_name' => $file_name,
                 ), 'license_invalid' );
             }
 
@@ -712,7 +713,8 @@ class Controller {
                     'media' => $media,
                     'caption' => $caption,
                     'delay' => $timestamp_delay,
-                ), $server_details->get_error_message() );
+                    'file_name' => $file_name,
+                ),$server_details->get_error_message() );
             }
 
             $details = self::build_response_details( 0, false, true, $server_details->get_error_message(), $queued );
@@ -722,20 +724,28 @@ class Controller {
         // get endpoint for send message media
         $api_url = self::get_instance_route_url( '/message/sendMedia/', $sender );
 
+        $request_body = array(
+            'number' => $receiver,
+            'mediatype' => $media_type,
+            'caption' => $caption,
+            'media' => $media,
+            'delay' => $timestamp_delay,
+        );
+
+        // a document sent as base64 carries no name of its own, so without this the
+        // recipient would see a generated name instead of the file they bought
+        if ( '' !== $file_name ) {
+            $request_body['fileName'] = $file_name;
+        }
+
         // send request
         $response = wp_remote_post( $api_url, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
                 'apikey' => $server_details['server']['token'] ?? '',
             ),
-            'body' => wp_json_encode( array(
-                'number' => $receiver,
-                'mediatype' => $media_type,
-                'caption' => $caption,
-                'media' => $media,
-                'delay' => $timestamp_delay,
-            )),
-            'timeout' => 30,
+            'body' => wp_json_encode( $request_body ),
+            'timeout' => 60,
         ));
 
         if ( is_wp_error( $response ) ) {
@@ -751,6 +761,7 @@ class Controller {
                     'media' => $media,
                     'caption' => $caption,
                     'delay' => $timestamp_delay,
+                    'file_name' => $file_name,
                 ), $response->get_error_message() );
             }
 
@@ -778,6 +789,7 @@ class Controller {
                 'media' => $media,
                 'caption' => $caption,
                 'delay' => $timestamp_delay,
+                'file_name' => $file_name,
             ), 'api_unavailable_' . $response_code );
         }
 

@@ -111,7 +111,8 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
                 $message->caption,
                 $message->delay,
                 true,
-                true
+                true,
+                (string) $message->get_meta( 'file_name', '' )
             );
         } else {
             $details = Controller::send_message_text(

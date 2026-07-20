@@ -871,9 +871,15 @@ class Workflow_Processor {
          * @param int   $post_id         Workflow post ID.
          * @param array $event_data      Runtime trigger payload.
          */
+        // The media URL and the attachment list are two ways of providing the same file, so
+        // an action carrying attachments must not be skipped for having no URL.
+        $media_required_config = empty( $action_data['attachments'] )
+            ? array( 'sender', 'receiver', 'media_type', 'media_url' )
+            : array( 'sender', 'receiver', 'media_type' );
+
         $required_config = apply_filters( 'Joinotify/Workflow_Processor/Action_Required_Config', array(
             'send_whatsapp_message_text' => array( 'sender', 'receiver', 'message' ),
-            'send_whatsapp_message_media' => array( 'sender', 'receiver', 'media_type', 'media_url' ),
+            'send_whatsapp_message_media' => $media_required_config,
             'send_telegram_message_text' => array( 'receiver', 'message' ),
             'send_resend_email' => array( 'receiver', 'subject', 'message' ),
             'create_coupon' => array( 'settings' ),
@@ -1168,12 +1174,32 @@ class Workflow_Processor {
         $media_type = $action_data['media_type'];
         $media = $action_data['media_url'];
         $caption = joinotify_prepare_message( $action_data['caption'] ?? '', $payload );
+        $attachments = Attachments::resolve( $action_data['attachments'] ?? array(), $payload );
 
         // tag the dispatch origin for the message history
         Message_History::set_context( array(
             'source' => 'workflow',
             'workflow_id' => $post_id,
         ));
+
+        // Each attachment travels as its own WhatsApp message, because the API carries one
+        // file per request. The caption rides on the first one only, so the customer does
+        // not read the same text once per file.
+        if ( ! empty( $attachments ) ) {
+            $result = self::send_whatsapp_attachments( $sender, $receiver, $media_type, $caption, $attachments, $post_id );
+
+            Message_History::clear_context();
+
+            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+                if ( $result && $result->is_success() ) {
+                    Logger::register_log( sprintf( 'WhatsApp attachments sent successfully to: %s', $receiver ) );
+                } else {
+                    Logger::register_log( sprintf( 'Failed to send WhatsApp attachments to: %s. Response: %s', $receiver, $result ? print_r( $result->to_array(), true ) : 'no file could be resolved' ), 'ERROR' );
+                }
+            }
+
+            return;
+        }
 
         // send message through the notification channel layer
         $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
@@ -1204,6 +1230,118 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
             }
         }
+    }
+
+
+    /**
+     * Deliver each resolved attachment as its own WhatsApp media message.
+     *
+     * A protected WooCommerce download has no publicly reachable URL, so a local file is
+     * embedded as base64 rather than handed to the API as a link. That also keeps the
+     * customer's download counter untouched, which fetching a permission link would spend.
+     *
+     * @since 2.1.0
+     * @param string $sender | Sender phone number
+     * @param string $receiver | Recipient phone number
+     * @param string $media_type | Media type configured on the action
+     * @param string $caption | Caption resolved from the action
+     * @param array $attachments | Resolved attachment files
+     * @param int $post_id | Workflow post ID
+     * @return \MeuMouse\Joinotify\Notifications\Channel_Result|null Result of the last dispatch
+     */
+    protected static function send_whatsapp_attachments( $sender, $receiver, $media_type, $caption, $attachments, $post_id = 0 ) {
+        $result = null;
+        $first = true;
+
+        /**
+         * Filter the maximum size of a single WhatsApp attachment
+         *
+         * @since 2.1.0
+         * @param int $limit | Size in bytes
+         */
+        $limit = (int) apply_filters( 'Joinotify/Workflow_Processor/Whatsapp_Attachment_Size_Limit', 16 * MB_IN_BYTES );
+
+        foreach ( $attachments as $file ) {
+            $name = (string) ( $file['name'] ?? '' );
+            $media = '';
+
+            if ( ! empty( $file['remote'] ) && ! empty( $file['url'] ) ) {
+                $media = (string) $file['url'];
+            } else {
+                $size = absint( $file['size'] ?? 0 );
+
+                if ( $size > 0 && $size > $limit ) {
+                    Logger::register_log( sprintf( 'Joinotify: WhatsApp attachment %s exceeds the size limit and was not sent.', $name ), 'WARNING' );
+
+                    continue;
+                }
+
+                $contents = Attachments::get_contents( $file );
+
+                if ( false === $contents ) {
+                    continue;
+                }
+
+                $media = base64_encode( $contents );
+            }
+
+            if ( '' === $media ) {
+                continue;
+            }
+
+            $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+                'channel' => 'whatsapp',
+                'type' => 'media',
+                'sender' => $sender,
+                'receiver' => $receiver,
+                'media_type' => self::resolve_whatsapp_media_type( $file, $media_type ),
+                'media_url' => $media,
+                // only the first message carries the caption, so the text is not repeated
+                'caption' => $first ? $caption : '',
+                'meta' => array(
+                    'file_name' => $name,
+                ),
+                'context' => array(
+                    'source' => 'workflow',
+                    'workflow_id' => $post_id,
+                ),
+            )));
+
+            $first = false;
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Pick the WhatsApp media type of a resolved attachment.
+     *
+     * The action setting describes the message as a whole, but a mixed attachment list can
+     * hold an image next to a PDF, so the file mime decides whenever it is conclusive.
+     *
+     * @since 2.1.0
+     * @param array $file | Resolved attachment file
+     * @param string $fallback | Media type configured on the action
+     * @return string
+     */
+    protected static function resolve_whatsapp_media_type( $file, $fallback ) {
+        $mime = (string) ( $file['mime'] ?? '' );
+
+        if ( 0 === strpos( $mime, 'image/' ) ) {
+            return 'image';
+        }
+
+        if ( 0 === strpos( $mime, 'video/' ) ) {
+            return 'video';
+        }
+
+        if ( 0 === strpos( $mime, 'audio/' ) ) {
+            return 'audio';
+        }
+
+        // audio is a separate transport on the action, so it never describes an attachment
+        return ( '' !== $fallback && 'audio' !== $fallback ) ? $fallback : 'document';
     }
 
 
