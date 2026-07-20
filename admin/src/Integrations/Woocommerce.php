@@ -287,6 +287,7 @@ class Woocommerce extends Integrations_Base {
         $order = isset( $payload['order_id'] ) ? wc_get_order( $payload['order_id'] ) : null;
         $current_user = wp_get_current_user();
         $trigger_names = Triggers::get_trigger_names('woocommerce');
+        $download_triggers = self::get_download_trigger_names();
 
         // if is refund, get parent order
         if ( $order instanceof \WC_Order_Refund ) {
@@ -479,6 +480,67 @@ class Woocommerce extends Integrations_Base {
                 'description' => __( 'To retrieve the value of a specific checkout field in the WooCommerce order. Replace FIELD_ID with the checkout field ID, for example: billing_email.', 'joinotify' ),
                 'replacement' => array(), // dynamic replacement is make on Placeholders::replace_placeholders()
             ),
+            '{{ wc_downloadable_items }}' => array(
+                'triggers' => $download_triggers,
+                'description' => __( 'To retrieve the name of each downloadable product in the WooCommerce order, separated by line', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_downloadable_item_names( $order ) : '',
+                    'sandbox' => sprintf( "%s\n%s", esc_html__( 'Complete e-book (Sample product)', 'joinotify' ), esc_html__( 'Video lessons pack (Sample product)', 'joinotify' ) ),
+                ),
+            ),
+            '{{ wc_download_links }}' => array(
+                'triggers' => $download_triggers,
+                'description' => __( 'To retrieve the download name and link of each digital file in the WooCommerce order, separated by line. Only available after the download access has been granted.', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_download_links( $order ) : '',
+                    'sandbox' => sprintf( "%s: %s\n%s: %s",
+                        esc_html__( 'Complete e-book (Sample product)', 'joinotify' ),
+                        get_site_url() . '/?download_file=123&order=wc_order_sample&key=sample',
+                        esc_html__( 'Video lessons pack (Sample product)', 'joinotify' ),
+                        get_site_url() . '/?download_file=456&order=wc_order_sample&key=sample'
+                    ),
+                ),
+            ),
+            '{{ wc_download_urls }}' => array(
+                'triggers' => $download_triggers,
+                'description' => __( 'To retrieve only the download links of the WooCommerce order, without the file name, separated by line', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_download_urls( $order ) : '',
+                    'sandbox' => sprintf( "%s\n%s",
+                        get_site_url() . '/?download_file=123&order=wc_order_sample&key=sample',
+                        get_site_url() . '/?download_file=456&order=wc_order_sample&key=sample'
+                    ),
+                ),
+            ),
+            '{{ wc_downloads_expiry }}' => array(
+                'triggers' => $download_triggers,
+                'description' => __( 'To retrieve the expiration date of the download access. Returns the closest date when the files expire on different dates.', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_downloads_expiry( $order ) : '',
+                    'sandbox' => esc_html__( 'Never expires', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_downloads_remaining }}' => array(
+                'triggers' => $download_triggers,
+                'description' => __( 'To retrieve how many downloads the customer still has available. Returns the smallest amount when the files have different limits.', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_downloads_remaining( $order ) : '',
+                    'sandbox' => esc_html__( 'Unlimited', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_account_downloads_url }}' => array(
+                'triggers' => $trigger_names,
+                'description' => __( 'To retrieve the link to the downloads area in the customer My Account page', 'joinotify' ),
+                'replacement' => array(
+                    'production' => self::get_account_downloads_url(),
+                    'sandbox' => self::get_account_downloads_url(),
+                ),
+            ),
+            '{{ wc_download_link=[PRODUCT_ID] }}' => array(
+                'triggers' => $download_triggers,
+                'description' => __( 'To retrieve the download links of a specific product in the WooCommerce order. Replace PRODUCT_ID with the product ID, for example: 128.', 'joinotify' ),
+                'replacement' => array(), // dynamic replacement is make on Placeholders::replace_placeholders()
+            ),
         );
 
         // check if the payload has a 'settings' key
@@ -500,6 +562,235 @@ class Woocommerce extends Integrations_Base {
         }
 
         return $placeholders;
+    }
+
+
+    /**
+     * Triggers where the download permissions already exist on the order
+     *
+     * WooCommerce only grants the download access inside wc_downloadable_product_permissions(),
+     * which runs on the "completed" and "processing" order statuses. Before that the download
+     * placeholders would resolve to an empty string, so they are only offered on the triggers
+     * that run after the access has been granted.
+     *
+     * @since 2.1.0
+     * @return array<int,string>
+     */
+    public static function get_download_trigger_names() {
+        return apply_filters( 'Joinotify/Integrations/Woocommerce/Download_Triggers', array(
+            'woocommerce_order_status_completed',
+            'woocommerce_checkout_order_processed',
+            'woocommerce_order_status_changed',
+        ));
+    }
+
+
+    /**
+     * Returns the link to the downloads area of the customer My Account page
+     *
+     * @since 2.1.0
+     * @return string
+     */
+    public static function get_account_downloads_url() {
+        if ( ! function_exists('wc_get_account_endpoint_url') ) {
+            return '';
+        }
+
+        return wc_get_account_endpoint_url('downloads');
+    }
+
+
+    /**
+     * Returns the downloadable files granted for the order
+     *
+     * Wraps WC_Order::get_downloadable_items(), which already skips fully refunded items and
+     * returns both the permission URL and the underlying file for each granted download.
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @return array<int,array<string,mixed>>
+     */
+    public static function get_downloadable_items( $order ) {
+        if ( ! $order || ! method_exists( $order, 'get_downloadable_items' ) ) {
+            return array();
+        }
+
+        $items = $order->get_downloadable_items();
+
+        return is_array( $items ) ? $items : array();
+    }
+
+
+    /**
+     * Returns the name of each downloadable product in the order
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Product names formatted on separate lines
+     */
+    public static function get_downloadable_item_names( $order ) {
+        $names = array();
+
+        foreach ( self::get_downloadable_items( $order ) as $item ) {
+            $product_name = isset( $item['product_name'] ) ? (string) $item['product_name'] : '';
+
+            // one line per product, even when the product ships several files
+            if ( '' !== $product_name && ! in_array( $product_name, $names, true ) ) {
+                $names[] = $product_name;
+            }
+        }
+
+        return ! empty( $names ) ? implode( "\n", $names ) : esc_html__( 'No downloadable item in this order.', 'joinotify' );
+    }
+
+
+    /**
+     * Returns the name and permission link of each downloadable file in the order
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Download links formatted on separate lines
+     */
+    public static function get_download_links( $order ) {
+        $links = array();
+
+        foreach ( self::get_downloadable_items( $order ) as $item ) {
+            $url = isset( $item['download_url'] ) ? (string) $item['download_url'] : '';
+
+            if ( '' === $url ) {
+                continue;
+            }
+
+            $label = isset( $item['download_name'] ) && '' !== (string) $item['download_name']
+                ? (string) $item['download_name']
+                : (string) ( $item['product_name'] ?? '' );
+
+            $links[] = '' !== $label ? sprintf( '%s: %s', $label, $url ) : $url;
+        }
+
+        return ! empty( $links ) ? implode( "\n", $links ) : esc_html__( 'No download available for this order.', 'joinotify' );
+    }
+
+
+    /**
+     * Returns only the permission links of the downloadable files in the order
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Download URLs formatted on separate lines
+     */
+    public static function get_download_urls( $order ) {
+        $urls = array();
+
+        foreach ( self::get_downloadable_items( $order ) as $item ) {
+            $url = isset( $item['download_url'] ) ? (string) $item['download_url'] : '';
+
+            if ( '' !== $url && ! in_array( $url, $urls, true ) ) {
+                $urls[] = $url;
+            }
+        }
+
+        return ! empty( $urls ) ? implode( "\n", $urls ) : esc_html__( 'No download available for this order.', 'joinotify' );
+    }
+
+
+    /**
+     * Returns the permission links of a specific product in the order
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @param int $product_id | Product ID to filter the downloads
+     * @return string Download URLs formatted on separate lines, empty when the product has no download
+     */
+    public static function get_download_links_by_product( $order, $product_id ) {
+        $product_id = absint( $product_id );
+        $urls = array();
+
+        if ( ! $product_id ) {
+            return '';
+        }
+
+        foreach ( self::get_downloadable_items( $order ) as $item ) {
+            if ( absint( $item['product_id'] ?? 0 ) !== $product_id ) {
+                continue;
+            }
+
+            $url = isset( $item['download_url'] ) ? (string) $item['download_url'] : '';
+
+            if ( '' !== $url && ! in_array( $url, $urls, true ) ) {
+                $urls[] = $url;
+            }
+        }
+
+        return implode( "\n", $urls );
+    }
+
+
+    /**
+     * Returns the expiration date of the download access
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Closest expiration date, or a "never expires" label
+     */
+    public static function get_downloads_expiry( $order ) {
+        $expires_at = null;
+
+        foreach ( self::get_downloadable_items( $order ) as $item ) {
+            $access_expires = $item['access_expires'] ?? null;
+
+            // a file without expiration date never limits the access of the others
+            if ( empty( $access_expires ) ) {
+                continue;
+            }
+
+            $timestamp = $access_expires instanceof \WC_DateTime
+                ? $access_expires->getTimestamp()
+                : strtotime( (string) $access_expires );
+
+            if ( ! $timestamp ) {
+                continue;
+            }
+
+            // keep the closest date so the customer is told the earliest deadline
+            if ( null === $expires_at || $timestamp < $expires_at ) {
+                $expires_at = $timestamp;
+            }
+        }
+
+        return null !== $expires_at
+            ? date_i18n( get_option('date_format'), $expires_at )
+            : esc_html__( 'Never expires', 'joinotify' );
+    }
+
+
+    /**
+     * Returns how many downloads the customer still has available
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Smallest remaining amount, or an "unlimited" label
+     */
+    public static function get_downloads_remaining( $order ) {
+        $remaining = null;
+
+        foreach ( self::get_downloadable_items( $order ) as $item ) {
+            $downloads_remaining = $item['downloads_remaining'] ?? '';
+
+            // WooCommerce stores an empty string when the download has no limit
+            if ( '' === $downloads_remaining || null === $downloads_remaining ) {
+                continue;
+            }
+
+            $value = absint( $downloads_remaining );
+
+            // keep the smallest amount so the customer is told the tightest limit
+            if ( null === $remaining || $value < $remaining ) {
+                $remaining = $value;
+            }
+        }
+
+        return null !== $remaining ? (string) $remaining : esc_html__( 'Unlimited', 'joinotify' );
     }
 
 

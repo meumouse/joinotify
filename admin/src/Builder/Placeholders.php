@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Builder;
 
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Integrations\Woocommerce;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -226,6 +227,30 @@ class Placeholders {
             }
 
             return $matches[0]; // returns the original placeholder if not found
+        }, $message );
+
+        // replace for product download placeholders {{ wc_download_link=[PRODUCT_ID] }}
+        $message = preg_replace_callback('/\{\{\s*wc_download_link=\[(.+?)\]\s*\}\}/', function( $matches ) use ( $payload ) {
+            if ( ! isset( $payload['order_id'] ) || ! function_exists('wc_get_order') ) {
+                return $matches[0];
+            }
+
+            $order = wc_get_order( $payload['order_id'] );
+
+            // refunds carry no download permission of their own, so resolve against the parent order
+            if ( $order instanceof \WC_Order_Refund ) {
+                $order = wc_get_order( $order->get_parent_id() );
+            }
+
+            if ( ! $order ) {
+                return $matches[0];
+            }
+
+            $links = Woocommerce::get_download_links_by_product( $order, $matches[1] );
+
+            // an empty result means the product has no granted download yet, so keep the
+            // placeholder visible instead of silently blanking the message
+            return '' !== $links ? $links : $matches[0];
         }, $message );
 
         // Replace for user meta placeholders {{ user_meta[META_KEY] }}
