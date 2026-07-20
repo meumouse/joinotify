@@ -70,6 +70,15 @@ class Woocommerce extends Integrations_Base {
                 
                 // when a order has status changed
                 add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_order_status_changed' ), 10, 3 );
+
+                // when the download access of a digital product is granted
+                // wc_downloadable_product_permissions() bails out when the access was already
+                // granted, so this fires only once per order even though WooCommerce hooks it
+                // on both the processing and completed statuses
+                add_action( 'woocommerce_grant_product_download_permissions', array( $this, 'process_workflow_download_permissions_granted' ), 10, 1 );
+
+                // when the customer downloads a digital file
+                add_action( 'woocommerce_download_product', array( $this, 'process_workflow_download_product' ), 10, 6 );
             }
         }
     }
@@ -213,9 +222,93 @@ class Woocommerce extends Integrations_Base {
                     ),
                 ),
             ),
+            array(
+                'data_trigger' => 'woocommerce_grant_product_download_permissions',
+                'title' => __( 'Digital product access granted', 'joinotify' ),
+                'description' => __( 'This action is triggered when WooCommerce grants the download access of a digital product to the customer. This is the recommended trigger to deliver digital products, because the download links only exist from this moment on.', 'joinotify' ),
+                'require_settings' => false,
+                'settings' => array(
+                    array(
+                        'key' => 'product_id',
+                        'label' => __( 'Digital product', 'joinotify' ),
+                        'component' => 'select',
+                        'required' => false,
+                        'description' => __( 'Restrict this workflow to a single digital product. Leave "Any digital product" to run for every downloadable item in the order.', 'joinotify' ),
+                        'placeholder' => __( 'Select a digital product', 'joinotify' ),
+                        'options' => self::get_downloadable_product_options(),
+                    ),
+                ),
+            ),
+            array(
+                'data_trigger' => 'woocommerce_download_product',
+                'title' => __( 'Digital file downloaded', 'joinotify' ),
+                'description' => __( 'This action is triggered when the customer actually downloads a digital file from the order.', 'joinotify' ),
+                'require_settings' => false,
+                'settings' => array(
+                    array(
+                        'key' => 'product_id',
+                        'label' => __( 'Digital product', 'joinotify' ),
+                        'component' => 'select',
+                        'required' => false,
+                        'description' => __( 'Restrict this workflow to a single digital product. Leave "Any digital product" to run for every downloaded file.', 'joinotify' ),
+                        'placeholder' => __( 'Select a digital product', 'joinotify' ),
+                        'options' => self::get_downloadable_product_options(),
+                    ),
+                ),
+            ),
         );
 
         return $triggers;
+    }
+
+
+    /**
+     * Get the downloadable product options used by the digital delivery trigger settings.
+     *
+     * The list is capped because it ships inside the builder bootstrap payload. Stores with more
+     * downloadable products than the cap can still use the triggers through the "Any digital
+     * product" option, which is why the product filter is optional.
+     *
+     * @since 2.1.0
+     * @return array<int,array<string,string>>
+     */
+    public static function get_downloadable_product_options() {
+        $options = array(
+            array(
+                'label' => __( 'Any digital product', 'joinotify' ),
+                'value' => 'none',
+            ),
+        );
+
+        if ( ! function_exists('wc_get_products') ) {
+            return $options;
+        }
+
+        /**
+         * Filter how many downloadable products are offered in the trigger settings
+         *
+         * @since 2.1.0
+         * @param int $limit | Maximum number of products listed
+         */
+        $limit = (int) apply_filters( 'Joinotify/Integrations/Woocommerce/Downloadable_Products_Limit', 100 );
+
+        $products = wc_get_products( array(
+            'limit' => $limit,
+            'status' => 'publish',
+            'downloadable' => true,
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'return' => 'objects',
+        ));
+
+        foreach ( $products as $product ) {
+            $options[] = array(
+                'label' => $product->get_name(),
+                'value' => (string) $product->get_id(),
+            );
+        }
+
+        return $options;
     }
 
 
@@ -578,6 +671,8 @@ class Woocommerce extends Integrations_Base {
      */
     public static function get_download_trigger_names() {
         return apply_filters( 'Joinotify/Integrations/Woocommerce/Download_Triggers', array(
+            'woocommerce_grant_product_download_permissions',
+            'woocommerce_download_product',
             'woocommerce_order_status_completed',
             'woocommerce_checkout_order_processed',
             'woocommerce_order_status_changed',
@@ -1474,8 +1569,67 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Process workflow when the download access of a digital product is granted
+     *
+     * @since 2.1.0
+     * @param int $order_id | Order ID
+     * @return void
+     */
+    public function process_workflow_download_permissions_granted( $order_id ) {
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.1.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Grant_Product_Download_Permissions', array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_grant_product_download_permissions',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+        ));
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when the customer downloads a digital file
+     *
+     * @since 2.1.0
+     * @param string $user_email | Customer email
+     * @param string $order_key  | Order key
+     * @param int $product_id    | Product ID of the downloaded file
+     * @param int $user_id       | Customer user ID
+     * @param string $download_id | Download ID of the file
+     * @param int $order_id      | Order ID
+     * @return void
+     */
+    public function process_workflow_download_product( $user_email, $order_key, $product_id, $user_id, $download_id, $order_id ) {
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.1.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Download_Product', array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_download_product',
+            'integration' => 'woocommerce',
+            'order_id' => $order_id,
+            'product_id' => $product_id,
+            'download_id' => $download_id,
+            'user_id' => $user_id,
+            'user_email' => $user_email,
+        ));
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
      * Process workflow when order is fully refunded
-     * 
+     *
      * @since 1.0.0
      * @version 1.4.7
      * @param int $order_id  | Order ID

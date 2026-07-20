@@ -512,6 +512,18 @@ class Workflow_Processor {
                     if ( $trigger_order_status !== 'none' && $trigger_order_status !== $order_status ) {
                         $match = false;
                     }
+                } elseif ( isset( $payload['hook'] ) && in_array( $payload['hook'], array( 'woocommerce_grant_product_download_permissions', 'woocommerce_download_product' ), true ) ) {
+                    $trigger_product_id = isset( $settings['product_id'] ) && is_scalar( $settings['product_id'] )
+                        ? (string) $settings['product_id']
+                        : '';
+
+                    // "none" or an unset filter => any digital product. Only ever narrows the
+                    // decision, so it can never resurrect a match the hook gate already denied.
+                    if ( '' !== $trigger_product_id && 'none' !== $trigger_product_id
+                        && ! self::payload_matches_downloadable_product( $order, $payload, $trigger_product_id )
+                    ) {
+                        $match = false;
+                    }
                 }
             }
         } elseif ( $integration === 'wpforms' ) {
@@ -549,6 +561,40 @@ class Workflow_Processor {
          * @param array $payload      Runtime trigger payload.
          */
         return (bool) apply_filters( 'Joinotify/Workflow_Processor/Trigger_Matches', $match, $trigger_data, $payload );
+    }
+
+
+    /**
+     * Whether the digital delivery payload concerns a specific downloadable product.
+     *
+     * The "file downloaded" payload names the product directly, while the "access granted"
+     * payload only names the order, so the order downloads are scanned in that case.
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | Order of the payload
+     * @param array $payload | Runtime trigger payload
+     * @param string $product_id | Product ID configured in the trigger settings
+     * @return bool
+     */
+    protected static function payload_matches_downloadable_product( $order, $payload, $product_id ) {
+        $product_id = absint( $product_id );
+
+        if ( ! $product_id ) {
+            return false;
+        }
+
+        // the download handler already tells us which product was downloaded
+        if ( isset( $payload['product_id'] ) ) {
+            return absint( $payload['product_id'] ) === $product_id;
+        }
+
+        foreach ( Woocommerce::get_downloadable_items( $order ) as $item ) {
+            if ( absint( $item['product_id'] ?? 0 ) === $product_id ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
