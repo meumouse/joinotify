@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Builder\Workflow_Migrator;
+use MeuMouse\Joinotify\Licensing\Migrator;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -214,6 +215,11 @@ class Upgrader {
                 'id' => 'workflows_schema_2_0_0',
                 'version' => '2.0.0',
                 'callback' => array( Workflow_Migrator::class, 'migrate_stored_workflows' ),
+            ),
+            array(
+                'id' => 'license_driver_2_1_0',
+                'version' => '2.1.0',
+                'callback' => array( Migrator::class, 'schedule_migration' ),
             ),
         );
 

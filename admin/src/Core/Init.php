@@ -371,6 +371,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Api\\Updater',
 			'MeuMouse\\Joinotify\\Core\\Logger',
 			'MeuMouse\\Joinotify\\Api\\License',
+			'MeuMouse\\Joinotify\\Licensing\\Migrator',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
