@@ -125,7 +125,7 @@ msgstr ""
 msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr ""
 
-#: admin/src/Core/Init.php:226
+#: admin/src/Core/Init.php:234
 msgid ""
 "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your "
 "hosting support to upgrade."
@@ -137,7 +137,7 @@ msgstr ""
 msgid "0 results"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:216
+#: admin/src/Admin/Settings/Registry.php:218
 msgid "180 days"
 msgstr ""
 
@@ -149,8 +149,8 @@ msgstr ""
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:213
-#: admin/src/Admin/Settings/Registry.php:232
+#: admin/src/Admin/Settings/Registry.php:215
+#: admin/src/Admin/Settings/Registry.php:234
 msgid "30 days"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "30 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:217
+#: admin/src/Admin/Settings/Registry.php:219
 msgid "365 days"
 msgstr ""
 
@@ -174,17 +174,17 @@ msgstr ""
 msgid "5541987111527"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:214
-#: admin/src/Admin/Settings/Registry.php:233
+#: admin/src/Admin/Settings/Registry.php:216
+#: admin/src/Admin/Settings/Registry.php:235
 msgid "60 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:231
+#: admin/src/Admin/Settings/Registry.php:233
 msgid "7 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:215
-#: admin/src/Admin/Settings/Registry.php:234
+#: admin/src/Admin/Settings/Registry.php:217
+#: admin/src/Admin/Settings/Registry.php:236
 msgid "90 days"
 msgstr ""
 
@@ -200,17 +200,17 @@ msgstr ""
 msgid "A new version is available:"
 msgstr ""
 
-#: admin/src/Api/Updater.php:526
+#: admin/src/Api/Updater.php:534
 msgid ""
 "A new version of the <strong>Joinotify</strong> plugin (%s) is available. "
 "<a href=\"%s\">Update now</a>."
 msgstr ""
 
-#: admin/src/Api/Updater.php:229
+#: admin/src/Api/Updater.php:237
 msgid "A new version of the <strong>Joinotify</strong> plugin is available."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:242
+#: admin/src/Admin/Settings/Registry.php:244
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
@@ -218,12 +218,12 @@ msgstr ""
 msgid "Abandoned cart is recovered"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:173
-#: admin/src/Admin/Settings/Registry.php:293
+#: admin/src/Admin/Settings/Registry.php:175
+#: admin/src/Admin/Settings/Registry.php:295
 msgid "About"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:423
+#: app/src/pages/license/LicensePage.vue:450
 msgid "Access validation and premium feature unlocking"
 msgstr ""
 
@@ -235,7 +235,7 @@ msgstr ""
 msgid "Account registration is currently disabled."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:473
+#: app/src/pages/license/LicensePage.vue:500
 msgid "Account status"
 msgstr ""
 
@@ -254,11 +254,11 @@ msgstr ""
 msgid "Actions menu"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:147
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:79
+#: admin/src/Admin/Settings/Registry.php:81
 msgid "Activate and configure the endpoints used to process external API requests."
 msgstr ""
 
@@ -267,9 +267,9 @@ msgid "Activate discount coupon action"
 msgstr ""
 
 #: app/src/pages/license/LicensePage.vue:54
-#: app/src/pages/license/LicensePage.vue:209
-#: app/src/pages/license/LicensePage.vue:376
-#: app/src/pages/license/LicensePage.vue:394
+#: app/src/pages/license/LicensePage.vue:217
+#: app/src/pages/license/LicensePage.vue:403
+#: app/src/pages/license/LicensePage.vue:421
 msgid "Activate license"
 msgstr ""
 
@@ -277,22 +277,22 @@ msgstr ""
 msgid "Activate plugin"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:342
+#: app/src/pages/license/LicensePage.vue:350
 msgid ""
 "Activate premium features, review your subscription status and keep your "
 "license in sync. If you need help, visit our "
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:413
+#: app/src/pages/license/LicensePage.vue:440
 msgid "Activate the license to unlock Joinotify premium features."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:634
+#: admin/src/Admin/Settings/Registry.php:636
 msgid "Activate your license"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:620
-#: app/src/pages/license/LicensePage.vue:212
+#: admin/src/Admin/Settings/Registry.php:622
+#: app/src/pages/license/LicensePage.vue:220
 msgid "Activate your license to unlock premium features."
 msgstr ""
 
@@ -302,7 +302,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:634
+#: admin/src/Admin/Settings/Registry.php:636
 msgid "Active license"
 msgstr ""
 
@@ -443,7 +443,7 @@ msgstr ""
 msgid "AI generation failed."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:119
+#: admin/src/Admin/Settings/Registry.php:121
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:123
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:129
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:143
@@ -626,7 +626,7 @@ msgstr ""
 msgid "Allows checking whether the order was paid."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:190
+#: admin/src/Admin/Settings/Registry.php:192
 msgid "Allows the plugin to update automatically whenever possible."
 msgstr ""
 
@@ -655,12 +655,6 @@ msgstr ""
 
 #: admin/src/Otp_Login/Auth_Flow_Service.php:241
 msgid "An account is already registered with this phone number."
-msgstr ""
-
-#: admin/src/Api/License.php:281
-msgid ""
-"An error occurred while connecting to the license verification server. "
-"Check the error in the WooCommerce logs."
 msgstr ""
 
 #: admin/src/Rest/Settings_Reset.php:44
@@ -725,7 +719,7 @@ msgstr ""
 #: .history/admin/src/Integrations/Resend_20260703155627.php:136
 #: .history/admin/src/Integrations/Resend_20260703155635.php:134
 #: .history/admin/src/Integrations/Resend_20260703155807.php:134
-#: admin/src/Admin/Settings/Registry.php:104
+#: admin/src/Admin/Settings/Registry.php:106
 #: admin/src/Integrations/Resend.php:134
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:140
 msgid "API key"
@@ -739,7 +733,7 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:281
+#: admin/src/Admin/Settings/Registry.php:283
 msgid "Applications"
 msgstr ""
 
@@ -751,7 +745,7 @@ msgstr ""
 msgid "Are you sure you want to clear the debug logs?"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:296
+#: app/src/pages/license/LicensePage.vue:304
 msgid ""
 "Are you sure you want to deactivate this license? This will disable premium "
 "features."
@@ -775,7 +769,7 @@ msgstr ""
 msgid "Armenia"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:114
+#: admin/src/Admin/Settings/Registry.php:116
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
@@ -842,19 +836,19 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:189
+#: admin/src/Admin/Settings/Registry.php:191
 msgid "Automatic updates"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:419
+#: app/src/pages/license/LicensePage.vue:446
 msgid "Automatic updates and license synchronization"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:228
+#: admin/src/Admin/Settings/Registry.php:230
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:210
+#: admin/src/Admin/Settings/Registry.php:212
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
@@ -1002,8 +996,8 @@ msgstr ""
 msgid "Brunei"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:159
-#: admin/src/Admin/Settings/Registry.php:287
+#: admin/src/Admin/Settings/Registry.php:161
+#: admin/src/Admin/Settings/Registry.php:289
 #: app/src/pages/builder/BuilderPage.vue:610
 #: app/src/pages/builder/BuilderPage.vue:665
 #: app/src/pages/builder/BuilderPage.vue:770
@@ -1046,8 +1040,8 @@ msgstr ""
 msgid "Burundi"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:364
-#: app/src/pages/license/LicensePage.vue:400
+#: app/src/pages/license/LicensePage.vue:391
+#: app/src/pages/license/LicensePage.vue:427
 msgid "Buy license"
 msgstr ""
 
@@ -1168,7 +1162,7 @@ msgstr ""
 msgid "Chat id"
 msgstr ""
 
-#: admin/src/Api/Updater.php:289
+#: admin/src/Api/Updater.php:297
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:64
 msgid "Check for updates"
 msgstr ""
@@ -1217,13 +1211,13 @@ msgstr ""
 msgid "Choose one of the validated senders available in your account."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:115
+#: admin/src/Admin/Settings/Registry.php:117
 msgid ""
 "Choose the engine used to generate AI content. Provider credentials and "
 "defaults are configured in the Applications tab."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:58
+#: admin/src/Admin/Settings/Registry.php:60
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
@@ -1407,8 +1401,8 @@ msgstr ""
 #: .history/admin/src/Integrations/Resend_20260703155627.php:117
 #: .history/admin/src/Integrations/Resend_20260703155635.php:115
 #: .history/admin/src/Integrations/Resend_20260703155807.php:115
-#: admin/src/Core/Init.php:495
-#: admin/src/Core/Init.php:499
+#: admin/src/Core/Init.php:505
+#: admin/src/Core/Init.php:509
 #: admin/src/Integrations/Anthropic.php:52
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
@@ -1519,7 +1513,7 @@ msgid "Costa Rica"
 msgstr ""
 
 #: admin/src/Rest/License_Activate.php:71
-#: app/src/pages/license/LicensePage.vue:245
+#: app/src/pages/license/LicensePage.vue:253
 msgid "Could not activate the license."
 msgstr ""
 
@@ -1527,7 +1521,7 @@ msgstr ""
 msgid "Could not cancel the scheduled item."
 msgstr ""
 
-#: admin/src/Api/Updater.php:250
+#: admin/src/Api/Updater.php:258
 msgid "Could not check for updates for the <strong>Joinotify</strong> plugin"
 msgstr ""
 
@@ -1557,7 +1551,7 @@ msgid "Could not clear the queue."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:93
-#: admin/src/Admin/Settings/Registry.php:595
+#: admin/src/Admin/Settings/Registry.php:597
 msgid "Could not complete the operation."
 msgstr ""
 
@@ -1566,7 +1560,7 @@ msgid "Could not create the workflow."
 msgstr ""
 
 #: admin/src/Rest/License_Deactivate.php:49
-#: app/src/pages/license/LicensePage.vue:287
+#: app/src/pages/license/LicensePage.vue:295
 msgid "Could not deactivate the license."
 msgstr ""
 
@@ -1625,6 +1619,14 @@ msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:629
 msgid "Could not open the logs."
+msgstr ""
+
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:334
+msgid "Could not read the license details."
+msgstr ""
+
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:290
+msgid "Could not read the response from the license server."
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:939
@@ -1703,11 +1705,11 @@ msgstr ""
 msgid "Could not send the verification code."
 msgstr ""
 
-#: admin/src/Rest/License_Sync.php:63
+#: admin/src/Rest/License_Sync.php:70
 msgid "Could not sync the license information."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:266
+#: app/src/pages/license/LicensePage.vue:274
 msgid "Could not sync the license."
 msgstr ""
 
@@ -1774,7 +1776,7 @@ msgstr ""
 msgid "Create a new workflow to start automating your processes."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:160
+#: admin/src/Admin/Settings/Registry.php:162
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
@@ -1875,15 +1877,6 @@ msgstr ""
 msgid "Curaçao"
 msgstr ""
 
-#: admin/src/Api/License.php:377
-#: admin/src/Api/License.php:430
-msgid "cURL Error 35: SSL/TLS communication issue."
-msgstr ""
-
-#: admin/src/Api/License.php:432
-msgid "cURL Error: %s"
-msgstr ""
-
 #: app/src/pages/settings/components/modals/IntegrationModalBlock.vue:59
 msgid "Custom block not available."
 msgstr ""
@@ -1892,7 +1885,7 @@ msgstr ""
 msgid "Custom color"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:165
+#: admin/src/Admin/Settings/Registry.php:167
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:80
 msgid "Custom variables"
 msgstr ""
@@ -1922,7 +1915,7 @@ msgstr ""
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:247
+#: admin/src/Admin/Settings/Registry.php:249
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
@@ -1962,8 +1955,8 @@ msgstr ""
 msgid "Days"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:295
-#: app/src/pages/license/LicensePage.vue:455
+#: app/src/pages/license/LicensePage.vue:303
+#: app/src/pages/license/LicensePage.vue:482
 msgid "Deactivate license"
 msgstr ""
 
@@ -1971,7 +1964,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:222
+#: admin/src/Admin/Settings/Registry.php:224
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:106
 msgid "Debug logs"
 msgstr ""
@@ -1980,11 +1973,11 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:227
+#: admin/src/Admin/Settings/Registry.php:229
 msgid "Debug logs retention"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:184
+#: admin/src/Admin/Settings/Registry.php:186
 msgid "Debug mode"
 msgstr ""
 
@@ -1997,7 +1990,7 @@ msgstr ""
 msgid "Default chat id"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:57
+#: admin/src/Admin/Settings/Registry.php:59
 msgid "Default country code"
 msgstr ""
 
@@ -2015,7 +2008,7 @@ msgstr ""
 msgid "Define the trigger that starts the workflow"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:53
+#: admin/src/Admin/Settings/Registry.php:55
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2155,7 +2148,7 @@ msgstr ""
 msgid "Description (optional)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:199
+#: admin/src/Admin/Settings/Registry.php:201
 msgid "Developer integration"
 msgstr ""
 
@@ -2180,7 +2173,7 @@ msgstr ""
 msgid "Digital product access granted"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:481
+#: admin/src/Admin/Settings/Registry.php:483
 msgid "Disabled"
 msgstr ""
 
@@ -2227,7 +2220,7 @@ msgstr ""
 msgid "Display mode"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:195
+#: admin/src/Admin/Settings/Registry.php:197
 msgid "Displays notifications when a new version is available."
 msgstr ""
 
@@ -2240,7 +2233,7 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: admin/src/Core/Init.php:521
+#: admin/src/Core/Init.php:531
 msgid "Documentation"
 msgstr ""
 
@@ -2385,15 +2378,11 @@ msgstr ""
 msgid "Empty canvas"
 msgstr ""
 
-#: admin/src/Api/License.php:340
-msgid "Empty response."
-msgstr ""
-
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:78
 msgid "Enable debug mode"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:153
+#: admin/src/Admin/Settings/Registry.php:155
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -2403,7 +2392,7 @@ msgstr ""
 msgid "Enable JavaScript to log in with a verification code or email and password."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:83
+#: admin/src/Admin/Settings/Registry.php:85
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:35
 msgid "Enable Proxy API"
 msgstr ""
@@ -2412,11 +2401,11 @@ msgstr ""
 msgid "Enable the integration to access its settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:185
+#: admin/src/Admin/Settings/Registry.php:187
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:481
+#: admin/src/Admin/Settings/Registry.php:483
 msgid "Enabled"
 msgstr ""
 
@@ -2432,7 +2421,7 @@ msgstr ""
 msgid "End the workflow at this point."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:226
+#: app/src/pages/license/LicensePage.vue:234
 msgid "Enter a license key before activating."
 msgstr ""
 
@@ -2489,7 +2478,7 @@ msgstr ""
 msgid "Enter the field ID that collects the recipient's phone number."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:637
+#: admin/src/Admin/Settings/Registry.php:639
 msgid "Enter the license code to unlock premium features."
 msgstr ""
 
@@ -2507,8 +2496,8 @@ msgstr ""
 msgid "Enter your email or username"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:58
-#: app/src/pages/license/LicensePage.vue:210
+#: app/src/pages/license/LicensePage.vue:66
+#: app/src/pages/license/LicensePage.vue:218
 msgid "Enter your license key to unlock premium features."
 msgstr ""
 
@@ -2609,7 +2598,7 @@ msgstr ""
 msgid "Expiration mode"
 msgstr ""
 
-#: admin/src/Api/License.php:935
+#: admin/src/Api/License.php:700
 msgid "Expired license"
 msgstr ""
 
@@ -2628,11 +2617,11 @@ msgstr ""
 msgid "Expires in %s %s"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:71
+#: app/src/pages/license/LicensePage.vue:79
 msgid "Expires on"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:213
+#: app/src/pages/license/LicensePage.vue:221
 msgid "Expires on: Not available"
 msgstr ""
 
@@ -2891,8 +2880,8 @@ msgstr ""
 msgid "Gambia"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:46
-#: admin/src/Admin/Settings/Registry.php:269
+#: admin/src/Admin/Settings/Registry.php:48
+#: admin/src/Admin/Settings/Registry.php:271
 #: admin/src/Builder/Actions.php:121
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
 #: app/src/stores/useWorkflowBuilderStore.ts:154
@@ -3028,7 +3017,7 @@ msgstr ""
 msgid "Hello, this is a test message."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:344
+#: app/src/pages/license/LicensePage.vue:352
 #: app/src/pages/settings/SettingsPage.vue:753
 msgid "Help Center"
 msgstr ""
@@ -3041,7 +3030,7 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:209
+#: admin/src/Admin/Settings/Registry.php:211
 msgid "History retention"
 msgstr ""
 
@@ -3094,7 +3083,7 @@ msgstr ""
 msgid "Iceland"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:487
+#: app/src/pages/license/LicensePage.vue:514
 msgid ""
 "If the license does not update immediately, click Sync to fetch the latest "
 "status from the server."
@@ -3235,7 +3224,7 @@ msgstr ""
 msgid "Integration settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:152
+#: admin/src/Admin/Settings/Registry.php:154
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
 msgstr ""
@@ -3254,9 +3243,9 @@ msgstr ""
 msgid "internal use"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:634
 #: app/src/pages/license/LicensePage.vue:48
-#: app/src/pages/license/LicensePage.vue:207
+#: app/src/pages/license/LicensePage.vue:215
 msgid "Invalid"
 msgstr ""
 
@@ -3268,7 +3257,7 @@ msgstr ""
 msgid "Invalid country code"
 msgstr ""
 
-#: admin/src/Api/License.php:755
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:327
 msgid "Invalid data."
 msgstr ""
 
@@ -3337,7 +3326,7 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:248
+#: admin/src/Admin/Settings/Registry.php:250
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
 
@@ -3409,7 +3398,7 @@ msgstr ""
 #: app/src/components/brand/BrandMark.vue:17
 #: app/src/components/layout/PageHeader.vue:32
 #: app/src/pages/builder/BuilderPage.vue:734
-#: app/src/pages/license/LicensePage.vue:136
+#: app/src/pages/license/LicensePage.vue:144
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
 #: app/src/pages/settings/SettingsPage.vue:223
 msgid "Joinotify"
@@ -3423,7 +3412,7 @@ msgstr ""
 msgid "Joinotify messaging helpers are unavailable."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:487
+#: admin/src/Admin/Settings/Registry.php:489
 msgid "Joinotify version"
 msgstr ""
 
@@ -3431,7 +3420,7 @@ msgstr ""
 msgid "Jordan"
 msgstr ""
 
-#: admin/src/Api/License.php:304
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:296
 msgid "JSON Error: %s"
 msgstr ""
 
@@ -3439,8 +3428,8 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:212
-#: admin/src/Admin/Settings/Registry.php:230
+#: admin/src/Admin/Settings/Registry.php:214
+#: admin/src/Admin/Settings/Registry.php:232
 msgid "Keep forever"
 msgstr ""
 
@@ -3456,7 +3445,7 @@ msgstr ""
 msgid "Kenya"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:105
+#: admin/src/Admin/Settings/Registry.php:107
 msgid "Key used to authenticate Proxy API calls."
 msgstr ""
 
@@ -3476,7 +3465,7 @@ msgstr ""
 msgid "Label (optional)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:120
+#: admin/src/Admin/Settings/Registry.php:122
 msgid ""
 "Language model engine used to generate content. New providers can be added "
 "by extensions."
@@ -3561,29 +3550,30 @@ msgstr ""
 #: admin/src/Admin/Menu.php:99
 #: admin/src/Admin/Menu.php:100
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/license/LicensePage.vue:226
-#: app/src/pages/license/LicensePage.vue:239
-#: app/src/pages/license/LicensePage.vue:242
-#: app/src/pages/license/LicensePage.vue:245
-#: app/src/pages/license/LicensePage.vue:266
-#: app/src/pages/license/LicensePage.vue:285
-#: app/src/pages/license/LicensePage.vue:287
-#: app/src/pages/license/LicensePage.vue:340
-#: app/src/pages/license/LicensePage.vue:354
+#: app/src/pages/license/LicensePage.vue:234
+#: app/src/pages/license/LicensePage.vue:247
+#: app/src/pages/license/LicensePage.vue:250
+#: app/src/pages/license/LicensePage.vue:253
+#: app/src/pages/license/LicensePage.vue:274
+#: app/src/pages/license/LicensePage.vue:293
+#: app/src/pages/license/LicensePage.vue:295
+#: app/src/pages/license/LicensePage.vue:348
+#: app/src/pages/license/LicensePage.vue:381
 msgid "License"
 msgstr ""
 
 #: admin/src/Rest/License_Activate.php:64
-#: app/src/pages/license/LicensePage.vue:239
-#: app/src/pages/license/LicensePage.vue:242
+#: app/src/pages/license/LicensePage.vue:247
+#: app/src/pages/license/LicensePage.vue:250
 msgid "License activated successfully."
 msgstr ""
 
+#: admin/src/Licensing/Drivers/Mds_Driver.php:171
 #: admin/src/Rest/License_Deactivate.php:44
 msgid "License deactivated successfully."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:285
+#: app/src/pages/license/LicensePage.vue:293
 msgid "License deactivated."
 msgstr ""
 
@@ -3591,20 +3581,20 @@ msgstr ""
 msgid "License details"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:649
+#: admin/src/Admin/Settings/Registry.php:651
 msgid "License expires in: %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:650
+#: admin/src/Admin/Settings/Registry.php:652
 msgid "License expires in: Not available"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:435
+#: app/src/pages/license/LicensePage.vue:462
 msgid "License information"
 msgstr ""
 
-#: admin/src/Rest/License_Sync.php:57
-#: app/src/pages/license/LicensePage.vue:262
+#: admin/src/Rest/License_Sync.php:64
+#: app/src/pages/license/LicensePage.vue:270
 msgid "License information updated successfully."
 msgstr ""
 
@@ -3616,7 +3606,7 @@ msgstr ""
 msgid "License key is required."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:62
+#: app/src/pages/license/LicensePage.vue:70
 msgid "License status"
 msgstr ""
 
@@ -3670,7 +3660,7 @@ msgstr ""
 msgid "Loading…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:52
+#: admin/src/Admin/Settings/Registry.php:54
 msgid "Location and phone numbers"
 msgstr ""
 
@@ -3735,15 +3725,15 @@ msgstr ""
 msgid "Madagascar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:200
+#: admin/src/Admin/Settings/Registry.php:202
 msgid "Maintains support integrations and advanced contracts available."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:179
+#: admin/src/Admin/Settings/Registry.php:181
 msgid "Maintenance and preference"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:174
+#: admin/src/Admin/Settings/Registry.php:176
 msgid "Maintenance, logs, updates, and environment details."
 msgstr ""
 
@@ -3767,7 +3757,7 @@ msgstr ""
 msgid "Malta"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:133
+#: admin/src/Admin/Settings/Registry.php:135
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
 
@@ -3783,7 +3773,7 @@ msgid ""
 "matching post meta value."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:166
+#: admin/src/Admin/Settings/Registry.php:168
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
@@ -3846,7 +3836,7 @@ msgstr ""
 msgid "Media message sent successfully."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:96
+#: admin/src/Admin/Settings/Registry.php:98
 msgid "Media route"
 msgstr ""
 
@@ -3895,7 +3885,7 @@ msgstr ""
 
 #: admin/src/Admin/History/Registry.php:144
 #: admin/src/Admin/Menu.php:71
-#: admin/src/Admin/Settings/Registry.php:204
+#: admin/src/Admin/Settings/Registry.php:206
 #: app/src/pages/history/HistoryPage.vue:157
 msgid "Message history"
 msgstr ""
@@ -4069,7 +4059,7 @@ msgstr ""
 msgid "Netherlands"
 msgstr ""
 
-#: admin/src/Api/License.php:926
+#: admin/src/Api/License.php:696
 #: admin/src/Integrations/Woocommerce.php:614
 #: admin/src/Integrations/Woocommerce.php:859
 msgid "Never expires"
@@ -4141,10 +4131,10 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:476
-#: admin/src/Admin/Settings/Registry.php:500
-#: admin/src/Admin/Settings/Registry.php:505
-#: admin/src/Admin/Settings/Registry.php:510
+#: admin/src/Admin/Settings/Registry.php:478
+#: admin/src/Admin/Settings/Registry.php:502
+#: admin/src/Admin/Settings/Registry.php:507
+#: admin/src/Admin/Settings/Registry.php:512
 #: admin/src/Builder/Messages.php:319
 #: admin/src/Builder/Messages.php:320
 #: admin/src/Integrations/Elementor_Forms.php:124
@@ -4247,8 +4237,12 @@ msgstr ""
 msgid "No Joinotify sender is configured to deliver the code."
 msgstr ""
 
-#: admin/src/Rest/License_Sync.php:48
+#: admin/src/Rest/License_Sync.php:49
 msgid "No license key found to sync."
+msgstr ""
+
+#: admin/src/Licensing/Client.php:163
+msgid "No licensing backend is available."
 msgstr ""
 
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:123
@@ -4343,7 +4337,7 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:751
+#: admin/src/Admin/Settings/Registry.php:797
 msgid "None"
 msgstr ""
 
@@ -4367,15 +4361,16 @@ msgstr ""
 msgid "Norway"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:622
-#: admin/src/Admin/Settings/Registry.php:627
-#: admin/src/Admin/Settings/Registry.php:646
-#: admin/src/Admin/Settings/Registry.php:796
-#: admin/src/Api/License.php:910
-#: app/src/pages/license/LicensePage.vue:90
-#: app/src/pages/license/LicensePage.vue:99
-#: app/src/pages/license/LicensePage.vue:211
-#: app/src/pages/license/LicensePage.vue:216
+#: admin/src/Admin/Settings/Registry.php:624
+#: admin/src/Admin/Settings/Registry.php:629
+#: admin/src/Admin/Settings/Registry.php:648
+#: admin/src/Admin/Settings/Registry.php:842
+#: admin/src/Api/License.php:669
+#: admin/src/Licensing/Drivers/Mds_Driver.php:304
+#: app/src/pages/license/LicensePage.vue:98
+#: app/src/pages/license/LicensePage.vue:107
+#: app/src/pages/license/LicensePage.vue:219
+#: app/src/pages/license/LicensePage.vue:224
 msgid "Not available"
 msgstr ""
 
@@ -4391,11 +4386,11 @@ msgstr ""
 msgid "Notification"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:63
+#: admin/src/Admin/Settings/Registry.php:65
 msgid "Notify when WhatsApp disconnects"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:69
+#: admin/src/Admin/Settings/Registry.php:71
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
@@ -4408,7 +4403,7 @@ msgstr ""
 msgid "of"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:540
+#: admin/src/Admin/Settings/Registry.php:542
 msgid "Off"
 msgstr ""
 
@@ -4420,7 +4415,7 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:540
+#: admin/src/Admin/Settings/Registry.php:542
 msgid "On"
 msgstr ""
 
@@ -4434,7 +4429,7 @@ msgstr ""
 msgid "Open documentation"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:495
+#: app/src/pages/license/LicensePage.vue:522
 msgid "Open help center"
 msgstr ""
 
@@ -4472,11 +4467,11 @@ msgstr ""
 msgid "OpenAI returned an empty response."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:509
+#: admin/src/Admin/Settings/Registry.php:511
 msgid "OpenSSL extension"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:180
+#: admin/src/Admin/Settings/Registry.php:182
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
@@ -4654,7 +4649,7 @@ msgstr ""
 msgid "Paste the exported JSON here"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:378
+#: app/src/pages/license/LicensePage.vue:405
 msgid ""
 "Paste the license key you received after purchase and click Activate to "
 "unlock all features."
@@ -4670,7 +4665,7 @@ msgid ""
 "deliver e-mails."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:97
+#: admin/src/Admin/Settings/Registry.php:99
 msgid "Path of the route used to send messages with media."
 msgstr ""
 
@@ -4751,8 +4746,8 @@ msgstr ""
 msgid "Phone validated."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:132
-#: admin/src/Admin/Settings/Registry.php:275
+#: admin/src/Admin/Settings/Registry.php:134
+#: admin/src/Admin/Settings/Registry.php:277
 #: app/src/pages/settings/components/cards/PhoneActions.vue:207
 #: app/src/pages/settings/components/cards/PhoneActions.vue:301
 #: app/src/pages/settings/SettingsPage.vue:449
@@ -4768,7 +4763,7 @@ msgstr ""
 msgid "Phones"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:139
+#: admin/src/Admin/Settings/Registry.php:141
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
@@ -4798,7 +4793,7 @@ msgid ""
 "administrators should edit this code."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:494
+#: admin/src/Admin/Settings/Registry.php:496
 msgid "PHP version"
 msgstr ""
 
@@ -4870,7 +4865,7 @@ msgstr ""
 msgid "plugin_version missing; version normalized automatically."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:47
+#: admin/src/Admin/Settings/Registry.php:49
 msgid "Plugin's basic preferences, sending proxy, and WhatsApp notifications."
 msgstr ""
 
@@ -4949,7 +4944,7 @@ msgstr ""
 msgid "Provide a valid variable name."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:78
+#: admin/src/Admin/Settings/Registry.php:80
 msgid "Proxy API"
 msgstr ""
 
@@ -4966,11 +4961,11 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:485
+#: app/src/pages/license/LicensePage.vue:512
 msgid "Quick help"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:144
+#: admin/src/Admin/Settings/Registry.php:146
 msgid "Quick Tools"
 msgstr ""
 
@@ -4999,7 +4994,7 @@ msgstr ""
 msgid "Recipient phone"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:207
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
 "History screen."
@@ -5064,7 +5059,7 @@ msgid ""
 "available sender to use the default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:138
+#: admin/src/Admin/Settings/Registry.php:140
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:25
 msgid "Registered senders"
 msgstr ""
@@ -5116,7 +5111,7 @@ msgstr ""
 msgid "Request"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:120
+#: app/src/pages/license/LicensePage.vue:128
 msgid "Request failed."
 msgstr ""
 
@@ -5251,7 +5246,7 @@ msgstr ""
 msgid "Reuse the generated value in any later message with:"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:57
+#: app/src/pages/license/LicensePage.vue:65
 msgid "Review your current license status and refresh it whenever needed."
 msgstr ""
 
@@ -5263,7 +5258,7 @@ msgstr ""
 msgid "Rounding applied to cards, buttons, and form fields."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:89
+#: admin/src/Admin/Settings/Registry.php:91
 msgid "Route path used to send text messages."
 msgstr ""
 
@@ -5741,7 +5736,7 @@ msgstr ""
 msgid "Sending..."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:64
+#: admin/src/Admin/Settings/Registry.php:66
 msgid "Sends a notification to the sender when the connection is not established."
 msgstr ""
 
@@ -5795,7 +5790,7 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:594
+#: admin/src/Admin/Settings/Registry.php:596
 #: admin/src/Rest/Settings_Save.php:42
 msgid "Settings saved."
 msgstr ""
@@ -5951,7 +5946,7 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:223
+#: admin/src/Admin/Settings/Registry.php:225
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -5967,7 +5962,7 @@ msgstr ""
 msgid "Subject: %s"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:67
+#: app/src/pages/license/LicensePage.vue:75
 msgid "Subscription"
 msgstr ""
 
@@ -5987,11 +5982,11 @@ msgstr ""
 msgid "Subscription status"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:618
+#: admin/src/Admin/Settings/Registry.php:620
 msgid "Subscription: %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:617
+#: admin/src/Admin/Settings/Registry.php:619
 msgid "Subscription: Club M - %s"
 msgstr ""
 
@@ -6005,23 +6000,23 @@ msgid ""
 "%s/product/sample-sunglasses/#reviews"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:427
+#: app/src/pages/license/LicensePage.vue:454
 msgid "Support access and subscription updates"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:75
+#: app/src/pages/license/LicensePage.vue:83
 msgid "Support until"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:214
+#: app/src/pages/license/LicensePage.vue:222
 msgid "Support until: Not available"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:652
+#: admin/src/Admin/Settings/Registry.php:654
 msgid "Support up to: %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:653
+#: admin/src/Admin/Settings/Registry.php:655
 msgid "Support up to: Not available"
 msgstr ""
 
@@ -6037,11 +6032,12 @@ msgstr ""
 msgid "Switzerland"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:262
+#: app/src/pages/license/LicensePage.vue:270
 msgid "Sync"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:462
+#: app/src/pages/license/LicensePage.vue:367
+#: app/src/pages/license/LicensePage.vue:489
 msgid "Sync license"
 msgstr ""
 
@@ -6054,7 +6050,7 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:241
+#: admin/src/Admin/Settings/Registry.php:243
 msgid "System status"
 msgstr ""
 
@@ -6118,7 +6114,7 @@ msgstr ""
 msgid "Test message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:68
+#: admin/src/Admin/Settings/Registry.php:70
 msgid "Test phone"
 msgstr ""
 
@@ -6148,7 +6144,7 @@ msgstr ""
 msgid "Text message sent successfully."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:88
+#: admin/src/Admin/Settings/Registry.php:90
 msgid "Text route"
 msgstr ""
 
@@ -6227,10 +6223,6 @@ msgstr ""
 msgid "The coupon already exists."
 msgstr ""
 
-#: admin/src/Api/License.php:397
-msgid "The cURL extension is missing."
-msgstr ""
-
 #: admin/src/Rest/Debug_Download.php:43
 #: admin/src/Rest/Debug_Logs.php:61
 #: app/src/pages/settings/SettingsPage.vue:623
@@ -6267,6 +6259,24 @@ msgid ""
 "flow will not be processed until the integration is available again."
 msgstr ""
 
+#: admin/src/Admin/Settings/Registry.php:701
+msgid "the license could not be confirmed"
+msgstr ""
+
+#: admin/src/Licensing/Drivers/Mds_Driver.php:373
+msgid "The licensing SDK is not installed."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:698
+msgid ""
+"The licensing server reported: %s. Your plugin keeps working normally. Try "
+"syncing the license, and contact support if the message persists."
+msgstr ""
+
+#: admin/src/Licensing/Drivers/Mds_Driver.php:383
+msgid "The licensing service is not configured."
+msgstr ""
+
 #: app/src/pages/settings/components/cards/PhoneActions.vue:260
 msgid "The message is prefilled and can be adjusted before sending the test."
 msgstr ""
@@ -6292,7 +6302,7 @@ msgstr ""
 msgid "The phone is disconnected."
 msgstr ""
 
-#: admin/src/Api/Updater.php:243
+#: admin/src/Api/Updater.php:251
 msgid "The plugin version <strong>Joinotify</strong> is up to date."
 msgstr ""
 
@@ -6483,7 +6493,7 @@ msgstr ""
 msgid "This integration will be available soon."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:367
+#: admin/src/Admin/Settings/Registry.php:369
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 
@@ -6498,7 +6508,13 @@ msgid ""
 "undone."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:84
+#: admin/src/Licensing/Drivers/Mds_Driver.php:379
+msgid ""
+"This server cannot verify signed license responses (the sodium extension is "
+"missing)."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:86
 msgid "This site exposes endpoints to process Joinotify requests."
 msgstr ""
 
@@ -7098,6 +7114,10 @@ msgstr ""
 msgid "Undo (Ctrl+Z)"
 msgstr ""
 
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:300
+msgid "Unexpected response from the license server."
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:216
 msgid "United Arab Emirates"
 msgstr ""
@@ -7112,10 +7132,6 @@ msgstr ""
 
 #: admin/src/AI/AI_Manager.php:161
 msgid "Unknown AI error."
-msgstr ""
-
-#: admin/src/Api/License.php:315
-msgid "Unknown response"
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:622
@@ -7143,7 +7159,7 @@ msgstr ""
 msgid "Update logs"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:194
+#: admin/src/Admin/Settings/Registry.php:196
 msgid "Update notices"
 msgstr ""
 
@@ -7262,7 +7278,7 @@ msgstr ""
 msgid "Uzbekistan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:634
 #: app/src/pages/license/LicensePage.vue:48
 msgid "Valid"
 msgstr ""
@@ -7456,7 +7472,7 @@ msgstr ""
 msgid "What should this workflow do?"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:410
+#: app/src/pages/license/LicensePage.vue:437
 msgid "What you unlock"
 msgstr ""
 
@@ -7545,11 +7561,11 @@ msgstr ""
 msgid "WordPress"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:475
+#: admin/src/Admin/Settings/Registry.php:477
 msgid "WordPress Multisite"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:470
+#: admin/src/Admin/Settings/Registry.php:472
 msgid "WordPress version"
 msgstr ""
 
@@ -7691,8 +7707,8 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:476
-#: admin/src/Admin/Settings/Registry.php:500
+#: admin/src/Admin/Settings/Registry.php:478
+#: admin/src/Admin/Settings/Registry.php:502
 #: admin/src/Builder/Messages.php:319
 #: admin/src/Builder/Messages.php:320
 #: admin/src/Integrations/Elementor_Forms.php:123
@@ -7738,30 +7754,34 @@ msgstr ""
 msgid "Your access code is: %1$s. This code expires in %2$d minutes."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:636
+#: admin/src/Admin/Settings/Registry.php:638
 msgid "Your installation is now ready for full use."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:477
+#: app/src/pages/license/LicensePage.vue:504
 msgid "Your installation is unlocked for full use."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:481
+#: app/src/pages/license/LicensePage.vue:508
 msgid ""
 "Your license is active. You can keep it synced here whenever the status "
 "changes on the server."
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:79
+#: app/src/pages/license/LicensePage.vue:87
 msgid "Your license key"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:654
+#: admin/src/Admin/Settings/Registry.php:656
 msgid "Your license key:"
 msgstr ""
 
-#: app/src/pages/license/LicensePage.vue:215
+#: app/src/pages/license/LicensePage.vue:223
 msgid "Your license key: Not available"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:695
+msgid "Your license needs to be checked"
 msgstr ""
 
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:45
