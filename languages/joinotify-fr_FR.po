@@ -6,17 +6,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "x-domain: joinotify\n"
 
-#: admin/src/Integrations/Woocommerce.php:342
+#: admin/src/Integrations/Woocommerce.php:438
 msgid "12345"
 msgstr "12345"
+
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:34
+msgid "-1001234567890 or {{ telegram_chat_id }}"
+msgstr "-1001234567890 ou {{ telegram_chat_id }}"
 
 #: app/src/composables/useSenderOptions.ts:38
 msgid "— Select a sender —"
 msgstr "— Sélectionnez un expéditeur —"
 
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:35
+msgid "{{ wc_billing_email }} or customer@example.com"
+msgstr "{{ wc_billing_email }} ou customer@example.com"
+
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:217
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:73
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:94
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr "{{ wc_billing_phone }} ou +5511999990000"
@@ -65,7 +73,7 @@ msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d an"
 
-#: admin/src/Builder/Messages.php:171
+#: admin/src/Builder/Messages.php:179
 msgid "%s %s: %s"
 msgstr "%s %s : %s"
 
@@ -73,7 +81,7 @@ msgstr "%s %s : %s"
 msgid "%s is required."
 msgstr "%s est requis."
 
-#: admin/src/Integrations/Flexify_Checkout.php:224
+#: admin/src/Integrations/Flexify_Checkout.php:225
 msgid "%s minutes"
 msgstr "%s minutes"
 
@@ -81,31 +89,31 @@ msgstr "%s minutes"
 msgid "%s settings"
 msgstr "%s paramètres"
 
-#: admin/src/Integrations/Woocommerce.php:402
+#: admin/src/Integrations/Woocommerce.php:498
 msgid "%s/checkout/pay/order/12345"
 msgstr "%s/checkout/pay/order/12345"
 
-#: admin/src/Integrations/Woocommerce.php:961
+#: admin/src/Integrations/Woocommerce.php:1349
 msgid "%s%%"
 msgstr "%s%%"
 
-#: admin/src/Integrations/Woocommerce.php:326
+#: admin/src/Integrations/Woocommerce.php:422
 msgid "+55 11 91234-5678"
 msgstr "+55 11 91234-5678"
 
-#: admin/src/Integrations/Woocommerce.php:334
+#: admin/src/Integrations/Woocommerce.php:430
 msgid "+55 41 91234-5678"
 msgstr "+55 41 91234-5678"
 
-#: admin/src/Builder/Messages.php:168
+#: admin/src/Builder/Messages.php:176
 msgid "<span class=\"builder-placeholder\">%s</span> %s: %s"
 msgstr "<span class=\"builder-placeholder\">%s</span> %s : %s"
 
-#: admin/src/Builder/Messages.php:164
+#: admin/src/Builder/Messages.php:172
 msgid "<span class=\"builder-placeholder\">%s</span> is empty"
 msgstr "<span class=\"builder-placeholder\">%s</span> est vide"
 
-#: admin/src/Builder/Messages.php:166
+#: admin/src/Builder/Messages.php:174
 msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr "<span class=\"builder-placeholder\">%s</span> n'est pas vide"
 
@@ -127,11 +135,11 @@ msgstr "0 résultats"
 msgid "180 days"
 msgstr "180 jours"
 
-#: admin/src/Integrations/Woocommerce.php:382
+#: admin/src/Integrations/Woocommerce.php:478
 msgid "1x - Men's cotton T-shirt (Sample product)"
 msgstr "1x - T-shirt en coton pour hommes (produit d'exemple)"
 
-#: admin/src/Integrations/Woocommerce.php:382
+#: admin/src/Integrations/Woocommerce.php:478
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr "1x - Lunettes de soleil avec protection UV (produit d'exemple)"
 
@@ -140,8 +148,8 @@ msgstr "1x - Lunettes de soleil avec protection UV (produit d'exemple)"
 msgid "30 days"
 msgstr "30 jours"
 
-#: admin/src/Integrations/Flexify_Checkout.php:225
-#: admin/src/Integrations/Flexify_Checkout.php:233
+#: admin/src/Integrations/Flexify_Checkout.php:226
+#: admin/src/Integrations/Flexify_Checkout.php:234
 msgid "30 minutes"
 msgstr "30 minutes"
 
@@ -149,11 +157,11 @@ msgstr "30 minutes"
 msgid "365 days"
 msgstr "365 jours"
 
-#: admin/src/Integrations/Flexify_Checkout.php:288
+#: admin/src/Integrations/Flexify_Checkout.php:289
 msgid "41912345678"
 msgstr "41912345678"
 
-#: app/src/pages/builder/BuilderPage.vue:1381
+#: app/src/pages/builder/BuilderPage.vue:1392
 #: app/src/pages/history/HistoryPage.vue:221
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/components/cards/PhoneActions.vue:247
@@ -174,7 +182,7 @@ msgstr "7 jours"
 msgid "90 days"
 msgstr "90 jours"
 
-#: admin/src/Admin/Builder/Registry.php:1469
+#: admin/src/Admin/Builder/Registry.php:1504
 msgid "A condition is missing its branches."
 msgstr "Une condition manque ses branches."
 
@@ -204,7 +212,7 @@ msgstr ""
 "Un aperçu rapide de l'environnement WordPress, PHP et des extensions "
 "critiques."
 
-#: admin/src/Integrations/Flexify_Checkout.php:134
+#: admin/src/Integrations/Flexify_Checkout.php:135
 msgid "Abandoned cart is recovered"
 msgstr "Le panier abandonné est récupéré"
 
@@ -254,7 +262,7 @@ msgstr ""
 "Activez et configurez les points de terminaison utilisés pour traiter les "
 "demandes d'API externes."
 
-#: admin/src/Integrations/Woocommerce.php:121
+#: admin/src/Integrations/Woocommerce.php:131
 msgid "Activate discount coupon action"
 msgstr "Activer l'action de coupon de réduction"
 
@@ -265,7 +273,7 @@ msgstr "Activer l'action de coupon de réduction"
 msgid "Activate license"
 msgstr "Activer la licence"
 
-#: admin/src/Integrations/Integrations_Base.php:908
+#: admin/src/Integrations/Integrations_Base.php:989
 msgid "Activate plugin"
 msgstr "Activer le plugin"
 
@@ -284,11 +292,11 @@ msgstr ""
 "Activez la licence pour déverrouiller les fonctionnalités premium de "
 "Joinotify."
 
-#: admin/src/Admin/Settings/Registry.php:589
+#: admin/src/Admin/Settings/Registry.php:634
 msgid "Activate your license"
 msgstr "Activez votre licence"
 
-#: admin/src/Admin/Settings/Registry.php:575
+#: admin/src/Admin/Settings/Registry.php:620
 #: app/src/pages/license/LicensePage.vue:212
 msgid "Activate your license to unlock premium features."
 msgstr "Activez votre licence pour déverrouiller les fonctionnalités premium."
@@ -299,7 +307,7 @@ msgstr "Activez votre licence pour déverrouiller les fonctionnalités premium."
 msgid "Active"
 msgstr "Actif"
 
-#: admin/src/Admin/Settings/Registry.php:589
+#: admin/src/Admin/Settings/Registry.php:634
 msgid "Active license"
 msgstr "Licence active"
 
@@ -353,7 +361,11 @@ msgstr "Ajouter une action à la branche vraie"
 msgid "Add an action"
 msgstr "Ajouter une action"
 
-#: app/src/components/settings/SchemaFieldRenderer.vue:278
+#: app/src/builder/components/base/AttachmentsField.vue:210
+msgid "Add attachment"
+msgstr "Ajouter une pièce jointe"
+
+#: app/src/components/settings/SchemaFieldRenderer.vue:294
 msgid "Add item"
 msgstr "Ajouter un élément"
 
@@ -380,7 +392,7 @@ msgstr "Ajouter un nouveau flux de travail"
 msgid "Add note"
 msgstr "Ajouter une note"
 
-#: app/src/pages/builder/BuilderPage.vue:1363
+#: app/src/pages/builder/BuilderPage.vue:1374
 msgid "Add test phone number"
 msgstr "Ajouter un numéro de téléphone de test"
 
@@ -404,7 +416,7 @@ msgstr ""
 msgid "Added"
 msgstr "Ajouté"
 
-#: admin/src/Integrations/Woocommerce.php:122
+#: admin/src/Integrations/Woocommerce.php:132
 msgid ""
 "Adds the coupon action to WooCommerce workflows so a workflow can create "
 "and send a discount coupon."
@@ -425,11 +437,12 @@ msgstr ""
 "la journée (par exemple, +1 jour à 09:00)."
 
 #: admin/src/Builder/Actions.php:127
+#: admin/src/Integrations/Integrations_Base.php:132
 msgid "Advanced"
 msgstr "Avancé"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:106
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:126
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:119
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:139
 msgid "Advanced (model override)"
 msgstr "Avancé (remplacement de modèle)"
 
@@ -446,6 +459,10 @@ msgid "AI generation failed."
 msgstr "Échec de la génération AI."
 
 #: admin/src/Admin/Settings/Registry.php:119
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:123
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:129
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:143
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:149
 msgid "AI provider"
 msgstr "Fournisseur AI"
 
@@ -453,7 +470,7 @@ msgstr "Fournisseur AI"
 msgid "AI smart variable"
 msgstr "Variable intelligente AI"
 
-#: admin/src/AI/Workflow_Generator.php:106
+#: admin/src/AI/Workflow_Generator.php:113
 #: app/src/stores/useWorkflowBuilderStore.ts:1211
 msgid "AI workflow"
 msgstr "Workflow AI"
@@ -462,8 +479,8 @@ msgstr "Workflow AI"
 msgid "AI-generated WhatsApp message"
 msgstr "Message WhatsApp généré par AI"
 
-#: admin/src/Integrations/AI_Messaging.php:93
-#: admin/src/Integrations/AI_Messaging.php:103
+#: admin/src/Integrations/AI_Messaging.php:94
+#: admin/src/Integrations/AI_Messaging.php:104
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:28
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:41
 msgid "AI: Smart variable"
@@ -482,8 +499,10 @@ msgid "Algeria"
 msgstr "Algérie"
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
+#: app/src/components/builder/BuilderTemplateLibraryView.vue:60
 #: app/src/composables/useMessageHistory.ts:51
 #: app/src/composables/useProcessingQueue.ts:49
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:142
 msgid "All"
 msgstr "Tous"
 
@@ -503,7 +522,7 @@ msgstr "Tous les flux"
 msgid "All levels"
 msgstr "Tous les niveaux"
 
-#: app/src/pages/settings/SettingsPage.vue:674
+#: app/src/pages/settings/SettingsPage.vue:675
 msgid "All options will return to the plugin defaults."
 msgstr "Toutes les options reviendront aux paramètres par défaut du plugin."
 
@@ -526,23 +545,23 @@ msgstr "Tous les workflows"
 msgid "Allow free shipping"
 msgstr "Autoriser la livraison gratuite"
 
-#: admin/src/Integrations/Wpforms.php:198
+#: admin/src/Integrations/Wpforms.php:199
 msgid "Allows checking a specific value from a submitted form field."
 msgstr "Permet de vérifier une valeur spécifique d'un champ de formulaire soumis."
 
-#: admin/src/Integrations/Elementor.php:151
+#: admin/src/Integrations/Elementor.php:152
 msgid "Allows checking a specific value of a submitted form field."
 msgstr "Permet de vérifier une valeur spécifique d'un champ de formulaire soumis."
 
-#: admin/src/Integrations/Wordpress.php:310
+#: admin/src/Integrations/Wordpress.php:311
 msgid "Allows checking specific metadata for the user that fired the trigger."
 msgstr ""
 "Permet de vérifier des métadonnées spécifiques pour l'utilisateur qui a "
 "déclenché l'événement."
 
-#: admin/src/Integrations/Wordpress.php:320
-#: admin/src/Integrations/Wordpress.php:326
-#: admin/src/Integrations/Wordpress.php:336
+#: admin/src/Integrations/Wordpress.php:321
+#: admin/src/Integrations/Wordpress.php:327
+#: admin/src/Integrations/Wordpress.php:337
 msgid ""
 "Allows checking specific metadata for the user who requested the password "
 "reset."
@@ -550,8 +569,8 @@ msgstr ""
 "Permet de vérifier des métadonnées spécifiques pour l'utilisateur qui a "
 "demandé la réinitialisation du mot de passe."
 
-#: admin/src/Integrations/Elementor.php:155
-#: admin/src/Integrations/Flexify_Checkout.php:342
+#: admin/src/Integrations/Elementor.php:156
+#: admin/src/Integrations/Flexify_Checkout.php:343
 msgid ""
 "Allows checking specific metadata of the user who requested the password "
 "reset."
@@ -559,74 +578,74 @@ msgstr ""
 "Permet de vérifier des métadonnées spécifiques de l'utilisateur qui a "
 "demandé la réinitialisation du mot de passe."
 
-#: admin/src/Integrations/Woocommerce.php:1059
-#: admin/src/Integrations/Wpforms.php:202
+#: admin/src/Integrations/Woocommerce.php:1447
+#: admin/src/Integrations/Wpforms.php:203
 msgid "Allows checking specific user metadata."
 msgstr "Permet de vérifier des métadonnées spécifiques de l'utilisateur."
 
-#: admin/src/Integrations/Flexify_Checkout.php:334
+#: admin/src/Integrations/Flexify_Checkout.php:335
 msgid "Allows checking the abandoned cart total amount."
 msgstr "Permet de vérifier le montant total du panier abandonné."
 
-#: admin/src/Integrations/Woocommerce.php:1063
+#: admin/src/Integrations/Woocommerce.php:1451
 msgid "Allows checking the customer email for the order."
 msgstr "Permet de vérifier l'email du client pour la commande."
 
-#: admin/src/Integrations/Flexify_Checkout.php:338
+#: admin/src/Integrations/Flexify_Checkout.php:339
 msgid "Allows checking the items present in the abandoned cart."
 msgstr "Permet de vérifier les articles présents dans le panier abandonné."
 
-#: admin/src/Integrations/Woocommerce.php:1051
+#: admin/src/Integrations/Woocommerce.php:1439
 msgid "Allows checking the order payment method."
 msgstr "Permet de vérifier le mode de paiement de la commande."
 
-#: admin/src/Integrations/Woocommerce.php:1067
+#: admin/src/Integrations/Woocommerce.php:1455
 msgid "Allows checking the order refund amount."
 msgstr "Permet de vérifier le montant du remboursement de la commande."
 
-#: admin/src/Integrations/Woocommerce.php:1055
+#: admin/src/Integrations/Woocommerce.php:1443
 msgid "Allows checking the order shipping method."
 msgstr "Permet de vérifier la méthode d'expédition de la commande."
 
-#: admin/src/Integrations/Woocommerce.php:1035
+#: admin/src/Integrations/Woocommerce.php:1423
 msgid "Allows checking the order status."
 msgstr "Permet de vérifier le statut de la commande."
 
-#: admin/src/Integrations/Woocommerce.php:1039
+#: admin/src/Integrations/Woocommerce.php:1427
 msgid "Allows checking the order total."
 msgstr "Permet de vérifier le total de la commande."
 
-#: admin/src/Integrations/Wordpress.php:342
+#: admin/src/Integrations/Wordpress.php:343
 msgid "Allows checking the post type that was published."
 msgstr "Permet de vérifier le type de publication qui a été publié."
 
-#: admin/src/Integrations/Woocommerce.php:1047
+#: admin/src/Integrations/Woocommerce.php:1435
 msgid "Allows checking the products purchased in the order."
 msgstr "Permet de vérifier les produits achetés dans la commande."
 
-#: admin/src/Integrations/Wordpress.php:316
+#: admin/src/Integrations/Wordpress.php:317
 msgid "Allows checking the role of the user who logged in."
 msgstr "Permet de vérifier le rôle de l'utilisateur qui s'est connecté."
 
-#: admin/src/Integrations/Wordpress.php:332
+#: admin/src/Integrations/Wordpress.php:333
 msgid "Allows checking the role of the user who requested the password reset."
 msgstr ""
 "Permet de vérifier le rôle de l'utilisateur qui a demandé la "
 "réinitialisation du mot de passe."
 
-#: admin/src/Integrations/Woocommerce.php:1071
+#: admin/src/Integrations/Woocommerce.php:1459
 msgid "Allows checking the status of the created subscription."
 msgstr "Permet de vérifier le statut de l'abonnement créé."
 
-#: admin/src/Integrations/Wordpress.php:306
+#: admin/src/Integrations/Wordpress.php:307
 msgid "Allows checking the user role that fired the trigger."
 msgstr "Permet de vérifier le rôle de l'utilisateur qui a déclenché l'événement."
 
-#: admin/src/Integrations/Flexify_Checkout.php:346
+#: admin/src/Integrations/Flexify_Checkout.php:347
 msgid "Allows checking whether the abandoned cart was recovered."
 msgstr "Permet de vérifier si le panier abandonné a été récupéré."
 
-#: admin/src/Integrations/Woocommerce.php:1043
+#: admin/src/Integrations/Woocommerce.php:1431
 msgid "Allows checking whether the order was paid."
 msgstr "Permet de vérifier si la commande a été payée."
 
@@ -644,7 +663,7 @@ msgstr "Permet de définir un temps d'attente avant que l'action ne soit exécut
 msgid "Already have an account?"
 msgstr "Vous avez déjà un compte ?"
 
-#: admin/src/Admin/Builder/Registry.php:343
+#: admin/src/Admin/Builder/Registry.php:378
 #: app/src/builder/actions/definitions/timeDelay.ts:61
 #: app/src/builder/actions/definitions/timeDelay.ts:89
 #: app/src/builder/actions/definitions/timeDelay.ts:96
@@ -683,7 +702,41 @@ msgstr "Andorre"
 msgid "Angola"
 msgstr "Angola"
 
-#: admin/src/Integrations/Woocommerce.php:230
+#: admin/src/Integrations/Anthropic.php:41
+msgid "Anthropic"
+msgstr "Anthropic"
+
+#: admin/src/Integrations/Anthropic.php:50
+msgid "Anthropic (Claude) settings"
+msgstr "Paramètres d'Anthropic (Claude)"
+
+#: admin/src/Integrations/Anthropic.php:73
+msgid "Anthropic API key"
+msgstr "Clé API d'Anthropic"
+
+#: admin/src/AI/Providers/Anthropic_Provider.php:166
+#: admin/src/AI/Providers/Anthropic_Provider.php:418
+msgid "Anthropic API key is not configured."
+msgstr "La clé API d'Anthropic n'est pas configurée."
+
+#: admin/src/AI/Providers/Anthropic_Provider.php:217
+msgid "Anthropic did not return any compatible models."
+msgstr "Anthropic n'a retourné aucun modèle compatible."
+
+#: admin/src/AI/Providers/Anthropic_Provider.php:205
+#: admin/src/AI/Providers/Anthropic_Provider.php:493
+msgid "Anthropic request failed with status %d."
+msgstr "La requête Anthropic a échoué avec le statut %d."
+
+#: admin/src/AI/Providers/Anthropic_Provider.php:504
+msgid "Anthropic returned an empty response."
+msgstr "Anthropic a retourné une réponse vide."
+
+#: admin/src/Integrations/Woocommerce.php:278
+msgid "Any digital product"
+msgstr "Tout produit numérique"
+
+#: admin/src/Integrations/Woocommerce.php:324
 msgid "Any status"
 msgstr "Tout statut"
 
@@ -695,10 +748,23 @@ msgstr "API"
 msgid "API client not initialized."
 msgstr "Client API non initialisé."
 
+#: .history/admin/src/Integrations/Resend_20260703153400.php:134
+#: .history/admin/src/Integrations/Resend_20260703155627.php:136
+#: .history/admin/src/Integrations/Resend_20260703155635.php:134
+#: .history/admin/src/Integrations/Resend_20260703155807.php:134
 #: admin/src/Admin/Settings/Registry.php:104
+#: admin/src/Integrations/Resend.php:134
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:140
 msgid "API key"
 msgstr "Clé API"
+
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:242
+msgid "application"
+msgstr "application"
+
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:242
+msgid "applications"
+msgstr "applications"
 
 #: admin/src/Admin/Settings/Registry.php:281
 msgid "Applications"
@@ -708,7 +774,7 @@ msgstr "Applications"
 msgid "Apply"
 msgstr "Appliquer"
 
-#: app/src/pages/settings/SettingsPage.vue:653
+#: app/src/pages/settings/SettingsPage.vue:654
 msgid "Are you sure you want to clear the debug logs?"
 msgstr "Êtes-vous sûr de vouloir effacer les journaux de débogage ?"
 
@@ -720,11 +786,11 @@ msgstr ""
 "Êtes-vous sûr de vouloir désactiver cette licence ? Cela désactivera les "
 "fonctionnalités premium."
 
-#: app/src/pages/settings/SettingsPage.vue:566
+#: app/src/pages/settings/SettingsPage.vue:567
 msgid "Are you sure you want to remove this sender?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet expéditeur ?"
 
-#: app/src/pages/settings/SettingsPage.vue:538
+#: app/src/pages/settings/SettingsPage.vue:539
 msgid ""
 "Are you sure you want to remove this variable? Workflows that use it will "
 "no longer resolve it."
@@ -742,10 +808,11 @@ msgstr "Arménie"
 
 #: admin/src/Admin/Settings/Registry.php:114
 #: admin/src/Integrations/AI_Messaging.php:48
+#: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
 msgstr "Intelligence Artificielle"
 
-#: admin/src/Integrations/OpenAI.php:52
+#: admin/src/Integrations/OpenAI.php:53
 msgid "Artificial Intelligence settings"
 msgstr "Paramètres de l'intelligence artificielle"
 
@@ -757,12 +824,26 @@ msgstr "Aruba"
 msgid "at"
 msgstr "à"
 
+#: app/src/builder/components/base/AttachmentsField.vue:166
+msgid ""
+"Attaches every digital file the customer purchased in this order. Resolved "
+"when the workflow runs, so it always matches the order that triggered it."
+msgstr ""
+"Attache chaque fichier numérique que le client a acheté dans cette "
+"commande. Résolu lorsque le flux s'exécute, il correspond donc toujours à "
+"la commande qui l'a déclenché."
+
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:63
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:131
+msgid "Attachments"
+msgstr "Pièces jointes"
+
 #: app/src/pages/history/components/HistoryDetailsModal.vue:31
 msgid "Attempts"
 msgstr "Tentatives"
 
 #: admin/src/Validations/Media_Types.php:41
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:34
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:35
 #: app/src/pages/history/HistoryPage.vue:80
 msgid "Audio"
 msgstr "Audio"
@@ -782,6 +863,10 @@ msgstr "Australie"
 #: admin/src/Validations/Country_Codes.php:38
 msgid "Austria"
 msgstr "Autriche"
+
+#: admin/src/Integrations/Integrations_Base.php:126
+msgid "Authentication"
+msgstr "Authentification"
 
 #: admin/src/Integrations/Wordpress.php:64
 msgid "Automate message delivery for WordPress event triggers."
@@ -817,9 +902,15 @@ msgstr ""
 "Supprimer automatiquement les enregistrements d'historique plus anciens que "
 "la période sélectionnée."
 
-#: admin/src/Builder/Messages.php:269
+#: admin/src/Builder/Messages.php:317
 msgid "Automatically generated"
 msgstr "Généré automatiquement"
+
+#: .history/app/src/components/builder/TemplateLibraryHeader_20260703082602.vue:22
+#: .history/app/src/components/builder/TemplateLibraryHeader_20260703152024.vue:22
+#: app/src/components/builder/TemplateLibraryHeader.vue:22
+msgid "Automation templates"
+msgstr "Modèles d'automatisation"
 
 #: app/src/components/builder/BuilderActionPickerModal.vue:24
 msgid "Available actions"
@@ -835,7 +926,7 @@ msgid "Azerbaijan"
 msgstr "Azerbaïdjan"
 
 #: app/src/components/builder/BuilderImportView.vue:42
-#: app/src/components/builder/BuilderTemplateLibraryView.vue:44
+#: app/src/components/builder/BuilderTemplateLibraryView.vue:46
 #: app/src/components/builder/TriggerStepFooter.vue:30
 msgid "Back"
 msgstr "Retour"
@@ -862,7 +953,7 @@ msgstr "Bangladesh"
 msgid "Base"
 msgstr "Base"
 
-#: admin/src/Integrations/Otp_Login.php:119
+#: admin/src/Integrations/Otp_Login.php:120
 msgid ""
 "Base color used to theme the login form. The full shade palette is derived "
 "automatically."
@@ -890,7 +981,7 @@ msgstr "Bénin"
 msgid "Bhutan"
 msgstr "Bhoutan"
 
-#: admin/src/Integrations/Woocommerce.php:134
+#: admin/src/Integrations/Woocommerce.php:144
 msgid "Billing full address format"
 msgstr "Format d'adresse de facturation complet"
 
@@ -903,17 +994,21 @@ msgstr "Gras"
 msgid "Bolivia"
 msgstr "Bolivie"
 
-#: admin/src/Integrations/Otp_Login.php:126
+#: admin/src/Integrations/Otp_Login.php:127
 msgid "Border radius"
 msgstr "Rayon de bordure"
 
-#: admin/src/Integrations/Otp_Login.php:136
+#: admin/src/Integrations/Otp_Login.php:137
 msgid "Border radius unit"
 msgstr "Unité de rayon de bordure"
 
 #: admin/src/Validations/Country_Codes.php:153
 msgid "Bosnia and Herzegovina"
 msgstr "Bosnie-Herzégovine"
+
+#: admin/src/Integrations/Telegram.php:134
+msgid "Bot token"
+msgstr "Jeton de bot"
 
 #: admin/src/Validations/Country_Codes.php:121
 msgid "Botswana"
@@ -923,7 +1018,7 @@ msgstr "Botswana"
 msgid "Branching action"
 msgstr "Action de ramification"
 
-#: admin/src/Integrations/OpenAI.php:105
+#: admin/src/Integrations/OpenAI.php:106
 msgid ""
 "Brand voice and rules inherited by every AI generation. Example: \"You are "
 "the support agent for Store X, be cordial and concise.\"."
@@ -967,17 +1062,17 @@ msgstr "Brunei"
 #: app/src/pages/builder/BuilderPage.vue:790
 #: app/src/pages/builder/BuilderPage.vue:807
 #: app/src/pages/builder/BuilderPage.vue:819
-#: app/src/pages/builder/BuilderPage.vue:1042
-#: app/src/pages/builder/BuilderPage.vue:1051
-#: app/src/pages/builder/BuilderPage.vue:1078
-#: app/src/pages/builder/BuilderPage.vue:1120
-#: app/src/pages/builder/BuilderPage.vue:1126
-#: app/src/pages/builder/BuilderPage.vue:1161
-#: app/src/pages/builder/BuilderPage.vue:1167
-#: app/src/pages/settings/SettingsPage.vue:527
-#: app/src/pages/settings/SettingsPage.vue:530
-#: app/src/pages/settings/SettingsPage.vue:543
-#: app/src/pages/settings/SettingsPage.vue:545
+#: app/src/pages/builder/BuilderPage.vue:1047
+#: app/src/pages/builder/BuilderPage.vue:1056
+#: app/src/pages/builder/BuilderPage.vue:1083
+#: app/src/pages/builder/BuilderPage.vue:1130
+#: app/src/pages/builder/BuilderPage.vue:1136
+#: app/src/pages/builder/BuilderPage.vue:1171
+#: app/src/pages/builder/BuilderPage.vue:1177
+#: app/src/pages/settings/SettingsPage.vue:528
+#: app/src/pages/settings/SettingsPage.vue:531
+#: app/src/pages/settings/SettingsPage.vue:544
+#: app/src/pages/settings/SettingsPage.vue:546
 msgid "Builder"
 msgstr "Constructeur"
 
@@ -1024,9 +1119,9 @@ msgstr "Canada"
 #: app/src/components/builder/BuilderImportModal.vue:44
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:17
-#: app/src/pages/builder/BuilderPage.vue:1355
-#: app/src/pages/builder/BuilderPage.vue:1393
-#: app/src/pages/builder/BuilderPage.vue:1439
+#: app/src/pages/builder/BuilderPage.vue:1366
+#: app/src/pages/builder/BuilderPage.vue:1404
+#: app/src/pages/builder/BuilderPage.vue:1450
 #: app/src/pages/queue/QueuePage.vue:310
 #: app/src/pages/settings/components/cards/PhoneActions.vue:282
 #: app/src/pages/settings/components/cards/PhoneActions.vue:350
@@ -1058,32 +1153,32 @@ msgstr "Téléphone du candidat"
 msgid "Cape Verde"
 msgstr "Cap-Vert"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:128
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:131
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:141
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:144
 msgid "Caption"
 msgstr "Légende"
 
-#: admin/src/Integrations/Flexify_Checkout.php:124
+#: admin/src/Integrations/Flexify_Checkout.php:125
 msgid "Cart abandoned"
 msgstr "Panier abandonné"
 
-#: admin/src/Integrations/Flexify_Checkout.php:337
+#: admin/src/Integrations/Flexify_Checkout.php:338
 msgid "Cart items"
 msgstr "Éléments du panier"
 
-#: admin/src/Integrations/Flexify_Checkout.php:345
+#: admin/src/Integrations/Flexify_Checkout.php:346
 msgid "Cart recovered"
 msgstr "Panier récupéré"
 
-#: admin/src/Integrations/Flexify_Checkout.php:333
+#: admin/src/Integrations/Flexify_Checkout.php:334
 msgid "Cart total"
 msgstr "Total du panier"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:35
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:36
 msgid "Casual"
 msgstr "Décontracté"
 
-#: admin/src/Integrations/Wordpress.php:267
+#: admin/src/Integrations/Wordpress.php:268
 msgid "Category 1, Category 2"
 msgstr "Catégorie 1, Catégorie 2"
 
@@ -1105,7 +1200,7 @@ msgid "Change number"
 msgstr "Changer le numéro"
 
 #: app/src/components/flow/FlowNode.vue:292
-#: app/src/pages/builder/BuilderPage.vue:1421
+#: app/src/pages/builder/BuilderPage.vue:1432
 msgid "Change trigger"
 msgstr "Changer le déclencheur"
 
@@ -1121,12 +1216,18 @@ msgstr ""
 msgid "Channel"
 msgstr "Canal"
 
+#: app/src/builder/actions/definitions/telegramText.ts:54
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:30
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:33
+msgid "Chat id"
+msgstr "ID de chat"
+
 #: admin/src/Api/Updater.php:289
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:64
 msgid "Check for updates"
 msgstr "Vérifier les mises à jour"
 
-#: admin/src/Builder/Messages.php:151
+#: admin/src/Builder/Messages.php:159
 msgid "Check if the order was not paid"
 msgstr "Vérifier si la commande n'a pas été payée"
 
@@ -1136,7 +1237,7 @@ msgstr ""
 "Vérifiez le registre backend, le contexte sélectionné ou le terme de "
 "recherche."
 
-#: admin/src/Builder/Messages.php:151
+#: admin/src/Builder/Messages.php:159
 msgid "Check whether the order was paid"
 msgstr "Vérifiez si la commande a été payée"
 
@@ -1151,6 +1252,16 @@ msgstr "Chili"
 #: admin/src/Validations/Country_Codes.php:63
 msgid "China"
 msgstr "Chine"
+
+#: .history/app/src/components/builder/TemplateLibraryHeader_20260703082602.vue:30
+#: .history/app/src/components/builder/TemplateLibraryHeader_20260703152024.vue:30
+#: app/src/components/builder/TemplateLibraryHeader.vue:30
+msgid ""
+"Choose a ready-made flow, import it with one click, and adjust it your way. "
+"Search by categories or names."
+msgstr ""
+"Choisissez un flux prêt à l'emploi, importez-le en un clic et ajustez-le à "
+"votre manière. Recherchez par catégories ou noms."
 
 #: app/src/components/builder/BuilderActionPickerModal.vue:26
 msgid "Choose an action to insert below the selected block."
@@ -1213,13 +1324,21 @@ msgstr ""
 "Choisissez si le flux de travail doit attendre une période, une date fixe "
 "ou un décalage relatif à un moment spécifique."
 
-#: admin/src/Integrations/Woocommerce.php:209
+#: admin/src/Integrations/Woocommerce.php:219
 msgid ""
 "Choose which order status should start this workflow. Select \"Any status\" "
 "to run on every status change."
 msgstr ""
 "Choisissez quel statut de commande doit déclencher ce flux de travail. "
 "Sélectionnez \"Tout statut\" pour s'exécuter à chaque changement de statut."
+
+#: admin/src/Integrations/Anthropic.php:83
+msgid ""
+"Claude model used when a workflow node does not override it. The list is "
+"fetched from Anthropic and can be refreshed."
+msgstr ""
+"Modèle Claude utilisé lorsque un nœud de workflow ne le remplace pas. La "
+"liste est récupérée depuis Anthropic et peut être actualisée."
 
 #: app/src/components/fields/ColorScaleField.vue:172
 #: app/src/components/workflows/WorkflowSearch.vue:17
@@ -1245,7 +1364,7 @@ msgstr "Effacer les filtres"
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:40
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:229
-#: app/src/pages/settings/SettingsPage.vue:652
+#: app/src/pages/settings/SettingsPage.vue:653
 msgid "Clear logs"
 msgstr "Effacer les journaux"
 
@@ -1257,11 +1376,15 @@ msgstr "Effacer la recherche"
 msgid "Clear shade %s"
 msgstr "Effacer l'ombre %s"
 
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:222
+msgid "Clear the category filter to change the display mode."
+msgstr "Effacer le filtre de catégorie pour changer le mode d'affichage."
+
 #: templates/otp-login/checkout/form-login.php:34
 msgid "Click here to log in"
 msgstr "Cliquez ici pour vous connecter"
 
-#: admin/src/Integrations/Integrations_Base.php:835
+#: admin/src/Integrations/Integrations_Base.php:916
 #: app/src/builder/actions/components/ActionLibraryModal.vue:290
 #: app/src/components/base/BaseDrawer.vue:30
 #: app/src/components/builder/BuilderActionPickerModal.vue:43
@@ -1297,7 +1420,7 @@ msgid "Code digit %s"
 msgstr "Code digit %s"
 
 #: admin/src/Rest/Phone_Register.php:50
-#: app/src/pages/settings/SettingsPage.vue:448
+#: app/src/pages/settings/SettingsPage.vue:449
 msgid "Code sent successfully."
 msgstr "Code envoyé avec succès."
 
@@ -1309,15 +1432,24 @@ msgstr "Colombie"
 msgid "Coming soon"
 msgstr "Bientôt disponible"
 
+#: admin/src/Integrations/Integrations_Base.php:96
+msgid "Communication channels"
+msgstr "Canaux de communication"
+
 #: admin/src/Validations/Country_Codes.php:123
 msgid "Comoros"
 msgstr "Comores"
 
-#: admin/src/Integrations/Woocommerce.php:350
+#: admin/src/Integrations/Woocommerce.php:582
+#: admin/src/Integrations/Woocommerce.php:591
+msgid "Complete e-book (Sample product)"
+msgstr "E-book complet (Produit d'exemple)"
+
+#: admin/src/Integrations/Woocommerce.php:446
 msgid "Completed"
 msgstr "Terminé"
 
-#: admin/src/Admin/Builder/Registry.php:486
+#: admin/src/Admin/Builder/Registry.php:521
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:106
@@ -1331,7 +1463,7 @@ msgstr "Condition"
 msgid "Condition rule"
 msgstr "Règle de condition"
 
-#: admin/src/Admin/Builder/Registry.php:379
+#: admin/src/Admin/Builder/Registry.php:414
 #: app/src/builder/actions/definitions/condition.ts:121
 #: app/src/builder/actions/definitions/condition.ts:132
 #: app/src/builder/actions/settings/ConditionSettings.vue:180
@@ -1346,19 +1478,26 @@ msgstr "Composant de configuration non disponible"
 msgid "Configuration component not available for this action."
 msgstr "Composant de configuration non disponible pour cette action."
 
-#: admin/src/Core/Init.php:492
-#: admin/src/Core/Init.php:496
-#: admin/src/Integrations/Integrations_Base.php:390
-#: admin/src/Integrations/Integrations_Base.php:798
-#: admin/src/Integrations/OpenAI.php:54
-#: admin/src/Integrations/Otp_Login.php:88
-#: admin/src/Integrations/Woocommerce.php:102
+#: .history/admin/src/Integrations/Resend_20260703153400.php:115
+#: .history/admin/src/Integrations/Resend_20260703155627.php:117
+#: .history/admin/src/Integrations/Resend_20260703155635.php:115
+#: .history/admin/src/Integrations/Resend_20260703155807.php:115
+#: admin/src/Core/Init.php:495
+#: admin/src/Core/Init.php:499
+#: admin/src/Integrations/Anthropic.php:52
+#: admin/src/Integrations/Integrations_Base.php:471
+#: admin/src/Integrations/Integrations_Base.php:879
+#: admin/src/Integrations/OpenAI.php:55
+#: admin/src/Integrations/Otp_Login.php:89
+#: admin/src/Integrations/Resend.php:115
+#: admin/src/Integrations/Telegram.php:115
+#: admin/src/Integrations/Woocommerce.php:112
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:48
 msgid "Configure"
 msgstr "Configurer"
 
-#: admin/src/Integrations/Woocommerce.php:101
+#: admin/src/Integrations/Woocommerce.php:111
 msgid ""
 "Configure discount coupons and checkout field formatting with the native "
 "integration fields."
@@ -1366,7 +1505,7 @@ msgstr ""
 "Configurer les coupons de réduction et le formatage des champs de paiement "
 "avec les champs d'intégration natifs."
 
-#: admin/src/Integrations/Otp_Login.php:87
+#: admin/src/Integrations/Otp_Login.php:88
 msgid ""
 "Configure how verification codes are delivered, the visual theme, and the "
 "sender used for the login form."
@@ -1378,7 +1517,7 @@ msgstr ""
 msgid "Configure Proxy API"
 msgstr "Configurer l'API Proxy"
 
-#: app/src/pages/settings/SettingsPage.vue:750
+#: app/src/pages/settings/SettingsPage.vue:751
 msgid ""
 "Configure senders, integrations, the builder and general plugin behavior. "
 "If you need help, visit our "
@@ -1386,13 +1525,21 @@ msgstr ""
 "Configurer les expéditeurs, les intégrations, le constructeur et le "
 "comportement général du plugin. Si vous avez besoin d'aide, visitez notre "
 
-#: admin/src/Integrations/OpenAI.php:53
+#: admin/src/Integrations/OpenAI.php:54
 msgid ""
 "Configure the AI provider, credentials, and the default behavior used to "
 "generate messages."
 msgstr ""
 "Configurer le fournisseur d'IA, les identifiants et le comportement par "
 "défaut utilisé pour générer des messages."
+
+#: admin/src/Integrations/Anthropic.php:51
+msgid ""
+"Configure the credentials and default model used to generate messages with "
+"Claude."
+msgstr ""
+"Configurer les identifiants et le modèle par défaut utilisé pour générer "
+"des messages avec Claude."
 
 #: app/src/builder/actions/settings/ConditionSettings.vue:158
 msgid "Configure the trigger first"
@@ -1417,11 +1564,11 @@ msgstr "Confirmation"
 msgid "Connected"
 msgstr "Connecté"
 
-#: app/src/pages/settings/SettingsPage.vue:597
+#: app/src/pages/settings/SettingsPage.vue:598
 msgid "Connection updated."
 msgstr "Connexion mise à jour."
 
-#: admin/src/Admin/Builder/Registry.php:1562
+#: admin/src/Admin/Builder/Registry.php:1597
 msgid "Contains"
 msgstr "Contient"
 
@@ -1429,6 +1576,10 @@ msgstr "Contient"
 #: app/src/pages/history/HistoryPage.vue:292
 msgid "Content"
 msgstr "Contenu"
+
+#: admin/src/Integrations/Integrations_Base.php:120
+msgid "Content & CMS"
+msgstr "Contenu & CMS"
 
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:195
 msgid "Context"
@@ -1467,7 +1618,7 @@ msgstr ""
 "Impossible de vérifier les mises à jour pour le <strong>Joinotify</strong> "
 "plugin"
 
-#: app/src/pages/settings/SettingsPage.vue:415
+#: app/src/pages/settings/SettingsPage.vue:416
 msgid "Could not check for updates."
 msgstr "Impossible de vérifier les mises à jour."
 
@@ -1484,7 +1635,7 @@ msgstr "Impossible de vider les journaux de débogage."
 msgid "Could not clear the history."
 msgstr "Impossible de vider l'historique."
 
-#: app/src/pages/settings/SettingsPage.vue:662
+#: app/src/pages/settings/SettingsPage.vue:663
 msgid "Could not clear the logs."
 msgstr "Impossible de vider les journaux."
 
@@ -1492,8 +1643,8 @@ msgstr "Impossible de vider les journaux."
 msgid "Could not clear the queue."
 msgstr "Impossible de vider la file d'attente."
 
-#: admin/src/Admin/Builder/Registry.php:90
-#: admin/src/Admin/Settings/Registry.php:550
+#: admin/src/Admin/Builder/Registry.php:93
+#: admin/src/Admin/Settings/Registry.php:595
 msgid "Could not complete the operation."
 msgstr "Impossible de terminer l'opération."
 
@@ -1506,7 +1657,7 @@ msgstr "Impossible de créer le flux de travail."
 msgid "Could not deactivate the license."
 msgstr "Impossible de désactiver la licence."
 
-#: app/src/pages/builder/BuilderPage.vue:1076
+#: app/src/pages/builder/BuilderPage.vue:1081
 msgid "Could not delete the action."
 msgstr "Impossible de supprimer l'action."
 
@@ -1519,7 +1670,7 @@ msgstr "Impossible de supprimer les enregistrements sélectionnés."
 msgid "Could not dismiss the tip."
 msgstr "Impossible de fermer l'astuce."
 
-#: app/src/pages/settings/SettingsPage.vue:350
+#: app/src/pages/settings/SettingsPage.vue:351
 msgid "Could not export the settings."
 msgstr "Impossible d'exporter les paramètres."
 
@@ -1531,7 +1682,7 @@ msgstr "Impossible de trouver le numéro de téléphone fourni."
 msgid "Could not find the variable to remove."
 msgstr "Impossible de trouver la variable à supprimer."
 
-#: app/src/pages/settings/SettingsPage.vue:379
+#: app/src/pages/settings/SettingsPage.vue:380
 msgid "Could not import the settings."
 msgstr "Impossible d'importer les paramètres."
 
@@ -1559,24 +1710,24 @@ msgstr "Impossible de charger le flux de travail."
 msgid "Could not load workflows."
 msgstr "Impossible de charger les flux de travail."
 
-#: app/src/pages/settings/SettingsPage.vue:628
+#: app/src/pages/settings/SettingsPage.vue:629
 msgid "Could not open the logs."
 msgstr "Impossible d'ouvrir les journaux."
 
 #: app/src/pages/builder/BuilderPage.vue:939
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:54
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:63
 msgid "Could not read the selected file."
 msgstr "Impossible de lire le fichier sélectionné."
 
-#: app/src/pages/settings/SettingsPage.vue:545
+#: app/src/pages/settings/SettingsPage.vue:546
 msgid "Could not remove the variable."
 msgstr "Impossible de supprimer la variable."
 
-#: app/src/pages/settings/SettingsPage.vue:576
+#: app/src/pages/settings/SettingsPage.vue:577
 msgid "Could not remove."
 msgstr "Impossible de supprimer."
 
-#: app/src/pages/settings/SettingsPage.vue:684
+#: app/src/pages/settings/SettingsPage.vue:685
 msgid "Could not reset."
 msgstr "Impossible de réinitialiser."
 
@@ -1584,15 +1735,15 @@ msgstr "Impossible de réinitialiser."
 msgid "Could not retrieve group information."
 msgstr "Impossible de récupérer les informations du groupe."
 
-#: admin/src/Integrations/Wordpress.php:181
+#: admin/src/Integrations/Wordpress.php:182
 msgid "Could not retrieve the user email"
 msgstr "Impossible de récupérer l'email de l'utilisateur"
 
-#: admin/src/Integrations/Wordpress.php:165
+#: admin/src/Integrations/Wordpress.php:166
 msgid "Could not retrieve the user first name"
 msgstr "Impossible de récupérer le prénom de l'utilisateur"
 
-#: admin/src/Integrations/Wordpress.php:173
+#: admin/src/Integrations/Wordpress.php:174
 msgid "Could not retrieve the user last name"
 msgstr "Impossible de récupérer le nom de famille de l'utilisateur"
 
@@ -1600,7 +1751,7 @@ msgstr "Impossible de récupérer le nom de famille de l'utilisateur"
 msgid "Could not run the scheduled item."
 msgstr "Impossible d'exécuter l'élément programmé."
 
-#: app/src/pages/builder/BuilderPage.vue:1124
+#: app/src/pages/builder/BuilderPage.vue:1134
 msgid "Could not run the workflow test."
 msgstr "Impossible d'exécuter le test de flux de travail."
 
@@ -1608,21 +1759,21 @@ msgstr "Impossible d'exécuter le test de flux de travail."
 msgid "Could not save the selected trigger."
 msgstr "Impossible d'enregistrer le déclencheur sélectionné."
 
-#: app/src/pages/builder/BuilderPage.vue:1165
+#: app/src/pages/builder/BuilderPage.vue:1175
 msgid "Could not save the test phone number."
 msgstr "Impossible d'enregistrer le numéro de téléphone de test."
 
 #: admin/src/Rest/Builder_Variables_Save.php:46
-#: app/src/pages/settings/SettingsPage.vue:530
+#: app/src/pages/settings/SettingsPage.vue:531
 msgid "Could not save the variable."
 msgstr "Impossible d'enregistrer la variable."
 
 #: app/src/pages/builder/BuilderPage.vue:608
-#: app/src/pages/builder/BuilderPage.vue:1049
+#: app/src/pages/builder/BuilderPage.vue:1054
 msgid "Could not save the workflow."
 msgstr "Impossible d'enregistrer le flux de travail."
 
-#: app/src/pages/settings/SettingsPage.vue:315
+#: app/src/pages/settings/SettingsPage.vue:316
 msgid "Could not save."
 msgstr "Impossible d'enregistrer."
 
@@ -1647,7 +1798,7 @@ msgstr "Impossible de synchroniser les informations de licence."
 msgid "Could not sync the license."
 msgstr "Impossible de synchroniser la licence."
 
-#: app/src/pages/settings/SettingsPage.vue:602
+#: app/src/pages/settings/SettingsPage.vue:603
 msgid "Could not update the connection."
 msgstr "Impossible de mettre à jour la connexion."
 
@@ -1678,11 +1829,11 @@ msgstr "Coupon"
 msgid "Coupon code"
 msgstr "Code de coupon"
 
-#: admin/src/Integrations/Woocommerce.php:987
+#: admin/src/Integrations/Woocommerce.php:1375
 msgid "Coupon does not expire"
 msgstr "Le coupon n'expire pas"
 
-#: admin/src/Builder/Messages.php:278
+#: admin/src/Builder/Messages.php:326
 msgid "Coupon expires: %s"
 msgstr "Le coupon expire : %s"
 
@@ -1690,13 +1841,21 @@ msgstr "Le coupon expire : %s"
 msgid "Coupon message"
 msgstr "Message du coupon"
 
-#: admin/src/Integrations/Woocommerce.php:126
+#: admin/src/Integrations/Woocommerce.php:136
 msgid "Coupon prefix"
 msgstr "Préfixe du coupon"
 
 #: app/src/builder/actions/definitions/createCoupon.ts:88
 msgid "Coupon: %s"
 msgstr "Coupon : %s"
+
+#: admin/src/Integrations/Telegram.php:114
+msgid ""
+"Create a bot with @BotFather and paste its token below. The destination "
+"chat id is set on each workflow action."
+msgstr ""
+"Créez un bot avec @BotFather et collez son jeton ci-dessous. L'identifiant "
+"de chat de destination est défini sur chaque action de workflow."
 
 #: app/src/components/builder/BuilderNavbar.vue:182
 msgid "Create a new workflow"
@@ -1722,11 +1881,19 @@ msgstr ""
 "Créez des messages dynamiques pour vos automatisations de manière simple et "
 "directe en utilisant ChatGPT."
 
-#: admin/src/Admin/Builder/Registry.php:84
+#: admin/src/Integrations/Anthropic.php:42
+msgid ""
+"Create dynamic messages for your automations using Claude, the family of AI "
+"models from Anthropic."
+msgstr ""
+"Créez des messages dynamiques pour vos automatisations en utilisant Claude, "
+"la famille de modèles d'IA d'Anthropic."
+
+#: admin/src/Admin/Builder/Registry.php:87
 msgid "Create from scratch"
 msgstr "Créer à partir de zéro"
 
-#: admin/src/Admin/Builder/Registry.php:85
+#: admin/src/Admin/Builder/Registry.php:88
 #: admin/src/Builder/Workflow_Manager.php:92
 msgid "Create from template"
 msgstr "Créer à partir d'un modèle"
@@ -1767,7 +1934,7 @@ msgstr "Créez votre flux de travail d'automatisation à partir de zéro."
 msgid "Created"
 msgstr "Créé"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:142
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:168
 msgid ""
 "Creativity from 0 (deterministic) to 2 (more creative). Leave empty to use "
 "the default."
@@ -1775,15 +1942,15 @@ msgstr ""
 "Créativité de 0 (déterministe) à 2 (plus créatif). Laissez vide pour "
 "utiliser la valeur par défaut."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:117
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:143
 msgid "Creativity from 0 to 2. Leave empty to use the default."
 msgstr "Créativité de 0 à 2. Laissez vide pour utiliser la valeur par défaut."
 
-#: admin/src/Integrations/OpenAI.php:95
+#: admin/src/Integrations/OpenAI.php:96
 msgid "Creativity of the responses, from 0 (deterministic) to 2 (more creative)."
 msgstr "Créativité des réponses, de 0 (déterministe) à 2 (plus créatif)."
 
-#: admin/src/Integrations/Woocommerce.php:465
+#: admin/src/Integrations/Woocommerce.php:561
 msgid "Credit card"
 msgstr "Carte de crédit"
 
@@ -1803,7 +1970,7 @@ msgstr "Cron indisponible"
 msgid "Cuba"
 msgstr "Cuba"
 
-#: admin/src/Integrations/Woocommerce.php:450
+#: admin/src/Integrations/Woocommerce.php:546
 msgid "CUPOM10, FREESHIPPING"
 msgstr "CUPOM10, FREESHIPPING"
 
@@ -1833,7 +2000,7 @@ msgstr "Couleur personnalisée"
 msgid "Custom variables"
 msgstr "Variables personnalisées"
 
-#: admin/src/Integrations/Woocommerce.php:1062
+#: admin/src/Integrations/Woocommerce.php:1450
 msgid "Customer email"
 msgstr "Email du client"
 
@@ -1845,7 +2012,7 @@ msgstr "Chypre"
 msgid "Czech Republic"
 msgstr "République tchèque"
 
-#: admin/src/Integrations/Flexify_Checkout.php:280
+#: admin/src/Integrations/Flexify_Checkout.php:281
 msgid "da Silva"
 msgstr "da Silva"
 
@@ -1853,8 +2020,8 @@ msgstr "da Silva"
 msgid "Daily"
 msgstr "Quotidien"
 
-#: admin/src/Integrations/Woocommerce.php:374
-#: admin/src/Integrations/Woocommerce.php:473
+#: admin/src/Integrations/Woocommerce.php:470
+#: admin/src/Integrations/Woocommerce.php:569
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr "Daisy Avenue, 450 - Curitiba/PR - Brésil (ZIP: 80000-100)"
 
@@ -1863,8 +2030,8 @@ msgstr "Daisy Avenue, 450 - Curitiba/PR - Brésil (ZIP: 80000-100)"
 msgid "Danger zone"
 msgstr "Zone de danger"
 
-#: admin/src/Admin/Builder/Registry.php:337
-#: admin/src/Admin/Builder/Registry.php:365
+#: admin/src/Admin/Builder/Registry.php:372
+#: admin/src/Admin/Builder/Registry.php:400
 #: app/src/builder/actions/definitions/timeDelay.ts:58
 #: app/src/builder/actions/definitions/timeDelay.ts:71
 #: app/src/builder/actions/definitions/timeDelay.ts:82
@@ -1890,7 +2057,7 @@ msgstr "jour(s)"
 msgid "days"
 msgstr "jours"
 
-#: admin/src/Admin/Builder/Registry.php:357
+#: admin/src/Admin/Builder/Registry.php:392
 #: app/src/builder/actions/definitions/timeDelay.ts:66
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:46
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:38
@@ -1924,20 +2091,25 @@ msgstr "Conservation des journaux de débogage"
 msgid "Debug mode"
 msgstr "Mode débogage"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:124
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:150
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:150
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:176
 msgid "Default"
 msgstr "Par défaut"
+
+#: admin/src/Integrations/Telegram.php:143
+msgid "Default chat id"
+msgstr "Identifiant de chat par défaut"
 
 #: admin/src/Admin/Settings/Registry.php:57
 msgid "Default country code"
 msgstr "Code pays par défaut"
 
-#: admin/src/Integrations/OpenAI.php:84
+#: admin/src/Integrations/Anthropic.php:82
+#: admin/src/Integrations/OpenAI.php:85
 msgid "Default model"
 msgstr "Modèle par défaut"
 
-#: admin/src/Integrations/OpenAI.php:94
+#: admin/src/Integrations/OpenAI.php:95
 msgid "Default temperature"
 msgstr "Température par défaut"
 
@@ -1966,7 +2138,7 @@ msgstr ""
 "Définit le point de terminaison utilisé pour envoyer des messages texte via "
 "l'API Proxy."
 
-#: admin/src/Integrations/Woocommerce.php:135
+#: admin/src/Integrations/Woocommerce.php:145
 msgid ""
 "Defines the value used in the billing full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
@@ -1976,7 +2148,7 @@ msgstr ""
 "facturation. Vous pouvez combiner des espaces réservés comme {{ address_1 "
 "}}, {{ number }}, {{ city }}, {{ state }}, et {{ postcode }}."
 
-#: admin/src/Integrations/Woocommerce.php:144
+#: admin/src/Integrations/Woocommerce.php:154
 msgid ""
 "Defines the value used in the shipping full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
@@ -1986,7 +2158,7 @@ msgstr ""
 "livraison. Vous pouvez combiner des espaces réservés comme {{ address_1 }}, "
 "{{ number }}, {{ city }}, {{ state }}, et {{ postcode }}."
 
-#: admin/src/Admin/Builder/Registry.php:474
+#: admin/src/Admin/Builder/Registry.php:509
 #: admin/src/Builder/Actions.php:32
 #: app/src/builder/actions/definitions/timeDelay.ts:31
 #: app/src/builder/actions/definitions/timeDelay.ts:46
@@ -2000,7 +2172,7 @@ msgstr "Délai"
 msgid "Delay mode"
 msgstr "Mode de délai"
 
-#: admin/src/Admin/Builder/Registry.php:332
+#: admin/src/Admin/Builder/Registry.php:367
 #: app/src/builder/actions/definitions/timeDelay.ts:56
 msgid "Delay type"
 msgstr "Type de délai"
@@ -2039,7 +2211,7 @@ msgstr "Supprimer sélectionné"
 msgid "Delete selected records"
 msgstr "Supprimer les enregistrements sélectionnés"
 
-#: admin/src/Integrations/Otp_Login.php:107
+#: admin/src/Integrations/Otp_Login.php:108
 msgid "Delivery channel"
 msgstr "Canal de livraison"
 
@@ -2063,7 +2235,7 @@ msgstr ""
 msgid "Describe the automation you want to generate."
 msgstr "Décrivez l'automatisation que vous souhaitez générer."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:81
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:94
 msgid ""
 "Describe the value to generate. Use {{ placeholders }} to inject the "
 "trigger context."
@@ -2071,7 +2243,7 @@ msgstr ""
 "Décrivez la valeur à générer. Utilisez {{ placeholders }} pour injecter le "
 "contexte du déclencheur."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:81
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:94
 msgid ""
 "Describe what the AI should write. Use {{ placeholders }} to inject the "
 "trigger context."
@@ -2120,7 +2292,20 @@ msgstr "Mode développeur"
 msgid "Diagnostics"
 msgstr "Diagnostics"
 
-#: admin/src/Admin/Settings/Registry.php:438
+#: admin/src/Integrations/Woocommerce.php:244
+msgid "Digital file downloaded"
+msgstr "Fichier numérique téléchargé"
+
+#: admin/src/Integrations/Woocommerce.php:233
+#: admin/src/Integrations/Woocommerce.php:250
+msgid "Digital product"
+msgstr "Produit numérique"
+
+#: admin/src/Integrations/Woocommerce.php:227
+msgid "Digital product access granted"
+msgstr "Accès au produit numérique accordé"
+
+#: admin/src/Admin/Settings/Registry.php:481
 msgid "Disabled"
 msgstr "Désactivé"
 
@@ -2133,14 +2318,14 @@ msgstr "Déconnecté"
 msgid "Discount"
 msgstr "Remise"
 
-#: admin/src/Admin/Builder/Registry.php:536
-#: admin/src/Integrations/Woocommerce.php:824
+#: admin/src/Admin/Builder/Registry.php:571
+#: admin/src/Integrations/Woocommerce.php:1212
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
 msgid "Discount coupon"
 msgstr "Coupon de remise"
 
-#: admin/src/Builder/Messages.php:274
+#: admin/src/Builder/Messages.php:322
 msgid "Discount coupon: <span class=\"builder-placeholder\">%s</span>"
 msgstr "Coupon de remise : <span class=\"builder-placeholder\">%s</span>"
 
@@ -2148,11 +2333,11 @@ msgstr "Coupon de remise : <span class=\"builder-placeholder\">%s</span>"
 msgid "Discount type"
 msgstr "Type de remise"
 
-#: admin/src/Builder/Messages.php:276
+#: admin/src/Builder/Messages.php:324
 msgid "Discount: %s"
 msgstr "Remise : %s"
 
-#: app/src/pages/builder/BuilderPage.vue:1419
+#: app/src/pages/builder/BuilderPage.vue:1430
 msgid "Dismiss"
 msgstr "Ignorer"
 
@@ -2163,6 +2348,10 @@ msgstr "Ignorer"
 msgid "Dispatch now"
 msgstr "Expédier maintenant"
 
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:210
+msgid "Display mode"
+msgstr "Mode d'affichage"
+
 #: admin/src/Admin/Settings/Registry.php:195
 msgid "Displays notifications when a new version is available."
 msgstr "Affiche des notifications lorsqu'une nouvelle version est disponible."
@@ -2172,20 +2361,20 @@ msgid "Djibouti"
 msgstr "Djibouti"
 
 #: admin/src/Validations/Media_Types.php:40
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:33
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:34
 msgid "Document"
 msgstr "Document"
 
-#: admin/src/Core/Init.php:518
+#: admin/src/Core/Init.php:521
 msgid "Documentation"
 msgstr "Documentation"
 
-#: admin/src/Integrations/Woocommerce.php:310
-#: admin/src/Integrations/Wordpress.php:174
+#: admin/src/Integrations/Woocommerce.php:406
+#: admin/src/Integrations/Wordpress.php:175
 msgid "Doe"
 msgstr "Doe"
 
-#: admin/src/Admin/Builder/Registry.php:1563
+#: admin/src/Admin/Builder/Registry.php:1598
 msgid "Does not contain"
 msgstr "Ne contient pas"
 
@@ -2193,7 +2382,7 @@ msgstr "Ne contient pas"
 msgid "Double-click to write a note in markdown"
 msgstr "Double-cliquez pour écrire une note en markdown"
 
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:67
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:76
 msgid ""
 "Download the plugin configuration as a JSON file or import it on another "
 "site. API keys and license data are not included in the export."
@@ -2232,11 +2421,19 @@ msgstr "Dupliquer"
 msgid "Dutch Caribbean"
 msgstr "Caraïbes néerlandaises"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:69
+#: admin/src/Integrations/Integrations_Base.php:108
+msgid "E-commerce"
+msgstr "E-commerce"
+
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:31
+msgid "E-mail address or a placeholder that resolves to one."
+msgstr "Adresse e-mail ou un espace réservé qui se résout en une."
+
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:82
 msgid "e.g. greeting"
 msgstr "p. ex. salutation"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:87
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:100
 msgid ""
 "e.g. Thank {{ wc_billing_first_name }} for order #{{ order_id }} and "
 "confirm it is being prepared."
@@ -2253,7 +2450,7 @@ msgstr ""
 "puis envoyez au client un message de remerciement WhatsApp avec le numéro "
 "de commande."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:87
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:100
 msgid "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
 msgstr "p. ex. Écrivez une salutation d'une ligne pour {{ wc_billing_first_name }}."
 
@@ -2285,7 +2482,7 @@ msgid "Edit workflow"
 msgstr "Modifier le flux de travail"
 
 #: app/src/components/builder/BuilderNavbar.vue:166
-#: app/src/pages/builder/BuilderPage.vue:1351
+#: app/src/pages/builder/BuilderPage.vue:1362
 msgid "Edit workflow title"
 msgstr "Modifier le titre du flux de travail"
 
@@ -2299,11 +2496,11 @@ msgstr "El Salvador"
 
 #: admin/src/Builder/Utils.php:103
 #: admin/src/Integrations/Elementor.php:54
-#: admin/src/Integrations/Elementor.php:100
+#: admin/src/Integrations/Elementor.php:101
 msgid "Elementor"
 msgstr "Elementor"
 
-#: admin/src/Integrations/Otp_Login.php:140
+#: admin/src/Integrations/Otp_Login.php:141
 msgid "EM"
 msgstr "EM"
 
@@ -2361,7 +2558,7 @@ msgstr ""
 "Activer pour enregistrer des détails supplémentaires sur les erreurs et le "
 "processus."
 
-#: admin/src/Admin/Settings/Registry.php:438
+#: admin/src/Admin/Settings/Registry.php:481
 msgid "Enabled"
 msgstr "Activé"
 
@@ -2385,7 +2582,7 @@ msgstr "Entrez une clé de licence avant d'activer."
 msgid "Enter a password to create the account."
 msgstr "Entrez un mot de passe pour créer le compte."
 
-#: app/src/pages/builder/BuilderPage.vue:1373
+#: app/src/pages/builder/BuilderPage.vue:1384
 #: app/src/pages/settings/components/cards/PhoneActions.vue:164
 msgid ""
 "Enter a phone number to receive test messages from the builder. Use "
@@ -2438,7 +2635,7 @@ msgstr "Entrez le numéro de téléphone de destination qui recevra le message d
 msgid "Enter the field ID that collects the recipient's phone number."
 msgstr "Entrez l'ID du champ qui collecte le numéro de téléphone du destinataire."
 
-#: admin/src/Admin/Settings/Registry.php:592
+#: admin/src/Admin/Settings/Registry.php:637
 msgid "Enter the license code to unlock premium features."
 msgstr "Entrez le code de licence pour débloquer les fonctionnalités premium."
 
@@ -2485,7 +2682,7 @@ msgstr "erreur"
 
 #: app/src/pages/history/components/HistoryDetailsModal.vue:32
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
-#: app/src/pages/settings/SettingsPage.vue:315
+#: app/src/pages/settings/SettingsPage.vue:316
 msgid "Error"
 msgstr "Erreur"
 
@@ -2536,7 +2733,7 @@ msgstr "Exemple"
 msgid "Example keys"
 msgstr "Clés d'exemple"
 
-#: admin/src/Integrations/Wordpress.php:240
+#: admin/src/Integrations/Wordpress.php:241
 msgid "Example post content"
 msgstr "Contenu de publication d'exemple"
 
@@ -2544,7 +2741,7 @@ msgstr "Contenu de publication d'exemple"
 msgid "Example post ID (optional)"
 msgstr "ID de publication d'exemple (facultatif)"
 
-#: admin/src/Integrations/Wordpress.php:222
+#: admin/src/Integrations/Wordpress.php:223
 msgid "Example post title"
 msgstr "Titre de publication d'exemple"
 
@@ -2568,18 +2765,18 @@ msgstr "Mode d'expiration"
 msgid "Expired license"
 msgstr "Licence expirée"
 
-#: admin/src/Builder/Messages.php:296
-#: admin/src/Integrations/Woocommerce.php:983
+#: admin/src/Builder/Messages.php:344
+#: admin/src/Integrations/Woocommerce.php:1371
 msgid "Expires in %s"
 msgstr "Expire dans %s"
 
-#: admin/src/Builder/Messages.php:294
-#: admin/src/Integrations/Woocommerce.php:981
+#: admin/src/Builder/Messages.php:342
+#: admin/src/Integrations/Woocommerce.php:1369
 msgid "Expires in %s - %s"
 msgstr "Expire dans %s - %s"
 
-#: admin/src/Builder/Messages.php:288
-#: admin/src/Integrations/Woocommerce.php:975
+#: admin/src/Builder/Messages.php:336
+#: admin/src/Integrations/Woocommerce.php:1363
 msgid "Expires in %s %s"
 msgstr "Expire dans %s %s"
 
@@ -2591,12 +2788,12 @@ msgstr "Expire le"
 msgid "Expires on: Not available"
 msgstr "Expire le : Non disponible"
 
-#: app/src/pages/settings/SettingsPage.vue:347
-#: app/src/pages/settings/SettingsPage.vue:350
+#: app/src/pages/settings/SettingsPage.vue:348
+#: app/src/pages/settings/SettingsPage.vue:351
 msgid "Export"
 msgstr "Exporter"
 
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:79
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
 msgid "Export settings"
 msgstr "Exporter les paramètres"
 
@@ -2604,7 +2801,7 @@ msgstr "Exporter les paramètres"
 msgid "Export workflow"
 msgstr "Exporter le flux de travail"
 
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:79
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
 msgid "Exporting…"
 msgstr "Exportation…"
 
@@ -2622,11 +2819,11 @@ msgstr "Échec de l'installation ou de la mise à jour du plugin."
 msgid "Failed to send media message."
 msgstr "Échec de l'envoi du message multimédia."
 
-#: app/src/pages/settings/SettingsPage.vue:500
+#: app/src/pages/settings/SettingsPage.vue:501
 msgid "Failed to send message."
 msgstr "Échec de l'envoi du message."
 
-#: app/src/pages/settings/SettingsPage.vue:453
+#: app/src/pages/settings/SettingsPage.vue:454
 msgid "Failed to send OTP."
 msgstr "Échec de l'envoi du OTP."
 
@@ -2655,13 +2852,13 @@ msgstr "Îles Féroé"
 msgid "Federated States of Micronesia"
 msgstr "États fédérés de Micronésie"
 
-#: admin/src/Admin/Builder/Registry.php:391
+#: admin/src/Admin/Builder/Registry.php:426
 #: app/src/builder/actions/definitions/condition.ts:123
 #: app/src/builder/actions/settings/ConditionSettings.vue:209
 msgid "Field ID"
 msgstr "ID de champ"
 
-#: admin/src/Builder/Messages.php:160
+#: admin/src/Builder/Messages.php:168
 msgid ""
 "Field with ID <span class=\"builder-placeholder\">%s</span> %s: <span "
 "class=\"builder-placeholder\">%s</span>"
@@ -2669,17 +2866,47 @@ msgstr ""
 "Champ avec l'ID <span class=\"builder-placeholder\">%s</span> %s : <span "
 "class=\"builder-placeholder\">%s</span>"
 
-#: admin/src/Builder/Messages.php:156
+#: admin/src/Builder/Messages.php:164
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is empty"
 msgstr "Champ avec l'ID <span class=\"builder-placeholder\">%s</span> est vide"
 
-#: admin/src/Builder/Messages.php:158
+#: admin/src/Builder/Messages.php:166
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr "Champ avec l'ID <span class=\"builder-placeholder\">%s</span> n'est pas vide"
 
 #: admin/src/Validations/Country_Codes.php:186
 msgid "Fiji"
 msgstr "Fidji"
+
+#: app/src/builder/components/base/AttachmentsField.vue:173
+msgid "File"
+msgstr "Fichier"
+
+#: app/src/components/base/BaseFileDropzone.vue:38
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:47
+msgid "File is too large. The maximum size is 5 MB."
+msgstr "Le fichier est trop volumineux. La taille maximale est de 5 Mo."
+
+#: app/src/builder/components/base/AttachmentsField.vue:39
+#: app/src/builder/components/base/AttachmentsField.vue:195
+msgid "File URL"
+msgstr "URL du fichier"
+
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:64
+msgid ""
+"Files delivered with the e-mail. Large files are replaced by their download "
+"link so the message still goes out."
+msgstr ""
+"Fichiers livrés avec l'e-mail. Les fichiers volumineux sont remplacés par "
+"leur lien de téléchargement afin que le message soit toujours envoyé."
+
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:132
+msgid ""
+"Files sent instead of the media URL above. Each file goes out as its own "
+"message, and the caption rides on the first one."
+msgstr ""
+"Fichiers envoyés au lieu de l'URL multimédia ci-dessus. Chaque fichier est "
+"envoyé comme son propre message, et la légende est sur le premier."
 
 #: templates/otp-login/shared/otp-login-form.php:61
 msgid "Fill in the email or username and password."
@@ -2710,8 +2937,8 @@ msgstr "Ajuster"
 msgid "Fit view"
 msgstr "Ajuster la vue"
 
-#: admin/src/Builder/Messages.php:270
-#: admin/src/Integrations/Woocommerce.php:1002
+#: admin/src/Builder/Messages.php:318
+#: admin/src/Integrations/Woocommerce.php:1390
 msgid "Fixed amount"
 msgstr "Montant fixe"
 
@@ -2720,11 +2947,11 @@ msgid "Fixed cart discount"
 msgstr "Remise fixe sur le panier"
 
 #: admin/src/Builder/Utils.php:102
-#: admin/src/Integrations/Flexify_Checkout.php:177
+#: admin/src/Integrations/Flexify_Checkout.php:178
 msgid "Flexify Checkout"
 msgstr "Flexify Checkout"
 
-#: admin/src/Integrations/Flexify_Checkout.php:96
+#: admin/src/Integrations/Flexify_Checkout.php:97
 msgid "Flexify Checkout - Abandoned cart recovery"
 msgstr "Flexify Checkout - Récupération de panier abandonné"
 
@@ -2740,7 +2967,7 @@ msgstr "Flexify Checkout for WooCommerce"
 msgid "Flow name"
 msgstr "Nom du flux"
 
-#: admin/src/Integrations/Woocommerce.php:366
+#: admin/src/Integrations/Woocommerce.php:462
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr "Flower Street, 123 - Curitiba/PR - Brésil (ZIP: 80000-000)"
 
@@ -2748,7 +2975,7 @@ msgstr "Flower Street, 123 - Curitiba/PR - Brésil (ZIP: 80000-000)"
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié ?"
 
-#: admin/src/Integrations/Wpforms.php:197
+#: admin/src/Integrations/Wpforms.php:198
 msgid "Form field value"
 msgstr "Valeur du champ du formulaire"
 
@@ -2756,7 +2983,7 @@ msgstr "Valeur du champ du formulaire"
 msgid "Form ID"
 msgstr "ID du formulaire"
 
-#: admin/src/Integrations/Wpforms.php:87
+#: admin/src/Integrations/Wpforms.php:88
 msgid "Form is sent"
 msgstr "Formulaire envoyé"
 
@@ -2768,19 +2995,23 @@ msgstr "Soumissions et réponses du formulaire."
 msgid "Form submissions and sends."
 msgstr "Soumissions et envois du formulaire."
 
-#: admin/src/Integrations/Elementor.php:80
+#: admin/src/Integrations/Elementor.php:81
 msgid "Form submitted"
 msgstr "Formulaire soumis"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:36
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:37
 msgid "Formal"
 msgstr "Formel"
+
+#: admin/src/Integrations/Integrations_Base.php:114
+msgid "Forms & page builders"
+msgstr "Formulaires et constructeurs de pages"
 
 #: admin/src/Validations/Country_Codes.php:32
 msgid "France"
 msgstr "France"
 
-#: admin/src/Builder/Messages.php:277
+#: admin/src/Builder/Messages.php:325
 msgid "Free shipping: %s"
 msgstr "Livraison gratuite : %s"
 
@@ -2792,13 +3023,25 @@ msgstr "Guyane française"
 msgid "French Polynesia"
 msgstr "Polynésie française"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:34
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:35
 msgid "Friendly"
 msgstr "Amical"
 
 #: app/src/pages/history/HistoryPage.vue:197
 msgid "From"
 msgstr "De"
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:144
+#: .history/admin/src/Integrations/Resend_20260703155627.php:146
+#: .history/admin/src/Integrations/Resend_20260703155635.php:144
+#: .history/admin/src/Integrations/Resend_20260703155807.php:144
+#: admin/src/Integrations/Resend.php:144
+msgid ""
+"From address used to deliver the e-mails. The domain must be verified in "
+"Resend."
+msgstr ""
+"Adresse d'expédition utilisée pour livrer les e-mails. Le domaine doit être "
+"vérifié dans Resend."
 
 #: admin/src/Validations/Country_Codes.php:97
 msgid "Gabon"
@@ -2824,7 +3067,7 @@ msgstr ""
 "Générez un message avec l'IA au moment du déclenchement et envoyez-le via "
 "WhatsApp."
 
-#: admin/src/Integrations/AI_Messaging.php:94
+#: admin/src/Integrations/AI_Messaging.php:95
 msgid ""
 "Generate a named value with AI and reuse it in later messages with {{ "
 "ai:NAME }}."
@@ -2885,15 +3128,15 @@ msgstr "Ghana"
 msgid "Gibraltar"
 msgstr "Gibraltar"
 
-#: admin/src/Integrations/OpenAI.php:104
+#: admin/src/Integrations/OpenAI.php:105
 msgid "Global persona / system prompt"
 msgstr "Persona globale / invite système"
 
-#: admin/src/Admin/Builder/Registry.php:1566
+#: admin/src/Admin/Builder/Registry.php:1601
 msgid "Greater than"
 msgstr "Supérieur à"
 
-#: admin/src/Builder/Messages.php:153
+#: admin/src/Builder/Messages.php:161
 msgid "Greater than <span class=\"builder-placeholder\">%s</span>"
 msgstr "Supérieur à <span class=\"builder-placeholder\">%s</span>"
 
@@ -2904,6 +3147,10 @@ msgstr "Grèce"
 #: admin/src/Validations/Country_Codes.php:127
 msgid "Greenland"
 msgstr "Groenland"
+
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:175
+msgid "Group by category"
+msgstr "Grouper par catégorie"
 
 #: admin/src/Validations/Country_Codes.php:168
 msgid "Guadeloupe"
@@ -2950,7 +3197,7 @@ msgid "Hello, this is a test message."
 msgstr "Bonjour, ceci est un message test."
 
 #: app/src/pages/license/LicensePage.vue:344
-#: app/src/pages/settings/SettingsPage.vue:752
+#: app/src/pages/settings/SettingsPage.vue:753
 msgid "Help Center"
 msgstr "Centre d'aide"
 
@@ -2990,14 +3237,14 @@ msgstr "heure(s)"
 msgid "hours"
 msgstr "heures"
 
-#: admin/src/Admin/Builder/Registry.php:356
+#: admin/src/Admin/Builder/Registry.php:391
 #: app/src/builder/actions/definitions/timeDelay.ts:65
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:45
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:37
 msgid "Hours"
 msgstr "Heures"
 
-#: admin/src/Integrations/Otp_Login.php:108
+#: admin/src/Integrations/Otp_Login.php:109
 msgid ""
 "How the verification code is sent to the user. New channels (e-mail, "
 "Telegram) can be added by extensions."
@@ -3025,25 +3272,25 @@ msgstr ""
 "Si la licence ne se met pas à jour immédiatement, cliquez sur Synchroniser "
 "pour récupérer le dernier statut du serveur."
 
-#: admin/src/Integrations/Woocommerce.php:152
+#: admin/src/Integrations/Woocommerce.php:162
 msgid "Ignore actions already processed."
 msgstr "Ignorer les actions déjà traitées."
 
 #: admin/src/Validations/Media_Types.php:38
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:31
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:32
 msgid "Image"
 msgstr "Image"
 
 #: app/src/components/builder/BuilderImportModal.vue:45
 #: app/src/components/builder/BuilderImportView.vue:27
 #: app/src/components/builder/BuilderImportView.vue:41
-#: app/src/pages/settings/SettingsPage.vue:376
-#: app/src/pages/settings/SettingsPage.vue:379
-#: app/src/pages/settings/SettingsPage.vue:390
+#: app/src/pages/settings/SettingsPage.vue:377
+#: app/src/pages/settings/SettingsPage.vue:380
+#: app/src/pages/settings/SettingsPage.vue:391
 msgid "Import"
 msgstr "Importer"
 
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:65
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:74
 msgid "Import / export settings"
 msgstr "Importer / exporter les paramètres"
 
@@ -3061,29 +3308,29 @@ msgstr "Importer un modèle"
 msgid "Import file"
 msgstr "Importer un fichier"
 
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:87
-#: app/src/pages/settings/SettingsPage.vue:362
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:96
+#: app/src/pages/settings/SettingsPage.vue:363
 msgid "Import settings"
 msgstr "Importer les paramètres"
 
-#: admin/src/Admin/Builder/Registry.php:86
+#: admin/src/Admin/Builder/Registry.php:89
 #: app/src/components/builder/BuilderImportModal.vue:27
 msgid "Import template"
 msgstr "Importer un modèle"
 
-#: app/src/components/builder/TemplateCard.vue:53
+#: app/src/components/builder/TemplateCard.vue:132
 msgid "Import workflow"
 msgstr "Importer un flux de travail"
 
-#: admin/src/Admin/Builder/Registry.php:1193
+#: admin/src/Admin/Builder/Registry.php:1228
 msgid "Imported automation #%s"
 msgstr "Automatisation importée #%s"
 
-#: app/src/components/builder/TemplateCard.vue:53
+#: app/src/components/builder/TemplateCard.vue:132
 msgid "Importing..."
 msgstr "Importation..."
 
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:87
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:96
 msgid "Importing…"
 msgstr "Importation…"
 
@@ -3145,11 +3392,11 @@ msgstr "Insérer une variable de texte"
 msgid "Insert variable"
 msgstr "Insérer une variable"
 
-#: admin/src/Integrations/Integrations_Base.php:912
+#: admin/src/Integrations/Integrations_Base.php:993
 msgid "Install plugin"
 msgstr "Installer le plugin"
 
-#: admin/src/Integrations/Woocommerce.php:852
+#: admin/src/Integrations/Woocommerce.php:1240
 msgid "Insufficient data to create the coupon."
 msgstr "Données insuffisantes pour créer le coupon."
 
@@ -3157,14 +3404,10 @@ msgstr "Données insuffisantes pour créer le coupon."
 msgid "Integration not active"
 msgstr "Intégration non active"
 
-#: admin/src/Integrations/Integrations_Base.php:796
+#: admin/src/Integrations/Integrations_Base.php:877
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:99
 msgid "Integration settings"
 msgstr "Paramètres d'intégration"
-
-#: app/src/components/builder/TemplateCard.vue:41
-msgid "Integration:"
-msgstr "Intégration :"
 
 #: admin/src/Admin/Settings/Registry.php:152
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
@@ -3185,13 +3428,13 @@ msgstr "Résumé interne"
 msgid "internal use"
 msgstr "utilisation interne"
 
-#: admin/src/Admin/Settings/Registry.php:587
+#: admin/src/Admin/Settings/Registry.php:632
 #: app/src/pages/license/LicensePage.vue:48
 #: app/src/pages/license/LicensePage.vue:207
 msgid "Invalid"
 msgstr "Invalide"
 
-#: admin/src/AI/AI_Manager.php:78
+#: admin/src/AI/AI_Manager.php:119
 msgid "Invalid AI request."
 msgstr "Demande AI invalide."
 
@@ -3203,14 +3446,18 @@ msgstr "Code pays invalide"
 msgid "Invalid data."
 msgstr "Données invalides."
 
+#: app/src/components/base/BaseFileDropzone.vue:33
+msgid "Invalid file type. Select a .json file."
+msgstr "Type de fichier invalide. Sélectionnez un fichier .json."
+
 #: app/src/pages/builder/BuilderPage.vue:954
-#: app/src/pages/settings/SettingsPage.vue:390
+#: app/src/pages/settings/SettingsPage.vue:391
 #: app/src/parsers/workflowParser.ts:505
 msgid "Invalid file."
 msgstr "Fichier invalide."
 
-#: admin/src/Admin/Settings/Transfer.php:121
-#: app/src/pages/settings/components/cards/ImportExportSettings.vue:49
+#: admin/src/Admin/Settings/Transfer.php:122
+#: app/src/pages/settings/components/cards/ImportExportSettings.vue:58
 msgid "Invalid file. Could not read the configuration."
 msgstr "Fichier invalide. Impossible de lire la configuration."
 
@@ -3272,19 +3519,19 @@ msgstr "Actions irréversibles et nettoyage de la configuration."
 msgid "Irreversible actions for clearing configuration and logs."
 msgstr "Actions irréversibles pour effacer la configuration et les journaux."
 
-#: admin/src/Admin/Builder/Registry.php:1564
+#: admin/src/Admin/Builder/Registry.php:1599
 msgid "Is empty"
 msgstr "Est vide"
 
-#: admin/src/Admin/Builder/Registry.php:1560
+#: admin/src/Admin/Builder/Registry.php:1595
 msgid "Is equal to"
 msgstr "Est égal à"
 
-#: admin/src/Admin/Builder/Registry.php:1565
+#: admin/src/Admin/Builder/Registry.php:1600
 msgid "Is not empty"
 msgstr "N'est pas vide"
 
-#: admin/src/Admin/Builder/Registry.php:1561
+#: admin/src/Admin/Builder/Registry.php:1596
 msgid "Is not equal to"
 msgstr "N'est pas égal à"
 
@@ -3317,13 +3564,13 @@ msgstr "Côte d'Ivoire"
 msgid "Japan"
 msgstr "Japon"
 
-#: admin/src/Integrations/Flexify_Checkout.php:272
-#: admin/src/Integrations/Woocommerce.php:302
-#: admin/src/Integrations/Wordpress.php:166
+#: admin/src/Integrations/Flexify_Checkout.php:273
+#: admin/src/Integrations/Woocommerce.php:398
+#: admin/src/Integrations/Wordpress.php:167
 msgid "John"
 msgstr "John"
 
-#: admin/src/Integrations/Flexify_Checkout.php:296
+#: admin/src/Integrations/Flexify_Checkout.php:297
 msgid "johndoe@email.com"
 msgstr "johndoe@email.com"
 
@@ -3338,7 +3585,7 @@ msgstr "johndoe@email.com"
 #: app/src/pages/builder/BuilderPage.vue:734
 #: app/src/pages/license/LicensePage.vue:136
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
-#: app/src/pages/settings/SettingsPage.vue:222
+#: app/src/pages/settings/SettingsPage.vue:223
 msgid "Joinotify"
 msgstr "Joinotify"
 
@@ -3350,7 +3597,7 @@ msgstr "Joinotify est à jour."
 msgid "Joinotify messaging helpers are unavailable."
 msgstr "Les assistants de messagerie Joinotify ne sont pas disponibles."
 
-#: admin/src/Admin/Settings/Registry.php:444
+#: admin/src/Admin/Settings/Registry.php:487
 msgid "Joinotify version"
 msgstr "Version de Joinotify"
 
@@ -3371,11 +3618,11 @@ msgstr "Kazakhstan"
 msgid "Keep forever"
 msgstr "Conserver pour toujours"
 
-#: admin/src/Core/Workflow_Processor.php:1260
+#: admin/src/Core/Workflow_Processor.php:1573
 msgid "Keep the message concise, around two to four sentences."
 msgstr "Gardez le message concis, autour de deux à quatre phrases."
 
-#: admin/src/Core/Workflow_Processor.php:1259
+#: admin/src/Core/Workflow_Processor.php:1572
 msgid "Keep the message very short, one or two sentences."
 msgstr "Gardez le message très court, une ou deux phrases."
 
@@ -3427,19 +3674,19 @@ msgstr "dernier post"
 msgid "Latvia"
 msgstr "Lettonie"
 
-#: admin/src/Integrations/Flexify_Checkout.php:114
+#: admin/src/Integrations/Flexify_Checkout.php:115
 msgid "Lead capture via checkout"
 msgstr "Capture de leads via le paiement"
 
-#: admin/src/Integrations/Flexify_Checkout.php:104
+#: admin/src/Integrations/Flexify_Checkout.php:105
 msgid "Lead capture via modal"
 msgstr "Capture de leads via modal"
 
-#: app/src/pages/builder/BuilderPage.vue:1440
+#: app/src/pages/builder/BuilderPage.vue:1451
 msgid "Leave without saving"
 msgstr "Quitter sans enregistrer"
 
-#: app/src/pages/builder/BuilderPage.vue:1428
+#: app/src/pages/builder/BuilderPage.vue:1439
 msgid "Leave without saving?"
 msgstr "Quitter sans enregistrer ?"
 
@@ -3447,8 +3694,8 @@ msgstr "Quitter sans enregistrer ?"
 msgid "Lebanon"
 msgstr "Liban"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:116
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:120
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:129
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:133
 msgid "Length"
 msgstr "Longueur"
 
@@ -3456,11 +3703,11 @@ msgstr "Longueur"
 msgid "Lesotho"
 msgstr "Lesotho"
 
-#: admin/src/Admin/Builder/Registry.php:1567
+#: admin/src/Admin/Builder/Registry.php:1602
 msgid "Less than"
 msgstr "Moins de"
 
-#: admin/src/Builder/Messages.php:153
+#: admin/src/Builder/Messages.php:161
 msgid "Less than <span class=\"builder-placeholder\">%s</span>"
 msgstr "Moins de <span class=\"builder-placeholder\">%s</span>"
 
@@ -3481,7 +3728,8 @@ msgstr "Niveau"
 msgid "Liberia"
 msgstr "Libéria"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:123
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:124
+#: app/src/builder/components/base/AttachmentsField.vue:188
 msgid "Library"
 msgstr "Bibliothèque"
 
@@ -3522,11 +3770,11 @@ msgstr "Licence désactivée."
 msgid "License details"
 msgstr "Détails de la licence"
 
-#: admin/src/Admin/Settings/Registry.php:604
+#: admin/src/Admin/Settings/Registry.php:649
 msgid "License expires in: %s"
 msgstr "La licence expire dans : %s"
 
-#: admin/src/Admin/Settings/Registry.php:605
+#: admin/src/Admin/Settings/Registry.php:650
 msgid "License expires in: Not available"
 msgstr "La licence expire dans : Non disponible"
 
@@ -3563,7 +3811,7 @@ msgstr "Lituanie"
 msgid "Load keys"
 msgstr "Charger les clés"
 
-#: admin/src/Admin/Builder/Registry.php:87
+#: admin/src/Admin/Builder/Registry.php:90
 msgid "Load workflow"
 msgstr "Charger le flux de travail"
 
@@ -3631,26 +3879,26 @@ msgstr "Connectez-vous avec WhatsApp"
 msgid "Login successful."
 msgstr "Connexion réussie."
 
-#: app/src/pages/settings/SettingsPage.vue:622
-#: app/src/pages/settings/SettingsPage.vue:628
-#: app/src/pages/settings/SettingsPage.vue:659
-#: app/src/pages/settings/SettingsPage.vue:662
+#: app/src/pages/settings/SettingsPage.vue:623
+#: app/src/pages/settings/SettingsPage.vue:629
+#: app/src/pages/settings/SettingsPage.vue:660
+#: app/src/pages/settings/SettingsPage.vue:663
 msgid "Logs"
 msgstr "Journaux"
 
-#: app/src/pages/settings/SettingsPage.vue:659
+#: app/src/pages/settings/SettingsPage.vue:660
 msgid "Logs cleared successfully."
 msgstr "Journaux effacés avec succès."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:42
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:43
 msgid "Long"
 msgstr "Long"
 
-#: admin/src/Integrations/Flexify_Checkout.php:154
+#: admin/src/Integrations/Flexify_Checkout.php:155
 msgid "Lost cart"
 msgstr "Panier abandonné"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:64
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:77
 msgid "Lowercase letters, numbers, and underscores. Used as the token below."
 msgstr ""
 "Lettres minuscules, chiffres et underscores. Utilisé comme le jeton "
@@ -3756,11 +4004,11 @@ msgstr "Maurice"
 msgid "Mayotte"
 msgstr "Mayotte"
 
-#: admin/src/Integrations/Otp_Login.php:137
+#: admin/src/Integrations/Otp_Login.php:138
 msgid "Measurement unit applied to the border radius value."
 msgstr "Unité de mesure appliquée à la valeur du rayon de bord."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:100
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:101
 #: app/src/pages/history/HistoryPage.vue:79
 msgid "Media"
 msgstr "Média"
@@ -3769,9 +4017,13 @@ msgstr "Média"
 msgid "Media caption"
 msgstr "Légende du média"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:133
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:146
 msgid "Media caption... Use {{ placeholders }}"
 msgstr "Légende du média... Utilisez {{ placeholders }}"
+
+#: app/src/builder/components/base/AttachmentsField.vue:38
+msgid "Media library file"
+msgstr "Fichier de la bibliothèque multimédia"
 
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:95
 msgid "Media message route"
@@ -3787,33 +4039,39 @@ msgid "Media route"
 msgstr "Route multimédia"
 
 #: admin/src/Integrations/Elementor_Forms.php:182
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:104
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:105
 #: app/src/pages/history/components/HistoryDetailsModal.vue:29
 msgid "Media type"
 msgstr "Type de média"
 
-#: app/src/builder/actions/definitions/whatsappMedia.ts:61
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:111
+#: app/src/builder/actions/definitions/whatsappMedia.ts:67
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:112
 #: app/src/pages/history/components/HistoryDetailsModal.vue:72
 msgid "Media URL"
 msgstr "URL du média"
 
-#: app/src/builder/actions/definitions/whatsappMedia.ts:57
+#: app/src/builder/actions/definitions/whatsappMedia.ts:59
 msgid "Media: %s"
 msgstr "Média : %s"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:41
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:42
 msgid "Medium"
 msgstr "Moyen"
 
-#: admin/src/Integrations/Woocommerce.php:391
+#: admin/src/Integrations/Woocommerce.php:487
 msgid "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews"
 msgstr ""
 "T-shirt en coton pour homme (produit d'exemple) : "
 "%s/product/sample-t-shirt/#reviews"
 
+#: app/src/builder/actions/definitions/resendEmail.ts:59
+#: app/src/builder/actions/definitions/telegramText.ts:55
 #: app/src/builder/actions/definitions/whatsappText.ts:56
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:222
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:51
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:54
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:40
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:52
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:55
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:155
@@ -3841,15 +4099,21 @@ msgstr ""
 "dans Paramètres → À propos pour commencer à enregistrer de nouveaux "
 "messages."
 
-#: app/src/pages/settings/SettingsPage.vue:494
+#: app/src/pages/settings/SettingsPage.vue:495
 msgid "Message sent."
 msgstr "Message envoyé."
 
+#: .history/admin/src/Integrations/Resend_20260703153400.php:85
+#: .history/admin/src/Integrations/Resend_20260703155627.php:87
+#: .history/admin/src/Integrations/Resend_20260703155635.php:85
+#: .history/admin/src/Integrations/Resend_20260703155807.php:85
+#: admin/src/Integrations/Resend.php:85
+#: admin/src/Integrations/Telegram.php:85
 #: admin/src/Integrations/Whatsapp.php:49
 msgid "Messages"
 msgstr "Messages"
 
-#: admin/src/Admin/Builder/Registry.php:396
+#: admin/src/Admin/Builder/Registry.php:431
 #: app/src/builder/actions/definitions/condition.ts:124
 #: app/src/builder/actions/settings/ConditionSettings.vue:203
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
@@ -3872,7 +4136,7 @@ msgstr "minute(s)"
 msgid "minutes"
 msgstr "minutes"
 
-#: admin/src/Admin/Builder/Registry.php:355
+#: admin/src/Admin/Builder/Registry.php:390
 #: app/src/builder/actions/definitions/timeDelay.ts:64
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:44
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:36
@@ -3887,14 +4151,14 @@ msgstr "Champ de publication manquant."
 msgid "Missing workflow_content field."
 msgstr "Champ workflow_content manquant."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:108
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:112
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:129
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:135
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:134
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:138
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:155
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:161
 msgid "Model"
 msgstr "Modèle"
 
-#: admin/src/Integrations/OpenAI.php:85
+#: admin/src/Integrations/OpenAI.php:86
 msgid ""
 "Model used when a workflow node does not override it. The list is fetched "
 "from OpenAI and can be refreshed."
@@ -3930,7 +4194,7 @@ msgstr "mois(s)"
 msgid "months"
 msgstr "mois"
 
-#: admin/src/Admin/Builder/Registry.php:359
+#: admin/src/Admin/Builder/Registry.php:394
 #: app/src/builder/actions/definitions/timeDelay.ts:68
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:48
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:40
@@ -3967,8 +4231,8 @@ msgstr "Mozambique"
 msgid "My automation"
 msgstr "Mon automatisation"
 
-#: admin/src/Admin/Builder/Registry.php:104
-#: admin/src/Admin/Builder/Registry.php:996
+#: admin/src/Admin/Builder/Registry.php:107
+#: admin/src/Admin/Builder/Registry.php:1031
 msgid "My automation #%s"
 msgstr "Mon automatisation #%s"
 
@@ -4001,6 +4265,8 @@ msgid "Netherlands"
 msgstr "Pays-Bas"
 
 #: admin/src/Api/License.php:926
+#: admin/src/Integrations/Woocommerce.php:614
+#: admin/src/Integrations/Woocommerce.php:859
 msgid "Never expires"
 msgstr "N'expire jamais"
 
@@ -4012,11 +4278,11 @@ msgstr "Nouvelle-Calédonie"
 msgid "New flow"
 msgstr "Nouveau flux"
 
-#: admin/src/Integrations/Woocommerce.php:170
+#: admin/src/Integrations/Woocommerce.php:180
 msgid "New order"
 msgstr "Nouvelle commande"
 
-#: admin/src/Integrations/Woocommerce.php:176
+#: admin/src/Integrations/Woocommerce.php:186
 msgid "New order (Processing)"
 msgstr "Nouvelle commande (En cours)"
 
@@ -4024,7 +4290,7 @@ msgstr "Nouvelle commande (En cours)"
 msgid "New subscription created"
 msgstr "Nouvelle souscription créée"
 
-#: admin/src/Integrations/Wordpress.php:86
+#: admin/src/Integrations/Wordpress.php:87
 msgid "New user registration"
 msgstr "Nouvelle inscription d'utilisateur"
 
@@ -4070,12 +4336,12 @@ msgstr "Nigeria"
 msgid "Niue"
 msgstr "Niue"
 
-#: admin/src/Admin/Settings/Registry.php:433
-#: admin/src/Admin/Settings/Registry.php:457
-#: admin/src/Admin/Settings/Registry.php:462
-#: admin/src/Admin/Settings/Registry.php:467
-#: admin/src/Builder/Messages.php:271
-#: admin/src/Builder/Messages.php:272
+#: admin/src/Admin/Settings/Registry.php:476
+#: admin/src/Admin/Settings/Registry.php:500
+#: admin/src/Admin/Settings/Registry.php:505
+#: admin/src/Admin/Settings/Registry.php:510
+#: admin/src/Builder/Messages.php:319
+#: admin/src/Builder/Messages.php:320
 #: admin/src/Integrations/Elementor_Forms.php:124
 #: admin/src/Integrations/Elementor_Forms.php:167
 #: app/src/builder/actions/settings/ConditionSettings.vue:104
@@ -4095,7 +4361,7 @@ msgstr "Aucune action ne sera effectuée à ce stade."
 msgid "No actions available."
 msgstr "Aucune action disponible."
 
-#: admin/src/AI/AI_Manager.php:87
+#: admin/src/AI/AI_Manager.php:128
 msgid "No AI provider is available."
 msgstr "Aucun fournisseur d'IA n'est disponible."
 
@@ -4114,7 +4380,7 @@ msgstr ""
 "Aucun numéro de téléphone disponible n'a été trouvé pour l'inscription. "
 "Enregistrez-le en utilisant le lien : %s"
 
-#: admin/src/Builder/Messages.php:315
+#: admin/src/Builder/Messages.php:363
 msgid "No code available."
 msgstr "Aucun code disponible."
 
@@ -4140,6 +4406,15 @@ msgstr ""
 "Aucune variable personnalisée pour l'instant. Cliquez sur “Ajouter une "
 "variable” pour créer votre première."
 
+#: admin/src/Integrations/Woocommerce.php:767
+#: admin/src/Integrations/Woocommerce.php:789
+msgid "No download available for this order."
+msgstr "Aucun téléchargement disponible pour cette commande."
+
+#: admin/src/Integrations/Woocommerce.php:739
+msgid "No downloadable item in this order."
+msgstr "Aucun article téléchargeable dans cette commande."
+
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "No entries match the current filters."
 msgstr "Aucune entrée ne correspond aux filtres actuels."
@@ -4160,16 +4435,12 @@ msgstr "Aucun flux trouvé."
 msgid "No history records match the current filters."
 msgstr "Aucun enregistrement d'historique ne correspond aux filtres actuels."
 
-#: app/src/components/builder/TemplateCard.vue:42
-msgid "No integration"
-msgstr "Aucune intégration"
-
 #: app/src/components/builder/BuilderTriggerSetupView.vue:225
 msgid "No integrations found."
 msgstr "Aucune intégration trouvée."
 
-#: admin/src/Integrations/Woocommerce.php:530
-#: admin/src/Integrations/Woocommerce.php:568
+#: admin/src/Integrations/Woocommerce.php:918
+#: admin/src/Integrations/Woocommerce.php:956
 msgid "No item purchased."
 msgstr "Aucun article acheté."
 
@@ -4226,7 +4497,7 @@ msgstr "Aucun élément programmé sélectionné."
 msgid "No sender available"
 msgstr "Aucun expéditeur disponible"
 
-#: app/src/components/builder/TemplateGrid.vue:71
+#: app/src/components/builder/TemplateGrid.vue:75
 msgid "No templates available."
 msgstr "Aucun modèle disponible."
 
@@ -4234,7 +4505,7 @@ msgstr "Aucun modèle disponible."
 msgid "No test phone number registered."
 msgstr "Aucun numéro de téléphone de test enregistré."
 
-#: app/src/components/builder/TemplateCard.vue:46
+#: app/src/components/builder/TemplateCard.vue:113
 msgid "No trigger"
 msgstr "Aucun déclencheur"
 
@@ -4275,7 +4546,7 @@ msgstr "Aucun workflow sélectionné."
 msgid "Node settings"
 msgstr "Paramètres du nœud"
 
-#: admin/src/Admin/Settings/Registry.php:705
+#: admin/src/Admin/Settings/Registry.php:751
 msgid "None"
 msgstr "Aucun"
 
@@ -4299,10 +4570,10 @@ msgstr "Macédoine du Nord"
 msgid "Norway"
 msgstr "Norvège"
 
-#: admin/src/Admin/Settings/Registry.php:577
-#: admin/src/Admin/Settings/Registry.php:582
-#: admin/src/Admin/Settings/Registry.php:601
-#: admin/src/Admin/Settings/Registry.php:750
+#: admin/src/Admin/Settings/Registry.php:622
+#: admin/src/Admin/Settings/Registry.php:627
+#: admin/src/Admin/Settings/Registry.php:646
+#: admin/src/Admin/Settings/Registry.php:796
 #: admin/src/Api/License.php:910
 #: app/src/pages/license/LicensePage.vue:90
 #: app/src/pages/license/LicensePage.vue:99
@@ -4318,6 +4589,10 @@ msgstr "Rien dans la file d'attente"
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:52
 msgid "Notice"
 msgstr "Avis"
+
+#: admin/src/Notifications/Channels/Resend_Channel.php:127
+msgid "Notification"
+msgstr "Notification"
 
 #: admin/src/Admin/Settings/Registry.php:63
 msgid "Notify when WhatsApp disconnects"
@@ -4339,7 +4614,7 @@ msgstr ""
 msgid "of"
 msgstr "de"
 
-#: admin/src/Admin/Settings/Registry.php:497
+#: admin/src/Admin/Settings/Registry.php:540
 msgid "Off"
 msgstr "Désactivé"
 
@@ -4351,7 +4626,7 @@ msgstr "ok"
 msgid "Oman"
 msgstr "Oman"
 
-#: admin/src/Admin/Settings/Registry.php:497
+#: admin/src/Admin/Settings/Registry.php:540
 msgid "On"
 msgstr "Activé"
 
@@ -4371,7 +4646,7 @@ msgstr "Ouvrir la documentation"
 msgid "Open help center"
 msgstr "Ouvrir le centre d'aide"
 
-#: app/src/pages/builder/BuilderPage.vue:1420
+#: app/src/pages/builder/BuilderPage.vue:1431
 msgid "Open integration settings"
 msgstr "Ouvrir les paramètres d'intégration"
 
@@ -4383,7 +4658,7 @@ msgstr "Ouvrir les actions de déclenchement"
 msgid "OpenAI"
 msgstr "OpenAI"
 
-#: admin/src/Integrations/OpenAI.php:75
+#: admin/src/Integrations/OpenAI.php:76
 msgid "OpenAI API key"
 msgstr "Clé API OpenAI"
 
@@ -4405,7 +4680,7 @@ msgstr "La requête OpenAI a échoué avec le statut %d."
 msgid "OpenAI returned an empty response."
 msgstr "OpenAI a renvoyé une réponse vide."
 
-#: admin/src/Admin/Settings/Registry.php:466
+#: admin/src/Admin/Settings/Registry.php:509
 msgid "OpenSSL extension"
 msgstr "Extension OpenSSL"
 
@@ -4413,7 +4688,7 @@ msgstr "Extension OpenSSL"
 msgid "Operational plugin settings and development flags."
 msgstr "Paramètres opérationnels du plugin et indicateurs de développement."
 
-#: admin/src/Admin/Builder/Registry.php:385
+#: admin/src/Admin/Builder/Registry.php:420
 #: app/src/builder/actions/definitions/condition.ts:122
 #: app/src/builder/actions/definitions/condition.ts:133
 #: app/src/builder/actions/settings/ConditionSettings.vue:187
@@ -4428,19 +4703,33 @@ msgstr ""
 "Règles ou contexte optionnels pour l'IA (voix de marque, contraintes, "
 "détails du produit)."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:95
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:108
 msgid "Optional rules, tone, and context for the AI."
 msgstr "Règles, ton et contexte optionnels pour l'IA."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:128
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:141
 msgid "Optional text sent together with the media."
 msgstr "Texte optionnel envoyé avec le média."
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:153
+#: .history/admin/src/Integrations/Resend_20260703155627.php:155
+#: .history/admin/src/Integrations/Resend_20260703155635.php:153
+#: .history/admin/src/Integrations/Resend_20260703155807.php:153
+#: admin/src/Integrations/Resend.php:153
+msgid "Optional. Friendly name shown as the sender of the e-mails."
+msgstr "Optionnel. Nom amical affiché comme l'expéditeur des e-mails."
+
+#: admin/src/Integrations/Telegram.php:144
+msgid "Optional. Used only when a workflow action does not specify a chat id."
+msgstr ""
+"Optionnel. Utilisé uniquement lorsqu'une action de workflow ne spécifie pas "
+"d'identifiant de chat."
 
 #: app/src/components/flow/FlowNode.vue:264
 msgid "Options"
 msgstr "Options"
 
-#: app/src/pages/settings/SettingsPage.vue:681
+#: app/src/pages/settings/SettingsPage.vue:682
 msgid "Options have been reset."
 msgstr "Les options ont été réinitialisées."
 
@@ -4456,42 +4745,46 @@ msgstr "Ou cliquez pour sélectionner le fichier de modèle."
 msgid "Or sign in with email"
 msgstr "Ou connectez-vous avec un e-mail"
 
-#: admin/src/Integrations/Flexify_Checkout.php:144
+#: admin/src/Integrations/Flexify_Checkout.php:145
 msgid "Order abandoned"
 msgstr "Commande abandonnée"
 
-#: admin/src/Integrations/Woocommerce.php:182
+#: admin/src/Integrations/Woocommerce.php:192
 #: app/src/registries/triggerRegistry.ts:246
 #: app/src/registries/triggerRegistry.ts:257
 #: app/src/registries/triggerRegistry.ts:264
 msgid "Order completed"
 msgstr "Commande complétée"
 
-#: admin/src/Integrations/Woocommerce.php:188
+#: app/src/builder/components/base/AttachmentsField.vue:40
+msgid "Order digital files"
+msgstr "Commander des fichiers numériques"
+
+#: admin/src/Integrations/Woocommerce.php:198
 msgid "Order fully refunded"
 msgstr "Commande entièrement remboursée"
 
-#: admin/src/Integrations/Woocommerce.php:1042
+#: admin/src/Integrations/Woocommerce.php:1430
 msgid "Order paid"
 msgstr "Commande payée"
 
-#: admin/src/Integrations/Woocommerce.php:194
+#: admin/src/Integrations/Woocommerce.php:204
 msgid "Order partially refunded"
 msgstr "Commande partiellement remboursée"
 
-#: admin/src/Integrations/Woocommerce.php:206
-#: admin/src/Integrations/Woocommerce.php:1034
+#: admin/src/Integrations/Woocommerce.php:216
+#: admin/src/Integrations/Woocommerce.php:1422
 msgid "Order status"
 msgstr "Statut de la commande"
 
-#: admin/src/Integrations/Woocommerce.php:200
+#: admin/src/Integrations/Woocommerce.php:210
 #: app/src/registries/triggerRegistry.ts:275
 #: app/src/registries/triggerRegistry.ts:286
 #: app/src/registries/triggerRegistry.ts:293
 msgid "Order status changed"
 msgstr "Statut de la commande changé"
 
-#: admin/src/Integrations/Woocommerce.php:1038
+#: admin/src/Integrations/Woocommerce.php:1426
 msgid "Order total"
 msgstr "Total de la commande"
 
@@ -4503,6 +4796,10 @@ msgstr "Commandes, changements de statut et événements d'achat."
 msgid "Other"
 msgstr "Autre"
 
+#: admin/src/Integrations/Integrations_Base.php:138
+msgid "Others"
+msgstr "Autres"
+
 #: admin/src/Admin/History/Registry.php:127
 msgid "OTP"
 msgstr "OTP"
@@ -4511,8 +4808,8 @@ msgstr "OTP"
 msgid "OTP Login - Passwordless authentication"
 msgstr "Connexion OTP - Authentification sans mot de passe"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:108
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:130
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:134
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:156
 msgid "Override the default model for this node only."
 msgstr "Remplacer le modèle par défaut pour ce nœud uniquement."
 
@@ -4553,11 +4850,11 @@ msgstr "Flux parent :"
 msgid "Password"
 msgstr "Mot de passe"
 
-#: admin/src/Integrations/Wordpress.php:104
+#: admin/src/Integrations/Wordpress.php:105
 msgid "Password reset request"
 msgstr "Demande de réinitialisation de mot de passe"
 
-#: admin/src/Integrations/Otp_Login.php:86
+#: admin/src/Integrations/Otp_Login.php:87
 msgid "Passwordless login settings"
 msgstr "Paramètres de connexion sans mot de passe"
 
@@ -4577,6 +4874,18 @@ msgstr ""
 "Collez la clé de licence que vous avez reçue après l'achat et cliquez sur "
 "Activer pour débloquer toutes les fonctionnalités."
 
+#: .history/admin/src/Integrations/Resend_20260703153400.php:114
+#: .history/admin/src/Integrations/Resend_20260703155627.php:116
+#: .history/admin/src/Integrations/Resend_20260703155635.php:114
+#: .history/admin/src/Integrations/Resend_20260703155807.php:114
+#: admin/src/Integrations/Resend.php:114
+msgid ""
+"Paste your Resend API key and set the verified sender address used to "
+"deliver e-mails."
+msgstr ""
+"Collez votre clé API Resend et définissez l'adresse d'expéditeur vérifiée "
+"utilisée pour livrer les e-mails."
+
 #: admin/src/Admin/Settings/Registry.php:97
 msgid "Path of the route used to send messages with media."
 msgstr "Chemin de la route utilisée pour envoyer des messages avec des médias."
@@ -4585,17 +4894,17 @@ msgstr "Chemin de la route utilisée pour envoyer des messages avec des médias.
 msgid "Pause the workflow before the next step."
 msgstr "Mettez le flux en pause avant l'étape suivante."
 
-#: admin/src/Integrations/Woocommerce.php:1050
+#: admin/src/Integrations/Woocommerce.php:1438
 msgid "Payment method"
 msgstr "Méthode de paiement"
 
-#: admin/src/Integrations/Wpforms.php:93
+#: admin/src/Integrations/Wpforms.php:94
 msgid "Payment processed by PayPal"
 msgstr "Paiement traité par PayPal"
 
-#: admin/src/Builder/Messages.php:270
-#: admin/src/Integrations/Otp_Login.php:142
-#: admin/src/Integrations/Woocommerce.php:1002
+#: admin/src/Builder/Messages.php:318
+#: admin/src/Integrations/Otp_Login.php:143
+#: admin/src/Integrations/Woocommerce.php:1390
 msgid "Percentage"
 msgstr "Pourcentage"
 
@@ -4603,8 +4912,8 @@ msgstr "Pourcentage"
 msgid "Percentage discount"
 msgstr "Remise en pourcentage"
 
-#: admin/src/Admin/Builder/Registry.php:336
-#: admin/src/Admin/Builder/Registry.php:351
+#: admin/src/Admin/Builder/Registry.php:371
+#: admin/src/Admin/Builder/Registry.php:386
 #: app/src/builder/actions/definitions/timeDelay.ts:57
 #: app/src/builder/actions/definitions/timeDelay.ts:62
 #: app/src/builder/actions/definitions/timeDelay.ts:90
@@ -4621,8 +4930,8 @@ msgstr "Période"
 msgid "Period delay"
 msgstr "Délai de période"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:94
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:94
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:107
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:107
 msgid "Persona / system message"
 msgstr "Message de persona / système"
 
@@ -4640,8 +4949,8 @@ msgstr "Philippines"
 msgid "Phone number"
 msgstr "Numéro de téléphone"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:69
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:90
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:82
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:91
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
 msgid "Phone number or a placeholder that resolves to one."
 msgstr "Numéro de téléphone ou un espace réservé qui se résout en un."
@@ -4656,7 +4965,7 @@ msgstr ""
 "Numéros de téléphone déjà validés et disponibles pour une utilisation dans "
 "les flux."
 
-#: app/src/pages/settings/SettingsPage.vue:473
+#: app/src/pages/settings/SettingsPage.vue:474
 msgid "Phone validated."
 msgstr "Téléphone validé."
 
@@ -4664,16 +4973,16 @@ msgstr "Téléphone validé."
 #: admin/src/Admin/Settings/Registry.php:275
 #: app/src/pages/settings/components/cards/PhoneActions.vue:207
 #: app/src/pages/settings/components/cards/PhoneActions.vue:301
-#: app/src/pages/settings/SettingsPage.vue:448
-#: app/src/pages/settings/SettingsPage.vue:453
-#: app/src/pages/settings/SettingsPage.vue:473
-#: app/src/pages/settings/SettingsPage.vue:478
-#: app/src/pages/settings/SettingsPage.vue:494
-#: app/src/pages/settings/SettingsPage.vue:500
-#: app/src/pages/settings/SettingsPage.vue:574
-#: app/src/pages/settings/SettingsPage.vue:576
-#: app/src/pages/settings/SettingsPage.vue:597
-#: app/src/pages/settings/SettingsPage.vue:602
+#: app/src/pages/settings/SettingsPage.vue:449
+#: app/src/pages/settings/SettingsPage.vue:454
+#: app/src/pages/settings/SettingsPage.vue:474
+#: app/src/pages/settings/SettingsPage.vue:479
+#: app/src/pages/settings/SettingsPage.vue:495
+#: app/src/pages/settings/SettingsPage.vue:501
+#: app/src/pages/settings/SettingsPage.vue:575
+#: app/src/pages/settings/SettingsPage.vue:577
+#: app/src/pages/settings/SettingsPage.vue:598
+#: app/src/pages/settings/SettingsPage.vue:603
 msgid "Phones"
 msgstr "Téléphones"
 
@@ -4683,7 +4992,7 @@ msgstr ""
 "Téléphones déjà validés et disponibles pour une utilisation dans les flux "
 "de travail."
 
-#: admin/src/Admin/Builder/Registry.php:415
+#: admin/src/Admin/Builder/Registry.php:450
 msgid "PHP code"
 msgstr "Code PHP"
 
@@ -4695,7 +5004,7 @@ msgstr "Code PHP"
 msgid "PHP snippet"
 msgstr "Extrait PHP"
 
-#: admin/src/Admin/Builder/Registry.php:499
+#: admin/src/Admin/Builder/Registry.php:534
 #: admin/src/Builder/Actions.php:68
 #: app/src/builder/actions/definitions/snippetPhp.ts:27
 #: app/src/builder/actions/definitions/snippetPhp.ts:37
@@ -4711,13 +5020,17 @@ msgstr ""
 "Les extraits PHP s'exécutent à l'intérieur du runtime du workflow. Seuls "
 "les administrateurs de confiance devraient modifier ce code."
 
-#: admin/src/Admin/Settings/Registry.php:451
+#: admin/src/Admin/Settings/Registry.php:494
 msgid "PHP version"
 msgstr "Version PHP"
 
 #: app/src/components/fields/ColorPickerField.vue:93
 msgid "Pick a color"
 msgstr "Choisissez une couleur"
+
+#: app/src/builder/components/base/AttachmentsField.vue:174
+msgid "Pick a file from the library"
+msgstr "Choisissez un fichier dans la bibliothèque"
 
 #: app/src/components/fields/ColorScaleField.vue:141
 msgid "Pick base color"
@@ -4731,7 +5044,7 @@ msgstr "Choisissez la nuance de base"
 msgid "Pick shade %s"
 msgstr "Choisissez la nuance %s"
 
-#: admin/src/Integrations/Otp_Login.php:139
+#: admin/src/Integrations/Otp_Login.php:140
 msgid "Pixel"
 msgstr "Pixel"
 
@@ -4797,19 +5110,19 @@ msgstr "Portugal"
 msgid "Post published"
 msgstr "Publication de l'article"
 
-#: admin/src/Integrations/Wordpress.php:110
+#: admin/src/Integrations/Wordpress.php:111
 msgid "Post status changed"
 msgstr "Statut de l'article modifié"
 
-#: admin/src/Integrations/Wordpress.php:341
+#: admin/src/Integrations/Wordpress.php:342
 msgid "Post type"
 msgstr "Type d'article"
 
-#: admin/src/Integrations/Woocommerce.php:127
+#: admin/src/Integrations/Woocommerce.php:137
 msgid "Prefix used when Joinotify generates a coupon code automatically."
 msgstr "Préfixe utilisé lorsque Joinotify génère automatiquement un code de coupon."
 
-#: admin/src/Integrations/Woocommerce.php:153
+#: admin/src/Integrations/Woocommerce.php:163
 msgid ""
 "Prevents the same action from being processed again when the trigger is "
 "repeated."
@@ -4825,7 +5138,7 @@ msgstr "Précédent"
 msgid "Previous month"
 msgstr "Mois précédent"
 
-#: admin/src/Integrations/Otp_Login.php:118
+#: admin/src/Integrations/Otp_Login.php:119
 msgid "Primary color"
 msgstr "Couleur principale"
 
@@ -4846,13 +5159,13 @@ msgstr "SKU du produit"
 
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:59
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:60
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:85
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:85
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:98
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:98
 msgid "Prompt"
 msgstr "Invite"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:80
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:80
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:93
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:93
 msgid "Prompt / instructions"
 msgstr "Invite / instructions"
 
@@ -4864,7 +5177,7 @@ msgstr "Fournissez un nom de variable valide."
 msgid "Proxy API"
 msgstr "API proxy"
 
-#: admin/src/Integrations/Woocommerce.php:1046
+#: admin/src/Integrations/Woocommerce.php:1434
 msgid "Purchased products"
 msgstr "Produits achetés"
 
@@ -4885,11 +5198,14 @@ msgstr "Aide rapide"
 msgid "Quick Tools"
 msgstr "Outils rapides"
 
+#: app/src/builder/actions/definitions/resendEmail.ts:57
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:216
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:69
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:72
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:90
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:93
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:31
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:34
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:82
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:85
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:91
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:94
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:45
 #: app/src/pages/history/components/HistoryDetailsModal.vue:27
@@ -4923,7 +5239,7 @@ msgstr ""
 "Récupérer les ventes inachevées, envoyer le code Pix via WhatsApp et "
 "optimiser le processus de paiement, garantissant plus de conversions."
 
-#: admin/src/Integrations/Flexify_Checkout.php:301
+#: admin/src/Integrations/Flexify_Checkout.php:302
 msgid "Recovery link from abandoned cart"
 msgstr "Lien de récupération du panier abandonné"
 
@@ -4935,7 +5251,7 @@ msgstr "Refaire"
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr "Refaire (Ctrl+Shift+Z)"
 
-#: app/src/components/fields/OpenAiModelField.vue:94
+#: app/src/components/fields/AiModelField.vue:103
 #: app/src/pages/queue/QueuePage.vue:237
 msgid "Refresh"
 msgstr "Rafraîchir"
@@ -4945,7 +5261,7 @@ msgstr "Rafraîchir"
 msgid "Refresh connection"
 msgstr "Rafraîchir la connexion"
 
-#: app/src/components/fields/OpenAiModelField.vue:81
+#: app/src/components/fields/AiModelField.vue:90
 msgid "Refresh models"
 msgstr "Rafraîchir les modèles"
 
@@ -4953,7 +5269,7 @@ msgstr "Rafraîchir les modèles"
 msgid "Refreshing connection"
 msgstr "Rafraîchissement de la connexion"
 
-#: admin/src/Integrations/Woocommerce.php:1066
+#: admin/src/Integrations/Woocommerce.php:1454
 msgid "Refund amount"
 msgstr "Montant du remboursement"
 
@@ -4970,7 +5286,7 @@ msgstr "Enregistrer un nouveau téléphone"
 msgid "Register phone"
 msgstr "Enregistrer le téléphone"
 
-#: admin/src/Integrations/Otp_Login.php:151
+#: admin/src/Integrations/Otp_Login.php:152
 msgid ""
 "Registered Joinotify number used to deliver OTP codes. Leave on the first "
 "available sender to use the default."
@@ -4983,7 +5299,7 @@ msgstr ""
 msgid "Registered senders"
 msgstr "Expéditeurs enregistrés"
 
-#: admin/src/Integrations/Otp_Login.php:141
+#: admin/src/Integrations/Otp_Login.php:142
 msgid "REM"
 msgstr "REM"
 
@@ -4992,17 +5308,21 @@ msgid "Remember me"
 msgstr "Se souvenir de moi"
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:169
-#: app/src/components/settings/SchemaFieldRenderer.vue:303
+#: app/src/components/settings/SchemaFieldRenderer.vue:319
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:71
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:130
 msgid "Remove"
 msgstr "Supprimer"
 
-#: app/src/pages/settings/SettingsPage.vue:565
+#: app/src/builder/components/base/AttachmentsField.vue:158
+msgid "Remove attachment"
+msgstr "Supprimer la pièce jointe"
+
+#: app/src/pages/settings/SettingsPage.vue:566
 msgid "Remove sender"
 msgstr "Supprimer l'expéditeur"
 
-#: app/src/pages/settings/SettingsPage.vue:537
+#: app/src/pages/settings/SettingsPage.vue:538
 msgid "Remove variable"
 msgstr "Supprimer la variable"
 
@@ -5034,6 +5354,15 @@ msgstr "Échec de la demande."
 msgid "Required configuration for this trigger to run correctly."
 msgstr "Configuration requise pour que ce déclencheur fonctionne correctement."
 
+#: .history/admin/src/Integrations/Resend_20260703153400.php:104
+#: .history/admin/src/Integrations/Resend_20260703155627.php:106
+#: .history/admin/src/Integrations/Resend_20260703155635.php:104
+#: .history/admin/src/Integrations/Resend_20260703155807.php:104
+#: admin/src/Integrations/Resend.php:104
+#: admin/src/Notifications/Channels/Resend_Channel.php:47
+msgid "Resend"
+msgstr "Renvoyer"
+
 #: templates/otp-login/shared/otp-login-form.php:39
 msgid "Resend code"
 msgstr "Renvoyer le code"
@@ -5042,8 +5371,20 @@ msgstr "Renvoyer le code"
 msgid "Resend code in"
 msgstr "Renvoyer le code dans"
 
-#: app/src/pages/settings/SettingsPage.vue:681
-#: app/src/pages/settings/SettingsPage.vue:684
+#: app/src/builder/actions/definitions/resendEmail.ts:55
+msgid "Resend e-mail"
+msgstr "Renvoyer l'e-mail"
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:113
+#: .history/admin/src/Integrations/Resend_20260703155627.php:115
+#: .history/admin/src/Integrations/Resend_20260703155635.php:113
+#: .history/admin/src/Integrations/Resend_20260703155807.php:113
+#: admin/src/Integrations/Resend.php:113
+msgid "Resend settings"
+msgstr "Paramètres de renvoi"
+
+#: app/src/pages/settings/SettingsPage.vue:682
+#: app/src/pages/settings/SettingsPage.vue:685
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -5052,13 +5393,21 @@ msgid "Reset base shade override"
 msgstr "Réinitialiser l'override de teinte de base"
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:33
-#: app/src/pages/settings/SettingsPage.vue:673
+#: app/src/pages/settings/SettingsPage.vue:674
 msgid "Reset settings"
 msgstr "Réinitialiser les paramètres"
 
 #: app/src/components/flow/StickyNote.vue:308
 msgid "Resize"
 msgstr "Redimensionner"
+
+#: admin/src/AI/Providers/Anthropic_Provider.php:437
+msgid ""
+"Respond with a single valid JSON object and nothing else. Do not wrap it in "
+"markdown code fences."
+msgstr ""
+"Répondez avec un seul objet JSON valide et rien d'autre. Ne l'encapsulez "
+"pas dans des balises de code markdown."
 
 #: app/src/pages/history/components/HistoryDetailsModal.vue:30
 msgid "Response code"
@@ -5078,27 +5427,44 @@ msgstr "Restaurer"
 msgid "Restore default"
 msgstr "Restaurer par défaut"
 
-#: admin/src/Integrations/Flexify_Checkout.php:293
+#: admin/src/Integrations/Woocommerce.php:236
+msgid ""
+"Restrict this workflow to a single digital product. Leave \"Any digital "
+"product\" to run for every downloadable item in the order."
+msgstr ""
+"Restreindre ce workflow à un seul produit numérique. Laissez \"Tout produit "
+"numérique\" pour s'appliquer à chaque article téléchargeable dans la "
+"commande."
+
+#: admin/src/Integrations/Woocommerce.php:253
+msgid ""
+"Restrict this workflow to a single digital product. Leave \"Any digital "
+"product\" to run for every downloaded file."
+msgstr ""
+"Restreindre ce flux de travail à un seul produit numérique. Laissez \"Tout "
+"produit numérique\" pour s'exécuter pour chaque fichier téléchargé."
+
+#: admin/src/Integrations/Flexify_Checkout.php:294
 msgid "Retrieve the cart contact's email address."
 msgstr "Récupérer l'adresse e-mail du contact du panier."
 
-#: admin/src/Integrations/Flexify_Checkout.php:269
+#: admin/src/Integrations/Flexify_Checkout.php:270
 msgid "Retrieve the cart contact's first name."
 msgstr "Récupérer le prénom du contact du panier."
 
-#: admin/src/Integrations/Flexify_Checkout.php:277
+#: admin/src/Integrations/Flexify_Checkout.php:278
 msgid "Retrieve the cart contact's last name."
 msgstr "Récupérer le nom de famille du contact du panier."
 
-#: admin/src/Integrations/Flexify_Checkout.php:285
+#: admin/src/Integrations/Flexify_Checkout.php:286
 msgid "Retrieve the cart contact's phone number."
 msgstr "Récupérer le numéro de téléphone du contact du panier."
 
-#: admin/src/Integrations/Flexify_Checkout.php:309
+#: admin/src/Integrations/Flexify_Checkout.php:310
 msgid "Retrieve the cart total amount."
 msgstr "Récupérer le montant total du panier."
 
-#: admin/src/Integrations/Woocommerce.php:363
+#: admin/src/Integrations/Woocommerce.php:459
 msgid ""
 "Retrieve the user's full billing address (format configurable in the "
 "WooCommerce options)."
@@ -5106,7 +5472,7 @@ msgstr ""
 "Récupérer l'adresse de facturation complète de l'utilisateur (format "
 "configurable dans les options de WooCommerce)."
 
-#: admin/src/Integrations/Woocommerce.php:371
+#: admin/src/Integrations/Woocommerce.php:467
 msgid ""
 "Retrieve the user's full shipping address (format configurable in the "
 "WooCommerce options)."
@@ -5122,7 +5488,7 @@ msgstr "Réessayer la file d'attente"
 msgid "Réunion"
 msgstr "Réunion"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:75
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:88
 msgid "Reuse the generated value in any later message with:"
 msgstr "Réutiliser la valeur générée dans tout message ultérieur avec :"
 
@@ -5134,13 +5500,22 @@ msgstr "Vérifiez l'état actuel de votre licence et actualisez-le si nécessair
 msgid "Romania"
 msgstr "Roumanie"
 
-#: admin/src/Integrations/Otp_Login.php:127
+#: admin/src/Integrations/Otp_Login.php:128
 msgid "Rounding applied to cards, buttons, and form fields."
 msgstr "Arrondi appliqué aux cartes, boutons et champs de formulaire."
 
 #: admin/src/Admin/Settings/Registry.php:89
 msgid "Route path used to send text messages."
 msgstr "Chemin de routage utilisé pour envoyer des messages texte."
+
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:124
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:144
+msgid ""
+"Route this node to a specific engine. Leave on the default to use the "
+"provider from settings."
+msgstr ""
+"Dirigez ce nœud vers un moteur spécifique. Laissez sur le défaut pour "
+"utiliser le fournisseur des paramètres."
 
 #: app/src/builder/actions/settings/ConditionSettings.vue:197
 msgid "Rule data"
@@ -5198,15 +5573,15 @@ msgstr "São Tomé et Príncipe"
 msgid "Saudi Arabia"
 msgstr "Arabie Saoudite"
 
-#: app/src/pages/builder/BuilderPage.vue:1356
+#: app/src/pages/builder/BuilderPage.vue:1367
 msgid "Save"
 msgstr "Enregistrer"
 
-#: app/src/pages/builder/BuilderPage.vue:1441
+#: app/src/pages/builder/BuilderPage.vue:1452
 msgid "Save and leave"
 msgstr "Enregistrer et quitter"
 
-#: app/src/pages/builder/BuilderPage.vue:1399
+#: app/src/pages/builder/BuilderPage.vue:1410
 msgid "Save and run test"
 msgstr "Enregistrer et exécuter le test"
 
@@ -5222,11 +5597,11 @@ msgstr "Enregistrer le flux"
 msgid "Save the workflow before activating it."
 msgstr "Enregistrez le flux de travail avant de l'activer."
 
-#: app/src/pages/settings/SettingsPage.vue:310
+#: app/src/pages/settings/SettingsPage.vue:311
 msgid "Saved"
 msgstr "Enregistré"
 
-#: admin/src/Admin/Builder/Registry.php:83
+#: admin/src/Admin/Builder/Registry.php:86
 msgid "Saving workflow..."
 msgstr "Enregistrement du flux de travail..."
 
@@ -5238,7 +5613,7 @@ msgstr "Enregistrement..."
 msgid "Saving…"
 msgstr "Enregistrement…"
 
-#: admin/src/Admin/Builder/Registry.php:338
+#: admin/src/Admin/Builder/Registry.php:373
 #: app/src/builder/actions/definitions/timeDelay.ts:59
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/composables/useProcessingQueue.ts:51
@@ -5270,10 +5645,6 @@ msgstr "Rechercher"
 #: app/src/builder/actions/components/ActionLibraryModal.vue:330
 msgid "Search actions"
 msgstr "Rechercher des actions"
-
-#: app/src/components/builder/TemplateLibraryHeader.vue:20
-msgid "Search by categories or names."
-msgstr "Rechercher par catégories ou noms."
 
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:46
 msgid "Search entity…"
@@ -5312,7 +5683,7 @@ msgstr "Rechercher des variables..."
 msgid "Search workflow, recipient or action"
 msgstr "Rechercher un workflow, un destinataire ou une action"
 
-#: app/src/components/builder/BuilderTemplateLibraryView.vue:36
+#: app/src/components/builder/BuilderTemplateLibraryView.vue:38
 msgid "Search workflows"
 msgstr "Rechercher des workflows"
 
@@ -5342,19 +5713,39 @@ msgstr "seconde(s)"
 msgid "seconds"
 msgstr "secondes"
 
-#: admin/src/Admin/Builder/Registry.php:354
+#: admin/src/Admin/Builder/Registry.php:389
 #: app/src/builder/actions/definitions/timeDelay.ts:63
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:35
 msgid "Seconds"
 msgstr "Secondes"
 
-#: admin/src/Integrations/OpenAI.php:76
+#: admin/src/Integrations/Anthropic.php:74
+msgid ""
+"Secret key used to authenticate requests to Anthropic. Find it at "
+"console.anthropic.com."
+msgstr ""
+"Clé secrète utilisée pour authentifier les demandes à Anthropic. Trouvez-la "
+"sur console.anthropic.com."
+
+#: admin/src/Integrations/OpenAI.php:77
 msgid ""
 "Secret key used to authenticate requests to OpenAI. Find it at "
 "platform.openai.com."
 msgstr ""
 "Clé secrète utilisée pour authentifier les requêtes à OpenAI. Trouvez-la "
 "sur platform.openai.com."
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:135
+#: .history/admin/src/Integrations/Resend_20260703155627.php:137
+#: .history/admin/src/Integrations/Resend_20260703155635.php:135
+#: .history/admin/src/Integrations/Resend_20260703155807.php:135
+#: admin/src/Integrations/Resend.php:135
+msgid ""
+"Secret key used to authenticate requests to Resend. Find it at "
+"resend.com/api-keys."
+msgstr ""
+"Clé secrète utilisée pour authentifier les demandes à Resend. Trouvez-la "
+"sur resend.com/api-keys."
 
 #: templates/otp-login/shared/otp-login-form.php:27
 msgid "Secure access"
@@ -5377,6 +5768,11 @@ msgstr "Sélectionner une condition"
 #: app/src/components/base/BaseDatePicker.vue:247
 msgid "Select a date"
 msgstr "Sélectionner une date"
+
+#: admin/src/Integrations/Woocommerce.php:237
+#: admin/src/Integrations/Woocommerce.php:254
+msgid "Select a digital product"
+msgstr "Sélectionnez un produit numérique"
 
 #: app/src/components/settings/NodeSettingsRenderer.vue:220
 msgid "Select a node to edit its settings."
@@ -5427,15 +5823,16 @@ msgstr "Sélectionnez un opérateur"
 msgid "Select an option"
 msgstr "Sélectionnez une option"
 
-#: admin/src/Integrations/Woocommerce.php:210
+#: admin/src/Integrations/Woocommerce.php:220
 msgid "Select an order status"
 msgstr "Sélectionnez un statut de commande"
 
-#: app/src/components/base/BaseFileDropzone.vue:54
+#: app/src/builder/components/base/AttachmentsField.vue:113
+#: app/src/components/base/BaseFileDropzone.vue:87
 msgid "Select file"
 msgstr "Sélectionnez un fichier"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:64
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:65
 msgid "Select media"
 msgstr "Sélectionnez un média"
 
@@ -5461,23 +5858,28 @@ msgstr "Fichier sélectionné :"
 msgid "Send"
 msgstr "Envoyer"
 
-#: admin/src/Integrations/Woocommerce.php:825
+#: admin/src/Integrations/Woocommerce.php:1213
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr ""
 "Envoyer un coupon de réduction à votre utilisateur via un message texte "
 "WhatsApp."
 
-#: admin/src/Integrations/Whatsapp.php:103
+#: admin/src/Integrations/Whatsapp.php:104
 msgid "Send a media message (image, file, document, and audio) with WhatsApp."
 msgstr ""
 "Envoyer un message multimédia (image, fichier, document et audio) avec "
 "WhatsApp."
 
-#: admin/src/Integrations/Whatsapp.php:90
+#: admin/src/Integrations/Telegram.php:165
+#: app/src/builder/actions/definitions/telegramText.ts:41
+msgid "Send a text message to a Telegram chat, group or channel."
+msgstr "Envoyer un message texte à un chat, groupe ou canal Telegram."
+
+#: admin/src/Integrations/Whatsapp.php:91
 msgid "Send a text message via WhatsApp."
 msgstr "Envoyer un message texte via WhatsApp."
 
-#: app/src/builder/actions/definitions/whatsappMedia.ts:45
+#: app/src/builder/actions/definitions/whatsappMedia.ts:47
 msgid "Send a WhatsApp media message."
 msgstr "Envoyer un message multimédia WhatsApp."
 
@@ -5485,11 +5887,40 @@ msgstr "Envoyer un message multimédia WhatsApp."
 msgid "Send a WhatsApp text message."
 msgstr "Envoyer un message texte WhatsApp."
 
+#: .history/admin/src/Integrations/Resend_20260703153400.php:174
+#: .history/admin/src/Integrations/Resend_20260703155627.php:176
+#: .history/admin/src/Integrations/Resend_20260703155635.php:174
+#: .history/admin/src/Integrations/Resend_20260703155807.php:174
+#: admin/src/Integrations/Resend.php:174
+#: app/src/builder/actions/definitions/resendEmail.ts:44
+msgid "Send an e-mail notification through Resend."
+msgstr "Envoyer une notification par e-mail via Resend."
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:173
+#: .history/admin/src/Integrations/Resend_20260703155627.php:175
+#: .history/admin/src/Integrations/Resend_20260703155635.php:173
+#: .history/admin/src/Integrations/Resend_20260703155807.php:173
+#: admin/src/Integrations/Resend.php:173
+#: app/src/builder/actions/definitions/resendEmail.ts:31
+#: app/src/builder/actions/definitions/resendEmail.ts:43
+msgid "Send e-mail (Resend)"
+msgstr "Envoyer un e-mail (Resend)"
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:105
+#: .history/admin/src/Integrations/Resend_20260703155627.php:107
+#: .history/admin/src/Integrations/Resend_20260703155635.php:105
+#: .history/admin/src/Integrations/Resend_20260703155807.php:105
+#: admin/src/Integrations/Resend.php:105
+msgid "Send e-mail notifications for your automations through the Resend API."
+msgstr ""
+"Envoyer des notifications par e-mail pour vos automatisations via l'API "
+"Resend."
+
 #: admin/src/Integrations/Elementor_Forms.php:164
 msgid "Send media"
 msgstr "Envoyer des médias"
 
-#: admin/src/Integrations/Woocommerce.php:89
+#: admin/src/Integrations/Woocommerce.php:98
 msgid ""
 "Send messages regarding new orders, cancellations, refunds, and recovery of "
 "unpaid orders. Keep your customers updated."
@@ -5505,6 +5936,10 @@ msgid ""
 msgstr ""
 "Envoyer des messages lorsqu'un formulaire Elementor avec un champ de numéro "
 "de téléphone est soumis. Connectez-vous instantanément avec vos clients."
+
+#: admin/src/Integrations/Telegram.php:105
+msgid "Send notifications to Telegram chats, groups and channels through a bot."
+msgstr "Envoyer des notifications aux chats, groupes et canaux Telegram via un bot."
 
 #: app/src/pages/settings/components/cards/PhoneActions.vue:199
 #: app/src/pages/settings/components/cards/PhoneActions.vue:205
@@ -5525,13 +5960,13 @@ msgstr "send-message/text"
 
 #: admin/src/Integrations/Elementor_Forms.php:87
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:59
-#: app/src/builder/actions/definitions/whatsappMedia.ts:60
+#: app/src/builder/actions/definitions/whatsappMedia.ts:62
 #: app/src/builder/actions/definitions/whatsappText.ts:55
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:211
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:60
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:64
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:81
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:85
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:73
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:77
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:82
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:86
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:37
 #: app/src/pages/history/components/HistoryDetailsModal.vue:26
@@ -5540,11 +5975,27 @@ msgstr "send-message/text"
 msgid "Sender"
 msgstr "Expéditeur"
 
-#: admin/src/Integrations/Otp_Login.php:150
+#: .history/admin/src/Integrations/Resend_20260703153400.php:143
+#: .history/admin/src/Integrations/Resend_20260703155627.php:145
+#: .history/admin/src/Integrations/Resend_20260703155635.php:143
+#: .history/admin/src/Integrations/Resend_20260703155807.php:143
+#: admin/src/Integrations/Resend.php:143
+msgid "Sender e-mail"
+msgstr "E-mail de l'expéditeur"
+
+#: .history/admin/src/Integrations/Resend_20260703153400.php:152
+#: .history/admin/src/Integrations/Resend_20260703155627.php:154
+#: .history/admin/src/Integrations/Resend_20260703155635.php:152
+#: .history/admin/src/Integrations/Resend_20260703155807.php:152
+#: admin/src/Integrations/Resend.php:152
+msgid "Sender name"
+msgstr "Nom de l'expéditeur"
+
+#: admin/src/Integrations/Otp_Login.php:151
 msgid "Sender phone"
 msgstr "Téléphone de l'expéditeur"
 
-#: app/src/pages/settings/SettingsPage.vue:574
+#: app/src/pages/settings/SettingsPage.vue:575
 msgid "Sender removed."
 msgstr "Expéditeur supprimé."
 
@@ -5584,23 +6035,23 @@ msgstr "Définir une expiration"
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:301
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/settings/SettingsPage.vue:748
+#: app/src/pages/settings/SettingsPage.vue:749
 msgid "Settings"
 msgstr "Paramètres"
 
-#: app/src/pages/settings/SettingsPage.vue:347
+#: app/src/pages/settings/SettingsPage.vue:348
 msgid "Settings exported."
 msgstr "Paramètres exportés."
 
-#: app/src/pages/settings/SettingsPage.vue:310
+#: app/src/pages/settings/SettingsPage.vue:311
 msgid "Settings have been saved."
 msgstr "Les paramètres ont été enregistrés."
 
-#: admin/src/Admin/Settings/Transfer.php:180
+#: admin/src/Admin/Settings/Transfer.php:181
 msgid "Settings imported successfully."
 msgstr "Paramètres importés avec succès."
 
-#: app/src/pages/settings/SettingsPage.vue:376
+#: app/src/pages/settings/SettingsPage.vue:377
 msgid "Settings imported."
 msgstr "Paramètres importés."
 
@@ -5608,7 +6059,7 @@ msgstr "Paramètres importés."
 msgid "Settings reset successfully!"
 msgstr "Paramètres réinitialisés avec succès !"
 
-#: admin/src/Admin/Settings/Registry.php:549
+#: admin/src/Admin/Settings/Registry.php:594
 #: admin/src/Rest/Settings_Save.php:42
 msgid "Settings saved."
 msgstr "Paramètres enregistrés."
@@ -5621,17 +6072,21 @@ msgstr "Seychelles"
 msgid "Shade %s"
 msgstr "Ombre %s"
 
-#: admin/src/Integrations/Woocommerce.php:143
+#: admin/src/Integrations/Woocommerce.php:153
 msgid "Shipping full address format"
 msgstr "Format d'adresse complète de livraison"
 
-#: admin/src/Integrations/Woocommerce.php:1054
+#: admin/src/Integrations/Woocommerce.php:1442
 msgid "Shipping method"
 msgstr "Méthode de livraison"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:40
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:41
 msgid "Short"
 msgstr "Court"
+
+#: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:174
+msgid "Show all"
+msgstr "Afficher tout"
 
 #: templates/otp-login/shared/otp-login-form.php:49
 msgid "Show password"
@@ -5669,6 +6124,7 @@ msgstr "Îles Salomon"
 msgid "Somalia"
 msgstr "Somalie"
 
+#: app/src/builder/components/base/AttachmentsField.vue:148
 #: app/src/pages/history/components/HistoryDetailsModal.vue:25
 #: app/src/pages/history/HistoryPage.vue:188
 #: app/src/pages/history/HistoryPage.vue:290
@@ -5700,7 +6156,9 @@ msgstr "Divisez le flux de travail en branches vraies et fausses."
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
 
-#: app/src/components/builder/TemplateLibraryHeader.vue:17
+#: .history/app/src/components/builder/TemplateLibraryHeader_20260703082602.vue:26
+#: .history/app/src/components/builder/TemplateLibraryHeader_20260703152024.vue:26
+#: app/src/components/builder/TemplateLibraryHeader.vue:26
 msgid "Start automating your site from a template"
 msgstr "Commencez à automatiser votre site à partir d'un modèle"
 
@@ -5743,7 +6201,7 @@ msgstr "Étape 2 : Entrez le code de vérification"
 msgid "Step 2: Enter the verification code."
 msgstr "Étape 2 : Entrez le code de vérification."
 
-#: admin/src/Admin/Builder/Registry.php:507
+#: admin/src/Admin/Builder/Registry.php:542
 #: admin/src/Builder/Actions.php:56
 msgid "Stop automation"
 msgstr "Arrêter l'automatisation"
@@ -5765,6 +6223,16 @@ msgstr ""
 "Stockez les erreurs, avertissements et demandes échouées dans une table "
 "dédiée consultable depuis l'écran des journaux de débogage."
 
+#: app/src/builder/actions/definitions/resendEmail.ts:58
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:41
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:44
+msgid "Subject"
+msgstr "Objet"
+
+#: admin/src/Builder/Messages.php:299
+msgid "Subject: %s"
+msgstr "Objet : %s"
+
 #: app/src/pages/license/LicensePage.vue:67
 msgid "Subscription"
 msgstr "Abonnement"
@@ -5781,15 +6249,15 @@ msgstr "L'abonnement est activé"
 msgid "Subscription renewal expired"
 msgstr "Renouvellement d'abonnement expiré"
 
-#: admin/src/Integrations/Woocommerce.php:1070
+#: admin/src/Integrations/Woocommerce.php:1458
 msgid "Subscription status"
 msgstr "Statut de l'abonnement"
 
-#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:618
 msgid "Subscription: %s"
 msgstr "Abonnement : %s"
 
-#: admin/src/Admin/Settings/Registry.php:572
+#: admin/src/Admin/Settings/Registry.php:617
 msgid "Subscription: Club M - %s"
 msgstr "Abonnement : Club M - %s"
 
@@ -5797,7 +6265,7 @@ msgstr "Abonnement : Club M - %s"
 msgid "Sudan"
 msgstr "Soudan"
 
-#: admin/src/Integrations/Woocommerce.php:393
+#: admin/src/Integrations/Woocommerce.php:489
 msgid ""
 "Sunglasses with UV protection (Sample product): "
 "%s/product/sample-sunglasses/#reviews"
@@ -5817,11 +6285,11 @@ msgstr "Support jusqu'à"
 msgid "Support until: Not available"
 msgstr "Support jusqu'à : Non disponible"
 
-#: admin/src/Admin/Settings/Registry.php:607
+#: admin/src/Admin/Settings/Registry.php:652
 msgid "Support up to: %s"
 msgstr "Support jusqu'à : %s"
 
-#: admin/src/Admin/Settings/Registry.php:608
+#: admin/src/Admin/Settings/Registry.php:653
 msgid "Support up to: Not available"
 msgstr "Support jusqu'à : Non disponible"
 
@@ -5849,8 +6317,8 @@ msgstr "Synchroniser la licence"
 msgid "Syria"
 msgstr "Syrie"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:99
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:99
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:112
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:112
 msgid "System message"
 msgstr "Message système"
 
@@ -5862,7 +6330,7 @@ msgstr "État du système"
 msgid "System status:"
 msgstr "État du système :"
 
-#: admin/src/Integrations/Wordpress.php:258
+#: admin/src/Integrations/Wordpress.php:259
 msgid "tag1, tag2"
 msgstr "tag1, tag2"
 
@@ -5878,10 +6346,37 @@ msgstr "Tadjikistan"
 msgid "Tanzania"
 msgstr "Tanzanie"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:117
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:120
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:141
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:146
+#: admin/src/Integrations/Telegram.php:104
+#: admin/src/Notifications/Channels/Telegram_Channel.php:45
+msgid "Telegram"
+msgstr "Telegram"
+
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:30
+msgid ""
+"Telegram chat, group or channel id. Accepts a placeholder that resolves to "
+"one."
+msgstr ""
+"Identifiant de chat, groupe ou canal Telegram. Accepte un espace réservé "
+"qui se résout en un."
+
+#: app/src/builder/actions/definitions/telegramText.ts:52
+msgid "Telegram message"
+msgstr "Message Telegram"
+
+#: admin/src/Integrations/Telegram.php:113
+msgid "Telegram settings"
+msgstr "Paramètres Telegram"
+
+#: admin/src/Integrations/Telegram.php:164
+#: app/src/builder/actions/definitions/telegramText.ts:30
+#: app/src/builder/actions/definitions/telegramText.ts:40
+msgid "Telegram: message"
+msgstr "Telegram : message"
+
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:143
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:146
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:167
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:172
 msgid "Temperature"
 msgstr "Température"
 
@@ -5897,7 +6392,7 @@ msgstr "Message de test"
 msgid "Test phone"
 msgstr "Téléphone de test"
 
-#: app/src/pages/builder/BuilderPage.vue:1370
+#: app/src/pages/builder/BuilderPage.vue:1381
 #: app/src/pages/settings/components/cards/PhoneActions.vue:162
 msgid "Test phone number"
 msgstr "Numéro de téléphone de test"
@@ -6002,7 +6497,7 @@ msgstr "L'action groupée a échoué."
 msgid "The code you entered is invalid or has expired."
 msgstr "Le code que vous avez saisi est invalide ou a expiré."
 
-#: app/src/pages/settings/SettingsPage.vue:363
+#: app/src/pages/settings/SettingsPage.vue:364
 msgid ""
 "The configuration in the file will be merged into your current settings. "
 "This cannot be undone."
@@ -6010,7 +6505,7 @@ msgstr ""
 "La configuration dans le fichier sera fusionnée avec vos paramètres "
 "actuels. Cela ne peut pas être annulé."
 
-#: admin/src/Integrations/Woocommerce.php:875
+#: admin/src/Integrations/Woocommerce.php:1263
 msgid "The coupon already exists."
 msgstr "Le coupon existe déjà."
 
@@ -6020,7 +6515,7 @@ msgstr "L'extension cURL est manquante."
 
 #: admin/src/Rest/Debug_Download.php:43
 #: admin/src/Rest/Debug_Logs.php:61
-#: app/src/pages/settings/SettingsPage.vue:622
+#: app/src/pages/settings/SettingsPage.vue:623
 msgid "The debug log is empty."
 msgstr "Le journal de débogage est vide."
 
@@ -6028,9 +6523,15 @@ msgstr "Le journal de débogage est vide."
 msgid "The field is required. Keep the code self-contained and deterministic."
 msgstr "Le champ est requis. Gardez le code autonome et déterministe."
 
-#: admin/src/Admin/Settings/Transfer.php:144
+#: admin/src/Admin/Settings/Transfer.php:145
 msgid "The file does not contain any settings to import."
 msgstr "Le fichier ne contient aucun paramètre à importer."
+
+#: admin/src/Notifications/Channels/Resend_Channel.php:274
+msgid "The files below were too large to attach, so you can download them here:"
+msgstr ""
+"Les fichiers ci-dessous étaient trop volumineux pour être joints, vous "
+"pouvez donc les télécharger ici :"
 
 #: admin/src/AI/Snippet_Generator.php:84
 msgid ""
@@ -6040,7 +6541,7 @@ msgstr ""
 "L'extrait généré utilise une fonction bloquée (%s). Veuillez affiner la "
 "demande."
 
-#: admin/src/AI/Workflow_Generator.php:97
+#: admin/src/AI/Workflow_Generator.php:104
 msgid ""
 "The generated workflow is missing a valid trigger. Try again with more "
 "detail."
@@ -6132,7 +6633,7 @@ msgstr ""
 "Les enregistrements sélectionnés seront définitivement supprimés. Cette "
 "action ne peut pas être annulée."
 
-#: admin/src/Admin/Builder/Registry.php:1045
+#: admin/src/Admin/Builder/Registry.php:1080
 msgid "The selected template was not found."
 msgstr "Le modèle sélectionné n'a pas été trouvé."
 
@@ -6187,11 +6688,11 @@ msgstr "La variable \"%s\" existe déjà. Choisissez un autre nom."
 msgid "The workflow"
 msgstr "Le flux de travail"
 
-#: admin/src/Admin/Builder/Registry.php:1406
+#: admin/src/Admin/Builder/Registry.php:1441
 msgid "The workflow content is invalid."
 msgstr "Le contenu du flux de travail est invalide."
 
-#: admin/src/Admin/Builder/Registry.php:1426
+#: admin/src/Admin/Builder/Registry.php:1461
 msgid "The workflow has more than one trigger."
 msgstr "Le flux de travail a plus d'un déclencheur."
 
@@ -6199,7 +6700,7 @@ msgstr "Le flux de travail a plus d'un déclencheur."
 msgid "The workflow has no content to test."
 msgstr "Le flux de travail n'a pas de contenu à tester."
 
-#: admin/src/Admin/Builder/Registry.php:1420
+#: admin/src/Admin/Builder/Registry.php:1455
 msgid "The workflow has no trigger."
 msgstr "Le flux de travail n'a pas de déclencheur."
 
@@ -6207,7 +6708,7 @@ msgstr "Le flux de travail n'a pas de déclencheur."
 msgid "The workflow is not published."
 msgstr "Le flux de travail n'est pas publié."
 
-#: admin/src/Admin/Builder/Registry.php:1432
+#: admin/src/Admin/Builder/Registry.php:1467
 msgid "The workflow trigger is not configured."
 msgstr "Le déclencheur du flux de travail n'est pas configuré."
 
@@ -6233,25 +6734,44 @@ msgstr ""
 "disponible. Le flux de travail peut toujours être enregistré en toute "
 "sécurité."
 
-#: admin/src/Integrations/Woocommerce.php:189
+#: admin/src/Integrations/Woocommerce.php:199
 msgid "This action is triggered when an order is fully refunded."
 msgstr "Cette action est déclenchée lorsqu'une commande est entièrement remboursée."
 
-#: admin/src/Integrations/Woocommerce.php:195
+#: admin/src/Integrations/Woocommerce.php:205
 msgid "This action is triggered when an order is partially refunded."
 msgstr ""
 "Cette action est déclenchée lorsqu'une commande est partiellement "
 "remboursée."
 
-#: admin/src/Integrations/Woocommerce.php:201
+#: admin/src/Integrations/Woocommerce.php:211
 msgid "This action is triggered when an order's status changes."
 msgstr "Cette action est déclenchée lorsqu'un statut de commande change."
 
-#: admin/src/Integrations/Woocommerce.php:183
+#: admin/src/Integrations/Woocommerce.php:193
 msgid "This action is triggered when an order's status is changed to completed."
 msgstr ""
 "Cette action est déclenchée lorsqu'un statut de commande est changé en "
 "terminé."
+
+#: admin/src/Integrations/Woocommerce.php:245
+msgid ""
+"This action is triggered when the customer actually downloads a digital "
+"file from the order."
+msgstr ""
+"Cette action est déclenchée lorsque le client télécharge effectivement un "
+"fichier numérique de la commande."
+
+#: admin/src/Integrations/Woocommerce.php:228
+msgid ""
+"This action is triggered when WooCommerce grants the download access of a "
+"digital product to the customer. This is the recommended trigger to deliver "
+"digital products, because the download links only exist from this moment on."
+msgstr ""
+"Cette action est déclenchée lorsque WooCommerce accorde l'accès au "
+"téléchargement d'un produit numérique au client. C'est le déclencheur "
+"recommandé pour livrer des produits numériques, car les liens de "
+"téléchargement n'existent qu'à partir de ce moment."
 
 #: app/src/builder/actions/settings/StopFunnelSettings.vue:26
 msgid "This action stops the workflow immediately. There are no editable settings."
@@ -6267,11 +6787,11 @@ msgstr ""
 "Ce délai utilise une exécution planifiée. L'environnement de flux de "
 "travail ne signale pas cron comme disponible."
 
-#: admin/src/Integrations/Integrations_Base.php:899
+#: admin/src/Integrations/Integrations_Base.php:980
 msgid "This feature will be released soon."
 msgstr "Cette fonctionnalité sera bientôt disponible."
 
-#: admin/src/Admin/Settings/Transfer.php:133
+#: admin/src/Admin/Settings/Transfer.php:134
 msgid "This file is not a valid Joinotify settings export."
 msgstr "Ce fichier n'est pas un export de paramètres Joinotify valide."
 
@@ -6287,7 +6807,7 @@ msgstr "Cette intégration n'a pas de paramètres supplémentaires."
 msgid "This integration will be available soon."
 msgstr "Cette intégration sera bientôt disponible."
 
-#: admin/src/Admin/Settings/Registry.php:366
+#: admin/src/Admin/Settings/Registry.php:367
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr "Ce plugin doit être installé et actif pour activer cette intégration."
 
@@ -6316,8 +6836,8 @@ msgstr ""
 msgid "This text variable may not work in this context"
 msgstr "Cette variable de texte peut ne pas fonctionner dans ce contexte"
 
-#: admin/src/Integrations/Integrations_Base.php:906
-#: admin/src/Integrations/Integrations_Base.php:910
+#: admin/src/Integrations/Integrations_Base.php:987
+#: admin/src/Integrations/Integrations_Base.php:991
 msgid "This trigger depends on a plugin"
 msgstr "Ce déclencheur dépend d'un plugin"
 
@@ -6325,29 +6845,29 @@ msgstr "Ce déclencheur dépend d'un plugin"
 msgid "This trigger does not expose any conditions to evaluate."
 msgstr "Ce déclencheur n'expose aucune condition à évaluer."
 
-#: admin/src/Integrations/Wordpress.php:99
+#: admin/src/Integrations/Wordpress.php:100
 msgid "This trigger fires after a user resets their password on the site."
 msgstr ""
 "Ce déclencheur se déclenche après qu'un utilisateur réinitialise son mot de "
 "passe sur le site."
 
-#: admin/src/Integrations/Wordpress.php:87
+#: admin/src/Integrations/Wordpress.php:88
 msgid "This trigger fires when a new user registration is received."
 msgstr ""
 "Ce déclencheur se déclenche lorsqu'une nouvelle inscription d'utilisateur "
 "est reçue."
 
-#: admin/src/Integrations/Wordpress.php:111
+#: admin/src/Integrations/Wordpress.php:112
 msgid "This trigger fires when a post status changes on the site."
 msgstr ""
 "Ce déclencheur se déclenche lorsqu'un statut de publication change sur le "
 "site."
 
-#: admin/src/Integrations/Wordpress.php:93
+#: admin/src/Integrations/Wordpress.php:94
 msgid "This trigger fires when a user logs in to the site."
 msgstr "Ce déclencheur se déclenche lorsqu'un utilisateur se connecte au site."
 
-#: admin/src/Integrations/Wordpress.php:105
+#: admin/src/Integrations/Wordpress.php:106
 msgid ""
 "This trigger fires when a user requests a password reset link, allowing you "
 "to send the reset link."
@@ -6356,11 +6876,11 @@ msgstr ""
 "réinitialisation de mot de passe, vous permettant d'envoyer le lien de "
 "réinitialisation."
 
-#: admin/src/Integrations/Wpforms.php:88
+#: admin/src/Integrations/Wpforms.php:89
 msgid "This trigger fires when a WPForms form is submitted."
 msgstr "Ce déclencheur se déclenche lorsqu'un formulaire WPForms est soumis."
 
-#: admin/src/Integrations/Wpforms.php:94
+#: admin/src/Integrations/Wpforms.php:95
 msgid "This trigger fires when a WPForms payment form is processed using PayPal."
 msgstr ""
 "Ce déclencheur se déclenche lorsqu'un formulaire de paiement WPForms est "
@@ -6374,7 +6894,7 @@ msgstr ""
 "Ce déclencheur n'a pas de paramètres supplémentaires. Utilisez « Changer de "
 "déclencheur » dans le menu du nœud pour en choisir un autre."
 
-#: admin/src/Integrations/Woocommerce.php:177
+#: admin/src/Integrations/Woocommerce.php:187
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "a processing status."
@@ -6382,7 +6902,7 @@ msgstr ""
 "Ce déclencheur est activé lorsqu'une nouvelle commande est reçue dans "
 "WooCommerce avec un statut de traitement."
 
-#: admin/src/Integrations/Woocommerce.php:171
+#: admin/src/Integrations/Woocommerce.php:181
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "any status."
@@ -6390,7 +6910,7 @@ msgstr ""
 "Ce déclencheur est activé lorsqu'une nouvelle commande est reçue dans "
 "WooCommerce avec n'importe quel statut."
 
-#: admin/src/Integrations/Flexify_Checkout.php:155
+#: admin/src/Integrations/Flexify_Checkout.php:156
 msgid "This trigger is fired when a cart is considered lost."
 msgstr "Ce déclencheur se déclenche lorsqu'un panier est considéré comme perdu."
 
@@ -6422,15 +6942,15 @@ msgstr "Ce déclencheur est activé lorsqu'un statut d'abonnement change en acti
 msgid "This trigger is fired when a subscription term has expired."
 msgstr "Ce déclencheur est activé lorsqu'un terme d'abonnement a expiré."
 
-#: admin/src/Integrations/Flexify_Checkout.php:135
+#: admin/src/Integrations/Flexify_Checkout.php:136
 msgid "This trigger is fired when an abandoned cart is recovered."
 msgstr "Ce déclencheur est activé lorsqu'un panier abandonné est récupéré."
 
-#: admin/src/Integrations/Elementor.php:81
+#: admin/src/Integrations/Elementor.php:82
 msgid "This trigger is fired when an Elementor form is submitted."
 msgstr "Ce déclencheur est activé lorsqu'un formulaire Elementor est soumis."
 
-#: admin/src/Integrations/Flexify_Checkout.php:145
+#: admin/src/Integrations/Flexify_Checkout.php:146
 msgid "This trigger is fired when an order is abandoned."
 msgstr "Ce déclencheur est activé lorsqu'une commande est abandonnée."
 
@@ -6438,23 +6958,23 @@ msgstr "Ce déclencheur est activé lorsqu'une commande est abandonnée."
 msgid "This trigger is fired when the subscription status changes to canceled."
 msgstr "Ce déclencheur est activé lorsque le statut d'abonnement change en annulé."
 
-#: admin/src/Integrations/Flexify_Checkout.php:125
+#: admin/src/Integrations/Flexify_Checkout.php:126
 msgid "This trigger is fired when the user abandons the cart."
 msgstr "Ce déclencheur est activé lorsque l'utilisateur abandonne le panier."
 
-#: admin/src/Integrations/Flexify_Checkout.php:115
+#: admin/src/Integrations/Flexify_Checkout.php:116
 msgid "This trigger is fired when the user provides your contact on checkout"
 msgstr ""
 "Ce déclencheur est activé lorsque l'utilisateur fournit vos coordonnées "
 "lors du paiement."
 
-#: admin/src/Integrations/Flexify_Checkout.php:105
+#: admin/src/Integrations/Flexify_Checkout.php:106
 msgid "This trigger is fired when the user provides your contact on modal"
 msgstr ""
 "Ce déclencheur est activé lorsque l'utilisateur fournit vos coordonnées "
 "dans la modal."
 
-#: app/src/pages/builder/BuilderPage.vue:1435
+#: app/src/pages/builder/BuilderPage.vue:1446
 msgid ""
 "This workflow has unsaved changes. If you leave now, your changes will be "
 "lost."
@@ -6462,7 +6982,7 @@ msgstr ""
 "Ce workflow a des modifications non enregistrées. Si vous partez "
 "maintenant, vos modifications seront perdues."
 
-#: admin/src/Admin/Builder/Registry.php:370
+#: admin/src/Admin/Builder/Registry.php:405
 #: app/src/builder/actions/definitions/timeDelay.ts:72
 #: app/src/builder/actions/definitions/timeDelay.ts:83
 #: app/src/builder/actions/definitions/timeDelay.ts:91
@@ -6488,7 +7008,7 @@ msgstr "Titre"
 msgid "To"
 msgstr "À"
 
-#: admin/src/Integrations/Wordpress.php:211
+#: admin/src/Integrations/Wordpress.php:212
 msgid ""
 "To retrieve a user meta value. Replace META_KEY with the key you want to "
 "retrieve. Example: billing_phone"
@@ -6496,7 +7016,7 @@ msgstr ""
 "Pour récupérer une valeur de méta utilisateur. Remplacez META_KEY par la "
 "clé que vous souhaitez récupérer. Exemple : billing_phone"
 
-#: admin/src/Integrations/Woocommerce.php:379
+#: admin/src/Integrations/Woocommerce.php:475
 msgid ""
 "To retrieve each purchased product and quantity from the order, separated "
 "by line"
@@ -6504,7 +7024,16 @@ msgstr ""
 "Pour récupérer chaque produit acheté et sa quantité de la commande, séparés "
 "par ligne."
 
-#: admin/src/Integrations/Wpforms.php:142
+#: admin/src/Integrations/Woocommerce.php:619
+msgid ""
+"To retrieve how many downloads the customer still has available. Returns "
+"the smallest amount when the files have different limits."
+msgstr ""
+"Pour récupérer combien de téléchargements le client a encore disponibles. "
+"Renvoie le plus petit montant lorsque les fichiers ont des limites "
+"différentes."
+
+#: admin/src/Integrations/Wpforms.php:143
 msgid ""
 "To retrieve information from a WPForms form field. Replace FIELD_ID with "
 "the corresponding field ID."
@@ -6512,7 +7041,7 @@ msgstr ""
 "Pour récupérer des informations d'un champ de formulaire WPForms. Remplacez "
 "FIELD_ID par l'ID du champ correspondant."
 
-#: admin/src/Integrations/Elementor.php:130
+#: admin/src/Integrations/Elementor.php:131
 msgid ""
 "To retrieve information from an Elementor form field. Replace FIELD_ID with "
 "the respective ID."
@@ -6520,19 +7049,27 @@ msgstr ""
 "Pour récupérer des informations d'un champ de formulaire Elementor. "
 "Remplacez FIELD_ID par l'ID respectif."
 
-#: admin/src/Integrations/Woocommerce.php:323
+#: admin/src/Integrations/Woocommerce.php:600
+msgid ""
+"To retrieve only the download links of the WooCommerce order, without the "
+"file name, separated by line"
+msgstr ""
+"Pour récupérer uniquement les liens de téléchargement de la commande "
+"WooCommerce, sans le nom du fichier, séparés par ligne"
+
+#: admin/src/Integrations/Woocommerce.php:419
 msgid "To retrieve the billing phone from the WooCommerce order"
 msgstr "Pour récupérer le téléphone de facturation de la commande WooCommerce."
 
-#: admin/src/Integrations/Woocommerce.php:447
+#: admin/src/Integrations/Woocommerce.php:543
 msgid "To retrieve the coupon codes used in the WooCommerce order"
 msgstr "Pour récupérer les codes de coupon utilisés dans la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:997
+#: admin/src/Integrations/Woocommerce.php:1385
 msgid "To retrieve the coupon description."
 msgstr "Pour récupérer la description du coupon."
 
-#: admin/src/Integrations/Woocommerce.php:1009
+#: admin/src/Integrations/Woocommerce.php:1397
 msgid ""
 "To retrieve the coupon discount amount formatted with a currency symbol or "
 "percentage. Example: 10%."
@@ -6540,61 +7077,103 @@ msgstr ""
 "Pour récupérer le montant de la remise du coupon formaté avec un symbole "
 "monétaire ou un pourcentage. Exemple : 10%."
 
-#: admin/src/Integrations/Woocommerce.php:1005
+#: admin/src/Integrations/Woocommerce.php:1393
 msgid "To retrieve the coupon discount amount."
 msgstr "Pour récupérer le montant de la remise du coupon."
 
-#: admin/src/Integrations/Woocommerce.php:993
+#: admin/src/Integrations/Woocommerce.php:1381
 msgid "To retrieve the coupon discount code."
 msgstr "Pour récupérer le code de remise du coupon."
 
-#: admin/src/Integrations/Woocommerce.php:1001
+#: admin/src/Integrations/Woocommerce.php:1389
 msgid "To retrieve the coupon discount type. Example: Percentage or fixed amount."
 msgstr ""
 "Pour récupérer le type de remise du coupon. Exemple : Pourcentage ou "
 "montant fixe."
 
-#: admin/src/Integrations/Woocommerce.php:1013
+#: admin/src/Integrations/Woocommerce.php:1401
 msgid "To retrieve the coupon expiration. Example: Expires in 1 hour."
 msgstr "Pour récupérer l'expiration du coupon. Exemple : Expire dans 1 heure."
 
-#: admin/src/Integrations/Wordpress.php:203
+#: admin/src/Integrations/Wordpress.php:204
 msgid "To retrieve the current date"
 msgstr "Pour récupérer la date actuelle"
 
-#: admin/src/Integrations/Woocommerce.php:315
+#: admin/src/Integrations/Woocommerce.php:411
 msgid "To retrieve the customer billing email from the WooCommerce order"
 msgstr ""
 "Pour récupérer l'email de facturation du client à partir de la commande "
 "WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:299
+#: admin/src/Integrations/Woocommerce.php:395
 msgid "To retrieve the customer billing first name from the WooCommerce order"
 msgstr "Pour récupérer le prénom du client à partir de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:307
+#: admin/src/Integrations/Woocommerce.php:403
 msgid "To retrieve the customer billing last name from the WooCommerce order"
 msgstr ""
 "Pour récupérer le nom de famille du client à partir de la commande "
 "WooCommerce"
 
-#: admin/src/Integrations/Wordpress.php:273
+#: admin/src/Integrations/Woocommerce.php:635
+msgid ""
+"To retrieve the download links of a specific product in the WooCommerce "
+"order. Replace PRODUCT_ID with the product ID, for example: 128."
+msgstr ""
+"Pour récupérer les liens de téléchargement d'un produit spécifique dans la "
+"commande WooCommerce. Remplacez PRODUCT_ID par l'ID du produit, par exemple "
+": 128."
+
+#: admin/src/Integrations/Woocommerce.php:587
+msgid ""
+"To retrieve the download name and link of each digital file in the "
+"WooCommerce order, separated by line. Only available after the download "
+"access has been granted."
+msgstr ""
+"Pour récupérer le nom et le lien de chaque fichier numérique dans la "
+"commande WooCommerce, séparés par ligne. Disponible uniquement après que "
+"l'accès au téléchargement a été accordé."
+
+#: admin/src/Integrations/Woocommerce.php:611
+msgid ""
+"To retrieve the expiration date of the download access. Returns the closest "
+"date when the files expire on different dates."
+msgstr ""
+"Pour récupérer la date d'expiration de l'accès au téléchargement. Renvoie "
+"la date la plus proche lorsque les fichiers expirent à des dates "
+"différentes."
+
+#: admin/src/Integrations/Wordpress.php:274
 msgid "To retrieve the featured image URL of the post"
 msgstr "Pour récupérer l'URL de l'image mise en avant du post"
 
-#: admin/src/Integrations/Woocommerce.php:407
+#: admin/src/Integrations/Woocommerce.php:627
+msgid "To retrieve the link to the downloads area in the customer My Account page"
+msgstr ""
+"Pour récupérer le lien vers la zone de téléchargements dans la page Mon "
+"Compte du client"
+
+#: admin/src/Integrations/Woocommerce.php:579
+msgid ""
+"To retrieve the name of each downloadable product in the WooCommerce order, "
+"separated by line"
+msgstr ""
+"Pour récupérer le nom de chaque produit téléchargeable dans la commande "
+"WooCommerce, séparés par ligne"
+
+#: admin/src/Integrations/Woocommerce.php:503
 msgid "To retrieve the order currency symbol"
 msgstr "Pour récupérer le symbole de la devise de la commande"
 
-#: admin/src/Integrations/Woocommerce.php:399
+#: admin/src/Integrations/Woocommerce.php:495
 msgid "To retrieve the order payment URL"
 msgstr "Pour récupérer l'URL de paiement de la commande"
 
-#: admin/src/Integrations/Wordpress.php:283
+#: admin/src/Integrations/Wordpress.php:284
 msgid "To retrieve the password reset link"
 msgstr "Pour récupérer le lien de réinitialisation du mot de passe"
 
-#: admin/src/Integrations/Flexify_Checkout.php:214
+#: admin/src/Integrations/Flexify_Checkout.php:215
 msgid ""
 "To retrieve the Pix Copia e Cola code from the order. Through the Flexify "
 "Checkout - Inter addon integration"
@@ -6602,8 +7181,8 @@ msgstr ""
 "Pour récupérer le code Pix Copia e Cola de la commande. Via l'intégration "
 "de Flexify Checkout - Inter addon"
 
-#: admin/src/Integrations/Flexify_Checkout.php:222
-#: admin/src/Integrations/Flexify_Checkout.php:230
+#: admin/src/Integrations/Flexify_Checkout.php:223
+#: admin/src/Integrations/Flexify_Checkout.php:231
 msgid ""
 "To retrieve the Pix Copia e Cola expiration time. Through the Flexify "
 "Checkout - Inter addon integration"
@@ -6611,31 +7190,31 @@ msgstr ""
 "Pour récupérer le temps d'expiration du Pix Copia e Cola. Via l'intégration "
 "de Flexify Checkout - Inter addon"
 
-#: admin/src/Integrations/Wordpress.php:264
+#: admin/src/Integrations/Wordpress.php:265
 msgid "To retrieve the post categories, separated by commas"
 msgstr "Pour récupérer les catégories du post, séparées par des virgules"
 
-#: admin/src/Integrations/Wordpress.php:237
+#: admin/src/Integrations/Wordpress.php:238
 msgid "To retrieve the post content (text only)"
 msgstr "Pour récupérer le contenu du post (texte uniquement)"
 
-#: admin/src/Integrations/Wordpress.php:246
+#: admin/src/Integrations/Wordpress.php:247
 msgid "To retrieve the post link"
 msgstr "Pour récupérer le lien du post"
 
-#: admin/src/Integrations/Wordpress.php:228
+#: admin/src/Integrations/Wordpress.php:229
 msgid "To retrieve the post publish date"
 msgstr "Pour récupérer la date de publication de l'article"
 
-#: admin/src/Integrations/Wordpress.php:255
+#: admin/src/Integrations/Wordpress.php:256
 msgid "To retrieve the post tags, separated by commas"
 msgstr "Pour récupérer les tags de l'article, séparés par des virgules"
 
-#: admin/src/Integrations/Wordpress.php:219
+#: admin/src/Integrations/Wordpress.php:220
 msgid "To retrieve the post title"
 msgstr "Pour récupérer le titre de l'article"
 
-#: admin/src/Integrations/Woocommerce.php:387
+#: admin/src/Integrations/Woocommerce.php:483
 msgid ""
 "To retrieve the review link for each purchased product from the order, "
 "separated by line"
@@ -6643,35 +7222,35 @@ msgstr ""
 "Pour récupérer le lien d'avis pour chaque produit acheté dans la commande, "
 "séparés par ligne"
 
-#: admin/src/Integrations/Woocommerce.php:331
+#: admin/src/Integrations/Woocommerce.php:427
 msgid "To retrieve the shipping phone from the WooCommerce order"
 msgstr "Pour récupérer le téléphone d'expédition de la commande WooCommerce"
 
-#: admin/src/Integrations/Wordpress.php:195
+#: admin/src/Integrations/Wordpress.php:196
 msgid "To retrieve the site name"
 msgstr "Pour récupérer le nom du site"
 
-#: admin/src/Integrations/Wordpress.php:187
+#: admin/src/Integrations/Wordpress.php:188
 msgid "To retrieve the site URL"
 msgstr "Pour récupérer l'URL du site"
 
-#: admin/src/Integrations/Wordpress.php:179
+#: admin/src/Integrations/Wordpress.php:180
 msgid "To retrieve the user email"
 msgstr "Pour récupérer l'email de l'utilisateur"
 
-#: admin/src/Integrations/Wordpress.php:163
+#: admin/src/Integrations/Wordpress.php:164
 msgid "To retrieve the user first name"
 msgstr "Pour récupérer le prénom de l'utilisateur"
 
-#: admin/src/Integrations/Wordpress.php:171
+#: admin/src/Integrations/Wordpress.php:172
 msgid "To retrieve the user last name"
 msgstr "Pour récupérer le nom de famille de l'utilisateur"
 
-#: admin/src/Integrations/Woocommerce.php:1394
+#: admin/src/Integrations/Woocommerce.php:1841
 msgid "To retrieve the value of %s"
 msgstr "Pour récupérer la valeur de %s"
 
-#: admin/src/Integrations/Woocommerce.php:478
+#: admin/src/Integrations/Woocommerce.php:574
 msgid ""
 "To retrieve the value of a specific checkout field in the WooCommerce "
 "order. Replace FIELD_ID with the checkout field ID, for example: "
@@ -6681,39 +7260,39 @@ msgstr ""
 "WooCommerce. Remplacez FIELD_ID par l'ID du champ de paiement, par exemple "
 ": billing_email."
 
-#: admin/src/Integrations/Woocommerce.php:355
+#: admin/src/Integrations/Woocommerce.php:451
 msgid "To retrieve the WooCommerce order date"
 msgstr "Pour récupérer la date de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:339
+#: admin/src/Integrations/Woocommerce.php:435
 msgid "To retrieve the WooCommerce order number"
 msgstr "Pour récupérer le numéro de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:455
+#: admin/src/Integrations/Woocommerce.php:551
 msgid "To retrieve the WooCommerce order payment method title"
 msgstr "Pour récupérer le titre du mode de paiement de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:470
+#: admin/src/Integrations/Woocommerce.php:566
 msgid "To retrieve the WooCommerce order shipping address"
 msgstr "Pour récupérer l'adresse de livraison de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:347
+#: admin/src/Integrations/Woocommerce.php:443
 msgid "To retrieve the WooCommerce order status"
 msgstr "Pour récupérer le statut de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:415
+#: admin/src/Integrations/Woocommerce.php:511
 msgid "To retrieve the WooCommerce order total"
 msgstr "Pour récupérer le total de la commande WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:423
+#: admin/src/Integrations/Woocommerce.php:519
 msgid "To retrieve the WooCommerce total discount"
 msgstr "Pour récupérer le total de la remise WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:439
+#: admin/src/Integrations/Woocommerce.php:535
 msgid "To retrieve the WooCommerce total refunded amount"
 msgstr "Pour récupérer le montant total remboursé par WooCommerce"
 
-#: admin/src/Integrations/Woocommerce.php:431
+#: admin/src/Integrations/Woocommerce.php:527
 msgid "To retrieve the WooCommerce total tax"
 msgstr "Pour récupérer le total de la taxe WooCommerce"
 
@@ -6738,12 +7317,18 @@ msgstr "Togo"
 msgid "Tokelau"
 msgstr "Tokelau"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:107
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:111
+#: admin/src/Integrations/Telegram.php:135
+msgid "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...)."
+msgstr ""
+"Jeton fourni par @BotFather lorsque vous créez un bot (ex : "
+"123456:ABC-DEF...)."
+
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:120
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:124
 msgid "Tone"
 msgstr "Ton"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:95
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:108
 msgid ""
 "Tone, personality, and brand rules for the AI. Optional — it adds to the "
 "global persona from settings."
@@ -6790,7 +7375,7 @@ msgstr "Déclencheur plus disponible"
 msgid "Trigger settings"
 msgstr "Paramètres du déclencheur"
 
-#: app/src/pages/builder/BuilderPage.vue:1411
+#: app/src/pages/builder/BuilderPage.vue:1422
 msgid "Trigger warning"
 msgstr "Avertissement de déclencheur"
 
@@ -6806,7 +7391,7 @@ msgstr "Déclencher lorsque le statut d'une commande atteint le statut terminé.
 msgid "Trigger when an order status changes."
 msgstr "Déclencher lorsque le statut d'une commande change."
 
-#: app/src/components/builder/TemplateCard.vue:45
+#: app/src/components/builder/TemplateCard.vue:112
 msgid "Trigger:"
 msgstr "Déclencheur :"
 
@@ -6870,7 +7455,7 @@ msgstr "Type"
 msgid "Type at least 2 characters…"
 msgstr "Tapez au moins 2 caractères…"
 
-#: admin/src/Admin/Builder/Registry.php:406
+#: admin/src/Admin/Builder/Registry.php:441
 #: app/src/builder/actions/definitions/condition.ts:126
 msgid "Type label"
 msgstr "Tapez l'étiquette"
@@ -6879,12 +7464,17 @@ msgstr "Tapez l'étiquette"
 msgid "Type to filter…"
 msgstr "Tapez pour filtrer…"
 
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:56
+msgid "Type your e-mail... Use {{ placeholders }} and *bold*"
+msgstr "Tapez votre e-mail... Utilisez {{ placeholders }} et *gras*"
+
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:224
 msgid "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}"
 msgstr ""
 "Tapez votre message... Utilisez {{ placeholders }} et {{ "
 "joinotify_coupon_code }}"
 
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:45
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:57
 msgid "Type your message... Use {{ placeholders }} and *bold*"
 msgstr "Tapez votre message... Utilisez {{ placeholders }} et *gras*"
@@ -6893,7 +7483,7 @@ msgstr "Tapez votre message... Utilisez {{ placeholders }} et *gras*"
 msgid "Type your test message..."
 msgstr "Tapez votre message de test..."
 
-#: admin/src/Builder/Messages.php:275
+#: admin/src/Builder/Messages.php:323
 msgid "Type: %s"
 msgstr "Tapez : %s"
 
@@ -6930,7 +7520,7 @@ msgstr "Royaume-Uni"
 msgid "United States"
 msgstr "États-Unis"
 
-#: admin/src/AI/AI_Manager.php:120
+#: admin/src/AI/AI_Manager.php:161
 msgid "Unknown AI error."
 msgstr "Erreur AI inconnue."
 
@@ -6938,7 +7528,12 @@ msgstr "Erreur AI inconnue."
 msgid "Unknown response"
 msgstr "Réponse inconnue"
 
-#: app/src/pages/builder/BuilderPage.vue:1429
+#: admin/src/Integrations/Woocommerce.php:622
+#: admin/src/Integrations/Woocommerce.php:889
+msgid "Unlimited"
+msgstr "Illimité"
+
+#: app/src/pages/builder/BuilderPage.vue:1440
 msgid "Unsaved changes"
 msgstr "Modifications non enregistrées"
 
@@ -6950,7 +7545,7 @@ msgstr "Intention AI non prise en charge."
 msgid "Untitled workflow"
 msgstr "Flux de travail sans titre"
 
-#: app/src/pages/settings/SettingsPage.vue:409
+#: app/src/pages/settings/SettingsPage.vue:410
 msgid "Update check completed."
 msgstr "Vérification de mise à jour terminée."
 
@@ -6970,12 +7565,12 @@ msgstr "Mettre à jour maintenant"
 msgid "Update variable"
 msgstr "Mettre à jour la variable"
 
-#: app/src/pages/settings/SettingsPage.vue:409
-#: app/src/pages/settings/SettingsPage.vue:415
+#: app/src/pages/settings/SettingsPage.vue:410
+#: app/src/pages/settings/SettingsPage.vue:416
 msgid "Updates"
 msgstr "Mises à jour"
 
-#: app/src/components/fields/OpenAiModelField.vue:94
+#: app/src/components/fields/AiModelField.vue:103
 msgid "Updating…"
 msgstr "Mise à jour en cours…"
 
@@ -6983,11 +7578,11 @@ msgstr "Mise à jour en cours…"
 msgid "Uruguay"
 msgstr "Uruguay"
 
-#: admin/src/Core/Workflow_Processor.php:1254
+#: admin/src/Core/Workflow_Processor.php:1567
 msgid "Use a casual and relaxed tone."
 msgstr "Utilisez un ton décontracté et détendu."
 
-#: admin/src/Core/Workflow_Processor.php:1253
+#: admin/src/Core/Workflow_Processor.php:1566
 msgid "Use a formal and professional tone."
 msgstr "Utilisez un ton formel et professionnel."
 
@@ -6995,20 +7590,23 @@ msgstr "Utilisez un ton formel et professionnel."
 msgid "Use a template"
 msgstr "Utilisez un modèle"
 
-#: admin/src/Core/Workflow_Processor.php:1255
+#: admin/src/Core/Workflow_Processor.php:1568
 msgid "Use a warm and friendly tone."
 msgstr "Utilisez un ton chaleureux et amical."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:37
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:47
+#: app/src/composables/useAiProviders.ts:119
 msgid "Use default model"
 msgstr "Utilisez le modèle par défaut"
+
+#: app/src/composables/useAiProviders.ts:93
+msgid "Use default provider"
+msgstr "Utiliser le fournisseur par défaut"
 
 #: templates/otp-login/shared/otp-login-form.php:32
 msgid "Use email and password"
 msgstr "Utilisez un e-mail et un mot de passe"
 
-#: admin/src/Integrations/Otp_Login.php:171
+#: admin/src/Integrations/Otp_Login.php:172
 msgid "Use the first available sender"
 msgstr "Utilisez le premier expéditeur disponible"
 
@@ -7020,7 +7618,11 @@ msgstr ""
 "Utilisez le plus grand service de messagerie au monde pour notifier vos "
 "clients des événements sur votre site web."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:64
+#: app/src/builder/components/base/AttachmentsField.vue:114
+msgid "Use this file"
+msgstr "Utiliser ce fichier"
+
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:65
 msgid "Use this media"
 msgstr "Utilisez ce média"
 
@@ -7038,33 +7640,33 @@ msgstr ""
 "Utilisez votre numéro de téléphone pour recevoir le code ou connectez-vous "
 "avec un e-mail et un mot de passe."
 
-#: admin/src/Integrations/Wordpress.php:92
+#: admin/src/Integrations/Wordpress.php:93
 msgid "User login"
 msgstr "Connexion utilisateur"
 
-#: admin/src/Integrations/Elementor.php:154
-#: admin/src/Integrations/Flexify_Checkout.php:341
-#: admin/src/Integrations/Woocommerce.php:1058
-#: admin/src/Integrations/Wordpress.php:309
-#: admin/src/Integrations/Wordpress.php:319
-#: admin/src/Integrations/Wordpress.php:325
-#: admin/src/Integrations/Wordpress.php:335
-#: admin/src/Integrations/Wpforms.php:201
+#: admin/src/Integrations/Elementor.php:155
+#: admin/src/Integrations/Flexify_Checkout.php:342
+#: admin/src/Integrations/Woocommerce.php:1446
+#: admin/src/Integrations/Wordpress.php:310
+#: admin/src/Integrations/Wordpress.php:320
+#: admin/src/Integrations/Wordpress.php:326
+#: admin/src/Integrations/Wordpress.php:336
+#: admin/src/Integrations/Wpforms.php:202
 msgid "User metadata"
 msgstr "Métadonnées utilisateur"
 
-#: admin/src/Integrations/Wordpress.php:98
+#: admin/src/Integrations/Wordpress.php:99
 msgid "User password recovery"
 msgstr "Récupération de mot de passe utilisateur"
 
-#: admin/src/Integrations/Wordpress.php:305
-#: admin/src/Integrations/Wordpress.php:315
-#: admin/src/Integrations/Wordpress.php:331
+#: admin/src/Integrations/Wordpress.php:306
+#: admin/src/Integrations/Wordpress.php:316
+#: admin/src/Integrations/Wordpress.php:332
 msgid "User role"
 msgstr "Rôle de l'utilisateur"
 
-#: admin/src/Integrations/Woocommerce.php:318
-#: admin/src/Integrations/Wordpress.php:182
+#: admin/src/Integrations/Woocommerce.php:414
+#: admin/src/Integrations/Wordpress.php:183
 msgid "user@example.com"
 msgstr "user@example.com"
 
@@ -7076,7 +7678,7 @@ msgstr "Nom d'utilisateur"
 msgid "Uzbekistan"
 msgstr "Ouzbékistan"
 
-#: admin/src/Admin/Settings/Registry.php:587
+#: admin/src/Admin/Settings/Registry.php:632
 #: app/src/pages/license/LicensePage.vue:48
 msgid "Valid"
 msgstr "Valide"
@@ -7085,11 +7687,11 @@ msgstr "Valide"
 msgid "Validate and save"
 msgstr "Valider et enregistrer"
 
-#: app/src/pages/settings/SettingsPage.vue:478
+#: app/src/pages/settings/SettingsPage.vue:479
 msgid "Validation failed."
 msgstr "La validation a échoué."
 
-#: admin/src/Admin/Builder/Registry.php:401
+#: admin/src/Admin/Builder/Registry.php:436
 #: app/src/builder/actions/definitions/condition.ts:125
 #: app/src/builder/actions/settings/ConditionSettings.vue:223
 #: app/src/builder/actions/settings/ConditionSettings.vue:230
@@ -7097,7 +7699,7 @@ msgstr "La validation a échoué."
 msgid "Value"
 msgstr "Valeur"
 
-#: admin/src/Integrations/Elementor.php:150
+#: admin/src/Integrations/Elementor.php:151
 msgid "Value of a form field"
 msgstr "Valeur d'un champ de formulaire"
 
@@ -7110,8 +7712,8 @@ msgid "Vanuatu"
 msgstr "Vanuatu"
 
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:58
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:63
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:68
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:76
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:81
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:143
 msgid "Variable name"
 msgstr "Nom de la variable"
@@ -7120,7 +7722,7 @@ msgstr "Nom de la variable"
 msgid "Variable removed successfully."
 msgstr "Variable supprimée avec succès."
 
-#: app/src/pages/settings/SettingsPage.vue:543
+#: app/src/pages/settings/SettingsPage.vue:544
 msgid "Variable removed."
 msgstr "Variable supprimée."
 
@@ -7128,7 +7730,7 @@ msgstr "Variable supprimée."
 msgid "Variable saved successfully."
 msgstr "Variable enregistrée avec succès."
 
-#: app/src/pages/settings/SettingsPage.vue:527
+#: app/src/pages/settings/SettingsPage.vue:528
 msgid "Variable saved."
 msgstr "Variable enregistrée."
 
@@ -7157,9 +7759,14 @@ msgid "Verifying..."
 msgstr "Vérification..."
 
 #: admin/src/Validations/Media_Types.php:39
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:32
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:33
 msgid "Video"
 msgstr "Vidéo"
+
+#: admin/src/Integrations/Woocommerce.php:582
+#: admin/src/Integrations/Woocommerce.php:593
+msgid "Video lessons pack (Sample product)"
+msgstr "Pack de leçons vidéo (Produit d'exemple)"
 
 #: admin/src/Validations/Country_Codes.php:62
 msgid "Vietnam"
@@ -7181,23 +7788,23 @@ msgstr "Voir le flux"
 msgid "View the recent events recorded by the plugin."
 msgstr "Voir les événements récents enregistrés par le plugin."
 
-#: admin/src/Builder/Messages.php:118
+#: admin/src/Builder/Messages.php:126
 msgid "Wait %s %s"
 msgstr "Attendre %s %s"
 
-#: admin/src/Builder/Messages.php:116
+#: admin/src/Builder/Messages.php:124
 msgid "Wait %s %s and run at %s"
 msgstr "Attendre %s %s et exécuter à %s"
 
-#: admin/src/Builder/Messages.php:97
+#: admin/src/Builder/Messages.php:105
 msgid "Wait for %s %s"
 msgstr "Attendre %s %s"
 
-#: admin/src/Builder/Messages.php:105
+#: admin/src/Builder/Messages.php:113
 msgid "Wait until %s"
 msgstr "Attendre jusqu'à %s"
 
-#: admin/src/Builder/Messages.php:103
+#: admin/src/Builder/Messages.php:111
 msgid "Wait until %s - %s"
 msgstr "Attendre jusqu'à %s - %s"
 
@@ -7257,7 +7864,7 @@ msgstr "semaine(s)"
 msgid "weeks"
 msgstr "semaines"
 
-#: admin/src/Admin/Builder/Registry.php:358
+#: admin/src/Admin/Builder/Registry.php:393
 #: app/src/builder/actions/definitions/timeDelay.ts:67
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:47
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
@@ -7291,11 +7898,11 @@ msgstr "Flux de travail d'automatisation WhatsApp créés avec Joinotify."
 msgid "WhatsApp message sent with the generated coupon."
 msgstr "Message WhatsApp envoyé avec le coupon généré."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:81
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:82
 msgid "WhatsApp number that will send the media."
 msgstr "Numéro WhatsApp qui enverra le média."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:60
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:73
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
 msgid "WhatsApp number that will send the message."
 msgstr "Numéro WhatsApp qui enverra le message."
@@ -7311,15 +7918,15 @@ msgstr "Message texte WhatsApp"
 msgid "WhatsApp: AI message"
 msgstr "WhatsApp : message AI"
 
-#: admin/src/Admin/Builder/Registry.php:524
-#: admin/src/Integrations/Whatsapp.php:102
-#: app/src/builder/actions/definitions/whatsappMedia.ts:31
-#: app/src/builder/actions/definitions/whatsappMedia.ts:44
+#: admin/src/Admin/Builder/Registry.php:559
+#: admin/src/Integrations/Whatsapp.php:103
+#: app/src/builder/actions/definitions/whatsappMedia.ts:32
+#: app/src/builder/actions/definitions/whatsappMedia.ts:46
 msgid "WhatsApp: Media message"
 msgstr "WhatsApp : message média"
 
-#: admin/src/Admin/Builder/Registry.php:514
-#: admin/src/Integrations/Whatsapp.php:89
+#: admin/src/Admin/Builder/Registry.php:549
+#: admin/src/Integrations/Whatsapp.php:90
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
 msgid "WhatsApp: Text message"
@@ -7342,9 +7949,9 @@ msgid "will be removed permanently."
 msgstr "sera supprimé définitivement."
 
 #: admin/src/Builder/Utils.php:101
-#: admin/src/Integrations/Woocommerce.php:88
-#: admin/src/Integrations/Woocommerce.php:257
-#: admin/src/Integrations/Woocommerce.php:805
+#: admin/src/Integrations/Woocommerce.php:97
+#: admin/src/Integrations/Woocommerce.php:351
+#: admin/src/Integrations/Woocommerce.php:1193
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
@@ -7352,23 +7959,23 @@ msgstr "WooCommerce"
 msgid "WooCommerce is not active."
 msgstr "WooCommerce n'est pas actif."
 
-#: admin/src/Integrations/Woocommerce.php:100
+#: admin/src/Integrations/Woocommerce.php:110
 msgid "WooCommerce settings"
 msgstr "Paramètres de WooCommerce"
 
 #: admin/src/Builder/Utils.php:100
-#: admin/src/Integrations/Integrations_Base.php:864
+#: admin/src/Integrations/Integrations_Base.php:945
 #: admin/src/Integrations/Wordpress.php:63
-#: admin/src/Integrations/Wordpress.php:129
+#: admin/src/Integrations/Wordpress.php:130
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:47
 msgid "WordPress"
 msgstr "WordPress"
 
-#: admin/src/Admin/Settings/Registry.php:432
+#: admin/src/Admin/Settings/Registry.php:475
 msgid "WordPress Multisite"
 msgstr "WordPress Multisite"
 
-#: admin/src/Admin/Settings/Registry.php:427
+#: admin/src/Admin/Settings/Registry.php:470
 msgid "WordPress version"
 msgstr "Version de WordPress"
 
@@ -7387,7 +7994,7 @@ msgstr "Flux de travail activé."
 msgid "Workflow API is not available."
 msgstr "L'API du flux de travail n'est pas disponible."
 
-#: admin/src/Admin/Builder/Registry.php:52
+#: admin/src/Admin/Builder/Registry.php:54
 msgid "Workflow builder"
 msgstr "Constructeur de flux de travail"
 
@@ -7401,7 +8008,7 @@ msgstr ""
 "Flux de travail généré. Passez en revue les étapes et cliquez sur "
 "Enregistrer le flux pour le conserver."
 
-#: app/src/pages/builder/BuilderPage.vue:1353
+#: app/src/pages/builder/BuilderPage.vue:1364
 #: app/src/registries/triggerRegistry.ts:251
 #: app/src/registries/triggerRegistry.ts:280
 #: app/src/registries/triggerRegistry.ts:309
@@ -7419,9 +8026,9 @@ msgstr ""
 msgid "Workflow not found or invalid post type."
 msgstr "Flux de travail non trouvé ou type de publication invalide."
 
-#: admin/src/Admin/Builder/Registry.php:88
-#: admin/src/Admin/Builder/Registry.php:1095
-#: admin/src/Admin/Builder/Registry.php:1165
+#: admin/src/Admin/Builder/Registry.php:91
+#: admin/src/Admin/Builder/Registry.php:1130
+#: admin/src/Admin/Builder/Registry.php:1200
 #: admin/src/Rest/Builder_Test.php:49
 msgid "Workflow not found."
 msgstr "Flux de travail non trouvé."
@@ -7430,18 +8037,18 @@ msgstr "Flux de travail non trouvé."
 msgid "Workflow not saved yet."
 msgstr "Flux de travail pas encore enregistré."
 
-#: admin/src/Admin/Builder/Registry.php:1142
+#: admin/src/Admin/Builder/Registry.php:1177
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 "Flux de travail enregistré en tant que brouillon : corrigez les problèmes "
 "signalés avant de publier."
 
-#: app/src/pages/builder/BuilderPage.vue:1040
+#: app/src/pages/builder/BuilderPage.vue:1045
 msgid "Workflow saved successfully."
 msgstr "Flux de travail enregistré avec succès."
 
-#: admin/src/Admin/Builder/Registry.php:82
-#: admin/src/Admin/Builder/Registry.php:1143
+#: admin/src/Admin/Builder/Registry.php:85
+#: admin/src/Admin/Builder/Registry.php:1178
 msgid "Workflow saved."
 msgstr "Flux de travail enregistré."
 
@@ -7459,8 +8066,8 @@ msgstr ""
 "Déclenchez-en un maintenant pour ignorer l'attente, ou annulez-le pour "
 "arrêter le traitement."
 
-#: app/src/pages/builder/BuilderPage.vue:1118
-#: app/src/pages/builder/BuilderPage.vue:1159
+#: app/src/pages/builder/BuilderPage.vue:1128
+#: app/src/pages/builder/BuilderPage.vue:1169
 #: app/src/stores/useWorkflowBuilderStore.ts:2014
 msgid "Workflow test queued."
 msgstr "Test de flux de travail en attente."
@@ -7481,11 +8088,11 @@ msgstr "Flux de travail par page"
 
 #: admin/src/Builder/Utils.php:104
 #: admin/src/Integrations/Wpforms.php:59
-#: admin/src/Integrations/Wpforms.php:112
+#: admin/src/Integrations/Wpforms.php:113
 msgid "WPForms"
 msgstr "WPForms"
 
-#: admin/src/Core/Workflow_Processor.php:1278
+#: admin/src/Core/Workflow_Processor.php:1591
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -7509,7 +8116,7 @@ msgstr "année(s)"
 msgid "years"
 msgstr "années"
 
-#: admin/src/Admin/Builder/Registry.php:360
+#: admin/src/Admin/Builder/Registry.php:395
 #: app/src/builder/actions/definitions/timeDelay.ts:69
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:49
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:41
@@ -7521,10 +8128,10 @@ msgstr "Années"
 msgid "Yemen"
 msgstr "Yémen"
 
-#: admin/src/Admin/Settings/Registry.php:433
-#: admin/src/Admin/Settings/Registry.php:457
-#: admin/src/Builder/Messages.php:271
-#: admin/src/Builder/Messages.php:272
+#: admin/src/Admin/Settings/Registry.php:476
+#: admin/src/Admin/Settings/Registry.php:500
+#: admin/src/Builder/Messages.php:319
+#: admin/src/Builder/Messages.php:320
 #: admin/src/Integrations/Elementor_Forms.php:123
 #: admin/src/Integrations/Elementor_Forms.php:166
 #: app/src/builder/actions/settings/ConditionSettings.vue:103
@@ -7532,7 +8139,7 @@ msgstr "Yémen"
 msgid "Yes"
 msgstr "Oui"
 
-#: admin/src/Integrations/OpenAI.php:107
+#: admin/src/Integrations/OpenAI.php:108
 msgid "You are a helpful assistant for my store..."
 msgstr "Vous êtes un assistant utile pour ma boutique..."
 
@@ -7540,8 +8147,8 @@ msgstr "Vous êtes un assistant utile pour ma boutique..."
 msgid "You are currently using version"
 msgstr "Vous utilisez actuellement la version"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:101
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:101
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:114
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:114
 msgid "You are the support agent for Store X. Be cordial and concise."
 msgstr "Vous êtes l'agent de support pour le magasin X. Soyez cordial et concis."
 
@@ -7556,11 +8163,11 @@ msgstr "Vous n'avez pas la permission d'accéder à cette page."
 msgid "You do not have permission to edit workflows."
 msgstr "Vous n'avez pas la permission de modifier les flux de travail."
 
-#: admin/src/Admin/Builder/Registry.php:89
+#: admin/src/Admin/Builder/Registry.php:92
 msgid "You have unsaved changes."
 msgstr "Vous avez des modifications non enregistrées."
 
-#: admin/src/Core/Workflow_Processor.php:1261
+#: admin/src/Core/Workflow_Processor.php:1574
 msgid "You may write a longer, detailed message."
 msgstr "Vous pouvez écrire un message plus long et détaillé."
 
@@ -7568,7 +8175,7 @@ msgstr "Vous pouvez écrire un message plus long et détaillé."
 msgid "Your access code is: %1$s. This code expires in %2$d minutes."
 msgstr "Votre code d'accès est : %1$s. Ce code expire dans %2$d minutes."
 
-#: admin/src/Admin/Settings/Registry.php:591
+#: admin/src/Admin/Settings/Registry.php:636
 msgid "Your installation is now ready for full use."
 msgstr "Votre installation est maintenant prête à être utilisée pleinement."
 
@@ -7588,13 +8195,17 @@ msgstr ""
 msgid "Your license key"
 msgstr "Votre clé de licence"
 
-#: admin/src/Admin/Settings/Registry.php:609
+#: admin/src/Admin/Settings/Registry.php:654
 msgid "Your license key:"
 msgstr "Votre clé de licence :"
 
 #: app/src/pages/license/LicensePage.vue:215
 msgid "Your license key: Not available"
 msgstr "Votre clé de licence : Non disponible"
+
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:45
+msgid "Your order is confirmed"
+msgstr "Votre commande est confirmée"
 
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:52
 msgid "Your plugin is up to date."

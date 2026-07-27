@@ -10,8 +10,14 @@
         "lang": "fr_FR",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      "-1001234567890 or {{ telegram_chat_id }}": [
+        "-1001234567890 ou {{ telegram_chat_id }}"
+      ],
       "— Select a sender —": [
         "— Sélectionnez un expéditeur —"
+      ],
+      "{{ wc_billing_email }} or customer@example.com": [
+        "{{ wc_billing_email }} ou customer@example.com"
       ],
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} ou +5511999990000"
@@ -226,6 +232,9 @@
       "Add an action": [
         "Ajouter une action"
       ],
+      "Add attachment": [
+        "Ajouter une pièce jointe"
+      ],
       "Add item": [
         "Ajouter un élément"
       ],
@@ -430,6 +439,30 @@
       "Angola": [
         "Angola"
       ],
+      "Anthropic": [
+        "Anthropic"
+      ],
+      "Anthropic (Claude) settings": [
+        "Paramètres d'Anthropic (Claude)"
+      ],
+      "Anthropic API key": [
+        "Clé API d'Anthropic"
+      ],
+      "Anthropic API key is not configured.": [
+        "La clé API d'Anthropic n'est pas configurée."
+      ],
+      "Anthropic did not return any compatible models.": [
+        "Anthropic n'a retourné aucun modèle compatible."
+      ],
+      "Anthropic request failed with status %d.": [
+        "La requête Anthropic a échoué avec le statut %d."
+      ],
+      "Anthropic returned an empty response.": [
+        "Anthropic a retourné une réponse vide."
+      ],
+      "Any digital product": [
+        "Tout produit numérique"
+      ],
       "Any status": [
         "Tout statut"
       ],
@@ -441,6 +474,12 @@
       ],
       "API key": [
         "Clé API"
+      ],
+      "application": [
+        "application"
+      ],
+      "applications": [
+        "applications"
       ],
       "Applications": [
         "Applications"
@@ -478,6 +517,12 @@
       "at": [
         "à"
       ],
+      "Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it.": [
+        "Attache chaque fichier numérique que le client a acheté dans cette commande. Résolu lorsque le flux s'exécute, il correspond donc toujours à la commande qui l'a déclenché."
+      ],
+      "Attachments": [
+        "Pièces jointes"
+      ],
       "Attempts": [
         "Tentatives"
       ],
@@ -492,6 +537,9 @@
       ],
       "Austria": [
         "Autriche"
+      ],
+      "Authentication": [
+        "Authentification"
       ],
       "Automate message delivery for WordPress event triggers.": [
         "Automatiser la livraison de messages pour les déclencheurs d'événements WordPress."
@@ -513,6 +561,9 @@
       ],
       "Automatically generated": [
         "Généré automatiquement"
+      ],
+      "Automation templates": [
+        "Modèles d'automatisation"
       ],
       "Available actions": [
         "Actions disponibles"
@@ -576,6 +627,9 @@
       ],
       "Bosnia and Herzegovina": [
         "Bosnie-Herzégovine"
+      ],
+      "Bot token": [
+        "Jeton de bot"
       ],
       "Botswana": [
         "Botswana"
@@ -694,6 +748,9 @@
       "Channel": [
         "Canal"
       ],
+      "Chat id": [
+        "ID de chat"
+      ],
       "Check for updates": [
         "Vérifier les mises à jour"
       ],
@@ -714,6 +771,9 @@
       ],
       "China": [
         "Chine"
+      ],
+      "Choose a ready-made flow, import it with one click, and adjust it your way. Search by categories or names.": [
+        "Choisissez un flux prêt à l'emploi, importez-le en un clic et ajustez-le à votre manière. Recherchez par catégories ou noms."
       ],
       "Choose an action to insert below the selected block.": [
         "Choisissez une action à insérer sous le bloc sélectionné."
@@ -748,6 +808,9 @@
       "Choose which order status should start this workflow. Select \"Any status\" to run on every status change.": [
         "Choisissez quel statut de commande doit déclencher ce flux de travail. Sélectionnez \"Tout statut\" pour s'exécuter à chaque changement de statut."
       ],
+      "Claude model used when a workflow node does not override it. The list is fetched from Anthropic and can be refreshed.": [
+        "Modèle Claude utilisé lorsque un nœud de workflow ne le remplace pas. La liste est récupérée depuis Anthropic et peut être actualisée."
+      ],
       "Clear": [
         "Effacer"
       ],
@@ -771,6 +834,9 @@
       ],
       "Clear shade %s": [
         "Effacer l'ombre %s"
+      ],
+      "Clear the category filter to change the display mode.": [
+        "Effacer le filtre de catégorie pour changer le mode d'affichage."
       ],
       "Click here to log in": [
         "Cliquez ici pour vous connecter"
@@ -802,8 +868,14 @@
       "Coming soon": [
         "Bientôt disponible"
       ],
+      "Communication channels": [
+        "Canaux de communication"
+      ],
       "Comoros": [
         "Comores"
+      ],
+      "Complete e-book (Sample product)": [
+        "E-book complet (Produit d'exemple)"
       ],
       "Completed": [
         "Terminé"
@@ -841,6 +913,9 @@
       "Configure the AI provider, credentials, and the default behavior used to generate messages.": [
         "Configurer le fournisseur d'IA, les identifiants et le comportement par défaut utilisé pour générer des messages."
       ],
+      "Configure the credentials and default model used to generate messages with Claude.": [
+        "Configurer les identifiants et le modèle par défaut utilisé pour générer des messages avec Claude."
+      ],
       "Configure the trigger first": [
         "Configurer le déclencheur d'abord"
       ],
@@ -864,6 +939,9 @@
       ],
       "Content": [
         "Contenu"
+      ],
+      "Content & CMS": [
+        "Contenu & CMS"
       ],
       "Context": [
         "Contexte"
@@ -1051,6 +1129,9 @@
       "Coupon: %s": [
         "Coupon : %s"
       ],
+      "Create a bot with @BotFather and paste its token below. The destination chat id is set on each workflow action.": [
+        "Créez un bot avec @BotFather et collez son jeton ci-dessous. L'identifiant de chat de destination est défini sur chaque action de workflow."
+      ],
       "Create a new workflow": [
         "Créer un nouveau flux de travail"
       ],
@@ -1062,6 +1143,9 @@
       ],
       "Create dynamic messages for your automations in a simple and direct way using ChatGPT.": [
         "Créez des messages dynamiques pour vos automatisations de manière simple et directe en utilisant ChatGPT."
+      ],
+      "Create dynamic messages for your automations using Claude, the family of AI models from Anthropic.": [
+        "Créez des messages dynamiques pour vos automatisations en utilisant Claude, la famille de modèles d'IA d'Anthropic."
       ],
       "Create from scratch": [
         "Créer à partir de zéro"
@@ -1192,6 +1276,9 @@
       "Default": [
         "Par défaut"
       ],
+      "Default chat id": [
+        "Identifiant de chat par défaut"
+      ],
       "Default country code": [
         "Code pays par défaut"
       ],
@@ -1294,6 +1381,15 @@
       "Diagnostics": [
         "Diagnostics"
       ],
+      "Digital file downloaded": [
+        "Fichier numérique téléchargé"
+      ],
+      "Digital product": [
+        "Produit numérique"
+      ],
+      "Digital product access granted": [
+        "Accès au produit numérique accordé"
+      ],
       "Disabled": [
         "Désactivé"
       ],
@@ -1320,6 +1416,9 @@
       ],
       "Dispatch now": [
         "Expédier maintenant"
+      ],
+      "Display mode": [
+        "Mode d'affichage"
       ],
       "Displays notifications when a new version is available.": [
         "Affiche des notifications lorsqu'une nouvelle version est disponible."
@@ -1362,6 +1461,12 @@
       ],
       "Dutch Caribbean": [
         "Caraïbes néerlandaises"
+      ],
+      "E-commerce": [
+        "E-commerce"
+      ],
+      "E-mail address or a placeholder that resolves to one.": [
+        "Adresse e-mail ou un espace réservé qui se résout en une."
       ],
       "e.g. greeting": [
         "p. ex. salutation"
@@ -1651,6 +1756,21 @@
       "Fiji": [
         "Fidji"
       ],
+      "File": [
+        "Fichier"
+      ],
+      "File is too large. The maximum size is 5 MB.": [
+        "Le fichier est trop volumineux. La taille maximale est de 5 Mo."
+      ],
+      "File URL": [
+        "URL du fichier"
+      ],
+      "Files delivered with the e-mail. Large files are replaced by their download link so the message still goes out.": [
+        "Fichiers livrés avec l'e-mail. Les fichiers volumineux sont remplacés par leur lien de téléchargement afin que le message soit toujours envoyé."
+      ],
+      "Files sent instead of the media URL above. Each file goes out as its own message, and the caption rides on the first one.": [
+        "Fichiers envoyés au lieu de l'URL multimédia ci-dessus. Chaque fichier est envoyé comme son propre message, et la légende est sur le premier."
+      ],
       "Fill in the email or username and password.": [
         "Remplissez l'email ou le nom d'utilisateur et le mot de passe."
       ],
@@ -1720,6 +1840,9 @@
       "Formal": [
         "Formel"
       ],
+      "Forms & page builders": [
+        "Formulaires et constructeurs de pages"
+      ],
       "France": [
         "France"
       ],
@@ -1737,6 +1860,9 @@
       ],
       "From": [
         "De"
+      ],
+      "From address used to deliver the e-mails. The domain must be verified in Resend.": [
+        "Adresse d'expédition utilisée pour livrer les e-mails. Le domaine doit être vérifié dans Resend."
       ],
       "Gabon": [
         "Gabon"
@@ -1803,6 +1929,9 @@
       ],
       "Greenland": [
         "Groenland"
+      ],
+      "Group by category": [
+        "Grouper par catégorie"
       ],
       "Guadeloupe": [
         "Guadeloupe"
@@ -1969,9 +2098,6 @@
       "Integration settings": [
         "Paramètres d'intégration"
       ],
-      "Integration:": [
-        "Intégration :"
-      ],
       "Integrations": [
         "Intégrations"
       ],
@@ -1995,6 +2121,9 @@
       ],
       "Invalid data.": [
         "Données invalides."
+      ],
+      "Invalid file type. Select a .json file.": [
+        "Type de fichier invalide. Sélectionnez un fichier .json."
       ],
       "Invalid file.": [
         "Fichier invalide."
@@ -2374,6 +2503,9 @@
       "Media caption... Use {{ placeholders }}": [
         "Légende du média... Utilisez {{ placeholders }}"
       ],
+      "Media library file": [
+        "Fichier de la bibliothèque multimédia"
+      ],
       "Media message route": [
         "Route du message multimédia"
       ],
@@ -2599,6 +2731,12 @@
       "No custom variable yet. Click “Add variable” to create your first one.": [
         "Aucune variable personnalisée pour l'instant. Cliquez sur “Ajouter une variable” pour créer votre première."
       ],
+      "No download available for this order.": [
+        "Aucun téléchargement disponible pour cette commande."
+      ],
+      "No downloadable item in this order.": [
+        "Aucun article téléchargeable dans cette commande."
+      ],
       "No entries match the current filters.": [
         "Aucune entrée ne correspond aux filtres actuels."
       ],
@@ -2613,9 +2751,6 @@
       ],
       "No history records match the current filters.": [
         "Aucun enregistrement d'historique ne correspond aux filtres actuels."
-      ],
-      "No integration": [
-        "Aucune intégration"
       ],
       "No integrations found.": [
         "Aucune intégration trouvée."
@@ -2722,6 +2857,9 @@
       "Notice": [
         "Avis"
       ],
+      "Notification": [
+        "Notification"
+      ],
       "Notify when WhatsApp disconnects": [
         "Notifier lorsque WhatsApp se déconnecte"
       ],
@@ -2794,6 +2932,12 @@
       "Optional text sent together with the media.": [
         "Texte optionnel envoyé avec le média."
       ],
+      "Optional. Friendly name shown as the sender of the e-mails.": [
+        "Optionnel. Nom amical affiché comme l'expéditeur des e-mails."
+      ],
+      "Optional. Used only when a workflow action does not specify a chat id.": [
+        "Optionnel. Utilisé uniquement lorsqu'une action de workflow ne spécifie pas d'identifiant de chat."
+      ],
       "Options": [
         "Options"
       ],
@@ -2814,6 +2958,9 @@
       ],
       "Order completed": [
         "Commande complétée"
+      ],
+      "Order digital files": [
+        "Commander des fichiers numériques"
       ],
       "Order fully refunded": [
         "Commande entièrement remboursée"
@@ -2838,6 +2985,9 @@
       ],
       "Other": [
         "Autre"
+      ],
+      "Others": [
+        "Autres"
       ],
       "OTP": [
         "OTP"
@@ -2889,6 +3039,9 @@
       ],
       "Paste the license key you received after purchase and click Activate to unlock all features.": [
         "Collez la clé de licence que vous avez reçue après l'achat et cliquez sur Activer pour débloquer toutes les fonctionnalités."
+      ],
+      "Paste your Resend API key and set the verified sender address used to deliver e-mails.": [
+        "Collez votre clé API Resend et définissez l'adresse d'expéditeur vérifiée utilisée pour livrer les e-mails."
       ],
       "Path of the route used to send messages with media.": [
         "Chemin de la route utilisée pour envoyer des messages avec des médias."
@@ -2961,6 +3114,9 @@
       ],
       "Pick a color": [
         "Choisissez une couleur"
+      ],
+      "Pick a file from the library": [
+        "Choisissez un fichier dans la bibliothèque"
       ],
       "Pick base color": [
         "Choisissez la couleur de base"
@@ -3139,6 +3295,9 @@
       "Remove": [
         "Supprimer"
       ],
+      "Remove attachment": [
+        "Supprimer la pièce jointe"
+      ],
       "Remove sender": [
         "Supprimer l'expéditeur"
       ],
@@ -3166,11 +3325,20 @@
       "Required configuration for this trigger to run correctly.": [
         "Configuration requise pour que ce déclencheur fonctionne correctement."
       ],
+      "Resend": [
+        "Renvoyer"
+      ],
       "Resend code": [
         "Renvoyer le code"
       ],
       "Resend code in": [
         "Renvoyer le code dans"
+      ],
+      "Resend e-mail": [
+        "Renvoyer l'e-mail"
+      ],
+      "Resend settings": [
+        "Paramètres de renvoi"
       ],
       "Reset": [
         "Réinitialiser"
@@ -3184,6 +3352,9 @@
       "Resize": [
         "Redimensionner"
       ],
+      "Respond with a single valid JSON object and nothing else. Do not wrap it in markdown code fences.": [
+        "Répondez avec un seul objet JSON valide et rien d'autre. Ne l'encapsulez pas dans des balises de code markdown."
+      ],
       "Response code": [
         "Code de réponse"
       ],
@@ -3192,6 +3363,12 @@
       ],
       "Restore default": [
         "Restaurer par défaut"
+      ],
+      "Restrict this workflow to a single digital product. Leave \"Any digital product\" to run for every downloadable item in the order.": [
+        "Restreindre ce workflow à un seul produit numérique. Laissez \"Tout produit numérique\" pour s'appliquer à chaque article téléchargeable dans la commande."
+      ],
+      "Restrict this workflow to a single digital product. Leave \"Any digital product\" to run for every downloaded file.": [
+        "Restreindre ce flux de travail à un seul produit numérique. Laissez \"Tout produit numérique\" pour s'exécuter pour chaque fichier téléchargé."
       ],
       "Retrieve the cart contact's email address.": [
         "Récupérer l'adresse e-mail du contact du panier."
@@ -3234,6 +3411,9 @@
       ],
       "Route path used to send text messages.": [
         "Chemin de routage utilisé pour envoyer des messages texte."
+      ],
+      "Route this node to a specific engine. Leave on the default to use the provider from settings.": [
+        "Dirigez ce nœud vers un moteur spécifique. Laissez sur le défaut pour utiliser le fournisseur des paramètres."
       ],
       "Rule data": [
         "Données de règle"
@@ -3328,9 +3508,6 @@
       "Search actions": [
         "Rechercher des actions"
       ],
-      "Search by categories or names.": [
-        "Rechercher par catégories ou noms."
-      ],
       "Search entity…": [
         "Rechercher une entité…"
       ],
@@ -3382,8 +3559,14 @@
       "Seconds": [
         "Secondes"
       ],
+      "Secret key used to authenticate requests to Anthropic. Find it at console.anthropic.com.": [
+        "Clé secrète utilisée pour authentifier les demandes à Anthropic. Trouvez-la sur console.anthropic.com."
+      ],
       "Secret key used to authenticate requests to OpenAI. Find it at platform.openai.com.": [
         "Clé secrète utilisée pour authentifier les requêtes à OpenAI. Trouvez-la sur platform.openai.com."
+      ],
+      "Secret key used to authenticate requests to Resend. Find it at resend.com/api-keys.": [
+        "Clé secrète utilisée pour authentifier les demandes à Resend. Trouvez-la sur resend.com/api-keys."
       ],
       "Secure access": [
         "Accès sécurisé"
@@ -3399,6 +3582,9 @@
       ],
       "Select a date": [
         "Sélectionner une date"
+      ],
+      "Select a digital product": [
+        "Sélectionnez un produit numérique"
       ],
       "Select a node to edit its settings.": [
         "Sélectionner un nœud pour modifier ses paramètres."
@@ -3466,6 +3652,9 @@
       "Send a media message (image, file, document, and audio) with WhatsApp.": [
         "Envoyer un message multimédia (image, fichier, document et audio) avec WhatsApp."
       ],
+      "Send a text message to a Telegram chat, group or channel.": [
+        "Envoyer un message texte à un chat, groupe ou canal Telegram."
+      ],
       "Send a text message via WhatsApp.": [
         "Envoyer un message texte via WhatsApp."
       ],
@@ -3475,6 +3664,15 @@
       "Send a WhatsApp text message.": [
         "Envoyer un message texte WhatsApp."
       ],
+      "Send an e-mail notification through Resend.": [
+        "Envoyer une notification par e-mail via Resend."
+      ],
+      "Send e-mail (Resend)": [
+        "Envoyer un e-mail (Resend)"
+      ],
+      "Send e-mail notifications for your automations through the Resend API.": [
+        "Envoyer des notifications par e-mail pour vos automatisations via l'API Resend."
+      ],
       "Send media": [
         "Envoyer des médias"
       ],
@@ -3483,6 +3681,9 @@
       ],
       "Send messages when an Elementor form with a phone number field is submitted. Connect with your customers instantly.": [
         "Envoyer des messages lorsqu'un formulaire Elementor avec un champ de numéro de téléphone est soumis. Connectez-vous instantanément avec vos clients."
+      ],
+      "Send notifications to Telegram chats, groups and channels through a bot.": [
+        "Envoyer des notifications aux chats, groupes et canaux Telegram via un bot."
       ],
       "Send test message": [
         "Envoyer un message test"
@@ -3498,6 +3699,12 @@
       ],
       "Sender": [
         "Expéditeur"
+      ],
+      "Sender e-mail": [
+        "E-mail de l'expéditeur"
+      ],
+      "Sender name": [
+        "Nom de l'expéditeur"
       ],
       "Sender phone": [
         "Téléphone de l'expéditeur"
@@ -3561,6 +3768,9 @@
       ],
       "Short": [
         "Court"
+      ],
+      "Show all": [
+        "Afficher tout"
       ],
       "Show password": [
         "Afficher le mot de passe"
@@ -3649,6 +3859,12 @@
       "Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen.": [
         "Stockez les erreurs, avertissements et demandes échouées dans une table dédiée consultable depuis l'écran des journaux de débogage."
       ],
+      "Subject": [
+        "Objet"
+      ],
+      "Subject: %s": [
+        "Objet : %s"
+      ],
       "Subscription": [
         "Abonnement"
       ],
@@ -3729,6 +3945,21 @@
       ],
       "Tanzania": [
         "Tanzanie"
+      ],
+      "Telegram": [
+        "Telegram"
+      ],
+      "Telegram chat, group or channel id. Accepts a placeholder that resolves to one.": [
+        "Identifiant de chat, groupe ou canal Telegram. Accepte un espace réservé qui se résout en un."
+      ],
+      "Telegram message": [
+        "Message Telegram"
+      ],
+      "Telegram settings": [
+        "Paramètres Telegram"
+      ],
+      "Telegram: message": [
+        "Telegram : message"
       ],
       "Temperature": [
         "Température"
@@ -3819,6 +4050,9 @@
       ],
       "The file does not contain any settings to import.": [
         "Le fichier ne contient aucun paramètre à importer."
+      ],
+      "The files below were too large to attach, so you can download them here:": [
+        "Les fichiers ci-dessous étaient trop volumineux pour être joints, vous pouvez donc les télécharger ici :"
       ],
       "The generated snippet uses a blocked function (%s). Please refine the request.": [
         "L'extrait généré utilise une fonction bloquée (%s). Veuillez affiner la demande."
@@ -3942,6 +4176,12 @@
       ],
       "This action is triggered when an order's status is changed to completed.": [
         "Cette action est déclenchée lorsqu'un statut de commande est changé en terminé."
+      ],
+      "This action is triggered when the customer actually downloads a digital file from the order.": [
+        "Cette action est déclenchée lorsque le client télécharge effectivement un fichier numérique de la commande."
+      ],
+      "This action is triggered when WooCommerce grants the download access of a digital product to the customer. This is the recommended trigger to deliver digital products, because the download links only exist from this moment on.": [
+        "Cette action est déclenchée lorsque WooCommerce accorde l'accès au téléchargement d'un produit numérique au client. C'est le déclencheur recommandé pour livrer des produits numériques, car les liens de téléchargement n'existent qu'à partir de ce moment."
       ],
       "This action stops the workflow immediately. There are no editable settings.": [
         "Cette action arrête immédiatement le flux de travail. Il n'y a pas de paramètres modifiables."
@@ -4078,11 +4318,17 @@
       "To retrieve each purchased product and quantity from the order, separated by line": [
         "Pour récupérer chaque produit acheté et sa quantité de la commande, séparés par ligne."
       ],
+      "To retrieve how many downloads the customer still has available. Returns the smallest amount when the files have different limits.": [
+        "Pour récupérer combien de téléchargements le client a encore disponibles. Renvoie le plus petit montant lorsque les fichiers ont des limites différentes."
+      ],
       "To retrieve information from a WPForms form field. Replace FIELD_ID with the corresponding field ID.": [
         "Pour récupérer des informations d'un champ de formulaire WPForms. Remplacez FIELD_ID par l'ID du champ correspondant."
       ],
       "To retrieve information from an Elementor form field. Replace FIELD_ID with the respective ID.": [
         "Pour récupérer des informations d'un champ de formulaire Elementor. Remplacez FIELD_ID par l'ID respectif."
+      ],
+      "To retrieve only the download links of the WooCommerce order, without the file name, separated by line": [
+        "Pour récupérer uniquement les liens de téléchargement de la commande WooCommerce, sans le nom du fichier, séparés par ligne"
       ],
       "To retrieve the billing phone from the WooCommerce order": [
         "Pour récupérer le téléphone de facturation de la commande WooCommerce."
@@ -4120,8 +4366,23 @@
       "To retrieve the customer billing last name from the WooCommerce order": [
         "Pour récupérer le nom de famille du client à partir de la commande WooCommerce"
       ],
+      "To retrieve the download links of a specific product in the WooCommerce order. Replace PRODUCT_ID with the product ID, for example: 128.": [
+        "Pour récupérer les liens de téléchargement d'un produit spécifique dans la commande WooCommerce. Remplacez PRODUCT_ID par l'ID du produit, par exemple : 128."
+      ],
+      "To retrieve the download name and link of each digital file in the WooCommerce order, separated by line. Only available after the download access has been granted.": [
+        "Pour récupérer le nom et le lien de chaque fichier numérique dans la commande WooCommerce, séparés par ligne. Disponible uniquement après que l'accès au téléchargement a été accordé."
+      ],
+      "To retrieve the expiration date of the download access. Returns the closest date when the files expire on different dates.": [
+        "Pour récupérer la date d'expiration de l'accès au téléchargement. Renvoie la date la plus proche lorsque les fichiers expirent à des dates différentes."
+      ],
       "To retrieve the featured image URL of the post": [
         "Pour récupérer l'URL de l'image mise en avant du post"
+      ],
+      "To retrieve the link to the downloads area in the customer My Account page": [
+        "Pour récupérer le lien vers la zone de téléchargements dans la page Mon Compte du client"
+      ],
+      "To retrieve the name of each downloadable product in the WooCommerce order, separated by line": [
+        "Pour récupérer le nom de chaque produit téléchargeable dans la commande WooCommerce, séparés par ligne"
       ],
       "To retrieve the order currency symbol": [
         "Pour récupérer le symbole de la devise de la commande"
@@ -4225,6 +4486,9 @@
       "Tokelau": [
         "Tokelau"
       ],
+      "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...).": [
+        "Jeton fourni par @BotFather lorsque vous créez un bot (ex : 123456:ABC-DEF...)."
+      ],
       "Tone": [
         "Ton"
       ],
@@ -4312,6 +4576,9 @@
       "Type to filter…": [
         "Tapez pour filtrer…"
       ],
+      "Type your e-mail... Use {{ placeholders }} and *bold*": [
+        "Tapez votre e-mail... Utilisez {{ placeholders }} et *gras*"
+      ],
       "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}": [
         "Tapez votre message... Utilisez {{ placeholders }} et {{ joinotify_coupon_code }}"
       ],
@@ -4353,6 +4620,9 @@
       ],
       "Unknown response": [
         "Réponse inconnue"
+      ],
+      "Unlimited": [
+        "Illimité"
       ],
       "Unsaved changes": [
         "Modifications non enregistrées"
@@ -4402,6 +4672,9 @@
       "Use default model": [
         "Utilisez le modèle par défaut"
       ],
+      "Use default provider": [
+        "Utiliser le fournisseur par défaut"
+      ],
       "Use email and password": [
         "Utilisez un e-mail et un mot de passe"
       ],
@@ -4410,6 +4683,9 @@
       ],
       "Use the world's largest messaging service to notify your customers about events on your website.": [
         "Utilisez le plus grand service de messagerie au monde pour notifier vos clients des événements sur votre site web."
+      ],
+      "Use this file": [
+        "Utiliser ce fichier"
       ],
       "Use this media": [
         "Utilisez ce média"
@@ -4494,6 +4770,9 @@
       ],
       "Video": [
         "Vidéo"
+      ],
+      "Video lessons pack (Sample product)": [
+        "Pack de leçons vidéo (Produit d'exemple)"
       ],
       "Vietnam": [
         "Vietnam"
@@ -4755,6 +5034,9 @@
       ],
       "Your license key: Not available": [
         "Votre clé de licence : Non disponible"
+      ],
+      "Your order is confirmed": [
+        "Votre commande est confirmée"
       ],
       "Your plugin is up to date.": [
         "Votre plugin est à jour."
