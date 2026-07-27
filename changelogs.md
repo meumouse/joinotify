@@ -1,3 +1,15 @@
+Versão 2.1.0 (27/07/2026)
+* Novo recurso: Entrega de produtos digitais do WooCommerce diretamente pelo construtor de fluxos, enviando arquivos e PDFs por e-mail ou WhatsApp
+* Novo recurso: Envio de anexos nas ações de e-mail (Resend) e de mídia do WhatsApp, com campo reutilizável que aceita arquivos da biblioteca de mídia, links ou os arquivos digitais do próprio pedido
+     - Anexos grandes no e-mail são substituídos automaticamente pelo link de download, garantindo o envio da mensagem
+     - Envio de múltiplos arquivos na ação de mídia do WhatsApp
+* Novo acionamento: "Acesso a produto digital liberado" (WooCommerce), recomendado para fluxos de entrega, pois os links de download já existem nesse momento
+* Novo acionamento: "Arquivo digital baixado" (WooCommerce), disparado quando o cliente baixa um arquivo, ambos com filtro opcional por produto
+* Novas variáveis do WooCommerce para produtos digitais: lista de produtos para download, nomes e links dos arquivos, links sem o nome, data de expiração, downloads restantes, link da área de downloads na conta do cliente e link de download por produto específico
+* Melhoria: variáveis passam a respeitar o acionamento escolhido também no envio, evitando que variáveis sem contexto sejam preenchidas indevidamente
+* Correção de bugs
+     - Ordem dos argumentos no acionamento de reembolso parcial do WooCommerce, que fazia a variável do pedido receber o identificador do reembolso
+
 Versão 2.0.0 (02/07/2026)
 * Novo construtor de fluxos: interface totalmente redesenhada em formato de canvas visual, com arrastar e soltar, conectar etapas, zoom, ajuste automático à tela e botões de desfazer/refazer
 * Novo recurso: Inteligência Artificial no construtor de fluxos
