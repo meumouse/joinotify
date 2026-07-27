@@ -17,6 +17,7 @@ import BaseNumberField from '../../components/base/BaseNumberField.vue';
 import BaseAccordion from '../../components/base/BaseAccordion.vue';
 import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
+import { useAiProviders } from '../../../composables/useAiProviders';
 import { __, textDomain } from '../../../utils/i18n';
 
 const props = defineProps({
@@ -32,15 +33,13 @@ const usageToken = computed(() => {
   return name ? `{{ ai:${name} }}` : '{{ ai:NAME }}';
 });
 
-// Empty value means "use the global default model" configured in settings.
-const modelOptions = computed(() => [
-  { label: __('Use default model', textDomain), value: '' },
-  { label: 'GPT-4o mini', value: 'gpt-4o-mini' },
-  { label: 'GPT-4o', value: 'gpt-4o' },
-  { label: 'GPT-4.1 mini', value: 'gpt-4.1-mini' },
-  { label: 'GPT-4.1', value: 'gpt-4.1' },
-  { label: 'o4-mini', value: 'o4-mini' },
-]);
+const { providerSelectOptions, hasMultipleProviders, resolveProviderId, modelOptions } = useAiProviders();
+
+// The provider a node effectively targets (falls back to the default provider).
+const activeProvider = computed(() => resolveProviderId((props.modelValue as Record<string, unknown>).ai_provider));
+
+// Models offered reflect the selected provider so the override stays valid.
+const providerModelOptions = computed(() => modelOptions(activeProvider.value));
 
 /**
  * Update a single key on the action model and emit the merged result.
@@ -53,6 +52,20 @@ function update(key: string, value: unknown) {
   emit('update:modelValue', {
     ...(props.modelValue as Record<string, unknown>),
     [key]: value,
+  });
+}
+
+/**
+ * Switch the routing provider and clear the model override, since a model
+ * belongs to a single provider and would not exist on the new one.
+ *
+ * @param {string} value The newly selected provider id.
+ */
+function onProviderChange(value: string) {
+  emit('update:modelValue', {
+    ...(props.modelValue as Record<string, unknown>),
+    ai_provider: value,
+    ai_model: '',
   });
 }
 </script>
@@ -105,10 +118,23 @@ function update(key: string, value: unknown) {
 
     <BaseAccordion :title="__('Advanced (model override)', textDomain)" :open="false">
       <div class="space-y-4">
+        <FieldGroup
+          v-if="hasMultipleProviders"
+          :title="__('AI provider', textDomain)"
+          :description="__('Route this node to a specific engine. Leave on the default to use the provider from settings.', textDomain)"
+        >
+          <BaseSelectField
+            :model-value="String(modelValue.ai_provider || '')"
+            :options="providerSelectOptions"
+            :label="__('AI provider', textDomain)"
+            @update:model-value="onProviderChange($event)"
+          />
+        </FieldGroup>
+
         <FieldGroup :title="__('Model', textDomain)" :description="__('Override the default model for this node only.', textDomain)">
           <BaseSelectField
             :model-value="String(modelValue.ai_model || '')"
-            :options="modelOptions"
+            :options="providerModelOptions"
             :label="__('Model', textDomain)"
             @update:model-value="update('ai_model', $event)"
           />

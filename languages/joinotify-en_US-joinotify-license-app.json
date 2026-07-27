@@ -10,8 +10,14 @@
         "lang": "en_US",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      "-1001234567890 or {{ telegram_chat_id }}": [
+        "-1001234567890 or {{ telegram_chat_id }}"
+      ],
       "— Select a sender —": [
         "— Select a sender —"
+      ],
+      "{{ wc_billing_email }} or customer@example.com": [
+        "{{ wc_billing_email }} or customer@example.com"
       ],
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} or +5511999990000"
@@ -233,6 +239,9 @@
       "Add an action": [
         "Add an action"
       ],
+      "Add attachment": [
+        "Add attachment"
+      ],
       "Add item": [
         "Add item"
       ],
@@ -437,6 +446,30 @@
       "Angola": [
         "Angola"
       ],
+      "Anthropic": [
+        "Anthropic"
+      ],
+      "Anthropic (Claude) settings": [
+        "Anthropic (Claude) settings"
+      ],
+      "Anthropic API key": [
+        "Anthropic API key"
+      ],
+      "Anthropic API key is not configured.": [
+        "Anthropic API key is not configured."
+      ],
+      "Anthropic did not return any compatible models.": [
+        "Anthropic did not return any compatible models."
+      ],
+      "Anthropic request failed with status %d.": [
+        "Anthropic request failed with status %d."
+      ],
+      "Anthropic returned an empty response.": [
+        "Anthropic returned an empty response."
+      ],
+      "Any digital product": [
+        "Any digital product"
+      ],
       "Any status": [
         "Any status"
       ],
@@ -448,6 +481,12 @@
       ],
       "API key": [
         "API key"
+      ],
+      "application": [
+        "application"
+      ],
+      "applications": [
+        "applications"
       ],
       "Applications": [
         "Applications"
@@ -485,6 +524,12 @@
       "at": [
         "at"
       ],
+      "Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it.": [
+        "Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it."
+      ],
+      "Attachments": [
+        "Attachments"
+      ],
       "Attempts": [
         "Attempts"
       ],
@@ -499,6 +544,9 @@
       ],
       "Austria": [
         "Austria"
+      ],
+      "Authentication": [
+        "Authentication"
       ],
       "Automate message delivery for WordPress event triggers.": [
         "Automate message delivery for WordPress event triggers."
@@ -520,6 +568,9 @@
       ],
       "Automatically generated": [
         "Automatically generated"
+      ],
+      "Automation templates": [
+        "Automation templates"
       ],
       "Available actions": [
         "Available actions"
@@ -583,6 +634,9 @@
       ],
       "Bosnia and Herzegovina": [
         "Bosnia and Herzegovina"
+      ],
+      "Bot token": [
+        "Bot token"
       ],
       "Botswana": [
         "Botswana"
@@ -701,6 +755,9 @@
       "Channel": [
         "Channel"
       ],
+      "Chat id": [
+        "Chat id"
+      ],
       "Check for updates": [
         "Check for updates"
       ],
@@ -721,6 +778,9 @@
       ],
       "China": [
         "China"
+      ],
+      "Choose a ready-made flow, import it with one click, and adjust it your way. Search by categories or names.": [
+        "Choose a ready-made flow, import it with one click, and adjust it your way. Search by categories or names."
       ],
       "Choose an action to insert below the selected block.": [
         "Choose an action to insert below the selected block."
@@ -755,6 +815,9 @@
       "Choose which order status should start this workflow. Select \"Any status\" to run on every status change.": [
         "Choose which order status should start this workflow. Select \"Any status\" to run on every status change."
       ],
+      "Claude model used when a workflow node does not override it. The list is fetched from Anthropic and can be refreshed.": [
+        "Claude model used when a workflow node does not override it. The list is fetched from Anthropic and can be refreshed."
+      ],
       "Clear": [
         "Clear"
       ],
@@ -778,6 +841,9 @@
       ],
       "Clear shade %s": [
         "Clear shade %s"
+      ],
+      "Clear the category filter to change the display mode.": [
+        "Clear the category filter to change the display mode."
       ],
       "Click here to log in": [
         "Click here to log in"
@@ -809,8 +875,14 @@
       "Coming soon": [
         "Coming soon"
       ],
+      "Communication channels": [
+        "Communication channels"
+      ],
       "Comoros": [
         "Comoros"
+      ],
+      "Complete e-book (Sample product)": [
+        "Complete e-book (Sample product)"
       ],
       "Completed": [
         "Completed"
@@ -848,6 +920,9 @@
       "Configure the AI provider, credentials, and the default behavior used to generate messages.": [
         "Configure the AI provider, credentials, and the default behavior used to generate messages."
       ],
+      "Configure the credentials and default model used to generate messages with Claude.": [
+        "Configure the credentials and default model used to generate messages with Claude."
+      ],
       "Configure the trigger first": [
         "Configure the trigger first"
       ],
@@ -871,6 +946,9 @@
       ],
       "Content": [
         "Content"
+      ],
+      "Content & CMS": [
+        "Content & CMS"
       ],
       "Context": [
         "Context"
@@ -1058,6 +1136,9 @@
       "Coupon: %s": [
         "Coupon: %s"
       ],
+      "Create a bot with @BotFather and paste its token below. The destination chat id is set on each workflow action.": [
+        "Create a bot with @BotFather and paste its token below. The destination chat id is set on each workflow action."
+      ],
       "Create a new workflow": [
         "Create a new workflow"
       ],
@@ -1069,6 +1150,9 @@
       ],
       "Create dynamic messages for your automations in a simple and direct way using ChatGPT.": [
         "Create dynamic messages for your automations in a simple and direct way using ChatGPT."
+      ],
+      "Create dynamic messages for your automations using Claude, the family of AI models from Anthropic.": [
+        "Create dynamic messages for your automations using Claude, the family of AI models from Anthropic."
       ],
       "Create from scratch": [
         "Create from scratch"
@@ -1199,6 +1283,9 @@
       "Default": [
         "Default"
       ],
+      "Default chat id": [
+        "Default chat id"
+      ],
       "Default country code": [
         "Default country code"
       ],
@@ -1301,6 +1388,15 @@
       "Diagnostics": [
         "Diagnostics"
       ],
+      "Digital file downloaded": [
+        "Digital file downloaded"
+      ],
+      "Digital product": [
+        "Digital product"
+      ],
+      "Digital product access granted": [
+        "Digital product access granted"
+      ],
       "Disabled": [
         "Disabled"
       ],
@@ -1327,6 +1423,9 @@
       ],
       "Dispatch now": [
         "Dispatch now"
+      ],
+      "Display mode": [
+        "Display mode"
       ],
       "Displays notifications when a new version is available.": [
         "Displays notifications when a new version is available."
@@ -1369,6 +1468,12 @@
       ],
       "Dutch Caribbean": [
         "Dutch Caribbean"
+      ],
+      "E-commerce": [
+        "E-commerce"
+      ],
+      "E-mail address or a placeholder that resolves to one.": [
+        "E-mail address or a placeholder that resolves to one."
       ],
       "e.g. greeting": [
         "e.g. greeting"
@@ -1658,6 +1763,21 @@
       "Fiji": [
         "Fiji"
       ],
+      "File": [
+        "File"
+      ],
+      "File is too large. The maximum size is 5 MB.": [
+        "File is too large. The maximum size is 5 MB."
+      ],
+      "File URL": [
+        "File URL"
+      ],
+      "Files delivered with the e-mail. Large files are replaced by their download link so the message still goes out.": [
+        "Files delivered with the e-mail. Large files are replaced by their download link so the message still goes out."
+      ],
+      "Files sent instead of the media URL above. Each file goes out as its own message, and the caption rides on the first one.": [
+        "Files sent instead of the media URL above. Each file goes out as its own message, and the caption rides on the first one."
+      ],
       "Fill in the email or username and password.": [
         "Fill in the email or username and password."
       ],
@@ -1727,6 +1847,9 @@
       "Formal": [
         "Formal"
       ],
+      "Forms & page builders": [
+        "Forms & page builders"
+      ],
       "France": [
         "France"
       ],
@@ -1744,6 +1867,9 @@
       ],
       "From": [
         "From"
+      ],
+      "From address used to deliver the e-mails. The domain must be verified in Resend.": [
+        "From address used to deliver the e-mails. The domain must be verified in Resend."
       ],
       "Gabon": [
         "Gabon"
@@ -1810,6 +1936,9 @@
       ],
       "Greenland": [
         "Greenland"
+      ],
+      "Group by category": [
+        "Group by category"
       ],
       "Guadeloupe": [
         "Guadeloupe"
@@ -1976,9 +2105,6 @@
       "Integration settings": [
         "Integration settings"
       ],
-      "Integration:": [
-        "Integration:"
-      ],
       "Integrations": [
         "Integrations"
       ],
@@ -2002,6 +2128,9 @@
       ],
       "Invalid data.": [
         "Invalid data."
+      ],
+      "Invalid file type. Select a .json file.": [
+        "Invalid file type. Select a .json file."
       ],
       "Invalid file.": [
         "Invalid file."
@@ -2381,6 +2510,9 @@
       "Media caption... Use {{ placeholders }}": [
         "Media caption... Use {{ placeholders }}"
       ],
+      "Media library file": [
+        "Media library file"
+      ],
       "Media message route": [
         "Media message route"
       ],
@@ -2606,6 +2738,12 @@
       "No custom variable yet. Click “Add variable” to create your first one.": [
         "No custom variable yet. Click “Add variable” to create your first one."
       ],
+      "No download available for this order.": [
+        "No download available for this order."
+      ],
+      "No downloadable item in this order.": [
+        "No downloadable item in this order."
+      ],
       "No entries match the current filters.": [
         "No entries match the current filters."
       ],
@@ -2620,9 +2758,6 @@
       ],
       "No history records match the current filters.": [
         "No history records match the current filters."
-      ],
-      "No integration": [
-        "No integration"
       ],
       "No integrations found.": [
         "No integrations found."
@@ -2729,6 +2864,9 @@
       "Notice": [
         "Notice"
       ],
+      "Notification": [
+        "Notification"
+      ],
       "Notify when WhatsApp disconnects": [
         "Notify when WhatsApp disconnects"
       ],
@@ -2801,6 +2939,12 @@
       "Optional text sent together with the media.": [
         "Optional text sent together with the media."
       ],
+      "Optional. Friendly name shown as the sender of the e-mails.": [
+        "Optional. Friendly name shown as the sender of the e-mails."
+      ],
+      "Optional. Used only when a workflow action does not specify a chat id.": [
+        "Optional. Used only when a workflow action does not specify a chat id."
+      ],
       "Options": [
         "Options"
       ],
@@ -2821,6 +2965,9 @@
       ],
       "Order completed": [
         "Order completed"
+      ],
+      "Order digital files": [
+        "Order digital files"
       ],
       "Order fully refunded": [
         "Order fully refunded"
@@ -2845,6 +2992,9 @@
       ],
       "Other": [
         "Other"
+      ],
+      "Others": [
+        "Others"
       ],
       "OTP": [
         "OTP"
@@ -2896,6 +3046,9 @@
       ],
       "Paste the license key you received after purchase and click Activate to unlock all features.": [
         "Paste the license key you received after purchase and click Activate to unlock all features."
+      ],
+      "Paste your Resend API key and set the verified sender address used to deliver e-mails.": [
+        "Paste your Resend API key and set the verified sender address used to deliver e-mails."
       ],
       "Path of the route used to send messages with media.": [
         "Path of the route used to send messages with media."
@@ -2968,6 +3121,9 @@
       ],
       "Pick a color": [
         "Pick a color"
+      ],
+      "Pick a file from the library": [
+        "Pick a file from the library"
       ],
       "Pick base color": [
         "Pick base color"
@@ -3146,6 +3302,9 @@
       "Remove": [
         "Remove"
       ],
+      "Remove attachment": [
+        "Remove attachment"
+      ],
       "Remove sender": [
         "Remove sender"
       ],
@@ -3173,11 +3332,20 @@
       "Required configuration for this trigger to run correctly.": [
         "Required configuration for this trigger to run correctly."
       ],
+      "Resend": [
+        "Resend"
+      ],
       "Resend code": [
         "Resend code"
       ],
       "Resend code in": [
         "Resend code in"
+      ],
+      "Resend e-mail": [
+        "Resend e-mail"
+      ],
+      "Resend settings": [
+        "Resend settings"
       ],
       "Reset": [
         "Reset"
@@ -3191,6 +3359,9 @@
       "Resize": [
         "Resize"
       ],
+      "Respond with a single valid JSON object and nothing else. Do not wrap it in markdown code fences.": [
+        "Respond with a single valid JSON object and nothing else. Do not wrap it in markdown code fences."
+      ],
       "Response code": [
         "Response code"
       ],
@@ -3199,6 +3370,12 @@
       ],
       "Restore default": [
         "Restore default"
+      ],
+      "Restrict this workflow to a single digital product. Leave \"Any digital product\" to run for every downloadable item in the order.": [
+        "Restrict this workflow to a single digital product. Leave \"Any digital product\" to run for every downloadable item in the order."
+      ],
+      "Restrict this workflow to a single digital product. Leave \"Any digital product\" to run for every downloaded file.": [
+        "Restrict this workflow to a single digital product. Leave \"Any digital product\" to run for every downloaded file."
       ],
       "Retrieve the cart contact's email address.": [
         "Retrieve the cart contact's email address."
@@ -3241,6 +3418,9 @@
       ],
       "Route path used to send text messages.": [
         "Route path used to send text messages."
+      ],
+      "Route this node to a specific engine. Leave on the default to use the provider from settings.": [
+        "Route this node to a specific engine. Leave on the default to use the provider from settings."
       ],
       "Rule data": [
         "Rule data"
@@ -3335,9 +3515,6 @@
       "Search actions": [
         "Search actions"
       ],
-      "Search by categories or names.": [
-        "Search by categories or names."
-      ],
       "Search entity…": [
         "Search entity…"
       ],
@@ -3389,8 +3566,14 @@
       "Seconds": [
         "Seconds"
       ],
+      "Secret key used to authenticate requests to Anthropic. Find it at console.anthropic.com.": [
+        "Secret key used to authenticate requests to Anthropic. Find it at console.anthropic.com."
+      ],
       "Secret key used to authenticate requests to OpenAI. Find it at platform.openai.com.": [
         "Secret key used to authenticate requests to OpenAI. Find it at platform.openai.com."
+      ],
+      "Secret key used to authenticate requests to Resend. Find it at resend.com/api-keys.": [
+        "Secret key used to authenticate requests to Resend. Find it at resend.com/api-keys."
       ],
       "Secure access": [
         "Secure access"
@@ -3406,6 +3589,9 @@
       ],
       "Select a date": [
         "Select a date"
+      ],
+      "Select a digital product": [
+        "Select a digital product"
       ],
       "Select a node to edit its settings.": [
         "Select a node to edit its settings."
@@ -3473,6 +3659,9 @@
       "Send a media message (image, file, document, and audio) with WhatsApp.": [
         "Send a media message (image, file, document, and audio) with WhatsApp."
       ],
+      "Send a text message to a Telegram chat, group or channel.": [
+        "Send a text message to a Telegram chat, group or channel."
+      ],
       "Send a text message via WhatsApp.": [
         "Send a text message via WhatsApp."
       ],
@@ -3482,6 +3671,15 @@
       "Send a WhatsApp text message.": [
         "Send a WhatsApp text message."
       ],
+      "Send an e-mail notification through Resend.": [
+        "Send an e-mail notification through Resend."
+      ],
+      "Send e-mail (Resend)": [
+        "Send e-mail (Resend)"
+      ],
+      "Send e-mail notifications for your automations through the Resend API.": [
+        "Send e-mail notifications for your automations through the Resend API."
+      ],
       "Send media": [
         "Send media"
       ],
@@ -3490,6 +3688,9 @@
       ],
       "Send messages when an Elementor form with a phone number field is submitted. Connect with your customers instantly.": [
         "Send messages when an Elementor form with a phone number field is submitted. Connect with your customers instantly."
+      ],
+      "Send notifications to Telegram chats, groups and channels through a bot.": [
+        "Send notifications to Telegram chats, groups and channels through a bot."
       ],
       "Send test message": [
         "Send test message"
@@ -3505,6 +3706,12 @@
       ],
       "Sender": [
         "Sender"
+      ],
+      "Sender e-mail": [
+        "Sender e-mail"
+      ],
+      "Sender name": [
+        "Sender name"
       ],
       "Sender phone": [
         "Sender phone"
@@ -3568,6 +3775,9 @@
       ],
       "Short": [
         "Short"
+      ],
+      "Show all": [
+        "Show all"
       ],
       "Show password": [
         "Show password"
@@ -3656,6 +3866,12 @@
       "Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen.": [
         "Store errors, warnings and failed requests in a dedicated table viewable from the debug logs screen."
       ],
+      "Subject": [
+        "Subject"
+      ],
+      "Subject: %s": [
+        "Subject: %s"
+      ],
       "Subscription": [
         "Subscription"
       ],
@@ -3736,6 +3952,21 @@
       ],
       "Tanzania": [
         "Tanzania"
+      ],
+      "Telegram": [
+        "Telegram"
+      ],
+      "Telegram chat, group or channel id. Accepts a placeholder that resolves to one.": [
+        "Telegram chat, group or channel id. Accepts a placeholder that resolves to one."
+      ],
+      "Telegram message": [
+        "Telegram message"
+      ],
+      "Telegram settings": [
+        "Telegram settings"
+      ],
+      "Telegram: message": [
+        "Telegram: message"
       ],
       "Temperature": [
         "Temperature"
@@ -3826,6 +4057,9 @@
       ],
       "The file does not contain any settings to import.": [
         "The file does not contain any settings to import."
+      ],
+      "The files below were too large to attach, so you can download them here:": [
+        "The files below were too large to attach, so you can download them here:"
       ],
       "The generated snippet uses a blocked function (%s). Please refine the request.": [
         "The generated snippet uses a blocked function (%s). Please refine the request."
@@ -3949,6 +4183,12 @@
       ],
       "This action is triggered when an order's status is changed to completed.": [
         "This action is triggered when an order's status is changed to completed."
+      ],
+      "This action is triggered when the customer actually downloads a digital file from the order.": [
+        "This action is triggered when the customer actually downloads a digital file from the order."
+      ],
+      "This action is triggered when WooCommerce grants the download access of a digital product to the customer. This is the recommended trigger to deliver digital products, because the download links only exist from this moment on.": [
+        "This action is triggered when WooCommerce grants the download access of a digital product to the customer. This is the recommended trigger to deliver digital products, because the download links only exist from this moment on."
       ],
       "This action stops the workflow immediately. There are no editable settings.": [
         "This action stops the workflow immediately. There are no editable settings."
@@ -4085,11 +4325,17 @@
       "To retrieve each purchased product and quantity from the order, separated by line": [
         "To retrieve each purchased product and quantity from the order, separated by line"
       ],
+      "To retrieve how many downloads the customer still has available. Returns the smallest amount when the files have different limits.": [
+        "To retrieve how many downloads the customer still has available. Returns the smallest amount when the files have different limits."
+      ],
       "To retrieve information from a WPForms form field. Replace FIELD_ID with the corresponding field ID.": [
         "To retrieve information from a WPForms form field. Replace FIELD_ID with the corresponding field ID."
       ],
       "To retrieve information from an Elementor form field. Replace FIELD_ID with the respective ID.": [
         "To retrieve information from an Elementor form field. Replace FIELD_ID with the respective ID."
+      ],
+      "To retrieve only the download links of the WooCommerce order, without the file name, separated by line": [
+        "To retrieve only the download links of the WooCommerce order, without the file name, separated by line"
       ],
       "To retrieve the billing phone from the WooCommerce order": [
         "To retrieve the billing phone from the WooCommerce order"
@@ -4127,8 +4373,23 @@
       "To retrieve the customer billing last name from the WooCommerce order": [
         "To retrieve the customer billing last name from the WooCommerce order"
       ],
+      "To retrieve the download links of a specific product in the WooCommerce order. Replace PRODUCT_ID with the product ID, for example: 128.": [
+        "To retrieve the download links of a specific product in the WooCommerce order. Replace PRODUCT_ID with the product ID, for example: 128."
+      ],
+      "To retrieve the download name and link of each digital file in the WooCommerce order, separated by line. Only available after the download access has been granted.": [
+        "To retrieve the download name and link of each digital file in the WooCommerce order, separated by line. Only available after the download access has been granted."
+      ],
+      "To retrieve the expiration date of the download access. Returns the closest date when the files expire on different dates.": [
+        "To retrieve the expiration date of the download access. Returns the closest date when the files expire on different dates."
+      ],
       "To retrieve the featured image URL of the post": [
         "To retrieve the featured image URL of the post"
+      ],
+      "To retrieve the link to the downloads area in the customer My Account page": [
+        "To retrieve the link to the downloads area in the customer My Account page"
+      ],
+      "To retrieve the name of each downloadable product in the WooCommerce order, separated by line": [
+        "To retrieve the name of each downloadable product in the WooCommerce order, separated by line"
       ],
       "To retrieve the order currency symbol": [
         "To retrieve the order currency symbol"
@@ -4232,6 +4493,9 @@
       "Tokelau": [
         "Tokelau"
       ],
+      "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...).": [
+        "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...)."
+      ],
       "Tone": [
         "Tone"
       ],
@@ -4319,6 +4583,9 @@
       "Type to filter…": [
         "Type to filter…"
       ],
+      "Type your e-mail... Use {{ placeholders }} and *bold*": [
+        "Type your e-mail... Use {{ placeholders }} and *bold*"
+      ],
       "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}": [
         "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}"
       ],
@@ -4360,6 +4627,9 @@
       ],
       "Unknown response": [
         "Unknown response"
+      ],
+      "Unlimited": [
+        "Unlimited"
       ],
       "Unsaved changes": [
         "Unsaved changes"
@@ -4409,6 +4679,9 @@
       "Use default model": [
         "Use default model"
       ],
+      "Use default provider": [
+        "Use default provider"
+      ],
       "Use email and password": [
         "Use email and password"
       ],
@@ -4417,6 +4690,9 @@
       ],
       "Use the world's largest messaging service to notify your customers about events on your website.": [
         "Use the world's largest messaging service to notify your customers about events on your website."
+      ],
+      "Use this file": [
+        "Use this file"
       ],
       "Use this media": [
         "Use this media"
@@ -4501,6 +4777,9 @@
       ],
       "Video": [
         "Video"
+      ],
+      "Video lessons pack (Sample product)": [
+        "Video lessons pack (Sample product)"
       ],
       "Vietnam": [
         "Vietnam"
@@ -4762,6 +5041,9 @@
       ],
       "Your license key: Not available": [
         "Your license key: Not available"
+      ],
+      "Your order is confirmed": [
+        "Your order is confirmed"
       ],
       "Your plugin is up to date.": [
         "Your plugin is up to date."

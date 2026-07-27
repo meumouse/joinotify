@@ -88,6 +88,13 @@ class Workflow_Generator {
         // Flatten those back into siblings before sanitizing so the flow always runs.
         $raw_content = self::flatten_linear_nodes( $raw_content );
 
+        // Enforce the registered catalog: even though the prompt lists every real
+        // action slug and forbids inventing them, LLMs still hallucinate shorter
+        // names (e.g. "send_whatsapp_message" instead of "send_whatsapp_message_text").
+        // Remap known aliases onto the real slug and drop any action the plugin does
+        // not register, so the saved workflow only ever contains runnable actions.
+        $raw_content = self::enforce_registered_catalog( $raw_content );
+
         // run through the same sanitizer the import path uses
         $content = Registry::sanitize_workflow_content( $raw_content );
 
@@ -580,6 +587,182 @@ class Workflow_Generator {
         }
 
         return $result;
+    }
+
+
+    /**
+     * Enforce the registered action catalog over AI-generated content.
+     *
+     * Walks the generated node tree (recursing into condition branches) and, for
+     * every action node: remaps a known hallucinated slug onto its real registered
+     * counterpart, normalizes field aliases (e.g. "recipient" -> "receiver"), keeps
+     * the node only when its action is actually registered in the plugin, and drops
+     * it otherwise. Triggers and condition nodes are preserved (condition is itself
+     * a registered action); a dropped node just disappears from its sibling list,
+     * which the builder re-lays-out and re-connects automatically.
+     *
+     * @since 2.1.0
+     * @param array<int,mixed> $nodes | List of workflow nodes.
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function enforce_registered_catalog( $nodes ) {
+        return self::normalize_nodes_against_catalog(
+            $nodes,
+            self::get_registered_action_slugs(),
+            self::get_action_aliases()
+        );
+    }
+
+
+    /**
+     * Recursively remap/validate action nodes against the registered catalog.
+     *
+     * @since 2.1.0
+     * @param array<int,mixed> $nodes | Nodes to normalize.
+     * @param array<string,bool> $valid_actions | Set of registered action slugs.
+     * @param array<string,string> $aliases | Hallucinated-slug => real-slug map.
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function normalize_nodes_against_catalog( $nodes, $valid_actions, $aliases ) {
+        if ( ! is_array( $nodes ) ) {
+            return array();
+        }
+
+        $result = array();
+
+        foreach ( $nodes as $node ) {
+            if ( ! is_array( $node ) ) {
+                continue;
+            }
+
+            $type = isset( $node['type'] ) ? sanitize_key( (string) $node['type'] ) : 'action';
+
+            // Triggers are validated on their own; keep them untouched.
+            if ( 'trigger' === $type ) {
+                $result[] = $node;
+
+                continue;
+            }
+
+            $data = isset( $node['data'] ) && is_array( $node['data'] ) ? $node['data'] : array();
+            $action = isset( $data['action'] ) ? sanitize_key( (string) $data['action'] ) : '';
+
+            // Remap a known alias onto the real registered slug.
+            if ( '' !== $action && isset( $aliases[ $action ] ) ) {
+                $action = $aliases[ $action ];
+                $data['action'] = $action;
+            }
+
+            $data = self::normalize_action_data_aliases( $data );
+            $node['data'] = $data;
+
+            // Condition nodes are valid ("condition" is a registered action) and are
+            // the only nodes that own branch containers — keep them and recurse.
+            if ( 'condition' === $type || 'condition' === $action ) {
+                $children = isset( $node['children'] ) && is_array( $node['children'] ) ? $node['children'] : array();
+
+                if ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) ) {
+                    $node['children'] = array(
+                        'action_true' => self::normalize_nodes_against_catalog( $children['action_true'] ?? array(), $valid_actions, $aliases ),
+                        'action_false' => self::normalize_nodes_against_catalog( $children['action_false'] ?? array(), $valid_actions, $aliases ),
+                    );
+                }
+
+                $result[] = $node;
+
+                continue;
+            }
+
+            // Core guard: drop any action the plugin does not register. A hallucinated
+            // slug would otherwise be saved and silently never run at trigger time.
+            if ( '' === $action || ! isset( $valid_actions[ $action ] ) ) {
+                continue;
+            }
+
+            $result[] = $node;
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Normalize common field-name aliases the LLM emits on action data.
+     *
+     * @since 2.1.0
+     * @param array<string,mixed> $data | Action node data.
+     * @return array<string,mixed>
+     */
+    protected static function normalize_action_data_aliases( $data ) {
+        if ( ! is_array( $data ) ) {
+            return array();
+        }
+
+        // The WhatsApp message actions store the destination in "receiver"; the model
+        // sometimes emits "recipient". Carry it over when receiver is empty so the
+        // number/placeholder survives instead of being dropped by the sanitizer.
+        if ( isset( $data['recipient'] ) ) {
+            if ( ( ! isset( $data['receiver'] ) || '' === (string) $data['receiver'] ) && '' !== (string) $data['recipient'] ) {
+                $data['receiver'] = $data['recipient'];
+            }
+
+            unset( $data['recipient'] );
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Set of action slugs currently registered in the plugin.
+     *
+     * @since 2.1.0
+     * @return array<string,bool> Map of slug => true for O(1) lookups.
+     */
+    protected static function get_registered_action_slugs() {
+        $slugs = array();
+
+        foreach ( Registry::get_actions_catalog() as $action ) {
+            if ( ! empty( $action['action'] ) ) {
+                $slugs[ (string) $action['action'] ] = true;
+            }
+        }
+
+        return $slugs;
+    }
+
+
+    /**
+     * Map of well-known hallucinated action slugs to their real registered slug.
+     *
+     * Only aliases whose target is actually registered survive normalization — an
+     * alias pointing at a disabled integration's action still gets dropped, which is
+     * correct (the runtime could not execute it anyway).
+     *
+     * @since 2.1.0
+     * @return array<string,string>
+     */
+    protected static function get_action_aliases() {
+        /**
+         * Filter the AI action-slug alias map used to repair generated workflows.
+         *
+         * @since 2.1.0
+         * @param array<string,string> $aliases Hallucinated-slug => real-slug map.
+         */
+        return apply_filters( 'Joinotify/AI/Action_Aliases', array(
+            'send_whatsapp_message' => 'send_whatsapp_message_text',
+            'send_whatsapp_text_message' => 'send_whatsapp_message_text',
+            'send_whatsapp_text' => 'send_whatsapp_message_text',
+            'whatsapp_message' => 'send_whatsapp_message_text',
+            'send_message' => 'send_whatsapp_message_text',
+            'send_whatsapp_media_message' => 'send_whatsapp_message_media',
+            'send_whatsapp_media' => 'send_whatsapp_message_media',
+            'whatsapp_media' => 'send_whatsapp_message_media',
+            'delay' => 'time_delay',
+            'wait' => 'time_delay',
+            'stop' => 'stop_funnel',
+            'stop_workflow' => 'stop_funnel',
+        ) );
     }
 
 

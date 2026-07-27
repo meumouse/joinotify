@@ -61,6 +61,7 @@ syncSettings(bootstrap.value.settings || {});
 
 const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
+const integrationCategories = computed(() => bootstrap.value.integration_categories || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
 const system = computed(() => bootstrap.value.system || {});
 const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
@@ -791,6 +792,7 @@ function canConfigureIntegration(integration) {
           <IntegrationsSettingsSection
             v-else-if="activeSectionId === 'integrations'"
             :integrations="integrations"
+            :categories="integrationCategories"
             :settings="settings"
             @toggle="toggleSetting"
             @configure="openIntegrationConfig"

@@ -287,6 +287,19 @@ class Workflow_Templates {
      * @return void
      */
     public static function flush_cache() {
+        global $wpdb;
+
         delete_transient( self::CATALOG_CACHE_KEY );
+
+        // Also drop the per-template content transients (keyed by md5(id)); without
+        // this a flush would leave stale template JSON pinned for the whole TTL.
+        $like = $wpdb->esc_like( '_transient_' . self::TEMPLATE_CACHE_PREFIX ) . '%';
+        $like_timeout = $wpdb->esc_like( '_transient_timeout_' . self::TEMPLATE_CACHE_PREFIX ) . '%';
+
+        $wpdb->query( $wpdb->prepare(
+            "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+            $like,
+            $like_timeout
+        ) );
     }
 }

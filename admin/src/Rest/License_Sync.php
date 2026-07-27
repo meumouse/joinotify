@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Rest;
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Api\License;
 use MeuMouse\Joinotify\Core\Cache_Helper;
+use MeuMouse\Joinotify\Licensing\Migrator;
 use WP_REST_Request;
 use stdClass;
 
@@ -51,7 +52,13 @@ class License_Sync extends Abstract_Route {
         Cache_Helper::clear_license_cache();
 
         if ( License::check_license( $license_key, $license_message, $response_obj, JOINOTIFY_FILE ) ) {
-            License::persist_status_from_response( $response_obj );
+            $is_valid = License::persist_status_from_response( $response_obj );
+
+            // A successful sync answers the question the migration flagged, so
+            // the warning it raised should not outlive it.
+            if ( $is_valid ) {
+                Migrator::clear_pending();
+            }
 
             return $this->success_response( array(
                 'message'      => __( 'License information updated successfully.', 'joinotify' ),

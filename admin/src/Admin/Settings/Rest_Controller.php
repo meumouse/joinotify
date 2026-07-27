@@ -35,6 +35,7 @@ class Rest_Controller extends Abstract_Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Delete',
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Meta_Keys',
         '\MeuMouse\Joinotify\Rest\Ai_Openai_Models',
+        '\MeuMouse\Joinotify\Rest\Ai_Anthropic_Models',
         '\MeuMouse\Joinotify\Rest\Check_Updates',
         '\MeuMouse\Joinotify\Rest\License_Activate',
         '\MeuMouse\Joinotify\Rest\License_Deactivate',

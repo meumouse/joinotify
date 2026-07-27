@@ -53,11 +53,21 @@ class Default_Options {
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'enable_openai_integration' => 'no',
+            'enable_anthropic_integration' => 'no',
             'ai_provider' => 'openai',
             'openai_api_key' => '',
             'openai_default_model' => 'gpt-4o-mini',
             'openai_default_temperature' => '0.7',
+            'anthropic_api_key' => '',
+            'anthropic_default_model' => 'claude-haiku-4-5',
             'ai_global_system_prompt' => '',
+            'enable_telegram_integration' => 'no',
+            'telegram_bot_token' => '',
+            'telegram_default_chat_id' => '',
+            'enable_resend_integration' => 'no',
+            'resend_api_key' => '',
+            'resend_from_email' => '',
+            'resend_from_name' => '',
         );
 
         $defaults = array_merge( $defaults, self::get_integration_default_options() );

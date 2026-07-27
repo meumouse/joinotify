@@ -34,6 +34,14 @@ class AI_Request {
     public $prompt = '';
 
     /**
+     * Provider override (null = active provider from settings).
+     *
+     * @since 2.1.0
+     * @var string|null
+     */
+    public $provider = null;
+
+    /**
      * Model override (null = global default).
      *
      * @since 2.0.0
@@ -91,6 +99,10 @@ class AI_Request {
 
         if ( isset( $args['prompt'] ) ) {
             $this->prompt = (string) $args['prompt'];
+        }
+
+        if ( isset( $args['provider'] ) && '' !== trim( (string) $args['provider'] ) ) {
+            $this->provider = (string) $args['provider'];
         }
 
         if ( isset( $args['model'] ) && '' !== trim( (string) $args['model'] ) ) {

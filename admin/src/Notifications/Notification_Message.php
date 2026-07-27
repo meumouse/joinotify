@@ -85,6 +85,17 @@ class Notification_Message {
     public $caption = '';
 
     /**
+     * Resolved files to deliver alongside the message (when the channel supports it).
+     *
+     * Each entry follows the shape produced by Builder\Attachments::resolve():
+     * { name, path, url, size, mime, remote }.
+     *
+     * @since 2.1.0
+     * @var array<int,array<string,mixed>>
+     */
+    public $attachments = array();
+
+    /**
      * Delay in milliseconds before delivery (when the channel supports it).
      *
      * @since 2.0.0
@@ -150,6 +161,10 @@ class Notification_Message {
 
         if ( isset( $args['caption'] ) ) {
             $this->caption = (string) $args['caption'];
+        }
+
+        if ( isset( $args['attachments'] ) && is_array( $args['attachments'] ) ) {
+            $this->attachments = $args['attachments'];
         }
 
         if ( isset( $args['delay'] ) && is_numeric( $args['delay'] ) ) {

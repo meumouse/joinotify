@@ -48,6 +48,47 @@ class AI_Manager {
 
 
     /**
+     * Provider routing config consumed by the workflow builder.
+     *
+     * Exposes the default provider plus the list of ready-to-use providers (and
+     * their models) so a node can route generation to a specific engine when
+     * more than one is configured.
+     *
+     * @since 2.1.0
+     * @return array<string,mixed>
+     */
+    public static function get_routing_config() {
+        return array(
+            'default_provider' => self::get_active_provider_id(),
+            'providers' => Provider_Registry::get_active_providers(),
+        );
+    }
+
+
+    /**
+     * Resolve the provider for a request, honoring a valid per-call override.
+     *
+     * Falls back to the globally active provider when the override is empty or
+     * points to a provider that is not configured.
+     *
+     * @since 2.1.0
+     * @param AI_Request $request | Generation request.
+     * @return Provider_Interface|null
+     */
+    protected static function resolve_provider( AI_Request $request ) {
+        if ( is_string( $request->provider ) && '' !== trim( $request->provider ) ) {
+            $candidate = Provider_Registry::get_provider( trim( $request->provider ) );
+
+            if ( $candidate instanceof Provider_Interface && $candidate->is_configured() ) {
+                return $candidate;
+            }
+        }
+
+        return self::get_active_provider();
+    }
+
+
+    /**
      * Whether AI generation is available (active provider configured).
      *
      * @since 2.0.0
@@ -79,7 +120,7 @@ class AI_Manager {
             ));
         }
 
-        $provider = self::get_active_provider();
+        $provider = self::resolve_provider( $request );
 
         if ( ! $provider instanceof Provider_Interface ) {
             $error = new WP_Error(

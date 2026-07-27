@@ -294,6 +294,14 @@ export interface BuilderBootstrap {
   trigger_contexts?: Array<Record<string, unknown>>;
   trigger_availability?: Record<string, unknown>;
   placeholders?: Record<string, unknown> | Array<Record<string, unknown>>;
+  ai?: {
+    default_provider?: string;
+    providers?: Array<{
+      value: string;
+      label: string;
+      models: Array<{ value: string; label: string }>;
+    }>;
+  };
   links?: Record<string, string>;
   permissions?: Record<string, unknown>;
   rest?: Record<string, string>;

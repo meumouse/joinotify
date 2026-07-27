@@ -6,6 +6,8 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
 use MeuMouse\Joinotify\Api\License;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Licensing\Driver_State;
+use MeuMouse\Joinotify\Licensing\Migrator;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
@@ -355,6 +357,7 @@ class Registry {
                 'title' => $item['title'] ?? ucfirst( $slug ),
                 'description' => $item['description'] ?? '',
                 'icon' => $item['icon'] ?? '',
+                'category' => ! empty( $item['category'] ) ? sanitize_key( (string) $item['category'] ) : 'others',
                 'setting_key' => $setting_key,
                 'enabled' => $setting_key ? ( ( $settings[ $setting_key ] ?? 'no' ) === 'yes' ) : false,
                 'requires_plugin' => $requires_plugin,
@@ -377,7 +380,49 @@ class Registry {
         return $cards;
     }
 
-    
+
+    /**
+     * Build the normalized Applications categories catalog for the frontend.
+     *
+     * Sanitizes ids, drops entries without an id, and sorts by priority so the
+     * Applications tab renders the category sections in a stable order.
+     *
+     * @since 2.1.0
+     * @return array<int,array<string,mixed>>
+     */
+    public static function get_integration_categories() {
+        $categories = Integrations_Base::get_integration_categories();
+        $normalized = array();
+
+        foreach ( (array) $categories as $category ) {
+            if ( ! is_array( $category ) ) {
+                continue;
+            }
+
+            $id = isset( $category['id'] ) ? sanitize_key( (string) $category['id'] ) : '';
+
+            if ( '' === $id ) {
+                continue;
+            }
+
+            $normalized[ $id ] = array(
+                'id' => $id,
+                'label' => isset( $category['label'] ) ? (string) $category['label'] : ucfirst( str_replace( '_', ' ', $id ) ),
+                'icon' => isset( $category['icon'] ) ? (string) $category['icon'] : '',
+                'priority' => isset( $category['priority'] ) ? (int) $category['priority'] : 0,
+            );
+        }
+
+        $normalized = array_values( $normalized );
+
+        usort( $normalized, static function( $a, $b ) {
+            return $a['priority'] <=> $b['priority'];
+        } );
+
+        return $normalized;
+    }
+
+
     /**
      * Current sender list and supporting phone metadata.
      *
@@ -516,6 +561,7 @@ class Registry {
             'schema' => self::get_schema(),
             'section_tabs' => self::get_section_tabs(),
             'integrations' => self::get_integration_cards(),
+            'integration_categories' => self::get_integration_categories(),
             'phones' => self::get_phone_state(),
             'builder_variables' => array(
                 'items' => Custom_Variables::get_all(),
@@ -539,6 +585,7 @@ class Registry {
                 'schema_filter' => 'Joinotify/Admin/Settings/Schema',
                 'section_tabs_filter' => 'Joinotify/Admin/Settings/Section_Tabs',
                 'integration_filter' => 'Joinotify/Settings/Tabs/Integrations',
+                'integration_categories_filter' => 'Joinotify/Settings/Integrations/Categories',
                 'integration_field_types' => self::get_supported_integration_field_types(),
                 'integration_field_components' => self::get_supported_integration_field_components(),
                 'integration_modal_block_types' => array( 'html', 'component' ),
@@ -610,7 +657,51 @@ class Registry {
             'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
             'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
             'support_renew_link' => is_object( $license_object ) && ! empty( $license_object->support_renew_link ) ? esc_url_raw( $license_object->support_renew_link ) : '',
+            'migration' => self::get_license_migration_state(),
         );
+    }
+
+
+    /**
+     * Build the licensing-backend payload used by the Vue license page.
+     *
+     * Which server a site talks to is normally invisible, and should stay that
+     * way. It surfaces here for the one case that needs a human: the new server
+     * answered and disagreed with a license this site is running on. That is
+     * recorded rather than acted on, so without somewhere to show it the site
+     * would keep working while nobody knew there was anything to resolve.
+     *
+     * @since 2.1.0
+     * @return array<string,mixed>
+     */
+    public static function get_license_migration_state() {
+        $details = Driver_State::details();
+        $pending = Migrator::pending_notice();
+
+        $state = array(
+            'driver' => $details['driver'],
+            'forced' => (bool) $details['forced'],
+            'migrated_at' => $details['decided_at'] > 0 ? date_i18n( get_option('date_format'), $details['decided_at'] ) : '',
+            'needs_attention' => false,
+            'notice_title' => '',
+            'notice_text' => '',
+        );
+
+        if ( null === $pending ) {
+            return $state;
+        }
+
+        $state['needs_attention'] = true;
+        $state['notice_title'] = esc_html__( 'Your license needs to be checked', 'joinotify' );
+        $state['notice_text'] = sprintf(
+            /* translators: %s: message returned by the licensing server. */
+            esc_html__( 'The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists.', 'joinotify' ),
+            isset( $pending['message'] ) && '' !== $pending['message']
+                ? sanitize_text_field( $pending['message'] )
+                : esc_html__( 'the license could not be confirmed', 'joinotify' )
+        );
+
+        return $state;
     }
 
 
@@ -688,6 +779,7 @@ class Registry {
             'color-scale',
             'color-scale-field',
             'openai-model-select',
+            'anthropic-model-select',
         );
     }
 

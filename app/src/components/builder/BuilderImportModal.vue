@@ -20,7 +20,7 @@ defineProps({
   error: { type: String, default: '' },
 });
 
-defineEmits(['close', 'file', 'import']);
+defineEmits(['close', 'file', 'import', 'error']);
 </script>
 
 <template>
@@ -30,7 +30,7 @@ defineEmits(['close', 'file', 'import']);
         {{ __('Drag and drop the template JSON file or click to browse. The format must match a real Joinotify export.', textDomain) }}
       </p>
 
-      <BaseFileDropzone @file="$emit('file', $event)">
+      <BaseFileDropzone @file="$emit('file', $event)" @error="$emit('error', $event)">
         <p class="text-sm font-semibold text-slate-900">{{ __('Drag and drop the file here', textDomain) }}</p>
         <p class="mt-2 text-sm leading-6 text-slate-500">{{ __('Or click to select the template file.', textDomain) }}</p>
         <p v-if="fileName" class="mt-3 text-sm font-medium text-slate-700">{{ __('Selected file:', textDomain) }} {{ fileName }}</p>

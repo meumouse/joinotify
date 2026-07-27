@@ -15,6 +15,7 @@ import BaseInput from '../base/BaseInput.vue';
 import BaseListboxSelect from '../base/BaseListboxSelect.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BaseTextarea from '../base/BaseTextarea.vue';
+import AttachmentsField from '../../builder/components/base/AttachmentsField.vue';
 import { __, textDomain } from '../../utils/i18n';
 import type { WorkflowFieldCondition, WorkflowFieldSchema } from '../../types/workflowBuilder';
 
@@ -192,6 +193,8 @@ const repeaterItems = computed(() => (Array.isArray(props.modelValue) ? props.mo
 
 const isGroup = computed(() => props.field.component === 'group');
 const isRepeater = computed(() => props.field.component === 'repeater');
+// rendered as a block rather than a labelled control, since it manages its own rows
+const isAttachments = computed(() => props.field.component === 'attachments');
 const inputType = computed(() => {
   if (props.field.component === 'number') {
     return 'number';
@@ -210,7 +213,7 @@ const inputType = computed(() => {
 
 <template>
   <div v-if="fieldVisible(field)" class="space-y-2">
-    <label v-if="!isGroup && !isRepeater" class="flex flex-col gap-1.5">
+    <label v-if="!isGroup && !isRepeater && !isAttachments" class="flex flex-col gap-1.5">
       <span class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
         {{ field.label }}
       </span>
@@ -247,6 +250,19 @@ const inputType = computed(() => {
         :disabled="disabled"
       />
     </label>
+
+    <div v-else-if="isAttachments">
+      <div class="mb-3">
+        <h4 class="text-sm font-semibold text-slate-900">{{ field.label }}</h4>
+        <p v-if="field.description" class="mt-1 text-sm leading-6 text-slate-500">{{ field.description }}</p>
+      </div>
+
+      <AttachmentsField
+        :model-value="Array.isArray(modelValue) ? modelValue : []"
+        :disabled="disabled"
+        @update:model-value="emit('update:modelValue', $event)"
+      />
+    </div>
 
     <div v-else-if="isGroup" class="rounded-xl border border-slate-200 bg-slate-50/70 p-4">
       <div class="mb-4">

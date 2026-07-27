@@ -82,6 +82,9 @@ joinotify_register_action([
     'settings_schema' => [
         [ 'key' => 'to',      'label' => __( 'Recipient', 'my-textdomain' ), 'component' => 'input',    'required' => true ],
         [ 'key' => 'message', 'label' => __( 'Message', 'my-textdomain' ),   'component' => 'textarea', 'required' => true, 'rows' => 4 ],
+        // 'attachments' gives the user a file list (media library / URL / order digital
+        // files). The key must be named "attachments" to be sanitized as a structured list.
+        [ 'key' => 'attachments', 'label' => __( 'Attachments', 'my-textdomain' ), 'component' => 'attachments' ],
     ],
 
     // Convenience keys (auto-wired to their own filters):
@@ -94,6 +97,10 @@ joinotify_register_action([
     'handler' => function( $action_data, $action, $post_id, $event_data ) {
         $to      = MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders( $action_data['to'] ?? '', $event_data );
         $message = MeuMouse\Joinotify\Builder\Placeholders::replace_placeholders( $action_data['message'] ?? '', $event_data );
+
+        // Turn the declared attachments into real files (see "Attachments" below).
+        $files = MeuMouse\Joinotify\Builder\Attachments::resolve( $action_data['attachments'] ?? [], $event_data );
+
         // ... call your SMS gateway here ...
         return true; // return bool
     },
@@ -233,6 +240,15 @@ joinotify_register_placeholders( 'my_app', [
 > The `production` value may also be a **callable** `fn( $payload )` resolved at send time.
 > Tokens are matched whitespace-tolerantly, so `{{ my_app_plan }}` and `{{my_app_plan}}` both resolve.
 
+> **`triggers` applies at send time, not only in the builder.** Since 2.1.0 the runtime
+> payload carries the trigger slug, so a token whose `triggers` list does not contain the
+> fired trigger is left unresolved. The slugs must be the same `data_trigger` values you
+> registered — a typo silently stops the token from resolving. Use `[]` for a token that is
+> valid on every trigger of the integration. Before 2.1.0 the list was ignored at send time
+> and every token of the group resolved; if that regressed an existing integration, return
+> `false` from `Joinotify/Workflow_Processor/Scope_Placeholders_By_Trigger` while you fix
+> the slugs.
+
 ### Parametric (bracket-syntax) tokens
 
 Static `{{ name }}` tokens cover most cases. For tokens that carry an **argument** — e.g.
@@ -249,8 +265,8 @@ joinotify_register_dynamic_placeholder( '/\{\{\s*my_app_field=\[(.+?)\]\s*\}\}/'
 ```
 
 Registered resolvers run **before** the built-in bracket handlers (`{{ field_id=[...] }}`,
-`{{ wc_checkout_field=[...] }}`, `{{ user_meta[...] }}`), so you can also override those for your own
-context. The built-ins remain as a backward-compatible fallback.
+`{{ wc_checkout_field=[...] }}`, `{{ wc_download_link=[...] }}`, `{{ user_meta[...] }}`), so you can
+also override those for your own context. The built-ins remain as a backward-compatible fallback.
 
 ---
 
@@ -512,9 +528,57 @@ joinotify_register_notification_channel( 'telegram', My_Telegram_Channel::class 
 
 `Notification_Message` carries everything a channel needs: `channel`, `type`
 (`text|media|audio`), `sender`, `receiver`, `content`, `media_type`, `media_url`,
-`caption`, `delay`, a `context` array (e.g. `source`, `workflow_id`) and a
-free‑form `meta` array for service‑specific fields (e‑mail subject, Telegram
+`caption`, `attachments`, `delay`, a `context` array (e.g. `source`, `workflow_id`)
+and a free‑form `meta` array for service‑specific fields (e‑mail subject, Telegram
 `chat_id`, template params, ...). Read meta with `$message->get_meta( $key )`.
+
+### Attachments
+
+`$message->attachments` holds files already resolved by
+`Builder\Attachments::resolve()`, so a channel never has to know where they came
+from (media library, URL or the digital products of a WooCommerce order). Each
+entry is:
+
+```php
+array(
+    'name'   => 'guide.pdf',              // safe file name, extension guaranteed
+    'path'   => '/abs/path/guide.pdf',    // set for local files, empty for remote
+    'url'    => '',                       // set for remote files, empty for local
+    'size'   => 128394,                   // bytes; 0 when unknown (remote)
+    'mime'   => 'application/pdf',
+    'remote' => false,
+    'link'   => '',                       // download link, when the source has one
+)
+```
+
+Read a file with `Attachments::get_contents( $file )`, which reads from disk or
+downloads it, and returns `false` when unavailable. Decide per entry whether to
+embed the bytes or hand the URL to the remote API:
+
+```php
+foreach ( $message->attachments as $file ) {
+    if ( ! empty( $file['remote'] ) ) {
+        $this->attach_by_url( $file['url'], $file['name'] );
+        continue;
+    }
+
+    $contents = Attachments::get_contents( $file );
+
+    if ( false !== $contents ) {
+        $this->attach_bytes( $contents, $file['name'], $file['mime'] );
+    }
+}
+```
+
+> **Never fetch a WooCommerce download permission link to re‑send its bytes.**
+> Every fetch spends one of the customer's own downloads and can leave them
+> without access to what they bought. Use the resolved `path`, or send `link` as
+> a link. The resolver already redirects a permission URL used as an attachment
+> source to the order files for this reason.
+>
+> Attachments are a **modifier of an existing message type**, not a type of their
+> own — do not add them to `get_capabilities()`, or `supports()` will reject
+> plain messages. Guard on `$message->attachments` being non‑empty instead.
 
 Send a notification through the layer with the global helper, which returns a
 normalized `Channel_Result` (`is_success()`, `response_code`, `retryable`,

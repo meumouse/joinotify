@@ -1,3 +1,24 @@
+Versão 2.1.0 (27/07/2026)
+* Novo recurso: Entrega de produtos digitais do WooCommerce diretamente pelo construtor de fluxos, enviando arquivos e PDFs por e-mail ou WhatsApp
+* Novo recurso: Envio de anexos nas ações de e-mail (Resend) e de mídia do WhatsApp, com campo reutilizável que aceita arquivos da biblioteca de mídia, links ou os arquivos digitais do próprio pedido
+     - Anexos grandes no e-mail são substituídos automaticamente pelo link de download, garantindo o envio da mensagem
+     - Envio de múltiplos arquivos na ação de mídia do WhatsApp
+* Novo acionamento: "Acesso a produto digital liberado" (WooCommerce), recomendado para fluxos de entrega, pois os links de download já existem nesse momento
+* Novo acionamento: "Arquivo digital baixado" (WooCommerce), disparado quando o cliente baixa um arquivo, ambos com filtro opcional por produto
+* Novas variáveis do WooCommerce para produtos digitais: lista de produtos para download, nomes e links dos arquivos, links sem o nome, data de expiração, downloads restantes, link da área de downloads na conta do cliente e link de download por produto específico
+* Melhoria: variáveis passam a respeitar o acionamento escolhido também no envio, evitando que variáveis sem contexto sejam preenchidas indevidamente
+* Melhoria: preparação para o novo servidor de licenças, com migração automática e sem intervenção do usuário
+     - O plugin passa a usar o novo servidor assim que o atual deixar de responder, mantendo a mesma chave de licença
+     - Sites já ativados são migrados em segundo plano, sem travar o painel
+     - Nenhuma licença é desativada quando o servidor está fora do ar ou quando há divergência de cadastro; nesses casos o plugin continua funcionando e avisa na tela de licença
+     - Atualizações do plugin passam a ser entregues pelo novo servidor após a migração
+* Correção de bugs
+     - Ordem dos argumentos no acionamento de reembolso parcial do WooCommerce, que fazia a variável do pedido receber o identificador do reembolso
+     - Licença expirada ou recusada pelo servidor continuava liberando os recursos premium por até 24 horas
+     - Abrir a tela de licença podia desativar a licença do site quando a data de validade já havia passado
+     - Licenças vitalícias marcadas como "Unlimited" ou "Lifetime" eram tratadas como expiradas
+     - Resposta de ativação da licença podia ser reaproveitada na desativação, por compartilharem o mesmo cache
+
 Versão 2.0.0 (02/07/2026)
 * Novo construtor de fluxos: interface totalmente redesenhada em formato de canvas visual, com arrastar e soltar, conectar etapas, zoom, ajuste automático à tela e botões de desfazer/refazer
 * Novo recurso: Inteligência Artificial no construtor de fluxos

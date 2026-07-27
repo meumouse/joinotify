@@ -269,7 +269,8 @@ class Notification_Queue {
                     $payload['caption'] ?? '',
                     (int) ( $payload['delay'] ?? 0 ),
                     false,
-                    true
+                    true,
+                    $payload['file_name'] ?? ''
                 );
                 break;
 

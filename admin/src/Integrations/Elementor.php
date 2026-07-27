@@ -53,6 +53,7 @@ class Elementor extends Integrations_Base {
         $integrations['elementor'] = array(
             'title' => __('Elementor', 'joinotify'),
             'description' => __('Send messages when an Elementor form with a phone number field is submitted. Connect with your customers instantly.', 'joinotify'),
+            'category' => 'forms',
             'icon' => '<svg viewBox="0 0 400 400" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g clip-path="url(#a)"><path d="M200 0C89.532 0 0 89.532 0 200c0 110.431 89.532 200 200 200s200-89.532 200-200C399.964 89.532 310.431 0 200 0Zm-49.991 283.306h-33.315V116.658h33.315v166.648Zm133.297 0h-99.982v-33.315h99.982v33.315Zm0-66.667h-99.982v-33.315h99.982v33.315Zm0-66.666h-99.982v-33.315h99.982v33.315Z" fill="#92003B"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h400v400H0z"/></clipPath></defs></svg>',
             'setting_key' => 'enable_elementor_integration',
             'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Elementor',

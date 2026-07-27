@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Core;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Cron\Schedule;
+use MeuMouse\Joinotify\Builder\Attachments;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 use MeuMouse\Joinotify\AI\AI_Manager;
@@ -201,6 +202,29 @@ class Workflow_Processor {
         // only run when this trigger actually matches the runtime payload
         if ( ! self::matches_trigger( $trigger_data, $payload ) ) {
             return;
+        }
+
+        // Carry the trigger slug on the payload so the placeholder resolver can scope the
+        // catalog the same way the builder does. Integrations only set 'hook', so without
+        // this Placeholders::get_placeholders_list() takes the "no trigger" branch and
+        // returns the whole integration group, resolving tokens that do not belong to this
+        // trigger. The gate above guarantees the slug equals the fired hook.
+        /**
+         * Filter whether the placeholder catalog is scoped to the trigger at runtime.
+         *
+         * Third-party placeholders registered with a "triggers" list that does not match
+         * their dispatched slug used to resolve anyway, because the catalog was never
+         * filtered. Returning false restores that behaviour for a single workflow.
+         *
+         * @since 2.1.0
+         * @param bool  $scope        Whether to carry the trigger slug on the payload.
+         * @param array $trigger_data Trigger node ({id,type,data}).
+         * @param array $payload      Runtime trigger payload.
+         */
+        $scope_placeholders = apply_filters( 'Joinotify/Workflow_Processor/Scope_Placeholders_By_Trigger', true, $trigger_data, $payload );
+
+        if ( $scope_placeholders && ! isset( $payload['trigger'] ) && isset( $trigger_data['data']['trigger'] ) ) {
+            $payload['trigger'] = (string) $trigger_data['data']['trigger'];
         }
 
         // top-level linear actions (siblings); conditions carry their own branches
@@ -512,6 +536,18 @@ class Workflow_Processor {
                     if ( $trigger_order_status !== 'none' && $trigger_order_status !== $order_status ) {
                         $match = false;
                     }
+                } elseif ( isset( $payload['hook'] ) && in_array( $payload['hook'], array( 'woocommerce_grant_product_download_permissions', 'woocommerce_download_product' ), true ) ) {
+                    $trigger_product_id = isset( $settings['product_id'] ) && is_scalar( $settings['product_id'] )
+                        ? (string) $settings['product_id']
+                        : '';
+
+                    // "none" or an unset filter => any digital product. Only ever narrows the
+                    // decision, so it can never resurrect a match the hook gate already denied.
+                    if ( '' !== $trigger_product_id && 'none' !== $trigger_product_id
+                        && ! self::payload_matches_downloadable_product( $order, $payload, $trigger_product_id )
+                    ) {
+                        $match = false;
+                    }
                 }
             }
         } elseif ( $integration === 'wpforms' ) {
@@ -549,6 +585,40 @@ class Workflow_Processor {
          * @param array $payload      Runtime trigger payload.
          */
         return (bool) apply_filters( 'Joinotify/Workflow_Processor/Trigger_Matches', $match, $trigger_data, $payload );
+    }
+
+
+    /**
+     * Whether the digital delivery payload concerns a specific downloadable product.
+     *
+     * The "file downloaded" payload names the product directly, while the "access granted"
+     * payload only names the order, so the order downloads are scanned in that case.
+     *
+     * @since 2.1.0
+     * @param \WC_Order $order | Order of the payload
+     * @param array $payload | Runtime trigger payload
+     * @param string $product_id | Product ID configured in the trigger settings
+     * @return bool
+     */
+    protected static function payload_matches_downloadable_product( $order, $payload, $product_id ) {
+        $product_id = absint( $product_id );
+
+        if ( ! $product_id ) {
+            return false;
+        }
+
+        // the download handler already tells us which product was downloaded
+        if ( isset( $payload['product_id'] ) ) {
+            return absint( $payload['product_id'] ) === $product_id;
+        }
+
+        foreach ( Woocommerce::get_downloadable_items( $order ) as $item ) {
+            if ( absint( $item['product_id'] ?? 0 ) === $product_id ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
@@ -824,9 +894,17 @@ class Workflow_Processor {
          * @param int   $post_id         Workflow post ID.
          * @param array $event_data      Runtime trigger payload.
          */
+        // The media URL and the attachment list are two ways of providing the same file, so
+        // an action carrying attachments must not be skipped for having no URL.
+        $media_required_config = empty( $action_data['attachments'] )
+            ? array( 'sender', 'receiver', 'media_type', 'media_url' )
+            : array( 'sender', 'receiver', 'media_type' );
+
         $required_config = apply_filters( 'Joinotify/Workflow_Processor/Action_Required_Config', array(
             'send_whatsapp_message_text' => array( 'sender', 'receiver', 'message' ),
-            'send_whatsapp_message_media' => array( 'sender', 'receiver', 'media_type', 'media_url' ),
+            'send_whatsapp_message_media' => $media_required_config,
+            'send_telegram_message_text' => array( 'receiver', 'message' ),
+            'send_resend_email' => array( 'receiver', 'subject', 'message' ),
             'create_coupon' => array( 'settings' ),
         ), $action, $post_id, $event_data );
 
@@ -861,6 +939,8 @@ class Workflow_Processor {
             'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data, $post_id ),
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data, $post_id ),
             'send_whatsapp_ai_message' => fn() => self::send_whatsapp_ai_message( $action_data, $event_data, $post_id ),
+            'send_telegram_message_text' => fn() => self::send_telegram_message_text( $action_data, $event_data, $post_id ),
+            'send_resend_email' => fn() => self::send_resend_email( $action_data, $event_data, $post_id ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data, $post_id ),
             'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
             'stop_funnel' => fn() => self::stop_funnel(),
@@ -1117,12 +1197,32 @@ class Workflow_Processor {
         $media_type = $action_data['media_type'];
         $media = $action_data['media_url'];
         $caption = joinotify_prepare_message( $action_data['caption'] ?? '', $payload );
+        $attachments = Attachments::resolve( $action_data['attachments'] ?? array(), $payload );
 
         // tag the dispatch origin for the message history
         Message_History::set_context( array(
             'source' => 'workflow',
             'workflow_id' => $post_id,
         ));
+
+        // Each attachment travels as its own WhatsApp message, because the API carries one
+        // file per request. The caption rides on the first one only, so the customer does
+        // not read the same text once per file.
+        if ( ! empty( $attachments ) ) {
+            $result = self::send_whatsapp_attachments( $sender, $receiver, $media_type, $caption, $attachments, $post_id );
+
+            Message_History::clear_context();
+
+            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+                if ( $result && $result->is_success() ) {
+                    Logger::register_log( sprintf( 'WhatsApp attachments sent successfully to: %s', $receiver ) );
+                } else {
+                    Logger::register_log( sprintf( 'Failed to send WhatsApp attachments to: %s. Response: %s', $receiver, $result ? print_r( $result->to_array(), true ) : 'no file could be resolved' ), 'ERROR' );
+                }
+            }
+
+            return;
+        }
 
         // send message through the notification channel layer
         $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
@@ -1151,6 +1251,218 @@ class Workflow_Processor {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
                 Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * Deliver each resolved attachment as its own WhatsApp media message.
+     *
+     * A protected WooCommerce download has no publicly reachable URL, so a local file is
+     * embedded as base64 rather than handed to the API as a link. That also keeps the
+     * customer's download counter untouched, which fetching a permission link would spend.
+     *
+     * @since 2.1.0
+     * @param string $sender | Sender phone number
+     * @param string $receiver | Recipient phone number
+     * @param string $media_type | Media type configured on the action
+     * @param string $caption | Caption resolved from the action
+     * @param array $attachments | Resolved attachment files
+     * @param int $post_id | Workflow post ID
+     * @return \MeuMouse\Joinotify\Notifications\Channel_Result|null Result of the last dispatch
+     */
+    protected static function send_whatsapp_attachments( $sender, $receiver, $media_type, $caption, $attachments, $post_id = 0 ) {
+        $result = null;
+        $first = true;
+
+        /**
+         * Filter the maximum size of a single WhatsApp attachment
+         *
+         * @since 2.1.0
+         * @param int $limit | Size in bytes
+         */
+        $limit = (int) apply_filters( 'Joinotify/Workflow_Processor/Whatsapp_Attachment_Size_Limit', 16 * MB_IN_BYTES );
+
+        foreach ( $attachments as $file ) {
+            $name = (string) ( $file['name'] ?? '' );
+            $media = '';
+
+            if ( ! empty( $file['remote'] ) && ! empty( $file['url'] ) ) {
+                $media = (string) $file['url'];
+            } else {
+                $size = absint( $file['size'] ?? 0 );
+
+                if ( $size > 0 && $size > $limit ) {
+                    Logger::register_log( sprintf( 'Joinotify: WhatsApp attachment %s exceeds the size limit and was not sent.', $name ), 'WARNING' );
+
+                    continue;
+                }
+
+                $contents = Attachments::get_contents( $file );
+
+                if ( false === $contents ) {
+                    continue;
+                }
+
+                $media = base64_encode( $contents );
+            }
+
+            if ( '' === $media ) {
+                continue;
+            }
+
+            $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+                'channel' => 'whatsapp',
+                'type' => 'media',
+                'sender' => $sender,
+                'receiver' => $receiver,
+                'media_type' => self::resolve_whatsapp_media_type( $file, $media_type ),
+                'media_url' => $media,
+                // only the first message carries the caption, so the text is not repeated
+                'caption' => $first ? $caption : '',
+                'meta' => array(
+                    'file_name' => $name,
+                ),
+                'context' => array(
+                    'source' => 'workflow',
+                    'workflow_id' => $post_id,
+                ),
+            )));
+
+            $first = false;
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Pick the WhatsApp media type of a resolved attachment.
+     *
+     * The action setting describes the message as a whole, but a mixed attachment list can
+     * hold an image next to a PDF, so the file mime decides whenever it is conclusive.
+     *
+     * @since 2.1.0
+     * @param array $file | Resolved attachment file
+     * @param string $fallback | Media type configured on the action
+     * @return string
+     */
+    protected static function resolve_whatsapp_media_type( $file, $fallback ) {
+        $mime = (string) ( $file['mime'] ?? '' );
+
+        if ( 0 === strpos( $mime, 'image/' ) ) {
+            return 'image';
+        }
+
+        if ( 0 === strpos( $mime, 'video/' ) ) {
+            return 'video';
+        }
+
+        if ( 0 === strpos( $mime, 'audio/' ) ) {
+            return 'audio';
+        }
+
+        // audio is a separate transport on the action, so it never describes an attachment
+        return ( '' !== $fallback && 'audio' !== $fallback ) ? $fallback : 'document';
+    }
+
+
+    /**
+     * Send a text message on Telegram.
+     *
+     * The chat id (receiver) and message support placeholders. The chat id is
+     * resolved with the generic placeholder resolver — not joinotify_prepare_receiver,
+     * which strips non-digits and would corrupt negative group ids / @usernames.
+     *
+     * @since 2.1.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @param int $post_id | Workflow post ID
+     * @return void
+     */
+    public static function send_telegram_message_text( $action_data, $payload, $post_id = 0 ) {
+        $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
+        $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
+
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
+        // send message through the notification channel layer
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => 'telegram',
+            'type' => 'text',
+            'receiver' => $receiver,
+            'content' => $message,
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
+
+        Message_History::clear_context();
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            if ( $result->is_success() ) {
+                Logger::register_log( "Telegram message sent successfully to: $receiver" );
+            } else {
+                Logger::register_log( "Failed to send Telegram message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * Send an e-mail through Resend.
+     *
+     * Recipient, subject and body support placeholders. The recipient is resolved
+     * with the generic placeholder resolver (not joinotify_prepare_receiver, which
+     * is phone-oriented). The subject travels in the message meta bag.
+     *
+     * @since 2.1.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @param int $post_id | Workflow post ID
+     * @return void
+     */
+    public static function send_resend_email( $action_data, $payload, $post_id = 0 ) {
+        $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
+        $subject = joinotify_prepare_message( $action_data['subject'] ?? '', $payload );
+        $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
+        $attachments = Attachments::resolve( $action_data['attachments'] ?? array(), $payload );
+
+        // tag the dispatch origin for the message history
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
+        // send message through the notification channel layer
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => 'resend',
+            'type' => 'text',
+            'receiver' => $receiver,
+            'content' => $message,
+            'attachments' => $attachments,
+            'meta' => array(
+                'subject' => $subject,
+            ),
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
+
+        Message_History::clear_context();
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            if ( $result->is_success() ) {
+                Logger::register_log( "Resend e-mail sent successfully to: $receiver" );
+            } else {
+                Logger::register_log( "Failed to send Resend e-mail. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
             }
         }
     }
@@ -1190,6 +1502,7 @@ class Workflow_Processor {
         $ai_response = AI_Manager::generate( new AI_Request( array(
             'system' => $system,
             'prompt' => $prompt,
+            'provider' => $action_data['ai_provider'] ?? '',
             'model' => $action_data['ai_model'] ?? '',
             'temperature' => $temperature,
             'context' => array(
@@ -1491,6 +1804,7 @@ class Workflow_Processor {
         $response = AI_Manager::generate( new AI_Request( array(
             'system' => $system,
             'prompt' => $prompt,
+            'provider' => $action_data['ai_provider'] ?? '',
             'model' => $action_data['ai_model'] ?? '',
             'temperature' => $temperature,
             'context' => array(

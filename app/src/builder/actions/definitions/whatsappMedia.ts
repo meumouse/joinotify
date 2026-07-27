@@ -11,6 +11,7 @@
 import WhatsappMediaSettings from '../settings/WhatsappMediaSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
+import { normalizeAttachments } from '../utils/attachments';
 import type { ActionDefinition } from '../registry/types';
 import { WHATSAPP_ICON } from './actionIcons';
 import { __, sprintf, textDomain } from '../../../utils/i18n';
@@ -36,6 +37,7 @@ function normalizeWhatsappMediaData(data: Record<string, unknown>): Record<strin
     caption,
     sender: String(data.sender || ''),
     receiver: String(data.receiver || '{{ wc_billing_phone }}'),
+    attachments: normalizeAttachments(data.attachments),
   };
 }
 
@@ -56,8 +58,15 @@ export const whatsappMediaDefinition: ActionDefinition = {
   buildDescription: (data) => truncateDescription(
     String(data.caption || '') || sprintf(__('Media: %s', textDomain), String(data.media_type || 'image')),
   ),
-  validate: (data) => normalizeValidationErrors(requiredFieldErrors(data, [
-    { key: 'sender', label: __('Sender', textDomain) },
-    { key: 'media_url', label: __('Media URL', textDomain) },
-  ])),
+  validate: (data) => {
+    const required: Array<{ key: string; label: string }> = [{ key: 'sender', label: __('Sender', textDomain) }];
+
+    // the media URL and the attachment list are two ways of saying the same thing,
+    // so requiring the URL when attachments are set would block a valid action
+    if (!normalizeAttachments(data.attachments).length) {
+      required.push({ key: 'media_url', label: __('Media URL', textDomain) });
+    }
+
+    return normalizeValidationErrors(requiredFieldErrors(data, required));
+  },
 };

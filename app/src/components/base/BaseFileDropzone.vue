@@ -11,8 +11,36 @@
 import { ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 
-const emit = defineEmits(['file']);
+const emit = defineEmits(['file', 'error']);
 const inputRef = ref(null);
+
+// Guard the import against pathological input: a JSON workflow is a few KB, so a
+// multi-MB file is either the wrong file or a resource-exhaustion attempt that
+// would freeze the tab when read into a string and JSON.parse'd on the main thread.
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+
+/**
+ * Validate a picked/dropped file (type + size) before emitting it.
+ *
+ * @since 2.0.0
+ * @param {File} file The candidate file.
+ * @returns {boolean} True when the file passes validation.
+ */
+function acceptFile(file) {
+  const isJson = file.type === 'application/json' || /\.json$/i.test(file.name || '');
+
+  if (!isJson) {
+    emit('error', __('Invalid file type. Select a .json file.', textDomain));
+    return false;
+  }
+
+  if (file.size > MAX_FILE_BYTES) {
+    emit('error', __('File is too large. The maximum size is 5 MB.', textDomain));
+    return false;
+  }
+
+  return true;
+}
 
 /**
  * Handle a file dropped onto the zone, emitting the first dropped file.
@@ -23,7 +51,7 @@ const inputRef = ref(null);
 function handleDrop(event) {
   event.preventDefault();
   const file = event.dataTransfer?.files?.[0];
-  if (file) {
+  if (file && acceptFile(file)) {
     emit('file', file);
   }
 }
@@ -36,7 +64,12 @@ function handleDrop(event) {
  */
 function handlePick(event) {
   const file = event.target.files?.[0];
-  if (file) {
+
+  // Reset the input value so re-selecting the SAME file (e.g. after fixing a failed
+  // import) still fires a change event; otherwise the picker stays silently dead.
+  event.target.value = '';
+
+  if (file && acceptFile(file)) {
     emit('file', file);
   }
 }

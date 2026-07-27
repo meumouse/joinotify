@@ -956,6 +956,11 @@ function confirmImport() {
   }
 
   importModalOpen.value = false;
+  // Clear the selection so reopening the modal starts clean instead of showing the
+  // previous file name with a pre-armed Import button pointing at stale JSON.
+  importJson.value = '';
+  importFileName.value = '';
+  importError.value = '';
   debugLogger.log('import:completed');
   goCanvas();
 }
@@ -1094,8 +1099,13 @@ function exportWorkflow() {
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download = `${(store.file.post.title || 'workflow').toLowerCase().replace(/[^a-z0-9]+/g, '-')}.json`;
+  // Anchor must be in the DOM for the click to trigger a download in Firefox, and
+  // the object URL must outlive the click — revoking it synchronously can abort
+  // the download before the browser has read the blob (Firefox / Chrome under load).
+  document.body.appendChild(anchor);
   anchor.click();
-  window.URL.revokeObjectURL(url);
+  document.body.removeChild(anchor);
+  setTimeout(() => window.URL.revokeObjectURL(url), 0);
 }
 
 async function runTest() {
@@ -1338,6 +1348,7 @@ function setChangeTriggerUrl(active) {
     @close="closeImportModal"
     @file="handleImportFile"
     @import="confirmImport"
+    @error="importError = $event"
   />
 
   <BuilderAiGenerateModal

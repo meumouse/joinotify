@@ -6,6 +6,7 @@ use MeuMouse\Joinotify\Admin\Settings\Repository;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Actions;
+use MeuMouse\Joinotify\Builder\Attachments;
 use MeuMouse\Joinotify\Builder\Messages;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Builder\Triggers;
@@ -14,6 +15,7 @@ use MeuMouse\Joinotify\Builder\Workflow_Manager;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Admin\Settings\Registry as Settings_Registry;
+use MeuMouse\Joinotify\AI\AI_Manager;
 
 defined('ABSPATH') || exit;
 
@@ -60,6 +62,7 @@ class Registry {
 			'trigger_availability' => self::get_workflow_trigger_availability( $workflow_state ),
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
 			'conditions' => self::get_conditions_catalog(),
+			'ai' => AI_Manager::get_routing_config(),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
 				'dashboard_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
@@ -172,6 +175,11 @@ class Registry {
 			return $catalog;
 		}
 
+		// Resolve the registered integration icon (SVG markup) keyed by context
+		// slug so each template card can render the same brand icon used on the
+		// integration settings screen instead of a hardcoded frontend fallback.
+		$integration_icons = self::get_integration_icons();
+
 		foreach ( $items as $item ) {
 			if ( ! is_array( $item ) ) {
 				continue;
@@ -187,6 +195,7 @@ class Registry {
 				'title' => isset( $item['title'] ) ? sanitize_text_field( (string) $item['title'] ) : '',
 				'category' => $context,
 				'integration' => self::get_integration_label( $context ),
+				'icon' => isset( $integration_icons[ $context ] ) ? $integration_icons[ $context ] : '',
 				'trigger' => self::get_trigger_label( $context, $trigger_key ),
 				'available' => ! empty( Triggers::get_trigger( $context, $trigger_key ) ),
 				'description' => isset( $item['description'] ) ? sanitize_text_field( (string) $item['description'] ) : '',
@@ -194,6 +203,32 @@ class Registry {
 		}
 
 		return $catalog;
+	}
+
+
+	/**
+	 * Map each registered integration slug to its icon SVG markup.
+	 *
+	 * Mirrors the icons rendered on the integration settings cards so the
+	 * template library can display the authoritative brand icon per context.
+	 *
+	 * @since 2.1.0
+	 * @return array<string,string> Icon SVG markup keyed by integration slug.
+	 */
+	private static function get_integration_icons() {
+		$icons = array();
+
+		foreach ( Settings_Registry::get_integration_cards() as $integration ) {
+			$slug = isset( $integration['slug'] ) ? sanitize_key( (string) $integration['slug'] ) : '';
+
+			if ( '' === $slug || empty( $integration['icon'] ) ) {
+				continue;
+			}
+
+			$icons[ $slug ] = (string) $integration['icon'];
+		}
+
+		return $icons;
 	}
 
 
@@ -1932,6 +1967,71 @@ class Registry {
 
 
 	/**
+	 * Sanitize the attachment list of an action.
+	 *
+	 * Each item declares where the file comes from, so the keys that matter depend on the
+	 * source: "media" carries an attachment id, "url" carries a URL that may hold
+	 * placeholders, and "order_downloads" carries no file reference at all because it is
+	 * resolved from the order at runtime.
+	 *
+	 * @since 2.1.0
+	 * @param array<int,mixed> $attachments Raw attachment list.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private static function sanitize_attachments( $attachments ) {
+		if ( ! is_array( $attachments ) ) {
+			return array();
+		}
+
+		$clean = array();
+
+		foreach ( $attachments as $attachment ) {
+			if ( ! is_array( $attachment ) ) {
+				continue;
+			}
+
+			$source = isset( $attachment['source'] ) ? sanitize_key( (string) $attachment['source'] ) : Attachments::SOURCE_URL;
+
+			if ( ! in_array( $source, Attachments::get_sources(), true ) ) {
+				continue;
+			}
+
+			$item = array(
+				'source' => $source,
+				'name' => isset( $attachment['name'] ) ? sanitize_text_field( (string) $attachment['name'] ) : '',
+			);
+
+			if ( Attachments::SOURCE_MEDIA === $source ) {
+				$item['attachment_id'] = isset( $attachment['attachment_id'] ) ? absint( $attachment['attachment_id'] ) : 0;
+			}
+
+			if ( Attachments::SOURCE_ORDER_DOWNLOADS !== $source ) {
+				$url = isset( $attachment['url'] ) ? trim( (string) $attachment['url'] ) : '';
+
+				// esc_url_raw strips the braces and spaces of a placeholder, so a URL built
+				// from a token has to keep the raw text and is escaped after being resolved
+				$item['url'] = false !== strpos( $url, '{{' )
+					? sanitize_textarea_field( $url )
+					: esc_url_raw( $url );
+			}
+
+			// an item pointing at nothing would only produce a silent no-op at runtime
+			if ( Attachments::SOURCE_MEDIA === $source && ! $item['attachment_id'] && '' === $item['url'] ) {
+				continue;
+			}
+
+			if ( Attachments::SOURCE_URL === $source && '' === $item['url'] ) {
+				continue;
+			}
+
+			$clean[] = $item;
+		}
+
+		return $clean;
+	}
+
+
+	/**
 	 * Build the runtime delay timestamp from delay settings.
 	 *
 	 * @since 1.4.7
@@ -2000,6 +2100,14 @@ class Registry {
 			// sync and prevents the selection from being silently malformed.
 			if ( 'products' === $key && is_array( $value ) ) {
 				$clean[ $key ] = self::sanitize_condition_products( $value );
+				continue;
+			}
+
+			// Action "attachments" is a structured list the runtime resolves into files.
+			// Canonicalize it explicitly so the URL keeps esc_url_raw and the attachment id
+			// stays an int, instead of letting the generic recursion stringify both.
+			if ( 'attachments' === $key && is_array( $value ) ) {
+				$clean[ $key ] = self::sanitize_attachments( $value );
 				continue;
 			}
 
