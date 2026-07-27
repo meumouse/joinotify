@@ -3,70 +3,88 @@
 namespace MeuMouse\Joinotify\Api;
 
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Licensing\Contracts\Driver;
+use MeuMouse\Joinotify\Licensing\Drivers\Legacy_Driver;
+use MeuMouse\Joinotify\Licensing\Dto\License_Result;
+use MeuMouse\Joinotify\Licensing\Support\Crypto;
+use MeuMouse\Joinotify\Licensing\Support\Site;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
-    
+
 /**
- * Connect to license authentication server
- * 
+ * License state for this installation.
+ *
+ * Owns everything that outlives a single request: the stored license object, the
+ * caches in front of it, the grace window that keeps a site working through a
+ * server outage, and the scheduled expiry check. Talking to a licensing server
+ * is delegated to a driver, so those rules stay the same regardless of which
+ * server answered.
+ *
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.1.0
  * @package MeuMouse\Joinotify\API
  * @author MeuMouse.com
  */
 class License {
 
-    private $product_id;
-    private $product_base;
-    private $product_key;
+    /**
+     * Base URL of the legacy licensing server.
+     *
+     * Retained for backwards compatibility with third-party code; the driver
+     * owns the URL it actually calls.
+     *
+     * @since 1.0.0
+     * @var string
+     */
+    public static $server_host = 'https://api.meumouse.com/wp-json/license/';
 
-    private $joinotify_product_id = '8';
-    private $joinotify_product_base = 'joinotify';
+    /**
+     * Legacy product key.
+     *
+     * Retained for backwards compatibility; the driver resolves the product from
+     * the license key.
+     *
+     * @since 1.0.0
+     * @var string
+     */
     public $joinotify_product_key = 'E63390D3F50B70F0';
 
-    private $clube_m_produt_id = '7';
-    private $clube_m_product_base = 'clube-m';
-    private $clube_m_product_key = 'B729F2659393EE27';
+    /**
+     * Plugin main file path.
+     *
+     * @since 1.0.0
+     * @var string
+     */
+    protected $plugin_file;
 
-    public static $server_host = 'https://api.meumouse.com/wp-json/license/';
-    private $plugin_file;
-    private $version = JOINOTIFY_VERSION;
-    private $is_theme = false;
-    private $email_address = JOINOTIFY_ADMIN_EMAIL;
-    private static $_onDeleteLicense = array();
-    private static $self_obj;
+    /**
+     * Callbacks invoked when the local license is dropped.
+     *
+     * @since 1.0.0
+     * @var array
+     */
+    protected static $_onDeleteLicense = array();
+
+    /**
+     * Shared instance.
+     *
+     * @since 1.0.0
+     * @var self|null
+     */
+    protected static $self_obj;
+
 
     /**
      * Construct function
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
-     * @param string $plugin_base_file
+     * @version 2.1.0
+     * @param string $plugin_base_file | Plugin main file path
      * @return void
      */
     public function __construct( $plugin_base_file = '' ) {
-        $license_key = get_option( 'joinotify_license_key' );
-        $license_key = is_string( $license_key ) ? $license_key : '';
-
-        // check if license is for Clube M, else license is product base
-        if ( strpos( $license_key, 'CM-' ) === 0 ) {
-            $this->product_base = $this->clube_m_product_base;
-            $this->product_id = $this->clube_m_produt_id;
-            $this->product_key = $this->clube_m_product_key;
-        } else {
-            $this->product_base = $this->joinotify_product_base;
-            $this->product_id = $this->joinotify_product_id;
-            $this->product_key = $this->joinotify_product_key;
-        }
-
         $this->plugin_file = $plugin_base_file;
-        $dir = dirname( $plugin_base_file );
-        $dir = str_replace('\\','/', $dir );
-
-        if ( strpos( $dir,'wp-content/themes' ) !== FALSE ) {
-            $this->is_theme = true;
-        }
 
         // deactive license on expire time
         add_action( 'joinotify_check_license_expires_event', array( __CLASS__, 'check_license_expires_time' ) );
@@ -80,7 +98,7 @@ class License {
 
     /**
      * Get plugin instance
-     * 
+     *
      * @since 1.0.0
      * @param self $plugin_base_file | Plugin file
      * @return self|null
@@ -97,8 +115,27 @@ class License {
 
 
     /**
+     * Driver used to talk to the licensing server.
+     *
+     * @since 2.1.0
+     * @param string $license_key | License key
+     * @return Driver
+     */
+    protected function driver( $license_key ) {
+        /**
+         * Filters the driver used for licensing calls.
+         *
+         * @since 2.1.0
+         * @param Driver $driver | Driver instance
+         * @param string $license_key | License key
+         */
+        return apply_filters( 'Joinotify/Licensing/Driver', new Legacy_Driver( $license_key ), $license_key );
+    }
+
+
+    /**
      * Get renew license link
-     * 
+     *
      * @since 1.0.0
      * @param object $response_object | Response object
      * @param string $type | Renew type
@@ -122,7 +159,7 @@ class License {
                     $show_button = true;
                 }
             }
-            
+
             if ( $show_button ) {
                 $renew_link = is_scalar( $response_object->renew_link ) ? (string) $response_object->renew_link : '';
                 $license_key = isset( $response_object->license_key ) && is_scalar( $response_object->license_key ) ? (string) $response_object->license_key : '';
@@ -155,373 +192,50 @@ class License {
 
 
     /**
-     * Encrypt response
-     * 
-     * @since 1.0.0
-     * @param string $plaintext | Object response to encrypt
-     * @param string $password | Product key
-     * @return string
-     */
-    private function encrypt( $plaintext, $password = '' ) {
-        if ( empty( $password ) ) {
-            $password = $this->product_key;
-        }
-
-        $plaintext = wp_rand( 10, 99 ) . $plaintext . wp_rand( 10, 99 );
-        $method = 'aes-256-cbc';
-        $key = substr( hash( 'sha256', $password, true ), 0, 32 );
-        $iv = substr( strtoupper( md5( $password ) ), 0, 16 );
-
-        return base64_encode( openssl_encrypt( $plaintext, $method, $key, OPENSSL_RAW_DATA, $iv ) );
-    }
-    
-
-    /**
-     * Decrypt response
-     * 
-     * @since 1.0.0
-     * @version 1.4.7
-     * @param string $encrypted | Encrypted response
-     * @param string $password | Product key
-     * @return string
-     */
-    private function decrypt( $encrypted, $password = '' ) {
-        if ( empty( $password ) ) {
-            $password = $this->product_key;
-        }
-
-        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( 'License API response encrypted: ' . print_r( $encrypted, true ) );
-        }
-
-        if ( is_string( $encrypted ) ) {
-            $method = 'aes-256-cbc';
-            $key = substr( hash( 'sha256', $password, true ), 0, 32 );
-            $iv = substr( strtoupper( md5( $password ) ), 0, 16 );
-    
-            $plaintext = openssl_decrypt( base64_decode( $encrypted ), $method, $key, OPENSSL_RAW_DATA, $iv );
-    
-            if ( $plaintext === false ) {
-                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                    Logger::register_log( 'License API - fail on decrypt: ' . print_r( $plaintext, true ), 'ERROR' );
-                }
-
-                return '';
-            }
-    
-            return substr( $plaintext, 2, -2 );
-        } else {
-            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                Logger::register_log( 'License API - Entry for decrypt is not string : ' . print_r( $encrypted, true ), 'ERROR' );
-            }
-           
-            return '';
-        }
-    }
-
-
-    /**
      * Get site domain
-     * 
+     *
      * @since 1.0.0
      * @return string
      */
     public static function get_domain() {
-        if ( function_exists('site_url') ) {
-            return site_url();
-        }
-
-        if ( defined('WPINC') && function_exists('get_bloginfo') ) {
-            return get_bloginfo('url');
-        } else {
-            $base_url = ( ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == "on" ) ? "https" : "http" );
-            $base_url .= "://" . $_SERVER['HTTP_HOST'];
-            $base_url .= str_replace( basename( $_SERVER['SCRIPT_NAME'] ), "", $_SERVER['SCRIPT_NAME'] );
-
-            return $base_url;
-        }
-    }
-
-
-    /**
-     * Processes the API response
-     *
-     * @since 1.0.0
-     * @version 1.4.7
-     * @param string $response | Raw API response
-     * @return stdClass|mixed Object decoded from the JSON response or error object, if applicable.
-     */
-    private function process_response( $response ) {
-        if ( get_option('joinotify_alternative_license') === 'active' ) {
-            return;
-        }
-
-        if ( ! empty( $response ) ) {
-            $resbk = $response;
-            $decrypted_response = $response;
-
-            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                Logger::register_log( 'License API - Process response : ' . print_r( $response, true ) );
-            }
-
-            if ( ! empty( $this->product_key ) ) {
-                // Try to decrypt
-                $decrypted_response = $this->decrypt( $response );
-
-                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                    Logger::register_log( 'License API - Decrypted response : ' . print_r( $decrypted_response, true ) );
-                }
-
-                if ( empty( $decrypted_response ) ) {
-                    update_option( 'joinotify_alternative_license_activation', 'yes' );
-
-                    // Handle decryption failure
-                    $decryption_error = new \stdClass();
-                    $decryption_error->status = false;
-                    $decryption_error->msg = __( 'An error occurred while connecting to the license verification server. Check the error in the WooCommerce logs.', 'joinotify' );
-                    $decryption_error->data = NULL;
-
-                    return $decryption_error;
-                }
-            }
-
-            // Ensure decrypted_response is a string before decoding the JSON
-            if ( is_object( $decrypted_response ) ) {
-                $decrypted_response = json_encode( $decrypted_response );
-            }
-
-            // Try decoding the JSON
-            $decoded_response = json_decode( $decrypted_response );
-
-            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                Logger::register_log( 'License API - Response decoded : ' . print_r( $decoded_response, true ) );
-            }
-
-            if ( json_last_error() !== JSON_ERROR_NONE ) {
-                // Handle JSON decoding error
-                $json_error = new \stdClass();
-                $json_error->status = false;
-                $json_error->msg = sprintf( __( 'JSON Error: %s', 'joinotify' ), json_last_error_msg() );
-                $json_error->data = $resbk;
-
-                return $json_error;
-            }
-
-            return $decoded_response;
-        }
-
-        // Treat unknown response
-        $unknown_response = new \stdClass();
-        $unknown_response->msg = __( 'Unknown response', 'joinotify' );
-        $unknown_response->status = false;
-        $unknown_response->data = NULL;
-
-        return $unknown_response;
-    }
-
-
-    /**
-     * Request on API server
-     * 
-     * @since 1.0.0
-     * @version 1.4.7
-     * @param string $relative_url | API URL to concat
-     * @param object $data | Object data to encode and add to body request
-     * @param string $error | Error message
-     * @return string
-     */
-    private function _request( $relative_url, $data, &$error = '' ) {
-        $transient_name = 'joinotify_api_request_cache';
-        $cached_response = get_transient( $transient_name );
-
-        if ( false === $cached_response ) {
-            $response = new \stdClass();
-            $response->status = false;
-            $response->msg = __( 'Empty response.', 'joinotify' );
-            $response->is_request_error = false;
-            $final_data = wp_json_encode( $data );
-            $url = rtrim( self::$server_host, '/' ) . "/" . ltrim( $relative_url, '/' );
-    
-            if ( ! empty( $this->product_key ) ) {
-                $final_data = $this->encrypt( $final_data );
-            }
-    
-            if ( function_exists('wp_remote_post') ) {
-                $request_params = array(
-                    'method' => 'POST',
-                    'sslverify' => true,
-                    'timeout' => 60,
-                    'redirection' => 5,
-                    'httpversion' => '1.0',
-                    'blocking' => true,
-                    'headers' => array(),
-                    'body' => $final_data,
-                    'cookies' => array(),
-                );
-    
-                $server_response = wp_remote_post( $url, $request_params );
-
-                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                    Logger::register_log( 'License API - Request response : ' . print_r( $server_response, true ) );
-                }
-
-                if ( is_wp_error( $server_response ) ) {
-                    $request_params['sslverify'] = false;
-                    $server_response = wp_remote_post( $url, $request_params );
-    
-                    if ( is_wp_error( $server_response ) ) {
-                        $curl_error_message = $server_response->get_error_message();
-    
-                        // Check if it is a cURL 35 error
-                        if ( strpos( $curl_error_message, 'cURL error 35' ) !== false ) {
-                            $error = __( 'cURL Error 35: SSL/TLS communication issue.', 'joinotify' );
-                        } else {
-                            $response->msg = $curl_error_message;
-                            $response->status = false;
-                            $response->data = NULL;
-                            $response->is_request_error = true;
-                        }
-                    } else {
-                        // If data response is successful, cache for 7 days
-                        if ( ! empty( $server_response['body'] ) && ( is_array( $server_response ) && 200 === (int) wp_remote_retrieve_response_code( $server_response ) ) && $server_response['body'] != "GET404" ) {
-                            $cached_response = $server_response['body'];
-                            set_transient( $transient_name, $cached_response, 7 * DAY_IN_SECONDS );
-                        }
-                    }
-                } else {
-                    if ( ! empty( $server_response['body'] ) && ( is_array( $server_response ) && 200 === (int) wp_remote_retrieve_response_code( $server_response ) ) && $server_response['body'] != "GET404" ) {
-                        $cached_response = $server_response['body'];
-                    }
-                }
-            } elseif ( ! extension_loaded( 'curl' ) ) {
-                $response->msg = __( 'The cURL extension is missing.', 'joinotify' );
-                $response->status = false;
-                $response->data = NULL;
-                $response->is_request_error = true;
-            } else {
-                // Curl when in last resort
-                $curlParams = array(
-                    CURLOPT_URL => $url,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 120,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => $final_data,
-                    CURLOPT_HTTPHEADER => array(
-                        "Content-Type: text/plain",
-                        "cache-control: no-cache"
-                    )
-                );
-    
-                $curl = curl_init();
-                curl_setopt_array( $curl, $curlParams );
-                $server_response = curl_exec( $curl );
-                $curlErrorNo = curl_errno( $curl );
-                $error = curl_error( $curl );
-                curl_close( $curl );
-    
-                if ( ! curl_exec( $curl ) ) {
-                    $error_message = curl_error( $curl );
-    
-                    // Check if it is a cURL 35 error
-                    if ( strpos( $error_message, 'cURL error 35' ) !== false ) {
-                        $error = __( 'cURL Error 35: SSL/TLS communication issue.', 'joinotify' );
-                    } else {
-                        $response->msg = sprintf( __( 'cURL Error: %s', 'joinotify' ), $error_message );
-                    }
-                }
-    
-                if ( ! $curlErrorNo ) {
-                    if ( ! empty( $server_response ) ) {
-                        $cached_response = $server_response;
-                    }
-                } else {
-                    $curl = curl_init();
-                    $curlParams[CURLOPT_SSL_VERIFYPEER] = false;
-                    $curlParams[CURLOPT_SSL_VERIFYHOST] = false;
-                    curl_setopt_array( $curl, $curlParams );
-                    $server_response = curl_exec( $curl );
-                    $curlErrorNo = curl_errno( $curl );
-                    $error = curl_error( $curl );
-                    curl_close( $curl );
-    
-                    if ( ! $curlErrorNo ) {
-                        if ( ! empty( $server_response ) ) {
-                            $cached_response = $server_response;
-                        }
-                    } else {
-                        $response->msg = $error;
-                        $response->status = false;
-                        $response->data = NULL;
-                        $response->is_request_error = true;
-                    }
-                }
-            }
-    
-            // If there is a response, set it in cache
-            if ( ! empty( $cached_response ) ) {
-                set_transient( $transient_name, $cached_response, 7 * DAY_IN_SECONDS );
-            }
-    
-            return $this->process_response( $cached_response ? $cached_response : $response ); // Fixed from process_response to processes_response
-        }
-    
-        return $this->process_response( $cached_response );
-    }
-
-    
-    /**
-     * Build object to send response API
-     * 
-     * @since 1.0.0
-     * @param string $purchase_key | License key
-     * @return object
-     */
-    private function get_response_param( $purchase_key ) {
-        $req = new \stdClass();
-        $req->license_key = $purchase_key;
-        $req->email = $this->email_address;
-        $req->domain = self::get_domain();
-        $req->app_version = $this->version;
-        $req->product_id = $this->product_id;
-        $req->product_base = $this->product_base;
-
-        return $req;
+        return Site::url();
     }
 
 
     /**
      * Generate hash key
-     * 
+     *
      * @since 1.0.0
+     * @version 2.1.0
      * @return string
      */
     private function get_key_name() {
-        return hash( 'crc32b', self::get_domain() . $this->plugin_file . $this->product_id . $this->product_base . $this->product_key . "LIC" );
+        $product = Legacy_Driver::resolve_product( get_option('joinotify_license_key') );
+
+        return hash( 'crc32b', self::get_domain() . $this->plugin_file . $product['id'] . $product['base'] . $product['key'] . 'LIC' );
     }
 
 
     /**
      * Set response base option
-     * 
+     *
      * @since 1.0.0
      * @param object $response | Response object
      * @return void
      */
     private function set_response_base( $response ) {
         $key = $this->get_key_name();
-        $data = $this->encrypt( maybe_serialize( $response ), self::get_domain() );
+        $data = Crypto::encrypt( maybe_serialize( $response ), self::get_domain() );
+
         update_option( $key, $data ) || add_option( $key, $data );
     }
 
 
     /**
      * Get response base option
-     * 
+     *
      * @since 1.0.0
-     * @return string
+     * @return mixed
      */
     public function get_response_base() {
         $key = $this->get_key_name();
@@ -531,31 +245,22 @@ class License {
             return NULL;
         }
 
-        return maybe_unserialize( $this->decrypt( $response, self::get_domain() ) );
+        return maybe_unserialize( Crypto::decrypt( $response, self::get_domain() ) );
     }
 
 
     /**
      * Remove response base option
-     * 
+     *
      * @since 1.0.0
      * @version 1.4.7
-     * @return string
+     * @return bool
      */
     public function remove_response_base() {
         $key = $this->get_key_name();
         $is_deleted = delete_option( $key );
 
-        update_option( 'joinotify_license_status', 'invalid' );
-        delete_option('joinotify_license_key');
-        delete_option('joinotify_license_response_object');
-        delete_option('joinotify_alternative_license');
-        delete_option('joinotify_temp_license_key');
-        delete_option('joinotify_alternative_license_activation');
-        delete_option('joinotify_license_expiration_failed_attempts');
-        delete_transient('joinotify_api_request_cache');
-        delete_transient('joinotify_api_response_cache');
-        delete_transient('joinotify_license_status_cached');
+        self::clear_local_state();
 
         foreach ( self::$_onDeleteLicense as $func ) {
             if ( is_callable( $func ) ) {
@@ -568,12 +273,33 @@ class License {
 
 
     /**
+     * Drop every option and transient that describes the current license.
+     *
+     * @since 2.1.0
+     * @return void
+     */
+    protected static function clear_local_state() {
+        update_option( 'joinotify_license_status', 'invalid' );
+
+        delete_option('joinotify_license_key');
+        delete_option('joinotify_license_response_object');
+        delete_option('joinotify_alternative_license');
+        delete_option('joinotify_temp_license_key');
+        delete_option('joinotify_alternative_license_activation');
+        delete_option('joinotify_license_expiration_failed_attempts');
+        delete_transient('joinotify_api_request_cache');
+        delete_transient('joinotify_api_response_cache');
+        delete_transient('joinotify_license_status_cached');
+    }
+
+
+    /**
      * Deactive license action
-     * 
+     *
      * @since 1.0.0
      * @param string $plugin_base_file | Plugin base file
      * @param string $message | Error message
-     * @return object
+     * @return bool
      */
     public static function deactive_license( $plugin_base_file, &$message = "" ) {
         $obj = self::get_instance( $plugin_base_file );
@@ -584,7 +310,7 @@ class License {
 
     /**
      * Check purchase key
-     * 
+     *
      * @since 1.0.0
      * @param string $purchase_key | License key
      * @param string $error | Error message
@@ -601,64 +327,48 @@ class License {
 
     /**
      * Deactive license process
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.1.0
      * @param string $message | Error message
      * @return bool
      */
     final function deactive_license_process( &$message = '' ) {
         $old_response = $this->get_response_base();
 
-        if ( ! empty( $old_response->is_valid ) ) {
-            if ( ! empty( $old_response->license_key ) ) {
-                $param = $this->get_response_param( $old_response->license_key );
-                $response = $this->_request( 'product/deactive/' . $this->product_id, $param, $message );
-                update_option('joinotify_license_response_object', $response);
-
-                if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                    Logger::register_log( 'License API - Deactive response object : ' . print_r( $response, true ) );
-                }
-
-                if ( empty( $response->code ) ) {
-                    update_option( 'joinotify_license_status', 'invalid' );
-                    delete_option('joinotify_license_key');
-                    delete_option('joinotify_license_response_object');
-                    delete_option('joinotify_alternative_license');
-                    delete_option('joinotify_temp_license_key');
-                    delete_option('joinotify_alternative_license_activation');
-                    delete_transient('joinotify_api_request_cache');
-                    delete_transient('joinotify_api_response_cache');
-                    delete_transient('joinotify_license_status_cached');
-
-                    if ( ! empty( $response->status ) ) {
-                        $message = $response->msg;
-                        $this->remove_response_base();
-
-                        return true;
-                    } else {
-                        $message = $response->msg;
-
-                        return true;
-                    }
-                } else {
-                    $message = $response->message;
-                }
-            }
-        } else {
+        if ( empty( $old_response->is_valid ) ) {
             $this->remove_response_base();
 
             return true;
         }
 
-        return false;
+        if ( empty( $old_response->license_key ) ) {
+            return false;
+        }
+
+        $result = $this->driver( $old_response->license_key )->deactivate( $old_response->license_key );
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            Logger::register_log( 'License API - Deactive result : ' . print_r( $result->message(), true ) );
+        }
+
+        $message = $result->message();
+
+        if ( ! $result->succeeded() ) {
+            return false;
+        }
+
+        $this->remove_response_base();
+
+        return true;
     }
 
 
     /**
      * Check if license is active and valid
-     * 
+     *
      * @since 1.0.0
+     * @version 2.1.0
      * @param string $purchase_key | License key
      * @param string $error | Error message
      * @param object $response_object | Response object
@@ -671,114 +381,110 @@ class License {
 
         if ( empty( $purchase_key ) ) {
             $this->remove_response_base();
-            $error = "";
-    
+            $error = '';
+
             return false;
         }
-    
+
         $transient_name = 'joinotify_api_response_cache';
         $cached_response = get_transient( $transient_name );
-    
+
         if ( false !== $cached_response ) {
             $response_object = maybe_unserialize( $cached_response );
             unset( $response_object->next_request );
-    
+
             return true;
         }
-    
+
         $old_response = $this->get_response_base();
-        $isForce = false;
-    
+        $is_force = false;
+
         if ( ! empty( $old_response ) ) {
-            if ( ! empty( $old_response->expire_date ) && strtolower( $old_response->expire_date ) != "no expiry" && strtotime( $old_response->expire_date ) < time() ) {
-                $isForce = true;
+            if ( ! empty( $old_response->expire_date ) && strtolower( $old_response->expire_date ) != 'no expiry' && strtotime( $old_response->expire_date ) < time() ) {
+                $is_force = true;
             }
-    
-            if ( ! $isForce && ! empty( $old_response->is_valid ) && $old_response->next_request > time() && ( ! empty( $old_response->license_key ) && $purchase_key == $old_response->license_key ) ) {
+
+            if ( ! $is_force && ! empty( $old_response->is_valid ) && $old_response->next_request > time() && ( ! empty( $old_response->license_key ) && $purchase_key == $old_response->license_key ) ) {
                 $response_object = clone $old_response;
                 unset( $response_object->next_request );
-    
+
                 return true;
             }
         }
-    
-        $param = $this->get_response_param( $purchase_key );
-        $response = $this->_request( 'product/active/' . $this->product_id, $param, $error );
 
-        if ( empty( $response->is_request_error ) ) {
-            if ( empty( $response->code ) ) {
-                if ( ! empty( $response->status ) ) {
-                    if ( ! empty( $response->data ) ) {
-                        $serialObj = $this->decrypt( $response->data, $param->domain );
-                        $licenseObj = maybe_unserialize( $serialObj );
-                        update_option( 'joinotify_license_response_object', $licenseObj );
+        $result = $this->driver( $purchase_key )->validate( $purchase_key );
 
-                        // schedule event for check expiration license time
-                        self::schedule_license_expiration_check();
-    
-                        if ( $licenseObj->is_valid ) {
-                            $response_object = new \stdClass();
-                            $response_object->is_valid = $licenseObj->is_valid;
-    
-                            if ( $licenseObj->request_duration > 0 ) {
-                                $response_object->next_request = strtotime( "+ {$licenseObj->request_duration} hour" );
-                            } else {
-                                $response_object->next_request = time();
-                            }
-    
-                            $response_object->expire_date = $licenseObj->expire_date;
-                            $response_object->support_end = $licenseObj->support_end;
-                            $response_object->license_title = $licenseObj->license_title;
-                            $response_object->license_key = $purchase_key;
-                            $response_object->msg = $response->msg;
-                            $response_object->renew_link = ! empty( $licenseObj->renew_link ) ? $licenseObj->renew_link : '';
-                            $response_object->expire_renew_link = self::get_renew_link( $response_object, "l" );
-                            $response_object->support_renew_link = self::get_renew_link( $response_object, "s" );
-                            $this->set_response_base( $response_object );
-    
-                            // Cache the response for 1 day
-                            set_transient( $transient_name, maybe_serialize( $response_object ), DAY_IN_SECONDS );
-    
-                            unset( $response_object->next_request );
-                            delete_transient( $this->product_base . "_up" );
-    
-                            return true;
-                        } else {
-                            if ( $this->check_old_response( $old_response, $response_object, $response ) ) {
-                                return true;
-                            } else {
-                                $this->remove_response_base();
-                                $error = ! empty( $response->msg ) ? $response->msg : '';
-                            }
-                        }
-                    } else {
-                        $error = __( 'Invalid data.', 'joinotify' );
-                    }
-                } else {
-                    $error = $response->msg;
-                }
-            } else {
-                $error = $response->message;
-            }
-        } else {
-            if ( $this->check_old_response( $old_response, $response_object, $response ) ) {
-                return true;
-            } else {
-                $this->remove_response_base();
-                $error = ! empty( $response->msg ) ? $response->msg : '';
-            }
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            Logger::register_log( 'License API - Validate result : ' . print_r( $result->data(), true ) );
         }
-    
-        return $this->check_old_response( $old_response, $response_object );
+
+        if ( $result->is_valid() ) {
+            $response_object = $this->store_valid_result( $result, $purchase_key );
+
+            return true;
+        }
+
+        // An unreachable server must not cost a paying customer their license,
+        // so the last known good answer stands for a couple more attempts.
+        if ( $this->check_old_response( $old_response, $response_object ) ) {
+            return true;
+        }
+
+        $this->remove_response_base();
+        $error = $result->message();
+
+        return false;
+    }
+
+
+    /**
+     * Persist a valid result and build the response object callers expect.
+     *
+     * @since 2.1.0
+     * @param License_Result $result | Driver result
+     * @param string $purchase_key | License key
+     * @return object
+     */
+    protected function store_valid_result( License_Result $result, $purchase_key ) {
+        $request_duration = (int) $result->get( 'request_duration', 0 );
+
+        $response_object = new \stdClass();
+        $response_object->is_valid = true;
+        $response_object->next_request = $request_duration > 0 ? strtotime( "+ {$request_duration} hour" ) : time();
+        $response_object->expire_date = $result->get( 'expire_date', '' );
+        $response_object->support_end = $result->get( 'support_end', '' );
+        $response_object->license_title = $result->get( 'license_title', '' );
+        $response_object->license_key = $purchase_key;
+        $response_object->msg = $result->message();
+        $response_object->renew_link = $result->get( 'renew_link', '' );
+        $response_object->expire_renew_link = self::get_renew_link( $response_object, 'l' );
+        $response_object->support_renew_link = self::get_renew_link( $response_object, 's' );
+
+        $this->set_response_base( $response_object );
+
+        // Cache the response for 1 day
+        set_transient( 'joinotify_api_response_cache', maybe_serialize( $response_object ), DAY_IN_SECONDS );
+
+        $public_object = clone $response_object;
+        unset( $public_object->next_request );
+
+        // The readable copy of the license, consumed by the settings screen and
+        // by is_valid(). Written before scheduling, which reads it back.
+        update_option( 'joinotify_license_response_object', $public_object );
+
+        // schedule event for check expiration license time
+        self::schedule_license_expiration_check();
+
+        return $public_object;
     }
 
 
     /**
      * Check if old response is active
-     * 
+     *
      * @since 1.0.0
-     * @param object $old_response | 
-     * @param object $response_object | 
+     * @param object $old_response |
+     * @param object $response_object |
      * @return bool
      */
     private function check_old_response( &$old_response, &$response_object ) {
@@ -829,45 +535,28 @@ class License {
      * Get license expires time
      *
      * @since 1.1.0
+     * @version 2.1.0
      * @param string $license_key | License key
-     * @return array
+     * @return string|false
      */
     public static function get_expires_time( $license_key ) {
-        $api_url = self::$server_host . 'license/view';
+        $obj = self::get_instance( defined('JOINOTIFY_FILE') ? JOINOTIFY_FILE : '' );
 
-        $response = wp_remote_post( $api_url, array(
-            'headers' => array(
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ),
-            'body' => array(
-                'api_key' => '41391199-FE02BDAA-3E8E3920-CDACDE2F',
-                'license_code' => $license_key
-            ),
-            'timeout' => 10,
-        ));
-
-        if ( is_wp_error( $response ) ) {
-            Logger::register_log( 'Error getting license expiration time: ' . $response->get_error_message(), 'ERROR' );
-
+        if ( ! $obj ) {
             return false;
         }
 
-        $response_body = wp_remote_retrieve_body( $response );
-        $decoded_response = json_decode( $response_body, true );
+        $timestamp = $obj->driver( $license_key )->expires_at( $license_key );
 
-        // check if response is valid
-        if ( ! is_array( $decoded_response ) || empty( $decoded_response['data']['expiry_time'] ) ) {
-            Logger::register_log( 'Invalid response from license API: ' . print_r( $decoded_response, true ), 'ERROR' );
-            return false;
-        }
-
-        return $decoded_response['data']['expiry_time'];
+        // ISO-8601 with an explicit offset: callers pass this straight back
+        // through strtotime(), and a bare UTC string would be re-read as local.
+        return $timestamp ? gmdate( 'c', $timestamp ) : false;
     }
 
 
     /**
      * Check if license is valid
-     * 
+     *
      * @since 1.0.0
      * @return bool
      */
@@ -897,13 +586,13 @@ class License {
 
     /**
      * Get license title
-     * 
+     *
      * @version 1.4.7
      * @return string
      */
     public static function license_title() {
         $object_query = get_option('joinotify_license_response_object');
-    
+
         if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->license_title ) ) {
           return $object_query->license_title;
         } else {
@@ -914,7 +603,7 @@ class License {
 
     /**
      * Get license expire date
-     * 
+     *
      * @since 1.0.0
      * @return string
      */
@@ -946,7 +635,7 @@ class License {
 
     /**
      * Check if license is expired
-     * 
+     *
      * @since 1.0.0
      * @return bool
      */
@@ -970,59 +659,27 @@ class License {
 
 
     /**
-     * Try to decrypt license with multiple keys
-     * 
-     * @since 1.0.0
-     * @param string $encrypted_data | Encrypted data
-     * @param array $possible_keys | Array list with decryp keys
-     * @return mixed Decrypted string or null
-     */
-    public static function decrypt_alternative_license( $encrypted_data, $possible_keys ) {
-        foreach ( $possible_keys as $key ) {
-            $decrypted_data = openssl_decrypt( $encrypted_data, 'AES-256-CBC', $key, 0, substr( $key, 0, 16 ) );
-
-            // Checks whether decryption was successful
-            if ( $decrypted_data !== false ) {
-                return $decrypted_data;
-            }
-        }
-        
-        return null;
-    }
-
-
-    /**
      * Check expiration license on schedule event
-     * 
+     *
      * @since 1.1.0
+     * @param int $expiration_timestamp | Expiration timestamp
      * @return void
      */
     public static function schedule_license_expiration_check( $expiration_timestamp = 0 ) {
         // Cancel any previous bookings to avoid duplication
         wp_clear_scheduled_hook('joinotify_check_license_expires_event');
 
-        if ( $expiration_timestamp > 0 ) {
-            if ( $expiration_timestamp > time() ) {
-                // Add 24h to timestamp
-                $expiration_timestamp += DAY_IN_SECONDS;
-
-                // Schedule event to expire at exactly the right time
-                wp_schedule_single_event( $expiration_timestamp, 'joinotify_check_license_expires_event' );
-            }
-        } else {
+        if ( $expiration_timestamp <= 0 ) {
             $object_query = get_option('joinotify_license_response_object');
-    
+
             if ( is_object( $object_query ) && ! empty( $object_query->expire_date ) ) {
                 $expiration_timestamp = strtotime( $object_query->expire_date );
-        
-                if ( $expiration_timestamp > time() ) {
-                    // Add 24h to timestamp
-                    $expiration_timestamp += DAY_IN_SECONDS;
-    
-                    // Schedule event to expire at exactly the right time
-                    wp_schedule_single_event( $expiration_timestamp, 'joinotify_check_license_expires_event' );
-                }
             }
+        }
+
+        if ( $expiration_timestamp > time() ) {
+            // Add 24h to timestamp so the check runs after the license lapses
+            wp_schedule_single_event( $expiration_timestamp + DAY_IN_SECONDS, 'joinotify_check_license_expires_event' );
         }
 
         // register runned event
@@ -1044,7 +701,7 @@ class License {
 
     /**
      * Deactivate license on scheduled event
-     * 
+     *
      * @since 1.1.0
      * @return void
      */
@@ -1071,37 +728,24 @@ class License {
          */
         do_action( 'joinotify_license_expiration_check_attempt', $attempt_number, $license_key, $api_expiry_time );
 
-        if ( $api_expiry_time ) {
-            $expiration_timestamp = strtotime( $api_expiry_time );
+        if ( $api_expiry_time && strtotime( $api_expiry_time ) >= time() ) {
+            delete_option('joinotify_license_expiration_failed_attempts');
+            self::schedule_license_expiration_check( strtotime( $api_expiry_time ) );
 
-            // license expired
-            if ( $expiration_timestamp < time() ) {
-                update_option('joinotify_license_expiration_failed_attempts', $attempt_number);
-
-                if ( $attempt_number >= 3 ) {
-                    $message = '';
-
-                    self::deactive_license( JOINOTIFY_FILE, $message );
-                    delete_option('joinotify_license_expiration_failed_attempts');
-                } else {
-                    self::schedule_license_expiration_retry_for_next_day();
-                }
-            } else {
-                delete_option('joinotify_license_expiration_failed_attempts');
-                self::schedule_license_expiration_check( $expiration_timestamp );
-            }
-        } else {
-            update_option('joinotify_license_expiration_failed_attempts', $attempt_number);
-
-            if ( $attempt_number >= 3 ) {
-                $message = '';
-
-                self::deactive_license( JOINOTIFY_FILE, $message );
-                delete_option('joinotify_license_expiration_failed_attempts');
-            } else {
-                self::schedule_license_expiration_retry_for_next_day();
-            }
+            return;
         }
+
+        update_option( 'joinotify_license_expiration_failed_attempts', $attempt_number );
+
+        if ( $attempt_number >= 3 ) {
+            $message = '';
+
+            self::deactive_license( defined('JOINOTIFY_FILE') ? JOINOTIFY_FILE : '', $message );
+            delete_option('joinotify_license_expiration_failed_attempts');
+
+            return;
+        }
+
+        self::schedule_license_expiration_retry_for_next_day();
     }
 }
-
