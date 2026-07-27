@@ -80,6 +80,7 @@ namespace MeuMouse\Joinotify\Core {
 
 namespace {
 
+require __DIR__ . '/../admin/src/Licensing/Support/Site.php';
 require __DIR__ . '/../admin/src/Licensing/Dto/License_Result.php';
 require __DIR__ . '/../admin/src/Licensing/Contracts/Driver.php';
 require __DIR__ . '/../admin/src/Licensing/Drivers/Mds_Driver.php';
@@ -306,16 +307,28 @@ reset_state();
 $client = new Client( 'KEY', array( new Scripted_Driver( Legacy_Driver::ID ), new Scripted_Driver( Mds_Driver::ID ) ) );
 check( 'returns null when nobody knows', null === $client->expires_at() );
 
-echo "\n== Mds_Driver placeholder ==\n";
+echo "\n== Mds_Driver when unconfigured ==\n";
 
 reset_state();
-$stub = new Mds_Driver();
-// Until the SDK is bundled the honest answer is "unreachable", which also keeps
-// the fallback inert because only a driver that answered gets elected.
-check( 'reports unreachable', $stub->validate('KEY')->is_transport_failure() );
-check( 'never claims validity', ! $stub->activate('KEY')->is_valid() );
-check( 'has no expiry', null === $stub->expires_at('KEY') );
-check( 'identifies itself', 'mds' === $stub->id() );
+$unconfigured = new Mds_Driver();
+// Without keys the honest answer is "unreachable", which also keeps the
+// fallback inert: only a driver that actually answered gets elected, so a site
+// missing its configuration stays on the legacy backend instead of losing its
+// license to a backend it cannot even authenticate against.
+check( 'reports unreachable', $unconfigured->validate('KEY')->is_transport_failure() );
+check( 'never claims validity', ! $unconfigured->activate('KEY')->is_valid() );
+check( 'has no expiry', null === $unconfigured->expires_at('KEY') );
+check( 'identifies itself', 'mds' === $unconfigured->id() );
+
+reset_state();
+$client = client_with( License_Result::transport_failure('legacy gone'), null, $legacy, $mds );
+// A real, unconfigured MDS driver alongside a dead legacy one: nothing is
+// elected, and the caller still sees a transport failure it can ride out.
+$client = new Client( 'KEY', array( $legacy, new Mds_Driver() ) );
+$result = $client->validate();
+
+check( 'nothing is elected', Legacy_Driver::ID === Driver_State::current() );
+check( 'the caller sees a transport failure', $result->is_transport_failure() );
 
 echo "\n";
 echo $failures > 0
