@@ -52,6 +52,14 @@ const licenseField = computed(() => ({
   placeholder: __('Example: CM-0000-0000-0000', textDomain),
 }));
 const contentTitle = computed(() => (isActive.value ? __('License details', textDomain) : __('Activate license', textDomain)));
+// Which licensing server a site talks to is normally invisible. This surfaces
+// only when that server reported something about a license that is still
+// running here, which is a case a human has to resolve.
+const migrationNotice = computed(() => {
+  const migration = license.value?.migration;
+
+  return migration?.needs_attention ? migration : null;
+});
 const contentDescription = computed(() =>
   isActive.value
     ? __('Review your current license status and refresh it whenever needed.', textDomain)
@@ -345,6 +353,25 @@ onBeforeUnmount(() => {
           </a>
         </template>
       </PageHeader>
+
+      <div
+        v-if="migrationNotice"
+        class="mt-8 rounded-[8px] border border-amber-200 bg-amber-50 px-6 py-5"
+        role="status"
+      >
+        <h3 class="text-sm font-semibold text-amber-900">{{ migrationNotice.notice_title }}</h3>
+        <p class="mt-1 text-sm leading-6 text-amber-800">{{ migrationNotice.notice_text }}</p>
+
+        <div class="mt-4">
+          <BaseButton
+            :title="__('Sync license', textDomain)"
+            color="white"
+            size="sm"
+            :loading="busyAction === 'sync'"
+            @click="syncLicense()"
+          />
+        </div>
+      </div>
 
       <section class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
         <div class="px-10 py-12">

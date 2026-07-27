@@ -6,6 +6,8 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
 use MeuMouse\Joinotify\Api\License;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Licensing\Driver_State;
+use MeuMouse\Joinotify\Licensing\Migrator;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
@@ -655,7 +657,51 @@ class Registry {
             'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
             'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
             'support_renew_link' => is_object( $license_object ) && ! empty( $license_object->support_renew_link ) ? esc_url_raw( $license_object->support_renew_link ) : '',
+            'migration' => self::get_license_migration_state(),
         );
+    }
+
+
+    /**
+     * Build the licensing-backend payload used by the Vue license page.
+     *
+     * Which server a site talks to is normally invisible, and should stay that
+     * way. It surfaces here for the one case that needs a human: the new server
+     * answered and disagreed with a license this site is running on. That is
+     * recorded rather than acted on, so without somewhere to show it the site
+     * would keep working while nobody knew there was anything to resolve.
+     *
+     * @since 2.1.0
+     * @return array<string,mixed>
+     */
+    public static function get_license_migration_state() {
+        $details = Driver_State::details();
+        $pending = Migrator::pending_notice();
+
+        $state = array(
+            'driver' => $details['driver'],
+            'forced' => (bool) $details['forced'],
+            'migrated_at' => $details['decided_at'] > 0 ? date_i18n( get_option('date_format'), $details['decided_at'] ) : '',
+            'needs_attention' => false,
+            'notice_title' => '',
+            'notice_text' => '',
+        );
+
+        if ( null === $pending ) {
+            return $state;
+        }
+
+        $state['needs_attention'] = true;
+        $state['notice_title'] = esc_html__( 'Your license needs to be checked', 'joinotify' );
+        $state['notice_text'] = sprintf(
+            /* translators: %s: message returned by the licensing server. */
+            esc_html__( 'The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists.', 'joinotify' ),
+            isset( $pending['message'] ) && '' !== $pending['message']
+                ? sanitize_text_field( $pending['message'] )
+                : esc_html__( 'the license could not be confirmed', 'joinotify' )
+        );
+
+        return $state;
     }
 
 
