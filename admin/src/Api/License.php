@@ -3,7 +3,7 @@
 namespace MeuMouse\Joinotify\Api;
 
 use MeuMouse\Joinotify\Core\Logger;
-use MeuMouse\Joinotify\Licensing\Contracts\Driver;
+use MeuMouse\Joinotify\Licensing\Client;
 use MeuMouse\Joinotify\Licensing\Drivers\Legacy_Driver;
 use MeuMouse\Joinotify\Licensing\Dto\License_Result;
 use MeuMouse\Joinotify\Licensing\Support\Crypto;
@@ -115,21 +115,21 @@ class License {
 
 
     /**
-     * Driver used to talk to the licensing server.
+     * Client used to talk to whichever licensing backend is answering.
      *
      * @since 2.1.0
      * @param string $license_key | License key
-     * @return Driver
+     * @return Client
      */
-    protected function driver( $license_key ) {
+    protected function client( $license_key ) {
         /**
-         * Filters the driver used for licensing calls.
+         * Filters the licensing client used for server calls.
          *
          * @since 2.1.0
-         * @param Driver $driver | Driver instance
+         * @param Client $client | Client instance
          * @param string $license_key | License key
          */
-        return apply_filters( 'Joinotify/Licensing/Driver', new Legacy_Driver( $license_key ), $license_key );
+        return apply_filters( 'Joinotify/Licensing/Client', new Client( $license_key ), $license_key );
     }
 
 
@@ -346,7 +346,7 @@ class License {
             return false;
         }
 
-        $result = $this->driver( $old_response->license_key )->deactivate( $old_response->license_key );
+        $result = $this->client( $old_response->license_key )->deactivate();
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'License API - Deactive result : ' . print_r( $result->message(), true ) );
@@ -421,7 +421,7 @@ class License {
             }
         }
 
-        $result = $this->driver( $purchase_key )->validate( $purchase_key );
+        $result = $this->client( $purchase_key )->validate();
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'License API - Validate result : ' . print_r( $result->data(), true ) );
@@ -555,7 +555,7 @@ class License {
             return false;
         }
 
-        $timestamp = $obj->driver( $license_key )->expires_at( $license_key );
+        $timestamp = $obj->client( $license_key )->expires_at();
 
         // ISO-8601 with an explicit offset: callers pass this straight back
         // through strtotime(), and a bare UTC string would be re-read as local.
