@@ -375,8 +375,13 @@ class License {
      * @return mixed object or bool
      */
     final function check_license_object( $purchase_key, &$error = '', &$response_object = null ) {
+        // A site pinned to the alternative activation path is not checked
+        // against the server at all. Reported as a plain failure rather than by
+        // returning null from a method documented to answer true or false.
         if ( get_option('joinotify_alternative_license') === 'active' ) {
-            return;
+            $error = '';
+
+            return false;
         }
 
         if ( empty( $purchase_key ) ) {
@@ -400,7 +405,11 @@ class License {
         $is_force = false;
 
         if ( ! empty( $old_response ) ) {
-            if ( ! empty( $old_response->expire_date ) && strtolower( $old_response->expire_date ) != 'no expiry' && strtotime( $old_response->expire_date ) < time() ) {
+            $old_expires_at = self::expires_at_from( $old_response );
+
+            // A lapsed local copy must not short-circuit the server call: the
+            // customer may have renewed since.
+            if ( null !== $old_expires_at && $old_expires_at < time() ) {
                 $is_force = true;
             }
 
@@ -555,32 +564,93 @@ class License {
 
 
     /**
+     * Expiry values that mean "this license never lapses".
+     *
+     * @since 2.1.0
+     * @var array
+     */
+    const NEVER_EXPIRES = array( 'no expiry', 'unlimited', 'never', 'lifetime' );
+
+
+    /**
+     * When a stored license lapses.
+     *
+     * @since 2.1.0
+     * @param object $license | Stored license object
+     * @return int|null Timestamp, or null when it never expires or has no date
+     */
+    protected static function expires_at_from( $license ) {
+        if ( ! is_object( $license ) || empty( $license->expire_date ) || ! is_scalar( $license->expire_date ) ) {
+            return null;
+        }
+
+        if ( in_array( strtolower( trim( (string) $license->expire_date ) ), self::NEVER_EXPIRES, true ) ) {
+            return null;
+        }
+
+        $timestamp = strtotime( (string) $license->expire_date );
+
+        return $timestamp ? $timestamp : null;
+    }
+
+
+    /**
+     * Whether the stored license is currently usable.
+     *
+     * @since 2.1.0
+     * @return bool
+     */
+    protected static function evaluate_validity() {
+        $license = get_option('joinotify_license_response_object');
+
+        if ( ! is_object( $license ) || empty( $license->is_valid ) ) {
+            return false;
+        }
+
+        $expires_at = self::expires_at_from( $license );
+
+        return null === $expires_at || $expires_at >= time();
+    }
+
+
+    /**
      * Check if license is valid
      *
      * @since 1.0.0
+     * @version 2.1.0
      * @return bool
      */
     public static function is_valid() {
-        $cached_result = get_transient('joinotify_license_status_cached');
+        $cached = get_transient('joinotify_license_status_cached');
 
-        // If the result is cached, return it
-        if ( $cached_result !== false ) {
-            return $cached_result;
+        // Stored as a string rather than a boolean: get_transient() reports a
+        // cached false and a cache miss identically, so a boolean would make
+        // every negative result recompute on each call.
+        if ( 'valid' === $cached ) {
+            return true;
         }
 
-        $object_query = get_option('joinotify_license_response_object');
-
-        if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->is_valid )  ) {
-            // set response cache for 24h
-            set_transient('joinotify_license_status_cached', true, 86400);
-
-            return true;
-        } else {
-            set_transient('joinotify_license_status_cached', false, 86400);
-            update_option( 'joinotify_license_status', 'invalid' );
-
+        if ( 'invalid' === $cached ) {
             return false;
         }
+
+        $is_valid = self::evaluate_validity();
+        $ttl = DAY_IN_SECONDS;
+
+        if ( $is_valid ) {
+            $expires_at = self::expires_at_from( get_option('joinotify_license_response_object') );
+
+            // Never hold a positive answer past the expiry date, or a license
+            // that lapses tonight keeps unlocking the plugin until tomorrow.
+            if ( null !== $expires_at ) {
+                $ttl = max( MINUTE_IN_SECONDS, min( $ttl, $expires_at - time() ) );
+            }
+        }
+
+        set_transient( 'joinotify_license_status_cached', $is_valid ? 'valid' : 'invalid', $ttl );
+        update_option( 'joinotify_license_status', $is_valid ? 'valid' : 'invalid' );
+
+        return $is_valid;
     }
 
 
@@ -604,32 +674,34 @@ class License {
     /**
      * Get license expire date
      *
+     * Read-only: this is called while rendering the settings screen, and a
+     * getter that revoked the license as a side effect meant simply opening
+     * that screen could deactivate a site. Expiry is acted on by is_valid() and
+     * by the scheduled check, which is where that decision belongs.
+     *
      * @since 1.0.0
+     * @version 2.1.0
      * @return string
      */
     public static function license_expire() {
-        $object_query = get_option('joinotify_license_response_object');
+        $license = get_option('joinotify_license_response_object');
 
-        if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->expire_date ) ) {
-            if ( $object_query->expire_date === 'No expiry' ) {
-                return esc_html__( 'Never expires', 'joinotify' );
-            } else {
-                if ( strtotime( $object_query->expire_date ) < time() ) {
-                    $object_query->is_valid = false;
-
-                    update_option( 'joinotify_license_response_object', $object_query );
-                    update_option( 'joinotify_license_status', 'invalid' );
-                    delete_option('joinotify_license_response_object');
-
-                    return esc_html__( 'Expired license', 'joinotify' );
-                }
-
-                // get wordpress date format setting
-                $date_format = get_option('date_format');
-
-                return date( $date_format, strtotime( $object_query->expire_date ) );
-            }
+        if ( ! is_object( $license ) || ! isset( $license->expire_date ) ) {
+            return '';
         }
+
+        $expires_at = self::expires_at_from( $license );
+
+        if ( null === $expires_at ) {
+            return esc_html__( 'Never expires', 'joinotify' );
+        }
+
+        if ( $expires_at < time() ) {
+            return esc_html__( 'Expired license', 'joinotify' );
+        }
+
+        // get wordpress date format setting
+        return date_i18n( get_option('date_format'), $expires_at );
     }
 
 
@@ -637,24 +709,13 @@ class License {
      * Check if license is expired
      *
      * @since 1.0.0
+     * @version 2.1.0
      * @return bool
      */
     public static function expired_license() {
-        $object_query = get_option('joinotify_license_response_object');
+        $expires_at = self::expires_at_from( get_option('joinotify_license_response_object') );
 
-        if ( is_object( $object_query ) && ! empty( $object_query ) && isset( $object_query->expire_date ) ) {
-            if ( $object_query->expire_date === 'No expiry' ) {
-                return false;
-            } else {
-                if ( strtotime( $object_query->expire_date ) < time() ) {
-                    $object_query->is_valid = false;
-
-                    update_option( 'joinotify_license_response_object', $object_query );
-
-                    return false;
-                }
-            }
-        }
+        return null !== $expires_at && $expires_at < time();
     }
 
 
