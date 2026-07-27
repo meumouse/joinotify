@@ -200,6 +200,14 @@ class Init {
 			'JOINOTIFY_DOCS_URL'           	=> 'https://ajuda.meumouse.com/docs/joinotify/overview',
 			'JOINOTIFY_REGISTER_PHONE_URL' 	=> 'https://meumouse.com/minha-conta/joinotify-slots/',
 			'JOINOTIFY_API_BASE_URL'       	=> 'https://slots-manager.joinotify.com',
+			// Licensing via the Modular Distribution Service. The API key is a
+			// public, low-privilege product key (activate/deactivate/update-check);
+			// the public key verifies the server's signature on license answers.
+			// While either is empty the MDS driver reports itself unavailable, so
+			// sites stay on the legacy server.
+			'JOINOTIFY_MDS_API_URL'        	=> 'https://api.meumouse.com',
+			'JOINOTIFY_MDS_API_KEY'        	=> '',
+			'JOINOTIFY_MDS_PUBLIC_KEY'     	=> '',
 			'JOINOTIFY_SLUG'               	=> 'joinotify',
 			'JOINOTIFY_VERSION'            	=> $this->plugin_version,
 			// Verbose runtime logging follows WP_DEBUG: on in development, off in

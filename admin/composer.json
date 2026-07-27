@@ -10,9 +10,17 @@
             "homepage": "https://meumouse.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/meumouse/mds-php-sdk"
+        }
+    ],
     "require": {
         "php": ">= 7.4",
-        "giggsey/libphonenumber-for-php": "^8.13"
+        "ext-sodium": "*",
+        "giggsey/libphonenumber-for-php": "^8.13",
+        "meumouse/mds-php-sdk": "^1.0"
     },
     "autoload": {
         "psr-4": {
