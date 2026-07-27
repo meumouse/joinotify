@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Api;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Licensing\Updates;
 
 use WP_Upgrader;
 use Plugin_Upgrader;
@@ -42,6 +43,13 @@ class Updater {
      * @return void
      */
     public function __construct() {
+        // Once a site is served by MDS its packages are license-gated and handed
+        // out through short-lived tokens, which this updater cannot request.
+        // Registering both would put two handlers on the same core filters.
+        if ( Updates::is_active() ) {
+            return;
+        }
+
         if ( defined('JOINOTIFY_DEV_MODE') && JOINOTIFY_DEV_MODE === true ) {
             add_filter( 'https_ssl_verify', '__return_false' );
             add_filter( 'https_local_ssl_verify', '__return_false' );
