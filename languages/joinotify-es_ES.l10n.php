@@ -1112,7 +1112,7 @@ return [
 		'Request' => 'Solicitud',
 		'Request failed.' => 'Solicitud fallida.',
 		'Required configuration for this trigger to run correctly.' => 'Configuración requerida para que este disparador funcione correctamente.',
-		'Resend' => 'Reenviar',
+		'Resend' => 'Resend',
 		'Resend code' => 'Reenviar código',
 		'Resend code in' => 'Reenviar código en',
 		'Resend e-mail' => 'Reenviar correo electrónico',

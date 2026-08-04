@@ -1112,7 +1112,7 @@ return [
 		'Request' => 'Solicitar',
 		'Request failed.' => 'Solicitação falhou.',
 		'Required configuration for this trigger to run correctly.' => 'Configuração necessária para que este gatilho funcione corretamente.',
-		'Resend' => 'Reenviar',
+		'Resend' => 'Resend',
 		'Resend code' => 'Reenviar código',
 		'Resend code in' => 'Reenviar código em',
 		'Resend e-mail' => 'Reenviar e-mail',
