@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Attachments;
 use MeuMouse\Joinotify\Validations\Conditions;
@@ -1501,9 +1502,10 @@ class Workflow_Processor {
             'workflow_id' => $post_id,
         ));
 
-        // send message through the notification channel layer
+        // send message through the notification channel layer, over whichever
+        // WhatsApp transport (Evolution or Cloud API) is currently active
         $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
-            'channel' => 'whatsapp',
+            'channel' => Transport::active_channel_id(),
             'type' => 'text',
             'sender' => $sender,
             'receiver' => $receiver,
@@ -1516,8 +1518,8 @@ class Workflow_Processor {
 
         Message_History::clear_context();
 
-        if ( ! $result->is_success() ) {
-            // refresh the stored connection state for the sender
+        if ( ! $result->is_success() && ! Transport::is_cloud() ) {
+            // refresh the stored connection state for the sender (Evolution only)
             Controller::get_connection_state( $sender );
         }
 
@@ -1573,9 +1575,10 @@ class Workflow_Processor {
             return;
         }
 
-        // send message through the notification channel layer
+        // send message through the notification channel layer, over whichever
+        // WhatsApp transport (Evolution or Cloud API) is currently active
         $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
-            'channel' => 'whatsapp',
+            'channel' => Transport::active_channel_id(),
             'type' => ( 'audio' === $media_type ) ? 'audio' : 'media',
             'sender' => $sender,
             'receiver' => $receiver,
@@ -1590,8 +1593,8 @@ class Workflow_Processor {
 
         Message_History::clear_context();
 
-        if ( ! $result->is_success() ) {
-            // refresh the stored connection state for the sender
+        if ( ! $result->is_success() && ! Transport::is_cloud() ) {
+            // refresh the stored connection state for the sender (Evolution only)
             Controller::get_connection_state( $sender );
         }
 
@@ -1662,7 +1665,7 @@ class Workflow_Processor {
             }
 
             $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
-                'channel' => 'whatsapp',
+                'channel' => Transport::active_channel_id(),
                 'type' => 'media',
                 'sender' => $sender,
                 'receiver' => $receiver,
@@ -1877,13 +1880,13 @@ class Workflow_Processor {
             'workflow_id' => $post_id,
         ));
 
-        // send the generated message
-        $response = Controller::send_message_text( $sender, $receiver, $message );
+        // send the generated message over the active WhatsApp transport
+        $response = Transport::send_message_text( $sender, $receiver, $message );
 
         Message_History::clear_context();
 
-        if ( 201 !== $response ) {
-            // refresh the stored connection state for the sender
+        if ( 201 !== $response && ! Transport::is_cloud() ) {
+            // refresh the stored connection state for the sender (Evolution only)
             Controller::get_connection_state( $sender );
         }
 

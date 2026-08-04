@@ -2,7 +2,7 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Admin\Admin;
 use WP_REST_Request;
 
@@ -62,7 +62,7 @@ class Send_Text_Message extends Proxy_Message_Route {
         $delay    = $request->get_param( 'delay' );
         $delay    = is_numeric( $delay ) ? (int) $delay : 0;
 
-        if ( 201 === Controller::send_message_text( $sender, $receiver, $message, $delay ) ) {
+        if ( 201 === Transport::send_message_text( $sender, $receiver, $message, $delay ) ) {
             return $this->success_response( array(
                 'message' => __( 'Text message sent successfully.', 'joinotify' ),
             ) );

@@ -7,6 +7,7 @@
  */
 
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Extensions;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -48,7 +49,7 @@ function joinotify_check_admin_page( $admin_page ) {
  * @return int
  */
 function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $delay = 0 ) {
-   $response = Controller::send_message_text( $sender, $receiver, $message, $delay );
+   $response = Transport::send_message_text( $sender, $receiver, $message, $delay );
 
    return $response;
 }
@@ -67,7 +68,7 @@ function joinotify_send_whatsapp_message_text( $sender, $receiver, $message, $de
  * @return int
  */
 function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type, $media, $caption = '', $delay = 0 ) {
-   $response = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption, $delay );
+   $response = Transport::send_message_media( $sender, $receiver, $media_type, $media, $caption, $delay );
 
    return $response;
 }

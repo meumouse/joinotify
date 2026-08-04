@@ -6,7 +6,7 @@ use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 use MeuMouse\Joinotify\Builder\Core;
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Validations\Media_Types;
 
 use ElementorPro\Modules\Forms\Classes\Action_Base;
@@ -285,7 +285,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 					Logger::register_log( "text message on Elementor form: " . $text_msg );
 				}
 
-				Controller::send_message_text( $sender, $receiver, $text_msg );
+				Transport::send_message_text( $sender, $receiver, $text_msg );
 			}
 		
 			// check if send message media is enabled
@@ -301,7 +301,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 						Logger::register_log( "media caption on Elementor form: " . $caption );
 					}
 
-					Controller::send_message_media( $sender, $receiver, $media_type, $media_url, $caption );
+					Transport::send_message_media( $sender, $receiver, $media_type, $media_url, $caption );
 				}
 			}
 		}

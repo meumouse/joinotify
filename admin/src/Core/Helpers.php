@@ -163,6 +163,84 @@ class Helpers {
 
 
     /**
+     * Resolve a WhatsApp Cloud API credential.
+     *
+     * Prefers the manual override saved in the settings screen; when empty,
+     * falls back to the value provisioned by the license activation (stored on
+     * the public license response object). Mirrors slots_manager_api_key() as
+     * the single accessor for the current relay key.
+     *
+     * @since 1.4.8
+     * @param string $setting_key | Settings key holding the manual override.
+     * @param string $license_key | Field name on the license response object.
+     * @return string
+     */
+    private static function cloud_credential( $setting_key, $license_key ) {
+        $manual = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
+
+        if ( is_string( $manual ) && '' !== trim( $manual ) ) {
+            return trim( $manual );
+        }
+
+        $license = get_option( 'joinotify_license_response_object' );
+
+        if ( is_object( $license ) && isset( $license->$license_key ) && is_string( $license->$license_key ) ) {
+            return trim( $license->$license_key );
+        }
+
+        if ( is_array( $license ) && isset( $license[ $license_key ] ) && is_string( $license[ $license_key ] ) ) {
+            return trim( $license[ $license_key ] );
+        }
+
+        return '';
+    }
+
+
+    /**
+     * WhatsApp Cloud API bearer token (sk_live_... / sk_test_...).
+     *
+     * @since 1.4.8
+     * @return string
+     */
+    public static function cloud_api_token() {
+        return self::cloud_credential( 'whatsapp_cloud_api_token', 'api_token' );
+    }
+
+
+    /**
+     * Default Cloud API phone_number_id used as the message origin ('from').
+     *
+     * @since 1.4.8
+     * @return string
+     */
+    public static function cloud_phone_number_id() {
+        return self::cloud_credential( 'whatsapp_phone_number_id', 'phone_number_id' );
+    }
+
+
+    /**
+     * WhatsApp Business Account id (waba_id) that owns the templates.
+     *
+     * @since 1.4.8
+     * @return string
+     */
+    public static function cloud_waba_id() {
+        return self::cloud_credential( 'whatsapp_waba_id', 'waba_id' );
+    }
+
+
+    /**
+     * Whether the WhatsApp Cloud API is usable (a bearer token is available).
+     *
+     * @since 1.4.8
+     * @return bool
+     */
+    public static function cloud_api_ready() {
+        return '' !== self::cloud_api_token();
+    }
+
+
+    /**
      * Get switch options dynamically from default options
      *
      * @since 1.1.0

@@ -125,6 +125,13 @@ class Init {
 		// Add docs link on plugins list.
 		add_filter( 'plugin_row_meta', array( $this, 'add_row_meta_links' ), 10, 4 );
 
+		// Route notifications to the WhatsApp transport selected by the switch
+		// (Evolution vs Cloud API). Messages that pin an explicit channel still
+		// win; this only supplies the default when none is set.
+		add_filter( 'Joinotify/Notifications/Default_Channel', function( $channel ) {
+			return \MeuMouse\Joinotify\Api\Transport::active_channel_id();
+		}, 10, 1 );
+
 		// Load plugin text domain.
 		add_action( 'init', array( $this, 'load_text_domain' ) );
 
@@ -200,6 +207,10 @@ class Init {
 			'JOINOTIFY_DOCS_URL'           	=> 'https://ajuda.meumouse.com/docs/joinotify/overview',
 			'JOINOTIFY_REGISTER_PHONE_URL' 	=> 'https://meumouse.com/minha-conta/joinotify-slots/',
 			'JOINOTIFY_API_BASE_URL'       	=> 'https://slots-manager.joinotify.com',
+			// Base URL for the official WhatsApp Cloud API exposed by Joinotify.
+			// This is the migration target that replaces the Evolution/slots-manager
+			// relay above. Filterable via 'Joinotify/Cloud_Api/Base_Url'.
+			'JOINOTIFY_CLOUD_API_BASE_URL' 	=> 'https://api.joinotify.com',
 			// Licensing via the Modular Distribution Service. The API key is a
 			// public, low-privilege product key (activate/deactivate/update-check);
 			// the public key verifies the server's signature on license answers.

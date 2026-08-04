@@ -2,7 +2,7 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Admin\Admin;
 use WP_REST_Request;
 
@@ -68,7 +68,7 @@ class Send_Media_Message extends Proxy_Message_Route {
         $delay      = $request->get_param( 'delay' );
         $delay      = is_numeric( $delay ) ? (int) $delay : 0;
 
-        if ( 201 === Controller::send_message_media( $sender, $receiver, $media_type, $media_url, $caption, $delay ) ) {
+        if ( 201 === Transport::send_message_media( $sender, $receiver, $media_type, $media_url, $caption, $delay ) ) {
             return $this->success_response( array(
                 'message' => __( 'Media message sent successfully.', 'joinotify' ),
             ) );

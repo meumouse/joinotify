@@ -2,7 +2,7 @@
 
 namespace MeuMouse\Joinotify\Core;
 
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -250,7 +250,7 @@ class Notification_Queue {
     private static function dispatch_item_request( $type, $payload ) {
         switch ( $type ) {
             case 'text':
-                $result = Controller::send_message_text(
+                $result = Transport::send_message_text(
                     $payload['sender'] ?? '',
                     $payload['receiver'] ?? '',
                     $payload['message'] ?? '',
@@ -261,7 +261,7 @@ class Notification_Queue {
                 break;
 
             case 'media':
-                $result = Controller::send_message_media(
+                $result = Transport::send_message_media(
                     $payload['sender'] ?? '',
                     $payload['receiver'] ?? '',
                     $payload['media_type'] ?? '',
@@ -275,10 +275,23 @@ class Notification_Queue {
                 break;
 
             case 'audio':
-                $result = Controller::send_whatsapp_audio(
+                $result = Transport::send_whatsapp_audio(
                     $payload['sender'] ?? '',
                     $payload['receiver'] ?? '',
                     $payload['audio'] ?? '',
+                    (int) ( $payload['delay'] ?? 0 ),
+                    false,
+                    true
+                );
+                break;
+
+            case 'template':
+                $result = Transport::send_message_template(
+                    $payload['sender'] ?? '',
+                    $payload['receiver'] ?? '',
+                    $payload['template_name'] ?? '',
+                    $payload['language'] ?? 'pt_BR',
+                    is_array( $payload['components'] ?? null ) ? $payload['components'] : array(),
                     (int) ( $payload['delay'] ?? 0 ),
                     false,
                     true
@@ -340,6 +353,17 @@ class Notification_Queue {
                     'sender' => sanitize_text_field( $payload['sender'] ?? '' ),
                     'receiver' => sanitize_text_field( $payload['receiver'] ?? '' ),
                     'audio' => esc_url_raw( $payload['audio'] ?? '' ),
+                    'delay' => max( 0, (int) ( $payload['delay'] ?? 0 ) ),
+                );
+
+            case 'template':
+                return array(
+                    'sender' => sanitize_text_field( $payload['sender'] ?? '' ),
+                    'receiver' => sanitize_text_field( $payload['receiver'] ?? '' ),
+                    'template_name' => sanitize_text_field( $payload['template_name'] ?? '' ),
+                    'language' => sanitize_text_field( $payload['language'] ?? 'pt_BR' ),
+                    // Already-resolved Meta components; kept structurally intact for retry.
+                    'components' => is_array( $payload['components'] ?? null ) ? $payload['components'] : array(),
                     'delay' => max( 0, (int) ( $payload['delay'] ?? 0 ) ),
                 );
         }

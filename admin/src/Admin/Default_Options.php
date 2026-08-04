@@ -38,6 +38,20 @@ class Default_Options {
             'proxy_api_key' => '',
             'send_text_proxy_api_route' => 'send-message/text',
             'send_media_proxy_api_route' => 'send-message/media',
+            // WhatsApp transport switch: 'evolution' (legacy slots relay),
+            // 'cloud' (official Meta Cloud API via Joinotify), or 'auto' (cloud
+            // when a Cloud API token is available, otherwise evolution).
+            'whatsapp_transport' => 'auto',
+            // Manual override for the Cloud API credentials. When empty, the
+            // values provisioned by the license activation are used instead
+            // (see Helpers::cloud_api_token() and friends).
+            'whatsapp_cloud_api_token' => '',
+            'whatsapp_phone_number_id' => '',
+            'whatsapp_waba_id' => '',
+            // Template used to deliver passwordless login (OTP) codes on the
+            // Cloud API, where free-form text is refused outside the 24h window.
+            'otp_login_template_name' => '',
+            'otp_login_template_language' => 'pt_BR',
             'enable_debug_mode' => 'no',
             'enable_auto_updates' => 'no',
             'enable_create_coupon_action' => 'yes',

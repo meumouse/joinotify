@@ -281,6 +281,10 @@ class Mds_Driver implements Driver {
             'plan' => isset( $data['plan'] ) ? $data['plan'] : '',
             'max_activations' => isset( $data['max_activations'] ) ? (int) $data['max_activations'] : 0,
             'used_activations' => isset( $data['used_activations'] ) ? (int) $data['used_activations'] : 0,
+            // WhatsApp Cloud API credentials, when the MDS server provisions them.
+            'api_token' => isset( $data['api_token'] ) ? (string) $data['api_token'] : '',
+            'phone_number_id' => isset( $data['phone_number_id'] ) ? (string) $data['phone_number_id'] : '',
+            'waba_id' => isset( $data['waba_id'] ) ? (string) $data['waba_id'] : '',
         );
     }
 
