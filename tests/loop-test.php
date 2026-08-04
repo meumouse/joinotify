@@ -290,6 +290,32 @@ check( 'each dispatch saw its own download name in order', $GLOBALS['dispatch_lo
 $items_f = call_static( 'resolve_loop_order_downloads', array( $payload_f ) );
 check( 'resolved download item carries file_ref for the attachment', ( $items_f[0]['file_ref'] ?? '' ) === '/files/ebook.pdf' && ( $items_f[1]['file_ref'] ?? '' ) === '/files/bonus.zip' );
 
+echo "\n== Test G: loop tokens resolve centrally (message, caption AND attachment URL) ==\n";
+require __DIR__ . '/../admin/src/Builder/Placeholders.php';
+
+$loop_payload = array(
+	'loop' => array(
+		'item' => array(
+			'value' => 'E-book',
+			'file_name' => 'ebook.pdf',
+			'download_url' => 'https://shop.test/?download_file=10&order=wc_x&key=abc',
+			'product_name' => 'Course',
+		),
+		'index' => 0,
+		'number' => 1,
+		'count' => 2,
+	),
+);
+
+$resolve_loop = 'MeuMouse\\Joinotify\\Builder\\Placeholders';
+
+check( 'token in a URL string resolves (the reported bug)',
+	$resolve_loop::replace_loop_tokens( '{{ loop_download_url }}', $loop_payload ) === 'https://shop.test/?download_file=10&order=wc_x&key=abc' );
+check( 'file name token resolves', $resolve_loop::replace_loop_tokens( 'File: {{ loop_file_name }}', $loop_payload ) === 'File: ebook.pdf' );
+check( 'number/count tokens resolve', $resolve_loop::replace_loop_tokens( '{{ loop_number }}/{{ loop_count }}', $loop_payload ) === '1/2' );
+check( 'unknown loop token is left intact, not blanked', $resolve_loop::replace_loop_tokens( 'x {{ loop_unknown }} y', $loop_payload ) === 'x {{ loop_unknown }} y' );
+check( 'outside a loop, tokens are left untouched', $resolve_loop::replace_loop_tokens( '{{ loop_value }}', array() ) === '{{ loop_value }}' );
+
 // ---------------------------------------------------------------------------
 // Summary
 // ---------------------------------------------------------------------------

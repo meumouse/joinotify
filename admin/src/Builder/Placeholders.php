@@ -295,6 +295,60 @@ class Placeholders {
 
         }, $message);
 
+        // Loop item variables produced by the loop action: {{ loop_* }}. Resolved
+        // centrally here so they work anywhere a token can be inserted (message,
+        // caption, attachment URL, recipient, ...), not only in message bodies.
+        $message = self::replace_loop_tokens( $message, $payload );
+
         return $message;
+    }
+
+
+    /**
+     * Replace the {{ loop_* }} tokens exposed by the loop action.
+     *
+     * The loop context ({ item, index, number, count }) is pinned on the payload by
+     * the loop's synthetic context node, so it travels with the payload through
+     * delays and is available to every action nested in the loop body.
+     *
+     * @since 2.2.0
+     * @param string $message | Text that may contain loop tokens
+     * @param array $payload | Runtime payload
+     * @return string
+     */
+    public static function replace_loop_tokens( $message, $payload = array() ) {
+        $message = is_scalar( $message ) ? (string) $message : '';
+
+        if ( false === strpos( $message, '{{ loop_' ) && false === strpos( $message, '{{loop_' ) ) {
+            return $message;
+        }
+
+        $loop = isset( $payload['loop'] ) && is_array( $payload['loop'] ) ? $payload['loop'] : array();
+        $item = isset( $loop['item'] ) && is_array( $loop['item'] ) ? $loop['item'] : array();
+
+        // No active loop context: leave the tokens untouched rather than blanking them.
+        if ( empty( $loop ) ) {
+            return $message;
+        }
+
+        $loop_vars = array(
+            'loop_value'         => $item['value'] ?? '',
+            'loop_index'         => $loop['index'] ?? '',
+            'loop_number'        => $loop['number'] ?? '',
+            'loop_count'         => $loop['count'] ?? '',
+            'loop_file_name'     => $item['file_name'] ?? '',
+            'loop_download_url'  => $item['download_url'] ?? '',
+            'loop_product_name'  => $item['product_name'] ?? '',
+            'loop_product_id'    => $item['product_id'] ?? '',
+            'loop_item_name'     => $item['name'] ?? ( $item['value'] ?? '' ),
+            'loop_item_quantity' => $item['quantity'] ?? '',
+        );
+
+        return preg_replace_callback( '/\{\{\s*(loop_[a-zA-Z0-9_]+)\s*\}\}/', function( $matches ) use ( $loop_vars ) {
+            $key = $matches[1];
+
+            // keep an unknown loop token intact instead of blanking the surrounding text
+            return array_key_exists( $key, $loop_vars ) && is_scalar( $loop_vars[ $key ] ) ? (string) $loop_vars[ $key ] : $matches[0];
+        }, $message );
     }
 }

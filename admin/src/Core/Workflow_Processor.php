@@ -1546,7 +1546,9 @@ class Workflow_Processor {
         $sender = $action_data['sender'];
         $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
         $media_type = $action_data['media_type'];
-        $media = $action_data['media_url'];
+        // resolve placeholders in the media URL too, so tokens (loop item, order data,
+        // AI variables) work when the file is provided as a URL instead of an attachment
+        $media = joinotify_prepare_message( $action_data['media_url'] ?? '', $payload );
         $caption = joinotify_prepare_message( $action_data['caption'] ?? '', $payload );
         $attachments = Attachments::resolve( $action_data['attachments'] ?? array(), $payload );
 

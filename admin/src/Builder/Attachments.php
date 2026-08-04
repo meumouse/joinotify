@@ -167,6 +167,13 @@ class Attachments {
         // fetched, so sending it to a remote API would burn their own quota. Resolve it
         // through the order instead, which yields the same files without spending anything.
         if ( self::is_download_permission_url( $url ) ) {
+            // Inside a loop over the order downloads, the link came from {{ loop_download_url }}
+            // and names one specific file: deliver just that file, not every order download
+            // (which would otherwise repeat all files on every iteration).
+            if ( isset( $payload['loop']['item'] ) && is_array( $payload['loop']['item'] ) && ! empty( $payload['loop']['item']['file_ref'] ) ) {
+                return self::resolve_loop_item( $payload );
+            }
+
             Logger::register_log( 'Joinotify: a download permission link was used as an attachment URL. Resolving it through the order downloads to avoid consuming the customer download limit.', 'WARNING' );
 
             return self::resolve_order_downloads( $payload );
