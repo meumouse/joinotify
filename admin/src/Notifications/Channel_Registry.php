@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Notifications;
 
 use MeuMouse\Joinotify\Notifications\Channels\Whatsapp_Evolution_Channel;
+use MeuMouse\Joinotify\Notifications\Channels\Whatsapp_Cloud_Channel;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -38,6 +39,7 @@ class Channel_Registry {
     public static function get_channels() {
         $channels = array(
             'whatsapp' => Whatsapp_Evolution_Channel::class,
+            'whatsapp_cloud' => Whatsapp_Cloud_Channel::class,
         );
 
         /**

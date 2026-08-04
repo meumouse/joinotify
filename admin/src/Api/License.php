@@ -469,6 +469,13 @@ class License {
         $response_object->expire_renew_link = self::get_renew_link( $response_object, 'l' );
         $response_object->support_renew_link = self::get_renew_link( $response_object, 's' );
 
+        // WhatsApp Cloud API credentials provisioned with the license. They ride
+        // on the public license object so Helpers::cloud_api_token() and friends
+        // can resolve them (the manual settings override still wins when set).
+        $response_object->api_token = $result->get( 'api_token', '' );
+        $response_object->phone_number_id = $result->get( 'phone_number_id', '' );
+        $response_object->waba_id = $result->get( 'waba_id', '' );
+
         $this->set_response_base( $response_object );
 
         // Cache the response for 1 day

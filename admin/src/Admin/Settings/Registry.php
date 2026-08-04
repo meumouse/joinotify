@@ -60,11 +60,6 @@ class Registry {
                                 esc_html__( 'Choose the fallback country when the phone number does not include a country code.', 'joinotify' ),
                                 self::build_country_code_options()
                             ),
-                            self::field_toggle(
-                                'enable_send_disconnect_notifications',
-                                esc_html__( 'Notify when WhatsApp disconnects', 'joinotify' ),
-                                esc_html__( 'Sends a notification to the sender when the connection is not established.', 'joinotify' )
-                            ),
                             self::field_text(
                                 'test_number_phone',
                                 esc_html__( 'Test phone', 'joinotify' ),
@@ -105,6 +100,50 @@ class Registry {
                                 'proxy_api_key',
                                 esc_html__( 'API key', 'joinotify' ),
                                 esc_html__( 'Key used to authenticate Proxy API calls.', 'joinotify' ),
+                                array(
+                                    'placeholder' => '',
+                                )
+                            ),
+                        ),
+                    ),
+                    array(
+                        'id' => 'general-whatsapp-cloud',
+                        'title' => __( 'WhatsApp Cloud API', 'joinotify' ),
+                        'description' => __( 'Official WhatsApp Cloud API transport that replaces the legacy relay. Leave the credentials blank to use the values provisioned with your license.', 'joinotify' ),
+                        'fields' => array(
+                            self::field_select(
+                                'whatsapp_transport',
+                                esc_html__( 'Message transport', 'joinotify' ),
+                                esc_html__( 'Which service delivers WhatsApp messages. "Automatic" uses the Cloud API whenever a token is available, otherwise the legacy Evolution relay.', 'joinotify' ),
+                                array(
+                                    array( 'value' => 'auto', 'label' => esc_html__( 'Automatic', 'joinotify' ) ),
+                                    array( 'value' => 'cloud', 'label' => esc_html__( 'Cloud API (official)', 'joinotify' ) ),
+                                    array( 'value' => 'evolution', 'label' => esc_html__( 'Evolution (legacy)', 'joinotify' ) ),
+                                ),
+                                array(
+                                    'default' => 'auto',
+                                )
+                            ),
+                            self::field_text(
+                                'whatsapp_cloud_api_token',
+                                esc_html__( 'API token', 'joinotify' ),
+                                esc_html__( 'Cloud API bearer token (sk_live_...). Overrides the token provisioned with the license.', 'joinotify' ),
+                                array(
+                                    'placeholder' => 'sk_live_...',
+                                )
+                            ),
+                            self::field_text(
+                                'whatsapp_phone_number_id',
+                                esc_html__( 'Phone number ID', 'joinotify' ),
+                                esc_html__( 'Default phone_number_id used as the message origin. Leave blank to use the oldest active number.', 'joinotify' ),
+                                array(
+                                    'placeholder' => '',
+                                )
+                            ),
+                            self::field_text(
+                                'whatsapp_waba_id',
+                                esc_html__( 'WhatsApp Business Account ID', 'joinotify' ),
+                                esc_html__( 'waba_id that owns the message templates.', 'joinotify' ),
                                 array(
                                     'placeholder' => '',
                                 )

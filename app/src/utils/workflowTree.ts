@@ -37,6 +37,42 @@ export function isPlaceholderAction(data: Record<string, unknown> | undefined): 
   return !!data && String(data.action || '') === 'dynamic_placeholder';
 }
 
+export function isLoopAction(data: Record<string, unknown> | undefined): boolean {
+  return !!data && String(data.action || '') === 'loop';
+}
+
+/**
+ * Branch topology of the built-in expansible actions: the source handle each
+ * branch key wires from. Kept here as the single source of truth shared by the
+ * tree reconstruction and the canvas rendering, so the two never disagree.
+ */
+export const BRANCH_HANDLES: Record<string, string> = {
+  action_true: 'true',
+  action_false: 'false',
+  action_loop: 'loop',
+};
+
+/**
+ * The ordered branch keys an action nests, or an empty array when the action is
+ * not expansible. Condition splits into true/false; loop holds a single body.
+ */
+export function branchKeysForAction(action: string): WorkflowBranchKey[] {
+  if (action === 'condition') {
+    return ['action_true', 'action_false'];
+  }
+
+  if (action === 'loop') {
+    return ['action_loop'];
+  }
+
+  return [];
+}
+
+/** The Vue-Flow source handle a branch key wires from (defaults to the key minus the `action_` prefix). */
+export function getBranchHandle(branchKey: string): string {
+  return BRANCH_HANDLES[branchKey] || branchKey.replace(/^action_/, '');
+}
+
 export function isWorkflowNode(value: unknown): value is WorkflowNode {
   return isRecord(value) && typeof value.id === 'string' && typeof value.type === 'string' && isRecord(value.data);
 }
@@ -44,7 +80,7 @@ export function isWorkflowNode(value: unknown): value is WorkflowNode {
 export function normalizeBranchKey(value: unknown): WorkflowBranchKey | undefined {
   const branchKey = String(value || '').trim();
 
-  if (branchKey === 'action_true' || branchKey === 'action_false') {
+  if (branchKey === 'action_true' || branchKey === 'action_false' || branchKey === 'action_loop') {
     return branchKey;
   }
 
@@ -58,6 +94,15 @@ export function createEmptyBranches(): WorkflowBranches {
   };
 }
 
+/** Seed an empty branch container for an action, keyed by the branches it nests. */
+export function createBranchesForAction(action: string): WorkflowBranches {
+  const branches: WorkflowBranches = {};
+  branchKeysForAction(action).forEach((key) => {
+    branches[key] = [];
+  });
+  return branches;
+}
+
 export function ensureNodeDefaults(node: Partial<WorkflowNode> & { type: WorkflowNodeKind }): WorkflowNode {
   const children = Array.isArray(node.children) ? node.children : [];
   const result: WorkflowNode = {
@@ -68,13 +113,14 @@ export function ensureNodeDefaults(node: Partial<WorkflowNode> & { type: Workflo
   };
 
   if (isRecord(node.branches)) {
-    result.branches = {
-      action_true: Array.isArray(node.branches.action_true) ? node.branches.action_true : [],
-      action_false: Array.isArray(node.branches.action_false) ? node.branches.action_false : [],
-    };
+    const branches: WorkflowBranches = {};
+    for (const [key, value] of Object.entries(node.branches)) {
+      branches[key] = Array.isArray(value) ? value : [];
+    }
+    result.branches = branches;
   }
 
-  if (node.branchKey === 'action_true' || node.branchKey === 'action_false') {
+  if (typeof node.branchKey === 'string' && normalizeBranchKey(node.branchKey)) {
     result.branchKey = node.branchKey;
   }
 
@@ -124,11 +170,16 @@ export function createActionNode(actionId = '', payload: Partial<Record<string, 
   const normalize = definition?.parseData || definition?.normalizeData;
   const normalized = normalize ? normalize(baseData) : baseData;
 
+  // Expansible actions (e.g. the loop) nest a branch container; seed it so the
+  // canvas can render the body drop zone immediately after the node is created.
+  const branchKeys = branchKeysForAction(actionId);
+
   return ensureNodeDefaults({
     type: 'action',
     id: typeof payload.id === 'string' ? payload.id : createWorkflowNodeId('action'),
     data: normalized,
     children: [],
+    branches: branchKeys.length ? createBranchesForAction(actionId) : undefined,
   });
 }
 
@@ -169,14 +220,21 @@ export function createConditionNode(payload: Partial<Record<string, unknown>> = 
 }
 
 export function createBranchCollection(branches?: Partial<WorkflowBranches> | null): WorkflowBranches {
-  return {
-    action_true: Array.isArray(branches?.action_true) ? branches!.action_true : [],
-    action_false: Array.isArray(branches?.action_false) ? branches!.action_false : [],
-  };
+  const result: WorkflowBranches = {};
+
+  if (isRecord(branches)) {
+    for (const [key, value] of Object.entries(branches)) {
+      if (Array.isArray(value)) {
+        result[key] = value as WorkflowNode[];
+      }
+    }
+  }
+
+  return result;
 }
 
 function isContainerNode(node: WorkflowNode): boolean {
-  return isConditionAction(node.data) || !!node.branches;
+  return isConditionAction(node.data) || isLoopAction(node.data) || (isRecord(node.branches) && Object.keys(node.branches).length > 0);
 }
 
 function collectLocation(
@@ -209,14 +267,11 @@ function collectLocation(
 
     if (isContainerNode(node)) {
       const branches = createBranchCollection(node.branches);
-      const trueLocation = collectLocation(branches.action_true, targetId, node, branches.action_true, 'action_true');
-      if (trueLocation) {
-        return trueLocation;
-      }
-
-      const falseLocation = collectLocation(branches.action_false, targetId, node, branches.action_false, 'action_false');
-      if (falseLocation) {
-        return falseLocation;
+      for (const key of Object.keys(branches)) {
+        const branchLocation = collectLocation(branches[key], targetId, node, branches[key], key as WorkflowContainerKey);
+        if (branchLocation) {
+          return branchLocation;
+        }
       }
     }
   }
@@ -261,8 +316,9 @@ export function walkWorkflowNodes(
 
       if (isContainerNode(node)) {
         const branches = createBranchCollection(node.branches);
-        traverse(branches.action_true, node, branches.action_true, 'action_true');
-        traverse(branches.action_false, node, branches.action_false, 'action_false');
+        Object.keys(branches).forEach((key) => {
+          traverse(branches[key], node, branches[key], key as WorkflowContainerKey);
+        });
       }
     });
   };
@@ -277,10 +333,12 @@ export function cloneWorkflowNode(node: WorkflowNode): WorkflowNode {
     data: cloneSerializable(node.data),
     children: (node.children || []).map((child) => cloneWorkflowNode(child)),
     branches: node.branches
-      ? {
-          action_true: node.branches.action_true.map((child) => cloneWorkflowNode(child)),
-          action_false: node.branches.action_false.map((child) => cloneWorkflowNode(child)),
-        }
+      ? Object.fromEntries(
+          Object.entries(node.branches).map(([key, list]) => [
+            key,
+            (Array.isArray(list) ? list : []).map((child) => cloneWorkflowNode(child)),
+          ])
+        )
       : undefined,
     branchKey: node.branchKey,
     parentId: node.parentId,
@@ -353,25 +411,27 @@ export function insertWorkflowNodeIntoConditionBranch(
     return null;
   }
 
-  const conditionNode = location.node.data.action === 'condition' ? location.node : location.parent;
-  if (!conditionNode || conditionNode.data.action !== 'condition') {
+  // the branch owner is the expansible node itself (condition/loop) or, when the
+  // insertion targets a node already inside a branch, that node's parent container
+  const ownerNode = branchKeysForAction(String(location.node.data.action || '')).length ? location.node : location.parent;
+  if (!ownerNode || !branchKeysForAction(String(ownerNode.data.action || '')).length) {
     return null;
   }
 
-  const branches = createBranchCollection(conditionNode.branches);
-  const branch = branches[branchKey];
+  const branches = ensureBranchesOnNode(ownerNode);
+  const branch = Array.isArray(branches[branchKey]) ? branches[branchKey] : (branches[branchKey] = []);
 
   if (fallbackAfterId) {
     const fallbackLocation = findWorkflowNodeLocation(branch, fallbackAfterId);
     if (fallbackLocation) {
       fallbackLocation.container.splice(fallbackLocation.index + 1, 0, nextNode);
-      conditionNode.branches = branches;
+      ownerNode.branches = branches;
       return nextNode;
     }
   }
 
   branch.push(nextNode);
-  conditionNode.branches = branches;
+  ownerNode.branches = branches;
   return nextNode;
 }
 
@@ -402,7 +462,17 @@ export function moveWorkflowNode(
 }
 
 export function ensureBranchesOnNode(node: WorkflowNode): WorkflowBranches {
-  node.branches = createBranchCollection(node.branches);
+  const branches = createBranchCollection(node.branches);
+
+  // seed the branch keys this action nests (true/false for a condition, the body
+  // for a loop) so a freshly wired node always has its containers ready
+  branchKeysForAction(String(node.data?.action || '')).forEach((key) => {
+    if (!Array.isArray(branches[key])) {
+      branches[key] = [];
+    }
+  });
+
+  node.branches = branches;
   return node.branches;
 }
 
@@ -440,9 +510,10 @@ function collectFlowNodes(
     meta.set(node.id, { parent: parentId, branch: branchKey });
     order.push(node.id);
 
-    if (branches) {
-      collectFlowNodes(Array.isArray(branches.action_true) ? branches.action_true : [], node.id, 'action_true', pool, meta, order);
-      collectFlowNodes(Array.isArray(branches.action_false) ? branches.action_false : [], node.id, 'action_false', pool, meta, order);
+    if (branches && Object.keys(branches).length) {
+      for (const [key, list] of Object.entries(branches)) {
+        collectFlowNodes(Array.isArray(list) ? list : [], node.id, key, pool, meta, order);
+      }
     } else if (children.length) {
       // Linear children (rare in this model); keep them tied to this exact parent
       // so they can only ever graft back here.
@@ -481,13 +552,17 @@ function materializeNode(id: string, branchKey: WorkflowBranchKey | undefined, c
     delete node.branchKey;
   }
 
-  // conditions nest their branches; linear nodes continue via siblings
-  if (isConditionAction(node.data)) {
+  // expansible nodes (condition true/false, loop body) nest their branches, each
+  // built by following the matching source handle; linear nodes continue via siblings
+  const branchKeys = branchKeysForAction(String(node.data?.action || ''));
+
+  if (branchKeys.length) {
     node.children = [];
-    node.branches = {
-      action_true: buildBranch(id, 'true', id, 'action_true', 'action_true', ctx),
-      action_false: buildBranch(id, 'false', id, 'action_false', 'action_false', ctx),
-    };
+    const branches: WorkflowBranches = {};
+    branchKeys.forEach((branchKey) => {
+      branches[branchKey] = buildBranch(id, getBranchHandle(branchKey), id, branchKey, branchKey, ctx);
+    });
+    node.branches = branches;
   } else {
     node.children = [];
     node.branches = undefined;

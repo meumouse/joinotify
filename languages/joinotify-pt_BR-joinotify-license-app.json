@@ -131,6 +131,9 @@
       "A condition is missing its branches.": [
         "Uma condição está faltando seus ramos."
       ],
+      "A message id is required.": [
+        "Um ID de mensagem é necessário."
+      ],
       "A new version (%s) is available!": [
         "Uma nova versão (%s) está disponível!"
       ],
@@ -232,6 +235,9 @@
       ],
       "Add action to the false branch": [
         "Adicionar ação ao ramo falso"
+      ],
+      "Add action to the loop body": [
+        "Adicionar ação ao corpo do loop"
       ],
       "Add action to the true branch": [
         "Adicionar ação ao ramo verdadeiro"
@@ -434,9 +440,6 @@
       "An account is already registered with this phone number.": [
         "Uma conta já está registrada com este número de telefone."
       ],
-      "An error occurred while connecting to the license verification server. Check the error in the WooCommerce logs.": [
-        "Ocorreu um erro na conexão com o servidor de verificação de licenças. Verifique o erro nos logs do WooCommerce."
-      ],
       "An error occurred while resetting the settings.": [
         "Ocorreu um erro ao redefinir as configurações."
       ],
@@ -481,6 +484,9 @@
       ],
       "API key": [
         "Chave de API"
+      ],
+      "API token": [
+        "Token da API"
       ],
       "application": [
         "aplicativo"
@@ -527,6 +533,9 @@
       "Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it.": [
         "Anexa todos os arquivos digitais que o cliente comprou neste pedido. Resolvido quando o fluxo de trabalho é executado, então sempre corresponde ao pedido que o acionou."
       ],
+      "Attaches the file of the item currently being looped, so each iteration sends its own file. Only carries a file when the loop iterates the order digital files.": [
+        "Anexa o arquivo do item atualmente em loop, para que cada iteração envie seu próprio arquivo. Apenas carrega um arquivo quando o loop itera os arquivos digitais do pedido."
+      ],
       "Attachments": [
         "Anexos"
       ],
@@ -553,6 +562,9 @@
       ],
       "Automate sending messages when you receive a WPForms form with a phone number. Keep your customers informed in real time.": [
         "Automatize o envio de mensagens quando você receber um formulário do WPForms com um número de telefone. Mantenha seus clientes informados em tempo real."
+      ],
+      "Automatic": [
+        "Automático"
       ],
       "Automatic updates": [
         "Atualizações automáticas"
@@ -755,6 +767,9 @@
       "Channel": [
         "Canal"
       ],
+      "Character that separates the entries. Leave empty to split by line break.": [
+        "Caractere que separa as entradas. Deixe vazio para dividir por quebra de linha."
+      ],
       "Chat id": [
         "ID do chat"
       ],
@@ -860,6 +875,12 @@
       "Close panel": [
         "Fechar painel"
       ],
+      "Cloud API (official)": [
+        "API Cloud (oficial)"
+      ],
+      "Cloud API bearer token (sk_live_...). Overrides the token provisioned with the license.": [
+        "Token bearer da API Cloud (sk_live_...). Substitui o token provisionado com a licença."
+      ],
       "Code digit %d": [
         "Código digitado %d"
       ],
@@ -868,6 +889,9 @@
       ],
       "Code sent successfully.": [
         "Código enviado com sucesso."
+      ],
+      "Collection": [
+        "Coleção"
       ],
       "Colombia": [
         "Colômbia"
@@ -1040,6 +1064,12 @@
       "Could not open the logs.": [
         "Não foi possível abrir os registros."
       ],
+      "Could not read the license details.": [
+        "Não foi possível ler os detalhes da licença."
+      ],
+      "Could not read the response from the license server.": [
+        "Não foi possível ler a resposta do servidor de licença."
+      ],
       "Could not read the selected file.": [
         "Não foi possível ler o arquivo selecionado."
       ],
@@ -1211,11 +1241,17 @@
       "Curaçao": [
         "Curaçao"
       ],
-      "cURL Error 35: SSL/TLS communication issue.": [
-        "Erro cURL 35: Problema de comunicação SSL/TLS."
+      "Current item value (file/product name or list entry).": [
+        "Valor do item atual (nome do arquivo/produto ou entrada da lista)."
       ],
-      "cURL Error: %s": [
-        "Erro cURL: %s"
+      "Current iteration index, starting at 0.": [
+        "Índice da iteração atual, começando em 0."
+      ],
+      "Current iteration number, starting at 1.": [
+        "Número da iteração atual, começando em 1."
+      ],
+      "Current loop item file": [
+        "Arquivo do item atual do loop"
       ],
       "Custom block not available.": [
         "Bloco personalizado não disponível."
@@ -1292,6 +1328,9 @@
       "Default model": [
         "Modelo padrão"
       ],
+      "Default phone_number_id used as the message origin. Leave blank to use the oldest active number.": [
+        "ID de phone_number_id padrão usado como origem da mensagem. Deixe em branco para usar o número ativo mais antigo."
+      ],
       "Default temperature": [
         "Temperatura padrão"
       ],
@@ -1343,6 +1382,9 @@
       "Delete selected records": [
         "Excluir registros selecionados"
       ],
+      "Delimiter": [
+        "Delimitador"
+      ],
       "Delivery channel": [
         "Canal de entrega"
       ],
@@ -1388,8 +1430,14 @@
       "Diagnostics": [
         "Diagnóstico"
       ],
+      "Digital file download link (order files loop).": [
+        "Link de download do arquivo digital (loop de arquivos do pedido)."
+      ],
       "Digital file downloaded": [
         "Arquivo digital baixado"
+      ],
+      "Digital file name (order files loop).": [
+        "Nome do arquivo digital (loop de arquivos do pedido)."
       ],
       "Digital product": [
         "Produto digital"
@@ -1475,6 +1523,9 @@
       "E-mail address or a placeholder that resolves to one.": [
         "Endereço de e-mail ou um espaço reservado que se resolve em um."
       ],
+      "e.g. , (comma)": [
+        "ex. , (vírgula)"
+      ],
       "e.g. greeting": [
         "ex. saudação"
       ],
@@ -1531,9 +1582,6 @@
       ],
       "Empty canvas": [
         "Canvas vazio"
-      ],
-      "Empty response.": [
-        "Resposta vazia."
       ],
       "Enable debug mode": [
         "Ativar o modo de depuração"
@@ -1657,6 +1705,9 @@
       ],
       "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
         "Todos os itens agendados pendentes serão removidos e nunca serão executados. Isso não pode ser desfeito."
+      ],
+      "Evolution (legacy)": [
+        "Evolution (legacy)"
       ],
       "Example": [
         "Exemplo"
@@ -1822,6 +1873,15 @@
       ],
       "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)": [
         "Rua das Flores, 123 - Curitiba/PR - Brasil (CEP: 80000-000)"
+      ],
+      "For each digital file in the order": [
+        "Para cada arquivo digital no pedido"
+      ],
+      "For each line of the list": [
+        "Para cada linha da lista"
+      ],
+      "For each purchased item in the order": [
+        "Para cada item comprado no pedido"
       ],
       "Forgot your password?": [
         "Esqueceu sua senha?"
@@ -2093,6 +2153,9 @@
       "Insert variable": [
         "Inserir variável"
       ],
+      "Inside the loop body you can use {{ loop_value }}, {{ loop_number }}, {{ loop_count }} and, for digital files, {{ loop_file_name }} and {{ loop_download_url }}.": [
+        "Dentro do corpo do loop, você pode usar {{ loop_value }}, {{ loop_number }}, {{ loop_count }} e, para arquivos digitais, {{ loop_file_name }} e {{ loop_download_url }}."
+      ],
       "Install plugin": [
         "Instalar plugin"
       ],
@@ -2206,6 +2269,15 @@
       ],
       "items": [
         "itens"
+      ],
+      "Iterate over": [
+        "Iterar sobre"
+      ],
+      "Iterate over a collection and run the nested actions once per item.": [
+        "Iterar sobre uma coleção e executar as ações aninhadas uma vez por item."
+      ],
+      "Iterates over a collection (order files, order items, or a list) and runs the actions inside it once per item.": [
+        "Itera sobre uma coleção (arquivos do pedido, itens do pedido ou uma lista) e executa as ações dentro dela uma vez por item."
       ],
       "Ivory Coast": [
         "Costa do Marfim"
@@ -2363,6 +2435,12 @@
       "Liechtenstein": [
         "Liechtenstein"
       ],
+      "List": [
+        "Lista"
+      ],
+      "List from a placeholder": [
+        "Lista de um placeholder"
+      ],
       "Lithuania": [
         "Lituânia"
       ],
@@ -2425,6 +2503,12 @@
       ],
       "Long": [
         "Longo"
+      ],
+      "Loop": [
+        "Loop"
+      ],
+      "Loop body": [
+        "Corpo do loop"
       ],
       "Lost cart": [
         "Carrinho perdido"
@@ -2495,6 +2579,9 @@
       "Mauritius": [
         "Maurício"
       ],
+      "Maximum items": [
+        "Itens máximos"
+      ],
       "Mayotte": [
         "Mayotte"
       ],
@@ -2525,6 +2612,9 @@
       "Media type": [
         "Tipo de mídia"
       ],
+      "Media upload did not return an id.": [
+        "O upload de mídia não retornou um id."
+      ],
       "Media URL": [
         "URL da mídia"
       ],
@@ -2552,6 +2642,9 @@
       "Message sent.": [
         "Mensagem enviada."
       ],
+      "Message transport": [
+        "Transporte de mensagem"
+      ],
       "Messages": [
         "Mensagens"
       ],
@@ -2572,6 +2665,9 @@
       ],
       "Minutes": [
         "Minutos"
+      ],
+      "Missing Cloud API token or phone number id for media upload.": [
+        "Faltando token da API Cloud ou id do número de telefone para upload de mídia."
       ],
       "Missing post field.": [
         "Campo de post ausente."
@@ -2771,6 +2867,9 @@
       "No license key found to sync.": [
         "Nenhuma chave de licença encontrada para sincronizar."
       ],
+      "No licensing backend is available.": [
+        "Nenhum backend de licenciamento está disponível."
+      ],
       "No logs available.": [
         "Nenhum registro disponível."
       ],
@@ -2822,6 +2921,12 @@
       "No variables available.": [
         "Nenhuma variável disponível."
       ],
+      "No WhatsApp Business Account id is configured.": [
+        "Nenhum id de Conta Comercial do WhatsApp está configurado."
+      ],
+      "No WhatsApp Cloud API token is configured.": [
+        "Nenhum token da API Cloud do WhatsApp está configurado."
+      ],
       "No workflow steps are currently waiting to run.": [
         "Nenhum passo do fluxo de trabalho está aguardando para ser executado."
       ],
@@ -2867,9 +2972,6 @@
       "Notification": [
         "Notificação"
       ],
-      "Notify when WhatsApp disconnects": [
-        "Notificar quando o WhatsApp desconectar"
-      ],
       "Number used as the default destination in test mailings. Please only include numbers with country code + area code.": [
         "Número usado como destino padrão em envios de teste. Por favor, inclua apenas números com código de país + código de área."
       ],
@@ -2879,6 +2981,9 @@
       "Off": [
         "Desligado"
       ],
+      "Official WhatsApp Cloud API transport that replaces the legacy relay. Leave the credentials blank to use the values provisioned with your license.": [
+        "Transporte oficial da API Cloud do WhatsApp que substitui o relay legado. Deixe as credenciais em branco para usar os valores provisionados com sua licença."
+      ],
       "ok": [
         "OK"
       ],
@@ -2887,6 +2992,9 @@
       ],
       "On": [
         "Ligado"
+      ],
+      "One entry per line, or use the delimiter below": [
+        "Uma entrada por linha, ou use o delimitador abaixo"
       ],
       "Only conditions and operators supported by the engine for this trigger are shown.": [
         "Apenas condições e operadores suportados pelo mecanismo para este gatilho são mostrados."
@@ -2929,6 +3037,9 @@
       ],
       "Operator": [
         "Operador"
+      ],
+      "Optional cap on how many items are processed. Leave empty for no limit.": [
+        "Limite opcional de quantos itens são processados. Deixe em branco para sem limite."
       ],
       "Optional rules or context for the AI (brand voice, constraints, product details).": [
         "Regras ou contexto opcionais para a IA (voz da marca, restrições, detalhes do produto)."
@@ -2977,6 +3088,9 @@
       ],
       "Order partially refunded": [
         "Pedido parcialmente reembolsado"
+      ],
+      "Order purchased items": [
+        "Itens comprados na ordem"
       ],
       "Order status": [
         "Status do pedido"
@@ -3085,6 +3199,9 @@
       ],
       "Phone number": [
         "Número de telefone"
+      ],
+      "Phone number ID": [
+        "ID do número de telefone"
       ],
       "Phone number or a placeholder that resolves to one.": [
         "Número de telefone ou um placeholder que resolve para um."
@@ -3206,6 +3323,9 @@
       "Processing queue": [
         "Fila de processamentos"
       ],
+      "Product name of the current item.": [
+        "Nome do produto do item atual."
+      ],
       "Product search is unavailable.": [
         "A pesquisa de produtos está indisponível."
       ],
@@ -3223,6 +3343,12 @@
       ],
       "Proxy API": [
         "API de proxy"
+      ],
+      "Purchased item name (order items loop).": [
+        "Nome do item comprado (loop de itens do pedido)."
+      ],
+      "Purchased item quantity (order items loop).": [
+        "Quantidade do item comprado (loop de itens do pedido)."
       ],
       "Purchased products": [
         "Produtos comprados"
@@ -3333,7 +3459,7 @@
         "Configuração necessária para que este gatilho funcione corretamente."
       ],
       "Resend": [
-        "Reenviar"
+        "Resend"
       ],
       "Resend code": [
         "Reenviar código"
@@ -3430,6 +3556,15 @@
       ],
       "Run test": [
         "Rodar teste"
+      ],
+      "Runs the body once for each downloadable file granted in the order. Attach {{ loop item }} files inside the body to send one file per message.": [
+        "Executa o corpo uma vez para cada arquivo baixável concedido no pedido. Anexe arquivos {{ loop item }} dentro do corpo para enviar um arquivo por mensagem."
+      ],
+      "Runs the body once for each entry of the list below.": [
+        "Executa o corpo uma vez para cada entrada da lista abaixo."
+      ],
+      "Runs the body once for each product line in the order.": [
+        "Executa o corpo uma vez para cada linha de produto no pedido."
       ],
       "Russia": [
         "Rússia"
@@ -3721,9 +3856,6 @@
       ],
       "Sending...": [
         "Enviando..."
-      ],
-      "Sends a notification to the sender when the connection is not established.": [
-        "Envia uma notificação ao remetente quando a conexão não é estabelecida."
       ],
       "Senegal": [
         "Senegal"
@@ -4046,9 +4178,6 @@
       "The coupon already exists.": [
         "O cupom já existe."
       ],
-      "The cURL extension is missing.": [
-        "A extensão cURL está faltando."
-      ],
       "The debug log is empty.": [
         "O log de depuração está vazio."
       ],
@@ -4069,6 +4198,18 @@
       ],
       "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
         "A integração da qual o gatilho deste fluxo depende não está disponível. Este fluxo não será processado até que a integração esteja disponível novamente."
+      ],
+      "the license could not be confirmed": [
+        "a licença não pôde ser confirmada"
+      ],
+      "The licensing SDK is not installed.": [
+        "O SDK de licenciamento não está instalado."
+      ],
+      "The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists.": [
+        "O servidor de licenciamento relatou: %s. Seu plugin continua funcionando normalmente. Tente sincronizar a licença e entre em contato com o suporte se a mensagem persistir."
+      ],
+      "The licensing service is not configured.": [
+        "O serviço de licenciamento não está configurado."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "A mensagem já vem preenchida e pode ser ajustada antes do envio do teste."
@@ -4138,6 +4279,9 @@
       ],
       "The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger.": [
         "O gatilho usado por este fluxo não está mais registrado. Este fluxo não será processado até que você selecione um gatilho disponível."
+      ],
+      "The value to iterate. Use {{ placeholders }} — each entry becomes one iteration.": [
+        "O valor a iterar. Use {{ placeholders }} — cada entrada se torna uma iteração."
       ],
       "The variable \"%s\" already exists. Choose another name.": [
         "A variável \"%s\" já existe. Escolha outro nome."
@@ -4219,6 +4363,9 @@
       ],
       "This scheduled item will be removed and will never run. This cannot be undone.": [
         "Este item agendado será removido e nunca será executado. Isso não pode ser desfeito."
+      ],
+      "This server cannot verify signed license responses (the sodium extension is missing).": [
+        "Este servidor não pode verificar respostas de licença assinadas (a extensão sodium está faltando)."
       ],
       "This site exposes endpoints to process Joinotify requests.": [
         "Este site expõe endpoints para processar solicitações do Joinotify."
@@ -4514,6 +4661,9 @@
       "Too short": [
         "Muito curto"
       ],
+      "Total number of items in the collection.": [
+        "Número total de itens na coleção."
+      ],
       "Trash": [
         "Lixeira"
       ],
@@ -4613,6 +4763,9 @@
       "Undo (Ctrl+Z)": [
         "Desfazer (Ctrl+Z)"
       ],
+      "Unexpected response from the license server.": [
+        "Resposta inesperada do servidor de licenciamento."
+      ],
       "United Arab Emirates": [
         "Emirados Árabes Unidos"
       ],
@@ -4624,9 +4777,6 @@
       ],
       "Unknown AI error.": [
         "Erro desconhecido de IA."
-      ],
-      "Unknown response": [
-        "Resposta desconhecida"
       ],
       "Unlimited": [
         "Ilimitado"
@@ -4796,6 +4946,9 @@
       "View the recent events recorded by the plugin.": [
         "Veja os eventos recentes registrados pelo plugin."
       ],
+      "waba_id that owns the message templates.": [
+        "waba_id que possui os modelos de mensagem."
+      ],
       "Wait %s %s": [
         "Aguarde %s %s"
       ],
@@ -4862,8 +5015,17 @@
       "WhatsApp": [
         "WhatsApp"
       ],
+      "WhatsApp (Cloud API)": [
+        "WhatsApp (Cloud API)"
+      ],
       "WhatsApp automation workflows created with Joinotify.": [
         "Fluxos de trabalho de automação do WhatsApp criados com Joinotify."
+      ],
+      "WhatsApp Business Account ID": [
+        "ID da Conta do WhatsApp Business"
+      ],
+      "WhatsApp Cloud API": [
+        "API do WhatsApp Cloud"
       ],
       "WhatsApp message sent with the generated coupon.": [
         "Mensagem do WhatsApp enviada com o cupom gerado."
@@ -4888,6 +5050,9 @@
       ],
       "Where the trigger fires from. Select an integration to see its available triggers.": [
         "De onde o gatilho é acionado. Selecione uma integração para ver seus gatilhos disponíveis."
+      ],
+      "Which service delivers WhatsApp messages. \"Automatic\" uses the Cloud API whenever a token is available, otherwise the legacy Evolution relay.": [
+        "Qual serviço entrega mensagens do WhatsApp. \"Automático\" usa a API Cloud sempre que um token está disponível, caso contrário, usa o relay Evolution legado."
       ],
       "will be moved to trash.": [
         "será movido para a lixeira."
@@ -5041,6 +5206,9 @@
       ],
       "Your license key: Not available": [
         "Sua chave de licença: Não disponível"
+      ],
+      "Your license needs to be checked": [
+        "Sua licença precisa ser verificada"
       ],
       "Your order is confirmed": [
         "Seu pedido está confirmado"

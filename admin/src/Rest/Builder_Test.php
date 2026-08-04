@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Actions;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Core\Helpers;
@@ -86,10 +87,12 @@ class Builder_Test extends Abstract_Route {
             if ( $action === 'send_whatsapp_message_text' ) {
                 $sender  = $item['data']['sender'] ?? '';
                 $message = Placeholders::replace_placeholders( $item['data']['message'] ?? '', $payload_ctx, 'sandbox' );
-                $result  = Controller::send_message_text( $sender, $receiver, $message );
+                $result  = Transport::send_message_text( $sender, $receiver, $message );
 
                 if ( 201 !== $result ) {
-                    Controller::get_connection_state( $sender );
+                    if ( ! Transport::is_cloud() ) {
+                        Controller::get_connection_state( $sender );
+                    }
 
                     return rest_ensure_response( array(
                         'status'  => 'error',
@@ -101,10 +104,12 @@ class Builder_Test extends Abstract_Route {
                 $media_type = $item['data']['media_type'] ?? '';
                 $media      = $item['data']['media_url'] ?? '';
                 $caption    = Placeholders::replace_placeholders( $item['data']['caption'] ?? '', $payload_ctx, 'sandbox' );
-                $result     = Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption );
+                $result     = Transport::send_message_media( $sender, $receiver, $media_type, $media, $caption );
 
                 if ( 201 !== $result ) {
-                    Controller::get_connection_state( $sender );
+                    if ( ! Transport::is_cloud() ) {
+                        Controller::get_connection_state( $sender );
+                    }
 
                     return rest_ensure_response( array(
                         'status'  => 'error',

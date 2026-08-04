@@ -358,6 +358,10 @@ class Legacy_Driver implements Driver {
             'support_end' => isset( $license->support_end ) ? $license->support_end : '',
             'renew_link' => ! empty( $license->renew_link ) ? $license->renew_link : '',
             'request_duration' => isset( $license->request_duration ) ? (int) $license->request_duration : 0,
+            // WhatsApp Cloud API credentials, when the license server provisions them.
+            'api_token' => isset( $license->api_token ) ? $license->api_token : '',
+            'phone_number_id' => isset( $license->phone_number_id ) ? $license->phone_number_id : '',
+            'waba_id' => isset( $license->waba_id ) ? $license->waba_id : '',
         );
     }
 }

@@ -17,8 +17,12 @@ export type BuilderStep = 'start' | 'library' | 'import' | 'trigger' | 'canvas';
 /** Whether a node is a trigger or an action. */
 export type WorkflowNodeKind = 'trigger' | 'action';
 
-/** The branch key for a condition node's true/false path. */
-export type WorkflowBranchKey = 'action_true' | 'action_false';
+/**
+ * The branch key of an expansible node's nested container. Condition nodes use
+ * `action_true`/`action_false`; the loop node uses `action_loop`. Kept as a
+ * widened string so new expansible actions can declare their own branch keys.
+ */
+export type WorkflowBranchKey = string;
 
 /** The key of a container that holds child nodes. */
 export type WorkflowContainerKey = 'children' | WorkflowBranchKey;
@@ -102,6 +106,12 @@ export interface WorkflowRegistryItem {
   enabled?: boolean;
   branchKeys?: string[];
   branchLabels?: Record<string, string>;
+  /** Maps each branch key to the Vue-Flow source handle it wires from (e.g. action_loop -> 'loop'). */
+  branchHandles?: Record<string, string>;
+  /** Whether the node still emits a linear `output` handle after its branches (loop yes, condition no). */
+  emitsOutputAfterBranches?: boolean;
+  /** Placeholders this action exposes to the actions nested inside it (e.g. loop item tokens). */
+  providesPlaceholders?: WorkflowPlaceholderItem[];
   hasSettings?: boolean;
   isExpansible?: boolean;
 }
@@ -118,11 +128,11 @@ export interface WorkflowContextDefinition {
   enabled?: boolean;
 }
 
-/** The true/false child branches of a condition node. */
-export interface WorkflowBranches {
-  action_true: WorkflowNode[];
-  action_false: WorkflowNode[];
-}
+/**
+ * The nested child branches of an expansible node, keyed by branch key.
+ * A condition carries `action_true`/`action_false`; a loop carries `action_loop`.
+ */
+export type WorkflowBranches = Record<string, WorkflowNode[]>;
 
 /** A single node in the workflow tree. */
 export interface WorkflowNode {

@@ -36,15 +36,21 @@ class Attachments {
      */
     const SOURCE_ORDER_DOWNLOADS = 'order_downloads';
 
+    /**
+     * The file of the item currently being looped (inside a loop body)
+     */
+    const SOURCE_LOOP_ITEM = 'loop_item';
+
 
     /**
      * Sources accepted on an attachment item
      *
      * @since 2.1.0
+     * @version 2.1.1
      * @return array<int,string>
      */
     public static function get_sources() {
-        return array( self::SOURCE_MEDIA, self::SOURCE_URL, self::SOURCE_ORDER_DOWNLOADS );
+        return array( self::SOURCE_MEDIA, self::SOURCE_URL, self::SOURCE_ORDER_DOWNLOADS, self::SOURCE_LOOP_ITEM );
     }
 
 
@@ -77,6 +83,10 @@ class Attachments {
 
                 case self::SOURCE_ORDER_DOWNLOADS:
                     $files = self::resolve_order_downloads( $payload );
+                    break;
+
+                case self::SOURCE_LOOP_ITEM:
+                    $files = self::resolve_loop_item( $payload );
                     break;
 
                 default:
@@ -157,6 +167,13 @@ class Attachments {
         // fetched, so sending it to a remote API would burn their own quota. Resolve it
         // through the order instead, which yields the same files without spending anything.
         if ( self::is_download_permission_url( $url ) ) {
+            // Inside a loop over the order downloads, the link came from {{ loop_download_url }}
+            // and names one specific file: deliver just that file, not every order download
+            // (which would otherwise repeat all files on every iteration).
+            if ( isset( $payload['loop']['item'] ) && is_array( $payload['loop']['item'] ) && ! empty( $payload['loop']['item']['file_ref'] ) ) {
+                return self::resolve_loop_item( $payload );
+            }
+
             Logger::register_log( 'Joinotify: a download permission link was used as an attachment URL. Resolving it through the order downloads to avoid consuming the customer download limit.', 'WARNING' );
 
             return self::resolve_order_downloads( $payload );
@@ -208,6 +225,36 @@ class Attachments {
         }
 
         return array_values( array_filter( $files ) );
+    }
+
+
+    /**
+     * Resolve the file of the item currently being looped, when it carries one.
+     *
+     * A loop over the order downloads pins a download item on the payload, whose
+     * file is delivered here as its own message. Loops over order items or a
+     * placeholder list carry no file, so nothing is attached and the action falls
+     * back to its media_url.
+     *
+     * @since 2.1.1
+     * @param array $payload | Runtime trigger payload
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function resolve_loop_item( $payload ) {
+        $item = isset( $payload['loop']['item'] ) && is_array( $payload['loop']['item'] ) ? $payload['loop']['item'] : array();
+        $file_ref = isset( $item['file_ref'] ) ? (string) $item['file_ref'] : '';
+
+        if ( '' === $file_ref ) {
+            return array();
+        }
+
+        $file = self::build_file_from_path( $file_ref, (string) ( $item['file_name'] ?? '' ) );
+
+        // keep the permission link so a channel that cannot carry the file itself
+        // (size limits, unsupported type) can still point the customer at it
+        $file['link'] = (string) ( $item['download_url'] ?? '' );
+
+        return array( $file );
     }
 
 

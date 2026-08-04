@@ -41,7 +41,9 @@ import {
 import { getActionRegistryRevision } from '../../builder/actions/registry/actionRegistry';
 import { getTriggerContextDefinition, getTriggerDefinition } from '../../registries/triggerRegistry';
 import {
+  branchKeysForAction,
   getBranchCollection,
+  getBranchHandle,
   isConditionNode,
 } from '../../utils/workflowTree';
 import { getTriggerSettingsSchema, triggerNeedsSetup } from '../../utils/triggerSettings';
@@ -291,10 +293,9 @@ function flattenWorkflowNodes(nodes: WorkflowNode[] = []): WorkflowNode[] {
         walk(item.children);
       }
 
-      if (isConditionNode(item)) {
+      if (branchKeysForAction(String(item.data?.action || '')).length) {
         const branches = getBranchCollection(item);
-        walk(branches.action_true || []);
-        walk(branches.action_false || []);
+        Object.values(branches).forEach((list) => walk(Array.isArray(list) ? list : []));
       }
     });
   };
@@ -360,20 +361,27 @@ function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
 
       let nextY = currentY + rowGapY;
 
-      if (isConditionNode(workflowNode)) {
+      const branchKeys = branchKeysForAction(String(workflowNode.data?.action || ''));
+
+      if (branchKeys.length) {
         const branches = getBranchCollection(workflowNode);
-        const trueLayout = layoutSequence(branches.action_true, startX - branchOffsetX, currentY + rowGapY);
-        const falseLayout = layoutSequence(branches.action_false, startX + branchOffsetX, currentY + rowGapY);
+        const branchEndYs: number[] = [];
+        const count = branchKeys.length;
 
-        if (trueLayout.firstId && !getConnectionMeta(branches.action_true[0]) && !isFloatingNode(branches.action_true[0])) {
-          flowEdges.push(createEdge(workflowNode.id, trueLayout.firstId, 'true'));
-        }
+        branchKeys.forEach((branchKey, branchIndex) => {
+          const list = Array.isArray(branches[branchKey]) ? branches[branchKey] : [];
+          // spread branches horizontally around the node; a single body (loop) sits to the left
+          const offsetFactor = count === 1 ? -1 : (branchIndex - (count - 1) / 2) * 2;
+          const branchLayout = layoutSequence(list, startX + offsetFactor * branchOffsetX, currentY + rowGapY);
 
-        if (falseLayout.firstId && !getConnectionMeta(branches.action_false[0]) && !isFloatingNode(branches.action_false[0])) {
-          flowEdges.push(createEdge(workflowNode.id, falseLayout.firstId, 'false'));
-        }
+          if (branchLayout.firstId && list[0] && !getConnectionMeta(list[0]) && !isFloatingNode(list[0])) {
+            flowEdges.push(createEdge(workflowNode.id, branchLayout.firstId, getBranchHandle(branchKey)));
+          }
 
-        nextY = Math.max(nextY, trueLayout.endY, falseLayout.endY) + branchExitGapY;
+          branchEndYs.push(branchLayout.endY);
+        });
+
+        nextY = Math.max(nextY, ...branchEndYs) + branchExitGapY;
       }
 
       if (Array.isArray(workflowNode.children) && workflowNode.children.length > 0) {
@@ -516,7 +524,7 @@ function handleChangeTrigger(nodeId: string) {
   emit('change-trigger', nodeId);
 }
 
-function handleAddAction(nodeId: string, branchKey?: 'action_true' | 'action_false') {
+function handleAddAction(nodeId: string, branchKey?: string) {
   if (!nodeId) {
     return;
   }

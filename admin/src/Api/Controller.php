@@ -22,9 +22,11 @@ defined('ABSPATH') || exit;
  */
 class Controller {
 
+    use Message_Dispatch;
+
     /**
      * Check debug mode
-     * 
+     *
      * @since 1.3.0
      * @return bool
      */
@@ -369,8 +371,6 @@ class Controller {
                 $status = 'connected';
             } elseif ( $phone_status['connection'] === 'disconnected' ) {
                 $status = 'disconnected';
-
-                self::notify_disconnected_phone( $phone );
             }
 
             if ( self::$debug_mode ) {
@@ -378,116 +378,12 @@ class Controller {
             }
         } else {
             $status = 'disconnected';
-
-            self::notify_disconnected_phone( $phone );
         }
 
         update_option( 'joinotify_status_connection_'. $phone, $status );
 
         // retrieve the response body that associative array
         return $phone_status;
-    }
-
-
-    /**
-     * Build normalized response details.
-     *
-     * @since 1.4.7
-     * @param int $response_code | HTTP response code.
-     * @param bool $success | Operation status.
-     * @param bool $retryable | If failure can be retried.
-     * @param string $error | Failure reason.
-     * @param bool $queued | If item was enqueued.
-     * @return array
-     */
-    private static function build_response_details( $response_code, $success, $retryable = false, $error = '', $queued = false ) {
-        return array(
-            'response_code' => (int) $response_code,
-            'success' => (bool) $success,
-            'retryable' => (bool) $retryable,
-            'error' => (string) $error,
-            'queued' => (bool) $queued,
-        );
-    }
-
-
-    /**
-     * Check if a response code should be retried.
-     *
-     * @since 1.4.7
-     * @param int $response_code | HTTP response code.
-     * @return bool
-     */
-    private static function should_retry_response_code( $response_code ) {
-        $response_code = (int) $response_code;
-
-        if ( 0 === $response_code ) {
-            return true;
-        }
-
-        if ( $response_code >= 500 ) {
-            return true;
-        }
-
-        return in_array( $response_code, array( 408, 409, 425, 429 ), true );
-    }
-
-
-    /**
-     * Record a dispatch in the message history and return the original value.
-     *
-     * Centralizes history logging across every return path of the send methods,
-     * so success, queued and failed dispatches are all captured uniformly while
-     * preserving each method's original return contract (details array or code).
-     *
-     * @since 2.0.0
-     * @param array $fields | Message fields (sender, receiver, message_type, media_type, content, media_url, attempts).
-     * @param array $details | Normalized response details from build_response_details().
-     * @param bool $return_details | Whether the caller expects the details array.
-     * @return int|array
-     */
-    private static function record_and_return( $fields, $details, $return_details ) {
-        if ( ! empty( $details['success'] ) ) {
-            $status = 'sent';
-        } elseif ( ! empty( $details['queued'] ) ) {
-            $status = 'queued';
-        } else {
-            $status = 'failed';
-        }
-
-        $response_code = (int) ( $details['response_code'] ?? 0 );
-
-        Message_History::record( array_merge( $fields, array(
-            'status' => $status,
-            'response_code' => $response_code,
-            'error' => (string) ( $details['error'] ?? '' ),
-        )));
-
-        // Capture failed dispatches in the structured debug log (queued retries
-        // are warnings, definitive failures are errors).
-        if ( 'sent' !== $status ) {
-            Debug_Log::record( array(
-                'level' => 'queued' === $status ? 'warning' : 'error',
-                'channel' => 'api',
-                'message' => sprintf(
-                    'WhatsApp dispatch %s for %s (HTTP %d)',
-                    $status,
-                    $fields['receiver'] ?? '',
-                    $response_code
-                ),
-                'code' => (string) ( $details['error'] ?? '' ),
-                'response_code' => $response_code,
-                'context' => array(
-                    'sender' => $fields['sender'] ?? '',
-                    'receiver' => $fields['receiver'] ?? '',
-                    'message_type' => $fields['message_type'] ?? '',
-                    'queued' => ! empty( $details['queued'] ),
-                    'retryable' => ! empty( $details['retryable'] ),
-                ),
-            ));
-        }
-
-        return $return_details ? $details : $response_code;
     }
 
 
@@ -1025,47 +921,5 @@ class Controller {
         return json_decode( $response_body, true );
     }
 
-
-    /**
-     * Notify user when phone is disconnected
-     * 
-     * @since 1.3.0
-     * @version 1.4.7
-     * @param string $phone | Phone number
-     * @return int
-     */
-    public static function notify_disconnected_phone( $phone ) {
-        // check if the notification is enabled
-        if ( Admin::get_setting('enable_send_disconnect_notifications') !== 'yes' ) {
-            return;
-        }
-
-        $api_url = self::get_api_url( '/utils', '/notify-disconnected-phone' );
-
-        // send request
-        $response = wp_remote_post( $api_url, array(
-            'headers' => array(
-                'Content-Type' => 'application/json',
-            ),
-            'body' => wp_json_encode( array(
-                'phone' => joinotify_prepare_receiver( $phone ),
-                'site' => License::get_domain(),
-            )),
-            'timeout' => 30,
-        ));
-
-        // Check if the response is an error
-        if ( self::$dev_mode ) {
-            error_log( 'notify_disconnected_phone() response: ' . print_r( $response, true ) );
-        }
-
-        if ( is_wp_error( $response ) ) {
-            Logger::register_log( $response, 'ERROR' );
-        }
-
-        $response_body = wp_remote_retrieve_body( $response );
-
-        return wp_remote_retrieve_response_code( $response );
-    }
 }
 

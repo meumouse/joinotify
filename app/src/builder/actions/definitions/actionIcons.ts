@@ -24,6 +24,10 @@ export const TIME_DELAY_ICON =
 export const CONDITION_ICON =
   '<svg class="icon icon-lg icon-dark condition" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 25 24" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><clipPath id="a"><path d="M.602 0h24v24h-24z" fill="#000000" opacity="1" data-original="#000000"/></clipPath><g clip-path="url(#a)"><path fill="currentColor" d="M24.564 16.811a.484.484 0 0 0-.115-.17l-2.994-2.994a.5.5 0 0 0-.707.707l2.145 2.145h-9.79a4.506 4.506 0 0 1-4.5-4.5c0-2.48 2.018-4.5 4.5-4.5h9.792l-2.147 2.147a.5.5 0 0 0 .707.708l3-3c.014-.014.02-.032.031-.046.03-.036.06-.073.077-.117.018-.043.022-.089.027-.134.003-.02.012-.038.012-.059 0-.047-.015-.089-.027-.132-.005-.018-.004-.038-.01-.056a.483.483 0 0 0-.116-.17l-2.994-2.994a.5.5 0 0 0-.707.707l2.145 2.145h-9.79a5.506 5.506 0 0 0-5.476 5H1.102a.5.5 0 0 0 0 1h6.525c.254 2.8 2.61 5 5.475 5h9.793l-2.147 2.147a.5.5 0 0 0 .707.708l3-3c.014-.014.02-.032.031-.046.03-.036.06-.073.077-.117.018-.043.022-.089.027-.134.003-.02.012-.037.012-.058 0-.047-.015-.089-.027-.132-.005-.018-.004-.038-.01-.055z" opacity="1"/></g></g></svg>';
 
+// Loop / repeat glyph. Mirrors the loop action icon in admin/src/Builder/Actions.php.
+export const LOOP_ICON =
+  '<svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>';
+
 export const STOP_FUNNEL_ICON =
   '<svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M9 9h6v6H9z"></path></svg>';
 

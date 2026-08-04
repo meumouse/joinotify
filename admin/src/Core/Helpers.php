@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
+use MeuMouse\Joinotify\Validations\Country_Codes;
 
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
@@ -48,18 +49,22 @@ class Helpers {
 
     /**
      * Validate and format a phone number, adding the default country code if missing.
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.2.0
      * @param string $phone | Raw phone number
      * @return string Formatted phone number with country code
      */
     public static function validate_and_format_phone( $phone ) {
-        // Get the default country code from admin settings (e.g., "BR" for Brazil)
-        $default_country_code = Admin::get_setting('joinotify_default_country_code');
+        // Get the default dial code from admin settings (e.g., "55" for Brazil).
+        $default_dial_code = Admin::get_setting('joinotify_default_country_code');
 
-        // Ensure country code is uppercase (as required by libphonenumber)
-        $default_country_code = strtoupper( $default_country_code );
+        // The setting stores a numeric dial code ("55"), but libphonenumber's
+        // parse() expects an ISO 3166-1 alpha-2 region code ("BR"). Convert it
+        // so the fallback region is actually applied when the number has no
+        // country code; passing the raw dial code made parse() throw and the
+        // number was returned without the country prefix.
+        $default_region = self::dial_code_to_region( $default_dial_code );
 
         // Instance of the phone number utility class
         $phoneUtil = PhoneNumberUtil::getInstance();
@@ -85,7 +90,7 @@ class Helpers {
             // the correct dialing prefix. The previous approach prepended the ISO
             // region letters ("BR") to a digit string and parsed "+BR55..." — which
             // always threw and returned the number without a country code.
-            $numberProto = $phoneUtil->parse( $phone, $default_country_code );
+            $numberProto = $phoneUtil->parse( $phone, $default_region );
 
             // Return the formatted phone number in INTERNATIONAL format
             return $phoneUtil->format( $numberProto, PhoneNumberFormat::INTERNATIONAL );
@@ -93,6 +98,36 @@ class Helpers {
             // If parsing fails again, return the original digits
             return $phone;
         }
+    }
+
+
+    /**
+     * Convert a numeric dial code (e.g. "55") into an ISO 3166-1 alpha-2 region
+     * code (e.g. "BR"), which is what libphonenumber expects as a default region.
+     *
+     * @since 2.2.0
+     * @param string $dial_code | Numeric dial code (e.g. "55")
+     * @return string|null ISO2 region code (e.g. "BR"), or null when it cannot be resolved
+     */
+    public static function dial_code_to_region( $dial_code ) {
+        $dial_code = preg_replace( '/\D/', '', (string) $dial_code );
+
+        // "0" is the "None" option and an empty value means "no default region".
+        if ( '' === $dial_code || '0' === $dial_code ) {
+            return null;
+        }
+
+        $countries = Country_Codes::get_country_codes_with_names();
+
+        if ( ! isset( $countries[ $dial_code ] ) ) {
+            return null;
+        }
+
+        // Each dial code maps to one or more ISO2 regions; use the first one as
+        // the default (e.g. "55" => "BR", "1" => "US").
+        $region = array_key_first( $countries[ $dial_code ] );
+
+        return ( is_string( $region ) && '' !== $region ) ? strtoupper( $region ) : null;
     }
 
     
@@ -159,6 +194,84 @@ class Helpers {
         $key = 'F5clS9xxRMwaDveTH4fS/WxnNVVBRVpHUnI3OTdvRlFpL0lZaGhBN2s2RDlRMDdkYmgrWnVZMnMxTXg2d1d5SkVkN3pEWndmeTg4d2ZMb1A=';
 
         return self::decrypt_data( $key, 'B729F2659393EE27' );
+    }
+
+
+    /**
+     * Resolve a WhatsApp Cloud API credential.
+     *
+     * Prefers the manual override saved in the settings screen; when empty,
+     * falls back to the value provisioned by the license activation (stored on
+     * the public license response object). Mirrors slots_manager_api_key() as
+     * the single accessor for the current relay key.
+     *
+     * @since 1.4.8
+     * @param string $setting_key | Settings key holding the manual override.
+     * @param string $license_key | Field name on the license response object.
+     * @return string
+     */
+    private static function cloud_credential( $setting_key, $license_key ) {
+        $manual = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
+
+        if ( is_string( $manual ) && '' !== trim( $manual ) ) {
+            return trim( $manual );
+        }
+
+        $license = get_option( 'joinotify_license_response_object' );
+
+        if ( is_object( $license ) && isset( $license->$license_key ) && is_string( $license->$license_key ) ) {
+            return trim( $license->$license_key );
+        }
+
+        if ( is_array( $license ) && isset( $license[ $license_key ] ) && is_string( $license[ $license_key ] ) ) {
+            return trim( $license[ $license_key ] );
+        }
+
+        return '';
+    }
+
+
+    /**
+     * WhatsApp Cloud API bearer token (sk_live_... / sk_test_...).
+     *
+     * @since 1.4.8
+     * @return string
+     */
+    public static function cloud_api_token() {
+        return self::cloud_credential( 'whatsapp_cloud_api_token', 'api_token' );
+    }
+
+
+    /**
+     * Default Cloud API phone_number_id used as the message origin ('from').
+     *
+     * @since 1.4.8
+     * @return string
+     */
+    public static function cloud_phone_number_id() {
+        return self::cloud_credential( 'whatsapp_phone_number_id', 'phone_number_id' );
+    }
+
+
+    /**
+     * WhatsApp Business Account id (waba_id) that owns the templates.
+     *
+     * @since 1.4.8
+     * @return string
+     */
+    public static function cloud_waba_id() {
+        return self::cloud_credential( 'whatsapp_waba_id', 'waba_id' );
+    }
+
+
+    /**
+     * Whether the WhatsApp Cloud API is usable (a bearer token is available).
+     *
+     * @since 1.4.8
+     * @return bool
+     */
+    public static function cloud_api_ready() {
+        return '' !== self::cloud_api_token();
     }
 
 

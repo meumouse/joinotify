@@ -33,7 +33,7 @@ export interface FlowNodeData {
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
   onSelect?: (id: string) => void;
   onChangeTrigger?: (id: string) => void;
-  onAddAction?: (id: string, branchKey?: 'action_true' | 'action_false') => void;
+  onAddAction?: (id: string, branchKey?: string) => void;
 }
 
 const props = defineProps<{
@@ -46,6 +46,7 @@ const fallbackConfig = computed(() => {
   return getFlowNodeConfig(String(props.data.actionId || '')) || getFlowNodeConfig(props.data.type);
 });
 const isCondition = computed(() => props.data.type === 'condition');
+const isLoop = computed(() => String(props.data.actionId || '').trim() === 'loop');
 const isTrigger = computed(() => props.data.type === 'trigger');
 const isStopAutomation = computed(() => String(props.data.actionId || props.data.type || '').trim() === 'stop_funnel');
 const needsSetup = computed(() => Boolean(props.data.needsSetup));
@@ -141,7 +142,7 @@ function selectNode() {
   props.data.onSelect?.(props.id);
 }
 
-function requestAddAction(branchKey?: 'action_true' | 'action_false') {
+function requestAddAction(branchKey?: string) {
   props.data.onAddAction?.(props.id, branchKey);
 }
 
@@ -426,8 +427,39 @@ function normalizeBoxiconClass(value: string) {
       </div>
     </template>
 
-    <template v-else-if="!isStopAutomation">
+    <template v-else>
+      <!-- Loop body handle: the actions wired here run once per collection item. -->
+      <div v-if="isLoop" class="flex items-end justify-start px-5 pb-3 pt-1">
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[10px] font-semibold text-indigo-600">{{ __('Loop body', textDomain) }}</span>
+          <Handle
+            id="loop"
+            type="source"
+            :position="Position.Bottom"
+            :style="{
+              position: 'relative',
+              transform: 'none',
+              inset: 'auto',
+              width: '12px',
+              height: '12px',
+              background: '#6366f1',
+              border: '2px solid #a5b4fc',
+              cursor: 'pointer',
+            }"
+          >
+            <span
+              class="nodrag flow-node-add-hit"
+              :title="__('Add action to the loop body', textDomain)"
+              :aria-label="__('Add action to the loop body', textDomain)"
+              @click.stop="requestAddAction('action_loop')"
+            />
+          </Handle>
+        </div>
+      </div>
+
+      <!-- Linear output: continues after the node (after every iteration for a loop). -->
       <Handle
+        v-if="!isStopAutomation"
         id="output"
         type="source"
         :position="Position.Bottom"
