@@ -157,6 +157,33 @@ function joinotify_prepare_message( $message, $payload = array() ) {
 		}, $message );
 	}
 
+	// Replace loop item variables produced by the loop action: {{ loop_* }}. The
+	// loop context ({ item, index, number, count }) is pinned on the payload by the
+	// loop's synthetic context node, so it travels with the payload through delays.
+	if ( false !== strpos( $message, '{{ loop_' ) || false !== strpos( $message, '{{loop_' ) ) {
+		$loop = isset( $payload['loop'] ) && is_array( $payload['loop'] ) ? $payload['loop'] : array();
+		$item = isset( $loop['item'] ) && is_array( $loop['item'] ) ? $loop['item'] : array();
+
+		$loop_vars = array(
+			'loop_value'         => $item['value'] ?? '',
+			'loop_index'         => $loop['index'] ?? '',
+			'loop_number'        => $loop['number'] ?? '',
+			'loop_count'         => $loop['count'] ?? '',
+			'loop_file_name'     => $item['file_name'] ?? '',
+			'loop_download_url'  => $item['download_url'] ?? '',
+			'loop_product_name'  => $item['product_name'] ?? '',
+			'loop_product_id'    => $item['product_id'] ?? '',
+			'loop_item_name'     => $item['name'] ?? ( $item['value'] ?? '' ),
+			'loop_item_quantity' => $item['quantity'] ?? '',
+		);
+
+		$message = preg_replace_callback( '/\{\{\s*(loop_[a-zA-Z0-9_]+)\s*\}\}/', function( $matches ) use ( $loop_vars ) {
+			$key = $matches[1];
+
+			return isset( $loop_vars[ $key ] ) && is_scalar( $loop_vars[ $key ] ) ? (string) $loop_vars[ $key ] : '';
+		}, $message );
+	}
+
 	return $message;
 }
 

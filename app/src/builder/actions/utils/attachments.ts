@@ -8,7 +8,7 @@
  * @since 2.1.0
  */
 
-export type AttachmentSource = 'media' | 'url' | 'order_downloads';
+export type AttachmentSource = 'media' | 'url' | 'order_downloads' | 'loop_item';
 
 export interface AttachmentItem {
   source: AttachmentSource;
@@ -17,7 +17,7 @@ export interface AttachmentItem {
   attachment_id?: number;
 }
 
-const SOURCES: AttachmentSource[] = ['media', 'url', 'order_downloads'];
+const SOURCES: AttachmentSource[] = ['media', 'url', 'order_downloads', 'loop_item'];
 
 /**
  * Normalize the stored attachment list, dropping entries that point at nothing.
@@ -52,7 +52,9 @@ export function normalizeAttachments(value: unknown): AttachmentItem[] {
       name: String(raw.name || ''),
     };
 
-    if (source === 'order_downloads') {
+    // order downloads and the current loop item are resolved from the payload at
+    // runtime, so they carry no id or URL to validate here
+    if (source === 'order_downloads' || source === 'loop_item') {
       items.push(item);
 
       return items;

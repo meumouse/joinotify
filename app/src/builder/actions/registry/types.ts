@@ -54,6 +54,10 @@ export interface ActionDefinition {
   settingsSchema?: WorkflowFieldSchema[];
   branchKeys?: BuilderActionBranchKey[];
   branchLabels?: Record<string, string>;
+  /** Maps each branch key to the Vue-Flow source handle it wires from (e.g. action_loop -> 'loop'). */
+  branchHandles?: Record<string, string>;
+  /** Whether the node still emits a linear `output` handle after its branches (loop yes, condition no). */
+  emitsOutputAfterBranches?: boolean;
   normalizeData?: (data: Record<string, unknown>) => Record<string, unknown>;
   serializeData?: (data: Record<string, unknown>) => Record<string, unknown>;
   buildDescription?: (data: Record<string, unknown>) => string;

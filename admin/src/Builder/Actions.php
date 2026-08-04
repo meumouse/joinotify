@@ -52,6 +52,18 @@ class Actions {
                 'is_expansible' => true,
             ),
             array(
+                'action' => 'loop',
+                'title' => __( 'Loop', 'joinotify' ),
+                'description' => __( 'Iterates over a collection (order files, order items, or a list) and runs the actions inside it once per item.', 'joinotify' ),
+                'context' => array(), // available for all the contexts
+                'category' => 'general',
+                'icon' => '<svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>',
+                'external_icon' => false,
+                'has_settings' => true,
+                'priority' => 25,
+                'is_expansible' => true,
+            ),
+            array(
                 'action' => 'stop_funnel',
                 'title' => __( 'Stop automation', 'joinotify' ),
                 'description' => __( 'No action will be taken upon reaching this point.', 'joinotify' ),
@@ -156,10 +168,12 @@ class Actions {
             }
 
             if ( isset( $item['children'] ) && is_array( $item['children'] ) ) {
-                if ( isset( $item['data']['action'] ) && $item['data']['action'] === 'condition' && self::is_branch_container( $item['children'] ) ) {
-                    foreach ( array( 'action_true', 'action_false' ) as $branch_key ) {
-                        if ( isset( $item['children'][ $branch_key ] ) && is_array( $item['children'][ $branch_key ] ) ) {
-                            $item['children'][ $branch_key ] = self::delete_item_recursive( $item['children'][ $branch_key ], $action_id );
+                if ( self::is_branch_container( $item['children'] ) ) {
+                    // condition (action_true/action_false) or loop (action_loop): recurse
+                    // into each branch list present, whatever the branch keys are
+                    foreach ( $item['children'] as $branch_key => $branch_nodes ) {
+                        if ( is_array( $branch_nodes ) ) {
+                            $item['children'][ $branch_key ] = self::delete_item_recursive( $branch_nodes, $action_id );
                         }
                     }
                 } else {
@@ -181,7 +195,7 @@ class Actions {
      * @return bool
      */
     private static function is_branch_container( $children ) {
-        return is_array( $children ) && ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) );
+        return is_array( $children ) && ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) || array_key_exists( 'action_loop', $children ) );
     }
 
 
@@ -273,10 +287,11 @@ class Actions {
 
             $children = $node['children'];
 
-            // condition branches: { action_true: [...], action_false: [...] }
-            if ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) ) {
+            // branch containers: condition { action_true, action_false } or loop { action_loop }
+            if ( array_key_exists( 'action_true', $children ) || array_key_exists( 'action_false', $children ) || array_key_exists( 'action_loop', $children ) ) {
                 self::collect_actions( $children['action_true'] ?? array(), $actions );
                 self::collect_actions( $children['action_false'] ?? array(), $actions );
+                self::collect_actions( $children['action_loop'] ?? array(), $actions );
             } else {
                 // linear nested children: [ node, node, ... ]
                 self::collect_actions( $children, $actions );

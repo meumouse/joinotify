@@ -52,6 +52,7 @@ import type {
   WorkflowRegistryItem,
 } from '../types/workflowBuilder';
 import {
+  branchKeysForAction,
   cloneSerializable,
   cloneWorkflowNode,
   createActionNode,
@@ -1742,8 +1743,9 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     (node.children || []).forEach((child) => stripNodeLayoutMetadata(child));
 
     if (node.branches) {
-      node.branches.action_true.forEach((child) => stripNodeLayoutMetadata(child));
-      node.branches.action_false.forEach((child) => stripNodeLayoutMetadata(child));
+      Object.values(node.branches).forEach((branch) => {
+        (Array.isArray(branch) ? branch : []).forEach((child) => stripNodeLayoutMetadata(child));
+      });
     }
   }
 
@@ -1782,7 +1784,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       canvas_position: resolveFloatingNodePosition(nodeId),
     };
 
-    if (location.parent && location.branchKey && location.parent.data.action === 'condition' && location.parent.branches) {
+    if (location.parent && location.branchKey && location.parent.branches && branchKeysForAction(String(location.parent.data.action || '')).length) {
       const branch = getBranchCollection(location.parent)[location.branchKey];
       branch.splice(location.index + 1, 0, clone);
       ensureBranchesOnNode(location.parent);

@@ -17,7 +17,7 @@ import BaseSelectField from './BaseSelectField.vue';
 import { ImagePlus, Trash, Plus } from '@boxicons/vue';
 import { __, textDomain } from '../../../utils/i18n';
 
-type AttachmentSource = 'media' | 'url' | 'order_downloads';
+type AttachmentSource = 'media' | 'url' | 'order_downloads' | 'loop_item';
 
 interface AttachmentItem {
   source: AttachmentSource;
@@ -34,11 +34,34 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const sourceOptions = [
-  { label: __('Media library file', textDomain), value: 'media' },
-  { label: __('File URL', textDomain), value: 'url' },
-  { label: __('Order digital files', textDomain), value: 'order_downloads' },
-];
+/**
+ * The "current loop item file" source only makes sense inside a loop body. We
+ * detect that context from the available placeholders: the loop action injects
+ * its {{ loop_* }} tokens for the actions nested in it, so their presence means
+ * this settings panel is being edited inside a loop.
+ *
+ * @since 2.1.1
+ */
+const insideLoop = computed(() =>
+  (Array.isArray(props.availablePlaceholders) ? props.availablePlaceholders : []).some((entry) => {
+    const token = String((entry as Record<string, unknown>)?.placeholder || entry || '');
+    return token.includes('loop_');
+  })
+);
+
+const sourceOptions = computed(() => {
+  const options = [
+    { label: __('Media library file', textDomain), value: 'media' },
+    { label: __('File URL', textDomain), value: 'url' },
+    { label: __('Order digital files', textDomain), value: 'order_downloads' },
+  ];
+
+  if (insideLoop.value) {
+    options.push({ label: __('Current loop item file', textDomain), value: 'loop_item' });
+  }
+
+  return options;
+});
 
 const items = computed<AttachmentItem[]>(() => (Array.isArray(props.modelValue) ? (props.modelValue as AttachmentItem[]) : []));
 
@@ -164,6 +187,10 @@ function openMediaLibrary(index: number) {
 
       <p v-if="item.source === 'order_downloads'" class="text-sm leading-6 text-slate-500">
         {{ __('Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it.', textDomain) }}
+      </p>
+
+      <p v-else-if="item.source === 'loop_item'" class="text-sm leading-6 text-slate-500">
+        {{ __('Attaches the file of the item currently being looped, so each iteration sends its own file. Only carries a file when the loop iterates the order digital files.', textDomain) }}
       </p>
 
       <div v-else-if="item.source === 'media'" class="flex items-end gap-2">

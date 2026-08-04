@@ -14,15 +14,14 @@ import { getTriggerDefinition } from '../registries/triggerRegistry';
 import { __, textDomain } from '../utils/i18n';
 import { createWorkflowNodeId } from '../utils/workflowIds';
 import {
+  branchKeysForAction,
   cloneSerializable,
   createActionNode,
   createBranchCollection,
   createConditionNode,
-  createEmptyBranches,
   createTriggerNode,
   ensureBranchesOnNode,
   ensureNodeDefaults,
-  isConditionAction,
   isRecord,
   isWorkflowNode,
   normalizeBranchKey,
@@ -310,43 +309,49 @@ function normalizeBranchNodes(nodes: unknown[], branchKey: WorkflowBranchKey): W
  * @param {string} fallbackNodeId The node ID used as a fallback.
  * @returns {WorkflowBranches} The normalized branches.
  */
-function normalizeConditionBranches(source: Record<string, unknown>, fallbackNodeId: string): WorkflowBranches {
+function normalizeExpansibleBranches(source: Record<string, unknown>, action: string): WorkflowBranches {
+  const keys = branchKeysForAction(action);
   const rawBranches = isRecord(source.branches) ? source.branches : null;
   const rawChildren = rawBranches || source.children;
-  const branches = createEmptyBranches();
+  const branches: WorkflowBranches = {};
+  keys.forEach((key) => {
+    branches[key] = [];
+  });
 
+  // object form: { action_true: [...], action_false: [...] } / { action_loop: [...] }
   if (isRecord(rawChildren)) {
-    branches.action_true = normalizeBranchNodes(Array.isArray(rawChildren.action_true) ? rawChildren.action_true : [], 'action_true');
-    branches.action_false = normalizeBranchNodes(Array.isArray(rawChildren.action_false) ? rawChildren.action_false : [], 'action_false');
+    keys.forEach((key) => {
+      const list = (rawChildren as Record<string, unknown>)[key];
+      branches[key] = normalizeBranchNodes(Array.isArray(list) ? list : [], key);
+    });
+
     return branches;
   }
 
+  // legacy array form: bucket by an explicit branch hint, defaulting to the first branch
   if (Array.isArray(rawChildren)) {
-    const bucketed: Record<WorkflowBranchKey, unknown[]> = {
-      action_true: [],
-      action_false: [],
-    };
-
-    let hasBranchHints = false;
+    const primary = keys[0];
+    const bucketed: Record<string, unknown[]> = {};
+    keys.forEach((key) => {
+      bucketed[key] = [];
+    });
 
     for (const item of rawChildren) {
       const branchKey = isRecord(item) ? normalizeBranchKey(item.branchKey || item.branch || item.condition_branch) : undefined;
 
-      if (branchKey) {
+      if (branchKey && bucketed[branchKey]) {
         bucketed[branchKey].push(item);
-        hasBranchHints = true;
         continue;
       }
 
-      bucketed.action_true.push(item);
+      if (primary) {
+        bucketed[primary].push(item);
+      }
     }
 
-    if (hasBranchHints) {
-      branches.action_true = normalizeBranchNodes(bucketed.action_true, 'action_true');
-      branches.action_false = normalizeBranchNodes(bucketed.action_false, 'action_false');
-    } else {
-      branches.action_true = normalizeBranchNodes(bucketed.action_true, 'action_true');
-    }
+    keys.forEach((key) => {
+      branches[key] = normalizeBranchNodes(bucketed[key], key);
+    });
   }
 
   return branches;
@@ -394,8 +399,10 @@ export function normalizeWorkflowNode(input: unknown, branchKey?: WorkflowBranch
     node.branchKey = branchKey;
   }
 
-  if (inferredType === 'action' && isConditionAction(node.data)) {
-    node.branches = normalizeConditionBranches(input, id);
+  const nodeAction = inferredType === 'action' ? String((node.data as Record<string, unknown>)?.action || '') : '';
+
+  if (branchKeysForAction(nodeAction).length) {
+    node.branches = normalizeExpansibleBranches(input, nodeAction);
     node.children = [];
     return node;
   }

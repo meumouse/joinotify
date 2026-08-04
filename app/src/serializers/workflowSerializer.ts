@@ -117,10 +117,13 @@ function serializeLinearChildren(children: WorkflowNode[]): WorkflowNode[] {
  * @returns {Record<string, WorkflowNode[]>} The serialized branch children.
  */
 function serializeBranchChildren(branches: WorkflowBranches): Record<string, WorkflowNode[]> {
-  return {
-    action_true: serializeLinearChildren(branches.action_true || []),
-    action_false: serializeLinearChildren(branches.action_false || []),
-  };
+  const serialized: Record<string, WorkflowNode[]> = {};
+
+  for (const [key, list] of Object.entries(branches)) {
+    serialized[key] = serializeLinearChildren(Array.isArray(list) ? list : []);
+  }
+
+  return serialized;
 }
 
 /**

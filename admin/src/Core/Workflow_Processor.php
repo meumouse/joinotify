@@ -371,24 +371,25 @@ class Workflow_Processor {
             $meta[ $id ] = array( 'parent' => (string) $parent_id, 'branch' => (string) $branch_key );
             $order[] = $id;
 
-            // condition branches can live under children (object form) or branches
-            $true_children = array();
-            $false_children = array();
+            // branch containers (condition's true/false, loop's body) can live under
+            // children (object form) or branches; a single source holds every branch key
+            $branch_source = null;
 
-            if ( is_array( $children ) && ( isset( $children['action_true'] ) || isset( $children['action_false'] ) ) ) {
-                $true_children = $children['action_true'] ?? array();
-                $false_children = $children['action_false'] ?? array();
-            } elseif ( is_array( $branches ) && ( isset( $branches['action_true'] ) || isset( $branches['action_false'] ) ) ) {
-                $true_children = $branches['action_true'] ?? array();
-                $false_children = $branches['action_false'] ?? array();
+            if ( is_array( $children ) && ( isset( $children['action_true'] ) || isset( $children['action_false'] ) || isset( $children['action_loop'] ) ) ) {
+                $branch_source = $children;
+            } elseif ( is_array( $branches ) && ( isset( $branches['action_true'] ) || isset( $branches['action_false'] ) || isset( $branches['action_loop'] ) ) ) {
+                $branch_source = $branches;
+            }
+
+            if ( null !== $branch_source ) {
+                self::collect_flow_nodes( $branch_source['action_true'] ?? array(), $id, 'action_true', $pool, $meta, $order );
+                self::collect_flow_nodes( $branch_source['action_false'] ?? array(), $id, 'action_false', $pool, $meta, $order );
+                self::collect_flow_nodes( $branch_source['action_loop'] ?? array(), $id, 'action_loop', $pool, $meta, $order );
             } elseif ( is_array( $children ) ) {
                 // Linear children (rare in this model); keep them tied to this exact
                 // parent so they can only ever graft back here.
                 self::collect_flow_nodes( $children, $id, 'children', $pool, $meta, $order );
             }
-
-            self::collect_flow_nodes( $true_children, $id, 'action_true', $pool, $meta, $order );
-            self::collect_flow_nodes( $false_children, $id, 'action_false', $pool, $meta, $order );
         }
     }
 
@@ -481,17 +482,333 @@ class Workflow_Processor {
         $used[ $id ] = true;
         $node = $pool[ $id ];
 
-        // conditions nest their branches; linear nodes continue via siblings
-        if ( ( $node['data']['action'] ?? '' ) === 'condition' ) {
+        // conditions nest their true/false branches; loops nest their single body
+        // branch (and still continue after the loop via their own 'output' handle);
+        // linear nodes continue via siblings
+        $node_action = $node['data']['action'] ?? '';
+
+        if ( $node_action === 'condition' ) {
             $node['children'] = array(
                 'action_true' => self::build_branch( $id, 'true', $id, 'action_true', $pool, $meta, $order, $used ),
                 'action_false' => self::build_branch( $id, 'false', $id, 'action_false', $pool, $meta, $order, $used ),
+            );
+        } elseif ( in_array( $node_action, self::get_looping_action_slugs(), true ) ) {
+            $node['children'] = array(
+                'action_loop' => self::build_branch( $id, 'loop', $id, 'action_loop', $pool, $meta, $order, $used ),
             );
         } else {
             $node['children'] = array();
         }
 
         return $node;
+    }
+
+
+    /**
+     * Action slugs treated as "looping": they nest their body under the
+     * 'action_loop' branch and are expanded once per collection item by
+     * run_segment().
+     *
+     * @since 2.1.1
+     * @return array<int,string>
+     */
+    protected static function get_looping_action_slugs() {
+        /**
+         * Filter the action slugs treated as looping actions.
+         *
+         * A looping action nests its body under children['action_loop'] and is
+         * unrolled once per resolved collection item. Third parties can register a
+         * custom looping slug (reusing the same body shape and the Resolve_Loop_Items
+         * filter to provide the collection) by adding it here.
+         *
+         * @since 2.1.1
+         * @param array $slugs Looping action slugs.
+         */
+        $slugs = apply_filters( 'Joinotify/Workflow_Processor/Looping_Actions', array( 'loop' ) );
+
+        return is_array( $slugs ) ? $slugs : array( 'loop' );
+    }
+
+
+    /**
+     * Resolve the collection a loop node iterates over into a list of flat,
+     * serializable items (so each item survives a time delay inside the body).
+     *
+     * @since 2.1.1
+     * @param array $node_data | Loop node data (loop_source, loop_list, ...)
+     * @param array $payload | Runtime payload
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function resolve_loop_items( $node_data, $payload ) {
+        $source = isset( $node_data['loop_source'] ) ? sanitize_key( (string) $node_data['loop_source'] ) : 'order_downloads';
+        $items = array();
+
+        if ( 'order_downloads' === $source ) {
+            $items = self::resolve_loop_order_downloads( $payload );
+        } elseif ( 'order_items' === $source ) {
+            $items = self::resolve_loop_order_items( $payload );
+        } elseif ( 'placeholder_list' === $source ) {
+            $items = self::resolve_loop_placeholder_list( $node_data, $payload );
+        }
+
+        // optional cap so a very large collection cannot flood the queue
+        $max = isset( $node_data['loop_max_items'] ) ? absint( $node_data['loop_max_items'] ) : 0;
+
+        if ( $max > 0 && count( $items ) > $max ) {
+            $items = array_slice( $items, 0, $max );
+        }
+
+        /**
+         * Filter the resolved items a loop node iterates over.
+         *
+         * Lets third parties provide the collection for a custom loop source (or
+         * refine the built-in ones). Each item should be a flat array of scalars;
+         * the 'value' key is used as the default {{ loop_value }} replacement.
+         *
+         * @since 2.1.1
+         * @param array $items     Normalized items.
+         * @param array $node_data Loop node data.
+         * @param array $payload   Runtime payload.
+         */
+        $items = apply_filters( 'Joinotify/Workflow_Processor/Resolve_Loop_Items', $items, $node_data, $payload );
+
+        return is_array( $items ) ? array_values( array_filter( $items, 'is_array' ) ) : array();
+    }
+
+
+    /**
+     * Resolve the downloadable files of the payload order into loop items.
+     *
+     * @since 2.1.1
+     * @param array $payload | Runtime payload
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function resolve_loop_order_downloads( $payload ) {
+        $order = self::get_loop_order( $payload );
+
+        if ( ! $order ) {
+            return array();
+        }
+
+        $items = array();
+
+        foreach ( Woocommerce::get_downloadable_items( $order ) as $download ) {
+            $file = isset( $download['file'] ) && is_array( $download['file'] ) ? $download['file'] : array();
+            $name = (string) ( $download['download_name'] ?? ( $file['name'] ?? '' ) );
+
+            $items[] = array(
+                'type' => 'download',
+                'value' => '' !== $name ? $name : (string) ( $download['product_name'] ?? '' ),
+                'file_name' => (string) ( $file['name'] ?? '' ),
+                'file_ref' => (string) ( $file['file'] ?? '' ),
+                'download_url' => (string) ( $download['download_url'] ?? '' ),
+                'product_id' => absint( $download['product_id'] ?? 0 ),
+                'product_name' => (string) ( $download['product_name'] ?? '' ),
+            );
+        }
+
+        return $items;
+    }
+
+
+    /**
+     * Resolve the purchased line items of the payload order into loop items.
+     *
+     * @since 2.1.1
+     * @param array $payload | Runtime payload
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function resolve_loop_order_items( $payload ) {
+        $order = self::get_loop_order( $payload );
+
+        if ( ! $order || ! method_exists( $order, 'get_items' ) ) {
+            return array();
+        }
+
+        $items = array();
+
+        foreach ( $order->get_items() as $line ) {
+            if ( ! is_object( $line ) || ! method_exists( $line, 'get_name' ) ) {
+                continue;
+            }
+
+            $items[] = array(
+                'type' => 'order_item',
+                'value' => (string) $line->get_name(),
+                'name' => (string) $line->get_name(),
+                'quantity' => method_exists( $line, 'get_quantity' ) ? (int) $line->get_quantity() : 1,
+                'product_id' => method_exists( $line, 'get_product_id' ) ? absint( $line->get_product_id() ) : 0,
+            );
+        }
+
+        return $items;
+    }
+
+
+    /**
+     * Resolve a delimited placeholder value into loop items, one per entry.
+     *
+     * @since 2.1.1
+     * @param array $node_data | Loop node data (loop_list, loop_delimiter)
+     * @param array $payload | Runtime payload
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function resolve_loop_placeholder_list( $node_data, $payload ) {
+        $raw = joinotify_prepare_message( (string) ( $node_data['loop_list'] ?? '' ), $payload );
+
+        if ( '' === trim( $raw ) ) {
+            return array();
+        }
+
+        $delimiter = isset( $node_data['loop_delimiter'] ) && '' !== (string) $node_data['loop_delimiter']
+            ? (string) $node_data['loop_delimiter']
+            : "\n";
+
+        // normalize CRLF so a newline delimiter behaves the same on every platform
+        $raw = str_replace( array( "\r\n", "\r" ), "\n", $raw );
+        $items = array();
+
+        foreach ( explode( $delimiter, $raw ) as $part ) {
+            $value = trim( $part );
+
+            if ( '' === $value ) {
+                continue;
+            }
+
+            $items[] = array(
+                'type' => 'list',
+                'value' => $value,
+            );
+        }
+
+        return $items;
+    }
+
+
+    /**
+     * Resolve the order of a loop payload, following a refund to its parent order.
+     *
+     * @since 2.1.1
+     * @param array $payload | Runtime payload
+     * @return \WC_Order|null
+     */
+    protected static function get_loop_order( $payload ) {
+        if ( ! isset( $payload['order_id'] ) || ! function_exists('wc_get_order') ) {
+            return null;
+        }
+
+        $order = wc_get_order( $payload['order_id'] );
+
+        if ( $order instanceof \WC_Order_Refund ) {
+            $order = wc_get_order( $order->get_parent_id() );
+        }
+
+        return $order ?: null;
+    }
+
+
+    /**
+     * Build the unrolled queue for a loop: for each item, a synthetic context node
+     * (which pins the item onto the payload) followed by a deep copy of the body,
+     * every node id rewritten to a per-iteration unique id so the idempotency layer
+     * never skips a repeated body node.
+     *
+     * @since 2.1.1
+     * @param array $items | Resolved loop items
+     * @param array $body | Loop body nodes (children['action_loop'])
+     * @param string $loop_id | Id of the loop node (namespaces the synthetic ids)
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function build_loop_queue( $items, $body, $loop_id ) {
+        $queue = array();
+        $count = count( $items );
+
+        foreach ( array_values( $items ) as $index => $item ) {
+            $queue[] = array(
+                'id' => $loop_id . '::ctx::' . $index,
+                'type' => 'action',
+                'data' => array(
+                    'action' => 'loop_set_context',
+                    'loop_context' => array(
+                        'item' => is_array( $item ) ? $item : array( 'value' => $item ),
+                        'index' => $index,
+                        'number' => $index + 1,
+                        'count' => $count,
+                    ),
+                ),
+                'children' => array(),
+            );
+
+            foreach ( $body as $body_node ) {
+                if ( is_array( $body_node ) ) {
+                    $queue[] = self::clone_loop_node( $body_node, $loop_id, $index );
+                }
+            }
+        }
+
+        return $queue;
+    }
+
+
+    /**
+     * Deep-copy a loop body node for one iteration, rewriting its id (and those of
+     * all descendants) so repeated iterations never collide in processed_actions.
+     *
+     * @since 2.1.1
+     * @param array $node | Body node to clone
+     * @param string $loop_id | Loop node id
+     * @param int $index | Iteration index
+     * @return array<string,mixed>
+     */
+    protected static function clone_loop_node( $node, $loop_id, $index ) {
+        $clone = $node;
+
+        if ( isset( $node['id'] ) ) {
+            $clone['id'] = $loop_id . '::' . $index . '::' . $node['id'];
+        }
+
+        if ( isset( $node['children'] ) && is_array( $node['children'] ) ) {
+            $children = $node['children'];
+
+            // branch container (condition/loop) keeps its keys; linear children are a list
+            if ( isset( $children['action_true'] ) || isset( $children['action_false'] ) || isset( $children['action_loop'] ) ) {
+                $rebuilt = array();
+
+                foreach ( $children as $branch_key => $branch_nodes ) {
+                    $rebuilt[ $branch_key ] = is_array( $branch_nodes )
+                        ? array_map( function( $child ) use ( $loop_id, $index ) {
+                            return is_array( $child ) ? self::clone_loop_node( $child, $loop_id, $index ) : $child;
+                        }, $branch_nodes )
+                        : $branch_nodes;
+                }
+
+                $clone['children'] = $rebuilt;
+            } else {
+                $clone['children'] = array_map( function( $child ) use ( $loop_id, $index ) {
+                    return is_array( $child ) ? self::clone_loop_node( $child, $loop_id, $index ) : $child;
+                }, $children );
+            }
+        }
+
+        return $clone;
+    }
+
+
+    /**
+     * Pin the current loop item onto the payload so the iteration's body resolves
+     * {{ loop_* }} tokens and the loop_item attachment source against it.
+     *
+     * @since 2.1.1
+     * @param array $action_data | Synthetic loop_set_context node data
+     * @param array $payload | Runtime payload (by reference)
+     * @return bool
+     */
+    protected static function apply_loop_context( $action_data, &$payload ) {
+        $payload['loop'] = isset( $action_data['loop_context'] ) && is_array( $action_data['loop_context'] )
+            ? $action_data['loop_context']
+            : array();
+
+        return true;
     }
 
 
@@ -668,6 +985,10 @@ class Workflow_Processor {
         $branching_actions = apply_filters( 'Joinotify/Workflow_Processor/Branching_Actions', array( 'condition' ) );
         $branching_actions = is_array( $branching_actions ) ? $branching_actions : array( 'condition' );
 
+        // Action slugs treated as "looping": they unroll their body once per collection
+        // item into the queue (see get_looping_action_slugs()).
+        $looping_actions = self::get_looping_action_slugs();
+
         while ( ! empty( $queue ) ) {
             // a previous action requested the funnel to stop
             if ( self::$funnel_stopped ) {
@@ -710,6 +1031,26 @@ class Workflow_Processor {
             if ( in_array( $action, $branching_actions, true ) ) {
                 $branch = self::evaluate_condition( $node, $post_id, $payload );
                 $queue = array_merge( array_values( $branch ), $queue );
+
+                if ( $node_id ) {
+                    $state['processed_actions'][] = $node_id;
+                    self::persist_state( $post_id, $state_key, $state );
+                }
+
+                continue;
+            }
+
+            // loop: unroll the body once per collection item, prefixing each iteration
+            // with a synthetic context node that pins the current item onto the payload.
+            // This reuses the delay machinery: a time_delay inside the body captures the
+            // remaining unrolled iterations as its continuation, and each iteration's
+            // context node restores the correct item on resume.
+            if ( in_array( $action, $looping_actions, true ) ) {
+                $body = $node['children']['action_loop'] ?? array();
+                $items = self::resolve_loop_items( $node_data, $payload );
+                $unrolled = self::build_loop_queue( $items, is_array( $body ) ? $body : array(), (string) ( $node_id ?? 'loop' ) );
+
+                $queue = array_merge( $unrolled, $queue );
 
                 if ( $node_id ) {
                     $state['processed_actions'][] = $node_id;
@@ -878,6 +1219,14 @@ class Workflow_Processor {
         // the closure map because it must mutate the shared payload, not a captured copy.
         if ( $action_data['action'] === 'dynamic_placeholder' ) {
             return self::execute_dynamic_placeholder( $action_data, $event_data );
+        }
+
+        // Loop context: pin the current loop item onto the payload (by reference) so the
+        // body actions of this iteration resolve {{ loop_* }} tokens and the loop_item
+        // attachment source against it. Handled before the closure map for the same
+        // reason as dynamic_placeholder: it must mutate the shared payload.
+        if ( $action_data['action'] === 'loop_set_context' ) {
+            return self::apply_loop_context( $action_data, $event_data );
         }
 
         /**

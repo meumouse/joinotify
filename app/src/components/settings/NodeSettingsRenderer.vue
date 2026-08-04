@@ -16,9 +16,25 @@ import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { getActionDefinition as getLegacyActionDefinition } from '../../registries/actionRegistry';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
 import { getTriggerSettingsSchema } from '../../utils/triggerSettings';
-import { cloneSerializable } from '../../utils/workflowTree';
+import { cloneSerializable, findWorkflowNodeLocation } from '../../utils/workflowTree';
 import { __, textDomain } from '../../utils/i18n';
 import type { WorkflowNode } from '../../types/workflowBuilder';
+
+// Tokens the loop action exposes to the actions nested in its body. Offered in the
+// placeholder picker (and used to enable the "loop item file" attachment) only when
+// the edited node actually lives inside a loop. Mirrors the runtime resolution in
+// admin/src/Core/Functions.php (joinotify_prepare_message).
+const LOOP_PLACEHOLDERS: Array<{ placeholder: string; description: string }> = [
+  { placeholder: '{{ loop_value }}', description: __('Current item value (file/product name or list entry).', textDomain) },
+  { placeholder: '{{ loop_number }}', description: __('Current iteration number, starting at 1.', textDomain) },
+  { placeholder: '{{ loop_index }}', description: __('Current iteration index, starting at 0.', textDomain) },
+  { placeholder: '{{ loop_count }}', description: __('Total number of items in the collection.', textDomain) },
+  { placeholder: '{{ loop_file_name }}', description: __('Digital file name (order files loop).', textDomain) },
+  { placeholder: '{{ loop_download_url }}', description: __('Digital file download link (order files loop).', textDomain) },
+  { placeholder: '{{ loop_product_name }}', description: __('Product name of the current item.', textDomain) },
+  { placeholder: '{{ loop_item_name }}', description: __('Purchased item name (order items loop).', textDomain) },
+  { placeholder: '{{ loop_item_quantity }}', description: __('Purchased item quantity (order items loop).', textDomain) },
+];
 
 const props = defineProps<{
   node: WorkflowNode | null;
@@ -84,10 +100,40 @@ const currentTriggerSlug = computed(() =>
   String(store.triggerNode?.data?.trigger || store.selectedTrigger || '').trim()
 );
 
+// Whether the edited node lives inside a loop body (any loop ancestor). Drives the
+// loop-scoped placeholder tokens and the "current loop item file" attachment source.
+const isInsideLoop = computed(() => {
+  const nodes = store.workflowContent;
+
+  if (!props.node || !Array.isArray(nodes)) {
+    return false;
+  }
+
+  let currentId: string | null = props.node.id;
+  const guard = new Set<string>();
+
+  while (currentId && !guard.has(currentId)) {
+    guard.add(currentId);
+    const location = findWorkflowNodeLocation(nodes, currentId);
+
+    if (!location || !location.parent) {
+      break;
+    }
+
+    if (String(location.parent.data?.action || '') === 'loop') {
+      return true;
+    }
+
+    currentId = location.parent.id;
+  }
+
+  return false;
+});
+
 const placeholderItems = computed(() => {
   const trigger = currentTriggerSlug.value;
 
-  return (store.placeholderCatalog || []).flatMap((group) =>
+  const catalogItems = (store.placeholderCatalog || []).flatMap((group) =>
     (group.items || []).map((item) => {
       const triggers = Array.isArray(item.triggers) ? item.triggers : [];
       // An empty `triggers` list means a global placeholder, available in every
@@ -102,6 +148,16 @@ const placeholderItems = computed(() => {
       };
     })
   );
+
+  // loop tokens only resolve inside a loop body, so offer them only there
+  if (isInsideLoop.value) {
+    return [
+      ...LOOP_PLACEHOLDERS.map((item) => ({ ...item, available: true })),
+      ...catalogItems,
+    ];
+  }
+
+  return catalogItems;
 });
 
 // Re-sync the edit buffer only when the *selected node changes identity* — not on
