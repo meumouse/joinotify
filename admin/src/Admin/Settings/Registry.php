@@ -60,11 +60,6 @@ class Registry {
                                 esc_html__( 'Choose the fallback country when the phone number does not include a country code.', 'joinotify' ),
                                 self::build_country_code_options()
                             ),
-                            self::field_toggle(
-                                'enable_send_disconnect_notifications',
-                                esc_html__( 'Notify when WhatsApp disconnects', 'joinotify' ),
-                                esc_html__( 'Sends a notification to the sender when the connection is not established.', 'joinotify' )
-                            ),
                             self::field_text(
                                 'test_number_phone',
                                 esc_html__( 'Test phone', 'joinotify' ),

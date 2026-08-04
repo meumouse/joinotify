@@ -44,7 +44,6 @@ class Default_Options {
             'create_coupon_prefix' => 'CUPOM_',
             'enable_ignore_processed_actions' => 'no',
             'enable_developer_integration' => 'yes',
-            'enable_send_disconnect_notifications' => 'yes',
             'enable_message_history' => 'yes',
             'message_history_retention_days' => '90',
             'enable_debug_logs' => 'yes',

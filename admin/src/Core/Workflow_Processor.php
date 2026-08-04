@@ -1168,7 +1168,7 @@ class Workflow_Processor {
         Message_History::clear_context();
 
         if ( ! $result->is_success() ) {
-            // check connection state and notify user if disconnected
+            // refresh the stored connection state for the sender
             Controller::get_connection_state( $sender );
         }
 
@@ -1242,7 +1242,7 @@ class Workflow_Processor {
         Message_History::clear_context();
 
         if ( ! $result->is_success() ) {
-            // check connection state and notify user if disconnected
+            // refresh the stored connection state for the sender
             Controller::get_connection_state( $sender );
         }
 
@@ -1534,7 +1534,7 @@ class Workflow_Processor {
         Message_History::clear_context();
 
         if ( 201 !== $response ) {
-            // check connection state and notify user if disconnected
+            // refresh the stored connection state for the sender
             Controller::get_connection_state( $sender );
         }
 

@@ -1,3 +1,6 @@
+Versão 2.2.0 (03/08/2026)
+* Recurso removido: Notificar quando o WhatsApp desconectar
+
 Versão 2.1.0 (27/07/2026)
 * Novo recurso: Entrega de produtos digitais do WooCommerce diretamente pelo construtor de fluxos, enviando arquivos e PDFs por e-mail ou WhatsApp
 * Novo recurso: Envio de anexos nas ações de e-mail (Resend) e de mídia do WhatsApp, com campo reutilizável que aceita arquivos da biblioteca de mídia, links ou os arquivos digitais do próprio pedido

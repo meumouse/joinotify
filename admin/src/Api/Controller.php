@@ -369,8 +369,6 @@ class Controller {
                 $status = 'connected';
             } elseif ( $phone_status['connection'] === 'disconnected' ) {
                 $status = 'disconnected';
-
-                self::notify_disconnected_phone( $phone );
             }
 
             if ( self::$debug_mode ) {
@@ -378,8 +376,6 @@ class Controller {
             }
         } else {
             $status = 'disconnected';
-
-            self::notify_disconnected_phone( $phone );
         }
 
         update_option( 'joinotify_status_connection_'. $phone, $status );
@@ -1026,46 +1022,5 @@ class Controller {
     }
 
 
-    /**
-     * Notify user when phone is disconnected
-     * 
-     * @since 1.3.0
-     * @version 1.4.7
-     * @param string $phone | Phone number
-     * @return int
-     */
-    public static function notify_disconnected_phone( $phone ) {
-        // check if the notification is enabled
-        if ( Admin::get_setting('enable_send_disconnect_notifications') !== 'yes' ) {
-            return;
-        }
-
-        $api_url = self::get_api_url( '/utils', '/notify-disconnected-phone' );
-
-        // send request
-        $response = wp_remote_post( $api_url, array(
-            'headers' => array(
-                'Content-Type' => 'application/json',
-            ),
-            'body' => wp_json_encode( array(
-                'phone' => joinotify_prepare_receiver( $phone ),
-                'site' => License::get_domain(),
-            )),
-            'timeout' => 30,
-        ));
-
-        // Check if the response is an error
-        if ( self::$dev_mode ) {
-            error_log( 'notify_disconnected_phone() response: ' . print_r( $response, true ) );
-        }
-
-        if ( is_wp_error( $response ) ) {
-            Logger::register_log( $response, 'ERROR' );
-        }
-
-        $response_body = wp_remote_retrieve_body( $response );
-
-        return wp_remote_retrieve_response_code( $response );
-    }
 }
 
