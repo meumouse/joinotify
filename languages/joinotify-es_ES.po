@@ -124,7 +124,7 @@ msgstr "<span class=\"builder-placeholder\">%s</span> está vacío"
 msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr "<span class=\"builder-placeholder\">%s</span> no está vacío"
 
-#: admin/src/Core/Init.php:226
+#: admin/src/Core/Init.php:245
 msgid ""
 "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your "
 "hosting support to upgrade."
@@ -138,7 +138,7 @@ msgstr ""
 msgid "0 results"
 msgstr "0 resultados"
 
-#: admin/src/Admin/Settings/Registry.php:216
+#: admin/src/Admin/Settings/Registry.php:257
 msgid "180 days"
 msgstr "180 días"
 
@@ -150,8 +150,8 @@ msgstr "1x - Camiseta de algodón masculina (Producto de ejemplo)"
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr "1x - Gafas de sol con protección UV (Producto de ejemplo)"
 
-#: admin/src/Admin/Settings/Registry.php:213
-#: admin/src/Admin/Settings/Registry.php:232
+#: admin/src/Admin/Settings/Registry.php:254
+#: admin/src/Admin/Settings/Registry.php:273
 msgid "30 days"
 msgstr "30 días"
 
@@ -160,7 +160,7 @@ msgstr "30 días"
 msgid "30 minutes"
 msgstr "30 minutos"
 
-#: admin/src/Admin/Settings/Registry.php:217
+#: admin/src/Admin/Settings/Registry.php:258
 msgid "365 days"
 msgstr "365 días"
 
@@ -175,23 +175,27 @@ msgstr "41912345678"
 msgid "5541987111527"
 msgstr "5541987111527"
 
-#: admin/src/Admin/Settings/Registry.php:214
-#: admin/src/Admin/Settings/Registry.php:233
+#: admin/src/Admin/Settings/Registry.php:255
+#: admin/src/Admin/Settings/Registry.php:274
 msgid "60 days"
 msgstr "60 días"
 
-#: admin/src/Admin/Settings/Registry.php:231
+#: admin/src/Admin/Settings/Registry.php:272
 msgid "7 days"
 msgstr "7 días"
 
-#: admin/src/Admin/Settings/Registry.php:215
-#: admin/src/Admin/Settings/Registry.php:234
+#: admin/src/Admin/Settings/Registry.php:256
+#: admin/src/Admin/Settings/Registry.php:275
 msgid "90 days"
 msgstr "90 días"
 
 #: admin/src/Admin/Builder/Registry.php:1504
 msgid "A condition is missing its branches."
 msgstr "Falta una rama en una condición."
+
+#: admin/src/Api/Cloud_Client.php:769
+msgid "A message id is required."
+msgstr "Se requiere un ID de mensaje."
 
 #: admin/src/Rest/Check_Updates.php:53
 msgid "A new version (%s) is available!"
@@ -201,7 +205,7 @@ msgstr "¡Una nueva versión (%s) está disponible!"
 msgid "A new version is available:"
 msgstr "Está disponible una nueva versión:"
 
-#: admin/src/Api/Updater.php:526
+#: admin/src/Api/Updater.php:534
 msgid ""
 "A new version of the <strong>Joinotify</strong> plugin (%s) is available. "
 "<a href=\"%s\">Update now</a>."
@@ -209,11 +213,11 @@ msgstr ""
 "Una nueva versión del plugin <strong>Joinotify</strong> (%s) está "
 "disponible. <a href=\"%s\">Actualice ahora</a>."
 
-#: admin/src/Api/Updater.php:229
+#: admin/src/Api/Updater.php:237
 msgid "A new version of the <strong>Joinotify</strong> plugin is available."
 msgstr "Una nueva versión del plugin <strong>Joinotify</strong> está disponible."
 
-#: admin/src/Admin/Settings/Registry.php:242
+#: admin/src/Admin/Settings/Registry.php:283
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 "Una visión general rápida del entorno de WordPress, PHP y extensiones "
@@ -223,12 +227,12 @@ msgstr ""
 msgid "Abandoned cart is recovered"
 msgstr "El carrito abandonado es recuperado"
 
-#: admin/src/Admin/Settings/Registry.php:173
-#: admin/src/Admin/Settings/Registry.php:293
+#: admin/src/Admin/Settings/Registry.php:214
+#: admin/src/Admin/Settings/Registry.php:334
 msgid "About"
 msgstr "Acerca de"
 
-#: app/src/pages/license/LicensePage.vue:423
+#: app/src/pages/license/LicensePage.vue:450
 msgid "Access validation and premium feature unlocking"
 msgstr "Validación de acceso y desbloqueo de funciones premium"
 
@@ -240,14 +244,14 @@ msgstr "Cuenta creada con éxito."
 msgid "Account registration is currently disabled."
 msgstr "El registro de cuentas está actualmente deshabilitado."
 
-#: app/src/pages/license/LicensePage.vue:473
+#: app/src/pages/license/LicensePage.vue:500
 msgid "Account status"
 msgstr "Estado de la cuenta"
 
 #: app/src/components/builder/BuilderActionPickerModal.vue:36
-#: app/src/components/flow/FlowCanvas.vue:214
+#: app/src/components/flow/FlowCanvas.vue:216
 #: app/src/components/settings/NodeSettingsDrawer.vue:42
-#: app/src/stores/useWorkflowBuilderStore.ts:1627
+#: app/src/stores/useWorkflowBuilderStore.ts:1628
 msgid "Action"
 msgstr "Acción"
 
@@ -259,11 +263,11 @@ msgstr "Acciones"
 msgid "Actions menu"
 msgstr "Menú de acciones"
 
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:186
 msgid "Actions to add a new sender and send a test message."
 msgstr "Acciones para añadir un nuevo remitente y enviar un mensaje de prueba."
 
-#: admin/src/Admin/Settings/Registry.php:79
+#: admin/src/Admin/Settings/Registry.php:76
 msgid "Activate and configure the endpoints used to process external API requests."
 msgstr ""
 "Activar y configurar los puntos finales utilizados para procesar "
@@ -274,9 +278,9 @@ msgid "Activate discount coupon action"
 msgstr "Activar acción de cupón de descuento"
 
 #: app/src/pages/license/LicensePage.vue:54
-#: app/src/pages/license/LicensePage.vue:209
-#: app/src/pages/license/LicensePage.vue:376
-#: app/src/pages/license/LicensePage.vue:394
+#: app/src/pages/license/LicensePage.vue:217
+#: app/src/pages/license/LicensePage.vue:403
+#: app/src/pages/license/LicensePage.vue:421
 msgid "Activate license"
 msgstr "Activar licencia"
 
@@ -284,7 +288,7 @@ msgstr "Activar licencia"
 msgid "Activate plugin"
 msgstr "Activar plugin"
 
-#: app/src/pages/license/LicensePage.vue:342
+#: app/src/pages/license/LicensePage.vue:350
 msgid ""
 "Activate premium features, review your subscription status and keep your "
 "license in sync. If you need help, visit our "
@@ -292,16 +296,16 @@ msgstr ""
 "Activa funciones premium, revisa el estado de tu suscripción y mantén tu "
 "licencia sincronizada. Si necesitas ayuda, visita nuestro "
 
-#: app/src/pages/license/LicensePage.vue:413
+#: app/src/pages/license/LicensePage.vue:440
 msgid "Activate the license to unlock Joinotify premium features."
 msgstr "Activar la licencia para desbloquear funciones premium de Joinotify."
 
-#: admin/src/Admin/Settings/Registry.php:634
+#: admin/src/Admin/Settings/Registry.php:675
 msgid "Activate your license"
 msgstr "Activar tu licencia"
 
-#: admin/src/Admin/Settings/Registry.php:620
-#: app/src/pages/license/LicensePage.vue:212
+#: admin/src/Admin/Settings/Registry.php:661
+#: app/src/pages/license/LicensePage.vue:220
 msgid "Activate your license to unlock premium features."
 msgstr "Activar tu licencia para desbloquear funciones premium."
 
@@ -311,7 +315,7 @@ msgstr "Activar tu licencia para desbloquear funciones premium."
 msgid "Active"
 msgstr "Activo"
 
-#: admin/src/Admin/Settings/Registry.php:634
+#: admin/src/Admin/Settings/Registry.php:675
 msgid "Active license"
 msgstr "Licencia activa"
 
@@ -331,33 +335,40 @@ msgstr ""
 "Añadir un pie de foto para acompañar el medio enviado. Soporta variables de "
 "texto (placeholders)."
 
-#: app/src/components/flow/FlowCanvas.vue:825
+#: app/src/components/flow/FlowCanvas.vue:833
 msgid "Add a documentation note"
 msgstr "Añadir una nota de documentación"
 
-#: admin/src/Builder/Actions.php:69
+#: .history/admin/src/Builder/Actions_20260803205441.php:81
+#: .history/admin/src/Builder/Actions_20260804124933.php:81
+#: admin/src/Builder/Actions.php:81
 msgid "Add a function, set of actions, and/or filters in PHP."
 msgstr "Añade una función, conjunto de acciones y/o filtros en PHP."
 
-#: app/src/components/flow/FlowCanvas.vue:838
-#: app/src/components/flow/FlowNode.vue:438
-#: app/src/components/flow/FlowNode.vue:439
+#: app/src/components/flow/FlowCanvas.vue:846
+#: app/src/components/flow/FlowNode.vue:470
+#: app/src/components/flow/FlowNode.vue:471
 msgid "Add action"
 msgstr "Añadir acción"
 
-#: app/src/components/flow/FlowNode.vue:420
+#: app/src/components/flow/FlowNode.vue:421
 msgid "Add action (False)"
 msgstr "Añadir acción (Falso)"
 
-#: app/src/components/flow/FlowNode.vue:395
+#: app/src/components/flow/FlowNode.vue:396
 msgid "Add action (True)"
 msgstr "Añadir acción (Verdadero)"
 
-#: app/src/components/flow/FlowNode.vue:421
+#: app/src/components/flow/FlowNode.vue:422
 msgid "Add action to the false branch"
 msgstr "Añadir acción a la rama falsa"
 
-#: app/src/components/flow/FlowNode.vue:396
+#: app/src/components/flow/FlowNode.vue:452
+#: app/src/components/flow/FlowNode.vue:453
+msgid "Add action to the loop body"
+msgstr "Añadir acción al cuerpo del bucle"
+
+#: app/src/components/flow/FlowNode.vue:397
 msgid "Add action to the true branch"
 msgstr "Añadir acción a la rama verdadera"
 
@@ -365,7 +376,7 @@ msgstr "Añadir acción a la rama verdadera"
 msgid "Add an action"
 msgstr "Añadir una acción"
 
-#: app/src/builder/components/base/AttachmentsField.vue:210
+#: app/src/builder/components/base/AttachmentsField.vue:237
 msgid "Add attachment"
 msgstr "Añadir archivo adjunto"
 
@@ -392,7 +403,7 @@ msgstr "Añadir nuevo teléfono"
 msgid "Add new workflow"
 msgstr "Añadir nuevo flujo de trabajo"
 
-#: app/src/components/flow/FlowCanvas.vue:829
+#: app/src/components/flow/FlowCanvas.vue:837
 msgid "Add note"
 msgstr "Añadir nota"
 
@@ -440,7 +451,9 @@ msgstr ""
 "Avanza la fecha por el desplazamiento elegido, luego ejecuta a la hora del "
 "día seleccionada (por ejemplo, +1 día a las 09:00)."
 
-#: admin/src/Builder/Actions.php:127
+#: .history/admin/src/Builder/Actions_20260803205441.php:139
+#: .history/admin/src/Builder/Actions_20260804124933.php:139
+#: admin/src/Builder/Actions.php:139
 #: admin/src/Integrations/Integrations_Base.php:132
 msgid "Advanced"
 msgstr "Avanzado"
@@ -462,7 +475,7 @@ msgstr "Afganistán"
 msgid "AI generation failed."
 msgstr "La generación de IA falló."
 
-#: admin/src/Admin/Settings/Registry.php:119
+#: admin/src/Admin/Settings/Registry.php:160
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:123
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:129
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:143
@@ -475,7 +488,7 @@ msgid "AI smart variable"
 msgstr "Variable inteligente de IA"
 
 #: admin/src/AI/Workflow_Generator.php:113
-#: app/src/stores/useWorkflowBuilderStore.ts:1211
+#: app/src/stores/useWorkflowBuilderStore.ts:1212
 msgid "AI workflow"
 msgstr "Flujo de trabajo de IA"
 
@@ -534,7 +547,7 @@ msgstr "Todas las opciones volverán a los valores predeterminados del plugin."
 msgid "All sources"
 msgstr "Todas las fuentes"
 
-#: admin/src/Rest/Builder_Test.php:119
+#: admin/src/Rest/Builder_Test.php:124
 msgid "All test messages were sent successfully."
 msgstr "Todos los mensajes de prueba se enviaron correctamente."
 
@@ -653,10 +666,12 @@ msgstr "Permite comprobar si se recuperó el carrito abandonado."
 msgid "Allows checking whether the order was paid."
 msgstr "Permite comprobar si el pedido fue pagado."
 
-#: admin/src/Admin/Settings/Registry.php:190
+#: admin/src/Admin/Settings/Registry.php:231
 msgid "Allows the plugin to update automatically whenever possible."
 msgstr "Permite que el plugin se actualice automáticamente siempre que sea posible."
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:33
+#: .history/admin/src/Builder/Actions_20260804124933.php:33
 #: admin/src/Builder/Actions.php:33
 msgid "Allows you to set a waiting time before the action is executed."
 msgstr "Te permite establecer un tiempo de espera antes de que se ejecute la acción."
@@ -683,14 +698,6 @@ msgstr "Ya hay una cuenta registrada con esta dirección de correo electrónico.
 #: admin/src/Otp_Login/Auth_Flow_Service.php:241
 msgid "An account is already registered with this phone number."
 msgstr "Ya hay una cuenta registrada con este número de teléfono."
-
-#: admin/src/Api/License.php:281
-msgid ""
-"An error occurred while connecting to the license verification server. "
-"Check the error in the WooCommerce logs."
-msgstr ""
-"Ocurrió un error en la conexión con el servidor de verificación de "
-"licencias. Verifique el error en los registros de WooCommerce."
 
 #: admin/src/Rest/Settings_Reset.php:44
 msgid "An error occurred while resetting the settings."
@@ -746,7 +753,7 @@ msgstr "Cualquier estado"
 msgid "API"
 msgstr "API"
 
-#: app/src/stores/useWorkflowBuilderStore.ts:2029
+#: app/src/stores/useWorkflowBuilderStore.ts:2031
 msgid "API client not initialized."
 msgstr "Cliente de API no inicializado."
 
@@ -754,11 +761,15 @@ msgstr "Cliente de API no inicializado."
 #: .history/admin/src/Integrations/Resend_20260703155627.php:136
 #: .history/admin/src/Integrations/Resend_20260703155635.php:134
 #: .history/admin/src/Integrations/Resend_20260703155807.php:134
-#: admin/src/Admin/Settings/Registry.php:104
+#: admin/src/Admin/Settings/Registry.php:101
 #: admin/src/Integrations/Resend.php:134
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:140
 msgid "API key"
 msgstr "Clave de API"
+
+#: admin/src/Admin/Settings/Registry.php:129
+msgid "API token"
+msgstr "Token de API"
 
 #: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:242
 msgid "application"
@@ -768,7 +779,7 @@ msgstr "aplicación"
 msgid "applications"
 msgstr "aplicaciones"
 
-#: admin/src/Admin/Settings/Registry.php:281
+#: admin/src/Admin/Settings/Registry.php:322
 msgid "Applications"
 msgstr "Aplicaciones"
 
@@ -780,7 +791,7 @@ msgstr "Aplicar"
 msgid "Are you sure you want to clear the debug logs?"
 msgstr "¿Está seguro de que desea limpiar los registros de depuración?"
 
-#: app/src/pages/license/LicensePage.vue:296
+#: app/src/pages/license/LicensePage.vue:304
 msgid ""
 "Are you sure you want to deactivate this license? This will disable premium "
 "features."
@@ -808,7 +819,7 @@ msgstr "Argentina"
 msgid "Armenia"
 msgstr "Armenia"
 
-#: admin/src/Admin/Settings/Registry.php:114
+#: admin/src/Admin/Settings/Registry.php:155
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
@@ -826,7 +837,7 @@ msgstr "Aruba"
 msgid "at"
 msgstr "en"
 
-#: app/src/builder/components/base/AttachmentsField.vue:166
+#: app/src/builder/components/base/AttachmentsField.vue:189
 msgid ""
 "Attaches every digital file the customer purchased in this order. Resolved "
 "when the workflow runs, so it always matches the order that triggered it."
@@ -834,6 +845,16 @@ msgstr ""
 "Adjunta cada archivo digital que el cliente compró en este pedido. Se "
 "resuelve cuando se ejecuta el flujo de trabajo, por lo que siempre coincide "
 "con el pedido que lo activó."
+
+#: app/src/builder/components/base/AttachmentsField.vue:193
+msgid ""
+"Attaches the file of the item currently being looped, so each iteration "
+"sends its own file. Only carries a file when the loop iterates the order "
+"digital files."
+msgstr ""
+"Adjunta el archivo del ítem que se está iterando, por lo que cada iteración "
+"envía su propio archivo. Solo lleva un archivo cuando el bucle itera los "
+"archivos digitales del pedido."
 
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:63
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:131
@@ -884,21 +905,25 @@ msgstr ""
 "Automatiza el envío de mensajes cuando recibes un formulario de WPForms con "
 "un número de teléfono. Mantén a tus clientes informados en tiempo real."
 
-#: admin/src/Admin/Settings/Registry.php:189
+#: admin/src/Admin/Settings/Registry.php:119
+msgid "Automatic"
+msgstr "Automático"
+
+#: admin/src/Admin/Settings/Registry.php:230
 msgid "Automatic updates"
 msgstr "Actualizaciones automáticas"
 
-#: app/src/pages/license/LicensePage.vue:419
+#: app/src/pages/license/LicensePage.vue:446
 msgid "Automatic updates and license synchronization"
 msgstr "Actualizaciones automáticas y sincronización de licencias"
 
-#: admin/src/Admin/Settings/Registry.php:228
+#: admin/src/Admin/Settings/Registry.php:269
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 "Elimina automáticamente los registros del log de depuración que sean más "
 "antiguos que el período seleccionado."
 
-#: admin/src/Admin/Settings/Registry.php:210
+#: admin/src/Admin/Settings/Registry.php:251
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 "Elimina automáticamente los registros de historial más antiguos que el "
@@ -1056,8 +1081,8 @@ msgstr ""
 msgid "Brunei"
 msgstr "Brunéi"
 
-#: admin/src/Admin/Settings/Registry.php:159
-#: admin/src/Admin/Settings/Registry.php:287
+#: admin/src/Admin/Settings/Registry.php:200
+#: admin/src/Admin/Settings/Registry.php:328
 #: app/src/pages/builder/BuilderPage.vue:610
 #: app/src/pages/builder/BuilderPage.vue:665
 #: app/src/pages/builder/BuilderPage.vue:770
@@ -1100,8 +1125,8 @@ msgstr "Burkina Faso"
 msgid "Burundi"
 msgstr "Burundi"
 
-#: app/src/pages/license/LicensePage.vue:364
-#: app/src/pages/license/LicensePage.vue:400
+#: app/src/pages/license/LicensePage.vue:391
+#: app/src/pages/license/LicensePage.vue:427
 msgid "Buy license"
 msgstr "Comprar licencia"
 
@@ -1201,7 +1226,7 @@ msgstr "Cambiar color"
 msgid "Change number"
 msgstr "Cambiar número"
 
-#: app/src/components/flow/FlowNode.vue:292
+#: app/src/components/flow/FlowNode.vue:293
 #: app/src/pages/builder/BuilderPage.vue:1432
 msgid "Change trigger"
 msgstr "Cambiar desencadenador"
@@ -1218,13 +1243,19 @@ msgstr ""
 msgid "Channel"
 msgstr "Canal"
 
+#: app/src/builder/actions/settings/LoopSettings.vue:80
+msgid "Character that separates the entries. Leave empty to split by line break."
+msgstr ""
+"Carácter que separa las entradas. Deja vacío para dividir por salto de "
+"línea."
+
 #: app/src/builder/actions/definitions/telegramText.ts:54
 #: app/src/builder/actions/settings/TelegramTextSettings.vue:30
 #: app/src/builder/actions/settings/TelegramTextSettings.vue:33
 msgid "Chat id"
 msgstr "ID de chat"
 
-#: admin/src/Api/Updater.php:289
+#: admin/src/Api/Updater.php:297
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:64
 msgid "Check for updates"
 msgstr "Verificar actualizaciones"
@@ -1279,7 +1310,7 @@ msgstr ""
 msgid "Choose one of the validated senders available in your account."
 msgstr "Elige uno de los remitentes validados disponibles en tu cuenta."
 
-#: admin/src/Admin/Settings/Registry.php:115
+#: admin/src/Admin/Settings/Registry.php:156
 msgid ""
 "Choose the engine used to generate AI content. Provider credentials and "
 "defaults are configured in the Applications tab."
@@ -1288,7 +1319,7 @@ msgstr ""
 "configuraciones predeterminadas del proveedor se configuran en la pestaña "
 "Aplicaciones."
 
-#: admin/src/Admin/Settings/Registry.php:58
+#: admin/src/Admin/Settings/Registry.php:60
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
@@ -1411,6 +1442,18 @@ msgstr "Cerrar cajón"
 msgid "Close panel"
 msgstr "Cerrar panel"
 
+#: admin/src/Admin/Settings/Registry.php:120
+msgid "Cloud API (official)"
+msgstr "API de Cloud (oficial)"
+
+#: admin/src/Admin/Settings/Registry.php:130
+msgid ""
+"Cloud API bearer token (sk_live_...). Overrides the token provisioned with "
+"the license."
+msgstr ""
+"Token de portador de API de Cloud (sk_live_...). Anula el token "
+"provisionado con la licencia."
+
 #: templates/otp-login/shared/otp-login-form.php:35
 msgid "Code digit %d"
 msgstr "Dígito del código %d"
@@ -1423,6 +1466,11 @@ msgstr "Dígito del código %s"
 #: app/src/pages/settings/SettingsPage.vue:449
 msgid "Code sent successfully."
 msgstr "Código enviado con éxito."
+
+#: app/src/builder/actions/definitions/loop.ts:99
+#: app/src/builder/actions/settings/LoopSettings.vue:59
+msgid "Collection"
+msgstr "Colección"
 
 #: admin/src/Validations/Country_Codes.php:51
 msgid "Colombia"
@@ -1449,13 +1497,15 @@ msgstr "E-book completo (Producto de muestra)"
 msgid "Completed"
 msgstr "Completado"
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:44
+#: .history/admin/src/Builder/Actions_20260804124933.php:44
 #: admin/src/Admin/Builder/Registry.php:521
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:106
 #: app/src/builder/actions/settings/ConditionSettings.vue:174
 #: app/src/builder/actions/utils/actionDescription.ts:214
-#: app/src/stores/useWorkflowBuilderStore.ts:1615
+#: app/src/stores/useWorkflowBuilderStore.ts:1616
 msgid "Condition"
 msgstr "Condición"
 
@@ -1482,8 +1532,8 @@ msgstr "Componente de configuración no disponible para esta acción."
 #: .history/admin/src/Integrations/Resend_20260703155627.php:117
 #: .history/admin/src/Integrations/Resend_20260703155635.php:115
 #: .history/admin/src/Integrations/Resend_20260703155807.php:115
-#: admin/src/Core/Init.php:495
-#: admin/src/Core/Init.php:499
+#: admin/src/Core/Init.php:516
+#: admin/src/Core/Init.php:520
 #: admin/src/Integrations/Anthropic.php:52
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
@@ -1604,7 +1654,7 @@ msgid "Costa Rica"
 msgstr "Costa Rica"
 
 #: admin/src/Rest/License_Activate.php:71
-#: app/src/pages/license/LicensePage.vue:245
+#: app/src/pages/license/LicensePage.vue:253
 msgid "Could not activate the license."
 msgstr "No se pudo activar la licencia."
 
@@ -1612,7 +1662,7 @@ msgstr "No se pudo activar la licencia."
 msgid "Could not cancel the scheduled item."
 msgstr "No se pudo cancelar el elemento programado."
 
-#: admin/src/Api/Updater.php:250
+#: admin/src/Api/Updater.php:258
 msgid "Could not check for updates for the <strong>Joinotify</strong> plugin"
 msgstr ""
 "No se pudo verificar actualizaciones para el plugin "
@@ -1646,7 +1696,7 @@ msgid "Could not clear the queue."
 msgstr "No se pudo limpiar la cola."
 
 #: admin/src/Admin/Builder/Registry.php:93
-#: admin/src/Admin/Settings/Registry.php:595
+#: admin/src/Admin/Settings/Registry.php:636
 msgid "Could not complete the operation."
 msgstr "No se pudo completar la operación."
 
@@ -1655,7 +1705,7 @@ msgid "Could not create the workflow."
 msgstr "No se pudo crear el flujo de trabajo."
 
 #: admin/src/Rest/License_Deactivate.php:49
-#: app/src/pages/license/LicensePage.vue:287
+#: app/src/pages/license/LicensePage.vue:295
 msgid "Could not deactivate the license."
 msgstr "No se pudo desactivar la licencia."
 
@@ -1688,7 +1738,7 @@ msgstr "No se pudo encontrar la variable para eliminar."
 msgid "Could not import the settings."
 msgstr "No se pudieron importar los ajustes."
 
-#: app/src/stores/useWorkflowBuilderStore.ts:870
+#: app/src/stores/useWorkflowBuilderStore.ts:871
 msgid "Could not load actions."
 msgstr "No se pudieron cargar las acciones."
 
@@ -1702,7 +1752,7 @@ msgstr "No se pudo cargar el historial de mensajes."
 msgid "Could not load the processing queue."
 msgstr "No se pudo cargar la cola de procesamiento."
 
-#: app/src/stores/useWorkflowBuilderStore.ts:976
+#: app/src/stores/useWorkflowBuilderStore.ts:977
 msgid "Could not load workflow."
 msgstr "No se pudo cargar el flujo de trabajo."
 
@@ -1715,6 +1765,14 @@ msgstr "No se pudieron cargar los flujos de trabajo."
 #: app/src/pages/settings/SettingsPage.vue:629
 msgid "Could not open the logs."
 msgstr "No se pudieron abrir los registros."
+
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:334
+msgid "Could not read the license details."
+msgstr "No se pudieron leer los detalles de la licencia."
+
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:290
+msgid "Could not read the response from the license server."
+msgstr "No se pudo leer la respuesta del servidor de licencias."
 
 #: app/src/pages/builder/BuilderPage.vue:939
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:63
@@ -1779,12 +1837,12 @@ msgstr "No se pudo guardar el flujo de trabajo."
 msgid "Could not save."
 msgstr "No se pudo guardar."
 
-#: admin/src/Rest/Builder_Test.php:111
+#: admin/src/Rest/Builder_Test.php:116
 msgid "Could not send one or more test messages."
 msgstr "No se pudo enviar uno o más mensajes de prueba."
 
-#: admin/src/Rest/Builder_Test.php:96
-#: admin/src/Rest/Phone_Test_Message.php:60
+#: admin/src/Rest/Builder_Test.php:99
+#: admin/src/Rest/Phone_Test_Message.php:63
 msgid "Could not send the test message."
 msgstr "No se pudo enviar el mensaje de prueba."
 
@@ -1792,11 +1850,11 @@ msgstr "No se pudo enviar el mensaje de prueba."
 msgid "Could not send the verification code."
 msgstr "No se pudo enviar el código de verificación."
 
-#: admin/src/Rest/License_Sync.php:63
+#: admin/src/Rest/License_Sync.php:70
 msgid "Could not sync the license information."
 msgstr "No se pudo sincronizar la información de la licencia."
 
-#: app/src/pages/license/LicensePage.vue:266
+#: app/src/pages/license/LicensePage.vue:274
 msgid "Could not sync the license."
 msgstr "No se pudo sincronizar la licencia."
 
@@ -1867,7 +1925,7 @@ msgstr "Crear un nuevo flujo"
 msgid "Create a new workflow to start automating your processes."
 msgstr "Crea un nuevo flujo de trabajo para comenzar a automatizar tus procesos."
 
-#: admin/src/Admin/Settings/Registry.php:160
+#: admin/src/Admin/Settings/Registry.php:201
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
@@ -1980,14 +2038,21 @@ msgstr "CUPOM10, FRETEGRATIS"
 msgid "Curaçao"
 msgstr "Curazao"
 
-#: admin/src/Api/License.php:377
-#: admin/src/Api/License.php:430
-msgid "cURL Error 35: SSL/TLS communication issue."
-msgstr "Error cURL 35: Problema de comunicación SSL/TLS."
+#: app/src/components/settings/NodeSettingsRenderer.vue:28
+msgid "Current item value (file/product name or list entry)."
+msgstr "Valor del ítem actual (nombre del archivo/producto o entrada de la lista)."
 
-#: admin/src/Api/License.php:432
-msgid "cURL Error: %s"
-msgstr "Error cURL: %s"
+#: app/src/components/settings/NodeSettingsRenderer.vue:30
+msgid "Current iteration index, starting at 0."
+msgstr "Índice de iteración actual, comenzando en 0."
+
+#: app/src/components/settings/NodeSettingsRenderer.vue:29
+msgid "Current iteration number, starting at 1."
+msgstr "Número de iteración actual, comenzando en 1."
+
+#: app/src/builder/components/base/AttachmentsField.vue:60
+msgid "Current loop item file"
+msgstr "Archivo del ítem actual del bucle"
 
 #: app/src/pages/settings/components/modals/IntegrationModalBlock.vue:59
 msgid "Custom block not available."
@@ -1997,7 +2062,7 @@ msgstr "Bloque personalizado no disponible."
 msgid "Custom color"
 msgstr "Color personalizado"
 
-#: admin/src/Admin/Settings/Registry.php:165
+#: admin/src/Admin/Settings/Registry.php:206
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:80
 msgid "Custom variables"
 msgstr "Variables personalizadas"
@@ -2027,7 +2092,7 @@ msgstr "Diariamente"
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr "Daisy Avenue, 450 - Curitiba/PR - Brasil (C.P.: 80000-100)"
 
-#: admin/src/Admin/Settings/Registry.php:247
+#: admin/src/Admin/Settings/Registry.php:288
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr "Zona de peligro"
@@ -2047,7 +2112,7 @@ msgstr "Zona de peligro"
 msgid "Date"
 msgstr "Fecha"
 
-#: admin/src/Core/Helpers.php:39
+#: admin/src/Core/Helpers.php:40
 msgid "day"
 msgstr "día"
 
@@ -2055,7 +2120,7 @@ msgstr "día"
 msgid "day(s)"
 msgstr "día(s)"
 
-#: admin/src/Core/Helpers.php:39
+#: admin/src/Core/Helpers.php:40
 msgid "days"
 msgstr "días"
 
@@ -2067,8 +2132,8 @@ msgstr "días"
 msgid "Days"
 msgstr "Días"
 
-#: app/src/pages/license/LicensePage.vue:295
-#: app/src/pages/license/LicensePage.vue:455
+#: app/src/pages/license/LicensePage.vue:303
+#: app/src/pages/license/LicensePage.vue:482
 msgid "Deactivate license"
 msgstr "Desactivar licencia"
 
@@ -2076,7 +2141,7 @@ msgstr "Desactivar licencia"
 msgid "Debug"
 msgstr "Depurar"
 
-#: admin/src/Admin/Settings/Registry.php:222
+#: admin/src/Admin/Settings/Registry.php:263
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:106
 msgid "Debug logs"
 msgstr "Registros de depuración"
@@ -2085,11 +2150,11 @@ msgstr "Registros de depuración"
 msgid "Debug logs cleared successfully!"
 msgstr "¡Registros de depuración borrados con éxito!"
 
-#: admin/src/Admin/Settings/Registry.php:227
+#: admin/src/Admin/Settings/Registry.php:268
 msgid "Debug logs retention"
 msgstr "Retención de logs de depuración"
 
-#: admin/src/Admin/Settings/Registry.php:184
+#: admin/src/Admin/Settings/Registry.php:225
 msgid "Debug mode"
 msgstr "Modo de depuración"
 
@@ -2102,7 +2167,7 @@ msgstr "Predeterminado"
 msgid "Default chat id"
 msgstr "ID de chat predeterminado"
 
-#: admin/src/Admin/Settings/Registry.php:57
+#: admin/src/Admin/Settings/Registry.php:59
 msgid "Default country code"
 msgstr "Código predeterminado del país"
 
@@ -2111,16 +2176,24 @@ msgstr "Código predeterminado del país"
 msgid "Default model"
 msgstr "Modelo predeterminado"
 
+#: admin/src/Admin/Settings/Registry.php:138
+msgid ""
+"Default phone_number_id used as the message origin. Leave blank to use the "
+"oldest active number."
+msgstr ""
+"ID de número de teléfono predeterminado utilizado como origen del mensaje. "
+"Deja en blanco para usar el número activo más antiguo."
+
 #: admin/src/Integrations/OpenAI.php:95
 msgid "Default temperature"
 msgstr "Temperatura predeterminada"
 
 #: app/src/components/builder/BuilderCanvasView.vue:86
-#: app/src/components/flow/FlowCanvas.vue:187
+#: app/src/components/flow/FlowCanvas.vue:189
 msgid "Define the trigger that starts the workflow"
 msgstr "Define el desencadenante que inicia el flujo de trabajo"
 
-#: admin/src/Admin/Settings/Registry.php:53
+#: admin/src/Admin/Settings/Registry.php:55
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2158,6 +2231,8 @@ msgstr ""
 "Puedes combinar marcadores de posición como {{ address_1 }}, {{ number }}, "
 "{{ city }}, {{ state }}, y {{ postcode }}."
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:32
+#: .history/admin/src/Builder/Actions_20260804124933.php:32
 #: admin/src/Admin/Builder/Registry.php:509
 #: admin/src/Builder/Actions.php:32
 #: app/src/builder/actions/definitions/timeDelay.ts:31
@@ -2181,7 +2256,7 @@ msgstr "Tipo de retraso"
 msgid "Delay until a fixed date"
 msgstr "Retrasar hasta una fecha fija"
 
-#: app/src/components/flow/FlowNode.vue:319
+#: app/src/components/flow/FlowNode.vue:320
 #: app/src/pages/history/HistoryPage.vue:355
 #: app/src/pages/workflows/WorkflowsPage.vue:84
 msgid "Delete"
@@ -2210,6 +2285,11 @@ msgstr "Eliminar seleccionados"
 #: app/src/pages/history/HistoryPage.vue:144
 msgid "Delete selected records"
 msgstr "Eliminar registros seleccionados"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:80
+#: app/src/builder/actions/settings/LoopSettings.vue:83
+msgid "Delimiter"
+msgstr "Delimitador"
 
 #: admin/src/Integrations/Otp_Login.php:108
 msgid "Delivery channel"
@@ -2280,7 +2360,7 @@ msgstr "Descripción"
 msgid "Description (optional)"
 msgstr "Descripción (opcional)"
 
-#: admin/src/Admin/Settings/Registry.php:199
+#: admin/src/Admin/Settings/Registry.php:240
 msgid "Developer integration"
 msgstr "Integración del desarrollador"
 
@@ -2292,9 +2372,17 @@ msgstr "Modo desarrollador"
 msgid "Diagnostics"
 msgstr "Diagnósticos"
 
+#: app/src/components/settings/NodeSettingsRenderer.vue:33
+msgid "Digital file download link (order files loop)."
+msgstr "Enlace de descarga del archivo digital (bucle de archivos del pedido)."
+
 #: admin/src/Integrations/Woocommerce.php:244
 msgid "Digital file downloaded"
 msgstr "Archivo digital descargado"
+
+#: app/src/components/settings/NodeSettingsRenderer.vue:32
+msgid "Digital file name (order files loop)."
+msgstr "Nombre del archivo digital (bucle de archivos del pedido)."
 
 #: admin/src/Integrations/Woocommerce.php:233
 #: admin/src/Integrations/Woocommerce.php:250
@@ -2305,7 +2393,7 @@ msgstr "Producto digital"
 msgid "Digital product access granted"
 msgstr "Acceso al producto digital concedido"
 
-#: admin/src/Admin/Settings/Registry.php:481
+#: admin/src/Admin/Settings/Registry.php:522
 msgid "Disabled"
 msgstr "Desactivado"
 
@@ -2352,7 +2440,7 @@ msgstr "Enviar ahora"
 msgid "Display mode"
 msgstr "Modo de visualización"
 
-#: admin/src/Admin/Settings/Registry.php:195
+#: admin/src/Admin/Settings/Registry.php:236
 msgid "Displays notifications when a new version is available."
 msgstr "Muestra notificaciones cuando hay una nueva versión disponible."
 
@@ -2365,7 +2453,7 @@ msgstr "Yibuti"
 msgid "Document"
 msgstr "Documento"
 
-#: admin/src/Core/Init.php:521
+#: admin/src/Core/Init.php:542
 msgid "Documentation"
 msgstr "Documentación"
 
@@ -2412,7 +2500,7 @@ msgstr ""
 msgid "Due"
 msgstr "Vencido"
 
-#: app/src/components/flow/FlowNode.vue:310
+#: app/src/components/flow/FlowNode.vue:311
 msgid "Duplicate"
 msgstr "Duplicar"
 
@@ -2429,6 +2517,10 @@ msgid "E-mail address or a placeholder that resolves to one."
 msgstr ""
 "Dirección de correo electrónico o un marcador de posición que se resuelve "
 "en una."
+
+#: app/src/builder/actions/settings/LoopSettings.vue:84
+msgid "e.g. , (comma)"
+msgstr "p. ej. , (coma)"
 
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:82
 msgid "e.g. greeting"
@@ -2522,15 +2614,11 @@ msgstr "Emojis"
 msgid "Empty canvas"
 msgstr "Lienzo vacío"
 
-#: admin/src/Api/License.php:340
-msgid "Empty response."
-msgstr "Respuesta vacía."
-
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:78
 msgid "Enable debug mode"
 msgstr "Activar modo de depuración"
 
-#: admin/src/Admin/Settings/Registry.php:153
+#: admin/src/Admin/Settings/Registry.php:194
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -2544,7 +2632,7 @@ msgstr ""
 "Habilita JavaScript para iniciar sesión con un código de verificación o "
 "correo electrónico y contraseña."
 
-#: admin/src/Admin/Settings/Registry.php:83
+#: admin/src/Admin/Settings/Registry.php:80
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:35
 msgid "Enable Proxy API"
 msgstr "Activar Proxy API"
@@ -2553,11 +2641,11 @@ msgstr "Activar Proxy API"
 msgid "Enable the integration to access its settings."
 msgstr "Habilita la integración para acceder a su configuración."
 
-#: admin/src/Admin/Settings/Registry.php:185
+#: admin/src/Admin/Settings/Registry.php:226
 msgid "Enable to log additional error and process details."
 msgstr "Habilita para registrar detalles adicionales de errores y procesos."
 
-#: admin/src/Admin/Settings/Registry.php:481
+#: admin/src/Admin/Settings/Registry.php:522
 msgid "Enabled"
 msgstr "Encendido"
 
@@ -2573,7 +2661,7 @@ msgstr "Fin del flujo de trabajo"
 msgid "End the workflow at this point."
 msgstr "Finaliza el flujo de trabajo en este punto."
 
-#: app/src/pages/license/LicensePage.vue:226
+#: app/src/pages/license/LicensePage.vue:234
 msgid "Enter a license key before activating."
 msgstr "Introduce una clave de licencia antes de activar."
 
@@ -2638,7 +2726,7 @@ msgstr ""
 "Proporciona el ID del campo que recoge el teléfono del destinatario del "
 "formulario."
 
-#: admin/src/Admin/Settings/Registry.php:637
+#: admin/src/Admin/Settings/Registry.php:678
 msgid "Enter the license code to unlock premium features."
 msgstr "Introduce el código de licencia para desbloquear funciones premium."
 
@@ -2658,8 +2746,8 @@ msgstr ""
 msgid "Enter your email or username"
 msgstr "Introduce tu correo electrónico o nombre de usuario"
 
-#: app/src/pages/license/LicensePage.vue:58
-#: app/src/pages/license/LicensePage.vue:210
+#: app/src/pages/license/LicensePage.vue:66
+#: app/src/pages/license/LicensePage.vue:218
 msgid "Enter your license key to unlock premium features."
 msgstr "Introduce tu clave de licencia para desbloquear funciones premium."
 
@@ -2725,6 +2813,10 @@ msgstr ""
 "Todos los elementos programados pendientes serán eliminados y nunca se "
 "ejecutarán. Esto no se puede deshacer."
 
+#: admin/src/Admin/Settings/Registry.php:121
+msgid "Evolution (legacy)"
+msgstr "Evolución (heredado)"
+
 #: app/src/builder/components/base/BaseTextFieldVariables.vue:82
 #: app/src/components/base/BaseRichTextArea.vue:112
 #: app/src/components/base/RichTextPreview.vue:76
@@ -2764,7 +2856,7 @@ msgstr "Expiración"
 msgid "Expiration mode"
 msgstr "Modo de expiración"
 
-#: admin/src/Api/License.php:935
+#: admin/src/Api/License.php:707
 msgid "Expired license"
 msgstr "Licencia expirada"
 
@@ -2783,11 +2875,11 @@ msgstr "Expira en %s - %s"
 msgid "Expires in %s %s"
 msgstr "Expira en %s %s"
 
-#: app/src/pages/license/LicensePage.vue:71
+#: app/src/pages/license/LicensePage.vue:79
 msgid "Expires on"
 msgstr "Expira el"
 
-#: app/src/pages/license/LicensePage.vue:213
+#: app/src/pages/license/LicensePage.vue:221
 msgid "Expires on: Not available"
 msgstr "Expira el: No disponible"
 
@@ -2817,7 +2909,7 @@ msgstr "Fallido"
 msgid "Failed to install or update the plugin."
 msgstr "No se pudo instalar o actualizar el plugin."
 
-#: admin/src/Api/Controller.php:302
+#: admin/src/Api/Controller.php:304
 #: admin/src/Rest/Send_Media_Message.php:77
 msgid "Failed to send media message."
 msgstr "Error al enviar mensaje de medio."
@@ -2830,7 +2922,7 @@ msgstr "Error al enviar el mensaje."
 msgid "Failed to send OTP."
 msgstr "Error al enviar el OTP."
 
-#: admin/src/Api/Controller.php:270
+#: admin/src/Api/Controller.php:272
 #: admin/src/Rest/Send_Text_Message.php:71
 msgid "Failed to send text message."
 msgstr "Error al enviar mensaje de texto."
@@ -2839,7 +2931,7 @@ msgstr "Error al enviar mensaje de texto."
 msgid "Falkland Islands (Malvinas)"
 msgstr "Islas Malvinas (Falkland)"
 
-#: app/src/components/flow/FlowNode.vue:402
+#: app/src/components/flow/FlowNode.vue:403
 msgid "False"
 msgstr "Falso"
 
@@ -2881,7 +2973,7 @@ msgstr "Campo con ID <span class=\"builder-placeholder\">%s</span> no está vac�
 msgid "Fiji"
 msgstr "Fiyi"
 
-#: app/src/builder/components/base/AttachmentsField.vue:173
+#: app/src/builder/components/base/AttachmentsField.vue:200
 msgid "File"
 msgstr "Archivo"
 
@@ -2890,8 +2982,8 @@ msgstr "Archivo"
 msgid "File is too large. The maximum size is 5 MB."
 msgstr "El archivo es demasiado grande. El tamaño máximo es de 5 MB."
 
-#: app/src/builder/components/base/AttachmentsField.vue:39
-#: app/src/builder/components/base/AttachmentsField.vue:195
+#: app/src/builder/components/base/AttachmentsField.vue:55
+#: app/src/builder/components/base/AttachmentsField.vue:222
 msgid "File URL"
 msgstr "URL del archivo"
 
@@ -2931,12 +3023,12 @@ msgstr "Finlandia"
 msgid "First"
 msgstr "Primero"
 
-#: app/src/components/flow/FlowCanvas.vue:793
+#: app/src/components/flow/FlowCanvas.vue:801
 msgid "Fit"
 msgstr "Ajustar"
 
-#: app/src/components/flow/FlowCanvas.vue:789
-#: app/src/components/flow/FlowCanvas.vue:790
+#: app/src/components/flow/FlowCanvas.vue:797
+#: app/src/components/flow/FlowCanvas.vue:798
 msgid "Fit view"
 msgstr "Vista ajustada"
 
@@ -2973,6 +3065,18 @@ msgstr "Nombre del flujo"
 #: admin/src/Integrations/Woocommerce.php:462
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr "Flower Street, 123 - Curitiba/PR - Brasil (C.P.: 80000-000)"
+
+#: app/src/builder/actions/definitions/loop.ts:72
+msgid "For each digital file in the order"
+msgstr "Por cada archivo digital en el pedido"
+
+#: app/src/builder/actions/definitions/loop.ts:69
+msgid "For each line of the list"
+msgstr "Por cada línea de la lista"
+
+#: app/src/builder/actions/definitions/loop.ts:65
+msgid "For each purchased item in the order"
+msgstr "Por cada artículo comprado en el pedido"
 
 #: templates/otp-login/shared/otp-login-form.php:50
 msgid "Forgot your password?"
@@ -3054,12 +3158,14 @@ msgstr "Gabón"
 msgid "Gambia"
 msgstr "Gambia"
 
-#: admin/src/Admin/Settings/Registry.php:46
-#: admin/src/Admin/Settings/Registry.php:269
-#: admin/src/Builder/Actions.php:121
+#: .history/admin/src/Builder/Actions_20260803205441.php:133
+#: .history/admin/src/Builder/Actions_20260804124933.php:133
+#: admin/src/Admin/Settings/Registry.php:48
+#: admin/src/Admin/Settings/Registry.php:310
+#: admin/src/Builder/Actions.php:133
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
-#: app/src/stores/useWorkflowBuilderStore.ts:154
-#: app/src/stores/useWorkflowBuilderStore.ts:249
+#: app/src/stores/useWorkflowBuilderStore.ts:155
+#: app/src/stores/useWorkflowBuilderStore.ts:250
 msgid "General"
 msgstr "General"
 
@@ -3197,7 +3303,7 @@ msgstr "Hola {{ field_id=[nome] }}, ¡mira este archivo!"
 msgid "Hello, this is a test message."
 msgstr "Hola, este es un mensaje de prueba."
 
-#: app/src/pages/license/LicensePage.vue:344
+#: app/src/pages/license/LicensePage.vue:352
 #: app/src/pages/settings/SettingsPage.vue:753
 msgid "Help Center"
 msgstr "Centro de ayuda"
@@ -3210,7 +3316,7 @@ msgstr "Ocultar contraseña"
 msgid "History"
 msgstr "Historial"
 
-#: admin/src/Admin/Settings/Registry.php:209
+#: admin/src/Admin/Settings/Registry.php:250
 msgid "History retention"
 msgstr "Retención del historial"
 
@@ -3226,7 +3332,7 @@ msgstr "Hong Kong"
 msgid "Hook"
 msgstr "Gancho"
 
-#: admin/src/Core/Helpers.php:38
+#: admin/src/Core/Helpers.php:39
 msgid "hour"
 msgstr "hora"
 
@@ -3234,7 +3340,7 @@ msgstr "hora"
 msgid "hour(s)"
 msgstr "hora(s)"
 
-#: admin/src/Core/Helpers.php:38
+#: admin/src/Core/Helpers.php:39
 msgid "hours"
 msgstr "horas"
 
@@ -3265,7 +3371,7 @@ msgstr "Hungría"
 msgid "Iceland"
 msgstr "Islandia"
 
-#: app/src/pages/license/LicensePage.vue:487
+#: app/src/pages/license/LicensePage.vue:514
 msgid ""
 "If the license does not update immediately, click Sync to fetch the latest "
 "status from the server."
@@ -3355,7 +3461,7 @@ msgstr "Flujo de trabajo inactivo"
 msgid "Include the country code so the number is normalized correctly."
 msgstr "Incluye el código de país para que el número se normalice correctamente."
 
-#: admin/src/Core/Init.php:173
+#: admin/src/Core/Init.php:180
 msgid ""
 "Increase customer satisfaction by automating WhatsApp messaging with "
 "Joinotify."
@@ -3393,6 +3499,16 @@ msgstr "Insertar una variable de texto"
 msgid "Insert variable"
 msgstr "Insertar variable"
 
+#: app/src/builder/actions/settings/LoopSettings.vue:42
+msgid ""
+"Inside the loop body you can use {{ loop_value }}, {{ loop_number }}, {{ "
+"loop_count }} and, for digital files, {{ loop_file_name }} and {{ "
+"loop_download_url }}."
+msgstr ""
+"Dentro del cuerpo del bucle puedes usar {{ loop_value }}, {{ loop_number "
+"}}, {{ loop_count }} y, para archivos digitales, {{ loop_file_name }} y {{ "
+"loop_download_url }}."
+
 #: admin/src/Integrations/Integrations_Base.php:993
 msgid "Install plugin"
 msgstr "Instalar plugin"
@@ -3410,7 +3526,7 @@ msgstr "Integración no activa"
 msgid "Integration settings"
 msgstr "Configuraciones de integración"
 
-#: admin/src/Admin/Settings/Registry.php:152
+#: admin/src/Admin/Settings/Registry.php:193
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
 msgstr "Integraciones"
@@ -3429,9 +3545,9 @@ msgstr "Resumen interno"
 msgid "internal use"
 msgstr "uso interno"
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:673
 #: app/src/pages/license/LicensePage.vue:48
-#: app/src/pages/license/LicensePage.vue:207
+#: app/src/pages/license/LicensePage.vue:215
 msgid "Invalid"
 msgstr "Inválida"
 
@@ -3443,7 +3559,7 @@ msgstr "Solicitud de IA no válida."
 msgid "Invalid country code"
 msgstr "Código de país no válido"
 
-#: admin/src/Api/License.php:755
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:327
 msgid "Invalid data."
 msgstr "Datos inválidos."
 
@@ -3453,7 +3569,7 @@ msgstr "Tipo de archivo no válido. Selecciona un archivo .json."
 
 #: app/src/pages/builder/BuilderPage.vue:954
 #: app/src/pages/settings/SettingsPage.vue:391
-#: app/src/parsers/workflowParser.ts:505
+#: app/src/parsers/workflowParser.ts:512
 msgid "Invalid file."
 msgstr "Archivo no válido."
 
@@ -3462,7 +3578,7 @@ msgstr "Archivo no válido."
 msgid "Invalid file. Could not read the configuration."
 msgstr "Archivo no válido. No se pudo leer la configuración."
 
-#: app/src/parsers/workflowParser.ts:551
+#: app/src/parsers/workflowParser.ts:558
 msgid "Invalid JSON."
 msgstr "JSON no válido."
 
@@ -3474,7 +3590,7 @@ msgstr "Número no válido"
 msgid "Invalid or expired OTP code."
 msgstr "Código OTP no válido o expirado."
 
-#: admin/src/Api/Controller.php:163
+#: admin/src/Api/Controller.php:165
 #: admin/src/Rest/Proxy_Message_Route.php:58
 msgid "Invalid or missing API key."
 msgstr "Clave de API inválida o ausente."
@@ -3512,7 +3628,7 @@ msgstr "Irlanda"
 msgid "Irreversible"
 msgstr "Irreversible"
 
-#: admin/src/Admin/Settings/Registry.php:248
+#: admin/src/Admin/Settings/Registry.php:289
 msgid "Irreversible actions and configuration cleanup."
 msgstr "Acciones irreversibles y limpieza de configuración."
 
@@ -3540,6 +3656,8 @@ msgstr "No es igual a"
 msgid "Israel"
 msgstr "Israel"
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:45
+#: .history/admin/src/Builder/Actions_20260804124933.php:45
 #: admin/src/Builder/Actions.php:45
 msgid "It allows you to define a condition for an action to be executed."
 msgstr "Te permite definir una condición para que se ejecute una acción."
@@ -3556,6 +3674,26 @@ msgstr "Italia"
 #: app/src/components/workflows/PaginationControls.vue:28
 msgid "items"
 msgstr "elementos"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:63
+msgid "Iterate over"
+msgstr "Iterar sobre"
+
+#: app/src/builder/actions/definitions/loop.ts:78
+msgid "Iterate over a collection and run the nested actions once per item."
+msgstr ""
+"Iterar sobre una colección y ejecutar las acciones anidadas una vez por "
+"elemento."
+
+#: .history/admin/src/Builder/Actions_20260803205441.php:57
+#: .history/admin/src/Builder/Actions_20260804124933.php:57
+#: admin/src/Builder/Actions.php:57
+msgid ""
+"Iterates over a collection (order files, order items, or a list) and runs "
+"the actions inside it once per item."
+msgstr ""
+"Itera sobre una colección (archivos de pedido, artículos de pedido o una "
+"lista) y ejecuta las acciones dentro de ella una vez por elemento."
 
 #: admin/src/Validations/Country_Codes.php:81
 msgid "Ivory Coast"
@@ -3577,14 +3715,14 @@ msgstr "joaodasilva@email.com"
 
 #: admin/src/Admin/Menu.php:40
 #: admin/src/Admin/Menu.php:41
-#: admin/src/Core/Init.php:172
+#: admin/src/Core/Init.php:179
 #: admin/src/Integrations/Elementor_Forms.php:50
 #: admin/src/Integrations/Elementor_Forms.php:66
 #: app/src/components/brand/BrandMark.vue:15
 #: app/src/components/brand/BrandMark.vue:17
 #: app/src/components/layout/PageHeader.vue:32
 #: app/src/pages/builder/BuilderPage.vue:734
-#: app/src/pages/license/LicensePage.vue:136
+#: app/src/pages/license/LicensePage.vue:144
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
 #: app/src/pages/settings/SettingsPage.vue:223
 msgid "Joinotify"
@@ -3598,7 +3736,7 @@ msgstr "Joinotify está actualizado."
 msgid "Joinotify messaging helpers are unavailable."
 msgstr "Los ayudantes de mensajería de Joinotify no están disponibles."
 
-#: admin/src/Admin/Settings/Registry.php:487
+#: admin/src/Admin/Settings/Registry.php:528
 msgid "Joinotify version"
 msgstr "Versión de Joinotify"
 
@@ -3606,7 +3744,7 @@ msgstr "Versión de Joinotify"
 msgid "Jordan"
 msgstr "Jordania"
 
-#: admin/src/Api/License.php:304
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:296
 msgid "JSON Error: %s"
 msgstr "Error JSON: %s"
 
@@ -3614,16 +3752,16 @@ msgstr "Error JSON: %s"
 msgid "Kazakhstan"
 msgstr "Kazajistán"
 
-#: admin/src/Admin/Settings/Registry.php:212
-#: admin/src/Admin/Settings/Registry.php:230
+#: admin/src/Admin/Settings/Registry.php:253
+#: admin/src/Admin/Settings/Registry.php:271
 msgid "Keep forever"
 msgstr "Mantener para siempre"
 
-#: admin/src/Core/Workflow_Processor.php:1573
+#: admin/src/Core/Workflow_Processor.php:1927
 msgid "Keep the message concise, around two to four sentences."
 msgstr "Mantén el mensaje conciso, alrededor de dos a cuatro oraciones."
 
-#: admin/src/Core/Workflow_Processor.php:1572
+#: admin/src/Core/Workflow_Processor.php:1926
 msgid "Keep the message very short, one or two sentences."
 msgstr "Mantén el mensaje muy corto, una o dos oraciones."
 
@@ -3631,7 +3769,7 @@ msgstr "Mantén el mensaje muy corto, una o dos oraciones."
 msgid "Kenya"
 msgstr "Kenia"
 
-#: admin/src/Admin/Settings/Registry.php:105
+#: admin/src/Admin/Settings/Registry.php:102
 msgid "Key used to authenticate Proxy API calls."
 msgstr "Clave utilizada para autenticar llamadas a la API Proxy."
 
@@ -3651,7 +3789,7 @@ msgstr "Kirguistán"
 msgid "Label (optional)"
 msgstr "Etiqueta (opcional)"
 
-#: admin/src/Admin/Settings/Registry.php:120
+#: admin/src/Admin/Settings/Registry.php:161
 msgid ""
 "Language model engine used to generate content. New providers can be added "
 "by extensions."
@@ -3730,7 +3868,7 @@ msgid "Liberia"
 msgstr "Liberia"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:124
-#: app/src/builder/components/base/AttachmentsField.vue:188
+#: app/src/builder/components/base/AttachmentsField.vue:215
 msgid "Library"
 msgstr "Biblioteca"
 
@@ -3741,29 +3879,30 @@ msgstr "Libia"
 #: admin/src/Admin/Menu.php:99
 #: admin/src/Admin/Menu.php:100
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/license/LicensePage.vue:226
-#: app/src/pages/license/LicensePage.vue:239
-#: app/src/pages/license/LicensePage.vue:242
-#: app/src/pages/license/LicensePage.vue:245
-#: app/src/pages/license/LicensePage.vue:266
-#: app/src/pages/license/LicensePage.vue:285
-#: app/src/pages/license/LicensePage.vue:287
-#: app/src/pages/license/LicensePage.vue:340
-#: app/src/pages/license/LicensePage.vue:354
+#: app/src/pages/license/LicensePage.vue:234
+#: app/src/pages/license/LicensePage.vue:247
+#: app/src/pages/license/LicensePage.vue:250
+#: app/src/pages/license/LicensePage.vue:253
+#: app/src/pages/license/LicensePage.vue:274
+#: app/src/pages/license/LicensePage.vue:293
+#: app/src/pages/license/LicensePage.vue:295
+#: app/src/pages/license/LicensePage.vue:348
+#: app/src/pages/license/LicensePage.vue:381
 msgid "License"
 msgstr "Licencia"
 
 #: admin/src/Rest/License_Activate.php:64
-#: app/src/pages/license/LicensePage.vue:239
-#: app/src/pages/license/LicensePage.vue:242
+#: app/src/pages/license/LicensePage.vue:247
+#: app/src/pages/license/LicensePage.vue:250
 msgid "License activated successfully."
 msgstr "Licencia activada con éxito."
 
+#: admin/src/Licensing/Drivers/Mds_Driver.php:171
 #: admin/src/Rest/License_Deactivate.php:44
 msgid "License deactivated successfully."
 msgstr "Licencia desactivada con éxito."
 
-#: app/src/pages/license/LicensePage.vue:285
+#: app/src/pages/license/LicensePage.vue:293
 msgid "License deactivated."
 msgstr "Licencia desactivada."
 
@@ -3771,20 +3910,20 @@ msgstr "Licencia desactivada."
 msgid "License details"
 msgstr "Detalles de la licencia"
 
-#: admin/src/Admin/Settings/Registry.php:649
+#: admin/src/Admin/Settings/Registry.php:690
 msgid "License expires in: %s"
 msgstr "La licencia expira en: %s"
 
-#: admin/src/Admin/Settings/Registry.php:650
+#: admin/src/Admin/Settings/Registry.php:691
 msgid "License expires in: Not available"
 msgstr "La licencia expira en: No disponible"
 
-#: app/src/pages/license/LicensePage.vue:435
+#: app/src/pages/license/LicensePage.vue:462
 msgid "License information"
 msgstr "Información de la licencia"
 
-#: admin/src/Rest/License_Sync.php:57
-#: app/src/pages/license/LicensePage.vue:262
+#: admin/src/Rest/License_Sync.php:64
+#: app/src/pages/license/LicensePage.vue:270
 msgid "License information updated successfully."
 msgstr "Información de la licencia actualizada con éxito."
 
@@ -3796,13 +3935,23 @@ msgstr "Clave de licencia"
 msgid "License key is required."
 msgstr "Se requiere clave de licencia."
 
-#: app/src/pages/license/LicensePage.vue:62
+#: app/src/pages/license/LicensePage.vue:70
 msgid "License status"
 msgstr "Estado de la licencia"
 
 #: admin/src/Validations/Country_Codes.php:157
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
+
+#: app/src/builder/actions/definitions/loop.ts:103
+#: app/src/builder/actions/settings/LoopSettings.vue:69
+#: app/src/builder/actions/settings/LoopSettings.vue:72
+msgid "List"
+msgstr "Lista"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:34
+msgid "List from a placeholder"
+msgstr "Lista desde un marcador de posición"
 
 #: admin/src/Validations/Country_Codes.php:138
 msgid "Lithuania"
@@ -3850,7 +3999,7 @@ msgstr "Cargando activador..."
 msgid "Loading…"
 msgstr "Cargando…"
 
-#: admin/src/Admin/Settings/Registry.php:52
+#: admin/src/Admin/Settings/Registry.php:54
 msgid "Location and phone numbers"
 msgstr "Ubicación y números de teléfono"
 
@@ -3895,6 +4044,19 @@ msgstr "Registros borrados con éxito."
 msgid "Long"
 msgstr "Largo"
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:56
+#: .history/admin/src/Builder/Actions_20260804124933.php:56
+#: admin/src/Builder/Actions.php:56
+#: app/src/builder/actions/definitions/loop.ts:43
+#: app/src/builder/actions/definitions/loop.ts:77
+msgid "Loop"
+msgstr "Bucle"
+
+#: app/src/builder/actions/definitions/loop.ts:89
+#: app/src/components/flow/FlowNode.vue:434
+msgid "Loop body"
+msgstr "Cuerpo del bucle"
+
 #: admin/src/Integrations/Flexify_Checkout.php:155
 msgid "Lost cart"
 msgstr "Carrito perdido"
@@ -3917,15 +4079,15 @@ msgstr "Macao"
 msgid "Madagascar"
 msgstr "Madagascar"
 
-#: admin/src/Admin/Settings/Registry.php:200
+#: admin/src/Admin/Settings/Registry.php:241
 msgid "Maintains support integrations and advanced contracts available."
 msgstr "Mantiene integraciones de soporte y contratos avanzados disponibles."
 
-#: admin/src/Admin/Settings/Registry.php:179
+#: admin/src/Admin/Settings/Registry.php:220
 msgid "Maintenance and preference"
 msgstr "Mantenimiento y preferencias"
 
-#: admin/src/Admin/Settings/Registry.php:174
+#: admin/src/Admin/Settings/Registry.php:215
 msgid "Maintenance, logs, updates, and environment details."
 msgstr "Mantenimiento, registros, actualizaciones y detalles del entorno."
 
@@ -3949,7 +4111,7 @@ msgstr "Malí"
 msgid "Malta"
 msgstr "Malta"
 
-#: admin/src/Admin/Settings/Registry.php:133
+#: admin/src/Admin/Settings/Registry.php:174
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr "Gestionar remitentes, validar nuevas conexiones y enviar mensajes de prueba."
 
@@ -3969,7 +4131,7 @@ msgstr ""
 "reemplaza en tiempo de ejecución con el valor meta de publicación "
 "correspondiente."
 
-#: admin/src/Admin/Settings/Registry.php:166
+#: admin/src/Admin/Settings/Registry.php:207
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
@@ -4000,6 +4162,11 @@ msgstr "Mauritania"
 msgid "Mauritius"
 msgstr "Mauricio"
 
+#: app/src/builder/actions/settings/LoopSettings.vue:90
+#: app/src/builder/actions/settings/LoopSettings.vue:93
+msgid "Maximum items"
+msgstr "Máximo de elementos"
+
 #: admin/src/Validations/Country_Codes.php:116
 msgid "Mayotte"
 msgstr "Mayotte"
@@ -4021,7 +4188,7 @@ msgstr "Subtítulo de medios"
 msgid "Media caption... Use {{ placeholders }}"
 msgstr "Subtítulo de medios... Usa {{ placeholders }}"
 
-#: app/src/builder/components/base/AttachmentsField.vue:38
+#: app/src/builder/components/base/AttachmentsField.vue:54
 msgid "Media library file"
 msgstr "Archivo de la biblioteca de medios"
 
@@ -4029,12 +4196,12 @@ msgstr "Archivo de la biblioteca de medios"
 msgid "Media message route"
 msgstr "Ruta del mensaje de medios"
 
-#: admin/src/Api/Controller.php:297
+#: admin/src/Api/Controller.php:299
 #: admin/src/Rest/Send_Media_Message.php:73
 msgid "Media message sent successfully."
 msgstr "Mensaje de medios enviado con éxito."
 
-#: admin/src/Admin/Settings/Registry.php:96
+#: admin/src/Admin/Settings/Registry.php:93
 msgid "Media route"
 msgstr "Ruta de medios"
 
@@ -4043,6 +4210,10 @@ msgstr "Ruta de medios"
 #: app/src/pages/history/components/HistoryDetailsModal.vue:29
 msgid "Media type"
 msgstr "Tipo de medio"
+
+#: admin/src/Api/Cloud_Client.php:649
+msgid "Media upload did not return an id."
+msgstr "La carga de medios no devolvió un id."
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:67
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:112
@@ -4085,7 +4256,7 @@ msgstr "Detalles del mensaje"
 
 #: admin/src/Admin/History/Registry.php:144
 #: admin/src/Admin/Menu.php:71
-#: admin/src/Admin/Settings/Registry.php:204
+#: admin/src/Admin/Settings/Registry.php:245
 #: app/src/pages/history/HistoryPage.vue:157
 msgid "Message history"
 msgstr "Historial de mensajes"
@@ -4101,6 +4272,10 @@ msgstr ""
 #: app/src/pages/settings/SettingsPage.vue:495
 msgid "Message sent."
 msgstr "Mensaje enviado."
+
+#: admin/src/Admin/Settings/Registry.php:116
+msgid "Message transport"
+msgstr "Transporte de mensajes"
 
 #: .history/admin/src/Integrations/Resend_20260703153400.php:85
 #: .history/admin/src/Integrations/Resend_20260703155627.php:87
@@ -4123,7 +4298,7 @@ msgstr "Clave del meta dato"
 msgid "Mexico"
 msgstr "México"
 
-#: admin/src/Core/Helpers.php:37
+#: admin/src/Core/Helpers.php:38
 msgid "minute"
 msgstr "minuto"
 
@@ -4131,7 +4306,7 @@ msgstr "minuto"
 msgid "minute(s)"
 msgstr "minuto(s)"
 
-#: admin/src/Core/Helpers.php:37
+#: admin/src/Core/Helpers.php:38
 msgid "minutes"
 msgstr "minutos"
 
@@ -4142,11 +4317,17 @@ msgstr "minutos"
 msgid "Minutes"
 msgstr "Minutos"
 
-#: app/src/parsers/workflowParser.ts:524
+#: admin/src/Api/Cloud_Client.php:616
+msgid "Missing Cloud API token or phone number id for media upload."
+msgstr ""
+"Falta el token de la API de Cloud o el id del número de teléfono para la "
+"carga de medios."
+
+#: app/src/parsers/workflowParser.ts:531
 msgid "Missing post field."
 msgstr "Campo de publicación faltante."
 
-#: app/src/parsers/workflowParser.ts:528
+#: app/src/parsers/workflowParser.ts:535
 msgid "Missing workflow_content field."
 msgstr "Campo workflow_content faltante."
 
@@ -4181,7 +4362,7 @@ msgstr "Mongolia"
 msgid "Montenegro"
 msgstr "Montenegro"
 
-#: admin/src/Core/Helpers.php:41
+#: admin/src/Core/Helpers.php:42
 msgid "month"
 msgstr "mes"
 
@@ -4189,7 +4370,7 @@ msgstr "mes"
 msgid "month(s)"
 msgstr "mes(es)"
 
-#: admin/src/Core/Helpers.php:41
+#: admin/src/Core/Helpers.php:42
 msgid "months"
 msgstr "meses"
 
@@ -4220,13 +4401,13 @@ msgstr "Mover a la papelera"
 msgid "Mozambique"
 msgstr "Mozambique"
 
-#: app/src/parsers/workflowParser.ts:90
-#: app/src/parsers/workflowParser.ts:569
-#: app/src/serializers/workflowSerializer.ts:166
-#: app/src/stores/useWorkflowBuilderStore.ts:795
-#: app/src/stores/useWorkflowBuilderStore.ts:995
-#: app/src/stores/useWorkflowBuilderStore.ts:1075
-#: app/src/stores/useWorkflowBuilderStore.ts:1102
+#: app/src/parsers/workflowParser.ts:89
+#: app/src/parsers/workflowParser.ts:576
+#: app/src/serializers/workflowSerializer.ts:169
+#: app/src/stores/useWorkflowBuilderStore.ts:796
+#: app/src/stores/useWorkflowBuilderStore.ts:996
+#: app/src/stores/useWorkflowBuilderStore.ts:1076
+#: app/src/stores/useWorkflowBuilderStore.ts:1103
 msgid "My automation"
 msgstr "Mi automatización"
 
@@ -4263,7 +4444,7 @@ msgstr "Nepal"
 msgid "Netherlands"
 msgstr "Países Bajos"
 
-#: admin/src/Api/License.php:926
+#: admin/src/Api/License.php:703
 #: admin/src/Integrations/Woocommerce.php:614
 #: admin/src/Integrations/Woocommerce.php:859
 msgid "Never expires"
@@ -4335,10 +4516,10 @@ msgstr "Nigeria"
 msgid "Niue"
 msgstr "Niue"
 
-#: admin/src/Admin/Settings/Registry.php:476
-#: admin/src/Admin/Settings/Registry.php:500
-#: admin/src/Admin/Settings/Registry.php:505
-#: admin/src/Admin/Settings/Registry.php:510
+#: admin/src/Admin/Settings/Registry.php:517
+#: admin/src/Admin/Settings/Registry.php:541
+#: admin/src/Admin/Settings/Registry.php:546
+#: admin/src/Admin/Settings/Registry.php:551
 #: admin/src/Builder/Messages.php:319
 #: admin/src/Builder/Messages.php:320
 #: admin/src/Integrations/Elementor_Forms.php:124
@@ -4352,7 +4533,9 @@ msgstr "No"
 msgid "No action selected"
 msgstr "No se ha seleccionado ninguna acción"
 
-#: admin/src/Builder/Actions.php:57
+#: .history/admin/src/Builder/Actions_20260803205441.php:69
+#: .history/admin/src/Builder/Actions_20260804124933.php:69
+#: admin/src/Builder/Actions.php:69
 msgid "No action will be taken upon reaching this point."
 msgstr "No se tomará ninguna acción al llegar a este punto."
 
@@ -4445,9 +4628,13 @@ msgstr "Ningún artículo adquirido."
 msgid "No Joinotify sender is configured to deliver the code."
 msgstr "No hay un remitente de Joinotify configurado para entregar el código."
 
-#: admin/src/Rest/License_Sync.php:48
+#: admin/src/Rest/License_Sync.php:49
 msgid "No license key found to sync."
 msgstr "No se encontró ninguna clave de licencia para sincronizar."
+
+#: admin/src/Licensing/Client.php:163
+msgid "No licensing backend is available."
+msgstr "No hay backend de licencias disponible."
 
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:123
 msgid "No logs available."
@@ -4498,7 +4685,7 @@ msgstr "No hay remitente disponible"
 msgid "No templates available."
 msgstr "No hay plantillas disponibles."
 
-#: admin/src/Rest/Builder_Test.php:59
+#: admin/src/Rest/Builder_Test.php:60
 msgid "No test phone number registered."
 msgstr "No hay número de teléfono de prueba registrado."
 
@@ -4517,6 +4704,14 @@ msgstr "No hay remitente validado aún."
 #: app/src/components/base/VariablePicker.vue:139
 msgid "No variables available."
 msgstr "No hay variables disponibles."
+
+#: admin/src/Api/Cloud_Client.php:744
+msgid "No WhatsApp Business Account id is configured."
+msgstr "No hay id de Cuenta de Negocios de WhatsApp configurado."
+
+#: admin/src/Api/Cloud_Client.php:104
+msgid "No WhatsApp Cloud API token is configured."
+msgstr "No hay token de la API de Cloud de WhatsApp configurado."
 
 #: app/src/pages/queue/QueuePage.vue:322
 msgid "No workflow steps are currently waiting to run."
@@ -4543,7 +4738,7 @@ msgstr "No se han seleccionado flujos de trabajo."
 msgid "Node settings"
 msgstr "Configuración del nodo"
 
-#: admin/src/Admin/Settings/Registry.php:751
+#: admin/src/Admin/Settings/Registry.php:836
 msgid "None"
 msgstr "Ninguno"
 
@@ -4567,15 +4762,16 @@ msgstr "Macedonia del Norte"
 msgid "Norway"
 msgstr "Noruega"
 
-#: admin/src/Admin/Settings/Registry.php:622
-#: admin/src/Admin/Settings/Registry.php:627
-#: admin/src/Admin/Settings/Registry.php:646
-#: admin/src/Admin/Settings/Registry.php:796
-#: admin/src/Api/License.php:910
-#: app/src/pages/license/LicensePage.vue:90
-#: app/src/pages/license/LicensePage.vue:99
-#: app/src/pages/license/LicensePage.vue:211
-#: app/src/pages/license/LicensePage.vue:216
+#: admin/src/Admin/Settings/Registry.php:663
+#: admin/src/Admin/Settings/Registry.php:668
+#: admin/src/Admin/Settings/Registry.php:687
+#: admin/src/Admin/Settings/Registry.php:881
+#: admin/src/Api/License.php:676
+#: admin/src/Licensing/Drivers/Mds_Driver.php:308
+#: app/src/pages/license/LicensePage.vue:98
+#: app/src/pages/license/LicensePage.vue:107
+#: app/src/pages/license/LicensePage.vue:219
+#: app/src/pages/license/LicensePage.vue:224
 msgid "Not available"
 msgstr "No disponible"
 
@@ -4591,11 +4787,7 @@ msgstr "Aviso"
 msgid "Notification"
 msgstr "Notificación"
 
-#: admin/src/Admin/Settings/Registry.php:63
-msgid "Notify when WhatsApp disconnects"
-msgstr "Notificar cuando WhatsApp se desconecte"
-
-#: admin/src/Admin/Settings/Registry.php:69
+#: admin/src/Admin/Settings/Registry.php:66
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
@@ -4610,9 +4802,18 @@ msgstr ""
 msgid "of"
 msgstr "de"
 
-#: admin/src/Admin/Settings/Registry.php:540
+#: admin/src/Admin/Settings/Registry.php:581
 msgid "Off"
 msgstr "Apagar"
+
+#: admin/src/Admin/Settings/Registry.php:112
+msgid ""
+"Official WhatsApp Cloud API transport that replaces the legacy relay. Leave "
+"the credentials blank to use the values provisioned with your license."
+msgstr ""
+"Transporte oficial de la API de Cloud de WhatsApp que reemplaza el relé "
+"heredado. Deja las credenciales en blanco para usar los valores "
+"provisionados con tu licencia."
 
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:32
 msgid "ok"
@@ -4622,9 +4823,13 @@ msgstr "ok"
 msgid "Oman"
 msgstr "Omán"
 
-#: admin/src/Admin/Settings/Registry.php:540
+#: admin/src/Admin/Settings/Registry.php:581
 msgid "On"
 msgstr "Encender"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:74
+msgid "One entry per line, or use the delimiter below"
+msgstr "Una entrada por línea, o utiliza el delimitador a continuación"
 
 #: app/src/builder/actions/settings/ConditionSettings.vue:170
 msgid ""
@@ -4638,7 +4843,7 @@ msgstr ""
 msgid "Open documentation"
 msgstr "Abrir documentación"
 
-#: app/src/pages/license/LicensePage.vue:495
+#: app/src/pages/license/LicensePage.vue:522
 msgid "Open help center"
 msgstr "Abrir centro de ayuda"
 
@@ -4676,11 +4881,11 @@ msgstr "La solicitud a OpenAI falló con el estado %d."
 msgid "OpenAI returned an empty response."
 msgstr "OpenAI devolvió una respuesta vacía."
 
-#: admin/src/Admin/Settings/Registry.php:509
+#: admin/src/Admin/Settings/Registry.php:550
 msgid "OpenSSL extension"
 msgstr "Extensión OpenSSL"
 
-#: admin/src/Admin/Settings/Registry.php:180
+#: admin/src/Admin/Settings/Registry.php:221
 msgid "Operational plugin settings and development flags."
 msgstr "Configuraciones operativas del plugin y banderas de desarrollo."
 
@@ -4690,6 +4895,12 @@ msgstr "Configuraciones operativas del plugin y banderas de desarrollo."
 #: app/src/builder/actions/settings/ConditionSettings.vue:187
 msgid "Operator"
 msgstr "Operador"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:90
+msgid "Optional cap on how many items are processed. Leave empty for no limit."
+msgstr ""
+"Límite opcional sobre cuántos elementos se procesan. Deja vacío para no "
+"tener límite."
 
 #: app/src/components/builder/BuilderAiGenerateModal.vue:85
 msgid ""
@@ -4723,7 +4934,7 @@ msgstr ""
 "Opcional. Utilizado solo cuando una acción de flujo de trabajo no "
 "especifica un id de chat."
 
-#: app/src/components/flow/FlowNode.vue:264
+#: app/src/components/flow/FlowNode.vue:265
 msgid "Options"
 msgstr "Opciones"
 
@@ -4754,7 +4965,8 @@ msgstr "Pedido abandonado"
 msgid "Order completed"
 msgstr "Pedido completado"
 
-#: app/src/builder/components/base/AttachmentsField.vue:40
+#: app/src/builder/actions/settings/LoopSettings.vue:32
+#: app/src/builder/components/base/AttachmentsField.vue:56
 msgid "Order digital files"
 msgstr "Ordenar archivos digitales"
 
@@ -4769,6 +4981,10 @@ msgstr "Pedido pagado"
 #: admin/src/Integrations/Woocommerce.php:204
 msgid "Order partially refunded"
 msgstr "Pedido parcialmente reembolsado"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:33
+msgid "Order purchased items"
+msgstr "Ordenar artículos comprados"
 
 #: admin/src/Integrations/Woocommerce.php:216
 #: admin/src/Integrations/Woocommerce.php:1422
@@ -4864,7 +5080,7 @@ msgstr "Pega el código que recibiste después de la compra."
 msgid "Paste the exported JSON here"
 msgstr "Pega el JSON exportado aquí"
 
-#: app/src/pages/license/LicensePage.vue:378
+#: app/src/pages/license/LicensePage.vue:405
 msgid ""
 "Paste the license key you received after purchase and click Activate to "
 "unlock all features."
@@ -4884,7 +5100,7 @@ msgstr ""
 "Pega tu clave API de Resend y establece la dirección de remitente "
 "verificada utilizada para entregar correos electrónicos."
 
-#: admin/src/Admin/Settings/Registry.php:97
+#: admin/src/Admin/Settings/Registry.php:94
 msgid "Path of the route used to send messages with media."
 msgstr "Ruta utilizada para enviar mensajes con medios."
 
@@ -4947,6 +5163,10 @@ msgstr "Filipinas"
 msgid "Phone number"
 msgstr "Número de teléfono"
 
+#: admin/src/Admin/Settings/Registry.php:137
+msgid "Phone number ID"
+msgstr "ID de número de teléfono"
+
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:82
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:91
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
@@ -4965,8 +5185,8 @@ msgstr "Números de teléfono ya validados y disponibles para su uso en flujos."
 msgid "Phone validated."
 msgstr "Teléfono validado."
 
-#: admin/src/Admin/Settings/Registry.php:132
-#: admin/src/Admin/Settings/Registry.php:275
+#: admin/src/Admin/Settings/Registry.php:173
+#: admin/src/Admin/Settings/Registry.php:316
 #: app/src/pages/settings/components/cards/PhoneActions.vue:207
 #: app/src/pages/settings/components/cards/PhoneActions.vue:301
 #: app/src/pages/settings/SettingsPage.vue:449
@@ -4982,7 +5202,7 @@ msgstr "Teléfono validado."
 msgid "Phones"
 msgstr "Teléfonos"
 
-#: admin/src/Admin/Settings/Registry.php:139
+#: admin/src/Admin/Settings/Registry.php:180
 msgid "Phones already validated and available for use in workflows."
 msgstr "Teléfonos ya validados y disponibles para su uso en flujos de trabajo."
 
@@ -4998,8 +5218,10 @@ msgstr "Código PHP"
 msgid "PHP snippet"
 msgstr "Fragmento PHP"
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:80
+#: .history/admin/src/Builder/Actions_20260804124933.php:80
 #: admin/src/Admin/Builder/Registry.php:534
-#: admin/src/Builder/Actions.php:68
+#: admin/src/Builder/Actions.php:80
 #: app/src/builder/actions/definitions/snippetPhp.ts:27
 #: app/src/builder/actions/definitions/snippetPhp.ts:37
 #: app/src/builder/actions/settings/SnippetPhpSettings.vue:105
@@ -5014,7 +5236,7 @@ msgstr ""
 "Los fragmentos PHP se ejecutan dentro del tiempo de ejecución del flujo de "
 "trabajo. Solo los administradores de confianza deben editar este código."
 
-#: admin/src/Admin/Settings/Registry.php:494
+#: admin/src/Admin/Settings/Registry.php:535
 msgid "PHP version"
 msgstr "Versión de PHP"
 
@@ -5022,7 +5244,7 @@ msgstr "Versión de PHP"
 msgid "Pick a color"
 msgstr "Elige un color"
 
-#: app/src/builder/components/base/AttachmentsField.vue:174
+#: app/src/builder/components/base/AttachmentsField.vue:201
 msgid "Pick a file from the library"
 msgstr "Selecciona un archivo de la biblioteca"
 
@@ -5082,11 +5304,11 @@ msgstr "Se requiere el slug del plugin."
 msgid "Plugin updates"
 msgstr "Actualizaciones del plugin"
 
-#: app/src/parsers/workflowParser.ts:520
+#: app/src/parsers/workflowParser.ts:527
 msgid "plugin_version missing; version normalized automatically."
 msgstr "plugin_version faltante; versión normalizada automáticamente."
 
-#: admin/src/Admin/Settings/Registry.php:47
+#: admin/src/Admin/Settings/Registry.php:49
 msgid "Plugin's basic preferences, sending proxy, and WhatsApp notifications."
 msgstr ""
 "Preferencias básicas del plugin, envío de proxy y notificaciones de "
@@ -5147,6 +5369,10 @@ msgstr "Color primario"
 msgid "Processing queue"
 msgstr "Procesando cola"
 
+#: app/src/components/settings/NodeSettingsRenderer.vue:34
+msgid "Product name of the current item."
+msgstr "Nombre del producto del artículo actual."
+
 #: app/src/builder/actions/settings/ConditionProductsField.vue:77
 msgid "Product search is unavailable."
 msgstr "La búsqueda de productos no está disponible."
@@ -5171,9 +5397,17 @@ msgstr "Sugerencia / instrucciones"
 msgid "Provide a valid variable name."
 msgstr "Proporciona un nombre de variable válido."
 
-#: admin/src/Admin/Settings/Registry.php:78
+#: admin/src/Admin/Settings/Registry.php:75
 msgid "Proxy API"
 msgstr "API proxy"
+
+#: app/src/components/settings/NodeSettingsRenderer.vue:35
+msgid "Purchased item name (order items loop)."
+msgstr "Nombre del artículo comprado (bucle de artículos del pedido)."
+
+#: app/src/components/settings/NodeSettingsRenderer.vue:36
+msgid "Purchased item quantity (order items loop)."
+msgstr "Cantidad de artículo comprado (bucle de artículos del pedido)."
 
 #: admin/src/Integrations/Woocommerce.php:1434
 msgid "Purchased products"
@@ -5188,11 +5422,11 @@ msgstr "Catar"
 msgid "Queued"
 msgstr "En cola"
 
-#: app/src/pages/license/LicensePage.vue:485
+#: app/src/pages/license/LicensePage.vue:512
 msgid "Quick help"
 msgstr "Ayuda rápida"
 
-#: admin/src/Admin/Settings/Registry.php:144
+#: admin/src/Admin/Settings/Registry.php:185
 msgid "Quick Tools"
 msgstr "Herramientas rápidas"
 
@@ -5221,7 +5455,7 @@ msgstr "ID del campo de destinatario"
 msgid "Recipient phone"
 msgstr "Teléfono del destinatario"
 
-#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:246
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
 "History screen."
@@ -5241,11 +5475,11 @@ msgstr ""
 msgid "Recovery link from abandoned cart"
 msgstr "Enlace de recuperación de carrito abandonado."
 
-#: app/src/components/flow/FlowCanvas.vue:813
+#: app/src/components/flow/FlowCanvas.vue:821
 msgid "Redo"
 msgstr "Rehacer"
 
-#: app/src/components/flow/FlowCanvas.vue:814
+#: app/src/components/flow/FlowCanvas.vue:822
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr "Rehacer (Ctrl+Shift+Z)"
 
@@ -5292,7 +5526,7 @@ msgstr ""
 "Número de Joinotify registrado utilizado para enviar códigos OTP. Deja en "
 "el primer remitente disponible para usar el predeterminado."
 
-#: admin/src/Admin/Settings/Registry.php:138
+#: admin/src/Admin/Settings/Registry.php:179
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:25
 msgid "Registered senders"
 msgstr "Remitentes registrados"
@@ -5312,7 +5546,7 @@ msgstr "Recuérdame"
 msgid "Remove"
 msgstr "Eliminar"
 
-#: app/src/builder/components/base/AttachmentsField.vue:158
+#: app/src/builder/components/base/AttachmentsField.vue:181
 msgid "Remove attachment"
 msgstr "Eliminar archivo adjunto"
 
@@ -5344,11 +5578,11 @@ msgstr "República del Congo"
 msgid "Request"
 msgstr "Solicitud"
 
-#: app/src/pages/license/LicensePage.vue:120
+#: app/src/pages/license/LicensePage.vue:128
 msgid "Request failed."
 msgstr "Solicitud fallida."
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:186
+#: app/src/components/settings/NodeSettingsRenderer.vue:242
 msgid "Required configuration for this trigger to run correctly."
 msgstr "Configuración requerida para que este disparador funcione correctamente."
 
@@ -5490,7 +5724,7 @@ msgstr "Reunión"
 msgid "Reuse the generated value in any later message with:"
 msgstr "Reutilizar el valor generado en cualquier mensaje posterior con:"
 
-#: app/src/pages/license/LicensePage.vue:57
+#: app/src/pages/license/LicensePage.vue:65
 msgid "Review your current license status and refresh it whenever needed."
 msgstr ""
 "Revisa el estado actual de tu licencia y actualízalo siempre que sea "
@@ -5504,7 +5738,7 @@ msgstr "Rumania"
 msgid "Rounding applied to cards, buttons, and form fields."
 msgstr "Redondeo aplicado a tarjetas, botones y campos de formulario."
 
-#: admin/src/Admin/Settings/Registry.php:89
+#: admin/src/Admin/Settings/Registry.php:86
 msgid "Route path used to send text messages."
 msgstr "Ruta utilizada para enviar mensajes de texto."
 
@@ -5528,6 +5762,23 @@ msgstr "Ejecutar un fragmento de PHP durante el flujo de trabajo."
 #: app/src/components/builder/BuilderNavbar.vue:139
 msgid "Run test"
 msgstr "Ejecutar prueba"
+
+#: app/src/builder/actions/settings/LoopSettings.vue:53
+msgid ""
+"Runs the body once for each downloadable file granted in the order. Attach "
+"{{ loop item }} files inside the body to send one file per message."
+msgstr ""
+"Ejecuta el cuerpo una vez por cada archivo descargable concedido en el "
+"pedido. Adjunta {{ loop item }} archivos dentro del cuerpo para enviar un "
+"archivo por mensaje."
+
+#: app/src/builder/actions/settings/LoopSettings.vue:50
+msgid "Runs the body once for each entry of the list below."
+msgstr "Ejecuta el cuerpo una vez por cada entrada de la lista a continuación."
+
+#: app/src/builder/actions/settings/LoopSettings.vue:46
+msgid "Runs the body once for each product line in the order."
+msgstr "Ejecuta el cuerpo una vez por cada línea de producto en el pedido."
 
 #: admin/src/Validations/Country_Codes.php:26
 msgid "Russia"
@@ -5700,7 +5951,7 @@ msgstr "Buscar..."
 msgid "Searching…"
 msgstr "Buscando…"
 
-#: admin/src/Core/Helpers.php:36
+#: admin/src/Core/Helpers.php:37
 msgid "second"
 msgstr "segundo"
 
@@ -5708,7 +5959,7 @@ msgstr "segundo"
 msgid "second(s)"
 msgstr "segundo(s)"
 
-#: admin/src/Core/Helpers.php:36
+#: admin/src/Core/Helpers.php:37
 #: templates/otp-login/shared/otp-login-form.php:38
 msgid "seconds"
 msgstr "segundos"
@@ -5774,7 +6025,7 @@ msgstr "Seleccione una fecha"
 msgid "Select a digital product"
 msgstr "Selecciona un producto digital"
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:220
+#: app/src/components/settings/NodeSettingsRenderer.vue:276
 msgid "Select a node to edit its settings."
 msgstr "Selecciona un nodo para editar su configuración."
 
@@ -5827,7 +6078,7 @@ msgstr "Selecciona una opción"
 msgid "Select an order status"
 msgstr "Selecciona un estado de pedido"
 
-#: app/src/builder/components/base/AttachmentsField.vue:113
+#: app/src/builder/components/base/AttachmentsField.vue:136
 #: app/src/components/base/BaseFileDropzone.vue:87
 msgid "Select file"
 msgstr "Seleccionar archivo"
@@ -6004,10 +6255,6 @@ msgstr "Remitente eliminado."
 msgid "Sending..."
 msgstr "Enviando..."
 
-#: admin/src/Admin/Settings/Registry.php:64
-msgid "Sends a notification to the sender when the connection is not established."
-msgstr "Envía una notificación al remitente cuando la conexión no se establece."
-
 #: admin/src/Validations/Country_Codes.php:77
 msgid "Senegal"
 msgstr "Senegal"
@@ -6032,7 +6279,7 @@ msgstr "Establecer una expiración"
 #: admin/src/Admin/Menu.php:90
 #: admin/src/Admin/Menu.php:91
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
-#: app/src/components/flow/FlowNode.vue:301
+#: app/src/components/flow/FlowNode.vue:302
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
 #: app/src/pages/settings/SettingsPage.vue:749
 msgid "Settings"
@@ -6058,7 +6305,7 @@ msgstr "Configuraciones importadas."
 msgid "Settings reset successfully!"
 msgstr "¡Configuraciones restablecidas con éxito!"
 
-#: admin/src/Admin/Settings/Registry.php:594
+#: admin/src/Admin/Settings/Registry.php:635
 #: admin/src/Rest/Settings_Save.php:42
 msgid "Settings saved."
 msgstr "Configuraciones guardadas."
@@ -6123,7 +6370,7 @@ msgstr "Islas Salomón"
 msgid "Somalia"
 msgstr "Somalia"
 
-#: app/src/builder/components/base/AttachmentsField.vue:148
+#: app/src/builder/components/base/AttachmentsField.vue:171
 #: app/src/pages/history/components/HistoryDetailsModal.vue:25
 #: app/src/pages/history/HistoryPage.vue:188
 #: app/src/pages/history/HistoryPage.vue:290
@@ -6200,8 +6447,10 @@ msgstr "Paso 2: Introduce el código de verificación"
 msgid "Step 2: Enter the verification code."
 msgstr "Paso 2: Introduce el código de verificación."
 
+#: .history/admin/src/Builder/Actions_20260803205441.php:68
+#: .history/admin/src/Builder/Actions_20260804124933.php:68
 #: admin/src/Admin/Builder/Registry.php:542
-#: admin/src/Builder/Actions.php:56
+#: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
 msgstr "Detener automatización"
 
@@ -6214,7 +6463,7 @@ msgstr "Detener embudo"
 msgid "Stops the workflow immediately"
 msgstr "Detiene el flujo de trabajo inmediatamente"
 
-#: admin/src/Admin/Settings/Registry.php:223
+#: admin/src/Admin/Settings/Registry.php:264
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -6232,7 +6481,7 @@ msgstr "Asunto"
 msgid "Subject: %s"
 msgstr "Asunto: %s"
 
-#: app/src/pages/license/LicensePage.vue:67
+#: app/src/pages/license/LicensePage.vue:75
 msgid "Subscription"
 msgstr "Suscripción"
 
@@ -6252,11 +6501,11 @@ msgstr "La renovación de la suscripción ha expirado"
 msgid "Subscription status"
 msgstr "Estado de la suscripción"
 
-#: admin/src/Admin/Settings/Registry.php:618
+#: admin/src/Admin/Settings/Registry.php:659
 msgid "Subscription: %s"
 msgstr "Suscripción: %s"
 
-#: admin/src/Admin/Settings/Registry.php:617
+#: admin/src/Admin/Settings/Registry.php:658
 msgid "Subscription: Club M - %s"
 msgstr "Suscripción: Club M - %s"
 
@@ -6272,23 +6521,23 @@ msgstr ""
 "Gafas de sol con protección UV (Producto de muestra): "
 "%s/product/sample-sunglasses/#reviews"
 
-#: app/src/pages/license/LicensePage.vue:427
+#: app/src/pages/license/LicensePage.vue:454
 msgid "Support access and subscription updates"
 msgstr "Acceso al soporte y actualizaciones de suscripción"
 
-#: app/src/pages/license/LicensePage.vue:75
+#: app/src/pages/license/LicensePage.vue:83
 msgid "Support until"
 msgstr "Soporte hasta"
 
-#: app/src/pages/license/LicensePage.vue:214
+#: app/src/pages/license/LicensePage.vue:222
 msgid "Support until: Not available"
 msgstr "Soporte hasta: No disponible"
 
-#: admin/src/Admin/Settings/Registry.php:652
+#: admin/src/Admin/Settings/Registry.php:693
 msgid "Support up to: %s"
 msgstr "Soporte hasta: %s"
 
-#: admin/src/Admin/Settings/Registry.php:653
+#: admin/src/Admin/Settings/Registry.php:694
 msgid "Support up to: Not available"
 msgstr "Soporte hasta: No disponible"
 
@@ -6304,11 +6553,12 @@ msgstr "Suecia"
 msgid "Switzerland"
 msgstr "Suiza"
 
-#: app/src/pages/license/LicensePage.vue:262
+#: app/src/pages/license/LicensePage.vue:270
 msgid "Sync"
 msgstr "Sincronizar"
 
-#: app/src/pages/license/LicensePage.vue:462
+#: app/src/pages/license/LicensePage.vue:367
+#: app/src/pages/license/LicensePage.vue:489
 msgid "Sync license"
 msgstr "Sincronizar licencia"
 
@@ -6321,7 +6571,7 @@ msgstr "Siria"
 msgid "System message"
 msgstr "Mensaje del sistema"
 
-#: admin/src/Admin/Settings/Registry.php:241
+#: admin/src/Admin/Settings/Registry.php:282
 msgid "System status"
 msgstr "Estado del sistema"
 
@@ -6387,7 +6637,7 @@ msgstr "Plantilla"
 msgid "Test message"
 msgstr "Mensaje de prueba"
 
-#: admin/src/Admin/Settings/Registry.php:68
+#: admin/src/Admin/Settings/Registry.php:65
 msgid "Test phone"
 msgstr "Teléfono para pruebas"
 
@@ -6412,12 +6662,12 @@ msgstr "Mensaje de texto"
 msgid "Text message route"
 msgstr "Ruta de mensaje de texto"
 
-#: admin/src/Api/Controller.php:265
+#: admin/src/Api/Controller.php:267
 #: admin/src/Rest/Send_Text_Message.php:67
 msgid "Text message sent successfully."
 msgstr "Mensaje de texto enviado con éxito."
 
-#: admin/src/Admin/Settings/Registry.php:88
+#: admin/src/Admin/Settings/Registry.php:85
 msgid "Text route"
 msgstr "Ruta de texto"
 
@@ -6458,14 +6708,14 @@ msgstr ""
 
 #: admin/src/AI/Snippet_Generator.php:65
 #: app/src/builder/actions/settings/SnippetPhpSettings.vue:55
-#: app/src/stores/useWorkflowBuilderStore.ts:1255
-#: app/src/stores/useWorkflowBuilderStore.ts:1260
+#: app/src/stores/useWorkflowBuilderStore.ts:1256
+#: app/src/stores/useWorkflowBuilderStore.ts:1261
 msgid "The AI could not generate the snippet."
 msgstr "La IA no pudo generar el fragmento."
 
 #: admin/src/AI/Workflow_Generator.php:63
 #: app/src/pages/builder/BuilderPage.vue:668
-#: app/src/stores/useWorkflowBuilderStore.ts:1227
+#: app/src/stores/useWorkflowBuilderStore.ts:1228
 msgid "The AI could not generate the workflow."
 msgstr "La IA no pudo generar el flujo de trabajo."
 
@@ -6507,10 +6757,6 @@ msgstr ""
 #: admin/src/Integrations/Woocommerce.php:1263
 msgid "The coupon already exists."
 msgstr "El cupón ya existe."
-
-#: admin/src/Api/License.php:397
-msgid "The cURL extension is missing."
-msgstr "Falta la extensión cURL."
 
 #: admin/src/Rest/Debug_Download.php:43
 #: admin/src/Rest/Debug_Logs.php:61
@@ -6557,6 +6803,27 @@ msgstr ""
 "disponible. Este flujo no se procesará hasta que la integración esté "
 "disponible nuevamente."
 
+#: admin/src/Admin/Settings/Registry.php:740
+msgid "the license could not be confirmed"
+msgstr "la licencia no pudo ser confirmada"
+
+#: admin/src/Licensing/Drivers/Mds_Driver.php:377
+msgid "The licensing SDK is not installed."
+msgstr "El SDK de licencias no está instalado."
+
+#: admin/src/Admin/Settings/Registry.php:737
+msgid ""
+"The licensing server reported: %s. Your plugin keeps working normally. Try "
+"syncing the license, and contact support if the message persists."
+msgstr ""
+"El servidor de licencias informó: %s. Tu plugin sigue funcionando "
+"normalmente. Intenta sincronizar la licencia y contacta con soporte si el "
+"mensaje persiste."
+
+#: admin/src/Licensing/Drivers/Mds_Driver.php:387
+msgid "The licensing service is not configured."
+msgstr "El servicio de licencias no está configurado."
+
 #: app/src/pages/settings/components/cards/PhoneActions.vue:260
 msgid "The message is prefilled and can be adjusted before sending the test."
 msgstr "El mensaje está prellenado y se puede ajustar antes de enviar la prueba."
@@ -6584,7 +6851,7 @@ msgstr "El teléfono está conectado."
 msgid "The phone is disconnected."
 msgstr "El teléfono está desconectado."
 
-#: admin/src/Api/Updater.php:243
+#: admin/src/Api/Updater.php:251
 msgid "The plugin version <strong>Joinotify</strong> is up to date."
 msgstr "La versión del plugin <strong>Joinotify</strong> es la más reciente."
 
@@ -6664,7 +6931,7 @@ msgstr ""
 "El plugin independiente \"Joinotify OTP Login\" fue desactivado porque el "
 "inicio de sesión sin contraseña ahora está integrado en Joinotify."
 
-#: admin/src/Rest/Phone_Test_Message.php:52
+#: admin/src/Rest/Phone_Test_Message.php:53
 msgid "The test message was sent successfully!"
 msgstr "¡El mensaje de prueba se envió con éxito!"
 
@@ -6679,6 +6946,14 @@ msgid ""
 msgstr ""
 "El disparador utilizado por este flujo ya no está registrado. Este flujo no "
 "se procesará hasta que selecciones un disparador disponible."
+
+#: app/src/builder/actions/settings/LoopSettings.vue:69
+msgid ""
+"The value to iterate. Use {{ placeholders }} — each entry becomes one "
+"iteration."
+msgstr ""
+"El valor a iterar. Usa {{ placeholders }} — cada entrada se convierte en "
+"una iteración."
 
 #: admin/src/Builder/Custom_Variables.php:121
 msgid "The variable \"%s\" already exists. Choose another name."
@@ -6697,7 +6972,7 @@ msgstr "El contenido del flujo de trabajo no es válido."
 msgid "The workflow has more than one trigger."
 msgstr "El flujo de trabajo tiene más de un desencadenador."
 
-#: admin/src/Rest/Builder_Test.php:66
+#: admin/src/Rest/Builder_Test.php:67
 msgid "The workflow has no content to test."
 msgstr "El flujo de trabajo no tiene contenido para probar."
 
@@ -6713,8 +6988,8 @@ msgstr "El flujo de trabajo no está publicado."
 msgid "The workflow trigger is not configured."
 msgstr "El desencadenador del flujo de trabajo no está configurado."
 
-#: app/src/components/flow/FlowNode.vue:271
-#: app/src/components/flow/FlowNode.vue:273
+#: app/src/components/flow/FlowNode.vue:272
+#: app/src/components/flow/FlowNode.vue:274
 msgid "There are required settings not configured"
 msgstr "Hay configuraciones requeridas que no están configuradas"
 
@@ -6803,7 +7078,7 @@ msgstr "Esta integración no tiene configuraciones adicionales."
 msgid "This integration will be available soon."
 msgstr "Esta integración estará disponible pronto."
 
-#: admin/src/Admin/Settings/Registry.php:367
+#: admin/src/Admin/Settings/Registry.php:408
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 "Este plugin necesita estar instalado y activo para habilitar esta "
@@ -6822,7 +7097,15 @@ msgstr ""
 "Este elemento programado será eliminado y nunca se ejecutará. Esto no se "
 "puede deshacer."
 
-#: admin/src/Admin/Settings/Registry.php:84
+#: admin/src/Licensing/Drivers/Mds_Driver.php:383
+msgid ""
+"This server cannot verify signed license responses (the sodium extension is "
+"missing)."
+msgstr ""
+"Este servidor no puede verificar las respuestas de licencia firmadas (falta "
+"la extensión sodium)."
+
+#: admin/src/Admin/Settings/Registry.php:81
 msgid "This site exposes endpoints to process Joinotify requests."
 msgstr "Este sitio expone endpoints para procesar solicitudes de Joinotify."
 
@@ -6880,7 +7163,7 @@ msgstr ""
 "Este disparador se activa cuando se procesa un formulario de pago de "
 "WPForms utilizando PayPal."
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:204
+#: app/src/components/settings/NodeSettingsRenderer.vue:260
 msgid ""
 "This trigger has no additional settings. Use “Change trigger” in the node "
 "menu to pick a different one."
@@ -7352,14 +7635,18 @@ msgstr ""
 msgid "Too short"
 msgstr "Demasiado corto"
 
+#: app/src/components/settings/NodeSettingsRenderer.vue:31
+msgid "Total number of items in the collection."
+msgstr "Número total de artículos en la colección."
+
 #: app/src/composables/useWorkflows.ts:180
 msgid "Trash"
 msgstr "Papelera"
 
 #: app/src/components/builder/BuilderCanvasTrigger.vue:59
 #: app/src/components/builder/BuilderCanvasView.vue:78
-#: app/src/components/flow/FlowCanvas.vue:181
-#: app/src/components/flow/FlowCanvas.vue:192
+#: app/src/components/flow/FlowCanvas.vue:183
+#: app/src/components/flow/FlowCanvas.vue:194
 #: app/src/components/settings/NodeSettingsDrawer.vue:38
 #: app/src/registries/triggerRegistry.ts:255
 #: app/src/registries/triggerRegistry.ts:284
@@ -7371,7 +7658,7 @@ msgstr "Disparador"
 msgid "Trigger no longer available"
 msgstr "Disparador ya no disponible"
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:184
+#: app/src/components/settings/NodeSettingsRenderer.vue:240
 msgid "Trigger settings"
 msgstr "Configuraciones del disparador"
 
@@ -7399,7 +7686,7 @@ msgstr "Disparador:"
 msgid "Triggers for the WordPress core."
 msgstr "Disparadores para el núcleo de WordPress."
 
-#: app/src/components/flow/FlowNode.vue:377
+#: app/src/components/flow/FlowNode.vue:378
 msgid "True"
 msgstr "Verdadero"
 
@@ -7498,13 +7785,17 @@ msgstr "Ucrania"
 msgid "Underline"
 msgstr "Subrayar"
 
-#: app/src/components/flow/FlowCanvas.vue:803
+#: app/src/components/flow/FlowCanvas.vue:811
 msgid "Undo"
 msgstr "Deshacer"
 
-#: app/src/components/flow/FlowCanvas.vue:804
+#: app/src/components/flow/FlowCanvas.vue:812
 msgid "Undo (Ctrl+Z)"
 msgstr "Deshacer (Ctrl+Z)"
+
+#: admin/src/Licensing/Drivers/Legacy_Driver.php:300
+msgid "Unexpected response from the license server."
+msgstr "Respuesta inesperada del servidor de licencias."
 
 #: admin/src/Validations/Country_Codes.php:216
 msgid "United Arab Emirates"
@@ -7521,10 +7812,6 @@ msgstr "Estados Unidos"
 #: admin/src/AI/AI_Manager.php:161
 msgid "Unknown AI error."
 msgstr "Error desconocido de IA."
-
-#: admin/src/Api/License.php:315
-msgid "Unknown response"
-msgstr "Respuesta desconocida"
 
 #: admin/src/Integrations/Woocommerce.php:622
 #: admin/src/Integrations/Woocommerce.php:889
@@ -7551,7 +7838,7 @@ msgstr "Comprobación de actualización completada."
 msgid "Update logs"
 msgstr "Registros de actualización"
 
-#: admin/src/Admin/Settings/Registry.php:194
+#: admin/src/Admin/Settings/Registry.php:235
 msgid "Update notices"
 msgstr "Avisos de actualización"
 
@@ -7576,11 +7863,11 @@ msgstr "Actualizando…"
 msgid "Uruguay"
 msgstr "Uruguay"
 
-#: admin/src/Core/Workflow_Processor.php:1567
+#: admin/src/Core/Workflow_Processor.php:1921
 msgid "Use a casual and relaxed tone."
 msgstr "Usa un tono casual y relajado."
 
-#: admin/src/Core/Workflow_Processor.php:1566
+#: admin/src/Core/Workflow_Processor.php:1920
 msgid "Use a formal and professional tone."
 msgstr "Usa un tono formal y profesional."
 
@@ -7588,7 +7875,7 @@ msgstr "Usa un tono formal y profesional."
 msgid "Use a template"
 msgstr "Usa una plantilla"
 
-#: admin/src/Core/Workflow_Processor.php:1568
+#: admin/src/Core/Workflow_Processor.php:1922
 msgid "Use a warm and friendly tone."
 msgstr "Usa un tono cálido y amigable."
 
@@ -7616,7 +7903,7 @@ msgstr ""
 "Utiliza el servicio de mensajería más grande del mundo para notificar a tus "
 "clientes sobre eventos en tu sitio web."
 
-#: app/src/builder/components/base/AttachmentsField.vue:114
+#: app/src/builder/components/base/AttachmentsField.vue:137
 msgid "Use this file"
 msgstr "Usar este archivo"
 
@@ -7676,7 +7963,7 @@ msgstr "Nombre de usuario"
 msgid "Uzbekistan"
 msgstr "Uzbekistán"
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:673
 #: app/src/pages/license/LicensePage.vue:48
 msgid "Valid"
 msgstr "Válida"
@@ -7786,6 +8073,10 @@ msgstr "Ver flujo"
 msgid "View the recent events recorded by the plugin."
 msgstr "Ver los eventos recientes registrados por el plugin."
 
+#: admin/src/Admin/Settings/Registry.php:146
+msgid "waba_id that owns the message templates."
+msgstr "waba_id que posee las plantillas de mensajes."
+
 #: admin/src/Builder/Messages.php:126
 msgid "Wait %s %s"
 msgstr "Espera %s %s"
@@ -7852,7 +8143,7 @@ msgstr ""
 msgid "We sent a code to %s."
 msgstr "Hemos enviado un código a %s."
 
-#: admin/src/Core/Helpers.php:40
+#: admin/src/Core/Helpers.php:41
 msgid "week"
 msgstr "semana"
 
@@ -7860,7 +8151,7 @@ msgstr "semana"
 msgid "week(s)"
 msgstr "semana(s)"
 
-#: admin/src/Core/Helpers.php:40
+#: admin/src/Core/Helpers.php:41
 msgid "weeks"
 msgstr "semanas"
 
@@ -7880,7 +8171,7 @@ msgstr "Sáhara Occidental"
 msgid "What should this workflow do?"
 msgstr "¿Qué debería hacer este flujo de trabajo?"
 
-#: app/src/pages/license/LicensePage.vue:410
+#: app/src/pages/license/LicensePage.vue:437
 msgid "What you unlock"
 msgstr "Lo que desbloqueas"
 
@@ -7890,9 +8181,21 @@ msgstr "Lo que desbloqueas"
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
+#: admin/src/Notifications/Channels/Whatsapp_Cloud_Channel.php:49
+msgid "WhatsApp (Cloud API)"
+msgstr "WhatsApp (API en la nube)"
+
 #: admin/src/Core/Workflow_Post_Type.php:56
 msgid "WhatsApp automation workflows created with Joinotify."
 msgstr "Flujos de trabajo de automatización de WhatsApp creados con Joinotify."
+
+#: admin/src/Admin/Settings/Registry.php:145
+msgid "WhatsApp Business Account ID"
+msgstr "ID de cuenta de WhatsApp Business"
+
+#: admin/src/Admin/Settings/Registry.php:111
+msgid "WhatsApp Cloud API"
+msgstr "API de WhatsApp Cloud"
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:207
 msgid "WhatsApp message sent with the generated coupon."
@@ -7940,6 +8243,15 @@ msgstr ""
 "Desde dónde se activa el desencadenante. Selecciona una integración para "
 "ver sus desencadenantes disponibles."
 
+#: admin/src/Admin/Settings/Registry.php:117
+msgid ""
+"Which service delivers WhatsApp messages. \"Automatic\" uses the Cloud API "
+"whenever a token is available, otherwise the legacy Evolution relay."
+msgstr ""
+"Qué servicio entrega los mensajes de WhatsApp. \"Automático\" utiliza la "
+"API Cloud siempre que haya un token disponible, de lo contrario, utiliza el "
+"relay Evolution heredado."
+
 #: app/src/pages/workflows/WorkflowsPage.vue:287
 msgid "will be moved to trash."
 msgstr "será movido a la papelera."
@@ -7971,11 +8283,11 @@ msgstr "Configuraciones de WooCommerce"
 msgid "WordPress"
 msgstr "WordPress"
 
-#: admin/src/Admin/Settings/Registry.php:475
+#: admin/src/Admin/Settings/Registry.php:516
 msgid "WordPress Multisite"
 msgstr "WordPress Multisite"
 
-#: admin/src/Admin/Settings/Registry.php:470
+#: admin/src/Admin/Settings/Registry.php:511
 msgid "WordPress version"
 msgstr "Versión de WordPress"
 
@@ -7990,7 +8302,7 @@ msgstr "Flujo de trabajo"
 msgid "Workflow activated."
 msgstr "Flujo de trabajo activado."
 
-#: app/src/stores/useWorkflowBuilderStore.ts:2125
+#: app/src/stores/useWorkflowBuilderStore.ts:2127
 msgid "Workflow API is not available."
 msgstr "La API de flujo de trabajo no está disponible."
 
@@ -8029,11 +8341,11 @@ msgstr "Flujo de trabajo no encontrado o tipo de publicación no válido."
 #: admin/src/Admin/Builder/Registry.php:91
 #: admin/src/Admin/Builder/Registry.php:1130
 #: admin/src/Admin/Builder/Registry.php:1200
-#: admin/src/Rest/Builder_Test.php:49
+#: admin/src/Rest/Builder_Test.php:50
 msgid "Workflow not found."
 msgstr "Flujo de trabajo no encontrado."
 
-#: app/src/stores/useWorkflowBuilderStore.ts:1374
+#: app/src/stores/useWorkflowBuilderStore.ts:1375
 msgid "Workflow not saved yet."
 msgstr "Flujo de trabajo aún no guardado."
 
@@ -8067,7 +8379,7 @@ msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:1128
 #: app/src/pages/builder/BuilderPage.vue:1169
-#: app/src/stores/useWorkflowBuilderStore.ts:2014
+#: app/src/stores/useWorkflowBuilderStore.ts:2016
 msgid "Workflow test queued."
 msgstr "Prueba de flujo de trabajo en cola."
 
@@ -8091,7 +8403,7 @@ msgstr "Flujos de trabajo por página"
 msgid "WPForms"
 msgstr "WPForms"
 
-#: admin/src/Core/Workflow_Processor.php:1591
+#: admin/src/Core/Workflow_Processor.php:1945
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -8103,7 +8415,7 @@ msgstr ""
 msgid "Write in markdown to document your flow…"
 msgstr "Escribe en markdown para documentar tu flujo…"
 
-#: admin/src/Core/Helpers.php:42
+#: admin/src/Core/Helpers.php:43
 msgid "year"
 msgstr "año"
 
@@ -8111,7 +8423,7 @@ msgstr "año"
 msgid "year(s)"
 msgstr "año(s)"
 
-#: admin/src/Core/Helpers.php:42
+#: admin/src/Core/Helpers.php:43
 msgid "years"
 msgstr "años"
 
@@ -8127,8 +8439,8 @@ msgstr "Años"
 msgid "Yemen"
 msgstr "Yemen"
 
-#: admin/src/Admin/Settings/Registry.php:476
-#: admin/src/Admin/Settings/Registry.php:500
+#: admin/src/Admin/Settings/Registry.php:517
+#: admin/src/Admin/Settings/Registry.php:541
 #: admin/src/Builder/Messages.php:319
 #: admin/src/Builder/Messages.php:320
 #: admin/src/Integrations/Elementor_Forms.php:123
@@ -8166,7 +8478,7 @@ msgstr "No tienes permiso para editar flujos de trabajo."
 msgid "You have unsaved changes."
 msgstr "Tienes cambios no guardados."
 
-#: admin/src/Core/Workflow_Processor.php:1574
+#: admin/src/Core/Workflow_Processor.php:1928
 msgid "You may write a longer, detailed message."
 msgstr "Puedes escribir un mensaje más largo y detallado."
 
@@ -8174,15 +8486,15 @@ msgstr "Puedes escribir un mensaje más largo y detallado."
 msgid "Your access code is: %1$s. This code expires in %2$d minutes."
 msgstr "Tu código de acceso es: %1$s. Este código expira en %2$d minutos."
 
-#: admin/src/Admin/Settings/Registry.php:636
+#: admin/src/Admin/Settings/Registry.php:677
 msgid "Your installation is now ready for full use."
 msgstr "Tu instalación ya está lista para su uso completo."
 
-#: app/src/pages/license/LicensePage.vue:477
+#: app/src/pages/license/LicensePage.vue:504
 msgid "Your installation is unlocked for full use."
 msgstr "Tu instalación está desbloqueada para su uso completo."
 
-#: app/src/pages/license/LicensePage.vue:481
+#: app/src/pages/license/LicensePage.vue:508
 msgid ""
 "Your license is active. You can keep it synced here whenever the status "
 "changes on the server."
@@ -8190,17 +8502,21 @@ msgstr ""
 "Tu licencia está activa. Puedes mantenerla sincronizada aquí siempre que el "
 "estado cambie en el servidor."
 
-#: app/src/pages/license/LicensePage.vue:79
+#: app/src/pages/license/LicensePage.vue:87
 msgid "Your license key"
 msgstr "Tu clave de licencia"
 
-#: admin/src/Admin/Settings/Registry.php:654
+#: admin/src/Admin/Settings/Registry.php:695
 msgid "Your license key:"
 msgstr "Su clave de licencia:"
 
-#: app/src/pages/license/LicensePage.vue:215
+#: app/src/pages/license/LicensePage.vue:223
 msgid "Your license key: Not available"
 msgstr "Tu clave de licencia: No disponible"
+
+#: admin/src/Admin/Settings/Registry.php:734
+msgid "Your license needs to be checked"
+msgstr "Tu licencia necesita ser verificada"
 
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:45
 msgid "Your order is confirmed"
@@ -8222,13 +8538,13 @@ msgstr "Zambia"
 msgid "Zimbabwe"
 msgstr "Zimbabue"
 
-#: app/src/components/flow/FlowCanvas.vue:771
-#: app/src/components/flow/FlowCanvas.vue:772
+#: app/src/components/flow/FlowCanvas.vue:779
+#: app/src/components/flow/FlowCanvas.vue:780
 msgid "Zoom in"
 msgstr "Acercar"
 
-#: app/src/components/flow/FlowCanvas.vue:780
-#: app/src/components/flow/FlowCanvas.vue:781
+#: app/src/components/flow/FlowCanvas.vue:788
+#: app/src/components/flow/FlowCanvas.vue:789
 msgid "Zoom out"
 msgstr "Alejar"
 

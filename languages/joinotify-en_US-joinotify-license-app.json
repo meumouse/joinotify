@@ -131,6 +131,9 @@
       "A condition is missing its branches.": [
         "A condition is missing its branches."
       ],
+      "A message id is required.": [
+        "A message id is required."
+      ],
       "A new version (%s) is available!": [
         "A new version (%s) is available!"
       ],
@@ -232,6 +235,9 @@
       ],
       "Add action to the false branch": [
         "Add action to the false branch"
+      ],
+      "Add action to the loop body": [
+        "Add action to the loop body"
       ],
       "Add action to the true branch": [
         "Add action to the true branch"
@@ -434,9 +440,6 @@
       "An account is already registered with this phone number.": [
         "An account is already registered with this phone number."
       ],
-      "An error occurred while connecting to the license verification server. Check the error in the WooCommerce logs.": [
-        "An error occurred while connecting to the license verification server. Check the error in the WooCommerce logs."
-      ],
       "An error occurred while resetting the settings.": [
         "An error occurred while resetting the settings."
       ],
@@ -481,6 +484,9 @@
       ],
       "API key": [
         "API key"
+      ],
+      "API token": [
+        "API token"
       ],
       "application": [
         "application"
@@ -527,6 +533,9 @@
       "Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it.": [
         "Attaches every digital file the customer purchased in this order. Resolved when the workflow runs, so it always matches the order that triggered it."
       ],
+      "Attaches the file of the item currently being looped, so each iteration sends its own file. Only carries a file when the loop iterates the order digital files.": [
+        "Attaches the file of the item currently being looped, so each iteration sends its own file. Only carries a file when the loop iterates the order digital files."
+      ],
       "Attachments": [
         "Attachments"
       ],
@@ -553,6 +562,9 @@
       ],
       "Automate sending messages when you receive a WPForms form with a phone number. Keep your customers informed in real time.": [
         "Automate sending messages when you receive a WPForms form with a phone number. Keep your customers informed in real time."
+      ],
+      "Automatic": [
+        "Automatic"
       ],
       "Automatic updates": [
         "Automatic updates"
@@ -755,6 +767,9 @@
       "Channel": [
         "Channel"
       ],
+      "Character that separates the entries. Leave empty to split by line break.": [
+        "Character that separates the entries. Leave empty to split by line break."
+      ],
       "Chat id": [
         "Chat id"
       ],
@@ -860,6 +875,12 @@
       "Close panel": [
         "Close panel"
       ],
+      "Cloud API (official)": [
+        "Cloud API (official)"
+      ],
+      "Cloud API bearer token (sk_live_...). Overrides the token provisioned with the license.": [
+        "Cloud API bearer token (sk_live_...). Overrides the token provisioned with the license."
+      ],
       "Code digit %d": [
         "Code digit %d"
       ],
@@ -868,6 +889,9 @@
       ],
       "Code sent successfully.": [
         "Code sent successfully."
+      ],
+      "Collection": [
+        "Collection"
       ],
       "Colombia": [
         "Colombia"
@@ -1040,6 +1064,12 @@
       "Could not open the logs.": [
         "Could not open the logs."
       ],
+      "Could not read the license details.": [
+        "Could not read the license details."
+      ],
+      "Could not read the response from the license server.": [
+        "Could not read the response from the license server."
+      ],
       "Could not read the selected file.": [
         "Could not read the selected file."
       ],
@@ -1211,11 +1241,17 @@
       "Curaçao": [
         "Curaçao"
       ],
-      "cURL Error 35: SSL/TLS communication issue.": [
-        "cURL Error 35: SSL/TLS communication issue."
+      "Current item value (file/product name or list entry).": [
+        "Current item value (file/product name or list entry)."
       ],
-      "cURL Error: %s": [
-        "cURL Error: %s"
+      "Current iteration index, starting at 0.": [
+        "Current iteration index, starting at 0."
+      ],
+      "Current iteration number, starting at 1.": [
+        "Current iteration number, starting at 1."
+      ],
+      "Current loop item file": [
+        "Current loop item file"
       ],
       "Custom block not available.": [
         "Custom block not available."
@@ -1292,6 +1328,9 @@
       "Default model": [
         "Default model"
       ],
+      "Default phone_number_id used as the message origin. Leave blank to use the oldest active number.": [
+        "Default phone_number_id used as the message origin. Leave blank to use the oldest active number."
+      ],
       "Default temperature": [
         "Default temperature"
       ],
@@ -1343,6 +1382,9 @@
       "Delete selected records": [
         "Delete selected records"
       ],
+      "Delimiter": [
+        "Delimiter"
+      ],
       "Delivery channel": [
         "Delivery channel"
       ],
@@ -1388,8 +1430,14 @@
       "Diagnostics": [
         "Diagnostics"
       ],
+      "Digital file download link (order files loop).": [
+        "Digital file download link (order files loop)."
+      ],
       "Digital file downloaded": [
         "Digital file downloaded"
+      ],
+      "Digital file name (order files loop).": [
+        "Digital file name (order files loop)."
       ],
       "Digital product": [
         "Digital product"
@@ -1475,6 +1523,9 @@
       "E-mail address or a placeholder that resolves to one.": [
         "E-mail address or a placeholder that resolves to one."
       ],
+      "e.g. , (comma)": [
+        "e.g. , (comma)"
+      ],
       "e.g. greeting": [
         "e.g. greeting"
       ],
@@ -1531,9 +1582,6 @@
       ],
       "Empty canvas": [
         "Empty canvas"
-      ],
-      "Empty response.": [
-        "Empty response."
       ],
       "Enable debug mode": [
         "Enable debug mode"
@@ -1657,6 +1705,9 @@
       ],
       "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
         "Every pending scheduled item will be removed and will never run. This cannot be undone."
+      ],
+      "Evolution (legacy)": [
+        "Evolution (legacy)"
       ],
       "Example": [
         "Example"
@@ -1822,6 +1873,15 @@
       ],
       "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)": [
         "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
+      ],
+      "For each digital file in the order": [
+        "For each digital file in the order"
+      ],
+      "For each line of the list": [
+        "For each line of the list"
+      ],
+      "For each purchased item in the order": [
+        "For each purchased item in the order"
       ],
       "Forgot your password?": [
         "Forgot your password?"
@@ -2093,6 +2153,9 @@
       "Insert variable": [
         "Insert variable"
       ],
+      "Inside the loop body you can use {{ loop_value }}, {{ loop_number }}, {{ loop_count }} and, for digital files, {{ loop_file_name }} and {{ loop_download_url }}.": [
+        "Inside the loop body you can use {{ loop_value }}, {{ loop_number }}, {{ loop_count }} and, for digital files, {{ loop_file_name }} and {{ loop_download_url }}."
+      ],
       "Install plugin": [
         "Install plugin"
       ],
@@ -2206,6 +2269,15 @@
       ],
       "items": [
         "items"
+      ],
+      "Iterate over": [
+        "Iterate over"
+      ],
+      "Iterate over a collection and run the nested actions once per item.": [
+        "Iterate over a collection and run the nested actions once per item."
+      ],
+      "Iterates over a collection (order files, order items, or a list) and runs the actions inside it once per item.": [
+        "Iterates over a collection (order files, order items, or a list) and runs the actions inside it once per item."
       ],
       "Ivory Coast": [
         "Ivory Coast"
@@ -2363,6 +2435,12 @@
       "Liechtenstein": [
         "Liechtenstein"
       ],
+      "List": [
+        "List"
+      ],
+      "List from a placeholder": [
+        "List from a placeholder"
+      ],
       "Lithuania": [
         "Lithuania"
       ],
@@ -2425,6 +2503,12 @@
       ],
       "Long": [
         "Long"
+      ],
+      "Loop": [
+        "Loop"
+      ],
+      "Loop body": [
+        "Loop body"
       ],
       "Lost cart": [
         "Lost cart"
@@ -2495,6 +2579,9 @@
       "Mauritius": [
         "Mauritius"
       ],
+      "Maximum items": [
+        "Maximum items"
+      ],
       "Mayotte": [
         "Mayotte"
       ],
@@ -2525,6 +2612,9 @@
       "Media type": [
         "Media type"
       ],
+      "Media upload did not return an id.": [
+        "Media upload did not return an id."
+      ],
       "Media URL": [
         "Media URL"
       ],
@@ -2552,6 +2642,9 @@
       "Message sent.": [
         "Message sent."
       ],
+      "Message transport": [
+        "Message transport"
+      ],
       "Messages": [
         "Messages"
       ],
@@ -2572,6 +2665,9 @@
       ],
       "Minutes": [
         "Minutes"
+      ],
+      "Missing Cloud API token or phone number id for media upload.": [
+        "Missing Cloud API token or phone number id for media upload."
       ],
       "Missing post field.": [
         "Missing post field."
@@ -2771,6 +2867,9 @@
       "No license key found to sync.": [
         "No license key found to sync."
       ],
+      "No licensing backend is available.": [
+        "No licensing backend is available."
+      ],
       "No logs available.": [
         "No logs available."
       ],
@@ -2822,6 +2921,12 @@
       "No variables available.": [
         "No variables available."
       ],
+      "No WhatsApp Business Account id is configured.": [
+        "No WhatsApp Business Account id is configured."
+      ],
+      "No WhatsApp Cloud API token is configured.": [
+        "No WhatsApp Cloud API token is configured."
+      ],
       "No workflow steps are currently waiting to run.": [
         "No workflow steps are currently waiting to run."
       ],
@@ -2867,9 +2972,6 @@
       "Notification": [
         "Notification"
       ],
-      "Notify when WhatsApp disconnects": [
-        "Notify when WhatsApp disconnects"
-      ],
       "Number used as the default destination in test mailings. Please only include numbers with country code + area code.": [
         "Number used as the default destination in test mailings. Please only include numbers with country code + area code."
       ],
@@ -2879,6 +2981,9 @@
       "Off": [
         "Off"
       ],
+      "Official WhatsApp Cloud API transport that replaces the legacy relay. Leave the credentials blank to use the values provisioned with your license.": [
+        "Official WhatsApp Cloud API transport that replaces the legacy relay. Leave the credentials blank to use the values provisioned with your license."
+      ],
       "ok": [
         "ok"
       ],
@@ -2887,6 +2992,9 @@
       ],
       "On": [
         "On"
+      ],
+      "One entry per line, or use the delimiter below": [
+        "One entry per line, or use the delimiter below"
       ],
       "Only conditions and operators supported by the engine for this trigger are shown.": [
         "Only conditions and operators supported by the engine for this trigger are shown."
@@ -2929,6 +3037,9 @@
       ],
       "Operator": [
         "Operator"
+      ],
+      "Optional cap on how many items are processed. Leave empty for no limit.": [
+        "Optional cap on how many items are processed. Leave empty for no limit."
       ],
       "Optional rules or context for the AI (brand voice, constraints, product details).": [
         "Optional rules or context for the AI (brand voice, constraints, product details)."
@@ -2977,6 +3088,9 @@
       ],
       "Order partially refunded": [
         "Order partially refunded"
+      ],
+      "Order purchased items": [
+        "Order purchased items"
       ],
       "Order status": [
         "Order status"
@@ -3085,6 +3199,9 @@
       ],
       "Phone number": [
         "Phone number"
+      ],
+      "Phone number ID": [
+        "Phone number ID"
       ],
       "Phone number or a placeholder that resolves to one.": [
         "Phone number or a placeholder that resolves to one."
@@ -3206,6 +3323,9 @@
       "Processing queue": [
         "Processing queue"
       ],
+      "Product name of the current item.": [
+        "Product name of the current item."
+      ],
       "Product search is unavailable.": [
         "Product search is unavailable."
       ],
@@ -3223,6 +3343,12 @@
       ],
       "Proxy API": [
         "Proxy API"
+      ],
+      "Purchased item name (order items loop).": [
+        "Purchased item name (order items loop)."
+      ],
+      "Purchased item quantity (order items loop).": [
+        "Purchased item quantity (order items loop)."
       ],
       "Purchased products": [
         "Purchased products"
@@ -3430,6 +3556,15 @@
       ],
       "Run test": [
         "Run test"
+      ],
+      "Runs the body once for each downloadable file granted in the order. Attach {{ loop item }} files inside the body to send one file per message.": [
+        "Runs the body once for each downloadable file granted in the order. Attach {{ loop item }} files inside the body to send one file per message."
+      ],
+      "Runs the body once for each entry of the list below.": [
+        "Runs the body once for each entry of the list below."
+      ],
+      "Runs the body once for each product line in the order.": [
+        "Runs the body once for each product line in the order."
       ],
       "Russia": [
         "Russia"
@@ -3721,9 +3856,6 @@
       ],
       "Sending...": [
         "Sending..."
-      ],
-      "Sends a notification to the sender when the connection is not established.": [
-        "Sends a notification to the sender when the connection is not established."
       ],
       "Senegal": [
         "Senegal"
@@ -4046,9 +4178,6 @@
       "The coupon already exists.": [
         "The coupon already exists."
       ],
-      "The cURL extension is missing.": [
-        "The cURL extension is missing."
-      ],
       "The debug log is empty.": [
         "The debug log is empty."
       ],
@@ -4069,6 +4198,18 @@
       ],
       "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
         "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again."
+      ],
+      "the license could not be confirmed": [
+        "the license could not be confirmed"
+      ],
+      "The licensing SDK is not installed.": [
+        "The licensing SDK is not installed."
+      ],
+      "The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists.": [
+        "The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists."
+      ],
+      "The licensing service is not configured.": [
+        "The licensing service is not configured."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "The message is prefilled and can be adjusted before sending the test."
@@ -4138,6 +4279,9 @@
       ],
       "The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger.": [
         "The trigger used by this flow is no longer registered. This flow will not be processed until you select an available trigger."
+      ],
+      "The value to iterate. Use {{ placeholders }} — each entry becomes one iteration.": [
+        "The value to iterate. Use {{ placeholders }} — each entry becomes one iteration."
       ],
       "The variable \"%s\" already exists. Choose another name.": [
         "The variable \"%s\" already exists. Choose another name."
@@ -4219,6 +4363,9 @@
       ],
       "This scheduled item will be removed and will never run. This cannot be undone.": [
         "This scheduled item will be removed and will never run. This cannot be undone."
+      ],
+      "This server cannot verify signed license responses (the sodium extension is missing).": [
+        "This server cannot verify signed license responses (the sodium extension is missing)."
       ],
       "This site exposes endpoints to process Joinotify requests.": [
         "This site exposes endpoints to process Joinotify requests."
@@ -4514,6 +4661,9 @@
       "Too short": [
         "Too short"
       ],
+      "Total number of items in the collection.": [
+        "Total number of items in the collection."
+      ],
       "Trash": [
         "Trash"
       ],
@@ -4613,6 +4763,9 @@
       "Undo (Ctrl+Z)": [
         "Undo (Ctrl+Z)"
       ],
+      "Unexpected response from the license server.": [
+        "Unexpected response from the license server."
+      ],
       "United Arab Emirates": [
         "United Arab Emirates"
       ],
@@ -4624,9 +4777,6 @@
       ],
       "Unknown AI error.": [
         "Unknown AI error."
-      ],
-      "Unknown response": [
-        "Unknown response"
       ],
       "Unlimited": [
         "Unlimited"
@@ -4796,6 +4946,9 @@
       "View the recent events recorded by the plugin.": [
         "View the recent events recorded by the plugin."
       ],
+      "waba_id that owns the message templates.": [
+        "waba_id that owns the message templates."
+      ],
       "Wait %s %s": [
         "Wait %s %s"
       ],
@@ -4862,8 +5015,17 @@
       "WhatsApp": [
         "WhatsApp"
       ],
+      "WhatsApp (Cloud API)": [
+        "WhatsApp (Cloud API)"
+      ],
       "WhatsApp automation workflows created with Joinotify.": [
         "WhatsApp automation workflows created with Joinotify."
+      ],
+      "WhatsApp Business Account ID": [
+        "WhatsApp Business Account ID"
+      ],
+      "WhatsApp Cloud API": [
+        "WhatsApp Cloud API"
       ],
       "WhatsApp message sent with the generated coupon.": [
         "WhatsApp message sent with the generated coupon."
@@ -4888,6 +5050,9 @@
       ],
       "Where the trigger fires from. Select an integration to see its available triggers.": [
         "Where the trigger fires from. Select an integration to see its available triggers."
+      ],
+      "Which service delivers WhatsApp messages. \"Automatic\" uses the Cloud API whenever a token is available, otherwise the legacy Evolution relay.": [
+        "Which service delivers WhatsApp messages. \"Automatic\" uses the Cloud API whenever a token is available, otherwise the legacy Evolution relay."
       ],
       "will be moved to trash.": [
         "will be moved to trash."
@@ -5041,6 +5206,9 @@
       ],
       "Your license key: Not available": [
         "Your license key: Not available"
+      ],
+      "Your license needs to be checked": [
+        "Your license needs to be checked"
       ],
       "Your order is confirmed": [
         "Your order is confirmed"
