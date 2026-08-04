@@ -1,4 +1,11 @@
 Versão 2.2.0 (03/08/2026)
+* Novo recurso: Ação "Loop" no construtor de fluxos, que percorre uma coleção e executa as ações do corpo uma vez para cada item, permitindo enviar várias mensagens em sequência
+     - Coleções disponíveis: arquivos digitais do pedido, itens comprados do pedido e lista a partir de uma variável (separada por linha ou delimitador)
+     - Entrega um arquivo por mensagem: por exemplo, uma mensagem de mídia para cada arquivo de download vinculado ao pedido
+     - Nova fonte de anexo "Arquivo do item do loop", que envia o arquivo da iteração atual sem consumir o limite de downloads do cliente
+     - Suporte a tempo de espera (delay) entre as iterações
+* Novas variáveis do loop, disponíveis dentro do corpo do loop: {{ loop_value }}, {{ loop_index }}, {{ loop_number }}, {{ loop_count }}, {{ loop_file_name }}, {{ loop_download_url }}, {{ loop_product_name }}, {{ loop_item_name }} e {{ loop_item_quantity }}
+     - As variáveis do loop são processadas em qualquer campo onde forem inseridas (legenda, URL de mídia, URL de anexo e destinatário)
 * Recurso removido: Notificar quando o WhatsApp desconectar
 * Correção de bugs
      - O código do país padrão (DDI) não era aplicado quando o número não incluía o código, fazendo o envio falhar; agora o país de fallback configurado é usado corretamente
