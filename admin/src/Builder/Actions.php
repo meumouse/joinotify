@@ -57,7 +57,7 @@ class Actions {
                 'description' => __( 'Iterates over a collection (order files, order items, or a list) and runs the actions inside it once per item.', 'joinotify' ),
                 'context' => array(), // available for all the contexts
                 'category' => 'general',
-                'icon' => '<svg class="icon icon-lg icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>',
+                'icon' => '<svg class="icon icon-lg icon-dark loop" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" ><path d="M14 7 9 3v3H8c-3.31 0-6 2.69-6 6s2.69 6 6 6v-2c-2.21 0-4-1.79-4-4s1.79-4 4-4h1v3zm2-1v2c2.21 0 4 1.79 4 4s-1.79 4-4 4h-1v-3l-5 4 5 4v-3h1c3.31 0 6-2.69 6-6s-2.69-6-6-6"></path></svg>',
                 'external_icon' => false,
                 'has_settings' => true,
                 'priority' => 25,
