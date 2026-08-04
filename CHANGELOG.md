@@ -1,5 +1,7 @@
 Versão 2.2.0 (03/08/2026)
 * Recurso removido: Notificar quando o WhatsApp desconectar
+* Correção de bugs
+     - O código do país padrão (DDI) não era aplicado quando o número não incluía o código, fazendo o envio falhar; agora o país de fallback configurado é usado corretamente
 
 Versão 2.1.0 (27/07/2026)
 * Novo recurso: Entrega de produtos digitais do WooCommerce diretamente pelo construtor de fluxos, enviando arquivos e PDFs por e-mail ou WhatsApp

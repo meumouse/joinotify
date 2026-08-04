@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
+use MeuMouse\Joinotify\Validations\Country_Codes;
 
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberFormat;
@@ -48,18 +49,22 @@ class Helpers {
 
     /**
      * Validate and format a phone number, adding the default country code if missing.
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.2.0
      * @param string $phone | Raw phone number
      * @return string Formatted phone number with country code
      */
     public static function validate_and_format_phone( $phone ) {
-        // Get the default country code from admin settings (e.g., "BR" for Brazil)
-        $default_country_code = Admin::get_setting('joinotify_default_country_code');
+        // Get the default dial code from admin settings (e.g., "55" for Brazil).
+        $default_dial_code = Admin::get_setting('joinotify_default_country_code');
 
-        // Ensure country code is uppercase (as required by libphonenumber)
-        $default_country_code = strtoupper( $default_country_code );
+        // The setting stores a numeric dial code ("55"), but libphonenumber's
+        // parse() expects an ISO 3166-1 alpha-2 region code ("BR"). Convert it
+        // so the fallback region is actually applied when the number has no
+        // country code; passing the raw dial code made parse() throw and the
+        // number was returned without the country prefix.
+        $default_region = self::dial_code_to_region( $default_dial_code );
 
         // Instance of the phone number utility class
         $phoneUtil = PhoneNumberUtil::getInstance();
@@ -85,7 +90,7 @@ class Helpers {
             // the correct dialing prefix. The previous approach prepended the ISO
             // region letters ("BR") to a digit string and parsed "+BR55..." — which
             // always threw and returned the number without a country code.
-            $numberProto = $phoneUtil->parse( $phone, $default_country_code );
+            $numberProto = $phoneUtil->parse( $phone, $default_region );
 
             // Return the formatted phone number in INTERNATIONAL format
             return $phoneUtil->format( $numberProto, PhoneNumberFormat::INTERNATIONAL );
@@ -93,6 +98,36 @@ class Helpers {
             // If parsing fails again, return the original digits
             return $phone;
         }
+    }
+
+
+    /**
+     * Convert a numeric dial code (e.g. "55") into an ISO 3166-1 alpha-2 region
+     * code (e.g. "BR"), which is what libphonenumber expects as a default region.
+     *
+     * @since 2.2.0
+     * @param string $dial_code | Numeric dial code (e.g. "55")
+     * @return string|null ISO2 region code (e.g. "BR"), or null when it cannot be resolved
+     */
+    public static function dial_code_to_region( $dial_code ) {
+        $dial_code = preg_replace( '/\D/', '', (string) $dial_code );
+
+        // "0" is the "None" option and an empty value means "no default region".
+        if ( '' === $dial_code || '0' === $dial_code ) {
+            return null;
+        }
+
+        $countries = Country_Codes::get_country_codes_with_names();
+
+        if ( ! isset( $countries[ $dial_code ] ) ) {
+            return null;
+        }
+
+        // Each dial code maps to one or more ISO2 regions; use the first one as
+        // the default (e.g. "55" => "BR", "1" => "US").
+        $region = array_key_first( $countries[ $dial_code ] );
+
+        return ( is_string( $region ) && '' !== $region ) ? strtoupper( $region ) : null;
     }
 
     
