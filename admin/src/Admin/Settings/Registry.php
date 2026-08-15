@@ -46,7 +46,7 @@ class Registry {
             array(
                 'id' => 'general',
                 'title' => __( 'General', 'joinotify' ),
-                'description' => __( "Plugin's basic preferences, sending proxy, and WhatsApp notifications.", 'joinotify' ),
+                'description' => __( "Plugin's basic preferences, WhatsApp connection, and notifications.", 'joinotify' ),
                 'layout' => 'cards',
                 'cards' => array(
                     array(
@@ -72,13 +72,18 @@ class Registry {
                     ),
                     array(
                         'id' => 'general-proxy',
-                        'title' => __( 'Proxy API', 'joinotify' ),
+                        'title' => __( 'Proxy API (deprecated)', 'joinotify' ),
                         'description' => __( 'Activate and configure the endpoints used to process external API requests.', 'joinotify' ),
+                        'deprecated' => true,
+                        'deprecation_notice' => __( 'The Proxy API is deprecated and will be removed in an upcoming release. Sending moves exclusively to the Joinotify API (official WhatsApp Cloud API), so migrate any integration that still calls these endpoints.', 'joinotify' ),
                         'fields' => array(
                             self::field_toggle(
                                 'enable_proxy_api',
                                 esc_html__( 'Enable Proxy API', 'joinotify' ),
-                                esc_html__( 'This site exposes endpoints to process Joinotify requests.', 'joinotify' )
+                                esc_html__( 'Deprecated: this site exposes endpoints to process Joinotify requests. These endpoints will be removed in an upcoming release.', 'joinotify' ),
+                                array(
+                                    'deprecated' => true,
+                                )
                             ),
                             self::field_text(
                                 'send_text_proxy_api_route',

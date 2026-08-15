@@ -76,8 +76,11 @@ function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type,
 
 /**
  * Get endpoint for Proxy API send text message
- * 
+ *
  * @since 1.1.0
+ * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
+ *             upcoming release. Use joinotify_send_whatsapp_message_text(),
+ *             which delivers through the Joinotify API.
  * @return string
  */
 function joinotify_proxy_api_text_message_text_endpoint() {
@@ -87,8 +90,11 @@ function joinotify_proxy_api_text_message_text_endpoint() {
 
 /**
  * Get endpoint for Proxy API send media message
- * 
+ *
  * @since 1.1.0
+ * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
+ *             upcoming release. Use joinotify_send_whatsapp_message_media(),
+ *             which delivers through the Joinotify API.
  * @return string
  */
 function joinotify_proxy_api_media_message_text_endpoint() {
@@ -98,8 +104,10 @@ function joinotify_proxy_api_media_message_text_endpoint() {
 
 /**
  * Get Proxy API key
- * 
+ *
  * @since 1.1.0
+ * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
+ *             upcoming release, along with its API key.
  * @return string
  */
 function joinotify_get_proxy_api_key() {

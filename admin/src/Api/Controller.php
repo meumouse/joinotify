@@ -250,6 +250,9 @@ class Controller {
      *
      * @since 1.0.0
      * @version 1.4.7
+     * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
+     *             upcoming release. Use Transport::send_message_text(), which
+     *             delivers through the Joinotify API.
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
@@ -280,6 +283,9 @@ class Controller {
      *
      * @since 1.0.0
      * @version 1.4.7
+     * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
+     *             upcoming release. Use Transport::send_message_media(), which
+     *             delivers through the Joinotify API.
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */

@@ -45,6 +45,11 @@ async function copyApiKey() {
 <template>
   <ModalDialog :open="open" :title="__('Configure Proxy API', textDomain)" :description="__('Adjust the routes and API key used by the proxy.', textDomain)" :eyebrow="__('General', textDomain)" size-class="max-w-4xl" @close="$emit('close')">
     <div class="space-y-5">
+      <div class="rounded-lg border border-amber-200 bg-amber-50 px-5 py-4 text-[13px] leading-5 text-amber-800">
+        <strong class="font-semibold">{{ __('The Proxy API is deprecated and will be removed soon.', textDomain) }}</strong>
+        {{ __('These routes keep working for now, but sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls them.', textDomain) }}
+      </div>
+
       <div class="grid gap-4 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
         <div>
           <h4 class="text-[15px] font-semibold text-slate-800">{{ __('Text message route', textDomain) }}</h4>

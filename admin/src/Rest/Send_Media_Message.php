@@ -14,6 +14,10 @@ defined('ABSPATH') || exit;
  * Authentication and registration conditions are inherited from
  * Proxy_Message_Route; this class only declares the route suffix
  * and the media-specific argument schema.
+ *
+ * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
+ *             upcoming release. Send messages through the Joinotify API
+ *             (official WhatsApp Cloud API) instead.
  */
 class Send_Media_Message extends Proxy_Message_Route {
 
@@ -59,7 +63,7 @@ class Send_Media_Message extends Proxy_Message_Route {
      * @param WP_REST_Request $request REST request instance.
      * @return \WP_REST_Response
      */
-    public function handle( WP_REST_Request $request ) {
+    protected function handle_message( WP_REST_Request $request ) {
         $sender     = $request->get_param( 'sender' );
         $receiver   = $request->get_param( 'receiver' );
         $media_type = $request->get_param( 'media_type' );

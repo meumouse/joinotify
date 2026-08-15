@@ -32,7 +32,12 @@ defineEmits(['update-setting', 'open-proxy-config']);
 
     <div class="grid items-start gap-6 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)] lg:items-center">
       <div>
-        <h3 class="text-[15px] font-semibold text-slate-800">{{ __('Enable Proxy API', textDomain) }}</h3>
+        <h3 class="flex flex-wrap items-center gap-2 text-[15px] font-semibold text-slate-800">
+          {{ __('Enable Proxy API', textDomain) }}
+          <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-700">
+            {{ __('Deprecated', textDomain) }}
+          </span>
+        </h3>
         <p class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">
           {{ __('Turn this on to expose endpoints on this site for processing Joinotify API requests.', textDomain) }}
         </p>
@@ -48,6 +53,11 @@ defineEmits(['update-setting', 'open-proxy-config']);
           {{ __('Configure', textDomain) }}
         </button>
       </div>
+    </div>
+
+    <div class="rounded-lg border border-amber-200 bg-amber-50 px-5 py-4 text-[13px] leading-5 text-amber-800">
+      <strong class="font-semibold">{{ __('The Proxy API is deprecated and will be removed soon.', textDomain) }}</strong>
+      {{ __('Sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls these endpoints, then turn this option off.', textDomain) }}
     </div>
   </div>
 </template>
