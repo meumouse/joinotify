@@ -21,6 +21,8 @@ import OtpField from './OtpField.vue';
 import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
 import AiModelField from './AiModelField.vue';
+import CloudConnectField from './CloudConnectField.vue';
+import JoinotifyApiKeyField from './JoinotifyApiKeyField.vue';
 
 const registry = new Map();
 
@@ -78,6 +80,8 @@ registerAlias('color-scale-field', ColorScaleField);
 registerAlias('openai-model-select', AiModelField);
 registerAlias('anthropic-model-select', AiModelField);
 registerAlias('ai-model-select', AiModelField);
+registerAlias('cloud-connect', CloudConnectField);
+registerAlias('joinotify-api-key', JoinotifyApiKeyField);
 
 /**
  * Convert a snake_case or kebab-case key into camelCase.

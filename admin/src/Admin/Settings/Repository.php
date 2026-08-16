@@ -61,6 +61,15 @@ class Repository {
             $sanitized[ $key ] = self::sanitize_setting_value( $key, $value, $definition );
         }
 
+        // Write-only credentials are blanked before they reach the browser, so
+        // the form always submits them empty. Treat that as "unchanged" rather
+        // than as a deletion — clearing one is done through its own control.
+        foreach ( Registry::get_write_only_keys() as $key ) {
+            if ( '' === trim( (string) ( $sanitized[ $key ] ?? '' ) ) && '' !== trim( (string) ( $current[ $key ] ?? '' ) ) ) {
+                $sanitized[ $key ] = $current[ $key ];
+            }
+        }
+
         update_option( 'joinotify_settings', $sanitized );
 
         return $sanitized;

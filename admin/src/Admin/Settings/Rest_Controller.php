@@ -27,6 +27,7 @@ class Rest_Controller extends Abstract_Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Phone_Check_Connection',
         '\MeuMouse\Joinotify\Rest\Cloud_Numbers',
         '\MeuMouse\Joinotify\Rest\Cloud_Numbers_Sync',
+        '\MeuMouse\Joinotify\Rest\Cloud_Connect_Key',
         '\MeuMouse\Joinotify\Rest\Cloud_Connect_Start',
         '\MeuMouse\Joinotify\Rest\Cloud_Connect_License',
         '\MeuMouse\Joinotify\Rest\Cloud_Connect_Finish',

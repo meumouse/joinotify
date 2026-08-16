@@ -36,6 +36,54 @@ class Registry {
 
 
     /**
+     * Settings that may be written from the browser but never read back into it.
+     *
+     * A live sending credential has no business sitting in the JSON payload of
+     * every admin page load. The screen only needs to know whether one is
+     * stored, which `get_settings_for_client()` reports as a `_is_set` flag.
+     *
+     * @since 2.4.0
+     * @return array<int,string>
+     */
+    public static function get_write_only_keys() {
+        /**
+         * Filter the settings never sent to the browser.
+         *
+         * A key listed here is also protected on save: an empty incoming value
+         * leaves the stored one alone, so the field can stay blank in the form
+         * without wiping the credential.
+         *
+         * @since 2.4.0
+         * @param array<int,string> $keys
+         */
+        return apply_filters( 'Joinotify/Admin/Settings/Write_Only_Keys', array(
+            'whatsapp_cloud_api_token',
+        ) );
+    }
+
+
+    /**
+     * The settings as the browser is allowed to see them.
+     *
+     * @since 2.4.0
+     * @param array<string,mixed> $settings Full settings array.
+     * @return array<string,mixed>
+     */
+    public static function get_settings_for_client( $settings ) {
+        foreach ( self::get_write_only_keys() as $key ) {
+            if ( ! array_key_exists( $key, $settings ) ) {
+                continue;
+            }
+
+            $settings[ $key . '_is_set' ] = '' !== trim( (string) $settings[ $key ] );
+            $settings[ $key ] = '';
+        }
+
+        return $settings;
+    }
+
+
+    /**
      * Build the settings schema consumed by the Vue app.
      *
      * @since 1.4.7
@@ -105,54 +153,6 @@ class Registry {
                                 'proxy_api_key',
                                 esc_html__( 'API key', 'joinotify' ),
                                 esc_html__( 'Key used to authenticate Proxy API calls.', 'joinotify' ),
-                                array(
-                                    'placeholder' => '',
-                                )
-                            ),
-                        ),
-                    ),
-                    array(
-                        'id' => 'general-whatsapp-cloud',
-                        'title' => __( 'WhatsApp Cloud API', 'joinotify' ),
-                        'description' => __( 'Official WhatsApp Cloud API transport that replaces the legacy relay. The API key issued for this site on the Joinotify panel is the only credential the plugin needs.', 'joinotify' ),
-                        'fields' => array(
-                            self::field_select(
-                                'whatsapp_transport',
-                                esc_html__( 'Message transport', 'joinotify' ),
-                                esc_html__( 'Which service delivers WhatsApp messages. "Automatic" uses the Cloud API whenever a token is available, otherwise the legacy Evolution relay.', 'joinotify' ),
-                                array(
-                                    array( 'value' => 'auto', 'label' => esc_html__( 'Automatic', 'joinotify' ) ),
-                                    array( 'value' => 'cloud', 'label' => esc_html__( 'Cloud API (official)', 'joinotify' ) ),
-                                    array( 'value' => 'evolution', 'label' => esc_html__( 'Evolution (legacy)', 'joinotify' ) ),
-                                ),
-                                array(
-                                    'default' => 'auto',
-                                )
-                            ),
-                            self::field_text(
-                                'whatsapp_cloud_api_token',
-                                esc_html__( 'Joinotify account', 'joinotify' ),
-                                esc_html__( 'Connect your account on the panel to issue a key for this site. Pasting a key (sk_live_...) by hand works too.', 'joinotify' ),
-                                array(
-                                    'type' => 'cloud-connect',
-                                    'placeholder' => 'sk_live_...',
-                                    'component_props' => array(
-                                        'panel_url' => JOINOTIFY_PANEL_URL,
-                                    ),
-                                )
-                            ),
-                            self::field_text(
-                                'whatsapp_phone_number_id',
-                                esc_html__( 'Phone number ID', 'joinotify' ),
-                                esc_html__( 'Default phone_number_id used as the message origin. Leave blank to use the oldest active number.', 'joinotify' ),
-                                array(
-                                    'placeholder' => '',
-                                )
-                            ),
-                            self::field_text(
-                                'whatsapp_waba_id',
-                                esc_html__( 'WhatsApp Business Account ID', 'joinotify' ),
-                                esc_html__( 'waba_id that owns the message templates.', 'joinotify' ),
                                 array(
                                     'placeholder' => '',
                                 )
@@ -354,6 +354,9 @@ class Registry {
     public static function get_field_definitions() {
         $fields = array();
 
+        // The integrations section carries the integration cards, so the fields
+        // declared inside integration modals (the WhatsApp credentials, the
+        // Telegram bot token, the AI keys) are collected here too.
         foreach ( self::get_schema() as $section ) {
             foreach ( $section['cards'] ?? array() as $card ) {
                 foreach ( self::collect_card_fields( $card ) as $field ) {
@@ -626,7 +629,7 @@ class Registry {
         return apply_filters( 'Joinotify/Admin/Settings/Bootstrap_Data', array(
             'version' => JOINOTIFY_VERSION,
             'page' => 'settings',
-            'settings' => self::get_settings(),
+            'settings' => self::get_settings_for_client( self::get_settings() ),
             'schema' => self::get_schema(),
             'section_tabs' => self::get_section_tabs(),
             'integrations' => self::get_integration_cards(),

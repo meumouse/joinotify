@@ -15,6 +15,13 @@ Versão 2.4.0
      - O assistente mostra exatamente o conteúdo que seria enviado antes de você decidir
      - Nunca inclui endereço do site, e-mail, telefones, contatos, conteúdo de mensagens, fluxos ou credenciais
      - Pode ser desligado a qualquer momento em Configurações → Sobre
+* Novo recurso: modal de configuração no card do WhatsApp, em Configurações → Integrações
+     - Botão "Configurar" abre o modal com a chave da API do Joinotify, o transporte de mensagens, o ID do número e o ID da conta empresarial
+     - O botão "Conectar" valida a chave na hora contra a API e importa os números da conta, preenchendo o ID do número e o da conta empresarial automaticamente
+     - Se a chave for recusada, a chave anterior é restaurada — o site nunca fica com uma chave que acabou de falhar
+     - Botão "Desconectar" apaga a chave sem remover os números já importados
+     - A chave da API deixa de ser enviada ao navegador: a tela recebe apenas o prefixo público e a informação de que existe uma chave salva
+     - A chave da API do WhatsApp, o token do Telegram e a chave do Resend passam a ser excluídos da exportação de configurações
 * Alteração: as atualizações passam a ser entregues pelo próprio WordPress
      - O verificador de atualizações próprio do plugin e as opções "Atualizações automáticas" e "Avisos de atualização" foram removidos
      - Sites instalados fora do diretório do WordPress.org precisam reinstalar o plugin pelo diretório para voltar a receber atualizações

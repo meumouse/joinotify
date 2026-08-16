@@ -53,6 +53,9 @@ class Transfer {
             'proxy_api_key',
             'openai_api_key',
             'anthropic_api_key',
+            'whatsapp_cloud_api_token',
+            'telegram_bot_token',
+            'resend_api_key',
         ) );
     }
 
