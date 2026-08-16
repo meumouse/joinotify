@@ -1,0 +1,138 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "en_US",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "0 results": [
+        "0 results"
+      ],
+      "Actions": [
+        "Actions"
+      ],
+      "All": [
+        "All"
+      ],
+      "Cancel": [
+        "Cancel"
+      ],
+      "Cancel all": [
+        "Cancel all"
+      ],
+      "Cancel all scheduled items": [
+        "Cancel all scheduled items"
+      ],
+      "Cancel item": [
+        "Cancel item"
+      ],
+      "Cancel scheduled item": [
+        "Cancel scheduled item"
+      ],
+      "Clear filters": [
+        "Clear filters"
+      ],
+      "Confirm": [
+        "Confirm"
+      ],
+      "Could not cancel the scheduled item.": [
+        "Could not cancel the scheduled item."
+      ],
+      "Could not clear the queue.": [
+        "Could not clear the queue."
+      ],
+      "Could not load the processing queue.": [
+        "Could not load the processing queue."
+      ],
+      "Could not run the scheduled item.": [
+        "Could not run the scheduled item."
+      ],
+      "Dispatch now": [
+        "Dispatch now"
+      ],
+      "Due": [
+        "Due"
+      ],
+      "End of workflow": [
+        "End of workflow"
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Every pending scheduled item will be removed and will never run. This cannot be undone."
+      ],
+      "Inactive": [
+        "Inactive"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Loading…": [
+        "Loading…"
+      ],
+      "more": [
+        "more"
+      ],
+      "Next action": [
+        "Next action"
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "No workflow steps are currently waiting to run."
+      ],
+      "Nothing in the queue": [
+        "Nothing in the queue"
+      ],
+      "of": [
+        "of"
+      ],
+      "Processing queue": [
+        "Processing queue"
+      ],
+      "Recipient": [
+        "Recipient"
+      ],
+      "Refresh": [
+        "Refresh"
+      ],
+      "Scheduled": [
+        "Scheduled"
+      ],
+      "Scheduled for": [
+        "Scheduled for"
+      ],
+      "Scheduler": [
+        "Scheduler"
+      ],
+      "Search workflow, recipient or action": [
+        "Search workflow, recipient or action"
+      ],
+      "Select an option": [
+        "Select an option"
+      ],
+      "Status": [
+        "Status"
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone."
+      ],
+      "The workflow is not published.": [
+        "The workflow is not published."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "This scheduled item will be removed and will never run. This cannot be undone."
+      ],
+      "Try again": [
+        "Try again"
+      ],
+      "Type to filter…": [
+        "Type to filter…"
+      ],
+      "Workflow": [
+        "Workflow"
+      ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing."
+      ]
+    }
+  }
+}

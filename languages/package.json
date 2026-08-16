@@ -9,6 +9,8 @@
 		"compile:mo:lang": "node compile-mo-cli.js --lang",
 		"compile:php": "node compile-php-cli.js",
 		"compile:php:lang": "node compile-php-cli.js --lang",
+		"compile:json": "node compile-json-cli.js",
+		"compile:json:lang": "node compile-json-cli.js --lang",
 		"pretranslate": "npm run pot",
 		"translate": "node translate-cli.js",
 		"translate:lang": "node translate-cli.js --lang",

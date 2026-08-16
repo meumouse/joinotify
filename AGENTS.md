@@ -226,7 +226,10 @@ examples in [`DEVELOPERS.md`](DEVELOPERS.md):
 - **Translation-only changes don't require a frontend rebuild** — JS translations are injected at
   runtime via `wp.i18n.setLocaleData` per script handle.
 - When **adding/changing strings**: run `npm run pot` in `languages/`, translate
-  (`npm run translate` / `:ai`) and compile (`compile:mo`, `compile:php`).
+  (`npm run translate` / `:ai`) and compile (`compile:mo`, `compile:php`, `compile:json`).
+- Each script handle's `.json` carries **only the strings its own bundle uses**. The handle list is
+  derived from `app/src/entries/*` and the `mountPage('<handle>', …)` call in each entry, so a new
+  page needs no separate list — but an entry without a resolvable handle fails the build.
 
 ---
 

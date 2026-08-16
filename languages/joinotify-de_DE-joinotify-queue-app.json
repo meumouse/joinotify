@@ -1,0 +1,138 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "de_DE",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "0 results": [
+        "0 Ergebnisse"
+      ],
+      "Actions": [
+        "Aktionen"
+      ],
+      "All": [
+        "Alle"
+      ],
+      "Cancel": [
+        "Abbrechen"
+      ],
+      "Cancel all": [
+        "Alle abbrechen"
+      ],
+      "Cancel all scheduled items": [
+        "Alle geplanten Elemente abbrechen"
+      ],
+      "Cancel item": [
+        "Element abbrechen"
+      ],
+      "Cancel scheduled item": [
+        "Geplantes Element abbrechen"
+      ],
+      "Clear filters": [
+        "Filter löschen"
+      ],
+      "Confirm": [
+        "Bestätigen"
+      ],
+      "Could not cancel the scheduled item.": [
+        "Der geplante Artikel konnte nicht storniert werden."
+      ],
+      "Could not clear the queue.": [
+        "Die Warteschlange konnte nicht gelöscht werden."
+      ],
+      "Could not load the processing queue.": [
+        "Die Verarbeitungswarteschlange konnte nicht geladen werden."
+      ],
+      "Could not run the scheduled item.": [
+        "Konnte das geplante Element nicht ausführen."
+      ],
+      "Dispatch now": [
+        "Jetzt versenden"
+      ],
+      "Due": [
+        "Fällig"
+      ],
+      "End of workflow": [
+        "Ende des Workflows"
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Jeder ausstehende geplante Eintrag wird entfernt und wird niemals ausgeführt. Dies kann nicht rückgängig gemacht werden."
+      ],
+      "Inactive": [
+        "Inaktiv"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Loading…": [
+        "Lädt…"
+      ],
+      "more": [
+        "mehr"
+      ],
+      "Next action": [
+        "Nächste Aktion"
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "Derzeit warten keine Workflow-Schritte auf die Ausführung."
+      ],
+      "Nothing in the queue": [
+        "Nichts in der Warteschlange"
+      ],
+      "of": [
+        "von"
+      ],
+      "Processing queue": [
+        "Verarbeitungsschlange"
+      ],
+      "Recipient": [
+        "Empfänger"
+      ],
+      "Refresh": [
+        "Aktualisieren"
+      ],
+      "Scheduled": [
+        "Geplant"
+      ],
+      "Scheduled for": [
+        "Geplant für"
+      ],
+      "Scheduler": [
+        "Planer"
+      ],
+      "Search workflow, recipient or action": [
+        "Workflow, Empfänger oder Aktion suchen"
+      ],
+      "Select an option": [
+        "Wählen Sie eine Option"
+      ],
+      "Status": [
+        "Status"
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "Die verbleibenden Aktionen werden jetzt ausgeführt, wobei die geplante Wartezeit übersprungen wird. Dies kann nicht rückgängig gemacht werden."
+      ],
+      "The workflow is not published.": [
+        "Der Workflow ist nicht veröffentlicht."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "Dieser geplante Artikel wird entfernt und wird niemals ausgeführt. Dies kann nicht rückgängig gemacht werden."
+      ],
+      "Try again": [
+        "Erneut versuchen"
+      ],
+      "Type to filter…": [
+        "Tippen Sie, um zu filtern…"
+      ],
+      "Workflow": [
+        "Workflow"
+      ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Workflow-Schritte warten auf eine Verzögerung, bevor sie ausgeführt werden. Dispatchen Sie einen jetzt, um die Wartezeit zu überspringen, oder brechen Sie ihn ab, um die Verarbeitung zu stoppen."
+      ]
+    }
+  }
+}

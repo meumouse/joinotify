@@ -1,0 +1,45 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "fr_FR",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "AI provider": [
+        "Fournisseur AI"
+      ],
+      "Back": [
+        "Retour"
+      ],
+      "Close": [
+        "Fermer"
+      ],
+      "Connected": [
+        "Connecté"
+      ],
+      "Continue": [
+        "Continuer"
+      ],
+      "Default country code": [
+        "Code pays par défaut"
+      ],
+      "Documentation": [
+        "Documentation"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "No options available": [
+        "Aucune option disponible"
+      ],
+      "Search...": [
+        "Rechercher..."
+      ],
+      "Select an option": [
+        "Sélectionnez une option"
+      ]
+    }
+  }
+}

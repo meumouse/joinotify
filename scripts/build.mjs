@@ -204,10 +204,14 @@ function buildTranslations() {
 		run('npm', ['run', script], langDir);
 	}
 
-	// Compile .po -> .mo and .l10n.php so WordPress can load them at runtime.
+	// Compile .po -> .mo and .l10n.php so WordPress can load them at runtime,
+	// plus the per-handle .json catalogues wp.i18n reads on the JS side. The
+	// JSONs used to be written by translate-cli.js alone, so a build without
+	// --translate shipped whatever they happened to contain last.
 	run('npm', ['run', 'compile:mo'], langDir);
 	run('npm', ['run', 'compile:php'], langDir);
-	ok('Translations compiled (languages/*.mo, *.l10n.php).');
+	run('npm', ['run', 'compile:json'], langDir);
+	ok('Translations compiled (languages/*.mo, *.l10n.php, *.json).');
 }
 
 async function stageFiles() {

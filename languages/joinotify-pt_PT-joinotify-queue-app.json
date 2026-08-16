@@ -1,0 +1,138 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "pt_PT",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "0 results": [
+        "0 resultados"
+      ],
+      "Actions": [
+        "Ações"
+      ],
+      "All": [
+        "Todos"
+      ],
+      "Cancel": [
+        "Cancelar"
+      ],
+      "Cancel all": [
+        "Cancelar tudo"
+      ],
+      "Cancel all scheduled items": [
+        "Cancelar todos os itens agendados"
+      ],
+      "Cancel item": [
+        "Cancelar item"
+      ],
+      "Cancel scheduled item": [
+        "Cancelar item agendado"
+      ],
+      "Clear filters": [
+        "Limpar filtros"
+      ],
+      "Confirm": [
+        "Confirmar"
+      ],
+      "Could not cancel the scheduled item.": [
+        "Não foi possível cancelar o item agendado."
+      ],
+      "Could not clear the queue.": [
+        "Não foi possível limpar a fila."
+      ],
+      "Could not load the processing queue.": [
+        "Não foi possível carregar a fila de processamento."
+      ],
+      "Could not run the scheduled item.": [
+        "Não foi possível executar o item agendado."
+      ],
+      "Dispatch now": [
+        "Enviar agora"
+      ],
+      "Due": [
+        "Devido"
+      ],
+      "End of workflow": [
+        "Fim do fluxo de trabalho"
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Cada item agendado pendente será removido e nunca será executado. Isto não pode ser desfeito."
+      ],
+      "Inactive": [
+        "Inativo"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Loading…": [
+        "A carregar…"
+      ],
+      "more": [
+        "mais"
+      ],
+      "Next action": [
+        "Próxima ação"
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "Nenhum passo de workflow está atualmente à espera de execução."
+      ],
+      "Nothing in the queue": [
+        "Nada na fila"
+      ],
+      "of": [
+        "de"
+      ],
+      "Processing queue": [
+        "Fila de processamento"
+      ],
+      "Recipient": [
+        "Destinatário"
+      ],
+      "Refresh": [
+        "Atualizar"
+      ],
+      "Scheduled": [
+        "Agendado"
+      ],
+      "Scheduled for": [
+        "Agendado para"
+      ],
+      "Scheduler": [
+        "Agendador"
+      ],
+      "Search workflow, recipient or action": [
+        "Pesquisar fluxo de trabalho, destinatário ou ação"
+      ],
+      "Select an option": [
+        "Selecione uma opção"
+      ],
+      "Status": [
+        "Estado"
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "As ações restantes serão executadas agora, ignorando a espera agendada. Isto não pode ser desfeito."
+      ],
+      "The workflow is not published.": [
+        "O fluxo de trabalho não está publicado."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "Este item agendado será removido e nunca será executado. Isto não pode ser desfeito."
+      ],
+      "Try again": [
+        "Tente novamente"
+      ],
+      "Type to filter…": [
+        "Digite para filtrar…"
+      ],
+      "Workflow": [
+        "Fluxo de trabalho"
+      ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Passos do fluxo de trabalho aguardando um atraso antes de serem executados. Despache um agora para pular a espera, ou cancele para parar o processamento."
+      ]
+    }
+  }
+}

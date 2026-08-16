@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Otp_Login;
 
+use MeuMouse\Joinotify\Assets\Settings_Assets;
 use MeuMouse\Joinotify\Core\Scripts;
 
 defined('ABSPATH') || exit;
@@ -53,6 +54,16 @@ class Frontend_Assets {
     public function __construct() {
         add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ), 5 );
         add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
+
+        // The languages pipeline names its JSONs after the script handle, which
+        // core never looks for on its own. Settings_Assets registers the same
+        // remap, but only inside wp-admin, so this bundle needs its own.
+        add_filter(
+            'load_script_translation_file',
+            array( Settings_Assets::class, 'resolve_script_translation_file' ),
+            10,
+            3
+        );
     }
 
 

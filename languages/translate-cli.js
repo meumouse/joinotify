@@ -6,6 +6,7 @@ import { Translate } from "@google-cloud/translate/build/src/v2/index.js";
 import dotenv from "dotenv";
 import { translateStringsOpenAI } from "./openai-translate.js";
 import { poDataToPhp } from "./l10n-php.js";
+import { writeScriptTranslations } from "./script-translations.js";
 
 dotenv.config();
 
@@ -13,14 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const TEXT_DOMAIN = "joinotify";
-const SCRIPT_HANDLES = [
-  "joinotify",
-  "joinotify-settings-app",
-  "joinotify-license-app",
-  "joinotify-builder-app",
-  "joinotify-workflows-app",
-  "joinotify-history-app",
-];
+const PLUGIN_ROOT = path.resolve(__dirname, "..");
 const POT_FILE = path.join(__dirname, `${TEXT_DOMAIN}.pot`);
 const BATCH_SIZE = 50;
 const DELAY_BETWEEN_BATCHES = 1000;
@@ -287,34 +281,7 @@ function writePhpFile(poData, outputPath) {
   fs.writeFileSync(outputPath, poDataToPhp(poData));
 }
 
-function generateJsonFile(poData, jsonPath, langCode, domain = TEXT_DOMAIN) {
-  const wpFormat = {
-    domain: TEXT_DOMAIN,
-    locale_data: {
-      [TEXT_DOMAIN]: {
-        "": {
-          domain: TEXT_DOMAIN,
-          lang: langCode,
-          "plural-forms": "nplurals=2; plural=(n != 1);",
-        },
-      },
-    },
-  };
-
-  for (const [msgid, entry] of Object.entries(poData.translations[""])) {
-    if (msgid === "") {
-      continue;
-    }
-
-    if (entry.msgstr && entry.msgstr[0]) {
-      wpFormat.locale_data[TEXT_DOMAIN][msgid] = entry.msgstr;
-    }
-  }
-
-  fs.writeFileSync(jsonPath, JSON.stringify(wpFormat, null, 2));
-}
-
-function writeTranslationArtifacts(poData, poPath, moPath, phpPath, jsonPaths, langCode) {
+function writeTranslationArtifacts(poData, poPath, moPath, phpPath, langCode) {
   writePoFile(poData, poPath);
   console.log(`   Written: ${path.basename(poPath)}`);
 
@@ -324,10 +291,12 @@ function writeTranslationArtifacts(poData, poPath, moPath, phpPath, jsonPaths, l
   writePhpFile(poData, phpPath);
   console.log(`   Written: ${path.basename(phpPath)}`);
 
-  for (const { path: jsonPath, domain } of jsonPaths) {
-    generateJsonFile(poData, jsonPath, langCode, domain);
-    console.log(`   Written: ${path.basename(jsonPath)}`);
-  }
+  writeScriptTranslations(poData, {
+    pluginRoot: PLUGIN_ROOT,
+    outputDir: __dirname,
+    textDomain: TEXT_DOMAIN,
+    locale: langCode,
+  });
 }
 
 async function main() {
@@ -359,10 +328,6 @@ async function main() {
     const poPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.po`);
     const moPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.mo`);
     const phpPath = path.join(__dirname, `${TEXT_DOMAIN}-${langCode}.l10n.php`);
-    const jsonPaths = SCRIPT_HANDLES.map((domain) => ({
-      domain,
-      path: path.join(__dirname, `${TEXT_DOMAIN}-${langCode}-${domain}.json`),
-    }));
 
     let existingPoData = null;
 
@@ -412,7 +377,7 @@ async function main() {
       poData = createPoFile(potData, existingPoData, newTranslations, langCode);
     }
 
-    writeTranslationArtifacts(poData, poPath, moPath, phpPath, jsonPaths, langCode);
+    writeTranslationArtifacts(poData, poPath, moPath, phpPath, langCode);
   }
 
   console.log("\nTranslation complete.");

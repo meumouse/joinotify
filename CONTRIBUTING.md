@@ -209,7 +209,11 @@ refresh / rebuild).
 - **Mudanças só de tradução não exigem rebuild do frontend** — as traduções de JS são injetadas
   em runtime via `wp.i18n.setLocaleData` por handle de script.
 - Ao **adicionar/alterar strings** no código: rode `npm run pot` em `languages/` para regenerar o
-  `.pot`, depois traduza (`npm run translate` / `:ai`) e compile (`compile:mo`, `compile:php`).
+  `.pot`, depois traduza (`npm run translate` / `:ai`) e compile (`compile:mo`, `compile:php`,
+  `compile:json`).
+- Cada `.json` de handle carrega **apenas as strings do próprio bundle**. A lista de handles vem de
+  `app/src/entries/*` e da chamada `mountPage('<handle>', …)` de cada entry — uma página nova não
+  precisa de lista separada, mas um entry sem handle resolvível interrompe o build.
 - Idiomas mantidos: **pt_BR, en_US, es_ES**.
 
 ---

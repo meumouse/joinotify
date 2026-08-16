@@ -1,0 +1,138 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "fr_FR",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "0 results": [
+        "0 résultats"
+      ],
+      "Actions": [
+        "Actions"
+      ],
+      "All": [
+        "Tous"
+      ],
+      "Cancel": [
+        "Annuler"
+      ],
+      "Cancel all": [
+        "Annuler tout"
+      ],
+      "Cancel all scheduled items": [
+        "Annuler tous les éléments programmés"
+      ],
+      "Cancel item": [
+        "Annuler l'élément"
+      ],
+      "Cancel scheduled item": [
+        "Annuler l'élément programmé"
+      ],
+      "Clear filters": [
+        "Effacer les filtres"
+      ],
+      "Confirm": [
+        "Confirmer"
+      ],
+      "Could not cancel the scheduled item.": [
+        "Impossible d'annuler l'élément programmé."
+      ],
+      "Could not clear the queue.": [
+        "Impossible de vider la file d'attente."
+      ],
+      "Could not load the processing queue.": [
+        "Impossible de charger la file d'attente de traitement."
+      ],
+      "Could not run the scheduled item.": [
+        "Impossible d'exécuter l'élément programmé."
+      ],
+      "Dispatch now": [
+        "Expédier maintenant"
+      ],
+      "Due": [
+        "Dû"
+      ],
+      "End of workflow": [
+        "Fin du flux de travail"
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Chaque élément programmé en attente sera supprimé et ne s'exécutera jamais. Cela ne peut pas être annulé."
+      ],
+      "Inactive": [
+        "Inactif"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Loading…": [
+        "Chargement…"
+      ],
+      "more": [
+        "plus"
+      ],
+      "Next action": [
+        "Prochaine action"
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "Aucun étape de workflow n'attend actuellement d'être exécutée."
+      ],
+      "Nothing in the queue": [
+        "Rien dans la file d'attente"
+      ],
+      "of": [
+        "de"
+      ],
+      "Processing queue": [
+        "File d'attente de traitement"
+      ],
+      "Recipient": [
+        "Destinataire"
+      ],
+      "Refresh": [
+        "Rafraîchir"
+      ],
+      "Scheduled": [
+        "Programmé"
+      ],
+      "Scheduled for": [
+        "Programmé pour"
+      ],
+      "Scheduler": [
+        "Planificateur"
+      ],
+      "Search workflow, recipient or action": [
+        "Rechercher un workflow, un destinataire ou une action"
+      ],
+      "Select an option": [
+        "Sélectionnez une option"
+      ],
+      "Status": [
+        "Statut"
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "Les actions restantes seront exécutées immédiatement, en sautant l'attente programmée. Cela ne peut pas être annulé."
+      ],
+      "The workflow is not published.": [
+        "Le flux de travail n'est pas publié."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "Cet élément programmé sera supprimé et ne s'exécutera jamais. Cela ne peut pas être annulé."
+      ],
+      "Try again": [
+        "Réessayer"
+      ],
+      "Type to filter…": [
+        "Tapez pour filtrer…"
+      ],
+      "Workflow": [
+        "Flux de travail"
+      ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Les étapes du flux de travail attendent un délai avant de s'exécuter. Déclenchez-en un maintenant pour ignorer l'attente, ou annulez-le pour arrêter le traitement."
+      ]
+    }
+  }
+}
