@@ -9,12 +9,16 @@ de WhatsApp, condições, atrasos e muito mais — tudo sem escrever código.
 
 ---
 
-#### Propriedade intelectual
+#### Licença
 
-O software Joinotify ® é uma propriedade registrada da MEUMOUSE.COM® – SOLUÇÕES DIGITAIS LTDA,
-em conformidade com o §2°, art. 2° da Lei 9.609, de 19 de Fevereiro de 1998.
-É expressamente proibido a distribuição ou cópia ilegal deste software, sujeita a penalidades
-conforme as leis de direitos autorais vigentes. Consulte o arquivo [`license.md`](license.md).
+O Joinotify é **software livre**, distribuído sob a **GNU General Public License, versão 2 ou
+posterior** — veja [`LICENSE`](LICENSE). Todos os recursos estão liberados: não há versão paga,
+trial nem bloqueio por licença. O envio de mensagens depende de uma conta Joinotify, porque a
+entrega passa pela API oficial do WhatsApp Cloud; os serviços externos utilizados estão
+declarados em [`readme.txt`](readme.txt).
+
+Joinotify® é uma marca da MEUMOUSE.COM® – SOLUÇÕES DIGITAIS LTDA. O plugin não é afiliado,
+patrocinado nem endossado pela WhatsApp LLC ou pela Meta Platforms, Inc.
 
 ---
 
@@ -63,7 +67,7 @@ conforme as leis de direitos autorais vigentes. Consulte o arquivo [`license.md`
 
 ### Requisitos
 
-- WordPress (testado até 7.0)
+- WordPress **6.0+** (testado até 6.8)
 - PHP **7.4+**
 
 ---
@@ -80,7 +84,7 @@ joinotify/
 │   │                      #   Integrations, Notifications, Otp_Login, Rest, Validations, Views
 │   └── vendor/            #   Dependências Composer (gerado no build)
 ├── app/                   # Frontend Vue 3 + Vite  → ver app/README.md
-│   ├── src/               #   Apps por página (builder, workflows, settings, license, history, otp-login)
+│   ├── src/               #   Apps por página (builder, workflows, settings, onboarding, history, otp-login)
 │   └── dist/              #   Build de produção (gerado)
 ├── languages/             # Pipeline de i18n (Node) → ver languages/README.md
 ├── assets/                # Assets estáticos (marca, etc.)
@@ -89,8 +93,8 @@ joinotify/
 ├── examples/              # Exemplo de extensão de terceiros
 ├── scripts/build.mjs      # Pipeline de build/empacotamento
 ├── DEVELOPERS.md          # API de extensão (PHP)
-├── changelogs.md          # Histórico de versões
-└── license.md             # Licença proprietária
+├── CHANGELOG.md          # Histórico de versões
+└── LICENSE                # GNU GPL v2 ou posterior
 ```
 
 - **Backend (PHP):** atua apenas como API (REST sob o namespace `joinotify/v1`) e fornecedor
@@ -166,14 +170,14 @@ Flags úteis do `build.mjs`: `--skip-app`, `--skip-composer`, `--skip-translatio
 | [`languages/README.md`](languages/README.md) | Pipeline de i18n: geração de `.pot`, tradução (IA/Google), compilação. |
 | [`DEVELOPERS.md`](DEVELOPERS.md) | API de extensão em PHP (ações, gatilhos, integrações, condições, placeholders, REST). |
 | [`docs/integrations.md`](docs/integrations.md) | Integrações disponíveis e seus gatilhos. |
-| [`changelogs.md`](changelogs.md) | Histórico completo de versões. |
-| [`license.md`](license.md) | Termos de licença. |
+| [`CHANGELOG.md`](CHANGELOG.md) | Histórico completo de versões. |
+| [`LICENSE`](LICENSE) | GNU GPL v2 ou posterior. |
 
 ---
 
 ## Histórico de versões
 
-O registro completo de alterações está em [`changelogs.md`](changelogs.md).
+O registro completo de alterações está em [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 

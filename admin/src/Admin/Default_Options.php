@@ -34,7 +34,9 @@ class Default_Options {
             'enable_wordpress_integration' => 'yes',
             'joinotify_default_country_code' => '55',
             'test_number_phone' => '',
-            'enable_proxy_api' => 'yes',
+            // The Proxy API is deprecated and exposes message-sending endpoints
+            // on this site, so it stays off until the owner turns it on.
+            'enable_proxy_api' => 'no',
             'proxy_api_key' => '',
             'send_text_proxy_api_route' => 'send-message/text',
             'send_media_proxy_api_route' => 'send-message/media',
@@ -53,7 +55,9 @@ class Default_Options {
             'otp_login_template_name' => '',
             'otp_login_template_language' => 'pt_BR',
             'enable_debug_mode' => 'no',
-            'enable_auto_updates' => 'no',
+            // Usage data is strictly opt-in: nothing is collected or sent while
+            // this is 'no', which is where every install starts.
+            'enable_usage_tracking' => 'no',
             'enable_create_coupon_action' => 'yes',
             'create_coupon_prefix' => 'CUPOM_',
             'enable_ignore_processed_actions' => 'no',
@@ -62,7 +66,6 @@ class Default_Options {
             'message_history_retention_days' => '90',
             'enable_debug_logs' => 'yes',
             'debug_logs_retention_days' => '30',
-            'enable_update_notice' => 'yes',
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'enable_openai_integration' => 'no',

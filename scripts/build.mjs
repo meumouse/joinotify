@@ -128,7 +128,7 @@ function zipDirectory(sourceDir, outPath) {
 /* ------------------------------------------------------------- copy rules */
 
 // Skip dev clutter that may sneak into otherwise-shipped directories.
-const denyList = new Set(['node_modules', '.git', '.env', '.DS_Store', 'Thumbs.db']);
+const denyList = new Set(['node_modules', '.git', '.env', '.DS_Store', 'Thumbs.db', '.gitignore', '.gitattributes']);
 
 const baseFilter = (src) => !denyList.has(path.basename(src));
 
@@ -216,8 +216,17 @@ async function stageFiles() {
 	await fs.rm(releaseDir, { recursive: true, force: true });
 	await fs.mkdir(stagingDir, { recursive: true });
 
+	// readme.txt and LICENSE are what the WordPress.org review reads, so a
+	// package missing either is not shippable — fail loudly instead of quietly
+	// producing a ZIP that will be rejected.
+	for (const file of ['readme.txt', 'LICENSE']) {
+		if (!existsSync(path.join(root, file))) {
+			throw new Error(`Required file "${file}" is missing; WordPress.org will reject this package.`);
+		}
+	}
+
 	// Top-level files.
-	for (const file of [`${slug}.php`, 'README.md', 'license.md', 'changelogs.md']) {
+	for (const file of [`${slug}.php`, 'readme.txt', 'LICENSE', 'README.md', 'CHANGELOG.md']) {
 		await copyFile(file);
 	}
 
@@ -229,8 +238,31 @@ async function stageFiles() {
 	// Built frontend (includes .vite/manifest.json that Scripts.php reads).
 	await copyDir('app/dist', 'app/dist', baseFilter);
 
+	// Frontend source. WordPress.org guideline 4 requires the human-readable
+	// source of anything compiled or minified to ship with the plugin (or be
+	// publicly linked); app/dist/*/app.js is minified, so its source travels
+	// with it, along with everything needed to rebuild it.
+	await copyDir('app/src', 'app/src', baseFilter);
+
+	for (const file of [
+		'app/package.json',
+		'app/package-lock.json',
+		'app/vite.config.js',
+		'app/tailwind.config.js',
+		'app/postcss.config.js',
+		'app/tsconfig.json',
+	]) {
+		await copyFile(file);
+	}
+
 	// Static assets.
 	await copyDir('assets', 'assets', baseFilter);
+
+	// PHP templates read at runtime through JOINOTIFY_DIR (the OTP login
+	// partials). Templates::render() returns silently when a file is missing,
+	// so leaving these out produced a package where the OTP screens rendered
+	// nothing at all, with no error to point at the cause.
+	await copyDir('templates', 'templates', baseFilter);
 
 	// Compiled translation artifacts only.
 	await copyDir('languages', 'languages', languageFilter);

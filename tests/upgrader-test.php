@@ -82,6 +82,8 @@ check( 'fresh install (0.0.0) still runs the routine (idempotent no-op)', has_pe
 check( 'already at target (2.0.0) does NOT re-run', ! has_pending( '2.0.0', array(), 'workflows_schema_2_0_0' ) );
 check( 'newer than target (2.5.0) does NOT run', ! has_pending( '2.5.0', array(), 'workflows_schema_2_0_0' ) );
 check( 'completed routine is not repeated', ! has_pending( '1.0.0', array( 'workflows_schema_2_0_0' ), 'workflows_schema_2_0_0' ) );
+check( 'upgrade from 2.3.0 runs the licensing cleanup routine', has_pending( '2.3.0', array(), 'drop_licensing_2_4_0' ) );
+check( 'a site already on 2.4.0 skips the licensing cleanup', ! has_pending( '2.4.0', array(), 'drop_licensing_2_4_0' ) );
 check( 'non-array completed coerced safely', is_array( Upgrader::get_pending_routines( '1.0.0', 'oops' ) ) );
 
 echo "\n== summary ==\n";

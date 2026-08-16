@@ -73,7 +73,7 @@ function onFileSelected(event) {
       <div>
         <h3 class="text-base font-semibold text-slate-800">{{ __('Import / export settings', textDomain) }}</h3>
         <p class="mt-2 text-sm leading-6 text-slate-600">
-          {{ __('Download the plugin configuration as a JSON file or import it on another site. API keys and license data are not included in the export.', textDomain) }}
+          {{ __('Download the plugin configuration as a JSON file or import it on another site. API keys are not included in the export.', textDomain) }}
         </p>
       </div>
     </div>

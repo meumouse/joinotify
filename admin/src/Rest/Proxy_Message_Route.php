@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
-use MeuMouse\Joinotify\Api\License;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Logger;
 use WP_Error;
@@ -45,12 +44,17 @@ abstract class Proxy_Message_Route extends Abstract_Route {
 
 
     /**
-     * Register the route only when proxy messaging is enabled and the license is valid.
+     * Register the route only when proxy messaging is explicitly enabled.
      *
+     * The endpoint is off by default and still demands the `X-API-Key` header,
+     * so turning it on is a deliberate act by the site owner.
+     *
+     * @since 1.4.7
+     * @version 2.4.0
      * @return bool
      */
     protected function should_register() {
-        return Admin::get_setting( 'enable_proxy_api' ) === 'yes' && License::is_valid();
+        return Admin::get_setting( 'enable_proxy_api' ) === 'yes';
     }
 
 

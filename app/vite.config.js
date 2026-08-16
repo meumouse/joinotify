@@ -16,7 +16,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         settings: resolve(__dirname, 'src/entries/settings.js'),
-        license: resolve(__dirname, 'src/entries/license.js'),
+        onboarding: resolve(__dirname, 'src/entries/onboarding.js'),
         builder: resolve(__dirname, 'src/entries/builder.js'),
         workflows: resolve(__dirname, 'src/entries/workflows.js'),
         history: resolve(__dirname, 'src/entries/history.js'),

@@ -154,7 +154,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 					'type' => Controls_Manager::ALERT,
 					'alert_type' => 'success',
 					'heading' => __( 'Tip', 'joinotify' ),
-					'content' => __( 'Replace information with ', 'joinotify' ) . ' <a href="https://ajuda.meumouse.com/docs/joinotify/placeholders">' . esc_html__( 'text variables', 'joinotify' ) . '</a>',
+					'content' => __( 'Replace information with ', 'joinotify' ) . ' <a href="https://docs.joinotify.com/plugin/placeholders" target="_blank" rel="noopener noreferrer">' . esc_html__( 'text variables', 'joinotify' ) . '</a>',
 				]
 			);
 

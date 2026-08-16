@@ -23,7 +23,7 @@ class Settings_Assets extends Abstract_Assets {
      */
     private $entries = array(
         'joinotify-settings'         => 'src/entries/settings.js',
-        'joinotify-license'          => 'src/entries/license.js',
+        'joinotify-onboarding'       => 'src/entries/onboarding.js',
         'joinotify-workflows-builder' => 'src/entries/builder.js',
         'joinotify-workflows'         => 'src/entries/workflows.js',
         'joinotify-history'           => 'src/entries/history.js',
@@ -168,7 +168,7 @@ class Settings_Assets extends Abstract_Assets {
     private function build_bootstrap_config( $page ) {
         $map = array(
             'joinotify-settings'          => array( 'page' => 'settings', 'endpoint' => 'admin/settings' ),
-            'joinotify-license'           => array( 'page' => 'license', 'endpoint' => 'admin/settings' ),
+            'joinotify-onboarding'        => array( 'page' => 'onboarding', 'endpoint' => 'admin/onboarding' ),
             'joinotify-workflows-builder' => array( 'page' => 'builder', 'endpoint' => 'admin/builder' ),
             'joinotify-workflows'         => array( 'page' => 'workflows', 'endpoint' => 'admin/workflows/bootstrap' ),
             'joinotify-history'           => array( 'page' => 'history', 'endpoint' => 'admin/history/bootstrap' ),
@@ -207,6 +207,9 @@ class Settings_Assets extends Abstract_Assets {
             return '';
         }
 
+        // Nonce verification is not applicable: this only reads which admin
+        // screen WordPress is already rendering, it never acts on a request.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         return sanitize_text_field( wp_unslash( $_GET['page'] ) );
     }
 
@@ -222,7 +225,7 @@ class Settings_Assets extends Abstract_Assets {
     private function get_script_handle( $page ) {
         $handles = array(
             'joinotify-settings'         => 'joinotify-settings-app',
-            'joinotify-license'          => 'joinotify-license-app',
+            'joinotify-onboarding'       => 'joinotify-onboarding-app',
             'joinotify-workflows-builder' => 'joinotify-builder-app',
             'joinotify-workflows'         => 'joinotify-workflows-app',
             'joinotify-history'           => 'joinotify-history-app',
@@ -256,7 +259,7 @@ class Settings_Assets extends Abstract_Assets {
         $tag = is_scalar( $tag ) ? (string) $tag : '';
         $module_handles = array(
             'joinotify-settings-app',
-            'joinotify-license-app',
+            'joinotify-onboarding-app',
             'joinotify-builder-app',
             'joinotify-workflows-app',
             'joinotify-history-app',

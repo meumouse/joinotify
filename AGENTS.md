@@ -4,8 +4,13 @@ This is the **canonical entry point** for working on the Joinotify codebase. It 
 construction pattern, the per-layer conventions, the central data contract, and the process rules.
 Read this **before editing anything**.
 
-> **Proprietary software.** Joinotify is owned by MEUMOUSE.COM® — Soluções Digitais LTDA. It is not
-> open source and does not accept public fork/PRs. See [`license.md`](license.md).
+> **Free software, distributed on WordPress.org.** Joinotify is licensed under the **GPLv2 or
+> later** (see [`LICENSE`](LICENSE)) and every feature is unlocked — there is no premium tier,
+> trial or license check. Because the plugin is published in the WordPress.org directory, changes
+> must keep it inside the [plugin guidelines](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/):
+> no code executed from a remote server, no update mechanism of its own, no external request
+> before the user consents, and no minified asset shipped without its source. Every external
+> service the plugin talks to must stay declared in [`readme.txt`](readme.txt).
 
 ---
 
@@ -53,7 +58,7 @@ PHP **7.4+**, Node **18+**.
 | [`languages/README.md`](languages/README.md) | i18n pipeline (`.pot`, AI/Google translation, `.mo`/`.l10n.php`/`.json` compilation). |
 | [`docs/integrations.md`](docs/integrations.md) | Available integrations and their triggers. |
 | [`examples/joinotify-extension-example.php`](examples/joinotify-extension-example.php) | Runnable third-party extension example. |
-| [`changelogs.md`](changelogs.md) | Version history. |
+| [`CHANGELOG.md`](CHANGELOG.md) | Version history. |
 
 ---
 
@@ -75,7 +80,6 @@ joinotify/
 │   │   ├── Core/          #   Init, Workflow_Processor (engine), Helpers, Upgrader, Cron...
 │   │   ├── Cron/          #   Scheduled tasks (WP-Cron)
 │   │   ├── Integrations/  #   WooCommerce, WPForms, Elementor, Flexify Checkout, Telegram, Resend...
-│   │   ├── Licensing/     #   Licensing (Contracts, Drivers, Dto, Http, Support)
 │   │   ├── Notifications/ #   Notification channel layer (Channel_Interface)
 │   │   ├── Otp_Login/     #   Passwordless login (OTP channels)
 │   │   ├── Rest/          #   REST routes (namespace joinotify/v1)
@@ -88,15 +92,17 @@ joinotify/
 ├── languages/             # Node i18n pipeline (see languages/README.md)
 ├── templates/             # PHP templates (e.g. OTP login) — markup scanned by Tailwind
 ├── assets/                # Static assets (brand, icons)
-├── dist/                  # Distributed workflow templates + update-checker.json
+├── dist/                  # Distributed workflow templates (NOT shipped in the ZIP)
 ├── docs/ · examples/ · tests/
 ├── scripts/build.mjs      # Build/packaging pipeline (orchestrates everything)
-└── *.md                   # AGENTS, CONTRIBUTING, README, DEVELOPERS, changelogs, license
+├── readme.txt             # WordPress.org plugin page (headers, external services)
+├── LICENSE                # GNU GPL v2 or later
+└── *.md                   # AGENTS, CONTRIBUTING, README, DEVELOPERS, CHANGELOG
 ```
 
 - **Backend (PHP):** API only (REST under `joinotify/v1`) and schema provider. PSR-4, root namespace
   `MeuMouse\Joinotify\` → `admin/src/` (see [`admin/composer.json`](admin/composer.json)). Requires
-  `ext-sodium`, `giggsey/libphonenumber-for-php`, and `meumouse/mds-php-sdk`.
+  `giggsey/libphonenumber-for-php`.
 - **Frontend (Vue):** each admin screen is an **independent Vue application** (multi-page) that
   consumes everything via REST. Details in [`app/README.md`](app/README.md).
 - **Workflow engine:** [`Core/Workflow_Processor.php`](admin/src/Core/Workflow_Processor.php).
@@ -301,7 +307,7 @@ Report results **honestly**: if a test fails, say so and show the output.
 - [ ] No generated artifacts (`dist/`, `vendor/`, `node_modules/`) or secrets in the commit.
 - [ ] Relevant tests run; build green when applicable.
 - [ ] Commit follows Conventional Commits.
-- [ ] `changelogs.md` updated for user-facing changes.
+- [ ] `CHANGELOG.md` updated for user-facing changes.
 
 ---
 

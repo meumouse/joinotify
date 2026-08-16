@@ -6,7 +6,7 @@ const { execSync } = require("child_process");
 const SCRIPT_HANDLES = [
   "joinotify",
   "joinotify-settings-app",
-  "joinotify-license-app",
+  "joinotify-onboarding-app",
   "joinotify-builder-app",
 ];
 

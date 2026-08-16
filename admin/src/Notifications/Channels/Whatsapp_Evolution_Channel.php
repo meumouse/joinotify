@@ -6,7 +6,6 @@ use MeuMouse\Joinotify\Notifications\Channel_Interface;
 use MeuMouse\Joinotify\Notifications\Notification_Message;
 use MeuMouse\Joinotify\Notifications\Channel_Result;
 use MeuMouse\Joinotify\Api\Controller;
-use MeuMouse\Joinotify\Api\License;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -61,16 +60,13 @@ class Whatsapp_Evolution_Channel implements Channel_Interface {
 
 
     /**
-     * Whether the channel can operate: valid license and a registered sender.
+     * Whether the channel can operate: a registered sender is all it takes.
      *
      * @since 2.0.0
+     * @version 2.4.0
      * @return bool
      */
     public function is_configured() {
-        if ( ! class_exists( License::class ) || ! License::is_valid() ) {
-            return false;
-        }
-
         return '' !== (string) ( function_exists( 'joinotify_get_first_sender' ) ? joinotify_get_first_sender() : '' );
     }
 

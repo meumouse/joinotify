@@ -2,8 +2,6 @@
 
 namespace MeuMouse\Joinotify\Admin;
 
-use MeuMouse\Joinotify\Api\License;
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -55,16 +53,14 @@ class Menu {
             array( $this, 'all_workflows_page' )
         );
 
-        if ( License::is_valid() ) {
-            add_submenu_page(
-                'joinotify-workflows',
-                esc_html__( 'Add new workflow', 'joinotify' ),
-                esc_html__( 'Add new workflow', 'joinotify' ),
-                'manage_options',
-                'joinotify-workflows-builder',
-                array( $this, 'render_builder_page' )
-            );
-        }
+        add_submenu_page(
+            'joinotify-workflows',
+            esc_html__( 'Add new workflow', 'joinotify' ),
+            esc_html__( 'Add new workflow', 'joinotify' ),
+            'manage_options',
+            'joinotify-workflows-builder',
+            array( $this, 'render_builder_page' )
+        );
 
         add_submenu_page(
             'joinotify-workflows',
@@ -94,16 +90,26 @@ class Menu {
             array( $this, 'render_settings_page' )
         );
 
+        // The setup wizard is reachable by URL only: it is a one-off flow, not a
+        // destination that belongs in the menu.
         add_submenu_page(
-            'joinotify-workflows',
-            esc_html__( 'License', 'joinotify' ),
-            esc_html__( 'License', 'joinotify' ),
+            null,
+            esc_html__( 'Joinotify setup', 'joinotify' ),
+            esc_html__( 'Joinotify setup', 'joinotify' ),
             'manage_options',
-            'joinotify-license',
-            array( $this, 'render_license_page' )
+            'joinotify-onboarding',
+            array( $this, 'render_onboarding_page' )
         );
 
-        if ( isset( $_GET['page'] ) && $_GET['page'] === 'joinotify-workflows-builder' ) {
+        $current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+        if ( 'joinotify-onboarding' === $current_page ) {
+            // See the note below: a submenu under a `null` parent never lands in
+            // the global $submenu array, so seed the title before the header runs.
+            $GLOBALS['title'] = esc_html__( 'Joinotify setup', 'joinotify' );
+        }
+
+        if ( 'joinotify-workflows-builder' === $current_page ) {
             add_submenu_page(
                 null,
                 esc_html__( 'Edit workflow', 'joinotify' ),
@@ -201,14 +207,18 @@ class Menu {
 
 
     /**
-     * Render license page settings.
+     * Display the Vue setup wizard.
      *
-     * @since 1.0.0
+     * @since 2.4.0
      * @return void
      */
-    public function render_license_page() {
-        // The Vue app fetches its bootstrap payload over REST (admin/settings).
-        include JOINOTIFY_SRC . 'Views/License.php';
+    public function render_onboarding_page() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
+        }
+
+        // The Vue app fetches its bootstrap payload over REST (admin/onboarding).
+        include JOINOTIFY_SRC . 'Views/Onboarding.php';
     }
 
 

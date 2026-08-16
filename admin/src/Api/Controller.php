@@ -431,26 +431,6 @@ class Controller {
             return self::record_and_return( $fields, $details, $return_details );
         }
 
-        if ( ! License::is_valid() ) {
-            if ( self::$debug_mode ) {
-                Logger::register_log( 'Stopping send message text because license is invalid', 'INFO' );
-            }
-
-            $queued = false;
-
-            if ( $queue_on_failure ) {
-                $queued = (bool) Notification_Queue::enqueue( 'text', array(
-                    'sender' => $sender,
-                    'receiver' => $receiver,
-                    'message' => $message,
-                    'delay' => $timestamp_delay,
-                ), 'license_invalid' );
-            }
-
-            $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
-            return self::record_and_return( $fields, $details, $return_details );
-        }
-
         $server_details = self::get_server_details( $sender );
 
         if ( is_wp_error( $server_details ) ) {
@@ -577,29 +557,6 @@ class Controller {
         // Chek if media type is audio and change request url
         if ( $media_type === 'audio' ) {
             return self::send_whatsapp_audio( $sender, $receiver, $media, $timestamp_delay, $queue_on_failure, $return_details );
-        }
-
-        if ( ! License::is_valid() ) {
-            if ( self::$debug_mode ) {
-                Logger::register_log( 'Stopping send message media because license is invalid', 'INFO' );
-            }
-
-            $queued = false;
-
-            if ( $queue_on_failure ) {
-                $queued = (bool) Notification_Queue::enqueue( 'media', array(
-                    'sender' => $sender,
-                    'receiver' => $receiver,
-                    'media_type' => $media_type,
-                    'media' => $media,
-                    'caption' => $caption,
-                    'delay' => $timestamp_delay,
-                    'file_name' => $file_name,
-                ), 'license_invalid' );
-            }
-
-            $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
-            return self::record_and_return( $fields, $details, $return_details );
         }
 
         $server_details = self::get_server_details( $sender );
@@ -734,26 +691,6 @@ class Controller {
             }
 
             $details = self::build_response_details( 0, false, false, 'invalid_sender' );
-            return self::record_and_return( $fields, $details, $return_details );
-        }
-
-        if ( ! License::is_valid() ) {
-            if ( self::$debug_mode ) {
-                Logger::register_log( 'Stopping send message audio because license is invalid', 'INFO' );
-            }
-
-            $queued = false;
-
-            if ( $queue_on_failure ) {
-                $queued = (bool) Notification_Queue::enqueue( 'audio', array(
-                    'sender' => $sender,
-                    'receiver' => $receiver,
-                    'audio' => $audio,
-                    'delay' => $timestamp_delay,
-                ), 'license_invalid' );
-            }
-
-            $details = self::build_response_details( 0, false, true, 'license_invalid', $queued );
             return self::record_and_return( $fields, $details, $return_details );
         }
 

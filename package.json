@@ -1,7 +1,8 @@
 {
 	"name": "joinotify",
 	"private": true,
-	"version": "2.2.0",
+	"version": "2.4.0",
+	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"build": "node scripts/build.mjs",
 		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",

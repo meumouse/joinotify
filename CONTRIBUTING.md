@@ -4,10 +4,15 @@ Este guia é o ponto de partida para **desenvolvedores humanos e agentes de IA**
 trabalhar no código do Joinotify. Ele reúne a organização do projeto, as convenções de código,
 o fluxo de trabalho com Git e as regras que mantêm o plugin consistente.
 
-> **Software proprietário.** O Joinotify é propriedade da MEUMOUSE.COM® — Soluções Digitais LTDA.
-> Não é um projeto de código aberto: contribuições externas via fork/PR público **não** são
-> aceitas. Este documento orienta a equipe interna e colaboradores autorizados. Veja
-> [`license.md`](license.md).
+> **Software livre, publicado no WordPress.org.** O Joinotify é licenciado sob a **GPLv2 ou
+> posterior** (veja [`LICENSE`](LICENSE)) e todos os recursos estão liberados — não há versão
+> paga, trial nem verificação de licença. Como o plugin é distribuído pelo diretório do
+> WordPress.org, qualquer alteração precisa mantê-lo dentro das
+> [diretrizes do diretório](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/):
+> nada de código executado a partir de servidor remoto, nada de mecanismo de atualização
+> próprio, nenhuma requisição externa antes do consentimento do usuário e nenhum arquivo
+> minificado sem o respectivo código-fonte. Todo serviço externo utilizado deve continuar
+> declarado no [`readme.txt`](readme.txt).
 
 ## Mapa da documentação
 
@@ -21,7 +26,7 @@ linke para eles.
 | [`app/README.md`](app/README.md) | Frontend Vue 3 + Vite: entries, bootstrap REST, store do builder, Tailwind, i18n. |
 | [`languages/README.md`](languages/README.md) | Pipeline de i18n (geração de `.pot`, tradução IA/Google, compilação `.mo`/`.l10n.php`/`.json`). |
 | [`docs/integrations.md`](docs/integrations.md) | Integrações disponíveis e seus gatilhos. |
-| [`changelogs.md`](changelogs.md) | Histórico de versões. |
+| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de versões. |
 
 ---
 
@@ -55,12 +60,14 @@ joinotify/
 ├── languages/             # Pipeline de i18n em Node (ver languages/README.md)
 ├── templates/             # Templates PHP (ex.: login OTP) — markup escaneado pelo Tailwind
 ├── assets/                # Assets estáticos (marca, ícones)
-├── dist/                  # Templates de fluxo distribuídos + update-checker.json
+├── dist/                  # Templates de fluxo distribuídos (não vão no ZIP)
 ├── docs/                  # Documentação adicional
 ├── examples/              # Exemplo de extensão de terceiros (PHP)
 ├── tests/                 # Harnesses de teste standalone + fixtures
 ├── scripts/build.mjs      # Pipeline de build/empacotamento (orquestra tudo)
-└── *.md                   # README, DEVELOPERS, changelogs, license, este arquivo
+├── readme.txt             # Ficha do WordPress.org (headers, serviços externos)
+├── LICENSE                # GNU GPL v2 ou posterior
+└── *.md                   # README, DEVELOPERS, CHANGELOG, este arquivo
 ```
 
 ### O contrato central: o fluxo (workflow)
@@ -273,7 +280,7 @@ Reporte resultados com honestidade: se um teste falhou, diga e mostre a saída.
 - [ ] Sem artefatos gerados (`dist/`, `vendor/`, `node_modules/`) nem segredos no commit.
 - [ ] Testes relevantes rodados; build verde quando aplicável.
 - [ ] Commit no padrão Conventional Commits.
-- [ ] `changelogs.md` atualizado para mudanças voltadas ao usuário.
+- [ ] `CHANGELOG.md` atualizado para mudanças voltadas ao usuário.
 
 ---
 

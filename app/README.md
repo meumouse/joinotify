@@ -60,7 +60,7 @@ Cada tela do plugin é uma aplicação Vue independente, com seu próprio *entry
 | Entry                | Página                       | Handle de script        |
 |----------------------|------------------------------|-------------------------|
 | `settings.js`        | Configurações                | `joinotify-settings-app` |
-| `license.js`         | Licença                      | `joinotify-license-app`  |
+| `onboarding.js`      | Assistente de configuração   | `joinotify-onboarding-app` |
 | `builder.js`         | Construtor de fluxos (canvas)| `joinotify-builder-app`  |
 | `workflows.js`       | Lista de fluxos              | `joinotify-workflows-app`|
 | `history.js`         | Histórico de mensagens       | `joinotify-history-app`  |
@@ -109,7 +109,8 @@ Mapa de endpoints de bootstrap:
 
 | Página              | Endpoint REST |
 |---------------------|---------------|
-| settings / license  | `admin/settings` |
+| settings             | `admin/settings` |
+| onboarding           | `admin/onboarding` |
 | builder             | `admin/builder?id=N` |
 | workflows           | `admin/workflows/bootstrap` |
 
@@ -123,7 +124,7 @@ namespace REST `joinotify/v1`, com o nonce do WordPress.
 ```
 src/
 ├── entries/          # Pontos de entrada do Vite (um por página)
-├── pages/            # Componente raiz de cada página (builder, workflows, settings, license, history)
+├── pages/            # Componente raiz de cada página (builder, workflows, settings, onboarding, history)
 ├── components/       # Componentes reutilizáveis
 │   ├── base/         # Primitivos (botões, selects, inputs...)
 │   ├── flow/         # Canvas @vue-flow: FlowCanvas, FlowNode, FlowEdge

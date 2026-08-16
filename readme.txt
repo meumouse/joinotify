@@ -1,0 +1,165 @@
+=== Joinotify ===
+Contributors: meumouse
+Tags: whatsapp, automation, woocommerce, notifications, workflow
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
+Stable tag: 2.4.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Build WhatsApp message automations with a visual drag-and-drop workflow builder, connected to WooCommerce, WPForms, Elementor and more.
+
+== Description ==
+
+Joinotify turns things that happen on your site into WhatsApp messages, without writing code. You draw the automation on a canvas: pick a trigger (an order is paid, a form is submitted, a user registers), add conditions, delays and loops, and attach the messages you want sent.
+
+The plugin is free and has no locked features. Building, saving, testing and exporting workflows all work out of the box. Sending messages requires a Joinotify account, because messages are delivered through the official WhatsApp Cloud API — see **External services** below.
+
+= Visual workflow builder =
+
+* Drag-and-drop canvas with triggers, actions, conditions, delays and loops
+* Branching logic with true/false paths
+* Placeholders and custom variables to personalise every message
+* Import and export workflows as JSON
+* Ready-made workflow templates
+
+= WhatsApp messaging =
+
+* Text, media, audio, documents and stickers
+* Interactive messages: reply buttons, option lists and link buttons
+* Location messages, contact cards and reactions
+* Meta-approved message templates, listed inside the builder with preview, language and approval status
+* Real delivery confirmation: sent, delivered, read and failed, with the reason reported by Meta
+* Multiple numbers and multiple WhatsApp Business Accounts on the same account
+
+= Integrations =
+
+* WooCommerce — order status, refunds, subscriptions, digital product delivery, abandoned carts
+* WPForms, Elementor Forms and Flexify Checkout
+* WordPress user events
+* Telegram and Resend (e-mail) as additional delivery channels
+* OpenAI and Anthropic for AI-generated message content (optional)
+
+= Operations =
+
+* Message history with per-message status
+* Processing queue for scheduled and retried messages
+* Debug log with configurable retention
+* Passwordless login (OTP) over WhatsApp
+* A PHP extension API: register your own actions, triggers, integrations, conditions, placeholders, REST routes and channels with filters only
+
+== External services ==
+
+This plugin connects to external services. Nothing is contacted until you supply the corresponding credential in the setup wizard or in the settings screen.
+
+**Joinotify API — https://api.joinotify.com**
+Delivers your WhatsApp messages through the official WhatsApp Cloud API, lists the numbers on your account, syncs Meta-approved message templates and receives delivery events. Used only once you paste the API key issued for your site. Each request sends your API key, the recipient phone number and the message content you configured, plus your site address when the site is first registered.
+Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+
+**Joinotify panel — https://app.joinotify.com**
+Opened in your browser when you click to create or manage an API key. No data is sent from your site by the plugin itself.
+Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+
+**Joinotify legacy relay — https://slots-manager.joinotify.com**
+The previous, deprecated transport. It is only contacted by sites that are still configured to use it and will be removed in a future release. It receives the sender number, recipient number and message content.
+Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+
+**Joinotify workflow templates — https://templates.joinotify.com**
+Fetches the catalogue of ready-made workflow templates when you open the template picker. It receives no personal data.
+Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+
+**OpenAI — https://api.openai.com**
+Optional. Contacted only if you enable the OpenAI integration and supply an API key. It receives the prompt text of the AI actions you add to a workflow.
+Terms: https://openai.com/policies/terms-of-use — Privacy: https://openai.com/policies/privacy-policy
+
+**Anthropic — https://api.anthropic.com**
+Optional. Contacted only if you enable the Anthropic integration and supply an API key. It receives the prompt text of the AI actions you add to a workflow.
+Terms: https://www.anthropic.com/legal/consumer-terms — Privacy: https://www.anthropic.com/legal/privacy
+
+**Telegram Bot API — https://api.telegram.org**
+Optional. Contacted only if you enable the Telegram integration and supply a bot token. It receives the chat id and message content of Telegram actions.
+Terms: https://telegram.org/tos — Privacy: https://telegram.org/privacy
+
+**Resend — https://api.resend.com**
+Optional. Contacted only if you enable the Resend integration and supply an API key. It receives the recipient address, subject, body and attachments of e-mail actions.
+Terms: https://resend.com/legal/terms-of-service — Privacy: https://resend.com/legal/privacy-policy
+
+= Usage data =
+
+Sharing anonymous usage data is **off by default** and entirely optional. If you turn it on, the setup wizard shows you the exact payload beforehand. It never includes your site address, admin e-mail, phone numbers, contacts, message content, workflow content or any credential.
+
+== Frequently Asked Questions ==
+
+= Do I need a paid account to use the plugin? =
+
+The plugin itself is free and every feature is unlocked. Building, testing and exporting workflows works with no account at all. Delivering messages requires a Joinotify account, because WhatsApp messages go through Meta's official Cloud API and that access is provisioned per account.
+
+= Where do I get the API key? =
+
+Create it for your site on the Joinotify panel at https://app.joinotify.com, then paste it in the setup wizard (step 2) or in Settings → General → WhatsApp Cloud API.
+
+= Can I send a message to anyone at any time? =
+
+No — that is a WhatsApp rule, not a plugin limitation. Outside a 24-hour window opened by the contact writing to you first, only Meta-approved message templates can be delivered. The builder lists your approved templates so you can pick one.
+
+= Does it work without WooCommerce? =
+
+Yes. WooCommerce is one integration among several; WPForms, Elementor, Flexify Checkout and core WordPress user events all work on their own.
+
+= Where is the uncompiled JavaScript? =
+
+The admin screens are Vue 3 applications built with Vite. The complete, unminified source ships inside the plugin under `app/src`, together with `app/package.json` and `app/vite.config.js`. Run `npm install && npm run build` in `app/` to reproduce `app/dist`.
+
+= Is this plugin affiliated with WhatsApp or Meta? =
+
+No. Joinotify is not affiliated with, endorsed by or sponsored by WhatsApp LLC or Meta Platforms, Inc. WhatsApp is a trademark of WhatsApp LLC.
+
+== Installation ==
+
+1. Upload the plugin to `/wp-content/plugins/joinotify`, or install it from the Plugins screen.
+2. Activate it. The setup wizard opens automatically.
+3. Work through the wizard: default country, Joinotify API key, optional AI provider, documentation, usage-data choice.
+4. Build your first automation from Joinotify → Add new workflow.
+
+You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-onboarding`.
+
+== Screenshots ==
+
+1. The visual workflow builder.
+2. The setup wizard.
+3. Settings, with integrations and senders.
+4. Message history with delivery status.
+
+== Changelog ==
+
+= 2.4.0 =
+* The plugin is now free software under the GPLv2 and every feature is unlocked — the licensing system and its activation screen were removed.
+* New: six-step setup wizard shown after activation, covering the default country, the Joinotify API key, an optional AI provider, the documentation, the usage-data choice and the first automation.
+* New: anonymous usage reporting, off by default, with the exact payload shown before you agree.
+* Changed: updates are now delivered by WordPress.org; the plugin no longer contacts an update server of its own.
+* Changed: the Proxy API is off by default on new installs. It remains deprecated and will be removed.
+* Removed: the extension installer that downloaded plugin packages from an external URL.
+
+= 2.3.0 =
+* New: WhatsApp connection through the official Joinotify API, replacing the Proxy API over Evolution.
+* New: Meta-approved message templates listed inside the builder, with a dedicated template action.
+* New: interactive messages — reply buttons, option lists, link buttons, location, contact cards, stickers and reactions.
+* New: real delivery confirmation through account events (delivered, read, failed).
+* Improved: OTP login codes are delivered through an authentication template on the official API.
+* Deprecated: the Proxy API setting under Settings → General.
+
+= 2.2.0 =
+* New: "Loop" action that walks a collection and runs its body once per item.
+* New: loop variables available inside the loop body.
+* Removed: WhatsApp disconnection notice.
+* Fixed: the default country code was not applied to numbers typed without one.
+
+= 2.1.0 =
+* New: WooCommerce digital product delivery straight from the workflow builder.
+* New: attachments on e-mail (Resend) and WhatsApp media actions.
+
+== Upgrade Notice ==
+
+= 2.4.0 =
+Joinotify is now free and GPL-licensed, with no locked features. Updates move to WordPress.org, so the plugin's own update server is gone — install this version from WordPress.org to keep receiving updates. A setup wizard runs once to confirm your configuration.

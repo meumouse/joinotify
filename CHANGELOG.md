@@ -1,3 +1,52 @@
+Versão 2.4.0
+* O plugin passa a ser 100% gratuito e software livre, sob a licença GNU GPL v2 ou posterior
+     - Todos os recursos estão liberados: não existe mais versão paga, período de teste nem verificação de licença
+     - A tela "Licença" e o sistema de licenciamento foram removidos; a chave da API do Joinotify passa a ser a única credencial
+     - Ao atualizar, a chave de licença, o status e os dados do servidor de licenciamento são apagados do banco automaticamente
+* Novo recurso: assistente de configuração em 6 etapas, exibido logo após a ativação
+     - País padrão, já pré-selecionado a partir do endereço da loja WooCommerce, do idioma do site ou do fuso horário
+     - Conexão com o Joinotify: a chave da API é validada na hora e os números da conta são importados
+     - Provedor de IA (opcional), com a chave do provedor
+     - Documentação do plugin, em https://docs.joinotify.com
+     - Autorização para o envio de dados de uso anônimos
+     - Ao final, criar a primeira automação ou ir para as configurações
+     - Instalações antigas que nunca passaram pelo assistente também o veem, uma única vez, ao abrir uma tela do Joinotify
+* Novo recurso: envio de dados de uso anônimos, desligado por padrão
+     - O assistente mostra exatamente o conteúdo que seria enviado antes de você decidir
+     - Nunca inclui endereço do site, e-mail, telefones, contatos, conteúdo de mensagens, fluxos ou credenciais
+     - Pode ser desligado a qualquer momento em Configurações → Sobre
+* Alteração: as atualizações passam a ser entregues pelo próprio WordPress
+     - O verificador de atualizações próprio do plugin e as opções "Atualizações automáticas" e "Avisos de atualização" foram removidos
+     - Sites instalados fora do diretório do WordPress.org precisam reinstalar o plugin pelo diretório para voltar a receber atualizações
+* Alteração: a Proxy API (descontinuada) passa a vir desligada em instalações novas
+* Recurso removido: instalador de extensões que baixava pacotes de um endereço externo
+* Adequação às diretrizes do diretório de plugins do WordPress.org: readme.txt com a declaração de todos os serviços externos utilizados, licença GPL e o código-fonte do frontend Vue distribuído junto do pacote
+
+Versão 2.3.0
+* Novo recurso: conexão do WhatsApp pela API oficial do Joinotify, substituindo o formato de Proxy API sobre a Evolution API
+     - Botão "Conectar ao Joinotify" nas configurações: a conta é autorizada no painel e a chave da API é entregue ao site sem que você precise copiar e colar nada (colar a chave manualmente continua disponível)
+     - Números conectados no painel são importados para o site, com nome verificado, identificador do número, qualidade atribuída pela Meta e limite de conversas iniciadas em 24 horas
+     - Suporte a múltiplos números e múltiplas contas empresariais (WABA) na mesma conta: cada ação escolhe de qual número sai a mensagem
+     - Quem ainda usa o formato antigo continua funcionando normalmente e passa a ver um aviso de descontinuação
+* Novo recurso: templates de mensagem aprovados pela Meta
+     - Os templates da sua conta são listados dentro do construtor, com prévia do conteúdo, categoria, idioma e situação da aprovação
+     - Nova ação "WhatsApp: Mensagem de template", com uma variável do Joinotify para cada variável do template
+     - Botão para sincronizar os templates quando algum for criado direto no Business Manager
+     - Aviso quando o template escolhido está pausado, desabilitado ou reprovado pela Meta
+     - Templates são a única forma de falar com alguém fora da janela de 24 horas, que é a situação da maioria dos fluxos automáticos
+* Novos tipos de mensagem permitidos pela API oficial: botões de resposta, lista de opções, botão de link, localização, cartão de contato, figurinha e reação
+* Novo recurso: confirmação real de entrega
+     - O site passa a receber os eventos da conta e registrar quando a mensagem foi entregue, lida ou recusada, em vez de apenas "aceita pela API"
+     - Falhas de entrega passam a aparecer no log de depuração com o motivo informado pela Meta
+     - Mensagens recebidas do contato abrem a janela de 24 horas, permitindo responder com texto livre
+* Melhoria: código de acesso do login por OTP passa a ser entregue por template de autenticação na API oficial, com nome e idioma configuráveis
+* Melhoria: quando a API pede para aguardar (limite de requisições), o reenvio respeita exatamente o tempo informado
+* Recurso descontinuado: "Ativar Proxy API", em Configurações → Geral, passa a ser marcado como depreciado e será removido em uma próxima versão
+     - As rotas continuam funcionando por enquanto, mas o envio passa a ser exclusivamente pela API do Joinotify (API oficial do WhatsApp)
+     - As configurações do proxy agora exibem um aviso de descontinuação
+     - As respostas das rotas do proxy passam a informar a descontinuação nos cabeçalhos "Deprecation" e "X-Joinotify-Deprecation", e cada chamada é registrada no log de depuração para ajudar a identificar integrações que ainda usam o formato antigo
+* Observação: a API oficial não oferece envio para grupos; nesse modo as ações de grupo ficam indisponíveis e avisam o motivo
+
 Versão 2.2.0 (03/08/2026)
 * Novo recurso: Ação "Loop" no construtor de fluxos, que percorre uma coleção e executa as ações do corpo uma vez para cada item, permitindo enviar várias mensagens em sequência
      - Coleções disponíveis: arquivos digitais do pedido, itens comprados do pedido e lista a partir de uma variável (separada por linha ou delimitador)

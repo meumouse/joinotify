@@ -4,10 +4,10 @@ namespace MeuMouse\Joinotify\Admin\Settings;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
-use MeuMouse\Joinotify\Api\License;
+use MeuMouse\Joinotify\Api\Sender_Sync;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Core\Helpers;
-use MeuMouse\Joinotify\Licensing\Driver_State;
-use MeuMouse\Joinotify\Licensing\Migrator;
+use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
@@ -114,7 +114,7 @@ class Registry {
                     array(
                         'id' => 'general-whatsapp-cloud',
                         'title' => __( 'WhatsApp Cloud API', 'joinotify' ),
-                        'description' => __( 'Official WhatsApp Cloud API transport that replaces the legacy relay. Leave the credentials blank to use the values provisioned with your license.', 'joinotify' ),
+                        'description' => __( 'Official WhatsApp Cloud API transport that replaces the legacy relay. The API key issued for this site on the Joinotify panel is the only credential the plugin needs.', 'joinotify' ),
                         'fields' => array(
                             self::field_select(
                                 'whatsapp_transport',
@@ -131,10 +131,14 @@ class Registry {
                             ),
                             self::field_text(
                                 'whatsapp_cloud_api_token',
-                                esc_html__( 'API token', 'joinotify' ),
-                                esc_html__( 'Cloud API bearer token (sk_live_...). Overrides the token provisioned with the license.', 'joinotify' ),
+                                esc_html__( 'Joinotify account', 'joinotify' ),
+                                esc_html__( 'Connect your account on the panel to issue a key for this site. Pasting a key (sk_live_...) by hand works too.', 'joinotify' ),
                                 array(
+                                    'type' => 'cloud-connect',
                                     'placeholder' => 'sk_live_...',
+                                    'component_props' => array(
+                                        'panel_url' => JOINOTIFY_PANEL_URL,
+                                    ),
                                 )
                             ),
                             self::field_text(
@@ -231,14 +235,9 @@ class Registry {
                                 esc_html__( 'Enable to log additional error and process details.', 'joinotify' )
                             ),
                             self::field_toggle(
-                                'enable_auto_updates',
-                                esc_html__( 'Automatic updates', 'joinotify' ),
-                                esc_html__( 'Allows the plugin to update automatically whenever possible.', 'joinotify' )
-                            ),
-                            self::field_toggle(
-                                'enable_update_notice',
-                                esc_html__( 'Update notices', 'joinotify' ),
-                                esc_html__( 'Displays notifications when a new version is available.', 'joinotify' )
+                                'enable_usage_tracking',
+                                esc_html__( 'Share anonymous usage data', 'joinotify' ),
+                                esc_html__( 'Sends non-sensitive environment data and error counts to help improve the plugin. Never includes your site address, phone numbers, contacts or message content. Off by default; you can turn it off again at any time.', 'joinotify' )
                             ),
                             self::field_toggle(
                                 'enable_developer_integration',
@@ -470,21 +469,43 @@ class Registry {
     /**
      * Current sender list and supporting phone metadata.
      *
+     * Feeds both the settings page and the builder bootstrap, so anything added
+     * here reaches both screens.
+     *
      * @since 1.4.7
+     * @version 2.3.0
      * @return array<string,mixed>
      */
     public static function get_phone_state() {
         $phones_senders = get_option( 'joinotify_get_phones_senders', array() );
         $phones_senders = is_array( $phones_senders ) ? array_values( array_filter( $phones_senders ) ) : array();
 
+        $is_cloud = Transport::is_cloud();
         $senders = array();
 
         foreach ( $phones_senders as $phone ) {
-            $senders[] = array(
+            $sender = array(
                 'phone' => $phone,
                 'formatted' => Helpers::validate_and_format_phone( $phone ),
                 'connection' => get_option( 'joinotify_status_connection_' . $phone, 'disconnected' ),
             );
+
+            if ( $is_cloud ) {
+                $meta = Phone_Manager::get_sender_meta( $phone );
+
+                // On the Cloud API a number is connected on the panel, so the
+                // slots connection state is meaningless: an imported number with
+                // a phone_number_id is what "connected" means here.
+                $sender['connection'] = ! empty( $meta['phone_number_id'] ) ? 'connected' : 'disconnected';
+                $sender['phone_number_id'] = $meta['phone_number_id'] ?? '';
+                $sender['waba_id'] = $meta['waba_id'] ?? '';
+                $sender['verified_name'] = $meta['verified_name'] ?? '';
+                $sender['quality_rating'] = $meta['quality_rating'] ?? '';
+                $sender['messaging_limit'] = $meta['messaging_limit'] ?? '';
+                $sender['verified'] = ! empty( $meta['verified'] );
+            }
+
+            $senders[] = $sender;
         }
 
         return array(
@@ -493,6 +514,10 @@ class Registry {
             'default_country_iso2' => self::get_default_country_iso2(),
             'locale' => function_exists('determine_locale') ? determine_locale() : get_locale(),
             'sender_count' => count( $senders ),
+            'transport' => Transport::active_transport(),
+            'cloud_ready' => Helpers::cloud_api_ready(),
+            'last_sync' => Sender_Sync::last_sync_time(),
+            'panel_url' => JOINOTIFY_PANEL_URL,
         );
     }
 
@@ -612,10 +637,9 @@ class Registry {
                 'post_types' => Custom_Variables::get_public_post_types(),
             ),
             'system' => self::get_system_status(),
-            'license' => self::get_license_state(),
             'links' => array(
-                'docs_url' => esc_url_raw( 'https://ajuda.meumouse.com/docs/joinotify/overview' ),
-                'purchase_url' => esc_url_raw( 'https://meumouse.com/plugins/joinotify/' ),
+                'docs_url' => esc_url_raw( JOINOTIFY_DOCS_URL ),
+                'panel_url' => esc_url_raw( JOINOTIFY_PANEL_URL ),
             ),
             'permissions' => array(
                 'manage_options' => current_user_can( 'manage_options' ),
@@ -641,111 +665,6 @@ class Registry {
                 'error' => __( 'Could not complete the operation.', 'joinotify' ),
             ),
         ) );
-    }
-
-
-    /**
-     * Build the license state payload used by the Vue license page.
-     *
-     * @since 1.4.7
-     * @return array<string,mixed>
-     */
-    public static function get_license_state() {
-        $license_key = get_option( 'joinotify_license_key', '' );
-        $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
-        $license_object = get_option( 'joinotify_license_response_object' );
-        $is_valid = License::is_valid();
-        $purchase_url = apply_filters( 'Joinotify/Admin/Settings/License_Purchase_Url', 'https://meumouse.com/plugins/joinotify/' );
-        $docs_url = apply_filters( 'Joinotify/Admin/Settings/License_Help_Url', 'https://ajuda.meumouse.com/docs/joinotify/overview' );
-
-        $subscription_label = $is_valid
-            ? ( strpos( $license_key, 'CM-' ) === 0
-                ? sprintf( esc_html__( 'Subscription: Club M - %s', 'joinotify' ), License::license_title() )
-                : sprintf( esc_html__( 'Subscription: %s', 'joinotify' ), License::license_title() )
-            )
-            : esc_html__( 'Activate your license to unlock premium features.', 'joinotify' );
-
-        $support_text = esc_html__( 'Not available', 'joinotify' );
-
-        if ( is_object( $license_object ) && ! empty( $license_object->support_end ) ) {
-            $support_text = is_string( $license_object->support_end )
-                ? sanitize_text_field( $license_object->support_end )
-                : esc_html__( 'Not available', 'joinotify' );
-        }
-
-        return array(
-            'is_valid' => $is_valid,
-            'status_label' => $is_valid ? esc_html__( 'Valid', 'joinotify' ) : esc_html__( 'Invalid', 'joinotify' ),
-            'status_tone' => $is_valid ? 'success' : 'danger',
-            'title' => $is_valid ? esc_html__( 'Active license', 'joinotify' ) : esc_html__( 'Activate your license', 'joinotify' ),
-            'subtitle' => $is_valid
-                ? esc_html__( 'Your installation is now ready for full use.', 'joinotify' )
-                : esc_html__( 'Enter the license code to unlock premium features.', 'joinotify' ),
-            'purchase_url' => esc_url_raw( $purchase_url ),
-            'docs_url' => esc_url_raw( $docs_url ),
-            'activate_action' => 'joinotify_active_license',
-            'deactivate_action' => 'joinotify_deactive_license',
-            'sync_action' => 'joinotify_sync_license',
-            'alternative_action' => 'joinotify_alternative_activation_license',
-            'license_key' => $license_key,
-            'license_key_masked' => self::mask_license_key( $license_key ),
-            'license_title' => $is_valid ? License::license_title() : esc_html__( 'Not available', 'joinotify' ),
-            'subscription_label' => $subscription_label,
-            'expire_label' => $is_valid
-                ? sprintf( esc_html__( 'License expires in: %s', 'joinotify' ), License::license_expire() )
-                : esc_html__( 'License expires in: Not available', 'joinotify' ),
-            'support_label' => $is_valid
-                ? sprintf( esc_html__( 'Support up to: %s', 'joinotify' ), $support_text )
-                : esc_html__( 'Support up to: Not available', 'joinotify' ),
-            'key_label' => __( 'Your license key:', 'joinotify' ) . ' ' . self::mask_license_key( $license_key ),
-            'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
-            'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
-            'support_renew_link' => is_object( $license_object ) && ! empty( $license_object->support_renew_link ) ? esc_url_raw( $license_object->support_renew_link ) : '',
-            'migration' => self::get_license_migration_state(),
-        );
-    }
-
-
-    /**
-     * Build the licensing-backend payload used by the Vue license page.
-     *
-     * Which server a site talks to is normally invisible, and should stay that
-     * way. It surfaces here for the one case that needs a human: the new server
-     * answered and disagreed with a license this site is running on. That is
-     * recorded rather than acted on, so without somewhere to show it the site
-     * would keep working while nobody knew there was anything to resolve.
-     *
-     * @since 2.1.0
-     * @return array<string,mixed>
-     */
-    public static function get_license_migration_state() {
-        $details = Driver_State::details();
-        $pending = Migrator::pending_notice();
-
-        $state = array(
-            'driver' => $details['driver'],
-            'forced' => (bool) $details['forced'],
-            'migrated_at' => $details['decided_at'] > 0 ? date_i18n( get_option('date_format'), $details['decided_at'] ) : '',
-            'needs_attention' => false,
-            'notice_title' => '',
-            'notice_text' => '',
-        );
-
-        if ( null === $pending ) {
-            return $state;
-        }
-
-        $state['needs_attention'] = true;
-        $state['notice_title'] = esc_html__( 'Your license needs to be checked', 'joinotify' );
-        $state['notice_text'] = sprintf(
-            /* translators: %s: message returned by the licensing server. */
-            esc_html__( 'The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists.', 'joinotify' ),
-            isset( $pending['message'] ) && '' !== $pending['message']
-                ? sanitize_text_field( $pending['message'] )
-                : esc_html__( 'the license could not be confirmed', 'joinotify' )
-        );
-
-        return $state;
     }
 
 
@@ -831,10 +750,13 @@ class Registry {
     /**
      * Build the country-code select options.
      *
+     * Public since the setup wizard renders the same list on its first step.
+     *
      * @since 1.4.7
+     * @version 2.4.0
      * @return array<int,array<string,string>>
      */
-    private static function build_country_code_options() {
+    public static function build_country_code_options() {
         $options = array(
             array(
                 'value' => '0',
@@ -871,24 +793,6 @@ class Registry {
         $iso2 = array_key_first( $country_data );
 
         return is_string( $iso2 ) && $iso2 ? strtolower( $iso2 ) : 'us';
-    }
-
-
-    /**
-     * Mask a license key preserving the beginning and end.
-     *
-     * @since 1.4.7
-     * @param string $license_key
-     * @return string
-     */
-    private static function mask_license_key( $license_key ) {
-        if ( empty( $license_key ) ) {
-            return esc_html__( 'Not available', 'joinotify' );
-        }
-
-        $license_key = sanitize_text_field( $license_key );
-
-        return substr( $license_key, 0, 9 ) . 'XXXXXXXX-XXXXXXXX' . substr( $license_key, -9 );
     }
 
 

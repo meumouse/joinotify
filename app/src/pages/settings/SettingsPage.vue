@@ -51,7 +51,6 @@ const proxyConfigOpen = ref(false);
 const integrationConfigOpen = ref(false);
 const selectedIntegration = ref(null);
 const toasts = ref([]);
-const updateState = reactive({ loading: false, checked: false, available: false, latestVersion: '', updateUrl: '' });
 const confirm = reactive({ open: false, title: '', description: '', action: null });
 const isHydrated = ref(false);
 const toastTimers = new Map();
@@ -63,13 +62,16 @@ const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
 const integrationCategories = computed(() => bootstrap.value.integration_categories || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
+// On the Cloud API numbers are connected on the Joinotify panel, so the site
+// imports them instead of running the slot + OTP onboarding.
+const isCloudTransport = computed(() => phones.value.transport === 'cloud');
 const system = computed(() => bootstrap.value.system || {});
 const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
 const pluginVersion = computed(() => bootstrap.value.version || '');
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
 const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'ai_provider']));
-const aboutVisibleFields = computed(() => filterFields(['enable_auto_updates', 'enable_update_notice', 'enable_message_history']));
+const aboutVisibleFields = computed(() => filterFields(['enable_usage_tracking', 'enable_message_history']));
 const proxyToggleField = computed(() => fieldFor('enable_proxy_api'));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
 const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
@@ -391,38 +393,13 @@ function onImportError(message) {
   toast(message || __('Invalid file.', textDomain), 'danger', __('Import', textDomain));
 }
 
-async function checkUpdates() {
-  if (updateState.loading) {
+async function loadPhoneCandidates() {
+  // Slot candidates only exist on the Evolution relay.
+  if (isCloudTransport.value) {
+    phoneCandidates.value = [];
     return;
   }
 
-  updateState.loading = true;
-  debugLogger.log('updates:check-start', {
-    current_version: pluginVersion.value,
-  });
-
-  try {
-    const response = await api.post('/admin/settings/check-updates', {});
-    updateState.checked = true;
-    updateState.available = Boolean(response.update_available);
-    updateState.latestVersion = response.latest_version || '';
-    updateState.updateUrl = response.update_url || '';
-    toast(response.message || __('Update check completed.', textDomain), updateState.available ? 'info' : 'success', __('Updates', textDomain));
-    debugLogger.log('updates:check-complete', {
-      update_available: updateState.available,
-      latest_version: updateState.latestVersion,
-    });
-  } catch (error) {
-    toast(error.message || __('Could not check for updates.', textDomain), 'danger', __('Updates', textDomain));
-    debugLogger.log('updates:check-failed', {
-      error: error instanceof Error ? error.message : String(error),
-    });
-  } finally {
-    updateState.loading = false;
-  }
-}
-
-async function loadPhoneCandidates() {
   debugLogger.log('phones:candidates-load-start');
   try {
     const response = await api.get('/admin/settings/phones/candidates');
@@ -479,6 +456,34 @@ async function validateOtp(payload) {
     toast(error.message || __('Validation failed.', textDomain), 'danger', __('Phones', textDomain));
     debugLogger.log('phones:validate-failed', {
       phone: payload?.phone || '',
+      error: error instanceof Error ? error.message : String(error),
+    });
+  } finally {
+    senderActionLoading.value = false;
+  }
+}
+
+async function syncCloudNumbers() {
+  senderActionLoading.value = true;
+  debugLogger.log('phones:cloud-sync-start');
+
+  try {
+    const response = await api.post('/admin/cloud/numbers/sync', {});
+
+    if (response?.status === 'error') {
+      toast(response.message || __('Could not sync your numbers.', textDomain), 'danger', __('Phones', textDomain));
+      debugLogger.log('phones:cloud-sync-failed', { error: response?.message || '' });
+      return;
+    }
+
+    syncPhones(response.phones || {});
+    toast(response.message || __('Numbers synced.', textDomain), 'success', __('Phones', textDomain));
+    debugLogger.log('phones:cloud-sync-complete', {
+      count: (response.phones?.senders || []).length,
+    });
+  } catch (error) {
+    toast(error.message || __('Could not sync your numbers.', textDomain), 'danger', __('Phones', textDomain));
+    debugLogger.log('phones:cloud-sync-failed', {
       error: error instanceof Error ? error.message : String(error),
     });
   } finally {
@@ -589,12 +594,19 @@ async function refreshSenderConnection(phone) {
 
   try {
     const response = await api.post('/admin/settings/phones/check-connection', { phone });
-    syncPhones({
-      ...(phones.value || {}),
-      senders: (phones.value.senders || []).map((item) =>
-        item.phone === phone ? { ...item, connection: response.connection?.connection || item.connection } : item
-      ),
-    });
+
+    // The Cloud transport re-imports every number, so it hands back the whole
+    // state; the Evolution relay only knows about the one that was checked.
+    if (response.phones) {
+      syncPhones(response.phones);
+    } else {
+      syncPhones({
+        ...(phones.value || {}),
+        senders: (phones.value.senders || []).map((item) =>
+          item.phone === phone ? { ...item, connection: response.connection?.connection || item.connection } : item
+        ),
+      });
+    }
     toast(response.message || __('Connection updated.', textDomain), 'info', __('Phones', textDomain));
     debugLogger.log('phones:refresh-connection-complete', {
       phone,
@@ -782,11 +794,13 @@ function canConfigureIntegration(integration) {
             :refreshing-sender-phone="refreshingSenderPhone"
             :sender-action-loading="senderActionLoading"
             :send-test-message="sendTestMessage"
+            :is-cloud="isCloudTransport"
             @update:model-value="updateSetting('test_number_phone', $event)"
             @register="registerPhone"
             @validate="validateOtp"
             @remove="confirmRemoveSender"
             @refresh="refreshSenderConnection"
+            @sync="syncCloudNumbers"
           />
 
           <IntegrationsSettingsSection
@@ -814,14 +828,12 @@ function canConfigureIntegration(integration) {
             :settings="settings"
             :system="system"
             :version="pluginVersion"
-            :update-state="updateState"
             :exporting="exporting"
             :importing="importing"
             @update-setting="updateSetting"
             @open-logs="openLogs"
             @reset="confirmReset"
             @clear-logs="confirmClearLogs"
-            @check-updates="checkUpdates"
             @export="exportSettings"
             @import="confirmImportSettings"
             @import-error="onImportError"

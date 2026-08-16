@@ -90,10 +90,8 @@ class Repository {
 		$deleted_settings = delete_option( 'joinotify_settings' );
 		$deleted_senders = delete_option( 'joinotify_get_phones_senders' );
 
-		delete_option( 'joinotify_alternative_license_activation' );
 		delete_transient( 'joinotify_api_request_cache' );
 		delete_transient( 'joinotify_api_response_cache' );
-		delete_transient( 'joinotify_license_status_cached' );
 		delete_user_meta( get_current_user_id(), 'joinotify_dismiss_placeholders_tip_user_meta' );
 
 		return (bool) ( $deleted_settings || $deleted_senders );
