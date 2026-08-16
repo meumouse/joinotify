@@ -17,6 +17,7 @@ import { timeDelayDefinition } from '../definitions/timeDelay';
 import { whatsappAiMessageDefinition } from '../definitions/whatsappAiMessage';
 import { whatsappMediaDefinition } from '../definitions/whatsappMedia';
 import { whatsappTextDefinition } from '../definitions/whatsappText';
+import { whatsappTemplateDefinition } from '../definitions/whatsappTemplate';
 import { telegramTextDefinition } from '../definitions/telegramText';
 import { resendEmailDefinition } from '../definitions/resendEmail';
 import { registerBuilderAction } from './actionRegistry';
@@ -35,6 +36,7 @@ export function registerCoreActions(): void {
   registerBuilderAction(snippetPhpDefinition);
   registerBuilderAction(whatsappTextDefinition);
   registerBuilderAction(whatsappMediaDefinition);
+  registerBuilderAction(whatsappTemplateDefinition);
   registerBuilderAction(whatsappAiMessageDefinition);
   registerBuilderAction(telegramTextDefinition);
   registerBuilderAction(resendEmailDefinition);

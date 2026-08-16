@@ -315,7 +315,7 @@ class Actions {
          * @param array $actions List of action slugs that require sender
          * @return array
          */
-        $check_actions = apply_filters( 'Joinotify/Download_Template/Fill_Sender_Actions', array( 'send_whatsapp_message_text', 'send_whatsapp_message_media', 'create_coupon' ) );
+        $check_actions = apply_filters( 'Joinotify/Download_Template/Fill_Sender_Actions', array( 'send_whatsapp_message_text', 'send_whatsapp_message_media', 'send_whatsapp_message_template', 'create_coupon' ) );
 
         foreach ( $items as &$item ) {
             if ( isset( $item['type'], $item['data'] ) && $item['type'] === 'action' && isset( $item['data']['action'] ) && in_array( $item['data']['action'], $check_actions, true ) && empty( $item['data']['sender'] ) ) {

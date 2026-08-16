@@ -8,6 +8,7 @@ use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Actions;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
@@ -114,6 +115,30 @@ class Builder_Test extends Abstract_Route {
                     return rest_ensure_response( array(
                         'status'  => 'error',
                         'message' => __( 'Could not send one or more test messages.', 'joinotify' ),
+                    ) );
+                }
+            } elseif ( $action === 'send_whatsapp_message_template' ) {
+                if ( ! Transport::is_cloud() ) {
+                    return rest_ensure_response( array(
+                        'status'  => 'error',
+                        'message' => __( 'Template messages require the WhatsApp Cloud API transport.', 'joinotify' ),
+                    ) );
+                }
+
+                $sender = $item['data']['sender'] ?? '';
+                $components = Workflow_Processor::build_template_components( $item['data']['variables'] ?? array(), $payload_ctx, 'sandbox' );
+                $result = Transport::send_message_template(
+                    $sender,
+                    $receiver,
+                    $item['data']['template_name'] ?? '',
+                    $item['data']['language'] ?? 'pt_BR',
+                    $components
+                );
+
+                if ( 201 !== $result ) {
+                    return rest_ensure_response( array(
+                        'status'  => 'error',
+                        'message' => __( 'Could not send the test template message.', 'joinotify' ),
                     ) );
                 }
             }

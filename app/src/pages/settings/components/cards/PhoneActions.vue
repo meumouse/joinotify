@@ -3,8 +3,12 @@
 /**
  * PhoneActions.vue frontend component.
  *
+ * On the Cloud API transport a number is connected on the Joinotify panel
+ * through Meta's Embedded Signup, so the slot + OTP onboarding is replaced by a
+ * read-only import of whatever the account already has.
+ *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.3.0
  */
 import { computed, ref, watch } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
@@ -25,9 +29,11 @@ const props = defineProps({
   locale: { type: String, default: 'en_US' },
   sendTestMessage: { type: Function, default: null },
   senderActionLoading: { type: Boolean, default: false },
+  isCloud: { type: Boolean, default: false },
+  panelUrl: { type: String, default: '' },
 });
 
-const emit = defineEmits(['update:modelValue', 'register', 'validate']);
+const emit = defineEmits(['update:modelValue', 'register', 'validate', 'sync']);
 
 const registerOpen = ref(false);
 const registerStep = ref('select');
@@ -180,8 +186,35 @@ async function submitTestMessage() {
       </div>
     </div>
 
+    <div v-if="!isCloud" class="rounded-lg border border-amber-200 bg-amber-50 px-5 py-4 text-[13px] leading-5 text-amber-800">
+      <strong class="font-semibold">{{ __('This site still delivers through the legacy relay.', textDomain) }}</strong>
+      {{ __('That connection is being discontinued. Connect your Joinotify account in Settings → General → WhatsApp Cloud API to move to the official WhatsApp Cloud API before it is switched off.', textDomain) }}
+    </div>
+
+    <div v-if="isCloud" class="rounded-lg border border-slate-200 bg-slate-50 px-5 py-4 text-[13px] leading-5 text-slate-600">
+      {{ __('Your numbers are connected on the Joinotify panel. Sync to import them here, along with their verified name, quality rating and 24-hour messaging limit.', textDomain) }}
+      <a
+        v-if="panelUrl"
+        class="ms-1 font-medium text-primary-700 underline underline-offset-2"
+        :href="panelUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >{{ __('Open the panel', textDomain) }}</a>
+    </div>
+
     <div class="flex flex-wrap gap-3">
       <button
+        v-if="isCloud"
+        type="button"
+        class="inline-flex items-center justify-center gap-2 rounded-[8px] bg-primary-700 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-800 disabled:cursor-not-allowed disabled:opacity-70"
+        :disabled="senderActionLoading"
+        @click="$emit('sync')"
+      >
+        <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
+        {{ __('Sync numbers from Joinotify', textDomain) }}
+      </button>
+      <button
+        v-else
         type="button"
         class="inline-flex items-center justify-center gap-2 rounded-[8px] bg-primary-700 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-800 disabled:cursor-not-allowed disabled:opacity-70"
         :disabled="senderActionLoading"
@@ -295,6 +328,7 @@ async function submitTestMessage() {
     </ModalDialog>
 
     <ModalDialog
+      v-if="!isCloud"
       :open="registerOpen"
       :title="__('Register new phone', textDomain)"
       :description="registerStep === 'select' ? __('Step 1: Select an available phone.', textDomain) : __('Step 2: Enter the verification code.', textDomain)"

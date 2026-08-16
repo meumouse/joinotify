@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use WP_REST_Request;
 
 defined('ABSPATH') || exit;
@@ -38,6 +39,17 @@ class Builder_Groups extends Abstract_Route {
     public function handle( WP_REST_Request $request ) {
         $payload      = $request->get_json_params();
         $sender       = isset( $payload['sender'] ) ? sanitize_text_field( $payload['sender'] ) : '';
+
+        // The official WhatsApp Cloud API has no group API at all, so there is
+        // nothing to list and nothing to send to.
+        if ( Transport::is_cloud() ) {
+            return rest_ensure_response( array(
+                'status'  => 'error',
+                'message' => __( 'The official WhatsApp Cloud API does not support groups. Send to individual numbers instead.', 'joinotify' ),
+                'groups'  => array(),
+            ) );
+        }
+
         $fetch_groups = Controller::fetch_all_groups( $sender );
 
         if ( ! $fetch_groups || ( isset( $fetch_groups['status'] ) && $fetch_groups['status'] === 404 ) ) {

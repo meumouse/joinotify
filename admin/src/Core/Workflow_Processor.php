@@ -7,6 +7,7 @@ use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Attachments;
+use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Validations\Conditions;
 use MeuMouse\Joinotify\Integrations\Woocommerce;
 use MeuMouse\Joinotify\AI\AI_Manager;
@@ -1253,6 +1254,7 @@ class Workflow_Processor {
         $required_config = apply_filters( 'Joinotify/Workflow_Processor/Action_Required_Config', array(
             'send_whatsapp_message_text' => array( 'sender', 'receiver', 'message' ),
             'send_whatsapp_message_media' => $media_required_config,
+            'send_whatsapp_message_template' => array( 'sender', 'receiver', 'template_name' ),
             'send_telegram_message_text' => array( 'receiver', 'message' ),
             'send_resend_email' => array( 'receiver', 'subject', 'message' ),
             'create_coupon' => array( 'settings' ),
@@ -1288,6 +1290,7 @@ class Workflow_Processor {
             'condition' => fn() => self::process_condition_action( $action, $post_id, $event_data ),
             'send_whatsapp_message_text' => fn() => self::send_whatsapp_message_text( $action_data, $event_data, $post_id ),
             'send_whatsapp_message_media' => fn() => self::send_whatsapp_message_media( $action_data, $event_data, $post_id ),
+            'send_whatsapp_message_template' => fn() => self::send_whatsapp_message_template( $action_data, $event_data, $post_id ),
             'send_whatsapp_ai_message' => fn() => self::send_whatsapp_ai_message( $action_data, $event_data, $post_id ),
             'send_telegram_message_text' => fn() => self::send_telegram_message_text( $action_data, $event_data, $post_id ),
             'send_resend_email' => fn() => self::send_resend_email( $action_data, $event_data, $post_id ),
@@ -1530,6 +1533,137 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
             }
         }
+    }
+
+
+    /**
+     * Executes a WhatsApp approved template action.
+     *
+     * A template is the only way to reach someone outside the 24-hour session
+     * window, which is where most Joinotify workflows run: they are started by
+     * the business (an order was paid, a cart was abandoned), not by a reply.
+     *
+     * Each mapped variable is resolved through the placeholder engine and then
+     * packed into Meta's `components` dialect, grouped by the component it
+     * belongs to and kept in the order the template declares.
+     *
+     * @since 2.3.0
+     * @param array $action_data | Action data
+     * @param array $payload | Payload data
+     * @param int   $post_id | Workflow post ID
+     * @return void
+     */
+    public static function send_whatsapp_message_template( $action_data, $payload, $post_id = 0 ) {
+        // Templates are a Cloud API concept; the Evolution relay has no
+        // equivalent and would silently deliver the template name as plain text.
+        if ( ! Transport::is_cloud() ) {
+            Logger::register_log( 'Skipping template action: templates require the WhatsApp Cloud API transport.', 'WARNING' );
+
+            return false;
+        }
+
+        $sender = $action_data['sender'];
+        $receiver = joinotify_prepare_receiver( $action_data['receiver'], $payload );
+        $template_name = sanitize_text_field( (string) ( $action_data['template_name'] ?? '' ) );
+        $language = sanitize_text_field( (string) ( $action_data['language'] ?? 'pt_BR' ) );
+        $components = self::build_template_components( $action_data['variables'] ?? array(), $payload );
+
+        Message_History::set_context( array(
+            'source' => 'workflow',
+            'workflow_id' => $post_id,
+        ));
+
+        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+            'channel' => Transport::active_channel_id(),
+            'type' => 'template',
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'content' => $template_name,
+            'meta' => array(
+                'template_name' => $template_name,
+                'language' => $language,
+                'components' => $components,
+            ),
+            'context' => array(
+                'source' => 'workflow',
+                'workflow_id' => $post_id,
+            ),
+        )));
+
+        Message_History::clear_context();
+
+        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
+            if ( $result->is_success() ) {
+                Logger::register_log( "Template \"$template_name\" sent successfully to: $receiver" );
+            } else {
+                Logger::register_log( "Failed to send template \"$template_name\". Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+            }
+        }
+    }
+
+
+    /**
+     * Turn the builder variable map into Meta's `components` payload.
+     *
+     * The builder stores one entry per template variable, each carrying where it
+     * belongs (`component`, and `sub_type`/`index` for button variables) and the
+     * Joinotify placeholder that fills it. Meta wants those grouped per
+     * component, with lowercase types, and button parameters split by button
+     * index.
+     *
+     * @since 2.3.0
+     * @param array  $variables | Variable map stored on the action.
+     * @param array  $payload | Runtime trigger payload.
+     * @param string $mode | Placeholder resolution mode ('production' or 'sandbox').
+     * @return array
+     */
+    public static function build_template_components( $variables, $payload, $mode = 'production' ) {
+        if ( ! is_array( $variables ) || empty( $variables ) ) {
+            return array();
+        }
+
+        $grouped = array();
+
+        foreach ( $variables as $variable ) {
+            if ( ! is_array( $variable ) ) {
+                continue;
+            }
+
+            $component = strtolower( (string) ( $variable['component'] ?? 'body' ) );
+
+            if ( ! in_array( $component, array( 'header', 'body', 'button' ), true ) ) {
+                continue;
+            }
+
+            $raw = (string) ( $variable['value'] ?? '' );
+            $value = 'sandbox' === $mode
+                ? Placeholders::replace_placeholders( $raw, $payload, 'sandbox' )
+                : joinotify_prepare_message( $raw, $payload );
+
+            // Buttons are addressed one by one, so they cannot share a bucket.
+            $bucket = 'button' === $component
+                ? $component . ':' . (string) ( $variable['sub_type'] ?? 'url' ) . ':' . (int) ( $variable['index'] ?? 0 )
+                : $component;
+
+            if ( ! isset( $grouped[ $bucket ] ) ) {
+                $grouped[ $bucket ] = array(
+                    'type' => $component,
+                    'parameters' => array(),
+                );
+
+                if ( 'button' === $component ) {
+                    $grouped[ $bucket ]['sub_type'] = (string) ( $variable['sub_type'] ?? 'url' );
+                    $grouped[ $bucket ]['index'] = (string) ( (int) ( $variable['index'] ?? 0 ) );
+                }
+            }
+
+            $grouped[ $bucket ]['parameters'][] = array(
+                'type' => 'text',
+                'text' => $value,
+            );
+        }
+
+        return array_values( $grouped );
     }
 
 

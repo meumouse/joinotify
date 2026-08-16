@@ -3,18 +3,53 @@
 /**
  * PhoneSenderList.vue frontend component.
  *
+ * On the Cloud API transport each sender also carries the identifiers and the
+ * health Meta assigns to it: the phone_number_id used as the message origin, the
+ * quality rating and the 24-hour messaging limit.
+ *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.3.0
  */
+import { computed } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
 import Tooltip from '../../../../components/tooltips/Tooltip.vue';
 
 const props = defineProps({
   senders: { type: Array, default: () => [] },
   refreshingPhone: { type: String, default: '' },
+  isCloud: { type: Boolean, default: false },
+  lastSync: { type: Number, default: 0 },
 });
 
 const isRefreshing = (phone) => props.refreshingPhone === phone;
+
+const lastSyncLabel = computed(() => {
+  if (!props.isCloud || !props.lastSync) {
+    return '';
+  }
+
+  return new Date(props.lastSync * 1000).toLocaleString();
+});
+
+/**
+ * Colour the quality pill the way Meta reports it.
+ *
+ * @since 2.3.0
+ * @param {string} rating Quality rating reported by Meta.
+ * @returns {string} Tailwind classes for the pill.
+ */
+function qualityClass(rating) {
+  switch (String(rating || '').toUpperCase()) {
+    case 'GREEN':
+      return 'bg-emerald-100 text-emerald-600';
+    case 'YELLOW':
+      return 'bg-amber-100 text-amber-600';
+    case 'RED':
+      return 'bg-rose-100 text-rose-600';
+    default:
+      return 'bg-slate-100 text-slate-500';
+  }
+}
 
 defineEmits(['remove', 'refresh']);
 </script>
@@ -26,10 +61,13 @@ defineEmits(['remove', 'refresh']);
       <p class="mt-1 text-[13px] leading-5 text-slate-500">
         {{ __('Phone numbers already validated and available for use in flows.', textDomain) }}
       </p>
+      <p v-if="lastSyncLabel" class="mt-1 text-xs text-slate-400">
+        {{ __('Last synced:', textDomain) }} {{ lastSyncLabel }}
+      </p>
     </div>
 
     <div v-if="!senders.length" class="rounded-lg border border-dashed border-slate-200 bg-white px-4 py-5 text-[14px] text-slate-500">
-      {{ __('No validated sender yet.', textDomain) }}
+      {{ isCloud ? __('No number imported yet. Sync to bring in the numbers connected on your Joinotify account.', textDomain) : __('No validated sender yet.', textDomain) }}
     </div>
 
     <div v-else class="space-y-3">
@@ -40,9 +78,27 @@ defineEmits(['remove', 'refresh']);
       >
         <div class="min-w-[220px] flex-1">
           <div class="text-[14px] font-semibold text-slate-700">{{ sender.formatted || sender.phone }}</div>
+
+          <template v-if="isCloud">
+            <div v-if="sender.verified_name" class="mt-0.5 text-[13px] text-slate-500">{{ sender.verified_name }}</div>
+            <div v-if="sender.phone_number_id" class="mt-0.5 font-mono text-xs text-slate-400">{{ sender.phone_number_id }}</div>
+            <div v-if="sender.messaging_limit" class="mt-0.5 text-xs text-slate-400">
+              {{ __('24h limit:', textDomain) }} {{ sender.messaging_limit }}
+            </div>
+          </template>
         </div>
 
-        <Tooltip :content="__('Refresh connection', textDomain)" placement="top" :disabled="isRefreshing(sender.phone)">
+        <span
+          v-if="isCloud && sender.quality_rating"
+          class="rounded-full px-3 py-2 text-[13px] font-semibold"
+          :class="qualityClass(sender.quality_rating)"
+        >{{ sender.quality_rating }}</span>
+
+        <Tooltip
+          :content="isCloud ? __('Re-import from Joinotify', textDomain) : __('Refresh connection', textDomain)"
+          placement="top"
+          :disabled="isRefreshing(sender.phone)"
+        >
           <button
             type="button"
             class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:bg-slate-50 disabled:cursor-wait disabled:opacity-60"

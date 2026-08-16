@@ -86,12 +86,16 @@ class Notification_Queue {
      * Enqueue a failed notification for retry.
      *
      * @since 1.4.7
-     * @param string $type Supported values: text, media, audio.
+     * @version 2.3.0
+     * @param string $type Supported values: text, media, audio, template.
      * @param array $payload Notification payload.
      * @param string $reason Failure reason.
+     * @param int $delay_override Seconds to wait before the first retry. Used when the
+     *                            API dictates the wait through a `Retry-After` header;
+     *                            0 keeps the default backoff.
      * @return string|false Queue item ID on success, false on failure.
      */
-    public static function enqueue( $type, $payload, $reason = '' ) {
+    public static function enqueue( $type, $payload, $reason = '', $delay_override = 0 ) {
         $type = sanitize_key( $type );
         $payload = self::sanitize_payload( $type, $payload );
 
@@ -101,7 +105,8 @@ class Notification_Queue {
 
         $queue = self::get_queue();
         $max_attempts = (int) apply_filters( 'Joinotify/Notification_Queue/Max_Attempts', 120, $type, $payload );
-        $next_attempt_at = time() + self::get_next_delay( 0, $reason );
+        $delay_override = max( 0, (int) $delay_override );
+        $next_attempt_at = time() + ( $delay_override > 0 ? $delay_override : self::get_next_delay( 0, $reason ) );
         $id = uniqid( 'joinotify_queue_', true );
 
         $queue[] = array(
@@ -298,6 +303,18 @@ class Notification_Queue {
                 );
                 break;
 
+            case 'raw':
+                $result = Transport::send_raw_message(
+                    $payload['sender'] ?? '',
+                    $payload['receiver'] ?? '',
+                    $payload['raw_type'] ?? '',
+                    is_array( $payload['raw_content'] ?? null ) ? $payload['raw_content'] : array(),
+                    $payload['preview'] ?? '',
+                    false,
+                    true
+                );
+                break;
+
             default:
                 return array(
                     'success' => false,
@@ -364,6 +381,18 @@ class Notification_Queue {
                     'language' => sanitize_text_field( $payload['language'] ?? 'pt_BR' ),
                     // Already-resolved Meta components; kept structurally intact for retry.
                     'components' => is_array( $payload['components'] ?? null ) ? $payload['components'] : array(),
+                    'delay' => max( 0, (int) ( $payload['delay'] ?? 0 ) ),
+                );
+
+            case 'raw':
+                return array(
+                    'sender' => sanitize_text_field( $payload['sender'] ?? '' ),
+                    'receiver' => sanitize_text_field( $payload['receiver'] ?? '' ),
+                    'raw_type' => sanitize_key( $payload['raw_type'] ?? '' ),
+                    // Already-built Meta object (interactive, location, contacts,
+                    // reaction, sticker); kept structurally intact for retry.
+                    'raw_content' => is_array( $payload['raw_content'] ?? null ) ? $payload['raw_content'] : array(),
+                    'preview' => sanitize_text_field( $payload['preview'] ?? '' ),
                     'delay' => max( 0, (int) ( $payload['delay'] ?? 0 ) ),
                 );
         }

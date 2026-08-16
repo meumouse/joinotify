@@ -155,6 +155,25 @@ class Otp_Login extends Integrations_Base {
                     'default' => '',
                 )
             ),
+            // A login code is always started by the business, so on the official
+            // Cloud API it falls outside the 24-hour window and only an approved
+            // AUTHENTICATION template gets through.
+            self::field_text(
+                'otp_login_template_name',
+                esc_html__( 'Login code template', 'joinotify' ),
+                esc_html__( 'Name of the approved AUTHENTICATION template used to deliver login codes over the WhatsApp Cloud API. Required on that transport, ignored on the legacy relay.', 'joinotify' ),
+                array(
+                    'placeholder' => 'codigo_de_acesso',
+                )
+            ),
+            self::field_text(
+                'otp_login_template_language',
+                esc_html__( 'Template language', 'joinotify' ),
+                esc_html__( 'Language code the template was approved in, for example pt_BR or en_US.', 'joinotify' ),
+                array(
+                    'placeholder' => 'pt_BR',
+                )
+            ),
         );
     }
 

@@ -1967,6 +1967,48 @@ class Registry {
 
 
 	/**
+	 * Sanitize the variable map of a WhatsApp template action.
+	 *
+	 * Each item says where a template placeholder lives (`component`, plus
+	 * `sub_type`/`index` for button variables), which placeholder key it is, and
+	 * the Joinotify token that fills it at send time.
+	 *
+	 * @since 2.3.0
+	 * @param array<int,mixed> $variables Raw variable map.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private static function sanitize_template_variables( $variables ) {
+		if ( ! is_array( $variables ) ) {
+			return array();
+		}
+
+		$clean = array();
+
+		foreach ( $variables as $variable ) {
+			if ( ! is_array( $variable ) ) {
+				continue;
+			}
+
+			$component = isset( $variable['component'] ) ? sanitize_key( (string) $variable['component'] ) : 'body';
+
+			if ( ! in_array( $component, array( 'header', 'body', 'button' ), true ) ) {
+				continue;
+			}
+
+			$clean[] = array(
+				'component' => $component,
+				'sub_type' => isset( $variable['sub_type'] ) ? sanitize_key( (string) $variable['sub_type'] ) : '',
+				'index' => isset( $variable['index'] ) ? absint( $variable['index'] ) : 0,
+				'key' => isset( $variable['key'] ) ? sanitize_text_field( (string) $variable['key'] ) : '',
+				'value' => isset( $variable['value'] ) ? sanitize_textarea_field( (string) $variable['value'] ) : '',
+			);
+		}
+
+		return $clean;
+	}
+
+
+	/**
 	 * Sanitize the attachment list of an action.
 	 *
 	 * Each item declares where the file comes from, so the keys that matter depend on the
@@ -2108,6 +2150,15 @@ class Registry {
 			// stays an int, instead of letting the generic recursion stringify both.
 			if ( 'attachments' === $key && is_array( $value ) ) {
 				$clean[ $key ] = self::sanitize_attachments( $value );
+				continue;
+			}
+
+			// Action "variables" maps each WhatsApp template placeholder to the
+			// Joinotify token that fills it. Canonicalize it explicitly so the
+			// button index stays an int instead of being stringified by the
+			// generic recursion below.
+			if ( 'variables' === $key && is_array( $value ) ) {
+				$clean[ $key ] = self::sanitize_template_variables( $value );
 				continue;
 			}
 

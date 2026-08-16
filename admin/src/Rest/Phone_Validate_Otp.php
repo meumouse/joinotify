@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Validations\Otp_Validation;
 use WP_REST_Request;
@@ -50,7 +51,11 @@ class Phone_Validate_Otp extends Abstract_Route {
         }
 
         Phone_Manager::add_sender( $phone );
-        Controller::get_connection_state( $phone );
+
+        // The slots connection state only exists on the Evolution transport.
+        if ( ! Transport::is_cloud() ) {
+            Controller::get_connection_state( $phone );
+        }
 
         return $this->success_response( array(
             'message' => __( 'Your WhatsApp was verified successfully!', 'joinotify' ),
