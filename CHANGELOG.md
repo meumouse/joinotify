@@ -20,6 +20,8 @@ Versão 2.4.0
      - O botão "Conectar" valida a chave na hora contra a API e importa os números da conta, preenchendo o ID do número e o da conta empresarial automaticamente
      - Se a chave for recusada, a chave anterior é restaurada — o site nunca fica com uma chave que acabou de falhar
      - Botão "Desconectar" apaga a chave sem remover os números já importados
+     - Com uma chave salva, o campo exibe o prefixo público dela (o restante fica mascarado) e um botão "Remover chave", com confirmação
+     - A chave informada no assistente de configuração aparece já salva no campo, e salvar as configurações não a apaga
      - A chave da API deixa de ser enviada ao navegador: a tela recebe apenas o prefixo público e a informação de que existe uma chave salva
      - A chave da API do WhatsApp, o token do Telegram e a chave do Resend passam a ser excluídos da exportação de configurações
 * Alteração: as atualizações passam a ser entregues pelo próprio WordPress

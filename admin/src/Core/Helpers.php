@@ -200,34 +200,20 @@ class Helpers {
     /**
      * Resolve a WhatsApp Cloud API credential.
      *
-     * Prefers the manual override saved in the settings screen; when empty,
-     * falls back to the value provisioned by the license activation (stored on
-     * the public license response object). Mirrors slots_manager_api_key() as
-     * the single accessor for the current relay key.
+     * The settings option is the single source: the setup wizard and the
+     * WhatsApp settings modal both write there, so nothing downstream has to
+     * know which one the site owner used. The old fallback to the license
+     * response object went away with the licensing system in 2.4.0.
      *
      * @since 1.4.8
-     * @param string $setting_key | Settings key holding the manual override.
-     * @param string $license_key | Field name on the license response object.
+     * @version 2.4.0
+     * @param string $setting_key | Settings key holding the credential.
      * @return string
      */
-    private static function cloud_credential( $setting_key, $license_key ) {
-        $manual = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
+    private static function cloud_credential( $setting_key ) {
+        $stored = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
 
-        if ( is_string( $manual ) && '' !== trim( $manual ) ) {
-            return trim( $manual );
-        }
-
-        $license = get_option( 'joinotify_license_response_object' );
-
-        if ( is_object( $license ) && isset( $license->$license_key ) && is_string( $license->$license_key ) ) {
-            return trim( $license->$license_key );
-        }
-
-        if ( is_array( $license ) && isset( $license[ $license_key ] ) && is_string( $license[ $license_key ] ) ) {
-            return trim( $license[ $license_key ] );
-        }
-
-        return '';
+        return is_string( $stored ) ? trim( $stored ) : '';
     }
 
 
@@ -238,7 +224,7 @@ class Helpers {
      * @return string
      */
     public static function cloud_api_token() {
-        return self::cloud_credential( 'whatsapp_cloud_api_token', 'api_token' );
+        return self::cloud_credential('whatsapp_cloud_api_token');
     }
 
 
@@ -249,7 +235,7 @@ class Helpers {
      * @return string
      */
     public static function cloud_phone_number_id() {
-        return self::cloud_credential( 'whatsapp_phone_number_id', 'phone_number_id' );
+        return self::cloud_credential('whatsapp_phone_number_id');
     }
 
 
@@ -260,7 +246,7 @@ class Helpers {
      * @return string
      */
     public static function cloud_waba_id() {
-        return self::cloud_credential( 'whatsapp_waba_id', 'waba_id' );
+        return self::cloud_credential('whatsapp_waba_id');
     }
 
 

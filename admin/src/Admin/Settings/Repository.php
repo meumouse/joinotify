@@ -61,16 +61,42 @@ class Repository {
             $sanitized[ $key ] = self::sanitize_setting_value( $key, $value, $definition );
         }
 
-        // Write-only credentials are blanked before they reach the browser, so
-        // the form always submits them empty. Treat that as "unchanged" rather
-        // than as a deletion — clearing one is done through its own control.
-        foreach ( Registry::get_write_only_keys() as $key ) {
-            if ( '' === trim( (string) ( $sanitized[ $key ] ?? '' ) ) && '' !== trim( (string) ( $current[ $key ] ?? '' ) ) ) {
+        $sanitized = self::preserve_write_only( $sanitized, $current, Registry::get_write_only_keys() );
+
+        update_option( 'joinotify_settings', $sanitized );
+
+        return $sanitized;
+    }
+
+
+    /**
+     * Keep stored credentials that the submitted payload left blank.
+     *
+     * Write-only settings (the Joinotify API key) are blanked before they reach
+     * the browser, so the settings form always submits them empty. Without this
+     * the first press of Save after connecting — through the wizard or through
+     * the WhatsApp modal — would write that empty string back and silently
+     * disconnect the site. Clearing one is done through its own control, which
+     * writes the option directly.
+     *
+     * Pure helper (no WordPress calls) so the rule can be tested in isolation.
+     *
+     * @since 2.4.0
+     * @param array<string,mixed> $sanitized Values about to be stored.
+     * @param array<string,mixed> $current   Values currently stored.
+     * @param array<int,string>   $keys      Write-only setting keys.
+     * @return array<string,mixed>
+     */
+    public static function preserve_write_only( $sanitized, $current, $keys ) {
+        foreach ( (array) $keys as $key ) {
+            $key = (string) $key;
+            $incoming = isset( $sanitized[ $key ] ) ? trim( (string) $sanitized[ $key ] ) : '';
+            $stored = isset( $current[ $key ] ) ? trim( (string) $current[ $key ] ) : '';
+
+            if ( '' === $incoming && '' !== $stored ) {
                 $sanitized[ $key ] = $current[ $key ];
             }
         }
-
-        update_option( 'joinotify_settings', $sanitized );
 
         return $sanitized;
     }

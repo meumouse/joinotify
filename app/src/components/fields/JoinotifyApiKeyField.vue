@@ -41,8 +41,18 @@ const successMsg = ref('');
 // exists and its public prefix.
 const connection = ref({ connected: props.connected, key_prefix: props.keyPrefix });
 const accountName = ref('');
+const confirmingRemoval = ref(false);
 
 const isConnected = computed(() => connection.value.connected);
+
+// The leading `sk_live_`/`sk_test_` segment is public and identifies which key
+// is in use; the secret half is stood in for so the field reads as a filled
+// credential rather than an empty box.
+const maskedKey = computed(() => {
+  const prefix = String(connection.value.key_prefix || '').trim();
+
+  return prefix ? `${prefix}${'•'.repeat(24)}` : '•'.repeat(32);
+});
 
 /**
  * Send the key to the backend, which validates it and imports the numbers.
@@ -109,6 +119,7 @@ async function disconnect() {
   loading.value = true;
   errorMsg.value = '';
   successMsg.value = '';
+  confirmingRemoval.value = false;
 
   try {
     const response = await api.post('/admin/cloud/connect/key', { disconnect: true });
@@ -132,37 +143,68 @@ async function disconnect() {
 
 <template>
   <div class="space-y-3">
-    <div
-      class="flex flex-wrap items-center justify-between gap-3 rounded-[10px] border px-4 py-3"
-      :class="isConnected ? 'border-emerald-200 bg-emerald-50' : 'border-slate-200 bg-slate-50'"
-    >
-      <div class="min-w-0">
-        <p class="text-[13px] font-semibold" :class="isConnected ? 'text-emerald-800' : 'text-slate-700'">
-          {{ isConnected ? __('Account connected', textDomain) : __('Account not connected', textDomain) }}
-        </p>
+    <div v-if="isConnected" class="space-y-3">
+      <div class="flex flex-wrap items-center gap-2">
+        <input
+          :value="maskedKey"
+          type="text"
+          readonly
+          :aria-label="__('Saved Joinotify API key', textDomain)"
+          class="min-w-0 flex-1 cursor-default rounded-lg border border-emerald-200 bg-emerald-50/60 px-4 py-3 font-mono text-[13px] tracking-tight text-emerald-900 outline-none"
+        >
 
-        <p class="mt-0.5 truncate text-xs text-slate-600">
-          <template v-if="isConnected">
-            {{ accountName || `${connection.key_prefix}…` }}
-          </template>
-          <template v-else>
-            {{ __('Messages cannot be delivered until this site is connected.', textDomain) }}
-          </template>
+        <button
+          v-if="!confirmingRemoval"
+          type="button"
+          class="inline-flex shrink-0 items-center rounded-[8px] border border-slate-200 bg-white px-3 py-3 text-[13px] font-medium text-slate-600 transition hover:border-rose-200 hover:text-rose-600 disabled:cursor-not-allowed disabled:opacity-50"
+          :disabled="disabled || loading"
+          @click="confirmingRemoval = true"
+        >
+          {{ __('Remove key', textDomain) }}
+        </button>
+
+        <template v-else>
+          <button
+            type="button"
+            class="inline-flex shrink-0 items-center rounded-[8px] bg-danger px-3 py-3 text-[13px] font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            :disabled="disabled || loading"
+            @click="disconnect"
+          >
+            {{ loading ? __('Removing…', textDomain) : __('Confirm', textDomain) }}
+          </button>
+
+          <button
+            type="button"
+            class="inline-flex shrink-0 items-center rounded-[8px] border border-slate-200 bg-white px-3 py-3 text-[13px] font-medium text-slate-600 transition hover:bg-slate-50"
+            :disabled="loading"
+            @click="confirmingRemoval = false"
+          >
+            {{ __('Cancel', textDomain) }}
+          </button>
+        </template>
+      </div>
+
+      <p class="text-xs leading-5 text-slate-500">
+        <span class="font-semibold text-emerald-700">{{ __('Connected', textDomain) }}</span>
+        <template v-if="accountName"> — {{ accountName }}</template>
+        &middot;
+        <template v-if="confirmingRemoval">
+          {{ __('Removing the key stops all message delivery from this site. The numbers already imported are kept.', textDomain) }}
+        </template>
+        <template v-else>
+          {{ __('Only the public prefix of your key is shown. Remove it to connect a different account.', textDomain) }}
+        </template>
+      </p>
+    </div>
+
+    <div v-else class="space-y-3">
+      <div class="rounded-[10px] border border-slate-200 bg-slate-50 px-4 py-3">
+        <p class="text-[13px] font-semibold text-slate-700">{{ __('Account not connected', textDomain) }}</p>
+        <p class="mt-0.5 text-xs text-slate-600">
+          {{ __('Messages cannot be delivered until this site is connected.', textDomain) }}
         </p>
       </div>
 
-      <button
-        v-if="isConnected"
-        type="button"
-        class="inline-flex shrink-0 items-center rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[13px] font-medium text-slate-600 transition hover:border-rose-200 hover:text-rose-600 disabled:cursor-not-allowed disabled:opacity-50"
-        :disabled="disabled || loading"
-        @click="disconnect"
-      >
-        {{ __('Disconnect', textDomain) }}
-      </button>
-    </div>
-
-    <div v-if="!isConnected" class="space-y-3">
       <input
         v-model="apiKey"
         type="password"
