@@ -32,6 +32,18 @@ class Cloud_Client {
     use Message_Dispatch;
 
     /**
+     * Single simplified send route.
+     *
+     * Text and template share one path: what tells them apart is the `type` in
+     * the body, not the URL. The per-type routes this client used to call
+     * (`/messages/send/text`, `/messages/send/template`) no longer exist.
+     *
+     * @since 2.4.0
+     * @var string
+     */
+    const SEND_PATH = '/messages';
+
+    /**
      * Base URL for the Cloud API.
      *
      * @since 1.4.8
@@ -93,7 +105,7 @@ class Cloud_Client {
      *
      * @since 1.4.8
      * @param string $method | HTTP method.
-     * @param string $path | Path beginning with a slash (e.g. '/messages/send/text').
+     * @param string $path | Path beginning with a slash (e.g. '/messages').
      * @param array|null $body | JSON body for write requests.
      * @param int $timeout | Request timeout in seconds.
      * @return array|\WP_Error | Raw wp_remote_* response or WP_Error.
@@ -257,6 +269,7 @@ class Cloud_Client {
         }
 
         $body = array(
+            'type' => 'text',
             'to' => $receiver,
             'body' => $message,
             'previewUrl' => (bool) apply_filters( 'Joinotify/API/Send_Message_Text/Link_Preview', true ),
@@ -268,7 +281,7 @@ class Cloud_Client {
             $body['from'] = $from;
         }
 
-        $response = self::request( 'POST', '/messages/send/text', $body );
+        $response = self::request( 'POST', self::SEND_PATH, $body );
 
         return self::finish_send( $response, $fields, $return_details, $queue_on_failure, 'text', array(
             'sender' => $sender,
@@ -492,6 +505,7 @@ class Cloud_Client {
         }
 
         $body = array(
+            'type' => 'template',
             'to' => $receiver,
             'name' => $template_name,
             'language' => $language,
@@ -507,7 +521,7 @@ class Cloud_Client {
             $body['from'] = $from;
         }
 
-        $response = self::request( 'POST', '/messages/send/template', $body );
+        $response = self::request( 'POST', self::SEND_PATH, $body );
 
         return self::finish_send( $response, $fields, $return_details, $queue_on_failure, 'template', $queue_payload );
     }
