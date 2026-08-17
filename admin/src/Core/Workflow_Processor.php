@@ -76,6 +76,7 @@ class Workflow_Processor {
             'post_type' => 'joinotify-workflow',
             'post_status' => 'publish',
             'numberposts' => -1,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Resolving which workflows listen to a hook is a meta lookup by nature; the fast path below hits the dedicated indexed meta and the result is memoized per request.
             'meta_query' => array(
                 'relation' => 'OR',
                 // Fast path: exact match on the indexed trigger-hook meta.
@@ -129,8 +130,8 @@ class Workflow_Processor {
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             Logger::register_log( 'Function process_workflows() fired' );
-            Logger::register_log( 'hook: ' . print_r( $hook, true ) );
-            Logger::register_log( 'payload: ' . print_r( $payload, true ) );
+            Logger::register_log( 'hook: ' . Logger::stringify( $hook ) );
+            Logger::register_log( 'payload: ' . Logger::stringify( $payload ) );
         }
 
         if ( empty( $workflows ) ) {
@@ -165,10 +166,10 @@ class Workflow_Processor {
         self::$funnel_stopped = false;
 
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( 'Function process_workflow_content() fired' );
-            error_log( 'Param $workflow_content: ' . print_r( $workflow_content, true ) );
-            error_log( 'Param $post_id: ' . print_r( $post_id, true ) );
-            error_log( 'Param $payload: ' . print_r( $payload, true ) );
+            Logger::register_log( 'Function process_workflow_content() fired' );
+            Logger::register_log( 'Param $workflow_content: ' . Logger::stringify( $workflow_content ) );
+            Logger::register_log( 'Param $post_id: ' . Logger::stringify( $post_id ) );
+            Logger::register_log( 'Param $payload: ' . Logger::stringify( $payload ) );
         }
 
         /**
@@ -1295,7 +1296,6 @@ class Workflow_Processor {
             'send_telegram_message_text' => fn() => self::send_telegram_message_text( $action_data, $event_data, $post_id ),
             'send_resend_email' => fn() => self::send_resend_email( $action_data, $event_data, $post_id ),
             'create_coupon' => fn() => self::execute_wc_coupon_action( $action_data, $event_data, $post_id ),
-            'snippet_php' => fn() => self::execute_snippet_php( $action_data['snippet_php'], $event_data ),
             'stop_funnel' => fn() => self::stop_funnel(),
         //  'dynamic_placeholder' => fn() => self::execute_dynamic_placeholder( $action_data, $event_data ),
         ), $action, $post_id, $event_data );
@@ -1381,9 +1381,9 @@ class Workflow_Processor {
      */
     protected static function evaluate_condition( $action, $post_id, $payload ) {
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Processing condition action: " . print_r( $action, true ) );
-            error_log( "Post ID: " . print_r( $post_id, true ) );
-            error_log( "Payload: " . print_r( $payload, true ) );
+            Logger::register_log( "Processing condition action: " . Logger::stringify( $action ) );
+            Logger::register_log( "Post ID: " . Logger::stringify( $post_id ) );
+            Logger::register_log( "Payload: " . Logger::stringify( $payload ) );
         }
 
         $action_data = $action['data'] ?? array();
@@ -1412,7 +1412,7 @@ class Workflow_Processor {
 
         // get meta key for user meta condition
         if ( $get_condition === 'user_meta' ) {
-            $payload['condition_content']['meta_key'] = $action_data['condition_content']['meta_key'] ?? '';
+            $payload['condition_content']['meta_key'] = $action_data['condition_content']['meta_key'] ?? ''; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Condition payload key, not a query argument.
         } elseif ( $get_condition === 'field_value' ) {
             $payload['condition_content']['field_id'] = $action_data['condition_content']['field_id'] ?? '';
         }
@@ -1427,12 +1427,12 @@ class Workflow_Processor {
         $next_actions = $condition_met ? ( $action['children']['action_true'] ?? array() ) : ( $action['children']['action_false'] ?? array() );
 
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Condition content: " . print_r( $action_data['condition_content'], true ) );
-            error_log( "Condition type: " . print_r( $condition_type, true ) );
-            error_log( "Condition value: " . print_r( $condition_value, true ) );
-            error_log( "Compare value: " . print_r( $compare_value, true ) );
-            error_log( "Condition met: " . print_r( $condition_met, true ) );
-            error_log( "Next actions: " . print_r( $next_actions, true ) );
+            Logger::register_log( "Condition content: " . Logger::stringify( $action_data['condition_content'] ) );
+            Logger::register_log( "Condition type: " . Logger::stringify( $condition_type ) );
+            Logger::register_log( "Condition value: " . Logger::stringify( $condition_value ) );
+            Logger::register_log( "Compare value: " . Logger::stringify( $compare_value ) );
+            Logger::register_log( "Condition met: " . Logger::stringify( $condition_met ) );
+            Logger::register_log( "Next actions: " . Logger::stringify( $next_actions ) );
         }
 
         return is_array( $next_actions ) ? $next_actions : array();
@@ -1530,7 +1530,7 @@ class Workflow_Processor {
             if ( $result->is_success() ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+                Logger::register_log( "Failed to send message. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
     }
@@ -1596,7 +1596,7 @@ class Workflow_Processor {
             if ( $result->is_success() ) {
                 Logger::register_log( "Template \"$template_name\" sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send template \"$template_name\". Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+                Logger::register_log( "Failed to send template \"$template_name\". Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
     }
@@ -1704,7 +1704,7 @@ class Workflow_Processor {
                 if ( $result && $result->is_success() ) {
                     Logger::register_log( sprintf( 'WhatsApp attachments sent successfully to: %s', $receiver ) );
                 } else {
-                    Logger::register_log( sprintf( 'Failed to send WhatsApp attachments to: %s. Response: %s', $receiver, $result ? print_r( $result->to_array(), true ) : 'no file could be resolved' ), 'ERROR' );
+                    Logger::register_log( sprintf( 'Failed to send WhatsApp attachments to: %s. Response: %s', $receiver, $result ? Logger::stringify( $result->to_array() ) : 'no file could be resolved' ), 'ERROR' );
                 }
             }
 
@@ -1738,7 +1738,7 @@ class Workflow_Processor {
             if ( $result->is_success() ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+                Logger::register_log( "Failed to send message. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
     }
@@ -1897,7 +1897,7 @@ class Workflow_Processor {
             if ( $result->is_success() ) {
                 Logger::register_log( "Telegram message sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send Telegram message. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+                Logger::register_log( "Failed to send Telegram message. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
     }
@@ -1950,7 +1950,7 @@ class Workflow_Processor {
             if ( $result->is_success() ) {
                 Logger::register_log( "Resend e-mail sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send Resend e-mail. Response: " . print_r( $result->to_array(), true ), 'ERROR' );
+                Logger::register_log( "Failed to send Resend e-mail. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
     }
@@ -2030,7 +2030,7 @@ class Workflow_Processor {
             if ( 201 === $response ) {
                 Logger::register_log( "AI message sent successfully to: $receiver" );
             } else {
-                Logger::register_log( "Failed to send AI message. Response: " . print_r( $response, true ), 'ERROR' );
+                Logger::register_log( "Failed to send AI message. Response: " . Logger::stringify( $response ), 'ERROR' );
             }
         }
     }
@@ -2083,125 +2083,6 @@ class Workflow_Processor {
         });
 
         return implode( "\n\n", $parts );
-    }
-
-
-    /**
-     * Execute a PHP snippet from a workflow action
-     *
-     * @since 1.1.0
-     * @param string $snippet_php | PHP Code to execute
-     * @param array $payload | Payload data
-     * @return bool Returns true if executed successfully
-     */
-    public static function execute_snippet_php( $snippet_php, $payload ) {
-        if ( empty( $snippet_php ) ) {
-            Logger::register_log( 'Empty PHP snippet, skipping execution.', 'WARNING' );
-
-            return false;
-        }
-
-        /**
-         * Master switch to allow/deny PHP snippet execution.
-         *
-         * Returning false here disables the eval()-based snippet action entirely,
-         * letting security-conscious sites turn it off without code changes.
-         *
-         * @since 2.0.0
-         * @param bool   $allow       Whether snippet execution is allowed.
-         * @param string $snippet_php The snippet source.
-         * @param array  $payload     Runtime payload.
-         */
-        if ( ! apply_filters( 'Joinotify/Snippet/Allow_Execution', true, $snippet_php, $payload ) ) {
-            Logger::register_log( 'PHP snippet execution is disabled by filter.', 'WARNING' );
-
-            return false;
-        }
-
-        // remove the `<?php` tag if it exists
-        $snippet_php = preg_replace( '/^\s*<\?php\s*/', '', $snippet_php );
-
-        /**
-         * Dangerous functions blocked inside snippets (command execution, file I/O,
-         * network sockets, dynamic invocation and code-eval vectors). The previous
-         * list only blocked a handful and was trivially bypassable (e.g. fopen,
-         * call_user_func, include were allowed).
-         *
-         * @since 2.0.0
-         * @param array $blocked Function names to block.
-         */
-        $blocked_functions = apply_filters( 'Joinotify/Snippet/Blocked_Functions', array(
-            // command execution
-            'exec', 'shell_exec', 'system', 'passthru', 'proc_open', 'popen', 'proc_nice', 'pcntl_exec',
-            // code evaluation / dynamic definition
-            'eval', 'assert', 'create_function',
-            // dynamic invocation (blocklist-bypass vectors)
-            'call_user_func', 'call_user_func_array',
-            // environment / module loading
-            'dl', 'putenv',
-            // filesystem
-            'file_get_contents', 'file_put_contents', 'fopen', 'fwrite', 'fputs', 'fread',
-            'unlink', 'rename', 'copy', 'rmdir', 'mkdir', 'chmod', 'chown', 'symlink', 'link',
-            // network
-            'fsockopen', 'pfsockopen', 'stream_socket_client', 'curl_exec', 'curl_multi_exec',
-        ) );
-
-        foreach ( $blocked_functions as $function ) {
-            // match `name(` even with whitespace, ignoring case
-            if ( preg_match( '/\b' . preg_quote( $function, '/' ) . '\s*\(/i', $snippet_php ) ) {
-                Logger::register_log( "Attempt to execute blocked function: $function", 'ERROR' );
-
-                return false;
-            }
-        }
-
-        // block include/require language constructs (with or without parentheses)
-        if ( preg_match( '/\b(include|require)(_once)?\b/i', $snippet_php ) ) {
-            Logger::register_log( 'Attempt to use include/require in a PHP snippet.', 'ERROR' );
-
-            return false;
-        }
-
-        // block backtick shell execution
-        if ( strpos( $snippet_php, '`' ) !== false ) {
-            Logger::register_log( 'Attempt to use shell execution (backticks) in a PHP snippet.', 'ERROR' );
-
-            return false;
-        }
-
-        // block variable / dynamic function calls like $fn(...) which bypass the blocklist
-        if ( preg_match( '/\$\w+\s*\(/', $snippet_php ) ) {
-            Logger::register_log( 'Attempt to use a variable function call in a PHP snippet.', 'ERROR' );
-
-            return false;
-        }
-
-        // register log before execution for debugging
-        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-            Logger::register_log( "Running PHP Snippet: \n" . $snippet_php );
-        }
-
-        try {
-            // create a safe execution environment
-            ob_start();
-
-            // execute the snippet
-            eval( $snippet_php ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.eval
-            
-            // get the output buffer contents
-            $output = ob_get_clean();
-
-            // result execution log
-            if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-                Logger::register_log( "PHP Snippet result: \n" . print_r( $output, true ) );
-            }
-
-            return true;
-        } catch ( \Throwable $e ) {
-            Logger::register_log( "Error executing PHP snippet: " . $e->getMessage(), 'ERROR' );
-
-            return false;
-        }
     }
 
 

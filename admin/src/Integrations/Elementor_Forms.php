@@ -265,7 +265,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			);
 
 			if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-				Logger::register_log( "context on Elementor form: " . print_r( $payload, true ) );
+				Logger::register_log( "context on Elementor form: " . Logger::stringify( $payload ) );
 			}
 
 			$text_msg = joinotify_prepare_message( $settings['joinotify_send_text_message'] ?? '', $payload );

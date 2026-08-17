@@ -15,6 +15,13 @@ defined('ABSPATH') || exit;
 
 use MeuMouse\Joinotify\Otp_Login\Templates;
 
+/*
+ * This file overrides a WooCommerce template, so it has to keep firing
+ * WooCommerce's own login/registration form hooks for themes and other plugins to
+ * stay wired up.
+ */
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+
 do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) : ?>

@@ -7,6 +7,15 @@ use MeuMouse\Joinotify\Admin\Admin;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+/*
+ * This class is the sole gateway to the plugin's own `joinotify_message_history`
+ * table, which no WordPress API covers, so every read and write here is a direct
+ * query by design. The rows are admin-screen audit data read behind a capability
+ * check and invalidated on every send, so an object cache would serve stale
+ * counts more often than it would save a query.
+ */
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
 /**
  * Persist and query a history of dispatched WhatsApp messages.
  *
@@ -336,6 +345,12 @@ class Message_History {
      * @param array<string,mixed> $args Filter args.
      * @return array{0:string,1:array} SQL fragment and prepare args.
      */
+    /*
+     * The fragment returned below is assembled only from literal SQL written in this
+     * method — every caller-supplied value becomes a %s/%d placeholder whose value is
+     * appended to the returned args array. Callers therefore interpolate the fragment
+     * into the query and pass the args to $wpdb->prepare().
+     */
     private static function build_where( $args ) {
         global $wpdb;
 
@@ -399,6 +414,7 @@ class Message_History {
         $values[] = $per_page;
         $values[] = $offset;
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql holds only the literal query, the $wpdb->prefix table name and the placeholder-only fragment from build_where(); all values are bound here.
         $rows = $wpdb->get_results( $wpdb->prepare( $sql, $values ), ARRAY_A );
 
         return is_array( $rows ) ? $rows : array();
@@ -421,9 +437,11 @@ class Message_History {
         $sql = "SELECT COUNT(*) FROM {$table} WHERE {$where}";
 
         if ( empty( $values ) ) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Unfiltered count: $sql is the literal query plus the $wpdb->prefix table name, with no caller input to bind.
             return (int) $wpdb->get_var( $sql );
         }
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql holds only the literal query, the $wpdb->prefix table name and the placeholder-only fragment from build_where(); all values are bound here.
         return (int) $wpdb->get_var( $wpdb->prepare( $sql, $values ) );
     }
 
@@ -440,6 +458,7 @@ class Message_History {
         $table = self::get_table_name();
         $counts = array( 'all' => 0, 'sent' => 0, 'failed' => 0, 'queued' => 0 );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_results( "SELECT status, COUNT(*) AS total FROM {$table} GROUP BY status", ARRAY_A );
 
         if ( is_array( $rows ) ) {
@@ -478,6 +497,7 @@ class Message_History {
         $table = self::get_table_name();
         $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID, all bound here.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE id IN ({$placeholders})", $ids ) );
     }
 
@@ -493,6 +513,7 @@ class Message_History {
 
         $table = self::get_table_name();
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         return (int) $wpdb->query( "DELETE FROM {$table}" );
     }
 
@@ -523,6 +544,9 @@ class Message_History {
         $table = self::get_table_name();
         $threshold = gmdate( 'Y-m-d H:i:s', time() - ( $days * DAY_IN_SECONDS ) );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; $threshold is bound as %s.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $threshold ) );
     }
 }
+
+// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching

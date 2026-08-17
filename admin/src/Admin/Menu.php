@@ -101,6 +101,7 @@ class Menu {
             array( $this, 'render_onboarding_page' )
         );
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
         $current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
         if ( 'joinotify-onboarding' === $current_page ) {

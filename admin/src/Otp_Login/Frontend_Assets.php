@@ -159,6 +159,12 @@ class Frontend_Assets {
             return $tag;
         }
 
-        return sprintf( '<script type="module" src="%s" id="%s-js"></script>', esc_url( $src ), esc_attr( $handle ) );
+        // Patching the tag WordPress generated keeps whatever else it put there
+        // (defer/async, filtered attributes) instead of discarding it.
+        if ( false !== strpos( $tag, 'type=' ) ) {
+            return preg_replace( '/\stype=(["\'])[^"\']*\1/', ' type="module"', $tag, 1 );
+        }
+
+        return preg_replace( '/<script\s/', '<script type="module" ', $tag, 1 );
     }
 }

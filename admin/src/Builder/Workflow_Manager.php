@@ -43,10 +43,12 @@ class Workflow_Manager {
      * @return void
      */
     public function suppress_admin_notices() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
         if ( ! is_admin() || ! isset( $_GET['page'] ) ) {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
         $current_page = sanitize_key( wp_unslash( $_GET['page'] ) );
 
         /**

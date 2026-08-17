@@ -14,6 +14,13 @@
 
 defined('ABSPATH') || exit;
 
+/*
+ * The assignments below are not global variables: this partial is included from
+ * Templates::render(), which extract()s its $args inside that method, so
+ * everything here lives in the renderer's local scope.
+ */
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 $context = $context ?? 'myaccount';
 $redirect_url = $redirect_url ?? home_url( '/' );
 $title = $title ?? __( 'Log in with a verification code', 'joinotify' );
@@ -31,7 +38,9 @@ $i18n = array(
 	'Sending...' => __( 'Sending...', 'joinotify' ),
 	'Use email and password' => __( 'Use email and password', 'joinotify' ),
 	'Enter the access code' => __( 'Enter the access code', 'joinotify' ),
+	/* translators: %d: number of digits in the verification code */
 	'Enter the %d-digit code sent to your WhatsApp.' => __( 'Enter the %d-digit code sent to your WhatsApp.', 'joinotify' ),
+	/* translators: %d: position of the digit within the verification code */
 	'Code digit %d' => __( 'Code digit %d', 'joinotify' ),
 	'Remember me' => __( 'Remember me', 'joinotify' ),
 	'Resend code in' => __( 'Resend code in', 'joinotify' ),

@@ -76,14 +76,6 @@ export const FLOW_NODE_TYPES: FlowNodeConfig[] = [
     description: 'Envie uma mensagem de mídia (imagem, vídeo, documento e áudio) com o WhatsApp.',
     category: 'WhatsApp',
   },
-  {
-    type: 'php-snippet',
-    label: 'Snippet PHP',
-    icon: 'bxl-php',
-    color: 'bg-indigo-600',
-    description: 'Execute um trecho de código PHP personalizado.',
-    category: 'Código',
-  },
 ];
 
 /** Returns only the types visible in the sidebar (not _internal) */

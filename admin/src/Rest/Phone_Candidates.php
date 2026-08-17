@@ -61,6 +61,7 @@ class Phone_Candidates extends Abstract_Route {
             return rest_ensure_response( array(
                 'status' => 'success',
                 'empty_message' => sprintf(
+                    /* translators: %s: URL of the phone registration page */
                     esc_html__( 'No available phone number was found for registration. Register it using the link: %s', 'joinotify' ),
                     esc_url( JOINOTIFY_REGISTER_PHONE_URL )
                 ),

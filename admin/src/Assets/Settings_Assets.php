@@ -177,6 +177,7 @@ class Settings_Assets extends Abstract_Assets {
         $endpoint = $map[ $page ]['endpoint'];
 
         if ( 'joinotify-workflows-builder' === $page ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which workflow the builder screen was opened for; nothing is acted on.
             $post_id = isset( $_GET['id'] ) ? absint( wp_unslash( $_GET['id'] ) ) : 0;
             $endpoint = add_query_arg( 'id', $post_id, $endpoint );
         }
@@ -198,6 +199,7 @@ class Settings_Assets extends Abstract_Assets {
      * @return string
      */
     private function get_current_page() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- See the note below.
         if ( ! is_admin() || ! isset( $_GET['page'] ) ) {
             return '';
         }

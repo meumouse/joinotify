@@ -13,6 +13,13 @@
 
 defined('ABSPATH') || exit;
 
+/*
+ * The assignments below are not global variables: this partial is included from
+ * Templates::render(), which extract()s its $args inside that method, so
+ * everything here lives in the renderer's local scope.
+ */
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 $field_id = $field_id ?? 'joinotify-phone';
 $field_name = $field_name ?? 'phone';
 $label = $label ?? __( 'Phone number', 'joinotify' );

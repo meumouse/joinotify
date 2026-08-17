@@ -11,7 +11,6 @@ import { conditionDefinition } from '../definitions/condition';
 import { loopDefinition } from '../definitions/loop';
 import { createCouponDefinition } from '../definitions/createCoupon';
 import { dynamicPlaceholderDefinition } from '../definitions/dynamicPlaceholder';
-import { snippetPhpDefinition } from '../definitions/snippetPhp';
 import { stopFunnelDefinition } from '../definitions/stopFunnel';
 import { timeDelayDefinition } from '../definitions/timeDelay';
 import { whatsappAiMessageDefinition } from '../definitions/whatsappAiMessage';
@@ -33,7 +32,6 @@ export function registerCoreActions(): void {
   registerBuilderAction(conditionDefinition);
   registerBuilderAction(loopDefinition);
   registerBuilderAction(stopFunnelDefinition);
-  registerBuilderAction(snippetPhpDefinition);
   registerBuilderAction(whatsappTextDefinition);
   registerBuilderAction(whatsappMediaDefinition);
   registerBuilderAction(whatsappTemplateDefinition);

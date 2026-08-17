@@ -9,7 +9,7 @@
 
 defined('ABSPATH') || exit;
 
-$debug_mode = defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : false; ?>
+$joinotify_debug_mode = defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : false; ?>
 
 <div class="wrap p-0 joinotify-builder-page">
 	<style>
@@ -18,7 +18,7 @@ $debug_mode = defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : 
 			display: none !important;
 		}
 
-		<?php if ( ! $debug_mode ) : ?>
+		<?php if ( ! $joinotify_debug_mode ) : ?>
 			#wpadminbar {
 				display: none !important;
 			}
@@ -32,7 +32,7 @@ $debug_mode = defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : 
 				display: none !important;
 			}
 
-			<?php if ( ! $debug_mode ) : ?>
+			<?php if ( ! $joinotify_debug_mode ) : ?>
 				#wpadminbar {
 					display: none !important;
 				}

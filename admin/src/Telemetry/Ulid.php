@@ -71,17 +71,18 @@ class Ulid {
     /**
      * Encode 16 random characters.
      *
-     * `wp_rand()` when WordPress is loaded, `mt_rand()` when it is not — this class is
+     * `wp_rand()` when WordPress is loaded, `random_int()` when it is not — this class is
      * exercised by a standalone test harness that never boots WordPress.
      *
      * @since 2.3.0
+     * @version 2.3.0
      * @return string
      */
     private static function encode_randomness() {
         $out = '';
 
         for ( $i = 0; $i < 16; $i++ ) {
-            $index = function_exists('wp_rand') ? wp_rand( 0, 31 ) : mt_rand( 0, 31 );
+            $index = function_exists('wp_rand') ? wp_rand( 0, 31 ) : random_int( 0, 31 );
             $out .= self::ALPHABET[ $index ];
         }
 

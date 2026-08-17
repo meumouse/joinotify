@@ -67,9 +67,7 @@ import {
   insertWorkflowNodeAtEnd,
   isConditionNode,
   isDelayNode,
-  isPlaceholderNode,
-  isSnippetNode,
-  isStopNode,
+  isPlaceholderNode,  isStopNode,
   moveWorkflowNode,
   removeWorkflowNode,
   replaceWorkflowNodeData,
@@ -1240,37 +1238,6 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
   }
 
   /**
-   * Generates a PHP snippet via AI.
-   *
-   * @since 2.0.0
-   * @param {Record<string, unknown>} [payload] The generation payload.
-   * @returns {Promise<Object>} The generation result with the code.
-   */
-  async function generateAiSnippet(payload: Record<string, unknown> = {}) {
-    debugLogger.log('snippet:generate-ai-start');
-
-    try {
-      const response = api.value
-        ? await api.value.generateAi({ intent: 'snippet', ...payload })
-        : null;
-
-      if (response && (response as Record<string, unknown>).status === 'success') {
-        return { ok: true, code: String((response as Record<string, unknown>).code || '') };
-      }
-
-      return {
-        ok: false,
-        message: String((response as Record<string, unknown>)?.message || __('The AI could not generate the snippet.', textDomain)),
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        message: error instanceof Error ? error.message : __('The AI could not generate the snippet.', textDomain),
-      };
-    }
-  }
-
-  /**
    * Loads the builder bootstrap payload from the server and hydrates the store.
    *
    * @since 2.0.0
@@ -2234,9 +2201,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     createEmptyWorkflowFile,
     createWorkflowFromScratch,
     createWorkflowFromTemplate,
-    generateWorkflowFromAi,
-    generateAiSnippet,
-    loadWorkflowFile,
+    generateWorkflowFromAi,    loadWorkflowFile,
     loadBootstrapFromServer,
     loadWorkflowFromServer,
     loadTemplatesFromServer,

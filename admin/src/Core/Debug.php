@@ -28,7 +28,7 @@ class Debug {
         if ( Admin::get_setting('enable_debug_mode') === 'yes' ) {
             define( 'JOINOTIFY_DEBUG_MODE', true );
 
-            add_action( 'admin_head', array( $this, 'debug_mode' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'debug_mode' ) );
         } else {
             define( 'JOINOTIFY_DEBUG_MODE', false );
         }
@@ -37,9 +37,13 @@ class Debug {
 
     /**
      * Add styles and scripts for debug
-     * 
+     *
+     * Debug mode keeps the admin bar visible, so the builder chrome has to be
+     * pushed down by its height. The rules are attached to an inline-only style
+     * handle instead of being printed on `admin_head`.
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.3.0
      * @return void
      */
     public function debug_mode() {
@@ -82,9 +86,12 @@ class Debug {
             margin-top: 32px;
         }
 
-		<?php $css = ob_get_clean();
-		$css = wp_strip_all_tags( $css );
+		<?php $css = wp_strip_all_tags( ob_get_clean() );
 
-		printf( '<style>%s</style>', $css );
+		// An inline-only handle (no `src`) is the supported way to ship a stylesheet
+		// that exists purely as inline CSS.
+		wp_register_style( 'joinotify-debug-mode', false, array(), JOINOTIFY_VERSION );
+		wp_enqueue_style( 'joinotify-debug-mode' );
+		wp_add_inline_style( 'joinotify-debug-mode', $css );
     }
 }

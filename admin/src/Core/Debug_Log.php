@@ -8,6 +8,15 @@ use WP_Error;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+/*
+ * This class is the sole gateway to the plugin's own `joinotify_debug_log` table,
+ * which no WordPress API covers, so every read and write here is a direct query by
+ * design. The rows are admin-screen diagnostics read behind a capability check and
+ * appended to on virtually every request, so an object cache would serve stale
+ * output more often than it would save a query.
+ */
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
 /**
  * Structured debug logging backed by a dedicated database table.
  *
@@ -463,7 +472,8 @@ class Debug_Log {
      * @return void
      */
     public static function register_error_handlers() {
-        set_error_handler( array( __CLASS__, 'handle_php_error' ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+        // phpcs:ignore WordPress.PHP.NoSilencedErrors, WordPress.PHP.DevelopmentFunctions.error_log_set_error_handler -- The debug screen is built on capturing plugin-scoped PHP errors; handle_php_error() re-raises them through the previous handler.
+        set_error_handler( array( __CLASS__, 'handle_php_error' ) );
         register_shutdown_function( array( __CLASS__, 'handle_shutdown' ) );
     }
 
@@ -539,6 +549,12 @@ class Debug_Log {
      * @param array<string,mixed> $args Filter args.
      * @return array{0:string,1:array} SQL fragment and prepare args.
      */
+    /*
+     * The fragment returned below is assembled only from literal SQL written in this
+     * method — every caller-supplied value becomes a %s/%d placeholder whose value is
+     * appended to the returned args array. Callers therefore interpolate the fragment
+     * into the query and pass the args to $wpdb->prepare().
+     */
     private static function build_where( $args ) {
         global $wpdb;
 
@@ -603,6 +619,7 @@ class Debug_Log {
         $values[] = $per_page;
         $values[] = $offset;
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql holds only the literal query, the $wpdb->prefix table name and the placeholder-only fragment from build_where(); all values are bound here.
         $rows = $wpdb->get_results( $wpdb->prepare( $sql, $values ), ARRAY_A );
 
         return is_array( $rows ) ? $rows : array();
@@ -625,9 +642,11 @@ class Debug_Log {
         $sql = "SELECT COUNT(*) FROM {$table} WHERE {$where}";
 
         if ( empty( $values ) ) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Unfiltered count: $sql is the literal query plus the $wpdb->prefix table name, with no caller input to bind.
             return (int) $wpdb->get_var( $sql );
         }
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql holds only the literal query, the $wpdb->prefix table name and the placeholder-only fragment from build_where(); all values are bound here.
         return (int) $wpdb->get_var( $wpdb->prepare( $sql, $values ) );
     }
 
@@ -648,6 +667,7 @@ class Debug_Log {
             $counts[ $level ] = 0;
         }
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_results( "SELECT level, COUNT(*) AS total FROM {$table} GROUP BY level", ARRAY_A );
 
         if ( is_array( $rows ) ) {
@@ -677,6 +697,7 @@ class Debug_Log {
         global $wpdb;
 
         $table = self::get_table_name();
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_col( "SELECT DISTINCT channel FROM {$table} ORDER BY channel ASC" );
 
         return is_array( $rows ) ? array_values( array_filter( $rows ) ) : array();
@@ -693,6 +714,7 @@ class Debug_Log {
         global $wpdb;
 
         $table = self::get_table_name();
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_results( "SELECT * FROM {$table} ORDER BY id ASC", ARRAY_A );
 
         if ( ! is_array( $rows ) || empty( $rows ) ) {
@@ -755,6 +777,7 @@ class Debug_Log {
         $table = self::get_table_name();
         $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID, all bound here.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE id IN ({$placeholders})", $ids ) );
     }
 
@@ -770,6 +793,7 @@ class Debug_Log {
 
         $table = self::get_table_name();
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         return (int) $wpdb->query( "DELETE FROM {$table}" );
     }
 
@@ -785,6 +809,7 @@ class Debug_Log {
 
         $table = self::get_table_name();
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         return (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" ) > 0;
     }
 
@@ -815,6 +840,7 @@ class Debug_Log {
         $table = self::get_table_name();
         $threshold = gmdate( 'Y-m-d H:i:s', time() - ( $days * DAY_IN_SECONDS ) );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; $threshold is bound as %s.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $threshold ) );
     }
 
@@ -837,7 +863,8 @@ class Debug_Log {
 
         $json = wp_json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
-        return false !== $json ? $json : print_r( $value, true );
+        // Encoding only fails on invalid UTF-8 or recursion; record the type instead.
+        return false !== $json ? $json : '[unencodable ' . get_debug_type( $value ) . ']';
     }
 
 
@@ -946,3 +973,5 @@ class Debug_Log {
         return $file;
     }
 }
+
+// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching

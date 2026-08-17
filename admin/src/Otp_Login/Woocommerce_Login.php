@@ -56,10 +56,12 @@ class Woocommerce_Login {
      * @return void
      */
     public function save_registration_phone( $customer_id ) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on woocommerce_created_customer, inside the registration handler that already verified its own nonce.
         if ( ! $customer_id || empty( $_POST['phone'] ) ) {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on woocommerce_created_customer, inside the registration handler that already verified its own nonce.
         $phone = Phone_Utils::normalize( sanitize_text_field( wp_unslash( $_POST['phone'] ) ) );
 
         if ( ! empty( $phone ) ) {
@@ -193,6 +195,7 @@ class Woocommerce_Login {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Runs on woocommerce_save_account_details, inside the handler that already verified the save-account-details nonce.
         $phone = isset( $_POST['account_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['account_phone'] ) ) : '';
 
         if ( empty( $phone ) ) {

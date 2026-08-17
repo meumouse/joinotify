@@ -254,15 +254,6 @@ export interface PlaceholderNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
-/** Data payload for a PHP-snippet node. */
-export interface SnippetNodeData extends Record<string, unknown> {
-  title?: string;
-  description?: string;
-  action?: 'snippet_php';
-  snippet_php?: string;
-  settings?: Record<string, unknown>;
-}
-
 /** A single dynamic placeholder available for messages. */
 export interface WorkflowPlaceholderItem {
   placeholder: string;

@@ -210,14 +210,14 @@ class Controller {
         ));
 
         if ( is_wp_error( $response ) ) {
-            error_log( print_r( $response, true ) );
+            Logger::register_log( Logger::stringify( $response ) );
             return $response;
         }
 
         $response_body = wp_remote_retrieve_body( $response );
 
         if ( self::$debug_mode ) {
-            error_log( "get_server_details() response: " . $response_body );
+            Logger::register_log( "get_server_details() response: " . $response_body );
         }
 
         $data = json_decode( $response_body, true );
@@ -336,7 +336,7 @@ class Controller {
 
         // Check response body
         if ( self::$dev_mode ) {
-            error_log( 'get_numbers() response body: ' . print_r( $response_body, true ) );
+            Logger::register_log( 'get_numbers() response body: ' . Logger::stringify( $response_body ) );
         }
 
         return json_decode( $response_body, true );
@@ -367,7 +367,7 @@ class Controller {
 
         // Check response body
         if ( self::$dev_mode ) {
-            error_log( 'get_connection_state() response body: ' . print_r( $response_body, true ) );
+            Logger::register_log( 'get_connection_state() response body: ' . Logger::stringify( $response_body ) );
         }
 
         $phone_status = json_decode( $response_body, true );
@@ -490,7 +490,7 @@ class Controller {
 
         // Check response body
         if ( self::$debug_mode ) {
-            Logger::register_log( 'send_message_text() response body: ' . print_r( $response_body, true ) );
+            Logger::register_log( 'send_message_text() response body: ' . Logger::stringify( $response_body ) );
         }
 
         $success = ( 201 === $response_code );
@@ -753,7 +753,7 @@ class Controller {
 
         // Check response body
         if ( self::$dev_mode ) {
-            error_log( 'send_whatsapp_audio() response body: ' . print_r( $response_body, true ) );
+            Logger::register_log( 'send_whatsapp_audio() response body: ' . Logger::stringify( $response_body ) );
         }
 
         $success = ( 201 === $response_code );
@@ -799,7 +799,7 @@ class Controller {
 
         // Check if the response is an error
         if ( self::$dev_mode ) {
-            error_log( 'send_validation_otp() response: ' . print_r( $response, true ) );
+            Logger::register_log( 'send_validation_otp() response: ' . Logger::stringify( $response ) );
         }
 
         if ( is_wp_error( $response ) ) {
@@ -851,7 +851,7 @@ class Controller {
 
         // Check if the response is an error
         if ( self::$dev_mode ) {
-            error_log( 'fetch_all_groups() response: ' . print_r( $response, true ) );
+            Logger::register_log( 'fetch_all_groups() response: ' . Logger::stringify( $response ) );
         }
 
         $response_body = wp_remote_retrieve_body( $response );

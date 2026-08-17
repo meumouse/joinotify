@@ -86,9 +86,18 @@ class Init {
 
 		/**
 		 * Fire hook before Joinotify initialize.
-		 * 
+		 *
 		 * @since 1.1.0
 		 */
+		do_action('Joinotify/Core/Before_Init');
+
+		/**
+		 * Fire hook before Joinotify initialize.
+		 *
+		 * @since 1.1.0
+		 * @deprecated 2.3.0 Use the prefixed 'Joinotify/Core/Before_Init' instead.
+		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Deprecated alias kept so existing integrations keep firing.
 		do_action('before_joinotify_init');
 
 		// Display notice if PHP version is below 7.4.
@@ -132,8 +141,9 @@ class Init {
 			return \MeuMouse\Joinotify\Api\Transport::active_channel_id();
 		}, 10, 1 );
 
-		// Load plugin text domain.
-		add_action( 'init', array( $this, 'load_text_domain' ) );
+		// The text domain is not loaded explicitly: the `Text Domain` header matches
+		// the plugin slug and the compiled catalogs live in `Domain Path`, so
+		// WordPress loads them just in time on the first translation call.
 
 		// Translate the plugin header metadata shown in the Plugins screen.
 		add_filter( 'all_plugins', array( $this, 'translate_plugin_header_data' ) );
@@ -145,18 +155,6 @@ class Init {
 		 * @version 1.4.7
 		 */
 		do_action('joinotify_init');
-	}
-
-
-	/**
-	 * Load text domain after init hook.
-	 * 
-	 * @since 1.0.0
-	 * @version 1.4.7
-	 * @return void
-	 */
-	public function load_text_domain() {
-		load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
 	}
 
 
@@ -223,6 +221,7 @@ class Init {
 
 		foreach ( $constants as $key => $value ) {
 			if ( ! defined( $key ) ) {
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.VariableConstantNameFound -- $key only ever holds one of the JOINOTIFY_* names declared above.
 				define( $key, $value );
 			}
 		}

@@ -507,6 +507,7 @@ class Workflow_Migrator {
 	 * @return mixed
 	 */
 	private static function filter( $hook, $value ) {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Every caller in this class passes a literal 'Joinotify/...' name.
 		return function_exists( 'apply_filters' ) ? apply_filters( $hook, $value ) : $value;
 	}
 }

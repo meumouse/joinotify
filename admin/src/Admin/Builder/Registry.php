@@ -104,8 +104,9 @@ class Registry {
 	 */
 	public static function get_default_workflow_state() {
 		$default_name = sprintf(
+			/* translators: %s: random number appended to the default automation name */
 			__( 'My automation #%s', 'joinotify' ),
-			function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
+			wp_rand( 1000, 999999 )
 		);
 
 		return array(
@@ -443,17 +444,6 @@ class Registry {
 					),
 				);
 
-			case 'snippet_php':
-				return array(
-					array(
-						'key' => 'snippet_php',
-						'label' => __( 'PHP code', 'joinotify' ),
-						'component' => 'code',
-						'required' => true,
-						'rows' => 12,
-					),
-				);
-
 			case 'stop_funnel':
 				return array();
 
@@ -524,17 +514,9 @@ class Registry {
 					'condition' => '',
 					'condition_type' => '',
 					'field_id' => '',
-					'meta_key' => '',
+					'meta_key' => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Node schema key, not a query argument.
 					'value_text' => '',
 					'type_text' => '',
-				);
-
-			case 'snippet_php':
-				return array(
-					'title' => $base_title ?: esc_html__( 'PHP Snippet', 'joinotify' ),
-					'description' => '',
-					'action' => 'snippet_php',
-					'snippet_php' => '',
 				);
 
 			case 'stop_funnel':
@@ -1028,8 +1010,9 @@ class Registry {
 
 		if ( empty( $title ) ) {
 			$title = sprintf(
+				/* translators: %s: random number appended to the default automation name */
 				__( 'My automation #%s', 'joinotify' ),
-				function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
+				wp_rand( 1000, 999999 )
 			);
 		}
 
@@ -1225,8 +1208,9 @@ class Registry {
 
 		$post_id = wp_insert_post( array(
 			'post_title' => $title ?: sprintf(
+				/* translators: %s: random number appended to the imported automation name */
 				__( 'Imported automation #%s', 'joinotify' ),
-				function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
+				wp_rand( 1000, 999999 )
 			),
 			'post_status' => 'draft',
 			'post_type' => 'joinotify-workflow',
@@ -1907,7 +1891,7 @@ class Registry {
 			'type_text' => $type_text,
 			'value' => $value,
 			'value_text' => $value_text,
-			'meta_key' => $meta_key,
+			'meta_key' => $meta_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Node schema key, not a query argument.
 			'field_id' => $field_id,
 		);
 
@@ -2169,11 +2153,6 @@ class Registry {
 
 			if ( in_array( $key, array( 'media_url' ), true ) ) {
 				$clean[ $key ] = esc_url_raw( (string) $value );
-				continue;
-			}
-
-			if ( 'snippet_php' === $key ) {
-				$clean[ $key ] = is_scalar( $value ) ? trim( (string) $value ) : '';
 				continue;
 			}
 

@@ -27,11 +27,17 @@ export default defineConfig({
         entryFileNames: '[name]/app.js',
         chunkFileNames: 'chunks/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+          const name = assetInfo.name || '';
+
+          if (name.endsWith('.css')) {
             return 'styles/[name][extname]';
           }
 
-          return 'assets/[name]-[hash][extname]';
+          // WordPress.org rejects file names with special characters, and some dependencies
+          // ship them (intl-tel-input's `flags@2x.webp`), so the base name is sanitized here.
+          const base = (/([^/\\]+?)(\.[^.]*)?$/.exec(name)?.[1] || 'asset').replace(/[^A-Za-z0-9._-]+/g, '-');
+
+          return `assets/${base}-[hash][extname]`;
         },
       },
     },

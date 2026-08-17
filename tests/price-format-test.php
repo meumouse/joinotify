@@ -70,6 +70,20 @@ function wc_price( $price, $args = array() ) {
 	return '<span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">' . $symbol . '</span>&nbsp;' . $amount . '</bdi></span>';
 }
 
+/**
+ * Mirrors wp_strip_all_tags(): drops script/style bodies, then every tag.
+ */
+function wp_strip_all_tags( $text, $remove_breaks = false ) {
+	$text = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', (string) $text );
+	$text = strip_tags( $text );
+
+	if ( $remove_breaks ) {
+		$text = preg_replace( '/[\r\n\t ]+/', ' ', $text );
+	}
+
+	return trim( $text );
+}
+
 // Functions.php only declares functions, so it can be pulled in directly.
 require_once __DIR__ . '/../admin/src/Core/Functions.php';
 

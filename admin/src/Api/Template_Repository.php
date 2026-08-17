@@ -149,6 +149,7 @@ class Template_Repository {
         $like = $wpdb->esc_like( '_transient_' . self::CACHE_PREFIX ) . '%';
         $timeout_like = $wpdb->esc_like( '_transient_timeout_' . self::CACHE_PREFIX ) . '%';
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Transient names are only discoverable by pattern, so there is no delete_transient() equivalent; this call is itself the cache invalidation.
         $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s", $like, $timeout_like ) );
     }
 

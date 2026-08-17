@@ -6,7 +6,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "x-domain: joinotify\n"
 
-#: admin/src/Integrations/Woocommerce.php:438
+#: admin/src/Integrations/Woocommerce.php:439
 msgid "12345"
 msgstr ""
 
@@ -34,7 +34,13 @@ msgstr ""
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr ""
 
+#: admin/src/Builder/Messages.php:188
+#. translators: 1: condition title, 2: comparison operator label, 3: compared value
+msgid "%1$s %2$s: %3$s"
+msgstr ""
+
 #: admin/src/Admin/Queue/Registry.php:253
+#. translators: 1: relative offset (e.g. "1 day(s)"), 2: time of day
 msgid "%1$s at %2$s"
 msgstr ""
 
@@ -62,17 +68,14 @@ msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:38
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:38
 #: admin/src/Rest/Cloud_Numbers_Sync.php:52
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:38
+#. translators: %d: number of imported WhatsApp numbers.
 msgid "%d number imported from your Joinotify account."
 msgid_plural "%d numbers imported from your Joinotify account."
 msgstr[0] ""
 msgstr[1] ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:96
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:96
 #: app/src/components/fields/JoinotifyApiKeyField.vue:96
 msgid "%d number imported."
 msgid_plural "%d numbers imported."
@@ -80,6 +83,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: admin/src/Rest/Queue_Cancel.php:50
+#. translators: %d: number of cancelled scheduled items
 msgid "%d scheduled item was cancelled."
 msgid_plural "%d scheduled items were cancelled."
 msgstr[0] ""
@@ -103,53 +107,54 @@ msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/src/Builder/Messages.php:179
-msgid "%s %s: %s"
-msgstr ""
-
 #: app/src/builder/actions/utils/validators.ts:48
 msgid "%s is required."
 msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:252
+#. translators: %s: number of minutes until the Pix code expires
 msgid "%s minutes"
 msgstr ""
 
 #: app/src/components/settings/NodeSettingsDrawer.vue:52
+#. translators: %s is the name of the action or trigger being configured.
 msgid "%s settings"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:498
+#: admin/src/Integrations/Woocommerce.php:502
+#. translators: %s: site URL
 msgid "%s/checkout/pay/order/12345"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1349
+#: admin/src/Integrations/Woocommerce.php:1354
+#. translators: %s: percentage discount amount
 msgid "%s%%"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:422
+#: admin/src/Integrations/Woocommerce.php:423
 msgid "+55 11 91234-5678"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:430
+#: admin/src/Integrations/Woocommerce.php:431
 msgid "+55 41 91234-5678"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:176
-msgid "<span class=\"builder-placeholder\">%s</span> %s: %s"
+#: admin/src/Builder/Messages.php:184
+#. translators: 1: user meta key, 2: comparison operator label, 3: compared value
+msgid "<span class=\"builder-placeholder\">%1$s</span> %2$s: %3$s"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:172
+#: admin/src/Builder/Messages.php:178
+#. translators: %s: user meta key
 msgid "<span class=\"builder-placeholder\">%s</span> is empty"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:174
+#: admin/src/Builder/Messages.php:181
+#. translators: %s: user meta key
 msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr ""
 
-#: .history/admin/src/Core/Init_20260816222318.php:241
-#: .history/admin/src/Core/Init_20260817113731.php:241
-#: admin/src/Core/Init.php:241
+#: admin/src/Core/Init.php:240
 msgid ""
 "<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your "
 "hosting support to upgrade."
@@ -161,18 +166,15 @@ msgstr ""
 msgid "0 results"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:262
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:262
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:262
 #: admin/src/Admin/Settings/Registry.php:262
 msgid "180 days"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:478
+#: admin/src/Integrations/Woocommerce.php:479
 msgid "1x - Men's cotton T-shirt (Sample product)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:478
+#: admin/src/Integrations/Woocommerce.php:479
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr ""
 
@@ -180,12 +182,6 @@ msgstr ""
 msgid "24h limit:"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:259
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:278
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:259
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:278
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:259
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:278
 #: admin/src/Admin/Settings/Registry.php:259
 #: admin/src/Admin/Settings/Registry.php:278
 msgid "30 days"
@@ -196,9 +192,6 @@ msgstr ""
 msgid "30 minutes"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:263
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:263
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:263
 #: admin/src/Admin/Settings/Registry.php:263
 msgid "365 days"
 msgstr ""
@@ -214,84 +207,52 @@ msgstr ""
 msgid "5541987111527"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:260
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:279
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:260
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:279
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:260
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:279
 #: admin/src/Admin/Settings/Registry.php:260
 #: admin/src/Admin/Settings/Registry.php:279
 msgid "60 days"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:277
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:277
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:277
 #: admin/src/Admin/Settings/Registry.php:277
 msgid "7 days"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:261
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:280
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:261
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:280
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:261
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:280
 #: admin/src/Admin/Settings/Registry.php:261
 #: admin/src/Admin/Settings/Registry.php:280
 msgid "90 days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1504
+#: admin/src/Admin/Builder/Registry.php:1488
 msgid "A condition is missing its branches."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:267
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:267
 #: app/src/pages/onboarding/OnboardingPage.vue:267
 msgid ""
 "A few questions and your site is ready to send WhatsApp messages. "
 "Everything here can be changed later in Settings."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:63
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:63
 #: app/src/pages/onboarding/components/steps/AiStep.vue:63
 msgid "A key is already saved. Type a new one to replace it."
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:1235
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:1235
 #: admin/src/Api/Cloud_Client.php:1235
 msgid "A message id is required."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:288
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:288
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:288
 #: admin/src/Admin/Settings/Registry.php:288
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
-#: .history/admin/src/Core/Telemetry_20260816222253.php:152
-#: .history/admin/src/Core/Telemetry_20260817113731.php:152
 #: admin/src/Core/Telemetry.php:152
 msgid ""
 "A random identifier generated on this site, plus the Joinotify API key you "
 "already use to send messages. Your site address is never sent."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:162
+#: admin/src/Integrations/Flexify_Checkout.php:161
 msgid "Abandoned cart is recovered"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:224
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:339
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:224
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:339
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:224
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:339
 #: admin/src/Admin/Settings/Registry.php:224
 #: admin/src/Admin/Settings/Registry.php:339
 msgid "About"
@@ -305,8 +266,6 @@ msgstr ""
 msgid "Account created successfully."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:202
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:202
 #: app/src/components/fields/CloudConnectField.vue:180
 #: app/src/components/fields/JoinotifyApiKeyField.vue:202
 msgid "Account not connected"
@@ -319,7 +278,7 @@ msgstr ""
 #: app/src/components/builder/BuilderActionPickerModal.vue:36
 #: app/src/components/flow/FlowCanvas.vue:216
 #: app/src/components/settings/NodeSettingsDrawer.vue:42
-#: app/src/stores/useWorkflowBuilderStore.ts:1635
+#: app/src/stores/useWorkflowBuilderStore.ts:1602
 msgid "Action"
 msgstr ""
 
@@ -331,31 +290,22 @@ msgstr ""
 msgid "Actions menu"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:196
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:196
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:196
 #: admin/src/Admin/Settings/Registry.php:196
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:125
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:125
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:125
 #: admin/src/Admin/Settings/Registry.php:125
 msgid "Activate and configure the endpoints used to process external API requests."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:131
+#: admin/src/Integrations/Woocommerce.php:132
 msgid "Activate discount coupon action"
 msgstr ""
 
-#: admin/src/Integrations/Integrations_Base.php:989
+#: admin/src/Integrations/Integrations_Base.php:1035
 msgid "Activate plugin"
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:149
-#: .history/admin/src/Api/Connect_20260817113722.php:149
-#: .history/admin/src/Api/Connect_20260817113731.php:149
 #: admin/src/Api/Connect.php:149
 msgid "Activate your license before connecting."
 msgstr ""
@@ -382,12 +332,6 @@ msgstr ""
 
 #: app/src/components/flow/FlowCanvas.vue:833
 msgid "Add a documentation note"
-msgstr ""
-
-#: .history/admin/src/Builder/Actions_20260803205441.php:81
-#: .history/admin/src/Builder/Actions_20260804124933.php:81
-#: admin/src/Builder/Actions.php:81
-msgid "Add a function, set of actions, and/or filters in PHP."
 msgstr ""
 
 #: app/src/components/flow/FlowCanvas.vue:846
@@ -441,10 +385,6 @@ msgstr ""
 msgid "Add new phone"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:58
-#: .history/admin/src/Admin/Menu_20260816132413.php:59
-#: .history/admin/src/Admin/Menu_20260817113731.php:58
-#: .history/admin/src/Admin/Menu_20260817113731.php:59
 #: admin/src/Admin/Menu.php:58
 #: admin/src/Admin/Menu.php:59
 #: app/src/components/workflows/EmptyState.vue:17
@@ -480,7 +420,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:132
+#: admin/src/Integrations/Woocommerce.php:133
 msgid ""
 "Adds the coupon action to WooCommerce workflows so a workflow can create "
 "and send a discount coupon."
@@ -496,9 +436,7 @@ msgid ""
 "(e.g. +1 day at 09:00)."
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:139
-#: .history/admin/src/Builder/Actions_20260804124933.php:139
-#: admin/src/Builder/Actions.php:139
+#: admin/src/Builder/Actions.php:127
 #: admin/src/Integrations/Integrations_Base.php:132
 msgid "Advanced"
 msgstr ""
@@ -516,17 +454,10 @@ msgstr ""
 msgid "Afghanistan"
 msgstr ""
 
-#: admin/src/Rest/Builder_Ai_Generate.php:71
+#: admin/src/Rest/Builder_Ai_Generate.php:66
 msgid "AI generation failed."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:170
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:170
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:170
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:25
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:41
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:25
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:41
 #: admin/src/Admin/Settings/Registry.php:170
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:123
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:129
@@ -542,7 +473,7 @@ msgid "AI smart variable"
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:113
-#: app/src/stores/useWorkflowBuilderStore.ts:1219
+#: app/src/stores/useWorkflowBuilderStore.ts:1217
 msgid "AI workflow"
 msgstr ""
 
@@ -597,8 +528,6 @@ msgstr ""
 msgid "All options will return to the plugin defaults."
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:138
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:138
 #: admin/src/Admin/Onboarding/Registry.php:138
 msgid "All set"
 msgstr ""
@@ -611,10 +540,6 @@ msgstr ""
 msgid "All test messages were sent successfully."
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:49
-#: .history/admin/src/Admin/Menu_20260816132413.php:50
-#: .history/admin/src/Admin/Menu_20260817113731.php:49
-#: .history/admin/src/Admin/Menu_20260817113731.php:50
 #: admin/src/Admin/Menu.php:49
 #: admin/src/Admin/Menu.php:50
 #: admin/src/Admin/Queue/Registry.php:387
@@ -647,46 +572,46 @@ msgid ""
 msgstr ""
 
 #: admin/src/Integrations/Elementor.php:156
-#: admin/src/Integrations/Flexify_Checkout.php:370
+#: admin/src/Integrations/Flexify_Checkout.php:376
 msgid ""
 "Allows checking specific metadata of the user who requested the password "
 "reset."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1447
+#: admin/src/Integrations/Woocommerce.php:1455
 #: admin/src/Integrations/Wpforms.php:203
 msgid "Allows checking specific user metadata."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:362
+#: admin/src/Integrations/Flexify_Checkout.php:368
 msgid "Allows checking the abandoned cart total amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1451
+#: admin/src/Integrations/Woocommerce.php:1459
 msgid "Allows checking the customer email for the order."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:366
+#: admin/src/Integrations/Flexify_Checkout.php:372
 msgid "Allows checking the items present in the abandoned cart."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1439
+#: admin/src/Integrations/Woocommerce.php:1447
 msgid "Allows checking the order payment method."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1455
+#: admin/src/Integrations/Woocommerce.php:1463
 msgid "Allows checking the order refund amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1443
+#: admin/src/Integrations/Woocommerce.php:1451
 msgid "Allows checking the order shipping method."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1423
+#: admin/src/Integrations/Woocommerce.php:1431
 msgid "Allows checking the order status."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1427
+#: admin/src/Integrations/Woocommerce.php:1435
 msgid "Allows checking the order total."
 msgstr ""
 
@@ -694,7 +619,7 @@ msgstr ""
 msgid "Allows checking the post type that was published."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1435
+#: admin/src/Integrations/Woocommerce.php:1443
 msgid "Allows checking the products purchased in the order."
 msgstr ""
 
@@ -706,7 +631,7 @@ msgstr ""
 msgid "Allows checking the role of the user who requested the password reset."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1459
+#: admin/src/Integrations/Woocommerce.php:1467
 msgid "Allows checking the status of the created subscription."
 msgstr ""
 
@@ -714,25 +639,23 @@ msgstr ""
 msgid "Allows checking the user role that fired the trigger."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:374
+#: admin/src/Integrations/Flexify_Checkout.php:380
 msgid "Allows checking whether the abandoned cart was recovered."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1431
+#: admin/src/Integrations/Woocommerce.php:1439
 msgid "Allows checking whether the order was paid."
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:33
-#: .history/admin/src/Builder/Actions_20260804124933.php:33
 #: admin/src/Builder/Actions.php:33
 msgid "Allows you to set a waiting time before the action is executed."
 msgstr ""
 
-#: templates/otp-login/checkout/form-login.php:33
+#: templates/otp-login/checkout/form-login.php:41
 msgid "Already have an account?"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:378
+#: admin/src/Admin/Builder/Registry.php:379
 #: app/src/builder/actions/definitions/timeDelay.ts:61
 #: app/src/builder/actions/definitions/timeDelay.ts:89
 #: app/src/builder/actions/definitions/timeDelay.ts:96
@@ -786,6 +709,7 @@ msgstr ""
 
 #: admin/src/AI/Providers/Anthropic_Provider.php:205
 #: admin/src/AI/Providers/Anthropic_Provider.php:493
+#. translators: %d: HTTP status code.
 msgid "Anthropic request failed with status %d."
 msgstr ""
 
@@ -793,11 +717,11 @@ msgstr ""
 msgid "Anthropic returned an empty response."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:278
+#: admin/src/Integrations/Woocommerce.php:279
 msgid "Any digital product"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:324
+#: admin/src/Integrations/Woocommerce.php:325
 msgid "Any status"
 msgstr ""
 
@@ -805,25 +729,16 @@ msgstr ""
 msgid "API"
 msgstr ""
 
-#: app/src/stores/useWorkflowBuilderStore.ts:2038
+#: app/src/stores/useWorkflowBuilderStore.ts:2005
 msgid "API client not initialized."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:155
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:155
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:155
-#: .history/admin/src/Integrations/Resend_20260703153400.php:134
-#: .history/admin/src/Integrations/Resend_20260703155627.php:136
-#: .history/admin/src/Integrations/Resend_20260703155635.php:134
-#: .history/admin/src/Integrations/Resend_20260703155807.php:134
 #: admin/src/Admin/Settings/Registry.php:155
 #: admin/src/Integrations/Resend.php:134
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:145
 msgid "API key"
 msgstr ""
 
-#: .history/admin/src/Core/Telemetry_20260816222253.php:143
-#: .history/admin/src/Core/Telemetry_20260817113731.php:143
 #: admin/src/Core/Telemetry.php:143
 msgid "API keys, tokens or any other credential"
 msgstr ""
@@ -836,9 +751,6 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:327
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:327
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:327
 #: admin/src/Admin/Settings/Registry.php:327
 msgid "Applications"
 msgstr ""
@@ -875,15 +787,10 @@ msgstr ""
 msgid "Armenia"
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:120
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:120
 #: admin/src/Admin/Onboarding/Registry.php:120
 msgid "Artificial intelligence"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:165
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:165
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:165
 #: admin/src/Admin/Settings/Registry.php:165
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
@@ -958,32 +865,22 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:125
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:125
 #: admin/src/Integrations/Whatsapp.php:125
 msgid "Automatic"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:274
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:274
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:274
 #: admin/src/Admin/Settings/Registry.php:274
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:256
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:256
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:256
 #: admin/src/Admin/Settings/Registry.php:256
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
-#: admin/src/Builder/Messages.php:317
+#: admin/src/Builder/Messages.php:327
 msgid "Automatically generated"
 msgstr ""
 
-#: .history/app/src/components/builder/TemplateLibraryHeader_20260703082602.vue:22
-#: .history/app/src/components/builder/TemplateLibraryHeader_20260703152024.vue:22
 #: app/src/components/builder/TemplateLibraryHeader.vue:22
 msgid "Automation templates"
 msgstr ""
@@ -1001,8 +898,6 @@ msgstr ""
 msgid "Azerbaijan"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:373
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:373
 #: app/src/components/builder/BuilderImportView.vue:42
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:46
 #: app/src/components/builder/TriggerStepFooter.vue:30
@@ -1015,7 +910,7 @@ msgstr ""
 msgid "Back to dashboard"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:52
+#: templates/otp-login/shared/otp-login-form.php:61
 msgid "Back to WhatsApp"
 msgstr ""
 
@@ -1058,7 +953,7 @@ msgstr ""
 msgid "Bhutan"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:144
+#: admin/src/Integrations/Woocommerce.php:145
 msgid "Billing full address format"
 msgstr ""
 
@@ -1129,18 +1024,10 @@ msgstr ""
 msgid "Brunei"
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:139
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:139
 #: admin/src/Admin/Onboarding/Registry.php:139
 msgid "Build your first automation or review the full settings."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:210
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:333
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:210
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:333
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:210
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:333
 #: admin/src/Admin/Settings/Registry.php:210
 #: admin/src/Admin/Settings/Registry.php:333
 #: app/src/pages/builder/BuilderPage.vue:610
@@ -1163,8 +1050,6 @@ msgstr ""
 msgid "Builder"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:18
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:18
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:18
 msgid "Building your first workflow: triggers, conditions and actions"
 msgstr ""
@@ -1191,8 +1076,6 @@ msgstr ""
 msgid "Burundi"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:145
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:145
 #: admin/src/Integrations/Whatsapp.php:145
 msgid ""
 "Business account that owns the message templates. Filled in when you "
@@ -1224,8 +1107,6 @@ msgstr ""
 msgid "Canada"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:182
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:182
 #: app/src/components/builder/BuilderAiGenerateModal.vue:96
 #: app/src/components/builder/BuilderImportModal.vue:44
 #: app/src/components/fields/JoinotifyApiKeyField.vue:182
@@ -1270,19 +1151,19 @@ msgstr ""
 msgid "Caption"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:152
+#: admin/src/Integrations/Flexify_Checkout.php:151
 msgid "Cart abandoned"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:365
+#: admin/src/Integrations/Flexify_Checkout.php:371
 msgid "Cart items"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:373
+#: admin/src/Integrations/Flexify_Checkout.php:379
 msgid "Cart recovered"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:361
+#: admin/src/Integrations/Flexify_Checkout.php:367
 msgid "Cart total"
 msgstr ""
 
@@ -1307,7 +1188,7 @@ msgstr ""
 msgid "Change color"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:42
+#: templates/otp-login/shared/otp-login-form.php:51
 msgid "Change number"
 msgstr ""
 
@@ -1336,7 +1217,7 @@ msgstr ""
 msgid "Chat id"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:159
+#: admin/src/Builder/Messages.php:160
 msgid "Check if the order was not paid"
 msgstr ""
 
@@ -1344,7 +1225,7 @@ msgstr ""
 msgid "Check the backend registry, the selected context, or the search term."
 msgstr ""
 
-#: admin/src/Builder/Messages.php:159
+#: admin/src/Builder/Messages.php:160
 msgid "Check whether the order was paid"
 msgstr ""
 
@@ -1356,8 +1237,6 @@ msgstr ""
 msgid "China"
 msgstr ""
 
-#: .history/app/src/components/builder/TemplateLibraryHeader_20260703082602.vue:30
-#: .history/app/src/components/builder/TemplateLibraryHeader_20260703152024.vue:30
 #: app/src/components/builder/TemplateLibraryHeader.vue:30
 msgid ""
 "Choose a ready-made flow, import it with one click, and adjust it your way. "
@@ -1376,18 +1255,12 @@ msgstr ""
 msgid "Choose one of the validated senders available in your account."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:166
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:166
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:166
 #: admin/src/Admin/Settings/Registry.php:166
 msgid ""
 "Choose the engine used to generate AI content. Provider credentials and "
 "defaults are configured in the Applications tab."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:109
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:109
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:109
 #: admin/src/Admin/Settings/Registry.php:109
 msgid ""
 "Choose the fallback country when the phone number does not include a "
@@ -1418,7 +1291,7 @@ msgid ""
 "relative offset at a specific time."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:219
+#: admin/src/Integrations/Woocommerce.php:220
 msgid ""
 "Choose which order status should start this workflow. Select \"Any status\" "
 "to run on every status change."
@@ -1470,7 +1343,7 @@ msgstr ""
 msgid "Clear the category filter to change the display mode."
 msgstr ""
 
-#: templates/otp-login/checkout/form-login.php:34
+#: templates/otp-login/checkout/form-login.php:42
 msgid "Click here to log in"
 msgstr ""
 
@@ -1501,22 +1374,17 @@ msgstr ""
 msgid "Close panel"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:278
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:279
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:278
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:279
 #: app/src/pages/onboarding/OnboardingPage.vue:278
 #: app/src/pages/onboarding/OnboardingPage.vue:279
 msgid "Close setup"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:126
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:126
 #: admin/src/Integrations/Whatsapp.php:126
 msgid "Cloud API (official)"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:35
+#: templates/otp-login/shared/otp-login-form.php:44
+#. translators: %d: position of the digit within the verification code
 msgid "Code digit %d"
 msgstr ""
 
@@ -1550,24 +1418,22 @@ msgstr ""
 msgid "Comoros"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:582
-#: admin/src/Integrations/Woocommerce.php:591
+#: admin/src/Integrations/Woocommerce.php:586
+#: admin/src/Integrations/Woocommerce.php:595
 msgid "Complete e-book (Sample product)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:446
+#: admin/src/Integrations/Woocommerce.php:447
 msgid "Completed"
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:44
-#: .history/admin/src/Builder/Actions_20260804124933.php:44
-#: admin/src/Admin/Builder/Registry.php:521
+#: admin/src/Admin/Builder/Registry.php:511
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:106
 #: app/src/builder/actions/settings/ConditionSettings.vue:174
 #: app/src/builder/actions/utils/actionDescription.ts:214
-#: app/src/stores/useWorkflowBuilderStore.ts:1623
+#: app/src/stores/useWorkflowBuilderStore.ts:1590
 msgid "Condition"
 msgstr ""
 
@@ -1575,7 +1441,7 @@ msgstr ""
 msgid "Condition rule"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:414
+#: admin/src/Admin/Builder/Registry.php:415
 #: app/src/builder/actions/definitions/condition.ts:121
 #: app/src/builder/actions/definitions/condition.ts:132
 #: app/src/builder/actions/settings/ConditionSettings.vue:180
@@ -1590,12 +1456,6 @@ msgstr ""
 msgid "Configuration component not available for this action."
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:115
-#: .history/admin/src/Integrations/Resend_20260703155627.php:117
-#: .history/admin/src/Integrations/Resend_20260703155635.php:115
-#: .history/admin/src/Integrations/Resend_20260703155807.php:115
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:75
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:75
 #: admin/src/Integrations/Anthropic.php:52
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
@@ -1604,13 +1464,13 @@ msgstr ""
 #: admin/src/Integrations/Resend.php:115
 #: admin/src/Integrations/Telegram.php:115
 #: admin/src/Integrations/Whatsapp.php:75
-#: admin/src/Integrations/Woocommerce.php:112
+#: admin/src/Integrations/Woocommerce.php:113
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:53
 msgid "Configure"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:111
+#: admin/src/Integrations/Woocommerce.php:112
 msgid ""
 "Configure discount coupons and checkout field formatting with the native "
 "integration fields."
@@ -1652,8 +1512,6 @@ msgstr ""
 msgid "Configure the WooCommerce coupon generated by this action."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:173
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:173
 #: app/src/components/fields/JoinotifyApiKeyField.vue:173
 #: app/src/components/modals/ConfirmDialog.vue:40
 #: app/src/components/workflows/ConfirmActionModal.vue:16
@@ -1665,25 +1523,17 @@ msgstr ""
 msgid "Confirmation"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:226
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:226
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:127
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:127
 #: app/src/components/fields/JoinotifyApiKeyField.vue:226
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:127
 msgid "Connect"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:74
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:74
 #: admin/src/Integrations/Whatsapp.php:74
 msgid ""
 "Connect this site to your Joinotify account to deliver messages through the "
 "official WhatsApp Cloud API."
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:114
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:114
 #: admin/src/Admin/Onboarding/Registry.php:114
 #: app/src/components/fields/CloudConnectField.vue:199
 msgid "Connect to Joinotify"
@@ -1703,10 +1553,6 @@ msgid ""
 "API."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:188
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:188
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:95
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:95
 #: app/src/components/fields/JoinotifyApiKeyField.vue:188
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:95
 #: app/src/pages/settings/components/cards/PhoneActions.vue:53
@@ -1714,8 +1560,6 @@ msgstr ""
 msgid "Connected"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:150
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:150
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:150
 msgid ""
 "Connecting sends your key and this site’s address to %s so it can register "
@@ -1723,24 +1567,16 @@ msgid ""
 "site before you press Connect."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:238
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:238
 #: app/src/components/fields/JoinotifyApiKeyField.vue:238
 msgid ""
 "Connecting sends your key and this site’s address to %s so it can register "
 "the site and list your WhatsApp numbers."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:19
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:19
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:19
 msgid "Connecting WooCommerce, WPForms, Elementor and the other integrations"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:226
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:226
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:127
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:127
 #: app/src/components/fields/CloudConnectField.vue:199
 #: app/src/components/fields/JoinotifyApiKeyField.vue:226
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:127
@@ -1759,7 +1595,7 @@ msgstr ""
 msgid "Contact phone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1597
+#: admin/src/Admin/Builder/Registry.php:1581
 msgid "Contains"
 msgstr ""
 
@@ -1776,8 +1612,6 @@ msgstr ""
 msgid "Context"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:380
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:380
 #: app/src/components/builder/TriggerStepFooter.vue:32
 #: app/src/pages/onboarding/OnboardingPage.vue:380
 msgid "Continue"
@@ -1818,18 +1652,11 @@ msgstr ""
 msgid "Could not clear the queue."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:669
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:669
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:669
 #: admin/src/Admin/Builder/Registry.php:93
 #: admin/src/Admin/Settings/Registry.php:669
 msgid "Could not complete the operation."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:83
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:83
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:68
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:68
 #: app/src/components/fields/JoinotifyApiKeyField.vue:83
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:68
 msgid "Could not connect with that key."
@@ -1848,8 +1675,6 @@ msgstr ""
 msgid "Could not delete the selected records."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:128
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:128
 #: app/src/components/fields/JoinotifyApiKeyField.vue:128
 msgid "Could not disconnect."
 msgstr ""
@@ -1874,8 +1699,6 @@ msgstr ""
 msgid "Could not finish the connection."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:218
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:218
 #: app/src/pages/onboarding/OnboardingPage.vue:218
 msgid "Could not finish the setup."
 msgstr ""
@@ -1884,13 +1707,11 @@ msgstr ""
 msgid "Could not import the settings."
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:1190
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:1190
 #: admin/src/Api/Cloud_Client.php:1190
 msgid "Could not list the connected numbers."
 msgstr ""
 
-#: app/src/stores/useWorkflowBuilderStore.ts:878
+#: app/src/stores/useWorkflowBuilderStore.ts:876
 msgid "Could not load actions."
 msgstr ""
 
@@ -1904,7 +1725,7 @@ msgstr ""
 msgid "Could not load the processing queue."
 msgstr ""
 
-#: app/src/stores/useWorkflowBuilderStore.ts:984
+#: app/src/stores/useWorkflowBuilderStore.ts:982
 msgid "Could not load workflow."
 msgstr ""
 
@@ -1922,8 +1743,6 @@ msgstr ""
 msgid "Could not open the logs."
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:1147
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:1147
 #: admin/src/Api/Cloud_Client.php:1147
 msgid "Could not read the Joinotify account data."
 msgstr ""
@@ -1987,8 +1806,6 @@ msgstr ""
 msgid "Could not save the workflow."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:151
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:151
 #: app/src/pages/onboarding/OnboardingPage.vue:151
 msgid "Could not save this step."
 msgstr ""
@@ -2056,11 +1873,12 @@ msgstr ""
 msgid "Coupon code"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1375
+#: admin/src/Integrations/Woocommerce.php:1383
 msgid "Coupon does not expire"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:326
+#: admin/src/Builder/Messages.php:341
+#. translators: %s: yes or no
 msgid "Coupon expires: %s"
 msgstr ""
 
@@ -2068,7 +1886,7 @@ msgstr ""
 msgid "Coupon message"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:136
+#: admin/src/Integrations/Woocommerce.php:137
 msgid "Coupon prefix"
 msgstr ""
 
@@ -2082,8 +1900,6 @@ msgid ""
 "chat id is set on each workflow action."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:105
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:105
 #: admin/src/Integrations/Whatsapp.php:105
 msgid ""
 "Create a key for this site on the Joinotify panel and paste it here. "
@@ -2099,15 +1915,10 @@ msgstr ""
 msgid "Create a new workflow to start automating your processes."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260816134016.vue:43
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260817113731.vue:43
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:43
 msgid "Create an automation"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:211
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:211
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:211
 #: admin/src/Admin/Settings/Registry.php:211
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
@@ -2131,7 +1942,7 @@ msgid "Create from scratch"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:88
-#: admin/src/Builder/Workflow_Manager.php:92
+#: admin/src/Builder/Workflow_Manager.php:94
 msgid "Create from template"
 msgstr ""
 
@@ -2147,17 +1958,17 @@ msgstr ""
 msgid "Create workflow with AI"
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:97
+#: admin/src/Builder/Workflow_Manager.php:99
 #: app/src/components/builder/BuilderStartChooser.vue:66
 msgid "Create your automation workflow by importing a file."
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:91
+#: admin/src/Builder/Workflow_Manager.php:93
 #: app/src/components/builder/BuilderStartChooser.vue:50
 msgid "Create your automation workflow from a template you choose."
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:85
+#: admin/src/Builder/Workflow_Manager.php:87
 #: app/src/components/builder/BuilderStartChooser.vue:35
 msgid "Create your automation workflow from scratch."
 msgstr ""
@@ -2181,7 +1992,7 @@ msgstr ""
 msgid "Creativity of the responses, from 0 (deterministic) to 2 (more creative)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:561
+#: admin/src/Integrations/Woocommerce.php:565
 msgid "Credit card"
 msgstr ""
 
@@ -2201,7 +2012,7 @@ msgstr ""
 msgid "Cuba"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:546
+#: admin/src/Integrations/Woocommerce.php:550
 msgid "CUPOM10, FREESHIPPING"
 msgstr ""
 
@@ -2233,15 +2044,12 @@ msgstr ""
 msgid "Custom color"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:216
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:216
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:216
 #: admin/src/Admin/Settings/Registry.php:216
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:80
 msgid "Custom variables"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1450
+#: admin/src/Integrations/Woocommerce.php:1458
 msgid "Customer email"
 msgstr ""
 
@@ -2257,27 +2065,22 @@ msgstr ""
 msgid "da Silva"
 msgstr ""
 
-#: .history/admin/src/Cron/Routines_20260816132711.php:97
-#: .history/admin/src/Cron/Routines_20260817113731.php:97
 #: admin/src/Cron/Routines.php:97
 msgid "Daily"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:470
-#: admin/src/Integrations/Woocommerce.php:569
+#: admin/src/Integrations/Woocommerce.php:471
+#: admin/src/Integrations/Woocommerce.php:573
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:293
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:293
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:293
 #: admin/src/Admin/Settings/Registry.php:293
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:372
-#: admin/src/Admin/Builder/Registry.php:400
+#: admin/src/Admin/Builder/Registry.php:373
+#: admin/src/Admin/Builder/Registry.php:401
 #: app/src/builder/actions/definitions/timeDelay.ts:58
 #: app/src/builder/actions/definitions/timeDelay.ts:71
 #: app/src/builder/actions/definitions/timeDelay.ts:82
@@ -2303,7 +2106,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:392
+#: admin/src/Admin/Builder/Registry.php:393
 #: app/src/builder/actions/definitions/timeDelay.ts:66
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:46
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:38
@@ -2315,9 +2118,6 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:268
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:268
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:268
 #: admin/src/Admin/Settings/Registry.php:268
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:106
 msgid "Debug logs"
@@ -2327,22 +2127,14 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:273
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:273
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:273
 #: admin/src/Admin/Settings/Registry.php:273
 msgid "Debug logs retention"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:235
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:235
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:235
 #: admin/src/Admin/Settings/Registry.php:235
 msgid "Debug mode"
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:133
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:133
 #: admin/src/Admin/Onboarding/Registry.php:133
 msgid "Decide whether to share anonymous data that helps improve the plugin."
 msgstr ""
@@ -2356,19 +2148,10 @@ msgstr ""
 msgid "Default chat id"
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:108
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:108
 #: admin/src/Admin/Onboarding/Registry.php:108
 msgid "Default country"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:108
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:108
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:108
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:25
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:65
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:25
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:65
 #: admin/src/Admin/Settings/Registry.php:108
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:25
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:65
@@ -2380,8 +2163,6 @@ msgstr ""
 msgid "Default model"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:136
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:136
 #: admin/src/Integrations/Whatsapp.php:136
 msgid ""
 "Default origin for messages. Filled in when you connect; change it only to "
@@ -2397,9 +2178,6 @@ msgstr ""
 msgid "Define the trigger that starts the workflow"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:104
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:104
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:104
 #: admin/src/Admin/Settings/Registry.php:104
 msgid ""
 "Defines the default country used to format numbers and populate support "
@@ -2414,23 +2192,21 @@ msgstr ""
 msgid "Defines the endpoint used to send text messages through the Proxy API."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:145
+#: admin/src/Integrations/Woocommerce.php:146
 msgid ""
 "Defines the value used in the billing full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:154
+#: admin/src/Integrations/Woocommerce.php:155
 msgid ""
 "Defines the value used in the shipping full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:32
-#: .history/admin/src/Builder/Actions_20260804124933.php:32
-#: admin/src/Admin/Builder/Registry.php:509
+#: admin/src/Admin/Builder/Registry.php:499
 #: admin/src/Builder/Actions.php:32
 #: app/src/builder/actions/definitions/timeDelay.ts:31
 #: app/src/builder/actions/definitions/timeDelay.ts:46
@@ -2444,7 +2220,7 @@ msgstr ""
 msgid "Delay mode"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:367
+#: admin/src/Admin/Builder/Registry.php:368
 #: app/src/builder/actions/definitions/timeDelay.ts:56
 msgid "Delay type"
 msgstr ""
@@ -2516,9 +2292,6 @@ msgstr ""
 msgid "Deprecated"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:132
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:132
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:132
 #: admin/src/Admin/Settings/Registry.php:132
 msgid ""
 "Deprecated: this site exposes endpoints to process Joinotify requests. "
@@ -2547,16 +2320,6 @@ msgid ""
 "trigger context."
 msgstr ""
 
-#: admin/src/AI/Snippet_Generator.php:43
-msgid "Describe what the snippet should do."
-msgstr ""
-
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:83
-msgid ""
-"Describe what the snippet should do. The runtime exposes $payload with the "
-"trigger context."
-msgstr ""
-
 #: app/src/components/builder/BuilderStartChooser.vue:83
 msgid "Describe what you want and let AI build the workflow for you."
 msgstr ""
@@ -2573,9 +2336,6 @@ msgstr ""
 msgid "Description (optional)"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:245
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:245
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:245
 #: admin/src/Admin/Settings/Registry.php:245
 msgid "Developer integration"
 msgstr ""
@@ -2592,7 +2352,7 @@ msgstr ""
 msgid "Digital file download link (order files loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:244
+#: admin/src/Integrations/Woocommerce.php:245
 msgid "Digital file downloaded"
 msgstr ""
 
@@ -2600,18 +2360,15 @@ msgstr ""
 msgid "Digital file name (order files loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:233
-#: admin/src/Integrations/Woocommerce.php:250
+#: admin/src/Integrations/Woocommerce.php:234
+#: admin/src/Integrations/Woocommerce.php:251
 msgid "Digital product"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:227
+#: admin/src/Integrations/Woocommerce.php:228
 msgid "Digital product access granted"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:556
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:556
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:556
 #: admin/src/Admin/Settings/Registry.php:556
 msgid "Disabled"
 msgstr ""
@@ -2629,14 +2386,15 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:571
-#: admin/src/Integrations/Woocommerce.php:1212
+#: admin/src/Admin/Builder/Registry.php:553
+#: admin/src/Integrations/Woocommerce.php:1216
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
 msgid "Discount coupon"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:322
+#: admin/src/Builder/Messages.php:333
+#. translators: %s: coupon code
 msgid "Discount coupon: <span class=\"builder-placeholder\">%s</span>"
 msgstr ""
 
@@ -2644,7 +2402,8 @@ msgstr ""
 msgid "Discount type"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:324
+#: admin/src/Builder/Messages.php:337
+#. translators: %s: discount amount
 msgid "Discount: %s"
 msgstr ""
 
@@ -2667,9 +2426,6 @@ msgstr ""
 msgid "Djibouti"
 msgstr ""
 
-#: .history/admin/src/Core/Onboarding_20260817113306.php:285
-#: .history/admin/src/Core/Onboarding_20260817113722.php:285
-#: .history/admin/src/Core/Onboarding_20260817113731.php:285
 #: admin/src/Core/Onboarding.php:285
 msgid "Do not remind me again"
 msgstr ""
@@ -2679,24 +2435,18 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:126
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:126
-#: .history/admin/src/Core/Init_20260816222318.php:556
-#: .history/admin/src/Core/Init_20260817113731.php:556
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:33
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:33
 #: admin/src/Admin/Onboarding/Registry.php:126
-#: admin/src/Core/Init.php:556
+#: admin/src/Core/Init.php:555
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:33
 msgid "Documentation"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:406
+#: admin/src/Integrations/Woocommerce.php:407
 #: admin/src/Integrations/Wordpress.php:175
 msgid "Doe"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1598
+#: admin/src/Admin/Builder/Registry.php:1582
 msgid "Does not contain"
 msgstr ""
 
@@ -2796,15 +2546,9 @@ msgstr ""
 msgid "Edit variable"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:115
-#: .history/admin/src/Admin/Menu_20260816132413.php:116
-#: .history/admin/src/Admin/Menu_20260816132413.php:130
-#: .history/admin/src/Admin/Menu_20260817113731.php:115
-#: .history/admin/src/Admin/Menu_20260817113731.php:116
-#: .history/admin/src/Admin/Menu_20260817113731.php:130
-#: admin/src/Admin/Menu.php:115
 #: admin/src/Admin/Menu.php:116
-#: admin/src/Admin/Menu.php:130
+#: admin/src/Admin/Menu.php:117
+#: admin/src/Admin/Menu.php:131
 msgid "Edit workflow"
 msgstr ""
 
@@ -2831,11 +2575,11 @@ msgstr ""
 msgid "EM"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:71
+#: templates/otp-login/myaccount/form-login.php:78
 msgid "Email"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:44
+#: templates/otp-login/shared/otp-login-form.php:53
 msgid "Email or username"
 msgstr ""
 
@@ -2856,22 +2600,16 @@ msgstr ""
 msgid "Enable debug mode"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:204
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:204
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:204
 #: admin/src/Admin/Settings/Registry.php:204
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:90
+#: templates/otp-login/shared/otp-login-form.php:99
 msgid "Enable JavaScript to log in with a verification code or email and password."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:131
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:131
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:131
 #: admin/src/Admin/Settings/Registry.php:131
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:36
 msgid "Enable Proxy API"
@@ -2881,16 +2619,10 @@ msgstr ""
 msgid "Enable the integration to access its settings."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:236
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:236
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:236
 #: admin/src/Admin/Settings/Registry.php:236
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:556
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:556
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:556
 #: admin/src/Admin/Settings/Registry.php:556
 msgid "Enabled"
 msgstr ""
@@ -2928,11 +2660,11 @@ msgstr ""
 
 #: admin/src/Otp_Login/Auth_Flow_Service.php:64
 #: admin/src/Otp_Login/Auth_Flow_Service.php:233
-#: templates/otp-login/shared/otp-login-form.php:58
+#: templates/otp-login/shared/otp-login-form.php:67
 msgid "Enter a valid phone number with country code."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:29
+#: templates/otp-login/shared/otp-login-form.php:36
 msgid "Enter a valid phone number. The country code will be detected automatically."
 msgstr ""
 
@@ -2944,11 +2676,12 @@ msgstr ""
 msgid "Enter phone number"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:34
+#: templates/otp-login/shared/otp-login-form.php:42
+#. translators: %d: number of digits in the verification code
 msgid "Enter the %d-digit code sent to your WhatsApp."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:33
+#: templates/otp-login/shared/otp-login-form.php:40
 msgid "Enter the access code"
 msgstr ""
 
@@ -2964,7 +2697,7 @@ msgstr ""
 msgid "Enter the field ID that collects the recipient's phone number."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:60
+#: templates/otp-login/shared/otp-login-form.php:69
 msgid "Enter the verification code you received."
 msgstr ""
 
@@ -2974,11 +2707,11 @@ msgid ""
 "additional information."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:45
+#: templates/otp-login/shared/otp-login-form.php:54
 msgid "Enter your email or username"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:47
+#: templates/otp-login/shared/otp-login-form.php:56
 msgid "Enter your password"
 msgstr ""
 
@@ -3016,14 +2749,10 @@ msgstr ""
 msgid "Ethiopia"
 msgstr ""
 
-#: .history/admin/src/Core/Notification_Queue_20260816230311.php:78
-#: .history/admin/src/Core/Notification_Queue_20260817113722.php:78
 #: admin/src/Core/Notification_Queue.php:78
 msgid "Every 5 minutes"
 msgstr ""
 
-#: .history/admin/src/Cron/Routines_20260816132711.php:92
-#: .history/admin/src/Cron/Routines_20260817113731.php:92
 #: admin/src/Cron/Routines.php:92
 msgid "Every 6 hours"
 msgstr ""
@@ -3040,16 +2769,12 @@ msgid ""
 "cannot be undone."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:28
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:28
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:28
 msgid ""
 "Everything Joinotify does is documented, from the first workflow to the PHP "
 "hooks you can extend it with. Keep this link handy."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:127
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:127
 #: admin/src/Integrations/Whatsapp.php:127
 msgid "Evolution (legacy)"
 msgstr ""
@@ -3081,8 +2806,6 @@ msgstr ""
 msgid "Example value (optional)"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:105
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:105
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:105
 msgid "Examples of the events that would be sent"
 msgstr ""
@@ -3095,19 +2818,22 @@ msgstr ""
 msgid "Expiration mode"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:344
-#: admin/src/Integrations/Woocommerce.php:1371
-msgid "Expires in %s"
+#: admin/src/Builder/Messages.php:359
+#: admin/src/Integrations/Woocommerce.php:1376
+#. translators: 1: date, 2: time of day
+msgid "Expires in %1$s - %2$s"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:342
+#: admin/src/Builder/Messages.php:352
 #: admin/src/Integrations/Woocommerce.php:1369
-msgid "Expires in %s - %s"
+#. translators: 1: delay amount, 2: time unit (minutes, hours, days)
+msgid "Expires in %1$s %2$s"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:336
-#: admin/src/Integrations/Woocommerce.php:1363
-msgid "Expires in %s %s"
+#: admin/src/Builder/Messages.php:362
+#: admin/src/Integrations/Woocommerce.php:1379
+#. translators: %s: date
+msgid "Expires in %s"
 msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:350
@@ -3170,23 +2896,26 @@ msgstr ""
 msgid "Federated States of Micronesia"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:426
+#: admin/src/Admin/Builder/Registry.php:427
 #: app/src/builder/actions/definitions/condition.ts:123
 #: app/src/builder/actions/settings/ConditionSettings.vue:209
 msgid "Field ID"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:168
+#: admin/src/Builder/Messages.php:173
+#. translators: 1: form field ID, 2: comparison operator label, 3: compared value
 msgid ""
-"Field with ID <span class=\"builder-placeholder\">%s</span> %s: <span "
-"class=\"builder-placeholder\">%s</span>"
+"Field with ID <span class=\"builder-placeholder\">%1$s</span> %2$s: <span "
+"class=\"builder-placeholder\">%3$s</span>"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:164
+#: admin/src/Builder/Messages.php:167
+#. translators: %s: form field ID
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is empty"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:166
+#: admin/src/Builder/Messages.php:170
+#. translators: %s: form field ID
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr ""
 
@@ -3220,7 +2949,7 @@ msgid ""
 "message, and the caption rides on the first one."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:61
+#: templates/otp-login/shared/otp-login-form.php:70
 msgid "Fill in the email or username and password."
 msgstr ""
 
@@ -3249,8 +2978,8 @@ msgstr ""
 msgid "Fit view"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:318
-#: admin/src/Integrations/Woocommerce.php:1390
+#: admin/src/Builder/Messages.php:328
+#: admin/src/Integrations/Woocommerce.php:1398
 msgid "Fixed amount"
 msgstr ""
 
@@ -3259,7 +2988,7 @@ msgid "Fixed cart discount"
 msgstr ""
 
 #: admin/src/Builder/Utils.php:102
-#: admin/src/Integrations/Flexify_Checkout.php:205
+#: admin/src/Integrations/Flexify_Checkout.php:204
 msgid "Flexify Checkout"
 msgstr ""
 
@@ -3279,7 +3008,7 @@ msgstr ""
 msgid "Flow name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:462
+#: admin/src/Integrations/Woocommerce.php:463
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr ""
 
@@ -3301,7 +3030,7 @@ msgstr ""
 msgid "For each purchased item in the order"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:50
+#: templates/otp-login/shared/otp-login-form.php:59
 msgid "Forgot your password?"
 msgstr ""
 
@@ -3341,7 +3070,8 @@ msgstr ""
 msgid "France"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:325
+#: admin/src/Builder/Messages.php:339
+#. translators: %s: yes or no
 msgid "Free shipping: %s"
 msgstr ""
 
@@ -3361,10 +3091,6 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:144
-#: .history/admin/src/Integrations/Resend_20260703155627.php:146
-#: .history/admin/src/Integrations/Resend_20260703155635.php:144
-#: .history/admin/src/Integrations/Resend_20260703155807.php:144
 #: admin/src/Integrations/Resend.php:144
 msgid ""
 "From address used to deliver the e-mails. The domain must be verified in "
@@ -3379,20 +3105,12 @@ msgstr ""
 msgid "Gambia"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:97
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:315
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:97
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:315
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:97
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:315
-#: .history/admin/src/Builder/Actions_20260803205441.php:133
-#: .history/admin/src/Builder/Actions_20260804124933.php:133
 #: admin/src/Admin/Settings/Registry.php:97
 #: admin/src/Admin/Settings/Registry.php:315
-#: admin/src/Builder/Actions.php:133
+#: admin/src/Builder/Actions.php:121
 #: app/src/pages/settings/components/modals/ProxySettingsModal.vue:46
-#: app/src/stores/useWorkflowBuilderStore.ts:156
-#: app/src/stores/useWorkflowBuilderStore.ts:251
+#: app/src/stores/useWorkflowBuilderStore.ts:154
+#: app/src/stores/useWorkflowBuilderStore.ts:249
 msgid "General"
 msgstr ""
 
@@ -3429,11 +3147,6 @@ msgstr ""
 msgid "Generate a WooCommerce coupon and notify the customer."
 msgstr ""
 
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:93
-msgid "Generate snippet"
-msgstr ""
-
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:76
 #: app/src/components/builder/BuilderStartChooser.vue:84
 msgid "Generate with AI"
 msgstr ""
@@ -3450,8 +3163,6 @@ msgstr ""
 msgid "Germany"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:234
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:234
 #: app/src/components/fields/JoinotifyApiKeyField.vue:234
 msgid "Get a key on the Joinotify panel"
 msgstr ""
@@ -3468,17 +3179,16 @@ msgstr ""
 msgid "Global persona / system prompt"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260816134016.vue:55
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260817113731.vue:55
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:55
 msgid "Go to settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1601
+#: admin/src/Admin/Builder/Registry.php:1585
 msgid "Greater than"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:161
+#: admin/src/Builder/Messages.php:163
+#. translators: %s: formatted order total the condition compares against
 msgid "Greater than <span class=\"builder-placeholder\">%s</span>"
 msgstr ""
 
@@ -3551,25 +3261,18 @@ msgstr ""
 msgid "Hide manual token"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:48
+#: templates/otp-login/shared/otp-login-form.php:57
 msgid "Hide password"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:63
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:63
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:63
 msgid "Hide what would be sent"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:68
-#: .history/admin/src/Admin/Menu_20260817113731.php:68
 #: admin/src/Admin/Menu.php:68
 msgid "History"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:255
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:255
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:255
 #: admin/src/Admin/Settings/Registry.php:255
 msgid "History retention"
 msgstr ""
@@ -3598,7 +3301,7 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:391
+#: admin/src/Admin/Builder/Registry.php:392
 #: app/src/builder/actions/definitions/timeDelay.ts:65
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:45
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:37
@@ -3611,8 +3314,6 @@ msgid ""
 "Telegram) can be added by extensions."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:76
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:76
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:76
 msgid "How this site is identified"
 msgstr ""
@@ -3634,7 +3335,7 @@ msgstr ""
 msgid "Identifier"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:162
+#: admin/src/Integrations/Woocommerce.php:163
 msgid "Ignore actions already processed."
 msgstr ""
 
@@ -3660,12 +3361,12 @@ msgstr ""
 msgid "Import a real Joinotify export"
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:96
+#: admin/src/Builder/Workflow_Manager.php:98
 #: app/src/components/builder/BuilderStartChooser.vue:65
 msgid "Import a template"
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:98
+#: admin/src/Builder/Workflow_Manager.php:100
 #: app/src/components/builder/BuilderStartChooser.vue:67
 msgid "Import file"
 msgstr ""
@@ -3684,7 +3385,8 @@ msgstr ""
 msgid "Import workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1228
+#: admin/src/Admin/Builder/Registry.php:1212
+#. translators: %s: random number appended to the imported automation name
 msgid "Imported automation #%s"
 msgstr ""
 
@@ -3712,13 +3414,11 @@ msgstr ""
 msgid "Inactive workflow"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:83
+#: templates/otp-login/myaccount/form-login.php:90
 msgid "Include the country code so the number is normalized correctly."
 msgstr ""
 
-#: .history/admin/src/Core/Init_20260816222318.php:180
-#: .history/admin/src/Core/Init_20260817113731.php:180
-#: admin/src/Core/Init.php:180
+#: admin/src/Core/Init.php:178
 msgid ""
 "Increase customer satisfaction by automating WhatsApp messaging with "
 "Joinotify."
@@ -3761,18 +3461,17 @@ msgid ""
 "loop_download_url }}."
 msgstr ""
 
-#: admin/src/Integrations/Integrations_Base.php:993
-msgid "Install plugin"
+#: admin/src/Integrations/Integrations_Base.php:1042
+#. translators: %s: name of the required plugin
+msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:886
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:886
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:886
 #: admin/src/Admin/Settings/Registry.php:886
+#. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1240
+#: admin/src/Integrations/Woocommerce.php:1244
 msgid "Insufficient data to create the coupon."
 msgstr ""
 
@@ -3785,9 +3484,6 @@ msgstr ""
 msgid "Integration settings"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:203
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:203
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:203
 #: admin/src/Admin/Settings/Registry.php:203
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
@@ -3811,7 +3507,7 @@ msgstr ""
 msgid "Invalid AI request."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:55
+#: templates/otp-login/shared/otp-login-form.php:64
 msgid "Invalid country code"
 msgstr ""
 
@@ -3834,7 +3530,7 @@ msgstr ""
 msgid "Invalid JSON."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:54
+#: templates/otp-login/shared/otp-login-form.php:63
 msgid "Invalid number"
 msgstr ""
 
@@ -3880,9 +3576,6 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:294
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:294
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:294
 #: admin/src/Admin/Settings/Registry.php:294
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
@@ -3891,19 +3584,19 @@ msgstr ""
 msgid "Irreversible actions for clearing configuration and logs."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1599
+#: admin/src/Admin/Builder/Registry.php:1583
 msgid "Is empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1595
+#: admin/src/Admin/Builder/Registry.php:1579
 msgid "Is equal to"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1600
+#: admin/src/Admin/Builder/Registry.php:1584
 msgid "Is not empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1596
+#: admin/src/Admin/Builder/Registry.php:1580
 msgid "Is not equal to"
 msgstr ""
 
@@ -3911,8 +3604,6 @@ msgstr ""
 msgid "Israel"
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:45
-#: .history/admin/src/Builder/Actions_20260804124933.php:45
 #: admin/src/Builder/Actions.php:45
 msgid "It allows you to define a condition for an action to be executed."
 msgstr ""
@@ -3938,8 +3629,6 @@ msgstr ""
 msgid "Iterate over a collection and run the nested actions once per item."
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:57
-#: .history/admin/src/Builder/Actions_20260804124933.php:57
 #: admin/src/Builder/Actions.php:57
 msgid ""
 "Iterates over a collection (order files, order items, or a list) and runs "
@@ -3955,7 +3644,7 @@ msgid "Japan"
 msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:300
-#: admin/src/Integrations/Woocommerce.php:398
+#: admin/src/Integrations/Woocommerce.php:399
 #: admin/src/Integrations/Wordpress.php:167
 msgid "John"
 msgstr ""
@@ -3964,17 +3653,9 @@ msgstr ""
 msgid "johndoe@email.com"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:38
-#: .history/admin/src/Admin/Menu_20260816132413.php:39
-#: .history/admin/src/Admin/Menu_20260817113731.php:38
-#: .history/admin/src/Admin/Menu_20260817113731.php:39
-#: .history/admin/src/Core/Init_20260816222318.php:179
-#: .history/admin/src/Core/Init_20260817113731.php:179
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:237
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:237
 #: admin/src/Admin/Menu.php:38
 #: admin/src/Admin/Menu.php:39
-#: admin/src/Core/Init.php:179
+#: admin/src/Core/Init.php:177
 #: admin/src/Integrations/Elementor_Forms.php:50
 #: admin/src/Integrations/Elementor_Forms.php:66
 #: app/src/components/brand/BrandMark.vue:15
@@ -3987,20 +3668,14 @@ msgstr ""
 msgid "Joinotify"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:104
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:104
 #: admin/src/Integrations/Whatsapp.php:104
 msgid "Joinotify account"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:110
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:110
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:110
 msgid "Joinotify API key"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:35
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:35
 #: app/src/pages/onboarding/components/steps/AiStep.vue:35
 msgid ""
 "Joinotify can use a language model to write message copy and suggest whole "
@@ -4008,8 +3683,6 @@ msgid ""
 "fully without it."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:86
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:86
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:86
 msgid ""
 "Joinotify delivers your messages through the official WhatsApp Cloud API. "
@@ -4017,23 +3690,16 @@ msgid ""
 "is the only credential the plugin needs."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:35
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:35
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:35
 msgid "Joinotify help center"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260816134016.vue:25
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260817113731.vue:25
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:25
 msgid ""
 "Joinotify is configured. Build your first automation now, or open the "
 "settings to fine-tune integrations, senders and message history."
 msgstr ""
 
-#: .history/admin/src/Core/Onboarding_20260817113306.php:282
-#: .history/admin/src/Core/Onboarding_20260817113722.php:282
-#: .history/admin/src/Core/Onboarding_20260817113731.php:282
 #: admin/src/Core/Onboarding.php:282
 msgid ""
 "Joinotify is not set up yet. The setup wizard connects your account and "
@@ -4044,21 +3710,12 @@ msgstr ""
 msgid "Joinotify messaging helpers are unavailable."
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:97
-#: .history/admin/src/Admin/Menu_20260816132413.php:98
-#: .history/admin/src/Admin/Menu_20260816132413.php:109
-#: .history/admin/src/Admin/Menu_20260817113731.php:97
-#: .history/admin/src/Admin/Menu_20260817113731.php:98
-#: .history/admin/src/Admin/Menu_20260817113731.php:109
 #: admin/src/Admin/Menu.php:97
 #: admin/src/Admin/Menu.php:98
-#: admin/src/Admin/Menu.php:109
+#: admin/src/Admin/Menu.php:110
 msgid "Joinotify setup"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:562
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:562
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:562
 #: admin/src/Admin/Settings/Registry.php:562
 msgid "Joinotify version"
 msgstr ""
@@ -4071,12 +3728,6 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:258
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:276
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:258
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:276
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:258
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:276
 #: admin/src/Admin/Settings/Registry.php:258
 #: admin/src/Admin/Settings/Registry.php:276
 msgid "Keep forever"
@@ -4094,9 +3745,6 @@ msgstr ""
 msgid "Kenya"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:156
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:156
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:156
 #: admin/src/Admin/Settings/Registry.php:156
 msgid "Key used to authenticate Proxy API calls."
 msgstr ""
@@ -4105,8 +3753,6 @@ msgstr ""
 msgid "Kiribati"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:34
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:34
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:34
 msgid ""
 "Knowing which WordPress and PHP versions Joinotify actually runs on, and "
@@ -4134,9 +3780,6 @@ msgstr ""
 msgid "Language code the template was approved in, for example pt_BR or en_US."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:171
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:171
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:171
 #: admin/src/Admin/Settings/Registry.php:171
 msgid ""
 "Language model engine used to generate content. New providers can be added "
@@ -4167,11 +3810,11 @@ msgstr ""
 msgid "Latvia"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:142
+#: admin/src/Integrations/Flexify_Checkout.php:141
 msgid "Lead capture via checkout"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:132
+#: admin/src/Integrations/Flexify_Checkout.php:131
 msgid "Lead capture via modal"
 msgstr ""
 
@@ -4200,11 +3843,12 @@ msgstr ""
 msgid "Lesotho"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1602
+#: admin/src/Admin/Builder/Registry.php:1586
 msgid "Less than"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:161
+#: admin/src/Builder/Messages.php:163
+#. translators: %s: formatted order total the condition compares against
 msgid "Less than <span class=\"builder-placeholder\">%s</span>"
 msgstr ""
 
@@ -4295,9 +3939,6 @@ msgstr ""
 msgid "Loading…"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:103
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:103
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:103
 #: admin/src/Admin/Settings/Registry.php:103
 msgid "Location and phone numbers"
 msgstr ""
@@ -4306,20 +3947,20 @@ msgstr ""
 msgid "Log file ready for download."
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:28
+#: templates/otp-login/myaccount/form-login.php:35
 msgid "Log in"
 msgstr ""
 
-#: admin/src/Otp_Login/Woocommerce_Login.php:128
+#: admin/src/Otp_Login/Woocommerce_Login.php:130
 msgid "Log in to continue"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:38
-#: templates/otp-login/shared/otp-login-form.php:19
+#: templates/otp-login/myaccount/form-login.php:45
+#: templates/otp-login/shared/otp-login-form.php:26
 msgid "Log in with a verification code"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:28
+#: templates/otp-login/shared/otp-login-form.php:35
 msgid "Log in with WhatsApp"
 msgstr ""
 
@@ -4351,8 +3992,6 @@ msgstr ""
 msgid "Longitude"
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:56
-#: .history/admin/src/Builder/Actions_20260804124933.php:56
 #: admin/src/Builder/Actions.php:56
 #: app/src/builder/actions/definitions/loop.ts:43
 #: app/src/builder/actions/definitions/loop.ts:77
@@ -4364,7 +4003,7 @@ msgstr ""
 msgid "Loop body"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:182
+#: admin/src/Integrations/Flexify_Checkout.php:181
 msgid "Lost cart"
 msgstr ""
 
@@ -4384,23 +4023,14 @@ msgstr ""
 msgid "Madagascar"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:246
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:246
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:246
 #: admin/src/Admin/Settings/Registry.php:246
 msgid "Maintains support integrations and advanced contracts available."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:230
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:230
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:230
 #: admin/src/Admin/Settings/Registry.php:230
 msgid "Maintenance and preference"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:225
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:225
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:225
 #: admin/src/Admin/Settings/Registry.php:225
 msgid "Maintenance, logs, updates, and environment details."
 msgstr ""
@@ -4425,9 +4055,6 @@ msgstr ""
 msgid "Malta"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:184
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:184
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:184
 #: admin/src/Admin/Settings/Registry.php:184
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
@@ -4444,9 +4071,6 @@ msgid ""
 "matching post meta value."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:217
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:217
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:217
 #: admin/src/Admin/Settings/Registry.php:217
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
@@ -4515,9 +4139,6 @@ msgstr ""
 msgid "Media message sent successfully."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:147
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:147
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:147
 #: admin/src/Admin/Settings/Registry.php:147
 msgid "Media route"
 msgstr ""
@@ -4528,8 +4149,6 @@ msgstr ""
 msgid "Media type"
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:1005
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:1005
 #: admin/src/Api/Cloud_Client.php:1005
 msgid "Media upload did not return an id."
 msgstr ""
@@ -4548,7 +4167,8 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:487
+#: admin/src/Integrations/Woocommerce.php:489
+#. translators: %s: site URL
 msgid "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews"
 msgstr ""
 
@@ -4570,8 +4190,6 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: .history/admin/src/Core/Telemetry_20260816222253.php:142
-#: .history/admin/src/Core/Telemetry_20260817113731.php:142
 #: admin/src/Core/Telemetry.php:142
 msgid "Message content, media or message history"
 msgstr ""
@@ -4580,11 +4198,6 @@ msgstr ""
 msgid "Message details"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:67
-#: .history/admin/src/Admin/Menu_20260817113731.php:67
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:250
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:250
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:250
 #: admin/src/Admin/History/Registry.php:144
 #: admin/src/Admin/Menu.php:67
 #: admin/src/Admin/Settings/Registry.php:250
@@ -4606,8 +4219,6 @@ msgstr ""
 msgid "Message sent."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:20
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:20
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:20
 msgid "Message templates and what the WhatsApp 24-hour window means for you"
 msgstr ""
@@ -4616,32 +4227,20 @@ msgstr ""
 msgid "Message templates synced."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:122
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:122
 #: admin/src/Integrations/Whatsapp.php:122
 msgid "Message transport"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:85
-#: .history/admin/src/Integrations/Resend_20260703155627.php:87
-#: .history/admin/src/Integrations/Resend_20260703155635.php:85
-#: .history/admin/src/Integrations/Resend_20260703155807.php:85
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:50
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:50
 #: admin/src/Integrations/Resend.php:85
 #: admin/src/Integrations/Telegram.php:85
 #: admin/src/Integrations/Whatsapp.php:50
 msgid "Messages"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:204
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:204
 #: app/src/components/fields/JoinotifyApiKeyField.vue:204
 msgid "Messages cannot be delivered until this site is connected."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:102
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:102
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:102
 msgid "Messages will send normally, but delivery reports could not be set up:"
 msgstr ""
@@ -4650,7 +4249,7 @@ msgstr ""
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:431
+#: admin/src/Admin/Builder/Registry.php:432
 #: app/src/builder/actions/definitions/condition.ts:124
 #: app/src/builder/actions/settings/ConditionSettings.vue:203
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
@@ -4683,15 +4282,13 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:390
+#: admin/src/Admin/Builder/Registry.php:391
 #: app/src/builder/actions/definitions/timeDelay.ts:64
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:44
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:36
 msgid "Minutes"
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:972
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:972
 #: admin/src/Api/Cloud_Client.php:972
 msgid "Missing Cloud API token or phone number id for media upload."
 msgstr ""
@@ -4745,7 +4342,7 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:394
+#: admin/src/Admin/Builder/Registry.php:395
 #: app/src/builder/actions/definitions/timeDelay.ts:68
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:48
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:40
@@ -4775,15 +4372,16 @@ msgstr ""
 #: app/src/parsers/workflowParser.ts:89
 #: app/src/parsers/workflowParser.ts:576
 #: app/src/serializers/workflowSerializer.ts:169
-#: app/src/stores/useWorkflowBuilderStore.ts:803
-#: app/src/stores/useWorkflowBuilderStore.ts:1003
-#: app/src/stores/useWorkflowBuilderStore.ts:1083
-#: app/src/stores/useWorkflowBuilderStore.ts:1110
+#: app/src/stores/useWorkflowBuilderStore.ts:801
+#: app/src/stores/useWorkflowBuilderStore.ts:1001
+#: app/src/stores/useWorkflowBuilderStore.ts:1081
+#: app/src/stores/useWorkflowBuilderStore.ts:1108
 msgid "My automation"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:107
-#: admin/src/Admin/Builder/Registry.php:1031
+#: admin/src/Admin/Builder/Registry.php:108
+#: admin/src/Admin/Builder/Registry.php:1014
+#. translators: %s: random number appended to the default automation name
 msgid "My automation #%s"
 msgstr ""
 
@@ -4822,14 +4420,12 @@ msgstr ""
 msgid "Netherlands"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:84
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:84
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:84
 msgid "Never collected"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:614
-#: admin/src/Integrations/Woocommerce.php:859
+#: admin/src/Integrations/Woocommerce.php:618
+#: admin/src/Integrations/Woocommerce.php:863
 msgid "Never expires"
 msgstr ""
 
@@ -4841,11 +4437,11 @@ msgstr ""
 msgid "New flow"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:180
+#: admin/src/Integrations/Woocommerce.php:181
 msgid "New order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:186
+#: admin/src/Integrations/Woocommerce.php:187
 msgid "New order (Processing)"
 msgstr ""
 
@@ -4899,24 +4495,12 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:551
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:575
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:580
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:585
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:551
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:575
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:580
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:585
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:551
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:575
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:580
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:585
 #: admin/src/Admin/Settings/Registry.php:551
 #: admin/src/Admin/Settings/Registry.php:575
 #: admin/src/Admin/Settings/Registry.php:580
 #: admin/src/Admin/Settings/Registry.php:585
-#: admin/src/Builder/Messages.php:319
-#: admin/src/Builder/Messages.php:320
+#: admin/src/Builder/Messages.php:329
+#: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
 #: admin/src/Integrations/Elementor_Forms.php:167
 #: app/src/builder/actions/settings/ConditionSettings.vue:104
@@ -4928,8 +4512,6 @@ msgstr ""
 msgid "No action selected"
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:69
-#: .history/admin/src/Builder/Actions_20260804124933.php:69
 #: admin/src/Builder/Actions.php:69
 msgid "No action will be taken upon reaching this point."
 msgstr ""
@@ -4942,26 +4524,22 @@ msgstr ""
 msgid "No AI provider is available."
 msgstr ""
 
-#: admin/src/AI/Snippet_Generator.php:50
 #: admin/src/AI/Workflow_Generator.php:47
 msgid "No AI provider is configured. Set it up in Settings → Integrations."
 msgstr ""
 
-#: admin/src/Rest/Phone_Candidates.php:64
+#: admin/src/Rest/Phone_Candidates.php:65
+#. translators: %s: URL of the phone registration page
 msgid ""
 "No available phone number was found for registration. Register it using the "
 "link: %s"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:363
-msgid "No code available."
-msgstr ""
-
-#: admin/src/Validations/Conditions.php:35
+#: admin/src/Validations/Conditions.php:36
 msgid "No condition available for this action"
 msgstr ""
 
-#: admin/src/Validations/Conditions.php:36
+#: admin/src/Validations/Conditions.php:37
 msgid "No condition has been set for this action."
 msgstr ""
 
@@ -4973,8 +4551,6 @@ msgstr ""
 msgid "No configuration required"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:29
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:29
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:29
 msgid "No country matches that search."
 msgstr ""
@@ -4983,12 +4559,12 @@ msgstr ""
 msgid "No custom variable yet. Click “Add variable” to create your first one."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:767
-#: admin/src/Integrations/Woocommerce.php:789
+#: admin/src/Integrations/Woocommerce.php:771
+#: admin/src/Integrations/Woocommerce.php:793
 msgid "No download available for this order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:739
+#: admin/src/Integrations/Woocommerce.php:743
 msgid "No downloadable item in this order."
 msgstr ""
 
@@ -5016,8 +4592,8 @@ msgstr ""
 msgid "No integrations found."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:918
-#: admin/src/Integrations/Woocommerce.php:956
+#: admin/src/Integrations/Woocommerce.php:922
+#: admin/src/Integrations/Woocommerce.php:960
 msgid "No item purchased."
 msgstr ""
 
@@ -5106,8 +4682,6 @@ msgstr ""
 msgid "No variables available."
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:1112
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:1112
 #: admin/src/Api/Cloud_Client.php:1112
 msgid "No WhatsApp Business Account id is configured."
 msgstr ""
@@ -5116,8 +4690,6 @@ msgstr ""
 msgid "No WhatsApp Business Account is linked to this token yet."
 msgstr ""
 
-#: .history/admin/src/Api/Cloud_Client_20260816143410.php:117
-#: .history/admin/src/Api/Cloud_Client_20260817113731.php:117
 #: admin/src/Api/Cloud_Client.php:117
 msgid "No WhatsApp Cloud API token is configured."
 msgstr ""
@@ -5145,9 +4717,6 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:767
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:767
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:767
 #: admin/src/Admin/Settings/Registry.php:767
 msgid "None"
 msgstr ""
@@ -5184,9 +4753,6 @@ msgstr ""
 msgid "Notification"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:115
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:115
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:115
 #: admin/src/Admin/Settings/Registry.php:115
 msgid ""
 "Number used as the default destination in test mailings. Please only "
@@ -5204,15 +4770,10 @@ msgstr ""
 msgid "of"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:615
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:615
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:615
 #: admin/src/Admin/Settings/Registry.php:615
 msgid "Off"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:42
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:42
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:42
 msgid "Off by default. You can change this at any time in Settings → About."
 msgstr ""
@@ -5225,9 +4786,6 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:615
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:615
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:615
 #: admin/src/Admin/Settings/Registry.php:615
 msgid "On"
 msgstr ""
@@ -5242,8 +4800,6 @@ msgid ""
 "shown."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:195
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:195
 #: app/src/components/fields/JoinotifyApiKeyField.vue:195
 msgid ""
 "Only the public prefix of your key is shown. Remove it to connect a "
@@ -5262,14 +4818,10 @@ msgstr ""
 msgid "Open panel"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:50
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:50
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:50
 msgid "Open the documentation"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:139
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:139
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:139
 msgid "Open the Joinotify panel to get a key"
 msgstr ""
@@ -5278,8 +4830,6 @@ msgstr ""
 msgid "Open the panel"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260816134016.vue:45
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260817113731.vue:45
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:45
 msgid "Open the visual builder and wire a trigger to your first WhatsApp message."
 msgstr ""
@@ -5311,6 +4861,7 @@ msgstr ""
 
 #: admin/src/AI/Providers/OpenAI_Provider.php:189
 #: admin/src/AI/Providers/OpenAI_Provider.php:450
+#. translators: %d: HTTP status code.
 msgid "OpenAI request failed with status %d."
 msgstr ""
 
@@ -5318,29 +4869,21 @@ msgstr ""
 msgid "OpenAI returned an empty response."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:584
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:584
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:584
 #: admin/src/Admin/Settings/Registry.php:584
 msgid "OpenSSL extension"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:231
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:231
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:231
 #: admin/src/Admin/Settings/Registry.php:231
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:420
+#: admin/src/Admin/Builder/Registry.php:421
 #: app/src/builder/actions/definitions/condition.ts:122
 #: app/src/builder/actions/definitions/condition.ts:133
 #: app/src/builder/actions/settings/ConditionSettings.vue:187
 msgid "Operator"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/StepIndicator_20260816133747.vue:56
-#: .history/app/src/pages/onboarding/components/StepIndicator_20260817113731.vue:56
 #: app/src/pages/onboarding/components/StepIndicator.vue:56
 msgid "Optional"
 msgstr ""
@@ -5363,16 +4906,10 @@ msgstr ""
 msgid "Optional text sent together with the media."
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:121
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:121
 #: admin/src/Admin/Onboarding/Registry.php:121
 msgid "Optional. Adds AI-generated content and workflow suggestions."
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:153
-#: .history/admin/src/Integrations/Resend_20260703155627.php:155
-#: .history/admin/src/Integrations/Resend_20260703155635.php:153
-#: .history/admin/src/Integrations/Resend_20260703155807.php:153
 #: admin/src/Integrations/Resend.php:153
 msgid "Optional. Friendly name shown as the sender of the e-mails."
 msgstr ""
@@ -5398,15 +4935,15 @@ msgstr ""
 msgid "Or click to select the template file."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:43
+#: templates/otp-login/shared/otp-login-form.php:52
 msgid "Or sign in with email"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:172
+#: admin/src/Integrations/Flexify_Checkout.php:171
 msgid "Order abandoned"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:192
+#: admin/src/Integrations/Woocommerce.php:193
 #: app/src/registries/triggerRegistry.ts:246
 #: app/src/registries/triggerRegistry.ts:257
 #: app/src/registries/triggerRegistry.ts:264
@@ -5418,15 +4955,15 @@ msgstr ""
 msgid "Order digital files"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:198
+#: admin/src/Integrations/Woocommerce.php:199
 msgid "Order fully refunded"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1430
+#: admin/src/Integrations/Woocommerce.php:1438
 msgid "Order paid"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:204
+#: admin/src/Integrations/Woocommerce.php:205
 msgid "Order partially refunded"
 msgstr ""
 
@@ -5434,19 +4971,19 @@ msgstr ""
 msgid "Order purchased items"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:216
-#: admin/src/Integrations/Woocommerce.php:1422
+#: admin/src/Integrations/Woocommerce.php:217
+#: admin/src/Integrations/Woocommerce.php:1430
 msgid "Order status"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:210
+#: admin/src/Integrations/Woocommerce.php:211
 #: app/src/registries/triggerRegistry.ts:275
 #: app/src/registries/triggerRegistry.ts:286
 #: app/src/registries/triggerRegistry.ts:293
 msgid "Order status changed"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1426
+#: admin/src/Integrations/Woocommerce.php:1434
 msgid "Order total"
 msgstr ""
 
@@ -5507,8 +5044,8 @@ msgstr ""
 msgid "Parent flow:"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:89
-#: templates/otp-login/shared/otp-login-form.php:46
+#: templates/otp-login/myaccount/form-login.php:96
+#: templates/otp-login/shared/otp-login-form.php:55
 msgid "Password"
 msgstr ""
 
@@ -5520,21 +5057,12 @@ msgstr ""
 msgid "Passwordless login settings"
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:232
-#: .history/admin/src/Api/Connect_20260817113722.php:232
-#: .history/admin/src/Api/Connect_20260817113731.php:232
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:71
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:71
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:57
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:57
 #: admin/src/Api/Connect.php:232
 #: app/src/components/fields/JoinotifyApiKeyField.vue:71
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:57
 msgid "Paste the API key issued for this site on the Joinotify panel."
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:115
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:115
 #: admin/src/Admin/Onboarding/Registry.php:115
 msgid "Paste the API key issued for this site to start sending WhatsApp messages."
 msgstr ""
@@ -5543,19 +5071,12 @@ msgstr ""
 msgid "Paste the exported JSON here"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:114
-#: .history/admin/src/Integrations/Resend_20260703155627.php:116
-#: .history/admin/src/Integrations/Resend_20260703155635.php:114
-#: .history/admin/src/Integrations/Resend_20260703155807.php:114
 #: admin/src/Integrations/Resend.php:114
 msgid ""
 "Paste your Resend API key and set the verified sender address used to "
 "deliver e-mails."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:148
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:148
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:148
 #: admin/src/Admin/Settings/Registry.php:148
 msgid "Path of the route used to send messages with media."
 msgstr ""
@@ -5564,7 +5085,7 @@ msgstr ""
 msgid "Pause the workflow before the next step."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1438
+#: admin/src/Integrations/Woocommerce.php:1446
 msgid "Payment method"
 msgstr ""
 
@@ -5572,9 +5093,9 @@ msgstr ""
 msgid "Payment processed by PayPal"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:318
+#: admin/src/Builder/Messages.php:328
 #: admin/src/Integrations/Otp_Login.php:143
-#: admin/src/Integrations/Woocommerce.php:1390
+#: admin/src/Integrations/Woocommerce.php:1398
 msgid "Percentage"
 msgstr ""
 
@@ -5582,8 +5103,8 @@ msgstr ""
 msgid "Percentage discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:371
-#: admin/src/Admin/Builder/Registry.php:386
+#: admin/src/Admin/Builder/Registry.php:372
+#: admin/src/Admin/Builder/Registry.php:387
 #: app/src/builder/actions/definitions/timeDelay.ts:57
 #: app/src/builder/actions/definitions/timeDelay.ts:62
 #: app/src/builder/actions/definitions/timeDelay.ts:90
@@ -5613,14 +5134,12 @@ msgstr ""
 msgid "Philippines"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:81
-#: templates/otp-login/shared/intl-phone-field.php:18
-#: templates/otp-login/shared/otp-login-form.php:30
+#: templates/otp-login/myaccount/form-login.php:88
+#: templates/otp-login/shared/intl-phone-field.php:25
+#: templates/otp-login/shared/otp-login-form.php:37
 msgid "Phone number"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:135
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:135
 #: admin/src/Integrations/Whatsapp.php:135
 msgid "Phone number ID"
 msgstr ""
@@ -5640,8 +5159,6 @@ msgstr ""
 msgid "Phone numbers already validated and available for use in flows."
 msgstr ""
 
-#: .history/admin/src/Core/Telemetry_20260816222253.php:141
-#: .history/admin/src/Core/Telemetry_20260817113731.php:141
 #: admin/src/Core/Telemetry.php:141
 msgid "Phone numbers, contacts or customer data"
 msgstr ""
@@ -5650,12 +5167,6 @@ msgstr ""
 msgid "Phone validated."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:183
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:321
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:183
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:321
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:183
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:321
 #: admin/src/Admin/Settings/Registry.php:183
 #: admin/src/Admin/Settings/Registry.php:321
 #: app/src/pages/settings/components/cards/PhoneActions.vue:240
@@ -5676,44 +5187,10 @@ msgstr ""
 msgid "Phones"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:190
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:190
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:190
 #: admin/src/Admin/Settings/Registry.php:190
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:450
-msgid "PHP code"
-msgstr ""
-
-#: app/src/builder/actions/definitions/snippetPhp.ts:48
-#: app/src/builder/actions/definitions/snippetPhp.ts:54
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:102
-#: app/src/builder/actions/utils/actionDescription.ts:245
-#: app/src/builder/actions/utils/actionDescription.ts:248
-msgid "PHP snippet"
-msgstr ""
-
-#: .history/admin/src/Builder/Actions_20260803205441.php:80
-#: .history/admin/src/Builder/Actions_20260804124933.php:80
-#: admin/src/Admin/Builder/Registry.php:534
-#: admin/src/Builder/Actions.php:80
-#: app/src/builder/actions/definitions/snippetPhp.ts:27
-#: app/src/builder/actions/definitions/snippetPhp.ts:37
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:105
-msgid "PHP Snippet"
-msgstr ""
-
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:71
-msgid ""
-"PHP snippets execute inside the workflow runtime. Only trusted "
-"administrators should edit this code."
-msgstr ""
-
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:569
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:569
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:569
 #: admin/src/Admin/Settings/Registry.php:569
 msgid "PHP version"
 msgstr ""
@@ -5750,13 +5227,11 @@ msgstr ""
 msgid "Placeholders"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260816133940.vue:21
-#: .history/app/src/pages/onboarding/components/steps/DocsStep_20260817113731.vue:21
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:21
 msgid "Placeholders, custom variables and the PHP extension API"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:53
+#: templates/otp-login/shared/otp-login-form.php:62
 msgid "Please enter a number"
 msgstr ""
 
@@ -5780,9 +5255,6 @@ msgstr ""
 msgid "plugin_version missing; version normalized automatically."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:98
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:98
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:98
 #: admin/src/Admin/Settings/Registry.php:98
 msgid "Plugin's basic preferences, WhatsApp connection, and notifications."
 msgstr ""
@@ -5809,11 +5281,11 @@ msgstr ""
 msgid "Post type"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:137
+#: admin/src/Integrations/Woocommerce.php:138
 msgid "Prefix used when Joinotify generates a coupon code automatically."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:163
+#: admin/src/Integrations/Woocommerce.php:164
 msgid ""
 "Prevents the same action from being processed again when the trigger is "
 "repeated."
@@ -5831,10 +5303,6 @@ msgstr ""
 msgid "Primary color"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:76
-#: .history/admin/src/Admin/Menu_20260816132413.php:77
-#: .history/admin/src/Admin/Menu_20260817113731.php:76
-#: .history/admin/src/Admin/Menu_20260817113731.php:77
 #: admin/src/Admin/Menu.php:76
 #: admin/src/Admin/Menu.php:77
 #: admin/src/Admin/Queue/Registry.php:420
@@ -5870,15 +5338,10 @@ msgstr ""
 msgid "Provide a valid variable name."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:54
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:54
 #: app/src/pages/onboarding/components/steps/AiStep.vue:54
 msgid "Provider API key"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:124
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:124
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:124
 #: admin/src/Admin/Settings/Registry.php:124
 msgid "Proxy API (deprecated)"
 msgstr ""
@@ -5895,7 +5358,7 @@ msgstr ""
 msgid "Purchased item quantity (order items loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1434
+#: admin/src/Integrations/Woocommerce.php:1442
 msgid "Purchased products"
 msgstr ""
 
@@ -5908,9 +5371,6 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:195
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:195
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:195
 #: admin/src/Admin/Settings/Registry.php:195
 msgid "Quick Tools"
 msgstr ""
@@ -5951,9 +5411,6 @@ msgstr ""
 msgid "Recipient phone"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:251
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:251
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:251
 #: admin/src/Admin/Settings/Registry.php:251
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
@@ -5996,12 +5453,12 @@ msgstr ""
 msgid "Refreshing connection"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1454
+#: admin/src/Integrations/Woocommerce.php:1462
 msgid "Refund amount"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:54
-#: templates/otp-login/myaccount/form-login.php:99
+#: templates/otp-login/myaccount/form-login.php:61
+#: templates/otp-login/myaccount/form-login.php:106
 msgid "Register"
 msgstr ""
 
@@ -6019,9 +5476,6 @@ msgid ""
 "available sender to use the default."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:189
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:189
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:189
 #: admin/src/Admin/Settings/Registry.php:189
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:60
 msgid "Registered senders"
@@ -6031,7 +5485,7 @@ msgstr ""
 msgid "REM"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:36
+#: templates/otp-login/shared/otp-login-form.php:45
 msgid "Remember me"
 msgstr ""
 
@@ -6046,8 +5500,6 @@ msgstr ""
 msgid "Remove attachment"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:163
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:163
 #: app/src/components/fields/JoinotifyApiKeyField.vue:163
 msgid "Remove key"
 msgstr ""
@@ -6060,16 +5512,12 @@ msgstr ""
 msgid "Remove variable"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:192
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:192
 #: app/src/components/fields/JoinotifyApiKeyField.vue:192
 msgid ""
 "Removing the key stops all message delivery from this site. The numbers "
 "already imported are kept."
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:173
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:173
 #: app/src/components/fields/JoinotifyApiKeyField.vue:173
 msgid "Removing…"
 msgstr ""
@@ -6098,20 +5546,16 @@ msgstr ""
 msgid "Required configuration for this trigger to run correctly."
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:104
-#: .history/admin/src/Integrations/Resend_20260703155627.php:106
-#: .history/admin/src/Integrations/Resend_20260703155635.php:104
-#: .history/admin/src/Integrations/Resend_20260703155807.php:104
 #: admin/src/Integrations/Resend.php:104
 #: admin/src/Notifications/Channels/Resend_Channel.php:47
 msgid "Resend"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:39
+#: templates/otp-login/shared/otp-login-form.php:48
 msgid "Resend code"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:37
+#: templates/otp-login/shared/otp-login-form.php:46
 msgid "Resend code in"
 msgstr ""
 
@@ -6119,10 +5563,6 @@ msgstr ""
 msgid "Resend e-mail"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:113
-#: .history/admin/src/Integrations/Resend_20260703155627.php:115
-#: .history/admin/src/Integrations/Resend_20260703155635.php:113
-#: .history/admin/src/Integrations/Resend_20260703155807.php:113
 #: admin/src/Integrations/Resend.php:113
 msgid "Resend settings"
 msgstr ""
@@ -6169,13 +5609,13 @@ msgstr ""
 msgid "Restore default"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:236
+#: admin/src/Integrations/Woocommerce.php:237
 msgid ""
 "Restrict this workflow to a single digital product. Leave \"Any digital "
 "product\" to run for every downloadable item in the order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:253
+#: admin/src/Integrations/Woocommerce.php:254
 msgid ""
 "Restrict this workflow to a single digital product. Leave \"Any digital "
 "product\" to run for every downloaded file."
@@ -6201,13 +5641,13 @@ msgstr ""
 msgid "Retrieve the cart total amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:459
+#: admin/src/Integrations/Woocommerce.php:460
 msgid ""
 "Retrieve the user's full billing address (format configurable in the "
 "WooCommerce options)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:467
+#: admin/src/Integrations/Woocommerce.php:468
 msgid ""
 "Retrieve the user's full shipping address (format configurable in the "
 "WooCommerce options)."
@@ -6229,8 +5669,6 @@ msgstr ""
 msgid "Reuse the generated value in any later message with:"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260816134016.vue:57
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260817113731.vue:57
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:57
 msgid "Review integrations, senders, history retention and the advanced options."
 msgstr ""
@@ -6243,9 +5681,6 @@ msgstr ""
 msgid "Rounding applied to cards, buttons, and form fields."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:140
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:140
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:140
 #: admin/src/Admin/Settings/Registry.php:140
 msgid "Route path used to send text messages."
 msgstr ""
@@ -6261,17 +5696,10 @@ msgstr ""
 msgid "Rule data"
 msgstr ""
 
-#: app/src/builder/actions/definitions/snippetPhp.ts:38
-msgid "Run a PHP snippet during the workflow."
-msgstr ""
-
 #: app/src/components/builder/BuilderNavbar.vue:139
 msgid "Run test"
 msgstr ""
 
-#: .history/admin/src/Core/Onboarding_20260817113306.php:284
-#: .history/admin/src/Core/Onboarding_20260817113722.php:284
-#: .history/admin/src/Core/Onboarding_20260817113731.php:284
 #: admin/src/Core/Onboarding.php:284
 msgid "Run the setup wizard"
 msgstr ""
@@ -6362,8 +5790,6 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260816184030.vue:152
-#: .history/app/src/components/fields/JoinotifyApiKeyField_20260817113731.vue:152
 #: app/src/components/fields/JoinotifyApiKeyField.vue:152
 msgid "Saved Joinotify API key"
 msgstr ""
@@ -6380,7 +5806,7 @@ msgstr ""
 msgid "Saving…"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:373
+#: admin/src/Admin/Builder/Registry.php:374
 #: app/src/builder/actions/definitions/timeDelay.ts:59
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/composables/useProcessingQueue.ts:51
@@ -6421,8 +5847,6 @@ msgstr ""
 msgid "Search flows"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:28
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:28
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:28
 msgid "Search for a country"
 msgstr ""
@@ -6482,11 +5906,11 @@ msgid "second(s)"
 msgstr ""
 
 #: admin/src/Core/Helpers.php:37
-#: templates/otp-login/shared/otp-login-form.php:38
+#: templates/otp-login/shared/otp-login-form.php:47
 msgid "seconds"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:389
+#: admin/src/Admin/Builder/Registry.php:390
 #: app/src/builder/actions/definitions/timeDelay.ts:63
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:35
 msgid "Seconds"
@@ -6504,10 +5928,6 @@ msgid ""
 "platform.openai.com."
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:135
-#: .history/admin/src/Integrations/Resend_20260703155627.php:137
-#: .history/admin/src/Integrations/Resend_20260703155635.php:135
-#: .history/admin/src/Integrations/Resend_20260703155807.php:135
 #: admin/src/Integrations/Resend.php:135
 msgid ""
 "Secret key used to authenticate requests to Resend. Find it at "
@@ -6518,23 +5938,14 @@ msgstr ""
 msgid "Section title"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:27
+#: templates/otp-login/shared/otp-login-form.php:34
 msgid "Secure access"
 msgstr ""
 
-#: .history/admin/src/Core/Onboarding_20260817113306.php:310
-#: .history/admin/src/Core/Onboarding_20260817113722.php:310
-#: .history/admin/src/Core/Onboarding_20260817113731.php:310
 #: admin/src/Core/Onboarding.php:310
 msgid "Security check failed."
 msgstr ""
 
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:70
-msgid "Security warning"
-msgstr ""
-
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:63
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:63
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:63
 msgid "See exactly what would be sent"
 msgstr ""
@@ -6557,8 +5968,8 @@ msgstr ""
 msgid "Select a date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:237
-#: admin/src/Integrations/Woocommerce.php:254
+#: admin/src/Integrations/Woocommerce.php:238
+#: admin/src/Integrations/Woocommerce.php:255
 msgid "Select a digital product"
 msgstr ""
 
@@ -6615,7 +6026,7 @@ msgstr ""
 msgid "Select an option"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:220
+#: admin/src/Integrations/Woocommerce.php:221
 msgid "Select an order status"
 msgstr ""
 
@@ -6652,12 +6063,10 @@ msgstr ""
 msgid "Send a contact card. Cloud API only, and only inside the 24-hour window."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1213
+#: admin/src/Integrations/Woocommerce.php:1217
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:195
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:195
 #: admin/src/Integrations/Whatsapp.php:195
 msgid "Send a media message (image, file, document, and audio) with WhatsApp."
 msgstr ""
@@ -6689,8 +6098,6 @@ msgstr ""
 msgid "Send a text message to a Telegram chat, group or channel."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:182
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:182
 #: admin/src/Integrations/Whatsapp.php:182
 msgid "Send a text message via WhatsApp."
 msgstr ""
@@ -6713,37 +6120,23 @@ msgstr ""
 msgid "Send an approved template through the official WhatsApp Cloud API."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:212
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:212
 #: admin/src/Integrations/Whatsapp.php:212
 msgid ""
 "Send an approved template through the official WhatsApp Cloud API. Required "
 "to start a conversation or reply outside the 24-hour window."
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:174
-#: .history/admin/src/Integrations/Resend_20260703155627.php:176
-#: .history/admin/src/Integrations/Resend_20260703155635.php:174
-#: .history/admin/src/Integrations/Resend_20260703155807.php:174
 #: admin/src/Integrations/Resend.php:174
 #: app/src/builder/actions/definitions/resendEmail.ts:44
 msgid "Send an e-mail notification through Resend."
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:173
-#: .history/admin/src/Integrations/Resend_20260703155627.php:175
-#: .history/admin/src/Integrations/Resend_20260703155635.php:173
-#: .history/admin/src/Integrations/Resend_20260703155807.php:173
 #: admin/src/Integrations/Resend.php:173
 #: app/src/builder/actions/definitions/resendEmail.ts:31
 #: app/src/builder/actions/definitions/resendEmail.ts:43
 msgid "Send e-mail (Resend)"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:105
-#: .history/admin/src/Integrations/Resend_20260703155627.php:107
-#: .history/admin/src/Integrations/Resend_20260703155635.php:105
-#: .history/admin/src/Integrations/Resend_20260703155807.php:105
 #: admin/src/Integrations/Resend.php:105
 msgid "Send e-mail notifications for your automations through the Resend API."
 msgstr ""
@@ -6752,7 +6145,7 @@ msgstr ""
 msgid "Send media"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:98
+#: admin/src/Integrations/Woocommerce.php:99
 msgid ""
 "Send messages regarding new orders, cancellations, refunds, and recovery of "
 "unpaid orders. Keep your customers updated."
@@ -6806,18 +6199,10 @@ msgstr ""
 msgid "Sender"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:143
-#: .history/admin/src/Integrations/Resend_20260703155627.php:145
-#: .history/admin/src/Integrations/Resend_20260703155635.php:143
-#: .history/admin/src/Integrations/Resend_20260703155807.php:143
 #: admin/src/Integrations/Resend.php:143
 msgid "Sender e-mail"
 msgstr ""
 
-#: .history/admin/src/Integrations/Resend_20260703153400.php:152
-#: .history/admin/src/Integrations/Resend_20260703155627.php:154
-#: .history/admin/src/Integrations/Resend_20260703155635.php:152
-#: .history/admin/src/Integrations/Resend_20260703155807.php:152
 #: admin/src/Integrations/Resend.php:152
 msgid "Sender name"
 msgstr ""
@@ -6837,13 +6222,10 @@ msgid ""
 "turn this option off."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:31
+#: templates/otp-login/shared/otp-login-form.php:38
 msgid "Sending..."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:876
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:876
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:876
 #: admin/src/Admin/Settings/Registry.php:876
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
@@ -6879,21 +6261,13 @@ msgstr ""
 msgid "Set an expiration"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:266
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:266
 #: app/src/pages/onboarding/OnboardingPage.vue:266
 msgid "Set up Joinotify"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:86
-#: .history/admin/src/Admin/Menu_20260816132413.php:87
-#: .history/admin/src/Admin/Menu_20260817113731.php:86
-#: .history/admin/src/Admin/Menu_20260817113731.php:87
-#: .history/admin/src/Core/Init_20260816222318.php:535
-#: .history/admin/src/Core/Init_20260817113731.php:535
 #: admin/src/Admin/Menu.php:86
 #: admin/src/Admin/Menu.php:87
-#: admin/src/Core/Init.php:535
+#: admin/src/Core/Init.php:534
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:310
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -6921,23 +6295,16 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:668
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:668
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:668
 #: admin/src/Admin/Settings/Registry.php:668
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:293
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:293
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
 #: app/src/pages/onboarding/OnboardingPage.vue:293
 msgid "Setup"
 msgstr ""
 
-#: .history/admin/src/Rest/Onboarding_Complete_20260816133532.php:43
-#: .history/admin/src/Rest/Onboarding_Complete_20260817113731.php:43
 #: admin/src/Rest/Onboarding_Complete.php:43
 msgid "Setup finished."
 msgstr ""
@@ -6950,24 +6317,17 @@ msgstr ""
 msgid "Shade %s"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:240
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:240
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:240
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:40
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:51
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:40
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:51
 #: admin/src/Admin/Settings/Registry.php:240
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:40
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:51
 msgid "Share anonymous usage data"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:153
+#: admin/src/Integrations/Woocommerce.php:154
 msgid "Shipping full address format"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1442
+#: admin/src/Integrations/Woocommerce.php:1450
 msgid "Shipping method"
 msgstr ""
 
@@ -6979,7 +6339,7 @@ msgstr ""
 msgid "Show all"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:49
+#: templates/otp-login/shared/otp-login-form.php:58
 msgid "Show password"
 msgstr ""
 
@@ -6991,7 +6351,7 @@ msgstr ""
 msgid "Sierra Leone"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:51
+#: templates/otp-login/shared/otp-login-form.php:60
 msgid "Sign in"
 msgstr ""
 
@@ -6999,14 +6359,10 @@ msgstr ""
 msgid "Singapore"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:367
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:367
 #: app/src/pages/onboarding/OnboardingPage.vue:367
 msgid "Skip setup for now"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:380
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:380
 #: app/src/pages/onboarding/OnboardingPage.vue:380
 msgid "Skip this step"
 msgstr ""
@@ -7059,8 +6415,6 @@ msgstr ""
 msgid "Sri Lanka"
 msgstr ""
 
-#: .history/app/src/components/builder/TemplateLibraryHeader_20260703082602.vue:26
-#: .history/app/src/components/builder/TemplateLibraryHeader_20260703152024.vue:26
 #: app/src/components/builder/TemplateLibraryHeader.vue:26
 msgid "Start automating your site from a template"
 msgstr ""
@@ -7069,14 +6423,14 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:84
 #: admin/src/Builder/Workflow_Manager.php:86
+#: admin/src/Builder/Workflow_Manager.php:88
 #: app/src/components/builder/BuilderStartChooser.vue:34
 #: app/src/components/builder/BuilderStartChooser.vue:36
 msgid "Start from scratch"
 msgstr ""
 
-#: admin/src/Builder/Workflow_Manager.php:90
+#: admin/src/Builder/Workflow_Manager.php:92
 #: app/src/components/builder/BuilderStartChooser.vue:49
 msgid "Start with a template"
 msgstr ""
@@ -7088,8 +6442,6 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:306
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:306
 #: app/src/pages/onboarding/OnboardingPage.vue:306
 msgid "Step"
 msgstr ""
@@ -7110,8 +6462,6 @@ msgstr ""
 msgid "Step 2: Enter the verification code."
 msgstr ""
 
-#: .history/admin/src/Rest/Onboarding_Step_20260816133506.php:56
-#: .history/admin/src/Rest/Onboarding_Step_20260817113731.php:56
 #: admin/src/Rest/Onboarding_Step.php:56
 msgid "Step saved."
 msgstr ""
@@ -7120,9 +6470,7 @@ msgstr ""
 msgid "Sticker URL"
 msgstr ""
 
-#: .history/admin/src/Builder/Actions_20260803205441.php:68
-#: .history/admin/src/Builder/Actions_20260804124933.php:68
-#: admin/src/Admin/Builder/Registry.php:542
+#: admin/src/Admin/Builder/Registry.php:524
 #: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
 msgstr ""
@@ -7132,13 +6480,10 @@ msgstr ""
 msgid "Stop funnel"
 msgstr ""
 
-#: app/src/builder/actions/utils/actionDescription.ts:258
+#: app/src/builder/actions/utils/actionDescription.ts:240
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:269
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:269
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:269
 #: admin/src/Admin/Settings/Registry.php:269
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
@@ -7151,7 +6496,8 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:299
+#: admin/src/Builder/Messages.php:309
+#. translators: %s: email subject line
 msgid "Subject: %s"
 msgstr ""
 
@@ -7167,7 +6513,7 @@ msgstr ""
 msgid "Subscription renewal expired"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1458
+#: admin/src/Integrations/Woocommerce.php:1466
 msgid "Subscription status"
 msgstr ""
 
@@ -7175,7 +6521,8 @@ msgstr ""
 msgid "Sudan"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:489
+#: admin/src/Integrations/Woocommerce.php:492
+#. translators: %s: site URL
 msgid ""
 "Sunglasses with UV protection (Sample product): "
 "%s/product/sample-sunglasses/#reviews"
@@ -7214,9 +6561,6 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:287
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:287
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:287
 #: admin/src/Admin/Settings/Registry.php:287
 msgid "System status"
 msgstr ""
@@ -7292,9 +6636,6 @@ msgstr ""
 msgid "Test message"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:114
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:114
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:114
 #: admin/src/Admin/Settings/Registry.php:114
 msgid "Test phone"
 msgstr ""
@@ -7325,9 +6666,6 @@ msgstr ""
 msgid "Text message sent successfully."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:139
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:139
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:139
 #: admin/src/Admin/Settings/Registry.php:139
 msgid "Text route"
 msgstr ""
@@ -7348,6 +6686,7 @@ msgid ""
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:139
+#. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s integration that this flow's trigger depends on is currently "
 "disabled. This flow will not be processed until the integration is enabled "
@@ -7355,27 +6694,22 @@ msgid ""
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:149
+#. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s integration that this flow's trigger depends on is not available. "
 "This flow will not be processed until the integration is available again."
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:133
+#. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s plugin this trigger depends on is not installed or active. This flow "
 "will not be processed until the plugin is active again."
 msgstr ""
 
-#: admin/src/AI/Snippet_Generator.php:65
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:55
-#: app/src/stores/useWorkflowBuilderStore.ts:1263
-#: app/src/stores/useWorkflowBuilderStore.ts:1268
-msgid "The AI could not generate the snippet."
-msgstr ""
-
 #: admin/src/AI/Workflow_Generator.php:63
 #: app/src/pages/builder/BuilderPage.vue:668
-#: app/src/stores/useWorkflowBuilderStore.ts:1235
+#: app/src/stores/useWorkflowBuilderStore.ts:1233
 msgid "The AI could not generate the workflow."
 msgstr ""
 
@@ -7385,10 +6719,6 @@ msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:81
 msgid "The AI did not produce any workflow steps. Try refining the description."
-msgstr ""
-
-#: admin/src/AI/Snippet_Generator.php:74
-msgid "The AI returned an empty snippet. Please try again."
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:72
@@ -7414,20 +6744,15 @@ msgid ""
 "This cannot be undone."
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:87
-#: .history/admin/src/Api/Connect_20260817113722.php:87
-#: .history/admin/src/Api/Connect_20260817113731.php:87
 #: admin/src/Api/Connect.php:87
 msgid "The connection response was incomplete. Start the connection again."
 msgstr ""
 
-#: .history/admin/src/Core/Telemetry_20260816222253.php:144
-#: .history/admin/src/Core/Telemetry_20260817113731.php:144
 #: admin/src/Core/Telemetry.php:144
 msgid "The content of your workflows"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1263
+#: admin/src/Integrations/Woocommerce.php:1267
 msgid "The coupon already exists."
 msgstr ""
 
@@ -7437,14 +6762,8 @@ msgstr ""
 msgid "The debug log is empty."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260816222632.vue:97
-#: .history/app/src/pages/onboarding/components/steps/PrivacyStep_20260817113731.vue:97
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:97
 msgid "The exact payload for this site right now"
-msgstr ""
-
-#: app/src/builder/actions/settings/SnippetPhpSettings.vue:102
-msgid "The field is required. Keep the code self-contained and deterministic."
 msgstr ""
 
 #: admin/src/Admin/Settings/Transfer.php:148
@@ -7453,12 +6772,6 @@ msgstr ""
 
 #: admin/src/Notifications/Channels/Resend_Channel.php:274
 msgid "The files below were too large to attach, so you can download them here:"
-msgstr ""
-
-#: admin/src/AI/Snippet_Generator.php:84
-msgid ""
-"The generated snippet uses a blocked function (%s). Please refine the "
-"request."
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:104
@@ -7473,29 +6786,18 @@ msgid ""
 "flow will not be processed until the integration is available again."
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:185
-#: .history/admin/src/Api/Connect_20260817113722.php:185
-#: .history/admin/src/Api/Connect_20260817113731.php:185
 #: admin/src/Api/Connect.php:185
 msgid "The Joinotify API did not return a key for this site."
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:361
-#: .history/admin/src/Api/Connect_20260817113722.php:361
-#: .history/admin/src/Api/Connect_20260817113731.php:361
 #: admin/src/Api/Connect.php:361
 msgid "The Joinotify panel did not return an API key."
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:352
-#: .history/admin/src/Api/Connect_20260817113722.php:352
-#: .history/admin/src/Api/Connect_20260817113731.php:352
 #: admin/src/Api/Connect.php:352
 msgid "The Joinotify panel refused this connection. Start the connection again."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:69
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:69
 #: app/src/pages/onboarding/components/steps/AiStep.vue:69
 msgid ""
 "The key is stored on this site and used only for the AI actions you add to "
@@ -7537,9 +6839,6 @@ msgstr ""
 msgid "The phone is disconnected."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:127
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:127
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:127
 #: admin/src/Admin/Settings/Registry.php:127
 msgid ""
 "The Proxy API is deprecated and will be removed in an upcoming release. "
@@ -7588,7 +6887,7 @@ msgid ""
 "undone."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1080
+#: admin/src/Admin/Builder/Registry.php:1063
 msgid "The selected template was not found."
 msgstr ""
 
@@ -7638,6 +6937,7 @@ msgid ""
 msgstr ""
 
 #: admin/src/Builder/Custom_Variables.php:121
+#. translators: %s: variable token
 msgid "The variable \"%s\" already exists. Choose another name."
 msgstr ""
 
@@ -7650,11 +6950,11 @@ msgstr ""
 msgid "The workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1441
+#: admin/src/Admin/Builder/Registry.php:1425
 msgid "The workflow content is invalid."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1461
+#: admin/src/Admin/Builder/Registry.php:1445
 msgid "The workflow has more than one trigger."
 msgstr ""
 
@@ -7662,7 +6962,7 @@ msgstr ""
 msgid "The workflow has no content to test."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1455
+#: admin/src/Admin/Builder/Registry.php:1439
 msgid "The workflow has no trigger."
 msgstr ""
 
@@ -7670,7 +6970,7 @@ msgstr ""
 msgid "The workflow is not published."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1467
+#: admin/src/Admin/Builder/Registry.php:1451
 msgid "The workflow trigger is not configured."
 msgstr ""
 
@@ -7698,29 +6998,29 @@ msgid ""
 "The workflow can still be saved safely."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:199
+#: admin/src/Integrations/Woocommerce.php:200
 msgid "This action is triggered when an order is fully refunded."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:205
+#: admin/src/Integrations/Woocommerce.php:206
 msgid "This action is triggered when an order is partially refunded."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:211
+#: admin/src/Integrations/Woocommerce.php:212
 msgid "This action is triggered when an order's status changes."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:193
+#: admin/src/Integrations/Woocommerce.php:194
 msgid "This action is triggered when an order's status is changed to completed."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:245
+#: admin/src/Integrations/Woocommerce.php:246
 msgid ""
 "This action is triggered when the customer actually downloads a digital "
 "file from the order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:228
+#: admin/src/Integrations/Woocommerce.php:229
 msgid ""
 "This action is triggered when WooCommerce grants the download access of a "
 "digital product to the customer. This is the recommended trigger to deliver "
@@ -7731,9 +7031,6 @@ msgstr ""
 msgid "This action stops the workflow immediately. There are no editable settings."
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:93
-#: .history/admin/src/Api/Connect_20260817113722.php:93
-#: .history/admin/src/Api/Connect_20260817113731.php:93
 #: admin/src/Api/Connect.php:93
 msgid ""
 "This connection attempt expired or did not start here. Start the connection "
@@ -7746,7 +7043,7 @@ msgid ""
 "report cron as available."
 msgstr ""
 
-#: admin/src/Integrations/Integrations_Base.php:980
+#: admin/src/Integrations/Integrations_Base.php:1026
 msgid "This feature will be released soon."
 msgstr ""
 
@@ -7774,9 +7071,6 @@ msgstr ""
 msgid "This number is no longer connected on your Joinotify account."
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:416
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:416
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:416
 #: admin/src/Admin/Settings/Registry.php:416
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
@@ -7792,8 +7086,6 @@ msgid ""
 "undone."
 msgstr ""
 
-#: .history/admin/src/Rest/Cloud_Connect_Key_20260816142059.php:92
-#: .history/admin/src/Rest/Cloud_Connect_Key_20260817113731.php:92
 #: admin/src/Rest/Cloud_Connect_Key.php:92
 msgid "This site is no longer connected to Joinotify."
 msgstr ""
@@ -7812,8 +7104,8 @@ msgstr ""
 msgid "This text variable may not work in this context"
 msgstr ""
 
-#: admin/src/Integrations/Integrations_Base.php:987
-#: admin/src/Integrations/Integrations_Base.php:991
+#: admin/src/Integrations/Integrations_Base.php:1033
+#: admin/src/Integrations/Integrations_Base.php:1037
 msgid "This trigger depends on a plugin"
 msgstr ""
 
@@ -7857,19 +7149,19 @@ msgid ""
 "menu to pick a different one."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:187
+#: admin/src/Integrations/Woocommerce.php:188
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "a processing status."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:181
+#: admin/src/Integrations/Woocommerce.php:182
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "any status."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:183
+#: admin/src/Integrations/Flexify_Checkout.php:182
 msgid "This trigger is fired when a cart is considered lost."
 msgstr ""
 
@@ -7895,7 +7187,7 @@ msgstr ""
 msgid "This trigger is fired when a subscription term has expired."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:163
+#: admin/src/Integrations/Flexify_Checkout.php:162
 msgid "This trigger is fired when an abandoned cart is recovered."
 msgstr ""
 
@@ -7903,7 +7195,7 @@ msgstr ""
 msgid "This trigger is fired when an Elementor form is submitted."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:173
+#: admin/src/Integrations/Flexify_Checkout.php:172
 msgid "This trigger is fired when an order is abandoned."
 msgstr ""
 
@@ -7911,15 +7203,15 @@ msgstr ""
 msgid "This trigger is fired when the subscription status changes to canceled."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:153
+#: admin/src/Integrations/Flexify_Checkout.php:152
 msgid "This trigger is fired when the user abandons the cart."
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:143
+#: admin/src/Integrations/Flexify_Checkout.php:142
 msgid "This trigger is fired when the user provides your contact on checkout"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:133
+#: admin/src/Integrations/Flexify_Checkout.php:132
 msgid "This trigger is fired when the user provides your contact on modal"
 msgstr ""
 
@@ -7929,7 +7221,7 @@ msgid ""
 "lost."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:405
+#: admin/src/Admin/Builder/Registry.php:406
 #: app/src/builder/actions/definitions/timeDelay.ts:72
 #: app/src/builder/actions/definitions/timeDelay.ts:83
 #: app/src/builder/actions/definitions/timeDelay.ts:91
@@ -7962,13 +7254,13 @@ msgid ""
 "retrieve. Example: billing_phone"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:475
+#: admin/src/Integrations/Woocommerce.php:476
 msgid ""
 "To retrieve each purchased product and quantity from the order, separated "
 "by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:619
+#: admin/src/Integrations/Woocommerce.php:623
 msgid ""
 "To retrieve how many downloads the customer still has available. Returns "
 "the smallest amount when the files have different limits."
@@ -7986,43 +7278,43 @@ msgid ""
 "the respective ID."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:600
+#: admin/src/Integrations/Woocommerce.php:604
 msgid ""
 "To retrieve only the download links of the WooCommerce order, without the "
 "file name, separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:419
+#: admin/src/Integrations/Woocommerce.php:420
 msgid "To retrieve the billing phone from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:543
+#: admin/src/Integrations/Woocommerce.php:547
 msgid "To retrieve the coupon codes used in the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1385
+#: admin/src/Integrations/Woocommerce.php:1393
 msgid "To retrieve the coupon description."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1397
+#: admin/src/Integrations/Woocommerce.php:1405
 msgid ""
 "To retrieve the coupon discount amount formatted with a currency symbol or "
 "percentage. Example: 10%."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1393
+#: admin/src/Integrations/Woocommerce.php:1401
 msgid "To retrieve the coupon discount amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1381
+#: admin/src/Integrations/Woocommerce.php:1389
 msgid "To retrieve the coupon discount code."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1389
+#: admin/src/Integrations/Woocommerce.php:1397
 msgid "To retrieve the coupon discount type. Example: Percentage or fixed amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1401
+#: admin/src/Integrations/Woocommerce.php:1409
 msgid "To retrieve the coupon expiration. Example: Expires in 1 hour."
 msgstr ""
 
@@ -8030,32 +7322,32 @@ msgstr ""
 msgid "To retrieve the current date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:411
+#: admin/src/Integrations/Woocommerce.php:412
 msgid "To retrieve the customer billing email from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:395
+#: admin/src/Integrations/Woocommerce.php:396
 msgid "To retrieve the customer billing first name from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:403
+#: admin/src/Integrations/Woocommerce.php:404
 msgid "To retrieve the customer billing last name from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:635
+#: admin/src/Integrations/Woocommerce.php:639
 msgid ""
 "To retrieve the download links of a specific product in the WooCommerce "
 "order. Replace PRODUCT_ID with the product ID, for example: 128."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:587
+#: admin/src/Integrations/Woocommerce.php:591
 msgid ""
 "To retrieve the download name and link of each digital file in the "
 "WooCommerce order, separated by line. Only available after the download "
 "access has been granted."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:611
+#: admin/src/Integrations/Woocommerce.php:615
 msgid ""
 "To retrieve the expiration date of the download access. Returns the closest "
 "date when the files expire on different dates."
@@ -8065,21 +7357,21 @@ msgstr ""
 msgid "To retrieve the featured image URL of the post"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:627
+#: admin/src/Integrations/Woocommerce.php:631
 msgid "To retrieve the link to the downloads area in the customer My Account page"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:579
+#: admin/src/Integrations/Woocommerce.php:583
 msgid ""
 "To retrieve the name of each downloadable product in the WooCommerce order, "
 "separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:503
+#: admin/src/Integrations/Woocommerce.php:507
 msgid "To retrieve the order currency symbol"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:495
+#: admin/src/Integrations/Woocommerce.php:498
 msgid "To retrieve the order payment URL"
 msgstr ""
 
@@ -8087,13 +7379,13 @@ msgstr ""
 msgid "To retrieve the password reset link"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:242
+#: admin/src/Integrations/Flexify_Checkout.php:241
 msgid ""
 "To retrieve the Pix Copia e Cola code from the order. Through the Flexify "
 "Checkout - Inter addon integration"
 msgstr ""
 
-#: admin/src/Integrations/Flexify_Checkout.php:250
+#: admin/src/Integrations/Flexify_Checkout.php:249
 #: admin/src/Integrations/Flexify_Checkout.php:258
 msgid ""
 "To retrieve the Pix Copia e Cola expiration time. Through the Flexify "
@@ -8124,13 +7416,13 @@ msgstr ""
 msgid "To retrieve the post title"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:483
+#: admin/src/Integrations/Woocommerce.php:484
 msgid ""
 "To retrieve the review link for each purchased product from the order, "
 "separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:427
+#: admin/src/Integrations/Woocommerce.php:428
 msgid "To retrieve the shipping phone from the WooCommerce order"
 msgstr ""
 
@@ -8154,50 +7446,51 @@ msgstr ""
 msgid "To retrieve the user last name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1841
+#: admin/src/Integrations/Woocommerce.php:1850
+#. translators: %s: checkout field label
 msgid "To retrieve the value of %s"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:574
+#: admin/src/Integrations/Woocommerce.php:578
 msgid ""
 "To retrieve the value of a specific checkout field in the WooCommerce "
 "order. Replace FIELD_ID with the checkout field ID, for example: "
 "billing_email."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:451
+#: admin/src/Integrations/Woocommerce.php:452
 msgid "To retrieve the WooCommerce order date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:435
+#: admin/src/Integrations/Woocommerce.php:436
 msgid "To retrieve the WooCommerce order number"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:551
+#: admin/src/Integrations/Woocommerce.php:555
 msgid "To retrieve the WooCommerce order payment method title"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:566
+#: admin/src/Integrations/Woocommerce.php:570
 msgid "To retrieve the WooCommerce order shipping address"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:443
+#: admin/src/Integrations/Woocommerce.php:444
 msgid "To retrieve the WooCommerce order status"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:511
+#: admin/src/Integrations/Woocommerce.php:515
 msgid "To retrieve the WooCommerce order total"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:519
+#: admin/src/Integrations/Woocommerce.php:523
 msgid "To retrieve the WooCommerce total discount"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:535
+#: admin/src/Integrations/Woocommerce.php:539
 msgid "To retrieve the WooCommerce total refunded amount"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:527
+#: admin/src/Integrations/Woocommerce.php:531
 msgid "To retrieve the WooCommerce total tax"
 msgstr ""
 
@@ -8241,7 +7534,7 @@ msgstr ""
 msgid "Tonga"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:57
+#: templates/otp-login/shared/otp-login-form.php:66
 msgid "Too long"
 msgstr ""
 
@@ -8249,7 +7542,7 @@ msgstr ""
 msgid "Too many code requests. Please wait a few minutes and try again."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:56
+#: templates/otp-login/shared/otp-login-form.php:65
 msgid "Too short"
 msgstr ""
 
@@ -8356,7 +7649,7 @@ msgstr ""
 msgid "Type at least 2 characters…"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:441
+#: admin/src/Admin/Builder/Registry.php:442
 #: app/src/builder/actions/definitions/condition.ts:126
 msgid "Type label"
 msgstr ""
@@ -8382,7 +7675,8 @@ msgstr ""
 msgid "Type your test message..."
 msgstr ""
 
-#: admin/src/Builder/Messages.php:323
+#: admin/src/Builder/Messages.php:335
+#. translators: %s: discount type (percentage or fixed amount)
 msgid "Type: %s"
 msgstr ""
 
@@ -8423,8 +7717,8 @@ msgstr ""
 msgid "Unknown AI error."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:622
-#: admin/src/Integrations/Woocommerce.php:889
+#: admin/src/Integrations/Woocommerce.php:626
+#: admin/src/Integrations/Woocommerce.php:893
 msgid "Unlimited"
 msgstr ""
 
@@ -8432,7 +7726,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: admin/src/Rest/Builder_Ai_Generate.php:64
+#: admin/src/Rest/Builder_Ai_Generate.php:59
 msgid "Unsupported AI intent."
 msgstr ""
 
@@ -8470,8 +7764,6 @@ msgstr ""
 msgid "Uruguay"
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:132
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:132
 #: admin/src/Admin/Onboarding/Registry.php:132
 msgid "Usage data"
 msgstr ""
@@ -8500,7 +7792,7 @@ msgstr ""
 msgid "Use default provider"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:32
+#: templates/otp-login/shared/otp-login-form.php:39
 msgid "Use email and password"
 msgstr ""
 
@@ -8508,8 +7800,6 @@ msgstr ""
 msgid "Use the first available sender"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:69
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:69
 #: admin/src/Integrations/Whatsapp.php:69
 msgid ""
 "Use the world's largest messaging service to notify your customers about "
@@ -8524,18 +7814,16 @@ msgstr ""
 msgid "Use this media"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:39
+#: templates/otp-login/myaccount/form-login.php:46
 msgid "Use your phone number to receive a login code and continue."
 msgstr ""
 
-#: admin/src/Otp_Login/Woocommerce_Login.php:129
+#: admin/src/Otp_Login/Woocommerce_Login.php:131
 msgid ""
 "Use your phone number to receive the code or sign in with email and "
 "password."
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:109
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:109
 #: admin/src/Admin/Onboarding/Registry.php:109
 msgid "Used to complete phone numbers that were typed without a country code."
 msgstr ""
@@ -8545,8 +7833,8 @@ msgid "User login"
 msgstr ""
 
 #: admin/src/Integrations/Elementor.php:155
-#: admin/src/Integrations/Flexify_Checkout.php:369
-#: admin/src/Integrations/Woocommerce.php:1446
+#: admin/src/Integrations/Flexify_Checkout.php:375
+#: admin/src/Integrations/Woocommerce.php:1454
 #: admin/src/Integrations/Wordpress.php:310
 #: admin/src/Integrations/Wordpress.php:320
 #: admin/src/Integrations/Wordpress.php:326
@@ -8565,12 +7853,12 @@ msgstr ""
 msgid "User role"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:414
+#: admin/src/Integrations/Woocommerce.php:415
 #: admin/src/Integrations/Wordpress.php:183
 msgid "user@example.com"
 msgstr ""
 
-#: templates/otp-login/myaccount/form-login.php:64
+#: templates/otp-login/myaccount/form-login.php:71
 msgid "Username"
 msgstr ""
 
@@ -8586,7 +7874,7 @@ msgstr ""
 msgid "Validation failed."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:436
+#: admin/src/Admin/Builder/Registry.php:437
 #: app/src/builder/actions/definitions/condition.ts:125
 #: app/src/builder/actions/settings/ConditionSettings.vue:223
 #: app/src/builder/actions/settings/ConditionSettings.vue:230
@@ -8647,11 +7935,11 @@ msgstr ""
 msgid "Venezuela"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:40
+#: templates/otp-login/shared/otp-login-form.php:49
 msgid "Verify OTP"
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:41
+#: templates/otp-login/shared/otp-login-form.php:50
 msgid "Verifying..."
 msgstr ""
 
@@ -8660,8 +7948,8 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:582
-#: admin/src/Integrations/Woocommerce.php:593
+#: admin/src/Integrations/Woocommerce.php:586
+#: admin/src/Integrations/Woocommerce.php:597
 msgid "Video lessons pack (Sample product)"
 msgstr ""
 
@@ -8685,24 +7973,29 @@ msgstr ""
 msgid "View the recent events recorded by the plugin."
 msgstr ""
 
-#: admin/src/Builder/Messages.php:126
-msgid "Wait %s %s"
+#: admin/src/Builder/Messages.php:127
+#. translators: 1: delay amount, 2: time unit (minutes, hours, days)
+msgid "Wait %1$s %2$s"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:124
-msgid "Wait %s %s and run at %s"
+#. translators: 1: delay amount, 2: time unit (minutes, hours, days), 3: time of day
+msgid "Wait %1$s %2$s and run at %3$s"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:105
-msgid "Wait for %s %s"
+#: admin/src/Builder/Messages.php:102
+#. translators: 1: delay amount, 2: time unit (minutes, hours, days)
+msgid "Wait for %1$s %2$s"
 msgstr ""
 
-#: admin/src/Builder/Messages.php:113
+#: admin/src/Builder/Messages.php:109
+#. translators: 1: date, 2: time of day
+msgid "Wait until %1$s - %2$s"
+msgstr ""
+
+#: admin/src/Builder/Messages.php:112
+#. translators: %s: date
 msgid "Wait until %s"
-msgstr ""
-
-#: admin/src/Builder/Messages.php:111
-msgid "Wait until %s - %s"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:188
@@ -8725,7 +8018,7 @@ msgstr ""
 msgid "We could not authenticate with that username or email and password."
 msgstr ""
 
-#: templates/otp-login/shared/otp-login-form.php:59
+#: templates/otp-login/shared/otp-login-form.php:68
 msgid "We could not complete the request right now. Please try again."
 msgstr ""
 
@@ -8743,25 +8036,20 @@ msgid ""
 "to log in."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:47
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:47
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:47
 msgid "We pre-selected %s based on this site’s language setting."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:48
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:48
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:48
 msgid "We pre-selected %s based on this site’s timezone."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:46
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:46
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:46
 msgid "We pre-selected %s because that is your WooCommerce store address."
 msgstr ""
 
 #: admin/src/Otp_Login/Auth_Flow_Service.php:107
+#. translators: %s: masked phone number.
 msgid "We sent a code to %s."
 msgstr ""
 
@@ -8777,7 +8065,7 @@ msgstr ""
 msgid "weeks"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:393
+#: admin/src/Admin/Builder/Registry.php:394
 #: app/src/builder/actions/definitions/timeDelay.ts:67
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:47
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
@@ -8793,14 +8081,10 @@ msgstr ""
 msgid "What should this workflow do?"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260816133837.vue:147
-#: .history/app/src/pages/onboarding/components/steps/ConnectStep_20260817113731.vue:147
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:147
 msgid "What this sends"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:68
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:68
 #: admin/src/Integrations/Whatsapp.php:68
 #: admin/src/Notifications/Channels/Whatsapp_Evolution_Channel.php:47
 #: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:46
@@ -8815,8 +8099,6 @@ msgstr ""
 msgid "WhatsApp automation workflows created with Joinotify."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:144
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:144
 #: admin/src/Integrations/Whatsapp.php:144
 msgid "WhatsApp Business Account ID"
 msgstr ""
@@ -8839,8 +8121,6 @@ msgstr ""
 msgid "WhatsApp number that will send the template."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:73
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:73
 #: admin/src/Integrations/Whatsapp.php:73
 msgid "WhatsApp settings"
 msgstr ""
@@ -8875,9 +8155,7 @@ msgstr ""
 msgid "WhatsApp: Location"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:194
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:194
-#: admin/src/Admin/Builder/Registry.php:559
+#: admin/src/Admin/Builder/Registry.php:541
 #: admin/src/Integrations/Whatsapp.php:194
 #: app/src/builder/actions/definitions/whatsappMedia.ts:32
 #: app/src/builder/actions/definitions/whatsappMedia.ts:46
@@ -8904,10 +8182,6 @@ msgstr ""
 msgid "WhatsApp: Sticker"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:211
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:221
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:211
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:221
 #: admin/src/Integrations/Whatsapp.php:211
 #: admin/src/Integrations/Whatsapp.php:221
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:51
@@ -8915,17 +8189,13 @@ msgstr ""
 msgid "WhatsApp: Template message"
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:181
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:181
-#: admin/src/Admin/Builder/Registry.php:549
+#: admin/src/Admin/Builder/Registry.php:531
 #: admin/src/Integrations/Whatsapp.php:181
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
 msgid "WhatsApp: Text message"
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260816134155.vue:60
-#: .history/app/src/pages/onboarding/components/steps/CountryStep_20260817113731.vue:60
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:60
 msgid ""
 "When a phone number reaches a workflow without a country code, Joinotify "
@@ -8933,8 +8203,6 @@ msgid ""
 "country code are never changed."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260816134209.vue:76
-#: .history/app/src/pages/onboarding/components/steps/AiStep_20260817113731.vue:76
 #: app/src/pages/onboarding/components/steps/AiStep.vue:76
 msgid "Where do I find it?"
 msgstr ""
@@ -8945,14 +8213,10 @@ msgid ""
 "triggers."
 msgstr ""
 
-#: .history/admin/src/Admin/Onboarding/Registry_20260816133434.php:127
-#: .history/admin/src/Admin/Onboarding/Registry_20260817113731.php:127
 #: admin/src/Admin/Onboarding/Registry.php:127
 msgid "Where to look when you need a feature explained."
 msgstr ""
 
-#: .history/admin/src/Integrations/Whatsapp_20260816201655.php:123
-#: .history/admin/src/Integrations/Whatsapp_20260817113731.php:123
 #: admin/src/Integrations/Whatsapp.php:123
 msgid ""
 "Which service delivers WhatsApp messages. \"Automatic\" uses the Cloud API "
@@ -8968,9 +8232,9 @@ msgid "will be removed permanently."
 msgstr ""
 
 #: admin/src/Builder/Utils.php:101
-#: admin/src/Integrations/Woocommerce.php:97
-#: admin/src/Integrations/Woocommerce.php:351
-#: admin/src/Integrations/Woocommerce.php:1193
+#: admin/src/Integrations/Woocommerce.php:98
+#: admin/src/Integrations/Woocommerce.php:352
+#: admin/src/Integrations/Woocommerce.php:1197
 msgid "WooCommerce"
 msgstr ""
 
@@ -8978,28 +8242,22 @@ msgstr ""
 msgid "WooCommerce is not active."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:110
+#: admin/src/Integrations/Woocommerce.php:111
 msgid "WooCommerce settings"
 msgstr ""
 
 #: admin/src/Builder/Utils.php:100
-#: admin/src/Integrations/Integrations_Base.php:945
+#: admin/src/Integrations/Integrations_Base.php:991
 #: admin/src/Integrations/Wordpress.php:63
 #: admin/src/Integrations/Wordpress.php:130
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:47
 msgid "WordPress"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:550
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:550
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:550
 #: admin/src/Admin/Settings/Registry.php:550
 msgid "WordPress Multisite"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:545
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:545
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:545
 #: admin/src/Admin/Settings/Registry.php:545
 msgid "WordPress version"
 msgstr ""
@@ -9015,7 +8273,7 @@ msgstr ""
 msgid "Workflow activated."
 msgstr ""
 
-#: app/src/stores/useWorkflowBuilderStore.ts:2138
+#: app/src/stores/useWorkflowBuilderStore.ts:2105
 msgid "Workflow API is not available."
 msgstr ""
 
@@ -9048,17 +8306,17 @@ msgid "Workflow not found or invalid post type."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:91
-#: admin/src/Admin/Builder/Registry.php:1130
-#: admin/src/Admin/Builder/Registry.php:1200
+#: admin/src/Admin/Builder/Registry.php:1113
+#: admin/src/Admin/Builder/Registry.php:1183
 #: admin/src/Rest/Builder_Test.php:51
 msgid "Workflow not found."
 msgstr ""
 
-#: app/src/stores/useWorkflowBuilderStore.ts:1382
+#: app/src/stores/useWorkflowBuilderStore.ts:1349
 msgid "Workflow not saved yet."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1177
+#: admin/src/Admin/Builder/Registry.php:1160
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 
@@ -9067,7 +8325,7 @@ msgid "Workflow saved successfully."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:85
-#: admin/src/Admin/Builder/Registry.php:1178
+#: admin/src/Admin/Builder/Registry.php:1161
 msgid "Workflow saved."
 msgstr ""
 
@@ -9084,7 +8342,7 @@ msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:1128
 #: app/src/pages/builder/BuilderPage.vue:1169
-#: app/src/stores/useWorkflowBuilderStore.ts:2023
+#: app/src/stores/useWorkflowBuilderStore.ts:1990
 msgid "Workflow test queued."
 msgstr ""
 
@@ -9098,9 +8356,7 @@ msgstr ""
 msgid "workflows"
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:143
-#: .history/admin/src/Admin/Menu_20260817113731.php:143
-#: admin/src/Admin/Menu.php:143
+#: admin/src/Admin/Menu.php:144
 msgid "Workflows per page"
 msgstr ""
 
@@ -9132,7 +8388,7 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:395
+#: admin/src/Admin/Builder/Registry.php:396
 #: app/src/builder/actions/definitions/timeDelay.ts:69
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:49
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:41
@@ -9144,16 +8400,10 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:551
-#: .history/admin/src/Admin/Settings/Registry_20260816222431.php:575
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:551
-#: .history/admin/src/Admin/Settings/Registry_20260817113722.php:575
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:551
-#: .history/admin/src/Admin/Settings/Registry_20260817113731.php:575
 #: admin/src/Admin/Settings/Registry.php:551
 #: admin/src/Admin/Settings/Registry.php:575
-#: admin/src/Builder/Messages.php:319
-#: admin/src/Builder/Messages.php:320
+#: admin/src/Builder/Messages.php:329
+#: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
 #: admin/src/Integrations/Elementor_Forms.php:166
 #: app/src/builder/actions/settings/ConditionSettings.vue:103
@@ -9174,33 +8424,18 @@ msgstr ""
 msgid "You are the support agent for Store X. Be cordial and concise."
 msgstr ""
 
-#: .history/admin/src/Rest/Onboarding_Skip_20260816133543.php:43
-#: .history/admin/src/Rest/Onboarding_Skip_20260817113731.php:43
 #: admin/src/Rest/Onboarding_Skip.php:43
 msgid "You can run the setup wizard again at any time."
 msgstr ""
 
-#: .history/admin/src/Admin/Menu_20260816132413.php:159
-#: .history/admin/src/Admin/Menu_20260816132413.php:174
-#: .history/admin/src/Admin/Menu_20260816132413.php:190
-#: .history/admin/src/Admin/Menu_20260816132413.php:217
-#: .history/admin/src/Admin/Menu_20260816132413.php:233
-#: .history/admin/src/Admin/Menu_20260817113731.php:159
-#: .history/admin/src/Admin/Menu_20260817113731.php:174
-#: .history/admin/src/Admin/Menu_20260817113731.php:190
-#: .history/admin/src/Admin/Menu_20260817113731.php:217
-#: .history/admin/src/Admin/Menu_20260817113731.php:233
-#: admin/src/Admin/Menu.php:159
-#: admin/src/Admin/Menu.php:174
-#: admin/src/Admin/Menu.php:190
-#: admin/src/Admin/Menu.php:217
-#: admin/src/Admin/Menu.php:233
+#: admin/src/Admin/Menu.php:160
+#: admin/src/Admin/Menu.php:175
+#: admin/src/Admin/Menu.php:191
+#: admin/src/Admin/Menu.php:218
+#: admin/src/Admin/Menu.php:234
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: .history/admin/src/Core/Onboarding_20260817113306.php:304
-#: .history/admin/src/Core/Onboarding_20260817113722.php:304
-#: .history/admin/src/Core/Onboarding_20260817113731.php:304
 #: admin/src/Core/Onboarding.php:304
 msgid "You do not have permission to do this."
 msgstr ""
@@ -9217,8 +8452,6 @@ msgstr ""
 msgid "You may write a longer, detailed message."
 msgstr ""
 
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260816134016.vue:33
-#: .history/app/src/pages/onboarding/components/steps/FinishStep_20260817113731.vue:33
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:33
 msgid ""
 "You skipped connecting a Joinotify account, so workflows will build and "
@@ -9227,15 +8460,10 @@ msgid ""
 msgstr ""
 
 #: admin/src/Otp_Login/Otp_Code.php:116
+#. translators: 1: OTP code, 2: minutes until expiration.
 msgid "Your access code is: %1$s. This code expires in %2$d minutes."
 msgstr ""
 
-#: .history/admin/src/Rest/Cloud_Connect_Key_20260816142059.php:59
-#: .history/admin/src/Rest/Cloud_Connect_Key_20260817113731.php:59
-#: .history/admin/src/Rest/Onboarding_Connect_20260816142037.php:57
-#: .history/admin/src/Rest/Onboarding_Connect_20260817113731.php:57
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113323.vue:231
-#: .history/app/src/pages/onboarding/OnboardingPage_20260817113731.vue:231
 #: admin/src/Rest/Cloud_Connect_Finish.php:51
 #: admin/src/Rest/Cloud_Connect_Key.php:59
 #: admin/src/Rest/Cloud_Connect_License.php:52
@@ -9245,9 +8473,6 @@ msgstr ""
 msgid "Your Joinotify account is connected."
 msgstr ""
 
-#: .history/admin/src/Api/Connect_20260816230351.php:176
-#: .history/admin/src/Api/Connect_20260817113722.php:176
-#: .history/admin/src/Api/Connect_20260817113731.php:176
 #: admin/src/Api/Connect.php:176
 msgid "Your license is not linked to a Joinotify Cloud account yet."
 msgstr ""
@@ -9263,8 +8488,6 @@ msgstr ""
 msgid "Your order is confirmed"
 msgstr ""
 
-#: .history/admin/src/Core/Telemetry_20260816222253.php:140
-#: .history/admin/src/Core/Telemetry_20260817113731.php:140
 #: admin/src/Core/Telemetry.php:140
 msgid "Your site address, name or admin e-mail"
 msgstr ""

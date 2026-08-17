@@ -927,6 +927,7 @@ abstract class Integrations_Base {
                     if ( is_callable( $content_callback ) ) {
                         call_user_func( $content_callback, $args );
                     } else {
+                        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Integrations declare this as a literal 'Joinotify/Settings/Tabs/...' name.
                         do_action( $args['action_hook'] );
                     }
                     ?>
@@ -938,19 +939,64 @@ abstract class Integrations_Base {
 
 
     /**
+     * Elements and attributes allowed in an integration's inline SVG icon.
+     *
+     * `wp_kses()` strips every SVG tag by default, so the markup an integration
+     * passes to render_integration_trigger_tab() needs an explicit allow list.
+     *
+     * @since 2.3.0
+     * @return array<string,array<string,bool>>
+     */
+    protected static function allowed_svg_html() {
+        $shared = array(
+            'class' => true,
+            'fill' => true,
+            'fill-rule' => true,
+            'clip-path' => true,
+            'stroke' => true,
+            'stroke-width' => true,
+            'stroke-linecap' => true,
+            'stroke-linejoin' => true,
+            'style' => true,
+            'transform' => true,
+        );
+
+        return array(
+            'svg' => array_merge( $shared, array(
+                'xmlns' => true,
+                'xmlns:xlink' => true,
+                'viewbox' => true,
+                'width' => true,
+                'height' => true,
+                'preserveaspectratio' => true,
+                'role' => true,
+                'aria-hidden' => true,
+                'focusable' => true,
+            ) ),
+            'g' => $shared,
+            'defs' => $shared,
+            'clippath' => array_merge( $shared, array( 'id' => true ) ),
+            'path' => array_merge( $shared, array( 'd' => true ) ),
+            'circle' => array_merge( $shared, array( 'cx' => true, 'cy' => true, 'r' => true ) ),
+        );
+    }
+
+
+    /**
      * Render a trigger tab on builder sidebar
-     * 
+     *
      * @since 1.1.0
+     * @version 2.3.0
      * @param string $slug | Integration slug (eg: 'wordpress')
-     * @param string $name | Integration name (eg: esc_html__( 'WordPress', 'joinotify' ) )
-     * @param string $icon_svg | SVG icon code
+     * @param string $name | Integration name, unescaped (eg: __( 'WordPress', 'joinotify' ) )
+     * @param string $icon | SVG icon code
      * @return void
      */
     protected function render_integration_trigger_tab( $slug, $name, $icon ) {
         if ( Admin::get_setting("enable_{$slug}_integration") === 'yes' ) : ?>
             <a href="#<?php echo esc_attr( $slug ); ?>" class="nav-tab">
-                <?php echo $icon; // SVG icon ?>
-                <?php echo $name; ?>
+                <?php echo wp_kses( $icon, self::allowed_svg_html() ); ?>
+                <?php echo esc_html( $name ); ?>
             </a>
         <?php endif;
     }
@@ -990,7 +1036,12 @@ abstract class Integrations_Base {
                                 <?php elseif ( ! array_key_exists( $item['slug'], get_plugins() ) ) : ?>
                                     <span class="fs-sm my-3"><?php esc_html_e( 'This trigger depends on a plugin', 'joinotify' ); ?></span>
 
-                                    <button class="btn btn-sm btn-outline-secondary install-required-plugin mb-2" data-download-url="<?php echo esc_attr( $item['download_url'] ) ?>" data-required-plugin="<?php echo esc_attr( $item['slug'] ) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="joinotify-tooltip" data-bs-title="<?php echo esc_attr( $item['name'] ) ?>"><?php esc_html_e( 'Install plugin', 'joinotify' ) ?></button>
+                                    <span class="fs-sm mb-2 fw-semibold">
+                                        <?php
+                                        /* translators: %s: name of the required plugin */
+                                        printf( esc_html__( 'Install and activate %s to use this trigger.', 'joinotify' ), esc_html( $item['name'] ) );
+                                        ?>
+                                    </span>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>

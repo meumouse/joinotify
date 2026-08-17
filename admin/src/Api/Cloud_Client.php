@@ -918,7 +918,7 @@ class Cloud_Client {
         $parsed = self::parse_send_response( $response );
 
         if ( self::dev_mode() ) {
-            error_log( 'Cloud_Client send response: ' . wp_remote_retrieve_body( $response ) );
+            Logger::register_log( 'Cloud_Client send response: ' . wp_remote_retrieve_body( $response ) );
         }
 
         $success = ( '' !== $parsed['wamid'] );

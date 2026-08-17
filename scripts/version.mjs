@@ -28,7 +28,7 @@ export async function readVersionSources(root, slug) {
 
 	return {
 		[`${slug}.php (header)`]: pluginFile.match(/^\s*\*\s*Version:\s*(.+)$/m)?.[1].trim(),
-		[`${slug}.php ($plugin_version)`]: pluginFile.match(/\$plugin_version\s*=\s*'([^']+)'/)?.[1],
+		[`${slug}.php ($joinotify_plugin_version)`]: pluginFile.match(/\$joinotify_plugin_version\s*=\s*'([^']+)'/)?.[1],
 		'readme.txt (Stable tag)': readmeFile.match(/^Stable tag:\s*(.+)$/m)?.[1].trim(),
 		'package.json': JSON.parse(packageFile).version,
 	};

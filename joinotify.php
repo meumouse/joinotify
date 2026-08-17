@@ -9,7 +9,7 @@
  * Version: 				2.3.0
  * Requires at least: 		6.0
  * Requires PHP: 			8.1.0
- * Tested up to: 			7.0.4
+ * Tested up to: 			7.0
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
  * License: 				GPLv2 or later
@@ -27,13 +27,13 @@ use MeuMouse\Joinotify\Telemetry\Recorder;
 defined('ABSPATH') || exit;
 
 // Load Composer autoloader if available.
-$autoload = plugin_dir_path( __FILE__ ) . 'admin/vendor/autoload.php';
+$joinotify_autoload = plugin_dir_path( __FILE__ ) . 'admin/vendor/autoload.php';
 
-if ( file_exists( $autoload ) ) {
-	require_once $autoload;
+if ( file_exists( $joinotify_autoload ) ) {
+	require_once $joinotify_autoload;
 }
 
-$plugin_version = '2.3.0';
+$joinotify_plugin_version = '2.3.0';
 
 // Flag a fresh activation so the first admin request opens the setup wizard.
 // The wizard is where the site owner picks a country, connects the Joinotify
@@ -84,4 +84,4 @@ register_deactivation_hook( __FILE__, function() {
 } );
 
 // Initialize the plugin
-new Init( __FILE__, $plugin_version );
+new Init( __FILE__, $joinotify_plugin_version );

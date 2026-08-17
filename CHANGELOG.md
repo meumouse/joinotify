@@ -81,6 +81,15 @@ Versão 2.3.0
 * Alteração: todas as ações de WhatsApp do construtor passam a exibir a logo do WhatsApp
      - Modelo aprovado, mensagem com IA, botões de resposta, lista de opções, botão de link, localização, contato, figurinha e reação usavam ícones genéricos
 * Adequação às diretrizes do diretório de plugins do WordPress.org: readme.txt com a declaração de todos os serviços externos utilizados, licença GPL e o código-fonte do frontend Vue distribuído junto do pacote
+* Recurso removido: ação "Snippet PHP" do construtor
+     - A ação executava código PHP arbitrário com `eval()`, o que o diretório do WordPress.org não permite
+     - A geração do trecho por IA, que existia só para essa ação, também foi removida
+     - **Atenção:** automações salvas que usam essa etapa continuam abrindo, mas o passo do snippet deixa de ser executado. Quem depende dele deve mover a lógica para um plugin próprio, ligado aos ganchos `Joinotify/...`
+* Recurso removido: botão que instalava o addon de recuperação de carrinho a partir de um endereço externo
+     - O botão já não funcionava (não havia mais código que respondesse ao clique) e o endereço remoto contrariava as diretrizes do diretório
+     - No lugar dele, o construtor agora apenas informa qual plugin precisa ser instalado e ativado
+* Correções de conformidade apontadas pelo Plugin Check: consultas ao banco preparadas e documentadas, escape de saída no ícone das integrações, comentários `translators:` e placeholders numerados em todas as mensagens traduzíveis, `date()` trocado por `wp_date()`/`gmdate()`, `mt_rand()` por `wp_rand()`, `strip_tags()` por `wp_strip_all_tags()`, e as chamadas de depuração (`error_log`/`print_r`) redirecionadas para o log do próprio plugin
+* Correção: o gerador do arquivo de tradução (`.pot`) lia a pasta de histórico do editor e trazia de volta textos já removidos do código; agora ele também leva os comentários `translators:` para o arquivo, que antes se perdiam
 * Correção: valores monetários chegavam quebrados na mensagem
      - `{{ wc_currency_symbol }}` enviava o código interno do WooCommerce em vez do símbolo: o real aparecia como `&#82;&#36;` no lugar de `R$`
      - Os totais eram enviados com o número cru do pedido (`68.70`), sem o separador decimal do idioma da loja e diferente do que a prévia do construtor mostrava

@@ -415,9 +415,6 @@
       "Describe what the AI should write. Use {{ placeholders }} to inject the trigger context.": [
         "Descreva o que a IA deve escrever. Use {{ placeholders }} para injetar o contexto do gatilho."
       ],
-      "Describe what the snippet should do. The runtime exposes $payload with the trigger context.": [
-        "Descreva o que o snippet deve fazer. O runtime expõe $payload com o contexto do gatilho."
-      ],
       "Describe what you want and let AI build the workflow for you.": [
         "Descreva o que deseja e deixe a IA construir o fluxo de trabalho para si."
       ],
@@ -582,9 +579,6 @@
       ],
       "Generate a WooCommerce coupon and notify the customer.": [
         "Gerar um cupão WooCommerce e notificar o cliente."
-      ],
-      "Generate snippet": [
-        "Gerar snippet"
       ],
       "Generate with AI": [
         "Gerar com IA"
@@ -901,15 +895,6 @@
       "Phone number or a placeholder that resolves to one.": [
         "Número de telefone ou um espaço reservado que resolve para um."
       ],
-      "PHP snippet": [
-        "Snippet PHP"
-      ],
-      "PHP Snippet": [
-        "Snippet PHP"
-      ],
-      "PHP snippets execute inside the workflow runtime. Only trusted administrators should edit this code.": [
-        "Os snippets PHP executam-se dentro do tempo de execução do fluxo de trabalho. Apenas administradores de confiança devem editar este código."
-      ],
       "Pick a color": [
         "Escolha uma cor"
       ],
@@ -979,9 +964,6 @@
       "Rule data": [
         "Dados da regra"
       ],
-      "Run a PHP snippet during the workflow.": [
-        "Executar um snippet PHP durante o fluxo de trabalho."
-      ],
       "Run test": [
         "Executar teste"
       ],
@@ -1047,9 +1029,6 @@
       ],
       "Seconds": [
         "Segundos"
-      ],
-      "Security warning": [
-        "Aviso de segurança"
       ],
       "Select a condition": [
         "Selecionar uma condição"
@@ -1171,17 +1150,11 @@
       "The %s plugin this trigger depends on is not installed or active. This flow will not be processed until the plugin is active again.": [
         "O plugin %s do qual este gatilho depende não está instalado ou ativo. Este fluxo não será processado até que o plugin esteja ativo novamente."
       ],
-      "The AI could not generate the snippet.": [
-        "A IA não conseguiu gerar o trecho."
-      ],
       "The AI could not generate the workflow.": [
         "A IA não conseguiu gerar o fluxo de trabalho."
       ],
       "The AI could not generate the workflow. Please try again.": [
         "A IA não conseguiu gerar o fluxo de trabalho. Por favor, tente novamente."
-      ],
-      "The field is required. Keep the code self-contained and deterministic.": [
-        "O campo é obrigatório. Mantenha o código autocontido e determinístico."
       ],
       "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
         "A integração da qual o gatilho deste fluxo depende não está disponível. Este fluxo não será processado até que a integração esteja disponível novamente."
