@@ -22,7 +22,7 @@ Versão 2.4.0
      - Botão "Desconectar" apaga a chave sem remover os números já importados
      - Com uma chave salva, o campo exibe o prefixo público dela (o restante fica mascarado) e um botão "Remover chave", com confirmação
      - A chave informada no assistente de configuração aparece já salva no campo, e salvar as configurações não a apaga
-     - A chave da API deixa de ser enviada ao navegador: a tela recebe apenas o prefixo público e a informação de que existe uma chave salva
+     - A chave da API não é enviada ao navegador em nenhuma tela: as configurações, o construtor de automações e a resposta de salvar recebem apenas o prefixo público e a informação de que existe uma chave salva
      - A chave da API do WhatsApp, o token do Telegram e a chave do Resend passam a ser excluídos da exportação de configurações
 * Alteração: as atualizações passam a ser entregues pelo próprio WordPress
      - O verificador de atualizações próprio do plugin e as opções "Atualizações automáticas" e "Avisos de atualização" foram removidos

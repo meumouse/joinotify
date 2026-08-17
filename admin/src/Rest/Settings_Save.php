@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
+use MeuMouse\Joinotify\Admin\Settings\Registry;
 use MeuMouse\Joinotify\Admin\Settings\Repository;
 use WP_REST_Request;
 
@@ -30,6 +31,11 @@ class Settings_Save extends Abstract_Route {
     /**
      * Handle the request.
      *
+     * The screens rehydrate their local copy from this answer, so it goes back
+     * through the same write-only filter the bootstrap uses. Echoing `$saved`
+     * raw would hand the browser the very credential the bootstrap withheld.
+     *
+     * @version 2.4.0
      * @param WP_REST_Request $request REST request instance.
      * @return \WP_REST_Response
      */
@@ -40,7 +46,7 @@ class Settings_Save extends Abstract_Route {
 
         return $this->success_response( array(
             'message'  => __( 'Settings saved.', 'joinotify' ),
-            'settings' => $saved,
+            'settings' => Registry::get_settings_for_client( $saved ),
         ) );
     }
 }

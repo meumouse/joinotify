@@ -52,7 +52,7 @@ class Registry {
 			'debug_mode' => defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : false,
 			'page' => 'builder',
 			'title' => __( 'Workflow builder', 'joinotify' ),
-			'settings' => Settings_Registry::get_settings(),
+			'settings' => Settings_Registry::get_settings_for_client( Settings_Registry::get_settings() ),
 			'phones' => Settings_Registry::get_phone_state(),
 			'workflow' => $workflow_state,
 			'workflow_file' => self::build_exported_workflow_file( $workflow_state, $post_id ),
