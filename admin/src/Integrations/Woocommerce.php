@@ -502,40 +502,40 @@ class Woocommerce extends Integrations_Base {
                 'triggers' => $trigger_names,
                 'description' => __( 'To retrieve the order currency symbol', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? get_woocommerce_currency_symbol( $order->get_currency() ) : '',
-                    'sandbox' => get_woocommerce_currency_symbol(),
+                    'production' => $order ? joinotify_format_plain_text( get_woocommerce_currency_symbol( $order->get_currency() ) ) : '',
+                    'sandbox' => joinotify_format_plain_text( get_woocommerce_currency_symbol() ),
                 ),
             ),
             '{{ wc_order_total }}' => array(
                 'triggers' => $trigger_names,
                 'description' => __( 'To retrieve the WooCommerce order total', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? joinotify_format_plain_text( $order->get_total() ) : '',
-                    'sandbox' => joinotify_format_plain_text( wc_price( 150 ) ),
+                    'production' => $order ? joinotify_format_price( $order->get_total(), $order->get_currency() ) : '',
+                    'sandbox' => joinotify_format_price( 150 ),
                 ),
             ),
             '{{ wc_total_discount }}' => array(
                 'triggers' => $trigger_names,
                 'description' => __( 'To retrieve the WooCommerce total discount', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? joinotify_format_plain_text( $order->get_total_discount() ) : '',
-                    'sandbox' => joinotify_format_plain_text( wc_price( 20 ) ),
+                    'production' => $order ? joinotify_format_price( $order->get_total_discount(), $order->get_currency() ) : '',
+                    'sandbox' => joinotify_format_price( 20 ),
                 ),
             ),
             '{{ wc_total_tax }}' => array(
                 'triggers' => $trigger_names,
                 'description' => __( 'To retrieve the WooCommerce total tax', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? joinotify_format_plain_text( $order->get_total_tax() ) : '',
-                    'sandbox' => joinotify_format_plain_text( wc_price( 15 ) ),
+                    'production' => $order ? joinotify_format_price( $order->get_total_tax(), $order->get_currency() ) : '',
+                    'sandbox' => joinotify_format_price( 15 ),
                 ),
             ),
             '{{ wc_total_refunded }}' => array(
                 'triggers' => $trigger_names,
                 'description' => __( 'To retrieve the WooCommerce total refunded amount', 'joinotify' ),
                 'replacement' => array(
-                    'production' => $order ? joinotify_format_plain_text( $order->get_total_refunded() ) : '',
-                    'sandbox' => joinotify_format_plain_text( wc_price( 10 ) ),
+                    'production' => $order ? joinotify_format_price( $order->get_total_refunded(), $order->get_currency() ) : '',
+                    'sandbox' => joinotify_format_price( 10 ),
                 ),
             ),
             '{{ wc_coupon_codes }}' => array(
@@ -1349,7 +1349,7 @@ class Woocommerce extends Integrations_Base {
             $formatted_discount = sprintf( __( '%s%%', 'joinotify' ), $discount_amount );
         } elseif ( isset( $settings['discount_type'] ) && $settings['discount_type'] === 'fixed_cart' ) {
             $discount = floatval( $settings['coupon_amount'] );
-            $formatted_discount = wc_price( $discount );
+            $formatted_discount = joinotify_format_price( $discount );
         }
 
         // add coupon expires replacement

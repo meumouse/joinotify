@@ -336,8 +336,14 @@ class Flexify_Checkout extends Integrations_Base {
                     'triggers' => $fcrc_triggers,
                     'description' => __( 'Retrieve the cart total amount.', 'joinotify' ),
                     'replacement' => array(
-                        'production' => get_post_meta( $cart_id, '_fcrc_cart_total', true ) ?? '',
-                        'sandbox' => 150.25,
+                        'production' => ( function() use ( $cart_id ) {
+                            $cart_total = get_post_meta( $cart_id, '_fcrc_cart_total', true );
+
+                            // keep the placeholder empty when the cart has no stored total,
+                            // otherwise it would render as a misleading zeroed price
+                            return '' !== $cart_total && null !== $cart_total ? joinotify_format_price( $cart_total ) : '';
+                        })(),
+                        'sandbox' => joinotify_format_price( 150.25 ),
                     ),
                 ),
             );

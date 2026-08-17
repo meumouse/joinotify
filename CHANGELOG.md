@@ -85,6 +85,12 @@ Versão 2.3.0
      - As configurações do proxy agora exibem um aviso de descontinuação
      - As respostas das rotas do proxy passam a informar a descontinuação nos cabeçalhos "Deprecation" e "X-Joinotify-Deprecation", e cada chamada é registrada no log de depuração para ajudar a identificar integrações que ainda usam o formato antigo
 * Observação: a API oficial não oferece envio para grupos; nesse modo as ações de grupo ficam indisponíveis e avisam o motivo
+* Correção: valores monetários chegavam quebrados na mensagem
+     - `{{ wc_currency_symbol }}` enviava o código interno do WooCommerce em vez do símbolo: o real aparecia como `&#82;&#36;` no lugar de `R$`
+     - Os totais eram enviados com o número cru do pedido (`68.70`), sem o separador decimal do idioma da loja e diferente do que a prévia do construtor mostrava
+     - `{{ joinotify_coupon_discount_formatted }}` enviava o HTML inteiro do preço, com as tags `<span>` visíveis na mensagem
+     - `{{ fcrc_cart_total }}` (carrinho abandonado do Flexify Checkout) enviava o valor sem formatação alguma
+     - **Atenção:** `{{ wc_order_total }}`, `{{ wc_total_discount }}`, `{{ wc_total_tax }}` e `{{ wc_total_refunded }}` agora já incluem o símbolo da moeda (`R$ 68,70`), como a prévia do construtor sempre mostrou. Fluxos que escreviam `{{ wc_currency_symbol }}{{ wc_order_total }}` precisam remover o `{{ wc_currency_symbol }}`, senão o símbolo aparece duas vezes
 
 Versão 2.2.0 (03/08/2026)
 * Novo recurso: Ação "Loop" no construtor de fluxos, que percorre uma coleção e executa as ações do corpo uma vez para cada item, permitindo enviar várias mensagens em sequência

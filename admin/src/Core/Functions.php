@@ -186,8 +186,38 @@ function joinotify_prepare_message( $message, $payload = array() ) {
  */
 function joinotify_format_plain_text( $content ) {
 	$content = (string) ( $content ?? '' );
+	$content = html_entity_decode( strip_tags( $content ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 
-	return html_entity_decode( strip_tags( $content ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	// Currency and price markup often carries non-breaking spaces (&nbsp; / U+00A0 /
+	// U+202F). Messaging apps render them as odd glyphs on some devices, so collapse
+	// them into regular spaces.
+	return (string) preg_replace( '/\x{00A0}|\x{202F}/u', ' ', $content );
+}
+
+
+/**
+ * Format a monetary value as plain text ready to be sent on a message
+ *
+ * Runs the value through wc_price() so it respects the store currency, decimal
+ * separator and price format, then strips the HTML wrapper and decodes the
+ * currency entity (WooCommerce stores symbols encoded, e.g. BRL is "&#82;&#36;").
+ * Without the decoding step the raw entity is delivered literally in the message.
+ *
+ * Falls back to the untouched value when WooCommerce is not available.
+ *
+ * @since 2.3.0
+ * @param mixed  $value | Monetary amount
+ * @param string $currency | Currency code to format with (defaults to the store currency)
+ * @return string
+ */
+function joinotify_format_price( $value, $currency = '' ) {
+	if ( ! function_exists('wc_price') ) {
+		return joinotify_format_plain_text( is_scalar( $value ) ? (string) $value : '' );
+	}
+
+	$args = ! empty( $currency ) ? array( 'currency' => $currency ) : array();
+
+	return joinotify_format_plain_text( wc_price( (float) $value, $args ) );
 }
 
 

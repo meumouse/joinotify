@@ -158,7 +158,7 @@ class Messages {
             } elseif ( $get_condition === 'order_paid' ) {
                 $description .= $condition_type === 'is' ? esc_html__( 'Check whether the order was paid', 'joinotify' ) : esc_html__( 'Check if the order was not paid', 'joinotify' );
             } elseif ( $get_condition === 'order_total' ) {
-                $description .= $condition_type === 'bigger_than' ? sprintf( __( 'Greater than <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_plain_text( wc_price( (float) $condition_content['value'] ?? '' ) ) ) : sprintf( __( 'Less than <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_plain_text( wc_price( (float) $condition_content['value'] ?? '' ) ) );
+                $description .= $condition_type === 'bigger_than' ? sprintf( __( 'Greater than <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_price( (float) $condition_content['value'] ?? '' ) ) : sprintf( __( 'Less than <span class="builder-placeholder">%s</span>', 'joinotify' ), joinotify_format_price( (float) $condition_content['value'] ?? '' ) );
             } elseif ( $get_condition === 'field_value' ) {
                 if ( $condition_type === 'empty' ) {
                     $description .= sprintf( __( 'Field with ID <span class="builder-placeholder">%s</span> is empty', 'joinotify' ), mb_strtolower( $condition_content['field_id'] ?? '', 'UTF-8' ) );
