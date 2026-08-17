@@ -95,6 +95,9 @@ class Phone_Manager {
         if ( ! empty( $meta ) ) {
             self::set_sender_meta( $phone, $meta );
         }
+
+        /** This action is documented in admin/src/Api/Connect.php */
+        do_action( 'Joinotify/Sender_Selected', 'manual' );
     }
 
 

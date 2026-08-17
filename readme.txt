@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.4.0
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,7 +54,11 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 This plugin connects to external services. Nothing is contacted until you supply the corresponding credential in the setup wizard or in the settings screen.
 
 **Joinotify API — https://api.joinotify.com**
-Delivers your WhatsApp messages through the official WhatsApp Cloud API, lists the numbers on your account, syncs Meta-approved message templates and receives delivery events. Used only once you paste the API key issued for your site. Each request sends your API key, the recipient phone number and the message content you configured, plus your site address when the site is first registered.
+Delivers your WhatsApp messages through the official WhatsApp Cloud API, lists the numbers on your account, syncs Meta-approved message templates and receives delivery events. Used only once you paste the API key issued for your site. Each request sends your API key, the recipient phone number and the message content you configured. When you connect the site from the Joinotify panel, that one request also sends your site address, so the key can be named and revoked from there.
+Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+
+**Joinotify telemetry — https://api.joinotify.com/telemetry**
+Optional and **off by default**. Contacted only after you switch on "Share anonymous usage data", either in the setup wizard or in Settings → About. It receives a random identifier generated on your site, your Joinotify API key (the same one used to send messages), the plugin, WordPress and PHP versions, your locale and time zone, whether the site is multisite and whether WooCommerce, Elementor and HTTPS are in play, how many workflows exist, which integrations are switched on, and a list of named events: which feature ran, whether a message succeeded or failed, and normalized error codes. It never receives your site address, admin e-mail, phone numbers, contacts, message content or workflow content. Sent at most once every few hours, and once more when you switch the option off — that last request is what tells the service to stop counting this installation.
 Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
 
 **Joinotify panel — https://app.joinotify.com**
@@ -87,7 +91,11 @@ Terms: https://resend.com/legal/terms-of-service — Privacy: https://resend.com
 
 = Usage data =
 
-Sharing anonymous usage data is **off by default** and entirely optional. If you turn it on, the setup wizard shows you the exact payload beforehand. It never includes your site address, admin e-mail, phone numbers, contacts, message content, workflow content or any credential.
+Sharing anonymous usage data is **off by default** and entirely optional. If you turn it on, the setup wizard shows you the exact payload and sample events beforehand. It never includes your site address, admin e-mail, phone numbers, contacts, message content, workflow content or any credential.
+
+Your site is identified by a random value generated on the site itself — never derived from your address — together with the API key you already use to send messages. Reports are batched and sent at most once every few hours, from a scheduled task, never during a page load. The identifier is shown in Settings → About so you can quote it in a support ticket, since the service has no way to look your site up by domain.
+
+Switching the option off stops collection, deletes anything still waiting to be sent, and sends one last request asking the service to stop counting this installation. If you would rather it stayed completely silent, the `Joinotify/Telemetry/Send_Opt_Out` filter suppresses that final request.
 
 == Frequently Asked Questions ==
 
@@ -132,6 +140,15 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 4. Message history with delivery status.
 
 == Changelog ==
+
+= 2.5.0 =
+* New: anonymous usage reporting now actually delivers. Still off by default — nothing leaves the site until you agree in the setup wizard.
+* New: the site is identified by a random value generated locally, never derived from your address. It is shown in Settings → About so you can quote it in a support ticket.
+* New: reports are batched and sent by a scheduled task, never during a page load. Repeated events collapse to one per day.
+* New: the consent screen also shows sample events and explains how the site is identified.
+* New: switching usage reporting off deletes anything still queued and asks the service to stop counting the installation.
+* New: actions for extensions — `Joinotify/Settings/Saved` (with the settings before and after each save), `Joinotify/Sender_Selected`, `Joinotify/Notification_Queue/Item_Retried` and `Joinotify/Debug_Log/Recorded`.
+* Fixed: deactivating the plugin left all of its scheduled tasks behind. They are now cleared. Nothing else is deleted — deactivating is not uninstalling.
 
 = 2.4.0 =
 * The plugin is now free software under the GPLv2 and every feature is unlocked — the licensing system and its activation screen were removed.

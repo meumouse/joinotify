@@ -176,6 +176,20 @@ class Notification_Queue {
             }
 
             $item['next_attempt_at'] = $now + self::get_next_delay( $item['attempts'], $item['last_error'] );
+
+            /**
+             * Fires when a queued message failed and is going back in line.
+             *
+             * Only the retries fire this — a delivery that succeeded leaves the queue at
+             * the top of the loop, and one that ran out of attempts is dropped just
+             * above. So a listener counting this is counting friction, not traffic.
+             *
+             * @since 2.5.0
+             * @param array $item The queued item, with the incremented attempt count and
+             *                    the error that caused it.
+             */
+            do_action( 'Joinotify/Notification_Queue/Item_Retried', $item );
+
             $updated_queue[] = $item;
         }
 

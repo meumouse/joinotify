@@ -12,6 +12,7 @@ use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
 use MeuMouse\Joinotify\AI\Provider_Registry;
+use MeuMouse\Joinotify\Telemetry\Installation;
 
 defined('ABSPATH') || exit;
 
@@ -237,7 +238,7 @@ class Registry {
                             self::field_toggle(
                                 'enable_usage_tracking',
                                 esc_html__( 'Share anonymous usage data', 'joinotify' ),
-                                esc_html__( 'Sends non-sensitive environment data and error counts to help improve the plugin. Never includes your site address, phone numbers, contacts or message content. Off by default; you can turn it off again at any time.', 'joinotify' )
+                                self::usage_tracking_description()
                             ),
                             self::field_toggle(
                                 'enable_developer_integration',
@@ -858,6 +859,36 @@ class Registry {
      * @param array<string,mixed> $extra
      * @return array<string,mixed>
      */
+    /**
+     * Describe the usage-data toggle, appending this installation's identifier once one
+     * exists.
+     *
+     * The identifier is read, never created: building this screen must not be what brings
+     * an installation into being on a site that will never consent. It is shown at all
+     * because the report deliberately omits the site address, which leaves support with
+     * no way to find a site — unless the owner can read the identifier off this screen
+     * and paste it into a ticket.
+     *
+     * @since 2.5.0
+     * @return string
+     */
+    private static function usage_tracking_description() {
+        $description = esc_html__( 'Sends plugin, WordPress and PHP versions, which integrations are switched on, and named events — which feature ran, whether a message succeeded, and normalized error codes. Never your site address, phone numbers, contacts or message content. Off by default.', 'joinotify' );
+
+        $id = class_exists( Installation::class ) ? Installation::peek() : '';
+
+        if ( '' === $id ) {
+            return $description;
+        }
+
+        return $description . ' ' . sprintf(
+            /* translators: %s: random identifier of this installation. */
+            esc_html__( 'Installation ID: %s', 'joinotify' ),
+            $id
+        );
+    }
+
+
     private static function field_toggle( $key, $label, $description, $extra = array() ) {
         return array_merge( array(
             'type' => 'toggle',

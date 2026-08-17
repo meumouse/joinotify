@@ -24,6 +24,8 @@ const detailsOpen = ref(false);
 
 const neverCollected = computed(() => props.telemetry?.never_collected || []);
 const payloadPreview = computed(() => JSON.stringify(props.telemetry?.collected || {}, null, 2));
+const identifiedBy = computed(() => props.telemetry?.identified_by || '');
+const sampleEvents = computed(() => JSON.stringify(props.telemetry?.sample_events || [], null, 2));
 </script>
 
 <template>
@@ -62,6 +64,21 @@ const payloadPreview = computed(() => JSON.stringify(props.telemetry?.collected 
         </button>
 
         <div v-if="detailsOpen" class="mt-4 space-y-4">
+          <!--
+            Stated before the "never collected" list, not after it. On its own that list
+            reads as "nothing identifies this site", which is not quite true: the report
+            travels on the same API key the site uses to send messages, so the service
+            knows the account. Putting the qualifier second would let the stronger claim
+            land first.
+          -->
+          <div v-if="identifiedBy">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
+              {{ __('How this site is identified', textDomain) }}
+            </p>
+
+            <p class="mt-2 text-[13px] leading-5 text-slate-600">{{ identifiedBy }}</p>
+          </div>
+
           <div>
             <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
               {{ __('Never collected', textDomain) }}
@@ -81,6 +98,14 @@ const payloadPreview = computed(() => JSON.stringify(props.telemetry?.collected 
             </p>
 
             <pre class="mt-2 max-h-72 overflow-auto rounded-[8px] bg-slate-900 p-4 text-[12px] leading-5 text-slate-100"><code>{{ payloadPreview }}</code></pre>
+          </div>
+
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
+              {{ __('Examples of the events that would be sent', textDomain) }}
+            </p>
+
+            <pre class="mt-2 max-h-72 overflow-auto rounded-[8px] bg-slate-900 p-4 text-[12px] leading-5 text-slate-100"><code>{{ sampleEvents }}</code></pre>
           </div>
         </div>
       </div>

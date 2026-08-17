@@ -269,6 +269,11 @@ class Init {
 			'MeuMouse\\Joinotify\\Cron\\Schedule',
 			'MeuMouse\\Joinotify\\Cron\\Routines',
 			'MeuMouse\\Joinotify\\Core\\Debug',
+			// Not an admin-screen class: the events worth recording happen on the front
+			// end and in cron, which is exactly where the admin list is skipped. With
+			// consent off — the shipped default — its constructor registers one listener
+			// and returns.
+			'MeuMouse\\Joinotify\\Telemetry\\Listeners',
 		));
 
 		// Admin-screen classes only register hooks that fire inside wp-admin

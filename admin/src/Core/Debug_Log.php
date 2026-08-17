@@ -231,6 +231,36 @@ class Debug_Log {
             $level = 'info';
         }
 
+        // Announced BEFORE the persistence gate, and only for the two levels that mean
+        // something broke. `should_persist()` returns false on any site that has debug
+        // logs switched off — which is most of them — so a listener placed after it would
+        // be blind to failures exactly where nobody is watching the log either.
+        //
+        // The caller is resolved here rather than in the listener because `detect_caller()`
+        // walks the stack and would see this class's own frames from out there. It costs a
+        // backtrace, which is why it is confined to errors: they are rare, and one already
+        // went wrong.
+        if ( 'error' === $level || 'critical' === $level ) {
+            $announced = $entry;
+
+            if ( empty( $announced['file'] ) || empty( $announced['channel'] ) ) {
+                $caller = self::detect_caller();
+
+                $announced['file'] = empty( $announced['file'] ) ? $caller['file'] : $announced['file'];
+                $announced['line'] = empty( $announced['line'] ) ? $caller['line'] : $announced['line'];
+                $announced['channel'] = empty( $announced['channel'] ) ? $caller['channel'] : $announced['channel'];
+            }
+
+            /**
+             * Fires when an error-level entry is recorded, whether or not it is stored.
+             *
+             * @since 2.5.0
+             * @param array $entry Entry fields, with file, line and channel resolved.
+             * @param string $level Normalized level: 'error' or 'critical'.
+             */
+            do_action( 'Joinotify/Debug_Log/Recorded', $announced, $level );
+        }
+
         if ( ! self::should_persist( $level ) ) {
             return false;
         }

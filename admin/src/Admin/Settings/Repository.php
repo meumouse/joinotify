@@ -65,6 +65,20 @@ class Repository {
 
         update_option( 'joinotify_settings', $sanitized );
 
+        /**
+         * Fires after settings are stored, with both sides of the change.
+         *
+         * The previous values are passed along because the useful signal is almost never
+         * the new value on its own — it is the transition. Consent being switched on, a
+         * transport being changed, a key being removed: each of those is a moment, and a
+         * listener that only saw the result would have to keep its own copy to spot it.
+         *
+         * @since 2.5.0
+         * @param array $sanitized Settings as stored.
+         * @param array $current Settings as they were before this save.
+         */
+        do_action( 'Joinotify/Settings/Saved', $sanitized, $current );
+
         return $sanitized;
     }
 

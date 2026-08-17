@@ -1,3 +1,23 @@
+Versão 2.5.0
+* O envio de dados de uso, que existia desde a 2.4.0 sem destino, passa a funcionar de verdade
+     - Continua **desligado por padrão**: nada sai do site antes de você aceitar no assistente
+     - O site é identificado por um valor aleatório gerado aqui mesmo — nunca derivado do endereço — mais a chave da API que você já usa para enviar mensagens
+     - O identificador aparece em Configurações → Sobre, para você citá-lo num chamado de suporte; sem ele, o suporte não tem como achar o seu site
+     - Os eventos são acumulados e enviados em lote por tarefa agendada, no máximo a cada poucas horas, nunca durante o carregamento de uma página
+     - Um evento repetido no mesmo dia conta uma vez só: uma loja com cinco mil pedidos diários gera cerca de dez eventos, não cinco mil
+     - Só sai o que está no catálogo, e cada propriedade tem tipo fechado — não existe campo de texto livre, então conteúdo de mensagem não cabe no formato
+     - Códigos de erro são normalizados antes de sair; o detalhe fica num identificador do ponto do código que gerou a falha
+     - Desligar apaga o que ainda estava na fila e avisa o servidor para parar de contar esta instalação (o filtro `Joinotify/Telemetry/Send_Opt_Out` suprime esse último aviso)
+     - O assistente passa a mostrar também exemplos dos eventos e como o site é identificado
+* Correção: o plugin não removia nenhuma das próprias tarefas agendadas ao ser desativado
+     - Um site que desativava o plugin seguia com os agendamentos na base até alguém limpar à mão
+     - A desativação agora limpa todas elas. Nada é apagado além disso — desativar não é desinstalar
+* Novos ganchos para extensões
+     - `Joinotify/Settings/Saved`, com os valores antes e depois de cada salvamento
+     - `Joinotify/Sender_Selected`, quando o site passa a ter um número de origem (leva só como foi escolhido, nunca o número)
+     - `Joinotify/Notification_Queue/Item_Retried`, quando uma mensagem falha e volta para a fila
+     - `Joinotify/Debug_Log/Recorded`, disparado em erros mesmo com o registro de logs desligado
+
 Versão 2.4.0
 * O plugin passa a ser 100% gratuito e software livre, sob a licença GNU GPL v2 ou posterior
      - Todos os recursos estão liberados: não existe mais versão paga, período de teste nem verificação de licença

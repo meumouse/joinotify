@@ -267,6 +267,20 @@ class Connect {
             'phone_number_id' => (string) ( $first['phone_number_id'] ?? '' ),
         ) );
 
+        if ( '' !== (string) ( $first['phone_number_id'] ?? '' ) ) {
+            /**
+             * Fires when the site ends up with a sending number configured.
+             *
+             * Carries how it happened and nothing else — deliberately not the number.
+             * The one consumer today is telemetry, and a phone number has no business
+             * travelling on a hook that feeds it.
+             *
+             * @since 2.5.0
+             * @param string $method How it was chosen: 'auto' or 'manual'.
+             */
+            do_action( 'Joinotify/Sender_Selected', 'auto' );
+        }
+
         // Delivery reports are a bonus, not a requirement: a site that is not
         // publicly reachable over HTTPS still sends fine, it just never learns
         // what happened afterwards. So a failure here is reported, not fatal.
