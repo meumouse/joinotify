@@ -1,4 +1,8 @@
 Versão 2.5.0
+* Melhoria: o assistente de configuração passa a ser exibido em tela cheia, sobre o painel do WordPress
+     - A barra e o menu do administrador ficam cobertos enquanto o assistente está aberto, para que o fluxo não seja interrompido no meio
+     - A página por trás não rola mais junto, e o esqueleto de carregamento já aparece em tela cheia, sem o salto que existia ao montar a tela
+     - Novo botão de fechar no canto superior direito, disponível em todas as etapas
 * O envio de dados de uso, que existia desde a 2.4.0 sem destino, passa a funcionar de verdade
      - Continua **desligado por padrão**: nada sai do site antes de você aceitar no assistente
      - O site é identificado por um valor aleatório gerado aqui mesmo — nunca derivado do endereço — mais a chave da API que você já usa para enviar mensagens

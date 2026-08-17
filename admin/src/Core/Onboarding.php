@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * most once per user: after that the reminder is a dismissible notice on
  * Joinotify's own screens, and the wizard stays reachable by URL forever.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Onboarding {
     /**
      * Option holding the wizard state.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const OPTION = 'joinotify_onboarding';
@@ -35,7 +35,7 @@ class Onboarding {
     /**
      * Transient set on activation to trigger the one-time redirect.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const ACTIVATION_KEY = 'joinotify_activation_redirect';
@@ -43,7 +43,7 @@ class Onboarding {
     /**
      * User meta recording that this user already landed on the wizard.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const SEEN_META = 'joinotify_onboarding_seen';
@@ -51,7 +51,7 @@ class Onboarding {
     /**
      * Admin page slug of the wizard.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const PAGE = 'joinotify-onboarding';
@@ -60,13 +60,34 @@ class Onboarding {
     /**
      * Register the hooks that surface the wizard.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public function __construct() {
         add_action( 'admin_init', array( $this, 'maybe_redirect' ), 1 );
         add_action( 'admin_notices', array( $this, 'render_notice' ) );
         add_action( 'wp_ajax_joinotify_dismiss_onboarding_notice', array( $this, 'ajax_dismiss_notice' ) );
+        add_filter( 'admin_body_class', array( $this, 'add_body_class' ) );
+    }
+
+
+    /**
+     * Flag the wizard screen on the admin body.
+     *
+     * The wizard covers the whole viewport, and a fixed overlay does not stop
+     * the document underneath from scrolling. Locking it from CSS on the body
+     * costs nothing and works before any JavaScript has run.
+     *
+     * @since 2.3.0
+     * @param string $classes Space-separated body classes.
+     * @return string
+     */
+    public function add_body_class( $classes ) {
+        if ( self::PAGE !== $this->current_page() ) {
+            return $classes;
+        }
+
+        return trim( $classes . ' joinotify-onboarding-fullscreen' );
     }
 
 
@@ -77,7 +98,7 @@ class Onboarding {
      * out later, in maybe_redirect(), because that is where the request that
      * would be redirected can actually be inspected.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public static function on_activation() {
@@ -92,7 +113,7 @@ class Onboarding {
     /**
      * Read the stored wizard state.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array{completed:bool,completed_at:int,step:string,dismissed:bool,version:int}
      */
     public static function get_state() {
@@ -112,7 +133,7 @@ class Onboarding {
     /**
      * Whether the wizard has already been finished on this site.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return bool
      */
     public static function is_completed() {
@@ -125,7 +146,7 @@ class Onboarding {
     /**
      * Record which step the user reached, so a reload resumes there.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param string $step Step identifier.
      * @return void
      */
@@ -140,7 +161,7 @@ class Onboarding {
     /**
      * Mark the wizard as finished.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public static function complete() {
@@ -154,7 +175,7 @@ class Onboarding {
         /**
          * Fires once the setup wizard is finished.
          *
-         * @since 2.4.0
+         * @since 2.3.0
          */
         do_action('Joinotify/Onboarding/Completed');
     }
@@ -163,7 +184,7 @@ class Onboarding {
     /**
      * Stop nudging the user without marking the wizard as done.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public static function dismiss() {
@@ -177,7 +198,7 @@ class Onboarding {
     /**
      * Admin URL of the wizard.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return string
      */
     public static function wizard_url() {
@@ -188,7 +209,7 @@ class Onboarding {
     /**
      * Send the user to the wizard once, when it makes sense to.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public function maybe_redirect() {
@@ -241,7 +262,7 @@ class Onboarding {
     /**
      * Show a dismissible reminder on Joinotify screens until the wizard is done.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public function render_notice() {
@@ -275,7 +296,7 @@ class Onboarding {
     /**
      * Persist the "do not remind me again" choice.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public function ajax_dismiss_notice() {
@@ -298,7 +319,7 @@ class Onboarding {
     /**
      * Read the admin page slug being rendered.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return string
      */
     private function current_page() {

@@ -7,7 +7,7 @@
  * version that has it. Each step writes its own values as the user moves on, so
  * closing the browser halfway through never loses what was already answered.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { computed, onBeforeUnmount, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -70,7 +70,7 @@ const canSkipStep = computed(() => Boolean(currentStep.value.optional));
  * Resume where the user left off, without ever landing on the final step —
  * reaching "all set" is a decision, not a place to be restored to.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {number} Index of the step to open.
  */
 function resolveInitialIndex() {
@@ -89,7 +89,7 @@ function resolveInitialIndex() {
 /**
  * Collect the settings a given step is responsible for.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {string} stepId Step identifier.
  * @returns {Object} Settings payload for that step.
  */
@@ -124,7 +124,7 @@ function valuesForStep(stepId) {
 /**
  * Persist the current step and advance.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {Promise<void>}
  */
 async function goNext() {
@@ -157,7 +157,7 @@ async function goNext() {
 /**
  * Move back one step without saving.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {void}
  */
 function goBack() {
@@ -167,7 +167,7 @@ function goBack() {
 /**
  * Jump to an already-completed step.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {number} index Target step index.
  * @returns {void}
  */
@@ -180,7 +180,7 @@ function goToStep(index) {
 /**
  * Leave the wizard without finishing it.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {Promise<void>}
  */
 async function skipWizard() {
@@ -199,7 +199,7 @@ async function skipWizard() {
 /**
  * Mark the wizard as finished and navigate to the chosen destination.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {string} destination Admin URL to open.
  * @returns {Promise<void>}
  */
@@ -222,7 +222,7 @@ async function finishWizard(destination) {
 /**
  * Record that the account was connected in the connect step.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {Object} result Response from the connect endpoint.
  * @returns {void}
  */
@@ -259,16 +259,36 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="joinotify-settings min-h-screen">
-    <div class="w-full">
-      <PageHeader
-        :title="__('Set up Joinotify', textDomain)"
-        :description="__('A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.', textDomain)"
-      />
+  <div class="joinotify-settings mx-auto flex min-h-full w-full max-w-6xl flex-col px-4 py-8 sm:px-8 sm:py-12">
+    <div class="flex w-full flex-1 flex-col">
+      <div class="flex items-start justify-between gap-4">
+        <PageHeader
+          :title="__('Set up Joinotify', textDomain)"
+          :description="__('A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.', textDomain)"
+        />
 
-      <section class="mt-8 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
-        <div class="grid gap-0 lg:grid-cols-[minmax(220px,280px)_minmax(0,1fr)]">
-          <aside class="border-b border-slate-100 px-6 py-8 lg:border-b-0 lg:border-r">
+        <!--
+          The wizard covers the admin, so it has to carry its own way out. The
+          footer link does the same thing, but it disappears on the last step
+          and is easy to miss on a screen with nothing else around it.
+        -->
+        <button
+          type="button"
+          class="-mr-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-shell-500 outline-none transition hover:bg-white hover:text-ink focus-visible:ring-4 focus-visible:ring-primary-100 disabled:cursor-not-allowed disabled:opacity-50"
+          :title="__('Close setup', textDomain)"
+          :aria-label="__('Close setup', textDomain)"
+          :disabled="busy"
+          @click="skipWizard"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <section class="mt-8 flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white shadow-soft ring-1 ring-slate-100">
+        <div class="grid flex-1 gap-0 lg:grid-cols-[minmax(220px,280px)_minmax(0,1fr)]">
+          <aside class="border-b border-slate-100 bg-shell-50/40 px-6 py-8 lg:border-b-0 lg:border-r">
             <p class="mb-4 px-3 text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
               {{ __('Setup', textDomain) }}
             </p>

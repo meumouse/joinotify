@@ -1,0 +1,70 @@
+/*
+ * styles.css frontend stylesheet.
+ *
+ * The setup wizard is the one Joinotify screen that takes the whole viewport.
+ * It is a linear flow with a single question per step, and the admin menu,
+ * admin bar and notices around it are all invitations to leave in the middle of
+ * it — so the shell covers them rather than sitting inside them.
+ *
+ * The overlay lives here, not in the component, so the skeleton WordPress
+ * renders before Vue boots is already full screen. Otherwise the wizard would
+ * paint once embedded in the admin and then jump.
+ *
+ * @since 2.3.0
+ */
+
+.joinotify-onboarding-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  /* shell-50, matching the admin background the rest of the plugin uses. */
+  background-color: #f4f7fb;
+}
+
+/*
+ * Set by admin_body_class while the wizard screen is being served, so the page
+ * behind the overlay cannot be scrolled by a stray wheel event.
+ */
+body.joinotify-onboarding-fullscreen {
+  overflow: hidden;
+}
+
+.joinotify-onboarding-shell__loading {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/*
+ * The pre-hydration placeholder. Every other admin screen ships its own copy of
+ * this rule alongside its skeleton markup; the wizard had the markup but no
+ * stylesheet, so its skeleton was invisible.
+ */
+.skeleton-content {
+  height: auto;
+  width: fit-content;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  position: relative;
+  animation-duration: 1.7s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: skeleton-animation;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eee 2%, #ddd 18%, #eee 33%);
+  background-size: 1300px;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-position: -650px 0;
+  }
+
+  100% {
+    background-position: 650px 0;
+  }
+}
