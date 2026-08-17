@@ -159,6 +159,7 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * Changed: the Proxy API is off by default on new installs. It remains deprecated and will be removed.
 * Removed: the extension installer that downloaded plugin packages from an external URL.
 * Improved: OTP login codes are delivered through an authentication template on the official API.
+* Improved: the workflow template library is now served by the Joinotify API at the same address as the account, counts an install when a template is used, and picks up revised templates on its own.
 * Fixed: deactivating the plugin left all of its scheduled tasks behind. They are now cleared. Nothing else is deleted — deactivating is not uninstalling.
 * Deprecated: the Proxy API setting under Settings → General.
 

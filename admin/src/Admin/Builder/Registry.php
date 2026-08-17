@@ -1049,13 +1049,22 @@ class Registry {
 	 * Create a workflow from a template file.
 	 *
 	 * @since 1.4.7
+	 * @version 2.3.0
 	 * @param string $template_file Template filename.
 	 * @param string $title Optional title override.
 	 * @return array<string,mixed>
 	 */
 	public static function create_workflow_from_template( $template_file, $title = '' ) {
 		$template_file = sanitize_text_field( $template_file );
-		$decoded = Workflow_Templates::get_template( $template_file );
+
+		// The download route is the one the API tallies, so imports go through
+		// it; the plain read is only a fallback so an import is never blocked by
+		// the counter.
+		$decoded = Workflow_Templates::download_template( $template_file );
+
+		if ( ! is_array( $decoded ) ) {
+			$decoded = Workflow_Templates::get_template( $template_file );
+		}
 
 		if ( ! is_array( $decoded ) ) {
 			return array(

@@ -36,6 +36,10 @@ Versão 2.3.0
      - Códigos de erro são normalizados antes de sair; o detalhe fica num identificador do ponto do código que gerou a falha
      - Desligar apaga o que ainda estava na fila e avisa o servidor para parar de contar esta instalação (o filtro `Joinotify/Telemetry/Send_Opt_Out` suprime esse último aviso)
      - O assistente passa a mostrar também exemplos dos eventos e como o site é identificado
+* Melhoria: a biblioteca de modelos de fluxo passa a ser servida pela API do Joinotify, no mesmo endereço da conta (`api.joinotify.com`), em vez do endereço dedicado que existia antes
+     - Ao usar um modelo, o download é contabilizado na biblioteca, o que passa a alimentar a contagem de instalações de cada modelo
+     - Quando um modelo é revisado, o site percebe pela assinatura publicada no catálogo e busca a versão nova sozinho, sem precisar limpar cache
+     - Falhas ao carregar a biblioteca passam a aparecer no log de depuração com o motivo informado pela API
 * Correção: o plugin não removia nenhuma das próprias tarefas agendadas ao ser desativado
      - Um site que desativava o plugin seguia com os agendamentos na base até alguém limpar à mão
      - A desativação agora limpa todas elas. Nada é apagado além disso — desativar não é desinstalar
