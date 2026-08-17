@@ -21,9 +21,9 @@ class Flexify_Checkout extends Integrations_Base {
 
     /**
      * Construct function
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.2.0
      * @return void
      */
     public function __construct() {
@@ -35,8 +35,8 @@ class Flexify_Checkout extends Integrations_Base {
             // standard builder hooks (triggers, tab, content, placeholders, conditions)
             $this->register_builder_hooks( 30, 2 );
 
-            // check if Flexify Checkout extension addon is active
-            if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+            // check if the cart recovery feature is available (native module or legacy addon)
+            if ( self::is_recovery_carts_active() ) {
                 // when a lead is collected on product modal
                 add_action( 'Flexify_Checkout/Recovery_Carts/Lead_Collected', array( $this, 'process_workflow_lead_collected_via_modal' ), 10, 2 );
 
@@ -60,8 +60,31 @@ class Flexify_Checkout extends Integrations_Base {
 
 
     /**
+     * Whether the Flexify Checkout cart recovery feature is available.
+     *
+     * Recognizes both the natively-integrated module (Flexify Checkout >= 6.0.0,
+     * class MeuMouse\Flexify_Checkout\Recovery_Carts\Bootstrap) and the legacy
+     * standalone addon (global class Flexify_Checkout_Recovery_Carts). Either one
+     * fires the same "Flexify_Checkout/Recovery_Carts/*" action hooks, so the
+     * workflow triggers, placeholders and conditions must register for both.
+     *
+     * @since 2.2.0
+     * @return bool
+     */
+    public static function is_recovery_carts_active() {
+        // Native module (Flexify Checkout >= 6.0.0).
+        if ( class_exists('\MeuMouse\Flexify_Checkout\Recovery_Carts\Bootstrap') && \MeuMouse\Flexify_Checkout\Recovery_Carts\Bootstrap::is_active() ) {
+            return true;
+        }
+
+        // Legacy standalone addon.
+        return class_exists('Flexify_Checkout_Recovery_Carts');
+    }
+
+
+    /**
      * Add integration item on settings
-     * 
+     *
      * @since 1.3.0
      * @param array $integrations | Current integrations
      * @return array
@@ -86,9 +109,9 @@ class Flexify_Checkout extends Integrations_Base {
 
     /**
      * Add Flexify Checkout triggers
-     * 
+     *
      * @since 1.1.0
-     * @version 1.4.7
+     * @version 2.2.0
      * @param array $triggers | Current triggers
      * @return array
      */
@@ -99,13 +122,17 @@ class Flexify_Checkout extends Integrations_Base {
             'download_url' => 'https://github.com/meumouse/flexify-checkout-recovery-carts-addon/raw/refs/heads/main/dist/flexify-checkout-recovery-carts-addon.zip',
         );
 
+        // The recovery feature now ships inside Flexify Checkout core. Only prompt
+        // to install the legacy standalone addon when the feature isn't available.
+        $require_plugins = ! self::is_recovery_carts_active();
+
         $triggers['flexify_checkout'] = array(
             array(
                 'data_trigger' => 'Flexify_Checkout/Recovery_Carts/Lead_Collected',
                 'title' => __( 'Lead capture via modal', 'joinotify' ),
                 'description' => __( 'This trigger is fired when the user provides your contact on modal', 'joinotify' ),
                 'require_settings' => false,
-                'require_plugins' => true,
+                'require_plugins' => $require_plugins,
                 'plugins' => array(
                     $fcrc_plugin,
                 ),
@@ -115,7 +142,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'title' => __( 'Lead capture via checkout', 'joinotify' ),
                 'description' => __( 'This trigger is fired when the user provides your contact on checkout', 'joinotify' ),
                 'require_settings' => false,
-                'require_plugins' => true,
+                'require_plugins' => $require_plugins,
                 'plugins' => array(
                     $fcrc_plugin,
                 ),
@@ -125,7 +152,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'title' => __( 'Cart abandoned', 'joinotify' ),
                 'description' => __( 'This trigger is fired when the user abandons the cart.', 'joinotify' ),
                 'require_settings' => false,
-                'require_plugins' => true,
+                'require_plugins' => $require_plugins,
                 'plugins' => array(
                     $fcrc_plugin,
                 ),
@@ -135,7 +162,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'title' => __( 'Abandoned cart is recovered', 'joinotify' ),
                 'description' => __( 'This trigger is fired when an abandoned cart is recovered.', 'joinotify' ),
                 'require_settings' => false,
-                'require_plugins' => true,
+                'require_plugins' => $require_plugins,
                 'plugins' => array(
                     $fcrc_plugin,
                 ),
@@ -145,7 +172,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'title' => __( 'Order abandoned', 'joinotify' ),
                 'description' => __( 'This trigger is fired when an order is abandoned.', 'joinotify' ),
                 'require_settings' => false,
-                'require_plugins' => true,
+                'require_plugins' => $require_plugins,
                 'plugins' => array(
                     $fcrc_plugin,
                 ),
@@ -155,7 +182,7 @@ class Flexify_Checkout extends Integrations_Base {
                 'title' => __( 'Lost cart', 'joinotify' ),
                 'description' => __( 'This trigger is fired when a cart is considered lost.', 'joinotify' ),
                 'require_settings' => false,
-                'require_plugins' => true,
+                'require_plugins' => $require_plugins,
                 'plugins' => array(
                     $fcrc_plugin,
                 ),
@@ -249,8 +276,8 @@ class Flexify_Checkout extends Integrations_Base {
             }
         }
 
-        // if Recovery Carts addon is active
-        if ( class_exists('Flexify_Checkout_Recovery_Carts') ) {
+        // if the cart recovery feature is available (native module or legacy addon)
+        if ( self::is_recovery_carts_active() ) {
             // set triggers for filter
             $fcrc_triggers = array(
                 'Flexify_Checkout/Recovery_Carts/Lead_Collected',
