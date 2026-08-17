@@ -49,6 +49,12 @@ Versão 2.4.0
      - Sites instalados fora do diretório do WordPress.org precisam reinstalar o plugin pelo diretório para voltar a receber atualizações
 * Alteração: a Proxy API (descontinuada) passa a vir desligada em instalações novas
 * Recurso removido: instalador de extensões que baixava pacotes de um endereço externo
+* Alteração: o construtor deixa de oferecer ações de integrações desativadas
+     - Telegram, Resend, WhatsApp e o cupom de desconto do WooCommerce só aparecem na biblioteca de ações quando a integração correspondente está ativa em Configurações → Integrações
+     - Antes, essas ações apareciam mesmo desligadas e a automação não entregava nada ao ser executada
+     - Automações já salvas continuam abrindo e exibindo essas etapas normalmente, mesmo com a integração desligada depois
+* Alteração: todas as ações de WhatsApp do construtor passam a exibir a logo do WhatsApp
+     - Modelo aprovado, mensagem com IA, botões de resposta, lista de opções, botão de link, localização, contato, figurinha e reação usavam ícones genéricos
 * Adequação às diretrizes do diretório de plugins do WordPress.org: readme.txt com a declaração de todos os serviços externos utilizados, licença GPL e o código-fonte do frontend Vue distribuído junto do pacote
 
 Versão 2.3.0

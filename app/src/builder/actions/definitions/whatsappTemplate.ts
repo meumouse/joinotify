@@ -66,6 +66,7 @@ export const whatsappTemplateDefinition: ActionDefinition = {
   icon: 'message-rounded',
   iconSvg: WHATSAPP_ICON,
   category: 'messages',
+  requiresSetting: 'enable_whatsapp_integration',
   hasSettings: true,
   priority: 105,
   isExpansible: false,

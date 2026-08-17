@@ -42,6 +42,7 @@ export const telegramTextDefinition: ActionDefinition = {
   icon: 'message-rounded',
   iconSvg: TELEGRAM_ICON,
   category: 'messages',
+  requiresSetting: 'enable_telegram_integration',
   hasSettings: true,
   priority: 60,
   isExpansible: false,

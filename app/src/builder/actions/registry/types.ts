@@ -45,6 +45,12 @@ export interface ActionDefinition {
   externalIcon?: boolean;
   context?: BuilderActionContext[];
   category?: string;
+  /**
+   * Plugin setting that must be enabled for this action to be listed in the
+   * action library (e.g. `enable_telegram_integration`). Mirrors the guard the
+   * backend integration puts around its `Joinotify/Builder/Actions` filter.
+   */
+  requiresSetting?: string;
   hasSettings: boolean;
   priority: number;
   isExpansible?: boolean;
@@ -80,6 +86,8 @@ export interface BackendActionDefinition extends Partial<ActionDefinition> {
   context?: string | string[];
   contexts?: string | string[];
   category?: string;
+  requires_setting?: string;
+  requiresSetting?: string;
   has_settings?: boolean;
   hasSettings?: boolean;
   priority?: number | string;

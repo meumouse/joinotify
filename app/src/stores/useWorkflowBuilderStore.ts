@@ -27,6 +27,7 @@ import {
   setTriggerCatalog,
 } from '../registries/triggerRegistry';
 import { setConditionsCatalog } from '../builder/actions/utils/conditionsCatalog';
+import { setIntegrationAvailability } from '../builder/actions/registry/integrationAvailability';
 import { getTriggerSettingsSchema } from '../utils/triggerSettings';
 import {
   createWorkflowFileFromParts,
@@ -468,6 +469,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     // Mirror the conditions catalog so the pure node-description builders can
     // resolve translated condition titles, operators and value labels.
     setConditionsCatalog((bootstrap.value as Record<string, unknown> | undefined)?.conditions);
+
+    // The bundled action definitions are registered eagerly, so the integration
+    // toggles have to be mirrored before any catalog read: without them a
+    // disabled channel (Telegram, Resend, ...) would still be listed in the
+    // action library even though the backend never publishes it.
+    setIntegrationAvailability((bootstrap.value as Record<string, unknown> | undefined)?.settings);
     debugLogger.log('bootstrap:api-ready', {
       debug_mode: Boolean(bootstrap.value?.debug_mode),
       post_id: Number(bootstrap.value?.workflow?.post_id || 0) || 0,
@@ -2038,6 +2045,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         ...bootstrap.value,
         settings: cloneSerializable(response.settings),
       };
+
+      // Keep the action library in step with an integration toggled from here.
+      setIntegrationAvailability(bootstrap.value.settings);
+      actionsCatalog.value = getActionCatalog();
     }
 
     return response;

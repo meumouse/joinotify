@@ -48,6 +48,7 @@ export const whatsappMediaDefinition: ActionDefinition = {
   icon: 'image',
   iconSvg: WHATSAPP_ICON,
   category: 'messages',
+  requiresSetting: 'enable_whatsapp_integration',
   hasSettings: true,
   priority: 99,
   isExpansible: false,
