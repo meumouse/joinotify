@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 6.0
 Tested up to: 7.0.4
 Requires PHP: 7.4
-Stable tag: 2.5.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -141,29 +141,25 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
-= 2.5.0 =
+= 2.3.0 =
 * New: anonymous usage reporting now actually delivers. Still off by default — nothing leaves the site until you agree in the setup wizard.
 * New: the site is identified by a random value generated locally, never derived from your address. It is shown in Settings → About so you can quote it in a support ticket.
 * New: reports are batched and sent by a scheduled task, never during a page load. Repeated events collapse to one per day.
 * New: the consent screen also shows sample events and explains how the site is identified.
 * New: switching usage reporting off deletes anything still queued and asks the service to stop counting the installation.
 * New: actions for extensions — `Joinotify/Settings/Saved` (with the settings before and after each save), `Joinotify/Sender_Selected`, `Joinotify/Notification_Queue/Item_Retried` and `Joinotify/Debug_Log/Recorded`.
-* Fixed: deactivating the plugin left all of its scheduled tasks behind. They are now cleared. Nothing else is deleted — deactivating is not uninstalling.
-
-= 2.4.0 =
-* The plugin is now free software under the GPLv2 and every feature is unlocked — the licensing system and its activation screen were removed.
 * New: six-step setup wizard shown after activation, covering the default country, the Joinotify API key, an optional AI provider, the documentation, the usage-data choice and the first automation.
 * New: anonymous usage reporting, off by default, with the exact payload shown before you agree.
-* Changed: updates are now delivered by WordPress.org; the plugin no longer contacts an update server of its own.
-* Changed: the Proxy API is off by default on new installs. It remains deprecated and will be removed.
-* Removed: the extension installer that downloaded plugin packages from an external URL.
-
-= 2.3.0 =
 * New: WhatsApp connection through the official Joinotify API, replacing the Proxy API over Evolution.
 * New: Meta-approved message templates listed inside the builder, with a dedicated template action.
 * New: interactive messages — reply buttons, option lists, link buttons, location, contact cards, stickers and reactions.
 * New: real delivery confirmation through account events (delivered, read, failed).
+* The plugin is now free software under the GPLv2 and every feature is unlocked — the licensing system and its activation screen were removed.
+* Changed: updates are now delivered by WordPress.org; the plugin no longer contacts an update server of its own.
+* Changed: the Proxy API is off by default on new installs. It remains deprecated and will be removed.
+* Removed: the extension installer that downloaded plugin packages from an external URL.
 * Improved: OTP login codes are delivered through an authentication template on the official API.
+* Fixed: deactivating the plugin left all of its scheduled tasks behind. They are now cleared. Nothing else is deleted — deactivating is not uninstalling.
 * Deprecated: the Proxy API setting under Settings → General.
 
 = 2.2.0 =
@@ -178,5 +174,5 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Upgrade Notice ==
 
-= 2.4.0 =
+= 2.3.0 =
 Joinotify is now free and GPL-licensed, with no locked features. Updates move to WordPress.org, so the plugin's own update server is gone — install this version from WordPress.org to keep receiving updates. A setup wizard runs once to confirm your configuration.

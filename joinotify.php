@@ -6,10 +6,10 @@
  * Plugin URI: 				https://meumouse.com/plugins/joinotify/
  * Author: 					MeuMouse.com
  * Author URI: 				https://meumouse.com/
- * Version: 				2.5.0
+ * Version: 				2.3.0
  * Requires at least: 		6.0
  * Requires PHP: 			7.4
- * Tested up to: 			6.8
+ * Tested up to: 			7.0.4
  * Text Domain: 			joinotify
  * Domain Path: 			/languages
  * License: 				GPLv2 or later
@@ -33,7 +33,7 @@ if ( file_exists( $autoload ) ) {
 	require_once $autoload;
 }
 
-$plugin_version = '2.5.0';
+$plugin_version = '2.3.0';
 
 // Flag a fresh activation so the first admin request opens the setup wizard.
 // The wizard is where the site owner picks a country, connects the Joinotify
