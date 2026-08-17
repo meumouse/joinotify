@@ -7,7 +7,7 @@
  * backend already guessed it from the WooCommerce store address, the site
  * locale or the timezone, so this step is usually a confirmation.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { computed } from 'vue';
 import { __, sprintf, textDomain } from '../../../../utils/i18n';

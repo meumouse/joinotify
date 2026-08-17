@@ -32,7 +32,7 @@ defined('ABSPATH') || exit;
  * The machinery lives in `MeuMouse\Joinotify\Telemetry`; this class stays as the stable
  * surface other code and third-party filters already point at.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @version 2.5.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
@@ -42,7 +42,7 @@ class Telemetry {
     /**
      * Settings key holding the owner's consent.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const SETTING = 'enable_usage_tracking';
@@ -51,7 +51,7 @@ class Telemetry {
     /**
      * Whether the site owner agreed to share usage data.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return bool
      */
     public static function is_enabled() {
@@ -65,7 +65,7 @@ class Telemetry {
      * An empty string still disables delivery entirely, and that remains the documented
      * escape hatch for a host that wants the plugin to talk to nothing.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @version 2.5.0
      * @return string
      */
@@ -75,7 +75,7 @@ class Telemetry {
         /**
          * Filter the usage-reporting endpoint.
          *
-         * @since 2.4.0
+         * @since 2.3.0
          * @param string $endpoint Absolute URL, or an empty string to disable.
          */
         $endpoint = apply_filters( 'Joinotify/Telemetry/Endpoint', $default );
@@ -94,7 +94,7 @@ class Telemetry {
      * accepts. Anything a filter adds is put through the same allow-list as the rest: a
      * key the service does not know would cost the whole batch, not just that key.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @version 2.5.0
      * @return array<string,mixed>
      */
@@ -108,7 +108,7 @@ class Telemetry {
          * the site, its visitors or its customers. Keys outside the service's catalog are
          * dropped before the request is built.
          *
-         * @since 2.4.0
+         * @since 2.3.0
          * @param array<string,mixed> $payload
          */
         $payload = apply_filters( 'Joinotify/Telemetry/Payload', $payload );
@@ -128,7 +128,7 @@ class Telemetry {
     /**
      * Human-readable preview of what would be sent, for the consent screen.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @version 2.5.0
      * @return array{collected:array<string,mixed>,sample_events:array<int,array<string,mixed>>,never_collected:array<int,string>,identified_by:string}
      */
@@ -157,7 +157,7 @@ class Telemetry {
     /**
      * Send a report, if and only if consent was given and a destination exists.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @version 2.5.0
      * @return bool Whether a request was actually made.
      */

@@ -248,7 +248,7 @@ class Upgrader {
      *
      * Idempotent: deleting an absent option is a no-op, so a retry is harmless.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public static function drop_licensing_data() {

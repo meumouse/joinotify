@@ -6,7 +6,7 @@
  * Points at the documentation once, at the moment it is most likely to be
  * needed, so the user knows where to look later.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { __, textDomain } from '../../../../utils/i18n';
 

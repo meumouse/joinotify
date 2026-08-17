@@ -17,7 +17,7 @@
  * Run (Windows / Local):
  *   & "C:\path\to\Local\php.exe" tests/telemetry-normalizer-test.php
  *
- * @since 2.5.0
+ * @since 2.3.0
  */
 
 // The class file guards with `defined('ABSPATH') || exit;`.

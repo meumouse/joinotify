@@ -26,7 +26,7 @@ defined('ABSPATH') || exit;
  * The environment is only ever built at dispatch time or for the consent preview. It
  * costs several option reads and a post count, and neither belongs in a page request.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -35,7 +35,7 @@ class Installation {
     /**
      * Option holding the random installation identifier. Autoload disabled.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const ID_OPTION = 'joinotify_telemetry_id';
@@ -44,7 +44,7 @@ class Installation {
     /**
      * Client name, as the service's enum spells it.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const CLIENT = 'wordpress';
@@ -53,7 +53,7 @@ class Installation {
     /**
      * The identifier for this installation, generating it on first use.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return string
      */
     public static function id() {
@@ -78,7 +78,7 @@ class Installation {
      * `id()` writes an option, and a site that will never consent has no business getting
      * one because somebody opened a tab.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return string Empty when telemetry has never run here.
      */
     public static function peek() {
@@ -93,7 +93,7 @@ class Installation {
      *
      * Only wired to the settings reset — never to the consent toggle.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function reset_id() {
@@ -104,7 +104,7 @@ class Installation {
     /**
      * The installation block of the request body.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param bool $opted_out | Whether to mark this report as an opt-out notice.
      * @return array<string,mixed>
      */
@@ -144,7 +144,7 @@ class Installation {
      * '8.2.20-1+ubuntu22.04.1+deb.sury.org', which is longer than the service accepts and
      * says nothing the three numbers do not.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return string|null
      */
     private static function php_version() {
@@ -161,7 +161,7 @@ class Installation {
      * configured that way. That is not a time zone, it fails the service's slug shape,
      * and guessing a zone from an offset would be wrong twice a year.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return string|null
      */
     private static function timezone() {
@@ -178,7 +178,7 @@ class Installation {
     /**
      * What is installed alongside the plugin.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,mixed>
      */
     public static function environment() {
@@ -206,7 +206,7 @@ class Installation {
     /**
      * Integration slugs currently switched on.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<int,string>
      */
     private static function active_integrations() {
@@ -235,7 +235,7 @@ class Installation {
     /**
      * Count workflows in a given post status.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $status | Post status.
      * @return int
      */
@@ -256,7 +256,7 @@ class Installation {
      * Not part of the request body: the service derives failure counts from the events
      * themselves, and sending the same number twice would let the two disagree.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,int>
      */
     public static function error_counts() {

@@ -7,7 +7,7 @@
  * clickable so the user can go back and change an answer; steps ahead are not,
  * because each one is saved as it is passed.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { __, textDomain } from '../../../utils/i18n';
 

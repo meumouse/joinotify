@@ -209,7 +209,7 @@ class Menu {
     /**
      * Display the Vue setup wizard.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public function render_onboarding_page() {

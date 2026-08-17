@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * request. Failing to deliver a customer's message is the site owner's problem; failing
  * to deliver telemetry is ours.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -40,7 +40,7 @@ class Dispatcher {
     /**
      * Cron hook that carries the dispatch.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const HOOK = 'joinotify_telemetry_dispatch_event';
@@ -49,7 +49,7 @@ class Dispatcher {
     /**
      * Transient guarding the `admin_init` fallback.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const LOCK = 'joinotify_telemetry_lock';
@@ -58,7 +58,7 @@ class Dispatcher {
     /**
      * Seconds allowed for the request.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const TIMEOUT = 10;
@@ -70,7 +70,7 @@ class Dispatcher {
      * Self-healing: a single event lost to a database restore or a plugin conflict is put
      * back the next time an admin page loads.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function ensure_scheduled() {
@@ -97,7 +97,7 @@ class Dispatcher {
      * inherit the same schedule and arrive within the same minute — a self-inflicted
      * thundering herd that grows with adoption.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param int $seconds | Delay from now.
      * @return void
      */
@@ -113,7 +113,7 @@ class Dispatcher {
     /**
      * Take the dispatch off the calendar.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function unschedule() {
@@ -124,7 +124,7 @@ class Dispatcher {
     /**
      * Send one batch.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param bool $opt_out_notice | Send an empty batch flagged as an opt-out and stop.
      * @return bool Whether a request was made.
      */
@@ -179,14 +179,14 @@ class Dispatcher {
      * it the installation stays alive in the service's counts forever, and "off" would
      * only mean "no new data".
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return bool
      */
     private static function send_opt_out_notice() {
         /**
          * Filter whether switching telemetry off notifies the service.
          *
-         * @since 2.5.0
+         * @since 2.3.0
          * @param bool $send Whether to send the notice.
          */
         if ( ! apply_filters( 'Joinotify/Telemetry/Send_Opt_Out', true ) ) {
@@ -207,7 +207,7 @@ class Dispatcher {
     /**
      * Apply whatever the service answered.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $response | Raw `wp_remote_request()` result.
      * @param array $buffer | Buffer as it was before the request.
      * @param array $ids | Event ids that went out.
@@ -300,7 +300,7 @@ class Dispatcher {
     /**
      * Run a dispatch from an admin request when cron is clearly not running.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function maybe_dispatch_late() {
@@ -333,7 +333,7 @@ class Dispatcher {
     /**
      * Resume after a reconnection, when a dead key was what stopped us.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function resume() {

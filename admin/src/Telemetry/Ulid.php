@@ -17,7 +17,7 @@ defined('ABSPATH') || exit;
  * millisecond it was created: the buffer sorts chronologically without a separate field,
  * and a batch read straight from the database is already in the order things happened.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Ulid {
      * Crockford base32 — no I, L, O or U, so a value read aloud in a support ticket
      * cannot be transcribed into a different one.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
@@ -36,7 +36,7 @@ class Ulid {
     /**
      * Generate an identifier for one event.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param int|null $timestamp_ms | Milliseconds, for tests. Defaults to now.
      * @return string 26 characters.
      */
@@ -52,7 +52,7 @@ class Ulid {
     /**
      * Encode the timestamp into the first 10 characters.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param int $timestamp_ms | Milliseconds since the epoch.
      * @return string
      */
@@ -74,7 +74,7 @@ class Ulid {
      * `wp_rand()` when WordPress is loaded, `mt_rand()` when it is not — this class is
      * exercised by a standalone test harness that never boots WordPress.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return string
      */
     private static function encode_randomness() {

@@ -21,7 +21,7 @@ defined('ABSPATH') || exit;
  * The decisions are pure functions over the stored state, so the backoff curve and the
  * sampling cut are covered by tests instead of by reasoning.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -30,7 +30,7 @@ class Policy {
     /**
      * Option holding the last known server directives. Autoload disabled.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const OPTION = 'joinotify_telemetry_state';
@@ -39,7 +39,7 @@ class Policy {
     /**
      * Fallback interval until the service says otherwise.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const DEFAULT_INTERVAL = 21600;
@@ -48,7 +48,7 @@ class Policy {
     /**
      * Longest a backoff can grow to.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const MAX_BACKOFF = 86400;
@@ -57,7 +57,7 @@ class Policy {
     /**
      * Base of the backoff curve.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const BASE_BACKOFF = 1800;
@@ -66,7 +66,7 @@ class Policy {
     /**
      * How long to wait before asking again after the service said this account opted out.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const OPT_OUT_RECHECK = 604800;
@@ -75,7 +75,7 @@ class Policy {
     /**
      * Starting state.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,mixed>
      */
     public static function defaults() {
@@ -95,7 +95,7 @@ class Policy {
     /**
      * Fold a successful response into the state.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $state | Current state.
      * @param array $data | The `data` object of the 202.
      * @param int $now | Unix timestamp.
@@ -134,7 +134,7 @@ class Policy {
     /**
      * When to try again, given how the last attempt went.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param int $status | HTTP status, or 0 for a transport failure.
      * @param int $failures | Consecutive failures INCLUDING this one.
      * @param int $interval | Normal interval in seconds.
@@ -179,7 +179,7 @@ class Policy {
     /**
      * Whether the batch stays in the buffer after this status.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param int $status | HTTP status.
      * @return bool
      */
@@ -199,7 +199,7 @@ class Policy {
     /**
      * Whether this status stops dispatching until something else wakes it up.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param int $status | HTTP status.
      * @return bool
      */
@@ -232,7 +232,7 @@ class Policy {
     /**
      * Coerce anything read from the option into the expected shape.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $state | Whatever came back from `get_option()`.
      * @return array<string,mixed>
      */
@@ -259,7 +259,7 @@ class Policy {
     /**
      * Read the stored state.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,mixed>
      */
     public static function load() {
@@ -270,7 +270,7 @@ class Policy {
     /**
      * Persist the state, creating the option with autoload disabled the first time.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $state | State to store.
      * @return void
      */
@@ -288,7 +288,7 @@ class Policy {
     /**
      * Forget everything except the service's opt-out, which has to outlive a reset.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function reset() {

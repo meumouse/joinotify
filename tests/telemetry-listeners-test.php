@@ -13,7 +13,7 @@
  * Run (Windows / Local):
  *   & "C:\path\to\Local\php.exe" tests/telemetry-listeners-test.php
  *
- * @since 2.5.0
+ * @since 2.3.0
  */
 
 namespace {

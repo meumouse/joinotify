@@ -254,7 +254,7 @@ class Debug_Log {
             /**
              * Fires when an error-level entry is recorded, whether or not it is stored.
              *
-             * @since 2.5.0
+             * @since 2.3.0
              * @param array $entry Entry fields, with file, line and channel resolved.
              * @param string $level Normalized level: 'error' or 'critical'.
              */

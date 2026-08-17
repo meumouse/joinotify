@@ -43,7 +43,7 @@ class Registry {
      * every admin page load. The screen only needs to know whether one is
      * stored, which `get_settings_for_client()` reports as a `_is_set` flag.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array<int,string>
      */
     public static function get_write_only_keys() {
@@ -54,7 +54,7 @@ class Registry {
          * leaves the stored one alone, so the field can stay blank in the form
          * without wiping the credential.
          *
-         * @since 2.4.0
+         * @since 2.3.0
          * @param array<int,string> $keys
          */
         return apply_filters( 'Joinotify/Admin/Settings/Write_Only_Keys', array(
@@ -66,7 +66,7 @@ class Registry {
     /**
      * The settings as the browser is allowed to see them.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param array<string,mixed> $settings Full settings array.
      * @return array<string,mixed>
      */
@@ -869,7 +869,7 @@ class Registry {
      * no way to find a site — unless the owner can read the identifier off this screen
      * and paste it into a ticket.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return string
      */
     private static function usage_tracking_description() {

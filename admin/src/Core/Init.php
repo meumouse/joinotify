@@ -457,7 +457,7 @@ class Init {
 	 * This runs before Core\Logger is available, so it cannot go through the
 	 * plugin's own logger. Gating it on WP_DEBUG keeps production logs clean.
 	 *
-	 * @since 2.4.0
+	 * @since 2.3.0
 	 * @param string $message Message to record.
 	 * @return void
 	 */

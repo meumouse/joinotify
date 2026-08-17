@@ -24,7 +24,7 @@ defined('ABSPATH') || exit;
  * Every method is pure: no options, no hooks, no database. That is deliberate — it is
  * what lets the whole guarantee be covered by tests that run without WordPress.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -33,7 +33,7 @@ class Normalizer {
     /**
      * Maximum length of a slug value, mirroring the service.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const MAX_SLUG = 60;
@@ -42,7 +42,7 @@ class Normalizer {
     /**
      * Maximum length of a version value, mirroring the service.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const MAX_VERSION = 40;
@@ -55,7 +55,7 @@ class Normalizer {
      * into a single bucket, because a template error we have never seen is not worth a
      * permanent row.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,int>
      */
     const TEMPLATE_CODES = array( 132000, 132001, 132005, 132007, 132012, 132015, 132016 );
@@ -64,7 +64,7 @@ class Normalizer {
     /**
      * HTTP statuses this integration actually produces.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,int>
      */
     const HTTP_CODES = array( 400, 401, 403, 404, 405, 408, 409, 413, 422, 425, 429, 500, 502, 503, 504 );
@@ -73,7 +73,7 @@ class Normalizer {
     /**
      * Graph API error types, normalized to snake case.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<string,string>
      */
     const META_TYPES = array(
@@ -87,7 +87,7 @@ class Normalizer {
     /**
      * PHP error levels, by errno.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,string>
      */
     const PHP_LEVELS = array(
@@ -106,7 +106,7 @@ class Normalizer {
     /**
      * Error codes the plugin raises itself, and that are already a closed set.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,string>
      */
     const INTERNAL_CODES = array(
@@ -134,7 +134,7 @@ class Normalizer {
      * value can end up inside a counter name, and 'Cart_Abandonment' and
      * 'cart_abandonment' arriving from two sites would count as two different features.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $value | Raw value.
      * @return string|null
      */
@@ -158,7 +158,7 @@ class Normalizer {
     /**
      * Normalize a version string, or return null to drop it.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $value | Raw value.
      * @return string|null
      */
@@ -184,7 +184,7 @@ class Normalizer {
     /**
      * Keep a value only when it is one of the allowed ones.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $value | Raw value.
      * @param array $allowed | Allowed values.
      * @return string|null
@@ -203,7 +203,7 @@ class Normalizer {
     /**
      * Normalize an integer inside a range, or return null to drop it.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $value | Raw value.
      * @param int $min | Lower bound, inclusive.
      * @param int $max | Upper bound, inclusive.
@@ -226,7 +226,7 @@ class Normalizer {
      * Sorted and de-duplicated so that two sites running the same integrations produce
      * the same value and can be grouped.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $value | Array of slugs, or an already joined list.
      * @param int $max | Maximum number of items kept.
      * @return string|null
@@ -266,7 +266,7 @@ class Normalizer {
      * belt-and-braces for its own sake: the service redacts a value that already left
      * the site, and leaving the site is the part that cannot be taken back.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $value | Value to inspect.
      * @return bool
      */
@@ -301,7 +301,7 @@ class Normalizer {
      * either matches a known bucket or becomes 'other'; the detail that is lost this way
      * is carried by the fingerprint instead.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $raw | Raw error code or message.
      * @return string
      */
@@ -365,7 +365,7 @@ class Normalizer {
      * number of lines in the plugin that can fail, which is a few dozen. It also happens
      * to be the useful grouping: "this error comes from this line".
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $code | Already normalized error code.
      * @param string $channel | Logical area (api, cron, rest...).
      * @param string $file | Absolute path of the file that raised it.

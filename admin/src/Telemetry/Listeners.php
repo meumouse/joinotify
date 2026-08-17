@@ -22,7 +22,7 @@ defined('ABSPATH') || exit;
  * The listeners themselves never make requests. They call `Recorder::record()`, which
  * appends to an array; the batch goes out from cron.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -31,7 +31,7 @@ class Listeners {
     /**
      * Register the hooks this site actually needs.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      */
     public function __construct() {
         // Always: the moment consent is given or withdrawn has to be observed even when
@@ -71,7 +71,7 @@ class Listeners {
     /**
      * Record that this site now has a sending number.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $method | 'auto' or 'manual'.
      * @return void
      */
@@ -88,7 +88,7 @@ class Listeners {
      * fine here, because none of them is a delivery attempt; they are configuration
      * problems, and they arrive through the error log instead.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param object $result | Channel_Result.
      * @param object $message | Notification_Message.
      * @param object $channel | Channel_Interface implementation.
@@ -141,7 +141,7 @@ class Listeners {
     /**
      * Record a queued message going back in line.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $item | The queued item, after its attempt count was incremented.
      * @return void
      */
@@ -165,7 +165,7 @@ class Listeners {
     /**
      * Record that a trigger actually drove a workflow.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $hook | Trigger hook that fired.
      * @param array $payload | Trigger payload.
      * @param array $workflows | Workflows matched for that hook.
@@ -192,7 +192,7 @@ class Listeners {
     /**
      * Record a failure the plugin raised itself.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $entry | Log entry, with file, line and channel resolved.
      * @param string $level | 'error' or 'critical'.
      * @return void
@@ -229,7 +229,7 @@ class Listeners {
     /**
      * Map a channel id onto the transport enum, or '' when it does not fit.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param object $channel | Channel_Interface implementation.
      * @return string
      */
@@ -252,7 +252,7 @@ class Listeners {
     /**
      * Map a message type onto the enum the service accepts.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param object $message | Notification_Message.
      * @return string
      */
@@ -271,7 +271,7 @@ class Listeners {
      * A third-party integration registered through the extension API would otherwise put
      * an unbounded set of slugs into a counter name.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $integration | Slug from the trigger payload.
      * @return string
      */
@@ -291,7 +291,7 @@ class Listeners {
     /**
      * Keep a trigger hook only when it belongs to that integration's catalog.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $integration | Integration slug.
      * @param string $hook | Trigger hook that fired.
      * @return string
@@ -315,7 +315,7 @@ class Listeners {
     /**
      * Run a scheduled dispatch.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function on_dispatch() {
@@ -326,7 +326,7 @@ class Listeners {
     /**
      * Keep the schedule alive, and cover for a broken cron.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function on_admin_init() {
@@ -338,7 +338,7 @@ class Listeners {
     /**
      * Record a version change.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $from | Version the site was on.
      * @param string $to | Version it is on now.
      * @return void
@@ -361,7 +361,7 @@ class Listeners {
     /**
      * React to consent being given or withdrawn.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $saved | Settings as stored.
      * @param array $previous | Settings as they were.
      * @return void
@@ -398,7 +398,7 @@ class Listeners {
      * setting at all. A value could be a token, a phone number or a message template, and
      * there is no version of this event that wants any of them, so none is ever read.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $saved | Settings as stored.
      * @param array $previous | Settings as they were.
      * @return void
@@ -426,7 +426,7 @@ class Listeners {
      * Order matters: the notice goes out before the buffer is cleared, so that a site
      * whose last batch never arrived still gets removed from the counts.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function on_opt_out() {

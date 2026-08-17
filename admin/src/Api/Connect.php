@@ -221,7 +221,7 @@ class Connect {
      * the API for the account's numbers, and puts the previous value back if it
      * does not. A site is never left holding a key that was just shown to fail.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param string $token | API key issued for this site (sk_live_...).
      * @return array|\WP_Error Stored credential summary, or the failure reason.
      */
@@ -275,7 +275,7 @@ class Connect {
              * The one consumer today is telemetry, and a phone number has no business
              * travelling on a hook that feeds it.
              *
-             * @since 2.5.0
+             * @since 2.3.0
              * @param string $method How it was chosen: 'auto' or 'manual'.
              */
             do_action( 'Joinotify/Sender_Selected', 'auto' );
@@ -298,7 +298,7 @@ class Connect {
     /**
      * Write the API key to the setting every credential reader looks at.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param array  $settings | Settings array to write into.
      * @param string $token    | Key to store ('' clears it).
      * @return void

@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
 /**
  * Validate and store the Joinotify API key pasted in the setup wizard.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 class Onboarding_Connect extends Abstract_Route {
 
@@ -34,7 +34,7 @@ class Onboarding_Connect extends Abstract_Route {
     /**
      * Handle the request.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param WP_REST_Request $request REST request instance.
      * @return \WP_REST_Response
      */

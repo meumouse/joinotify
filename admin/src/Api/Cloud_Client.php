@@ -38,7 +38,7 @@ class Cloud_Client {
      * the body, not the URL. The per-type routes this client used to call
      * (`/messages/send/text`, `/messages/send/template`) no longer exist.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const SEND_PATH = '/messages';

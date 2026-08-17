@@ -7,7 +7,7 @@
  * and the exact payload is shown on demand — agreeing to something you cannot
  * read is not consent.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';

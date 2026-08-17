@@ -6,7 +6,7 @@
  * Two ways out of the wizard: straight into the builder, or into the settings
  * screen. Both mark the wizard as finished before navigating.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { __, textDomain } from '../../../../utils/i18n';
 

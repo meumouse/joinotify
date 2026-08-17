@@ -184,7 +184,7 @@ class Notification_Queue {
              * the top of the loop, and one that ran out of attempts is dropped just
              * above. So a listener counting this is counting friction, not traffic.
              *
-             * @since 2.5.0
+             * @since 2.3.0
              * @param array $item The queued item, with the incremented attempt count and
              *                    the error that caused it.
              */

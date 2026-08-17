@@ -6,7 +6,7 @@
  * Optional: picks an AI provider and takes its API key. Skipping leaves the
  * AI actions in the builder untouched — they simply stay unconfigured.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { computed } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';

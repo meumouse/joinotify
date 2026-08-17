@@ -20,7 +20,7 @@ defined('ABSPATH') || exit;
  * round: counting an event twice is a smaller lie than losing the one failure that
  * explained an outage.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -33,7 +33,7 @@ class Buffer {
      * not change the autoload flag of an option that already exists, so getting it wrong
      * once puts the buffer into every single request on the site — forever, and silently.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var string
      */
     const OPTION = 'joinotify_telemetry_buffer';
@@ -42,7 +42,7 @@ class Buffer {
     /**
      * Hard ceiling on stored events.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const MAX_EVENTS = 500;
@@ -51,7 +51,7 @@ class Buffer {
     /**
      * Events per request to the service.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const MAX_BATCH_EVENTS = 200;
@@ -61,7 +61,7 @@ class Buffer {
      * Byte ceiling of the events array, leaving room for the installation block inside
      * the service's 64 kb body limit.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const MAX_BATCH_BYTES = 56000;
@@ -75,7 +75,7 @@ class Buffer {
      * A store with five thousand orders a day contributes about ten events instead of
      * five thousand, and the answer is the same.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var int
      */
     const COALESCE_WINDOW = 86400;
@@ -84,7 +84,7 @@ class Buffer {
     /**
      * Per-flush ceilings for the noisy families.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<string,int>
      */
     const FAMILY_LIMITS = array(
@@ -96,7 +96,7 @@ class Buffer {
     /**
      * An empty buffer.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,mixed>
      */
     public static function blank() {
@@ -109,7 +109,7 @@ class Buffer {
      *
      * Pure: everything it needs arrives as an argument.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $stored | Buffer as read from the option.
      * @param array $incoming | Events recorded during this request.
      * @param array $limits | Overrides for max_events, window and families.
@@ -181,7 +181,7 @@ class Buffer {
      * each milestone the first time it sees it and never again, so an evicted milestone
      * is a milestone lost for that installation forever.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $events | Stored events, oldest first.
      * @param int $max | Ceiling.
      * @return array{events:array<int,array<string,mixed>>,dropped:int}
@@ -216,7 +216,7 @@ class Buffer {
      * Identity of an event for coalescing: the name plus its properties, canonically
      * ordered so that the same event built in a different order still matches.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $event | Event.
      * @return string
      */
@@ -236,7 +236,7 @@ class Buffer {
      * service answers 422 for the whole batch — which, without this, would repeat on
      * every run until someone looked.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $events | Stored events.
      * @param int $max_events | Event ceiling.
      * @param int $max_bytes | Byte ceiling.
@@ -273,7 +273,7 @@ class Buffer {
     /**
      * Drop the events the service confirmed, keeping whatever arrived mid-flight.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $events | Stored events.
      * @param array $ids | Confirmed event ids.
      * @return array<int,array<string,mixed>>
@@ -295,7 +295,7 @@ class Buffer {
     /**
      * Coerce anything read from the option into the expected shape.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param mixed $stored | Whatever came back from `get_option()`.
      * @return array<string,mixed>
      */
@@ -318,7 +318,7 @@ class Buffer {
     /**
      * Read the buffer.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,mixed>
      */
     public static function load() {
@@ -329,7 +329,7 @@ class Buffer {
     /**
      * Persist the buffer, creating the option with autoload disabled the first time.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $buffer | Buffer to store.
      * @return void
      */
@@ -347,7 +347,7 @@ class Buffer {
     /**
      * Throw the buffer away.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function clear() {

@@ -12,7 +12,7 @@
  * The stored key is never read back into the browser: the backend reports only
  * whether one exists and its public prefix.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { computed, inject, ref } from 'vue';
 import { __, _n, sprintf, textDomain } from '../../utils/i18n';
@@ -57,7 +57,7 @@ const maskedKey = computed(() => {
 /**
  * Send the key to the backend, which validates it and imports the numbers.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {Promise<void>}
  */
 async function connect() {
@@ -108,7 +108,7 @@ async function connect() {
 /**
  * Forget the stored key. The imported numbers are left untouched.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {Promise<void>}
  */
 async function disconnect() {

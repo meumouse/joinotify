@@ -73,7 +73,7 @@ class Repository {
          * transport being changed, a key being removed: each of those is a moment, and a
          * listener that only saw the result would have to keep its own copy to spot it.
          *
-         * @since 2.5.0
+         * @since 2.3.0
          * @param array $sanitized Settings as stored.
          * @param array $current Settings as they were before this save.
          */
@@ -95,7 +95,7 @@ class Repository {
      *
      * Pure helper (no WordPress calls) so the rule can be tested in isolation.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param array<string,mixed> $sanitized Values about to be stored.
      * @param array<string,mixed> $current   Values currently stored.
      * @param array<int,string>   $keys      Write-only setting keys.

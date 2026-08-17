@@ -21,7 +21,7 @@ defined('ABSPATH') || exit;
  * Keep this file in step with `src/telemetry/registry.ts` on the service. A name added
  * here and not there is silently dropped; a name added there and not here is never sent.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -34,7 +34,7 @@ class Event_Catalog {
      * not fit this enum, and an event carrying an unknown transport would be stripped
      * down to a half-event. Listeners check this list and emit nothing instead.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,string>
      */
     const TRANSPORTS = array( 'cloud', 'evolution' );
@@ -43,7 +43,7 @@ class Event_Catalog {
     /**
      * Message types that map onto the service enum.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,string>
      */
     const MESSAGE_TYPES = array( 'text', 'template', 'media', 'test' );
@@ -52,7 +52,7 @@ class Event_Catalog {
     /**
      * Every event the service accepts, with its allowed properties.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,array<string,mixed>>
      */
     public static function events() {
@@ -134,7 +134,7 @@ class Event_Catalog {
     /**
      * Environment keys the service accepts inside the installation block.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<string,array<string,mixed>>
      */
     public static function environment_props() {
@@ -155,7 +155,7 @@ class Event_Catalog {
     /**
      * Whether the service knows this event name.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $name | Event name.
      * @return bool
      */
@@ -169,7 +169,7 @@ class Event_Catalog {
     /**
      * Whether this event survives buffer trimming.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $name | Event name.
      * @return bool
      */
@@ -183,7 +183,7 @@ class Event_Catalog {
     /**
      * Whether repeated occurrences of this event collapse into one per day.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $name | Event name.
      * @return bool
      */
@@ -202,7 +202,7 @@ class Event_Catalog {
      * telemetry until the service caught up — the opposite of what a diagnostic channel
      * is for.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $name | Event name.
      * @param array $props | Raw properties.
      * @return array<string,mixed>
@@ -221,7 +221,7 @@ class Event_Catalog {
     /**
      * Keep only the environment keys the service declares.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $environment | Raw environment.
      * @return array<string,mixed>
      */
@@ -233,7 +233,7 @@ class Event_Catalog {
     /**
      * Apply an allow-list of specs to a set of raw values.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $allowed | Map of key => spec.
      * @param array $raw | Raw values.
      * @return array<string,mixed>
@@ -260,7 +260,7 @@ class Event_Catalog {
     /**
      * Normalize one value against one spec.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param array $spec | Property spec.
      * @param mixed $value | Raw value.
      * @return mixed|null
@@ -298,7 +298,7 @@ class Event_Catalog {
      * Shown verbatim next to the toggle, so the owner reads the actual shape of what
      * would be sent rather than a description of it.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return array<int,array<string,mixed>>
      */
     public static function samples() {

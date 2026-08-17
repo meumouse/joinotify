@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 /**
  * Bootstrap the REST endpoints backing the setup wizard.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Admin\Onboarding
  * @author MeuMouse.com
  */

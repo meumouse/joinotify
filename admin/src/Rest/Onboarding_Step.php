@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 /**
  * Persist the values of a single wizard step.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 class Onboarding_Step extends Abstract_Route {
 
@@ -33,7 +33,7 @@ class Onboarding_Step extends Abstract_Route {
     /**
      * Handle the request.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param WP_REST_Request $request REST request instance.
      * @return \WP_REST_Response
      */

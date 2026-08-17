@@ -8,7 +8,7 @@
  * first moment the site contacts an external server, so the step says so in
  * plain words before the user acts.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { computed, ref } from 'vue';
 import { __, _n, sprintf, textDomain } from '../../../../utils/i18n';
@@ -43,7 +43,7 @@ const senderSummary = computed(() => {
 /**
  * Validate and store the pasted key.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {Promise<void>}
  */
 async function connect() {

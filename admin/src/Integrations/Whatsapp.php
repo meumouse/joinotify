@@ -92,7 +92,7 @@ class Whatsapp extends Integrations_Base {
      * not the whole job: the key has to be proven against the API and the
      * account's numbers imported before the site can send anything.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
@@ -159,7 +159,7 @@ class Whatsapp extends Integrations_Base {
      * logo, so the canvas reads as one channel instead of a mix of generic
      * glyphs. Shared with the AI message and interactive message actions.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return string Inline SVG markup.
      */
     public static function get_action_icon() {

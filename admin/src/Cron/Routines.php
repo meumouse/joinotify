@@ -59,7 +59,7 @@ class Routines {
      * WP-Cron would keep firing a callback that resolves to nothing on every
      * daily run.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return void
      */
     public static function unschedule_legacy_update_events() {

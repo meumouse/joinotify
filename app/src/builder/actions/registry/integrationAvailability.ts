@@ -17,7 +17,7 @@
  * action lookups stay ungated on purpose: a workflow saved while the channel was
  * enabled must keep rendering its nodes after it is turned off.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 import { ref } from 'vue';
 
@@ -27,7 +27,7 @@ const hydrated = ref(false);
 /**
  * Populates the cache from the bootstrap settings payload.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {unknown} value The `settings` object from the builder bootstrap.
  * @returns {void}
  */
@@ -49,7 +49,7 @@ export function setIntegrationAvailability(value: unknown): void {
  * Settings are stored as the `yes`/`no` strings WordPress options use, but the
  * REST payload may already have coerced them into booleans.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {string} key Setting key (e.g. `enable_telegram_integration`).
  * @returns {boolean} True when the setting is enabled.
  */
@@ -70,7 +70,7 @@ export function isSettingEnabled(key: string): boolean {
  * bootstrap settings arrive — hiding the whole library on a failed or pending
  * bootstrap would be worse than briefly listing a disabled channel.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @param {string} [requiresSetting] Setting key the action depends on.
  * @returns {boolean} True when the action may be offered.
  */
@@ -88,7 +88,7 @@ export function isActionAvailable(requiresSetting?: string): boolean {
  * Returns the current availability revision source, so registry consumers that
  * read the catalog inside a computed re-evaluate when the settings change.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @returns {boolean} True once the bootstrap settings have been applied.
  */
 export function isIntegrationAvailabilityHydrated(): boolean {

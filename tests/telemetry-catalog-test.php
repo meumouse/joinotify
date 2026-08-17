@@ -13,7 +13,7 @@
  * Run (Windows / Local):
  *   & "C:\path\to\Local\php.exe" tests/telemetry-catalog-test.php
  *
- * @since 2.5.0
+ * @since 2.3.0
  */
 
 // The class files guard with `defined('ABSPATH') || exit;`.

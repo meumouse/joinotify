@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * The same handshake the setup wizard runs, reachable from Settings so a site
  * can rotate or revoke its key long after the wizard is done.
  *
- * @since 2.4.0
+ * @since 2.3.0
  */
 class Cloud_Connect_Key extends Abstract_Route {
 
@@ -37,7 +37,7 @@ class Cloud_Connect_Key extends Abstract_Route {
     /**
      * Handle the request.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param WP_REST_Request $request REST request instance.
      * @return \WP_REST_Response
      */
@@ -73,7 +73,7 @@ class Cloud_Connect_Key extends Abstract_Route {
      * this site was sending from, and wiping them would also wipe the message
      * history's ability to name the sender of past messages.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return \WP_REST_Response
      */
     protected function disconnect() {
@@ -99,7 +99,7 @@ class Cloud_Connect_Key extends Abstract_Route {
     /**
      * Describe the connection without ever handing the key back to the browser.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array{connected:bool,key_prefix:string,phone_number_id:string,waba_id:string}
      */
     public static function connection_state() {

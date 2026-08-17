@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  *
  * The dispatch itself never happens here. That belongs to cron, where nobody is waiting.
  *
- * @since 2.5.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Telemetry
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Recorder {
     /**
      * Events collected during this request.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var array<int,array<string,mixed>>
      */
     private static $pending = array();
@@ -36,7 +36,7 @@ class Recorder {
     /**
      * Whether the shutdown flush is already hooked.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var bool
      */
     private static $hooked = false;
@@ -45,7 +45,7 @@ class Recorder {
     /**
      * Cached consent, so a workflow firing forty actions reads the setting once.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @var bool|null
      */
     private static $enabled = null;
@@ -59,7 +59,7 @@ class Recorder {
      * to avoid — it is applied at flush time instead, which costs nothing extra because
      * the flush is already touching options.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return bool
      */
     public static function is_recording() {
@@ -74,7 +74,7 @@ class Recorder {
     /**
      * Forget the cached consent, after the setting changes within the same request.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function refresh() {
@@ -89,7 +89,7 @@ class Recorder {
      * name or property the catalog does not know is a bug on this side, and the place it
      * should surface is the mirror test, not a site owner's error log.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @param string $name | Event name from the catalog.
      * @param array $props | Properties; anything outside the allow-list is dropped.
      * @param int|null $timestamp | Unix timestamp, defaults to now.
@@ -136,7 +136,7 @@ class Recorder {
      *
      * One read, one write, and only when there is something to write.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return int Number of events persisted.
      */
     public static function flush() {
@@ -169,7 +169,7 @@ class Recorder {
      *
      * Used by deactivation, which has no next request to flush in.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return int
      */
     public static function flush_now() {
@@ -180,7 +180,7 @@ class Recorder {
     /**
      * Drop whatever this request collected without persisting it.
      *
-     * @since 2.5.0
+     * @since 2.3.0
      * @return void
      */
     public static function discard() {

@@ -20,7 +20,7 @@ defined('ABSPATH') || exit;
  * than duplicating field definitions. What the wizard adds is the ordering, the
  * country suggestion and the telemetry preview.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Admin\Onboarding
  * @author MeuMouse.com
  */
@@ -32,7 +32,7 @@ class Registry {
      * Everything else on the settings screen is out of the wizard's reach, so a
      * malformed step payload can never reach an unrelated option.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var array<int,string>
      */
     const ALLOWED_KEYS = array(
@@ -52,7 +52,7 @@ class Registry {
     /**
      * Build the wizard bootstrap payload.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array<string,mixed>
      */
     public static function get_bootstrap_data() {
@@ -98,7 +98,7 @@ class Registry {
      * Titles and descriptions live here so they go through the same translation
      * pipeline as the rest of the backend copy.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_steps() {
@@ -144,7 +144,7 @@ class Registry {
         /**
          * Filter the setup wizard steps.
          *
-         * @since 2.4.0
+         * @since 2.3.0
          * @param array<int,array<string,mixed>> $steps
          */
         return apply_filters( 'Joinotify/Admin/Onboarding/Steps', $steps );
@@ -154,7 +154,7 @@ class Registry {
     /**
      * Describe each AI provider and the settings key holding its credential.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array<int,array<string,string>>
      */
     public static function get_ai_providers() {
@@ -202,7 +202,7 @@ class Registry {
      * Credentials are reported as a boolean rather than echoed back: the wizard
      * needs to know whether a key is already stored, never what it is.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param array<string,mixed> $settings Full settings array.
      * @return array<string,mixed>
      */
@@ -235,7 +235,7 @@ class Registry {
      * before it is handed over. Skipping that would silently disable every
      * toggle on the site the moment a wizard step is saved.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param array<string,mixed> $values Raw values from one step.
      * @return array<string,mixed> The saved settings.
      */

@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
  * shared by several countries. The result is only a suggestion — the wizard
  * always shows the full list and the user can override it.
  *
- * @since 2.4.0
+ * @since 2.3.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -27,7 +27,7 @@ class Locale_Detector {
     /**
      * Dial code used when nothing can be inferred.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @var string
      */
     const FALLBACK_CODE = '55';
@@ -36,7 +36,7 @@ class Locale_Detector {
     /**
      * Suggest the default country dial code for this site.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array{code:string,iso:string,source:string} Dial code, ISO 3166-1
      *         alpha-2 code and which source produced them ('woocommerce',
      *         'locale', 'timezone' or 'fallback').
@@ -70,7 +70,7 @@ class Locale_Detector {
             /**
              * Filter the country suggested for a fresh install.
              *
-             * @since 2.4.0
+             * @since 2.3.0
              * @param array<string,string> $suggestion {code, iso, source}.
              */
             return apply_filters( 'Joinotify/Core/Suggested_Country', $suggestion );
@@ -87,7 +87,7 @@ class Locale_Detector {
     /**
      * Read the store base country configured in WooCommerce.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return string ISO alpha-2 code, or an empty string.
      */
     public static function iso_from_woocommerce() {
@@ -105,7 +105,7 @@ class Locale_Detector {
     /**
      * Read the region out of the site locale (`pt_BR` -> `BR`).
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return string ISO alpha-2 code, or an empty string.
      */
     public static function iso_from_locale() {
@@ -127,7 +127,7 @@ class Locale_Detector {
      * Zones shared by more than one country simply resolve to whichever known
      * country claims them first, which is acceptable for a suggestion.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return string ISO alpha-2 code, or an empty string.
      */
     public static function iso_from_timezone() {
@@ -152,7 +152,7 @@ class Locale_Detector {
     /**
      * Translate an ISO alpha-2 code into the dial code the plugin stores.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param string $iso ISO 3166-1 alpha-2 code.
      * @return string Dial code without the plus sign, or an empty string.
      */
@@ -175,7 +175,7 @@ class Locale_Detector {
      * The source table is `dial code => [ ISO => country name ]`, which is the
      * shape the settings select needs; this is the same data read the other way.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @return array<string,string> ISO alpha-2 code => dial code.
      */
     public static function iso_to_dial_code_map() {
@@ -210,7 +210,7 @@ class Locale_Detector {
     /**
      * Normalize a country code to upper-case ISO alpha-2.
      *
-     * @since 2.4.0
+     * @since 2.3.0
      * @param mixed $iso Raw value.
      * @return string
      */
