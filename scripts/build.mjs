@@ -21,6 +21,9 @@
  *   --engine=<name>       Translation engine for --translate (default: openai).
  *   --no-install          Skip dependency install steps (npm ci / composer install deps).
  *   --no-zip              Stage files but don't create the .zip.
+ *   --pot-only            Ship joinotify.pot alone, dropping the compiled locales.
+ *                         Only worth it if the package ever approaches the 10 MB
+ *                         WordPress.org submission limit — see languageFilter().
  */
 
 import { spawnSync } from 'node:child_process';
@@ -30,6 +33,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import archiver from 'archiver';
+
+import { resolveVersion } from './version.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -56,12 +61,14 @@ const opts = {
 	engine: getOpt('--engine', 'openai'),
 	install: !hasFlag('--no-install'),
 	zip: !hasFlag('--no-zip'),
+	potOnly: hasFlag('--pot-only'),
 };
 
 /* ---------------------------------------------------------------- helpers */
 
 const log = (msg) => console.log(`\x1b[36m▶\x1b[0m ${msg}`);
 const ok = (msg) => console.log(`\x1b[32m✓\x1b[0m ${msg}`);
+const warn = (msg) => console.log(`\x1b[33m!\x1b[0m ${msg}`);
 
 function run(command, args, cwd) {
 	const printable = `${command} ${args.join(' ')}`;
@@ -102,13 +109,6 @@ async function copyFile(relSource, relDest = relSource) {
 	await fs.copyFile(source, dest);
 }
 
-async function getPluginVersion() {
-	const file = path.join(root, `${slug}.php`);
-	const contents = await fs.readFile(file, 'utf8');
-	const match = contents.match(/^\s*\*\s*Version:\s*(.+)$/m);
-	return match ? match[1].trim() : '0.0.0';
-}
-
 function zipDirectory(sourceDir, outPath) {
 	return new Promise((resolve, reject) => {
 		const output = createWriteStream(outPath);
@@ -144,6 +144,16 @@ const languageFilter = (src) => {
 	// Always allow directory entries so their children get evaluated.
 	if (!path.extname(name)) {
 		return true;
+	}
+
+	// The compiled locales ship by default. WordPress prefers a language pack
+	// from translate.wordpress.org when one exists, so these are a fallback --
+	// but they are the only translations a user gets until the strings are
+	// imported and approved there, which is a slow, human process. Dropping them
+	// would ship an English-only plugin to every non-English install in the
+	// meantime, and they cost about 1 MB compressed.
+	if (opts.potOnly && path.extname(name) !== '.pot') {
+		return false;
 	}
 
 	// Keep .l10n.php and friends; drop the *-cli.js pipeline scripts.
@@ -294,14 +304,28 @@ async function packageZip(version) {
 
 	const zipPath = path.join(releaseDir, manifest.zipFile);
 	const bytes = await zipDirectory(stagingDir, zipPath);
-	ok(`ZIP created: ${path.relative(root, zipPath)} (${(bytes / 1024 / 1024).toFixed(2)} MB)`);
+	const megabytes = bytes / 1024 / 1024;
+	ok(`ZIP created: ${path.relative(root, zipPath)} (${megabytes.toFixed(2)} MB)`);
+
+	// The "add your plugin" form rejects uploads above 10 MB outright. Updates go
+	// through SVN and aren't capped, but a package this close to the limit is a
+	// sign something unwanted is being staged.
+	if (megabytes > 10) {
+		warn(`Over the 10 MB WordPress.org submission limit. Trim the package before submitting.`);
+	} else if (megabytes > 8) {
+		warn(`Close to the 10 MB WordPress.org submission limit.`);
+	}
 }
 
 /* -------------------------------------------------------------------- main */
 
 async function main() {
-	const version = await getPluginVersion();
+	const version = await resolveVersion(root, slug, warn);
 	console.log(`\n\x1b[1mBuilding ${slug} v${version}\x1b[0m\n`);
+
+	if (opts.potOnly) {
+		log('Translations: joinotify.pot only — non-English installs fall back to English.');
+	}
 
 	buildFrontend();
 	installPhpDependencies();

@@ -6,3 +6,6 @@ composer.lock
 admin/vendor
 .claude
 .history
+
+# WordPress.org SVN working copy created by scripts/deploy-svn.mjs.
+.wporg-svn/

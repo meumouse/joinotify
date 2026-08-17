@@ -8,7 +8,11 @@
 		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",
 		"build:translate": "node scripts/build.mjs --translate",
 		"build:app": "npm run build --prefix app",
-		"release": "node scripts/build.mjs"
+		"release": "node scripts/build.mjs",
+		"deploy": "node scripts/deploy-svn.mjs",
+		"deploy:commit": "node scripts/deploy-svn.mjs --commit",
+		"deploy:assets": "node scripts/deploy-svn.mjs --assets-only",
+		"deploy:trunk": "node scripts/deploy-svn.mjs --trunk-only"
 	},
 	"devDependencies": {
 		"archiver": "^7.0.1"

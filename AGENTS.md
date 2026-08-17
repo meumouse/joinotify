@@ -95,6 +95,8 @@ joinotify/
 ├── dist/                  # Distributed workflow templates (NOT shipped in the ZIP)
 ├── docs/ · examples/ · tests/
 ├── scripts/build.mjs      # Build/packaging pipeline (orchestrates everything)
+├── scripts/deploy-svn.mjs # Publishes a release to the WordPress.org SVN repository
+├── .wordpress-org/        # Directory page artwork (banner, icon, screenshots) — not shipped
 ├── readme.txt             # WordPress.org plugin page (headers, external services)
 ├── LICENSE                # GNU GPL v2 or later
 └── *.md                   # AGENTS, CONTRIBUTING, README, DEVELOPERS, CHANGELOG
@@ -246,8 +248,38 @@ Orchestrated by [`scripts/build.mjs`](scripts/build.mjs), from the root:
 
 Full build order: **frontend → composer `--no-dev` → translations → staging → ZIP.** Flags:
 `--skip-app`, `--skip-composer`, `--skip-translations`, `--translate`, `--engine=<name>`,
-`--no-install`, `--no-zip`. Initial setup: `cd app && npm install`; `cd languages && npm install`;
-`cd admin && composer install`; `npm install` at the root.
+`--no-install`, `--no-zip`, `--pot-only`. Initial setup: `cd app && npm install`;
+`cd languages && npm install`; `cd admin && composer install`; `npm install` at the root.
+
+The build refuses to run when `joinotify.php` (header and `$plugin_version`), the `Stable tag` in
+`readme.txt` and `package.json` disagree — the gate lives in
+[`scripts/version.mjs`](scripts/version.mjs) and the SVN deploy shares it.
+
+**The compiled locales ship with the package.** WordPress prefers a language pack from
+translate.wordpress.org when one exists, so they are a fallback — but the only one users get until
+the strings are imported and approved there. `--pot-only` drops them, and is only worth reaching for
+if the ZIP approaches the 10 MB submission limit.
+
+### Publishing to WordPress.org
+
+Git is the development history; SVN is only the publishing channel, driven by
+[`scripts/deploy-svn.mjs`](scripts/deploy-svn.mjs). **Nothing is published without `--commit`** — a
+bare run mirrors the build into `trunk/`, creates the tag locally and prints the pending diff.
+
+| Command | Description |
+|---------|-------------|
+| `npm run deploy` | Dry run: build, mirror into `trunk/`, tag, show the diff. Publishes nothing. |
+| `npm run deploy:commit` | Commits `trunk/` and `tags/<version>` in one revision. |
+| `npm run deploy:assets` | Directory artwork only (`.wordpress-org/` → SVN `assets/`). |
+| `npm run deploy:trunk` | Updates `trunk/` without tagging, for readme-only fixes. |
+
+The working copy lives in `.wporg-svn/` (Git-ignored), with `tags/` at shallow depth. Needs an `svn`
+client on PATH and `WPORG_USERNAME` (or `--username=<name>`).
+
+> **SVN `assets/` ≠ the plugin's `assets/`.** The SVN one sits beside `trunk/`, outside the
+> installed package, and holds the banner, icon and screenshots — see
+> [`.wordpress-org/README.md`](.wordpress-org/README.md). The plugin's own `assets/brand/` still
+> ships inside the ZIP.
 
 ---
 
@@ -293,7 +325,8 @@ Report results **honestly**: if a test fails, say so and show the output.
   Types: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`, `i18n`. Common scopes: `builder`,
   `ai`, `cron`, `queue`, `history`, `settings`, `core`, `i18n`.
 - **Don't commit generated artifacts or secrets** (already in [`.gitignore`](.gitignore)): `app/dist/`,
-  `admin/vendor`, `node_modules/`, `release/`, `.env`, `composer.lock`, `.claude`, `.history`.
+  `admin/vendor`, `node_modules/`, `release/`, `.wporg-svn/`, `.env`, `composer.lock`, `.claude`,
+  `.history`.
 - **Commit/push only when explicitly requested** by the user.
 
 ---

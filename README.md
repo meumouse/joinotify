@@ -92,6 +92,8 @@ joinotify/
 ├── docs/                  # Documentação adicional (integrations.md)
 ├── examples/              # Exemplo de extensão de terceiros
 ├── scripts/build.mjs      # Pipeline de build/empacotamento
+├── scripts/deploy-svn.mjs # Publicação no SVN do WordPress.org
+├── .wordpress-org/        # Arte da página do diretório (banner, ícone, screenshots)
 ├── DEVELOPERS.md          # API de extensão (PHP)
 ├── CHANGELOG.md          # Histórico de versões
 └── LICENSE                # GNU GPL v2 ou posterior
@@ -158,7 +160,56 @@ O build executa, em ordem:
 | `npm run build:app` | Apenas o build do frontend (`app/dist`). |
 
 Flags úteis do `build.mjs`: `--skip-app`, `--skip-composer`, `--skip-translations`,
-`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`.
+`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`, `--pot-only`.
+
+O build recusa rodar quando o `joinotify.php` (header e `$plugin_version`), o `Stable tag` do
+`readme.txt` e o `package.json` não declaram a mesma versão.
+
+### Traduções no pacote
+
+Os locales compilados **vão junto do ZIP**. O WordPress prefere o *language pack* do
+[translate.wordpress.org](https://translate.wordpress.org/) quando ele existe, então os arquivos
+embutidos são um fallback — mas são a única tradução que o usuário tem até as strings serem
+importadas e aprovadas por lá, que é um processo humano e lento. Custam cerca de 1 MB comprimidos.
+
+A flag `--pot-only` deixa só o `joinotify.pot` no pacote. Só vale a pena se o ZIP chegar perto do
+limite de 10 MB da submissão.
+
+---
+
+## Publicação no WordPress.org
+
+O Git continua sendo o histórico de desenvolvimento. O **SVN é só o canal de publicação**, e o ciclo
+inteiro está em [`scripts/deploy-svn.mjs`](scripts/deploy-svn.mjs).
+
+```bash
+npm run deploy     # ensaio: prepara tudo e mostra o diff, sem publicar nada
+```
+
+Nada vai ao ar sem `--commit`. Confirmado o diff:
+
+```bash
+node scripts/deploy-svn.mjs --skip-build --commit
+```
+
+| Comando | Descrição |
+|---------|-----------|
+| `npm run deploy` | Build + espelhamento em `trunk/` + tag, tudo local. Não publica. |
+| `npm run deploy:commit` | O mesmo, publicando `trunk/` e `tags/<versão>` em uma única revisão. |
+| `npm run deploy:assets` | Só a arte da página (`.wordpress-org/` → `assets/` do SVN). |
+| `npm run deploy:trunk` | Atualiza `trunk/` sem criar tag — para correções só de `readme.txt`. |
+
+O script mantém a cópia de trabalho em `.wporg-svn/` (ignorada pelo Git), com `tags/` em
+profundidade rasa: os nomes das tags bastam para detectar duplicata, e baixar o conteúdo de todas
+elas custaria centenas de megabytes.
+
+Requisitos: cliente `svn` no PATH e a variável `WPORG_USERNAME` (ou `--username=<nome>`) com o
+usuário do WordPress.org.
+
+> **`assets/` do SVN ≠ `assets/` do plugin.** A do SVN fica ao lado de `trunk/`, fora do pacote
+> instalado, e guarda banner, ícone e capturas de tela — veja
+> [`.wordpress-org/README.md`](.wordpress-org/README.md). A `assets/brand/` interna continua indo
+> dentro do ZIP normalmente.
 
 ---
 

@@ -65,6 +65,8 @@ joinotify/
 ├── examples/              # Exemplo de extensão de terceiros (PHP)
 ├── tests/                 # Harnesses de teste standalone + fixtures
 ├── scripts/build.mjs      # Pipeline de build/empacotamento (orquestra tudo)
+├── scripts/deploy-svn.mjs # Publica uma release no repositório SVN do WordPress.org
+├── .wordpress-org/        # Arte da página do diretório (banner, ícone, screenshots)
 ├── readme.txt             # Ficha do WordPress.org (headers, serviços externos)
 ├── LICENSE                # GNU GPL v2 ou posterior
 └── *.md                   # README, DEVELOPERS, CHANGELOG, este arquivo
@@ -121,6 +123,17 @@ npm run build          # build completo → release/joinotify-<versão>.zip
 npm run build:fast     # reaproveita artefatos (pula app/composer/traduções)
 npm run build:app      # só o frontend
 ```
+
+Publicação no WordPress.org (detalhes em
+[`README.md`](README.md#publicação-no-wordpressorg)) — o `--commit` é obrigatório para publicar:
+
+```bash
+npm run deploy         # ensaio: prepara trunk/ e a tag, mostra o diff, não publica
+npm run deploy:commit  # publica trunk/ e tags/<versão> em uma única revisão
+```
+
+Antes de qualquer um dos dois, `joinotify.php` (header e `$plugin_version`), o `Stable tag` do
+`readme.txt` e o `package.json` precisam declarar a mesma versão — o build para se divergirem.
 
 ---
 
@@ -237,8 +250,8 @@ refresh / rebuild).
 - **Mensagens em inglês**, curtas e no imperativo. A documentação narrativa (`*.md`) é em
   português.
 - **Não comite artefatos gerados nem segredos.** Já estão no [`.gitignore`](.gitignore):
-  `app/dist/`, `admin/vendor`, `node_modules/`, `release/`, `.env`, `composer.lock`,
-  `package-lock.json`.
+  `app/dist/`, `admin/vendor`, `node_modules/`, `release/`, `.wporg-svn/`, `.env`,
+  `composer.lock`, `package-lock.json`.
 - **Commits/pushes só quando solicitado.** Agentes de IA: não faça commit/push sem pedido
   explícito do usuário.
 
