@@ -16,6 +16,9 @@
       "{{ wc_billing_email }} or customer@example.com": [
         "{{ wc_billing_email }} ou customer@example.com"
       ],
+      "{{ wc_billing_first_name }} or a fixed value": [
+        "{{ wc_billing_first_name }} ou um valor fixo"
+      ],
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} ou +5511999990000"
       ],
@@ -145,6 +148,9 @@
       "API client not initialized.": [
         "Cliente da API não inicializado."
       ],
+      "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window.": [
+        "Modelos aprovados da sua Conta Empresarial do WhatsApp. Apenas estes podem ser entregues fora da janela de 24 horas."
+      ],
       "at": [
         "em"
       ],
@@ -172,6 +178,9 @@
       "Back to dashboard": [
         "Voltar ao painel"
       ],
+      "Body": [
+        "Corpo"
+      ],
       "Bold": [
         "Negrito"
       ],
@@ -183,6 +192,9 @@
       ],
       "Builder": [
         "Construtor"
+      ],
+      "Button": [
+        "Botão"
       ],
       "Cancel": [
         "Cancelar"
@@ -274,6 +286,9 @@
       "Could not load workflow.": [
         "Não foi possível carregar o fluxo de trabalho."
       ],
+      "Could not load your message templates.": [
+        "Não foi possível carregar os seus modelos de mensagem."
+      ],
       "Could not read the selected file.": [
         "Não foi possível ler o ficheiro selecionado."
       ],
@@ -288,6 +303,9 @@
       ],
       "Could not save the workflow.": [
         "Não foi possível guardar o fluxo de trabalho."
+      ],
+      "Could not sync your message templates.": [
+        "Não foi possível sincronizar os seus modelos de mensagem."
       ],
       "Could not update the workflow status.": [
         "Não foi possível atualizar o estado do fluxo de trabalho."
@@ -457,6 +475,9 @@
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "ex. Escreva uma saudação de uma linha para {{ wc_billing_first_name }}."
       ],
+      "Each template variable is filled at send time with the placeholder you map here.": [
+        "Cada variável de modelo é preenchida no momento do envio com o espaço reservado que você mapeia aqui."
+      ],
       "Edit workflow title": [
         "Editar título do fluxo de trabalho"
       ],
@@ -571,6 +592,9 @@
       "Generate workflow": [
         "Gerar fluxo de trabalho"
       ],
+      "Header": [
+        "Cabeçalho"
+      ],
       "Hours": [
         "Horas"
       ],
@@ -676,6 +700,9 @@
       "Loading senders...": [
         "A carregar remetentes..."
       ],
+      "Loading templates…": [
+        "A carregar modelos…"
+      ],
       "Loading the builder": [
         "A carregar o construtor"
       ],
@@ -721,8 +748,17 @@
       "Message": [
         "Mensagem"
       ],
+      "Meta disabled this template. It can no longer be sent.": [
+        "A Meta desativou este modelo. Já não pode ser enviado."
+      ],
       "Meta key": [
         "Chave meta"
+      ],
+      "Meta paused this template because of low quality. It will not be delivered until it recovers.": [
+        "A Meta pausou este modelo devido à baixa qualidade. Não será entregue até que recupere."
+      ],
+      "Meta rejected this template.": [
+        "A Meta rejeitou este modelo."
       ],
       "Minutes": [
         "Minutos"
@@ -774,6 +810,9 @@
       ],
       "No products selected yet.": [
         "Nenhum produto selecionado ainda."
+      ],
+      "No template found. Create one on the Joinotify panel and approve it with Meta first.": [
+        "Nenhum modelo encontrado. Crie um no painel Joinotify e aprove-o com a Meta primeiro."
       ],
       "No templates available.": [
         "Nenhum modelo disponível."
@@ -1018,6 +1057,9 @@
       "Select a node to edit its settings.": [
         "Selecione um nó para editar as suas definições."
       ],
+      "Select a template": [
+        "Selecionar um modelo"
+      ],
       "Select a value": [
         "Selecionar um valor"
       ],
@@ -1047,6 +1089,9 @@
       ],
       "Send a WhatsApp text message.": [
         "Envie uma mensagem de texto do WhatsApp."
+      ],
+      "Send an approved template through the official WhatsApp Cloud API.": [
+        "Enviar um modelo aprovado através da API Cloud oficial do WhatsApp."
       ],
       "Send an e-mail notification through Resend.": [
         "Enviar uma notificação por e-mail através do Resend."
@@ -1089,6 +1134,12 @@
       ],
       "Subject": [
         "Assunto"
+      ],
+      "Sync now": [
+        "Sincronizar agora"
+      ],
+      "Syncing…": [
+        "A sincronizar…"
       ],
       "System message": [
         "Mensagem do sistema"
@@ -1158,6 +1209,12 @@
       ],
       "This delay uses scheduled execution. The workflow environment does not report cron as available.": [
         "Este atraso utiliza execução agendada. O ambiente do fluxo de trabalho não reporta cron como disponível."
+      ],
+      "This list may be out of date.": [
+        "Esta lista pode estar desatualizada."
+      ],
+      "This template is still awaiting Meta approval and cannot be delivered yet.": [
+        "Este modelo ainda está à espera de aprovação da Meta e não pode ser entregue ainda."
       ],
       "This text variable may not work in this context": [
         "Esta variável de texto pode não funcionar neste contexto"
@@ -1273,6 +1330,9 @@
       "Variable name": [
         "Nome da variável"
       ],
+      "Variables": [
+        "Variáveis"
+      ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "As variáveis são substituídas por dados reais quando a mensagem é enviada. Clique em uma para inseri-la."
       ],
@@ -1297,6 +1357,12 @@
       "WhatsApp number that will send the message.": [
         "Número do WhatsApp que enviará a mensagem."
       ],
+      "WhatsApp number that will send the template.": [
+        "Número do WhatsApp que enviará o modelo."
+      ],
+      "WhatsApp template message": [
+        "Mensagem de modelo do WhatsApp"
+      ],
       "WhatsApp text message": [
         "Mensagem de texto do WhatsApp"
       ],
@@ -1305,6 +1371,9 @@
       ],
       "WhatsApp: Media message": [
         "WhatsApp: mensagem de mídia"
+      ],
+      "WhatsApp: Template message": [
+        "WhatsApp: Mensagem de modelo"
       ],
       "WhatsApp: Text message": [
         "WhatsApp: mensagem de texto"

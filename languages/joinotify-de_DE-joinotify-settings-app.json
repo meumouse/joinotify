@@ -7,8 +7,20 @@
         "lang": "de_DE",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      "%d number imported.": [
+        "%d Nummer importiert."
+      ],
+      "24h limit:": [
+        "24h Limit:"
+      ],
       "5541987111527": [
         "5541987111527"
+      ],
+      "Account connected": [
+        "Konto verbunden"
+      ],
+      "Account not connected": [
+        "Konto nicht verbunden"
       ],
       "Add new phone": [
         "Neues Telefon hinzufügen"
@@ -118,8 +130,23 @@
       "Confirmation": [
         "Bestätigung"
       ],
+      "Connect": [
+        "Verbinden"
+      ],
+      "Connect to Joinotify": [
+        "Mit Joinotify verbinden"
+      ],
+      "Connect your Joinotify account to send through the official WhatsApp Cloud API.": [
+        "Verbinden Sie Ihr Joinotify-Konto, um über die offizielle WhatsApp Cloud API zu senden."
+      ],
       "Connected": [
         "Verbunden"
+      ],
+      "Connecting sends your key and this site’s address to %s so it can register the site and list your WhatsApp numbers.": [
+        "Das Verbinden sendet Ihren Schlüssel und die Adresse dieser Seite an %s, damit die Seite registriert und Ihre WhatsApp-Nummern aufgelistet werden können."
+      ],
+      "Connecting…": [
+        "Verbindung wird hergestellt…"
       ],
       "Connection updated.": [
         "Verbindung aktualisiert."
@@ -133,8 +160,17 @@
       "Could not clear the logs.": [
         "Die Protokolle konnten nicht gelöscht werden."
       ],
+      "Could not connect with that key.": [
+        "Konnte mit diesem Schlüssel nicht verbinden."
+      ],
+      "Could not disconnect.": [
+        "Konnte nicht trennen."
+      ],
       "Could not export the settings.": [
         "Die Einstellungen konnten nicht exportiert werden."
+      ],
+      "Could not finish the connection.": [
+        "Konnte die Verbindung nicht beenden."
       ],
       "Could not import the settings.": [
         "Die Einstellungen konnten nicht importiert werden."
@@ -159,6 +195,12 @@
       ],
       "Could not save.": [
         "Konnte nicht speichern."
+      ],
+      "Could not start the connection.": [
+        "Konnte die Verbindung nicht starten."
+      ],
+      "Could not sync your numbers.": [
+        "Konnte Ihre Nummern nicht synchronisieren."
       ],
       "Could not update the connection.": [
         "Konnte die Verbindung nicht aktualisieren."
@@ -190,17 +232,26 @@
       "Defines the endpoint used to send text messages through the Proxy API.": [
         "Definiert den Endpunkt, der verwendet wird, um Textnachrichten über die Proxy-API zu senden."
       ],
+      "Deprecated": [
+        "Veraltet"
+      ],
       "Description (optional)": [
         "Beschreibung (optional)"
       ],
       "Diagnostics": [
         "Diagnose"
       ],
+      "Disconnect": [
+        "Trennen"
+      ],
       "Disconnected": [
         "Getrennt"
       ],
       "Display mode": [
         "Anzeigemodus"
+      ],
+      "Download the plugin configuration as a JSON file or import it on another site. API keys are not included in the export.": [
+        "Laden Sie die Plugin-Konfiguration als JSON-Datei herunter oder importieren Sie sie auf einer anderen Seite. API-Schlüssel sind nicht im Export enthalten."
       ],
       "Edit": [
         "Bearbeiten"
@@ -222,6 +273,9 @@
       ],
       "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
         "Geben Sie eine Telefonnummer ein, um Testnachrichten vom Builder zu erhalten. Verwenden Sie das internationale Format und nur Zahlen."
+      ],
+      "Enter a token manually": [
+        "Token manuell eingeben"
       ],
       "Enter phone number": [
         "Telefonnummer eingeben"
@@ -280,6 +334,9 @@
       "Generate a new key to authenticate Proxy API calls.": [
         "Generiere einen neuen Schlüssel zur Authentifizierung von Proxy-API-Aufrufen."
       ],
+      "Get a key on the Joinotify panel": [
+        "Holen Sie sich einen Schlüssel im Joinotify-Panel"
+      ],
       "Group by category": [
         "Nach Kategorie gruppieren"
       ],
@@ -288,6 +345,9 @@
       ],
       "Help Center": [
         "Hilfe-Center"
+      ],
+      "Hide manual token": [
+        "Manuellen Token ausblenden"
       ],
       "Hook": [
         "Haken"
@@ -343,6 +403,9 @@
       "Label (optional)": [
         "Bezeichnung (optional)"
       ],
+      "Last synced:": [
+        "Zuletzt synchronisiert:"
+      ],
       "latest post": [
         "neuester Beitrag"
       ],
@@ -376,6 +439,9 @@
       "Message sent.": [
         "Nachricht gesendet."
       ],
+      "Messages cannot be delivered until this site is connected.": [
+        "Nachrichten können nicht zugestellt werden, bis diese Seite verbunden ist."
+      ],
       "Meta key": [
         "Meta-Schlüssel"
       ],
@@ -393,6 +459,9 @@
       ],
       "No meta keys were found for this entity.": [
         "Keine Metaschlüssel für dieses Element gefunden."
+      ],
+      "No number imported yet. Sync to bring in the numbers connected on your Joinotify account.": [
+        "Noch keine Nummer importiert. Synchronisieren, um die mit Ihrem Joinotify-Konto verbundenen Nummern zu bringen."
       ],
       "No options available": [
         "Keine Optionen verfügbar"
@@ -412,11 +481,29 @@
       "Notice": [
         "Hinweis"
       ],
+      "Numbers synced.": [
+        "Nummern synchronisiert."
+      ],
       "ok": [
         "ok"
       ],
+      "Only the public prefix of your key is shown. Remove it to connect a different account.": [
+        "Nur das öffentliche Präfix Ihres Schlüssels wird angezeigt. Entfernen Sie es, um ein anderes Konto zu verbinden."
+      ],
+      "Open panel": [
+        "Panel öffnen"
+      ],
+      "Open the panel": [
+        "Panel öffnen"
+      ],
+      "Open WordPress updates": [
+        "WordPress-Updates öffnen"
+      ],
       "Options have been reset.": [
         "Optionen wurden zurückgesetzt."
+      ],
+      "Paste the API key issued for this site on the Joinotify panel.": [
+        "Fügen Sie den API-Schlüssel ein, der für diese Site im Joinotify-Panel ausgegeben wurde."
       ],
       "Phone number that will receive the test WhatsApp message.": [
         "Telefonnummer, die die Test-WhatsApp-Nachricht empfangen wird."
@@ -448,6 +535,9 @@
       "Product SKU": [
         "Produkt SKU"
       ],
+      "Re-import from Joinotify": [
+        "Erneut von Joinotify importieren"
+      ],
       "Recipient": [
         "Empfänger"
       ],
@@ -478,11 +568,20 @@
       "Remove": [
         "Entfernen"
       ],
+      "Remove key": [
+        "Schlüssel entfernen"
+      ],
       "Remove sender": [
         "Absender entfernen"
       ],
       "Remove variable": [
         "Variable entfernen"
+      ],
+      "Removing the key stops all message delivery from this site. The numbers already imported are kept.": [
+        "Das Entfernen des Schlüssels stoppt die gesamte Nachrichtenübermittlung von dieser Seite. Die bereits importierten Nummern bleiben erhalten."
+      ],
+      "Removing…": [
+        "Entferne…"
       ],
       "Request": [
         "Anfrage"
@@ -507,6 +606,9 @@
       ],
       "Saved": [
         "Gespeichert"
+      ],
+      "Saved Joinotify API key": [
+        "Gespeicherter Joinotify-API-Schlüssel"
       ],
       "Saving…": [
         "Wird gespeichert…"
@@ -562,6 +664,9 @@
       "Sender removed.": [
         "Absender entfernt."
       ],
+      "Sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls these endpoints, then turn this option off.": [
+        "Das Senden erfolgt ausschließlich über die Joinotify-API, über die offizielle WhatsApp Cloud-API. Migrieren Sie alle Integrationen, die noch diese Endpunkte aufrufen, und schalten Sie dann diese Option aus."
+      ],
       "Server": [
         "Server"
       ],
@@ -601,6 +706,9 @@
       "Step 2: Enter the verification code.": [
         "Schritt 2: Geben Sie den Bestätigungscode ein."
       ],
+      "Sync numbers from Joinotify": [
+        "Nummern von Joinotify synchronisieren"
+      ],
       "System status:": [
         "Systemstatus:"
       ],
@@ -613,6 +721,9 @@
       "Text message route": [
         "Textnachrichtenroute"
       ],
+      "That connection is being discontinued. Connect your Joinotify account in Settings → General → WhatsApp Cloud API to move to the official WhatsApp Cloud API before it is switched off.": [
+        "Diese Verbindung wird eingestellt. Verbinden Sie Ihr Joinotify-Konto in Einstellungen → Allgemein → WhatsApp Cloud API, um zur offiziellen WhatsApp Cloud API zu wechseln, bevor sie abgeschaltet wird."
+      ],
       "The configuration in the file will be merged into your current settings. This cannot be undone.": [
         "Die Konfiguration in der Datei wird mit Ihren aktuellen Einstellungen zusammengeführt. Dies kann nicht rückgängig gemacht werden."
       ],
@@ -622,6 +733,12 @@
       "The message is prefilled and can be adjusted before sending the test.": [
         "Die Nachricht ist vorausgefüllt und kann vor dem Senden des Tests angepasst werden."
       ],
+      "The Proxy API is deprecated and will be removed soon.": [
+        "Die Proxy-API ist veraltet und wird bald entfernt."
+      ],
+      "These routes keep working for now, but sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls them.": [
+        "Diese Routen funktionieren vorerst weiter, senden jedoch ausschließlich an die Joinotify-API über die offizielle WhatsApp Cloud API. Migrieren Sie alle Integrationen, die sie noch aufrufen."
+      ],
       "This integration depends on an installed and active plugin.": [
         "Diese Integration hängt von einem installierten und aktiven Plugin ab."
       ],
@@ -630,6 +747,9 @@
       ],
       "This integration will be available soon.": [
         "Diese Integration wird bald verfügbar sein."
+      ],
+      "This site still delivers through the legacy relay.": [
+        "Diese Seite liefert weiterhin über das alte Relay."
       ],
       "This text variable may not work in this context": [
         "Diese Textvariable funktioniert möglicherweise nicht in diesem Kontext"
@@ -654,6 +774,9 @@
       ],
       "Update variable": [
         "Variable aktualisieren"
+      ],
+      "Updates are delivered by WordPress itself, together with every other plugin on this site.": [
+        "Updates werden von WordPress selbst geliefert, zusammen mit jedem anderen Plugin auf dieser Seite."
       ],
       "Updating…": [
         "Aktualisiere…"
@@ -693,6 +816,12 @@
       ],
       "You are currently using version": [
         "Sie verwenden derzeit die Version"
+      ],
+      "Your Joinotify account is connected.": [
+        "Ihr Joinotify-Konto ist verbunden."
+      ],
+      "Your numbers are connected on the Joinotify panel. Sync to import them here, along with their verified name, quality rating and 24-hour messaging limit.": [
+        "Ihre Nummern sind im Joinotify-Panel verbunden. Synchronisieren Sie, um sie hier zu importieren, zusammen mit ihrem verifizierten Namen, Qualitätsbewertung und 24-Stunden-Nachrichtengrenze."
       ]
     }
   }

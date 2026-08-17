@@ -16,6 +16,9 @@
       "{{ wc_billing_email }} or customer@example.com": [
         "{{ wc_billing_email }} oder customer@example.com"
       ],
+      "{{ wc_billing_first_name }} or a fixed value": [
+        "{{ wc_billing_first_name }} oder einen festen Wert"
+      ],
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} oder +5511999990000"
       ],
@@ -145,6 +148,9 @@
       "API client not initialized.": [
         "API-Client nicht initialisiert."
       ],
+      "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window.": [
+        "Genehmigte Vorlagen Ihres WhatsApp Business-Kontos. Nur diese können außerhalb des 24-Stunden-Fensters geliefert werden."
+      ],
       "at": [
         "bei"
       ],
@@ -172,6 +178,9 @@
       "Back to dashboard": [
         "Zurück zum Dashboard"
       ],
+      "Body": [
+        "Inhalt"
+      ],
       "Bold": [
         "Fett"
       ],
@@ -183,6 +192,9 @@
       ],
       "Builder": [
         "Builder"
+      ],
+      "Button": [
+        "Schaltfläche"
       ],
       "Cancel": [
         "Abbrechen"
@@ -274,6 +286,9 @@
       "Could not load workflow.": [
         "Der Workflow konnte nicht geladen werden."
       ],
+      "Could not load your message templates.": [
+        "Konnte Ihre Nachrichtenvorlagen nicht laden."
+      ],
       "Could not read the selected file.": [
         "Die ausgewählte Datei konnte nicht gelesen werden."
       ],
@@ -288,6 +303,9 @@
       ],
       "Could not save the workflow.": [
         "Konnte den Workflow nicht speichern."
+      ],
+      "Could not sync your message templates.": [
+        "Konnte Ihre Nachrichtenvorlagen nicht synchronisieren."
       ],
       "Could not update the workflow status.": [
         "Konnte den Workflow-Status nicht aktualisieren."
@@ -457,6 +475,9 @@
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "z.B. Schreiben Sie eine einzeilige Begrüßung für {{ wc_billing_first_name }}."
       ],
+      "Each template variable is filled at send time with the placeholder you map here.": [
+        "Jede Vorlagenvariable wird zum Zeitpunkt des Sendens mit dem Platzhalter ausgefüllt, den Sie hier zuordnen."
+      ],
       "Edit workflow title": [
         "Titel des Workflows bearbeiten"
       ],
@@ -571,6 +592,9 @@
       "Generate workflow": [
         "Generiere Workflow"
       ],
+      "Header": [
+        "Kopfzeile"
+      ],
       "Hours": [
         "Stunden"
       ],
@@ -676,6 +700,9 @@
       "Loading senders...": [
         "Sender werden geladen..."
       ],
+      "Loading templates…": [
+        "Vorlagen werden geladen…"
+      ],
       "Loading the builder": [
         "Den Builder laden"
       ],
@@ -721,8 +748,17 @@
       "Message": [
         "Nachricht"
       ],
+      "Meta disabled this template. It can no longer be sent.": [
+        "Meta hat diese Vorlage deaktiviert. Sie kann nicht mehr gesendet werden."
+      ],
       "Meta key": [
         "Meta-Schlüssel"
+      ],
+      "Meta paused this template because of low quality. It will not be delivered until it recovers.": [
+        "Meta hat diese Vorlage wegen geringer Qualität pausiert. Sie wird nicht zugestellt, bis sie sich erholt."
+      ],
+      "Meta rejected this template.": [
+        "Meta hat diese Vorlage abgelehnt."
       ],
       "Minutes": [
         "Minuten"
@@ -774,6 +810,9 @@
       ],
       "No products selected yet.": [
         "Noch keine Produkte ausgewählt."
+      ],
+      "No template found. Create one on the Joinotify panel and approve it with Meta first.": [
+        "Keine Vorlage gefunden. Erstellen Sie eine im Joinotify-Panel und genehmigen Sie sie zuerst bei Meta."
       ],
       "No templates available.": [
         "Keine Vorlagen verfügbar."
@@ -1018,6 +1057,9 @@
       "Select a node to edit its settings.": [
         "Wählen Sie einen Knoten aus, um dessen Einstellungen zu bearbeiten."
       ],
+      "Select a template": [
+        "Wählen Sie eine Vorlage"
+      ],
       "Select a value": [
         "Wert auswählen"
       ],
@@ -1047,6 +1089,9 @@
       ],
       "Send a WhatsApp text message.": [
         "Senden Sie eine WhatsApp-Textnachricht."
+      ],
+      "Send an approved template through the official WhatsApp Cloud API.": [
+        "Senden Sie eine genehmigte Vorlage über die offizielle WhatsApp Cloud-API."
       ],
       "Send an e-mail notification through Resend.": [
         "Senden Sie eine E-Mail-Benachrichtigung über Resend."
@@ -1089,6 +1134,12 @@
       ],
       "Subject": [
         "Betreff"
+      ],
+      "Sync now": [
+        "Jetzt synchronisieren"
+      ],
+      "Syncing…": [
+        "Synchronisiere…"
       ],
       "System message": [
         "Systemnachricht"
@@ -1158,6 +1209,12 @@
       ],
       "This delay uses scheduled execution. The workflow environment does not report cron as available.": [
         "Diese Verzögerung verwendet eine geplante Ausführung. Die Workflow-Umgebung meldet cron nicht als verfügbar."
+      ],
+      "This list may be out of date.": [
+        "Diese Liste könnte veraltet sein."
+      ],
+      "This template is still awaiting Meta approval and cannot be delivered yet.": [
+        "Diese Vorlage wartet noch auf die Genehmigung von Meta und kann noch nicht geliefert werden."
       ],
       "This text variable may not work in this context": [
         "Diese Textvariable funktioniert möglicherweise nicht in diesem Kontext"
@@ -1273,6 +1330,9 @@
       "Variable name": [
         "Variablenname"
       ],
+      "Variables": [
+        "Variablen"
+      ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "Variablen werden durch echte Daten ersetzt, wenn die Nachricht gesendet wird. Klicken Sie auf eine, um sie einzufügen."
       ],
@@ -1297,6 +1357,12 @@
       "WhatsApp number that will send the message.": [
         "WhatsApp-Nummer, die die Nachricht sendet."
       ],
+      "WhatsApp number that will send the template.": [
+        "WhatsApp-Nummer, die die Vorlage senden wird."
+      ],
+      "WhatsApp template message": [
+        "WhatsApp-Vorlagennachricht"
+      ],
       "WhatsApp text message": [
         "WhatsApp-Textnachricht"
       ],
@@ -1305,6 +1371,9 @@
       ],
       "WhatsApp: Media message": [
         "WhatsApp: Mediennachricht"
+      ],
+      "WhatsApp: Template message": [
+        "WhatsApp: Vorlagennachricht"
       ],
       "WhatsApp: Text message": [
         "WhatsApp: Textnachricht"

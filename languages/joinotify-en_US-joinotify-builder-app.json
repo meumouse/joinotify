@@ -16,6 +16,9 @@
       "{{ wc_billing_email }} or customer@example.com": [
         "{{ wc_billing_email }} or customer@example.com"
       ],
+      "{{ wc_billing_first_name }} or a fixed value": [
+        "{{ wc_billing_first_name }} or a fixed value"
+      ],
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} or +5511999990000"
       ],
@@ -152,6 +155,9 @@
       "API client not initialized.": [
         "API client not initialized."
       ],
+      "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window.": [
+        "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window."
+      ],
       "at": [
         "at"
       ],
@@ -179,6 +185,9 @@
       "Back to dashboard": [
         "Back to dashboard"
       ],
+      "Body": [
+        "Body"
+      ],
       "Bold": [
         "Bold"
       ],
@@ -190,6 +199,9 @@
       ],
       "Builder": [
         "Builder"
+      ],
+      "Button": [
+        "Button"
       ],
       "Cancel": [
         "Cancel"
@@ -281,6 +293,9 @@
       "Could not load workflow.": [
         "Could not load workflow."
       ],
+      "Could not load your message templates.": [
+        "Could not load your message templates."
+      ],
       "Could not read the selected file.": [
         "Could not read the selected file."
       ],
@@ -295,6 +310,9 @@
       ],
       "Could not save the workflow.": [
         "Could not save the workflow."
+      ],
+      "Could not sync your message templates.": [
+        "Could not sync your message templates."
       ],
       "Could not update the workflow status.": [
         "Could not update the workflow status."
@@ -464,6 +482,9 @@
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
       ],
+      "Each template variable is filled at send time with the placeholder you map here.": [
+        "Each template variable is filled at send time with the placeholder you map here."
+      ],
       "Edit workflow title": [
         "Edit workflow title"
       ],
@@ -578,6 +599,9 @@
       "Generate workflow": [
         "Generate workflow"
       ],
+      "Header": [
+        "Header"
+      ],
       "Hours": [
         "Hours"
       ],
@@ -683,6 +707,9 @@
       "Loading senders...": [
         "Loading senders..."
       ],
+      "Loading templates…": [
+        "Loading templates…"
+      ],
       "Loading the builder": [
         "Loading the builder"
       ],
@@ -728,8 +755,17 @@
       "Message": [
         "Message"
       ],
+      "Meta disabled this template. It can no longer be sent.": [
+        "Meta disabled this template. It can no longer be sent."
+      ],
       "Meta key": [
         "Meta key"
+      ],
+      "Meta paused this template because of low quality. It will not be delivered until it recovers.": [
+        "Meta paused this template because of low quality. It will not be delivered until it recovers."
+      ],
+      "Meta rejected this template.": [
+        "Meta rejected this template."
       ],
       "Minutes": [
         "Minutes"
@@ -781,6 +817,9 @@
       ],
       "No products selected yet.": [
         "No products selected yet."
+      ],
+      "No template found. Create one on the Joinotify panel and approve it with Meta first.": [
+        "No template found. Create one on the Joinotify panel and approve it with Meta first."
       ],
       "No templates available.": [
         "No templates available."
@@ -1025,6 +1064,9 @@
       "Select a node to edit its settings.": [
         "Select a node to edit its settings."
       ],
+      "Select a template": [
+        "Select a template"
+      ],
       "Select a value": [
         "Select a value"
       ],
@@ -1054,6 +1096,9 @@
       ],
       "Send a WhatsApp text message.": [
         "Send a WhatsApp text message."
+      ],
+      "Send an approved template through the official WhatsApp Cloud API.": [
+        "Send an approved template through the official WhatsApp Cloud API."
       ],
       "Send an e-mail notification through Resend.": [
         "Send an e-mail notification through Resend."
@@ -1096,6 +1141,12 @@
       ],
       "Subject": [
         "Subject"
+      ],
+      "Sync now": [
+        "Sync now"
+      ],
+      "Syncing…": [
+        "Syncing…"
       ],
       "System message": [
         "System message"
@@ -1165,6 +1216,12 @@
       ],
       "This delay uses scheduled execution. The workflow environment does not report cron as available.": [
         "This delay uses scheduled execution. The workflow environment does not report cron as available."
+      ],
+      "This list may be out of date.": [
+        "This list may be out of date."
+      ],
+      "This template is still awaiting Meta approval and cannot be delivered yet.": [
+        "This template is still awaiting Meta approval and cannot be delivered yet."
       ],
       "This text variable may not work in this context": [
         "This text variable may not work in this context"
@@ -1280,6 +1337,9 @@
       "Variable name": [
         "Variable name"
       ],
+      "Variables": [
+        "Variables"
+      ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "Variables are replaced with real data when the message is sent. Click one to insert it."
       ],
@@ -1304,6 +1364,12 @@
       "WhatsApp number that will send the message.": [
         "WhatsApp number that will send the message."
       ],
+      "WhatsApp number that will send the template.": [
+        "WhatsApp number that will send the template."
+      ],
+      "WhatsApp template message": [
+        "WhatsApp template message"
+      ],
       "WhatsApp text message": [
         "WhatsApp text message"
       ],
@@ -1312,6 +1378,9 @@
       ],
       "WhatsApp: Media message": [
         "WhatsApp: Media message"
+      ],
+      "WhatsApp: Template message": [
+        "WhatsApp: Template message"
       ],
       "WhatsApp: Text message": [
         "WhatsApp: Text message"
