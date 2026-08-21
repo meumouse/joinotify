@@ -175,6 +175,9 @@
       "Could not import the settings.": [
         "Não foi possível importar as configurações."
       ],
+      "Could not load your message templates.": [
+        "Não foi possível carregar seus modelos de mensagem."
+      ],
       "Could not open the logs.": [
         "Não foi possível abrir os registros."
       ],
@@ -198,6 +201,9 @@
       ],
       "Could not start the connection.": [
         "Não foi possível iniciar a conexão."
+      ],
+      "Could not sync your message templates.": [
+        "Não foi possível sincronizar seus modelos de mensagem."
       ],
       "Could not sync your numbers.": [
         "Não foi possível sincronizar seus números."
@@ -702,6 +708,9 @@
       ],
       "Sync numbers from Joinotify": [
         "Sincronizar números do Joinotify"
+      ],
+      "Syncing…": [
+        "Sincronizando…"
       ],
       "System status:": [
         "Estado do sistema:"

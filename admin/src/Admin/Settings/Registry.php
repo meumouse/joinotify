@@ -763,6 +763,7 @@ class Registry {
             'color-picker-field',
             'color-scale',
             'color-scale-field',
+            'whatsapp-template-select',
         );
     }
 

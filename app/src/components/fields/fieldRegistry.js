@@ -22,6 +22,7 @@ import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
 import CloudConnectField from './CloudConnectField.vue';
 import JoinotifyApiKeyField from './JoinotifyApiKeyField.vue';
+import WhatsappTemplateField from './WhatsappTemplateField.vue';
 
 const registry = new Map();
 
@@ -65,6 +66,7 @@ registerAlias('rich-text', RichTextAreaField);
 registerAlias('rich-text-area', RichTextAreaField);
 registerAlias('select', SelectField);
 registerAlias('phone', PhoneField);
+registerAlias('whatsapp-template-select', WhatsappTemplateField);
 registerAlias('input-group', InputGroupField);
 registerAlias('input-group-field', InputGroupField);
 registerAlias('input-button', InputButtonField);

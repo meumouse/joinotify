@@ -221,7 +221,7 @@ msgstr ""
 msgid "90 days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1497
+#: admin/src/Admin/Builder/Registry.php:1547
 msgid "A condition is missing its branches."
 msgstr ""
 
@@ -656,7 +656,7 @@ msgstr ""
 msgid "Already have an account?"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:379
+#: admin/src/Admin/Builder/Registry.php:429
 #: app/src/builder/actions/definitions/timeDelay.ts:61
 #: app/src/builder/actions/definitions/timeDelay.ts:89
 #: app/src/builder/actions/definitions/timeDelay.ts:96
@@ -727,6 +727,13 @@ msgstr ""
 
 #: app/src/components/workflows/BulkActions.vue:56
 msgid "Apply"
+msgstr ""
+
+#: admin/src/Integrations/Otp_Login.php:185
+msgid ""
+"Approved AUTHENTICATION template used to deliver login codes over the "
+"WhatsApp Cloud API. Create it in the Joinotify panel; this list is synced "
+"from your account. Required on that transport, ignored on the legacy relay."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:265
@@ -1375,7 +1382,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:511
+#: admin/src/Admin/Builder/Registry.php:561
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:106
@@ -1389,7 +1396,7 @@ msgstr ""
 msgid "Condition rule"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:415
+#: admin/src/Admin/Builder/Registry.php:465
 #: app/src/builder/actions/definitions/condition.ts:121
 #: app/src/builder/actions/definitions/condition.ts:132
 #: app/src/builder/actions/settings/ConditionSettings.vue:180
@@ -1477,7 +1484,7 @@ msgstr ""
 msgid "Connect your Joinotify account before syncing numbers."
 msgstr ""
 
-#: admin/src/Api/Template_Repository.php:70
+#: admin/src/Api/Template_Repository.php:81
 msgid "Connect your Joinotify account to load message templates."
 msgstr ""
 
@@ -1529,7 +1536,7 @@ msgstr ""
 msgid "Contact phone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1590
+#: admin/src/Admin/Builder/Registry.php:1640
 msgid "Contains"
 msgstr ""
 
@@ -1586,7 +1593,7 @@ msgstr ""
 msgid "Could not clear the queue."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:93
+#: admin/src/Admin/Builder/Registry.php:95
 #: admin/src/Admin/Settings/Registry.php:687
 msgid "Could not complete the operation."
 msgstr ""
@@ -1670,6 +1677,7 @@ msgid "Could not load workflows."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:183
+#: app/src/components/fields/WhatsappTemplateField.vue:112
 msgid "Could not load your message templates."
 msgstr ""
 
@@ -1770,6 +1778,7 @@ msgid "Could not start the connection."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:213
+#: app/src/components/fields/WhatsappTemplateField.vue:143
 msgid "Could not sync your message templates."
 msgstr ""
 
@@ -1859,11 +1868,11 @@ msgid ""
 "flow builder."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:87
+#: admin/src/Admin/Builder/Registry.php:89
 msgid "Create from scratch"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:88
+#: admin/src/Admin/Builder/Registry.php:90
 #: admin/src/Builder/Workflow_Manager.php:130
 msgid "Create from template"
 msgstr ""
@@ -1938,15 +1947,15 @@ msgstr ""
 msgid "Curaçao"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:28
+#: app/src/components/settings/NodeSettingsRenderer.vue:29
 msgid "Current item value (file/product name or list entry)."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:30
+#: app/src/components/settings/NodeSettingsRenderer.vue:31
 msgid "Current iteration index, starting at 0."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:29
+#: app/src/components/settings/NodeSettingsRenderer.vue:30
 msgid "Current iteration number, starting at 1."
 msgstr ""
 
@@ -1997,8 +2006,8 @@ msgstr ""
 msgid "Danger zone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:373
-#: admin/src/Admin/Builder/Registry.php:401
+#: admin/src/Admin/Builder/Registry.php:423
+#: admin/src/Admin/Builder/Registry.php:451
 #: app/src/builder/actions/definitions/timeDelay.ts:58
 #: app/src/builder/actions/definitions/timeDelay.ts:71
 #: app/src/builder/actions/definitions/timeDelay.ts:82
@@ -2024,7 +2033,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:393
+#: admin/src/Admin/Builder/Registry.php:443
 #: app/src/builder/actions/definitions/timeDelay.ts:66
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:46
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:38
@@ -2119,7 +2128,7 @@ msgid ""
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:499
+#: admin/src/Admin/Builder/Registry.php:549
 #: admin/src/Builder/Actions.php:32
 #: app/src/builder/actions/definitions/timeDelay.ts:31
 #: app/src/builder/actions/definitions/timeDelay.ts:46
@@ -2133,7 +2142,7 @@ msgstr ""
 msgid "Delay mode"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:368
+#: admin/src/Admin/Builder/Registry.php:418
 #: app/src/builder/actions/definitions/timeDelay.ts:56
 msgid "Delay type"
 msgstr ""
@@ -2261,7 +2270,7 @@ msgstr ""
 msgid "Diagnostics"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:33
+#: app/src/components/settings/NodeSettingsRenderer.vue:34
 msgid "Digital file download link (order files loop)."
 msgstr ""
 
@@ -2269,7 +2278,7 @@ msgstr ""
 msgid "Digital file downloaded"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:32
+#: app/src/components/settings/NodeSettingsRenderer.vue:33
 msgid "Digital file name (order files loop)."
 msgstr ""
 
@@ -2299,7 +2308,7 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:553
+#: admin/src/Admin/Builder/Registry.php:603
 #: admin/src/Integrations/Woocommerce.php:1216
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
@@ -2359,7 +2368,7 @@ msgstr ""
 msgid "Doe"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1591
+#: admin/src/Admin/Builder/Registry.php:1641
 msgid "Does not contain"
 msgstr ""
 
@@ -2822,7 +2831,7 @@ msgstr ""
 msgid "Federated States of Micronesia"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:427
+#: admin/src/Admin/Builder/Registry.php:477
 #: app/src/builder/actions/definitions/condition.ts:123
 #: app/src/builder/actions/settings/ConditionSettings.vue:209
 msgid "Field ID"
@@ -3113,7 +3122,7 @@ msgstr ""
 msgid "Go to settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1594
+#: admin/src/Admin/Builder/Registry.php:1644
 msgid "Greater than"
 msgstr ""
 
@@ -3231,7 +3240,7 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:392
+#: admin/src/Admin/Builder/Registry.php:442
 #: app/src/builder/actions/definitions/timeDelay.ts:65
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:45
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:37
@@ -3269,6 +3278,12 @@ msgstr ""
 #: admin/src/Integrations/Whatsapp_Interactive.php:153
 #: admin/src/Integrations/Whatsapp_Interactive.php:184
 msgid "Identifier"
+msgstr ""
+
+#: app/src/builder/components/base/SessionWindowNotice.vue:91
+msgid ""
+"If this workflow starts the conversation, put a “WhatsApp: Template "
+"message” step before this one to open the window."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:163
@@ -3312,7 +3327,7 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:89
+#: admin/src/Admin/Builder/Registry.php:91
 #: app/src/components/builder/BuilderImportModal.vue:27
 msgid "Import template"
 msgstr ""
@@ -3321,7 +3336,7 @@ msgstr ""
 msgid "Import workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1221
+#: admin/src/Admin/Builder/Registry.php:1271
 #. translators: %s: random number appended to the imported automation name
 msgid "Imported automation #%s"
 msgstr ""
@@ -3402,7 +3417,7 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:902
+#: admin/src/Admin/Settings/Registry.php:903
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
@@ -3520,19 +3535,19 @@ msgstr ""
 msgid "Irreversible actions for clearing configuration and logs."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1592
+#: admin/src/Admin/Builder/Registry.php:1642
 msgid "Is empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1588
+#: admin/src/Admin/Builder/Registry.php:1638
 msgid "Is equal to"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1593
+#: admin/src/Admin/Builder/Registry.php:1643
 msgid "Is not empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1589
+#: admin/src/Admin/Builder/Registry.php:1639
 msgid "Is not equal to"
 msgstr ""
 
@@ -3649,7 +3664,7 @@ msgid ""
 "gets the first automation running in a couple of minutes."
 msgstr ""
 
-#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:92
+#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:93
 msgid "Joinotify messaging helpers are unavailable."
 msgstr ""
 
@@ -3719,10 +3734,6 @@ msgstr ""
 msgid "Label (optional)"
 msgstr ""
 
-#: admin/src/Integrations/Otp_Login.php:192
-msgid "Language code the template was approved in, for example pt_BR or en_US."
-msgstr ""
-
 #: admin/src/Validations/Country_Codes.php:203
 msgid "Lao"
 msgstr ""
@@ -3780,7 +3791,7 @@ msgstr ""
 msgid "Lesotho"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1595
+#: admin/src/Admin/Builder/Registry.php:1645
 msgid "Less than"
 msgstr ""
 
@@ -3834,7 +3845,7 @@ msgstr ""
 msgid "Load keys"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:90
+#: admin/src/Admin/Builder/Registry.php:92
 msgid "Load workflow"
 msgstr ""
 
@@ -3901,7 +3912,7 @@ msgstr ""
 msgid "Log in with WhatsApp"
 msgstr ""
 
-#: admin/src/Integrations/Otp_Login.php:183
+#: admin/src/Integrations/Otp_Login.php:184
 msgid "Login code template"
 msgstr ""
 
@@ -4186,7 +4197,7 @@ msgstr ""
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:432
+#: admin/src/Admin/Builder/Registry.php:482
 #: app/src/builder/actions/definitions/condition.ts:124
 #: app/src/builder/actions/settings/ConditionSettings.vue:203
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
@@ -4219,7 +4230,7 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:391
+#: admin/src/Admin/Builder/Registry.php:441
 #: app/src/builder/actions/definitions/timeDelay.ts:64
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:44
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:36
@@ -4273,7 +4284,7 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:395
+#: admin/src/Admin/Builder/Registry.php:445
 #: app/src/builder/actions/definitions/timeDelay.ts:68
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:48
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:40
@@ -4310,8 +4321,8 @@ msgstr ""
 msgid "My automation"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:108
-#: admin/src/Admin/Builder/Registry.php:1014
+#: admin/src/Admin/Builder/Registry.php:158
+#: admin/src/Admin/Builder/Registry.php:1064
 #. translators: %s: random number appended to the default automation name
 msgid "My automation #%s"
 msgstr ""
@@ -4326,13 +4337,6 @@ msgstr ""
 
 #: app/src/components/workflows/WorkflowTableHeader.vue:35
 msgid "Name"
-msgstr ""
-
-#: admin/src/Integrations/Otp_Login.php:184
-msgid ""
-"Name of the approved AUTHENTICATION template used to deliver login codes "
-"over the WhatsApp Cloud API. Required on that transport, ignored on the "
-"legacy relay."
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:118
@@ -4465,6 +4469,18 @@ msgid ""
 "until one is."
 msgstr ""
 
+#: app/src/components/fields/WhatsappTemplateField.vue:89
+msgid ""
+"No approved template of this type was found on your account. Create it in "
+"the Joinotify panel and sync again."
+msgstr ""
+
+#: app/src/components/fields/WhatsappTemplateField.vue:90
+msgid ""
+"No approved template was found on your account. Create it in the Joinotify "
+"panel and sync again."
+msgstr ""
+
 #: admin/src/Rest/Phone_Candidates.php:65
 #. translators: %s: URL of the phone registration page
 msgid ""
@@ -4534,7 +4550,7 @@ msgstr ""
 msgid "No item purchased."
 msgstr ""
 
-#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:98
+#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:99
 msgid "No Joinotify sender is configured to deliver the code."
 msgstr ""
 
@@ -4654,7 +4670,7 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:783
+#: admin/src/Admin/Settings/Registry.php:784
 msgid "None"
 msgstr ""
 
@@ -4676,6 +4692,10 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:42
 msgid "Norway"
+msgstr ""
+
+#: app/src/components/fields/WhatsappTemplateField.vue:71
+msgid "not found in the account"
 msgstr ""
 
 #: app/src/pages/queue/QueuePage.vue:321
@@ -4727,6 +4747,13 @@ msgstr ""
 msgid "On"
 msgstr ""
 
+#: app/src/builder/components/base/SessionWindowNotice.vue:83
+msgid ""
+"On the official WhatsApp Cloud API, this kind of message only reaches a "
+"contact within 24 hours of their last reply. Outside that window Meta "
+"refuses it."
+msgstr ""
+
 #: app/src/builder/actions/settings/LoopSettings.vue:74
 msgid "One entry per line, or use the delimiter below"
 msgstr ""
@@ -4735,6 +4762,13 @@ msgstr ""
 msgid ""
 "Only conditions and operators supported by the engine for this trigger are "
 "shown."
+msgstr ""
+
+#: admin/src/Integrations/Otp_Login.php:198
+msgid ""
+"Only needed as a fallback: the language is normally taken from the template "
+"picked above. Fill it in if the template is not in the synced list, for "
+"example pt_BR or en_US."
 msgstr ""
 
 #: app/src/components/fields/JoinotifyApiKeyField.vue:195
@@ -4791,7 +4825,7 @@ msgstr ""
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:421
+#: admin/src/Admin/Builder/Registry.php:471
 #: app/src/builder/actions/definitions/condition.ts:122
 #: app/src/builder/actions/definitions/condition.ts:133
 #: app/src/builder/actions/settings/ConditionSettings.vue:187
@@ -5026,8 +5060,8 @@ msgstr ""
 msgid "Percentage discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:372
-#: admin/src/Admin/Builder/Registry.php:387
+#: admin/src/Admin/Builder/Registry.php:422
+#: admin/src/Admin/Builder/Registry.php:437
 #: app/src/builder/actions/definitions/timeDelay.ts:57
 #: app/src/builder/actions/definitions/timeDelay.ts:62
 #: app/src/builder/actions/definitions/timeDelay.ts:90
@@ -5239,7 +5273,7 @@ msgstr ""
 msgid "Processing queue"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:34
+#: app/src/components/settings/NodeSettingsRenderer.vue:35
 msgid "Product name of the current item."
 msgstr ""
 
@@ -5275,11 +5309,11 @@ msgstr ""
 msgid "Public WebP file, up to 100 KB static or 500 KB animated."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:35
+#: app/src/components/settings/NodeSettingsRenderer.vue:36
 msgid "Purchased item name (order items loop)."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:36
+#: app/src/components/settings/NodeSettingsRenderer.vue:37
 msgid "Purchased item quantity (order items loop)."
 msgstr ""
 
@@ -5462,7 +5496,7 @@ msgstr ""
 msgid "Request"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:242
+#: app/src/components/settings/NodeSettingsRenderer.vue:243
 msgid "Required configuration for this trigger to run correctly."
 msgstr ""
 
@@ -5708,7 +5742,7 @@ msgstr ""
 msgid "Saved Joinotify API key"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:86
+#: admin/src/Admin/Builder/Registry.php:88
 msgid "Saving workflow..."
 msgstr ""
 
@@ -5720,7 +5754,7 @@ msgstr ""
 msgid "Saving…"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:374
+#: admin/src/Admin/Builder/Registry.php:424
 #: app/src/builder/actions/definitions/timeDelay.ts:59
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/composables/useProcessingQueue.ts:51
@@ -5824,7 +5858,7 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:390
+#: admin/src/Admin/Builder/Registry.php:440
 #: app/src/builder/actions/definitions/timeDelay.ts:63
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:35
 msgid "Seconds"
@@ -5871,7 +5905,7 @@ msgstr ""
 msgid "Select a digital product"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:276
+#: app/src/components/settings/NodeSettingsRenderer.vue:280
 msgid "Select a node to edit its settings."
 msgstr ""
 
@@ -6124,7 +6158,7 @@ msgstr ""
 msgid "Sending..."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:892
+#: admin/src/Admin/Settings/Registry.php:893
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
@@ -6149,7 +6183,7 @@ msgstr ""
 msgid "Server"
 msgstr ""
 
-#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:133
+#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:134
 msgid ""
 "Set an approved AUTHENTICATION template to deliver login codes through the "
 "WhatsApp Cloud API."
@@ -6368,7 +6402,7 @@ msgstr ""
 msgid "Sticker URL"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:524
+#: admin/src/Admin/Builder/Registry.php:574
 #: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
 msgstr ""
@@ -6438,6 +6472,10 @@ msgstr ""
 msgid "Switzerland"
 msgstr ""
 
+#: app/src/components/fields/WhatsappTemplateField.vue:190
+msgid "Sync"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
 msgid "Sync now"
 msgstr ""
@@ -6446,7 +6484,12 @@ msgstr ""
 msgid "Sync numbers from Joinotify"
 msgstr ""
 
+#: app/src/components/fields/WhatsappTemplateField.vue:177
+msgid "Sync templates with your account"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
+#: app/src/components/fields/WhatsappTemplateField.vue:190
 msgid "Syncing…"
 msgstr ""
 
@@ -6522,7 +6565,7 @@ msgstr ""
 msgid "Template"
 msgstr ""
 
-#: admin/src/Integrations/Otp_Login.php:191
+#: admin/src/Integrations/Otp_Login.php:197
 msgid "Template language"
 msgstr ""
 
@@ -6789,7 +6832,7 @@ msgid ""
 "undone."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1072
+#: admin/src/Admin/Builder/Registry.php:1122
 msgid "The selected template was not found."
 msgstr ""
 
@@ -6807,8 +6850,8 @@ msgstr ""
 msgid "The sender phone number was removed successfully!"
 msgstr ""
 
-#: admin/src/Api/Template_Repository.php:86
-#: admin/src/Api/Template_Repository.php:90
+#: admin/src/Api/Template_Repository.php:100
+#: admin/src/Api/Template_Repository.php:104
 msgid "The templates could not be read."
 msgstr ""
 
@@ -6852,11 +6895,11 @@ msgstr ""
 msgid "The workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1434
+#: admin/src/Admin/Builder/Registry.php:1484
 msgid "The workflow content is invalid."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1454
+#: admin/src/Admin/Builder/Registry.php:1504
 msgid "The workflow has more than one trigger."
 msgstr ""
 
@@ -6864,7 +6907,7 @@ msgstr ""
 msgid "The workflow has no content to test."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1448
+#: admin/src/Admin/Builder/Registry.php:1498
 msgid "The workflow has no trigger."
 msgstr ""
 
@@ -6872,7 +6915,7 @@ msgstr ""
 msgid "The workflow is not published."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1460
+#: admin/src/Admin/Builder/Registry.php:1510
 msgid "The workflow trigger is not configured."
 msgstr ""
 
@@ -6996,6 +7039,10 @@ msgstr ""
 msgid "This site still delivers through the legacy relay."
 msgstr ""
 
+#: app/src/builder/components/base/SessionWindowNotice.vue:80
+msgid "This step needs an open conversation"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:86
 msgid "This template is still awaiting Meta approval and cannot be delivered yet."
 msgstr ""
@@ -7045,7 +7092,7 @@ msgstr ""
 msgid "This trigger fires when a WPForms payment form is processed using PayPal."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:260
+#: app/src/components/settings/NodeSettingsRenderer.vue:261
 msgid ""
 "This trigger has no additional settings. Use “Change trigger” in the node "
 "menu to pick a different one."
@@ -7117,13 +7164,19 @@ msgstr ""
 msgid "This trigger is fired when the user provides your contact on modal"
 msgstr ""
 
+#: app/src/builder/components/base/SessionWindowNotice.vue:87
+msgid ""
+"This workflow already has a template step, which opens the window. Keep it "
+"before this one."
+msgstr ""
+
 #: app/src/pages/builder/BuilderPage.vue:1446
 msgid ""
 "This workflow has unsaved changes. If you leave now, your changes will be "
 "lost."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:406
+#: admin/src/Admin/Builder/Registry.php:456
 #: app/src/builder/actions/definitions/timeDelay.ts:72
 #: app/src/builder/actions/definitions/timeDelay.ts:83
 #: app/src/builder/actions/definitions/timeDelay.ts:91
@@ -7448,7 +7501,7 @@ msgstr ""
 msgid "Too short"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:31
+#: app/src/components/settings/NodeSettingsRenderer.vue:32
 msgid "Total number of items in the collection."
 msgstr ""
 
@@ -7471,7 +7524,7 @@ msgstr ""
 msgid "Trigger no longer available"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:240
+#: app/src/components/settings/NodeSettingsRenderer.vue:241
 msgid "Trigger settings"
 msgstr ""
 
@@ -7551,7 +7604,7 @@ msgstr ""
 msgid "Type at least 2 characters…"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:442
+#: admin/src/Admin/Builder/Registry.php:492
 #: app/src/builder/actions/definitions/condition.ts:126
 msgid "Type label"
 msgstr ""
@@ -7694,7 +7747,7 @@ msgstr ""
 msgid "Use email and password"
 msgstr ""
 
-#: admin/src/Integrations/Otp_Login.php:211
+#: admin/src/Integrations/Otp_Login.php:217
 msgid "Use the first available sender"
 msgstr ""
 
@@ -7772,7 +7825,7 @@ msgstr ""
 msgid "Validation failed."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:437
+#: admin/src/Admin/Builder/Registry.php:487
 #: app/src/builder/actions/definitions/condition.ts:125
 #: app/src/builder/actions/settings/ConditionSettings.vue:223
 #: app/src/builder/actions/settings/ConditionSettings.vue:230
@@ -7963,7 +8016,7 @@ msgstr ""
 msgid "weeks"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:394
+#: admin/src/Admin/Builder/Registry.php:444
 #: app/src/builder/actions/definitions/timeDelay.ts:67
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:47
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
@@ -7985,7 +8038,7 @@ msgstr ""
 
 #: admin/src/Integrations/Whatsapp.php:68
 #: admin/src/Notifications/Channels/Whatsapp_Evolution_Channel.php:47
-#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:46
+#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:47
 msgid "WhatsApp"
 msgstr ""
 
@@ -8053,7 +8106,7 @@ msgstr ""
 msgid "WhatsApp: Location"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:541
+#: admin/src/Admin/Builder/Registry.php:591
 #: admin/src/Integrations/Whatsapp.php:194
 #: app/src/builder/actions/definitions/whatsappMedia.ts:32
 #: app/src/builder/actions/definitions/whatsappMedia.ts:46
@@ -8087,7 +8140,7 @@ msgstr ""
 msgid "WhatsApp: Template message"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:531
+#: admin/src/Admin/Builder/Registry.php:581
 #: admin/src/Integrations/Whatsapp.php:181
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
@@ -8181,7 +8234,7 @@ msgstr ""
 msgid "Workflow API is not available."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:54
+#: admin/src/Admin/Builder/Registry.php:55
 msgid "Workflow builder"
 msgstr ""
 
@@ -8209,9 +8262,9 @@ msgstr ""
 msgid "Workflow not found or invalid post type."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:91
-#: admin/src/Admin/Builder/Registry.php:1122
-#: admin/src/Admin/Builder/Registry.php:1192
+#: admin/src/Admin/Builder/Registry.php:93
+#: admin/src/Admin/Builder/Registry.php:1172
+#: admin/src/Admin/Builder/Registry.php:1242
 #: admin/src/Rest/Builder_Test.php:51
 msgid "Workflow not found."
 msgstr ""
@@ -8220,7 +8273,7 @@ msgstr ""
 msgid "Workflow not saved yet."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1169
+#: admin/src/Admin/Builder/Registry.php:1219
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 
@@ -8228,8 +8281,8 @@ msgstr ""
 msgid "Workflow saved successfully."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:85
-#: admin/src/Admin/Builder/Registry.php:1170
+#: admin/src/Admin/Builder/Registry.php:87
+#: admin/src/Admin/Builder/Registry.php:1220
 msgid "Workflow saved."
 msgstr ""
 
@@ -8292,7 +8345,7 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:396
+#: admin/src/Admin/Builder/Registry.php:446
 #: app/src/builder/actions/definitions/timeDelay.ts:69
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:49
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:41
@@ -8344,7 +8397,7 @@ msgstr ""
 msgid "You do not have permission to edit workflows."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:92
+#: admin/src/Admin/Builder/Registry.php:94
 msgid "You have unsaved changes."
 msgstr ""
 

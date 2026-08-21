@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Admin\Builder;
 
 use MeuMouse\Joinotify\Admin\Settings\Repository;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Actions;
@@ -63,6 +64,7 @@ class Registry {
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
 			'conditions' => self::get_conditions_catalog(),
 			'ai' => AI_Manager::get_routing_config(),
+			'transport' => self::get_transport_state(),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
 				'dashboard_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
@@ -93,6 +95,54 @@ class Registry {
 				'error' => __( 'Could not complete the operation.', 'joinotify' ),
 			),
 		) );
+	}
+
+
+	/**
+	 * Describe the active WhatsApp transport for the builder.
+	 *
+	 * The Cloud API only accepts free-form text inside the 24-hour window a
+	 * contact opens by writing first. A workflow that starts the conversation has
+	 * to lead with an approved template, and the builder says so while the
+	 * workflow is being drawn instead of letting it fail at send time.
+	 *
+	 * @since 2.3.0
+	 * @return array<string,mixed>
+	 */
+	public static function get_transport_state() {
+		$transport = Transport::active_transport();
+
+		/**
+		 * Actions that can only reach a contact whose 24-hour window is open.
+		 *
+		 * Everything the Cloud API treats as free-form: text, media, interactive
+		 * messages, reactions and AI-written copy. The template action is the way
+		 * to open the window, so it is deliberately absent.
+		 *
+		 * @since 2.3.0
+		 * @param array<int,string> $actions Action slugs.
+		 */
+		$free_form_actions = apply_filters( 'Joinotify/Transport/Free_Form_Actions', array(
+			'send_whatsapp_message_text',
+			'send_whatsapp_message_media',
+			'send_whatsapp_ai_message',
+			'send_whatsapp_buttons',
+			'send_whatsapp_list',
+			'send_whatsapp_cta',
+			'send_whatsapp_location',
+			'send_whatsapp_contact',
+			'send_whatsapp_sticker',
+			'send_whatsapp_reaction',
+		) );
+
+		return array(
+			'active' => $transport,
+			'is_cloud' => 'cloud' === $transport,
+			// Free-form content outside the window is refused by Meta on this transport.
+			'requires_template_to_open_window' => 'cloud' === $transport,
+			'template_action' => 'send_whatsapp_message_template',
+			'free_form_actions' => array_values( array_unique( array_filter( (array) $free_form_actions, 'is_string' ) ) ),
+		);
 	}
 
 

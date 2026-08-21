@@ -7,6 +7,7 @@ use MeuMouse\Joinotify\Otp_Login\Otp_Message;
 use MeuMouse\Joinotify\Otp_Login\Settings;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Template_Repository;
 use MeuMouse\Joinotify\Api\Transport;
 
 // Exit if accessed directly.
@@ -133,7 +134,16 @@ class Whatsapp_Channel implements Channel_Interface {
             return new \WP_Error( 'joinotify_otp_no_template', __( 'Set an approved AUTHENTICATION template to deliver login codes through the WhatsApp Cloud API.', 'joinotify' ) );
         }
 
-        $language = trim( (string) Admin::get_setting('otp_login_template_language') );
+        // The language belongs to the template, not to the site: sending a code
+        // the template was not approved in is refused by Meta. Read it from the
+        // synced list and fall back to the setting when the list has no answer.
+        $synced = Template_Repository::find( $template );
+        $language = is_array( $synced ) ? trim( (string) ( $synced['language'] ?? '' ) ) : '';
+
+        if ( '' === $language ) {
+            $language = trim( (string) Admin::get_setting('otp_login_template_language') );
+        }
+
         $language = '' !== $language ? $language : 'pt_BR';
 
         // Meta's AUTHENTICATION templates take the code as the single body

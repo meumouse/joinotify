@@ -39,6 +39,17 @@ class Template_Repository {
      */
     const CACHE_TTL = 900;
 
+    /**
+     * Templates asked for per request.
+     *
+     * The API caps the page at 250; asking for it keeps the picker complete for
+     * accounts with many templates, which would otherwise be cut at the default
+     * page of 100 with no visible sign.
+     *
+     * @var int
+     */
+    const PAGE_SIZE = 250;
+
 
     /**
      * List the templates of a business account.
@@ -73,6 +84,9 @@ class Template_Repository {
         $response = Cloud_Client::list_templates( array(
             'status' => $args['status'] ?? '',
             'waba_id' => $waba_id,
+            // The API pages at 100 by default; ask for the cap so a big account
+            // does not silently lose templates from the picker.
+            'limit' => self::PAGE_SIZE,
             // The mirror maintains itself; only ask the API to hit Meta when the
             // user explicitly asked for fresh data.
             'refresh' => $force,
@@ -102,6 +116,8 @@ class Template_Repository {
 
         $result = array(
             'templates' => $templates,
+            // What the account holds, so a listing cut by the page cap is visible.
+            'total' => isset( $response['total'] ) ? (int) $response['total'] : count( $templates ),
             'waba_id' => (string) ( $response['wabaId'] ?? $waba_id ),
             'synced_at' => (string) ( $response['syncedAt'] ?? '' ),
             'stale' => ! empty( $response['stale'] ),
@@ -115,6 +131,40 @@ class Template_Repository {
         }
 
         return $result;
+    }
+
+
+    /**
+     * Find one synced template by name.
+     *
+     * Reads the local cache only: callers use it on the send path, where a
+     * round trip to the API would delay the message for a detail the cache
+     * almost always has.
+     *
+     * @since 2.3.0
+     * @param string $name | Template name as approved on Meta.
+     * @return array|null Normalized template, or null when it is not cached.
+     */
+    public static function find( $name ) {
+        $name = trim( (string) $name );
+
+        if ( '' === $name ) {
+            return null;
+        }
+
+        $cached = get_transient( self::CACHE_PREFIX . md5( '' ) );
+
+        if ( ! is_array( $cached ) || empty( $cached['templates'] ) ) {
+            return null;
+        }
+
+        foreach ( (array) $cached['templates'] as $template ) {
+            if ( is_array( $template ) && isset( $template['name'] ) && $template['name'] === $name ) {
+                return $template;
+            }
+        }
+
+        return null;
     }
 
 

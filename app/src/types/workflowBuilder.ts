@@ -303,6 +303,14 @@ export interface BuilderBootstrap {
       models: Array<{ value: string; label: string }>;
     }>;
   };
+  transport?: {
+    active?: string;
+    is_cloud?: boolean;
+    /** True when free-form content needs an open 24-hour window to be delivered. */
+    requires_template_to_open_window?: boolean;
+    template_action?: string;
+    free_form_actions?: string[];
+  };
   links?: Record<string, string>;
   permissions?: Record<string, unknown>;
   rest?: Record<string, string>;
