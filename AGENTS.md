@@ -42,7 +42,7 @@ Read this **before editing anything**.
 A WordPress plugin that builds **WhatsApp message automation workflows** in a visual drag-and-drop
 builder. It connects site triggers (WooCommerce, forms, user actions) to actions (send WhatsApp,
 conditions, delays, AI, etc.). Current version in [`joinotify.php`](joinotify.php) (`Version:`),
-PHP **7.4+**, Node **18+**.
+WordPress **7.0+**, PHP **8.1+**, Node **18+**.
 
 ---
 
@@ -72,7 +72,7 @@ joinotify/
 ├── joinotify.php          # Bootstrap: loads Composer autoloader + instantiates Core\Init
 ├── admin/                 # PHP BACKEND (PSR-4, namespace MeuMouse\Joinotify\ → admin/src/)
 │   ├── src/
-│   │   ├── AI/            #   AI-driven workflow generation (+ Providers: OpenAI, Anthropic...)
+│   │   ├── AI/            #   AI-driven workflow generation (via the WordPress AI Client)
 │   │   ├── Admin/         #   Server-side screens/settings/builder, Workflow_Migrator, Queue, History
 │   │   ├── Api/           #   Send Controller, Extensions (extension facade)
 │   │   ├── Assets/        #   Asset registration (reads the Vite manifest)
@@ -248,17 +248,19 @@ Orchestrated by [`scripts/build.mjs`](scripts/build.mjs), from the root:
 
 Full build order: **frontend → composer `--no-dev` → translations → staging → ZIP.** Flags:
 `--skip-app`, `--skip-composer`, `--skip-translations`, `--translate`, `--engine=<name>`,
-`--no-install`, `--no-zip`, `--pot-only`. Initial setup: `cd app && npm install`;
+`--no-install`, `--no-zip`, `--ship-locales`. Initial setup: `cd app && npm install`;
 `cd languages && npm install`; `cd admin && composer install`; `npm install` at the root.
 
 The build refuses to run when `joinotify.php` (header and `$plugin_version`), the `Stable tag` in
 `readme.txt` and `package.json` disagree — the gate lives in
 [`scripts/version.mjs`](scripts/version.mjs) and the SVN deploy shares it.
 
-**The compiled locales ship with the package.** WordPress prefers a language pack from
-translate.wordpress.org when one exists, so they are a fallback — but the only one users get until
-the strings are imported and approved there. `--pot-only` drops them, and is only worth reaching for
-if the ZIP approaches the 10 MB submission limit.
+**Only `joinotify.pot` ships.** WordPress.org generates and delivers every locale from
+translate.wordpress.org, and the plugin review team asks that packages not duplicate that channel,
+so the compiled catalogues (`.po`/`.mo`/`.l10n.php`/`.json`) stay out of the ZIP. Until the strings
+are imported and approved there, non-English installs fall back to English. `--ship-locales` builds
+a package that carries them, which is what installs outside the directory need — they get no
+language packs.
 
 ### Publishing to WordPress.org
 

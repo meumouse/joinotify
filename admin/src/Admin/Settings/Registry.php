@@ -12,6 +12,7 @@ use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
 use MeuMouse\Joinotify\AI\Provider_Registry;
+use MeuMouse\Joinotify\AI\Providers\Wp_Ai_Client_Provider;
 use MeuMouse\Joinotify\Telemetry\Installation;
 
 defined('ABSPATH') || exit;
@@ -163,15 +164,32 @@ class Registry {
                     array(
                         'id' => 'general-ai',
                         'title' => __( 'Artificial Intelligence', 'joinotify' ),
-                        'description' => __( 'Choose the engine used to generate AI content. Provider credentials and defaults are configured in the Applications tab.', 'joinotify' ),
+                        'description' => __( 'Joinotify generates AI content through the WordPress AI Client. Pick the provider and store its credentials once in Settings → Connectors, and every AI action here uses it.', 'joinotify' ),
                         'fields' => array(
                             self::field_select(
                                 'ai_provider',
-                                esc_html__( 'AI provider', 'joinotify' ),
-                                esc_html__( 'Language model engine used to generate content. New providers can be added by extensions.', 'joinotify' ),
+                                esc_html__( 'AI engine', 'joinotify' ),
+                                esc_html__( 'Engine used to generate content. WordPress AI covers every provider configured in Settings → Connectors; extensions can register additional engines.', 'joinotify' ),
                                 Provider_Registry::get_provider_options(),
                                 array(
-                                    'default' => 'openai',
+                                    'default' => Wp_Ai_Client_Provider::ID,
+                                )
+                            ),
+                            self::field_textarea(
+                                'ai_global_system_prompt',
+                                esc_html__( 'Global instructions', 'joinotify' ),
+                                esc_html__( 'Persona, tone and rules prepended to every AI generation. Each action can add its own instructions on top of this.', 'joinotify' ),
+                                array(
+                                    'placeholder' => esc_html__( 'e.g. Always answer in Brazilian Portuguese, in a friendly and objective tone.', 'joinotify' ),
+                                )
+                            ),
+                            self::field_text(
+                                'ai_default_temperature',
+                                esc_html__( 'Default temperature', 'joinotify' ),
+                                esc_html__( 'How creative the answers are, from 0 (predictable) to 1 (varied). Actions may override it.', 'joinotify' ),
+                                array(
+                                    'default' => '0.7',
+                                    'placeholder' => '0.7',
                                 )
                             ),
                         ),
@@ -745,8 +763,6 @@ class Registry {
             'color-picker-field',
             'color-scale',
             'color-scale-field',
-            'openai-model-select',
-            'anthropic-model-select',
         );
     }
 

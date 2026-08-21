@@ -4,7 +4,7 @@ namespace MeuMouse\Joinotify\Admin\Onboarding;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry as Settings_Registry;
 use MeuMouse\Joinotify\Admin\Settings\Repository;
-use MeuMouse\Joinotify\AI\Provider_Registry;
+use MeuMouse\Joinotify\AI\AI_Manager;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Locale_Detector;
 use MeuMouse\Joinotify\Core\Onboarding;
@@ -41,10 +41,7 @@ class Registry {
         'whatsapp_phone_number_id',
         'whatsapp_waba_id',
         'ai_provider',
-        'openai_api_key',
-        'anthropic_api_key',
-        'enable_openai_integration',
-        'enable_anthropic_integration',
+        'enable_ai_integration',
         'enable_usage_tracking',
     );
 
@@ -68,9 +65,7 @@ class Registry {
                 'suggestion' => Locale_Detector::suggest_country_code(),
                 'options' => Settings_Registry::build_country_code_options(),
             ),
-            'ai' => array(
-                'providers' => self::get_ai_providers(),
-            ),
+            'ai' => self::get_ai_status(),
             'connection' => array(
                 'connected' => '' !== Helpers::cloud_api_token(),
                 'panel_url' => esc_url_raw( JOINOTIFY_PANEL_URL ),
@@ -118,7 +113,7 @@ class Registry {
             array(
                 'id' => 'ai',
                 'title' => __( 'Artificial intelligence', 'joinotify' ),
-                'summary' => __( 'Optional. Adds AI-generated content and workflow suggestions.', 'joinotify' ),
+                'summary' => __( 'Optional. Adds AI-generated content and workflow suggestions, using the provider set up in WordPress.', 'joinotify' ),
                 'optional' => true,
             ),
             array(
@@ -152,47 +147,21 @@ class Registry {
 
 
     /**
-     * Describe each AI provider and the settings key holding its credential.
+     * Report whether the site can already generate AI content.
+     *
+     * Credentials belong to WordPress since 7.0: the site owner picks a provider
+     * once in Settings > Connectors and every plugin inherits it, so the wizard
+     * only reports the state and links to that screen.
      *
      * @since 2.3.0
-     * @return array<int,array<string,string>>
+     * @return array<string,mixed>
      */
-    public static function get_ai_providers() {
-        $credentials = apply_filters( 'Joinotify/Admin/Onboarding/Ai_Credential_Keys', array(
-            'openai' => array(
-                'api_key' => 'openai_api_key',
-                'toggle' => 'enable_openai_integration',
-                'placeholder' => 'sk-...',
-                'docs_url' => 'https://platform.openai.com/api-keys',
-            ),
-            'anthropic' => array(
-                'api_key' => 'anthropic_api_key',
-                'toggle' => 'enable_anthropic_integration',
-                'placeholder' => 'sk-ant-...',
-                'docs_url' => 'https://console.anthropic.com/settings/keys',
-            ),
+    public static function get_ai_status() {
+        return apply_filters( 'Joinotify/Admin/Onboarding/Ai_Status', array(
+            'supported' => function_exists('wp_supports_ai') ? (bool) wp_supports_ai() : false,
+            'configured' => AI_Manager::is_available(),
+            'connectors_url' => esc_url_raw( admin_url('options-connectors.php') ),
         ) );
-
-        $providers = array();
-
-        foreach ( Provider_Registry::get_provider_options() as $option ) {
-            $id = isset( $option['value'] ) ? (string) $option['value'] : '';
-
-            if ( '' === $id || ! isset( $credentials[ $id ] ) ) {
-                continue;
-            }
-
-            $providers[] = array(
-                'id' => $id,
-                'label' => isset( $option['label'] ) ? (string) $option['label'] : $id,
-                'api_key_setting' => (string) $credentials[ $id ]['api_key'],
-                'toggle_setting' => (string) ( $credentials[ $id ]['toggle'] ?? '' ),
-                'placeholder' => (string) ( $credentials[ $id ]['placeholder'] ?? '' ),
-                'docs_url' => esc_url_raw( (string) ( $credentials[ $id ]['docs_url'] ?? '' ) ),
-            );
-        }
-
-        return $providers;
     }
 
 
@@ -207,7 +176,7 @@ class Registry {
      * @return array<string,mixed>
      */
     public static function visible_settings( $settings ) {
-        $secret_keys = array( 'whatsapp_cloud_api_token', 'openai_api_key', 'anthropic_api_key' );
+        $secret_keys = array( 'whatsapp_cloud_api_token' );
         $visible = array();
 
         foreach ( self::ALLOWED_KEYS as $key ) {

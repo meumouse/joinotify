@@ -21,9 +21,10 @@
  *   --engine=<name>       Translation engine for --translate (default: openai).
  *   --no-install          Skip dependency install steps (npm ci / composer install deps).
  *   --no-zip              Stage files but don't create the .zip.
- *   --pot-only            Ship joinotify.pot alone, dropping the compiled locales.
- *                         Only worth it if the package ever approaches the 10 MB
- *                         WordPress.org submission limit — see languageFilter().
+ *   --ship-locales        Also ship the compiled locales (.po/.mo/.l10n.php/.json).
+ *                         Off by default: WordPress.org serves translations from
+ *                         translate.wordpress.org, and its reviewers ask that the
+ *                         package carry only joinotify.pot — see languageFilter().
  */
 
 import { spawnSync } from 'node:child_process';
@@ -61,7 +62,9 @@ const opts = {
 	engine: getOpt('--engine', 'openai'),
 	install: !hasFlag('--no-install'),
 	zip: !hasFlag('--no-zip'),
-	potOnly: hasFlag('--pot-only'),
+	// WordPress.org distributes translations itself, so the package ships the
+	// .pot alone unless a build explicitly asks for the compiled locales.
+	potOnly: !hasFlag('--ship-locales'),
 };
 
 /* ---------------------------------------------------------------- helpers */
@@ -146,12 +149,11 @@ const languageFilter = (src) => {
 		return true;
 	}
 
-	// The compiled locales ship by default. WordPress prefers a language pack
-	// from translate.wordpress.org when one exists, so these are a fallback --
-	// but they are the only translations a user gets until the strings are
-	// imported and approved there, which is a slow, human process. Dropping them
-	// would ship an English-only plugin to every non-English install in the
-	// meantime, and they cost about 1 MB compressed.
+	// Only joinotify.pot ships. WordPress.org generates and delivers every locale
+	// from translate.wordpress.org, and bundling compiled catalogues duplicates
+	// that channel — the plugin review team asks for them to be left out. Pass
+	// --ship-locales to build a package that carries them, which is what installs
+	// outside the directory need, since they get no language packs.
 	if (opts.potOnly && path.extname(name) !== '.pot') {
 		return false;
 	}
@@ -323,8 +325,8 @@ async function main() {
 	const version = await resolveVersion(root, slug, warn);
 	console.log(`\n\x1b[1mBuilding ${slug} v${version}\x1b[0m\n`);
 
-	if (opts.potOnly) {
-		log('Translations: joinotify.pot only — non-English installs fall back to English.');
+	if (!opts.potOnly) {
+		log('Translations: shipping the compiled locales alongside joinotify.pot.');
 	}
 
 	buildFrontend();

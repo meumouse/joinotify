@@ -67,8 +67,8 @@ patrocinado nem endossado pela WhatsApp LLC ou pela Meta Platforms, Inc.
 
 ### Requisitos
 
-- WordPress **6.0+** (testado até 6.8)
-- PHP **7.4+**
+- WordPress **7.0+** (testado até 7.0) — a integração de IA usa o AI Client do core
+- PHP **8.1+**
 
 ---
 
@@ -160,20 +160,21 @@ O build executa, em ordem:
 | `npm run build:app` | Apenas o build do frontend (`app/dist`). |
 
 Flags úteis do `build.mjs`: `--skip-app`, `--skip-composer`, `--skip-translations`,
-`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`, `--pot-only`.
+`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`, `--ship-locales`.
 
 O build recusa rodar quando o `joinotify.php` (header e `$plugin_version`), o `Stable tag` do
 `readme.txt` e o `package.json` não declaram a mesma versão.
 
 ### Traduções no pacote
 
-Os locales compilados **vão junto do ZIP**. O WordPress prefere o *language pack* do
-[translate.wordpress.org](https://translate.wordpress.org/) quando ele existe, então os arquivos
-embutidos são um fallback — mas são a única tradução que o usuário tem até as strings serem
-importadas e aprovadas por lá, que é um processo humano e lento. Custam cerca de 1 MB comprimidos.
+Só o `joinotify.pot` **vai no ZIP**. O WordPress.org gera e entrega cada locale pelo
+[translate.wordpress.org](https://translate.wordpress.org/), e a equipe de revisão pede que o pacote
+não duplique esse canal — por isso os catálogos compilados (`.po`/`.mo`/`.l10n.php`/`.json`) ficam
+de fora. Até as strings serem importadas e aprovadas por lá, instalações não-inglesas caem para o
+inglês.
 
-A flag `--pot-only` deixa só o `joinotify.pot` no pacote. Só vale a pena se o ZIP chegar perto do
-limite de 10 MB da submissão.
+A flag `--ship-locales` gera um pacote com os locales compilados, que é o que instalações fora do
+diretório precisam — elas não recebem *language packs*.
 
 ---
 

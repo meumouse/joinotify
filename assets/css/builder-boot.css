@@ -1,0 +1,163 @@
+/*
+ * Builder screen chrome and pre-mount loader.
+ *
+ * The loader mirrors the Vue BuilderLoader spinner (app/src/pages/builder/styles.css)
+ * so the server-rendered loader and the Vue one are visually identical, making the
+ * hand-off on mount seamless (a single, continuous loader).
+ *
+ * Every utility rule is scoped under .joinotify-boot-loader: the builder is a
+ * full-screen Vue app and these generic class names must not leak into it.
+ */
+
+#adminmenumain,
+#wpfooter {
+	display: none !important;
+}
+
+.joinotify-boot-loader {
+	position: fixed;
+	inset: 0;
+	z-index: 9999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #fff;
+}
+
+.joinotify-boot-loader .flex {
+	display: flex;
+}
+
+.joinotify-boot-loader .d-block {
+	display: block;
+}
+
+.joinotify-boot-loader .align-items-center {
+	align-items: center;
+}
+
+.joinotify-boot-loader .justify-content-center {
+	justify-content: center;
+}
+
+.joinotify-boot-loader .position-absolute {
+	position: absolute;
+}
+
+.joinotify-boot-loader__stack {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 1rem;
+}
+
+.joinotify-boot-loader .joinotify-loader-container {
+	position: relative;
+	width: 6rem;
+	height: 6rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--joinotify-success, #22c55e);
+}
+
+.joinotify-boot-loader .joinotify-loader {
+	width: 6rem;
+	height: 6rem;
+	display: inline-block;
+	color: var(--joinotify-success, #22c55e);
+	-webkit-animation: joinotify-boot-spin 1.4s linear infinite;
+	animation: joinotify-boot-spin 1.4s linear infinite;
+}
+
+.joinotify-boot-loader .circular-progress-animation {
+	stroke: currentColor;
+	stroke-dasharray: 80px, 200px;
+	stroke-dashoffset: 0;
+	stroke-width: 3px;
+	-webkit-animation: joinotify-boot-stroke 1.4s ease-in-out infinite;
+	animation: joinotify-boot-stroke 1.4s ease-in-out infinite;
+}
+
+.joinotify-boot-loader #joinotify-builder-logo {
+	width: 2.825rem;
+}
+
+.joinotify-boot-loader .joinotify-loader-container .circle-base {
+	position: absolute;
+	z-index: -1;
+	width: 6rem;
+}
+
+.joinotify-boot-loader .joinotify-loader-container .circle-base circle {
+	stroke-width: 3px;
+	position: absolute;
+	stroke: #CED4DA;
+}
+
+.joinotify-boot-loader .joinotify-loader-text {
+	margin-top: 1.5rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.5rem;
+	color: #475569;
+	text-align: center;
+}
+
+@-webkit-keyframes joinotify-boot-stroke {
+	0% {
+		stroke-dasharray: 1px, 200px;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -15px;
+	}
+
+	100% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -125px;
+	}
+}
+
+@keyframes joinotify-boot-stroke {
+	0% {
+		stroke-dasharray: 1px, 200px;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -15px;
+	}
+
+	100% {
+		stroke-dasharray: 100px, 200px;
+		stroke-dashoffset: -125px;
+	}
+}
+
+@-webkit-keyframes joinotify-boot-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes joinotify-boot-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}

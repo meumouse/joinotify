@@ -544,14 +544,8 @@
       "Recipient phone": [
         "Teléfono del destinatario"
       ],
-      "Refresh": [
-        "Actualizar"
-      ],
       "Refresh connection": [
         "Actualizar conexión"
-      ],
-      "Refresh models": [
-        "Actualizar modelos"
       ],
       "Refreshing connection": [
         "Actualizando conexión"
@@ -777,9 +771,6 @@
       ],
       "Updates are delivered by WordPress itself, together with every other plugin on this site.": [
         "Las actualizaciones son entregadas por WordPress mismo, junto con todos los demás plugins en este sitio."
-      ],
-      "Updating…": [
-        "Actualizando…"
       ],
       "Validate and save": [
         "Validar y guardar"

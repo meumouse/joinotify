@@ -69,7 +69,7 @@ A aba **Settings > Applications** agrupa os cards em secoes por categoria. Cada 
 Categorias nativas (id => rotulo):
 
 - `channels` — Communication channels (WhatsApp, Telegram, Resend)
-- `ai` — Artificial Intelligence (OpenAI, Anthropic)
+- `ai` — Artificial Intelligence (WordPress AI Client)
 - `ecommerce` — E-commerce (WooCommerce, Flexify Checkout)
 - `forms` — Forms & page builders (WPForms, Elementor)
 - `content` — Content & CMS (WordPress)

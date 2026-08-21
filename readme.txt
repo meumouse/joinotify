@@ -1,7 +1,7 @@
 === Joinotify ===
 Contributors: meumouse
 Tags: whatsapp, automation, woocommerce, notifications, workflow
-Requires at least: 6.0
+Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.1.0
 Stable tag: 2.3.0
@@ -39,7 +39,7 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 * WPForms, Elementor Forms and Flexify Checkout
 * WordPress user events
 * Telegram and Resend (e-mail) as additional delivery channels
-* OpenAI and Anthropic for AI-generated message content (optional)
+* AI-generated message content through the WordPress AI Client, using the provider set up in Settings → Connectors (optional)
 
 = Operations =
 
@@ -53,33 +53,23 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 
 This plugin connects to external services. Nothing is contacted until you supply the corresponding credential in the setup wizard or in the settings screen.
 
+The AI actions are the exception: they do not call any provider directly. They go through the WordPress AI Client, so the request is made by WordPress to whichever provider you configured in Settings → Connectors, under that provider's own terms.
+
 **Joinotify API — https://api.joinotify.com**
-Delivers your WhatsApp messages through the official WhatsApp Cloud API, lists the numbers on your account, syncs Meta-approved message templates and receives delivery events. Used only once you paste the API key issued for your site. Each request sends your API key, the recipient phone number and the message content you configured. When you connect the site from the Joinotify panel, that one request also sends your site address, so the key can be named and revoked from there.
-Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+Delivers your WhatsApp messages through the official WhatsApp Cloud API, lists the numbers on your account, syncs Meta-approved message templates, serves the catalogue of ready-made workflow templates shown in the template picker, and receives delivery events. Used only once you paste the API key issued for your site. Each request sends your API key, the recipient phone number and the message content you configured. When you connect the site from the Joinotify panel, that one request also sends your site address, so the key can be named and revoked from there.
+Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy
 
 **Joinotify telemetry — https://api.joinotify.com/telemetry**
-Optional and **off by default**. Contacted only after you switch on "Share anonymous usage data", either in the setup wizard or in Settings → About. It receives a random identifier generated on your site, your Joinotify API key (the same one used to send messages), the plugin, WordPress and PHP versions, your locale and time zone, whether the site is multisite and whether WooCommerce, Elementor and HTTPS are in play, how many workflows exist, which integrations are switched on, and a list of named events: which feature ran, whether a message succeeded or failed, and normalized error codes. It never receives your site address, admin e-mail, phone numbers, contacts, message content or workflow content. Sent at most once every few hours, and once more when you switch the option off — that last request is what tells the service to stop counting this installation.
-Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+Optional and **off by default**. Contacted only after you switch on "Share anonymous usage data", either in the setup wizard or in Settings → About. It receives a random identifier generated on your site, your Joinotify API key (the same one used to send messages), the plugin, WordPress and PHP versions, your locale and time zone, whether the site is multisite and whether WooCommerce, Elementor and HTTPS are in play, how many workflows exist, which integrations are switched on, and a list of named events: which feature ran, whether a message succeeded or failed, and normalized error codes. It never receives your site address, admin e-mail, phone numbers, contacts, message content or workflow content. Sent at most once every few hours, and once more when you switch the option off — that last request is what tells the service to stop counting this installation. To have the data already collected for your installation erased, use the removal request page below.
+Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy — Data removal: https://joinotify.com/remove-data
 
 **Joinotify panel — https://app.joinotify.com**
 Opened in your browser when you click to create or manage an API key. No data is sent from your site by the plugin itself.
-Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
+Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy
 
 **Joinotify legacy relay — https://slots-manager.joinotify.com**
 The previous, deprecated transport. It is only contacted by sites that are still configured to use it and will be removed in a future release. It receives the sender number, recipient number and message content.
-Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
-
-**Joinotify workflow templates — https://templates.joinotify.com**
-Fetches the catalogue of ready-made workflow templates when you open the template picker. It receives no personal data.
-Terms: https://joinotify.com/termos — Privacy: https://joinotify.com/privacidade
-
-**OpenAI — https://api.openai.com**
-Optional. Contacted only if you enable the OpenAI integration and supply an API key. It receives the prompt text of the AI actions you add to a workflow.
-Terms: https://openai.com/policies/terms-of-use — Privacy: https://openai.com/policies/privacy-policy
-
-**Anthropic — https://api.anthropic.com**
-Optional. Contacted only if you enable the Anthropic integration and supply an API key. It receives the prompt text of the AI actions you add to a workflow.
-Terms: https://www.anthropic.com/legal/consumer-terms — Privacy: https://www.anthropic.com/legal/privacy
+Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy
 
 **Telegram Bot API — https://api.telegram.org**
 Optional. Contacted only if you enable the Telegram integration and supply a bot token. It receives the chat id and message content of Telegram actions.
@@ -96,6 +86,8 @@ Sharing anonymous usage data is **off by default** and entirely optional. If you
 Your site is identified by a random value generated on the site itself — never derived from your address — together with the API key you already use to send messages. Reports are batched and sent at most once every few hours, from a scheduled task, never during a page load. The identifier is shown in Settings → About so you can quote it in a support ticket, since the service has no way to look your site up by domain.
 
 Switching the option off stops collection, deletes anything still waiting to be sent, and sends one last request asking the service to stop counting this installation. If you would rather it stayed completely silent, the `Joinotify/Telemetry/Send_Opt_Out` filter suppresses that final request.
+
+Switching it off stops future reports but does not erase what was already received. To request the erasure of the data tied to your installation, use https://joinotify.com/remove-data and quote the identifier shown in Settings → About.
 
 == Frequently Asked Questions ==
 

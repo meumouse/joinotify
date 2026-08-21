@@ -281,25 +281,6 @@ class Country_Codes {
 
 
     /**
-     * Detects the country code from a phone number or IP address.
-     *
-     * @since 1.0.0
-     * @param string $phone_number | Phone number in E.164 format or with explicit country codes.
-     * @param string $ip_address | User's IP address (optional, for geolocation fallback).
-     * @return string Detected country code (e.g. 'US', 'BR').
-     */
-    public function detect_country_code( $phone_number = '', $ip_address = '' ) {
-        $country_code = self::detect_from_phone_number( $phone_number );
-
-        if ( ! $country_code && $ip_address ) {
-            $country_code = self::detect_from_ip( $ip_address );
-        }
-
-        return $country_code;
-    }
-
-
-    /**
      * Detects the country code based on the phone number.
      *
      * @since 1.0.0
@@ -320,26 +301,5 @@ class Country_Codes {
         }
 
         return null;
-    }
-
-
-    /**
-     * Detects the country code based on the IP address
-     *
-     * @since 1.0.0
-     * @param string $ip_address | IP address of the user
-     * @return string|null Country code, or null if unable to determine
-     */
-    public static function detect_from_ip( $ip_address ) {
-        // Use an external IP-based geolocation API
-        $response = wp_remote_get('http://ipinfo.io/{$ip_address}/json');
-
-        if ( is_wp_error( $response ) ) {
-            return null;
-        }
-
-        $data = json_decode( wp_remote_retrieve_body( $response ), true );
-
-        return isset( $data['country'] ) ? $data['country'] : null;
     }
 }

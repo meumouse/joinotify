@@ -13,12 +13,6 @@
       "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
         "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings."
       ],
-      "A key is already saved. Type a new one to replace it.": [
-        "A key is already saved. Type a new one to replace it."
-      ],
-      "AI provider": [
-        "AI provider"
-      ],
       "Back": [
         "Back"
       ],
@@ -139,9 +133,6 @@
       "Placeholders, custom variables and the PHP extension API": [
         "Placeholders, custom variables and the PHP extension API"
       ],
-      "Provider API key": [
-        "Provider API key"
-      ],
       "Review integrations, senders, history retention and the advanced options.": [
         "Review integrations, senders, history retention and the advanced options."
       ],
@@ -178,9 +169,6 @@
       "The exact payload for this site right now": [
         "The exact payload for this site right now"
       ],
-      "The key is stored on this site and used only for the AI actions you add to a workflow.": [
-        "The key is stored on this site and used only for the AI actions you add to a workflow."
-      ],
       "We pre-selected %s based on this site’s language setting.": [
         "We pre-selected %s based on this site’s language setting."
       ],
@@ -195,9 +183,6 @@
       ],
       "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed.": [
         "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed."
-      ],
-      "Where do I find it?": [
-        "Where do I find it?"
       ],
       "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready.": [
         "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready."

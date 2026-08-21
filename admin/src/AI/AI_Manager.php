@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\AI;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\AI\Providers\Wp_Ai_Client_Provider;
 use MeuMouse\Joinotify\Core\Logger;
 use WP_Error;
 
@@ -31,8 +32,15 @@ class AI_Manager {
      */
     public static function get_active_provider_id() {
         $id = Admin::get_setting('ai_provider');
+        $id = is_string( $id ) ? trim( $id ) : '';
 
-        return ( is_string( $id ) && '' !== trim( $id ) ) ? trim( $id ) : 'openai';
+        // Sites upgrading from 2.2.x still carry 'openai'/'anthropic' here; those
+        // providers are gone, so anything unknown resolves to the WordPress AI Client.
+        if ( '' === $id || ! array_key_exists( $id, Provider_Registry::get_providers() ) ) {
+            return Wp_Ai_Client_Provider::ID;
+        }
+
+        return $id;
     }
 
 
@@ -138,7 +146,7 @@ class AI_Manager {
 
         // Apply the global default temperature when the call did not override it.
         if ( null === $request->temperature ) {
-            $default_temperature = Admin::get_setting('openai_default_temperature');
+            $default_temperature = Admin::get_setting('ai_default_temperature');
 
             if ( is_numeric( $default_temperature ) ) {
                 $request->temperature = (float) $default_temperature;

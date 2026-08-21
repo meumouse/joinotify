@@ -20,7 +20,6 @@ import InputButtonField from './InputButtonField.vue';
 import OtpField from './OtpField.vue';
 import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
-import AiModelField from './AiModelField.vue';
 import CloudConnectField from './CloudConnectField.vue';
 import JoinotifyApiKeyField from './JoinotifyApiKeyField.vue';
 
@@ -77,9 +76,6 @@ registerAlias('color-picker', ColorPickerField);
 registerAlias('color-picker-field', ColorPickerField);
 registerAlias('color-scale', ColorScaleField);
 registerAlias('color-scale-field', ColorScaleField);
-registerAlias('openai-model-select', AiModelField);
-registerAlias('anthropic-model-select', AiModelField);
-registerAlias('ai-model-select', AiModelField);
 registerAlias('cloud-connect', CloudConnectField);
 registerAlias('joinotify-api-key', JoinotifyApiKeyField);
 

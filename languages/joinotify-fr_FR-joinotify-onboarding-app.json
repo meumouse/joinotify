@@ -13,12 +13,6 @@
       "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
         "Quelques questions et votre site est prêt à envoyer des messages WhatsApp. Tout cela peut être modifié plus tard dans les paramètres."
       ],
-      "A key is already saved. Type a new one to replace it.": [
-        "Une clé est déjà enregistrée. Tapez une nouvelle pour la remplacer."
-      ],
-      "AI provider": [
-        "Fournisseur AI"
-      ],
       "Back": [
         "Retour"
       ],
@@ -139,9 +133,6 @@
       "Placeholders, custom variables and the PHP extension API": [
         "Espaces réservés, variables personnalisées et l'API d'extension PHP"
       ],
-      "Provider API key": [
-        "Clé API du fournisseur"
-      ],
       "Review integrations, senders, history retention and the advanced options.": [
         "Examiner les intégrations, les expéditeurs, la conservation de l'historique et les options avancées."
       ],
@@ -178,9 +169,6 @@
       "The exact payload for this site right now": [
         "La charge utile exacte pour ce site en ce moment"
       ],
-      "The key is stored on this site and used only for the AI actions you add to a workflow.": [
-        "La clé est stockée sur ce site et utilisée uniquement pour les actions AI que vous ajoutez à un flux de travail."
-      ],
       "We pre-selected %s based on this site’s language setting.": [
         "Nous avons pré-sélectionné %s en fonction des paramètres de langue de ce site."
       ],
@@ -195,9 +183,6 @@
       ],
       "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed.": [
         "Lorsque un numéro de téléphone atteint un flux de travail sans code pays, Joinotify le complète avec le pays que vous choisissez ici. Les numéros qui portent déjà un code pays ne sont jamais modifiés."
-      ],
-      "Where do I find it?": [
-        "Où le trouver ?"
       ],
       "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready.": [
         "Vous avez sauté la connexion d'un compte Joinotify, donc les flux de travail seront construits et enregistrés mais n'enverront rien pour l'instant. Ajoutez votre clé API dans Paramètres → Général lorsque vous êtes prêt."

@@ -34,7 +34,7 @@ const steps = computed(() => props.bootstrap?.steps || []);
 const links = computed(() => props.bootstrap?.links || {});
 const countryOptions = computed(() => props.bootstrap?.country?.options || []);
 const countrySuggestion = computed(() => props.bootstrap?.country?.suggestion || {});
-const aiProviders = computed(() => props.bootstrap?.ai?.providers || []);
+const ai = computed(() => props.bootstrap?.ai || {});
 const telemetry = computed(() => props.bootstrap?.telemetry || {});
 const panelUrl = computed(() => props.bootstrap?.connection?.panel_url || '');
 const apiHost = computed(() => props.bootstrap?.connection?.api_host || 'api.joinotify.com');
@@ -42,19 +42,11 @@ const apiHost = computed(() => props.bootstrap?.connection?.api_host || 'api.joi
 const savedSettings = cloneValue(props.bootstrap?.settings || {});
 const connected = ref(Boolean(props.bootstrap?.connection?.connected));
 
-// The AI key is write-only: the backend reports whether one is stored but never
-// echoes it back, so the field starts blank and only sends what is typed.
+// AI credentials belong to WordPress since 7.0 (Settings → Connectors), so the
+// wizard has nothing to collect for that step.
 const form = reactive({
   country: String(savedSettings.joinotify_default_country_code || countrySuggestion.value.code || ''),
-  aiProvider: String(savedSettings.ai_provider || (aiProviders.value[0]?.id ?? '')),
-  aiApiKey: '',
   usageTracking: savedSettings.enable_usage_tracking === 'yes' ? 'yes' : 'no',
-});
-
-const aiKeyStored = computed(() => {
-  const provider = aiProviders.value.find((entry) => entry.id === form.aiProvider);
-
-  return provider ? Boolean(savedSettings[`${provider.api_key_setting}_is_set`]) : false;
 });
 
 const currentIndex = ref(resolveInitialIndex());
@@ -98,22 +90,6 @@ function valuesForStep(stepId) {
     return { joinotify_default_country_code: form.country };
   }
 
-  if (stepId === 'ai') {
-    const provider = aiProviders.value.find((entry) => entry.id === form.aiProvider);
-    const values = { ai_provider: form.aiProvider };
-    const key = form.aiApiKey.trim();
-
-    if (provider && key) {
-      values[provider.api_key_setting] = key;
-
-      if (provider.toggle_setting) {
-        values[provider.toggle_setting] = 'yes';
-      }
-    }
-
-    return values;
-  }
-
   if (stepId === 'privacy') {
     return { enable_usage_tracking: form.usageTracking };
   }
@@ -139,12 +115,6 @@ async function goNext() {
 
   try {
     await api.post('/admin/onboarding/step', { step: step.id, values });
-
-    if (step.id === 'ai' && form.aiApiKey.trim()) {
-      // The key is stored now; stop holding it in the page.
-      savedSettings[`${aiProviders.value.find((entry) => entry.id === form.aiProvider)?.api_key_setting}_is_set`] = true;
-      form.aiApiKey = '';
-    }
 
     currentIndex.value = Math.min(currentIndex.value + 1, steps.value.length - 1);
   } catch (error) {
@@ -327,10 +297,9 @@ onBeforeUnmount(() => {
 
                 <AiStep
                   v-else-if="currentStep.id === 'ai'"
-                  v-model:provider="form.aiProvider"
-                  v-model:api-key="form.aiApiKey"
-                  :providers="aiProviders"
-                  :api-key-stored="aiKeyStored"
+                  :supported="Boolean(ai.supported)"
+                  :configured="Boolean(ai.configured)"
+                  :connectors-url="String(ai.connectors_url || '')"
                 />
 
                 <DocsStep
@@ -377,7 +346,7 @@ onBeforeUnmount(() => {
                 />
 
                 <BaseButton
-                  :title="canSkipStep && !form.aiApiKey ? __('Skip this step', textDomain) : __('Continue', textDomain)"
+                  :title="canSkipStep ? __('Skip this step', textDomain) : __('Continue', textDomain)"
                   :loading="busy"
                   @click="goNext"
                 />

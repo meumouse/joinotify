@@ -6,7 +6,7 @@ namespace MeuMouse\Joinotify\AI;
 defined('ABSPATH') || exit;
 
 /**
- * Contract implemented by every LLM provider (OpenAI, Anthropic, Gemini, ...).
+ * Contract implemented by every AI generation engine.
  *
  * New providers are registered through the `Joinotify/AI/Providers` filter and
  * only need to implement this interface to be selectable as the active engine.
@@ -18,7 +18,7 @@ defined('ABSPATH') || exit;
 interface Provider_Interface {
 
     /**
-     * Unique provider identifier (e.g. 'openai').
+     * Unique provider identifier (e.g. 'wp_ai_client').
      *
      * @since 2.0.0
      * @return string
@@ -27,7 +27,7 @@ interface Provider_Interface {
 
 
     /**
-     * Human-readable provider label (e.g. 'OpenAI').
+     * Human-readable provider label (e.g. 'WordPress AI').
      *
      * @since 2.0.0
      * @return string

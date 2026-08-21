@@ -66,7 +66,7 @@ class Onboarding {
     public function __construct() {
         add_action( 'admin_init', array( $this, 'maybe_redirect' ), 1 );
         add_action( 'admin_notices', array( $this, 'render_notice' ) );
-        add_action( 'wp_ajax_joinotify_dismiss_onboarding_notice', array( $this, 'ajax_dismiss_notice' ) );
+        add_action( 'admin_post_joinotify_dismiss_onboarding_notice', array( $this, 'handle_dismiss_notice' ) );
         add_filter( 'admin_body_class', array( $this, 'add_body_class' ) );
     }
 
@@ -277,18 +277,19 @@ class Onboarding {
             return;
         }
 
-        printf(
-            '<div class="notice notice-info is-dismissible joinotify-onboarding-notice"><p>%1$s</p><p><a class="button button-primary" href="%2$s">%3$s</a> <button type="button" class="button-link joinotify-onboarding-dismiss">%4$s</button></p></div>',
-            esc_html__( 'Joinotify is not set up yet. The setup wizard connects your account and gets the first automation running in a couple of minutes.', 'joinotify' ),
-            esc_url( self::wizard_url() ),
-            esc_html__( 'Run the setup wizard', 'joinotify' ),
-            esc_html__( 'Do not remind me again', 'joinotify' )
+        // A plain link handled server-side, so the notice needs no JavaScript.
+        $dismiss_url = wp_nonce_url(
+            add_query_arg( 'action', 'joinotify_dismiss_onboarding_notice', admin_url('admin-post.php') ),
+            'joinotify_dismiss_onboarding'
         );
 
         printf(
-            '<script>document.addEventListener("click",function(e){if(!e.target.classList.contains("joinotify-onboarding-dismiss")){return;}e.preventDefault();var n=e.target.closest(".joinotify-onboarding-notice");if(n){n.style.display="none";}var b=new FormData();b.append("action","joinotify_dismiss_onboarding_notice");b.append("nonce","%1$s");fetch("%2$s",{method:"POST",body:b,credentials:"same-origin"});});</script>',
-            esc_js( wp_create_nonce('joinotify_dismiss_onboarding') ),
-            esc_url_raw( admin_url('admin-ajax.php') )
+            '<div class="notice notice-info is-dismissible joinotify-onboarding-notice"><p>%1$s</p><p><a class="button button-primary" href="%2$s">%3$s</a> <a class="button-link" href="%4$s">%5$s</a></p></div>',
+            esc_html__( 'Joinotify is not set up yet. The setup wizard connects your account and gets the first automation running in a couple of minutes.', 'joinotify' ),
+            esc_url( self::wizard_url() ),
+            esc_html__( 'Run the setup wizard', 'joinotify' ),
+            esc_url( $dismiss_url ),
+            esc_html__( 'Do not remind me again', 'joinotify' )
         );
     }
 
@@ -297,22 +298,20 @@ class Onboarding {
      * Persist the "do not remind me again" choice.
      *
      * @since 2.3.0
+     * @version 2.3.0
      * @return void
      */
-    public function ajax_dismiss_notice() {
+    public function handle_dismiss_notice() {
         if ( ! current_user_can('manage_options') ) {
-            wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'joinotify' ) ), 403 );
+            wp_die( esc_html__( 'You do not have permission to do this.', 'joinotify' ), '', array( 'response' => 403 ) );
         }
 
-        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-
-        if ( ! wp_verify_nonce( $nonce, 'joinotify_dismiss_onboarding' ) ) {
-            wp_send_json_error( array( 'message' => __( 'Security check failed.', 'joinotify' ) ), 403 );
-        }
+        check_admin_referer('joinotify_dismiss_onboarding');
 
         self::dismiss();
 
-        wp_send_json_success();
+        wp_safe_redirect( wp_get_referer() ?: admin_url() );
+        exit;
     }
 
 
