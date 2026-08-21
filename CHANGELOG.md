@@ -1,3 +1,48 @@
+Versão 2.3.1
+* Alteração: o WordPress 7.0 passa a ser a versão mínima exigida
+     - A partir dele o WordPress traz o AI Client embutido, que é o que a integração de IA do plugin usa agora
+* Alteração: a IA deixa de guardar chaves próprias e passa a usar o AI Client do WordPress
+     - O provedor e a chave são configurados uma vez em Configurações → Conectores, no próprio WordPress, e valem para todos os plugins do site
+     - As integrações "OpenAI" e "Anthropic" saíram de Configurações → Integrações, junto com os campos de chave e de modelo
+     - O plugin não fala mais diretamente com api.openai.com nem com api.anthropic.com; quem faz a chamada é o WordPress, para o provedor que você escolheu
+     - As instruções globais e a temperatura padrão continuam no plugin, agora em Configurações → Geral → Inteligência Artificial
+     - O assistente de configuração deixa de pedir chave: a etapa de IA agora informa se o site já tem um provedor e leva até a tela de Conectores
+     - **Atenção:** quem já usava IA precisa configurar o provedor em Configurações → Conectores. As chaves antigas continuam no banco, mas não são mais usadas
+* Recurso removido: ação "Snippet PHP" do construtor
+     - A ação executava código PHP arbitrário com `eval()`, o que o diretório do WordPress.org não permite
+     - A geração do trecho por IA, que existia só para essa ação, também foi removida
+     - **Atenção:** automações salvas que usam essa etapa continuam abrindo, mas o passo do snippet deixa de ser executado. Quem depende dele deve mover a lógica para um plugin próprio, ligado aos ganchos `Joinotify/...`
+* Novo recurso: o construtor avisa quando uma etapa não consegue iniciar a conversa
+     - Na API oficial, texto, mídia, mensagens interativas e conteúdo gerado por IA só chegam ao contato dentro de 24 horas desde a última resposta dele
+     - Um fluxo que inicia a conversa — carrinho abandonado, "pedido enviado", pós-venda — precisa começar por um template aprovado; fora disso a Meta recusa o envio e a falha só aparecia no log
+     - O aviso aparece ao editar a etapa e muda de tom quando o fluxo já tem um passo de template. No transporte legado ele não aparece, porque lá essa regra não existe
+     - Nada mudou no envio: é orientação em tempo de edição
+     - Extensões podem incluir as próprias ações no aviso pelo filtro `Joinotify/Transport/Free_Form_Actions`
+* Melhoria: o template do login por OTP passa a ser escolhido em uma lista, não digitado
+     - A lista traz só os templates de autenticação aprovados na sua conta, com botão para sincronizar quando algum acabou de ser aprovado
+     - Os templates continuam sendo criados no painel do Joinotify; o plugin apenas lê e guarda em cache
+     - O idioma passa a vir do template escolhido, em vez de um segundo campo preenchido à mão — enviar um idioma diferente do aprovado é recusado pela Meta. O campo continua existindo como reserva
+* Correção: contas com mais de 100 templates de mensagem perdiam o restante nos seletores
+     - A listagem não pedia limite e recebia só a primeira página da API, sem nenhum sinal de que havia mais
+* Alteração: os arquivos de tradução compilados deixam de ir no pacote
+     - O WordPress.org gera e entrega cada idioma pelo translate.wordpress.org, e a equipe de revisão pede que o pacote não duplique esse canal
+     - Até as strings serem aprovadas por lá, instalações não-inglesas exibem o texto em inglês
+     - Quem instala fora do diretório pode gerar um pacote com os idiomas usando `npm run build -- --ship-locales`
+     - O ZIP caiu de 3,35 MB para 2,15 MB
+* Adequações pedidas na revisão do WordPress.org
+     - Os estilos do construtor saíram do HTML para uma folha de estilo enfileirada (`assets/css/builder-boot.css`), e as regras utilitárias do carregador passaram a ficar restritas a ele, sem vazar para o resto da tela
+     - O aviso do assistente de configuração não usa mais JavaScript embutido: o "Não lembrar novamente" virou um link com nonce tratado no servidor
+     - A posição do menu no admin deixou de disputar espaço com os itens do WordPress; agora fica abaixo deles, ajustável pelo filtro `Joinotify/Admin/Menu_Position`
+     - O plugin não desativa mais sozinho o "Joinotify OTP Login" antigo: exibe um aviso com link para a tela de Plugins, e a decisão fica com você
+     - Removida a detecção de país por IP, que consultava o ipinfo.io sem estar declarado no readme. A função não tinha nenhum uso e estava quebrada (a URL nunca interpolava o endereço)
+     - O seletor de emojis não carrega mais imagens de um CDN externo: a URL é removida do pacote no build (o seletor já usava emojis nativos, então nada muda na tela)
+     - `giggsey/libphonenumber-for-php-lite` atualizado de 8.13.55 para 9.0.37
+* Recurso removido: botão que instalava o addon de recuperação de carrinho a partir de um endereço externo
+     - O botão já não funcionava (não havia mais código que respondesse ao clique) e o endereço remoto contrariava as diretrizes do diretório
+     - No lugar dele, o construtor agora apenas informa qual plugin precisa ser instalado e ativado
+* Correções de conformidade apontadas pelo Plugin Check: consultas ao banco preparadas e documentadas, escape de saída no ícone das integrações, comentários `translators:` e placeholders numerados em todas as mensagens traduzíveis, `date()` trocado por `wp_date()`/`gmdate()`, `mt_rand()` por `wp_rand()`, `strip_tags()` por `wp_strip_all_tags()`, e as chamadas de depuração (`error_log`/`print_r`) redirecionadas para o log do próprio plugin
+* Correção: o gerador do arquivo de tradução (`.pot`) lia a pasta de histórico do editor e trazia de volta textos já removidos do código; agora ele também leva os comentários `translators:` para o arquivo, que antes se perdiam
+
 Versão 2.3.0
 * Novo recurso: conexão do WhatsApp pela API oficial do Joinotify, substituindo o formato de Proxy API sobre a Evolution API
      - Botão "Conectar ao Joinotify" nas configurações: a conta é autorizada no painel e a chave da API é entregue ao site sem que você precise copiar e colar nada (colar a chave manualmente continua disponível)
@@ -85,37 +130,6 @@ Versão 2.3.0
 * Alteração: todas as ações de WhatsApp do construtor passam a exibir a logo do WhatsApp
      - Modelo aprovado, mensagem com IA, botões de resposta, lista de opções, botão de link, localização, contato, figurinha e reação usavam ícones genéricos
 * Adequação às diretrizes do diretório de plugins do WordPress.org: readme.txt com a declaração de todos os serviços externos utilizados, licença GPL e o código-fonte do frontend Vue distribuído junto do pacote
-* Recurso removido: ação "Snippet PHP" do construtor
-     - A ação executava código PHP arbitrário com `eval()`, o que o diretório do WordPress.org não permite
-     - A geração do trecho por IA, que existia só para essa ação, também foi removida
-     - **Atenção:** automações salvas que usam essa etapa continuam abrindo, mas o passo do snippet deixa de ser executado. Quem depende dele deve mover a lógica para um plugin próprio, ligado aos ganchos `Joinotify/...`
-* Recurso removido: botão que instalava o addon de recuperação de carrinho a partir de um endereço externo
-     - O botão já não funcionava (não havia mais código que respondesse ao clique) e o endereço remoto contrariava as diretrizes do diretório
-     - No lugar dele, o construtor agora apenas informa qual plugin precisa ser instalado e ativado
-* Alteração: o WordPress 7.0 passa a ser a versão mínima exigida
-     - A partir dele o WordPress traz o AI Client embutido, que é o que a integração de IA do plugin usa agora
-* Alteração: a IA deixa de guardar chaves próprias e passa a usar o AI Client do WordPress
-     - O provedor e a chave são configurados uma vez em Configurações → Conectores, no próprio WordPress, e valem para todos os plugins do site
-     - As integrações "OpenAI" e "Anthropic" saíram de Configurações → Integrações, junto com os campos de chave e de modelo
-     - O plugin não fala mais diretamente com api.openai.com nem com api.anthropic.com; quem faz a chamada é o WordPress, para o provedor que você escolheu
-     - As instruções globais e a temperatura padrão continuam no plugin, agora em Configurações → Geral → Inteligência Artificial
-     - O assistente de configuração deixa de pedir chave: a etapa de IA agora informa se o site já tem um provedor e leva até a tela de Conectores
-     - **Atenção:** quem já usava IA precisa configurar o provedor em Configurações → Conectores. As chaves antigas continuam no banco, mas não são mais usadas
-* Adequações pedidas na revisão do WordPress.org
-     - Os estilos do construtor saíram do HTML para uma folha de estilo enfileirada (`assets/css/builder-boot.css`), e as regras utilitárias do carregador passaram a ficar restritas a ele, sem vazar para o resto da tela
-     - O aviso do assistente de configuração não usa mais JavaScript embutido: o "Não lembrar novamente" virou um link com nonce tratado no servidor
-     - A posição do menu no admin deixou de disputar espaço com os itens do WordPress; agora fica abaixo deles, ajustável pelo filtro `Joinotify/Admin/Menu_Position`
-     - O plugin não desativa mais sozinho o "Joinotify OTP Login" antigo: exibe um aviso com link para a tela de Plugins, e a decisão fica com você
-     - Removida a detecção de país por IP, que consultava o ipinfo.io sem estar declarado no readme. A função não tinha nenhum uso e estava quebrada (a URL nunca interpolava o endereço)
-     - O seletor de emojis não carrega mais imagens de um CDN externo: a URL é removida do pacote no build (o seletor já usava emojis nativos, então nada muda na tela)
-     - `giggsey/libphonenumber-for-php-lite` atualizado de 8.13.55 para 9.0.37
-* Alteração: os arquivos de tradução compilados deixam de ir no pacote
-     - O WordPress.org gera e entrega cada idioma pelo translate.wordpress.org, e a equipe de revisão pede que o pacote não duplique esse canal
-     - Até as strings serem aprovadas por lá, instalações não-inglesas exibem o texto em inglês
-     - Quem instala fora do diretório pode gerar um pacote com os idiomas usando `npm run build -- --ship-locales`
-     - O ZIP caiu de 3,35 MB para 2,15 MB
-* Correções de conformidade apontadas pelo Plugin Check: consultas ao banco preparadas e documentadas, escape de saída no ícone das integrações, comentários `translators:` e placeholders numerados em todas as mensagens traduzíveis, `date()` trocado por `wp_date()`/`gmdate()`, `mt_rand()` por `wp_rand()`, `strip_tags()` por `wp_strip_all_tags()`, e as chamadas de depuração (`error_log`/`print_r`) redirecionadas para o log do próprio plugin
-* Correção: o gerador do arquivo de tradução (`.pot`) lia a pasta de histórico do editor e trazia de volta textos já removidos do código; agora ele também leva os comentários `translators:` para o arquivo, que antes se perdiam
 * Correção: valores monetários chegavam quebrados na mensagem
      - `{{ wc_currency_symbol }}` enviava o código interno do WooCommerce em vez do símbolo: o real aparecia como `&#82;&#36;` no lugar de `R$`
      - Os totais eram enviados com o número cru do pedido (`68.70`), sem o separador decimal do idioma da loja e diferente do que a prévia do construtor mostrava

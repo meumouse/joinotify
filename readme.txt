@@ -2,9 +2,9 @@
 Contributors: meumouse
 Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,11 +127,25 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 == Screenshots ==
 
 1. The visual workflow builder.
-2. The setup wizard.
-3. Settings, with integrations and senders.
-4. Message history with delivery status.
+2. The workflow actions library.
+3. Message history with delivery status.
+4. Settings, with integrations and senders.
 
 == Changelog ==
+
+= 2.3.1 =
+* Changed: WordPress 7.0 is now required. The AI features run on the AI Client that ships with it.
+* Changed: AI content is generated through the WordPress AI Client. Choose a provider and store its key once in Settings → Connectors and every AI action uses it — Joinotify no longer keeps a key of its own, nor calls a provider directly. The OpenAI and Anthropic integrations were removed, so a site using AI has to set the provider up again in Connectors.
+* Removed: the "PHP Snippet" action, which executed arbitrary PHP. Saved workflows still open, but that step no longer runs.
+* New: the builder warns when a step cannot open a conversation on the official API. Text, media, interactive messages and AI copy only reach a contact within 24 hours of their last reply, so a workflow that starts the conversation has to lead with an approved template.
+* Improved: the OTP login template is now picked from the templates approved on your account instead of typed by name, and its language comes from the template itself.
+* Fixed: an account with more than 100 message templates lost the rest from the template pickers.
+* Changed: translations are delivered by translate.wordpress.org instead of being bundled with the plugin.
+* Changed: the Joinotify menu moved below the WordPress items instead of sitting among them.
+* Changed: the standalone "Joinotify OTP Login" plugin is no longer deactivated on its own. You are told it duplicates the built-in login and decide what to do.
+* Removed: country detection by IP address, which contacted a third-party service that was not declared and was never actually used.
+* Removed: the button offering to install the cart recovery add-on from an external download. It had done nothing since 2.0.0.
+* Improved: the phone number library was updated, and the builder styles and the setup notice now go through the standard WordPress asset queue.
 
 = 2.3.0 =
 * New: anonymous usage reporting now actually delivers. Still off by default — nothing leaves the site until you agree in the setup wizard.
@@ -166,6 +180,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.3.1 =
+Requires WordPress 7.0. AI content now runs on the WordPress AI Client: set your provider up again in Settings → Connectors, because the OpenAI and Anthropic keys stored by the plugin are no longer used. The "PHP Snippet" action was removed — workflows that use it still open, but that step no longer runs.
 
 = 2.3.0 =
 Joinotify is now free and GPL-licensed, with no locked features. Updates move to WordPress.org, so the plugin's own update server is gone — install this version from WordPress.org to keep receiving updates. A setup wizard runs once to confirm your configuration.

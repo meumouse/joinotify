@@ -29,9 +29,9 @@ A numeração é posicional: `screenshot-N.png` é descrito pela N-ésima linha 
 `== Screenshots ==` do `readme.txt`. Hoje o `readme.txt` declara quatro:
 
 1. The visual workflow builder.
-2. The setup wizard.
-3. Settings, with integrations and senders.
-4. Message history with delivery status.
+2. The workflow actions library.
+3. Message history with delivery status.
+4. Settings, with integrations and senders.
 
 Se você adicionar, remover ou reordenar imagens aqui, ajuste a lista do `readme.txt` junto — as
 legendas erradas ficam visíveis na página pública.
