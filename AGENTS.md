@@ -27,11 +27,15 @@ Read this **before editing anything**.
 4. **Don't invent APIs.** Use `joinotify_*()` helpers and classes that actually exist; confirm with
    a repository search before referencing a symbol.
 5. **Don't commit, push, or run destructive builds** without an explicit request from the user.
-6. **All source code is written in English.** Identifiers (classes, methods, variables, functions,
-   files), inline comments, docblocks, and commit messages are **always in English** — this applies
-   to PHP, JavaScript/TypeScript, and Vue alike. Only the narrative documentation (`*.md`) is
-   written in Portuguese; match the language of the file you are editing. User-facing strings are
-   authored in English and translated through the i18n pipeline (see §7).
+6. **Everything in the repository is written in English.** Identifiers (classes, methods, variables,
+   functions, files), inline comments, docblocks, commit messages, and the narrative documentation
+   (`*.md`, `readme.txt`) are **always in English** — this applies to PHP, JavaScript/TypeScript,
+   and Vue alike. There is no Portuguese exception: new files are authored in English, and a
+   Portuguese file you are already editing should be migrated to English as you touch it. Some docs
+   still carry legacy Portuguese (`README.md`, `CONTRIBUTING.md`, `app/README.md`,
+   `languages/README.md`, `docs/integrations.md`, `.wordpress-org/README.md`) — treat that as debt to
+   fix, not as precedent. User-facing strings are authored in English and translated through the i18n
+   pipeline (see §7).
 7. **Touch both sides of the contract.** Changed a workflow node's shape? Update the serializer/parser
    (Vue) **and** the processor (PHP) — and consider the migrator. Otherwise saved workflows break.
 
@@ -336,7 +340,7 @@ Report results **honestly**: if a test fails, say so and show the output.
 ## 11. Delivery checklist
 
 - [ ] Code matches the neighboring module's style (TAB in PHP; Vue/TS conventions in the app).
-- [ ] All source code (identifiers, comments, docblocks) is in **English**.
+- [ ] Everything written is in **English** — identifiers, comments, docblocks, and documentation.
 - [ ] PHP docblocks updated (`@since`/`@version`) on new/changed symbols.
 - [ ] Workflow-contract change reflected on **both sides** (serializer/parser + PHP processor) and,
       if needed, the migrator.

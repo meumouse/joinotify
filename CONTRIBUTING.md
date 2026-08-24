@@ -247,8 +247,8 @@ refresh / rebuild).
 
   Tipos em uso: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`, `i18n`. Escopos comuns:
   `builder`, `ai`, `cron`, `queue`, `history`, `settings`, `core`, `i18n`.
-- **Mensagens em inglês**, curtas e no imperativo. A documentação narrativa (`*.md`) é em
-  português.
+- **Mensagens em inglês**, curtas e no imperativo — assim como todo o resto do repositório,
+  incluindo a documentação narrativa (`*.md`).
 - **Não comite artefatos gerados nem segredos.** Já estão no [`.gitignore`](.gitignore):
   `app/dist/`, `admin/vendor`, `node_modules/`, `release/`, `.wporg-svn/`, `.env`,
   `composer.lock`, `package-lock.json`.
@@ -312,8 +312,9 @@ Reporte resultados com honestidade: se um teste falhou, diga e mostre a saída.
   [`examples/joinotify-extension-example.php`](examples/joinotify-extension-example.php).
 - **Não invente APIs.** Use os helpers `joinotify_*()` e classes que realmente existem; confirme
   com busca no repositório antes de referenciar um símbolo.
-- **Idiomas:** código/identificadores e mensagens de commit em inglês; documentação narrativa em
-  português (combine com o arquivo que está editando).
+- **Idiomas:** tudo em inglês — código, identificadores, comentários, docblocks, mensagens de
+  commit e documentação narrativa. Não há exceção para o português; arquivos ainda em português
+  são dívida a ser migrada conforme forem editados.
 - **Não comite, não faça push e não rode builds destrutivos** sem pedido explícito do usuário.
 - **Windows / Local.** O ambiente de dev é WordPress via Local (Windows). Caminhos de `php.exe`
   variam por instalação — não assuma um caminho fixo.

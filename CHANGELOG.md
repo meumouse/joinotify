@@ -1,366 +1,366 @@
-Versão 2.3.2 (23/08/2026)
-* Recurso removido: o transporte legado (Evolution / slots-manager) saiu por completo
-     - **Atenção:** sites que ainda enviavam por esse caminho param de enviar até conectar a conta do Joinotify em Configurações → Geral → WhatsApp Cloud API
-     - O plugin trazia embutida uma chave de API do slots-manager, cifrada com a chave de decifragem na linha seguinte. Era a mesma credencial para todas as instalações e qualquer pessoa conseguia extraí-la; ela foi removida junto com a criptografia caseira que a escondia
-     - Saíram também: a Proxy API e suas rotas, o seletor "Transporte de mensagens", o cadastro de número por QR Code/OTP, a consulta de estado de conexão e a listagem de grupos — recursos que só existiam no relay
-     - A rotina agendada que checava conexão de telefone a cada 6 horas foi removida e é desagendada automaticamente na atualização
-     - Números continuam sendo conectados no painel do Joinotify e importados pelo botão "Sincronizar números"
-     - O `slots-manager.joinotify.com` saiu da lista de serviços externos do readme.txt, já que o plugin não o contata mais
-* Alteração: o transporte deixa de ser configurável e o `Transport` resolve sempre para a API oficial
-     - Continua sendo o ponto único de saída de mensagens, então trocar de transporte no futuro segue sendo alteração de um arquivo só
-     - Novo método `Transport::is_ready()`, que informa se o site já tem chave para enviar
-     - O identificador de canal `whatsapp` continua registrado, apontando para o canal da API oficial: mensagens que já estavam na fila antes da atualização ainda encontram um canal válido
-     - O filtro `Joinotify/Transport/Active` foi removido junto com a escolha de transporte
-* Documentação: o readme.txt ganha a seção "Source code and build", exigida pelo diretório do WordPress.org
-     - Explica que o PHP não é compilado e que a fonte completa do frontend Vue vai no pacote, em `app/src`, com toda a configuração de build necessária para reproduzir o `app/dist`
-     - Lista as bibliotecas de terceiros embutidas no bundle, cada uma com o endereço do código-fonte e a licença
-     - Aponta o repositório público de desenvolvimento
-* Alteração: o plugin de build que remove a URL de CDN do seletor de emojis passa a mirar a constante da biblioteca, não o endereço
-     - O endereço não aparece mais em nenhum arquivo do plugin, o que evitava um falso positivo na revisão do diretório
-     - Também deixa de depender do host: se a biblioteca trocar de CDN numa versão futura, a URL continua sendo removida do pacote
+Version 2.3.2 (2026-08-23)
+* Removed: the legacy transport (Evolution / slots-manager) is gone for good
+     - **Heads-up:** sites still sending through that path stop sending until the Joinotify account is connected under Settings → General → WhatsApp Cloud API
+     - The plugin shipped an embedded slots-manager API key, encrypted with the decryption key sitting on the next line. It was the same credential for every installation and anyone could extract it; it was removed along with the homegrown encryption that hid it
+     - Also gone: the Proxy API and its routes, the "Message transport" selector, phone registration by QR Code/OTP, the connection state lookup and the group listing — features that only ever existed on the relay
+     - The scheduled routine that checked phone connection every 6 hours was removed and is automatically unscheduled on update
+     - Numbers are still connected in the Joinotify panel and imported with the "Sync numbers" button
+     - `slots-manager.joinotify.com` was dropped from the external services list in readme.txt, since the plugin no longer contacts it
+* Changed: the transport is no longer configurable and `Transport` always resolves to the official API
+     - It remains the single outbound point for messages, so swapping transports in the future is still a one-file change
+     - New `Transport::is_ready()` method, which reports whether the site already has a key to send with
+     - The `whatsapp` channel identifier stays registered, pointing at the official API channel: messages already queued before the update still find a valid channel
+     - The `Joinotify/Transport/Active` filter was removed along with the transport choice
+* Documentation: readme.txt gains the "Source code and build" section required by the WordPress.org directory
+     - It explains that the PHP is not compiled and that the complete Vue frontend source ships in the package, under `app/src`, with all the build configuration needed to reproduce `app/dist`
+     - It lists the third-party libraries bundled into the build, each with its source code address and license
+     - It points to the public development repository
+* Changed: the build plugin that strips the emoji picker's CDN URL now targets the library constant, not the address
+     - The address no longer appears in any plugin file, which was triggering a false positive in the directory review
+     - It also stops depending on the host: if the library switches CDN in a future version, the URL is still removed from the package
 
-Versão 2.3.1 (21/08/2026)
-* Alteração: o WordPress 7.0 passa a ser a versão mínima exigida
-     - A partir dele o WordPress traz o AI Client embutido, que é o que a integração de IA do plugin usa agora
-* Alteração: a IA deixa de guardar chaves próprias e passa a usar o AI Client do WordPress
-     - O provedor e a chave são configurados uma vez em Configurações → Conectores, no próprio WordPress, e valem para todos os plugins do site
-     - As integrações "OpenAI" e "Anthropic" saíram de Configurações → Integrações, junto com os campos de chave e de modelo
-     - O plugin não fala mais diretamente com api.openai.com nem com api.anthropic.com; quem faz a chamada é o WordPress, para o provedor que você escolheu
-     - As instruções globais e a temperatura padrão continuam no plugin, agora em Configurações → Geral → Inteligência Artificial
-     - O assistente de configuração deixa de pedir chave: a etapa de IA agora informa se o site já tem um provedor e leva até a tela de Conectores
-     - **Atenção:** quem já usava IA precisa configurar o provedor em Configurações → Conectores. As chaves antigas continuam no banco, mas não são mais usadas
-* Recurso removido: ação "Snippet PHP" do construtor
-     - A ação executava código PHP arbitrário com `eval()`, o que o diretório do WordPress.org não permite
-     - A geração do trecho por IA, que existia só para essa ação, também foi removida
-     - **Atenção:** automações salvas que usam essa etapa continuam abrindo, mas o passo do snippet deixa de ser executado. Quem depende dele deve mover a lógica para um plugin próprio, ligado aos ganchos `Joinotify/...`
-* Novo recurso: o construtor avisa quando uma etapa não consegue iniciar a conversa
-     - Na API oficial, texto, mídia, mensagens interativas e conteúdo gerado por IA só chegam ao contato dentro de 24 horas desde a última resposta dele
-     - Um fluxo que inicia a conversa — carrinho abandonado, "pedido enviado", pós-venda — precisa começar por um template aprovado; fora disso a Meta recusa o envio e a falha só aparecia no log
-     - O aviso aparece ao editar a etapa e muda de tom quando o fluxo já tem um passo de template. No transporte legado ele não aparece, porque lá essa regra não existe
-     - Nada mudou no envio: é orientação em tempo de edição
-     - Extensões podem incluir as próprias ações no aviso pelo filtro `Joinotify/Transport/Free_Form_Actions`
-* Melhoria: o template do login por OTP passa a ser escolhido em uma lista, não digitado
-     - A lista traz só os templates de autenticação aprovados na sua conta, com botão para sincronizar quando algum acabou de ser aprovado
-     - Os templates continuam sendo criados no painel do Joinotify; o plugin apenas lê e guarda em cache
-     - O idioma passa a vir do template escolhido, em vez de um segundo campo preenchido à mão — enviar um idioma diferente do aprovado é recusado pela Meta. O campo continua existindo como reserva
-* Correção: contas com mais de 100 templates de mensagem perdiam o restante nos seletores
-     - A listagem não pedia limite e recebia só a primeira página da API, sem nenhum sinal de que havia mais
-* Alteração: os arquivos de tradução compilados deixam de ir no pacote
-     - O WordPress.org gera e entrega cada idioma pelo translate.wordpress.org, e a equipe de revisão pede que o pacote não duplique esse canal
-     - Até as strings serem aprovadas por lá, instalações não-inglesas exibem o texto em inglês
-     - Quem instala fora do diretório pode gerar um pacote com os idiomas usando `npm run build -- --ship-locales`
-     - O ZIP caiu de 3,35 MB para 2,15 MB
-* Adequações pedidas na revisão do WordPress.org
-     - Os estilos do construtor saíram do HTML para uma folha de estilo enfileirada (`assets/css/builder-boot.css`), e as regras utilitárias do carregador passaram a ficar restritas a ele, sem vazar para o resto da tela
-     - O aviso do assistente de configuração não usa mais JavaScript embutido: o "Não lembrar novamente" virou um link com nonce tratado no servidor
-     - A posição do menu no admin deixou de disputar espaço com os itens do WordPress; agora fica abaixo deles, ajustável pelo filtro `Joinotify/Admin/Menu_Position`
-     - O plugin não desativa mais sozinho o "Joinotify OTP Login" antigo: exibe um aviso com link para a tela de Plugins, e a decisão fica com você
-     - Removida a detecção de país por IP, que consultava o ipinfo.io sem estar declarado no readme. A função não tinha nenhum uso e estava quebrada (a URL nunca interpolava o endereço)
-     - O seletor de emojis não carrega mais imagens de um CDN externo: a URL é removida do pacote no build (o seletor já usava emojis nativos, então nada muda na tela)
-     - `giggsey/libphonenumber-for-php-lite` atualizado de 8.13.55 para 9.0.37
-* Recurso removido: botão que instalava o addon de recuperação de carrinho a partir de um endereço externo
-     - O botão já não funcionava (não havia mais código que respondesse ao clique) e o endereço remoto contrariava as diretrizes do diretório
-     - No lugar dele, o construtor agora apenas informa qual plugin precisa ser instalado e ativado
-* Correções de conformidade apontadas pelo Plugin Check: consultas ao banco preparadas e documentadas, escape de saída no ícone das integrações, comentários `translators:` e placeholders numerados em todas as mensagens traduzíveis, `date()` trocado por `wp_date()`/`gmdate()`, `mt_rand()` por `wp_rand()`, `strip_tags()` por `wp_strip_all_tags()`, e as chamadas de depuração (`error_log`/`print_r`) redirecionadas para o log do próprio plugin
-* Correção: o gerador do arquivo de tradução (`.pot`) lia a pasta de histórico do editor e trazia de volta textos já removidos do código; agora ele também leva os comentários `translators:` para o arquivo, que antes se perdiam
+Version 2.3.1 (2026-08-21)
+* Changed: WordPress 7.0 is now the minimum required version
+     - From that release on, WordPress ships the built-in AI Client, which is what the plugin's AI integration uses now
+* Changed: AI no longer stores its own keys and now uses the WordPress AI Client
+     - The provider and the key are configured once under Settings → Connectors, in WordPress itself, and apply to every plugin on the site
+     - The "OpenAI" and "Anthropic" integrations were removed from Settings → Integrations, along with the key and model fields
+     - The plugin no longer talks directly to api.openai.com or api.anthropic.com; WordPress makes the call, to whichever provider you chose
+     - Global instructions and the default temperature stay in the plugin, now under Settings → General → Artificial Intelligence
+     - The setup wizard no longer asks for a key: the AI step now reports whether the site already has a provider and links to the Connectors screen
+     - **Heads-up:** anyone already using AI needs to configure the provider under Settings → Connectors. The old keys remain in the database but are no longer used
+* Removed: the builder's "PHP Snippet" action
+     - The action executed arbitrary PHP code through `eval()`, which the WordPress.org directory does not allow
+     - AI snippet generation, which existed only for that action, was removed as well
+     - **Heads-up:** saved automations using that step still open, but the snippet step is no longer executed. Anyone depending on it should move the logic into their own plugin, hooked into the `Joinotify/...` hooks
+* New feature: the builder warns when a step cannot start a conversation
+     - On the official API, text, media, interactive messages and AI-generated content only reach the contact within 24 hours of their last reply
+     - A flow that starts the conversation — abandoned cart, "order shipped", post-sale — has to begin with an approved template; otherwise Meta rejects the send and the failure only showed up in the log
+     - The warning appears while editing the step and changes tone once the flow already has a template step. It does not appear on the legacy transport, because that rule does not exist there
+     - Nothing changed about sending: this is edit-time guidance
+     - Extensions can include their own actions in the warning through the `Joinotify/Transport/Free_Form_Actions` filter
+* Improvement: the OTP login template is now picked from a list instead of typed
+     - The list only shows approved authentication templates on your account, with a button to sync when one has just been approved
+     - Templates are still created in the Joinotify panel; the plugin only reads and caches them
+     - The language now comes from the selected template instead of a second hand-filled field — sending a language other than the approved one is rejected by Meta. The field still exists as a fallback
+* Fix: accounts with more than 100 message templates lost the remainder in the selectors
+     - The listing did not request a limit and received only the API's first page, with no sign that there was more
+* Changed: compiled translation files no longer ship in the package
+     - WordPress.org generates and delivers each language through translate.wordpress.org, and the review team asks that the package not duplicate that channel
+     - Until the strings are approved there, non-English installations display the text in English
+     - Anyone installing outside the directory can build a package with the languages using `npm run build -- --ship-locales`
+     - The ZIP dropped from 3.35 MB to 2.15 MB
+* Adjustments requested in the WordPress.org review
+     - The builder styles moved out of the HTML into an enqueued stylesheet (`assets/css/builder-boot.css`), and the loader's utility rules are now scoped to it instead of leaking into the rest of the screen
+     - The setup wizard notice no longer uses inline JavaScript: "Don't remind me again" became a nonce-signed link handled on the server
+     - The admin menu position no longer competes with the WordPress items; it now sits below them, adjustable through the `Joinotify/Admin/Menu_Position` filter
+     - The plugin no longer deactivates the old "Joinotify OTP Login" on its own: it shows a notice linking to the Plugins screen and leaves the decision to you
+     - Removed IP-based country detection, which queried ipinfo.io without being declared in the readme. The function had no callers and was broken (the URL never interpolated the address)
+     - The emoji picker no longer loads images from an external CDN: the URL is stripped from the package at build time (the picker already used native emoji, so nothing changes on screen)
+     - `giggsey/libphonenumber-for-php-lite` updated from 8.13.55 to 9.0.37
+* Removed: the button that installed the cart recovery add-on from an external address
+     - The button no longer worked (there was no code left responding to the click) and the remote address went against the directory guidelines
+     - In its place, the builder now simply states which plugin needs to be installed and activated
+* Compliance fixes reported by Plugin Check: prepared and documented database queries, output escaping on the integrations icon, `translators:` comments and numbered placeholders in every translatable string, `date()` replaced by `wp_date()`/`gmdate()`, `mt_rand()` by `wp_rand()`, `strip_tags()` by `wp_strip_all_tags()`, and the debug calls (`error_log`/`print_r`) routed to the plugin's own log
+* Fix: the translation file (`.pot`) generator read the editor's history folder and brought back strings already removed from the code; it now also carries the `translators:` comments into the file, which used to be lost
 
-Versão 2.3.0 (17/08/2026)
-* Novo recurso: conexão do WhatsApp pela API oficial do Joinotify, substituindo o formato de Proxy API sobre a Evolution API
-     - Botão "Conectar ao Joinotify" nas configurações: a conta é autorizada no painel e a chave da API é entregue ao site sem que você precise copiar e colar nada (colar a chave manualmente continua disponível)
-     - Números conectados no painel são importados para o site, com nome verificado, identificador do número, qualidade atribuída pela Meta e limite de conversas iniciadas em 24 horas
-     - Suporte a múltiplos números e múltiplas contas empresariais (WABA) na mesma conta: cada ação escolhe de qual número sai a mensagem
-     - Quem ainda usa o formato antigo continua funcionando normalmente e passa a ver um aviso de descontinuação
-* Novo recurso: templates de mensagem aprovados pela Meta
-     - Os templates da sua conta são listados dentro do construtor, com prévia do conteúdo, categoria, idioma e situação da aprovação
-     - Nova ação "WhatsApp: Mensagem de template", com uma variável do Joinotify para cada variável do template
-     - Botão para sincronizar os templates quando algum for criado direto no Business Manager
-     - Aviso quando o template escolhido está pausado, desabilitado ou reprovado pela Meta
-     - Templates são a única forma de falar com alguém fora da janela de 24 horas, que é a situação da maioria dos fluxos automáticos
-* Novos tipos de mensagem permitidos pela API oficial: botões de resposta, lista de opções, botão de link, localização, cartão de contato, figurinha e reação
-* Novo recurso: confirmação real de entrega
-     - O site passa a receber os eventos da conta e registrar quando a mensagem foi entregue, lida ou recusada, em vez de apenas "aceita pela API"
-     - Falhas de entrega passam a aparecer no log de depuração com o motivo informado pela Meta
-     - Mensagens recebidas do contato abrem a janela de 24 horas, permitindo responder com texto livre
-* Melhoria: código de acesso do login por OTP passa a ser entregue por template de autenticação na API oficial, com nome e idioma configuráveis
-* Melhoria: quando a API pede para aguardar (limite de requisições), o reenvio respeita exatamente o tempo informado
-* Recurso descontinuado: "Ativar Proxy API", em Configurações → Geral, passa a ser marcado como depreciado e será removido em uma próxima versão
-     - As rotas continuam funcionando por enquanto, mas o envio passa a ser exclusivamente pela API do Joinotify (API oficial do WhatsApp)
-     - As configurações do proxy agora exibem um aviso de descontinuação
-     - As respostas das rotas do proxy passam a informar a descontinuação nos cabeçalhos "Deprecation" e "X-Joinotify-Deprecation", e cada chamada é registrada no log de depuração para ajudar a identificar integrações que ainda usam o formato antigo
-* Observação: a API oficial não oferece envio para grupos; nesse modo as ações de grupo ficam indisponíveis e avisam o motivo
-* Melhoria: o assistente de configuração passa a ser exibido em tela cheia, sobre o painel do WordPress
-     - A barra e o menu do administrador ficam cobertos enquanto o assistente está aberto, para que o fluxo não seja interrompido no meio
-     - A página por trás não rola mais junto, e o esqueleto de carregamento já aparece em tela cheia, sem o salto que existia ao montar a tela
-     - Novo botão de fechar no canto superior direito, disponível em todas as etapas
-* O envio de dados de uso, que existia desde a 2.4.0 sem destino, passa a funcionar de verdade
-     - Continua **desligado por padrão**: nada sai do site antes de você aceitar no assistente
-     - O site é identificado por um valor aleatório gerado aqui mesmo — nunca derivado do endereço — mais a chave da API que você já usa para enviar mensagens
-     - O identificador aparece em Configurações → Sobre, para você citá-lo num chamado de suporte; sem ele, o suporte não tem como achar o seu site
-     - Os eventos são acumulados e enviados em lote por tarefa agendada, no máximo a cada poucas horas, nunca durante o carregamento de uma página
-     - Um evento repetido no mesmo dia conta uma vez só: uma loja com cinco mil pedidos diários gera cerca de dez eventos, não cinco mil
-     - Só sai o que está no catálogo, e cada propriedade tem tipo fechado — não existe campo de texto livre, então conteúdo de mensagem não cabe no formato
-     - Códigos de erro são normalizados antes de sair; o detalhe fica num identificador do ponto do código que gerou a falha
-     - Desligar apaga o que ainda estava na fila e avisa o servidor para parar de contar esta instalação (o filtro `Joinotify/Telemetry/Send_Opt_Out` suprime esse último aviso)
-     - O assistente passa a mostrar também exemplos dos eventos e como o site é identificado
-* Melhoria: a biblioteca de modelos de fluxo passa a ser servida pela API do Joinotify, no mesmo endereço da conta (`api.joinotify.com`), em vez do endereço dedicado que existia antes
-     - Ao usar um modelo, o download é contabilizado na biblioteca, o que passa a alimentar a contagem de instalações de cada modelo
-     - Quando um modelo é revisado, o site percebe pela assinatura publicada no catálogo e busca a versão nova sozinho, sem precisar limpar cache
-     - Falhas ao carregar a biblioteca passam a aparecer no log de depuração com o motivo informado pela API
-* Correção: o plugin não removia nenhuma das próprias tarefas agendadas ao ser desativado
-     - Um site que desativava o plugin seguia com os agendamentos na base até alguém limpar à mão
-     - A desativação agora limpa todas elas. Nada é apagado além disso — desativar não é desinstalar
-* Novos ganchos para extensões
-     - `Joinotify/Settings/Saved`, com os valores antes e depois de cada salvamento
-     - `Joinotify/Sender_Selected`, quando o site passa a ter um número de origem (leva só como foi escolhido, nunca o número)
-     - `Joinotify/Notification_Queue/Item_Retried`, quando uma mensagem falha e volta para a fila
-     - `Joinotify/Debug_Log/Recorded`, disparado em erros mesmo com o registro de logs desligado
-* O plugin passa a ser 100% gratuito e software livre, sob a licença GNU GPL v2 ou posterior
-     - Todos os recursos estão liberados: não existe mais versão paga, período de teste nem verificação de licença
-     - A tela "Licença" e o sistema de licenciamento foram removidos; a chave da API do Joinotify passa a ser a única credencial
-     - Ao atualizar, a chave de licença, o status e os dados do servidor de licenciamento são apagados do banco automaticamente
-* Novo recurso: assistente de configuração em 6 etapas, exibido logo após a ativação
-     - País padrão, já pré-selecionado a partir do endereço da loja WooCommerce, do idioma do site ou do fuso horário
-     - Conexão com o Joinotify: a chave da API é validada na hora e os números da conta são importados
-     - Provedor de IA (opcional), com a chave do provedor
-     - Documentação do plugin, em https://docs.joinotify.com
-     - Autorização para o envio de dados de uso anônimos
-     - Ao final, criar a primeira automação ou ir para as configurações
-     - Instalações antigas que nunca passaram pelo assistente também o veem, uma única vez, ao abrir uma tela do Joinotify
-* Novo recurso: envio de dados de uso anônimos, desligado por padrão
-     - O assistente mostra exatamente o conteúdo que seria enviado antes de você decidir
-     - Nunca inclui endereço do site, e-mail, telefones, contatos, conteúdo de mensagens, fluxos ou credenciais
-     - Pode ser desligado a qualquer momento em Configurações → Sobre
-* Novo recurso: modal de configuração no card do WhatsApp, em Configurações → Integrações
-     - Botão "Configurar" abre o modal com a chave da API do Joinotify, o transporte de mensagens, o ID do número e o ID da conta empresarial
-     - O botão "Conectar" valida a chave na hora contra a API e importa os números da conta, preenchendo o ID do número e o da conta empresarial automaticamente
-     - Se a chave for recusada, a chave anterior é restaurada — o site nunca fica com uma chave que acabou de falhar
-     - Botão "Desconectar" apaga a chave sem remover os números já importados
-     - Com uma chave salva, o campo exibe o prefixo público dela (o restante fica mascarado) e um botão "Remover chave", com confirmação
-     - A chave informada no assistente de configuração aparece já salva no campo, e salvar as configurações não a apaga
-     - A chave da API não é enviada ao navegador em nenhuma tela: as configurações, o construtor de automações e a resposta de salvar recebem apenas o prefixo público e a informação de que existe uma chave salva
-     - A chave da API do WhatsApp, o token do Telegram e a chave do Resend passam a ser excluídos da exportação de configurações
-* Alteração: as atualizações passam a ser entregues pelo próprio WordPress
-     - O verificador de atualizações próprio do plugin e as opções "Atualizações automáticas" e "Avisos de atualização" foram removidos
-     - Sites instalados fora do diretório do WordPress.org precisam reinstalar o plugin pelo diretório para voltar a receber atualizações
-* Alteração: a Proxy API (descontinuada) passa a vir desligada em instalações novas
-* Recurso removido: instalador de extensões que baixava pacotes de um endereço externo
-* Alteração: o construtor deixa de oferecer ações de integrações desativadas
-     - Telegram, Resend, WhatsApp e o cupom de desconto do WooCommerce só aparecem na biblioteca de ações quando a integração correspondente está ativa em Configurações → Integrações
-     - Antes, essas ações apareciam mesmo desligadas e a automação não entregava nada ao ser executada
-     - Automações já salvas continuam abrindo e exibindo essas etapas normalmente, mesmo com a integração desligada depois
-* Alteração: todas as ações de WhatsApp do construtor passam a exibir a logo do WhatsApp
-     - Modelo aprovado, mensagem com IA, botões de resposta, lista de opções, botão de link, localização, contato, figurinha e reação usavam ícones genéricos
-* Adequação às diretrizes do diretório de plugins do WordPress.org: readme.txt com a declaração de todos os serviços externos utilizados, licença GPL e o código-fonte do frontend Vue distribuído junto do pacote
-* Correção: valores monetários chegavam quebrados na mensagem
-     - `{{ wc_currency_symbol }}` enviava o código interno do WooCommerce em vez do símbolo: o real aparecia como `&#82;&#36;` no lugar de `R$`
-     - Os totais eram enviados com o número cru do pedido (`68.70`), sem o separador decimal do idioma da loja e diferente do que a prévia do construtor mostrava
-     - `{{ joinotify_coupon_discount_formatted }}` enviava o HTML inteiro do preço, com as tags `<span>` visíveis na mensagem
-     - `{{ fcrc_cart_total }}` (carrinho abandonado do Flexify Checkout) enviava o valor sem formatação alguma
-     - **Atenção:** `{{ wc_order_total }}`, `{{ wc_total_discount }}`, `{{ wc_total_tax }}` e `{{ wc_total_refunded }}` agora já incluem o símbolo da moeda (`R$ 68,70`), como a prévia do construtor sempre mostrou. Fluxos que escreviam `{{ wc_currency_symbol }}{{ wc_order_total }}` precisam remover o `{{ wc_currency_symbol }}`, senão o símbolo aparece duas vezes
+Version 2.3.0 (2026-08-17)
+* New feature: WhatsApp connection through the official Joinotify API, replacing the Proxy API format over the Evolution API
+     - "Connect to Joinotify" button in the settings: the account is authorized in the panel and the API key is delivered to the site without any copy and paste (pasting the key manually is still available)
+     - Numbers connected in the panel are imported into the site, with verified name, phone number identifier, Meta-assigned quality and 24-hour business-initiated conversation limit
+     - Support for multiple numbers and multiple business accounts (WABA) on the same account: each action picks which number the message goes out from
+     - Anyone still on the old format keeps working normally and starts seeing a deprecation notice
+* New feature: Meta-approved message templates
+     - Your account's templates are listed inside the builder, with a content preview, category, language and approval status
+     - New "WhatsApp: Template message" action, with one Joinotify variable per template variable
+     - Button to sync the templates when one is created straight in Business Manager
+     - Warning when the chosen template is paused, disabled or rejected by Meta
+     - Templates are the only way to reach someone outside the 24-hour window, which is the situation for most automatic flows
+* New message types allowed by the official API: reply buttons, option list, link button, location, contact card, sticker and reaction
+* New feature: real delivery confirmation
+     - The site now receives the account's events and records when the message was delivered, read or rejected, instead of only "accepted by the API"
+     - Delivery failures now appear in the debug log with the reason reported by Meta
+     - Messages received from the contact open the 24-hour window, allowing free-form replies
+* Improvement: the OTP login access code is now delivered through an authentication template on the official API, with configurable name and language
+* Improvement: when the API asks to wait (rate limit), the retry respects exactly the time reported
+* Deprecated: "Enable Proxy API", under Settings → General, is now marked as deprecated and will be removed in an upcoming version
+     - The routes keep working for now, but sending is exclusively through the Joinotify API (official WhatsApp API)
+     - The proxy settings now display a deprecation notice
+     - The proxy route responses now report the deprecation in the "Deprecation" and "X-Joinotify-Deprecation" headers, and every call is recorded in the debug log to help identify integrations still on the old format
+* Note: the official API does not offer sending to groups; in this mode the group actions are unavailable and explain why
+* Improvement: the setup wizard is now displayed full screen, over the WordPress dashboard
+     - The admin bar and menu are covered while the wizard is open, so the flow is not interrupted halfway
+     - The page behind no longer scrolls along, and the loading skeleton already appears full screen, without the jump that happened while mounting
+     - New close button in the top right corner, available in every step
+* Usage data reporting, which had existed since 2.4.0 with no destination, now actually works
+     - It stays **off by default**: nothing leaves the site before you accept it in the wizard
+     - The site is identified by a random value generated right here — never derived from the address — plus the API key you already use to send messages
+     - The identifier appears under Settings → About, so you can quote it in a support ticket; without it, support has no way to find your site
+     - Events are accumulated and sent in batches by a scheduled task, at most every few hours, never during a page load
+     - A repeated event on the same day counts once: a store with five thousand daily orders generates about ten events, not five thousand
+     - Only what is in the catalog goes out, and every property has a closed type — there is no free-text field, so message content does not fit the format
+     - Error codes are normalized before leaving; the detail stays in an identifier for the code point that produced the failure
+     - Turning it off clears whatever was still queued and tells the server to stop counting this installation (the `Joinotify/Telemetry/Send_Opt_Out` filter suppresses that last notice)
+     - The wizard now also shows examples of the events and how the site is identified
+* Improvement: the workflow template library is now served by the Joinotify API, at the same address as the account (`api.joinotify.com`), instead of the dedicated address it used before
+     - When a template is used, the download is counted in the library, which now feeds each template's install count
+     - When a template is revised, the site notices through the signature published in the catalog and fetches the new version by itself, with no cache clearing
+     - Failures loading the library now appear in the debug log with the reason reported by the API
+* Fix: the plugin removed none of its own scheduled tasks on deactivation
+     - A site that deactivated the plugin kept the schedules in the database until someone cleaned them by hand
+     - Deactivation now clears all of them. Nothing else is erased — deactivating is not uninstalling
+* New hooks for extensions
+     - `Joinotify/Settings/Saved`, with the values before and after each save
+     - `Joinotify/Sender_Selected`, when the site gains a sender number (it carries only how it was chosen, never the number)
+     - `Joinotify/Notification_Queue/Item_Retried`, when a message fails and goes back into the queue
+     - `Joinotify/Debug_Log/Recorded`, fired on errors even with logging turned off
+* The plugin is now 100% free and open source software, under the GNU GPL v2 or later license
+     - Every feature is unlocked: there is no paid version, trial period or license check anymore
+     - The "License" screen and the licensing system were removed; the Joinotify API key is now the only credential
+     - On update, the license key, the status and the licensing server data are automatically deleted from the database
+* New feature: 6-step setup wizard, shown right after activation
+     - Default country, pre-selected from the WooCommerce store address, the site language or the timezone
+     - Connection to Joinotify: the API key is validated on the spot and the account's numbers are imported
+     - AI provider (optional), with the provider's key
+     - Plugin documentation, at https://docs.joinotify.com
+     - Authorization for anonymous usage data reporting
+     - At the end, create the first automation or go to the settings
+     - Older installations that never went through the wizard also see it, once, when opening a Joinotify screen
+* New feature: anonymous usage data reporting, off by default
+     - The wizard shows exactly what would be sent before you decide
+     - It never includes the site address, e-mail, phone numbers, contacts, message content, flows or credentials
+     - It can be turned off at any time under Settings → About
+* New feature: settings modal on the WhatsApp card, under Settings → Integrations
+     - The "Configure" button opens the modal with the Joinotify API key, the message transport, the phone number ID and the business account ID
+     - The "Connect" button validates the key against the API on the spot and imports the account's numbers, filling in the phone number ID and the business account ID automatically
+     - If the key is rejected, the previous key is restored — the site is never left with a key that just failed
+     - The "Disconnect" button erases the key without removing the numbers already imported
+     - With a key saved, the field displays its public prefix (the rest is masked) plus a "Remove key" button, with confirmation
+     - The key entered in the setup wizard appears already saved in the field, and saving the settings does not erase it
+     - The API key is not sent to the browser on any screen: the settings, the automation builder and the save response receive only the public prefix and the fact that a key is stored
+     - The WhatsApp API key, the Telegram token and the Resend key are now excluded from the settings export
+* Changed: updates are now delivered by WordPress itself
+     - The plugin's own update checker and the "Automatic updates" and "Update notices" options were removed
+     - Sites installed outside the WordPress.org directory need to reinstall the plugin from the directory to receive updates again
+* Changed: the Proxy API (deprecated) now ships turned off on new installations
+* Removed: the extension installer that downloaded packages from an external address
+* Changed: the builder no longer offers actions from disabled integrations
+     - Telegram, Resend, WhatsApp and the WooCommerce discount coupon only appear in the action library when the corresponding integration is active under Settings → Integrations
+     - Before, those actions showed up even when off and the automation delivered nothing when executed
+     - Already saved automations keep opening and displaying those steps normally, even if the integration is disabled afterwards
+* Changed: every WhatsApp action in the builder now displays the WhatsApp logo
+     - Approved template, AI message, reply buttons, option list, link button, location, contact, sticker and reaction were using generic icons
+* Compliance with the WordPress.org plugin directory guidelines: readme.txt declaring every external service used, GPL license and the Vue frontend source code distributed with the package
+* Fix: monetary values arrived broken in the message
+     - `{{ wc_currency_symbol }}` sent WooCommerce's internal code instead of the symbol: the Brazilian real showed up as `&#82;&#36;` instead of `R$`
+     - Totals were sent with the order's raw number (`68.70`), without the decimal separator of the store's language and different from what the builder preview showed
+     - `{{ joinotify_coupon_discount_formatted }}` sent the entire price HTML, with the `<span>` tags visible in the message
+     - `{{ fcrc_cart_total }}` (Flexify Checkout abandoned cart) sent the value with no formatting at all
+     - **Heads-up:** `{{ wc_order_total }}`, `{{ wc_total_discount }}`, `{{ wc_total_tax }}` and `{{ wc_total_refunded }}` now already include the currency symbol (`R$ 68,70`), as the builder preview always showed. Flows writing `{{ wc_currency_symbol }}{{ wc_order_total }}` need to drop the `{{ wc_currency_symbol }}`, otherwise the symbol appears twice
 
-Versão 2.2.0 (03/08/2026)
-* Novo recurso: Ação "Loop" no construtor de fluxos, que percorre uma coleção e executa as ações do corpo uma vez para cada item, permitindo enviar várias mensagens em sequência
-     - Coleções disponíveis: arquivos digitais do pedido, itens comprados do pedido e lista a partir de uma variável (separada por linha ou delimitador)
-     - Entrega um arquivo por mensagem: por exemplo, uma mensagem de mídia para cada arquivo de download vinculado ao pedido
-     - Nova fonte de anexo "Arquivo do item do loop", que envia o arquivo da iteração atual sem consumir o limite de downloads do cliente
-     - Suporte a tempo de espera (delay) entre as iterações
-* Novas variáveis do loop, disponíveis dentro do corpo do loop: {{ loop_value }}, {{ loop_index }}, {{ loop_number }}, {{ loop_count }}, {{ loop_file_name }}, {{ loop_download_url }}, {{ loop_product_name }}, {{ loop_item_name }} e {{ loop_item_quantity }}
-     - As variáveis do loop são processadas em qualquer campo onde forem inseridas (legenda, URL de mídia, URL de anexo e destinatário)
-* Recurso removido: Notificar quando o WhatsApp desconectar
-* Correção de bugs
-     - O código do país padrão (DDI) não era aplicado quando o número não incluía o código, fazendo o envio falhar; agora o país de fallback configurado é usado corretamente
+Version 2.2.0 (2026-08-03)
+* New feature: "Loop" action in the flow builder, which walks through a collection and runs the body actions once per item, allowing several messages to be sent in sequence
+     - Available collections: the order's digital files, the order's purchased items and a list from a variable (split by line or delimiter)
+     - Delivers one file per message: for example, one media message for each downloadable file linked to the order
+     - New "Loop item file" attachment source, which sends the current iteration's file without consuming the customer's download limit
+     - Support for a wait time (delay) between iterations
+* New loop variables, available inside the loop body: {{ loop_value }}, {{ loop_index }}, {{ loop_number }}, {{ loop_count }}, {{ loop_file_name }}, {{ loop_download_url }}, {{ loop_product_name }}, {{ loop_item_name }} and {{ loop_item_quantity }}
+     - Loop variables are processed in any field they are inserted into (caption, media URL, attachment URL and recipient)
+* Removed: Notify when WhatsApp disconnects
+* Bug fixes
+     - The default country code (dial code) was not applied when the number did not include the code, making the send fail; the configured fallback country is now used correctly
 
-Versão 2.1.0 (27/07/2026)
-* Novo recurso: Entrega de produtos digitais do WooCommerce diretamente pelo construtor de fluxos, enviando arquivos e PDFs por e-mail ou WhatsApp
-* Novo recurso: Envio de anexos nas ações de e-mail (Resend) e de mídia do WhatsApp, com campo reutilizável que aceita arquivos da biblioteca de mídia, links ou os arquivos digitais do próprio pedido
-     - Anexos grandes no e-mail são substituídos automaticamente pelo link de download, garantindo o envio da mensagem
-     - Envio de múltiplos arquivos na ação de mídia do WhatsApp
-* Novo acionamento: "Acesso a produto digital liberado" (WooCommerce), recomendado para fluxos de entrega, pois os links de download já existem nesse momento
-* Novo acionamento: "Arquivo digital baixado" (WooCommerce), disparado quando o cliente baixa um arquivo, ambos com filtro opcional por produto
-* Novas variáveis do WooCommerce para produtos digitais: lista de produtos para download, nomes e links dos arquivos, links sem o nome, data de expiração, downloads restantes, link da área de downloads na conta do cliente e link de download por produto específico
-* Melhoria: variáveis passam a respeitar o acionamento escolhido também no envio, evitando que variáveis sem contexto sejam preenchidas indevidamente
-* Melhoria: preparação para o novo servidor de licenças, com migração automática e sem intervenção do usuário
-     - O plugin passa a usar o novo servidor assim que o atual deixar de responder, mantendo a mesma chave de licença
-     - Sites já ativados são migrados em segundo plano, sem travar o painel
-     - Nenhuma licença é desativada quando o servidor está fora do ar ou quando há divergência de cadastro; nesses casos o plugin continua funcionando e avisa na tela de licença
-     - Atualizações do plugin passam a ser entregues pelo novo servidor após a migração
-* Correção de bugs
-     - Ordem dos argumentos no acionamento de reembolso parcial do WooCommerce, que fazia a variável do pedido receber o identificador do reembolso
-     - Licença expirada ou recusada pelo servidor continuava liberando os recursos premium por até 24 horas
-     - Abrir a tela de licença podia desativar a licença do site quando a data de validade já havia passado
-     - Licenças vitalícias marcadas como "Unlimited" ou "Lifetime" eram tratadas como expiradas
-     - Resposta de ativação da licença podia ser reaproveitada na desativação, por compartilharem o mesmo cache
+Version 2.1.0 (2026-07-27)
+* New feature: WooCommerce digital product delivery straight from the flow builder, sending files and PDFs by e-mail or WhatsApp
+* New feature: attachments in the e-mail (Resend) and WhatsApp media actions, with a reusable field that accepts media library files, links or the order's own digital files
+     - Large e-mail attachments are automatically replaced by the download link, guaranteeing the message goes out
+     - Multiple files can be sent in the WhatsApp media action
+* New trigger: "Digital product access granted" (WooCommerce), recommended for delivery flows, since the download links already exist at that point
+* New trigger: "Digital file downloaded" (WooCommerce), fired when the customer downloads a file, both with an optional per-product filter
+* New WooCommerce variables for digital products: downloadable product list, file names and links, links without the name, expiration date, remaining downloads, link to the downloads area in the customer's account and download link for a specific product
+* Improvement: variables now respect the chosen trigger at send time as well, preventing context-less variables from being filled in improperly
+* Improvement: groundwork for the new license server, with automatic migration and no user intervention
+     - The plugin switches to the new server as soon as the current one stops responding, keeping the same license key
+     - Already activated sites are migrated in the background, without freezing the dashboard
+     - No license is deactivated when the server is down or when there is a registration mismatch; in those cases the plugin keeps working and reports it on the license screen
+     - Plugin updates are delivered by the new server after the migration
+* Bug fixes
+     - Argument order in the WooCommerce partial refund trigger, which made the order variable receive the refund identifier
+     - An expired or server-rejected license kept the premium features unlocked for up to 24 hours
+     - Opening the license screen could deactivate the site's license when the expiration date had already passed
+     - Lifetime licenses marked as "Unlimited" or "Lifetime" were treated as expired
+     - The license activation response could be reused on deactivation, since both shared the same cache
 
-Versão 2.0.0 (02/07/2026)
-* Novo construtor de fluxos: interface totalmente redesenhada em formato de canvas visual, com arrastar e soltar, conectar etapas, zoom, ajuste automático à tela e botões de desfazer/refazer
-* Novo recurso: Inteligência Artificial no construtor de fluxos
-     - Criação de fluxos completos automaticamente a partir de uma descrição em texto
-     - Geração de mensagens dinâmicas do WhatsApp com IA
-     - Geração de variáveis inteligentes com IA
-     - Criação de snippets PHP com auxílio da IA
-* Novo recurso: Variáveis de texto personalizadas, criadas pelo próprio usuário a partir de tipos de conteúdo e campos do site (inclui suporte a pedidos do WooCommerce)
-* Novo recurso: Histórico de mensagens enviadas, com filtros e seletor de data por mês e ano
-* Novo recurso: Login sem senha por código (OTP) enviado via WhatsApp, com suporte a novos canais no futuro
-* Novo recurso: Exportar e importar todas as configurações do plugin em arquivo JSON
-* Novo recurso: Acionamento "Solicitação de redefinição de senha", com variável do link de redefinição
-* Novo editor de mensagens com formatação visual (negrito, itálico, emojis) convertida automaticamente para o padrão do WhatsApp
-* Melhoria: pré-visualização de mídia diretamente na etapa de mensagem de mídia do WhatsApp
-* Melhoria: variáveis de texto destacadas e clicáveis dentro dos campos, com aviso quando indisponíveis no acionamento escolhido
-* Melhoria: ações sinalizam quando há configurações obrigatórias pendentes
-* Melhoria: catálogo de condições mais completo, com seleção por lista e seletor de produtos nos valores
-* Melhoria: agendamento de mensagens com data e hora específicas (tempo de espera), com fila e reprocessamento de notificações que falharam
-* Melhoria: aba "Integrações" renomeada para "Aplicativos"
-* Melhoria: verificação manual de atualização na aba "Sobre"
-* Melhoria: migração automática dos fluxos das versões anteriores ao atualizar o plugin
-* Otimizações de desempenho no carregamento do plugin e nas telas administrativas
-* Suporte aprimorado a traduções (português, inglês e espanhol)
-* Novos idiomas adicionados: Francês, Italiano, Alemão e Português de Portugal
+Version 2.0.0 (2026-07-02)
+* New flow builder: fully redesigned interface as a visual canvas, with drag and drop, step connections, zoom, fit to screen and undo/redo buttons
+* New feature: Artificial Intelligence in the flow builder
+     - Automatic creation of complete flows from a text description
+     - Generation of dynamic WhatsApp messages with AI
+     - Generation of smart variables with AI
+     - Creation of PHP snippets with AI assistance
+* New feature: custom text variables, created by the user from the site's content types and fields (includes support for WooCommerce orders)
+* New feature: sent message history, with filters and a month-and-year date picker
+* New feature: passwordless login by code (OTP) sent via WhatsApp, with support for new channels in the future
+* New feature: export and import all plugin settings in a JSON file
+* New feature: "Password reset request" trigger, with a reset link variable
+* New message editor with visual formatting (bold, italic, emoji) automatically converted to the WhatsApp standard
+* Improvement: media preview right in the WhatsApp media message step
+* Improvement: text variables highlighted and clickable inside the fields, with a warning when unavailable in the chosen trigger
+* Improvement: actions flag when there are required settings pending
+* Improvement: a more complete condition catalog, with list-based selection and a product picker in the values
+* Improvement: message scheduling with a specific date and time (wait time), with a queue and reprocessing of failed notifications
+* Improvement: "Integrations" tab renamed to "Apps"
+* Improvement: manual update check in the "About" tab
+* Improvement: automatic migration of flows from previous versions when updating the plugin
+* Performance optimizations in plugin loading and in the admin screens
+* Improved translation support (Portuguese, English and Spanish)
+* New languages added: French, Italian, German and European Portuguese
 
-Versão 1.4.7 (12/04/2026)
-* Recurso adicionado: Fila para processamento de mensagens
-* Mudança de tecnologia do frontend para Vue.js, Vite e Tailwind CSS
+Version 1.4.7 (2026-04-12)
+* Added: queue for message processing
+* Frontend technology switched to Vue.js, Vite and Tailwind CSS
 
-Versão 1.4.6 (10/02/2026)
-* Otimizações
-* Correção de bugs
-     - Erro fatal devido a falta da classe ElementorPro\Modules\Forms\Classes\Action_Base
+Version 1.4.6 (2026-02-10)
+* Optimizations
+* Bug fixes
+     - Fatal error due to the missing ElementorPro\Modules\Forms\Classes\Action_Base class
 
-Versão 1.4.5 (24/01/2026)
-* Correção de bugs
-     - Erro fatal ao carregar página "Todos os fluxos": Call to undefined function convert_to_screen()
-* Otimizações
-* Recurso adicionado: WooCommerce -> Formato do endereço completo (faturamento e entrega)
+Version 1.4.5 (2026-01-24)
+* Bug fixes
+     - Fatal error loading the "All flows" page: Call to undefined function convert_to_screen()
+* Optimizations
+* Added: WooCommerce -> full address format (billing and shipping)
 
-Versão 1.4.4 (12/12/2025)
-* Otimizações
-     - Melhorias em segurança no instanciamento de classes
+Version 1.4.4 (2025-12-12)
+* Optimizations
+     - Security improvements in class instantiation
 
-Versão 1.4.3 (08/12/2025)
-* Correção de bugs
-     - Verificar se o pedido foi pago
-     - Criptografia de emojis em mensagens
-     - Contagem de posts na tabela Todos os fluxos
+Version 1.4.3 (2025-12-08)
+* Bug fixes
+     - Check whether the order was paid
+     - Emoji encoding in messages
+     - Post count in the All flows table
 
-Versão 1.4.2 (27/11/2025)
-* Correção de bugs
-     - Erro na validação de string com Proxy API
-* Otimizações
+Version 1.4.2 (2025-11-27)
+* Bug fixes
+     - String validation error with the Proxy API
+* Optimizations
 
-Versão 1.4.1 (28/10/2025)
-* Alteração na API de consulta de atualizações
+Version 1.4.1 (2025-10-28)
+* Change to the update check API
 
-Versão 1.4.0 (29/08/2025)
-* Otimizações
-* Recurso adicionado: Legenda para mensagens de mídia do WhatsApp
-* Recurso adicionado Variáveis de texto {{ post_title }}, {{ post_date }}, {{ post_content }}, {{ post_link }}, {{ post_tags }}, {{ post_categories }} e {{ post_featured_image }}
+Version 1.4.0 (2025-08-29)
+* Optimizations
+* Added: caption for WhatsApp media messages
+* Added: text variables {{ post_title }}, {{ post_date }}, {{ post_content }}, {{ post_link }}, {{ post_tags }}, {{ post_categories }} and {{ post_featured_image }}
 
-Versão 1.3.7 (13/08/2025)
-* Correção de bugs
-     - Incapacidade de editar fluxos com plugin Academy LMS e similares
+Version 1.3.7 (2025-08-13)
+* Bug fixes
+     - Unable to edit flows with the Academy LMS plugin and similar
 
-Versão 1.3.6 (11/07/2025)
-* Correção de bugs
-     - Prioridade e argumentos da função add_action() na classe Woo_Subscriptions informados fora do array de callback
-     - Falha na verificação de status de pagamento de pedidos
+Version 1.3.6 (2025-07-11)
+* Bug fixes
+     - Priority and arguments of add_action() in the Woo_Subscriptions class passed outside the callback array
+     - Failure checking order payment status
 
-Versão 1.3.5 (09/07/2025)
-* Correção de bugs
-     - Erro fatal ao alterar status de pedido: Uncaught Error: Class name must be a valid object or a string in /woocommerce/src/Internal/DataStores/Orders/OrdersTableDataStore.php:1524
-* Recurso adicionado: Validação de status do post no acionamento "Post tem status alterado"
+Version 1.3.5 (2025-07-09)
+* Bug fixes
+     - Fatal error when changing order status: Uncaught Error: Class name must be a valid object or a string in /woocommerce/src/Internal/DataStores/Orders/OrdersTableDataStore.php:1524
+* Added: post status validation in the "Post status changed" trigger
 
-Versão 1.3.4 (16/06/2025)
-* Correção de bugs
-     - Link de recuperação do carrinho é vazio (Flexify Checkout - Recuperação de carrinhos abandonados)
-* Otimizações
-     - Melhorias na responsividade em desktop
-* Recurso adicionado: Mostrar notificações de atualização de versão
+Version 1.3.4 (2025-06-16)
+* Bug fixes
+     - Cart recovery link is empty (Flexify Checkout - Abandoned cart recovery)
+* Optimizations
+     - Responsiveness improvements on desktop
+* Added: show version update notices
 
-Versão 1.3.3 (10/06/2025)
-* Recurso adicionado: Receber avisos quando WhatsApp estiver desconectado
-* Recurso removido: Ao entrar na etapa 1 da integração Flexify Checkout
-* Recurso removido: Ao entrar na etapa 2 da integração Flexify Checkout
-* Recurso removido: Ao entrar na etapa 3 da integração Flexify Checkout
-* Recurso adicionado: Variáveis de texto: {{ fcrc_first_name }}, {{ fcrc_last_name }}, {{ fcrc_phone }}, {{ fcrc_email }}, {{ fcrc_cart_total }} (Flexify Checkout - Recuperação de carrinhos abandonados)
-* Recurso adicionado: Acionamento: Coleta de lead via modal (Flexify Checkout - Recuperação de carrinhos abandonados)
-* Recurso adicionado: Acionamento: Coleta de lead via checkout (Flexify Checkout - Recuperação de carrinhos abandonados)
+Version 1.3.3 (2025-06-10)
+* Added: receive notices when WhatsApp is disconnected
+* Removed: on entering step 1 of the Flexify Checkout integration
+* Removed: on entering step 2 of the Flexify Checkout integration
+* Removed: on entering step 3 of the Flexify Checkout integration
+* Added: text variables {{ fcrc_first_name }}, {{ fcrc_last_name }}, {{ fcrc_phone }}, {{ fcrc_email }}, {{ fcrc_cart_total }} (Flexify Checkout - Abandoned cart recovery)
+* Added: trigger "Lead captured via modal" (Flexify Checkout - Abandoned cart recovery)
+* Added: trigger "Lead captured via checkout" (Flexify Checkout - Abandoned cart recovery)
 
-Versão 1.3.2 (29/05/2025)
-* Correção de bugs
-     - Método set_default_options() indefinido na classe Helpers na linha 171
-* Otimizações
-     - Preencher o remetente ao importar um fluxo
+Version 1.3.2 (2025-05-29)
+* Bug fixes
+     - Undefined set_default_options() method in the Helpers class at line 171
+* Optimizations
+     - Fill in the sender when importing a flow
 
-Versão 1.3.1 (26/05/2025)
-* Correção de bugs
-     - Ação de Tempo de espera
+Version 1.3.1 (2025-05-26)
+* Bug fixes
+     - Wait time action
 
-Versão 1.3.0 (08/05/2025)
-* Correção de bugs
-* Otimizações
-* Correção de segurança se remetente está registrado no site
-* Mudança na API de envio de mensagens via WhatsApp
+Version 1.3.0 (2025-05-08)
+* Bug fixes
+* Optimizations
+* Security fix for whether the sender is registered on the site
+* Change to the WhatsApp message sending API
 
-Versão 1.2.5 (24/03/2025)
-* Correção de bugs
-     - Correção na chamada de ganchos da integração Woo Subscriptions
-* Otimizações
+Version 1.2.5 (2025-03-24)
+* Bug fixes
+     - Fix to the hook calls of the Woo Subscriptions integration
+* Optimizations
 
-Versão 1.2.2 (17/03/2025)
-* Correção de bugs:
-     - Variáveis de texto em acionamentos para WooCommerce em modo testes não estavam sendo substituídas corretamente.
-* Otimizações
-* Recurso modificado: Variáveis de texto {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, agora retornam valores com símbolo de moeda formatados.
-* Recurso removido: Condição "Status do pedido" no acionamento "Novo pedido"
-* Recurso adicionado: Adição de ações entre ações existentes no fluxo
-* Recurso adicionado: Formatação de textos com variáveis do WhatsApp
-* Recurso adicionado: Tradução para o idioma inglês (en-US)
-* Recurso adicionado: Tradução para o idioma espanhol (es-ES)
+Version 1.2.2 (2025-03-17)
+* Bug fixes:
+     - Text variables in WooCommerce triggers in test mode were not being replaced correctly.
+* Optimizations
+* Changed: text variables {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }} now return formatted values with the currency symbol.
+* Removed: "Order status" condition in the "New order" trigger
+* Added: adding actions between existing actions in the flow
+* Added: text formatting with WhatsApp variables
+* Added: English translation (en-US)
+* Added: Spanish translation (es-ES)
 
-Versão 1.2.0 (12/03/2025)
-* Correção de bugs
-* Otimizações
-* Recurso adicionado: Biblioteca "giggsey/libphonenumber-for-php" para formatação e validação de telefones em formato internacional
-* Recurso adicionado: Biblioteca "Selectize" para multi seleção de elementos
-* Recurso removido: Variável de texto {{ post_id }}
-* Recurso adicionado: Condições "Método de pagamento", "Método de entrega" e "Pedido pago"
-* Recurso adicionado: Acionamentos: "Pagamento processado pelo PayPal"
-* Recurso adicionado: Classe "Routines" para execução de rotinas; E adicionado rotina de verificação de conexão do telefones e atualizações
-* Recurso adicionado: Variáveis de texto {{ fc_inter_pix_copia_cola }}, {{ fc_inter_pix_expiration_time }}, {{ fc_inter_bank_slip_url }} e {{ fcrc_recovery_link }}
+Version 1.2.0 (2025-03-12)
+* Bug fixes
+* Optimizations
+* Added: "giggsey/libphonenumber-for-php" library for formatting and validating phone numbers in international format
+* Added: "Selectize" library for multi-selecting elements
+* Removed: text variable {{ post_id }}
+* Added: "Payment method", "Shipping method" and "Order paid" conditions
+* Added: trigger "Payment processed by PayPal"
+* Added: "Routines" class for running routines; and added a routine that checks phone connection and updates
+* Added: text variables {{ fc_inter_pix_copia_cola }}, {{ fc_inter_pix_expiration_time }}, {{ fc_inter_bank_slip_url }} and {{ fcrc_recovery_link }}
 
-Versão 1.1.2 (24/02/2025)
-* Correção de bugs
+Version 1.1.2 (2025-02-24)
+* Bug fixes
 
-Versão 1.1.1 (24/02/2025)
-* Correção de bugs
+Version 1.1.1 (2025-02-24)
+* Bug fixes
 
-Versão 1.1.0 (24/02/2025)
-* Correção de bugs
-* Otimizações
-* Recurso adicionado: Ativar modo depuração
-* Recurso adicionado: Integração com formulários do Elementor
-* Recurso removido: Variáveis de texto {{ br }} e {{ phone }}
-* Recurso removido: Atualização de configurações automáticas
-* Recurso adicionado: Variáveis de texto {{ wc_billing_first_name }}, {{ wc_billing_last_name }}, {{ wc_billing_email }}, {{ wc_billing_phone }}, {{ wc_shipping_phone }}, {{ wc_order_status }}, {{ wc_billing_full_address }}, {{ wc_shipping_full_address }}, {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, {{ wc_coupon_codes }}, {{ wc_payment_method_title }}, {{ wc_shipping_address }}, {{ wc_checkout_field=[FIELD_ID] }}
-* Recurso adicionado: Ativar atualizações automáticas
-* Recurso adicionado: Ação "Snippet PHP" no construtor de fluxos
-* Recurso adicionado: Ação "Cupom de desconto " no construtor de fluxos para integração com WooCommerce
-* Recurso adicionado: Obter informações de grupos do WhatsApp
-* Recurso modificado: Alteração da biblioteca de emojis (Picmo -> EmojioneArea)
+Version 1.1.0 (2025-02-24)
+* Bug fixes
+* Optimizations
+* Added: enable debug mode
+* Added: integration with Elementor forms
+* Removed: text variables {{ br }} and {{ phone }}
+* Removed: automatic settings update
+* Added: text variables {{ wc_billing_first_name }}, {{ wc_billing_last_name }}, {{ wc_billing_email }}, {{ wc_billing_phone }}, {{ wc_shipping_phone }}, {{ wc_order_status }}, {{ wc_billing_full_address }}, {{ wc_shipping_full_address }}, {{ wc_order_total }}, {{ wc_total_discount }}, {{ wc_total_tax }}, {{ wc_total_refunded }}, {{ wc_coupon_codes }}, {{ wc_payment_method_title }}, {{ wc_shipping_address }}, {{ wc_checkout_field=[FIELD_ID] }}
+* Added: enable automatic updates
+* Added: "PHP Snippet" action in the flow builder
+* Added: "Discount coupon" action in the flow builder for the WooCommerce integration
+* Added: get WhatsApp group information
+* Changed: emoji library swapped (Picmo -> EmojioneArea)
 
-Versão 1.0.5 (05/12/2024)
-* Correção de compatibilidade com PHP 7.4
+Version 1.0.5 (2024-12-05)
+* PHP 7.4 compatibility fix
 
-Versão 1.0.4 (22/11/2024)
-* Correção de bugs
+Version 1.0.4 (2024-11-22)
+* Bug fixes
 
-Versão 1.0.3 (22/11/2024)
-* Correção de bugs
+Version 1.0.3 (2024-11-22)
+* Bug fixes
 
-Versão 1.0.2 (22/11/2024)
-* Correção de bugs
+Version 1.0.2 (2024-11-22)
+* Bug fixes
 
-Versão 1.0.1 (21/11/2024)
-* Correção de bugs
+Version 1.0.1 (2024-11-21)
+* Bug fixes
 
-Versão 1.0.0 (20/11/2024)
-* Versão inicial
+Version 1.0.0 (2024-11-20)
+* Initial release
