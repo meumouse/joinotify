@@ -6,7 +6,6 @@ use MeuMouse\Joinotify\Otp_Login\Channel_Interface;
 use MeuMouse\Joinotify\Otp_Login\Otp_Message;
 use MeuMouse\Joinotify\Otp_Login\Settings;
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Template_Repository;
 use MeuMouse\Joinotify\Api\Transport;
 
@@ -89,10 +88,6 @@ class Whatsapp_Channel implements Channel_Interface {
      * @return bool|\WP_Error
      */
     public function send( Otp_Message $message ) {
-        if ( ! class_exists( Controller::class ) ) {
-            return new \WP_Error( 'joinotify_otp_helpers_missing', __( 'Joinotify messaging helpers are unavailable.', 'joinotify' ) );
-        }
-
         $sender = $this->resolve_sender();
 
         if ( empty( $sender ) ) {
@@ -106,9 +101,7 @@ class Whatsapp_Channel implements Channel_Interface {
         // OTP codes expire within minutes, so a deferred retry would deliver an
         // already-invalid code. Send a single attempt and never enqueue it for
         // the notification retry queue ($queue_on_failure = false).
-        $result = Transport::is_cloud()
-            ? $this->send_template( $sender, $receiver, $message )
-            : Controller::send_message_text( $sender, $receiver, $message->body, 0, false );
+        $result = $this->send_template( $sender, $receiver, $message );
 
         if ( is_wp_error( $result ) ) {
             return $result;

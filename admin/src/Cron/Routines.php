@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Cron;
 
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
 use MeuMouse\Joinotify\Admin\Admin;
@@ -31,13 +30,6 @@ class Routines {
 		// register custom schedule
 		add_filter( 'cron_schedules', array( __CLASS__, 'register_custom_schedules' ) );
 
-		// Schedule the cron event if not already scheduled
-		if ( ! wp_next_scheduled('joinotify_check_phone_connection_event') ) {
-            wp_schedule_event( time(), 'six_hours', 'joinotify_check_phone_connection_event' );
-        }
-
-		// make request
-		add_action( 'joinotify_check_phone_connection_event', array( __CLASS__, 'check_phone_connection' ) );
 
         // Updates are served by WordPress.org, so the plugin no longer polls an
         // update server of its own. Clear the events left behind by older builds.
@@ -53,7 +45,7 @@ class Routines {
 
 
 	/**
-     * Clear the update-polling events scheduled by pre-2.4.0 builds.
+     * Clear the scheduled events left behind by older builds.
      *
      * Those events pointed at Api\Updater, which no longer exists. Left behind,
      * WP-Cron would keep firing a callback that resolves to nothing on every
@@ -67,6 +59,8 @@ class Routines {
             'joinotify_check_plugin_updates_event',
             'joinotify_auto_update_event',
             'joinotify_check_daily_update',
+            // Retired with the Evolution relay: a Cloud number has no connection to poll.
+            'joinotify_check_phone_connection_event',
         );
 
         foreach ( $legacy_events as $event ) {
@@ -98,32 +92,6 @@ class Routines {
         );
 
         return $schedules;
-    }
-
-
-	/**
-     * Get phone numbers and check their connection state
-     *
-     * @since 1.2.0
-     * @version 2.3.0
-	 * @return void
-     */
-    public static function check_phone_connection() {
-        // The slots manager only knows about Evolution instances; on the Cloud
-        // API a number lives on the panel and has no connection state to poll.
-        if ( Transport::is_cloud() ) {
-            return;
-        }
-
-        $phones = get_option( 'joinotify_get_phones_senders', array() );
-
-        if ( empty( $phones ) || ! is_array( $phones ) ) {
-            return;
-        }
-
-        foreach ( $phones as $phone ) {
-            Controller::get_connection_state( $phone );
-        }
     }
 
 

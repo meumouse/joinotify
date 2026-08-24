@@ -22,14 +22,8 @@
       "Account not connected": [
         "Conta não conectada"
       ],
-      "Add new phone": [
-        "Adicionar novo telefone"
-      ],
       "Add variable": [
         "Adicionar variável"
-      ],
-      "Adjust the routes and API key used by the proxy.": [
-        "Ajuste as rotas e a chave API usadas pelo proxy."
       ],
       "All": [
         "Todos"
@@ -42,9 +36,6 @@
       ],
       "All options will return to the plugin defaults.": [
         "Todas as opções voltarão aos padrões do plugin."
-      ],
-      "API key": [
-        "Chave da API"
       ],
       "application": [
         "aplicação"
@@ -72,9 +63,6 @@
       ],
       "Cancel": [
         "Cancelar"
-      ],
-      "Candidate phone": [
-        "Telefone do candidato"
       ],
       "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
         "Alterar a cor base regenera a palete. Tons individuais ainda podem ser substituídos."
@@ -109,17 +97,11 @@
       "Code digit %s": [
         "Código do dígito %s"
       ],
-      "Code sent successfully.": [
-        "Código enviado com sucesso."
-      ],
       "Coming soon": [
         "Em breve"
       ],
       "Configure": [
         "Configurar"
-      ],
-      "Configure Proxy API": [
-        "Configurar Proxy API"
       ],
       "Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ": [
         "Configure remetentes, integrações, o construtor e o comportamento geral do plugin. Se precisar de ajuda, visite o nosso "
@@ -153,9 +135,6 @@
       ],
       "Context": [
         "Contexto"
-      ],
-      "Copy code": [
-        "Copiar código"
       ],
       "Could not clear the logs.": [
         "Não foi possível limpar os logs."
@@ -232,15 +211,6 @@
       "Debug logs": [
         "Registos de depuração"
       ],
-      "Defines the endpoint used to send media through the Proxy API.": [
-        "Define o endpoint utilizado para enviar media através da Proxy API."
-      ],
-      "Defines the endpoint used to send text messages through the Proxy API.": [
-        "Define o endpoint utilizado para enviar mensagens de texto através da Proxy API."
-      ],
-      "Deprecated": [
-        "Obsoleto"
-      ],
       "Description (optional)": [
         "Descrição (opcional)"
       ],
@@ -271,9 +241,6 @@
       "Enable debug mode": [
         "Ativar modo de depuração"
       ],
-      "Enable Proxy API": [
-        "Ativar Proxy API"
-      ],
       "Enable the integration to access its settings.": [
         "Ativar a integração para aceder às suas definições."
       ],
@@ -285,9 +252,6 @@
       ],
       "Enter phone number": [
         "Introduza o número de telefone"
-      ],
-      "Enter the code received on the selected phone.": [
-        "Introduza o código recebido no telefone selecionado."
       ],
       "Enter the destination phone number that will receive the test message.": [
         "Introduza o número de telefone de destino que receberá a mensagem de teste."
@@ -325,20 +289,8 @@
       "Failed to send message.": [
         "Falhou ao enviar a mensagem."
       ],
-      "Failed to send OTP.": [
-        "Falhou ao enviar o OTP."
-      ],
       "File is too large. The maximum size is 5 MB.": [
         "O arquivo é muito grande. O tamanho máximo é 5 MB."
-      ],
-      "General": [
-        "Geral"
-      ],
-      "Generate a new key": [
-        "Gerar uma nova chave"
-      ],
-      "Generate a new key to authenticate Proxy API calls.": [
-        "Gerar uma nova chave para autenticar chamadas à API Proxy."
       ],
       "Get a key on the Joinotify panel": [
         "Obtenha uma chave no painel do Joinotify"
@@ -436,9 +388,6 @@
       "Map an entity and meta key to a named variable available in the builder.": [
         "Mapear uma entidade e chave meta para uma variável nomeada disponível no construtor."
       ],
-      "Media message route": [
-        "Rota da mensagem de mídia"
-      ],
       "Message": [
         "Mensagem"
       ],
@@ -472,14 +421,8 @@
       "No options available": [
         "Nenhuma opção disponível"
       ],
-      "No phone available": [
-        "Nenhum telefone disponível"
-      ],
       "No sender available": [
         "Nenhum remetente disponível"
-      ],
-      "No validated sender yet.": [
-        "Nenhum remetente validado ainda."
       ],
       "No variables available.": [
         "Nenhuma variável disponível."
@@ -517,9 +460,6 @@
       "Phone numbers already validated and available for use in flows.": [
         "Números de telefone já validados e disponíveis para uso em fluxos."
       ],
-      "Phone validated.": [
-        "Telefone validado."
-      ],
       "Phones": [
         "Telefones"
       ],
@@ -556,12 +496,6 @@
       "Refreshing connection": [
         "Atualizando conexão"
       ],
-      "Register new phone": [
-        "Registar novo telefone"
-      ],
-      "Register phone": [
-        "Registar telefone"
-      ],
       "Registered senders": [
         "Remetentes registados"
       ],
@@ -595,9 +529,6 @@
       "Reset settings": [
         "Reiniciar definições"
       ],
-      "Restore default": [
-        "Restaurar padrão"
-      ],
       "Sample value shown in the builder": [
         "Valor de exemplo mostrado no construtor"
       ],
@@ -628,14 +559,8 @@
       "Search...": [
         "Pesquisar..."
       ],
-      "Select a phone": [
-        "Selecionar um telefone"
-      ],
       "Select a sender": [
         "Selecionar um remetente"
-      ],
-      "Select an available phone for registration and validation.": [
-        "Selecionar um telefone disponível para registo e validação."
       ],
       "Select an entity": [
         "Selecionar uma entidade"
@@ -652,20 +577,11 @@
       "Send test message": [
         "Enviar mensagem de teste"
       ],
-      "send-message/media": [
-        "send-message/media"
-      ],
-      "send-message/text": [
-        "send-message/text"
-      ],
       "Sender": [
         "Remetente"
       ],
       "Sender removed.": [
         "Remetente removido."
-      ],
-      "Sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls these endpoints, then turn this option off.": [
-        "Os envios movem-se exclusivamente para a API Joinotify, através da API Cloud oficial do WhatsApp. Migre qualquer integração que ainda chame estes endpoints, depois desative esta opção."
       ],
       "Server": [
         "Servidor"
@@ -694,18 +610,6 @@
       "Source": [
         "Fonte"
       ],
-      "Step 1: Select an available phone": [
-        "Passo 1: Selecione um telefone disponível"
-      ],
-      "Step 1: Select an available phone.": [
-        "Passo 1: Selecione um telefone disponível."
-      ],
-      "Step 2: Enter the verification code": [
-        "Passo 2: Insira o código de verificação"
-      ],
-      "Step 2: Enter the verification code.": [
-        "Passo 2: Insira o código de verificação."
-      ],
       "Sync numbers from Joinotify": [
         "Sincronizar números do Joinotify"
       ],
@@ -721,12 +625,6 @@
       "Test sender": [
         "Remetente de teste"
       ],
-      "Text message route": [
-        "Rota de mensagem de texto"
-      ],
-      "That connection is being discontinued. Connect your Joinotify account in Settings → General → WhatsApp Cloud API to move to the official WhatsApp Cloud API before it is switched off.": [
-        "Essa conexão está a ser descontinuada. Conecte a sua conta do Joinotify em Definições → Geral → WhatsApp Cloud API para migrar para a API oficial do WhatsApp Cloud antes que seja desligada."
-      ],
       "The configuration in the file will be merged into your current settings. This cannot be undone.": [
         "A configuração no arquivo será mesclada nas suas definições atuais. Isto não pode ser desfeito."
       ],
@@ -735,12 +633,6 @@
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "A mensagem está pré-preenchida e pode ser ajustada antes de enviar o teste."
-      ],
-      "The Proxy API is deprecated and will be removed soon.": [
-        "A API Proxy está obsoleta e será removida em breve."
-      ],
-      "These routes keep working for now, but sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls them.": [
-        "Estas rotas continuam a funcionar por agora, mas o envio de movimentos é exclusivamente para a API Joinotify, através da API oficial do WhatsApp Cloud. Migre qualquer integração que ainda as chame."
       ],
       "This integration depends on an installed and active plugin.": [
         "Esta integração depende de um plugin instalado e ativo."
@@ -751,9 +643,6 @@
       "This integration will be available soon.": [
         "Esta integração estará disponível em breve."
       ],
-      "This site still delivers through the legacy relay.": [
-        "Este site ainda entrega através do relay legado."
-      ],
       "This text variable may not work in this context": [
         "Esta variável de texto pode não funcionar neste contexto"
       ],
@@ -762,9 +651,6 @@
       ],
       "Turn this on to enable debug mode and inspect errors and other relevant information.": [
         "Ative isto para habilitar o modo de depuração e inspecionar erros e outras informações relevantes."
-      ],
-      "Turn this on to expose endpoints on this site for processing Joinotify API requests.": [
-        "Ative isto para expor endpoints neste site para processar pedidos da API do Joinotify."
       ],
       "Type your test message...": [
         "Digite sua mensagem de teste..."
@@ -780,12 +666,6 @@
       ],
       "Updates are delivered by WordPress itself, together with every other plugin on this site.": [
         "As atualizações são entregues pelo próprio WordPress, juntamente com todos os outros plugins neste site."
-      ],
-      "Validate and save": [
-        "Validar e guardar"
-      ],
-      "Validation failed.": [
-        "Validação falhou."
       ],
       "Variable name": [
         "Nome da variável"

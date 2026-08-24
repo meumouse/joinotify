@@ -6,7 +6,6 @@
  * @version 1.4.7
  */
 
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Extensions;
 use MeuMouse\Joinotify\Admin\Admin;
@@ -80,47 +79,6 @@ function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type,
    $response = Transport::send_message_media( $sender, $receiver, $media_type, $media, $caption, $delay );
 
    return $response;
-}
-
-
-/**
- * Get endpoint for Proxy API send text message
- *
- * @since 1.1.0
- * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
- *             upcoming release. Use joinotify_send_whatsapp_message_text(),
- *             which delivers through the Joinotify API.
- * @return string
- */
-function joinotify_proxy_api_text_message_text_endpoint() {
-   return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_text_proxy_api_route');
-}
-
-
-/**
- * Get endpoint for Proxy API send media message
- *
- * @since 1.1.0
- * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
- *             upcoming release. Use joinotify_send_whatsapp_message_media(),
- *             which delivers through the Joinotify API.
- * @return string
- */
-function joinotify_proxy_api_media_message_text_endpoint() {
-   return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_media_proxy_api_route');
-}
-
-
-/**
- * Get Proxy API key
- *
- * @since 1.1.0
- * @deprecated 2.3.0 The Proxy API is deprecated and will be removed in an
- *             upcoming release, along with its API key.
- * @return string
- */
-function joinotify_get_proxy_api_key() {
-   return Admin::get_setting('proxy_api_key');
 }
 
 

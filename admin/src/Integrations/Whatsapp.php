@@ -117,19 +117,6 @@ class Whatsapp extends Integrations_Base {
                     ),
                 )
             ),
-            self::field_select(
-                'whatsapp_transport',
-                esc_html__( 'Message transport', 'joinotify' ),
-                esc_html__( 'Which service delivers WhatsApp messages. "Automatic" uses the Cloud API whenever a key is available, otherwise the legacy Evolution relay.', 'joinotify' ),
-                array(
-                    array( 'value' => 'auto', 'label' => esc_html__( 'Automatic', 'joinotify' ) ),
-                    array( 'value' => 'cloud', 'label' => esc_html__( 'Cloud API (official)', 'joinotify' ) ),
-                    array( 'value' => 'evolution', 'label' => esc_html__( 'Evolution (legacy)', 'joinotify' ) ),
-                ),
-                array(
-                    'default' => 'auto',
-                )
-            ),
             self::field_text(
                 'whatsapp_phone_number_id',
                 esc_html__( 'Phone number ID', 'joinotify' ),

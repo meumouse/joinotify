@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Telemetry;
 
-use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Telemetry;
 use MeuMouse\Joinotify\Core\Upgrader;
@@ -184,7 +183,7 @@ class Listeners {
         Recorder::record( 'feature.used', array(
             'feature' => self::known_integration( $integration ),
             'trigger' => self::known_trigger( $integration, (string) $hook ),
-            'transport' => Transport::is_cloud() ? 'cloud' : 'evolution',
+            'transport' => 'cloud',
         ) );
     }
 
@@ -238,9 +237,10 @@ class Listeners {
             return '';
         }
 
+        // Both ids resolve to the Cloud channel since the relay was retired.
         $map = array(
             'whatsapp_cloud' => 'cloud',
-            'whatsapp' => 'evolution',
+            'whatsapp' => 'cloud',
         );
 
         $id = (string) $channel->get_id();

@@ -281,7 +281,9 @@ namespace {
 	Listeners::on_message_sent( new Fake_Result( true ), new Fake_Message('audio'), new Fake_Channel('whatsapp') );
 	$events = recorded();
 
-	check( 'the legacy channel maps to evolution', 'evolution' === $events[0]['props']['transport'] );
+	// The relay is gone: its channel id now resolves to the Cloud transport, so a
+	// message queued before the upgrade still reports something the service knows.
+	check( 'the legacy channel id maps to cloud', 'cloud' === $events[0]['props']['transport'] );
 	// Audio is media everywhere that matters, and a value the service does not know would
 	// be stripped on arrival.
 	check( 'audio is folded into media', 'media' === $events[0]['props']['type'] );
@@ -365,10 +367,8 @@ namespace {
 	check( 'and so does its hook', 'custom' === $props['trigger'] );
 
 	reset_buffer();
-	Transport::$cloud = false;
 	Listeners::on_workflows_processed( 'woocommerce_new_order', array( 'integration' => 'woocommerce' ), array( 'a workflow' ) );
-	check( 'the legacy transport is reported as evolution', 'evolution' === recorded()[0]['props']['transport'] );
-	Transport::$cloud = true;
+	check( 'the transport is always reported as cloud', 'cloud' === recorded()[0]['props']['transport'] );
 
 	echo "\n== plugin.error ==\n";
 

@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Client for the official WhatsApp Cloud API exposed by Joinotify.
  *
  * This is the migration target that replaces the Evolution/slots-manager relay
- * in Api\Controller. Authentication is a single account-level bearer token
+ * in the retired relay. Authentication is a single account-level bearer token
  * (`sk_live_...`), the origin number is a `phone_number_id`, and every business
  * initiated message outside the 24h session window requires an approved
  * template (see send_template()).

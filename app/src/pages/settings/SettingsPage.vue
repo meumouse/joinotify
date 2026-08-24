@@ -9,7 +9,6 @@
 import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { cloneValue, deepEqual } from '../../utils/object';
-import { generateHexToken } from '../../utils/random';
 import { createApiClient } from '../../utils/api';
 import PageHeader from '../../components/layout/PageHeader.vue';
 import SectionTabs from './components/SectionTabs.vue';
@@ -19,7 +18,6 @@ import IntegrationsSettingsSection from './components/sections/IntegrationsSetti
 import AboutSettingsSection from './components/sections/AboutSettingsSection.vue';
 import BuilderSettingsSection from './components/sections/BuilderSettingsSection.vue';
 import SettingsActionBar from './components/SettingsActionBar.vue';
-import ProxySettingsModal from './components/modals/ProxySettingsModal.vue';
 import IntegrationSettingsModal from './components/modals/IntegrationSettingsModal.vue';
 import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
@@ -37,7 +35,6 @@ const bootstrap = ref(cloneValue(props.bootstrap));
 const debugLogger = createDebugLogger('Settings', () => Boolean(bootstrap.value?.debug_mode));
 const settings = reactive({});
 const savedSettings = ref(cloneValue(props.bootstrap?.settings || {}));
-const phoneCandidates = ref([]);
 const debugLogs = ref([]);
 const debugItems = ref([]);
 const logsOpen = ref(false);
@@ -47,7 +44,6 @@ const exporting = ref(false);
 const importing = ref(false);
 const refreshingSenderPhone = ref('');
 const senderActionLoading = ref(false);
-const proxyConfigOpen = ref(false);
 const integrationConfigOpen = ref(false);
 const selectedIntegration = ref(null);
 const toasts = ref([]);
@@ -62,9 +58,6 @@ const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
 const integrationCategories = computed(() => bootstrap.value.integration_categories || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
-// On the Cloud API numbers are connected on the Joinotify panel, so the site
-// imports them instead of running the slot + OTP onboarding.
-const isCloudTransport = computed(() => phones.value.transport === 'cloud');
 const system = computed(() => bootstrap.value.system || {});
 const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
 const pluginVersion = computed(() => bootstrap.value.version || '');
@@ -72,14 +65,8 @@ const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []
 
 const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'ai_provider']));
 const aboutVisibleFields = computed(() => filterFields(['enable_usage_tracking', 'enable_message_history']));
-const proxyToggleField = computed(() => fieldFor('enable_proxy_api'));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
 const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
-const proxyDefaults = {
-  send_text_proxy_api_route: 'send-message/text',
-  send_media_proxy_api_route: 'send-message/media',
-  proxy_api_key: '',
-};
 
 const activeSectionId = ref(getInitialActiveSectionId());
 const selectedIntegrationModalSize = computed(() => {
@@ -114,7 +101,6 @@ watch(activeSectionId, (value) => {
   persistActiveSectionId(value);
 });
 
-loadPhoneCandidates();
 
 onMounted(() => {
   debugLogger.log('page:mounted', {
@@ -272,24 +258,6 @@ function updateSetting(key, value) {
   settings[key] = value;
 }
 
-function resetProxyField(key) {
-  if (!(key in proxyDefaults)) {
-    return;
-  }
-
-  debugLogger.log('proxy:reset-field', {
-    key,
-  });
-  updateSetting(key, proxyDefaults[key]);
-}
-
-function generateProxyApiKey() {
-  const generated = generateHexToken(32);
-  debugLogger.log('proxy:generate-key');
-  updateSetting('proxy_api_key', generated);
-}
-
-
 
 onBeforeUnmount(() => {
   toastTimers.forEach((timer) => window.clearTimeout(timer));
@@ -373,7 +341,6 @@ function confirmImportSettings(payload) {
       if (response.bootstrap) {
         bootstrap.value = cloneValue(response.bootstrap);
         syncSettings(bootstrap.value.settings || {});
-        await loadPhoneCandidates();
       }
 
       toast(response.message || __('Settings imported.', textDomain), 'success', __('Import', textDomain));
@@ -391,76 +358,6 @@ function confirmImportSettings(payload) {
 
 function onImportError(message) {
   toast(message || __('Invalid file.', textDomain), 'danger', __('Import', textDomain));
-}
-
-async function loadPhoneCandidates() {
-  // Slot candidates only exist on the Evolution relay.
-  if (isCloudTransport.value) {
-    phoneCandidates.value = [];
-    return;
-  }
-
-  debugLogger.log('phones:candidates-load-start');
-  try {
-    const response = await api.get('/admin/settings/phones/candidates');
-    phoneCandidates.value = response.candidates || [];
-    debugLogger.log('phones:candidates-load-complete', {
-      count: phoneCandidates.value.length,
-    });
-  } catch (error) {
-    phoneCandidates.value = [];
-    debugLogger.log('phones:candidates-load-failed', {
-      error: error instanceof Error ? error.message : String(error),
-    });
-  }
-}
-
-async function registerPhone(phone) {
-  senderActionLoading.value = true;
-  debugLogger.log('phones:register-start', {
-    phone,
-  });
-
-  try {
-    const response = await api.post('/admin/settings/phones/register', { phone });
-    toast(response.message || __('Code sent successfully.', textDomain), 'success', __('Phones', textDomain));
-    debugLogger.log('phones:register-complete', {
-      phone,
-    });
-  } catch (error) {
-    toast(error.message || __('Failed to send OTP.', textDomain), 'danger', __('Phones', textDomain));
-    debugLogger.log('phones:register-failed', {
-      phone,
-      error: error instanceof Error ? error.message : String(error),
-    });
-  } finally {
-    senderActionLoading.value = false;
-  }
-}
-
-async function validateOtp(payload) {
-  senderActionLoading.value = true;
-  debugLogger.log('phones:validate-start', {
-    phone: payload?.phone || '',
-  });
-
-  try {
-    const response = await api.post('/admin/settings/phones/validate-otp', payload);
-    syncPhones(response.phones || {});
-    await loadPhoneCandidates();
-    toast(response.message || __('Phone validated.', textDomain), 'success', __('Phones', textDomain));
-    debugLogger.log('phones:validate-complete', {
-      phone: payload?.phone || '',
-    });
-  } catch (error) {
-    toast(error.message || __('Validation failed.', textDomain), 'danger', __('Phones', textDomain));
-    debugLogger.log('phones:validate-failed', {
-      phone: payload?.phone || '',
-      error: error instanceof Error ? error.message : String(error),
-    });
-  } finally {
-    senderActionLoading.value = false;
-  }
 }
 
 async function syncCloudNumbers() {
@@ -576,8 +473,7 @@ function confirmRemoveSender(phone) {
     try {
       const response = await api.post('/admin/settings/phones/remove', { phone });
       syncPhones(response.phones || {});
-      await loadPhoneCandidates();
-      toast(response.message || __('Sender removed.', textDomain), 'success', __('Phones', textDomain));
+      await       toast(response.message || __('Sender removed.', textDomain), 'success', __('Phones', textDomain));
     } catch (error) {
       toast(error.message || __('Could not remove.', textDomain), 'danger', __('Phones', textDomain));
     } finally {
@@ -690,8 +586,7 @@ function confirmReset() {
       const response = await api.post('/admin/settings/reset', {});
       bootstrap.value = cloneValue(response.bootstrap || {});
       syncSettings(bootstrap.value.settings || {});
-      await loadPhoneCandidates();
-      toast(response.message || __('Options have been reset.', textDomain), 'success', __('Reset', textDomain));
+      await       toast(response.message || __('Options have been reset.', textDomain), 'success', __('Reset', textDomain));
       debugLogger.log('settings:reset-complete');
     } catch (error) {
       toast(error.message || __('Could not reset.', textDomain), 'danger', __('Reset', textDomain));
@@ -778,26 +673,20 @@ function canConfigureIntegration(integration) {
           <GeneralSettingsSection
             v-if="activeSectionId === 'general'"
             :general-visible-fields="generalVisibleFields"
-            :proxy-toggle-field="proxyToggleField"
             :settings="settings"
             @update-setting="updateSetting"
-            @open-proxy-config="proxyConfigOpen = true"
           />
 
           <PhonesSettingsSection
             v-else-if="activeSectionId === 'phones'"
             :model-value="settings.test_number_phone"
-            :phone-candidates="phoneCandidates"
             :phones="phones"
             :locale="phones.locale"
             :default-country="phones.default_country_iso2"
             :refreshing-sender-phone="refreshingSenderPhone"
             :sender-action-loading="senderActionLoading"
             :send-test-message="sendTestMessage"
-            :is-cloud="isCloudTransport"
             @update:model-value="updateSetting('test_number_phone', $event)"
-            @register="registerPhone"
-            @validate="validateOtp"
             @remove="confirmRemoveSender"
             @refresh="refreshSenderConnection"
             @sync="syncCloudNumbers"
@@ -849,15 +738,6 @@ function canConfigureIntegration(integration) {
     </div>
 
     <ToastStack :toasts="toasts" @dismiss="dismissToast" />
-
-    <ProxySettingsModal
-      :open="proxyConfigOpen"
-      :settings="settings"
-      @close="proxyConfigOpen = false"
-      @update-setting="updateSetting"
-      @reset-field="resetProxyField"
-      @generate-key="generateProxyApiKey"
-    />
 
     <IntegrationSettingsModal
       :open="integrationConfigOpen && canConfigureIntegration(selectedIntegration)"

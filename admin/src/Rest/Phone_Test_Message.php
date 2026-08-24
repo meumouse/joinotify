@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Rest;
 
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Core\Message_History;
 use WP_REST_Request;
@@ -52,10 +51,6 @@ class Phone_Test_Message extends Abstract_Route {
                 'status' => 'success',
                 'message' => __( 'The test message was sent successfully!', 'joinotify' ),
             ) );
-        }
-
-        if ( ! Transport::is_cloud() ) {
-            Controller::get_connection_state( $sender );
         }
 
         return rest_ensure_response( array(

@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Api;
 
-use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 
 // Exit if accessed directly.
@@ -11,15 +10,12 @@ defined('ABSPATH') || exit;
 /**
  * WhatsApp transport switch.
  *
- * Single chokepoint that routes every outbound WhatsApp message to either the
- * legacy Evolution relay (Api\Controller) or the official Cloud API
- * (Api\Cloud_Client), based on the `whatsapp_transport` setting. This is the
- * "chave de virada" that lets a site run on Evolution until it is shut down and
- * then flip to the Cloud API without touching call sites.
+ * Single chokepoint for every outbound WhatsApp message. Since 2.3.2 there is
+ * one transport, the official Cloud API (Api\Cloud_Client): the Evolution relay
+ * it used to fall back to was retired along with the servers behind it.
  *
- * The send methods mirror the Controller/Cloud_Client signatures and return
- * contract (int response code, or the normalized details array when
- * $return_details is true), so existing callers migrate by swapping the class.
+ * The class stays because call sites talk to it rather than to the client, which
+ * keeps a future transport a one-file change.
  *
  * @since 1.4.8
  * @package MeuMouse\Joinotify\Api
@@ -28,34 +24,17 @@ defined('ABSPATH') || exit;
 class Transport {
 
     /**
-     * Resolve the active transport: 'evolution' or 'cloud'.
+     * Resolve the active transport.
+     *
+     * Kept for the extensions that read it. There is only one transport now, so
+     * it always answers 'cloud'.
      *
      * @since 1.4.8
+     * @version 2.3.2
      * @return string
      */
     public static function active_transport() {
-        $mode = Admin::get_setting('whatsapp_transport');
-        $mode = is_string( $mode ) ? $mode : 'auto';
-
-        if ( 'cloud' === $mode ) {
-            $transport = 'cloud';
-        } elseif ( 'evolution' === $mode ) {
-            $transport = 'evolution';
-        } else {
-            // auto: prefer the Cloud API whenever a token is available.
-            $transport = Helpers::cloud_api_ready() ? 'cloud' : 'evolution';
-        }
-
-        /**
-         * Filter the resolved WhatsApp transport ('evolution' or 'cloud').
-         *
-         * @since 1.4.8
-         * @param string $transport
-         * @param string $mode | Raw setting value.
-         */
-        $transport = apply_filters( 'Joinotify/Transport/Active', $transport, $mode );
-
-        return in_array( $transport, array( 'evolution', 'cloud' ), true ) ? $transport : 'evolution';
+        return 'cloud';
     }
 
 
@@ -63,21 +42,37 @@ class Transport {
      * Whether the Cloud API transport is active.
      *
      * @since 1.4.8
+     * @version 2.3.2
      * @return bool
      */
     public static function is_cloud() {
-        return 'cloud' === self::active_transport();
+        return true;
     }
 
 
     /**
-     * Notification channel id backing the active transport.
+     * Whether the site can actually deliver a message.
+     *
+     * False until the Joinotify account is connected: without an API key there
+     * is nothing to send through.
+     *
+     * @since 2.3.2
+     * @return bool
+     */
+    public static function is_ready() {
+        return Helpers::cloud_api_ready();
+    }
+
+
+    /**
+     * Notification channel id backing the transport.
      *
      * @since 1.4.8
+     * @version 2.3.2
      * @return string
      */
     public static function active_channel_id() {
-        return self::is_cloud() ? 'whatsapp_cloud' : 'whatsapp';
+        return 'whatsapp_cloud';
     }
 
 
@@ -88,11 +83,7 @@ class Transport {
      * @return int|array
      */
     public static function send_message_text( $sender, $receiver, $message, $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
-        if ( self::is_cloud() ) {
-            return Cloud_Client::send_message_text( $sender, $receiver, $message, $timestamp_delay, $queue_on_failure, $return_details );
-        }
-
-        return Controller::send_message_text( $sender, $receiver, $message, $timestamp_delay, $queue_on_failure, $return_details );
+        return Cloud_Client::send_message_text( $sender, $receiver, $message, $timestamp_delay, $queue_on_failure, $return_details );
     }
 
 
@@ -103,11 +94,7 @@ class Transport {
      * @return int|array
      */
     public static function send_message_media( $sender, $receiver, $media_type, $media, $caption = '', $timestamp_delay = 0, $queue_on_failure = true, $return_details = false, $file_name = '' ) {
-        if ( self::is_cloud() ) {
-            return Cloud_Client::send_message_media( $sender, $receiver, $media_type, $media, $caption, $timestamp_delay, $queue_on_failure, $return_details, $file_name );
-        }
-
-        return Controller::send_message_media( $sender, $receiver, $media_type, $media, $caption, $timestamp_delay, $queue_on_failure, $return_details, $file_name );
+        return Cloud_Client::send_message_media( $sender, $receiver, $media_type, $media, $caption, $timestamp_delay, $queue_on_failure, $return_details, $file_name );
     }
 
 
@@ -118,11 +105,7 @@ class Transport {
      * @return int|array
      */
     public static function send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay = 0, $queue_on_failure = true, $return_details = false ) {
-        if ( self::is_cloud() ) {
-            return Cloud_Client::send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay, $queue_on_failure, $return_details );
-        }
-
-        return Controller::send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay, $queue_on_failure, $return_details );
+        return Cloud_Client::send_whatsapp_audio( $sender, $receiver, $audio, $timestamp_delay, $queue_on_failure, $return_details );
     }
 
 

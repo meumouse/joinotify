@@ -256,7 +256,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 		
 			// extract data from form
 			$sender = $settings['joinotify_sender'] ?? '';
-			$receiver = Controller::prepare_receiver( $fields[ $settings['joinotify_receiver'] ] ?? '' );
+			$receiver = joinotify_prepare_receiver( $fields[ $settings['joinotify_receiver'] ] ?? '' );
 
 			$payload = array(
 				'type' => 'elementor',

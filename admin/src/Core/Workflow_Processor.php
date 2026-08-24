@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Attachments;
@@ -1521,11 +1520,6 @@ class Workflow_Processor {
 
         Message_History::clear_context();
 
-        if ( ! $result->is_success() && ! Transport::is_cloud() ) {
-            // refresh the stored connection state for the sender (Evolution only)
-            Controller::get_connection_state( $sender );
-        }
-
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             if ( $result->is_success() ) {
                 Logger::register_log( "Message sent successfully to: $receiver" );
@@ -1728,11 +1722,6 @@ class Workflow_Processor {
         )));
 
         Message_History::clear_context();
-
-        if ( ! $result->is_success() && ! Transport::is_cloud() ) {
-            // refresh the stored connection state for the sender (Evolution only)
-            Controller::get_connection_state( $sender );
-        }
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             if ( $result->is_success() ) {
@@ -2020,11 +2009,6 @@ class Workflow_Processor {
         $response = Transport::send_message_text( $sender, $receiver, $message );
 
         Message_History::clear_context();
-
-        if ( 201 !== $response && ! Transport::is_cloud() ) {
-            // refresh the stored connection state for the sender (Evolution only)
-            Controller::get_connection_state( $sender );
-        }
 
         if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
             if ( 201 === $response ) {

@@ -121,47 +121,6 @@ class Registry {
                         ),
                     ),
                     array(
-                        'id' => 'general-proxy',
-                        'title' => __( 'Proxy API (deprecated)', 'joinotify' ),
-                        'description' => __( 'Activate and configure the endpoints used to process external API requests.', 'joinotify' ),
-                        'deprecated' => true,
-                        'deprecation_notice' => __( 'The Proxy API is deprecated and will be removed in an upcoming release. Sending moves exclusively to the Joinotify API (official WhatsApp Cloud API), so migrate any integration that still calls these endpoints.', 'joinotify' ),
-                        'fields' => array(
-                            self::field_toggle(
-                                'enable_proxy_api',
-                                esc_html__( 'Enable Proxy API', 'joinotify' ),
-                                esc_html__( 'Deprecated: this site exposes endpoints to process Joinotify requests. These endpoints will be removed in an upcoming release.', 'joinotify' ),
-                                array(
-                                    'deprecated' => true,
-                                )
-                            ),
-                            self::field_text(
-                                'send_text_proxy_api_route',
-                                esc_html__( 'Text route', 'joinotify' ),
-                                esc_html__( 'Route path used to send text messages.', 'joinotify' ),
-                                array(
-                                    'placeholder' => 'send-message/text',
-                                )
-                            ),
-                            self::field_text(
-                                'send_media_proxy_api_route',
-                                esc_html__( 'Media route', 'joinotify' ),
-                                esc_html__( 'Path of the route used to send messages with media.', 'joinotify' ),
-                                array(
-                                    'placeholder' => 'send-message/media',
-                                )
-                            ),
-                            self::field_text(
-                                'proxy_api_key',
-                                esc_html__( 'API key', 'joinotify' ),
-                                esc_html__( 'Key used to authenticate Proxy API calls.', 'joinotify' ),
-                                array(
-                                    'placeholder' => '',
-                                )
-                            ),
-                        ),
-                    ),
-                    array(
                         'id' => 'general-ai',
                         'title' => __( 'Artificial Intelligence', 'joinotify' ),
                         'description' => __( 'Joinotify generates AI content through the WordPress AI Client. Pick the provider and store its credentials once in Settings → Connectors, and every AI action here uses it.', 'joinotify' ),

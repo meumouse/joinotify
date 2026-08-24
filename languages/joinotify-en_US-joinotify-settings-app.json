@@ -22,14 +22,8 @@
       "Account not connected": [
         "Account not connected"
       ],
-      "Add new phone": [
-        "Add new phone"
-      ],
       "Add variable": [
         "Add variable"
-      ],
-      "Adjust the routes and API key used by the proxy.": [
-        "Adjust the routes and API key used by the proxy."
       ],
       "All": [
         "All"
@@ -42,9 +36,6 @@
       ],
       "All options will return to the plugin defaults.": [
         "All options will return to the plugin defaults."
-      ],
-      "API key": [
-        "API key"
       ],
       "application": [
         "application"
@@ -72,9 +63,6 @@
       ],
       "Cancel": [
         "Cancel"
-      ],
-      "Candidate phone": [
-        "Candidate phone"
       ],
       "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
         "Changing the base color regenerates the palette. Individual shades can still be overridden."
@@ -109,17 +97,11 @@
       "Code digit %s": [
         "Code digit %s"
       ],
-      "Code sent successfully.": [
-        "Code sent successfully."
-      ],
       "Coming soon": [
         "Coming soon"
       ],
       "Configure": [
         "Configure"
-      ],
-      "Configure Proxy API": [
-        "Configure Proxy API"
       ],
       "Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our ": [
         "Configure senders, integrations, the builder and general plugin behavior. If you need help, visit our "
@@ -153,9 +135,6 @@
       ],
       "Context": [
         "Context"
-      ],
-      "Copy code": [
-        "Copy code"
       ],
       "Could not clear the logs.": [
         "Could not clear the logs."
@@ -232,15 +211,6 @@
       "Debug logs": [
         "Debug logs"
       ],
-      "Defines the endpoint used to send media through the Proxy API.": [
-        "Defines the endpoint used to send media through the Proxy API."
-      ],
-      "Defines the endpoint used to send text messages through the Proxy API.": [
-        "Defines the endpoint used to send text messages through the Proxy API."
-      ],
-      "Deprecated": [
-        "Deprecated"
-      ],
       "Description (optional)": [
         "Description (optional)"
       ],
@@ -271,9 +241,6 @@
       "Enable debug mode": [
         "Enable debug mode"
       ],
-      "Enable Proxy API": [
-        "Enable Proxy API"
-      ],
       "Enable the integration to access its settings.": [
         "Enable the integration to access its settings."
       ],
@@ -285,9 +252,6 @@
       ],
       "Enter phone number": [
         "Enter phone number"
-      ],
-      "Enter the code received on the selected phone.": [
-        "Enter the code received on the selected phone."
       ],
       "Enter the destination phone number that will receive the test message.": [
         "Enter the destination phone number that will receive the test message."
@@ -325,20 +289,8 @@
       "Failed to send message.": [
         "Failed to send message."
       ],
-      "Failed to send OTP.": [
-        "Failed to send OTP."
-      ],
       "File is too large. The maximum size is 5 MB.": [
         "File is too large. The maximum size is 5 MB."
-      ],
-      "General": [
-        "General"
-      ],
-      "Generate a new key": [
-        "Generate a new key"
-      ],
-      "Generate a new key to authenticate Proxy API calls.": [
-        "Generate a new key to authenticate Proxy API calls."
       ],
       "Get a key on the Joinotify panel": [
         "Get a key on the Joinotify panel"
@@ -436,9 +388,6 @@
       "Map an entity and meta key to a named variable available in the builder.": [
         "Map an entity and meta key to a named variable available in the builder."
       ],
-      "Media message route": [
-        "Media message route"
-      ],
       "Message": [
         "Message"
       ],
@@ -472,14 +421,8 @@
       "No options available": [
         "No options available"
       ],
-      "No phone available": [
-        "No phone available"
-      ],
       "No sender available": [
         "No sender available"
-      ],
-      "No validated sender yet.": [
-        "No validated sender yet."
       ],
       "No variables available.": [
         "No variables available."
@@ -517,9 +460,6 @@
       "Phone numbers already validated and available for use in flows.": [
         "Phone numbers already validated and available for use in flows."
       ],
-      "Phone validated.": [
-        "Phone validated."
-      ],
       "Phones": [
         "Phones"
       ],
@@ -556,12 +496,6 @@
       "Refreshing connection": [
         "Refreshing connection"
       ],
-      "Register new phone": [
-        "Register new phone"
-      ],
-      "Register phone": [
-        "Register phone"
-      ],
       "Registered senders": [
         "Registered senders"
       ],
@@ -595,9 +529,6 @@
       "Reset settings": [
         "Reset settings"
       ],
-      "Restore default": [
-        "Restore default"
-      ],
       "Sample value shown in the builder": [
         "Sample value shown in the builder"
       ],
@@ -628,14 +559,8 @@
       "Search...": [
         "Search..."
       ],
-      "Select a phone": [
-        "Select a phone"
-      ],
       "Select a sender": [
         "Select a sender"
-      ],
-      "Select an available phone for registration and validation.": [
-        "Select an available phone for registration and validation."
       ],
       "Select an entity": [
         "Select an entity"
@@ -652,20 +577,11 @@
       "Send test message": [
         "Send test message"
       ],
-      "send-message/media": [
-        "send-message/media"
-      ],
-      "send-message/text": [
-        "send-message/text"
-      ],
       "Sender": [
         "Sender"
       ],
       "Sender removed.": [
         "Sender removed."
-      ],
-      "Sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls these endpoints, then turn this option off.": [
-        "Sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls these endpoints, then turn this option off."
       ],
       "Server": [
         "Server"
@@ -694,18 +610,6 @@
       "Source": [
         "Source"
       ],
-      "Step 1: Select an available phone": [
-        "Step 1: Select an available phone"
-      ],
-      "Step 1: Select an available phone.": [
-        "Step 1: Select an available phone."
-      ],
-      "Step 2: Enter the verification code": [
-        "Step 2: Enter the verification code"
-      ],
-      "Step 2: Enter the verification code.": [
-        "Step 2: Enter the verification code."
-      ],
       "Sync numbers from Joinotify": [
         "Sync numbers from Joinotify"
       ],
@@ -721,12 +625,6 @@
       "Test sender": [
         "Test sender"
       ],
-      "Text message route": [
-        "Text message route"
-      ],
-      "That connection is being discontinued. Connect your Joinotify account in Settings → General → WhatsApp Cloud API to move to the official WhatsApp Cloud API before it is switched off.": [
-        "That connection is being discontinued. Connect your Joinotify account in Settings → General → WhatsApp Cloud API to move to the official WhatsApp Cloud API before it is switched off."
-      ],
       "The configuration in the file will be merged into your current settings. This cannot be undone.": [
         "The configuration in the file will be merged into your current settings. This cannot be undone."
       ],
@@ -735,12 +633,6 @@
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "The message is prefilled and can be adjusted before sending the test."
-      ],
-      "The Proxy API is deprecated and will be removed soon.": [
-        "The Proxy API is deprecated and will be removed soon."
-      ],
-      "These routes keep working for now, but sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls them.": [
-        "These routes keep working for now, but sending moves exclusively to the Joinotify API, over the official WhatsApp Cloud API. Migrate any integration that still calls them."
       ],
       "This integration depends on an installed and active plugin.": [
         "This integration depends on an installed and active plugin."
@@ -751,9 +643,6 @@
       "This integration will be available soon.": [
         "This integration will be available soon."
       ],
-      "This site still delivers through the legacy relay.": [
-        "This site still delivers through the legacy relay."
-      ],
       "This text variable may not work in this context": [
         "This text variable may not work in this context"
       ],
@@ -762,9 +651,6 @@
       ],
       "Turn this on to enable debug mode and inspect errors and other relevant information.": [
         "Turn this on to enable debug mode and inspect errors and other relevant information."
-      ],
-      "Turn this on to expose endpoints on this site for processing Joinotify API requests.": [
-        "Turn this on to expose endpoints on this site for processing Joinotify API requests."
       ],
       "Type your test message...": [
         "Type your test message..."
@@ -780,12 +666,6 @@
       ],
       "Updates are delivered by WordPress itself, together with every other plugin on this site.": [
         "Updates are delivered by WordPress itself, together with every other plugin on this site."
-      ],
-      "Validate and save": [
-        "Validate and save"
-      ],
-      "Validation failed.": [
-        "Validation failed."
       ],
       "Variable name": [
         "Variable name"

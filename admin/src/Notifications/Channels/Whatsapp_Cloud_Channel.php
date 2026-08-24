@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
 /**
  * Deliver notifications over the official WhatsApp Cloud API (via Joinotify).
  *
- * Sibling of Whatsapp_Evolution_Channel: same Channel_Interface contract, but
+ * Implements Channel_Interface contract, but
  * the transport is Api\Cloud_Client (bearer token, phone_number_id) instead of
  * the Evolution/slots relay. It adds the `template` message type, which is the
  * only way to reach a recipient outside the 24h session window.

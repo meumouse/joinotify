@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 /**
  * Shared message-dispatch plumbing for WhatsApp transports.
  *
- * Both the legacy Evolution transport (Api\Controller) and the official Cloud
+ * The Cloud
  * API transport (Api\Cloud_Client) normalize their result the same way, record
  * every dispatch in the message history, and capture failures in the structured
  * debug log. This trait holds that shared logic so a new transport only has to

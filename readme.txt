@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,10 +67,6 @@ Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify
 Opened in your browser when you click to create or manage an API key. No data is sent from your site by the plugin itself.
 Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy
 
-**Joinotify legacy relay — https://slots-manager.joinotify.com**
-The previous, deprecated transport. It is only contacted by sites that are still configured to use it and will be removed in a future release. It receives the sender number, recipient number and message content.
-Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy
-
 **Telegram Bot API — https://api.telegram.org**
 Optional. Contacted only if you enable the Telegram integration and supply a bot token. It receives the chat id and message content of Telegram actions.
 Terms: https://telegram.org/tos — Privacy: https://telegram.org/privacy
@@ -88,6 +84,40 @@ Your site is identified by a random value generated on the site itself — never
 Switching the option off stops collection, deletes anything still waiting to be sent, and sends one last request asking the service to stop counting this installation. If you would rather it stayed completely silent, the `Joinotify/Telemetry/Send_Opt_Out` filter suppresses that final request.
 
 Switching it off stops future reports but does not erase what was already received. To request the erasure of the data tied to your installation, use https://joinotify.com/remove-data and quote the identifier shown in Settings → About.
+
+== Source code and build ==
+
+Nothing here is obfuscated, and no compiled file ships without the source that produced it.
+
+= The plugin's own code =
+
+The PHP under `admin/src` and `templates/` is not compiled: it is the code that runs.
+
+The admin screens are Vue 3 applications bundled with Vite. Their complete, unminified source ships inside the package under `app/src` (242 files, of which 167 are Vue components), together with `app/package.json`, `app/package-lock.json`, `app/vite.config.js`, `app/tailwind.config.js`, `app/postcss.config.js` and `app/tsconfig.json`. To reproduce `app/dist` from it:
+
+`cd app && npm install && npm run build`
+
+PHP dependencies are declared in `admin/composer.json` and installed with `cd admin && composer install --no-dev`.
+
+The development repository, including the script that assembles the release package, is public at https://github.com/meumouse/joinotify
+
+= Bundled third-party libraries =
+
+`app/dist` also carries the libraries below. Each is installed from npm and used unmodified; the version in this release is pinned in `app/package.json` and `app/package-lock.json`, both shipped. Their source is at:
+
+* Vue — https://github.com/vuejs/core (MIT)
+* Pinia — https://github.com/vuejs/pinia (MIT)
+* Vue Flow, with the background, controls and minimap plugins — https://github.com/bcakmakoglu/vue-flow (MIT)
+* Headless UI — https://github.com/tailwindlabs/headlessui (MIT)
+* VueUse — https://github.com/vueuse/vueuse (MIT)
+* Boxicons for Vue — https://github.com/box-icons/boxicons-vue (MIT)
+* intl-tel-input — https://github.com/jackocnr/intl-tel-input (MIT)
+* vue3-emoji-picker — https://github.com/delowardev/vue3-emoji-picker (MIT)
+* @wordpress/i18n — https://github.com/WordPress/gutenberg (GPL-2.0-or-later)
+
+The country-name chunks under `app/dist/chunks/index-*.js` are intl-tel-input's translated country lists, split out by Vite so a screen only downloads the locale it needs.
+
+`admin/vendor` holds one Composer dependency, giggsey/libphonenumber-for-php-lite — https://github.com/giggsey/libphonenumber-for-php (Apache-2.0) — used to validate and format phone numbers.
 
 == Frequently Asked Questions ==
 
@@ -109,7 +139,7 @@ Yes. WooCommerce is one integration among several; WPForms, Elementor, Flexify C
 
 = Where is the uncompiled JavaScript? =
 
-The admin screens are Vue 3 applications built with Vite. The complete, unminified source ships inside the plugin under `app/src`, together with `app/package.json` and `app/vite.config.js`. Run `npm install && npm run build` in `app/` to reproduce `app/dist`.
+It ships with the plugin, under `app/src`, together with the build configuration needed to reproduce `app/dist`. See **Source code and build** above, which also lists the source of every third-party library bundled into it.
 
 = Is this plugin affiliated with WhatsApp or Meta? =
 
@@ -132,6 +162,16 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 4. Settings, with integrations and senders.
 
 == Changelog ==
+
+= 2.3.2 =
+* Removed: the legacy Evolution relay, in full. Messages now go through the official WhatsApp Cloud API only.
+* Security: the plugin shipped an embedded slots-manager API key, encrypted with its decryption key on the next line. It was the same credential in every installation and anyone could extract it. Both it and the hand-rolled encryption around it are gone.
+* Removed with the relay: the Proxy API and its endpoints, the "Message transport" selector, phone registration by QR code and OTP, the per-number connection check and the WhatsApp group listing. None of them exist on the official API.
+* Removed: the scheduled task that polled phone connections every six hours. Upgrading unschedules it.
+* Changed: `Transport` always resolves to the official API and gained `Transport::is_ready()`, which reports whether the site has a key to send with. The `Joinotify/Transport/Active` filter went away with the transport choice.
+* Changed: `slots-manager.joinotify.com` was dropped from the external services list, since the plugin no longer contacts it.
+* Added: a "Source code and build" section in this readme, documenting where the uncompiled frontend source lives, how to rebuild it, and the source of every third-party library bundled into the package.
+* Changed: the build step that strips the emoji picker's CDN URL now targets the library constant rather than the address, so no remote asset URL appears anywhere in the plugin.
 
 = 2.3.1 =
 * Changed: WordPress 7.0 is now required. The AI features run on the AI Client that ships with it.
@@ -180,6 +220,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.3.2 =
+The legacy Evolution relay was removed. A site still sending through it stops delivering until you connect your Joinotify account in Settings → General → WhatsApp Cloud API. This release also removes an API key that shipped embedded in the plugin, so updating is recommended for every installation.
 
 = 2.3.1 =
 Requires WordPress 7.0. AI content now runs on the WordPress AI Client: set your provider up again in Settings → Connectors, because the OpenAI and Anthropic keys stored by the plugin are no longer used. The "PHP Snippet" action was removed — workflows that use it still open, but that step no longer runs.

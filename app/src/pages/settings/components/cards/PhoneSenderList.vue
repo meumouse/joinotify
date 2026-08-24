@@ -17,14 +17,13 @@ import Tooltip from '../../../../components/tooltips/Tooltip.vue';
 const props = defineProps({
   senders: { type: Array, default: () => [] },
   refreshingPhone: { type: String, default: '' },
-  isCloud: { type: Boolean, default: false },
   lastSync: { type: Number, default: 0 },
 });
 
 const isRefreshing = (phone) => props.refreshingPhone === phone;
 
 const lastSyncLabel = computed(() => {
-  if (!props.isCloud || !props.lastSync) {
+  if (!props.lastSync) {
     return '';
   }
 
@@ -67,7 +66,7 @@ defineEmits(['remove', 'refresh']);
     </div>
 
     <div v-if="!senders.length" class="rounded-lg border border-dashed border-slate-200 bg-white px-4 py-5 text-[14px] text-slate-500">
-      {{ isCloud ? __('No number imported yet. Sync to bring in the numbers connected on your Joinotify account.', textDomain) : __('No validated sender yet.', textDomain) }}
+      {{ __('No number imported yet. Sync to bring in the numbers connected on your Joinotify account.', textDomain) }}
     </div>
 
     <div v-else class="space-y-3">
@@ -79,7 +78,7 @@ defineEmits(['remove', 'refresh']);
         <div class="min-w-[220px] flex-1">
           <div class="text-[14px] font-semibold text-slate-700">{{ sender.formatted || sender.phone }}</div>
 
-          <template v-if="isCloud">
+          <template>
             <div v-if="sender.verified_name" class="mt-0.5 text-[13px] text-slate-500">{{ sender.verified_name }}</div>
             <div v-if="sender.phone_number_id" class="mt-0.5 font-mono text-xs text-slate-400">{{ sender.phone_number_id }}</div>
             <div v-if="sender.messaging_limit" class="mt-0.5 text-xs text-slate-400">
@@ -89,13 +88,13 @@ defineEmits(['remove', 'refresh']);
         </div>
 
         <span
-          v-if="isCloud && sender.quality_rating"
+          v-if="sender.quality_rating"
           class="rounded-full px-3 py-2 text-[13px] font-semibold"
           :class="qualityClass(sender.quality_rating)"
         >{{ sender.quality_rating }}</span>
 
         <Tooltip
-          :content="isCloud ? __('Re-import from Joinotify', textDomain) : __('Refresh connection', textDomain)"
+          :content="__('Re-import from Joinotify', textDomain)"
           placement="top"
           :disabled="isRefreshing(sender.phone)"
         >

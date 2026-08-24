@@ -6,10 +6,14 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
- * vue3-emoji-picker hardcodes a jsdelivr URL used only to build <img> sources for
- * the image (non-native) emoji set. Joinotify always renders the picker with
- * `:native="true"`, so the URL is never requested — but WordPress.org scans the
- * built bundle for remote asset URLs and disallows them, so it is stripped here.
+ * vue3-emoji-picker ships a constant holding a remote base URL, used only to build
+ * <img> sources for the image (non-native) emoji set. Joinotify always renders the
+ * picker with `:native="true"`, so that URL is never requested — but shipping it
+ * inside the bundle still reads as an external asset dependency, which the
+ * WordPress.org guidelines do not allow.
+ *
+ * The constant is blanked here whatever address it holds, so no remote asset URL
+ * reaches `app/dist` and a future release of the library cannot reintroduce one.
  */
 function stripEmojiPickerRemoteAssets() {
   return {
@@ -17,14 +21,13 @@ function stripEmojiPickerRemoteAssets() {
     apply: 'build',
     enforce: 'post',
     transform(code, id) {
-      if (!id.includes('vue3-emoji-picker') || !code.includes('cdn.jsdelivr.net')) {
+      if (!id.includes('vue3-emoji-picker')) {
         return null;
       }
 
-      return {
-        code: code.replace(/https:\/\/cdn\.jsdelivr\.net\/npm\/emoji-datasource-apple@[^"']*/g, ''),
-        map: null,
-      };
+      const stripped = code.replace(/(EMOJI_REMOTE_SRC\s*=\s*)(["'])(?:(?!\2).)*\2/g, '$1$2$2');
+
+      return stripped === code ? null : { code: stripped, map: null };
     },
   };
 }

@@ -1,4 +1,25 @@
-Versão 2.3.1
+Versão 2.3.2 (23/08/2026)
+* Recurso removido: o transporte legado (Evolution / slots-manager) saiu por completo
+     - **Atenção:** sites que ainda enviavam por esse caminho param de enviar até conectar a conta do Joinotify em Configurações → Geral → WhatsApp Cloud API
+     - O plugin trazia embutida uma chave de API do slots-manager, cifrada com a chave de decifragem na linha seguinte. Era a mesma credencial para todas as instalações e qualquer pessoa conseguia extraí-la; ela foi removida junto com a criptografia caseira que a escondia
+     - Saíram também: a Proxy API e suas rotas, o seletor "Transporte de mensagens", o cadastro de número por QR Code/OTP, a consulta de estado de conexão e a listagem de grupos — recursos que só existiam no relay
+     - A rotina agendada que checava conexão de telefone a cada 6 horas foi removida e é desagendada automaticamente na atualização
+     - Números continuam sendo conectados no painel do Joinotify e importados pelo botão "Sincronizar números"
+     - O `slots-manager.joinotify.com` saiu da lista de serviços externos do readme.txt, já que o plugin não o contata mais
+* Alteração: o transporte deixa de ser configurável e o `Transport` resolve sempre para a API oficial
+     - Continua sendo o ponto único de saída de mensagens, então trocar de transporte no futuro segue sendo alteração de um arquivo só
+     - Novo método `Transport::is_ready()`, que informa se o site já tem chave para enviar
+     - O identificador de canal `whatsapp` continua registrado, apontando para o canal da API oficial: mensagens que já estavam na fila antes da atualização ainda encontram um canal válido
+     - O filtro `Joinotify/Transport/Active` foi removido junto com a escolha de transporte
+* Documentação: o readme.txt ganha a seção "Source code and build", exigida pelo diretório do WordPress.org
+     - Explica que o PHP não é compilado e que a fonte completa do frontend Vue vai no pacote, em `app/src`, com toda a configuração de build necessária para reproduzir o `app/dist`
+     - Lista as bibliotecas de terceiros embutidas no bundle, cada uma com o endereço do código-fonte e a licença
+     - Aponta o repositório público de desenvolvimento
+* Alteração: o plugin de build que remove a URL de CDN do seletor de emojis passa a mirar a constante da biblioteca, não o endereço
+     - O endereço não aparece mais em nenhum arquivo do plugin, o que evitava um falso positivo na revisão do diretório
+     - Também deixa de depender do host: se a biblioteca trocar de CDN numa versão futura, a URL continua sendo removida do pacote
+
+Versão 2.3.1 (21/08/2026)
 * Alteração: o WordPress 7.0 passa a ser a versão mínima exigida
      - A partir dele o WordPress traz o AI Client embutido, que é o que a integração de IA do plugin usa agora
 * Alteração: a IA deixa de guardar chaves próprias e passa a usar o AI Client do WordPress
@@ -43,7 +64,7 @@ Versão 2.3.1
 * Correções de conformidade apontadas pelo Plugin Check: consultas ao banco preparadas e documentadas, escape de saída no ícone das integrações, comentários `translators:` e placeholders numerados em todas as mensagens traduzíveis, `date()` trocado por `wp_date()`/`gmdate()`, `mt_rand()` por `wp_rand()`, `strip_tags()` por `wp_strip_all_tags()`, e as chamadas de depuração (`error_log`/`print_r`) redirecionadas para o log do próprio plugin
 * Correção: o gerador do arquivo de tradução (`.pot`) lia a pasta de histórico do editor e trazia de volta textos já removidos do código; agora ele também leva os comentários `translators:` para o arquivo, que antes se perdiam
 
-Versão 2.3.0
+Versão 2.3.0 (17/08/2026)
 * Novo recurso: conexão do WhatsApp pela API oficial do Joinotify, substituindo o formato de Proxy API sobre a Evolution API
      - Botão "Conectar ao Joinotify" nas configurações: a conta é autorizada no painel e a chave da API é entregue ao site sem que você precise copiar e colar nada (colar a chave manualmente continua disponível)
      - Números conectados no painel são importados para o site, com nome verificado, identificador do número, qualidade atribuída pela Meta e limite de conversas iniciadas em 24 horas

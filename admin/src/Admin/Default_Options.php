@@ -36,14 +36,9 @@ class Default_Options {
             'test_number_phone' => '',
             // The Proxy API is deprecated and exposes message-sending endpoints
             // on this site, so it stays off until the owner turns it on.
-            'enable_proxy_api' => 'no',
-            'proxy_api_key' => '',
-            'send_text_proxy_api_route' => 'send-message/text',
-            'send_media_proxy_api_route' => 'send-message/media',
             // WhatsApp transport switch: 'evolution' (legacy slots relay),
             // 'cloud' (official Meta Cloud API via Joinotify), or 'auto' (cloud
             // when a Cloud API token is available, otherwise evolution).
-            'whatsapp_transport' => 'auto',
             // Manual override for the Cloud API credentials. When empty, the
             // values provisioned by the license activation are used instead
             // (see Helpers::cloud_api_token() and friends).

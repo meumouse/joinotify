@@ -3,7 +3,6 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Admin;
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Actions;
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -91,10 +90,6 @@ class Builder_Test extends Abstract_Route {
                 $result  = Transport::send_message_text( $sender, $receiver, $message );
 
                 if ( 201 !== $result ) {
-                    if ( ! Transport::is_cloud() ) {
-                        Controller::get_connection_state( $sender );
-                    }
-
                     return rest_ensure_response( array(
                         'status'  => 'error',
                         'message' => __( 'Could not send the test message.', 'joinotify' ),
@@ -108,10 +103,6 @@ class Builder_Test extends Abstract_Route {
                 $result     = Transport::send_message_media( $sender, $receiver, $media_type, $media, $caption );
 
                 if ( 201 !== $result ) {
-                    if ( ! Transport::is_cloud() ) {
-                        Controller::get_connection_state( $sender );
-                    }
-
                     return rest_ensure_response( array(
                         'status'  => 'error',
                         'message' => __( 'Could not send one or more test messages.', 'joinotify' ),
