@@ -1,4 +1,11 @@
 Version 2.3.2 (2026-08-23)
+* Changed: the minimum PHP version went back down to 7.4, from the 8.1 required since 2.3.0
+     - A meaningful share of WordPress sites still runs 7.4, and nothing in the plugin actually needed a newer runtime — no `match`, enums, promoted constructors or nullsafe calls were ever used
+     - `Core/Init.php` now refuses to boot below 7.4 (it checked for 8.1), and `joinotify.php`, `readme.txt` and `admin/composer.json` all declare the new floor
+     - The phone number library changed from `giggsey/libphonenumber-for-php-lite` 9.0 to `giggsey/libphonenumber-for-php` 8.13, the newest line that still supports 7.4. The "lite" fork only exists for PHP 8+
+     - The full library carries ~19 MB of geocoding, carrier, timezone and CLDR data that the plugin never reads (it only parses and formats numbers), so the build now strips those data directories. The packaged vendor stays around 3 MB, as before
+     - Two PHP 8 functions were replaced by 7.4 equivalents: `get_debug_type()` in the debug log and `str_contains()` in the emoji encoder
+     - New `npm run lint:php`, which parses every source file with a real PHP 7.4 binary so nothing newer creeps back in unnoticed
 * Removed: the legacy transport (Evolution / slots-manager) is gone for good
      - **Heads-up:** sites still sending through that path stop sending until the Joinotify account is connected under Settings → General → WhatsApp Cloud API
      - The plugin shipped an embedded slots-manager API key, encrypted with the decryption key sitting on the next line. It was the same credential for every installation and anyone could extract it; it was removed along with the homegrown encryption that hid it

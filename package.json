@@ -4,6 +4,7 @@
 	"version": "2.3.2",
 	"license": "GPL-2.0-or-later",
 	"scripts": {
+		"lint:php": "node scripts/lint-php.mjs",
 		"build": "node scripts/build.mjs",
 		"build:fast": "node scripts/build.mjs --skip-app --skip-composer --skip-translations --no-install",
 		"build:translate": "node scripts/build.mjs --translate",

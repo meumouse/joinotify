@@ -156,7 +156,7 @@ msgstr ""
 
 #: admin/src/Core/Init.php:237
 msgid ""
-"<strong>Joinotify</strong> requires PHP version 8.1 or higher. Contact your "
+"<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your "
 "hosting support to upgrade."
 msgstr ""
 

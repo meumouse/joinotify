@@ -849,6 +849,7 @@ class Debug_Log {
      * Convert any value to a storable string (JSON for structured data).
      *
      * @since 2.0.0
+     * @version 2.3.2
      * @param mixed $value Value to stringify.
      * @return string
      */
@@ -864,7 +865,9 @@ class Debug_Log {
         $json = wp_json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
         // Encoding only fails on invalid UTF-8 or recursion; record the type instead.
-        return false !== $json ? $json : '[unencodable ' . get_debug_type( $value ) . ']';
+        $type = is_object( $value ) ? get_class( $value ) : gettype( $value );
+
+        return false !== $json ? $json : '[unencodable ' . $type . ']';
     }
 
 

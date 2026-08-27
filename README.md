@@ -68,7 +68,7 @@ patrocinado nem endossado pela WhatsApp LLC ou pela Meta Platforms, Inc.
 ### Requisitos
 
 - WordPress **7.0+** (testado até 7.0) — a integração de IA usa o AI Client do core
-- PHP **8.1+**
+- PHP **7.4+**
 
 ---
 

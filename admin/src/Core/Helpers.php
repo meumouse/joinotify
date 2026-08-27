@@ -331,6 +331,7 @@ class Helpers {
      * Encode emoji characters to HTML entities
      *
      * @since 1.4.3
+     * @version 2.3.2
      * @param string $content | Text content
      * @return string
      */
@@ -343,7 +344,7 @@ class Helpers {
 
         foreach ( $emoji as $emojum ) {
             $emoji_char = html_entity_decode( $emojum );
-            if ( str_contains( $content, $emoji_char ) ) {
+            if ( '' !== $emoji_char && false !== strpos( $content, $emoji_char ) ) {
                 $content = preg_replace( "/$emoji_char/", $emojum, $content );
             }
         }

@@ -75,7 +75,7 @@ class Init {
 	 * Construct function.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.7
+	 * @version 2.3.2
 	 * @param string $plugin_file | Plugin main file path.
 	 * @param string $plugin_version | Plugin version.
 	 * @return void
@@ -100,8 +100,8 @@ class Init {
 		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Deprecated alias kept so existing integrations keep firing.
 		do_action('before_joinotify_init');
 
-		// Display notice if PHP version is below 8.1
-		if ( version_compare( phpversion(), '8.1', '<' ) ) {
+		// Display notice if PHP version is below 7.4
+		if ( version_compare( phpversion(), '7.4', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'php_version_notice' ) );
 			return;
 		}
@@ -234,7 +234,7 @@ class Init {
 	 */
 	public function php_version_notice() {
 		$class = 'notice notice-error is-dismissible';
-		$message = __( '<strong>Joinotify</strong> requires PHP version 8.1 or higher. Contact your hosting support to upgrade.', 'joinotify' );
+		$message = __( '<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade.', 'joinotify' );
 
 		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), wp_kses( $message, array( 'strong' => array() ) ) );
 	}
