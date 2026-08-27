@@ -3,7 +3,7 @@ Contributors: meumouse
 Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 7.0
 Tested up to: 7.1
-Requires PHP: 7.4
+Requires PHP: 8.1.0
 Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -119,11 +119,8 @@ The country-name chunks under `app/dist/chunks/index-*.js` are intl-tel-input's 
 
 `admin/vendor` holds the Composer dependencies, installed with `composer install --no-dev` from `admin/composer.json`:
 
-* giggsey/libphonenumber-for-php — https://github.com/giggsey/libphonenumber-for-php (Apache-2.0) — used to validate and format phone numbers
-* giggsey/locale — https://github.com/giggsey/Locale (MIT) — a dependency of the above
+* giggsey/libphonenumber-for-php-lite — https://github.com/giggsey/libphonenumber-for-php (Apache-2.0) — used to validate and format phone numbers. The "lite" build of the same library, without the offline geocoding, carrier and timezone datasets the plugin never reads
 * symfony/polyfill-mbstring — https://github.com/symfony/polyfill-mbstring (MIT) — a dependency of the above
-
-The library's offline datasets for geocoding, carrier lookup and timezone mapping are removed from the package at build time; the plugin only parses and formats numbers and never reads them.
 
 == Frequently Asked Questions ==
 
@@ -170,7 +167,7 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 == Changelog ==
 
 = 2.3.2 =
-* Changed: PHP 7.4 is enough again. The requirement had gone up to 8.1 in 2.3.0; nothing in the plugin needed it, so the floor is back down and sites on 7.4 can update.
+* Changed: the phone number library moved to giggsey/libphonenumber-for-php-lite 9.0.37. The version shipped until now was the last one supporting PHP 7.4, released in February 2025 and no longer updated, which would have frozen the country numbering rules the plugin validates against. PHP 8.1 remains the minimum.
 * Removed: the legacy Evolution relay, in full. Messages now go through the official WhatsApp Cloud API only.
 * Security: the plugin shipped an embedded slots-manager API key, encrypted with its decryption key on the next line. It was the same credential in every installation and anyone could extract it. Both it and the hand-rolled encryption around it are gone.
 * Removed with the relay: the Proxy API and its endpoints, the "Message transport" selector, phone registration by QR code and OTP, the per-number connection check and the WhatsApp group listing. None of them exist on the official API.

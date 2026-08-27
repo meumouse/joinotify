@@ -1,20 +1,20 @@
 /**
- * lint-php.mjs — parse every source PHP file with a PHP 7.4 binary.
+ * lint-php.mjs — parse every source PHP file with a PHP 8.1 binary.
  *
- * The plugin declares `Requires PHP: 7.4`, but everyone develops on PHP 8.x, so
+ * The plugin declares `Requires PHP: 8.1`, but development happens on newer PHP, so
  * nothing stops a `match` expression or a nullsafe operator from slipping in and
- * fataling on the oldest supported host. `php -l` under a real 7.4 binary is the
+ * fataling on the oldest supported host. `php -l` under a real 8.1 binary is the
  * only honest check: it catches every syntax-level regression at once.
  *
- * It does not catch PHP 8 *functions* (`str_contains`, `get_debug_type`, ...),
- * which parse fine everywhere — see AGENTS.md §4 for the list to avoid.
+ * It does not catch functions newer than the floor, which parse fine everywhere
+ * — see AGENTS.md §4 for the list to avoid.
  *
  * Usage:
  *   npm run lint:php
- *   PHP74_BIN="C:\\path\\to\\php.exe" npm run lint:php
+ *   PHP81_BIN="C:\\path\\to\\php.exe" npm run lint:php
  *
- * Resolution order for the binary: --php=<path>, $PHP74_BIN, then a few common
- * Local by Flywheel / XAMPP locations, then `php7.4` on PATH.
+ * Resolution order for the binary: --php=<path>, $PHP81_BIN, then a few common
+ * Local by Flywheel / XAMPP locations, then `php8.1` on PATH.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -36,13 +36,13 @@ function findPhp() {
 
 	const candidates = [
 		fromFlag ? fromFlag.slice('--php='.length) : null,
-		process.env.PHP74_BIN,
+		process.env.PHP81_BIN,
 		path.join(
 			os.homedir(),
-			'AppData/Roaming/Local/lightning-services/php-7.4.30+6/bin/win64/php.exe',
+			'AppData/Roaming/Local/lightning-services/php-8.1.23+2/bin/win64/php.exe',
 		),
-		'C:/xampp74/php/php.exe',
-		'/usr/bin/php7.4',
+		'C:/xampp81/php/php.exe',
+		'/usr/bin/php8.1',
 	].filter(Boolean);
 
 	for (const candidate of candidates) {
@@ -51,8 +51,8 @@ function findPhp() {
 		}
 	}
 
-	// Last resort: whatever `php7.4` resolves to on PATH.
-	return 'php7.4';
+	// Last resort: whatever `php8.1` resolves to on PATH.
+	return 'php8.1';
 }
 
 function collect(dir, out) {
@@ -78,17 +78,17 @@ const version = spawnSync(php, ['-n', '-r', 'echo PHP_VERSION;'], { encoding: 'u
 
 if (version.status !== 0) {
 	console.error(
-		`Could not run a PHP 7.4 binary ("${php}").\n` +
-			'Point at one with PHP74_BIN=... or --php=<path>.',
+		`Could not run a PHP 8.1 binary ("${php}").\n` +
+			'Point at one with PHP81_BIN=... or --php=<path>.',
 	);
 	process.exit(1);
 }
 
-if (!version.stdout.startsWith('7.4')) {
+if (!version.stdout.startsWith('8.1')) {
 	console.error(
-		`"${php}" is PHP ${version.stdout.trim()}, not 7.4. Linting against a newer ` +
+		`"${php}" is PHP ${version.stdout.trim()}, not 8.1. Linting against a newer ` +
 			'runtime would accept syntax the oldest supported host rejects.\n' +
-			'Point at a 7.4 binary with PHP74_BIN=... or --php=<path>.',
+			'Point at an 8.1 binary with PHP81_BIN=... or --php=<path>.',
 	);
 	process.exit(1);
 }
@@ -124,7 +124,7 @@ for (const file of files) {
 }
 
 if (failed > 0) {
-	console.error(`PHP 7.4 lint failed: ${failed} of ${files.length} file(s) do not parse.`);
+	console.error(`PHP 8.1 lint failed: ${failed} of ${files.length} file(s) do not parse.`);
 	process.exit(1);
 }
 

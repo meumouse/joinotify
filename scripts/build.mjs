@@ -135,27 +135,6 @@ const denyList = new Set(['node_modules', '.git', '.env', '.DS_Store', 'Thumbs.d
 
 const baseFilter = (src) => !denyList.has(path.basename(src));
 
-// admin/vendor/: libphonenumber ships offline datasets for geocoding, carrier
-// lookup and timezone mapping, plus the CLDR catalogue in giggsey/locale — about
-// 19 MB the plugin never reads, since it only parses and formats numbers. Their
-// PHP classes stay so the Composer autoloader keeps resolving; only the data
-// directories are dropped. The -lite package used to strip them for us, but it
-// requires PHP 8.0+, so the PHP 7.4 floor forced the full package back in.
-const vendorDataDirs = [
-	'giggsey/libphonenumber-for-php/src/geocoding/data',
-	'giggsey/libphonenumber-for-php/src/carrier/data',
-	'giggsey/libphonenumber-for-php/src/timezone/data',
-	'giggsey/locale/data',
-].map((rel) => path.join(root, 'admin/vendor', rel));
-
-const vendorFilter = (src) => {
-	if (denyList.has(path.basename(src))) {
-		return false;
-	}
-
-	return !vendorDataDirs.some((dir) => src === dir || src.startsWith(dir + path.sep));
-};
-
 // languages/: ship only compiled artifacts, never the Node tooling.
 const languageExtensions = new Set(['.po', '.mo', '.pot', '.json', '.php']);
 const languageFilter = (src) => {
@@ -269,7 +248,7 @@ async function stageFiles() {
 
 	// PHP backend: source + production autoloader. composer.json stays for reference.
 	await copyDir('admin/src', 'admin/src', baseFilter);
-	await copyDir('admin/vendor', 'admin/vendor', vendorFilter);
+	await copyDir('admin/vendor', 'admin/vendor', baseFilter);
 	await copyFile('admin/composer.json');
 
 	// Built frontend (includes .vite/manifest.json that Scripts.php reads).

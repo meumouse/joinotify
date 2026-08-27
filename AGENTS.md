@@ -46,7 +46,7 @@ Read this **before editing anything**.
 A WordPress plugin that builds **WhatsApp message automation workflows** in a visual drag-and-drop
 builder. It connects site triggers (WooCommerce, forms, user actions) to actions (send WhatsApp,
 conditions, delays, AI, etc.). Current version in [`joinotify.php`](joinotify.php) (`Version:`),
-WordPress **7.0+**, PHP **7.4+**, Node **18+**.
+WordPress **7.0+**, PHP **8.1+**, Node **18+**.
 
 ---
 
@@ -137,15 +137,13 @@ joinotify/
 
 Follow the style already present in `admin/src/`.
 
-- **PHP 7.4 is the floor.** `joinotify.php` (`Requires PHP:`), `readme.txt` and
-  [`admin/composer.json`](admin/composer.json) all declare 7.4, and `Core/Init.php` refuses to boot
-  below it. Nothing newer than PHP 7.4 syntax may appear in `admin/src/`, `templates/` or `tests/`:
-  no `match`, no enums, no constructor property promotion, no union/intersection types, no `readonly`,
-  no nullsafe `?->`, no attributes, no named arguments, no trailing comma in parameter lists. The same
-  goes for the PHP 8 standard library — `str_contains()`, `str_starts_with()`, `str_ends_with()`,
-  `get_debug_type()`, `array_is_list()` and friends are out (WordPress polyfills some of them, but the
-  plugin does not rely on that). Arrow functions, typed properties, `??=` and spread are fine; they are 7.4.
-  Run `npm run lint:php` to check — it parses every source file with a real PHP 7.4 binary.
+- **PHP 8.1 is the floor.** `joinotify.php` (`Requires PHP:`), `readme.txt` and
+  [`admin/composer.json`](admin/composer.json) all declare 8.1, and `Core/Init.php` refuses to boot
+  below it. Nothing newer than PHP 8.1 may appear in `admin/src/`, `templates/` or `tests/`: no
+  `readonly` classes, no typed class constants, no `json_validate()`, no dynamic class constant
+  fetch. Enums, `match`, promoted constructors, union types, nullsafe `?->`, named arguments and the
+  PHP 8 standard library (`str_contains()`, `get_debug_type()`, `array_is_list()`) are all fine.
+  Run `npm run lint:php` to check — it parses every source file with a real PHP 8.1 binary.
 - **PSR-4 + WordPress Coding Standards.** One class per file; the file name matches the class name
   (`Workflow_Processor.php` → `class Workflow_Processor`).
 - **TAB indentation** (not spaces).

@@ -8,7 +8,7 @@
  * Author URI: 				https://meumouse.com/
  * Version: 				2.3.2
  * Requires at least: 		7.0
- * Requires PHP: 			7.4
+ * Requires PHP: 			8.1.0
  * Tested up to: 			7.1
  * Text Domain: 			joinotify
  * Domain Path: 			/languages

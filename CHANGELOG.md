@@ -16,17 +16,16 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
     - It explains that the PHP is not compiled and that the complete Vue frontend source ships in the package, under `app/src`, with all the build configuration needed to reproduce `app/dist`
     - It lists the third-party libraries bundled into the build, each with its source code address and license
     - It points to the public development repository
-- New `npm run lint:php`, which parses every source file with a real PHP 7.4 binary so nothing newer creeps back in unnoticed
+- New `npm run lint:php`, which parses every source file with a real PHP 8.1 binary so nothing newer creeps back in unnoticed
 - New `Transport::is_ready()` method, which reports whether the site already has a key to send with
 
 ### Changed
 
-- **The minimum PHP version went back down to 7.4**, from the 8.1 required since 2.3.0
-    - A meaningful share of WordPress sites still runs 7.4, and nothing in the plugin actually needed a newer runtime — no `match`, enums, promoted constructors or nullsafe calls were ever used
-    - `Core/Init.php` now refuses to boot below 7.4 (it checked for 8.1), and `joinotify.php`, `readme.txt` and `admin/composer.json` all declare the new floor
-    - The phone number library changed from `giggsey/libphonenumber-for-php-lite` 9.0 to `giggsey/libphonenumber-for-php` 8.13, the newest line that still supports 7.4. The "lite" fork only exists for PHP 8+
-    - The full library carries ~19 MB of geocoding, carrier, timezone and CLDR data that the plugin never reads (it only parses and formats numbers), so the build now strips those data directories. The packaged vendor stays around 3 MB, as before
-    - Two PHP 8 functions were replaced by 7.4 equivalents: `get_debug_type()` in the debug log and `str_contains()` in the emoji encoder
+- **PHP 8.1 stays the minimum**, and the phone number library moves to `giggsey/libphonenumber-for-php-lite` 9.0.37
+    - 8.13.55, the version shipped until now, is the last release of that library to support PHP 7.4 — it came out in February 2025 and receives no further updates. Staying on it would freeze the country numbering rules the plugin validates against
+    - There is no alternative: every maintained phone library in the PHP ecosystem wraps this same package, because the value is in Google's metadata rather than the code
+    - The "lite" build is the same library without the offline geocoding, carrier and timezone datasets, which the plugin never reads. It requires PHP 8, which the 8.1 floor now allows again, and brings `admin/vendor` down from 22 MB to 3 MB
+    - With no datasets to drop, the build no longer strips anything from `admin/vendor`
 - **The transport is no longer configurable** and `Transport` always resolves to the official API
     - It remains the single outbound point for messages, so swapping transports in the future is still a one-file change
     - The `whatsapp` channel identifier stays registered, pointing at the official API channel: messages already queued before the update still find a valid channel

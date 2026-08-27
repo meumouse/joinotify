@@ -216,19 +216,11 @@ namespace {
     );
     $legacy_error = jn_simulate_wp_dispatch( $legacy_assoc );
 
-    // Named arguments arrived in PHP 8.0. On the 7.4 floor the string keys are
-    // simply passed positionally, so the bug this guard describes cannot happen
-    // there and the dispatch succeeds. Assert the shape that the running runtime
-    // can actually produce, so the harness is meaningful on both.
-    if ( PHP_VERSION_ID >= 80000 ) {
-        check( 'associative args raise a Throwable on dispatch', $legacy_error instanceof \Throwable );
-        check(
-            'the error is the "Unknown named parameter $context" fatal',
-            $legacy_error instanceof \Throwable && false !== strpos( $legacy_error->getMessage(), 'Unknown named parameter $context' )
-        );
-    } else {
-        check( 'associative args are harmless before PHP 8 (no named arguments)', null === $legacy_error );
-    }
+    check( 'associative args raise a Throwable on dispatch', $legacy_error instanceof \Throwable );
+    check(
+        'the error is the "Unknown named parameter $context" fatal',
+        $legacy_error instanceof \Throwable && false !== strpos( $legacy_error->getMessage(), 'Unknown named parameter $context' )
+    );
 
     echo "\n== clear_scheduled_for_post: WP-Cron branch matches by post_id ==\n";
     $GLOBALS['__as_available'] = false;
