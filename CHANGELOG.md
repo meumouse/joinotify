@@ -8,6 +8,27 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.3.3] - 2026-08-28
+
+Release tooling only. Nothing inside the shipped package changed since 2.3.2 — the plugin code, the frontend build and the translation catalogues are the same files.
+
+### Added
+
+- **Local credentials and machine paths now come from a Git-ignored `.env`** at the repository root, read by `scripts/env.mjs`
+    - `scripts/deploy-svn.mjs` takes `WPORG_USERNAME`, `WPORG_PASSWORD` and `WPORG_SLUG` from it, so publishing no longer needs the login passed as a flag that ends up in the shell history
+    - `scripts/build.mjs` and `scripts/lint-php.mjs` read `PHP81_BIN` and the translation keys from the same file
+    - `.env.example` is the tracked documentation of every variable the tooling reads. A variable already present in the environment always wins, so CI secrets are never overridden by a stray local file
+    - The parser is deliberately dependency-free, keeping the root package at its single devDependency
+- The WordPress.org directory artwork lives in `.wordpress-org/` — banner in both sizes, icon and screenshots — which the deploy mirrors into the SVN `assets/` directory
+
+### Fixed
+
+- **The SVN deploy could corrupt its own working copy while creating a tag**
+    - The checkout is sparse, and `tags/` came down at depth `empty`, so the tag names never reached the working copy
+    - A tag copied under a depth-empty parent falls outside the next update's target set: `svn update` dropped it from disk while leaving the scheduled add in the entries database, and the following `svn copy` failed against that orphan with `E155033`
+    - The same gap made the duplicate-tag guard in `createTag()` unreachable, which in turn left `--force-tag` with nothing to act on
+    - `prepareWorkingCopy()` now promotes `tags/` to depth `immediates` on every run, existing checkouts included. Only the names are fetched; the contents — every release ever published — stay on the server
+
 ## [2.3.2] - 2026-08-23
 
 ### Added
@@ -577,7 +598,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.3.2...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.3.3...HEAD
+[2.3.3]: https://github.com/meumouse/joinotify/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/meumouse/joinotify/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/meumouse/joinotify/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/meumouse/joinotify/compare/v2.2.0...v2.3.0

@@ -334,6 +334,18 @@ function prepareWorkingCopy() {
 		}
 	}
 
+	// A checkout at "immediates" brings tags/ down at depth "empty", so the tag
+	// names never reach the working copy: createTag() cannot see a duplicate, and
+	// — worse — a tag copied under a depth-empty parent is outside the next
+	// update's target set, so `svn update` drops it from disk while leaving the
+	// scheduled add in the entries database. The next `svn copy` then fails with
+	// E155033 against that orphan. Promoting tags/ to "immediates" costs only the
+	// names; the contents (every release ever published) stay on the server.
+	//
+	// Idempotent, and applied to an existing working copy too, since one checked
+	// out before this fix is still at the depth that causes the problem.
+	run('svn', ['update', '--set-depth', 'immediates', 'tags', ...authArgs()], workingCopy);
+
 	ok(`Working copy ready at ${path.relative(root, workingCopy)}.`);
 }
 

@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.3.3 =
+* No change to the plugin itself: the code, the interface and the translations are the same as 2.3.2. Only the release pipeline that publishes the package to WordPress.org was fixed.
+
 = 2.3.2 =
 * Changed: the phone number library moved to giggsey/libphonenumber-for-php-lite 9.0.37. The version shipped until now was the last one supporting PHP 7.4, released in February 2025 and no longer updated, which would have frozen the country numbering rules the plugin validates against. PHP 8.1 remains the minimum.
 * Removed: the legacy Evolution relay, in full. Messages now go through the official WhatsApp Cloud API only.
@@ -224,6 +227,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.3.3 =
+Same plugin as 2.3.2. Coming from 2.2.x: the legacy Evolution relay was removed, so a site still sending through it stops delivering until you connect your Joinotify account in Settings → General → WhatsApp Cloud API. It also removes an API key that shipped embedded in the plugin.
 
 = 2.3.2 =
 The legacy Evolution relay was removed. A site still sending through it stops delivering until you connect your Joinotify account in Settings → General → WhatsApp Cloud API. This release also removes an API key that shipped embedded in the plugin, so updating is recommended for every installation.
