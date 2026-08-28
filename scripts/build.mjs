@@ -35,11 +35,16 @@ import { fileURLToPath } from 'node:url';
 
 import archiver from 'archiver';
 
+import { loadEnv } from './env.mjs';
 import { resolveVersion } from './version.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const slug = 'joinotify';
+
+// Translation keys for --translate live in a Git-ignored .env at the repository
+// root (see .env.example); the child processes inherit them from here.
+loadEnv(root);
 
 const releaseDir = path.join(root, 'release');
 const stagingDir = path.join(releaseDir, slug);

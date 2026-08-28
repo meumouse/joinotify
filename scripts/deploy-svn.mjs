@@ -33,8 +33,15 @@
  *                        tags are what users install; only for a tag that was
  *                        just created and never announced.
  *   --username=<name>    WordPress.org username (default: $WPORG_USERNAME).
- *   --slug=<slug>        Plugin slug on WordPress.org (default: joinotify).
+ *   --password=<pass>    WordPress.org password (default: $WPORG_PASSWORD). Only
+ *                        for unattended runs; left unset, svn prompts once and
+ *                        caches the credential itself.
+ *   --slug=<slug>        Plugin slug on WordPress.org (default: $WPORG_SLUG, or
+ *                        joinotify).
  *   --message=<text>     Commit message (default: "Release <version>").
+ *
+ * Credentials and machine paths are read from a Git-ignored `.env` at the
+ * repository root — copy `.env.example` and fill it in.
  */
 
 import { spawnSync } from 'node:child_process';
@@ -43,10 +50,15 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { loadEnv } from './env.mjs';
 import { resolveVersion } from './version.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
+
+// Credentials come from .env before the flags are resolved, so $WPORG_* can act
+// as the default for --username / --password / --slug.
+loadEnv(root);
 
 /* ------------------------------------------------------------------ flags */
 
@@ -65,7 +77,8 @@ const opts = {
 	assetsOnly: hasFlag('--assets-only'),
 	forceTag: hasFlag('--force-tag'),
 	username: getOpt('--username', process.env.WPORG_USERNAME || ''),
-	slug: getOpt('--slug', 'joinotify'),
+	password: getOpt('--password', process.env.WPORG_PASSWORD || ''),
+	slug: getOpt('--slug', process.env.WPORG_SLUG || 'joinotify'),
 	message: getOpt('--message', ''),
 };
 
@@ -85,13 +98,13 @@ const warn = (msg) => console.log(`\x1b[33m!\x1b[0m ${msg}`);
  * Run a command, streaming its output. Throws on a non-zero exit.
  */
 function run(command, args, cwd = root) {
-	log(`${command} ${args.join(' ')}`);
+	log(mask(`${command} ${args.join(' ')}`));
 
 	// shell:true lets Windows resolve svn.exe / npm.cmd from PATH.
 	const result = spawnSync(command, args, { cwd, stdio: 'inherit', shell: true });
 
 	if (result.status !== 0) {
-		throw new Error(`Command failed (exit ${result.status}): ${command} ${args.join(' ')}`);
+		throw new Error(mask(`Command failed (exit ${result.status}): ${command} ${args.join(' ')}`));
 	}
 }
 
@@ -102,19 +115,52 @@ function capture(command, args, cwd = root) {
 	const result = spawnSync(command, args, { cwd, encoding: 'utf8', shell: true });
 
 	if (result.status !== 0) {
-		throw new Error(`Command failed (exit ${result.status}): ${command} ${args.join(' ')}\n${result.stderr || ''}`);
+		throw new Error(mask(`Command failed (exit ${result.status}): ${command} ${args.join(' ')}\n${result.stderr || ''}`));
 	}
 
 	return result.stdout || '';
 }
 
 /**
- * SVN auth flags. Passing --username lets svn reuse a cached credential for that
- * user; the password is never handled here, so svn prompts for it on the first
- * commit and caches it itself.
+ * SVN auth flags.
+ *
+ * With only a username, svn reuses a cached credential for that user and prompts
+ * for the password on the first commit, caching it itself — the friendly path for
+ * a human deploy.
+ *
+ * A password (from $WPORG_PASSWORD or --password) is for unattended runs, where
+ * there is nobody to answer the prompt. It comes with --non-interactive so a
+ * wrong credential fails instead of hanging, and --no-auth-cache so the secret is
+ * not copied into svn's on-disk auth store — the .env is already the one place
+ * that holds it.
  */
 function authArgs() {
-	return opts.username ? ['--username', opts.username] : [];
+	const args = [];
+
+	if (opts.username) {
+		args.push('--username', quote(opts.username));
+	}
+
+	if (opts.password) {
+		args.push('--password', quoteSecret(opts.password), '--non-interactive', '--no-auth-cache');
+	}
+
+	return args;
+}
+
+/**
+ * Hide the password in anything printed. run() echoes every command it runs, and
+ * a deploy log is routinely pasted into an issue or a CI transcript.
+ */
+function mask(text) {
+	if (!opts.password) {
+		return text;
+	}
+
+	return [quoteSecret(opts.password), opts.password].reduce(
+		(out, secret) => out.split(secret).join('********'),
+		text,
+	);
 }
 
 /**
@@ -231,6 +277,21 @@ function syncSvnState(cwd) {
  */
 function quote(value) {
 	return `"${String(value).replace(/"/g, '\\"')}"`;
+}
+
+/**
+ * Quote a secret for the shell. Same job as quote(), but a password can carry
+ * characters the shell would otherwise expand, and — unlike a path — it is never
+ * a Windows path, so POSIX single-quoting is safe here.
+ */
+function quoteSecret(value) {
+	const text = String(value);
+
+	if (process.platform === 'win32') {
+		return `"${text.replace(/"/g, '\\"')}"`;
+	}
+
+	return `'${text.replace(/'/g, "'\\''")}'`;
 }
 
 /* ----------------------------------------------------------------- stages */

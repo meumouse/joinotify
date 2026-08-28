@@ -13,6 +13,8 @@
  *   npm run lint:php
  *   PHP81_BIN="C:\\path\\to\\php.exe" npm run lint:php
  *
+ * PHP81_BIN can also live in the repository-root `.env` (see `.env.example`).
+ *
  * Resolution order for the binary: --php=<path>, $PHP81_BIN, then a few common
  * Local by Flywheel / XAMPP locations, then `php8.1` on PATH.
  */
@@ -23,7 +25,13 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { loadEnv } from './env.mjs';
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+// PHP81_BIN is usually a per-machine path, so it belongs in .env rather than in
+// everyone's shell profile — see .env.example.
+loadEnv(root);
 
 // Directories that hold code we ship or run, minus everything vendored,
 // generated or kept around as editor history.

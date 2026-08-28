@@ -100,6 +100,8 @@ joinotify/
 ├── docs/ · examples/ · tests/
 ├── scripts/build.mjs      # Build/packaging pipeline (orchestrates everything)
 ├── scripts/deploy-svn.mjs # Publishes a release to the WordPress.org SVN repository
+├── scripts/env.mjs        # Reads the Git-ignored .env consumed by the scripts above
+├── .env.example           # Documented template for that .env (credentials, local paths)
 ├── .wordpress-org/        # Directory page artwork (banner, icon, screenshots) — not shipped
 ├── readme.txt             # WordPress.org plugin page (headers, external services)
 ├── LICENSE                # GNU GPL v2 or later
@@ -288,6 +290,14 @@ bare run mirrors the build into `trunk/`, creates the tag locally and prints the
 
 The working copy lives in `.wporg-svn/` (Git-ignored), with `tags/` at shallow depth. Needs an `svn`
 client on PATH and `WPORG_USERNAME` (or `--username=<name>`).
+
+Credentials come from a Git-ignored `.env` at the repository root — copy
+[`.env.example`](.env.example), which documents every variable the scripts read (`WPORG_USERNAME`,
+`WPORG_PASSWORD`, `WPORG_SLUG`, `PHP81_BIN`, translation keys). A variable already set in the
+environment wins over the file, so CI secrets are never overridden. Leave `WPORG_PASSWORD` empty for
+an interactive deploy: svn prompts once and caches the credential itself. Setting it is for
+unattended runs, and makes the deploy pass `--non-interactive --no-auth-cache` and mask the value in
+its output. Add every new variable to `.env.example` — never a real secret.
 
 > **SVN `assets/` ≠ the plugin's `assets/`.** The SVN one sits beside `trunk/`, outside the
 > installed package, and holds the banner, icon and screenshots — see
