@@ -29,9 +29,14 @@ class Notification_Message {
     public $channel = '';
 
     /**
-     * Message type: 'text', 'media' or 'audio'.
+     * Message type: 'text', 'media', 'audio' or 'template'.
+     *
+     * `template` is only understood by channels that advertise the capability
+     * (today, WhatsApp Cloud API) and reads its name, language and components
+     * from the metadata bag.
      *
      * @since 2.0.0
+     * @version 2.3.0
      * @var string
      */
     public $type = 'text';
@@ -118,6 +123,7 @@ class Notification_Message {
      * @var array<string,mixed>
      */
     public $meta = array();
+
 
     /**
      * Construct function.

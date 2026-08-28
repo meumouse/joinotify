@@ -231,24 +231,6 @@ export function describeConditionAction(data: Record<string, unknown>): string {
 }
 
 /**
- * Build the summary for a PHP snippet action, previewing the first characters
- * of the code.
- *
- * @since 2.0.0
- * @param {Object} data Snippet action data.
- * @returns {string} Human-readable snippet summary.
- */
-export function describeSnippetAction(data: Record<string, unknown>): string {
-  const snippet = cleanText(data.snippet_php || '');
-
-  if (!snippet) {
-    return __('PHP snippet', textDomain);
-  }
-
-  return joinSegments([__('PHP snippet', textDomain), snippet.slice(0, 48)]);
-}
-
-/**
  * Build the summary for a stop action.
  *
  * @since 2.0.0

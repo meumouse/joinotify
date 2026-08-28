@@ -1,0 +1,138 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "it_IT",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "0 results": [
+        "0 risultati"
+      ],
+      "Actions": [
+        "Azioni"
+      ],
+      "All": [
+        "Tutti"
+      ],
+      "Cancel": [
+        "Annulla"
+      ],
+      "Cancel all": [
+        "Annulla tutto"
+      ],
+      "Cancel all scheduled items": [
+        "Annulla tutti gli elementi programmati"
+      ],
+      "Cancel item": [
+        "Annulla elemento"
+      ],
+      "Cancel scheduled item": [
+        "Annulla elemento programmato"
+      ],
+      "Clear filters": [
+        "Pulisci filtri"
+      ],
+      "Confirm": [
+        "Conferma"
+      ],
+      "Could not cancel the scheduled item.": [
+        "Impossibile annullare l'elemento programmato."
+      ],
+      "Could not clear the queue.": [
+        "Impossibile cancellare la coda."
+      ],
+      "Could not load the processing queue.": [
+        "Impossibile caricare la coda di elaborazione."
+      ],
+      "Could not run the scheduled item.": [
+        "Impossibile eseguire l'elemento programmato."
+      ],
+      "Dispatch now": [
+        "Invia ora"
+      ],
+      "Due": [
+        "Scadenza"
+      ],
+      "End of workflow": [
+        "Fine del flusso di lavoro"
+      ],
+      "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
+        "Ogni elemento programmato in attesa sarà rimosso e non verrà mai eseguito. Questo non può essere annullato."
+      ],
+      "Inactive": [
+        "Inattivo"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Loading…": [
+        "Caricamento…"
+      ],
+      "more": [
+        "di più"
+      ],
+      "Next action": [
+        "Prossima azione"
+      ],
+      "No workflow steps are currently waiting to run.": [
+        "Nessun passaggio del workflow è attualmente in attesa di esecuzione."
+      ],
+      "Nothing in the queue": [
+        "Niente in coda"
+      ],
+      "of": [
+        "di"
+      ],
+      "Processing queue": [
+        "Coda di elaborazione"
+      ],
+      "Recipient": [
+        "Destinatario"
+      ],
+      "Refresh": [
+        "Aggiorna"
+      ],
+      "Scheduled": [
+        "Pianificato"
+      ],
+      "Scheduled for": [
+        "Pianificato per"
+      ],
+      "Scheduler": [
+        "Pianificatore"
+      ],
+      "Search workflow, recipient or action": [
+        "Cerca flusso di lavoro, destinatario o azione"
+      ],
+      "Select an option": [
+        "Seleziona un'opzione"
+      ],
+      "Status": [
+        "Stato"
+      ],
+      "The remaining actions will be executed right now, skipping the scheduled wait. This cannot be undone.": [
+        "Le azioni rimanenti verranno eseguite immediatamente, saltando l'attesa programmata. Questa azione non può essere annullata."
+      ],
+      "The workflow is not published.": [
+        "Il flusso di lavoro non è pubblicato."
+      ],
+      "This scheduled item will be removed and will never run. This cannot be undone.": [
+        "Questo elemento programmato verrà rimosso e non verrà mai eseguito. Questa azione non può essere annullata."
+      ],
+      "Try again": [
+        "Riprova"
+      ],
+      "Type to filter…": [
+        "Digita per filtrare…"
+      ],
+      "Workflow": [
+        "Flusso di lavoro"
+      ],
+      "Workflow steps waiting on a delay before they run. Dispatch one now to skip the wait, or cancel it to stop the processing.": [
+        "Passaggi del flusso di lavoro in attesa di un ritardo prima di essere eseguiti. Invia uno ora per saltare l'attesa, o annullalo per fermare l'elaborazione."
+      ]
+    }
+  }
+}

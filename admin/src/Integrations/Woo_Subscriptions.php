@@ -127,6 +127,7 @@ class Woo_Subscriptions extends Integrations_Base {
          * @since 1.3.0
          * @param array $payload | Payload to be processed
          */
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Every caller in this class passes a literal 'Joinotify/Process_Workflows/...' name.
         $payload = apply_filters( $filter, array_merge( array(
             'type' => 'trigger',
             'hook' => $hook,

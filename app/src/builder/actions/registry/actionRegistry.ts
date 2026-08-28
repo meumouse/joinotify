@@ -20,6 +20,7 @@ import type {
   WorkflowActionItem,
 } from './types';
 import { registerCoreActions } from './registerCoreActions';
+import { isActionAvailable } from './integrationAvailability';
 import { resolveSvgMarkup } from '../../../utils/icon';
 import { __, textDomain } from '../../../utils/i18n';
 
@@ -116,6 +117,10 @@ function mergeDefinition(current: ActionDefinition | undefined, next: ActionDefi
     },
     settingsSchema: next.settingsSchema && next.settingsSchema.length > 0 ? next.settingsSchema : current?.settingsSchema,
     tags: next.tags && next.tags.length > 0 ? next.tags : current?.tags,
+    // The backend omits this key entirely (its own catalog is already filtered
+    // by the integration toggle), so a hydration pass must not drop the gate
+    // declared by the bundled definition.
+    requiresSetting: next.requiresSetting || current?.requiresSetting || '',
     settingsComponent: next.settingsComponent || current?.settingsComponent,
     cardComponent: next.cardComponent || current?.cardComponent,
     normalizeData: next.normalizeData || current?.normalizeData,
@@ -171,6 +176,7 @@ function normalizeDefinition(definition: ActionDefinition | BackendActionDefinit
     externalIcon: Boolean(definition.externalIcon ?? definition.external_icon),
     context: cleanContext(definition.context || definition.contexts),
     category: String(definition.category || '').trim() || 'general',
+    requiresSetting: String(definition.requiresSetting || definition.requires_setting || '').trim(),
     hasSettings: Boolean(definition.hasSettings ?? definition.has_settings ?? false),
     priority: cleanPriority(definition.priority, 0),
     isExpansible: Boolean(definition.isExpansible ?? definition.is_expansible),
@@ -209,6 +215,7 @@ function createFallbackDefinition(action: string, metadata: Partial<ActionDefini
     iconSvg: metadata.iconSvg || '',
     externalIcon: Boolean(metadata.externalIcon),
     context: metadata.context || [],
+    requiresSetting: metadata.requiresSetting || '',
     hasSettings: Boolean(metadata.hasSettings ?? false),
     priority: Number(metadata.priority || 0),
     isExpansible: Boolean(metadata.isExpansible),
@@ -295,8 +302,14 @@ export function getBuilderAction(action: string): ActionDefinition | null {
  * Returns all enabled action definitions, sorted by descending priority and
  * then by title.
  *
+ * Definitions gated behind a plugin setting (`requiresSetting`) are left out
+ * while that setting is off, so a disabled channel is never offered in the
+ * action library. Single lookups (getBuilderAction) stay ungated so nodes saved
+ * while the channel was enabled keep rendering.
+ *
  * @since 2.0.0
- * @returns {ActionDefinition[]} The sorted list of enabled definitions.
+ * @version 2.4.0
+ * @returns {ActionDefinition[]} The sorted list of enabled, available definitions.
  */
 export function getBuilderActions(): ActionDefinition[] {
   ensureBootstrapped();
@@ -304,6 +317,7 @@ export function getBuilderActions(): ActionDefinition[] {
   return Array.from(registry.values())
     .map((definition) => cloneDefinition(definition))
     .filter((definition) => definition.enabled !== false)
+    .filter((definition) => isActionAvailable(definition.requiresSetting))
     .sort((left, right) => right.priority - left.priority || left.title.localeCompare(right.title));
 }
 

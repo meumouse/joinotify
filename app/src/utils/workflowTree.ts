@@ -29,10 +29,6 @@ export function isDelayAction(data: Record<string, unknown> | undefined): boolea
   return !!data && String(data.action || '') === 'time_delay';
 }
 
-export function isSnippetAction(data: Record<string, unknown> | undefined): boolean {
-  return !!data && String(data.action || '') === 'snippet_php';
-}
-
 export function isPlaceholderAction(data: Record<string, unknown> | undefined): boolean {
   return !!data && String(data.action || '') === 'dynamic_placeholder';
 }
@@ -683,10 +679,6 @@ export function isStopNode(node: WorkflowNode | null | undefined): boolean {
 
 export function isDelayNode(node: WorkflowNode | null | undefined): boolean {
   return !!node && node.type === 'action' && isDelayAction(node.data);
-}
-
-export function isSnippetNode(node: WorkflowNode | null | undefined): boolean {
-  return !!node && node.type === 'action' && isSnippetAction(node.data);
 }
 
 export function isPlaceholderNode(node: WorkflowNode | null | undefined): boolean {

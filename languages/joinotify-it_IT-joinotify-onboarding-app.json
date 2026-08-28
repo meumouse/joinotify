@@ -1,0 +1,195 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "it_IT",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "%d number imported from your Joinotify account.": [
+        "%d numero importato dal tuo account Joinotify."
+      ],
+      "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
+        "Alcune domande e il tuo sito è pronto per inviare messaggi WhatsApp. Tutto qui può essere modificato in seguito nelle Impostazioni."
+      ],
+      "Back": [
+        "Indietro"
+      ],
+      "Building your first workflow: triggers, conditions and actions": [
+        "Costruendo il tuo primo flusso di lavoro: trigger, condizioni e azioni"
+      ],
+      "Close": [
+        "Chiudi"
+      ],
+      "Close setup": [
+        "Chiudi configurazione"
+      ],
+      "Connect": [
+        "Collegati"
+      ],
+      "Connected": [
+        "Connesso"
+      ],
+      "Connecting sends your key and this site’s address to %s so it can register the site and list the WhatsApp numbers on your account. Nothing leaves this site before you press Connect.": [
+        "Collegare invia la tua chiave e l'indirizzo di questo sito a %s in modo che possa registrare il sito e elencare i numeri WhatsApp sul tuo account. Nulla lascia questo sito prima che tu prema Collega."
+      ],
+      "Connecting WooCommerce, WPForms, Elementor and the other integrations": [
+        "Collegamento di WooCommerce, WPForms, Elementor e delle altre integrazioni"
+      ],
+      "Connecting…": [
+        "Collegamento…"
+      ],
+      "Continue": [
+        "Continua"
+      ],
+      "Could not connect with that key.": [
+        "Impossibile collegarsi con quella chiave."
+      ],
+      "Could not finish the setup.": [
+        "Impossibile completare la configurazione."
+      ],
+      "Could not save this step.": [
+        "Impossibile salvare questo passaggio."
+      ],
+      "Create an automation": [
+        "Crea un'automazione"
+      ],
+      "Default country code": [
+        "Prefisso del paese predefinito"
+      ],
+      "Documentation": [
+        "Documentazione"
+      ],
+      "Everything Joinotify does is documented, from the first workflow to the PHP hooks you can extend it with. Keep this link handy.": [
+        "Tutto ciò che Joinotify fa è documentato, dal primo flusso di lavoro agli hook PHP con cui puoi estenderlo. Tieni a portata di mano questo link."
+      ],
+      "Examples of the events that would be sent": [
+        "Esempi degli eventi che verrebbero inviati"
+      ],
+      "Go to settings": [
+        "Vai alle impostazioni"
+      ],
+      "Hide what would be sent": [
+        "Nascondi ciò che verrebbe inviato"
+      ],
+      "How this site is identified": [
+        "Come viene identificato questo sito"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Joinotify API key": [
+        "Chiave API Joinotify"
+      ],
+      "Joinotify can use a language model to write message copy and suggest whole workflows. This is optional and you can set it up later — the plugin works fully without it.": [
+        "Joinotify può utilizzare un modello linguistico per scrivere testi dei messaggi e suggerire interi flussi di lavoro. Questo è facoltativo e puoi configurarlo in seguito — il plugin funziona completamente senza di esso."
+      ],
+      "Joinotify delivers your messages through the official WhatsApp Cloud API. Create a key for this site on the Joinotify panel and paste it below — it is the only credential the plugin needs.": [
+        "Joinotify invia i tuoi messaggi tramite l'API Cloud ufficiale di WhatsApp. Crea una chiave per questo sito nel pannello di Joinotify e incollala qui sotto — è l'unica credenziale di cui ha bisogno il plugin."
+      ],
+      "Joinotify help center": [
+        "Centro assistenza Joinotify"
+      ],
+      "Joinotify is configured. Build your first automation now, or open the settings to fine-tune integrations, senders and message history.": [
+        "Joinotify è configurato. Crea la tua prima automazione ora, oppure apri le impostazioni per affinare integrazioni, mittenti e cronologia dei messaggi."
+      ],
+      "Knowing which WordPress and PHP versions Joinotify actually runs on, and which errors people hit, is what tells us where to spend our time. Sharing is entirely up to you and the plugin behaves identically either way.": [
+        "Sapere quali versioni di WordPress e PHP utilizza effettivamente Joinotify e quali errori incontrano le persone ci dice dove spendere il nostro tempo. La condivisione è completamente a tua discrezione e il plugin si comporta in modo identico in entrambi i casi."
+      ],
+      "Message templates and what the WhatsApp 24-hour window means for you": [
+        "Modelli di messaggio e cosa significa la finestra di 24 ore di WhatsApp per te"
+      ],
+      "Messages will send normally, but delivery reports could not be set up:": [
+        "I messaggi verranno inviati normalmente, ma i rapporti di consegna non possono essere impostati:"
+      ],
+      "Never collected": [
+        "Mai raccolto"
+      ],
+      "No country matches that search.": [
+        "Nessun paese corrisponde a quella ricerca."
+      ],
+      "No options available": [
+        "Nessuna opzione disponibile"
+      ],
+      "Off by default. You can change this at any time in Settings → About.": [
+        "Disattivato per impostazione predefinita. Puoi cambiarlo in qualsiasi momento in Impostazioni → Informazioni."
+      ],
+      "Open the documentation": [
+        "Apri la documentazione"
+      ],
+      "Open the Joinotify panel to get a key": [
+        "Apri il pannello di Joinotify per ottenere una chiave"
+      ],
+      "Open the visual builder and wire a trigger to your first WhatsApp message.": [
+        "Apri il builder visivo e collega un trigger al tuo primo messaggio WhatsApp."
+      ],
+      "Optional": [
+        "Facoltativo"
+      ],
+      "Paste the API key issued for this site on the Joinotify panel.": [
+        "Incolla la chiave API emessa per questo sito nel pannello di Joinotify."
+      ],
+      "Placeholders, custom variables and the PHP extension API": [
+        "Segnaposto, variabili personalizzate e l'API di estensione PHP"
+      ],
+      "Review integrations, senders, history retention and the advanced options.": [
+        "Rivedi integrazioni, mittenti, conservazione della cronologia e opzioni avanzate."
+      ],
+      "Search for a country": [
+        "Cerca un paese"
+      ],
+      "Search...": [
+        "Cerca..."
+      ],
+      "See exactly what would be sent": [
+        "Vedi esattamente cosa verrebbe inviato"
+      ],
+      "Select an option": [
+        "Seleziona un'opzione"
+      ],
+      "Set up Joinotify": [
+        "Configura Joinotify"
+      ],
+      "Setup": [
+        "Configurazione"
+      ],
+      "Share anonymous usage data": [
+        "Condividi dati di utilizzo anonimi"
+      ],
+      "Skip setup for now": [
+        "Salta la configurazione per ora"
+      ],
+      "Skip this step": [
+        "Salta questo passaggio"
+      ],
+      "Step": [
+        "Passaggio"
+      ],
+      "The exact payload for this site right now": [
+        "Il payload esatto per questo sito in questo momento"
+      ],
+      "We pre-selected %s based on this site’s language setting.": [
+        "Abbiamo pre-selezionato %s in base alle impostazioni della lingua di questo sito."
+      ],
+      "We pre-selected %s based on this site’s timezone.": [
+        "Abbiamo pre-selezionato %s in base al fuso orario di questo sito."
+      ],
+      "We pre-selected %s because that is your WooCommerce store address.": [
+        "Abbiamo pre-selezionato %s perché è l'indirizzo del tuo negozio WooCommerce."
+      ],
+      "What this sends": [
+        "Cosa invia"
+      ],
+      "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed.": [
+        "Quando un numero di telefono raggiunge un flusso di lavoro senza un prefisso internazionale, Joinotify lo completa con il paese che scegli qui. I numeri che già portano un prefisso internazionale non vengono mai modificati."
+      ],
+      "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready.": [
+        "Hai saltato la connessione a un account Joinotify, quindi i flussi di lavoro verranno creati e salvati ma non invieranno ancora nulla. Aggiungi la tua chiave API in Impostazioni → Generale quando sei pronto."
+      ],
+      "Your Joinotify account is connected.": [
+        "Il tuo account Joinotify è connesso."
+      ]
+    }
+  }
+}

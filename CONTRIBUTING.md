@@ -4,10 +4,15 @@ Este guia é o ponto de partida para **desenvolvedores humanos e agentes de IA**
 trabalhar no código do Joinotify. Ele reúne a organização do projeto, as convenções de código,
 o fluxo de trabalho com Git e as regras que mantêm o plugin consistente.
 
-> **Software proprietário.** O Joinotify é propriedade da MEUMOUSE.COM® — Soluções Digitais LTDA.
-> Não é um projeto de código aberto: contribuições externas via fork/PR público **não** são
-> aceitas. Este documento orienta a equipe interna e colaboradores autorizados. Veja
-> [`license.md`](license.md).
+> **Software livre, publicado no WordPress.org.** O Joinotify é licenciado sob a **GPLv2 ou
+> posterior** (veja [`LICENSE`](LICENSE)) e todos os recursos estão liberados — não há versão
+> paga, trial nem verificação de licença. Como o plugin é distribuído pelo diretório do
+> WordPress.org, qualquer alteração precisa mantê-lo dentro das
+> [diretrizes do diretório](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/):
+> nada de código executado a partir de servidor remoto, nada de mecanismo de atualização
+> próprio, nenhuma requisição externa antes do consentimento do usuário e nenhum arquivo
+> minificado sem o respectivo código-fonte. Todo serviço externo utilizado deve continuar
+> declarado no [`readme.txt`](readme.txt).
 
 ## Mapa da documentação
 
@@ -21,7 +26,7 @@ linke para eles.
 | [`app/README.md`](app/README.md) | Frontend Vue 3 + Vite: entries, bootstrap REST, store do builder, Tailwind, i18n. |
 | [`languages/README.md`](languages/README.md) | Pipeline de i18n (geração de `.pot`, tradução IA/Google, compilação `.mo`/`.l10n.php`/`.json`). |
 | [`docs/integrations.md`](docs/integrations.md) | Integrações disponíveis e seus gatilhos. |
-| [`changelogs.md`](changelogs.md) | Histórico de versões. |
+| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de versões. |
 
 ---
 
@@ -55,12 +60,16 @@ joinotify/
 ├── languages/             # Pipeline de i18n em Node (ver languages/README.md)
 ├── templates/             # Templates PHP (ex.: login OTP) — markup escaneado pelo Tailwind
 ├── assets/                # Assets estáticos (marca, ícones)
-├── dist/                  # Templates de fluxo distribuídos + update-checker.json
+├── dist/                  # Templates de fluxo distribuídos (não vão no ZIP)
 ├── docs/                  # Documentação adicional
 ├── examples/              # Exemplo de extensão de terceiros (PHP)
 ├── tests/                 # Harnesses de teste standalone + fixtures
 ├── scripts/build.mjs      # Pipeline de build/empacotamento (orquestra tudo)
-└── *.md                   # README, DEVELOPERS, changelogs, license, este arquivo
+├── scripts/deploy-svn.mjs # Publica uma release no repositório SVN do WordPress.org
+├── .wordpress-org/        # Arte da página do diretório (banner, ícone, screenshots)
+├── readme.txt             # Ficha do WordPress.org (headers, serviços externos)
+├── LICENSE                # GNU GPL v2 ou posterior
+└── *.md                   # README, DEVELOPERS, CHANGELOG, este arquivo
 ```
 
 ### O contrato central: o fluxo (workflow)
@@ -114,6 +123,17 @@ npm run build          # build completo → release/joinotify-<versão>.zip
 npm run build:fast     # reaproveita artefatos (pula app/composer/traduções)
 npm run build:app      # só o frontend
 ```
+
+Publicação no WordPress.org (detalhes em
+[`README.md`](README.md#publicação-no-wordpressorg)) — o `--commit` é obrigatório para publicar:
+
+```bash
+npm run deploy         # ensaio: prepara trunk/ e a tag, mostra o diff, não publica
+npm run deploy:commit  # publica trunk/ e tags/<versão> em uma única revisão
+```
+
+Antes de qualquer um dos dois, `joinotify.php` (header e `$plugin_version`), o `Stable tag` do
+`readme.txt` e o `package.json` precisam declarar a mesma versão — o build para se divergirem.
 
 ---
 
@@ -202,7 +222,11 @@ refresh / rebuild).
 - **Mudanças só de tradução não exigem rebuild do frontend** — as traduções de JS são injetadas
   em runtime via `wp.i18n.setLocaleData` por handle de script.
 - Ao **adicionar/alterar strings** no código: rode `npm run pot` em `languages/` para regenerar o
-  `.pot`, depois traduza (`npm run translate` / `:ai`) e compile (`compile:mo`, `compile:php`).
+  `.pot`, depois traduza (`npm run translate` / `:ai`) e compile (`compile:mo`, `compile:php`,
+  `compile:json`).
+- Cada `.json` de handle carrega **apenas as strings do próprio bundle**. A lista de handles vem de
+  `app/src/entries/*` e da chamada `mountPage('<handle>', …)` de cada entry — uma página nova não
+  precisa de lista separada, mas um entry sem handle resolvível interrompe o build.
 - Idiomas mantidos: **pt_BR, en_US, es_ES**.
 
 ---
@@ -223,11 +247,11 @@ refresh / rebuild).
 
   Tipos em uso: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`, `i18n`. Escopos comuns:
   `builder`, `ai`, `cron`, `queue`, `history`, `settings`, `core`, `i18n`.
-- **Mensagens em inglês**, curtas e no imperativo. A documentação narrativa (`*.md`) é em
-  português.
+- **Mensagens em inglês**, curtas e no imperativo — assim como todo o resto do repositório,
+  incluindo a documentação narrativa (`*.md`).
 - **Não comite artefatos gerados nem segredos.** Já estão no [`.gitignore`](.gitignore):
-  `app/dist/`, `admin/vendor`, `node_modules/`, `release/`, `.env`, `composer.lock`,
-  `package-lock.json`.
+  `app/dist/`, `admin/vendor`, `node_modules/`, `release/`, `.wporg-svn/`, `.env`,
+  `composer.lock`, `package-lock.json`.
 - **Commits/pushes só quando solicitado.** Agentes de IA: não faça commit/push sem pedido
   explícito do usuário.
 
@@ -273,7 +297,7 @@ Reporte resultados com honestidade: se um teste falhou, diga e mostre a saída.
 - [ ] Sem artefatos gerados (`dist/`, `vendor/`, `node_modules/`) nem segredos no commit.
 - [ ] Testes relevantes rodados; build verde quando aplicável.
 - [ ] Commit no padrão Conventional Commits.
-- [ ] `changelogs.md` atualizado para mudanças voltadas ao usuário.
+- [ ] `CHANGELOG.md` atualizado para mudanças voltadas ao usuário.
 
 ---
 
@@ -288,8 +312,9 @@ Reporte resultados com honestidade: se um teste falhou, diga e mostre a saída.
   [`examples/joinotify-extension-example.php`](examples/joinotify-extension-example.php).
 - **Não invente APIs.** Use os helpers `joinotify_*()` e classes que realmente existem; confirme
   com busca no repositório antes de referenciar um símbolo.
-- **Idiomas:** código/identificadores e mensagens de commit em inglês; documentação narrativa em
-  português (combine com o arquivo que está editando).
+- **Idiomas:** tudo em inglês — código, identificadores, comentários, docblocks, mensagens de
+  commit e documentação narrativa. Não há exceção para o português; arquivos ainda em português
+  são dívida a ser migrada conforme forem editados.
 - **Não comite, não faça push e não rode builds destrutivos** sem pedido explícito do usuário.
 - **Windows / Local.** O ambiente de dev é WordPress via Local (Windows). Caminhos de `php.exe`
   variam por instalação — não assuma um caminho fixo.

@@ -16,6 +16,7 @@ código-fonte (.php/.js/.ts/.vue)
 joinotify-<locale>.po             │
         │  npm run compile:mo     │
         │  npm run compile:php    │
+        │  npm run compile:json   │
         ▼                         ▼
 .mo   .l10n.php   *.json (por handle de script JS)
 ```
@@ -100,6 +101,8 @@ no mesmo mapa — basta descomentá-los para incluí-los nas próximas execuçõ
 | `npm run compile:mo:lang -- <locale>` | Compila o `.mo` de um idioma. |
 | `npm run compile:php`        | Compila todos os `.po` → `.l10n.php`. |
 | `npm run compile:php:lang -- <locale>` | Compila o `.l10n.php` de um idioma. |
+| `npm run compile:json`       | Compila todos os `.po` → `.json` por handle de script. |
+| `npm run compile:json:lang -- <locale>` | Compila os `.json` de um idioma. |
 
 > Os scripts `pretranslate*` rodam `npm run pot` automaticamente antes de traduzir,
 > garantindo que o `.pot` esteja sempre atualizado.
@@ -163,11 +166,16 @@ anterior, ou devolvido inalterado pelo modelo para strings curtas/técnicas) é 
 ```bash
 npm run compile:mo     # .po -> .mo
 npm run compile:php    # .po -> .l10n.php
+npm run compile:json   # .po -> .json (um por handle de script)
 ```
 
 Você pode editar um `.po` à mão e recompilar sem retraduzir.
 O `translate-cli.js` já escreve `.po`, `.mo`, `.l10n.php` e os `.json` de uma só vez;
 os comandos `compile:*` existem para regenerar a partir de `.po` editados manualmente.
+
+> `compile:json` lê as traduções do `.po`, mas lê as **referências de origem** (`#:`) do
+> `joinotify.pot`. Um `.po` só é reescrito por uma rodada de tradução, então suas referências
+> ficam desatualizadas assim que uma string muda de arquivo; o `.pot` é regenerado a cada build.
 
 ---
 
@@ -185,19 +193,39 @@ Os artefatos PHP são carregados via `load_plugin_textdomain` em `admin/src/Core
 
 ### Handles de script JS
 
-Os arquivos `.json` são gerados um para cada *handle* listado em `SCRIPT_HANDLES`
-(`translate-cli.js`):
+A lista de handles **não é mantida à mão**: `js-module-graph.js` varre `app/src/entries/*`
+(os mesmos entries declarados em `vite.config.js`) e lê o handle de cada um da chamada
+`mountPage('<handle>', …)`. Entries sem `mountPage` — hoje só `otp-login.js`, cujo handle
+vive em `Otp_Login\Frontend_Assets::HANDLE` — são resolvidos pelo mapa `HANDLE_OVERRIDES`
+do mesmo arquivo. Um entry sem handle **interrompe a geração**, em vez de produzir um
+pacote em que a página nova aparece sem tradução.
+
+Handles atuais:
 
 ```
-joinotify, joinotify-settings-app, joinotify-license-app,
-joinotify-builder-app, joinotify-workflows-app, joinotify-history-app
+joinotify-settings-app, joinotify-onboarding-app, joinotify-builder-app,
+joinotify-workflows-app, joinotify-history-app, joinotify-queue-app,
+joinotify-otp-login
 ```
 
-Cada handle precisa corresponder a um script enfileirado em
-`Assets\Settings_Assets::get_script_handle`. O WordPress 7.0 resolve o JSON pelo nome
-`joinotify-<locale>-<handle>.json`, que coincide com a saída do pipeline; versões mais
-antigas usavam `…-<md5(src)>.json`, e há um filtro `load_script_translation_file` em
-`Settings_Assets` como rede de segurança.
+O WordPress resolve o JSON pelo nome `joinotify-<locale>-<handle>.json`, que coincide com a
+saída do pipeline; o core, porém, procura `…-<md5(src)>.json`, então o filtro
+`load_script_translation_file` (`Settings_Assets::resolve_script_translation_file`, registrado
+também por `Otp_Login\Frontend_Assets` para o front-end) faz o remapeamento.
+
+#### Cada JSON carrega só as suas strings
+
+Cada `.json` contém apenas as strings que o *seu* bundle pode pedir em runtime — a mesma
+regra do `wp i18n make-json`. `script-translations.js` resolve cada string de volta para os
+arquivos listados nos comentários `#:` do `.pot` e a inclui somente nos handles cujo grafo de
+imports contém um desses arquivos. Strings extraídas apenas de PHP não entram em nenhum JSON.
+
+O grafo de imports vem do código-fonte, não do `app/dist/.vite/manifest.json`: o manifest lista
+os *chunks* que um entry carrega, mas um chunk compartilhado (`_PageHeader-<hash>.js`) não nomeia
+nenhum módulo de origem, então o mapeamento pararia na fronteira do bundle.
+
+> Antes disso, todo handle recebia uma cópia idêntica da tabela inteira (1740 strings, ~172 KB
+> cada). Hoje o maior é o `builder-app` (~450 strings) e o `queue-app` fica em ~42.
 
 > **Traduções de JS não exigem rebuild do Vite.** As strings de tradução são injetadas em
 > runtime via `wp.i18n.setLocaleData` — após regenerar os `.json`, basta recarregar a página.
@@ -225,9 +253,11 @@ WordPress injeta o `.json` correspondente como `setLocaleData` inline.
 | `translate-cli.js`    | Orquestra tradução incremental + escreve `.po`/`.mo`/`.l10n.php`/`.json`. |
 | `openai-translate.js` | Motor de IA (OpenAI) via `fetch`; preserva `%s`, HTML, tokens `{{ ... }}`, URLs e marcas. |
 | `l10n-php.js`         | Conversor compartilhado PO → `.l10n.php` (formato WP 6.5+). |
+| `js-module-graph.js`  | Descobre os entries do Vite, resolve o handle de cada um e percorre o grafo de imports. |
+| `script-translations.js` | Escritor compartilhado dos `.json` por handle (usado por `translate-cli.js` e `compile-json-cli.js`). |
 | `compile-mo-cli.js`   | Recompila `.mo` a partir de `.po`. |
 | `compile-php-cli.js`  | Recompila `.l10n.php` a partir de `.po`. |
-| `convert-cli.js`      | **Legado** (CommonJS, depende de `i18next-conv` externo) — substituído pelo escritor de JSON embutido em `translate-cli.js`. |
+| `compile-json-cli.js` | Recompila os `.json` por handle a partir de `.po` + `.pot`. |
 | `.env` / `.env.example` | Chaves de API (o `.env` é git-ignored). |
 
 ---
@@ -248,7 +278,7 @@ Como o `.pot` do Joinotify tem origem mista (PT legado + EN novo), **prefira `tr
 
 Durante `npm run build` (na raiz do plugin, via `scripts/build.mjs`), a etapa de
 traduções roda automaticamente: `npm run pot` → (opcional `--translate`) → `compile:mo`
-→ `compile:php`. Somente os artefatos compilados (`.po`, `.mo`, `.pot`, `.l10n.php`, `.json`)
+→ `compile:php` → `compile:json`. Somente os artefatos compilados (`.po`, `.mo`, `.pot`, `.l10n.php`, `.json`)
 são empacotados no ZIP de release — os scripts `*-cli.js` e o `node_modules` ficam de fora.
 
 Para incluir a re-tradução por IA no build:

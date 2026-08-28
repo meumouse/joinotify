@@ -28,6 +28,42 @@ class Workflow_Manager {
 
         // Remove third-party admin notices on the full-screen Joinotify pages.
         add_action( 'in_admin_header', array( $this, 'suppress_admin_notices' ), PHP_INT_MAX );
+
+        // Chrome and pre-mount loader styles for the builder screen.
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_boot_styles' ) );
+    }
+
+
+    /**
+     * Enqueue the builder chrome and pre-mount loader styles.
+     *
+     * The builder is a full-screen Vue app, so the WordPress menu and footer are
+     * hidden while it is open, and the admin bar too unless debug mode is on.
+     *
+     * @since 2.3.0
+     * @param string $hook_suffix Current admin page hook suffix.
+     * @return void
+     */
+    public function enqueue_boot_styles( $hook_suffix ) {
+        if ( false === strpos( (string) $hook_suffix, 'joinotify-workflows-builder' ) ) {
+            return;
+        }
+
+        $handle = 'joinotify-builder-boot';
+        $relative = 'assets/css/builder-boot.css';
+        $path = JOINOTIFY_DIR . $relative;
+
+        wp_enqueue_style(
+            $handle,
+            JOINOTIFY_URL . $relative,
+            array(),
+            file_exists( $path ) ? (string) filemtime( $path ) : JOINOTIFY_VERSION
+        );
+
+        // Debug mode keeps the admin bar visible so the site owner can navigate.
+        if ( ! defined('JOINOTIFY_DEBUG_MODE') || ! JOINOTIFY_DEBUG_MODE ) {
+            wp_add_inline_style( $handle, '#wpadminbar{display:none !important;}' );
+        }
     }
 
 
@@ -43,10 +79,12 @@ class Workflow_Manager {
      * @return void
      */
     public function suppress_admin_notices() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
         if ( ! is_admin() || ! isset( $_GET['page'] ) ) {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
         $current_page = sanitize_key( wp_unslash( $_GET['page'] ) );
 
         /**

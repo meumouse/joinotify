@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Admin\Builder;
 
 use MeuMouse\Joinotify\Admin\Settings\Repository;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Actions;
@@ -52,7 +53,7 @@ class Registry {
 			'debug_mode' => defined( 'JOINOTIFY_DEBUG_MODE' ) ? (bool) JOINOTIFY_DEBUG_MODE : false,
 			'page' => 'builder',
 			'title' => __( 'Workflow builder', 'joinotify' ),
-			'settings' => Settings_Registry::get_settings(),
+			'settings' => Settings_Registry::get_settings_for_client( Settings_Registry::get_settings() ),
 			'phones' => Settings_Registry::get_phone_state(),
 			'workflow' => $workflow_state,
 			'workflow_file' => self::build_exported_workflow_file( $workflow_state, $post_id ),
@@ -63,6 +64,7 @@ class Registry {
 			'placeholders' => self::get_placeholders_catalog( $workflow_state ),
 			'conditions' => self::get_conditions_catalog(),
 			'ai' => AI_Manager::get_routing_config(),
+			'transport' => self::get_transport_state(),
 			'links' => array(
 				'back_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
 				'dashboard_url' => admin_url( 'admin.php?page=joinotify-workflows' ),
@@ -97,6 +99,54 @@ class Registry {
 
 
 	/**
+	 * Describe the active WhatsApp transport for the builder.
+	 *
+	 * The Cloud API only accepts free-form text inside the 24-hour window a
+	 * contact opens by writing first. A workflow that starts the conversation has
+	 * to lead with an approved template, and the builder says so while the
+	 * workflow is being drawn instead of letting it fail at send time.
+	 *
+	 * @since 2.3.0
+	 * @return array<string,mixed>
+	 */
+	public static function get_transport_state() {
+		$transport = Transport::active_transport();
+
+		/**
+		 * Actions that can only reach a contact whose 24-hour window is open.
+		 *
+		 * Everything the Cloud API treats as free-form: text, media, interactive
+		 * messages, reactions and AI-written copy. The template action is the way
+		 * to open the window, so it is deliberately absent.
+		 *
+		 * @since 2.3.0
+		 * @param array<int,string> $actions Action slugs.
+		 */
+		$free_form_actions = apply_filters( 'Joinotify/Transport/Free_Form_Actions', array(
+			'send_whatsapp_message_text',
+			'send_whatsapp_message_media',
+			'send_whatsapp_ai_message',
+			'send_whatsapp_buttons',
+			'send_whatsapp_list',
+			'send_whatsapp_cta',
+			'send_whatsapp_location',
+			'send_whatsapp_contact',
+			'send_whatsapp_sticker',
+			'send_whatsapp_reaction',
+		) );
+
+		return array(
+			'active' => $transport,
+			'is_cloud' => 'cloud' === $transport,
+			// Free-form content outside the window is refused by Meta on this transport.
+			'requires_template_to_open_window' => 'cloud' === $transport,
+			'template_action' => 'send_whatsapp_message_template',
+			'free_form_actions' => array_values( array_unique( array_filter( (array) $free_form_actions, 'is_string' ) ) ),
+		);
+	}
+
+
+	/**
 	 * Return a blank builder state.
 	 *
 	 * @since 1.4.7
@@ -104,8 +154,9 @@ class Registry {
 	 */
 	public static function get_default_workflow_state() {
 		$default_name = sprintf(
+			/* translators: %s: random number appended to the default automation name */
 			__( 'My automation #%s', 'joinotify' ),
-			function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
+			wp_rand( 1000, 999999 )
 		);
 
 		return array(
@@ -443,17 +494,6 @@ class Registry {
 					),
 				);
 
-			case 'snippet_php':
-				return array(
-					array(
-						'key' => 'snippet_php',
-						'label' => __( 'PHP code', 'joinotify' ),
-						'component' => 'code',
-						'required' => true,
-						'rows' => 12,
-					),
-				);
-
 			case 'stop_funnel':
 				return array();
 
@@ -524,17 +564,9 @@ class Registry {
 					'condition' => '',
 					'condition_type' => '',
 					'field_id' => '',
-					'meta_key' => '',
+					'meta_key' => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Node schema key, not a query argument.
 					'value_text' => '',
 					'type_text' => '',
-				);
-
-			case 'snippet_php':
-				return array(
-					'title' => $base_title ?: esc_html__( 'PHP Snippet', 'joinotify' ),
-					'description' => '',
-					'action' => 'snippet_php',
-					'snippet_php' => '',
 				);
 
 			case 'stop_funnel':
@@ -1028,8 +1060,9 @@ class Registry {
 
 		if ( empty( $title ) ) {
 			$title = sprintf(
+				/* translators: %s: random number appended to the default automation name */
 				__( 'My automation #%s', 'joinotify' ),
-				function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
+				wp_rand( 1000, 999999 )
 			);
 		}
 
@@ -1066,13 +1099,22 @@ class Registry {
 	 * Create a workflow from a template file.
 	 *
 	 * @since 1.4.7
+	 * @version 2.3.0
 	 * @param string $template_file Template filename.
 	 * @param string $title Optional title override.
 	 * @return array<string,mixed>
 	 */
 	public static function create_workflow_from_template( $template_file, $title = '' ) {
 		$template_file = sanitize_text_field( $template_file );
-		$decoded = Workflow_Templates::get_template( $template_file );
+
+		// The download route is the one the API tallies, so imports go through
+		// it; the plain read is only a fallback so an import is never blocked by
+		// the counter.
+		$decoded = Workflow_Templates::download_template( $template_file );
+
+		if ( ! is_array( $decoded ) ) {
+			$decoded = Workflow_Templates::get_template( $template_file );
+		}
 
 		if ( ! is_array( $decoded ) ) {
 			return array(
@@ -1225,8 +1267,9 @@ class Registry {
 
 		$post_id = wp_insert_post( array(
 			'post_title' => $title ?: sprintf(
+				/* translators: %s: random number appended to the imported automation name */
 				__( 'Imported automation #%s', 'joinotify' ),
-				function_exists( 'random_int' ) ? random_int( 1000, 999999 ) : mt_rand( 1000, 999999 )
+				wp_rand( 1000, 999999 )
 			),
 			'post_status' => 'draft',
 			'post_type' => 'joinotify-workflow',
@@ -1907,7 +1950,7 @@ class Registry {
 			'type_text' => $type_text,
 			'value' => $value,
 			'value_text' => $value_text,
-			'meta_key' => $meta_key,
+			'meta_key' => $meta_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Node schema key, not a query argument.
 			'field_id' => $field_id,
 		);
 
@@ -1959,6 +2002,48 @@ class Registry {
 			$clean[] = array(
 				'id' => $id,
 				'title' => isset( $product['title'] ) ? sanitize_text_field( (string) $product['title'] ) : '',
+			);
+		}
+
+		return $clean;
+	}
+
+
+	/**
+	 * Sanitize the variable map of a WhatsApp template action.
+	 *
+	 * Each item says where a template placeholder lives (`component`, plus
+	 * `sub_type`/`index` for button variables), which placeholder key it is, and
+	 * the Joinotify token that fills it at send time.
+	 *
+	 * @since 2.3.0
+	 * @param array<int,mixed> $variables Raw variable map.
+	 * @return array<int,array<string,mixed>>
+	 */
+	private static function sanitize_template_variables( $variables ) {
+		if ( ! is_array( $variables ) ) {
+			return array();
+		}
+
+		$clean = array();
+
+		foreach ( $variables as $variable ) {
+			if ( ! is_array( $variable ) ) {
+				continue;
+			}
+
+			$component = isset( $variable['component'] ) ? sanitize_key( (string) $variable['component'] ) : 'body';
+
+			if ( ! in_array( $component, array( 'header', 'body', 'button' ), true ) ) {
+				continue;
+			}
+
+			$clean[] = array(
+				'component' => $component,
+				'sub_type' => isset( $variable['sub_type'] ) ? sanitize_key( (string) $variable['sub_type'] ) : '',
+				'index' => isset( $variable['index'] ) ? absint( $variable['index'] ) : 0,
+				'key' => isset( $variable['key'] ) ? sanitize_text_field( (string) $variable['key'] ) : '',
+				'value' => isset( $variable['value'] ) ? sanitize_textarea_field( (string) $variable['value'] ) : '',
 			);
 		}
 
@@ -2111,6 +2196,15 @@ class Registry {
 				continue;
 			}
 
+			// Action "variables" maps each WhatsApp template placeholder to the
+			// Joinotify token that fills it. Canonicalize it explicitly so the
+			// button index stays an int instead of being stringified by the
+			// generic recursion below.
+			if ( 'variables' === $key && is_array( $value ) ) {
+				$clean[ $key ] = self::sanitize_template_variables( $value );
+				continue;
+			}
+
 			if ( is_array( $value ) ) {
 				$clean[ $key ] = self::sanitize_node_data( $value, $type );
 				continue;
@@ -2118,11 +2212,6 @@ class Registry {
 
 			if ( in_array( $key, array( 'media_url' ), true ) ) {
 				$clean[ $key ] = esc_url_raw( (string) $value );
-				continue;
-			}
-
-			if ( 'snippet_php' === $key ) {
-				$clean[ $key ] = is_scalar( $value ) ? trim( (string) $value ) : '';
 				continue;
 			}
 

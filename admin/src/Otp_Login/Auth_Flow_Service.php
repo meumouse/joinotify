@@ -306,6 +306,7 @@ class Auth_Flow_Service {
         $user = get_user_by( 'id', $user_id );
 
         if ( $user ) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core's own login hook, fired here because this passwordless flow replaces wp_signon().
             do_action( 'wp_login', $user->user_login, $user );
         }
     }

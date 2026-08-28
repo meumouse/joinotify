@@ -5,9 +5,10 @@ This project uses **[`AGENTS.md`](AGENTS.md)** as the canonical guide for AI age
 pattern, the central data contract (the workflow tree), the per-layer conventions (PHP/Vue), i18n,
 build, testing, and the Git workflow.
 
-**All source code is written in English** — identifiers, inline comments, docblocks, and commit
-messages, across PHP, JavaScript/TypeScript, and Vue. Only the narrative documentation (`*.md`) is in
-Portuguese. See [`AGENTS.md`](AGENTS.md) §0 for the full rule.
+**Everything in the repository is written in English** — identifiers, inline comments, docblocks,
+commit messages, and the narrative documentation (`*.md`, `readme.txt`), across PHP,
+JavaScript/TypeScript, and Vue. There is no Portuguese exception; docs still in Portuguese are legacy
+debt to migrate as you touch them. See [`AGENTS.md`](AGENTS.md) §0 for the full rule.
 
 Supporting documentation (linked from `AGENTS.md`):
 

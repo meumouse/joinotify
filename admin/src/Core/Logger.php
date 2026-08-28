@@ -54,7 +54,7 @@ class Logger {
      * compatibility. Existing call sites keep working unchanged.
      *
      * @since 1.1.0
-     * @version 2.0.0
+     * @version 2.3.0
      * @param mixed  $message | Message (string, array or WP_Error) for register
      * @param string $level | Log level (INFO, WARNING, ERROR)
      */
@@ -69,13 +69,51 @@ class Logger {
 
         // Ensure the message is a string for the flat file.
         if ( ! is_string( $message ) ) {
-            $message = print_r( $message, true );
+            $message = self::stringify( $message );
         }
 
-        $timestamp = date('Y-m-d H:i:s');
+        // Timestamps are stored in UTC; the reader renders them in the site timezone.
+        $timestamp = gmdate('Y-m-d H:i:s');
         $formatted_message = "[$timestamp] [$level] $message" . PHP_EOL;
 
-        error_log( $formatted_message, 3, self::$log_file );
+        file_put_contents( self::$log_file, $formatted_message, FILE_APPEND );
+    }
+
+
+    /**
+     * Render an arbitrary value as a log-friendly string.
+     *
+     * Scalars are returned as-is so simple traces stay readable; anything else is
+     * encoded as pretty-printed JSON.
+     *
+     * @since 2.3.0
+     * @param mixed $value | Value to render
+     * @return string
+     */
+    public static function stringify( $value ) {
+        if ( is_string( $value ) ) {
+            return $value;
+        }
+
+        if ( is_bool( $value ) ) {
+            return $value ? 'true' : 'false';
+        }
+
+        if ( is_null( $value ) ) {
+            return 'null';
+        }
+
+        if ( is_scalar( $value ) ) {
+            return (string) $value;
+        }
+
+        if ( $value instanceof \WP_Error ) {
+            $value = $value->errors;
+        }
+
+        $encoded = wp_json_encode( $value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+
+        return false !== $encoded ? $encoded : '';
     }
 
 

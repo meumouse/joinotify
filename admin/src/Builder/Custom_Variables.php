@@ -81,7 +81,7 @@ class Custom_Variables {
             'token'       => isset( $variable['token'] ) ? self::slugify_token( $variable['token'] ) : '',
             'label'       => isset( $variable['label'] ) ? sanitize_text_field( (string) $variable['label'] ) : '',
             'post_type'   => isset( $variable['post_type'] ) ? sanitize_key( (string) $variable['post_type'] ) : '',
-            'meta_key'    => isset( $variable['meta_key'] ) ? sanitize_text_field( (string) $variable['meta_key'] ) : '',
+            'meta_key'    => isset( $variable['meta_key'] ) ? sanitize_text_field( (string) $variable['meta_key'] ) : '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Stored variable definition key, not a query argument.
             'description' => isset( $variable['description'] ) ? sanitize_text_field( (string) $variable['description'] ) : '',
             'example'     => isset( $variable['example'] ) ? sanitize_text_field( (string) $variable['example'] ) : '',
         );

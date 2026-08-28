@@ -45,6 +45,7 @@ export const resendEmailDefinition: ActionDefinition = {
   icon: 'envelope',
   iconSvg: RESEND_ICON,
   category: 'messages',
+  requiresSetting: 'enable_resend_integration',
   hasSettings: true,
   priority: 70,
   isExpansible: false,

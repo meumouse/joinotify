@@ -46,7 +46,7 @@ class User_Dismiss_Tip extends Abstract_Route {
             return rest_ensure_response( array(
                 'status'   => 'success',
                 'message'  => __( 'Tip dismissed.', 'joinotify' ),
-                'meta_key' => $meta_key,
+                'meta_key' => $meta_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- REST response field, not a query argument.
                 'value'    => get_user_meta( $user_id, $meta_key, true ),
             ) );
         }

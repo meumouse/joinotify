@@ -2,9 +2,8 @@
 
 namespace MeuMouse\Joinotify\Cron;
 
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
-use MeuMouse\Joinotify\Api\Updater;
 use MeuMouse\Joinotify\Admin\Admin;
 
 // Exit if accessed directly.
@@ -31,39 +30,10 @@ class Routines {
 		// register custom schedule
 		add_filter( 'cron_schedules', array( __CLASS__, 'register_custom_schedules' ) );
 
-		// Schedule the cron event if not already scheduled
-		if ( ! wp_next_scheduled('joinotify_check_phone_connection_event') ) {
-            wp_schedule_event( time(), 'six_hours', 'joinotify_check_phone_connection_event' );
-        }
 
-		// make request
-		add_action( 'joinotify_check_phone_connection_event', array( __CLASS__, 'check_phone_connection' ) );
-
-        // Schedule the cron event if not already scheduled
-        if ( ! wp_next_scheduled('joinotify_check_plugin_updates_event') ) {
-            wp_schedule_event( time(), 'daily', 'joinotify_check_plugin_updates_event' );
-        }
-
-        add_action( 'joinotify_check_plugin_updates_event', array( '\MeuMouse\\Joinotify\\Api\\Updater', 'check_daily_updates' ) );
-
-        // enable auto updates
-        if ( Admin::get_setting('enable_auto_updates') === 'yes' ) {
-            // Schedule the cron event if not already scheduled
-            if ( ! wp_next_scheduled('joinotify_auto_update_event') ) {
-                wp_schedule_event( time(), 'daily', 'joinotify_auto_update_event' );
-            }
-
-            // auto update plugin action
-            add_action( 'joinotify_auto_update_event', array( '\MeuMouse\\Joinotify\\Api\\Updater', 'auto_update_plugin' ) );
-        }
-
-        // schedule daily updates
-        if ( ! wp_next_scheduled('joinotify_check_daily_update') ) {
-            wp_schedule_event( time(), 'daily', 'joinotify_check_daily_update' );
-        }
-
-        // check daily updates
-        add_action( 'joinotify_check_daily_update', array( '\MeuMouse\\Joinotify\\Api\\Updater', 'check_daily_updates' ) );
+        // Updates are served by WordPress.org, so the plugin no longer polls an
+        // update server of its own. Clear the events left behind by older builds.
+        self::unschedule_legacy_update_events();
 
         // Schedule the cron event for get templates count
         if ( ! wp_next_scheduled('joinotify_update_templates_count') ) {
@@ -72,6 +42,35 @@ class Routines {
 
         add_action( 'joinotify_update_templates_count', array( $this, 'fetch_templates_count' ) );
 	}
+
+
+	/**
+     * Clear the scheduled events left behind by older builds.
+     *
+     * Those events pointed at Api\Updater, which no longer exists. Left behind,
+     * WP-Cron would keep firing a callback that resolves to nothing on every
+     * daily run.
+     *
+     * @since 2.3.0
+     * @return void
+     */
+    public static function unschedule_legacy_update_events() {
+        $legacy_events = array(
+            'joinotify_check_plugin_updates_event',
+            'joinotify_auto_update_event',
+            'joinotify_check_daily_update',
+            // Retired with the Evolution relay: a Cloud number has no connection to poll.
+            'joinotify_check_phone_connection_event',
+        );
+
+        foreach ( $legacy_events as $event ) {
+            $timestamp = wp_next_scheduled( $event );
+
+            if ( $timestamp ) {
+                wp_unschedule_event( $timestamp, $event );
+            }
+        }
+    }
 
 
 	/**
@@ -93,25 +92,6 @@ class Routines {
         );
 
         return $schedules;
-    }
-
-
-	/**
-     * Get phone numbers and check their connection state
-     *
-     * @since 1.2.0
-	 * @return void
-     */
-    public static function check_phone_connection() {
-        $phones = get_option( 'joinotify_get_phones_senders', array() );
-
-        if ( empty( $phones ) || ! is_array( $phones ) ) {
-            return;
-        }
-
-        foreach ( $phones as $phone ) {
-            Controller::get_connection_state( $phone );
-        }
     }
 
 

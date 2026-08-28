@@ -10,7 +10,7 @@ defined('ABSPATH') || exit;
  * Initialize plugin classes
  *
  * @since 1.0.0
- * @version 2.0.0
+ * @version 2.3.2
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -75,7 +75,7 @@ class Init {
 	 * Construct function.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.7
+	 * @version 2.3.2
 	 * @param string $plugin_file | Plugin main file path.
 	 * @param string $plugin_version | Plugin version.
 	 * @return void
@@ -86,13 +86,22 @@ class Init {
 
 		/**
 		 * Fire hook before Joinotify initialize.
-		 * 
+		 *
 		 * @since 1.1.0
 		 */
+		do_action('Joinotify/Core/Before_Init');
+
+		/**
+		 * Fire hook before Joinotify initialize.
+		 *
+		 * @since 1.1.0
+		 * @deprecated 2.3.0 Use the prefixed 'Joinotify/Core/Before_Init' instead.
+		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Deprecated alias kept so existing integrations keep firing.
 		do_action('before_joinotify_init');
 
-		// Display notice if PHP version is below 7.4.
-		if ( version_compare( phpversion(), '7.4', '<' ) ) {
+		// Display notice if PHP version is below 8.1
+		if ( version_compare( phpversion(), '8.1', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'php_version_notice' ) );
 			return;
 		}
@@ -132,8 +141,9 @@ class Init {
 			return \MeuMouse\Joinotify\Api\Transport::active_channel_id();
 		}, 10, 1 );
 
-		// Load plugin text domain.
-		add_action( 'init', array( $this, 'load_text_domain' ) );
+		// The text domain is not loaded explicitly: the `Text Domain` header matches
+		// the plugin slug and the compiled catalogs live in `Domain Path`, so
+		// WordPress loads them just in time on the first translation call.
 
 		// Translate the plugin header metadata shown in the Plugins screen.
 		add_filter( 'all_plugins', array( $this, 'translate_plugin_header_data' ) );
@@ -145,18 +155,6 @@ class Init {
 		 * @version 1.4.7
 		 */
 		do_action('joinotify_init');
-	}
-
-
-	/**
-	 * Load text domain after init hook.
-	 * 
-	 * @since 1.0.0
-	 * @version 1.4.7
-	 * @return void
-	 */
-	public function load_text_domain() {
-		load_plugin_textdomain( 'joinotify', false, dirname( $this->basename ) . '/languages/' );
 	}
 
 
@@ -204,21 +202,13 @@ class Init {
 			'JOINOTIFY_ASSETS'             	=> $base_url . 'assets/',
 			'JOINOTIFY_ABSPATH'            	=> dirname( $base_file ) . '/',
 			'JOINOTIFY_ADMIN_EMAIL'        	=> get_option('admin_email'),
-			'JOINOTIFY_DOCS_URL'           	=> 'https://ajuda.meumouse.com/docs/joinotify/overview',
-			'JOINOTIFY_REGISTER_PHONE_URL' 	=> 'https://meumouse.com/minha-conta/joinotify-slots/',
-			'JOINOTIFY_API_BASE_URL'       	=> 'https://slots-manager.joinotify.com',
+			'JOINOTIFY_DOCS_URL'           	=> 'https://docs.joinotify.com/plugin/visao-geral',
 			// Base URL for the official WhatsApp Cloud API exposed by Joinotify.
-			// This is the migration target that replaces the Evolution/slots-manager
-			// relay above. Filterable via 'Joinotify/Cloud_Api/Base_Url'.
+			// Filterable via 'Joinotify/Cloud_Api/Base_Url'.
 			'JOINOTIFY_CLOUD_API_BASE_URL' 	=> 'https://api.joinotify.com',
-			// Licensing via the Modular Distribution Service. The API key is a
-			// public, low-privilege product key (activate/deactivate/update-check);
-			// the public key verifies the server's signature on license answers.
-			// While either is empty the MDS driver reports itself unavailable, so
-			// sites stay on the legacy server.
-			'JOINOTIFY_MDS_API_URL'        	=> 'https://api.meumouse.com',
-			'JOINOTIFY_MDS_API_KEY'        	=> '',
-			'JOINOTIFY_MDS_PUBLIC_KEY'     	=> '',
+			// Customer panel, where numbers are connected through Meta's Embedded
+			// Signup and API keys are issued.
+			'JOINOTIFY_PANEL_URL'          	=> 'https://app.joinotify.com',
 			'JOINOTIFY_SLUG'               	=> 'joinotify',
 			'JOINOTIFY_VERSION'            	=> $this->plugin_version,
 			// Verbose runtime logging follows WP_DEBUG: on in development, off in
@@ -228,6 +218,7 @@ class Init {
 
 		foreach ( $constants as $key => $value ) {
 			if ( ! defined( $key ) ) {
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.VariableConstantNameFound -- $key only ever holds one of the JOINOTIFY_* names declared above.
 				define( $key, $value );
 			}
 		}
@@ -238,13 +229,14 @@ class Init {
 	 * PHP version notice.
 	 * 
 	 * @since 1.0.0
+	 * @version 2.3.2
 	 * @return void
 	 */
 	public function php_version_notice() {
 		$class = 'notice notice-error is-dismissible';
-		$message = __( '<strong>Joinotify</strong> requires PHP version 7.4 or higher. Contact your hosting support to upgrade.', 'joinotify' );
+		$message = __( '<strong>Joinotify</strong> requires PHP version 8.1 or higher. Contact your hosting support to upgrade.', 'joinotify' );
 
-		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), wp_kses( $message, array( 'strong' => array() ) ) );
 	}
 
 
@@ -273,6 +265,11 @@ class Init {
 			'MeuMouse\\Joinotify\\Cron\\Schedule',
 			'MeuMouse\\Joinotify\\Cron\\Routines',
 			'MeuMouse\\Joinotify\\Core\\Debug',
+			// Not an admin-screen class: the events worth recording happen on the front
+			// end and in cron, which is exactly where the admin list is skipped. With
+			// consent off — the shipped default — its constructor registers one listener
+			// and returns.
+			'MeuMouse\\Joinotify\\Telemetry\\Listeners',
 		));
 
 		// Admin-screen classes only register hooks that fire inside wp-admin
@@ -282,6 +279,7 @@ class Init {
 			$admin_classes = apply_filters( 'Joinotify/Init/Admin_Screen_Classes', array(
 				'MeuMouse\\Joinotify\\Admin\\Menu',
 				'MeuMouse\\Joinotify\\Assets\\Settings_Assets',
+				'MeuMouse\\Joinotify\\Core\\Onboarding',
 			));
 
 			if ( is_array( $admin_classes ) ) {
@@ -315,6 +313,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Admin\\Builder\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\Workflows\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\Settings\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\Onboarding\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\History\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\Queue\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Rest\\Extensions_Controller',
@@ -365,8 +364,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Cache',
 			'MeuMouse\\Joinotify\\Builder\\Workflow_Manager',
 			'MeuMouse\\Joinotify\\Integrations\\Whatsapp',
-			'MeuMouse\\Joinotify\\Integrations\\OpenAI',
-			'MeuMouse\\Joinotify\\Integrations\\Anthropic',
+			'MeuMouse\\Joinotify\\Integrations\\Whatsapp_Interactive',
 			'MeuMouse\\Joinotify\\Integrations\\Telegram',
 			'MeuMouse\\Joinotify\\Integrations\\Resend',
 			'MeuMouse\\Joinotify\\Integrations\\AI_Messaging',
@@ -379,11 +377,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Otp_Login\\Frontend_Assets',
 			'MeuMouse\\Joinotify\\Otp_Login\\Shortcode',
 			'MeuMouse\\Joinotify\\Otp_Login\\Woocommerce_Login',
-			'MeuMouse\\Joinotify\\Api\\Updater',
 			'MeuMouse\\Joinotify\\Core\\Logger',
-			'MeuMouse\\Joinotify\\Api\\License',
-			'MeuMouse\\Joinotify\\Licensing\\Migrator',
-			'MeuMouse\\Joinotify\\Licensing\\Updates',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {
@@ -425,7 +419,7 @@ class Init {
 		}
 
 		if ( ! class_exists( $class ) ) {
-			error_log( 'Joinotify: Class does not exist: ' . $class );
+			self::debug_log( 'Joinotify: Class does not exist: ' . $class );
 			return null;
 		}
 
@@ -444,10 +438,30 @@ class Init {
 			return $instance;
 
 		} catch ( Throwable $e ) {
-			error_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
+			self::debug_log( 'Joinotify: Error instantiating class ' . $class . ': ' . $e->getMessage() );
 
 			return null;
 		}
+	}
+
+
+	/**
+	 * Write a bootstrap failure to the PHP error log, but only while debugging.
+	 *
+	 * This runs before Core\Logger is available, so it cannot go through the
+	 * plugin's own logger. Gating it on WP_DEBUG keeps production logs clean.
+	 *
+	 * @since 2.3.0
+	 * @param string $message Message to record.
+	 * @return void
+	 */
+	private static function debug_log( $message ) {
+		if ( ! defined('WP_DEBUG') || ! WP_DEBUG ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $message );
 	}
 
 
@@ -506,20 +520,14 @@ class Init {
 	 * Plugin action links.
 	 * 
 	 * @since 1.0.0
-	 * @version 1.4.7
+	 * @version 2.4.0
 	 * @param array $action_links Default plugin action links.
 	 * @return array
 	 */
 	public function add_action_plugin_links( $action_links ) {
-		if ( get_option('joinotify_license_status') !== 'valid' ) {
-			$plugins_links = array(
-				'<a href="' . admin_url( 'admin.php?page=joinotify-license' ) . '">' . __( 'Configure', 'joinotify' ) . '</a>',
-			);
-		} else {
-			$plugins_links = array(
-				'<a href="' . admin_url( 'admin.php?page=joinotify-settings' ) . '">' . __( 'Configure', 'joinotify' ) . '</a>',
-			);
-		}
+		$plugins_links = array(
+			'<a href="' . esc_url( admin_url( 'admin.php?page=joinotify-settings' ) ) . '">' . esc_html__( 'Settings', 'joinotify' ) . '</a>',
+		);
 
 		return array_merge( $plugins_links, $action_links );
 	}

@@ -46,6 +46,7 @@ export const whatsappAiMessageDefinition: ActionDefinition = {
   icon: 'message-rounded',
   iconSvg: WHATSAPP_ICON,
   category: 'ai',
+  requiresSetting: 'enable_whatsapp_integration',
   hasSettings: true,
   priority: 45,
   isExpansible: false,

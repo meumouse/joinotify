@@ -4,14 +4,16 @@ namespace MeuMouse\Joinotify\Admin\Settings;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
-use MeuMouse\Joinotify\Api\License;
+use MeuMouse\Joinotify\Api\Sender_Sync;
+use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Core\Helpers;
-use MeuMouse\Joinotify\Licensing\Driver_State;
-use MeuMouse\Joinotify\Licensing\Migrator;
+use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
 use MeuMouse\Joinotify\AI\Provider_Registry;
+use MeuMouse\Joinotify\AI\Providers\Wp_Ai_Client_Provider;
+use MeuMouse\Joinotify\Telemetry\Installation;
 
 defined('ABSPATH') || exit;
 
@@ -36,6 +38,54 @@ class Registry {
 
 
     /**
+     * Settings that may be written from the browser but never read back into it.
+     *
+     * A live sending credential has no business sitting in the JSON payload of
+     * every admin page load. The screen only needs to know whether one is
+     * stored, which `get_settings_for_client()` reports as a `_is_set` flag.
+     *
+     * @since 2.3.0
+     * @return array<int,string>
+     */
+    public static function get_write_only_keys() {
+        /**
+         * Filter the settings never sent to the browser.
+         *
+         * A key listed here is also protected on save: an empty incoming value
+         * leaves the stored one alone, so the field can stay blank in the form
+         * without wiping the credential.
+         *
+         * @since 2.3.0
+         * @param array<int,string> $keys
+         */
+        return apply_filters( 'Joinotify/Admin/Settings/Write_Only_Keys', array(
+            'whatsapp_cloud_api_token',
+        ) );
+    }
+
+
+    /**
+     * The settings as the browser is allowed to see them.
+     *
+     * @since 2.3.0
+     * @param array<string,mixed> $settings Full settings array.
+     * @return array<string,mixed>
+     */
+    public static function get_settings_for_client( $settings ) {
+        foreach ( self::get_write_only_keys() as $key ) {
+            if ( ! array_key_exists( $key, $settings ) ) {
+                continue;
+            }
+
+            $settings[ $key . '_is_set' ] = '' !== trim( (string) $settings[ $key ] );
+            $settings[ $key ] = '';
+        }
+
+        return $settings;
+    }
+
+
+    /**
      * Build the settings schema consumed by the Vue app.
      *
      * @since 1.4.7
@@ -46,7 +96,7 @@ class Registry {
             array(
                 'id' => 'general',
                 'title' => __( 'General', 'joinotify' ),
-                'description' => __( "Plugin's basic preferences, sending proxy, and WhatsApp notifications.", 'joinotify' ),
+                'description' => __( "Plugin's basic preferences, WhatsApp connection, and notifications.", 'joinotify' ),
                 'layout' => 'cards',
                 'cards' => array(
                     array(
@@ -71,97 +121,34 @@ class Registry {
                         ),
                     ),
                     array(
-                        'id' => 'general-proxy',
-                        'title' => __( 'Proxy API', 'joinotify' ),
-                        'description' => __( 'Activate and configure the endpoints used to process external API requests.', 'joinotify' ),
-                        'fields' => array(
-                            self::field_toggle(
-                                'enable_proxy_api',
-                                esc_html__( 'Enable Proxy API', 'joinotify' ),
-                                esc_html__( 'This site exposes endpoints to process Joinotify requests.', 'joinotify' )
-                            ),
-                            self::field_text(
-                                'send_text_proxy_api_route',
-                                esc_html__( 'Text route', 'joinotify' ),
-                                esc_html__( 'Route path used to send text messages.', 'joinotify' ),
-                                array(
-                                    'placeholder' => 'send-message/text',
-                                )
-                            ),
-                            self::field_text(
-                                'send_media_proxy_api_route',
-                                esc_html__( 'Media route', 'joinotify' ),
-                                esc_html__( 'Path of the route used to send messages with media.', 'joinotify' ),
-                                array(
-                                    'placeholder' => 'send-message/media',
-                                )
-                            ),
-                            self::field_text(
-                                'proxy_api_key',
-                                esc_html__( 'API key', 'joinotify' ),
-                                esc_html__( 'Key used to authenticate Proxy API calls.', 'joinotify' ),
-                                array(
-                                    'placeholder' => '',
-                                )
-                            ),
-                        ),
-                    ),
-                    array(
-                        'id' => 'general-whatsapp-cloud',
-                        'title' => __( 'WhatsApp Cloud API', 'joinotify' ),
-                        'description' => __( 'Official WhatsApp Cloud API transport that replaces the legacy relay. Leave the credentials blank to use the values provisioned with your license.', 'joinotify' ),
-                        'fields' => array(
-                            self::field_select(
-                                'whatsapp_transport',
-                                esc_html__( 'Message transport', 'joinotify' ),
-                                esc_html__( 'Which service delivers WhatsApp messages. "Automatic" uses the Cloud API whenever a token is available, otherwise the legacy Evolution relay.', 'joinotify' ),
-                                array(
-                                    array( 'value' => 'auto', 'label' => esc_html__( 'Automatic', 'joinotify' ) ),
-                                    array( 'value' => 'cloud', 'label' => esc_html__( 'Cloud API (official)', 'joinotify' ) ),
-                                    array( 'value' => 'evolution', 'label' => esc_html__( 'Evolution (legacy)', 'joinotify' ) ),
-                                ),
-                                array(
-                                    'default' => 'auto',
-                                )
-                            ),
-                            self::field_text(
-                                'whatsapp_cloud_api_token',
-                                esc_html__( 'API token', 'joinotify' ),
-                                esc_html__( 'Cloud API bearer token (sk_live_...). Overrides the token provisioned with the license.', 'joinotify' ),
-                                array(
-                                    'placeholder' => 'sk_live_...',
-                                )
-                            ),
-                            self::field_text(
-                                'whatsapp_phone_number_id',
-                                esc_html__( 'Phone number ID', 'joinotify' ),
-                                esc_html__( 'Default phone_number_id used as the message origin. Leave blank to use the oldest active number.', 'joinotify' ),
-                                array(
-                                    'placeholder' => '',
-                                )
-                            ),
-                            self::field_text(
-                                'whatsapp_waba_id',
-                                esc_html__( 'WhatsApp Business Account ID', 'joinotify' ),
-                                esc_html__( 'waba_id that owns the message templates.', 'joinotify' ),
-                                array(
-                                    'placeholder' => '',
-                                )
-                            ),
-                        ),
-                    ),
-                    array(
                         'id' => 'general-ai',
                         'title' => __( 'Artificial Intelligence', 'joinotify' ),
-                        'description' => __( 'Choose the engine used to generate AI content. Provider credentials and defaults are configured in the Applications tab.', 'joinotify' ),
+                        'description' => __( 'Joinotify generates AI content through the WordPress AI Client. Pick the provider and store its credentials once in Settings → Connectors, and every AI action here uses it.', 'joinotify' ),
                         'fields' => array(
                             self::field_select(
                                 'ai_provider',
-                                esc_html__( 'AI provider', 'joinotify' ),
-                                esc_html__( 'Language model engine used to generate content. New providers can be added by extensions.', 'joinotify' ),
+                                esc_html__( 'AI engine', 'joinotify' ),
+                                esc_html__( 'Engine used to generate content. WordPress AI covers every provider configured in Settings → Connectors; extensions can register additional engines.', 'joinotify' ),
                                 Provider_Registry::get_provider_options(),
                                 array(
-                                    'default' => 'openai',
+                                    'default' => Wp_Ai_Client_Provider::ID,
+                                )
+                            ),
+                            self::field_textarea(
+                                'ai_global_system_prompt',
+                                esc_html__( 'Global instructions', 'joinotify' ),
+                                esc_html__( 'Persona, tone and rules prepended to every AI generation. Each action can add its own instructions on top of this.', 'joinotify' ),
+                                array(
+                                    'placeholder' => esc_html__( 'e.g. Always answer in Brazilian Portuguese, in a friendly and objective tone.', 'joinotify' ),
+                                )
+                            ),
+                            self::field_text(
+                                'ai_default_temperature',
+                                esc_html__( 'Default temperature', 'joinotify' ),
+                                esc_html__( 'How creative the answers are, from 0 (predictable) to 1 (varied). Actions may override it.', 'joinotify' ),
+                                array(
+                                    'default' => '0.7',
+                                    'placeholder' => '0.7',
                                 )
                             ),
                         ),
@@ -226,14 +213,9 @@ class Registry {
                                 esc_html__( 'Enable to log additional error and process details.', 'joinotify' )
                             ),
                             self::field_toggle(
-                                'enable_auto_updates',
-                                esc_html__( 'Automatic updates', 'joinotify' ),
-                                esc_html__( 'Allows the plugin to update automatically whenever possible.', 'joinotify' )
-                            ),
-                            self::field_toggle(
-                                'enable_update_notice',
-                                esc_html__( 'Update notices', 'joinotify' ),
-                                esc_html__( 'Displays notifications when a new version is available.', 'joinotify' )
+                                'enable_usage_tracking',
+                                esc_html__( 'Share anonymous usage data', 'joinotify' ),
+                                self::usage_tracking_description()
                             ),
                             self::field_toggle(
                                 'enable_developer_integration',
@@ -350,6 +332,9 @@ class Registry {
     public static function get_field_definitions() {
         $fields = array();
 
+        // The integrations section carries the integration cards, so the fields
+        // declared inside integration modals (the WhatsApp credentials, the
+        // Telegram bot token, the AI keys) are collected here too.
         foreach ( self::get_schema() as $section ) {
             foreach ( $section['cards'] ?? array() as $card ) {
                 foreach ( self::collect_card_fields( $card ) as $field ) {
@@ -465,21 +450,43 @@ class Registry {
     /**
      * Current sender list and supporting phone metadata.
      *
+     * Feeds both the settings page and the builder bootstrap, so anything added
+     * here reaches both screens.
+     *
      * @since 1.4.7
+     * @version 2.3.0
      * @return array<string,mixed>
      */
     public static function get_phone_state() {
         $phones_senders = get_option( 'joinotify_get_phones_senders', array() );
         $phones_senders = is_array( $phones_senders ) ? array_values( array_filter( $phones_senders ) ) : array();
 
+        $is_cloud = Transport::is_cloud();
         $senders = array();
 
         foreach ( $phones_senders as $phone ) {
-            $senders[] = array(
+            $sender = array(
                 'phone' => $phone,
                 'formatted' => Helpers::validate_and_format_phone( $phone ),
                 'connection' => get_option( 'joinotify_status_connection_' . $phone, 'disconnected' ),
             );
+
+            if ( $is_cloud ) {
+                $meta = Phone_Manager::get_sender_meta( $phone );
+
+                // On the Cloud API a number is connected on the panel, so the
+                // slots connection state is meaningless: an imported number with
+                // a phone_number_id is what "connected" means here.
+                $sender['connection'] = ! empty( $meta['phone_number_id'] ) ? 'connected' : 'disconnected';
+                $sender['phone_number_id'] = $meta['phone_number_id'] ?? '';
+                $sender['waba_id'] = $meta['waba_id'] ?? '';
+                $sender['verified_name'] = $meta['verified_name'] ?? '';
+                $sender['quality_rating'] = $meta['quality_rating'] ?? '';
+                $sender['messaging_limit'] = $meta['messaging_limit'] ?? '';
+                $sender['verified'] = ! empty( $meta['verified'] );
+            }
+
+            $senders[] = $sender;
         }
 
         return array(
@@ -488,6 +495,10 @@ class Registry {
             'default_country_iso2' => self::get_default_country_iso2(),
             'locale' => function_exists('determine_locale') ? determine_locale() : get_locale(),
             'sender_count' => count( $senders ),
+            'transport' => Transport::active_transport(),
+            'cloud_ready' => Helpers::cloud_api_ready(),
+            'last_sync' => Sender_Sync::last_sync_time(),
+            'panel_url' => JOINOTIFY_PANEL_URL,
         );
     }
 
@@ -596,7 +607,7 @@ class Registry {
         return apply_filters( 'Joinotify/Admin/Settings/Bootstrap_Data', array(
             'version' => JOINOTIFY_VERSION,
             'page' => 'settings',
-            'settings' => self::get_settings(),
+            'settings' => self::get_settings_for_client( self::get_settings() ),
             'schema' => self::get_schema(),
             'section_tabs' => self::get_section_tabs(),
             'integrations' => self::get_integration_cards(),
@@ -607,10 +618,9 @@ class Registry {
                 'post_types' => Custom_Variables::get_public_post_types(),
             ),
             'system' => self::get_system_status(),
-            'license' => self::get_license_state(),
             'links' => array(
-                'docs_url' => esc_url_raw( 'https://ajuda.meumouse.com/docs/joinotify/overview' ),
-                'purchase_url' => esc_url_raw( 'https://meumouse.com/plugins/joinotify/' ),
+                'docs_url' => esc_url_raw( JOINOTIFY_DOCS_URL ),
+                'panel_url' => esc_url_raw( JOINOTIFY_PANEL_URL ),
             ),
             'permissions' => array(
                 'manage_options' => current_user_can( 'manage_options' ),
@@ -636,111 +646,6 @@ class Registry {
                 'error' => __( 'Could not complete the operation.', 'joinotify' ),
             ),
         ) );
-    }
-
-
-    /**
-     * Build the license state payload used by the Vue license page.
-     *
-     * @since 1.4.7
-     * @return array<string,mixed>
-     */
-    public static function get_license_state() {
-        $license_key = get_option( 'joinotify_license_key', '' );
-        $license_key = is_string( $license_key ) ? sanitize_text_field( $license_key ) : '';
-        $license_object = get_option( 'joinotify_license_response_object' );
-        $is_valid = License::is_valid();
-        $purchase_url = apply_filters( 'Joinotify/Admin/Settings/License_Purchase_Url', 'https://meumouse.com/plugins/joinotify/' );
-        $docs_url = apply_filters( 'Joinotify/Admin/Settings/License_Help_Url', 'https://ajuda.meumouse.com/docs/joinotify/overview' );
-
-        $subscription_label = $is_valid
-            ? ( strpos( $license_key, 'CM-' ) === 0
-                ? sprintf( esc_html__( 'Subscription: Club M - %s', 'joinotify' ), License::license_title() )
-                : sprintf( esc_html__( 'Subscription: %s', 'joinotify' ), License::license_title() )
-            )
-            : esc_html__( 'Activate your license to unlock premium features.', 'joinotify' );
-
-        $support_text = esc_html__( 'Not available', 'joinotify' );
-
-        if ( is_object( $license_object ) && ! empty( $license_object->support_end ) ) {
-            $support_text = is_string( $license_object->support_end )
-                ? sanitize_text_field( $license_object->support_end )
-                : esc_html__( 'Not available', 'joinotify' );
-        }
-
-        return array(
-            'is_valid' => $is_valid,
-            'status_label' => $is_valid ? esc_html__( 'Valid', 'joinotify' ) : esc_html__( 'Invalid', 'joinotify' ),
-            'status_tone' => $is_valid ? 'success' : 'danger',
-            'title' => $is_valid ? esc_html__( 'Active license', 'joinotify' ) : esc_html__( 'Activate your license', 'joinotify' ),
-            'subtitle' => $is_valid
-                ? esc_html__( 'Your installation is now ready for full use.', 'joinotify' )
-                : esc_html__( 'Enter the license code to unlock premium features.', 'joinotify' ),
-            'purchase_url' => esc_url_raw( $purchase_url ),
-            'docs_url' => esc_url_raw( $docs_url ),
-            'activate_action' => 'joinotify_active_license',
-            'deactivate_action' => 'joinotify_deactive_license',
-            'sync_action' => 'joinotify_sync_license',
-            'alternative_action' => 'joinotify_alternative_activation_license',
-            'license_key' => $license_key,
-            'license_key_masked' => self::mask_license_key( $license_key ),
-            'license_title' => $is_valid ? License::license_title() : esc_html__( 'Not available', 'joinotify' ),
-            'subscription_label' => $subscription_label,
-            'expire_label' => $is_valid
-                ? sprintf( esc_html__( 'License expires in: %s', 'joinotify' ), License::license_expire() )
-                : esc_html__( 'License expires in: Not available', 'joinotify' ),
-            'support_label' => $is_valid
-                ? sprintf( esc_html__( 'Support up to: %s', 'joinotify' ), $support_text )
-                : esc_html__( 'Support up to: Not available', 'joinotify' ),
-            'key_label' => __( 'Your license key:', 'joinotify' ) . ' ' . self::mask_license_key( $license_key ),
-            'renew_link' => is_object( $license_object ) && ! empty( $license_object->renew_link ) ? esc_url_raw( $license_object->renew_link ) : '',
-            'expire_renew_link' => is_object( $license_object ) && ! empty( $license_object->expire_renew_link ) ? esc_url_raw( $license_object->expire_renew_link ) : '',
-            'support_renew_link' => is_object( $license_object ) && ! empty( $license_object->support_renew_link ) ? esc_url_raw( $license_object->support_renew_link ) : '',
-            'migration' => self::get_license_migration_state(),
-        );
-    }
-
-
-    /**
-     * Build the licensing-backend payload used by the Vue license page.
-     *
-     * Which server a site talks to is normally invisible, and should stay that
-     * way. It surfaces here for the one case that needs a human: the new server
-     * answered and disagreed with a license this site is running on. That is
-     * recorded rather than acted on, so without somewhere to show it the site
-     * would keep working while nobody knew there was anything to resolve.
-     *
-     * @since 2.1.0
-     * @return array<string,mixed>
-     */
-    public static function get_license_migration_state() {
-        $details = Driver_State::details();
-        $pending = Migrator::pending_notice();
-
-        $state = array(
-            'driver' => $details['driver'],
-            'forced' => (bool) $details['forced'],
-            'migrated_at' => $details['decided_at'] > 0 ? date_i18n( get_option('date_format'), $details['decided_at'] ) : '',
-            'needs_attention' => false,
-            'notice_title' => '',
-            'notice_text' => '',
-        );
-
-        if ( null === $pending ) {
-            return $state;
-        }
-
-        $state['needs_attention'] = true;
-        $state['notice_title'] = esc_html__( 'Your license needs to be checked', 'joinotify' );
-        $state['notice_text'] = sprintf(
-            /* translators: %s: message returned by the licensing server. */
-            esc_html__( 'The licensing server reported: %s. Your plugin keeps working normally. Try syncing the license, and contact support if the message persists.', 'joinotify' ),
-            isset( $pending['message'] ) && '' !== $pending['message']
-                ? sanitize_text_field( $pending['message'] )
-                : esc_html__( 'the license could not be confirmed', 'joinotify' )
-        );
-
-        return $state;
     }
 
 
@@ -817,8 +722,7 @@ class Registry {
             'color-picker-field',
             'color-scale',
             'color-scale-field',
-            'openai-model-select',
-            'anthropic-model-select',
+            'whatsapp-template-select',
         );
     }
 
@@ -826,10 +730,13 @@ class Registry {
     /**
      * Build the country-code select options.
      *
+     * Public since the setup wizard renders the same list on its first step.
+     *
      * @since 1.4.7
+     * @version 2.4.0
      * @return array<int,array<string,string>>
      */
-    private static function build_country_code_options() {
+    public static function build_country_code_options() {
         $options = array(
             array(
                 'value' => '0',
@@ -866,24 +773,6 @@ class Registry {
         $iso2 = array_key_first( $country_data );
 
         return is_string( $iso2 ) && $iso2 ? strtolower( $iso2 ) : 'us';
-    }
-
-
-    /**
-     * Mask a license key preserving the beginning and end.
-     *
-     * @since 1.4.7
-     * @param string $license_key
-     * @return string
-     */
-    private static function mask_license_key( $license_key ) {
-        if ( empty( $license_key ) ) {
-            return esc_html__( 'Not available', 'joinotify' );
-        }
-
-        $license_key = sanitize_text_field( $license_key );
-
-        return substr( $license_key, 0, 9 ) . 'XXXXXXXX-XXXXXXXX' . substr( $license_key, -9 );
     }
 
 
@@ -946,6 +835,36 @@ class Registry {
      * @param array<string,mixed> $extra
      * @return array<string,mixed>
      */
+    /**
+     * Describe the usage-data toggle, appending this installation's identifier once one
+     * exists.
+     *
+     * The identifier is read, never created: building this screen must not be what brings
+     * an installation into being on a site that will never consent. It is shown at all
+     * because the report deliberately omits the site address, which leaves support with
+     * no way to find a site — unless the owner can read the identifier off this screen
+     * and paste it into a ticket.
+     *
+     * @since 2.3.0
+     * @return string
+     */
+    private static function usage_tracking_description() {
+        $description = esc_html__( 'Sends plugin, WordPress and PHP versions, which integrations are switched on, and named events — which feature ran, whether a message succeeded, and normalized error codes. Never your site address, phone numbers, contacts or message content. Off by default.', 'joinotify' );
+
+        $id = class_exists( Installation::class ) ? Installation::peek() : '';
+
+        if ( '' === $id ) {
+            return $description;
+        }
+
+        return $description . ' ' . sprintf(
+            /* translators: %s: random identifier of this installation. */
+            esc_html__( 'Installation ID: %s', 'joinotify' ),
+            $id
+        );
+    }
+
+
     private static function field_toggle( $key, $label, $description, $extra = array() ) {
         return array_merge( array(
             'type' => 'toggle',

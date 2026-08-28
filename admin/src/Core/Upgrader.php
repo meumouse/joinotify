@@ -3,7 +3,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Builder\Workflow_Migrator;
-use MeuMouse\Joinotify\Licensing\Migrator;
+use MeuMouse\Joinotify\Cron\Routines;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -217,9 +217,9 @@ class Upgrader {
                 'callback' => array( Workflow_Migrator::class, 'migrate_stored_workflows' ),
             ),
             array(
-                'id' => 'license_driver_2_1_0',
-                'version' => '2.1.0',
-                'callback' => array( Migrator::class, 'schedule_migration' ),
+                'id' => 'drop_licensing_2_4_0',
+                'version' => '2.4.0',
+                'callback' => array( self::class, 'drop_licensing_data' ),
             ),
         );
 
@@ -235,6 +235,42 @@ class Upgrader {
         });
 
         return $routines;
+    }
+
+
+    /**
+     * Erase every trace of the licensing system removed in 2.4.0.
+     *
+     * The plugin is free and unrestricted now, so the stored key, the cached
+     * verdict and the licensing driver's own state describe a subsystem that no
+     * longer exists. Leaving them behind would keep a license key sitting in the
+     * options table of every site forever.
+     *
+     * Idempotent: deleting an absent option is a no-op, so a retry is harmless.
+     *
+     * @since 2.3.0
+     * @return void
+     */
+    public static function drop_licensing_data() {
+        $options = array(
+            'joinotify_license_key',
+            'joinotify_license_status',
+            'joinotify_license_response_object',
+            'joinotify_license_driver',
+            'joinotify_alternative_license_activation',
+            'joinotify_check_updates',
+            'joinotify_remote_data',
+        );
+
+        foreach ( $options as $option ) {
+            delete_option( $option );
+        }
+
+        delete_transient('joinotify_license_status_cached');
+        delete_transient('joinotify_check_updates');
+
+        // The update-polling cron events pointed at a class that is gone.
+        Routines::unschedule_legacy_update_events();
     }
 
 

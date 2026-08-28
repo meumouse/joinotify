@@ -13,15 +13,15 @@ defined('ABSPATH') || exit;
 class Cache_Helper {
 
     /**
-     * Delete all three license-related transients so the next request
-     * fetches a fresh response from the remote server.
+     * Delete the cached API request/response pair so the next call goes out to
+     * the remote server instead of being answered from cache.
      *
      * @since 1.4.7
+     * @version 2.4.0
      * @return void
      */
     public static function clear_license_cache() {
         delete_transient( 'joinotify_api_request_cache' );
         delete_transient( 'joinotify_api_response_cache' );
-        delete_transient( 'joinotify_license_status_cached' );
     }
 }

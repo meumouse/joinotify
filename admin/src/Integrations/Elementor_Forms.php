@@ -154,7 +154,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 					'type' => Controls_Manager::ALERT,
 					'alert_type' => 'success',
 					'heading' => __( 'Tip', 'joinotify' ),
-					'content' => __( 'Replace information with ', 'joinotify' ) . ' <a href="https://ajuda.meumouse.com/docs/joinotify/placeholders">' . esc_html__( 'text variables', 'joinotify' ) . '</a>',
+					'content' => __( 'Replace information with ', 'joinotify' ) . ' <a href="https://docs.joinotify.com/plugin/placeholders" target="_blank" rel="noopener noreferrer">' . esc_html__( 'text variables', 'joinotify' ) . '</a>',
 				]
 			);
 
@@ -256,7 +256,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 		
 			// extract data from form
 			$sender = $settings['joinotify_sender'] ?? '';
-			$receiver = Controller::prepare_receiver( $fields[ $settings['joinotify_receiver'] ] ?? '' );
+			$receiver = joinotify_prepare_receiver( $fields[ $settings['joinotify_receiver'] ] ?? '' );
 
 			$payload = array(
 				'type' => 'elementor',
@@ -265,7 +265,7 @@ if ( class_exists('\ElementorPro\Modules\Forms\Classes\Action_Base') ) {
 			);
 
 			if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-				Logger::register_log( "context on Elementor form: " . print_r( $payload, true ) );
+				Logger::register_log( "context on Elementor form: " . Logger::stringify( $payload ) );
 			}
 
 			$text_msg = joinotify_prepare_message( $settings['joinotify_send_text_message'] ?? '', $payload );

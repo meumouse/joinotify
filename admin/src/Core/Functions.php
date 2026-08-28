@@ -6,7 +6,6 @@
  * @version 1.4.7
  */
 
-use MeuMouse\Joinotify\Api\Controller;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Extensions;
 use MeuMouse\Joinotify\Admin\Admin;
@@ -24,17 +23,26 @@ defined('ABSPATH') || exit;
 
 /**
  * Check admin page from partial URL
- * 
+ *
+ * Matches the `page` query argument by prefix, so passing 'joinotify' also
+ * matches 'joinotify-settings'.
+ *
  * @since 1.1.0
- * @version 1.4.7
+ * @version 2.3.0
  * @param $admin_page | Page string for check from admin.php?page=
  * @return bool
  */
 function joinotify_check_admin_page( $admin_page ) {
-   $current_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
    $admin_page = is_scalar( $admin_page ) ? (string) $admin_page : '';
 
-   return strpos( $current_url, "admin.php?page=$admin_page" ) !== false;
+   if ( '' === $admin_page || ! is_admin() ) {
+      return false;
+   }
+
+   // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
+   $current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+   return 0 === strpos( $current_page, $admin_page );
 }
 
 
@@ -75,39 +83,6 @@ function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type,
 
 
 /**
- * Get endpoint for Proxy API send text message
- * 
- * @since 1.1.0
- * @return string
- */
-function joinotify_proxy_api_text_message_text_endpoint() {
-   return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_text_proxy_api_route');
-}
-
-
-/**
- * Get endpoint for Proxy API send media message
- * 
- * @since 1.1.0
- * @return string
- */
-function joinotify_proxy_api_media_message_text_endpoint() {
-   return get_home_url() . '/wp-json/joinotify/v1/' . Admin::get_setting('send_media_proxy_api_route');
-}
-
-
-/**
- * Get Proxy API key
- * 
- * @since 1.1.0
- * @return string
- */
-function joinotify_get_proxy_api_key() {
-   return Admin::get_setting('proxy_api_key');
-}
-
-
-/**
  * Prepare the receiver phone number with the correct format
  * 
  * @since 1.0.0
@@ -127,7 +102,7 @@ function joinotify_prepare_receiver( $receiver, $payload = array() ) {
 
 	// Check receiver phone number
 	if ( JOINOTIFY_DEV_MODE ) {
-		error_log( 'joinotify_prepare_receiver() receiver finished: ' . print_r( $phone, true ) );
+		Logger::register_log( 'joinotify_prepare_receiver() receiver finished: ' . $phone );
 	}
 
 	return $phone;
@@ -178,8 +153,38 @@ function joinotify_prepare_message( $message, $payload = array() ) {
  */
 function joinotify_format_plain_text( $content ) {
 	$content = (string) ( $content ?? '' );
+	$content = html_entity_decode( wp_strip_all_tags( $content ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 
-	return html_entity_decode( strip_tags( $content ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	// Currency and price markup often carries non-breaking spaces (&nbsp; / U+00A0 /
+	// U+202F). Messaging apps render them as odd glyphs on some devices, so collapse
+	// them into regular spaces.
+	return (string) preg_replace( '/\x{00A0}|\x{202F}/u', ' ', $content );
+}
+
+
+/**
+ * Format a monetary value as plain text ready to be sent on a message
+ *
+ * Runs the value through wc_price() so it respects the store currency, decimal
+ * separator and price format, then strips the HTML wrapper and decodes the
+ * currency entity (WooCommerce stores symbols encoded, e.g. BRL is "&#82;&#36;").
+ * Without the decoding step the raw entity is delivered literally in the message.
+ *
+ * Falls back to the untouched value when WooCommerce is not available.
+ *
+ * @since 2.3.0
+ * @param mixed  $value | Monetary amount
+ * @param string $currency | Currency code to format with (defaults to the store currency)
+ * @return string
+ */
+function joinotify_format_price( $value, $currency = '' ) {
+	if ( ! function_exists('wc_price') ) {
+		return joinotify_format_plain_text( is_scalar( $value ) ? (string) $value : '' );
+	}
+
+	$args = ! empty( $currency ) ? array( 'currency' => $currency ) : array();
+
+	return joinotify_format_plain_text( wc_price( (float) $value, $args ) );
 }
 
 

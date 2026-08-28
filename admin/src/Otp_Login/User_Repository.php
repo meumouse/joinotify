@@ -79,6 +79,7 @@ class User_Repository {
 
         $prepared = array_merge( $this->phone_meta_keys, $lookup_variants );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- $sql is literal SQL plus generated %s placeholder lists; every meta key and phone variant is bound here. A meta_value lookup across several keys has no WP_User_Query equivalent, and the result is resolved through get_user_by() which is cached.
         $results = $wpdb->get_results( $wpdb->prepare( $sql, $prepared ) );
 
         if ( empty( $results ) ) {

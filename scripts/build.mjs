@@ -21,6 +21,10 @@
  *   --engine=<name>       Translation engine for --translate (default: openai).
  *   --no-install          Skip dependency install steps (npm ci / composer install deps).
  *   --no-zip              Stage files but don't create the .zip.
+ *   --ship-locales        Also ship the compiled locales (.po/.mo/.l10n.php/.json).
+ *                         Off by default: WordPress.org serves translations from
+ *                         translate.wordpress.org, and its reviewers ask that the
+ *                         package carry only joinotify.pot — see languageFilter().
  */
 
 import { spawnSync } from 'node:child_process';
@@ -31,9 +35,16 @@ import { fileURLToPath } from 'node:url';
 
 import archiver from 'archiver';
 
+import { loadEnv } from './env.mjs';
+import { resolveVersion } from './version.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const slug = 'joinotify';
+
+// Translation keys for --translate live in a Git-ignored .env at the repository
+// root (see .env.example); the child processes inherit them from here.
+loadEnv(root);
 
 const releaseDir = path.join(root, 'release');
 const stagingDir = path.join(releaseDir, slug);
@@ -56,12 +67,16 @@ const opts = {
 	engine: getOpt('--engine', 'openai'),
 	install: !hasFlag('--no-install'),
 	zip: !hasFlag('--no-zip'),
+	// WordPress.org distributes translations itself, so the package ships the
+	// .pot alone unless a build explicitly asks for the compiled locales.
+	potOnly: !hasFlag('--ship-locales'),
 };
 
 /* ---------------------------------------------------------------- helpers */
 
 const log = (msg) => console.log(`\x1b[36m▶\x1b[0m ${msg}`);
 const ok = (msg) => console.log(`\x1b[32m✓\x1b[0m ${msg}`);
+const warn = (msg) => console.log(`\x1b[33m!\x1b[0m ${msg}`);
 
 function run(command, args, cwd) {
 	const printable = `${command} ${args.join(' ')}`;
@@ -102,13 +117,6 @@ async function copyFile(relSource, relDest = relSource) {
 	await fs.copyFile(source, dest);
 }
 
-async function getPluginVersion() {
-	const file = path.join(root, `${slug}.php`);
-	const contents = await fs.readFile(file, 'utf8');
-	const match = contents.match(/^\s*\*\s*Version:\s*(.+)$/m);
-	return match ? match[1].trim() : '0.0.0';
-}
-
 function zipDirectory(sourceDir, outPath) {
 	return new Promise((resolve, reject) => {
 		const output = createWriteStream(outPath);
@@ -128,7 +136,7 @@ function zipDirectory(sourceDir, outPath) {
 /* ------------------------------------------------------------- copy rules */
 
 // Skip dev clutter that may sneak into otherwise-shipped directories.
-const denyList = new Set(['node_modules', '.git', '.env', '.DS_Store', 'Thumbs.db']);
+const denyList = new Set(['node_modules', '.git', '.env', '.DS_Store', 'Thumbs.db', '.gitignore', '.gitattributes']);
 
 const baseFilter = (src) => !denyList.has(path.basename(src));
 
@@ -144,6 +152,15 @@ const languageFilter = (src) => {
 	// Always allow directory entries so their children get evaluated.
 	if (!path.extname(name)) {
 		return true;
+	}
+
+	// Only joinotify.pot ships. WordPress.org generates and delivers every locale
+	// from translate.wordpress.org, and bundling compiled catalogues duplicates
+	// that channel — the plugin review team asks for them to be left out. Pass
+	// --ship-locales to build a package that carries them, which is what installs
+	// outside the directory need, since they get no language packs.
+	if (opts.potOnly && path.extname(name) !== '.pot') {
+		return false;
 	}
 
 	// Keep .l10n.php and friends; drop the *-cli.js pipeline scripts.
@@ -204,10 +221,14 @@ function buildTranslations() {
 		run('npm', ['run', script], langDir);
 	}
 
-	// Compile .po -> .mo and .l10n.php so WordPress can load them at runtime.
+	// Compile .po -> .mo and .l10n.php so WordPress can load them at runtime,
+	// plus the per-handle .json catalogues wp.i18n reads on the JS side. The
+	// JSONs used to be written by translate-cli.js alone, so a build without
+	// --translate shipped whatever they happened to contain last.
 	run('npm', ['run', 'compile:mo'], langDir);
 	run('npm', ['run', 'compile:php'], langDir);
-	ok('Translations compiled (languages/*.mo, *.l10n.php).');
+	run('npm', ['run', 'compile:json'], langDir);
+	ok('Translations compiled (languages/*.mo, *.l10n.php, *.json).');
 }
 
 async function stageFiles() {
@@ -216,8 +237,17 @@ async function stageFiles() {
 	await fs.rm(releaseDir, { recursive: true, force: true });
 	await fs.mkdir(stagingDir, { recursive: true });
 
+	// readme.txt and LICENSE are what the WordPress.org review reads, so a
+	// package missing either is not shippable — fail loudly instead of quietly
+	// producing a ZIP that will be rejected.
+	for (const file of ['readme.txt', 'LICENSE']) {
+		if (!existsSync(path.join(root, file))) {
+			throw new Error(`Required file "${file}" is missing; WordPress.org will reject this package.`);
+		}
+	}
+
 	// Top-level files.
-	for (const file of [`${slug}.php`, 'README.md', 'license.md', 'changelogs.md']) {
+	for (const file of [`${slug}.php`, 'readme.txt', 'LICENSE', 'README.md', 'CHANGELOG.md']) {
 		await copyFile(file);
 	}
 
@@ -229,8 +259,31 @@ async function stageFiles() {
 	// Built frontend (includes .vite/manifest.json that Scripts.php reads).
 	await copyDir('app/dist', 'app/dist', baseFilter);
 
+	// Frontend source. WordPress.org guideline 4 requires the human-readable
+	// source of anything compiled or minified to ship with the plugin (or be
+	// publicly linked); app/dist/*/app.js is minified, so its source travels
+	// with it, along with everything needed to rebuild it.
+	await copyDir('app/src', 'app/src', baseFilter);
+
+	for (const file of [
+		'app/package.json',
+		'app/package-lock.json',
+		'app/vite.config.js',
+		'app/tailwind.config.js',
+		'app/postcss.config.js',
+		'app/tsconfig.json',
+	]) {
+		await copyFile(file);
+	}
+
 	// Static assets.
 	await copyDir('assets', 'assets', baseFilter);
+
+	// PHP templates read at runtime through JOINOTIFY_DIR (the OTP login
+	// partials). Templates::render() returns silently when a file is missing,
+	// so leaving these out produced a package where the OTP screens rendered
+	// nothing at all, with no error to point at the cause.
+	await copyDir('templates', 'templates', baseFilter);
 
 	// Compiled translation artifacts only.
 	await copyDir('languages', 'languages', languageFilter);
@@ -258,14 +311,28 @@ async function packageZip(version) {
 
 	const zipPath = path.join(releaseDir, manifest.zipFile);
 	const bytes = await zipDirectory(stagingDir, zipPath);
-	ok(`ZIP created: ${path.relative(root, zipPath)} (${(bytes / 1024 / 1024).toFixed(2)} MB)`);
+	const megabytes = bytes / 1024 / 1024;
+	ok(`ZIP created: ${path.relative(root, zipPath)} (${megabytes.toFixed(2)} MB)`);
+
+	// The "add your plugin" form rejects uploads above 10 MB outright. Updates go
+	// through SVN and aren't capped, but a package this close to the limit is a
+	// sign something unwanted is being staged.
+	if (megabytes > 10) {
+		warn(`Over the 10 MB WordPress.org submission limit. Trim the package before submitting.`);
+	} else if (megabytes > 8) {
+		warn(`Close to the 10 MB WordPress.org submission limit.`);
+	}
 }
 
 /* -------------------------------------------------------------------- main */
 
 async function main() {
-	const version = await getPluginVersion();
+	const version = await resolveVersion(root, slug, warn);
 	console.log(`\n\x1b[1mBuilding ${slug} v${version}\x1b[0m\n`);
+
+	if (!opts.potOnly) {
+		log('Translations: shipping the compiled locales alongside joinotify.pot.');
+	}
 
 	buildFrontend();
 	installPhpDependencies();

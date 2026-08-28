@@ -254,15 +254,6 @@ export interface PlaceholderNodeData extends Record<string, unknown> {
   settings?: Record<string, unknown>;
 }
 
-/** Data payload for a PHP-snippet node. */
-export interface SnippetNodeData extends Record<string, unknown> {
-  title?: string;
-  description?: string;
-  action?: 'snippet_php';
-  snippet_php?: string;
-  settings?: Record<string, unknown>;
-}
-
 /** A single dynamic placeholder available for messages. */
 export interface WorkflowPlaceholderItem {
   placeholder: string;
@@ -311,6 +302,14 @@ export interface BuilderBootstrap {
       label: string;
       models: Array<{ value: string; label: string }>;
     }>;
+  };
+  transport?: {
+    active?: string;
+    is_cloud?: boolean;
+    /** True when free-form content needs an open 24-hour window to be delivered. */
+    requires_template_to_open_window?: boolean;
+    template_action?: string;
+    free_form_actions?: string[];
   };
   links?: Record<string, string>;
   permissions?: Record<string, unknown>;

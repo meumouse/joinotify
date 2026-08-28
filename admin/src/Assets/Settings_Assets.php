@@ -23,7 +23,7 @@ class Settings_Assets extends Abstract_Assets {
      */
     private $entries = array(
         'joinotify-settings'         => 'src/entries/settings.js',
-        'joinotify-license'          => 'src/entries/license.js',
+        'joinotify-onboarding'       => 'src/entries/onboarding.js',
         'joinotify-workflows-builder' => 'src/entries/builder.js',
         'joinotify-workflows'         => 'src/entries/workflows.js',
         'joinotify-history'           => 'src/entries/history.js',
@@ -43,7 +43,7 @@ class Settings_Assets extends Abstract_Assets {
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
         add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
-        add_filter( 'load_script_translation_file', array( $this, 'resolve_script_translation_file' ), 10, 3 );
+        add_filter( 'load_script_translation_file', array( __CLASS__, 'resolve_script_translation_file' ), 10, 3 );
     }
 
 
@@ -56,13 +56,20 @@ class Settings_Assets extends Abstract_Assets {
      * the Vue apps render untranslated. Vite hashes the entry paths, so a stable
      * md5-based name cannot be generated ahead of the build.
      *
+     * Each JSON now carries only the strings its own bundle can ask for, so there
+     * is no longer a full-table file to fall back on when a handle has no JSON.
+     * The pipeline derives its handle list from `app/src/entries/*`, which is where
+     * a new admin page has to register its entry anyway, so every enqueued handle
+     * gets a file without a second list to keep in step.
+     *
      * @since 2.0.0
+     * @version 2.4.0
      * @param string|false $file   Translation file path resolved by core.
      * @param string       $handle Script handle being translated.
      * @param string       $domain Text domain.
      * @return string|false
      */
-    public function resolve_script_translation_file( $file, $handle, $domain ) {
+    public static function resolve_script_translation_file( $file, $handle, $domain ) {
         if ( 'joinotify' !== $domain ) {
             return $file;
         }
@@ -72,18 +79,6 @@ class Settings_Assets extends Abstract_Assets {
 
         if ( is_readable( $candidate ) ) {
             return $candidate;
-        }
-
-        // Fallback to the canonical base file. Every per-handle JSON the languages
-        // pipeline emits is an identical full copy of the translation table, so any
-        // Joinotify script can be served the base file. This means a new admin page
-        // (i.e. a new script handle such as joinotify-queue-app) receives its
-        // translations automatically, without adding it to the pipeline's handle
-        // list or shipping a dedicated JSON for it.
-        $base = trailingslashit( JOINOTIFY_DIR ) . "languages/joinotify-{$locale}-joinotify.json";
-
-        if ( is_readable( $base ) ) {
-            return $base;
         }
 
         return $file;
@@ -168,7 +163,7 @@ class Settings_Assets extends Abstract_Assets {
     private function build_bootstrap_config( $page ) {
         $map = array(
             'joinotify-settings'          => array( 'page' => 'settings', 'endpoint' => 'admin/settings' ),
-            'joinotify-license'           => array( 'page' => 'license', 'endpoint' => 'admin/settings' ),
+            'joinotify-onboarding'        => array( 'page' => 'onboarding', 'endpoint' => 'admin/onboarding' ),
             'joinotify-workflows-builder' => array( 'page' => 'builder', 'endpoint' => 'admin/builder' ),
             'joinotify-workflows'         => array( 'page' => 'workflows', 'endpoint' => 'admin/workflows/bootstrap' ),
             'joinotify-history'           => array( 'page' => 'history', 'endpoint' => 'admin/history/bootstrap' ),
@@ -182,6 +177,7 @@ class Settings_Assets extends Abstract_Assets {
         $endpoint = $map[ $page ]['endpoint'];
 
         if ( 'joinotify-workflows-builder' === $page ) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which workflow the builder screen was opened for; nothing is acted on.
             $post_id = isset( $_GET['id'] ) ? absint( wp_unslash( $_GET['id'] ) ) : 0;
             $endpoint = add_query_arg( 'id', $post_id, $endpoint );
         }
@@ -203,10 +199,14 @@ class Settings_Assets extends Abstract_Assets {
      * @return string
      */
     private function get_current_page() {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- See the note below.
         if ( ! is_admin() || ! isset( $_GET['page'] ) ) {
             return '';
         }
 
+        // Nonce verification is not applicable: this only reads which admin
+        // screen WordPress is already rendering, it never acts on a request.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         return sanitize_text_field( wp_unslash( $_GET['page'] ) );
     }
 
@@ -222,7 +222,7 @@ class Settings_Assets extends Abstract_Assets {
     private function get_script_handle( $page ) {
         $handles = array(
             'joinotify-settings'         => 'joinotify-settings-app',
-            'joinotify-license'          => 'joinotify-license-app',
+            'joinotify-onboarding'       => 'joinotify-onboarding-app',
             'joinotify-workflows-builder' => 'joinotify-builder-app',
             'joinotify-workflows'         => 'joinotify-workflows-app',
             'joinotify-history'           => 'joinotify-history-app',
@@ -256,7 +256,7 @@ class Settings_Assets extends Abstract_Assets {
         $tag = is_scalar( $tag ) ? (string) $tag : '';
         $module_handles = array(
             'joinotify-settings-app',
-            'joinotify-license-app',
+            'joinotify-onboarding-app',
             'joinotify-builder-app',
             'joinotify-workflows-app',
             'joinotify-history-app',

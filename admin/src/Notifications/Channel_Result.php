@@ -156,8 +156,8 @@ class Channel_Result {
 
 
     /**
-     * Build a result from the details array returned by Api\Controller send methods
-     * (see Controller::build_response_details()).
+     * Build a result from the details array returned by Cloud_Client send methods
+     * (see Cloud_Client::build_response_details()).
      *
      * @since 2.0.0
      * @param array<string,mixed> $details | Controller details array.

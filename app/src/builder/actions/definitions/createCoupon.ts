@@ -75,6 +75,7 @@ export const createCouponDefinition: ActionDefinition = {
   iconSvg: COUPON_ICON,
   context: ['woocommerce'],
   category: 'woocommerce',
+  requiresSetting: 'enable_create_coupon_action',
   hasSettings: true,
   priority: 60,
   isExpansible: false,

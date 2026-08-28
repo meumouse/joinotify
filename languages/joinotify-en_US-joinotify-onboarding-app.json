@@ -1,0 +1,195 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "en_US",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "%d number imported from your Joinotify account.": [
+        "%d number imported from your Joinotify account."
+      ],
+      "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
+        "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings."
+      ],
+      "Back": [
+        "Back"
+      ],
+      "Building your first workflow: triggers, conditions and actions": [
+        "Building your first workflow: triggers, conditions and actions"
+      ],
+      "Close": [
+        "Close"
+      ],
+      "Close setup": [
+        "Close setup"
+      ],
+      "Connect": [
+        "Connect"
+      ],
+      "Connected": [
+        "Connected"
+      ],
+      "Connecting sends your key and this site’s address to %s so it can register the site and list the WhatsApp numbers on your account. Nothing leaves this site before you press Connect.": [
+        "Connecting sends your key and this site’s address to %s so it can register the site and list the WhatsApp numbers on your account. Nothing leaves this site before you press Connect."
+      ],
+      "Connecting WooCommerce, WPForms, Elementor and the other integrations": [
+        "Connecting WooCommerce, WPForms, Elementor and the other integrations"
+      ],
+      "Connecting…": [
+        "Connecting…"
+      ],
+      "Continue": [
+        "Continue"
+      ],
+      "Could not connect with that key.": [
+        "Could not connect with that key."
+      ],
+      "Could not finish the setup.": [
+        "Could not finish the setup."
+      ],
+      "Could not save this step.": [
+        "Could not save this step."
+      ],
+      "Create an automation": [
+        "Create an automation"
+      ],
+      "Default country code": [
+        "Default country code"
+      ],
+      "Documentation": [
+        "Documentation"
+      ],
+      "Everything Joinotify does is documented, from the first workflow to the PHP hooks you can extend it with. Keep this link handy.": [
+        "Everything Joinotify does is documented, from the first workflow to the PHP hooks you can extend it with. Keep this link handy."
+      ],
+      "Examples of the events that would be sent": [
+        "Examples of the events that would be sent"
+      ],
+      "Go to settings": [
+        "Go to settings"
+      ],
+      "Hide what would be sent": [
+        "Hide what would be sent"
+      ],
+      "How this site is identified": [
+        "How this site is identified"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Joinotify API key": [
+        "Joinotify API key"
+      ],
+      "Joinotify can use a language model to write message copy and suggest whole workflows. This is optional and you can set it up later — the plugin works fully without it.": [
+        "Joinotify can use a language model to write message copy and suggest whole workflows. This is optional and you can set it up later — the plugin works fully without it."
+      ],
+      "Joinotify delivers your messages through the official WhatsApp Cloud API. Create a key for this site on the Joinotify panel and paste it below — it is the only credential the plugin needs.": [
+        "Joinotify delivers your messages through the official WhatsApp Cloud API. Create a key for this site on the Joinotify panel and paste it below — it is the only credential the plugin needs."
+      ],
+      "Joinotify help center": [
+        "Joinotify help center"
+      ],
+      "Joinotify is configured. Build your first automation now, or open the settings to fine-tune integrations, senders and message history.": [
+        "Joinotify is configured. Build your first automation now, or open the settings to fine-tune integrations, senders and message history."
+      ],
+      "Knowing which WordPress and PHP versions Joinotify actually runs on, and which errors people hit, is what tells us where to spend our time. Sharing is entirely up to you and the plugin behaves identically either way.": [
+        "Knowing which WordPress and PHP versions Joinotify actually runs on, and which errors people hit, is what tells us where to spend our time. Sharing is entirely up to you and the plugin behaves identically either way."
+      ],
+      "Message templates and what the WhatsApp 24-hour window means for you": [
+        "Message templates and what the WhatsApp 24-hour window means for you"
+      ],
+      "Messages will send normally, but delivery reports could not be set up:": [
+        "Messages will send normally, but delivery reports could not be set up:"
+      ],
+      "Never collected": [
+        "Never collected"
+      ],
+      "No country matches that search.": [
+        "No country matches that search."
+      ],
+      "No options available": [
+        "No options available"
+      ],
+      "Off by default. You can change this at any time in Settings → About.": [
+        "Off by default. You can change this at any time in Settings → About."
+      ],
+      "Open the documentation": [
+        "Open the documentation"
+      ],
+      "Open the Joinotify panel to get a key": [
+        "Open the Joinotify panel to get a key"
+      ],
+      "Open the visual builder and wire a trigger to your first WhatsApp message.": [
+        "Open the visual builder and wire a trigger to your first WhatsApp message."
+      ],
+      "Optional": [
+        "Optional"
+      ],
+      "Paste the API key issued for this site on the Joinotify panel.": [
+        "Paste the API key issued for this site on the Joinotify panel."
+      ],
+      "Placeholders, custom variables and the PHP extension API": [
+        "Placeholders, custom variables and the PHP extension API"
+      ],
+      "Review integrations, senders, history retention and the advanced options.": [
+        "Review integrations, senders, history retention and the advanced options."
+      ],
+      "Search for a country": [
+        "Search for a country"
+      ],
+      "Search...": [
+        "Search..."
+      ],
+      "See exactly what would be sent": [
+        "See exactly what would be sent"
+      ],
+      "Select an option": [
+        "Select an option"
+      ],
+      "Set up Joinotify": [
+        "Set up Joinotify"
+      ],
+      "Setup": [
+        "Setup"
+      ],
+      "Share anonymous usage data": [
+        "Share anonymous usage data"
+      ],
+      "Skip setup for now": [
+        "Skip setup for now"
+      ],
+      "Skip this step": [
+        "Skip this step"
+      ],
+      "Step": [
+        "Step"
+      ],
+      "The exact payload for this site right now": [
+        "The exact payload for this site right now"
+      ],
+      "We pre-selected %s based on this site’s language setting.": [
+        "We pre-selected %s based on this site’s language setting."
+      ],
+      "We pre-selected %s based on this site’s timezone.": [
+        "We pre-selected %s based on this site’s timezone."
+      ],
+      "We pre-selected %s because that is your WooCommerce store address.": [
+        "We pre-selected %s because that is your WooCommerce store address."
+      ],
+      "What this sends": [
+        "What this sends"
+      ],
+      "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed.": [
+        "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed."
+      ],
+      "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready.": [
+        "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready."
+      ],
+      "Your Joinotify account is connected.": [
+        "Your Joinotify account is connected."
+      ]
+    }
+  }
+}

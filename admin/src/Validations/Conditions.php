@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Validations;
 
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -111,8 +112,8 @@ class Conditions {
         }
 
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Payload from get_compare_value() : " . print_r( $payload, true ) );
-            error_log( "Context from get_compare_value() : " . print_r( $context, true ) );
+            Logger::register_log( "Payload from get_compare_value() : " . Logger::stringify( $payload ) );
+            Logger::register_log( "Context from get_compare_value() : " . Logger::stringify( $context ) );
         }
 
         $shipping_items = $context instanceof \WC_Order ? $context->get_items('shipping') : array();
@@ -162,10 +163,10 @@ class Conditions {
      */
     public static function check_condition( $condition, $value, $value_compare = '', $payload = array() ) {
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Checking condition: {$condition}" );
-            error_log( "Value: " . print_r( $value, true ) );
-            error_log( "Value Compare: " . print_r( $value_compare, true ) );
-            error_log( "Payload: " . print_r( $payload, true ) );
+            Logger::register_log( "Checking condition: {$condition}" );
+            Logger::register_log( "Value: " . Logger::stringify( $value ) );
+            Logger::register_log( "Value Compare: " . Logger::stringify( $value_compare ) );
+            Logger::register_log( "Payload: " . Logger::stringify( $payload ) );
         }
     
         // If it is the "products_purchased" condition, check within the products array
@@ -174,8 +175,8 @@ class Conditions {
             $expected_product_ids = array_column( $expected_products, 'id' ); // Extract only product IDs
     
             if ( JOINOTIFY_DEV_MODE ) {
-                error_log( "Expected Product IDs: " . print_r( $expected_product_ids, true ) );
-                error_log( "Purchased Products: " . print_r( $value, true ) );
+                Logger::register_log( "Expected Product IDs: " . Logger::stringify( $expected_product_ids ) );
+                Logger::register_log( "Purchased Products: " . Logger::stringify( $value ) );
             }
     
             // Condition check

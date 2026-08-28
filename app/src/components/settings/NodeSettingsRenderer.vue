@@ -12,6 +12,7 @@
 import { computed, nextTick, ref, watch } from 'vue';
 import SchemaFieldRenderer from './SchemaFieldRenderer.vue';
 import DynamicActionSettingsRenderer from '../../builder/actions/components/DynamicActionSettingsRenderer.vue';
+import SessionWindowNotice from '../../builder/components/base/SessionWindowNotice.vue';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { getActionDefinition as getLegacyActionDefinition } from '../../registries/actionRegistry';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
@@ -261,15 +262,18 @@ async function copyPlaceholder(placeholder: string) {
       </div>
     </template>
 
-    <DynamicActionSettingsRenderer
-      v-else
-      :action="actionSlug"
-      :model-value="draft"
-      :available-placeholders="placeholderItems"
-      :cron-available="Boolean(store.bootstrap?.permissions?.cron_available ?? true)"
-      @update:model-value="replaceDraft"
-      @placeholder-selected="copyPlaceholder"
-    />
+    <template v-else>
+      <SessionWindowNotice :action="actionSlug" />
+
+      <DynamicActionSettingsRenderer
+        :action="actionSlug"
+        :model-value="draft"
+        :available-placeholders="placeholderItems"
+        :cron-available="Boolean(store.bootstrap?.permissions?.cron_available ?? true)"
+        @update:model-value="replaceDraft"
+        @placeholder-selected="copyPlaceholder"
+      />
+    </template>
   </div>
 
   <div v-else class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">

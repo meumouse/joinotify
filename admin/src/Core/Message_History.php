@@ -7,6 +7,15 @@ use MeuMouse\Joinotify\Admin\Admin;
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
+/*
+ * This class is the sole gateway to the plugin's own `joinotify_message_history`
+ * table, which no WordPress API covers, so every read and write here is a direct
+ * query by design. The rows are admin-screen audit data read behind a capability
+ * check and invalidated on every send, so an object cache would serve stale
+ * counts more often than it would save a query.
+ */
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
 /**
  * Persist and query a history of dispatched WhatsApp messages.
  *
@@ -34,7 +43,7 @@ class Message_History {
      * @since 2.0.0
      * @var string
      */
-    const DB_VERSION = '1.0.0';
+    const DB_VERSION = '1.1.0';
 
     /**
      * Option key that stores the installed schema version.
@@ -56,9 +65,10 @@ class Message_History {
      * Allowed message types.
      *
      * @since 2.0.0
+     * @version 2.3.0
      * @var string[]
      */
-    const MESSAGE_TYPES = array( 'text', 'media', 'audio' );
+    const MESSAGE_TYPES = array( 'text', 'media', 'audio', 'template' );
 
     /**
      * Allowed dispatch sources.
@@ -71,10 +81,14 @@ class Message_History {
     /**
      * Allowed delivery statuses.
      *
+     * `sent` only means the API accepted the message. `delivered`, `read` and
+     * the `failed` that follows a rejection arrive later, by webhook.
+     *
      * @since 2.0.0
+     * @version 2.3.0
      * @var string[]
      */
-    const STATUSES = array( 'sent', 'failed', 'queued' );
+    const STATUSES = array( 'sent', 'failed', 'queued', 'delivered', 'read' );
 
     /**
      * Context shared by the current dispatch (workflow id / source).
@@ -153,13 +167,15 @@ class Message_History {
             response_code SMALLINT(6) NOT NULL DEFAULT 0,
             error VARCHAR(191) NOT NULL DEFAULT '',
             attempts SMALLINT(6) NOT NULL DEFAULT 0,
+            wamid VARCHAR(128) NOT NULL DEFAULT '',
             PRIMARY KEY  (id),
             KEY created_at (created_at),
             KEY receiver (receiver),
             KEY sender (sender),
             KEY status (status),
             KEY source (source),
-            KEY workflow_id (workflow_id)
+            KEY workflow_id (workflow_id),
+            KEY wamid (wamid)
         ) {$charset_collate};";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -244,9 +260,11 @@ class Message_History {
             'response_code' => isset( $entry['response_code'] ) ? (int) $entry['response_code'] : 0,
             'error' => substr( sanitize_text_field( $entry['error'] ?? '' ), 0, 191 ),
             'attempts' => isset( $entry['attempts'] ) ? (int) $entry['attempts'] : 0,
+            // The WhatsApp message id is what later delivery webhooks key on.
+            'wamid' => substr( sanitize_text_field( $entry['wamid'] ?? '' ), 0, 128 ),
         );
 
-        $formats = array( '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d' );
+        $formats = array( '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s' );
 
         $inserted = $wpdb->insert( self::get_table_name(), $data, $formats );
 
@@ -270,11 +288,68 @@ class Message_History {
 
 
     /**
+     * Update the delivery outcome of a message identified by its WhatsApp id.
+     *
+     * A `201` at send time only means the API accepted the message; whether it
+     * reached the device, was opened or was rejected arrives minutes later on
+     * the status webhook.
+     *
+     * @since 2.3.0
+     * @param string $wamid | WhatsApp message id (wamid...).
+     * @param string $status | New delivery status.
+     * @param string $error | Failure reason, when the status is a failure.
+     * @return bool True when a row was updated.
+     */
+    public static function update_status_by_wamid( $wamid, $status, $error = '' ) {
+        $wamid = sanitize_text_field( (string) $wamid );
+        $status = sanitize_key( (string) $status );
+
+        if ( '' === $wamid || ! in_array( $status, self::STATUSES, true ) ) {
+            return false;
+        }
+
+        global $wpdb;
+
+        $data = array( 'status' => $status );
+        $formats = array( '%s' );
+
+        if ( '' !== $error ) {
+            $data['error'] = substr( sanitize_text_field( $error ), 0, 191 );
+            $formats[] = '%s';
+        }
+
+        $updated = $wpdb->update( self::get_table_name(), $data, array( 'wamid' => $wamid ), $formats, array( '%s' ) );
+
+        if ( ! $updated ) {
+            return false;
+        }
+
+        /**
+         * Fires after a delivery status update lands on a history record.
+         *
+         * @since 2.3.0
+         * @param string $wamid WhatsApp message id.
+         * @param string $status New delivery status.
+         * @param string $error Failure reason, when any.
+         */
+        do_action( 'Joinotify/Message_History/Status_Updated', $wamid, $status, $error );
+
+        return true;
+    }
+
+
+    /**
      * Build the WHERE clause and prepared args from query filters.
      *
      * @since 2.0.0
      * @param array<string,mixed> $args Filter args.
      * @return array{0:string,1:array} SQL fragment and prepare args.
+     */
+    /*
+     * The fragment returned below is assembled only from literal SQL written in this
+     * method — every caller-supplied value becomes a %s/%d placeholder whose value is
+     * appended to the returned args array. Callers therefore interpolate the fragment
+     * into the query and pass the args to $wpdb->prepare().
      */
     private static function build_where( $args ) {
         global $wpdb;
@@ -339,6 +414,7 @@ class Message_History {
         $values[] = $per_page;
         $values[] = $offset;
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql holds only the literal query, the $wpdb->prefix table name and the placeholder-only fragment from build_where(); all values are bound here.
         $rows = $wpdb->get_results( $wpdb->prepare( $sql, $values ), ARRAY_A );
 
         return is_array( $rows ) ? $rows : array();
@@ -361,9 +437,11 @@ class Message_History {
         $sql = "SELECT COUNT(*) FROM {$table} WHERE {$where}";
 
         if ( empty( $values ) ) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Unfiltered count: $sql is the literal query plus the $wpdb->prefix table name, with no caller input to bind.
             return (int) $wpdb->get_var( $sql );
         }
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $sql holds only the literal query, the $wpdb->prefix table name and the placeholder-only fragment from build_where(); all values are bound here.
         return (int) $wpdb->get_var( $wpdb->prepare( $sql, $values ) );
     }
 
@@ -380,6 +458,7 @@ class Message_History {
         $table = self::get_table_name();
         $counts = array( 'all' => 0, 'sent' => 0, 'failed' => 0, 'queued' => 0 );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_results( "SELECT status, COUNT(*) AS total FROM {$table} GROUP BY status", ARRAY_A );
 
         if ( is_array( $rows ) ) {
@@ -418,6 +497,7 @@ class Message_History {
         $table = self::get_table_name();
         $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID, all bound here.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE id IN ({$placeholders})", $ids ) );
     }
 
@@ -433,6 +513,7 @@ class Message_History {
 
         $table = self::get_table_name();
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         return (int) $wpdb->query( "DELETE FROM {$table}" );
     }
 
@@ -463,6 +544,9 @@ class Message_History {
         $table = self::get_table_name();
         $threshold = gmdate( 'Y-m-d H:i:s', time() - ( $days * DAY_IN_SECONDS ) );
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; $threshold is bound as %s.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE created_at < %s", $threshold ) );
     }
 }
+
+// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching

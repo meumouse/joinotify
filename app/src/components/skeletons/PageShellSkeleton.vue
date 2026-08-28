@@ -16,7 +16,7 @@ const props = defineProps({
 
 const loadingLabel = {
   settings: __('Loading the settings interface...', textDomain),
-  license: __('Loading the license interface...', textDomain),
+  onboarding: __('Loading the setup wizard...', textDomain),
 };
 </script>
 
@@ -38,7 +38,7 @@ const loadingLabel = {
         <div class="px-10 py-12">
           <div class="rounded-[8px] border border-slate-200 bg-slate-50 px-6 py-10 text-center">
             <p class="text-sm font-semibold uppercase tracking-[0.18em] text-shell-500">
-              {{ variant === 'license' ? __('License', textDomain) : __('Settings', textDomain) }}
+              {{ variant === 'onboarding' ? __('Setup', textDomain) : __('Settings', textDomain) }}
             </p>
             <p class="mt-3 text-base font-medium text-slate-700">
               {{ loadingLabel[variant] || loadingLabel.settings }}

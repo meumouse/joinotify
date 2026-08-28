@@ -103,6 +103,14 @@ watch(mediaUrl, () => {
 const ACTION_GROUP_LABELS: Record<string, string> = {
   send_whatsapp_message_text: 'WhatsApp',
   send_whatsapp_message_media: 'WhatsApp',
+  send_whatsapp_message_template: 'WhatsApp',
+  send_whatsapp_buttons: 'WhatsApp',
+  send_whatsapp_list: 'WhatsApp',
+  send_whatsapp_cta: 'WhatsApp',
+  send_whatsapp_location: 'WhatsApp',
+  send_whatsapp_contact: 'WhatsApp',
+  send_whatsapp_sticker: 'WhatsApp',
+  send_whatsapp_reaction: 'WhatsApp',
   create_coupon: 'WooCommerce',
 };
 const actionGroupLabel = computed(() => {

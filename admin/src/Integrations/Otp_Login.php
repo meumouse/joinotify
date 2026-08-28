@@ -30,19 +30,41 @@ class Otp_Login extends Integrations_Base {
     public function __construct() {
         add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 50, 1 );
 
-        // The OTP login feature is now native; deactivate the legacy companion
-        // plugin if it is still active to avoid duplicate cards and routes.
-        add_action( 'admin_init', array( $this, 'deactivate_legacy_companion' ) );
+        // The OTP login feature is now native; point out the legacy companion
+        // plugin if it is still active, so the site owner can turn it off.
+        add_action( 'admin_notices', array( $this, 'notice_legacy_companion' ) );
     }
 
 
     /**
-     * Deactivate the standalone "Joinotify OTP Login" companion plugin.
+     * Point out the standalone "Joinotify OTP Login" companion plugin.
+     *
+     * Passwordless login ships with Joinotify since 2.0.0, so running the
+     * companion alongside it duplicates the settings card and the REST routes.
+     * Only the site owner may deactivate a plugin, so this just links them to
+     * the Plugins screen.
      *
      * @since 2.0.0
+     * @version 2.3.0
      * @return void
      */
-    public function deactivate_legacy_companion() {
+    public function notice_legacy_companion() {
+        if ( ! current_user_can('activate_plugins') ) {
+            return;
+        }
+
+        // Kept to the screens where it is actionable, so it never lands on an
+        // admin page that has nothing to do with Joinotify.
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        $screen_id = $screen ? (string) $screen->id : '';
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reads which admin screen WordPress is already rendering; nothing is acted on.
+        $current_page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+
+        if ( 'plugins' !== $screen_id && 0 !== strpos( $current_page, 'joinotify' ) ) {
+            return;
+        }
+
         $companion = 'joinotify-otp-login/joinotify-otp-login.php';
 
         if ( ! function_exists( 'is_plugin_active' ) ) {
@@ -53,14 +75,12 @@ class Otp_Login extends Integrations_Base {
             return;
         }
 
-        deactivate_plugins( $companion );
-
-        add_action( 'admin_notices', function() {
-            printf(
-                '<div class="notice notice-info is-dismissible"><p>%s</p></div>',
-                esc_html__( 'The standalone "Joinotify OTP Login" plugin was deactivated because passwordless login is now built into Joinotify.', 'joinotify' )
-            );
-        });
+        printf(
+            '<div class="notice notice-warning is-dismissible"><p>%1$s <a href="%2$s">%3$s</a></p></div>',
+            esc_html__( 'Passwordless login is now built into Joinotify, so the standalone "Joinotify OTP Login" plugin duplicates it. You can safely deactivate the standalone plugin.', 'joinotify' ),
+            esc_url( admin_url('plugins.php') ),
+            esc_html__( 'Go to Plugins', 'joinotify' )
+        );
     }
 
 
@@ -153,6 +173,31 @@ class Otp_Login extends Integrations_Base {
                 self::get_sender_options(),
                 array(
                     'default' => '',
+                )
+            ),
+            // A login code is always started by the business, so on the official
+            // Cloud API it falls outside the 24-hour window and only an approved
+            // AUTHENTICATION template gets through. Templates are authored in the
+            // Joinotify panel, so the field only lists what the account already has.
+            self::field_select(
+                'otp_login_template_name',
+                esc_html__( 'Login code template', 'joinotify' ),
+                esc_html__( 'Approved AUTHENTICATION template used to deliver login codes over the WhatsApp Cloud API. Create it in the Joinotify panel; this list is synced from your account. Required on that transport, ignored on the legacy relay.', 'joinotify' ),
+                array(),
+                array(
+                    'default' => '',
+                    'component' => 'whatsapp-template-select',
+                    'component_props' => array(
+                        'category' => 'AUTHENTICATION',
+                    ),
+                )
+            ),
+            self::field_text(
+                'otp_login_template_language',
+                esc_html__( 'Template language', 'joinotify' ),
+                esc_html__( 'Only needed as a fallback: the language is normally taken from the template picked above. Fill it in if the template is not in the synced list, for example pt_BR or en_US.', 'joinotify' ),
+                array(
+                    'placeholder' => 'pt_BR',
                 )
             ),
         );

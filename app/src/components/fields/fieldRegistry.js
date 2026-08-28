@@ -20,7 +20,9 @@ import InputButtonField from './InputButtonField.vue';
 import OtpField from './OtpField.vue';
 import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
-import AiModelField from './AiModelField.vue';
+import CloudConnectField from './CloudConnectField.vue';
+import JoinotifyApiKeyField from './JoinotifyApiKeyField.vue';
+import WhatsappTemplateField from './WhatsappTemplateField.vue';
 
 const registry = new Map();
 
@@ -64,6 +66,7 @@ registerAlias('rich-text', RichTextAreaField);
 registerAlias('rich-text-area', RichTextAreaField);
 registerAlias('select', SelectField);
 registerAlias('phone', PhoneField);
+registerAlias('whatsapp-template-select', WhatsappTemplateField);
 registerAlias('input-group', InputGroupField);
 registerAlias('input-group-field', InputGroupField);
 registerAlias('input-button', InputButtonField);
@@ -75,9 +78,8 @@ registerAlias('color-picker', ColorPickerField);
 registerAlias('color-picker-field', ColorPickerField);
 registerAlias('color-scale', ColorScaleField);
 registerAlias('color-scale-field', ColorScaleField);
-registerAlias('openai-model-select', AiModelField);
-registerAlias('anthropic-model-select', AiModelField);
-registerAlias('ai-model-select', AiModelField);
+registerAlias('cloud-connect', CloudConnectField);
+registerAlias('joinotify-api-key', JoinotifyApiKeyField);
 
 /**
  * Convert a snake_case or kebab-case key into camelCase.

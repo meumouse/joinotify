@@ -13,6 +13,9 @@ const INCLUDED_EXTENSIONS = new Set([".php", ".js", ".jsx", ".ts", ".tsx", ".vue
 const IGNORED_DIRECTORIES = new Set([
   ".git",
   ".vscode",
+  // Editor local-history snapshots — scanning them resurrects strings that were
+  // already removed from source.
+  ".history",
   "dist",
   "build",
   "node_modules",
@@ -21,6 +24,10 @@ const IGNORED_DIRECTORIES = new Set([
   // Packaged build copy (full plugin duplicate + zip) — scanning it double-
   // extracts every string and resurrects ones already removed from source.
   "release",
+  // SVN working copy for WordPress.org: another full duplicate, holding trunk
+  // plus every tag staged locally, so it multiplies the references instead of
+  // merely doubling them.
+  ".wporg-svn",
   // Developer sample extension, not part of the shipped UI.
   "examples",
 ]);
@@ -262,6 +269,51 @@ function addReference(existingReference, nextReference) {
   return Array.from(referenceSet).join("\n");
 }
 
+function normalizeCommentBody(lines) {
+  return lines
+    .map((line) => line.replace(/^\/\*+/, "").replace(/\*+\/$/, "").replace(/^\/\//, "").replace(/^\*+/, "").trim())
+    .filter((line) => line !== "")
+    .join(" ")
+    .trim();
+}
+
+// Reads the `translators:` note WordPress expects on the line directly above a
+// gettext call, written either as a line comment or as a one-line or multi-line
+// block comment.
+function findTranslatorsComment(source, callIndex) {
+  const lineStart = source.lastIndexOf("\n", callIndex - 1) + 1;
+  const lines = source.slice(0, lineStart).split(/\r?\n/);
+
+  lines.pop(); // Drop the empty tail left by the final newline.
+
+  const previous = (lines.pop() ?? "").trim();
+
+  if (previous === "") {
+    return undefined;
+  }
+
+  let body;
+
+  if (previous.startsWith("//")) {
+    body = normalizeCommentBody([previous]);
+  } else if (/^\/\*[\s\S]*\*\/$/.test(previous)) {
+    body = normalizeCommentBody([previous]);
+  } else if (previous.endsWith("*/")) {
+    // Multi-line block: walk back to its opening line.
+    const block = [previous];
+
+    while (lines.length > 0 && !block[0].startsWith("/*")) {
+      block.unshift((lines.pop() ?? "").trim());
+    }
+
+    body = normalizeCommentBody(block);
+  } else {
+    return undefined;
+  }
+
+  return /^translators\s*:/i.test(body) ? body : undefined;
+}
+
 function extractStringsFromFile(filePath) {
   const source = fs.readFileSync(filePath, "utf8");
   const results = [];
@@ -319,6 +371,7 @@ function extractStringsFromFile(filePath) {
         msgid,
         plural,
         context,
+        translatorsComment: findTranslatorsComment(source, index),
         reference: `${path.relative(PLUGIN_ROOT, filePath).replace(/\\/g, "/")}:${getLineNumber(source, index)}`,
       });
 
@@ -367,6 +420,8 @@ function buildPotData(entries) {
       msgstr: entry.plural ? ["", ""] : [""],
       comments: {
         reference: addReference(existing?.comments?.reference, entry.reference),
+        // The same string can be used in several places; keep the first note found.
+        extracted: existing?.comments?.extracted || entry.translatorsComment,
       },
     };
   }

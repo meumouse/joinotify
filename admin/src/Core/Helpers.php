@@ -130,104 +130,24 @@ class Helpers {
         return ( is_string( $region ) && '' !== $region ) ? strtoupper( $region ) : null;
     }
 
-    
-    /**
-     * Encrypt data
-     * 
-     * @since 1.0.0
-     * @param string $data | Data for encrypt
-     * @param string $key | Key for build encrypt
-     * @return string
-     */
-    public static function encrypt_data( $data, $key ) {
-        $cipher_method = 'AES-256-CBC';
-    
-        // Adjust the key to be 32 characters long (required for AES-256)
-        $key = str_pad( $key, 32, '0' );
-        
-        // Generate a secure, random IV (Initialization Vector)
-        $iv_lenght = openssl_cipher_iv_length( $cipher_method );
-        $iv = openssl_random_pseudo_bytes( $iv_lenght );
-    
-        // encrypt data
-        $encrypted_data = openssl_encrypt( $data, $cipher_method, $key, 0, $iv );
-    
-        // Return the encrypted data and IV, encoded in base64
-        return base64_encode( $iv . $encrypted_data );
-    }
-    
-
-    /**
-     * Decrypt data
-     * 
-     * @since 1.0.0
-     * @param string $encrypted_data | Encrypted data for decrypt
-     * @param string $key | Key for decrypt data
-     * @return string
-     */
-    public static function decrypt_data( $encrypted_data, $key ) {
-        $cipher_method = 'AES-256-CBC';
-    
-        // Adjust the key to be 32 characters long (required for AES-256)
-        $key = str_pad( $key, 32, '0' );
-    
-        // Decode encrypted data from base64 encrypted value
-        $encrypted_data = base64_decode( $encrypted_data );
-    
-        // Separate the IV from the encrypted value
-        $iv_lenght = openssl_cipher_iv_length( $cipher_method );
-        $iv = substr( $encrypted_data, 0, $iv_lenght );
-        $encrypted_data = substr( $encrypted_data, $iv_lenght );
-    
-        // return decrypted data
-        return openssl_decrypt( $encrypted_data, $cipher_method, $key, 0, $iv );
-    }
-
-
-    /**
-     * API key for requests on Slots Manager API
-     * 
-     * @since 1.3.0
-     * @return string
-     */
-    public static function slots_manager_api_key() {
-        $key = 'F5clS9xxRMwaDveTH4fS/WxnNVVBRVpHUnI3OTdvRlFpL0lZaGhBN2s2RDlRMDdkYmgrWnVZMnMxTXg2d1d5SkVkN3pEWndmeTg4d2ZMb1A=';
-
-        return self::decrypt_data( $key, 'B729F2659393EE27' );
-    }
-
 
     /**
      * Resolve a WhatsApp Cloud API credential.
      *
-     * Prefers the manual override saved in the settings screen; when empty,
-     * falls back to the value provisioned by the license activation (stored on
-     * the public license response object). Mirrors slots_manager_api_key() as
-     * the single accessor for the current relay key.
+     * The settings option is the single source: the setup wizard and the
+     * WhatsApp settings modal both write there, so nothing downstream has to
+     * know which one the site owner used. The old fallback to the license
+     * response object went away with the licensing system in 2.4.0.
      *
      * @since 1.4.8
-     * @param string $setting_key | Settings key holding the manual override.
-     * @param string $license_key | Field name on the license response object.
+     * @version 2.4.0
+     * @param string $setting_key | Settings key holding the credential.
      * @return string
      */
-    private static function cloud_credential( $setting_key, $license_key ) {
-        $manual = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
+    private static function cloud_credential( $setting_key ) {
+        $stored = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
 
-        if ( is_string( $manual ) && '' !== trim( $manual ) ) {
-            return trim( $manual );
-        }
-
-        $license = get_option( 'joinotify_license_response_object' );
-
-        if ( is_object( $license ) && isset( $license->$license_key ) && is_string( $license->$license_key ) ) {
-            return trim( $license->$license_key );
-        }
-
-        if ( is_array( $license ) && isset( $license[ $license_key ] ) && is_string( $license[ $license_key ] ) ) {
-            return trim( $license[ $license_key ] );
-        }
-
-        return '';
+        return is_string( $stored ) ? trim( $stored ) : '';
     }
 
 
@@ -238,7 +158,7 @@ class Helpers {
      * @return string
      */
     public static function cloud_api_token() {
-        return self::cloud_credential( 'whatsapp_cloud_api_token', 'api_token' );
+        return self::cloud_credential('whatsapp_cloud_api_token');
     }
 
 
@@ -249,7 +169,7 @@ class Helpers {
      * @return string
      */
     public static function cloud_phone_number_id() {
-        return self::cloud_credential( 'whatsapp_phone_number_id', 'phone_number_id' );
+        return self::cloud_credential('whatsapp_phone_number_id');
     }
 
 
@@ -260,7 +180,7 @@ class Helpers {
      * @return string
      */
     public static function cloud_waba_id() {
-        return self::cloud_credential( 'whatsapp_waba_id', 'waba_id' );
+        return self::cloud_credential('whatsapp_waba_id');
     }
 
 
@@ -411,6 +331,7 @@ class Helpers {
      * Encode emoji characters to HTML entities
      *
      * @since 1.4.3
+     * @version 2.3.2
      * @param string $content | Text content
      * @return string
      */
@@ -423,7 +344,7 @@ class Helpers {
 
         foreach ( $emoji as $emojum ) {
             $emoji_char = html_entity_decode( $emojum );
-            if ( str_contains( $content, $emoji_char ) ) {
+            if ( '' !== $emoji_char && false !== strpos( $content, $emoji_char ) ) {
                 $content = preg_replace( "/$emoji_char/", $emojum, $content );
             }
         }

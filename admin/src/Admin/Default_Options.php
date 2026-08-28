@@ -34,14 +34,11 @@ class Default_Options {
             'enable_wordpress_integration' => 'yes',
             'joinotify_default_country_code' => '55',
             'test_number_phone' => '',
-            'enable_proxy_api' => 'yes',
-            'proxy_api_key' => '',
-            'send_text_proxy_api_route' => 'send-message/text',
-            'send_media_proxy_api_route' => 'send-message/media',
+            // The Proxy API is deprecated and exposes message-sending endpoints
+            // on this site, so it stays off until the owner turns it on.
             // WhatsApp transport switch: 'evolution' (legacy slots relay),
             // 'cloud' (official Meta Cloud API via Joinotify), or 'auto' (cloud
             // when a Cloud API token is available, otherwise evolution).
-            'whatsapp_transport' => 'auto',
             // Manual override for the Cloud API credentials. When empty, the
             // values provisioned by the license activation are used instead
             // (see Helpers::cloud_api_token() and friends).
@@ -53,7 +50,9 @@ class Default_Options {
             'otp_login_template_name' => '',
             'otp_login_template_language' => 'pt_BR',
             'enable_debug_mode' => 'no',
-            'enable_auto_updates' => 'no',
+            // Usage data is strictly opt-in: nothing is collected or sent while
+            // this is 'no', which is where every install starts.
+            'enable_usage_tracking' => 'no',
             'enable_create_coupon_action' => 'yes',
             'create_coupon_prefix' => 'CUPOM_',
             'enable_ignore_processed_actions' => 'no',
@@ -62,17 +61,11 @@ class Default_Options {
             'message_history_retention_days' => '90',
             'enable_debug_logs' => 'yes',
             'debug_logs_retention_days' => '30',
-            'enable_update_notice' => 'yes',
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
             'woocommerce_shipping_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-            'enable_openai_integration' => 'no',
-            'enable_anthropic_integration' => 'no',
-            'ai_provider' => 'openai',
-            'openai_api_key' => '',
-            'openai_default_model' => 'gpt-4o-mini',
-            'openai_default_temperature' => '0.7',
-            'anthropic_api_key' => '',
-            'anthropic_default_model' => 'claude-haiku-4-5',
+            'enable_ai_integration' => 'no',
+            'ai_provider' => 'wp_ai_client',
+            'ai_default_temperature' => '0.7',
             'ai_global_system_prompt' => '',
             'enable_telegram_integration' => 'no',
             'telegram_bot_token' => '',

@@ -29,7 +29,8 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Builder_Export',
 		'\MeuMouse\Joinotify\Rest\Builder_Test',
 		'\MeuMouse\Joinotify\Rest\Builder_Status',
-		'\MeuMouse\Joinotify\Rest\Builder_Groups',
 		'\MeuMouse\Joinotify\Rest\Builder_Woo_Products',
+		'\MeuMouse\Joinotify\Rest\Builder_Whatsapp_Templates',
+		'\MeuMouse\Joinotify\Rest\Builder_Whatsapp_Templates_Sync',
 	);
 }

@@ -13,6 +13,14 @@
 
 defined('ABSPATH') || exit;
 
+/*
+ * This file overrides a WooCommerce template, so it is included from
+ * wc_get_template() — the assignments below live in that function's local scope,
+ * not the global one — and it has to keep firing WooCommerce's own form hooks for
+ * themes and other plugins to stay wired up.
+ */
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+
 $registration_at_checkout   = WC_Checkout::instance()->is_registration_enabled();
 $login_reminder_at_checkout = 'yes' === get_option( 'woocommerce_enable_checkout_login_reminder' );
 $is_flexify_checkout        = function_exists( 'is_flexify_template' ) && is_flexify_template();

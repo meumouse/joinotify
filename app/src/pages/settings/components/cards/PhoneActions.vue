@@ -3,8 +3,12 @@
 /**
  * PhoneActions.vue frontend component.
  *
+ * On the Cloud API transport a number is connected on the Joinotify panel
+ * through Meta's Embedded Signup, so the slot + OTP onboarding is replaced by a
+ * read-only import of whatever the account already has.
+ *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.3.0
  */
 import { computed, ref, watch } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
@@ -13,27 +17,21 @@ import SelectField from '../../../../components/fields/SelectField.vue';
 import RichTextAreaField from '../../../../components/fields/RichTextAreaField.vue';
 import BaseButton from '../../../../components/buttons/BaseButton.vue';
 import PhoneField from '../../../../components/fields/PhoneField.vue';
-import OtpField from '../../../../components/fields/OtpField.vue';
 
 const DEFAULT_TEST_MESSAGE = __('Hello, this is a test message.', textDomain);
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
-  candidates: { type: Array, default: () => [] },
   senders: { type: Array, default: () => [] },
   defaultCountry: { type: String, default: 'us' },
   locale: { type: String, default: 'en_US' },
   sendTestMessage: { type: Function, default: null },
   senderActionLoading: { type: Boolean, default: false },
+  panelUrl: { type: String, default: '' },
 });
 
-const emit = defineEmits(['update:modelValue', 'register', 'validate']);
+const emit = defineEmits(['update:modelValue', 'sync']);
 
-const registerOpen = ref(false);
-const registerStep = ref('select');
-const registerPhone = ref('');
-const otpDigits = ref(Array(4).fill(''));
-const otpComplete = ref(false);
 const testMessageOpen = ref(false);
 const selectedSender = ref('');
 const testReceiverPhone = ref('');
@@ -46,16 +44,6 @@ const senderOptions = computed(() =>
     label: sender.formatted || sender.phone,
     meta: sender.connection === 'connected' ? __('Connected', textDomain) : __('Disconnected', textDomain),
   }))
-);
-
-watch(
-  () => props.candidates,
-  (value) => {
-    if (!registerPhone.value && value.length) {
-      registerPhone.value = value[0].phone;
-    }
-  },
-  { immediate: true }
 );
 
 watch(
@@ -75,20 +63,6 @@ watch(
   { immediate: true, deep: true }
 );
 
-watch(registerPhone, () => {
-  otpDigits.value = Array(4).fill('');
-  otpComplete.value = false;
-  registerStep.value = 'select';
-});
-
-watch(registerOpen, (open) => {
-  if (!open) {
-    registerStep.value = 'select';
-    otpDigits.value = Array(4).fill('');
-    otpComplete.value = false;
-  }
-});
-
 watch(testMessageOpen, (open) => {
   if (open) {
     selectedSender.value = senderOptions.value.find((option) => option.value === selectedSender.value)?.value || senderOptions.value[0]?.value || '';
@@ -99,26 +73,6 @@ watch(testMessageOpen, (open) => {
 
   sendingTestMessage.value = false;
 });
-
-function sendOtp() {
-  if (!registerPhone.value) {
-    return;
-  }
-
-  emit('register', registerPhone.value);
-  registerStep.value = 'otp';
-}
-
-function validate() {
-  const otpCode = otpDigits.value.join('');
-
-  if (!registerPhone.value || !otpComplete.value || otpCode.length !== 4) {
-    return;
-  }
-
-  emit('validate', { phone: registerPhone.value, otp: otpCode });
-  registerOpen.value = false;
-}
 
 function openTestMessageModal() {
   if (!senderOptions.value.length) {
@@ -180,15 +134,26 @@ async function submitTestMessage() {
       </div>
     </div>
 
+    <div class="rounded-lg border border-slate-200 bg-slate-50 px-5 py-4 text-[13px] leading-5 text-slate-600">
+      {{ __('Your numbers are connected on the Joinotify panel. Sync to import them here, along with their verified name, quality rating and 24-hour messaging limit.', textDomain) }}
+      <a
+        v-if="panelUrl"
+        class="ms-1 font-medium text-primary-700 underline underline-offset-2"
+        :href="panelUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >{{ __('Open the panel', textDomain) }}</a>
+    </div>
+
     <div class="flex flex-wrap gap-3">
       <button
         type="button"
         class="inline-flex items-center justify-center gap-2 rounded-[8px] bg-primary-700 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-800 disabled:cursor-not-allowed disabled:opacity-70"
         :disabled="senderActionLoading"
-        @click="registerOpen = true"
+        @click="$emit('sync')"
       >
         <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
-        {{ __('Add new phone', textDomain) }}
+        {{ __('Sync numbers from Joinotify', textDomain) }}
       </button>
       <button
         type="button"
@@ -290,85 +255,6 @@ async function submitTestMessage() {
             :disabled="!selectedSender || !testReceiverPhone || !testMessageBody.trim() || !sendTestMessage"
             @click="submitTestMessage"
           />
-        </div>
-      </div>
-    </ModalDialog>
-
-    <ModalDialog
-      :open="registerOpen"
-      :title="__('Register new phone', textDomain)"
-      :description="registerStep === 'select' ? __('Step 1: Select an available phone.', textDomain) : __('Step 2: Enter the verification code.', textDomain)"
-      :eyebrow="__('Phones', textDomain)"
-      @close="registerOpen = false"
-    >
-      <div class="space-y-4">
-        <div class="space-y-3">
-          <div>
-            <span class="text-sm font-medium text-ink">{{ __('Step 1: Select an available phone', textDomain) }}</span>
-          </div>
-
-          <SelectField
-            v-model="registerPhone"
-            :field="{
-              label: __('Candidate phone', textDomain),
-              description: __('Select an available phone for registration and validation.', textDomain),
-              placeholder: __('Select a phone', textDomain),
-              emptyLabel: __('No phone available', textDomain),
-              searchable: true,
-              options: candidates.map((item) => ({
-                value: item.phone,
-                label: item.formatted || item.phone,
-                meta: item.phone,
-              })),
-            }"
-            name="register-phone"
-          />
-        </div>
-
-        <div v-if="registerStep === 'otp'" class="space-y-3">
-          <div>
-            <span class="text-sm font-medium text-ink">{{ __('Step 2: Enter the verification code', textDomain) }}</span>
-            <p class="mt-1 text-sm leading-6 text-muted">
-              {{ __('Enter the code received on the selected phone.', textDomain) }}
-            </p>
-          </div>
-
-          <OtpField
-            v-model:digits="otpDigits"
-            :length="4"
-            @complete="otpComplete = true"
-          />
-        </div>
-
-        <div class="flex flex-wrap justify-end gap-3">
-          <button
-            type="button"
-            class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
-            :disabled="senderActionLoading"
-            @click="registerOpen = false"
-          >
-            {{ __('Cancel', textDomain) }}
-          </button>
-          <button
-            v-if="registerStep === 'select'"
-            type="button"
-            class="inline-flex items-center justify-center gap-2 rounded-full bg-shell-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-shell-700 disabled:cursor-not-allowed disabled:bg-slate-300"
-            :disabled="!registerPhone || senderActionLoading"
-            @click="sendOtp"
-          >
-            <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
-            {{ __('Register phone', textDomain) }}
-          </button>
-          <button
-            v-else
-            type="button"
-            class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-300"
-            :disabled="!registerPhone || !otpComplete || senderActionLoading"
-            @click="validate"
-          >
-            <span v-if="senderActionLoading" class="inline-flex h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" />
-            {{ __('Validate and save', textDomain) }}
-          </button>
         </div>
       </div>
     </ModalDialog>

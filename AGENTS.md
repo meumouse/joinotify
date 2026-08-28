@@ -4,8 +4,13 @@ This is the **canonical entry point** for working on the Joinotify codebase. It 
 construction pattern, the per-layer conventions, the central data contract, and the process rules.
 Read this **before editing anything**.
 
-> **Proprietary software.** Joinotify is owned by MEUMOUSE.COM® — Soluções Digitais LTDA. It is not
-> open source and does not accept public fork/PRs. See [`license.md`](license.md).
+> **Free software, distributed on WordPress.org.** Joinotify is licensed under the **GPLv2 or
+> later** (see [`LICENSE`](LICENSE)) and every feature is unlocked — there is no premium tier,
+> trial or license check. Because the plugin is published in the WordPress.org directory, changes
+> must keep it inside the [plugin guidelines](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/):
+> no code executed from a remote server, no update mechanism of its own, no external request
+> before the user consents, and no minified asset shipped without its source. Every external
+> service the plugin talks to must stay declared in [`readme.txt`](readme.txt).
 
 ---
 
@@ -22,11 +27,15 @@ Read this **before editing anything**.
 4. **Don't invent APIs.** Use `joinotify_*()` helpers and classes that actually exist; confirm with
    a repository search before referencing a symbol.
 5. **Don't commit, push, or run destructive builds** without an explicit request from the user.
-6. **All source code is written in English.** Identifiers (classes, methods, variables, functions,
-   files), inline comments, docblocks, and commit messages are **always in English** — this applies
-   to PHP, JavaScript/TypeScript, and Vue alike. Only the narrative documentation (`*.md`) is
-   written in Portuguese; match the language of the file you are editing. User-facing strings are
-   authored in English and translated through the i18n pipeline (see §7).
+6. **Everything in the repository is written in English.** Identifiers (classes, methods, variables,
+   functions, files), inline comments, docblocks, commit messages, and the narrative documentation
+   (`*.md`, `readme.txt`) are **always in English** — this applies to PHP, JavaScript/TypeScript,
+   and Vue alike. There is no Portuguese exception: new files are authored in English, and a
+   Portuguese file you are already editing should be migrated to English as you touch it. Some docs
+   still carry legacy Portuguese (`README.md`, `CONTRIBUTING.md`, `app/README.md`,
+   `languages/README.md`, `docs/integrations.md`, `.wordpress-org/README.md`) — treat that as debt to
+   fix, not as precedent. User-facing strings are authored in English and translated through the i18n
+   pipeline (see §7).
 7. **Touch both sides of the contract.** Changed a workflow node's shape? Update the serializer/parser
    (Vue) **and** the processor (PHP) — and consider the migrator. Otherwise saved workflows break.
 
@@ -37,7 +46,7 @@ Read this **before editing anything**.
 A WordPress plugin that builds **WhatsApp message automation workflows** in a visual drag-and-drop
 builder. It connects site triggers (WooCommerce, forms, user actions) to actions (send WhatsApp,
 conditions, delays, AI, etc.). Current version in [`joinotify.php`](joinotify.php) (`Version:`),
-PHP **7.4+**, Node **18+**.
+WordPress **7.0+**, PHP **8.1+**, Node **18+**.
 
 ---
 
@@ -53,7 +62,7 @@ PHP **7.4+**, Node **18+**.
 | [`languages/README.md`](languages/README.md) | i18n pipeline (`.pot`, AI/Google translation, `.mo`/`.l10n.php`/`.json` compilation). |
 | [`docs/integrations.md`](docs/integrations.md) | Available integrations and their triggers. |
 | [`examples/joinotify-extension-example.php`](examples/joinotify-extension-example.php) | Runnable third-party extension example. |
-| [`changelogs.md`](changelogs.md) | Version history. |
+| [`CHANGELOG.md`](CHANGELOG.md) | Version history. |
 
 ---
 
@@ -67,7 +76,7 @@ joinotify/
 ├── joinotify.php          # Bootstrap: loads Composer autoloader + instantiates Core\Init
 ├── admin/                 # PHP BACKEND (PSR-4, namespace MeuMouse\Joinotify\ → admin/src/)
 │   ├── src/
-│   │   ├── AI/            #   AI-driven workflow generation (+ Providers: OpenAI, Anthropic...)
+│   │   ├── AI/            #   AI-driven workflow generation (via the WordPress AI Client)
 │   │   ├── Admin/         #   Server-side screens/settings/builder, Workflow_Migrator, Queue, History
 │   │   ├── Api/           #   Send Controller, Extensions (extension facade)
 │   │   ├── Assets/        #   Asset registration (reads the Vite manifest)
@@ -75,7 +84,6 @@ joinotify/
 │   │   ├── Core/          #   Init, Workflow_Processor (engine), Helpers, Upgrader, Cron...
 │   │   ├── Cron/          #   Scheduled tasks (WP-Cron)
 │   │   ├── Integrations/  #   WooCommerce, WPForms, Elementor, Flexify Checkout, Telegram, Resend...
-│   │   ├── Licensing/     #   Licensing (Contracts, Drivers, Dto, Http, Support)
 │   │   ├── Notifications/ #   Notification channel layer (Channel_Interface)
 │   │   ├── Otp_Login/     #   Passwordless login (OTP channels)
 │   │   ├── Rest/          #   REST routes (namespace joinotify/v1)
@@ -88,15 +96,21 @@ joinotify/
 ├── languages/             # Node i18n pipeline (see languages/README.md)
 ├── templates/             # PHP templates (e.g. OTP login) — markup scanned by Tailwind
 ├── assets/                # Static assets (brand, icons)
-├── dist/                  # Distributed workflow templates + update-checker.json
+├── dist/                  # Distributed workflow templates (NOT shipped in the ZIP)
 ├── docs/ · examples/ · tests/
 ├── scripts/build.mjs      # Build/packaging pipeline (orchestrates everything)
-└── *.md                   # AGENTS, CONTRIBUTING, README, DEVELOPERS, changelogs, license
+├── scripts/deploy-svn.mjs # Publishes a release to the WordPress.org SVN repository
+├── scripts/env.mjs        # Reads the Git-ignored .env consumed by the scripts above
+├── .env.example           # Documented template for that .env (credentials, local paths)
+├── .wordpress-org/        # Directory page artwork (banner, icon, screenshots) — not shipped
+├── readme.txt             # WordPress.org plugin page (headers, external services)
+├── LICENSE                # GNU GPL v2 or later
+└── *.md                   # AGENTS, CONTRIBUTING, README, DEVELOPERS, CHANGELOG
 ```
 
 - **Backend (PHP):** API only (REST under `joinotify/v1`) and schema provider. PSR-4, root namespace
   `MeuMouse\Joinotify\` → `admin/src/` (see [`admin/composer.json`](admin/composer.json)). Requires
-  `ext-sodium`, `giggsey/libphonenumber-for-php`, and `meumouse/mds-php-sdk`.
+  `giggsey/libphonenumber-for-php`.
 - **Frontend (Vue):** each admin screen is an **independent Vue application** (multi-page) that
   consumes everything via REST. Details in [`app/README.md`](app/README.md).
 - **Workflow engine:** [`Core/Workflow_Processor.php`](admin/src/Core/Workflow_Processor.php).
@@ -125,6 +139,13 @@ joinotify/
 
 Follow the style already present in `admin/src/`.
 
+- **PHP 8.1 is the floor.** `joinotify.php` (`Requires PHP:`), `readme.txt` and
+  [`admin/composer.json`](admin/composer.json) all declare 8.1, and `Core/Init.php` refuses to boot
+  below it. Nothing newer than PHP 8.1 may appear in `admin/src/`, `templates/` or `tests/`: no
+  `readonly` classes, no typed class constants, no `json_validate()`, no dynamic class constant
+  fetch. Enums, `match`, promoted constructors, union types, nullsafe `?->`, named arguments and the
+  PHP 8 standard library (`str_contains()`, `get_debug_type()`, `array_is_list()`) are all fine.
+  Run `npm run lint:php` to check — it parses every source file with a real PHP 8.1 binary.
 - **PSR-4 + WordPress Coding Standards.** One class per file; the file name matches the class name
   (`Workflow_Processor.php` → `class Workflow_Processor`).
 - **TAB indentation** (not spaces).
@@ -220,7 +241,10 @@ examples in [`DEVELOPERS.md`](DEVELOPERS.md):
 - **Translation-only changes don't require a frontend rebuild** — JS translations are injected at
   runtime via `wp.i18n.setLocaleData` per script handle.
 - When **adding/changing strings**: run `npm run pot` in `languages/`, translate
-  (`npm run translate` / `:ai`) and compile (`compile:mo`, `compile:php`).
+  (`npm run translate` / `:ai`) and compile (`compile:mo`, `compile:php`, `compile:json`).
+- Each script handle's `.json` carries **only the strings its own bundle uses**. The handle list is
+  derived from `app/src/entries/*` and the `mountPage('<handle>', …)` call in each entry, so a new
+  page needs no separate list — but an entry without a resolvable handle fails the build.
 
 ---
 
@@ -237,8 +261,48 @@ Orchestrated by [`scripts/build.mjs`](scripts/build.mjs), from the root:
 
 Full build order: **frontend → composer `--no-dev` → translations → staging → ZIP.** Flags:
 `--skip-app`, `--skip-composer`, `--skip-translations`, `--translate`, `--engine=<name>`,
-`--no-install`, `--no-zip`. Initial setup: `cd app && npm install`; `cd languages && npm install`;
-`cd admin && composer install`; `npm install` at the root.
+`--no-install`, `--no-zip`, `--ship-locales`. Initial setup: `cd app && npm install`;
+`cd languages && npm install`; `cd admin && composer install`; `npm install` at the root.
+
+The build refuses to run when `joinotify.php` (header and `$plugin_version`), the `Stable tag` in
+`readme.txt` and `package.json` disagree — the gate lives in
+[`scripts/version.mjs`](scripts/version.mjs) and the SVN deploy shares it.
+
+**Only `joinotify.pot` ships.** WordPress.org generates and delivers every locale from
+translate.wordpress.org, and the plugin review team asks that packages not duplicate that channel,
+so the compiled catalogues (`.po`/`.mo`/`.l10n.php`/`.json`) stay out of the ZIP. Until the strings
+are imported and approved there, non-English installs fall back to English. `--ship-locales` builds
+a package that carries them, which is what installs outside the directory need — they get no
+language packs.
+
+### Publishing to WordPress.org
+
+Git is the development history; SVN is only the publishing channel, driven by
+[`scripts/deploy-svn.mjs`](scripts/deploy-svn.mjs). **Nothing is published without `--commit`** — a
+bare run mirrors the build into `trunk/`, creates the tag locally and prints the pending diff.
+
+| Command | Description |
+|---------|-------------|
+| `npm run deploy` | Dry run: build, mirror into `trunk/`, tag, show the diff. Publishes nothing. |
+| `npm run deploy:commit` | Commits `trunk/` and `tags/<version>` in one revision. |
+| `npm run deploy:assets` | Directory artwork only (`.wordpress-org/` → SVN `assets/`). |
+| `npm run deploy:trunk` | Updates `trunk/` without tagging, for readme-only fixes. |
+
+The working copy lives in `.wporg-svn/` (Git-ignored), with `tags/` at shallow depth. Needs an `svn`
+client on PATH and `WPORG_USERNAME` (or `--username=<name>`).
+
+Credentials come from a Git-ignored `.env` at the repository root — copy
+[`.env.example`](.env.example), which documents every variable the scripts read (`WPORG_USERNAME`,
+`WPORG_PASSWORD`, `WPORG_SLUG`, `PHP81_BIN`, translation keys). A variable already set in the
+environment wins over the file, so CI secrets are never overridden. Leave `WPORG_PASSWORD` empty for
+an interactive deploy: svn prompts once and caches the credential itself. Setting it is for
+unattended runs, and makes the deploy pass `--non-interactive --no-auth-cache` and mask the value in
+its output. Add every new variable to `.env.example` — never a real secret.
+
+> **SVN `assets/` ≠ the plugin's `assets/`.** The SVN one sits beside `trunk/`, outside the
+> installed package, and holds the banner, icon and screenshots — see
+> [`.wordpress-org/README.md`](.wordpress-org/README.md). The plugin's own `assets/brand/` still
+> ships inside the ZIP.
 
 ---
 
@@ -284,7 +348,8 @@ Report results **honestly**: if a test fails, say so and show the output.
   Types: `feat`, `fix`, `refactor`, `style`, `docs`, `chore`, `i18n`. Common scopes: `builder`,
   `ai`, `cron`, `queue`, `history`, `settings`, `core`, `i18n`.
 - **Don't commit generated artifacts or secrets** (already in [`.gitignore`](.gitignore)): `app/dist/`,
-  `admin/vendor`, `node_modules/`, `release/`, `.env`, `composer.lock`, `.claude`, `.history`.
+  `admin/vendor`, `node_modules/`, `release/`, `.wporg-svn/`, `.env`, `composer.lock`, `.claude`,
+  `.history`.
 - **Commit/push only when explicitly requested** by the user.
 
 ---
@@ -292,7 +357,7 @@ Report results **honestly**: if a test fails, say so and show the output.
 ## 11. Delivery checklist
 
 - [ ] Code matches the neighboring module's style (TAB in PHP; Vue/TS conventions in the app).
-- [ ] All source code (identifiers, comments, docblocks) is in **English**.
+- [ ] Everything written is in **English** — identifiers, comments, docblocks, and documentation.
 - [ ] PHP docblocks updated (`@since`/`@version`) on new/changed symbols.
 - [ ] Workflow-contract change reflected on **both sides** (serializer/parser + PHP processor) and,
       if needed, the migrator.
@@ -301,7 +366,7 @@ Report results **honestly**: if a test fails, say so and show the output.
 - [ ] No generated artifacts (`dist/`, `vendor/`, `node_modules/`) or secrets in the commit.
 - [ ] Relevant tests run; build green when applicable.
 - [ ] Commit follows Conventional Commits.
-- [ ] `changelogs.md` updated for user-facing changes.
+- [ ] `CHANGELOG.md` updated for user-facing changes.
 
 ---
 

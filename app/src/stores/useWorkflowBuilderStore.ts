@@ -27,6 +27,7 @@ import {
   setTriggerCatalog,
 } from '../registries/triggerRegistry';
 import { setConditionsCatalog } from '../builder/actions/utils/conditionsCatalog';
+import { setIntegrationAvailability } from '../builder/actions/registry/integrationAvailability';
 import { getTriggerSettingsSchema } from '../utils/triggerSettings';
 import {
   createWorkflowFileFromParts,
@@ -66,9 +67,7 @@ import {
   insertWorkflowNodeAtEnd,
   isConditionNode,
   isDelayNode,
-  isPlaceholderNode,
-  isSnippetNode,
-  isStopNode,
+  isPlaceholderNode,  isStopNode,
   moveWorkflowNode,
   removeWorkflowNode,
   replaceWorkflowNodeData,
@@ -468,6 +467,12 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     // Mirror the conditions catalog so the pure node-description builders can
     // resolve translated condition titles, operators and value labels.
     setConditionsCatalog((bootstrap.value as Record<string, unknown> | undefined)?.conditions);
+
+    // The bundled action definitions are registered eagerly, so the integration
+    // toggles have to be mirrored before any catalog read: without them a
+    // disabled channel (Telegram, Resend, ...) would still be listed in the
+    // action library even though the backend never publishes it.
+    setIntegrationAvailability((bootstrap.value as Record<string, unknown> | undefined)?.settings);
     debugLogger.log('bootstrap:api-ready', {
       debug_mode: Boolean(bootstrap.value?.debug_mode),
       post_id: Number(bootstrap.value?.workflow?.post_id || 0) || 0,
@@ -1229,37 +1234,6 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
       };
     } finally {
       loading.value.create = false;
-    }
-  }
-
-  /**
-   * Generates a PHP snippet via AI.
-   *
-   * @since 2.0.0
-   * @param {Record<string, unknown>} [payload] The generation payload.
-   * @returns {Promise<Object>} The generation result with the code.
-   */
-  async function generateAiSnippet(payload: Record<string, unknown> = {}) {
-    debugLogger.log('snippet:generate-ai-start');
-
-    try {
-      const response = api.value
-        ? await api.value.generateAi({ intent: 'snippet', ...payload })
-        : null;
-
-      if (response && (response as Record<string, unknown>).status === 'success') {
-        return { ok: true, code: String((response as Record<string, unknown>).code || '') };
-      }
-
-      return {
-        ok: false,
-        message: String((response as Record<string, unknown>)?.message || __('The AI could not generate the snippet.', textDomain)),
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        message: error instanceof Error ? error.message : __('The AI could not generate the snippet.', textDomain),
-      };
     }
   }
 
@@ -2038,6 +2012,10 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
         ...bootstrap.value,
         settings: cloneSerializable(response.settings),
       };
+
+      // Keep the action library in step with an integration toggled from here.
+      setIntegrationAvailability(bootstrap.value.settings);
+      actionsCatalog.value = getActionCatalog();
     }
 
     return response;
@@ -2223,9 +2201,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     createEmptyWorkflowFile,
     createWorkflowFromScratch,
     createWorkflowFromTemplate,
-    generateWorkflowFromAi,
-    generateAiSnippet,
-    loadWorkflowFile,
+    generateWorkflowFromAi,    loadWorkflowFile,
     loadBootstrapFromServer,
     loadWorkflowFromServer,
     loadTemplatesFromServer,

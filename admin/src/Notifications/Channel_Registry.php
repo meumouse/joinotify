@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Notifications;
 
-use MeuMouse\Joinotify\Notifications\Channels\Whatsapp_Evolution_Channel;
 use MeuMouse\Joinotify\Notifications\Channels\Whatsapp_Cloud_Channel;
 
 // Exit if accessed directly.
@@ -38,8 +37,10 @@ class Channel_Registry {
      */
     public static function get_channels() {
         $channels = array(
-            'whatsapp' => Whatsapp_Evolution_Channel::class,
             'whatsapp_cloud' => Whatsapp_Cloud_Channel::class,
+            // The relay's id is kept pointing at the Cloud channel so messages
+            // queued before the upgrade still resolve to something that sends.
+            'whatsapp' => Whatsapp_Cloud_Channel::class,
         );
 
         /**

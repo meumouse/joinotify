@@ -61,7 +61,56 @@ class Repository {
             $sanitized[ $key ] = self::sanitize_setting_value( $key, $value, $definition );
         }
 
+        $sanitized = self::preserve_write_only( $sanitized, $current, Registry::get_write_only_keys() );
+
         update_option( 'joinotify_settings', $sanitized );
+
+        /**
+         * Fires after settings are stored, with both sides of the change.
+         *
+         * The previous values are passed along because the useful signal is almost never
+         * the new value on its own — it is the transition. Consent being switched on, a
+         * transport being changed, a key being removed: each of those is a moment, and a
+         * listener that only saw the result would have to keep its own copy to spot it.
+         *
+         * @since 2.3.0
+         * @param array $sanitized Settings as stored.
+         * @param array $current Settings as they were before this save.
+         */
+        do_action( 'Joinotify/Settings/Saved', $sanitized, $current );
+
+        return $sanitized;
+    }
+
+
+    /**
+     * Keep stored credentials that the submitted payload left blank.
+     *
+     * Write-only settings (the Joinotify API key) are blanked before they reach
+     * the browser, so the settings form always submits them empty. Without this
+     * the first press of Save after connecting — through the wizard or through
+     * the WhatsApp modal — would write that empty string back and silently
+     * disconnect the site. Clearing one is done through its own control, which
+     * writes the option directly.
+     *
+     * Pure helper (no WordPress calls) so the rule can be tested in isolation.
+     *
+     * @since 2.3.0
+     * @param array<string,mixed> $sanitized Values about to be stored.
+     * @param array<string,mixed> $current   Values currently stored.
+     * @param array<int,string>   $keys      Write-only setting keys.
+     * @return array<string,mixed>
+     */
+    public static function preserve_write_only( $sanitized, $current, $keys ) {
+        foreach ( (array) $keys as $key ) {
+            $key = (string) $key;
+            $incoming = isset( $sanitized[ $key ] ) ? trim( (string) $sanitized[ $key ] ) : '';
+            $stored = isset( $current[ $key ] ) ? trim( (string) $current[ $key ] ) : '';
+
+            if ( '' === $incoming && '' !== $stored ) {
+                $sanitized[ $key ] = $current[ $key ];
+            }
+        }
 
         return $sanitized;
     }
@@ -90,10 +139,8 @@ class Repository {
 		$deleted_settings = delete_option( 'joinotify_settings' );
 		$deleted_senders = delete_option( 'joinotify_get_phones_senders' );
 
-		delete_option( 'joinotify_alternative_license_activation' );
 		delete_transient( 'joinotify_api_request_cache' );
 		delete_transient( 'joinotify_api_response_cache' );
-		delete_transient( 'joinotify_license_status_cached' );
 		delete_user_meta( get_current_user_id(), 'joinotify_dismiss_placeholders_tip_user_meta' );
 
 		return (bool) ( $deleted_settings || $deleted_senders );

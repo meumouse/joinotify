@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Cron;
 
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Logger;
 
 use WP_Cron;
 
@@ -473,7 +474,7 @@ class Schedule {
         wp_delete_post( $coupon_id, true );
 
         if ( JOINOTIFY_DEV_MODE ) {
-            error_log( "Coupon {$coupon_id} deleted upon expiration" );
+            Logger::register_log( "Coupon {$coupon_id} deleted upon expiration" );
         }
     }
 }

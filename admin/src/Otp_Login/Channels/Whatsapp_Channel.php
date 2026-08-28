@@ -5,7 +5,9 @@ namespace MeuMouse\Joinotify\Otp_Login\Channels;
 use MeuMouse\Joinotify\Otp_Login\Channel_Interface;
 use MeuMouse\Joinotify\Otp_Login\Otp_Message;
 use MeuMouse\Joinotify\Otp_Login\Settings;
-use MeuMouse\Joinotify\Api\Controller;
+use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Api\Template_Repository;
+use MeuMouse\Joinotify\Api\Transport;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -75,15 +77,17 @@ class Whatsapp_Channel implements Channel_Interface {
     /**
      * Send the OTP message over WhatsApp.
      *
+     * A login code is always started by the business, so on the Cloud API it
+     * lands outside the 24-hour session window and free-form text is refused
+     * (error 131047). There it must go out as an approved AUTHENTICATION
+     * template, whose single variable is the code itself.
+     *
      * @since 2.0.0
+     * @version 2.3.0
      * @param Otp_Message $message | OTP message to deliver.
      * @return bool|\WP_Error
      */
     public function send( Otp_Message $message ) {
-        if ( ! class_exists( Controller::class ) ) {
-            return new \WP_Error( 'joinotify_otp_helpers_missing', __( 'Joinotify messaging helpers are unavailable.', 'joinotify' ) );
-        }
-
         $sender = $this->resolve_sender();
 
         if ( empty( $sender ) ) {
@@ -97,9 +101,77 @@ class Whatsapp_Channel implements Channel_Interface {
         // OTP codes expire within minutes, so a deferred retry would deliver an
         // already-invalid code. Send a single attempt and never enqueue it for
         // the notification retry queue ($queue_on_failure = false).
-        $result = Controller::send_message_text( $sender, $receiver, $message->body, 0, false );
+        $result = $this->send_template( $sender, $receiver, $message );
+
+        if ( is_wp_error( $result ) ) {
+            return $result;
+        }
 
         return ( true === $result || 201 === $result || '201' === $result );
+    }
+
+
+    /**
+     * Deliver the code through the configured AUTHENTICATION template.
+     *
+     * @since 2.3.0
+     * @param string      $sender | Origin phone number.
+     * @param string      $receiver | Recipient phone number.
+     * @param Otp_Message $message | OTP message to deliver.
+     * @return int|\WP_Error
+     */
+    protected function send_template( $sender, $receiver, Otp_Message $message ) {
+        $template = trim( (string) Admin::get_setting('otp_login_template_name') );
+
+        if ( '' === $template ) {
+            return new \WP_Error( 'joinotify_otp_no_template', __( 'Set an approved AUTHENTICATION template to deliver login codes through the WhatsApp Cloud API.', 'joinotify' ) );
+        }
+
+        // The language belongs to the template, not to the site: sending a code
+        // the template was not approved in is refused by Meta. Read it from the
+        // synced list and fall back to the setting when the list has no answer.
+        $synced = Template_Repository::find( $template );
+        $language = is_array( $synced ) ? trim( (string) ( $synced['language'] ?? '' ) ) : '';
+
+        if ( '' === $language ) {
+            $language = trim( (string) Admin::get_setting('otp_login_template_language') );
+        }
+
+        $language = '' !== $language ? $language : 'pt_BR';
+
+        // Meta's AUTHENTICATION templates take the code as the single body
+        // variable, and repeat it on the copy button when the template has one.
+        $components = array(
+            array(
+                'type' => 'body',
+                'parameters' => array(
+                    array( 'type' => 'text', 'text' => (string) $message->code ),
+                ),
+            ),
+            array(
+                'type' => 'button',
+                'sub_type' => 'url',
+                'index' => '0',
+                'parameters' => array(
+                    array( 'type' => 'text', 'text' => (string) $message->code ),
+                ),
+            ),
+        );
+
+        /**
+         * Filter the components sent with the OTP login template.
+         *
+         * Lets a site drop the copy-code button entry when its template has no
+         * button, or add a header parameter.
+         *
+         * @since 2.3.0
+         * @param array       $components | Meta components payload.
+         * @param Otp_Message $message | OTP message being delivered.
+         * @return array
+         */
+        $components = apply_filters( 'Joinotify/Otp_Login/Template_Components', $components, $message );
+
+        return Transport::send_message_template( $sender, $receiver, $template, $language, $components, 0, false );
     }
 
 
