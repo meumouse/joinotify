@@ -37,7 +37,7 @@ loadEnv(root);
 // generated or kept around as editor history.
 const scanDirs = ['admin/src', 'templates', 'tests', 'examples'];
 const scanFiles = ['joinotify.php'];
-const skipDirs = new Set(['node_modules', 'vendor', 'dist', '.git', '.history', 'release']);
+const skipDirs = new Set(['node_modules', 'vendor', 'dist', '.git', '.history', 'release', '.wporg-svn']);
 
 function findPhp() {
 	const fromFlag = process.argv.find((arg) => arg.startsWith('--php='));

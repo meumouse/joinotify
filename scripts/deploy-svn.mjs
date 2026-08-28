@@ -45,7 +45,7 @@
  */
 
 import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, rmSync } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -385,23 +385,51 @@ async function syncAssets() {
 /**
  * Create tags/<version> as a local copy of trunk, so the tag and the trunk
  * changes land in the same revision.
+ *
+ * A tag present in the working copy means one of two very different things, and
+ * only one of them is a problem:
+ *
+ *   - Scheduled for add ("A"): staged by an earlier run of this same version and
+ *     never committed, so nobody has ever seen it. The normal flow produces this
+ *     every time — a dry run stages the tag, then the operator re-runs with
+ *     --commit — so refusing here would block every release on its second step.
+ *     It is reverted and re-copied, to tag the build that is actually about to
+ *     be committed rather than the one the dry run happened to leave behind.
+ *   - Versioned: the tag is published. That is what users install, so it is only
+ *     replaceable with --force-tag, and only while it has not been announced.
  */
 function createTag(version) {
-	const tagPath = path.join(workingCopy, 'tags', version);
+	const relative = path.join('tags', version);
+	const tagPath = path.join(workingCopy, relative);
 
 	if (existsSync(tagPath)) {
-		if (!opts.forceTag) {
+		// --depth empty: the status of the tag directory itself, not of the
+		// thousand files inside it.
+		const staged = capture('svn', ['status', '--depth', 'empty', quote(relative)], workingCopy)
+			.trimStart()
+			.startsWith('A');
+
+		if (staged) {
+			warn(`Re-staging tags/${version} left by an earlier run (never committed).`);
+			run('svn', ['revert', '-R', quote(relative)], workingCopy);
+
+			// Reverting a scheduled copy takes it off disk, but an obstruction
+			// left behind would make the copy below fail.
+			if (existsSync(tagPath)) {
+				rmSync(tagPath, { recursive: true, force: true });
+			}
+		} else if (!opts.forceTag) {
 			throw new Error(
-				`tags/${version} already exists. Bump the version, or pass --force-tag to replace it ` +
+				`tags/${version} is already published. Bump the version, or pass --force-tag to replace it ` +
 				'(only safe for a tag that was never announced).',
 			);
+		} else {
+			warn(`Replacing published tags/${version}.`);
+			run('svn', ['rm', '--force', quote(relative)], workingCopy);
 		}
-
-		warn(`Replacing existing tags/${version}.`);
-		run('svn', ['rm', '--force', quote(path.join('tags', version))], workingCopy);
 	}
 
-	run('svn', ['copy', 'trunk', quote(path.join('tags', version))], workingCopy);
+	run('svn', ['copy', 'trunk', quote(relative)], workingCopy);
 	ok(`Tagged as tags/${version}.`);
 }
 

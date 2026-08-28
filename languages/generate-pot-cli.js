@@ -24,6 +24,10 @@ const IGNORED_DIRECTORIES = new Set([
   // Packaged build copy (full plugin duplicate + zip) — scanning it double-
   // extracts every string and resurrects ones already removed from source.
   "release",
+  // SVN working copy for WordPress.org: another full duplicate, holding trunk
+  // plus every tag staged locally, so it multiplies the references instead of
+  // merely doubling them.
+  ".wporg-svn",
   // Developer sample extension, not part of the shipped UI.
   "examples",
 ]);
