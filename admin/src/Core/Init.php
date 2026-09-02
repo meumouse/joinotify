@@ -117,6 +117,12 @@ class Init {
 		// Register deferred instantiation ASAP.
 		$this->register_deferred_classes();
 
+		// Declared here rather than from the `init` bootstrap below: WooCommerce
+		// fires `before_woocommerce_init` from `WooCommerce::init()`, hooked to
+		// `init` at priority 0, so anything registered at priority 10 arrives
+		// after the action is already spent.
+		Compatibility::init();
+
 		// Instance only the explicitly allowed classes
 		add_action( 'init', array( $this, 'instance_init_classes' ), 10 );
 		add_action( 'admin_init', array( $this, 'instance_admin_init_classes' ), 10 );

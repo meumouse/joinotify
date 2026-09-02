@@ -21,13 +21,45 @@ class Logger {
      * Construct function
      * 
      * @since 1.1.0
+     * @version 2.3.4
      * @return void
      */
     public function __construct() {
-        // set file path on uploads folder
-        $upload_dir = wp_upload_dir();
+        self::get_log_file();
+    }
+
+
+    /**
+     * Resolve the log file path, lazily.
+     *
+     * The class is bootstrapped on `wp_loaded`, but static call sites such as
+     * {@see self::register_log()} run much earlier (`plugins_loaded`, `init`,
+     * cron, REST and CLI). Resolving the path on demand keeps those calls safe
+     * instead of writing to an empty path, which raises a fatal ValueError on
+     * PHP 8.
+     *
+     * @since 2.3.4
+     * @return string Absolute path to the log file, or an empty string when the
+     *                uploads folder is unavailable.
+     */
+    private static function get_log_file() {
+        if ( ! empty( self::$log_file ) ) {
+            return self::$log_file;
+        }
+
+        if ( ! function_exists('wp_upload_dir') ) {
+            return '';
+        }
+
+        $upload_dir = wp_upload_dir( null, false );
+
+        if ( ! empty( $upload_dir['error'] ) || empty( $upload_dir['basedir'] ) ) {
+            return '';
+        }
+
         self::$log_file = trailingslashit( $upload_dir['basedir'] ) . 'joinotify/logs.txt';
-        $this->ensure_log_directory_exists();
+
+        return self::$log_file;
     }
 
 
@@ -35,14 +67,22 @@ class Logger {
      * Ensures the logs directory exists
      * 
      * @since 1.1.0
-     * @return void
+     * @version 2.3.4
+     * @param string $file | Absolute path to the log file
+     * @return bool True when the directory is available for writing
      */
-    private function ensure_log_directory_exists() {
-        $dir = dirname( self::$log_file );
-
-        if ( ! file_exists( $dir ) ) {
-            wp_mkdir_p( $dir );
+    private static function ensure_log_directory_exists( $file ) {
+        if ( empty( $file ) ) {
+            return false;
         }
+
+        $dir = dirname( $file );
+
+        if ( ! is_dir( $dir ) ) {
+            return wp_mkdir_p( $dir );
+        }
+
+        return true;
     }
 
 
@@ -72,11 +112,19 @@ class Logger {
             $message = self::stringify( $message );
         }
 
+        $log_file = self::get_log_file();
+
+        // Bail out silently when the uploads folder is unavailable; the
+        // structured store above already kept the entry.
+        if ( ! self::ensure_log_directory_exists( $log_file ) ) {
+            return;
+        }
+
         // Timestamps are stored in UTC; the reader renders them in the site timezone.
         $timestamp = gmdate('Y-m-d H:i:s');
         $formatted_message = "[$timestamp] [$level] $message" . PHP_EOL;
 
-        file_put_contents( self::$log_file, $formatted_message, FILE_APPEND );
+        file_put_contents( $log_file, $formatted_message, FILE_APPEND );
     }
 
 
@@ -124,8 +172,10 @@ class Logger {
      * @return string log content
      */
     public static function read_log() {
-        if ( file_exists( self::$log_file ) ) {
-            return file_get_contents( self::$log_file );
+        $log_file = self::get_log_file();
+
+        if ( $log_file && file_exists( $log_file ) ) {
+            return file_get_contents( $log_file );
         }
 
         return '';
@@ -139,8 +189,10 @@ class Logger {
      * @return void
      */
     public static function clear_log() {
-        if ( file_exists( self::$log_file ) ) {
-            file_put_contents( self::$log_file, '' );
+        $log_file = self::get_log_file();
+
+        if ( $log_file && file_exists( $log_file ) ) {
+            file_put_contents( $log_file, '' );
         }
     }
 
@@ -152,6 +204,8 @@ class Logger {
      * @return bool
      */
     public static function has_logs() {
-        return file_exists( self::$log_file ) && filesize( self::$log_file ) > 0;
+        $log_file = self::get_log_file();
+
+        return $log_file && file_exists( $log_file ) && filesize( $log_file ) > 0;
     }
 }

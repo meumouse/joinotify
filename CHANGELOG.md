@@ -8,6 +8,26 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.3.4] - 2026-09-01
+
+Three hooks that never fired. All three come from the same place: `Core\Init` builds the plugin's classes from callbacks on `init`, `admin_init` and `wp_loaded`, so whatever a constructor registers is registered while that hook is already running. `WP_Hook::apply_filters()` iterates a snapshot of the callbacks at the priority it is executing, and anything hooked to a priority that has already gone past — the current one included — is dropped without a warning.
+
+### Fixed
+
+- **Any log written before `wp_loaded` crashed the site with a fatal `ValueError: Path cannot be empty`**
+    - `Core\Logger` resolved its file path (`uploads/joinotify/logs.txt`) only inside the constructor, and the class is bootstrapped on `wp_loaded`
+    - Every static `Logger::register_log()` call that runs earlier — `Notification_Queue::maybe_process_due_items()` on `init`, cron, REST and CLI — therefore reached `file_put_contents()` with a `null` path, which is a fatal error on PHP 8
+    - The path is now resolved lazily on first use, so the static API is safe from any hook. When the uploads folder is unavailable the flat-file write is skipped instead of fatalling; the entry is still recorded in the structured `Debug_Log` table
+- **The `joinotify-workflow` post type was never registered**
+    - `Core\Workflow_Post_Type` is bootstrapped by `Core\Init` on `init` at priority 10, and its constructor hooked `init` at that same priority
+    - `WP_Hook::apply_filters()` iterates a snapshot of the callbacks at the priority it is running, so a callback added to that very priority is dropped for the rest of the request. `register_post_type()` therefore never ran, and neither did the one-time `flush_rewrite_rules()` behind it
+    - Workflows kept saving and querying — WordPress tolerates unregistered types in `wp_insert_post()` and `WP_Query` — which is why this went unnoticed. What did not apply were the declared capabilities: with no post type object, `map_meta_cap()` falls back to `edit_others_posts`, so any Editor could edit and delete workflows that were meant to require `manage_options`
+    - The post type is now registered inline when the class is built inside `init`, and still hooked when it is built earlier
+- **The WooCommerce HPOS compatibility declaration never reached WooCommerce**
+    - WooCommerce fires `before_woocommerce_init` from `WooCommerce::init()`, hooked to `init` at priority 0; `Core\Compatibility` registered its callback from a constructor running at `init` priority 10, always after the action had fired
+    - `FeaturesUtil::declare_compatibility( 'custom_order_tables', ... )` was consequently never called, and the plugin was listed as incompatible under WooCommerce → Settings → Advanced → Features
+    - The declaration is now registered by `Core\Compatibility::init()` at plugin load time, well before `init`
+
 ## [2.3.3] - 2026-08-28
 
 Release tooling only. Nothing inside the shipped package changed since 2.3.2 — the plugin code, the frontend build and the translation catalogues are the same files.
@@ -598,7 +618,8 @@ Release tooling only. Nothing inside the shipped package changed since 2.3.2 —
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.3.3...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.3.4...HEAD
+[2.3.4]: https://github.com/meumouse/joinotify/compare/v2.3.3...v2.3.4
 [2.3.3]: https://github.com/meumouse/joinotify/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/meumouse/joinotify/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/meumouse/joinotify/compare/v2.3.0...v2.3.1

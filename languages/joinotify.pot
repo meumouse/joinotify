@@ -154,7 +154,7 @@ msgstr ""
 msgid "<span class=\"builder-placeholder\">%s</span> is not empty"
 msgstr ""
 
-#: admin/src/Core/Init.php:237
+#: admin/src/Core/Init.php:243
 msgid ""
 "<strong>Joinotify</strong> requires PHP version 8.1 or higher. Contact your "
 "hosting support to upgrade."
@@ -369,7 +369,7 @@ msgstr ""
 msgid "Add media"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:43
+#: admin/src/Core/Workflow_Post_Type.php:54
 msgid "Add new flow"
 msgstr ""
 
@@ -505,7 +505,7 @@ msgstr ""
 msgid "All channels"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:47
+#: admin/src/Core/Workflow_Post_Type.php:58
 msgid "All flows"
 msgstr ""
 
@@ -2289,7 +2289,7 @@ msgid "Document"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:121
-#: admin/src/Core/Init.php:550
+#: admin/src/Core/Init.php:556
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:33
 msgid "Documentation"
 msgstr ""
@@ -2397,7 +2397,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:45
+#: admin/src/Core/Workflow_Post_Type.php:56
 msgid "Edit flow"
 msgstr ""
 
@@ -3258,7 +3258,7 @@ msgstr ""
 msgid "Include the country code so the number is normalized correctly."
 msgstr ""
 
-#: admin/src/Core/Init.php:178
+#: admin/src/Core/Init.php:184
 msgid ""
 "Increase customer satisfaction by automating WhatsApp messaging with "
 "Joinotify."
@@ -3485,7 +3485,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:38
 #: admin/src/Admin/Menu.php:39
-#: admin/src/Core/Init.php:177
+#: admin/src/Core/Init.php:183
 #: admin/src/Integrations/Elementor_Forms.php:50
 #: admin/src/Integrations/Elementor_Forms.php:66
 #: app/src/components/brand/BrandMark.vue:15
@@ -4222,7 +4222,7 @@ msgstr ""
 msgid "New Caledonia"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:44
+#: admin/src/Core/Workflow_Post_Type.php:55
 msgid "New flow"
 msgstr ""
 
@@ -4376,11 +4376,11 @@ msgstr ""
 msgid "No example post or meta keys were found for this entity."
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:51
+#: admin/src/Core/Workflow_Post_Type.php:62
 msgid "No flow found in trash."
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:50
+#: admin/src/Core/Workflow_Post_Type.php:61
 msgid "No flow found."
 msgstr ""
 
@@ -4829,7 +4829,7 @@ msgstr ""
 msgid "Paraguay"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:49
+#: admin/src/Core/Workflow_Post_Type.php:60
 msgid "Parent flow:"
 msgstr ""
 
@@ -5591,7 +5591,7 @@ msgstr ""
 msgid "Search entity…"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:48
+#: admin/src/Core/Workflow_Post_Type.php:59
 msgid "Search flows"
 msgstr ""
 
@@ -5976,7 +5976,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:95
 #: admin/src/Admin/Menu.php:96
-#: admin/src/Core/Init.php:529
+#: admin/src/Core/Init.php:535
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:310
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -7606,7 +7606,7 @@ msgstr ""
 msgid "View debug logs"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:46
+#: admin/src/Core/Workflow_Post_Type.php:57
 msgid "View flow"
 msgstr ""
 
@@ -7735,7 +7735,7 @@ msgstr ""
 msgid "WhatsApp (Cloud API)"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:56
+#: admin/src/Core/Workflow_Post_Type.php:67
 msgid "WhatsApp automation workflows created with Joinotify."
 msgstr ""
 
@@ -8146,27 +8146,27 @@ msgstr ""
 msgid "Zoom out"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:42
+#: admin/src/Core/Workflow_Post_Type.php:53
 msgctxt "fluxo"
 msgid "Add new"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:41
+#: admin/src/Core/Workflow_Post_Type.php:52
 msgctxt "add new on admin bar"
 msgid "Flow"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:39
+#: admin/src/Core/Workflow_Post_Type.php:50
 msgctxt "post type singular name"
 msgid "Flow"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:40
+#: admin/src/Core/Workflow_Post_Type.php:51
 msgctxt "admin menu"
 msgid "Flows"
 msgstr ""
 
-#: admin/src/Core/Workflow_Post_Type.php:38
+#: admin/src/Core/Workflow_Post_Type.php:49
 msgctxt "post type general name"
 msgid "Flows"
 msgstr ""

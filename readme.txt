@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,11 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.3.4 =
+* Fixed: a fatal error could take the whole site down, login page included, whenever the plugin wrote a log entry early in the request. Sites on PHP 8 with debugging enabled were the ones affected.
+* Fixed: the workflow post type was never actually registered with WordPress. Workflows themselves kept working, but the permissions declared for them did not apply, so an Editor could open and delete workflows that were meant to be restricted to administrators.
+* Fixed: the plugin was reported as incompatible with WooCommerce's High-Performance Order Storage, because the compatibility declaration was sent after WooCommerce had stopped listening. HPOS can now be enabled with Joinotify active.
+
 = 2.3.3 =
 * No change to the plugin itself: the code, the interface and the translations are the same as 2.3.2. Only the release pipeline that publishes the package to WordPress.org was fixed.
 
@@ -227,6 +232,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.3.4 =
+Recommended for every installation. Fixes a fatal error that could make the site — and wp-login.php — unreachable, restores the permission rules on workflows, and makes the plugin compatible with WooCommerce High-Performance Order Storage again.
 
 = 2.3.3 =
 Same plugin as 2.3.2. Coming from 2.2.x: the legacy Evolution relay was removed, so a site still sending through it stops delivering until you connect your Joinotify account in Settings → General → WhatsApp Cloud API. It also removes an API key that shipped embedded in the plugin.

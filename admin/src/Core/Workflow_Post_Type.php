@@ -18,10 +18,21 @@ class Workflow_Post_Type {
      * Constructor
      * 
      * @since 1.4.6
+     * @version 2.3.4
      * @return void
      */
     public function __construct() {
-        // register new post type
+        // Init bootstraps this class on `init` at priority 10, so hooking
+        // `init` at the same priority appended the callback to the array
+        // WP_Hook was already iterating over -- and it never ran, leaving the
+        // post type unregistered. Register it inline instead: `init` is exactly
+        // where post types belong, and we are already inside it.
+        if ( did_action('init') ) {
+            $this->register_joinotify_workflow_post_type();
+
+            return;
+        }
+
         add_action( 'init', array( $this, 'register_joinotify_workflow_post_type' ) );
     }
 
