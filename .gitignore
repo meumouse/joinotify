@@ -1,11 +1,22 @@
-.env
+# Dependencies
 node_modules/
-release/
+admin/vendor/
+
+# Build artifacts
 app/dist/
-composer.lock
-admin/vendor
+
+# Release outputs
+release/
+
+# Local tooling
+.vscode
 .claude
 .history
+
+# OS
+.DS_Store
+Thumbs.db
+.env
 
 # WordPress.org SVN working copy created by scripts/deploy-svn.mjs.
 .wporg-svn/
