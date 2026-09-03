@@ -166,6 +166,15 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.4.0 =
+* New: how many times a failed message is retried, and how long the first wait is, are now settings under Settings → General → Delivery retries. The default is 5 attempts starting 30 minutes apart, replacing the fixed budget of 120 attempts used until now. Choosing "Do not retry" keeps a failed message out of the queue altogether.
+* New: a resend that has not run yet can be cancelled from the message history. Select the records and use "Cancel resend"; they settle as "cancelled", a new status with its own tab. Records whose retry already ran are left alone.
+* New: the message history has an Error column, showing why a message failed without having to open the details.
+* Changed: the setup wizard now uses the same visual style as the rest of the admin screens.
+* Fixed: a message left in "queued" stayed that way forever, even after the retry had succeeded or run out of attempts. Those records now settle as sent or failed.
+* Fixed: a test message refused by WhatsApp was announced as a success, in a green notice that carried the failure text.
+* Fixed: the reason a send failed never reached the screen. Failures now explain what happened and what to do about it — in particular, sending outside the 24-hour customer service window says so and points to template messages, instead of leaving the cause in the log.
+
 = 2.3.4 =
 * Fixed: a fatal error could take the whole site down, login page included, whenever the plugin wrote a log entry early in the request. Sites on PHP 8 with debugging enabled were the ones affected.
 * Fixed: the workflow post type was never actually registered with WordPress. Workflows themselves kept working, but the permissions declared for them did not apply, so an Editor could open and delete workflows that were meant to be restricted to administrators.
@@ -232,6 +241,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.4.0 =
+Recommended for every installation. Failed sends now explain themselves on screen instead of only in the log, messages stuck in "queued" settle correctly, and a test message refused by WhatsApp is no longer reported as sent. Note one behaviour change: a failed message is now retried 5 times by default instead of 120, adjustable under Settings → General → Delivery retries.
 
 = 2.3.4 =
 Recommended for every installation. Fixes a fatal error that could make the site — and wp-login.php — unreachable, restores the permission rules on workflows, and makes the plugin compatible with WooCommerce High-Performance Order Storage again.
