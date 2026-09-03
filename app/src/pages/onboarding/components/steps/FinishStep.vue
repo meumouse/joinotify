@@ -27,7 +27,7 @@ defineEmits(['finish']);
 
     <p
       v-if="!connected"
-      class="max-w-2xl rounded-[8px] border border-amber-200 bg-amber-50 px-5 py-4 text-[13px] leading-5 text-amber-800"
+      class="max-w-2xl rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-5 text-amber-800"
       role="status"
     >
       {{ __('You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready.', textDomain) }}
@@ -36,7 +36,7 @@ defineEmits(['finish']);
     <div class="grid max-w-3xl gap-4 sm:grid-cols-2">
       <button
         type="button"
-        class="rounded-[8px] border border-primary-200 bg-white p-6 text-left transition hover:border-primary-700 hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-60"
+        class="rounded-lg border border-primary-200 bg-white p-6 text-left transition hover:border-primary-700 hover:bg-primary-50 disabled:cursor-not-allowed disabled:opacity-60"
         :disabled="busy"
         @click="$emit('finish', links.builder_url)"
       >
@@ -48,7 +48,7 @@ defineEmits(['finish']);
 
       <button
         type="button"
-        class="rounded-[8px] border border-slate-200 bg-white p-6 text-left transition hover:border-slate-400 hover:shadow-soft disabled:cursor-not-allowed disabled:opacity-60"
+        class="rounded-lg border border-slate-200 bg-white p-6 text-left transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
         :disabled="busy"
         @click="$emit('finish', links.settings_url)"
       >

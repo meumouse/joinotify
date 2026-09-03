@@ -27,7 +27,7 @@ defineProps({
 
     <div class="max-w-2xl space-y-4">
       <div
-        class="rounded-xl border px-4 py-3 text-[14px] leading-6"
+        class="rounded-lg border px-4 py-3 text-[13px] leading-5"
         :class="configured ? 'border-emerald-200 bg-emerald-50 text-emerald-900' : 'border-slate-200 bg-slate-50 text-slate-700'"
       >
         <p v-if="configured" class="font-medium">

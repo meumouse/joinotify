@@ -256,7 +256,7 @@ onBeforeUnmount(() => {
         </button>
       </div>
 
-      <section class="mt-8 flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white shadow-soft ring-1 ring-slate-100">
+      <section class="mt-8 flex flex-1 flex-col overflow-hidden rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
         <div class="grid flex-1 gap-0 lg:grid-cols-[minmax(220px,280px)_minmax(0,1fr)]">
           <aside class="border-b border-slate-100 bg-shell-50/40 px-6 py-8 lg:border-b-0 lg:border-r">
             <p class="mb-4 px-3 text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">

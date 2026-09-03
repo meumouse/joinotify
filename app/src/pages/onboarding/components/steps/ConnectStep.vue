@@ -88,7 +88,7 @@ async function connect() {
 
     <div
       v-if="isConnected"
-      class="max-w-2xl rounded-[8px] border border-emerald-200 bg-emerald-50 px-5 py-4"
+      class="max-w-2xl rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3"
       role="status"
     >
       <div class="flex flex-wrap items-center gap-3">
@@ -117,7 +117,7 @@ async function connect() {
           autocomplete="off"
           spellcheck="false"
           placeholder="sk_live_..."
-          class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100"
+          class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10"
           @keyup.enter="connect"
         >
       </div>
@@ -142,7 +142,7 @@ async function connect() {
       <p v-if="errorMsg" class="text-[13px] leading-5 text-rose-600" role="alert">{{ errorMsg }}</p>
     </div>
 
-    <div class="max-w-2xl rounded-[8px] border border-dashed border-slate-300 bg-slate-50 px-5 py-4">
+    <div class="max-w-2xl rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
       <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
         {{ __('What this sends', textDomain) }}
       </p>

@@ -25,7 +25,7 @@ defineEmits(['navigate']);
       <component
         :is="index < currentIndex ? 'button' : 'div'"
         :type="index < currentIndex ? 'button' : undefined"
-        class="flex w-full items-start gap-3 rounded-[8px] px-3 py-3 text-left transition"
+        class="flex w-full items-start gap-3 rounded-lg px-3 py-3 text-left transition"
         :class="[
           index === currentIndex ? 'bg-primary-50 ring-1 ring-primary-200' : '',
           index < currentIndex ? 'cursor-pointer hover:bg-slate-50' : '',

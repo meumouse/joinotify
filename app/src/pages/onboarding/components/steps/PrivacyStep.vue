@@ -34,7 +34,7 @@ const sampleEvents = computed(() => JSON.stringify(props.telemetry?.sample_event
       {{ __('Knowing which WordPress and PHP versions Joinotify actually runs on, and which errors people hit, is what tells us where to spend our time. Sharing is entirely up to you and the plugin behaves identically either way.', textDomain) }}
     </p>
 
-    <div class="max-w-2xl rounded-[8px] border border-slate-200 bg-white p-6 shadow-soft">
+    <div class="max-w-2xl rounded-lg border border-slate-200 bg-white p-6">
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div class="min-w-0">
           <h3 class="text-[15px] font-semibold text-ink">{{ __('Share anonymous usage data', textDomain) }}</h3>
@@ -97,7 +97,7 @@ const sampleEvents = computed(() => JSON.stringify(props.telemetry?.sample_event
               {{ __('The exact payload for this site right now', textDomain) }}
             </p>
 
-            <pre class="mt-2 max-h-72 overflow-auto rounded-[8px] bg-slate-900 p-4 text-[12px] leading-5 text-slate-100"><code>{{ payloadPreview }}</code></pre>
+            <pre class="mt-2 max-h-72 overflow-auto rounded-lg bg-slate-900 p-4 text-[12px] leading-5 text-slate-100"><code>{{ payloadPreview }}</code></pre>
           </div>
 
           <div>
@@ -105,7 +105,7 @@ const sampleEvents = computed(() => JSON.stringify(props.telemetry?.sample_event
               {{ __('Examples of the events that would be sent', textDomain) }}
             </p>
 
-            <pre class="mt-2 max-h-72 overflow-auto rounded-[8px] bg-slate-900 p-4 text-[12px] leading-5 text-slate-100"><code>{{ sampleEvents }}</code></pre>
+            <pre class="mt-2 max-h-72 overflow-auto rounded-lg bg-slate-900 p-4 text-[12px] leading-5 text-slate-100"><code>{{ sampleEvents }}</code></pre>
           </div>
         </div>
       </div>

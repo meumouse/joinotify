@@ -9,6 +9,7 @@
  * @since 2.3.0
  */
 import { __, textDomain } from '../../../../utils/i18n';
+import BaseButton from '../../../../components/base/BaseButton.vue';
 
 defineProps({
   docsUrl: { type: String, default: '' },
@@ -28,7 +29,7 @@ const topics = [
       {{ __('Everything Joinotify does is documented, from the first workflow to the PHP hooks you can extend it with. Keep this link handy.', textDomain) }}
     </p>
 
-    <div class="max-w-2xl rounded-[8px] border border-slate-200 bg-white p-6 shadow-soft">
+    <div class="max-w-2xl rounded-lg border border-slate-200 bg-white p-6">
       <p class="text-xs font-semibold uppercase tracking-[0.18em] text-shell-500">
         {{ __('Documentation', textDomain) }}
       </p>
@@ -42,12 +43,11 @@ const topics = [
       </ul>
 
       <div class="mt-6">
-        <a
-          class="inline-flex items-center justify-center rounded-[8px] bg-primary-700 px-4 py-2.5 text-sm font-medium text-white outline-none transition hover:bg-primary-800 focus-visible:ring-4 focus-visible:ring-primary-100"
+        <BaseButton
+          :title="__('Open the documentation', textDomain)"
           :href="docsUrl"
           target="_blank"
-          rel="noopener noreferrer"
-        >{{ __('Open the documentation', textDomain) }}</a>
+        />
       </div>
     </div>
   </div>

@@ -8,9 +8,15 @@
  *
  * @since 2.0.0
  */
+import { computed } from 'vue';
+
 const props = defineProps({
   title: { type: String, required: true },
   href: { type: String, default: '' },
+  // Only meaningful when rendering as a link; `rel` defaults to the safe pair a
+  // new tab needs, so callers never have to remember it.
+  target: { type: String, default: '' },
+  rel: { type: String, default: '' },
   variant: {
     type: String,
     default: 'primary',
@@ -41,6 +47,26 @@ const sizeClasses = {
 };
 
 /**
+ * Resolve the `rel` attribute of the link form. A link that opens in a new tab
+ * gets the safe default on its own, because forgetting it hands the opened page
+ * a reference back to the admin screen.
+ *
+ * @since 2.3.4
+ * @returns {string|undefined} Value for the rel attribute, or undefined.
+ */
+const linkRel = computed(() => {
+  if (!props.href) {
+    return undefined;
+  }
+
+  if (props.rel) {
+    return props.rel;
+  }
+
+  return props.target === '_blank' ? 'noopener noreferrer' : undefined;
+});
+
+/**
  * Handle a click on the button, suppressing it while disabled or loading and
  * otherwise emitting the "click" event.
  *
@@ -62,6 +88,8 @@ function handleClick(event) {
   <component
     :is="href ? 'a' : 'button'"
     :href="href || undefined"
+    :target="href && target ? target : undefined"
+    :rel="linkRel"
     :type="href ? undefined : type"
     :aria-disabled="disabled || loading ? 'true' : undefined"
     :tabindex="disabled || loading ? -1 : undefined"
