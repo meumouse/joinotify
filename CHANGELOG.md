@@ -8,6 +8,40 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-09-03
+
+### Added
+
+- **The retry policy is now a setting instead of a constant** — Settings → General → "Delivery retries"
+    - `message_retry_max_attempts` (5 by default) and `message_retry_first_delay_minutes` (30) replace the hardcoded budget of 120 attempts and the 5-minute base wait. The backoff still doubles on every attempt, which with the defaults means 30, 60, 120, 240 and 480 minutes
+    - Choosing "Do not retry" stops a failed message from entering the queue at all: the failure is recorded, and that is the end of it
+    - `Joinotify/Notification_Queue/Max_Attempts` and `Joinotify/Notification_Queue/Retry_Delay` still have the last word; they now filter the configured value rather than a constant. `Core\Notification_Queue::get_retry_schedule_minutes()` returns the resulting schedule, which is what the settings screen prints back to the reader
+    - Covered by `tests/notification-queue-retry-test.php`
+- **The pending resend of a message can be cancelled from the history screen**
+    - Pick the records and use "Cancel resend": the retry-queue items behind them are discarded and the rows settle as `cancelled`, a new history status with its own tab and count
+    - Only rows with a resend actually still on the books are touched. A selection that includes records whose retry already ran leaves those alone and says so
+    - History rows now carry the id of the retry-queue item they parked (`queue_id`, schema 1.2.0), which is what makes the cancel exact rather than a guess by recipient and timestamp
+- **The history table has an Error column**, showing the same human-readable description as the details modal instead of hiding the reason one click away
+
+### Changed
+
+- **The setup wizard now looks like the rest of the admin screens**
+    - Its panel takes the same chrome every other page uses — the hairline over a `slate-100` ring — instead of the deep `shadow-soft` drop shadow, and the cards inside the steps (documentation, telemetry, the two finish choices, the connect callouts) are flat bordered cards like the ones in Settings, with the callout padding and type sizes those already use
+    - The "Open the documentation" link is the shared `BaseButton` rather than a hand-rolled copy of it. `BaseButton` takes `target` and `rel` for that, filling in `noopener noreferrer` on its own whenever a link opens in a new tab
+
+### Fixed
+
+- **A `queued` history row stayed `queued` forever**
+    - The row written when a send first failed pointed at a retry-queue item, but nothing settled it afterwards: whether the retry succeeded or ran out of attempts, the record kept claiming a resend was still coming
+    - `Core\Notification_Queue::process_queue()` now closes it out — `sent` when a later attempt lands, `failed` with the last error when the budget runs out
+- **A test message refused by WhatsApp was announced as a success, and never said why**
+    - `Rest\Phone_Test_Message` and `Rest\Builder_Test` answer `200` with `status: 'error'` on a failed send, but `SettingsPage.vue` and `BuilderPage.vue` only branched on a rejected promise — the `api.js` client throws on a non-OK HTTP status alone. A refusal therefore rendered a green toast carrying the failure text
+    - Both handlers now read the payload status, so a refused send raises the error toast and, in the settings dialog, keeps the modal open
+- **The reason a send failed never reached the administrator**
+    - `Api\Cloud_Client` already reduces every failure to a code — `window_closed_requires_template` for Meta's 131047 above all, the single most common production error — but the REST routes discarded it and answered with a fixed "Could not send the test message"
+    - The new `Api\Send_Error` turns those codes into a sentence that says what to do about it, and the test routes now ask the transport for the send details so they can use it. Outside the 24-hour session window the toast names the window and points at template messages, instead of leaving the cause in the log
+    - The message history carries the same description in a new `error_label` field, so the details modal shows the explanation rather than the raw slug. The stored `error` code is unchanged, and an unmapped code still renders as itself
+
 ## [2.3.4] - 2026-09-01
 
 Three hooks that never fired. All three come from the same place: `Core\Init` builds the plugin's classes from callbacks on `init`, `admin_init` and `wp_loaded`, so whatever a constructor registers is registered while that hook is already running. `WP_Hook::apply_filters()` iterates a snapshot of the callbacks at the priority it is executing, and anything hooked to a priority that has already gone past — the current one included — is dropped without a warning.

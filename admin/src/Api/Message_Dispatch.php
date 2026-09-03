@@ -27,20 +27,27 @@ trait Message_Dispatch {
      * Build normalized response details.
      *
      * @since 1.4.8
+     * @version 2.4.0
      * @param int $response_code | HTTP response code.
      * @param bool $success | Operation status.
      * @param bool $retryable | If failure can be retried.
      * @param string $error | Failure reason.
-     * @param bool $queued | If item was enqueued.
+     * @param bool|string $queued | Queue item id when enqueued, false otherwise.
      * @return array
      */
     protected static function build_response_details( $response_code, $success, $retryable = false, $error = '', $queued = false ) {
+        // Callers pass whatever Notification_Queue::enqueue() returned — an item
+        // id or false — so the id is kept alongside the boolean the rest of the
+        // codebase reads. It is what lets the history row cancel its own resend.
+        $queue_id = is_string( $queued ) ? $queued : '';
+
         return array(
             'response_code' => (int) $response_code,
             'success' => (bool) $success,
             'retryable' => (bool) $retryable,
             'error' => (string) $error,
             'queued' => (bool) $queued,
+            'queue_id' => $queue_id,
         );
     }
 
@@ -99,6 +106,7 @@ trait Message_Dispatch {
             'status' => $status,
             'response_code' => $response_code,
             'error' => (string) ( $details['error'] ?? '' ),
+            'queue_id' => (string) ( $details['queue_id'] ?? '' ),
         )));
 
         // Capture failed dispatches in the structured debug log (queued retries

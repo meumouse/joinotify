@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Core;
 
+use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Transport;
 
 // Exit if accessed directly.
@@ -10,7 +11,15 @@ defined('ABSPATH') || exit;
 /**
  * Queue and retry failed WhatsApp notifications.
  *
+ * A send that failed for a reason worth repeating (a timeout, a 429, a 5xx) is
+ * parked here and tried again on an exponential backoff: the configured first
+ * wait, then double it every time — 30, 60, 120, 240, 480 minutes by default —
+ * until the attempt budget runs out. Both the budget and the first wait are
+ * settings, so a site that would rather give up early, or wait longer between
+ * tries, does not need a filter to say so.
+ *
  * @since 1.4.7
+ * @version 2.4.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -47,6 +56,33 @@ class Notification_Queue {
      * @var string
      */
     const PROCESS_LOCK_KEY = 'joinotify_notification_queue_lock';
+
+    /**
+     * Attempts a queued message gets before it is dropped, when unconfigured.
+     *
+     * @since 2.4.0
+     * @var int
+     */
+    const DEFAULT_MAX_ATTEMPTS = 5;
+
+    /**
+     * Minutes to wait before the first retry, when unconfigured.
+     *
+     * @since 2.4.0
+     * @var int
+     */
+    const DEFAULT_FIRST_DELAY_MINUTES = 30;
+
+    /**
+     * Hard ceiling for a computed backoff, in seconds.
+     *
+     * Only there so a large attempt budget cannot double its way into a delay
+     * nobody meant to configure; the defaults never reach it.
+     *
+     * @since 2.4.0
+     * @var int
+     */
+    const MAX_DELAY = 30 * DAY_IN_SECONDS;
 
     /**
      * Construct function.
@@ -86,7 +122,7 @@ class Notification_Queue {
      * Enqueue a failed notification for retry.
      *
      * @since 1.4.7
-     * @version 2.3.0
+     * @version 2.4.0
      * @param string $type Supported values: text, media, audio, template.
      * @param array $payload Notification payload.
      * @param string $reason Failure reason.
@@ -103,8 +139,15 @@ class Notification_Queue {
             return false;
         }
 
+        $max_attempts = self::get_max_attempts( $type, $payload );
+
+        // A budget of zero is how the settings screen turns retries off: the
+        // failure is still recorded, it just never comes back.
+        if ( $max_attempts < 1 ) {
+            return false;
+        }
+
         $queue = self::get_queue();
-        $max_attempts = (int) apply_filters( 'Joinotify/Notification_Queue/Max_Attempts', 120, $type, $payload );
         $delay_override = max( 0, (int) $delay_override );
         $next_attempt_at = time() + ( $delay_override > 0 ? $delay_override : self::get_next_delay( 0, $reason ) );
         $id = uniqid( 'joinotify_queue_', true );
@@ -114,7 +157,7 @@ class Notification_Queue {
             'type' => $type,
             'payload' => $payload,
             'attempts' => 0,
-            'max_attempts' => max( 1, $max_attempts ),
+            'max_attempts' => $max_attempts,
             'created_at' => time(),
             'updated_at' => time(),
             'next_attempt_at' => $next_attempt_at,
@@ -162,6 +205,9 @@ class Notification_Queue {
             $result = self::dispatch_item( $item );
 
             if ( ! empty( $result['success'] ) ) {
+                // Settle the history row that parked this message, so it stops
+                // reporting a retry that has already happened.
+                Message_History::resolve_queue_item( (string) ( $item['id'] ?? '' ), 'sent' );
                 continue;
             }
 
@@ -172,6 +218,7 @@ class Notification_Queue {
             $max_attempts = (int) ( $item['max_attempts'] ?? 1 );
 
             if ( $item['attempts'] >= max( 1, $max_attempts ) ) {
+                Message_History::resolve_queue_item( (string) ( $item['id'] ?? '' ), 'failed', $item['last_error'] );
                 continue;
             }
 
@@ -416,24 +463,179 @@ class Notification_Queue {
 
 
     /**
+     * How many times a queued message may be attempted before it is dropped.
+     *
+     * @since 2.4.0
+     * @param string $type Queue type, for the filter.
+     * @param array $payload Queue payload, for the filter.
+     * @return int Attempt budget; 0 means retries are turned off.
+     */
+    public static function get_max_attempts( $type = '', $payload = array() ) {
+        $configured = Admin::get_setting('message_retry_max_attempts');
+        $attempts = is_numeric( $configured ) ? (int) $configured : self::DEFAULT_MAX_ATTEMPTS;
+        $attempts = max( 0, min( 100, $attempts ) );
+
+        /**
+         * Filter the attempt budget of a queued message.
+         *
+         * @since 1.4.7
+         * @version 2.4.0
+         * @param int $attempts Budget resolved from the settings.
+         * @param string $type Queue type.
+         * @param array $payload Queue payload.
+         */
+        return max( 0, (int) apply_filters( 'Joinotify/Notification_Queue/Max_Attempts', $attempts, $type, $payload ) );
+    }
+
+
+    /**
+     * Minutes to wait before the first retry, from which the backoff doubles.
+     *
+     * @since 2.4.0
+     * @return int
+     */
+    public static function get_first_delay_minutes() {
+        $configured = Admin::get_setting('message_retry_first_delay_minutes');
+        $minutes = is_numeric( $configured ) ? (int) $configured : self::DEFAULT_FIRST_DELAY_MINUTES;
+
+        // Capped at a day: past that the doubling stops being a retry policy.
+        return (int) max( 1, min( 1440, $minutes ) );
+    }
+
+
+    /**
+     * The whole retry schedule, in minutes, as currently configured.
+     *
+     * One entry per attempt, so the settings screen can show what it just
+     * described ("30, 60, 120, 240, 480 minutes") instead of asking the reader
+     * to do the doubling in their head.
+     *
+     * @since 2.4.0
+     * @return array<int,int> Minutes before each attempt; empty when retries are off.
+     */
+    public static function get_retry_schedule_minutes() {
+        $attempts = self::get_max_attempts();
+        $schedule = array();
+
+        for ( $attempt = 0; $attempt < $attempts; $attempt++ ) {
+            $schedule[] = (int) round( self::get_next_delay( $attempt ) / MINUTE_IN_SECONDS );
+        }
+
+        return $schedule;
+    }
+
+
+    /**
      * Get retry delay in seconds based on attempts and failure reason.
      *
+     * Exponential backoff anchored on the configured first wait: every attempt
+     * doubles the previous one, which with the defaults gives 30, 60, 120, 240
+     * and 480 minutes. The exponent is clamped so an unusually large attempt
+     * budget cannot overflow the multiplication.
+     *
      * @since 1.4.7
+     * @version 2.4.0
      * @param int $attempts Number of retries already made.
      * @param string $reason Failure reason.
      * @return int
      */
     private static function get_next_delay( $attempts, $reason = '' ) {
         $reason = strtolower( (string) $reason );
+        $attempts = max( 0, (int) $attempts );
 
         if ( strpos( $reason, 'license' ) !== false ) {
             $delay = HOUR_IN_SECONDS;
         } else {
-            $delay = 5 * MINUTE_IN_SECONDS * max( 1, (int) pow( 2, min( 6, max( 0, $attempts ) ) ) );
-            $delay = min( 6 * HOUR_IN_SECONDS, $delay );
+            $base = self::get_first_delay_minutes() * MINUTE_IN_SECONDS;
+            $delay = $base * (int) pow( 2, min( 20, $attempts ) );
+            $delay = min( self::MAX_DELAY, $delay );
         }
 
+        /**
+         * Filter the wait before the next attempt of a queued message.
+         *
+         * @since 1.4.7
+         * @param int $delay Delay in seconds.
+         * @param int $attempts Retries already made.
+         * @param string $reason Failure reason.
+         */
         return (int) apply_filters( 'Joinotify/Notification_Queue/Retry_Delay', $delay, $attempts, $reason );
+    }
+
+
+    /**
+     * Drop queued messages by their queue item id.
+     *
+     * This is what the history screen calls when someone cancels the resend of
+     * the rows they picked: the payload is discarded, so the message is never
+     * attempted again.
+     *
+     * @since 2.4.0
+     * @param string[] $ids Queue item ids.
+     * @return int Number of items removed.
+     */
+    public static function cancel( $ids ) {
+        $ids = array_filter( array_map( 'strval', (array) $ids ) );
+
+        if ( empty( $ids ) ) {
+            return 0;
+        }
+
+        $queue = self::get_queue();
+        $kept = array();
+        $cancelled = 0;
+
+        foreach ( $queue as $item ) {
+            if ( is_array( $item ) && in_array( (string) ( $item['id'] ?? '' ), $ids, true ) ) {
+                $cancelled++;
+
+                /**
+                 * Fires when a queued message is cancelled before its next attempt.
+                 *
+                 * @since 2.4.0
+                 * @param array $item The queue item being discarded.
+                 */
+                do_action( 'Joinotify/Notification_Queue/Item_Cancelled', $item );
+
+                continue;
+            }
+
+            $kept[] = $item;
+        }
+
+        if ( $cancelled > 0 ) {
+            self::save_queue( $kept );
+        }
+
+        return $cancelled;
+    }
+
+
+    /**
+     * Which of the given queue item ids are still waiting for an attempt.
+     *
+     * @since 2.4.0
+     * @param string[] $ids Queue item ids.
+     * @return string[] The subset still present in the queue.
+     */
+    public static function filter_pending_ids( $ids ) {
+        $ids = array_filter( array_map( 'strval', (array) $ids ) );
+
+        if ( empty( $ids ) ) {
+            return array();
+        }
+
+        $pending = array();
+
+        foreach ( self::get_queue() as $item ) {
+            $id = is_array( $item ) ? (string) ( $item['id'] ?? '' ) : '';
+
+            if ( '' !== $id && in_array( $id, $ids, true ) ) {
+                $pending[] = $id;
+            }
+        }
+
+        return $pending;
     }
 
 

@@ -394,6 +394,19 @@ async function sendTestMessage(payload) {
   });
   try {
     const response = await api.post('/admin/settings/phones/test-message', payload);
+
+    // A refused send still answers 200 with `status: 'error'` — the reason it
+    // carries (a closed 24-hour window, most often) has to reach the toast as a
+    // failure, not be announced as a success.
+    if (response?.status === 'error') {
+      toast(response.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
+      debugLogger.log('phones:test-message-refused', {
+        phone: payload?.phone || '',
+        error_code: response?.error_code || '',
+      });
+      return false;
+    }
+
     toast(response.message || __('Message sent.', textDomain), 'success', __('Phones', textDomain));
     debugLogger.log('phones:test-message-complete', {
       phone: payload?.phone || '',

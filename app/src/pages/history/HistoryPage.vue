@@ -22,6 +22,7 @@ const props = defineProps({
 const {
   loading,
   error,
+  notice,
   items,
   pagination,
   sources,
@@ -29,6 +30,7 @@ const {
   selectedIds,
   statusTabs,
   totalSelected,
+  cancellableSelected,
   allVisibleSelected,
   partiallyVisibleSelected,
   pageSummary,
@@ -44,6 +46,7 @@ const {
   toggleSelected,
   toggleSelectAll,
   removeSelected,
+  cancelRetrySelected,
   clearAll,
 } = useMessageHistory(props.bootstrap);
 
@@ -62,6 +65,7 @@ const statusLabels = computed(() => ({
   sent: __('Sent', textDomain),
   failed: __('Failed', textDomain),
   queued: __('Queued', textDomain),
+  cancelled: __('Cancelled', textDomain),
 }));
 
 const sourceLabels = computed(() => {
@@ -89,7 +93,21 @@ function statusBadgeClass(status) {
     return 'bg-amber-50 text-amber-700 ring-amber-200';
   }
 
+  if (status === 'cancelled') {
+    return 'bg-slate-100 text-slate-600 ring-slate-200';
+  }
+
   return 'bg-rose-50 text-rose-700 ring-rose-200';
+}
+
+function errorPreview(entry) {
+  const text = String(entry?.error_label || entry?.error || '').replace(/\s+/g, ' ').trim();
+
+  if (!text) {
+    return '—';
+  }
+
+  return text.length > 60 ? `${text.slice(0, 60)}…` : text;
 }
 
 function contentPreview(value) {
@@ -132,21 +150,44 @@ function askConfirm(kind) {
 }
 
 function runConfirm() {
-  const promise = confirmKind.value === 'clear' ? clearAll() : removeSelected();
+  const actions = {
+    clear: clearAll,
+    'cancel-retry': cancelRetrySelected,
+  };
+  const run = actions[confirmKind.value] || removeSelected;
 
-  Promise.resolve(promise).finally(() => {
+  Promise.resolve(run()).finally(() => {
     confirmOpen.value = false;
     confirmKind.value = '';
   });
 }
 
-const confirmTitle = computed(() =>
-  confirmKind.value === 'clear' ? __('Clear all history', textDomain) : __('Delete selected records', textDomain)
-);
-const confirmDescription = computed(() =>
-  confirmKind.value === 'clear'
-    ? __('Every history record will be permanently removed. This action cannot be undone.', textDomain)
-    : __('The selected records will be permanently removed. This action cannot be undone.', textDomain)
+const confirmTitle = computed(() => {
+  if (confirmKind.value === 'clear') {
+    return __('Clear all history', textDomain);
+  }
+
+  if (confirmKind.value === 'cancel-retry') {
+    return __('Cancel resend', textDomain);
+  }
+
+  return __('Delete selected records', textDomain);
+});
+
+const confirmDescription = computed(() => {
+  if (confirmKind.value === 'clear') {
+    return __('Every history record will be permanently removed. This action cannot be undone.', textDomain);
+  }
+
+  if (confirmKind.value === 'cancel-retry') {
+    return __('The selected messages will not be sent again. Records without a pending resend are left untouched.', textDomain);
+  }
+
+  return __('The selected records will be permanently removed. This action cannot be undone.', textDomain);
+});
+
+const confirmLabel = computed(() =>
+  confirmKind.value === 'cancel-retry' ? __('Cancel resend', textDomain) : __('Delete', textDomain)
 );
 </script>
 
@@ -241,9 +282,23 @@ const confirmDescription = computed(() =>
             </div>
           </div>
 
+          <!-- Notice -->
+          <div v-if="notice" class="rounded-[8px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+            {{ notice }}
+          </div>
+
           <!-- Toolbar -->
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                class="rounded-[8px] bg-amber-50 px-4 py-2 text-[13px] font-semibold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
+                :disabled="!cancellableSelected || loading"
+                :title="__('Discard the pending retry of the selected messages', textDomain)"
+                @click="askConfirm('cancel-retry')"
+              >
+                {{ __('Cancel resend', textDomain) }}<span v-if="cancellableSelected"> ({{ cancellableSelected }})</span>
+              </button>
               <button
                 type="button"
                 class="rounded-[8px] bg-rose-50 px-4 py-2 text-[13px] font-semibold text-rose-600 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50"
@@ -289,6 +344,7 @@ const confirmDescription = computed(() =>
                   <th class="px-3 py-3 font-medium">{{ __('Type', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Source', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Status', textDomain) }}</th>
+                  <th class="px-3 py-3 font-medium">{{ __('Error', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Content', textDomain) }}</th>
                 </tr>
               </thead>
@@ -315,6 +371,13 @@ const confirmDescription = computed(() =>
                     <span class="inline-flex rounded-full px-2.5 py-0.5 text-[12px] font-medium ring-1 ring-inset" :class="statusBadgeClass(entry.status)">
                       {{ statusLabels[entry.status] || entry.status }}
                     </span>
+                  </td>
+                  <td
+                    class="max-w-[240px] px-3 py-3"
+                    :class="entry.error ? 'text-rose-600' : 'text-slate-400'"
+                    :title="entry.error_label || entry.error || ''"
+                  >
+                    {{ errorPreview(entry) }}
                   </td>
                   <td class="max-w-[280px] px-3 py-3 text-slate-500">{{ contentPreview(entry.content) }}</td>
                 </tr>
@@ -352,7 +415,7 @@ const confirmDescription = computed(() =>
     />
 
     <ConfirmActionModal
-      :confirm-label="__('Delete', textDomain)"
+      :confirm-label="confirmLabel"
       :description="confirmDescription"
       :loading="loading"
       :open="confirmOpen"

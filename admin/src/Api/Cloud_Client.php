@@ -368,7 +368,7 @@ class Cloud_Client {
             $upload = self::upload_media( $phone_number_id, $bytes, self::guess_mime( $file_name, $media_type ), '' !== $file_name ? $file_name : 'file' );
 
             if ( is_wp_error( $upload ) ) {
-                $queued = $queue_on_failure ? (bool) Notification_Queue::enqueue( 'media', $queue_payload, $upload->get_error_message() ) : false;
+                $queued = $queue_on_failure ? Notification_Queue::enqueue( 'media', $queue_payload, $upload->get_error_message() ) : false;
                 $details = self::build_response_details( 0, false, true, $upload->get_error_message(), $queued );
                 return self::record_and_return( $fields, $details, $return_details );
             }
@@ -884,7 +884,7 @@ class Cloud_Client {
         }
 
         if ( '' === Helpers::cloud_api_token() ) {
-            $queued = $queue_on_failure ? (bool) Notification_Queue::enqueue( $queue_type, $queue_payload, 'cloud_no_token' ) : false;
+            $queued = $queue_on_failure ? Notification_Queue::enqueue( $queue_type, $queue_payload, 'cloud_no_token' ) : false;
             $details = self::build_response_details( 0, false, true, 'cloud_no_token', $queued );
             return self::record_and_return( $fields, $details, $return_details );
         }
@@ -909,7 +909,7 @@ class Cloud_Client {
         if ( is_wp_error( $response ) ) {
             Logger::register_log( $response, 'ERROR' );
 
-            $queued = $queue_on_failure ? (bool) Notification_Queue::enqueue( $queue_type, $queue_payload, $response->get_error_message() ) : false;
+            $queued = $queue_on_failure ? Notification_Queue::enqueue( $queue_type, $queue_payload, $response->get_error_message() ) : false;
             $details = self::build_response_details( 0, false, true, $response->get_error_message(), $queued );
 
             return self::record_and_return( $fields, $details, $return_details );
@@ -929,7 +929,7 @@ class Cloud_Client {
         if ( ! $success && $queue_on_failure && $retryable ) {
             // A 429 answer says exactly how long to wait; insisting earlier only
             // burns quota, so it wins over the queue's own backoff.
-            $queued = (bool) Notification_Queue::enqueue(
+            $queued = Notification_Queue::enqueue(
                 $queue_type,
                 $queue_payload,
                 'api_unavailable_' . $parsed['code'],

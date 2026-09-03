@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Api\Send_Error;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Actions;
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -37,6 +38,12 @@ class Builder_Test extends Abstract_Route {
     /**
      * Handle request.
      *
+     * Every send asks for its details rather than the bare response code, so a
+     * refusal can be reported with its cause — a closed 24-hour session window
+     * above all, which is what a free-form step hits when the test number has
+     * not written to the business first.
+     *
+     * @version 2.4.0
      * @param WP_REST_Request $request Request instance.
      * @return \WP_REST_Response
      */
@@ -87,26 +94,20 @@ class Builder_Test extends Abstract_Route {
             if ( $action === 'send_whatsapp_message_text' ) {
                 $sender  = $item['data']['sender'] ?? '';
                 $message = Placeholders::replace_placeholders( $item['data']['message'] ?? '', $payload_ctx, 'sandbox' );
-                $result  = Transport::send_message_text( $sender, $receiver, $message );
+                $result  = Transport::send_message_text( $sender, $receiver, $message, 0, true, true );
 
-                if ( 201 !== $result ) {
-                    return rest_ensure_response( array(
-                        'status'  => 'error',
-                        'message' => __( 'Could not send the test message.', 'joinotify' ),
-                    ) );
+                if ( empty( $result['success'] ) ) {
+                    return self::failure_response( $result, __( 'Could not send the test message.', 'joinotify' ) );
                 }
             } elseif ( $action === 'send_whatsapp_message_media' ) {
                 $sender     = $item['data']['sender'] ?? '';
                 $media_type = $item['data']['media_type'] ?? '';
                 $media      = $item['data']['media_url'] ?? '';
                 $caption    = Placeholders::replace_placeholders( $item['data']['caption'] ?? '', $payload_ctx, 'sandbox' );
-                $result     = Transport::send_message_media( $sender, $receiver, $media_type, $media, $caption );
+                $result     = Transport::send_message_media( $sender, $receiver, $media_type, $media, $caption, 0, true, true );
 
-                if ( 201 !== $result ) {
-                    return rest_ensure_response( array(
-                        'status'  => 'error',
-                        'message' => __( 'Could not send one or more test messages.', 'joinotify' ),
-                    ) );
+                if ( empty( $result['success'] ) ) {
+                    return self::failure_response( $result, __( 'Could not send one or more test messages.', 'joinotify' ) );
                 }
             } elseif ( $action === 'send_whatsapp_message_template' ) {
                 if ( ! Transport::is_cloud() ) {
@@ -123,14 +124,14 @@ class Builder_Test extends Abstract_Route {
                     $receiver,
                     $item['data']['template_name'] ?? '',
                     $item['data']['language'] ?? 'pt_BR',
-                    $components
+                    $components,
+                    0,
+                    true,
+                    true
                 );
 
-                if ( 201 !== $result ) {
-                    return rest_ensure_response( array(
-                        'status'  => 'error',
-                        'message' => __( 'Could not send the test template message.', 'joinotify' ),
-                    ) );
+                if ( empty( $result['success'] ) ) {
+                    return self::failure_response( $result, __( 'Could not send the test template message.', 'joinotify' ) );
                 }
             }
         }
@@ -138,6 +139,25 @@ class Builder_Test extends Abstract_Route {
         return rest_ensure_response( array(
             'status'  => 'success',
             'message' => __( 'All test messages were sent successfully.', 'joinotify' ),
+        ) );
+    }
+
+
+    /**
+     * Build the error response for a refused test send.
+     *
+     * @since 2.4.0
+     * @param array  $result | Normalized send details from the transport.
+     * @param string $fallback | Message used when the failure has no description.
+     * @return \WP_REST_Response
+     */
+    protected static function failure_response( $result, $fallback ) {
+        $error_code = (string) ( $result['error'] ?? '' );
+
+        return rest_ensure_response( array(
+            'status'     => 'error',
+            'message'    => Send_Error::describe( $error_code, $fallback ),
+            'error_code' => $error_code,
         ) );
     }
 }

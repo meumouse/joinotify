@@ -2,7 +2,9 @@
 
 namespace MeuMouse\Joinotify\Admin\History;
 
+use MeuMouse\Joinotify\Api\Send_Error;
 use MeuMouse\Joinotify\Core\Message_History;
+use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Admin\Admin;
 
 // Exit if accessed directly.
@@ -32,7 +34,12 @@ class Registry {
     /**
      * Build a normalized list item from a stored row.
      *
+     * The stored `error` is the transport's machine code; `error_label` is the
+     * same failure written for whoever is reading the screen — which is how the
+     * closed 24-hour window stops looking like an opaque slug.
+     *
      * @since 2.0.0
+     * @version 2.4.0
      * @param array<string,mixed> $row Raw DB row.
      * @return array<string,mixed>
      */
@@ -40,6 +47,7 @@ class Registry {
         $created_gmt = (string) ( $row['created_at'] ?? '' );
         $created_local = $created_gmt ? get_date_from_gmt( $created_gmt ) : '';
         $workflow_id = (int) ( $row['workflow_id'] ?? 0 );
+        $error = (string) ( $row['error'] ?? '' );
 
         return array(
             'id' => (int) ( $row['id'] ?? 0 ),
@@ -57,8 +65,58 @@ class Registry {
             'media_url' => (string) ( $row['media_url'] ?? '' ),
             'status' => (string) ( $row['status'] ?? 'failed' ),
             'response_code' => (int) ( $row['response_code'] ?? 0 ),
-            'error' => (string) ( $row['error'] ?? '' ),
+            'error' => $error,
+            // An unmapped code falls back to itself: better a raw slug on screen
+            // than a generic sentence that hides which failure this was.
+            'error_label' => '' !== $error ? Send_Error::describe( $error, $error ) : '',
             'attempts' => (int) ( $row['attempts'] ?? 0 ),
+            // True only while a resend is actually still on the books, which is
+            // what the "Cancel resend" action acts on.
+            'can_cancel_retry' => 'queued' === (string) ( $row['status'] ?? '' ) && '' !== (string) ( $row['queue_id'] ?? '' ),
+        );
+    }
+
+
+    /**
+     * Cancel the pending resend of the given history rows.
+     *
+     * Only rows still parked in the retry queue are touched: one whose queue
+     * item has already been delivered or exhausted has nothing left to call off,
+     * and is reported back as such rather than being mislabelled as cancelled.
+     *
+     * @since 2.4.0
+     * @param int[] $ids History row IDs.
+     * @return array{cancelled:int,skipped:int}
+     */
+    public static function cancel_retry( $ids ) {
+        $ids = array_filter( array_map( 'absint', (array) $ids ) );
+        $queue_ids = Message_History::get_pending_queue_ids( $ids );
+
+        if ( empty( $queue_ids ) ) {
+            return array( 'cancelled' => 0, 'skipped' => count( $ids ) );
+        }
+
+        $pending = Notification_Queue::filter_pending_ids( array_values( $queue_ids ) );
+
+        $rows = array();
+
+        foreach ( $queue_ids as $row_id => $queue_id ) {
+            if ( in_array( $queue_id, $pending, true ) ) {
+                $rows[] = (int) $row_id;
+            }
+        }
+
+        if ( empty( $rows ) ) {
+            return array( 'cancelled' => 0, 'skipped' => count( $ids ) );
+        }
+
+        Notification_Queue::cancel( $pending );
+
+        $cancelled = Message_History::mark_cancelled( $rows );
+
+        return array(
+            'cancelled' => $cancelled,
+            'skipped' => max( 0, count( $ids ) - $cancelled ),
         );
     }
 

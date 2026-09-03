@@ -7,6 +7,7 @@ use MeuMouse\Joinotify\Admin\Default_Options;
 use MeuMouse\Joinotify\Api\Sender_Sync;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
@@ -116,6 +117,37 @@ class Registry {
                                 esc_html__( 'Number used as the default destination in test mailings. Please only include numbers with country code + area code.', 'joinotify' ),
                                 array(
                                     'placeholder' => '5541987111527',
+                                )
+                            ),
+                        ),
+                    ),
+                    array(
+                        'id' => 'general-retries',
+                        'title' => __( 'Delivery retries', 'joinotify' ),
+                        'description' => __( 'When WhatsApp refuses a message for a reason that may pass — a timeout, a rate limit, an outage — Joinotify parks it and tries again. Each attempt waits twice as long as the one before it.', 'joinotify' ),
+                        'fields' => array(
+                            self::field_select(
+                                'message_retry_max_attempts',
+                                esc_html__( 'Maximum attempts', 'joinotify' ),
+                                esc_html__( 'How many times a failed message is retried before it is given up on. Choose "Do not retry" to record the failure without ever sending again.', 'joinotify' ),
+                                self::build_retry_attempts_options(),
+                                array(
+                                    'default' => (string) Notification_Queue::DEFAULT_MAX_ATTEMPTS,
+                                )
+                            ),
+                            self::field_select(
+                                'message_retry_first_delay_minutes',
+                                esc_html__( 'First retry after', 'joinotify' ),
+                                self::retry_schedule_description(),
+                                array(
+                                    array( 'value' => '5', 'label' => __( '5 minutes', 'joinotify' ) ),
+                                    array( 'value' => '15', 'label' => __( '15 minutes', 'joinotify' ) ),
+                                    array( 'value' => '30', 'label' => __( '30 minutes', 'joinotify' ) ),
+                                    array( 'value' => '60', 'label' => __( '60 minutes', 'joinotify' ) ),
+                                    array( 'value' => '120', 'label' => __( '120 minutes', 'joinotify' ) ),
+                                ),
+                                array(
+                                    'default' => (string) Notification_Queue::DEFAULT_FIRST_DELAY_MINUTES,
                                 )
                             ),
                         ),
@@ -800,6 +832,56 @@ class Registry {
         }
 
         return false;
+    }
+
+
+    /**
+     * Options for the retry attempt budget.
+     *
+     * @since 2.4.0
+     * @return array<int,array<string,string>>
+     */
+    private static function build_retry_attempts_options() {
+        $options = array(
+            array( 'value' => '0', 'label' => __( 'Do not retry', 'joinotify' ) ),
+        );
+
+        for ( $attempts = 1; $attempts <= 10; $attempts++ ) {
+            $options[] = array(
+                'value' => (string) $attempts,
+                /* translators: %d: number of retry attempts */
+                'label' => sprintf( _n( '%d attempt', '%d attempts', $attempts, 'joinotify' ), $attempts ),
+            );
+        }
+
+        return $options;
+    }
+
+
+    /**
+     * Describe the retry schedule the saved settings currently produce.
+     *
+     * Spelling the waits out beats asking the reader to double the first one in
+     * their head; it is rebuilt from the stored values, so it catches up with a
+     * change once the settings are saved.
+     *
+     * @since 2.4.0
+     * @return string
+     */
+    private static function retry_schedule_description() {
+        $schedule = Notification_Queue::get_retry_schedule_minutes();
+
+        if ( empty( $schedule ) ) {
+            return esc_html__( 'Retries are turned off, so this wait is not used.', 'joinotify' );
+        }
+
+        $waits = implode( ', ', array_map( 'absint', $schedule ) );
+
+        return sprintf(
+            /* translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480" */
+            esc_html__( 'Wait before the first retry. Every attempt then doubles it — with what is saved now: %s minutes.', 'joinotify' ),
+            $waits
+        );
     }
 
 

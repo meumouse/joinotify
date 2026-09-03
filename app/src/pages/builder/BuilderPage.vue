@@ -1124,6 +1124,22 @@ async function runTest() {
 
   try {
     const response = await store.runWorkflowTest();
+
+    // The route answers 200 even when WhatsApp refuses a step, so the payload
+    // status decides the tone. Without this a send blocked by the closed
+    // 24-hour window was announced as a successful test.
+    if (response?.status === 'error') {
+      pushToast(
+        response?.message || __('Could not run the workflow test.', textDomain),
+        'error',
+        __('Builder', textDomain)
+      );
+      debugLogger.log('workflow:test-refused', {
+        error_code: response?.error_code || '',
+      });
+      return;
+    }
+
     pushToast(
       response?.toast_body_title || response?.message || __('Workflow test queued.', textDomain),
       'success',

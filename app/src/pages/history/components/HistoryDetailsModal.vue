@@ -29,7 +29,7 @@ const rows = computed(() => {
     { label: __('Media type', textDomain), value: entry.media_type || '-' },
     { label: __('Response code', textDomain), value: entry.response_code || '-' },
     { label: __('Attempts', textDomain), value: entry.attempts ?? '-' },
-    { label: __('Error', textDomain), value: entry.error || '-' },
+    { label: __('Error', textDomain), value: entry.error_label || entry.error || '-' },
   ];
 });
 </script>

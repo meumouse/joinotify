@@ -22,5 +22,6 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\History_Bootstrap',
 		'\MeuMouse\Joinotify\Rest\History_List',
 		'\MeuMouse\Joinotify\Rest\History_Delete',
+		'\MeuMouse\Joinotify\Rest\History_Cancel_Retry',
 	);
 }

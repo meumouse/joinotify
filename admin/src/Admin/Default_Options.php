@@ -59,6 +59,11 @@ class Default_Options {
             'enable_developer_integration' => 'yes',
             'enable_message_history' => 'yes',
             'message_history_retention_days' => '90',
+            // Retry policy for a failed send: how many attempts it gets, and the
+            // wait before the first one, which then doubles on every attempt
+            // (30, 60, 120, 240, 480 minutes with these values).
+            'message_retry_max_attempts' => '5',
+            'message_retry_first_delay_minutes' => '30',
             'enable_debug_logs' => 'yes',
             'debug_logs_retention_days' => '30',
             'woocommerce_billing_full_address_format' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',

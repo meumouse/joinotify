@@ -2,7 +2,7 @@ import { computed, onBeforeUnmount, ref } from 'vue';
 import { __, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
 
-const EMPTY_COUNTS = { all: 0, sent: 0, failed: 0, queued: 0 };
+const EMPTY_COUNTS = { all: 0, sent: 0, failed: 0, queued: 0, cancelled: 0 };
 
 function normalizeCounts(counts) {
   return { ...EMPTY_COUNTS, ...(counts && typeof counts === 'object' ? counts : {}) };
@@ -32,6 +32,7 @@ export function useMessageHistory(bootstrap = {}) {
 
   const loading = ref(false);
   const error = ref('');
+  const notice = ref('');
   const items = ref(Array.isArray(bootstrap.items) ? bootstrap.items : []);
   const counts = ref(normalizeCounts(bootstrap.counts));
   const pagination = ref(normalizePagination(bootstrap.pagination));
@@ -52,9 +53,16 @@ export function useMessageHistory(bootstrap = {}) {
     { label: __('Sent', textDomain), value: 'sent', count: counts.value.sent },
     { label: __('Failed', textDomain), value: 'failed', count: counts.value.failed },
     { label: __('Queued', textDomain), value: 'queued', count: counts.value.queued },
+    { label: __('Cancelled', textDomain), value: 'cancelled', count: counts.value.cancelled },
   ]);
 
   const totalSelected = computed(() => selectedIds.value.size);
+
+  // Selection never spans pages (a reload clears it), so the visible rows are
+  // the whole selection and can answer whether a resend is left to cancel.
+  const cancellableSelected = computed(
+    () => items.value.filter((item) => item?.can_cancel_retry && selectedIds.value.has(String(item.id))).length
+  );
 
   const allVisibleSelected = computed(
     () => items.value.length > 0 && items.value.every((item) => selectedIds.value.has(String(item.id)))
@@ -104,6 +112,7 @@ export function useMessageHistory(bootstrap = {}) {
 
     loading.value = true;
     error.value = '';
+    notice.value = '';
 
     try {
       const response = await api.get(`/admin/history?${buildQuery()}`);
@@ -219,6 +228,42 @@ export function useMessageHistory(bootstrap = {}) {
     }
   }
 
+  /**
+   * Call off the pending resend of the selected rows.
+   *
+   * The queue items behind them are discarded and the records settle as
+   * cancelled; rows whose retry already ran are left alone and reported back.
+   *
+   * @since 2.4.0
+   */
+  async function cancelRetrySelected() {
+    if (!hasApi || !selectedIds.value.size) {
+      return;
+    }
+
+    loading.value = true;
+    error.value = '';
+    notice.value = '';
+
+    try {
+      const response = await api.post('/admin/history/cancel-retry', { ids: Array.from(selectedIds.value) });
+
+      if (response?.status === 'error') {
+        throw new Error(response.message || __('Could not cancel the resend.', textDomain));
+      }
+
+      items.value = Array.isArray(response?.items) ? response.items : [];
+      counts.value = normalizeCounts(response?.counts);
+      pagination.value = normalizePagination(response?.pagination);
+      selectedIds.value = new Set();
+      notice.value = response?.message || '';
+    } catch (cancelError) {
+      error.value = cancelError instanceof Error ? cancelError.message : __('Could not cancel the resend.', textDomain);
+    } finally {
+      loading.value = false;
+    }
+  }
+
   async function clearAll() {
     if (!hasApi) {
       return;
@@ -254,6 +299,7 @@ export function useMessageHistory(bootstrap = {}) {
   return {
     loading,
     error,
+    notice,
     items,
     counts,
     pagination,
@@ -262,6 +308,7 @@ export function useMessageHistory(bootstrap = {}) {
     selectedIds,
     statusTabs,
     totalSelected,
+    cancellableSelected,
     allVisibleSelected,
     partiallyVisibleSelected,
     pageSummary,
@@ -279,6 +326,7 @@ export function useMessageHistory(bootstrap = {}) {
     toggleSelected,
     toggleSelectAll,
     removeSelected,
+    cancelRetrySelected,
     clearAll,
   };
 }

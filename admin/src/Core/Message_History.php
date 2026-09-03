@@ -43,7 +43,7 @@ class Message_History {
      * @since 2.0.0
      * @var string
      */
-    const DB_VERSION = '1.1.0';
+    const DB_VERSION = '1.2.0';
 
     /**
      * Option key that stores the installed schema version.
@@ -83,12 +83,14 @@ class Message_History {
      *
      * `sent` only means the API accepted the message. `delivered`, `read` and
      * the `failed` that follows a rejection arrive later, by webhook.
+     * `cancelled` is the one nobody's server decides: it is a `queued` row whose
+     * resend was called off from the history screen.
      *
      * @since 2.0.0
-     * @version 2.3.0
+     * @version 2.4.0
      * @var string[]
      */
-    const STATUSES = array( 'sent', 'failed', 'queued', 'delivered', 'read' );
+    const STATUSES = array( 'sent', 'failed', 'queued', 'cancelled', 'delivered', 'read' );
 
     /**
      * Context shared by the current dispatch (workflow id / source).
@@ -168,6 +170,7 @@ class Message_History {
             error VARCHAR(191) NOT NULL DEFAULT '',
             attempts SMALLINT(6) NOT NULL DEFAULT 0,
             wamid VARCHAR(128) NOT NULL DEFAULT '',
+            queue_id VARCHAR(64) NOT NULL DEFAULT '',
             PRIMARY KEY  (id),
             KEY created_at (created_at),
             KEY receiver (receiver),
@@ -175,7 +178,8 @@ class Message_History {
             KEY status (status),
             KEY source (source),
             KEY workflow_id (workflow_id),
-            KEY wamid (wamid)
+            KEY wamid (wamid),
+            KEY queue_id (queue_id)
         ) {$charset_collate};";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -262,9 +266,12 @@ class Message_History {
             'attempts' => isset( $entry['attempts'] ) ? (int) $entry['attempts'] : 0,
             // The WhatsApp message id is what later delivery webhooks key on.
             'wamid' => substr( sanitize_text_field( $entry['wamid'] ?? '' ), 0, 128 ),
+            // Set only on a `queued` row: the retry-queue item this record can
+            // still call off, which is what makes "cancel resend" possible.
+            'queue_id' => substr( sanitize_text_field( $entry['queue_id'] ?? '' ), 0, 64 ),
         );
 
-        $formats = array( '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s' );
+        $formats = array( '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s' );
 
         $inserted = $wpdb->insert( self::get_table_name(), $data, $formats );
 
@@ -456,7 +463,7 @@ class Message_History {
         global $wpdb;
 
         $table = self::get_table_name();
-        $counts = array( 'all' => 0, 'sent' => 0, 'failed' => 0, 'queued' => 0 );
+        $counts = array( 'all' => 0, 'sent' => 0, 'failed' => 0, 'queued' => 0, 'cancelled' => 0 );
 
         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_results( "SELECT status, COUNT(*) AS total FROM {$table} GROUP BY status", ARRAY_A );
@@ -499,6 +506,127 @@ class Message_History {
 
         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID, all bound here.
         return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE id IN ({$placeholders})", $ids ) );
+    }
+
+
+    /**
+     * Close out the row that parked a message in the retry queue.
+     *
+     * The row written when the send first failed stays `queued` until the queue
+     * item it points at is resolved — delivered on a later attempt, or dropped
+     * for running out of them. Without this it would sit there forever claiming
+     * a retry that is no longer coming, and the history screen would offer to
+     * cancel a resend that does not exist.
+     *
+     * @since 2.4.0
+     * @param string $queue_id | Retry-queue item id.
+     * @param string $status | Status to settle the row on.
+     * @param string $error | Failure reason, when any.
+     * @return bool True when a row was updated.
+     */
+    public static function resolve_queue_item( $queue_id, $status, $error = '' ) {
+        $queue_id = sanitize_text_field( (string) $queue_id );
+        $status = sanitize_key( (string) $status );
+
+        if ( '' === $queue_id || ! in_array( $status, self::STATUSES, true ) ) {
+            return false;
+        }
+
+        global $wpdb;
+
+        $data = array( 'status' => $status, 'queue_id' => '' );
+        $formats = array( '%s', '%s' );
+
+        if ( '' !== $error ) {
+            $data['error'] = substr( sanitize_text_field( $error ), 0, 191 );
+            $formats[] = '%s';
+        }
+
+        $updated = $wpdb->update(
+            self::get_table_name(),
+            $data,
+            array( 'queue_id' => $queue_id, 'status' => 'queued' ),
+            $formats,
+            array( '%s', '%s' )
+        );
+
+        return (bool) $updated;
+    }
+
+
+    /**
+     * Fetch the queue item ids of rows still waiting for a retry.
+     *
+     * Only `queued` rows carry one, so the result is exactly the subset of the
+     * selection whose resend can still be called off.
+     *
+     * @since 2.4.0
+     * @param int[] $ids Row IDs.
+     * @return array<int,string> Queue item id keyed by history row id.
+     */
+    public static function get_pending_queue_ids( $ids ) {
+        global $wpdb;
+
+        $ids = array_filter( array_map( 'absint', (array) $ids ) );
+
+        if ( empty( $ids ) ) {
+            return array();
+        }
+
+        $table = self::get_table_name();
+        $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID, all bound here.
+        $rows = $wpdb->get_results( $wpdb->prepare( "SELECT id, queue_id FROM {$table} WHERE status = 'queued' AND queue_id <> '' AND id IN ({$placeholders})", $ids ), ARRAY_A );
+
+        $map = array();
+
+        if ( is_array( $rows ) ) {
+            foreach ( $rows as $row ) {
+                $map[ (int) $row['id'] ] = (string) $row['queue_id'];
+            }
+        }
+
+        return $map;
+    }
+
+
+    /**
+     * Mark rows as having had their resend cancelled.
+     *
+     * @since 2.4.0
+     * @param int[] $ids Row IDs.
+     * @param string $error Failure code stored on the row.
+     * @return int Number of rows updated.
+     */
+    public static function mark_cancelled( $ids, $error = 'retry_cancelled' ) {
+        global $wpdb;
+
+        $ids = array_filter( array_map( 'absint', (array) $ids ) );
+
+        if ( empty( $ids ) ) {
+            return 0;
+        }
+
+        $table = self::get_table_name();
+        $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+        $values = array_merge( array( substr( sanitize_text_field( $error ), 0, 191 ) ), $ids );
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID; every value is bound here.
+        $updated = (int) $wpdb->query( $wpdb->prepare( "UPDATE {$table} SET status = 'cancelled', queue_id = '', error = %s WHERE status = 'queued' AND id IN ({$placeholders})", $values ) );
+
+        if ( $updated > 0 ) {
+            /**
+             * Fires after queued rows had their resend cancelled.
+             *
+             * @since 2.4.0
+             * @param int[] $ids Row IDs that were asked to cancel.
+             * @param int $updated Number of rows actually updated.
+             */
+            do_action( 'Joinotify/Message_History/Retry_Cancelled', $ids, $updated );
+        }
+
+        return $updated;
     }
 
 
