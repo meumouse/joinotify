@@ -8,11 +8,11 @@ Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Build WhatsApp message automations with a visual drag-and-drop workflow builder, connected to WooCommerce, WPForms, Elementor and more.
+Automate WhatsApp notifications with a visual drag-and-drop workflow builder, connected to WooCommerce, WPForms, Elementor and more.
 
 == Description ==
 
-Joinotify turns things that happen on your site into WhatsApp messages, without writing code. You draw the automation on a canvas: pick a trigger (an order is paid, a form is submitted, a user registers), add conditions, delays and loops, and attach the messages you want sent.
+Joinotify — from *join* and *notify* — turns things that happen on your site into WhatsApp messages, without writing code. You draw the automation on a canvas: pick a trigger (an order is paid, a form is submitted, a user registers), add conditions, delays and loops, and attach the messages you want sent.
 
 The plugin is free and has no locked features. Building, saving, testing and exporting workflows all work out of the box. Sending messages requires a Joinotify account, because messages are delivered through the official WhatsApp Cloud API — see **External services** below.
 
