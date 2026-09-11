@@ -25,6 +25,12 @@
       "Audit every WhatsApp message dispatched by Joinotify, including workflow sends, retries and test messages.": [
         "Auditez chaque message WhatsApp envoyé par Joinotify, y compris les envois de flux de travail, les nouvelles tentatives et les messages de test."
       ],
+      "Body": [
+        "Corps"
+      ],
+      "Button": [
+        "Bouton"
+      ],
       "Cancel": [
         "Annuler"
       ],
@@ -84,6 +90,9 @@
       ],
       "From": [
         "De"
+      ],
+      "Header": [
+        "En-tête"
       ],
       "Joinotify": [
         "Joinotify"
@@ -169,6 +178,9 @@
       "Status": [
         "Statut"
       ],
+      "Template": [
+        "Modèle"
+      ],
       "Text": [
         "Texte"
       ],
@@ -183,6 +195,9 @@
       ],
       "Type": [
         "Type"
+      ],
+      "Value": [
+        "Valeur"
       ],
       "Workflow": [
         "Flux de travail"

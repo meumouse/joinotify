@@ -445,9 +445,6 @@
       "Open the panel": [
         "Apri il pannello"
       ],
-      "Open WordPress updates": [
-        "Apri gli aggiornamenti di WordPress"
-      ],
       "Options have been reset.": [
         "Le opzioni sono state ripristinate."
       ],
@@ -474,9 +471,6 @@
       ],
       "Pick shade %s": [
         "Scegli la tonalità %s"
-      ],
-      "Plugin updates": [
-        "Aggiornamenti del plugin"
       ],
       "Product SKU": [
         "SKU del prodotto"
@@ -664,9 +658,6 @@
       "Update variable": [
         "Aggiorna variabile"
       ],
-      "Updates are delivered by WordPress itself, together with every other plugin on this site.": [
-        "Gli aggiornamenti vengono forniti da WordPress stesso, insieme a ogni altro plugin su questo sito."
-      ],
       "Variable name": [
         "Nome variabile"
       ],
@@ -693,9 +684,6 @@
       ],
       "WordPress": [
         "WordPress"
-      ],
-      "You are currently using version": [
-        "Stai attualmente utilizzando la versione"
       ],
       "Your Joinotify account is connected.": [
         "Il tuo account Joinotify è connesso."
