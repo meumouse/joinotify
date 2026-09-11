@@ -1,6 +1,7 @@
 import { computed, onBeforeUnmount, ref } from 'vue';
-import { __, textDomain } from '../utils/i18n';
+import { __, sprintf, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
+import { downloadJson } from '../utils/downloadJson';
 import { DEFAULT_PER_PAGE, normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 
 const EMPTY_COUNTS = { all: 0, sent: 0, failed: 0, queued: 0, cancelled: 0 };
@@ -21,8 +22,8 @@ function normalizePagination(pagination) {
 }
 
 /**
- * Server-side message history listing: filtering, pagination, selection and
- * deletion backed by the Joinotify REST endpoints.
+ * Server-side message history listing: filtering, pagination, selection,
+ * deletion and JSON export backed by the Joinotify REST endpoints.
  *
  * @since 2.0.0
  * @version 2.4.2
@@ -33,6 +34,7 @@ export function useMessageHistory(bootstrap = {}) {
   const hasApi = Boolean(bootstrap?.rest?.root);
 
   const loading = ref(false);
+  const exporting = ref(false);
   const error = ref('');
   const notice = ref('');
   const items = ref(Array.isArray(bootstrap.items) ? bootstrap.items : []);
@@ -325,6 +327,72 @@ export function useMessageHistory(bootstrap = {}) {
     }
   }
 
+  /**
+   * Download history records as a JSON file.
+   *
+   * @since 2.4.2
+   * @param {Object} body Either `{ ids }` or `{ all: true, ...filters }`.
+   * @returns {Promise<void>} Resolves once the download has started or failed.
+   */
+  async function requestExport(body) {
+    if (!hasApi || exporting.value) {
+      return;
+    }
+
+    exporting.value = true;
+    error.value = '';
+    notice.value = '';
+
+    try {
+      const response = await api.post('/admin/history/export', body);
+
+      if (response?.status === 'error' || !response?.payload) {
+        throw new Error(response?.message || __('Could not export the message history.', textDomain));
+      }
+
+      downloadJson(response.payload, response.filename);
+
+      if (response.payload.truncated) {
+        notice.value = sprintf(
+          /* translators: 1: number of exported records, 2: number of records matching the filters */
+          __('The export holds only the %1$d most recent of the %2$d matching records.', textDomain),
+          response.payload.items?.length || 0,
+          response.payload.total || 0
+        );
+      }
+    } catch (exportError) {
+      error.value = exportError instanceof Error ? exportError.message : __('Could not export the message history.', textDomain);
+    } finally {
+      exporting.value = false;
+    }
+  }
+
+  /**
+   * Export the selected records, or every record matching the active filters
+   * when nothing is selected.
+   *
+   * @since 2.4.2
+   * @returns {Promise<void>}
+   */
+  function exportRecords() {
+    if (selectedIds.value.size) {
+      return requestExport({ ids: Array.from(selectedIds.value) });
+    }
+
+    return requestExport({ ...filters.value, all: true });
+  }
+
+  /**
+   * Export a single record.
+   *
+   * @since 2.4.2
+   * @param {number|string} id History record ID.
+   * @returns {Promise<void>}
+   */
+  function exportRecord(id) {
+    return requestExport({ ids: [String(id)] });
+  }
+
   onBeforeUnmount(() => {
     if (searchTimer) {
       window.clearTimeout(searchTimer);
@@ -340,6 +408,7 @@ export function useMessageHistory(bootstrap = {}) {
 
   return {
     loading,
+    exporting,
     error,
     notice,
     items,
@@ -371,5 +440,7 @@ export function useMessageHistory(bootstrap = {}) {
     removeSelected,
     cancelRetrySelected,
     clearAll,
+    exportRecords,
+    exportRecord,
   };
 }

@@ -534,6 +534,32 @@ class Message_History {
 
 
     /**
+     * Get history rows by ID, newest first.
+     *
+     * @since 2.4.2
+     * @param int[] $ids Row IDs.
+     * @return array<int,array<string,mixed>>
+     */
+    public static function get_items_by_ids( $ids ) {
+        global $wpdb;
+
+        $ids = array_values( array_unique( array_filter( array_map( 'absint', (array) $ids ) ) ) );
+
+        if ( empty( $ids ) ) {
+            return array();
+        }
+
+        $table = self::get_table_name();
+        $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $table comes from $wpdb->prefix and $placeholders is a generated list of %d tokens, one per absint()-cast ID, all bound here.
+        $rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table} WHERE id IN ({$placeholders}) ORDER BY id DESC", $ids ), ARRAY_A );
+
+        return is_array( $rows ) ? $rows : array();
+    }
+
+
+    /**
      * Count history items matching the given filters.
      *
      * @since 2.0.0

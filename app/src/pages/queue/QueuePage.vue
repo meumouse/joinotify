@@ -3,15 +3,18 @@
  * QueuePage.vue — scheduled segments ("processing queue") listing.
  *
  * Lists workflow continuations waiting on a delay (Action Scheduler / WP-Cron),
- * letting the user dispatch one immediately (skip the wait) or cancel it.
+ * letting the user dispatch one immediately (skip the wait) or cancel it, and
+ * export items as JSON one by one, as the selection or all matching the filters.
  *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
 import { useProcessingQueue } from '../../composables/useProcessingQueue';
 import BaseButton from '../../components/base/BaseButton.vue';
 import BaseListboxSelect from '../../components/base/BaseListboxSelect.vue';
+import BaseCheckbox from '../../components/buttons/checkbox/BaseCheckbox.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
 import PageHeader from '../../components/layout/PageHeader.vue';
 import PerPageSelect from '../../components/workflows/PerPageSelect.vue';
@@ -23,13 +26,18 @@ const props = defineProps({
 const {
   loading,
   acting,
+  exporting,
   error,
   notice,
   items,
   pagination,
   workflows,
   filters,
+  selectedIds,
   statusTabs,
+  totalSelected,
+  allVisibleSelected,
+  partiallyVisibleSelected,
   pageSummary,
   reload,
   setStatusFilter,
@@ -43,6 +51,10 @@ const {
   runNow,
   cancel,
   cancelAll,
+  toggleSelected,
+  toggleSelectAll,
+  exportItems,
+  exportItem,
 } = useProcessingQueue(props.bootstrap);
 
 const searchTerm = ref('');
@@ -141,6 +153,18 @@ const confirmDescription = computed(() => {
 const confirmLabel = computed(() =>
   confirmKind.value === 'run' ? __('Dispatch now', textDomain) : __('Cancel item', textDomain)
 );
+
+// With items selected the export covers them; otherwise every item the
+// filters match, which is what the tooltip says.
+const exportLabel = computed(() =>
+  totalSelected.value ? `${__('Export selected', textDomain)} (${totalSelected.value})` : __('Export all', textDomain)
+);
+
+const exportTitle = computed(() =>
+  totalSelected.value
+    ? __('Download the selected items as a JSON file', textDomain)
+    : __('Download every item matching the current filters as a JSON file', textDomain)
+);
 </script>
 
 <template>
@@ -220,14 +244,25 @@ const confirmLabel = computed(() =>
 
           <!-- Toolbar -->
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <button
-              type="button"
-              class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
-              :disabled="loading || !pagination.total_items"
-              @click="askCancelAll"
-            >
-              {{ __('Cancel all', textDomain) }}
-            </button>
+            <div class="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                :disabled="loading || exporting || (!totalSelected && !pagination.total_items)"
+                :title="exportTitle"
+                @click="exportItems"
+              >
+                {{ exporting ? __('Exporting…', textDomain) : exportLabel }}
+              </button>
+              <button
+                type="button"
+                class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                :disabled="loading || !pagination.total_items"
+                @click="askCancelAll"
+              >
+                {{ __('Cancel all', textDomain) }}
+              </button>
+            </div>
 
             <div class="flex items-center gap-3">
               <button
@@ -252,6 +287,14 @@ const confirmLabel = computed(() =>
             <table class="min-w-full divide-y divide-slate-100 text-left">
               <thead>
                 <tr class="text-[12px] uppercase tracking-wide text-slate-400">
+                  <th class="px-3 py-3">
+                    <BaseCheckbox
+                      :model-value="allVisibleSelected"
+                      :indeterminate="partiallyVisibleSelected"
+                      :aria-label="__('Select all visible items', textDomain)"
+                      @change="toggleSelectAll($event)"
+                    />
+                  </th>
                   <th class="px-3 py-3 font-medium">{{ __('Workflow', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Scheduled for', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Next action', textDomain) }}</th>
@@ -262,6 +305,13 @@ const confirmLabel = computed(() =>
               </thead>
               <tbody class="divide-y divide-slate-50 text-[14px] text-slate-700">
                 <tr v-for="entry in items" :key="entry.id" class="transition hover:bg-slate-50">
+                  <td class="px-3 py-3">
+                    <BaseCheckbox
+                      :model-value="selectedIds.has(String(entry.id))"
+                      :aria-label="`${__('Select', textDomain)} ${entry.workflow_title || entry.id}`"
+                      @change="toggleSelected(entry.id, $event)"
+                    />
+                  </td>
                   <td class="px-3 py-3">
                     <a
                       v-if="entry.workflow_edit_url"
@@ -302,6 +352,15 @@ const confirmLabel = computed(() =>
                         @click="askRun(entry)"
                       >
                         {{ __('Dispatch now', textDomain) }}
+                      </button>
+                      <button
+                        type="button"
+                        class="rounded-[8px] border border-slate-200 px-3 py-1.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+                        :disabled="exporting"
+                        :title="__('Download this item as a JSON file', textDomain)"
+                        @click="exportItem(entry.id)"
+                      >
+                        {{ __('Export', textDomain) }}
                       </button>
                       <button
                         type="button"

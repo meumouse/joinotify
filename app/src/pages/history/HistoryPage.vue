@@ -2,7 +2,11 @@
 /**
  * HistoryPage.vue — message dispatch history listing.
  *
+ * Records can be exported as JSON one by one (row action or details modal),
+ * as the current selection, or as every record matching the filters.
+ *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -22,6 +26,7 @@ const props = defineProps({
 
 const {
   loading,
+  exporting,
   error,
   notice,
   items,
@@ -50,6 +55,8 @@ const {
   removeSelected,
   cancelRetrySelected,
   clearAll,
+  exportRecords,
+  exportRecord,
 } = useMessageHistory(props.bootstrap);
 
 const detailsEntry = ref(null);
@@ -192,6 +199,18 @@ const confirmDescription = computed(() => {
 const confirmLabel = computed(() =>
   confirmKind.value === 'cancel-retry' ? __('Cancel resend', textDomain) : __('Delete', textDomain)
 );
+
+// With rows selected the export covers them; otherwise every record the
+// filters match, which is what the tooltip says.
+const exportLabel = computed(() =>
+  totalSelected.value ? `${__('Export selected', textDomain)} (${totalSelected.value})` : __('Export all', textDomain)
+);
+
+const exportTitle = computed(() =>
+  totalSelected.value
+    ? __('Download the selected records as a JSON file', textDomain)
+    : __('Download every record matching the current filters as a JSON file', textDomain)
+);
 </script>
 
 <template>
@@ -313,6 +332,15 @@ const confirmLabel = computed(() =>
               <button
                 type="button"
                 class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                :disabled="loading || exporting || (!totalSelected && !pagination.total_items)"
+                :title="exportTitle"
+                @click="exportRecords"
+              >
+                {{ exporting ? __('Exporting…', textDomain) : exportLabel }}
+              </button>
+              <button
+                type="button"
+                class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
                 :disabled="loading || !pagination.total_items"
                 @click="askConfirm('clear')"
               >
@@ -349,6 +377,7 @@ const confirmLabel = computed(() =>
                   <th class="px-3 py-3 font-medium">{{ __('Status', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Error', textDomain) }}</th>
                   <th class="px-3 py-3 font-medium">{{ __('Content', textDomain) }}</th>
+                  <th class="px-3 py-3 font-medium text-right">{{ __('Actions', textDomain) }}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-50 text-[14px] text-slate-700">
@@ -383,6 +412,17 @@ const confirmLabel = computed(() =>
                     {{ errorPreview(entry) }}
                   </td>
                   <td class="max-w-[280px] px-3 py-3 text-slate-500">{{ contentPreview(entry.content) }}</td>
+                  <td class="whitespace-nowrap px-3 py-3 text-right" @click.stop>
+                    <button
+                      type="button"
+                      class="rounded-[8px] border border-slate-200 px-3 py-1.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+                      :disabled="exporting"
+                      :title="__('Download this record as a JSON file', textDomain)"
+                      @click="exportRecord(entry.id)"
+                    >
+                      {{ __('Export', textDomain) }}
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -413,9 +453,11 @@ const confirmLabel = computed(() =>
     <HistoryDetailsModal
       :open="detailsOpen"
       :entry="detailsEntry || {}"
+      :exporting="exporting"
       :status-labels="statusLabels"
       :source-labels="sourceLabels"
       @close="detailsOpen = false"
+      @export="exportRecord(detailsEntry?.id)"
     />
 
     <ConfirmActionModal

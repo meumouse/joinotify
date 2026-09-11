@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
+import { downloadJson } from '../utils/downloadJson';
 import { DEFAULT_PER_PAGE, normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 
 const EMPTY_COUNTS = { all: 0, due: 0, scheduled: 0 };
@@ -21,8 +22,9 @@ function normalizePagination(pagination) {
 }
 
 /**
- * Server-side processing-queue listing: filtering, pagination, run-now and cancel
- * backed by the Joinotify REST endpoints (scheduled segments source).
+ * Server-side processing-queue listing: filtering, pagination, selection,
+ * run-now, cancel and JSON export backed by the Joinotify REST endpoints
+ * (scheduled segments source).
  *
  * @since 2.0.0
  * @version 2.4.2
@@ -34,6 +36,7 @@ export function useProcessingQueue(bootstrap = {}) {
 
   const loading = ref(false);
   const acting = ref('');
+  const exporting = ref(false);
   const error = ref('');
   const notice = ref('');
   const items = ref(Array.isArray(bootstrap.items) ? bootstrap.items : []);
@@ -48,11 +51,31 @@ export function useProcessingQueue(bootstrap = {}) {
     search: '',
   });
 
+  // Opaque segment ids ("as:123", "cron:<ts>:<hash>"). Every list refresh
+  // clears the set, so it never outlives the rows it was picked from.
+  const selectedIds = ref(new Set());
+
   const statusTabs = computed(() => [
     { label: __('All', textDomain), value: '', count: counts.value.all },
     { label: __('Due', textDomain), value: 'due', count: counts.value.due },
     { label: __('Scheduled', textDomain), value: 'scheduled', count: counts.value.scheduled },
   ]);
+
+  const totalSelected = computed(() => selectedIds.value.size);
+
+  const allVisibleSelected = computed(
+    () => items.value.length > 0 && items.value.every((item) => selectedIds.value.has(String(item.id)))
+  );
+
+  const partiallyVisibleSelected = computed(() => {
+    if (!items.value.length) {
+      return false;
+    }
+
+    const selectedVisibleCount = items.value.filter((item) => selectedIds.value.has(String(item.id))).length;
+
+    return selectedVisibleCount > 0 && selectedVisibleCount < items.value.length;
+  });
 
   const pageSummary = computed(() => {
     const total = pagination.value.total_items;
@@ -97,6 +120,7 @@ export function useProcessingQueue(bootstrap = {}) {
     items.value = Array.isArray(response?.items) ? response.items : [];
     counts.value = normalizeCounts(response?.counts);
     pagination.value = normalizePagination(response?.pagination);
+    selectedIds.value = new Set();
   }
 
   async function fetchItems() {
@@ -234,6 +258,81 @@ export function useProcessingQueue(bootstrap = {}) {
     return postAction('/admin/queue/cancel', { all: true }, __('Could not clear the queue.', textDomain));
   }
 
+  function toggleSelected(id, checked) {
+    const next = new Set(selectedIds.value);
+    const key = String(id);
+
+    if (checked) {
+      next.add(key);
+    } else {
+      next.delete(key);
+    }
+
+    selectedIds.value = next;
+  }
+
+  function toggleSelectAll(checked) {
+    selectedIds.value = checked ? new Set(items.value.map((item) => String(item.id))) : new Set();
+  }
+
+  /**
+   * Download scheduled items as a JSON file, including the runtime context
+   * and the actions each one still has to run.
+   *
+   * @since 2.4.2
+   * @param {Object} body Either `{ ids }` or `{ all: true, ...filters }`.
+   * @returns {Promise<void>} Resolves once the download has started or failed.
+   */
+  async function requestExport(body) {
+    if (!hasApi || exporting.value) {
+      return;
+    }
+
+    exporting.value = true;
+    error.value = '';
+    notice.value = '';
+
+    try {
+      const response = await api.post('/admin/queue/export', body);
+
+      if (response?.status === 'error' || !response?.payload) {
+        throw new Error(response?.message || __('Could not export the processing queue.', textDomain));
+      }
+
+      downloadJson(response.payload, response.filename);
+    } catch (exportError) {
+      error.value = exportError instanceof Error ? exportError.message : __('Could not export the processing queue.', textDomain);
+    } finally {
+      exporting.value = false;
+    }
+  }
+
+  /**
+   * Export the selected items, or every item matching the active filters when
+   * nothing is selected.
+   *
+   * @since 2.4.2
+   * @returns {Promise<void>}
+   */
+  function exportItems() {
+    if (selectedIds.value.size) {
+      return requestExport({ ids: Array.from(selectedIds.value) });
+    }
+
+    return requestExport({ ...filters.value, all: true });
+  }
+
+  /**
+   * Export a single scheduled item.
+   *
+   * @since 2.4.2
+   * @param {string} id Opaque segment id.
+   * @returns {Promise<void>}
+   */
+  function exportItem(id) {
+    return requestExport({ ids: [String(id)] });
+  }
+
   // The bootstrap payload is sized with the server default. When the viewer
   // picked another size, reload before the first render shows the wrong one.
   if (hasApi && storedPerPage && storedPerPage !== pagination.value.per_page) {
@@ -244,6 +343,7 @@ export function useProcessingQueue(bootstrap = {}) {
   return {
     loading,
     acting,
+    exporting,
     error,
     notice,
     items,
@@ -251,7 +351,11 @@ export function useProcessingQueue(bootstrap = {}) {
     pagination,
     workflows,
     filters,
+    selectedIds,
     statusTabs,
+    totalSelected,
+    allVisibleSelected,
+    partiallyVisibleSelected,
     pageSummary,
     fetchItems,
     reload: fetchItems,
@@ -267,5 +371,9 @@ export function useProcessingQueue(bootstrap = {}) {
     runNow,
     cancel,
     cancelAll,
+    toggleSelected,
+    toggleSelectAll,
+    exportItems,
+    exportItem,
   };
 }

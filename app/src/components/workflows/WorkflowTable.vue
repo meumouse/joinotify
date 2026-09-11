@@ -7,6 +7,7 @@
  * row-action events from its child rows up to the parent view.
  *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import { __, textDomain } from '../../utils/i18n';
 import BaseCheckbox from '../buttons/checkbox/BaseCheckbox.vue';
@@ -21,10 +22,11 @@ defineProps({
   allSelected: { type: Boolean, default: false },
   indeterminate: { type: Boolean, default: false },
   loadingIds: { type: Array, default: () => [] },
+  exporting: { type: Boolean, default: false },
   formatDate: { type: Function, default: (value) => value },
 });
 
-defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent', 'toggleStatus']);
+defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent', 'toggleStatus', 'export']);
 </script>
 
 <template>
@@ -40,12 +42,14 @@ defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent
           <WorkflowTableRow
             v-for="workflow in workflows"
             :key="workflow.id"
+            :exporting="exporting"
             :format-date="formatDate"
             :selected="selectedIds.includes(String(workflow.id))"
             :updating="loadingIds.includes(String(workflow.id))"
             :workflow="workflow"
             @deletePermanent="$emit('deletePermanent', $event)"
             @edit="$emit('edit', $event)"
+            @export="$emit('export', $event)"
             @restore="$emit('restore', $event)"
             @select="$emit('select', workflow, $event)"
             @toggleStatus="$emit('toggleStatus', workflow, $event)"
@@ -98,9 +102,11 @@ defineEmits(['toggleAll', 'select', 'edit', 'trash', 'restore', 'deletePermanent
             <span class="font-medium text-ink">{{ formatDate(workflow.created_at) }}</span>
           </div>
           <WorkflowRowActions
+            :exporting="exporting"
             :workflow="workflow"
             @deletePermanent="$emit('deletePermanent', $event)"
             @edit="$emit('edit', $event)"
+            @export="$emit('export', $event)"
             @restore="$emit('restore', $event)"
             @trash="$emit('trash', $event)"
           />

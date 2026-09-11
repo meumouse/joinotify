@@ -23,5 +23,6 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Queue_List',
 		'\MeuMouse\Joinotify\Rest\Queue_Run',
 		'\MeuMouse\Joinotify\Rest\Queue_Cancel',
+		'\MeuMouse\Joinotify\Rest\Queue_Export',
 	);
 }

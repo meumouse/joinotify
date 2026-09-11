@@ -11,19 +11,25 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
+import { downloadJson } from '../utils/downloadJson';
 import { normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 import { useBulkSelection } from './useBulkSelection';
 import { usePagination } from './usePagination';
+
+// Handled on the screen as a download, not sent to the bulk endpoint.
+const EXPORT_ACTION = { label: __('Export as JSON', textDomain), value: 'export' };
 
 const BULK_ACTIONS_DEFAULT = [
   { label: __('Move to trash', textDomain), value: 'trash', destructive: true },
   { label: __('Mark as active', textDomain), value: 'publish' },
   { label: __('Mark as inactive', textDomain), value: 'draft' },
+  EXPORT_ACTION,
 ];
 
 const BULK_ACTIONS_TRASH = [
   { label: __('Restore', textDomain), value: 'restore' },
   { label: __('Delete permanently', textDomain), value: 'delete_permanently', destructive: true },
+  EXPORT_ACTION,
 ];
 
 const MOCK_WORKFLOWS = [
@@ -149,6 +155,7 @@ export function useWorkflows(bootstrap = {}) {
   const loading = ref(true);
   const error = ref('');
   const bulkActionLoading = ref(false);
+  const exporting = ref(false);
   const updateLoadingIds = ref(new Set());
   const searchQuery = ref(bootstrap.search_query || '');
   const selectedStatus = ref(normalizeStatus(bootstrap.active_status));
@@ -459,6 +466,37 @@ export function useWorkflows(bootstrap = {}) {
   }
 
   /**
+   * Downloads workflows as a JSON file. One workflow comes as the builder's
+   * own export file, ready to import again; several come as a bundle.
+   *
+   * @since 2.4.2
+   * @param {Array} [ids] The workflow IDs to export (defaults to selection).
+   * @returns {Promise<void>} Resolves once the download has started or failed.
+   */
+  async function exportWorkflows(ids = bulkSelection.selectedIds.value) {
+    if (!hasApi || !ids.length || exporting.value) {
+      return;
+    }
+
+    exporting.value = true;
+    error.value = '';
+
+    try {
+      const response = await api.post('/admin/workflows/export', { ids });
+
+      if (response?.status === 'error' || !response?.payload) {
+        throw new Error(response?.message || __('Could not export the workflows.', textDomain));
+      }
+
+      downloadJson(response.payload, response.filename);
+    } catch (exportError) {
+      error.value = exportError instanceof Error ? exportError.message : __('Could not export the workflows.', textDomain);
+    } finally {
+      exporting.value = false;
+    }
+  }
+
+  /**
    * Navigates the browser to a URL.
    *
    * @since 2.0.0
@@ -479,6 +517,8 @@ export function useWorkflows(bootstrap = {}) {
     bulkSelection,
     counts,
     error,
+    exportWorkflows,
+    exporting,
     loading,
     navigateTo,
     pageSummary,

@@ -12,6 +12,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 - `{{ wc_shipping_method_total }}` returns the shipping cost and method of the WooCommerce order as plain text, for example "R$ 20,00 via SEDEX", or only the method name when the shipping is free
 - The workflows, message history and processing queue tables have an "Items per page" selector (10, 25, 50, 100 or 200). Each screen remembers the choice in the browser, and changing it keeps the first visible row on screen instead of jumping back to page 1
+- The workflows, message history and processing queue tables export to JSON. Each row has an "Export" action, the selected rows export together, and in the history and the queue the toolbar button exports every row matching the current filters when nothing is selected. One workflow downloads as the same file the builder exports, so it can be imported again; several download as one bundle. The processing queue gains row selection for this, and its export includes each item's runtime data and the actions it still has to run. A history export keeps the 5,000 most recent matching records and says so when it stops there
 
 ### Changed
 

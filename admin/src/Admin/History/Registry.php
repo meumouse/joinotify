@@ -6,6 +6,7 @@ use MeuMouse\Joinotify\Api\Send_Error;
 use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Admin\Export;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -32,6 +33,15 @@ class Registry {
      * @var int
      */
     const PER_PAGE = 25;
+
+    /**
+     * Most records a single "export all" writes, newest first. Keeps the
+     * request inside the memory a shared host gives PHP.
+     *
+     * @since 2.4.2
+     * @var int
+     */
+    const EXPORT_LIMIT = 5000;
 
 
     /**
@@ -213,6 +223,116 @@ class Registry {
                 'total_pages' => (int) max( 1, ceil( $total / $per_page ) ),
             ),
         );
+    }
+
+
+    /**
+     * Build an exported record from a stored row.
+     *
+     * The list item minus what only the screen needs (the link back into the
+     * builder and the "Cancel resend" flag), plus the WhatsApp message id and
+     * the retry-queue item that the list leaves out.
+     *
+     * @since 2.4.2
+     * @param array<string,mixed> $row Raw DB row.
+     * @return array<string,mixed>
+     */
+    public static function build_export_item( $row ) {
+        $item = self::build_item( $row );
+
+        unset( $item['workflow_edit_url'], $item['can_cancel_retry'] );
+
+        $item['wamid'] = (string) ( $row['wamid'] ?? '' );
+        $item['queue_id'] = (string) ( $row['queue_id'] ?? '' );
+
+        return $item;
+    }
+
+
+    /**
+     * Build the JSON export of history records.
+     *
+     * `ids` exports those rows. `all` exports every row matching the filters
+     * sent next to it, newest first, up to the export limit; the payload then
+     * carries those filters, the matching total and whether it was cut short.
+     *
+     * @since 2.4.2
+     * @param array<string,mixed> $params Request body: `ids`, or `all` plus the list filters.
+     * @return array{filename:string,payload:array<string,mixed>}|null Null when no row matches.
+     */
+    public static function export_items( $params ) {
+        $params = is_array( $params ) ? $params : array();
+        $data = array();
+
+        if ( ! empty( $params['all'] ) ) {
+            $args = self::normalize_args( $params );
+            $total = Message_History::count_items( $args );
+            $rows = self::get_rows_for_export( $args );
+
+            $data['filters'] = array(
+                'status' => $args['status'],
+                'source' => $args['source'],
+                'search' => $args['search'],
+                'date_from' => $args['date_from'],
+                'date_to' => $args['date_to'],
+            );
+        } else {
+            $rows = Message_History::get_items_by_ids( $params['ids'] ?? array() );
+            $total = count( $rows );
+        }
+
+        if ( empty( $rows ) ) {
+            return null;
+        }
+
+        $items = array_map( array( __CLASS__, 'build_export_item' ), $rows );
+
+        $data['total'] = $total;
+        $data['truncated'] = count( $items ) < $total;
+        $data['items'] = $items;
+
+        return array(
+            'filename' => Export::build_filename('message-history'),
+            'payload' => Export::build_payload( 'joinotify_message_history_export', $data ),
+        );
+    }
+
+
+    /**
+     * Read every row matching the filters, newest first, up to the export limit.
+     *
+     * @since 2.4.2
+     * @param array<string,mixed> $args Normalized filter args.
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function get_rows_for_export( $args ) {
+        /**
+         * Filter how many history records a single "export all" writes.
+         *
+         * @since 2.4.2
+         * @param int $limit Maximum number of records.
+         */
+        $limit = max( 1, (int) apply_filters( 'Joinotify/Admin/History/Export_Limit', self::EXPORT_LIMIT ) );
+        $batch_size = 200;
+        $rows = array();
+        $page = 1;
+
+        while ( count( $rows ) < $limit ) {
+            $batch = Message_History::get_items( array_merge( $args, array(
+                'page' => $page,
+                'per_page' => $batch_size,
+            ) ) );
+
+            $rows = array_merge( $rows, $batch );
+
+            if ( count( $batch ) < $batch_size ) {
+                break;
+            }
+
+            $page++;
+        }
+
+        return array_slice( $rows, 0, $limit );
     }
 
 

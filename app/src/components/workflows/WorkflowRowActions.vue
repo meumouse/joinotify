@@ -4,17 +4,20 @@
  *
  * Renders the per-row action links for a single workflow, showing edit and
  * move-to-trash for active rows and restore/delete-permanently for trashed
- * rows. Emits the matching action event with the workflow payload.
+ * rows, plus a JSON export for every row. Emits the matching action event
+ * with the workflow payload.
  *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import { __, textDomain } from '../../utils/i18n';
 
 defineProps({
   workflow: { type: Object, required: true },
+  exporting: { type: Boolean, default: false },
 });
 
-defineEmits(['edit', 'trash', 'restore', 'deletePermanent']);
+defineEmits(['edit', 'trash', 'restore', 'deletePermanent', 'export']);
 </script>
 
 <template>
@@ -26,6 +29,16 @@ defineEmits(['edit', 'trash', 'restore', 'deletePermanent']);
       @click="$emit('edit', workflow)"
     >
       {{ __('Edit', textDomain) }}
+    </button>
+
+    <button
+      type="button"
+      class="font-medium text-ink transition hover:text-primary-800 disabled:cursor-not-allowed disabled:opacity-50"
+      :disabled="exporting"
+      :title="__('Download this workflow as a JSON file', textDomain)"
+      @click="$emit('export', workflow)"
+    >
+      {{ __('Export', textDomain) }}
     </button>
 
     <button

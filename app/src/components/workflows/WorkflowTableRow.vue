@@ -7,6 +7,7 @@
  * selection, status, and action events for the parent table to handle.
  *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import { computed } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -18,10 +19,11 @@ const props = defineProps({
   workflow: { type: Object, required: true },
   selected: { type: Boolean, default: false },
   updating: { type: Boolean, default: false },
+  exporting: { type: Boolean, default: false },
   formatDate: { type: Function, default: (value) => value },
 });
 
-const emit = defineEmits(['select', 'edit', 'trash', 'restore', 'deletePermanent', 'toggleStatus']);
+const emit = defineEmits(['select', 'edit', 'trash', 'restore', 'deletePermanent', 'toggleStatus', 'export']);
 
 /**
  * Maps the workflow's raw status to a localized, human-readable label,
@@ -61,9 +63,11 @@ const statusLabel = computed(() => {
         </a>
         <WorkflowRowActions
           class="hidden md:flex"
+          :exporting="exporting"
           :workflow="workflow"
           @deletePermanent="$emit('deletePermanent', $event)"
           @edit="$emit('edit', $event)"
+          @export="$emit('export', $event)"
           @restore="$emit('restore', $event)"
           @trash="$emit('trash', $event)"
         />

@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Admin\Queue;
 
+use MeuMouse\Joinotify\Admin\Export;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Messages;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
@@ -219,6 +220,31 @@ class Registry {
 
 
     /**
+     * Build an exported item from a raw segment.
+     *
+     * The list item without its builder link, plus the scheduler args behind
+     * it: the runtime `context` captured when the delay was reached and the
+     * `action_data` holding the delay node and the actions still to run.
+     *
+     * @since 2.4.2
+     * @param array<string,mixed> $segment Raw segment descriptor.
+     * @return array<string,mixed>
+     */
+    public static function build_export_item( $segment ) {
+        $item = self::build_item( $segment );
+
+        unset( $item['workflow_edit_url'] );
+
+        list( , $context, $action_data ) = self::extract_args( $segment['args'] ?? array() );
+
+        $item['context'] = $context;
+        $item['action_data'] = $action_data;
+
+        return $item;
+    }
+
+
+    /**
      * Human-readable summary of the delay that scheduled this segment.
      *
      * @since 2.0.0
@@ -313,33 +339,31 @@ class Registry {
 
 
     /**
-     * Build the full list state payload (items + counts + pagination).
+     * Order items by scheduled time, soonest first.
      *
-     * The backends already return the complete pending set, so filtering and
-     * pagination happen in memory.
-     *
-     * @since 2.0.0
-     * @param array<string,mixed> $args Filter + pagination args.
-     * @return array<string,mixed>
+     * @since 2.4.2
+     * @param array<int,array<string,mixed>> $items Items built by build_item() or build_export_item().
+     * @return array<int,array<string,mixed>>
      */
-    public static function get_list_state( $args = array() ) {
-        $args = self::normalize_args( $args );
-
-        $items = array_map( array( __CLASS__, 'build_item' ), self::get_pending_segments() );
-
-        // sort by scheduled time ascending (soonest first)
+    protected static function sort_items( $items ) {
         usort( $items, static function( $a, $b ) {
             return ( $a['timestamp'] ?? 0 ) <=> ( $b['timestamp'] ?? 0 );
         } );
 
-        $counts = array(
-            'all'       => count( $items ),
-            'due'       => count( array_filter( $items, static fn( $i ) => ! empty( $i['is_due'] ) ) ),
-            'scheduled' => count( array_filter( $items, static fn( $i ) => empty( $i['is_due'] ) ) ),
-        );
+        return $items;
+    }
 
-        // apply filters
-        $filtered = array_values( array_filter( $items, static function( $item ) use ( $args ) {
+
+    /**
+     * Keep the items matching the status, workflow and search filters.
+     *
+     * @since 2.4.2
+     * @param array<int,array<string,mixed>> $items Items built by build_item() or build_export_item().
+     * @param array<string,mixed>            $args Normalized filter args.
+     * @return array<int,array<string,mixed>>
+     */
+    protected static function filter_items( $items, $args ) {
+        return array_values( array_filter( $items, static function( $item ) use ( $args ) {
             if ( 'due' === $args['status'] && empty( $item['is_due'] ) ) {
                 return false;
             }
@@ -362,6 +386,32 @@ class Registry {
 
             return true;
         } ) );
+    }
+
+
+    /**
+     * Build the full list state payload (items + counts + pagination).
+     *
+     * The backends already return the complete pending set, so filtering and
+     * pagination happen in memory.
+     *
+     * @since 2.0.0
+     * @version 2.4.2
+     * @param array<string,mixed> $args Filter + pagination args.
+     * @return array<string,mixed>
+     */
+    public static function get_list_state( $args = array() ) {
+        $args = self::normalize_args( $args );
+
+        $items = self::sort_items( array_map( array( __CLASS__, 'build_item' ), self::get_pending_segments() ) );
+
+        $counts = array(
+            'all'       => count( $items ),
+            'due'       => count( array_filter( $items, static fn( $i ) => ! empty( $i['is_due'] ) ) ),
+            'scheduled' => count( array_filter( $items, static fn( $i ) => empty( $i['is_due'] ) ) ),
+        );
+
+        $filtered = self::filter_items( $items, $args );
 
         $total = count( $filtered );
         $per_page = $args['per_page'];
@@ -376,6 +426,56 @@ class Registry {
                 'total_items'  => $total,
                 'total_pages'  => (int) max( 1, ceil( $total / $per_page ) ),
             ),
+        );
+    }
+
+
+    /**
+     * Build the JSON export of pending scheduled items.
+     *
+     * `ids` exports those items (opaque ids from build_segment_id()). `all`
+     * exports every item matching the filters sent next to it, and the payload
+     * then carries those filters. Either way the items come soonest first.
+     *
+     * @since 2.4.2
+     * @param array<string,mixed> $params Request body: `ids`, or `all` plus the list filters.
+     * @return array{filename:string,payload:array<string,mixed>}|null Null when no item matches.
+     */
+    public static function export_items( $params ) {
+        $params = is_array( $params ) ? $params : array();
+        $data = array();
+
+        if ( ! empty( $params['all'] ) ) {
+            $args = self::normalize_args( $params );
+            $items = array_map( array( __CLASS__, 'build_export_item' ), self::get_pending_segments() );
+            $items = self::filter_items( $items, $args );
+
+            $data['filters'] = array(
+                'status'      => $args['status'],
+                'workflow_id' => $args['workflow_id'],
+                'search'      => $args['search'],
+            );
+        } else {
+            $ids = array_map( 'sanitize_text_field', array_map( 'strval', (array) ( $params['ids'] ?? array() ) ) );
+            $items = array();
+
+            foreach ( self::get_pending_segments() as $segment ) {
+                if ( in_array( self::build_segment_id( $segment ), $ids, true ) ) {
+                    $items[] = self::build_export_item( $segment );
+                }
+            }
+        }
+
+        if ( empty( $items ) ) {
+            return null;
+        }
+
+        $data['total'] = count( $items );
+        $data['items'] = self::sort_items( $items );
+
+        return array(
+            'filename' => Export::build_filename('processing-queue'),
+            'payload'  => Export::build_payload( 'joinotify_processing_queue_export', $data ),
         );
     }
 

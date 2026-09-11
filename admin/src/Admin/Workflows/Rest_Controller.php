@@ -23,5 +23,6 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Workflows_List',
 		'\MeuMouse\Joinotify\Rest\Workflows_Status',
 		'\MeuMouse\Joinotify\Rest\Workflows_Bulk',
+		'\MeuMouse\Joinotify\Rest\Workflows_Export',
 	);
 }

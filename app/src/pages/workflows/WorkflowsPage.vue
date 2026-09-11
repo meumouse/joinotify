@@ -4,9 +4,11 @@
  *
  * Admin "Workflows" listing screen: renders the status tabs, search, bulk
  * actions toolbar, paginated table and single/bulk trash-delete confirmation
- * modal, backed by the useWorkflows composable for data and state.
+ * modal, backed by the useWorkflows composable for data and state. Workflows
+ * export as JSON from the row actions or the "Export as JSON" bulk action.
  *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import { computed, reactive, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -31,6 +33,8 @@ const {
   bulkActionOptions,
   bulkSelection,
   error,
+  exportWorkflows,
+  exporting,
   loading,
   navigateTo,
   pageSummary,
@@ -60,6 +64,7 @@ const confirmState = reactive({
 });
 
 const createUrl = computed(() => props.bootstrap?.create_url || 'admin.php?page=joinotify-workflows-builder');
+const toolbarLoading = computed(() => bulkActionLoading.value || exporting.value);
 const loadingIds = computed(() => Array.from(updateLoadingIds.value));
 const selectedIds = computed(() => bulkSelection.selectedIds.value);
 const allVisibleSelected = computed(() => bulkSelection.isAllVisibleSelected.value);
@@ -214,12 +219,21 @@ function confirmSelectionAction() {
 
 /**
  * Apply a bulk action, opening the confirmation modal first when destructive.
+ * Export downloads the selection instead and keeps it selected.
  *
  * @since 2.0.0
+ * @version 2.4.2
  * @param {string} action Bulk action value (e.g. 'trash', 'delete_permanently').
  */
 function openBulkConfirmation(action) {
   if (!bulkSelection.selectedIds.value.length || !action) {
+    return;
+  }
+
+  if (action === 'export') {
+    exportWorkflows().finally(() => {
+      bulkAction.value = '';
+    });
     return;
   }
 
@@ -286,6 +300,16 @@ function handleTrash(workflow) {
   confirmState.workflowId = String(workflow.id);
   confirmState.title = __('Move to trash', textDomain);
   confirmState.description = `${__('The workflow', textDomain)} "${workflow.name}" ${__('will be moved to trash.', textDomain)}`;
+}
+
+/**
+ * Download a single workflow as the builder's JSON export file.
+ *
+ * @since 2.4.2
+ * @param {Object} workflow Workflow to export.
+ */
+function handleExport(workflow) {
+  exportWorkflows([String(workflow.id)]);
 }
 
 /**
@@ -370,7 +394,7 @@ function handleToggleStatus(workflow, nextStatus) {
               :bulk-action="bulkAction"
               :bulk-options="bulkActionOptions"
               :bulk-disabled="!totalSelected"
-              :loading="bulkActionLoading"
+              :loading="toolbarLoading"
               :pagination="tablePagination"
               :pagination-disabled="loading || bulkActionLoading"
               :selected-count="totalSelected"
@@ -390,9 +414,11 @@ function handleToggleStatus(workflow, nextStatus) {
               :indeterminate="partiallyVisibleSelected"
               :loading-ids="loadingIds"
               :selected-ids="selectedIds"
+              :exporting="exporting"
               :workflows="visibleWorkflows"
               @deletePermanent="handleDeletePermanent"
               @edit="handleEdit"
+              @export="handleExport"
               @restore="handleRestore"
               @select="handleRowSelect"
               @toggleAll="handleSelectAll"
@@ -412,7 +438,7 @@ function handleToggleStatus(workflow, nextStatus) {
               :bulk-action="bulkAction"
               :bulk-options="bulkActionOptions"
               :bulk-disabled="!totalSelected"
-              :loading="bulkActionLoading"
+              :loading="toolbarLoading"
               :pagination="tablePagination"
               :pagination-disabled="loading || bulkActionLoading"
               :per-page="pagination.perPage.value"

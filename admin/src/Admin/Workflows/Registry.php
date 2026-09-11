@@ -2,6 +2,8 @@
 
 namespace MeuMouse\Joinotify\Admin\Workflows;
 
+use MeuMouse\Joinotify\Admin\Export;
+use MeuMouse\Joinotify\Admin\Builder\Registry as Builder_Registry;
 use WP_Query;
 use WP_Post;
 
@@ -262,5 +264,73 @@ class Registry {
 		}
 
 		return false;
+	}
+
+
+	/**
+	 * Build the JSON export of a set of workflows.
+	 *
+	 * One workflow exports as the same file the builder's own export writes, so
+	 * it can go straight back into the builder's import. Several export as a
+	 * bundle whose `workflows` list holds one such file per workflow.
+	 *
+	 * @since 2.4.2
+	 * @param int[] $ids Workflow post IDs.
+	 * @return array{filename:string,payload:array<string,mixed>}|null Null when none of the IDs is a workflow.
+	 */
+	public static function export_items( $ids ) {
+		$ids = array_values( array_unique( array_filter( array_map( 'absint', (array) $ids ) ) ) );
+		$files = array();
+
+		foreach ( $ids as $id ) {
+			if ( get_post_type( $id ) !== self::POST_TYPE ) {
+				continue;
+			}
+
+			$files[ $id ] = Builder_Registry::build_exported_workflow_file( Builder_Registry::get_workflow_state( $id ), $id );
+		}
+
+		if ( empty( $files ) ) {
+			return null;
+		}
+
+		if ( 1 === count( $files ) ) {
+			$id = (int) array_key_first( $files );
+			$file = reset( $files );
+
+			return array(
+				'filename' => self::build_workflow_filename( (string) ( $file['post']['title'] ?? '' ), $id ),
+				'payload' => $file,
+			);
+		}
+
+		return array(
+			'filename' => Export::build_filename('workflows'),
+			'payload' => Export::build_payload( 'joinotify_workflows_export', array(
+				'total' => count( $files ),
+				'workflows' => array_values( $files ),
+			) ),
+		);
+	}
+
+
+	/**
+	 * File name for a single exported workflow, slugged from its title like the
+	 * builder's export.
+	 *
+	 * @since 2.4.2
+	 * @param string $title Workflow title.
+	 * @param int    $id Workflow post ID, used when the title yields no usable slug.
+	 * @return string
+	 */
+	private static function build_workflow_filename( $title, $id ) {
+		$slug = sanitize_title( remove_accents( $title ) );
+
+		// sanitize_title() percent-encodes scripts it cannot transliterate.
+		if ( '' === $slug || str_contains( $slug, '%' ) ) {
+			$slug = 'workflow-' . $id;
+		}
+
+		return $slug . '.json';
 	}
 }
