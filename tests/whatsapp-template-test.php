@@ -79,6 +79,11 @@ function is_wp_error( $thing ) { return $thing instanceof WP_Error; }
 function joinotify_prepare_message( $message, $payload = array() ) { return is_scalar( $message ) ? (string) $message : ''; }
 function joinotify_prepare_receiver( $receiver, $payload = array() ) { return preg_replace( '/\D+/', '', (string) $receiver ); }
 
+// Mirrors the real helper: tags out, entities decoded, non-breaking spaces flattened.
+function joinotify_format_plain_text( $content ) {
+	return (string) preg_replace( '/\x{00A0}|\x{202F}/u', ' ', html_entity_decode( strip_tags( (string) $content ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+}
+
 }
 
 // ---------------------------------------------------------------------------
@@ -321,6 +326,39 @@ $components = Workflow_Processor::build_template_components( array(
 ), array(), 'sandbox' );
 
 check( 'sandbox mode resolves through the sandbox placeholder path', '[{{ wc_billing_first_name }}]' === $components[0]['parameters'][0]['text'] );
+
+echo "\nWorkflow_Processor template parameter text\n";
+
+/**
+ * Text of the single body parameter built from one resolved value.
+ */
+function parameter_text( $value ) {
+	$components = Workflow_Processor::build_template_components( array(
+		array( 'component' => 'body', 'key' => 'valor', 'value' => $value ),
+	), array() );
+
+	return $components[0]['parameters'][0]['text'] ?? null;
+}
+
+check( 'an integer value goes out as a digit string', '1042' === parameter_text( 1042 ) );
+check( 'a decimal value goes out as a string', '19.9' === parameter_text( 19.9 ) );
+check( 'a numeric string is kept as is', '0042' === parameter_text( '0042' ) );
+check( 'a numeric value keeps the text type', array( 'type' => 'text', 'parameter_name' => 'valor', 'text' => '1042' ) === Workflow_Processor::build_template_components( array(
+	array( 'component' => 'body', 'key' => 'valor', 'value' => 1042 ),
+), array() )[0]['parameters'][0] );
+check( 'a plain single-line value is untouched', 'Maria da Silva' === parameter_text( 'Maria da Silva' ) );
+
+// Meta refuses line breaks, tabs and more than four spaces in a row (132018).
+check( 'line breaks are joined with a comma', 'Rua das Flores, 123, Centro, Alagoa - MG' === parameter_text( "Rua das Flores, 123\nCentro\r\nAlagoa - MG" ) );
+check( 'a line ending in a comma gets no second one', 'Rua A, 1, Centro' === parameter_text( "Rua A, 1,\nCentro" ) );
+check( 'blank lines are dropped', 'a, b' === parameter_text( "a\n\n\nb\n" ) );
+check( 'tabs and runs of spaces collapse to one space', 'a b c' === parameter_text( "a\t\tb      c" ) );
+check( 'markup line breaks become separators', 'Maria, Rua A, 1, Alagoa - MG' === parameter_text( 'Maria<br/>Rua A, 1<br>Alagoa - MG' ) );
+check( 'tags and entities are removed', 'R$ 20,00 via SEDEX' === parameter_text( '<span class="amount"><bdi><span>&#82;&#36;</span>&nbsp;20,00</bdi></span>&nbsp;<small class="shipped_via">via SEDEX</small>' ) );
+check( 'an empty value stays empty', '' === parameter_text( '' ) );
+check( 'a button value is flattened too', 'a, b' === Workflow_Processor::build_template_components( array(
+	array( 'component' => 'button', 'sub_type' => 'url', 'key' => '1', 'index' => 0, 'value' => "a\nb" ),
+), array() )[0]['parameters'][0]['text'] );
 
 echo "\n";
 echo $failures > 0

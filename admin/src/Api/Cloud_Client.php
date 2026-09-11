@@ -142,12 +142,13 @@ class Cloud_Client {
      * mirror (Meta's raw body, 200 + messages[].id).
      *
      * @since 1.4.8
+     * @version 2.4.2
      * @param array|\WP_Error $response | wp_remote_* response.
-     * @return array{code:int,wamid:string,error_type:string,meta_code:int,retry_after:int}
+     * @return array{code:int,wamid:string,error_type:string,meta_code:int,retry_after:int,error_detail:string}
      */
     protected static function parse_send_response( $response ) {
         if ( is_wp_error( $response ) ) {
-            return array( 'code' => 0, 'wamid' => '', 'error_type' => $response->get_error_message(), 'meta_code' => 0, 'retry_after' => 0 );
+            return array( 'code' => 0, 'wamid' => '', 'error_type' => $response->get_error_message(), 'meta_code' => 0, 'retry_after' => 0, 'error_detail' => '' );
         }
 
         $code = (int) wp_remote_retrieve_response_code( $response );
@@ -177,7 +178,43 @@ class Cloud_Client {
             'error_type' => $error_type,
             'meta_code' => $meta_code,
             'retry_after' => $retry_after,
+            'error_detail' => self::extract_error_detail( $body ),
         );
+    }
+
+
+    /**
+     * Read the explanation WhatsApp gave for a refused send.
+     *
+     * The failure code only says which family an error belongs to. What went
+     * wrong — a template parameter with a line break, a variable Meta could not
+     * match, an account without a payment method — lives in Meta's own message
+     * and its `error_data.details`, which the simplified endpoints nest under
+     * `error.meta.error` and the Meta mirror returns as `error` itself.
+     *
+     * @since 2.4.2
+     * @param array $body | Decoded response body.
+     * @return string Empty when the response carries no explanation.
+     */
+    protected static function extract_error_detail( $body ) {
+        $error = isset( $body['error'] ) && is_array( $body['error'] ) ? $body['error'] : array();
+        $meta_error = isset( $error['meta']['error'] ) && is_array( $error['meta']['error'] ) ? $error['meta']['error'] : $error;
+
+        $message = isset( $meta_error['message'] ) && is_scalar( $meta_error['message'] ) ? trim( (string) $meta_error['message'] ) : '';
+        $details = isset( $meta_error['error_data']['details'] ) && is_scalar( $meta_error['error_data']['details'] ) ? trim( (string) $meta_error['error_data']['details'] ) : '';
+
+        // Joinotify's envelope message is the fallback when Meta said nothing.
+        if ( '' === $message && '' === $details && isset( $error['message'] ) && is_scalar( $error['message'] ) ) {
+            $message = trim( (string) $error['message'] );
+        }
+
+        if ( '' !== $message && '' !== $details && false === strpos( $message, $details ) ) {
+            $detail = $message . ': ' . $details;
+        } else {
+            $detail = '' !== $message ? $message : $details;
+        }
+
+        return substr( sanitize_text_field( $detail ), 0, 300 );
     }
 
 
@@ -962,7 +999,11 @@ class Cloud_Client {
     /**
      * Shared post-flight: parse the response, decide retry/queue, record it.
      *
+     * A refused send also carries `error_detail`, WhatsApp's explanation of
+     * the refusal, when the response had one.
+     *
      * @since 1.4.8
+     * @version 2.4.2
      * @param array|\WP_Error $response | wp_remote_* response.
      * @param array $fields | History fields.
      * @param bool $return_details | Whether to return details.
@@ -1013,6 +1054,11 @@ class Cloud_Client {
         // find the row it belongs to later.
         $fields['wamid'] = $parsed['wamid'];
         $details['wamid'] = $parsed['wamid'];
+
+        // The code alone rarely says what to fix; WhatsApp's own words do.
+        if ( ! $success && '' !== $parsed['error_detail'] ) {
+            $details['error_detail'] = $parsed['error_detail'];
+        }
 
         return self::record_and_return( $fields, $details, $return_details );
     }

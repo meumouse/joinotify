@@ -163,6 +163,7 @@ trait Message_Dispatch {
      * is on, keeping what production logs hold about recipients unchanged.
      *
      * @since 2.4.1
+     * @version 2.4.2
      * @param array $fields | Message fields.
      * @param array $details | Normalized response details.
      * @return array
@@ -184,6 +185,12 @@ trait Message_Dispatch {
 
         if ( ! empty( $fields['meta']['template'] ) ) {
             $context['template'] = $fields['meta']['template'];
+        }
+
+        // WhatsApp's explanation of a refusal, kept regardless of debug mode:
+        // it is what tells a malformed parameter from a missing payment method.
+        if ( ! empty( $details['error_detail'] ) ) {
+            $context['error_detail'] = (string) $details['error_detail'];
         }
 
         if ( Debug_Log::debug_mode_enabled() ) {

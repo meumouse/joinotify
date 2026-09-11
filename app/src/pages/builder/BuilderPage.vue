@@ -1136,6 +1136,7 @@ async function runTest() {
       );
       debugLogger.log('workflow:test-refused', {
         error_code: response?.error_code || '',
+        error_detail: response?.error_detail || '',
       });
       return;
     }
@@ -1181,9 +1182,10 @@ async function saveTestPhoneAndRun() {
     testPhoneModalOpen.value = false;
 
     const testResponse = await store.runWorkflowTest();
+    // Same rule as runTest(): a refused send answers 200 with an error status.
     pushToast(
       testResponse?.toast_body_title || testResponse?.message || __('Workflow test queued.', textDomain),
-      'success',
+      testResponse?.status === 'error' ? 'error' : 'success',
       __('Builder', textDomain)
     );
   } catch (error) {

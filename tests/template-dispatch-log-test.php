@@ -447,6 +447,55 @@ check( 'the error context carries the template block', 'pedido_pago' === ( $cont
 check( 'without debug mode the message body stays out of the log', ! isset( $context['content'] ) );
 check( 'the failed history row still has the rendered message', 0 === strpos( rows( 'joinotify_message_history' )[0]['content'], 'Pedido #1234' ) );
 
+// The simplified endpoints nest Meta's error under error.meta.error.
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 400, array( 'error' => array(
+	'type' => 'meta_error',
+	'message' => 'Meta rejected the request.',
+	'meta' => array( 'error' => array(
+		'message' => '(#132018) There was an issue with the parameters in your template.',
+		'code' => 132018,
+		'error_data' => array( 'details' => 'Param text cannot have new-line/tab characters or more than 4 consecutive spaces' ),
+	) ),
+) ) );
+$details = Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', order_components(), 0, true, true );
+$context = context_of( rows( 'joinotify_debug_logs' )[0] ?? array() );
+
+check( 'a refusal carries Meta\'s message and details', '(#132018) There was an issue with the parameters in your template.: Param text cannot have new-line/tab characters or more than 4 consecutive spaces' === ( $details['error_detail'] ?? '' ) );
+check( 'the refusal keeps its failure code', 'meta_error' === $details['error'] );
+check( 'the debug log keeps the explanation without debug mode', ( $details['error_detail'] ?? '' ) === ( $context['error_detail'] ?? null ) );
+
+// The Meta mirror answers with Meta's error object itself.
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 400, array( 'error' => array(
+	'message' => '(#100) Invalid parameter',
+	'code' => 100,
+	'error_data' => array( 'details' => 'Parameter name is missing or empty' ),
+) ) );
+$details = Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', order_components(), 0, true, true );
+
+check( 'a mirror refusal is explained too', '(#100) Invalid parameter: Parameter name is missing or empty' === ( $details['error_detail'] ?? '' ) );
+
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 401, array( 'error' => array( 'type' => 'unauthorized', 'message' => 'Invalid API key.' ) ) );
+$details = Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', order_components(), 0, true, true );
+
+check( 'the Joinotify message stands in when Meta said nothing', 'Invalid API key.' === ( $details['error_detail'] ?? '' ) );
+
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.OK' ) ) ) ) );
+$details = Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', order_components(), 0, true, true );
+
+check( 'a delivered send carries no error detail', ! isset( $details['error_detail'] ) );
+
 reset_state();
 seed_cache( array( order_template() ) );
 Helpers::$allowed = false;

@@ -8,6 +8,15 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Changed
+
+- A refused send now carries WhatsApp's own explanation: the builder test shows it after the description, and the debug log keeps it on every failed dispatch
+
+### Fixed
+
+- Template variables are sent as one line of plain text, as WhatsApp requires: line breaks become commas, tags and entities are removed and runs of spaces collapse, so a multi-line address no longer gets the template refused and a WooCommerce price no longer arrives as raw HTML
+- Saving the test number and running the test announced a refused send in a success toast
+
 ## [2.4.1] - 2026-09-11
 
 ### Added

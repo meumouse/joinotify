@@ -1607,8 +1607,12 @@ class Workflow_Processor {
      * format. Positional variables (`{{1}}`) are matched by order and go out
      * without it, as do button parameters.
      *
+     * Every value travels as a `text` parameter, numbers included: Meta has no
+     * numeric text type, and a digit string is what it expects for an order
+     * number or a count.
+     *
      * @since 2.3.0
-     * @version 2.4.1
+     * @version 2.4.2
      * @param array  $variables | Variable map stored on the action.
      * @param array  $payload | Runtime trigger payload.
      * @param string $mode | Placeholder resolution mode ('production' or 'sandbox').
@@ -1666,12 +1670,52 @@ class Workflow_Processor {
                 $parameter['parameter_name'] = $key;
             }
 
-            $parameter['text'] = $value;
+            $parameter['text'] = self::prepare_template_text( $value );
 
             $grouped[ $bucket ]['parameters'][] = $parameter;
         }
 
         return array_values( $grouped );
+    }
+
+
+    /**
+     * Flatten a resolved value into text Meta accepts as a template parameter.
+     *
+     * Meta refuses a parameter holding a line break, a tab or more than four
+     * spaces in a row (error 132018), and shows any markup literally. Several
+     * placeholders are built for free-form messages and carry both: an address
+     * formatted over several lines, a list with one item per line, a price
+     * wrapped in WooCommerce HTML. Tags are dropped, entities decoded, and the
+     * lines joined with a comma so an address still reads as one.
+     *
+     * @since 2.4.2
+     * @param string $value | Resolved parameter value.
+     * @return string
+     */
+    protected static function prepare_template_text( $value ) {
+        $value = (string) $value;
+
+        // Line-breaking markup has to become a real break before the tags go,
+        // otherwise "Street<br>City" would be glued into "StreetCity".
+        if ( false !== strpos( $value, '<' ) ) {
+            $value = (string) preg_replace( '/<br\s*\/?>|<\/(?:p|div|li|tr|h[1-6])>/i', "\n", $value );
+        }
+
+        $value = joinotify_format_plain_text( $value );
+        $lines = array();
+
+        // preg_split() gives up on malformed UTF-8; the value is then kept whole.
+        foreach ( preg_split( '/\R/u', $value ) ?: array( $value ) as $line ) {
+            // A line that already ends with a separator must not get a second one.
+            $line = rtrim( trim( $line ), ',;' );
+
+            if ( '' !== trim( $line ) ) {
+                $lines[] = trim( $line );
+            }
+        }
+
+        return (string) preg_replace( '/[\t ]+/', ' ', implode( ', ', $lines ) );
     }
 
 

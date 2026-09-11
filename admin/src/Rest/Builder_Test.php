@@ -158,10 +158,12 @@ class Builder_Test extends Abstract_Route {
      * Build the error response for a refused test send.
      *
      * A refusal ends the test run, so it also closes the history context the
-     * run opened.
+     * run opened. When WhatsApp explained the refusal, its words follow the
+     * description: a generic "could not send" says nothing about which
+     * variable or account setting to fix.
      *
      * @since 2.4.0
-     * @version 2.4.1
+     * @version 2.4.2
      * @param array  $result | Normalized send details from the transport.
      * @param string $fallback | Message used when the failure has no description.
      * @return \WP_REST_Response
@@ -170,11 +172,19 @@ class Builder_Test extends Abstract_Route {
         Message_History::clear_context();
 
         $error_code = (string) ( $result['error'] ?? '' );
+        $error_detail = sanitize_text_field( (string) ( $result['error_detail'] ?? '' ) );
+        $message = Send_Error::describe( $error_code, $fallback );
+
+        if ( '' !== $error_detail ) {
+            /* translators: 1: why the send failed, 2: the error returned by WhatsApp */
+            $message = sprintf( __( '%1$s WhatsApp replied: %2$s', 'joinotify' ), $message, $error_detail );
+        }
 
         return rest_ensure_response( array(
-            'status'     => 'error',
-            'message'    => Send_Error::describe( $error_code, $fallback ),
-            'error_code' => $error_code,
+            'status'       => 'error',
+            'message'      => $message,
+            'error_code'   => $error_code,
+            'error_detail' => $error_detail,
         ) );
     }
 }
