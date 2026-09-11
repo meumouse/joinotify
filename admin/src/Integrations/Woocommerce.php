@@ -372,7 +372,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.4.2
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -565,12 +565,24 @@ class Woocommerce extends Integrations_Base {
                     'sandbox' => __( 'Credit card', 'joinotify' ),
                 ),
             ),
+            '{{ wc_shipping_method_total }}' => array(
+                'triggers' => $trigger_names,
+                'description' => __( 'To retrieve the shipping cost and method of the WooCommerce order, for example "$20.00 via Express shipping". Returns only the method name when the shipping is free.', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_shipping_method_total( $order ) : '',
+                    'sandbox' => self::get_sample_shipping_method_total(),
+                ),
+            ),
+            // Legacy name: it has always resolved to the shipping cost and method, never to the
+            // address. The value is kept so saved workflows send what they always sent; the
+            // description steers new mappings to the tokens that match what the name suggests.
             '{{ wc_shipping_address }}' => array(
                 'triggers' => $trigger_names,
-                'description' => __( 'To retrieve the WooCommerce order shipping address', 'joinotify' ),
+                /* translators: 1: shipping address placeholder, 2: shipping cost and method placeholder */
+                'description' => sprintf( __( 'Legacy name kept for existing workflows: it returns the shipping cost and method, NOT the address. Use %1$s for the delivery address, or %2$s for the same value under a clearer name.', 'joinotify' ), '{{ wc_shipping_full_address }}', '{{ wc_shipping_method_total }}' ),
                 'replacement' => array(
-                    'production' => $order ? $order->get_shipping_to_display() : '',
-                    'sandbox' => __( 'Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)', 'joinotify' ),
+                    'production' => $order ? self::get_shipping_method_total( $order ) : '',
+                    'sandbox' => self::get_sample_shipping_method_total(),
                 ),
             ),
             '{{ wc_checkout_field=[FIELD_ID] }}' => array(
@@ -989,6 +1001,35 @@ class Woocommerce extends Integrations_Base {
 
         // Filter out empty values and join with a comma.
         return implode( ', ', array_filter( $address ) );
+    }
+
+
+    /**
+     * Get the shipping cost and method of the order as plain text
+     *
+     * Wraps WC_Order::get_shipping_to_display(), which returns price markup with the cost and
+     * method (e.g. "R$ 20,00 via SEDEX"), only the method name when the shipping is free, or
+     * "Free!" when the order has no shipping method. It never returns the address — that is
+     * get_full_address( $order, 'shipping' ).
+     *
+     * @since 2.4.2
+     * @param \WC_Order $order | WooCommerce Order object
+     * @return string
+     */
+    public static function get_shipping_method_total( $order ) {
+        return trim( joinotify_format_plain_text( $order->get_shipping_to_display() ) );
+    }
+
+
+    /**
+     * Get the sample shipping cost and method shown by the builder preview and test sends
+     *
+     * @since 2.4.2
+     * @return string
+     */
+    protected static function get_sample_shipping_method_total() {
+        /* translators: %s: sample shipping cost, already formatted with the store currency */
+        return sprintf( __( '%s via Express shipping', 'joinotify' ), joinotify_format_price( 20 ) );
     }
 
 
