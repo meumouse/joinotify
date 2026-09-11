@@ -15,7 +15,7 @@
  * a full-screen overlay has no use for anyway.
  *
  * @since 2.3.0
- * @version 2.5.0
+ * @version 2.3.0
  */
 
 defined('ABSPATH') || exit; ?>

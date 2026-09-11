@@ -33,7 +33,7 @@ defined('ABSPATH') || exit;
  * surface other code and third-party filters already point at.
  *
  * @since 2.3.0
- * @version 2.5.0
+ * @version 2.3.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -66,7 +66,7 @@ class Telemetry {
      * escape hatch for a host that wants the plugin to talk to nothing.
      *
      * @since 2.3.0
-     * @version 2.5.0
+     * @version 2.3.0
      * @return string
      */
     public static function endpoint() {
@@ -90,12 +90,12 @@ class Telemetry {
      * Safe to call regardless of consent — the caller decides what to do with it. The
      * wizard uses it to show the user exactly what they are agreeing to.
      *
-     * The shape changed in 2.5.0, from an ad-hoc snapshot to the object the service
+     * The shape changed in 2.3.0, from an ad-hoc snapshot to the object the service
      * accepts. Anything a filter adds is put through the same allow-list as the rest: a
      * key the service does not know would cost the whole batch, not just that key.
      *
      * @since 2.3.0
-     * @version 2.5.0
+     * @version 2.3.0
      * @return array<string,mixed>
      */
     public static function collect() {
@@ -129,7 +129,7 @@ class Telemetry {
      * Human-readable preview of what would be sent, for the consent screen.
      *
      * @since 2.3.0
-     * @version 2.5.0
+     * @version 2.3.0
      * @return array{collected:array<string,mixed>,sample_events:array<int,array<string,mixed>>,never_collected:array<int,string>,identified_by:string}
      */
     public static function preview() {
@@ -158,7 +158,7 @@ class Telemetry {
      * Send a report, if and only if consent was given and a destination exists.
      *
      * @since 2.3.0
-     * @version 2.5.0
+     * @version 2.3.0
      * @return bool Whether a request was actually made.
      */
     public static function maybe_send() {
