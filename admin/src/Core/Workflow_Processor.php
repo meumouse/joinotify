@@ -1608,7 +1608,7 @@ class Workflow_Processor {
      * without it, as do button parameters.
      *
      * @since 2.3.0
-     * @version 2.5.0
+     * @version 2.4.1
      * @param array  $variables | Variable map stored on the action.
      * @param array  $payload | Runtime trigger payload.
      * @param string $mode | Placeholder resolution mode ('production' or 'sandbox').

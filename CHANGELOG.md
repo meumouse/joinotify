@@ -8,6 +8,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.4.1] - 2026-09-11
+
 ### Added
 
 - The message history records the rendered text of each template send, with its language and variable values shown in the details modal
