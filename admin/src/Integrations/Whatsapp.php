@@ -93,6 +93,7 @@ class Whatsapp extends Integrations_Base {
      * account's numbers imported before the site can send anything.
      *
      * @since 2.3.0
+     * @version 2.4.1
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
@@ -104,7 +105,10 @@ class Whatsapp extends Integrations_Base {
                 esc_html__( 'Joinotify account', 'joinotify' ),
                 esc_html__( 'Create a key for this site on the Joinotify panel and paste it here. Connecting validates the key and imports the WhatsApp numbers on your account.', 'joinotify' ),
                 array(
-                    'type' => 'joinotify-api-key',
+                    // Declared as a component, not a type: the settings
+                    // normalizer folds unknown types into `text`, which would
+                    // render a plain input left blank by the write-only key.
+                    'component' => 'joinotify-api-key',
                     'placeholder' => 'sk_live_...',
                     'component_props' => array(
                         'panel_url' => JOINOTIFY_PANEL_URL,

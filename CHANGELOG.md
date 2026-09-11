@@ -15,6 +15,9 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
     - Covered by `tests/whatsapp-template-test.php`
 - **The setup wizard's country list never appeared**
     - The "Default country code" select on the first wizard step opened its list behind the full-screen wizard shell, so the countries offered in Settings could not be picked there. Select dropdowns now stack above every full-screen layer the plugin draws
+- **The "Joinotify account" field showed an empty input after a key was saved**
+    - The WhatsApp settings modal declared the key control through `type`, which the integration settings normalizer folds into `text` for any value it does not know. The dedicated control never rendered, and the plain input it fell back to stayed blank because the key is write-only
+    - The field now declares it through `component`, so a connected site sees the key's public prefix followed by a mask, with the option to remove it
 
 ## [2.4.0] - 2026-09-03
 
