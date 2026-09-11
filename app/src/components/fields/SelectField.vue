@@ -4,7 +4,7 @@
  * SelectField.vue frontend component.
  *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.4.1
  */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -197,7 +197,10 @@ function handleOutsideClick(event) {
 }
 
 // Position the teleported dropdown next to the trigger using fixed coordinates,
-// so it escapes any ancestor `overflow` clipping (e.g. settings modals).
+// so it escapes any ancestor `overflow` clipping (e.g. settings modals). The
+// stacking order has to beat every fixed layer a select can live in — the setup
+// wizard shell (99999) and the history details modal (100000) included —
+// otherwise the list opens behind the screen that triggered it.
 function updatePosition() {
   if (!rootEl.value || typeof window === 'undefined') {
     return;
@@ -217,7 +220,7 @@ function updatePosition() {
     left: `${Math.round(rect.left)}px`,
     width: `${Math.round(rect.width)}px`,
     maxHeight: `${Math.round(maxHeight)}px`,
-    zIndex: 10000,
+    zIndex: 100010,
   };
 
   if (openUp) {
