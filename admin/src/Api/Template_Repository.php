@@ -64,6 +64,27 @@ class Template_Repository {
     const SNAPSHOT_OPTION = 'joinotify_template_snapshots';
 
     /**
+     * Transient prefix marking a template the listing did not have.
+     *
+     * Keeps the send path from asking the API again, message after message,
+     * for a template that is not there. It shares the listing cache prefix, so
+     * flush_cache() — which the template webhooks call when a template is
+     * approved or changed — clears these marks along with the listings.
+     *
+     * @since 2.4.2
+     * @var string
+     */
+    const MISS_PREFIX = self::CACHE_PREFIX . 'miss_';
+
+    /**
+     * How long a missing template waits before the listing is asked again.
+     *
+     * @since 2.4.2
+     * @var int
+     */
+    const MISS_TTL = 600;
+
+    /**
      * What a masked parameter value is replaced with.
      *
      * @since 2.4.1
@@ -206,6 +227,150 @@ class Template_Repository {
 
 
     /**
+     * Find a template for a send, loading the listing once when nothing local knows it.
+     *
+     * find() only reads what a listing left behind, and a listing only runs
+     * when someone opens the template picker. A site that just sends — the
+     * usual case right after an update, when the snapshot is still empty —
+     * would otherwise never learn what its templates say. On a miss this asks
+     * for the listing, which costs nothing while the 15-minute cache is fresh
+     * and one request to the API mirror when it is cold, and fills the
+     * snapshot for every send after it.
+     *
+     * A template the listing still does not have is marked for MISS_TTL, so
+     * sending it again does not repeat the request each time.
+     *
+     * @since 2.4.2
+     * @param string $name | Template name as approved on Meta.
+     * @param string $language | Optional language code to prefer (e.g. pt_BR).
+     * @return array|null Normalized template, or null when the account does not list it.
+     */
+    public static function find_or_fetch( $name, $language = '' ) {
+        $template = self::find( $name, $language );
+        $name = trim( (string) $name );
+
+        if ( null !== $template || '' === $name ) {
+            return $template;
+        }
+
+        $miss_key = self::MISS_PREFIX . md5( $name . '|' . trim( (string) $language ) );
+
+        if ( false !== get_transient( $miss_key ) ) {
+            return null;
+        }
+
+        // A failed listing (no key, API down) is a miss like any other: the
+        // mark is what stops an outage from costing one request per message.
+        self::get_templates();
+
+        $template = self::find( $name, $language );
+
+        if ( null === $template ) {
+            set_transient( $miss_key, 1, self::MISS_TTL );
+        }
+
+        return $template;
+    }
+
+
+    /**
+     * Bring every template parameter Meta would refuse down to one line.
+     *
+     * Meta refuses a text parameter holding a line break, a tab or more than
+     * four spaces in a row (error 132018). Workflow values are already built
+     * that way by Workflow_Processor::build_template_components(), but other
+     * callers hand over their own components: extensions, the OTP components
+     * filter, a retry stored by a version that did not flatten yet. Only the
+     * values Meta would refuse are rewritten; everything else is returned as
+     * given.
+     *
+     * @since 2.4.2
+     * @param array $components | Meta components payload.
+     * @return array
+     */
+    public static function flatten_components( $components ) {
+        if ( ! is_array( $components ) ) {
+            return array();
+        }
+
+        foreach ( $components as $c => $component ) {
+            if ( ! is_array( $component ) || ! is_array( $component['parameters'] ?? null ) ) {
+                continue;
+            }
+
+            foreach ( $component['parameters'] as $p => $parameter ) {
+                if ( ! is_array( $parameter ) || 'text' !== strtolower( (string) ( $parameter['type'] ?? '' ) ) || ! isset( $parameter['text'] ) ) {
+                    continue;
+                }
+
+                $text = (string) $parameter['text'];
+
+                if ( self::breaks_one_line_rule( $text ) ) {
+                    $components[ $c ]['parameters'][ $p ]['text'] = self::flatten_parameter_text( $text );
+                }
+            }
+        }
+
+        return $components;
+    }
+
+
+    /**
+     * Join the lines of a value with a comma and collapse runs of blanks.
+     *
+     * An address formatted over several lines, or a list with one item per
+     * line, still reads as one: "Rua A, 1\nCentro" becomes "Rua A, 1, Centro".
+     * Blank lines are dropped, and a line already ending in a comma or a
+     * semicolon does not get a second separator.
+     *
+     * @since 2.4.2
+     * @param string $value | Plain-text value.
+     * @return string
+     */
+    public static function flatten_parameter_text( $value ) {
+        $value = (string) $value;
+
+        // \R understands every Unicode line break but gives up on malformed
+        // UTF-8; the byte-level split still catches the ones Meta refuses.
+        $split = preg_split( '/\R/u', $value );
+
+        if ( false === $split ) {
+            $split = preg_split( '/\r\n|[\r\n\v\f]/', $value ) ?: array( $value );
+        }
+
+        $lines = array();
+
+        foreach ( $split as $line ) {
+            $line = rtrim( trim( $line ), ',;' );
+
+            if ( '' !== trim( $line ) ) {
+                $lines[] = trim( $line );
+            }
+        }
+
+        return (string) preg_replace( '/[\t ]+/', ' ', implode( ', ', $lines ) );
+    }
+
+
+    /**
+     * Whether a value breaks Meta's one-line rule for template parameters.
+     *
+     * @since 2.4.2
+     * @param string $text | Parameter value.
+     * @return bool
+     */
+    protected static function breaks_one_line_rule( $text ) {
+        $found = preg_match( '/\R|\t| {5,}/u', $text );
+
+        if ( false === $found ) {
+            $found = preg_match( '/[\r\n\t\v\f]| {5,}/', $text );
+        }
+
+        return 1 === $found;
+    }
+
+
+    /**
      * Pick a template by name from a list, preferring the given language.
      *
      * @since 2.4.1
@@ -277,14 +442,18 @@ class Template_Repository {
      * being sent, so the history can show the message that was read rather
      * than a bare template name. Values are matched to the `{{...}}` tokens in
      * the order the template declares them, which is the same order the
-     * builder packs them in. When the template text is not known locally the
-     * text falls back to the name followed by one line per parameter.
+     * builder packs them in. The template is looked up with find_or_fetch(),
+     * so the first send on a site whose snapshot is still empty loads the
+     * listing instead of giving up. Only when the account does not list the
+     * template does the text fall back to the name followed by one line per
+     * parameter.
      *
      * Masking replaces every value with {@see self::MASK} — in the text, the
      * parameter list and the returned components alike. It is forced for
      * AUTHENTICATION templates, whose only variable is a login code.
      *
      * @since 2.4.1
+     * @version 2.4.2
      * @param string $name | Template name.
      * @param string $language | Template language code.
      * @param array  $components | Meta components payload being sent.
@@ -299,7 +468,7 @@ class Template_Repository {
      */
     public static function render( $name, $language = '', $components = array(), $mask = false ) {
         $name = trim( (string) $name );
-        $template = self::find( $name, $language );
+        $template = self::find_or_fetch( $name, $language );
         $components = is_array( $components ) ? array_values( $components ) : array();
 
         if ( is_array( $template ) && 'AUTHENTICATION' === ( $template['category'] ?? '' ) ) {

@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Core;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Api\Template_Repository;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Attachments;
@@ -1687,7 +1688,9 @@ class Workflow_Processor {
      * placeholders are built for free-form messages and carry both: an address
      * formatted over several lines, a list with one item per line, a price
      * wrapped in WooCommerce HTML. Tags are dropped, entities decoded, and the
-     * lines joined with a comma so an address still reads as one.
+     * lines joined with a comma so an address still reads as one — the same
+     * one-line rule Cloud_Client enforces on every template send, through
+     * Template_Repository::flatten_parameter_text().
      *
      * @since 2.4.2
      * @param string $value | Resolved parameter value.
@@ -1702,20 +1705,7 @@ class Workflow_Processor {
             $value = (string) preg_replace( '/<br\s*\/?>|<\/(?:p|div|li|tr|h[1-6])>/i', "\n", $value );
         }
 
-        $value = joinotify_format_plain_text( $value );
-        $lines = array();
-
-        // preg_split() gives up on malformed UTF-8; the value is then kept whole.
-        foreach ( preg_split( '/\R/u', $value ) ?: array( $value ) as $line ) {
-            // A line that already ends with a separator must not get a second one.
-            $line = rtrim( trim( $line ), ',;' );
-
-            if ( '' !== trim( $line ) ) {
-                $lines[] = trim( $line );
-            }
-        }
-
-        return (string) preg_replace( '/[\t ]+/', ' ', implode( ', ', $lines ) );
+        return Template_Repository::flatten_parameter_text( joinotify_format_plain_text( $value ) );
     }
 
 

@@ -502,8 +502,11 @@ class Cloud_Client {
      * template text with the parameter values in place — and its `meta` keeps
      * the template name, language and each parameter, on every return path.
      *
+     * Every text parameter is held to Meta's one-line rule before anything
+     * else, whoever built the components.
+     *
      * @since 1.4.8
-     * @version 2.4.1
+     * @version 2.4.2
      * @param string $sender | Origin phone number.
      * @param string $receiver | Recipient phone number.
      * @param string $template_name | Approved template name.
@@ -519,6 +522,12 @@ class Cloud_Client {
         $receiver = joinotify_prepare_receiver( $receiver );
         $template_name = sanitize_text_field( (string) $template_name );
         $language = '' !== trim( (string) $language ) ? trim( (string) $language ) : 'pt_BR';
+
+        // Meta refuses a parameter with a line break, a tab or more than four
+        // spaces in a row (132018). Workflow values arrive flat already; this
+        // covers every other caller, and the retry queue and the history below
+        // both keep the flattened values that actually go out.
+        $components = Template_Repository::flatten_components( $components );
 
         // Described before any early return, so a refused or queued send is
         // recorded with the same detail as a delivered one.

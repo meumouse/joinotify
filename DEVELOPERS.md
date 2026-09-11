@@ -628,9 +628,20 @@ twice:
 
 The template text comes from the local template listing, backed by a
 long-lived copy in the `joinotify_template_snapshots` option, so the 15-minute
-listing cache expiring does not lose it. When the template is not known
-locally, `content` falls back to the name plus one `{{key}} = value` line per
-parameter and `rendered_from` says `fallback`.
+listing cache expiring does not lose it. When neither knows the template — a
+site that has not listed its templates since updating, for one — the send loads
+the listing once through `Template_Repository::find_or_fetch()` before going
+out. Only when the account does not list the template does `content` fall back
+to the name plus one `{{key}} = value` line per parameter, with `rendered_from`
+set to `fallback`; the listing is then not asked for that template again for
+10 minutes.
+
+Components you build yourself are held to Meta's one-line rule before they go
+out: a text parameter with a line break, a tab or more than four spaces in a
+row (refused with error 132018) has its lines joined with a comma and its
+blanks collapsed, through `Template_Repository::flatten_components()`. Values
+Meta already accepts are sent exactly as given, and non-text parameters are
+never touched. Markup is not stripped at this point — send plain text.
 
 Login codes are never written down: values are masked (`••••••`) for sends
 tagged with the `otp` source and for any `AUTHENTICATION` template. To redact

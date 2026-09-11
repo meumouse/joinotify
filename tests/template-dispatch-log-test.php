@@ -8,14 +8,16 @@
  * every send while debug mode is on, failures always. These assertions cover
  * the template rendering (positional, named, header/footer, buttons, fallback),
  * the long-lived snapshot that survives the 15-minute listing cache, the
- * masking of login codes, the redaction filter, the `meta` schema guard, and
- * the history and debug-log rows written by a real Cloud_Client send against
- * a fake $wpdb.
+ * one-time listing load when a send finds the snapshot empty (and its miss
+ * mark), the masking of login codes, the redaction filter, the `meta` schema
+ * guard, and the history and debug-log rows written by a real Cloud_Client
+ * send against a fake $wpdb.
  *
  * Run (Windows / Local):
  *   & "C:\path\to\Local\php.exe" -d extension_dir="C:\path\to\ext" -d extension=mbstring tests/template-dispatch-log-test.php
  *
  * @since 2.4.1
+ * @version 2.4.2
  */
 
 namespace {
@@ -165,7 +167,13 @@ namespace MeuMouse\Joinotify\Core {
 	}
 
 	class Notification_Queue {
-		public static function enqueue( $type, $payload, $error = '', $retry_after = 0 ) { return 'q_1'; }
+		public static $payloads = array();
+
+		public static function enqueue( $type, $payload, $error = '', $retry_after = 0 ) {
+			self::$payloads[] = $payload;
+
+			return 'q_1';
+		}
 	}
 }
 
@@ -204,6 +212,7 @@ function reset_state() {
 	);
 
 	Helpers::$allowed = true;
+	\MeuMouse\Joinotify\Core\Notification_Queue::$payloads = array();
 	Message_History::clear_context();
 }
 
@@ -391,6 +400,77 @@ $snapshots = get_option( Template_Repository::SNAPSHOT_OPTION, array() );
 
 check( 'a later listing merges instead of replacing', isset( $snapshots['pedido_pago|pt_BR'], $snapshots['boas_vindas|pt_BR'] ) );
 
+echo "\nTemplate_Repository::find_or_fetch\n";
+reset_state();
+
+/**
+ * API listing holding one "order paid" template with a single body variable.
+ */
+function listing_response() {
+	return array( 'data' => array(
+		array(
+			'id' => 't1',
+			'name' => 'pedido_pago',
+			'language' => 'pt_BR',
+			'status' => 'APPROVED',
+			'category' => 'UTILITY',
+			'components' => array(
+				array( 'type' => 'BODY', 'text' => 'Olá {{1}}, seu pedido foi pago.' ),
+			),
+		),
+	) );
+}
+
+$one_body_value = array(
+	array( 'type' => 'body', 'parameters' => array( array( 'type' => 'text', 'text' => 'Jussara' ) ) ),
+);
+
+// The site just updated: no snapshot, no listing cache, nobody opened the builder.
+queue_response( 200, listing_response() );
+$first = Template_Repository::render( 'pedido_pago', 'pt_BR', $one_body_value );
+
+check( 'the first send on an empty snapshot loads the listing', 1 === count( $GLOBALS['http_requests'] ) && false !== strpos( $GLOBALS['http_requests'][0]['url'], '/templates' ) );
+check( 'that send renders the template text instead of the fallback', 'Olá Jussara, seu pedido foi pago.' === $first['text'] && 'snapshot' === $first['rendered_from'] );
+check( 'the loaded listing fills the snapshot', isset( get_option( Template_Repository::SNAPSHOT_OPTION, array() )['pedido_pago|pt_BR'] ) );
+
+Template_Repository::render( 'pedido_pago', 'pt_BR', $one_body_value );
+check( 'a known template costs no further request', 1 === count( $GLOBALS['http_requests'] ) );
+
+$unknown = Template_Repository::render( 'nao_existe', 'pt_BR', $one_body_value );
+check( 'a template the fresh listing lacks is not asked for again', 1 === count( $GLOBALS['http_requests'] ) && 'fallback' === $unknown['rendered_from'] );
+
+// Snapshot known, cache expired: the snapshot answers on its own.
+$GLOBALS['transients'] = array();
+Template_Repository::render( 'pedido_pago', 'pt_BR', $one_body_value );
+check( 'an expired cache with a snapshot costs no request', 1 === count( $GLOBALS['http_requests'] ) );
+
+reset_state();
+
+// The API is down: the first send asks once, the next ones wait for the mark.
+queue_response( 500, array() );
+$down = Template_Repository::render( 'pedido_pago', 'pt_BR', $one_body_value );
+Template_Repository::render( 'pedido_pago', 'pt_BR', $one_body_value );
+Template_Repository::render( 'pedido_pago', 'pt_BR', $one_body_value );
+
+check( 'a failed listing falls back without breaking the render', 'fallback' === $down['rendered_from'] && "pedido_pago (pt_BR)\n{{1}} = Jussara" === $down['text'] );
+check( 'a failed listing is not retried on every send', 1 === count( $GLOBALS['http_requests'] ) );
+check( 'a failed listing leaves a miss mark that expires',Template_Repository::MISS_TTL > 0 && false !== get_transient( Template_Repository::MISS_PREFIX . md5( 'pedido_pago|pt_BR' ) ) );
+check( 'flush_cache() clears miss marks along with the listings', 0 === strpos( Template_Repository::MISS_PREFIX, Template_Repository::CACHE_PREFIX ) );
+
+reset_state();
+
+// End to end: a workflow send right after the update.
+queue_response( 200, listing_response() );
+queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.FIRST' ) ) ) ) );
+Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', $one_body_value, 0, true, true );
+
+$history = rows( 'joinotify_message_history' );
+$meta = Message_History::decode_meta( $history[0]['meta'] ?? '' );
+
+check( 'the listing is loaded before the message goes out', 'GET' === ( $GLOBALS['http_requests'][0]['args']['method'] ?? '' ) && 'POST' === ( $GLOBALS['http_requests'][1]['args']['method'] ?? '' ) );
+check( 'the first history row after an update has the template text', 'Olá Jussara, seu pedido foi pago.' === $history[0]['content'] && 'snapshot' === ( $meta['template']['rendered_from'] ?? '' ) );
+check( 'the message itself is still delivered', 'sent' === $history[0]['status'] );
+
 echo "\nCloud_Client::send_message_template — delivered\n";
 reset_state();
 seed_cache( array( order_template() ) );
@@ -510,6 +590,8 @@ reset_state();
 Admin::$settings['enable_debug_mode'] = 'yes';
 Message_History::set_context( array( 'source' => 'otp' ) );
 
+// The unknown template first asks for the listing, which does not have it.
+queue_response( 200, array( 'data' => array() ) );
 queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.OTP' ) ) ) ) );
 Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'login_code', 'pt_BR', array(
 	array( 'type' => 'body', 'parameters' => array( array( 'type' => 'text', 'text' => '482913' ) ) ),
@@ -519,7 +601,7 @@ Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'login_co
 $history = rows( 'joinotify_message_history' );
 $logs = rows( 'joinotify_debug_logs' );
 
-check( 'the code still reaches WhatsApp', false !== strpos( $GLOBALS['http_requests'][0]['args']['body'], '482913' ) );
+check( 'the code still reaches WhatsApp', false !== strpos( (string) ( end( $GLOBALS['http_requests'] )['args']['body'] ?? '' ), '482913' ) );
 check( 'the OTP row is recorded under the otp source', 'otp' === $history[0]['source'] );
 check( 'the code never reaches the history', false === strpos( $history[0]['content'] . $history[0]['meta'], '482913' ) );
 check( 'the code never reaches the debug log', false === strpos( (string) $logs[0]['context'], '482913' ) );
@@ -543,6 +625,70 @@ $history = rows( 'joinotify_message_history' );
 check( 'the filter can redact the recorded text', 'redacted' === $history[0]['content'] );
 check( 'the filter can redact the recorded parameters', false === strpos( (string) $history[0]['meta'], 'João' ) );
 check( 'the filter never changes what is sent', 'João' === json_decode( $GLOBALS['http_requests'][0]['args']['body'], true )['components'][1]['parameters'][0]['text'] );
+
+echo "\nCloud_Client::send_message_template — one-line rule (132018)\n";
+
+/**
+ * Components as a caller outside the builder could hand them over: the order
+ * items one per line (the value Meta refused in production), a tab, a run of
+ * spaces, a Unicode line separator, and values Meta already accepts.
+ */
+function multi_line_components() {
+	return array(
+		array( 'type' => 'body', 'parameters' => array(
+			array( 'type' => 'text', 'parameter_name' => 'wc_order_items', 'text' => "1x - Queijo Capital ao Vinho Tinto | Reserva Especial (900g-a-1kg)\n1x - Queijo Capital Defumado | Natural à Lenha (peca-inteira-aprox-800g)" ),
+			array( 'type' => 'text', 'parameter_name' => 'endereco', 'text' => "Rua A, 1,\r\n\r\nCentro\tAlagoa - MG" ),
+			array( 'type' => 'text', 'parameter_name' => 'espacos', 'text' => 'Total:      R$ 10,00' ),
+			array( 'type' => 'text', 'parameter_name' => 'separador', 'text' => "Linha 1\u{2028}Linha 2" ),
+			array( 'type' => 'text', 'parameter_name' => 'pagamento', 'text' => 'Pix;' ),
+			array( 'type' => 'text', 'parameter_name' => 'quatro', 'text' => 'a    b' ),
+		) ),
+		array( 'type' => 'button', 'sub_type' => 'url', 'index' => '0', 'parameters' => array(
+			array( 'type' => 'text', 'text' => "abc\n123" ),
+		) ),
+	);
+}
+
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.FLAT' ) ) ) ) );
+Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', multi_line_components(), 0, true, true );
+
+$sent = json_decode( (string) ( end( $GLOBALS['http_requests'] )['args']['body'] ?? '' ), true );
+$body_values = array_column( $sent['components'][0]['parameters'] ?? array(), 'text' );
+
+check( 'order items with one product per line go out on one line', '1x - Queijo Capital ao Vinho Tinto | Reserva Especial (900g-a-1kg), 1x - Queijo Capital Defumado | Natural à Lenha (peca-inteira-aprox-800g)' === ( $body_values[0] ?? '' ) );
+check( 'CRLF, blank lines and a tab are flattened', 'Rua A, 1, Centro Alagoa - MG' === ( $body_values[1] ?? '' ) );
+check( 'more than four spaces in a row collapse', 'Total: R$ 10,00' === ( $body_values[2] ?? '' ) );
+check( 'a Unicode line separator is treated as a break', 'Linha 1, Linha 2' === ( $body_values[3] ?? '' ) );
+check( 'a value Meta accepts is sent exactly as given', 'Pix;' === ( $body_values[4] ?? '' ) && 'a    b' === ( $body_values[5] ?? '' ) );
+check( 'button parameters follow the same rule', 'abc, 123' === ( $sent['components'][1]['parameters'][0]['text'] ?? '' ) );
+check( 'the parameter names survive', 'wc_order_items' === ( $sent['components'][0]['parameters'][0]['parameter_name'] ?? '' ) );
+
+$no_break = true;
+array_walk_recursive( $sent['components'], function ( $value ) use ( &$no_break ) {
+	if ( is_string( $value ) && preg_match( '/\R|\t| {5,}/u', $value ) ) {
+		$no_break = false;
+	}
+} );
+check( 'nothing Meta refuses is left anywhere in the payload', $no_break );
+
+$meta = Message_History::decode_meta( rows( 'joinotify_message_history' )[0]['meta'] ?? '' );
+check( 'the history records the flattened value that went out', 'Rua A, 1, Centro Alagoa - MG' === ( $meta['template']['parameters'][1]['value'] ?? '' ) );
+
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 503, array() );
+Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', multi_line_components(), 0, true, true );
+
+$queued = \MeuMouse\Joinotify\Core\Notification_Queue::$payloads[0]['components'] ?? array();
+check( 'a queued retry stores the flattened components', 'abc, 123' === ( $queued[1]['parameters'][0]['text'] ?? '' ) );
+
+check( 'flatten_components() leaves non-text parameters alone', array( array( 'type' => 'header', 'parameters' => array( array( 'type' => 'image', 'image' => array( 'link' => "https://x/a\nb" ) ) ) ) ) === Template_Repository::flatten_components( array( array( 'type' => 'header', 'parameters' => array( array( 'type' => 'image', 'image' => array( 'link' => "https://x/a\nb" ) ) ) ) ) ) );
+check( 'flatten_components() tolerates a non-array payload', array() === Template_Repository::flatten_components( 'x' ) );
+check( 'malformed UTF-8 still loses its line break', false === strpos( Template_Repository::flatten_parameter_text( "a\xC3\n\xFFb" ), "\n" ) );
 
 echo "\nCloud_Client::send_message_text — debug mode\n";
 reset_state();

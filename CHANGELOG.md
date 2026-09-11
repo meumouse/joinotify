@@ -20,6 +20,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 - Template variables are sent as one line of plain text, as WhatsApp requires: line breaks become commas, tags and entities are removed and runs of spaces collapse, so a multi-line address no longer gets the template refused and a WooCommerce price no longer arrives as raw HTML
 - Saving the test number and running the test announced a refused send in a success toast
+- Template sends recorded only the template name and variables in the history until someone opened the template picker, because nothing else loaded the template text; the first send on a site that has not listed its templates now loads them once
+- Template components built outside the workflow builder — by an extension, the OTP components filter or a retry queued by an earlier version — still reached WhatsApp with line breaks and were refused with error 132018; every template send now holds its text parameters to the same one-line rule
 - `{{ wc_shipping_address }}` was described as the shipping address, but it has always returned the shipping cost and method, so a template variable meant for the delivery address sent customers the price and carrier instead. Its value is unchanged, so existing messages send what they always sent, but it now arrives as plain text instead of WooCommerce price markup, and the builder describes it as the shipping cost and previews a cost instead of a street address. If you mapped it to an address, switch to `{{ wc_shipping_full_address }}`
 
 ## [2.4.1] - 2026-09-11
