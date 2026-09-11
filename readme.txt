@@ -166,6 +166,19 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.4.2 =
+* New: the workflows, message history and processing queue screens export to a JSON file. Export one row from its "Export" action, the rows you selected, or — in the history and the queue — everything matching the current filters. A single workflow downloads as the same file the builder exports, so it can be imported again; several download together in one file. The processing queue gained row selection for this. A history export stops at the 5,000 most recent records and tells you when it does.
+* New: the workflows, message history and processing queue tables have an "Items per page" selector with 10, 25, 50, 100 or 200 rows. Each screen remembers your choice, and changing it keeps the first visible row on screen instead of jumping back to page 1.
+* New: the `{{ wc_shipping_method_total }}` variable returns the shipping cost and method of a WooCommerce order as plain text, for example "R$ 20,00 via SEDEX", or only the method name when shipping is free.
+* Changed: when WhatsApp refuses a message, its own explanation now appears in the builder test after the description, and the debug log keeps it for every failed send.
+* Changed: the tables show 25 rows per page by default instead of 20.
+* Fixed: template variables go out as one line of plain text, as WhatsApp requires. Line breaks become commas and HTML is removed, so a multi-line address no longer gets the template refused and a WooCommerce price no longer arrives as raw HTML.
+* Fixed: templates built outside the builder — by an extension, the OTP login or a retry queued by an earlier version — were still refused with error 132018 because of line breaks. Every template send now follows the same one-line rule.
+* Fixed: saving the test number and running the test announced a refused message in a success notice.
+* Fixed: deleting records or cancelling a resend in the message history, or running or cancelling an item in the processing queue, reloaded the table without its filters, so it showed unrelated rows while the filter still looked active.
+* Fixed: until someone opened the template picker, template sends were recorded in the message history with only the template name and variables. The first send on a site now loads the template text by itself.
+* Fixed: `{{ wc_shipping_address }}` was described as the shipping address, but it has always returned the shipping cost and method. Its value is unchanged, so existing messages send what they always sent, but it now arrives as plain text instead of price markup, and the builder describes and previews it as a cost. If you used it for the delivery address, switch to `{{ wc_shipping_full_address }}`.
+
 = 2.4.1 =
 * New: the message history shows what a template message actually said. The record keeps the template text with each value filled in, and the details window lists the template's language and the value given to each variable.
 * New: while debug mode is on, the debug log records every message delivered — template, text or media — not only the ones that fail. A failed template send always includes the template name, language and values.
@@ -253,6 +266,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.4.2 =
+Recommended for sites that send WhatsApp templates: values with line breaks or prices no longer get a template refused. If a template uses `{{ wc_shipping_address }}` for the delivery address, switch it to `{{ wc_shipping_full_address }}` — the first has always returned the shipping cost.
 
 = 2.4.1 =
 Recommended for sites that send WhatsApp templates. Templates with named variables are no longer refused, and the message history now shows the text and values each template carried. Login codes are never stored.
