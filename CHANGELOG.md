@@ -8,6 +8,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.4.2] - 2026-09-11
+
 ### Added
 
 - `{{ wc_shipping_method_total }}` returns the shipping cost and method of the WooCommerce order as plain text, for example "R$ 20,00 via SEDEX", or only the method name when the shipping is free
