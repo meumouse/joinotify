@@ -18,7 +18,6 @@ defineProps({
   debugToggleField: { type: Object, default: () => ({}) },
   settings: { type: Object, default: () => ({}) },
   system: { type: Object, default: () => ({}) },
-  version: { type: String, default: '' },
   exporting: { type: Boolean, default: false },
   importing: { type: Boolean, default: false },
 });
@@ -40,25 +39,6 @@ defineEmits(['update-setting', 'open-logs', 'reset', 'clear-logs', 'export', 'im
     </div>
 
     <div class="grid items-start gap-6 border-t border-slate-100 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)] lg:items-center">
-      <div>
-        <h3 class="text-[15px] font-semibold text-slate-800">{{ __('Plugin updates', textDomain) }}</h3>
-        <p class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">
-          {{ __('You are currently using version', textDomain) }} <strong class="text-slate-700">{{ version }}</strong>.
-          {{ __('Updates are delivered by WordPress itself, together with every other plugin on this site.', textDomain) }}
-        </p>
-      </div>
-
-      <div class="flex flex-wrap items-center gap-4 lg:justify-self-start">
-        <a
-          href="update-core.php"
-          class="rounded-[8px] border border-primary-200 bg-white px-6 py-3 text-[14px] font-semibold text-primary-700 transition hover:bg-primary-50"
-        >
-          {{ __('Open WordPress updates', textDomain) }}
-        </a>
-      </div>
-    </div>
-
-    <div class="grid items-start gap-6 py-6 lg:grid-cols-[minmax(0,420px)_minmax(0,460px)] lg:items-center">
       <div>
         <h3 class="text-[15px] font-semibold text-slate-800">{{ __('Enable debug mode', textDomain) }}</h3>
         <p class="mt-1 max-w-xl text-[13px] leading-5 text-slate-500">

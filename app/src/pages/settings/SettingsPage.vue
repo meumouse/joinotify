@@ -60,7 +60,6 @@ const integrationCategories = computed(() => bootstrap.value.integration_categor
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
 const system = computed(() => bootstrap.value.system || {});
 const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
-const pluginVersion = computed(() => bootstrap.value.version || '');
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
 const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'ai_provider']));
@@ -729,7 +728,6 @@ function canConfigureIntegration(integration) {
             :debug-toggle-field="debugToggleField"
             :settings="settings"
             :system="system"
-            :version="pluginVersion"
             :exporting="exporting"
             :importing="importing"
             @update-setting="updateSetting"

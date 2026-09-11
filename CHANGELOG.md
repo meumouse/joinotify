@@ -23,6 +23,10 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 - The setup wizard's country list opened behind the full-screen wizard shell
 - The "Joinotify account" field showed an empty input after a key was saved instead of the key's masked prefix
 
+### Removed
+
+- The "Plugin updates" row in Settings → About, which only repeated what the plugin list already shows
+
 ## [2.4.0] - 2026-09-03
 
 ### Added
