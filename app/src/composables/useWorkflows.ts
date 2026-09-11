@@ -11,6 +11,7 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
+import { normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 import { useBulkSelection } from './useBulkSelection';
 import { usePagination } from './usePagination';
 
@@ -137,6 +138,7 @@ function simulateLatency(duration = 300) {
  * Provides state and actions for the workflows listing screen.
  *
  * @since 2.0.0
+ * @version 2.4.2
  * @param {Object} [bootstrap] Bootstrap payload from the workflows screen.
  * @returns {Object} Listing state, computed values, and action methods.
  */
@@ -166,7 +168,7 @@ export function useWorkflows(bootstrap = {}) {
 
   const pagination = usePagination(filteredWorkflows, {
     currentPage: bootstrap.pagination?.current_page || 1,
-    perPage: bootstrap.pagination?.per_page || 20,
+    perPage: readStoredPerPage('workflows') ?? normalizePerPage(bootstrap.pagination?.per_page),
   });
 
   const visibleWorkflows = computed(() => pagination.paginatedItems.value);
@@ -276,6 +278,27 @@ export function useWorkflows(bootstrap = {}) {
    */
   function setSearchQuery(value) {
     searchQuery.value = value || '';
+  }
+
+  /**
+   * Changes how many workflows a page shows, keeping the first visible row on
+   * screen, and remembers the choice for the next visit.
+   *
+   * @since 2.4.2
+   * @param {number} size The new page size.
+   */
+  function setPerPage(size) {
+    const nextSize = normalizePerPage(size, pagination.perPage.value);
+
+    if (nextSize === pagination.perPage.value) {
+      return;
+    }
+
+    const nextPage = pageKeepingFirstRow(pagination.currentPage.value, pagination.perPage.value, nextSize);
+
+    pagination.perPage.value = nextSize;
+    pagination.setPage(nextPage);
+    storePerPage('workflows', nextSize);
   }
 
   /**
@@ -463,6 +486,7 @@ export function useWorkflows(bootstrap = {}) {
     reload,
     searchQuery,
     selectedStatus,
+    setPerPage,
     setSearchQuery,
     setStatusFilter,
     statusTabs,

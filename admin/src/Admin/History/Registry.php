@@ -24,11 +24,14 @@ defined('ABSPATH') || exit;
 class Registry {
 
     /**
-     * Default per-page used by the list screen.
+     * Default per-page used by the list screen. One of the page sizes the
+     * screen offers (10, 25, 50, 100, 200).
      *
+     * @since 2.0.0
+     * @version 2.4.2
      * @var int
      */
-    const PER_PAGE = 20;
+    const PER_PAGE = 25;
 
 
     /**

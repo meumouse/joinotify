@@ -33,6 +33,11 @@ class History_Delete extends Abstract_Route {
 	/**
 	 * Handle request.
 	 *
+	 * The body may carry the screen's filters and `per_page` next to the IDs;
+	 * the refreshed list honours them so the table keeps its view and size.
+	 *
+	 * @since 2.0.0
+	 * @version 2.4.2
 	 * @param WP_REST_Request $request Request instance.
 	 * @return \WP_REST_Response
 	 */
@@ -51,7 +56,7 @@ class History_Delete extends Abstract_Route {
 			return $this->error_response( esc_html__( 'No records selected.', 'joinotify' ) );
 		}
 
-		$list = Registry::get_list_state( array() );
+		$list = Registry::get_list_state( $params );
 
 		return $this->success_response( array(
 			'deleted' => (int) $deleted,

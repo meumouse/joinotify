@@ -38,6 +38,7 @@ const {
   reload,
   searchQuery,
   selectedStatus,
+  setPerPage,
   setSearchQuery,
   setStatusFilter,
   statusTabs,
@@ -414,6 +415,7 @@ function handleToggleStatus(workflow, nextStatus) {
               :loading="bulkActionLoading"
               :pagination="tablePagination"
               :pagination-disabled="loading || bulkActionLoading"
+              :per-page="pagination.perPage.value"
               :selected-count="totalSelected"
               :summary="`${totalItemsText} | ${pageSummary}`"
               @applyBulkAction="openBulkConfirmation(bulkAction)"
@@ -422,6 +424,7 @@ function handleToggleStatus(workflow, nextStatus) {
               @next="pagination.nextPage"
               @previous="pagination.previousPage"
               @update:bulkAction="bulkAction = $event"
+              @update:perPage="setPerPage"
             />
           </template>
         </div>

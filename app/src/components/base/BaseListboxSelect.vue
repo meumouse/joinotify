@@ -16,7 +16,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from '@headlessui/vue';
-import { useElementBounding } from '@vueuse/core';
+import { useElementBounding, useWindowSize } from '@vueuse/core';
 import { Check, ChevronDown } from '@boxicons/vue';
 import { __, textDomain } from '../../utils/i18n';
 
@@ -42,10 +42,31 @@ const emit = defineEmits(['update:modelValue', 'change']);
 // teleported to <body> and escape any scroll container (e.g. the settings
 // modal) that would otherwise clip them.
 const anchorRef = ref<HTMLElement | null>(null);
-const { x, width, bottom } = useElementBounding(anchorRef);
+const { x, width, top, bottom } = useElementBounding(anchorRef);
+const { height: viewportHeight } = useWindowSize({ includeScrollbar: false });
+
+// Matches the list's `max-h-60` cap, and each option's `py-2` + `text-sm` row.
+const MENU_MAX_HEIGHT = 240;
+const OPTION_HEIGHT = 36;
+const MENU_GAP = 4;
+
+// A fixed list cannot be scrolled into view, so one anchored near the bottom
+// of the viewport (a table's pagination bar) opens upward instead — but only
+// when there is more room above than below.
+const opensUpward = computed(() => {
+  const rows = props.options.length + (props.placeholder ? 1 : 0);
+  const menuHeight = Math.min(MENU_MAX_HEIGHT, rows * OPTION_HEIGHT + 8);
+  const spaceBelow = viewportHeight.value - bottom.value - MENU_GAP;
+  const spaceAbove = top.value - MENU_GAP;
+
+  return spaceBelow < menuHeight && spaceAbove > spaceBelow;
+});
+
 const floatingStyles = computed(() => ({
   position: 'fixed' as const,
-  top: `${bottom.value + 4}px`,
+  ...(opensUpward.value
+    ? { bottom: `${viewportHeight.value - top.value + MENU_GAP}px` }
+    : { top: `${bottom.value + MENU_GAP}px` }),
   left: `${x.value}px`,
   width: `${width.value}px`,
 }));

@@ -4,9 +4,11 @@
  *
  * Composes the workflows table toolbar by combining the BulkActions selector
  * and PaginationControls into one row, forwarding their props and re-emitting
- * their events up to the parent.
+ * their events up to the parent. `perPage` is forwarded so the toolbar can
+ * carry the page-size picker; leave it at 0 to hide the picker.
  *
  * @since 2.0.0
+ * @version 2.4.2
  */
 import BulkActions from './BulkActions.vue';
 import PaginationControls from './PaginationControls.vue';
@@ -20,9 +22,10 @@ defineProps({
   paginationDisabled: { type: Boolean, default: false },
   pagination: { type: Object, default: () => ({}) },
   summary: { type: String, default: '' },
+  perPage: { type: Number, default: 0 },
 });
 
-defineEmits(['update:bulkAction', 'applyBulkAction', 'first', 'previous', 'next', 'last']);
+defineEmits(['update:bulkAction', 'applyBulkAction', 'first', 'previous', 'next', 'last', 'update:perPage']);
 </script>
 
 <template>
@@ -40,6 +43,7 @@ defineEmits(['update:bulkAction', 'applyBulkAction', 'first', 'previous', 'next'
     <PaginationControls
       :current-page="pagination.current_page || 1"
       :disabled="paginationDisabled"
+      :per-page="perPage"
       :summary="summary"
       :total-items="pagination.total_items || 0"
       :total-pages="pagination.total_pages || 1"
@@ -47,6 +51,7 @@ defineEmits(['update:bulkAction', 'applyBulkAction', 'first', 'previous', 'next'
       @last="$emit('last')"
       @next="$emit('next')"
       @previous="$emit('previous')"
+      @update:per-page="$emit('update:perPage', $event)"
     />
   </div>
 </template>

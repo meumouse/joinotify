@@ -13,6 +13,7 @@ import BaseDatePicker from '../../components/base/BaseDatePicker.vue';
 import ConfirmActionModal from '../../components/workflows/ConfirmActionModal.vue';
 import BaseCheckbox from '../../components/buttons/checkbox/BaseCheckbox.vue';
 import PageHeader from '../../components/layout/PageHeader.vue';
+import PerPageSelect from '../../components/workflows/PerPageSelect.vue';
 import HistoryDetailsModal from './components/HistoryDetailsModal.vue';
 
 const props = defineProps({
@@ -43,6 +44,7 @@ const {
   previousPage,
   nextPage,
   lastPage,
+  setPerPage,
   toggleSelected,
   toggleSelectAll,
   removeSelected,
@@ -393,9 +395,10 @@ const confirmLabel = computed(() =>
           </div>
 
           <!-- Pagination -->
-          <div v-if="items.length" class="flex items-center justify-between pt-2">
+          <div v-if="items.length" class="flex flex-wrap items-center justify-between gap-3 pt-2">
             <span class="text-[13px] text-slate-500">{{ pageSummary }}</span>
-            <div class="flex items-center gap-1">
+            <div class="flex flex-wrap items-center gap-1">
+              <PerPageSelect class="mr-3" :disabled="loading" :model-value="pagination.per_page" @update:model-value="setPerPage" />
               <button type="button" class="rounded-md px-3 py-1.5 text-[13px] text-slate-600 transition hover:bg-slate-100 disabled:opacity-40" :disabled="pagination.current_page <= 1" @click="firstPage">«</button>
               <button type="button" class="rounded-md px-3 py-1.5 text-[13px] text-slate-600 transition hover:bg-slate-100 disabled:opacity-40" :disabled="pagination.current_page <= 1" @click="previousPage">‹</button>
               <span class="px-3 text-[13px] text-slate-500">{{ pagination.current_page }} / {{ pagination.total_pages }}</span>

@@ -160,11 +160,12 @@ class Registry {
 	 * Build the full list state payload (items + counts + pagination hints).
 	 *
 	 * @since 2.0.0
+	 * @version 2.4.2
 	 * @param string $search Optional search term.
 	 * @param int    $per_page Per-page hint for the client paginator.
 	 * @return array<string,mixed>
 	 */
-	public static function get_list_state( $search = '', $per_page = 20 ) {
+	public static function get_list_state( $search = '', $per_page = 25 ) {
 		$items = self::get_items( $search );
 		$per_page = max( 1, absint( $per_page ) );
 		$total = count( $items );

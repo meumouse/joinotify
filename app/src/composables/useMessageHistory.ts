@@ -1,6 +1,7 @@
 import { computed, onBeforeUnmount, ref } from 'vue';
 import { __, textDomain } from '../utils/i18n';
 import { createApiClient } from '../utils/api';
+import { DEFAULT_PER_PAGE, normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 
 const EMPTY_COUNTS = { all: 0, sent: 0, failed: 0, queued: 0, cancelled: 0 };
 
@@ -13,7 +14,7 @@ function normalizePagination(pagination) {
 
   return {
     current_page: Number(source.current_page) || 1,
-    per_page: Number(source.per_page) || 20,
+    per_page: Number(source.per_page) || DEFAULT_PER_PAGE,
     total_items: Number(source.total_items) || 0,
     total_pages: Number(source.total_pages) || 1,
   };
@@ -24,6 +25,7 @@ function normalizePagination(pagination) {
  * deletion backed by the Joinotify REST endpoints.
  *
  * @since 2.0.0
+ * @version 2.4.2
  * @param {Object} bootstrap Bootstrap payload from the history screen.
  */
 export function useMessageHistory(bootstrap = {}) {
@@ -37,6 +39,7 @@ export function useMessageHistory(bootstrap = {}) {
   const counts = ref(normalizeCounts(bootstrap.counts));
   const pagination = ref(normalizePagination(bootstrap.pagination));
   const sources = ref(Array.isArray(bootstrap.sources) ? bootstrap.sources : []);
+  const storedPerPage = readStoredPerPage('history');
 
   const filters = ref({
     status: '',
@@ -103,6 +106,12 @@ export function useMessageHistory(bootstrap = {}) {
     });
 
     return query.toString();
+  }
+
+  // The write endpoints answer with a refreshed first page. Sending the active
+  // filters and page size makes it the list on screen rather than the default.
+  function listArgs() {
+    return { ...filters.value, per_page: pagination.value.per_page };
   }
 
   async function fetchItems() {
@@ -180,6 +189,32 @@ export function useMessageHistory(bootstrap = {}) {
   const nextPage = () => goToPage(pagination.value.current_page + 1);
   const lastPage = () => goToPage(pagination.value.total_pages);
 
+  /**
+   * Change how many records a page shows, keeping the first visible row on
+   * screen, and remember the choice for the next visit.
+   *
+   * @since 2.4.2
+   * @param {number} size The new page size.
+   */
+  function setPerPage(size) {
+    const current = pagination.value;
+    const nextSize = normalizePerPage(size, current.per_page);
+
+    if (nextSize === current.per_page) {
+      return;
+    }
+
+    storePerPage('history', nextSize);
+
+    pagination.value = {
+      ...current,
+      per_page: nextSize,
+      current_page: pageKeepingFirstRow(current.current_page, current.per_page, nextSize),
+    };
+
+    fetchItems();
+  }
+
   function toggleSelected(id, checked) {
     const next = new Set(selectedIds.value);
     const key = String(id);
@@ -211,7 +246,7 @@ export function useMessageHistory(bootstrap = {}) {
     error.value = '';
 
     try {
-      const response = await api.post('/admin/history/delete', { ids: Array.from(selectedIds.value) });
+      const response = await api.post('/admin/history/delete', { ...listArgs(), ids: Array.from(selectedIds.value) });
 
       if (response?.status === 'error') {
         throw new Error(response.message || __('Could not delete the selected records.', textDomain));
@@ -246,7 +281,7 @@ export function useMessageHistory(bootstrap = {}) {
     notice.value = '';
 
     try {
-      const response = await api.post('/admin/history/cancel-retry', { ids: Array.from(selectedIds.value) });
+      const response = await api.post('/admin/history/cancel-retry', { ...listArgs(), ids: Array.from(selectedIds.value) });
 
       if (response?.status === 'error') {
         throw new Error(response.message || __('Could not cancel the resend.', textDomain));
@@ -273,7 +308,7 @@ export function useMessageHistory(bootstrap = {}) {
     error.value = '';
 
     try {
-      const response = await api.post('/admin/history/delete', { all: true });
+      const response = await api.post('/admin/history/delete', { ...listArgs(), all: true });
 
       if (response?.status === 'error') {
         throw new Error(response.message || __('Could not clear the history.', textDomain));
@@ -295,6 +330,13 @@ export function useMessageHistory(bootstrap = {}) {
       window.clearTimeout(searchTimer);
     }
   });
+
+  // The bootstrap payload is sized with the server default. When the viewer
+  // picked another size, reload before the first render shows the wrong one.
+  if (hasApi && storedPerPage && storedPerPage !== pagination.value.per_page) {
+    pagination.value = { ...pagination.value, per_page: storedPerPage, current_page: 1 };
+    fetchItems();
+  }
 
   return {
     loading,
@@ -323,6 +365,7 @@ export function useMessageHistory(bootstrap = {}) {
     nextPage,
     lastPage,
     goToPage,
+    setPerPage,
     toggleSelected,
     toggleSelectAll,
     removeSelected,
