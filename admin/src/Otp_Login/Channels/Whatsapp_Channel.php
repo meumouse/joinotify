@@ -8,6 +8,7 @@ use MeuMouse\Joinotify\Otp_Login\Settings;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Template_Repository;
 use MeuMouse\Joinotify\Api\Transport;
+use MeuMouse\Joinotify\Core\Message_History;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -83,7 +84,7 @@ class Whatsapp_Channel implements Channel_Interface {
      * template, whose single variable is the code itself.
      *
      * @since 2.0.0
-     * @version 2.3.0
+     * @version 2.4.1
      * @param Otp_Message $message | OTP message to deliver.
      * @return bool|\WP_Error
      */
@@ -98,10 +99,16 @@ class Whatsapp_Channel implements Channel_Interface {
             ? joinotify_prepare_receiver( preg_replace( '/\s+/', '', (string) $message->phone ) )
             : preg_replace( '/\D+/', '', (string) $message->phone );
 
+        // Tag the send as OTP in the message history. Besides the right source
+        // label, it is what makes the transport mask the code before recording.
+        Message_History::set_context( array( 'source' => 'otp' ) );
+
         // OTP codes expire within minutes, so a deferred retry would deliver an
         // already-invalid code. Send a single attempt and never enqueue it for
         // the notification retry queue ($queue_on_failure = false).
         $result = $this->send_template( $sender, $receiver, $message );
+
+        Message_History::clear_context();
 
         if ( is_wp_error( $result ) ) {
             return $result;

@@ -9,7 +9,7 @@
  * payload is available.
  *
  * @since 1.4.7
- * @version 2.0.0
+ * @version 2.4.1
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
@@ -97,6 +97,25 @@ function toggle(id) {
 
 function isExpanded(id) {
   return expanded.value.has(id);
+}
+
+/**
+ * Indent a JSON context so nested details (a template send's parameters, for
+ * one) stay readable. Anything that is not a JSON object is shown as stored.
+ *
+ * @param {unknown} context Stored context string.
+ * @returns {string} Context ready for display.
+ */
+function formatContext(context) {
+  const raw = String(context ?? '');
+
+  try {
+    const parsed = JSON.parse(raw);
+
+    return parsed && typeof parsed === 'object' ? JSON.stringify(parsed, null, 2) : raw;
+  } catch {
+    return raw;
+  }
 }
 </script>
 
@@ -194,7 +213,7 @@ function isExpanded(id) {
                       <div v-if="item.context" class="flex gap-2">
                         <dt class="w-24 shrink-0 text-slate-400">{{ __('Context', textDomain) }}</dt>
                         <dd class="min-w-0 flex-1">
-                          <pre class="overflow-auto whitespace-pre-wrap break-words font-mono text-slate-200">{{ item.context }}</pre>
+                          <pre class="overflow-auto whitespace-pre-wrap break-words font-mono text-slate-200">{{ formatContext(item.context) }}</pre>
                         </dd>
                       </div>
                     </dl>

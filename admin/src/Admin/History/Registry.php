@@ -39,7 +39,7 @@ class Registry {
      * closed 24-hour window stops looking like an opaque slug.
      *
      * @since 2.0.0
-     * @version 2.4.0
+     * @version 2.4.1
      * @param array<string,mixed> $row Raw DB row.
      * @return array<string,mixed>
      */
@@ -63,6 +63,9 @@ class Registry {
             'media_type' => (string) ( $row['media_type'] ?? '' ),
             'content' => (string) ( $row['content'] ?? '' ),
             'media_url' => (string) ( $row['media_url'] ?? '' ),
+            // Name, language and parameters of a template send; null for any
+            // other message, and for rows recorded before schema 1.3.0.
+            'template' => self::build_template( $row['meta'] ?? '' ),
             'status' => (string) ( $row['status'] ?? 'failed' ),
             'response_code' => (int) ( $row['response_code'] ?? 0 ),
             'error' => $error,
@@ -73,6 +76,46 @@ class Registry {
             // True only while a resend is actually still on the books, which is
             // what the "Cancel resend" action acts on.
             'can_cancel_retry' => 'queued' === (string) ( $row['status'] ?? '' ) && '' !== (string) ( $row['queue_id'] ?? '' ),
+        );
+    }
+
+
+    /**
+     * Read the template details out of a row's `meta` column.
+     *
+     * @since 2.4.1
+     * @param mixed $meta Raw `meta` column value.
+     * @return array<string,mixed>|null
+     */
+    public static function build_template( $meta ) {
+        $template = Message_History::decode_meta( $meta )['template'] ?? null;
+
+        if ( ! is_array( $template ) || empty( $template['name'] ) ) {
+            return null;
+        }
+
+        $parameters = array();
+
+        foreach ( (array) ( $template['parameters'] ?? array() ) as $parameter ) {
+            if ( ! is_array( $parameter ) ) {
+                continue;
+            }
+
+            $parameters[] = array(
+                'component' => (string) ( $parameter['component'] ?? 'body' ),
+                'index' => (int) ( $parameter['index'] ?? 0 ),
+                'key' => (string) ( $parameter['key'] ?? '' ),
+                'value' => (string) ( $parameter['value'] ?? '' ),
+            );
+        }
+
+        return array(
+            'name' => (string) $template['name'],
+            'language' => (string) ( $template['language'] ?? '' ),
+            'rendered_from' => (string) ( $template['rendered_from'] ?? '' ),
+            'masked' => ! empty( $template['masked'] ),
+            'parameters' => $parameters,
+            'components' => is_array( $template['components'] ?? null ) ? $template['components'] : array(),
         );
     }
 

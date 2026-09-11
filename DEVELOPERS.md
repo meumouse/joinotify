@@ -608,6 +608,51 @@ history are preserved unchanged.
 and the `Joinotify/Notifications/Message_Sent` action (fired after every
 dispatch attempt, success or failure).
 
+### What a template send records
+
+Every WhatsApp template send (workflow action, builder test, retry queue, OTP
+login) goes through `Api\Cloud_Client::send_message_template()`, which records it
+twice:
+
+- **Message history** — `content` holds the message as the recipient read it
+  (the template header, body and footer with the values in place), and the new
+  `meta` column holds `{ "template": { name, language, rendered_from, masked,
+  parameters, components } }`. `parameters` has one entry per value
+  (`component`, `index`, `key`, `value`); `components` is the payload sent to
+  WhatsApp. The history REST items expose it as `template`.
+- **Debug log** — while debug mode is on, every delivered message (template,
+  text or media) is logged at `info` with code `dispatch_sent`; its context carries
+  `source`, `workflow_id`, the recipient, the message body and, for templates, the
+  same `template` block. Failed and queued sends are always logged as
+  `error`/`warning`, and carry the `template` block even with debug mode off.
+
+The template text comes from the local template listing, backed by a
+long-lived copy in the `joinotify_template_snapshots` option, so the 15-minute
+listing cache expiring does not lose it. When the template is not known
+locally, `content` falls back to the name plus one `{{key}} = value` line per
+parameter and `rendered_from` says `fallback`.
+
+Login codes are never written down: values are masked (`••••••`) for sends
+tagged with the `otp` source and for any `AUTHENTICATION` template. To redact
+anything else, filter the details before they are stored — this changes both
+stores, never the payload sent to WhatsApp:
+
+```php
+add_filter( 'Joinotify/Api/Template_Dispatch_Log', function( $template, $context ) {
+    if ( 'nota_fiscal' === $template['name'] ) {
+        $template['text'] = $template['name'];
+        $template['parameters'] = array();
+        $template['components'] = array();
+    }
+
+    return $template;
+}, 10, 2 );
+```
+
+`$template` carries `name`, `language`, `text` (what goes into `content`),
+`rendered_from`, `masked`, `parameters` and `components`; `$context` is the
+dispatch context (`source`, `workflow_id`, ...).
+
 ---
 
 ## Notes & gotchas

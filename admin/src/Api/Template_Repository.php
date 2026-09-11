@@ -50,6 +50,27 @@ class Template_Repository {
      */
     const PAGE_SIZE = 250;
 
+    /**
+     * Option holding the last known copy of every listed template.
+     *
+     * The listing cache expires after 15 minutes, but the send path still has
+     * to know what a template says to record the message the recipient read.
+     * This copy has no expiry: it is refreshed on every listing and only read
+     * when the cache is cold.
+     *
+     * @since 2.4.1
+     * @var string
+     */
+    const SNAPSHOT_OPTION = 'joinotify_template_snapshots';
+
+    /**
+     * What a masked parameter value is replaced with.
+     *
+     * @since 2.4.1
+     * @var string
+     */
+    const MASK = '••••••';
+
 
     /**
      * List the templates of a business account.
@@ -128,6 +149,7 @@ class Template_Repository {
         // the picker with an empty catalogue.
         if ( ! empty( $templates ) ) {
             set_transient( $cache_key, $result, self::CACHE_TTL );
+            self::store_snapshots( $templates );
         }
 
         return $result;
@@ -137,34 +159,370 @@ class Template_Repository {
     /**
      * Find one synced template by name.
      *
-     * Reads the local cache only: callers use it on the send path, where a
-     * round trip to the API would delay the message for a detail the cache
-     * almost always has.
+     * Reads local data only: callers use it on the send path, where a round
+     * trip to the API would delay the message for a detail the cache almost
+     * always has. The listing cache is tried first and the long-lived snapshot
+     * second, so an expired cache no longer means an unknown template.
+     *
+     * The same name can be approved in several languages; when `$language` is
+     * given the matching one wins, otherwise the first one found is returned.
      *
      * @since 2.3.0
+     * @version 2.4.1
      * @param string $name | Template name as approved on Meta.
-     * @return array|null Normalized template, or null when it is not cached.
+     * @param string $language | Optional language code to prefer (e.g. pt_BR).
+     * @return array|null Normalized template, or null when it is not known locally.
      */
-    public static function find( $name ) {
+    public static function find( $name, $language = '' ) {
         $name = trim( (string) $name );
+        $language = trim( (string) $language );
 
         if ( '' === $name ) {
             return null;
         }
 
         $cached = get_transient( self::CACHE_PREFIX . md5( '' ) );
+        $match = null;
 
-        if ( ! is_array( $cached ) || empty( $cached['templates'] ) ) {
-            return null;
-        }
+        if ( is_array( $cached ) && ! empty( $cached['templates'] ) ) {
+            $match = self::pick( (array) $cached['templates'], $name, $language );
 
-        foreach ( (array) $cached['templates'] as $template ) {
-            if ( is_array( $template ) && isset( $template['name'] ) && $template['name'] === $name ) {
-                return $template;
+            // The fresh listing wins unless it only has the name in another
+            // language, in which case the snapshot may still know the right one.
+            if ( null !== $match && ( '' === $language || ( $match['language'] ?? '' ) === $language ) ) {
+                return $match;
             }
         }
 
-        return null;
+        $snapshots = get_option( self::SNAPSHOT_OPTION, array() );
+        $snapshot = is_array( $snapshots ) ? self::pick( $snapshots, $name, $language ) : null;
+
+        if ( null !== $snapshot && ( null === $match || ( $snapshot['language'] ?? '' ) === $language ) ) {
+            return $snapshot;
+        }
+
+        return $match;
+    }
+
+
+    /**
+     * Pick a template by name from a list, preferring the given language.
+     *
+     * @since 2.4.1
+     * @param array  $templates | Normalized templates.
+     * @param string $name | Template name.
+     * @param string $language | Language to prefer, or empty for any.
+     * @return array|null
+     */
+    protected static function pick( $templates, $name, $language ) {
+        $fallback = null;
+
+        foreach ( $templates as $template ) {
+            if ( ! is_array( $template ) || ( $template['name'] ?? '' ) !== $name ) {
+                continue;
+            }
+
+            if ( '' === $language || ( $template['language'] ?? '' ) === $language ) {
+                return $template;
+            }
+
+            $fallback = $fallback ?? $template;
+        }
+
+        return $fallback;
+    }
+
+
+    /**
+     * Keep a long-lived copy of the listed templates.
+     *
+     * Entries are merged by name and language rather than replaced, so a
+     * listing filtered by status or scoped to another business account never
+     * erases what the others taught.
+     *
+     * @since 2.4.1
+     * @param array $templates | Normalized templates from a listing.
+     * @return void
+     */
+    protected static function store_snapshots( $templates ) {
+        $snapshots = get_option( self::SNAPSHOT_OPTION, array() );
+        $snapshots = is_array( $snapshots ) ? $snapshots : array();
+        $changed = false;
+
+        foreach ( $templates as $template ) {
+            if ( ! is_array( $template ) || '' === ( $template['name'] ?? '' ) ) {
+                continue;
+            }
+
+            $key = $template['name'] . '|' . ( $template['language'] ?? '' );
+
+            if ( ( $snapshots[ $key ] ?? null ) !== $template ) {
+                $snapshots[ $key ] = $template;
+                $changed = true;
+            }
+        }
+
+        // Skip the write when nothing moved: listings are frequent and the
+        // catalogue rarely changes between them.
+        if ( $changed ) {
+            update_option( self::SNAPSHOT_OPTION, $snapshots, false );
+        }
+    }
+
+
+    /**
+     * Describe a template send the way it reached the recipient.
+     *
+     * Fills the template's header, body and footer with the parameter values
+     * being sent, so the history can show the message that was read rather
+     * than a bare template name. Values are matched to the `{{...}}` tokens in
+     * the order the template declares them, which is the same order the
+     * builder packs them in. When the template text is not known locally the
+     * text falls back to the name followed by one line per parameter.
+     *
+     * Masking replaces every value with {@see self::MASK} — in the text, the
+     * parameter list and the returned components alike. It is forced for
+     * AUTHENTICATION templates, whose only variable is a login code.
+     *
+     * @since 2.4.1
+     * @param string $name | Template name.
+     * @param string $language | Template language code.
+     * @param array  $components | Meta components payload being sent.
+     * @param bool   $mask | Whether to hide the parameter values.
+     * @return array {
+     *     @type string $text          Rendered message.
+     *     @type array  $parameters    One entry per value: component, index, key, value.
+     *     @type array  $components    Components payload, masked when masking applies.
+     *     @type string $rendered_from 'snapshot' when the template text was known, 'fallback' otherwise.
+     *     @type bool   $masked        Whether the values were masked.
+     * }
+     */
+    public static function render( $name, $language = '', $components = array(), $mask = false ) {
+        $name = trim( (string) $name );
+        $template = self::find( $name, $language );
+        $components = is_array( $components ) ? array_values( $components ) : array();
+
+        if ( is_array( $template ) && 'AUTHENTICATION' === ( $template['category'] ?? '' ) ) {
+            $mask = true;
+        }
+
+        if ( $mask ) {
+            $components = self::mask_components( $components );
+        }
+
+        $parameters = self::flatten_parameters( $components, $template );
+
+        if ( is_array( $template ) ) {
+            $text = self::fill_template( $template, $parameters );
+            $rendered_from = 'snapshot';
+        } else {
+            $text = self::describe_parameters( $name, $language, $parameters );
+            $rendered_from = 'fallback';
+        }
+
+        return array(
+            'text' => $text,
+            'parameters' => $parameters,
+            'components' => $components,
+            'rendered_from' => $rendered_from,
+            'masked' => (bool) $mask,
+        );
+    }
+
+
+    /**
+     * Replace every parameter value in a components payload with the mask.
+     *
+     * @since 2.4.1
+     * @param array $components | Meta components payload.
+     * @return array
+     */
+    protected static function mask_components( $components ) {
+        foreach ( $components as $c => $component ) {
+            if ( ! is_array( $component ) || ! is_array( $component['parameters'] ?? null ) ) {
+                continue;
+            }
+
+            foreach ( $component['parameters'] as $p => $parameter ) {
+                $components[ $c ]['parameters'][ $p ] = array(
+                    'type' => 'text',
+                    'text' => self::MASK,
+                );
+            }
+        }
+
+        return $components;
+    }
+
+
+    /**
+     * Flatten a components payload into one entry per parameter value.
+     *
+     * The variable name comes from the template when it is known; without it
+     * the position inside the component (1, 2, ...) stands in, which is what a
+     * positional template calls them anyway.
+     *
+     * @since 2.4.1
+     * @param array      $components | Meta components payload.
+     * @param array|null $template | Normalized template, when known.
+     * @return array<int,array{component:string,index:int,key:string,value:string}>
+     */
+    protected static function flatten_parameters( $components, $template ) {
+        $variables = is_array( $template ) ? (array) ( $template['variables'] ?? array() ) : array();
+        $flat = array();
+
+        foreach ( $components as $component ) {
+            if ( ! is_array( $component ) ) {
+                continue;
+            }
+
+            $type = strtolower( (string) ( $component['type'] ?? 'body' ) );
+            $index = (int) ( $component['index'] ?? 0 );
+
+            // The template's own variable names for this component, in order.
+            $keys = array();
+
+            foreach ( $variables as $variable ) {
+                if ( ! is_array( $variable ) || ( $variable['component'] ?? '' ) !== $type ) {
+                    continue;
+                }
+
+                if ( 'button' === $type && (int) ( $variable['index'] ?? 0 ) !== $index ) {
+                    continue;
+                }
+
+                $keys[] = (string) ( $variable['key'] ?? '' );
+            }
+
+            foreach ( array_values( (array) ( $component['parameters'] ?? array() ) ) as $position => $parameter ) {
+                $key = (string) ( $parameter['parameter_name'] ?? '' );
+
+                if ( '' === $key ) {
+                    $key = '' !== ( $keys[ $position ] ?? '' ) ? $keys[ $position ] : (string) ( $position + 1 );
+                }
+
+                $flat[] = array(
+                    'component' => $type,
+                    'index' => $index,
+                    'key' => $key,
+                    'value' => self::parameter_value( $parameter ),
+                );
+            }
+        }
+
+        return $flat;
+    }
+
+
+    /**
+     * Read the value a recipient sees for one Meta parameter object.
+     *
+     * @since 2.4.1
+     * @param mixed $parameter | Meta parameter object.
+     * @return string
+     */
+    protected static function parameter_value( $parameter ) {
+        if ( ! is_array( $parameter ) ) {
+            return is_scalar( $parameter ) ? (string) $parameter : '';
+        }
+
+        $type = strtolower( (string) ( $parameter['type'] ?? 'text' ) );
+
+        switch ( $type ) {
+            case 'text':
+                return (string) ( $parameter['text'] ?? '' );
+
+            case 'currency':
+            case 'date_time':
+                return (string) ( $parameter[ $type ]['fallback_value'] ?? '' );
+
+            case 'image':
+            case 'video':
+            case 'document':
+                return (string) ( $parameter[ $type ]['link'] ?? ( $parameter[ $type ]['id'] ?? '' ) );
+
+            case 'payload':
+                return (string) ( $parameter['payload'] ?? '' );
+        }
+
+        $json = wp_json_encode( $parameter );
+
+        return false !== $json ? $json : '';
+    }
+
+
+    /**
+     * Write the template's text with the parameter values in place.
+     *
+     * Button values have no place in the text — they live in the button URL —
+     * so they are only kept in the parameter list. A token with no value is
+     * left as-is, which is exactly what makes a missing variable visible.
+     *
+     * @since 2.4.1
+     * @param array $template | Normalized template.
+     * @param array $parameters | Flattened parameters.
+     * @return string
+     */
+    protected static function fill_template( $template, $parameters ) {
+        $parts = array();
+
+        foreach ( array( 'header', 'body', 'footer' ) as $type ) {
+            $text = (string) ( $template[ $type ] ?? '' );
+
+            if ( '' === trim( $text ) ) {
+                continue;
+            }
+
+            foreach ( $parameters as $parameter ) {
+                if ( $parameter['component'] !== $type ) {
+                    continue;
+                }
+
+                $text = preg_replace(
+                    '/\{\{\s*' . preg_quote( $parameter['key'], '/' ) . '\s*\}\}/',
+                    // Escape backreference syntax so a value like "$1" stays literal.
+                    addcslashes( $parameter['value'], '\\$' ),
+                    $text
+                );
+            }
+
+            $parts[] = $text;
+        }
+
+        return implode( "\n\n", $parts );
+    }
+
+
+    /**
+     * Describe a template whose text is not known locally.
+     *
+     * @since 2.4.1
+     * @param string $name | Template name.
+     * @param string $language | Template language code.
+     * @param array  $parameters | Flattened parameters.
+     * @return string
+     */
+    protected static function describe_parameters( $name, $language, $parameters ) {
+        if ( '' === $name ) {
+            return '';
+        }
+
+        $lines = array( '' !== trim( (string) $language ) ? sprintf( '%s (%s)', $name, $language ) : $name );
+
+        foreach ( $parameters as $parameter ) {
+            if ( 'body' === $parameter['component'] ) {
+                $prefix = '';
+            } elseif ( 'button' === $parameter['component'] ) {
+                // Meta counts buttons from zero; people count them from one.
+                $prefix = 'button #' . ( $parameter['index'] + 1 ) . ' ';
+            } else {
+                $prefix = $parameter['component'] . ' ';
+            }
+
+            $lines[] = sprintf( '%s{{%s}} = %s', $prefix, $parameter['key'], $parameter['value'] );
+        }
+
+        return implode( "\n", $lines );
     }
 
 

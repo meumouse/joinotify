@@ -8,6 +8,7 @@ use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Actions;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
 use WP_REST_Request;
 
@@ -43,7 +44,7 @@ class Builder_Test extends Abstract_Route {
      * above all, which is what a free-form step hits when the test number has
      * not written to the business first.
      *
-     * @version 2.4.0
+     * @version 2.4.1
      * @param WP_REST_Request $request Request instance.
      * @return \WP_REST_Response
      */
@@ -84,6 +85,12 @@ class Builder_Test extends Abstract_Route {
             'trigger'     => $trigger,
         );
 
+        // Tag every send below as a test in the message history and debug log.
+        Message_History::set_context( array(
+            'source'      => 'test',
+            'workflow_id' => $post_id,
+        ) );
+
         foreach ( $all_actions as $item ) {
             if ( ! isset( $item['type'] ) || $item['type'] !== 'action' ) {
                 continue;
@@ -111,6 +118,8 @@ class Builder_Test extends Abstract_Route {
                 }
             } elseif ( $action === 'send_whatsapp_message_template' ) {
                 if ( ! Transport::is_cloud() ) {
+                    Message_History::clear_context();
+
                     return rest_ensure_response( array(
                         'status'  => 'error',
                         'message' => __( 'Template messages require the WhatsApp Cloud API transport.', 'joinotify' ),
@@ -136,6 +145,8 @@ class Builder_Test extends Abstract_Route {
             }
         }
 
+        Message_History::clear_context();
+
         return rest_ensure_response( array(
             'status'  => 'success',
             'message' => __( 'All test messages were sent successfully.', 'joinotify' ),
@@ -146,12 +157,18 @@ class Builder_Test extends Abstract_Route {
     /**
      * Build the error response for a refused test send.
      *
+     * A refusal ends the test run, so it also closes the history context the
+     * run opened.
+     *
      * @since 2.4.0
+     * @version 2.4.1
      * @param array  $result | Normalized send details from the transport.
      * @param string $fallback | Message used when the failure has no description.
      * @return \WP_REST_Response
      */
     protected static function failure_response( $result, $fallback ) {
+        Message_History::clear_context();
+
         $error_code = (string) ( $result['error'] ?? '' );
 
         return rest_ensure_response( array(

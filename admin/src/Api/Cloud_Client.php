@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Api;
 
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Notification_Queue;
 
 // Exit if accessed directly.
@@ -460,7 +461,12 @@ class Cloud_Client {
      * Send an approved template message. This is the only way to reach a
      * recipient outside the 24h session window.
      *
+     * The history row carries the message as the recipient read it — the
+     * template text with the parameter values in place — and its `meta` keeps
+     * the template name, language and each parameter, on every return path.
+     *
      * @since 1.4.8
+     * @version 2.4.1
      * @param string $sender | Origin phone number.
      * @param string $receiver | Recipient phone number.
      * @param string $template_name | Approved template name.
@@ -477,12 +483,13 @@ class Cloud_Client {
         $template_name = sanitize_text_field( (string) $template_name );
         $language = '' !== trim( (string) $language ) ? trim( (string) $language ) : 'pt_BR';
 
-        $fields = array(
+        // Described before any early return, so a refused or queued send is
+        // recorded with the same detail as a delivered one.
+        $fields = array_merge( array(
             'message_type' => 'template',
             'sender' => $sender,
             'receiver' => $receiver,
-            'content' => $template_name,
-        );
+        ), self::describe_template( $template_name, $language, $components ) );
 
         $queue_payload = array(
             'sender' => $sender,
@@ -524,6 +531,65 @@ class Cloud_Client {
         $response = self::request( 'POST', self::SEND_PATH, $body );
 
         return self::finish_send( $response, $fields, $return_details, $queue_on_failure, 'template', $queue_payload );
+    }
+
+
+    /**
+     * Build the history and debug-log fields of a template send.
+     *
+     * Login codes are masked: a send tagged with the `otp` source, or any
+     * AUTHENTICATION template, never has its values written down.
+     *
+     * @since 2.4.1
+     * @param string $template_name | Template name.
+     * @param string $language | Template language code.
+     * @param array  $components | Meta components payload being sent.
+     * @return array{content:string,meta:array}
+     */
+    protected static function describe_template( $template_name, $language, $components ) {
+        $context = Message_History::get_context();
+        $is_otp = 'otp' === ( $context['source'] ?? '' );
+        $rendered = Template_Repository::render( $template_name, $language, is_array( $components ) ? $components : array(), $is_otp );
+
+        $template = array(
+            'name' => $template_name,
+            'language' => $language,
+            'text' => $rendered['text'],
+            'rendered_from' => $rendered['rendered_from'],
+            'masked' => $rendered['masked'],
+            'parameters' => $rendered['parameters'],
+            'components' => $rendered['components'],
+        );
+
+        /**
+         * Filter the template details kept in the message history and the debug log.
+         *
+         * Runs once per send, before anything is written, so redacting a value
+         * here removes it from both stores. The payload sent to WhatsApp is not
+         * affected.
+         *
+         * @since 2.4.1
+         * @param array $template {
+         *     @type string $name          Template name.
+         *     @type string $language      Template language code.
+         *     @type string $text          Message as the recipient reads it.
+         *     @type string $rendered_from 'snapshot' or 'fallback'.
+         *     @type bool   $masked        Whether the values were masked.
+         *     @type array  $parameters    One entry per value: component, index, key, value.
+         *     @type array  $components    Components payload as sent (masked when $masked).
+         * }
+         * @param array $context Dispatch context (source, workflow_id, ...).
+         */
+        $template = apply_filters( 'Joinotify/Api/Template_Dispatch_Log', $template, $context );
+        $template = is_array( $template ) ? $template : array();
+
+        $text = (string) ( $template['text'] ?? '' );
+        unset( $template['text'] );
+
+        return array(
+            'content' => '' !== $text ? $text : $template_name,
+            'meta' => array( 'template' => $template ),
+        );
     }
 
 

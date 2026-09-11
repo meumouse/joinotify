@@ -82,6 +82,7 @@ const typeLabels = computed(() => ({
   text: __('Text', textDomain),
   media: __('Media', textDomain),
   audio: __('Audio', textDomain),
+  template: __('Template', textDomain),
 }));
 
 function statusBadgeClass(status) {

@@ -1542,6 +1542,7 @@ class Workflow_Processor {
      * belongs to and kept in the order the template declares.
      *
      * @since 2.3.0
+     * @version 2.4.1
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @param int   $post_id | Workflow post ID
@@ -1567,7 +1568,7 @@ class Workflow_Processor {
             'workflow_id' => $post_id,
         ));
 
-        $result = Channel_Manager::dispatch( Notification_Message::from_array( array(
+        Channel_Manager::dispatch( Notification_Message::from_array( array(
             'channel' => Transport::active_channel_id(),
             'type' => 'template',
             'sender' => $sender,
@@ -1586,13 +1587,9 @@ class Workflow_Processor {
 
         Message_History::clear_context();
 
-        if ( defined('JOINOTIFY_DEBUG_MODE') && JOINOTIFY_DEBUG_MODE ) {
-            if ( $result->is_success() ) {
-                Logger::register_log( "Template \"$template_name\" sent successfully to: $receiver" );
-            } else {
-                Logger::register_log( "Failed to send template \"$template_name\". Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
-            }
-        }
+        // Nothing to log here: the transport records the send — template,
+        // language, parameters and outcome — in the debug log itself, and the
+        // channel layer logs a failure that never reached it.
     }
 
 

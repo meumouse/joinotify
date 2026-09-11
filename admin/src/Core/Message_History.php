@@ -40,10 +40,22 @@ class Message_History {
     /**
      * Schema version. Bump to trigger a dbDelta migration.
      *
+     * 1.3.0 adds the `meta` column (structured details such as the template
+     * name, language and parameters of a template send).
+     *
      * @since 2.0.0
+     * @version 2.4.1
      * @var string
      */
-    const DB_VERSION = '1.2.0';
+    const DB_VERSION = '1.3.0';
+
+    /**
+     * Longest string kept inside the `meta` column, per value.
+     *
+     * @since 2.4.1
+     * @var int
+     */
+    const META_VALUE_MAX_LENGTH = 2000;
 
     /**
      * Option key that stores the installed schema version.
@@ -142,6 +154,7 @@ class Message_History {
      * Create or upgrade the history table, guarded by the stored schema version.
      *
      * @since 2.0.0
+     * @version 2.4.1
      * @return void
      */
     public static function maybe_create_table() {
@@ -165,6 +178,7 @@ class Message_History {
             media_type VARCHAR(20) NOT NULL DEFAULT '',
             content LONGTEXT NULL,
             media_url TEXT NULL,
+            meta LONGTEXT NULL,
             status VARCHAR(20) NOT NULL DEFAULT 'failed',
             response_code SMALLINT(6) NOT NULL DEFAULT 0,
             error VARCHAR(191) NOT NULL DEFAULT '',
@@ -213,12 +227,28 @@ class Message_History {
 
 
     /**
+     * Get the dispatch context set for the current message(s).
+     *
+     * Lets the send path know where a message came from (workflow, queue,
+     * test, OTP) before it is recorded — e.g. to mask a login code or to tag a
+     * debug entry with its workflow.
+     *
+     * @since 2.4.1
+     * @return array<string,mixed>
+     */
+    public static function get_context() {
+        return self::$context;
+    }
+
+
+    /**
      * Record a dispatched message.
      *
      * @since 2.0.0
+     * @version 2.4.1
      * @param array<string,mixed> $entry Message fields. Recognized keys:
      *        sender, receiver, message_type, media_type, content, media_url,
-     *        status, response_code, error, attempts, source, workflow_id.
+     *        meta, status, response_code, error, attempts, source, workflow_id.
      * @return int|false Inserted row ID, or false when skipped/failed.
      */
     public static function record( $entry ) {
@@ -229,6 +259,11 @@ class Message_History {
         if ( ! is_array( $entry ) ) {
             return false;
         }
+
+        // The migration otherwise only runs on admin_init, and a send fired by
+        // cron before anyone opens the admin would write to a column that does
+        // not exist yet — losing the row. The check is one autoloaded option.
+        self::maybe_create_table();
 
         // Merge the shared dispatch context (workflow_id / source).
         $entry = array_merge( self::$context, $entry );
@@ -260,6 +295,7 @@ class Message_History {
             'media_type' => sanitize_key( $entry['media_type'] ?? '' ),
             'content' => wp_kses_post( (string) ( $entry['content'] ?? '' ) ),
             'media_url' => esc_url_raw( $entry['media_url'] ?? '' ),
+            'meta' => self::encode_meta( $entry['meta'] ?? null ),
             'status' => in_array( $status, self::STATUSES, true ) ? $status : 'failed',
             'response_code' => isset( $entry['response_code'] ) ? (int) $entry['response_code'] : 0,
             'error' => substr( sanitize_text_field( $entry['error'] ?? '' ), 0, 191 ),
@@ -271,7 +307,7 @@ class Message_History {
             'queue_id' => substr( sanitize_text_field( $entry['queue_id'] ?? '' ), 0, 64 ),
         );
 
-        $formats = array( '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s' );
+        $formats = array( '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s' );
 
         $inserted = $wpdb->insert( self::get_table_name(), $data, $formats );
 
@@ -291,6 +327,75 @@ class Message_History {
         do_action( 'Joinotify/Message_History/Recorded', $id, $data );
 
         return $id;
+    }
+
+
+    /**
+     * Encode the structured details of a message for the `meta` column.
+     *
+     * @since 2.4.1
+     * @param mixed $meta | Details array, or null when the message has none.
+     * @return string|null JSON, or null to store SQL NULL.
+     */
+    public static function encode_meta( $meta ) {
+        if ( ! is_array( $meta ) || empty( $meta ) ) {
+            return null;
+        }
+
+        $json = wp_json_encode( self::sanitize_meta( $meta ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+
+        return false !== $json ? $json : null;
+    }
+
+
+    /**
+     * Decode the `meta` column of a stored row.
+     *
+     * @since 2.4.1
+     * @param mixed $meta | Raw column value.
+     * @return array
+     */
+    public static function decode_meta( $meta ) {
+        if ( ! is_string( $meta ) || '' === $meta ) {
+            return array();
+        }
+
+        $decoded = json_decode( $meta, true );
+
+        return is_array( $decoded ) ? $decoded : array();
+    }
+
+
+    /**
+     * Keep only scalars and nested arrays, capping string length and depth.
+     *
+     * The values are shown back through REST and escaped on output, so they
+     * are stored as sent — a parameter such as "<3" must survive intact — but
+     * never unbounded.
+     *
+     * @since 2.4.1
+     * @param array $value | Details to clean.
+     * @param int   $depth | Current nesting depth.
+     * @return array
+     */
+    private static function sanitize_meta( $value, $depth = 0 ) {
+        $clean = array();
+
+        foreach ( $value as $key => $item ) {
+            $key = is_int( $key ) ? $key : sanitize_key( (string) $key );
+
+            if ( is_array( $item ) ) {
+                if ( $depth < 6 ) {
+                    $clean[ $key ] = self::sanitize_meta( $item, $depth + 1 );
+                }
+            } elseif ( is_string( $item ) ) {
+                $clean[ $key ] = mb_substr( wp_check_invalid_utf8( $item, true ), 0, self::META_VALUE_MAX_LENGTH );
+            } elseif ( is_scalar( $item ) || null === $item ) {
+                $clean[ $key ] = $item;
+            }
+        }
+
+        return $clean;
     }
 
 

@@ -85,8 +85,13 @@ trait Message_Dispatch {
      * so success, queued and failed dispatches are all captured uniformly while
      * preserving each method's original return contract (details array or code).
      *
+     * Successful dispatches are written to the debug log at the `info` level,
+     * which only persists while debug mode is on; failed and queued ones are
+     * always captured as errors and warnings.
+     *
      * @since 1.4.8
-     * @param array $fields | Message fields (sender, receiver, message_type, media_type, content, media_url, attempts).
+     * @version 2.4.1
+     * @param array $fields | Message fields (sender, receiver, message_type, media_type, content, media_url, meta, wamid, attempts).
      * @param array $details | Normalized response details from build_response_details().
      * @param bool $return_details | Whether the caller expects the details array.
      * @return int|array
@@ -123,16 +128,82 @@ trait Message_Dispatch {
                 ),
                 'code' => (string) ( $details['error'] ?? '' ),
                 'response_code' => $response_code,
-                'context' => array(
-                    'sender' => $fields['sender'] ?? '',
-                    'receiver' => $fields['receiver'] ?? '',
-                    'message_type' => $fields['message_type'] ?? '',
+                'context' => array_merge( self::dispatch_log_context( $fields, $details ), array(
                     'queued' => ! empty( $details['queued'] ),
                     'retryable' => ! empty( $details['retryable'] ),
-                ),
+                )),
+            ));
+        } elseif ( Debug_Log::should_persist( 'info' ) ) {
+            // Checked up front so a production site does not build the context of
+            // an entry that `info` would never persist anyway.
+            $template = $fields['meta']['template'] ?? array();
+
+            Debug_Log::record( array(
+                'level' => 'info',
+                'channel' => 'api',
+                'message' => ! empty( $template['name'] )
+                    ? sprintf( 'WhatsApp template "%s" (%s) sent to %s', $template['name'], $template['language'] ?? '', $fields['receiver'] ?? '' )
+                    : sprintf( 'WhatsApp %s message sent to %s', $fields['message_type'] ?? 'text', $fields['receiver'] ?? '' ),
+                'code' => 'dispatch_sent',
+                'response_code' => $response_code,
+                'context' => self::dispatch_log_context( $fields, $details ),
             ));
         }
 
         return $return_details ? $details : $response_code;
+    }
+
+
+    /**
+     * Build the debug-log context of a dispatch.
+     *
+     * The template block (name, language, parameters) is always included, so a
+     * refused template can be diagnosed without turning debug mode on. The
+     * message body, media link and WhatsApp id are only added while debug mode
+     * is on, keeping what production logs hold about recipients unchanged.
+     *
+     * @since 2.4.1
+     * @param array $fields | Message fields.
+     * @param array $details | Normalized response details.
+     * @return array
+     */
+    protected static function dispatch_log_context( $fields, $details ) {
+        $origin = Message_History::get_context();
+
+        $context = array(
+            'source' => (string) ( $origin['source'] ?? 'api' ),
+            'workflow_id' => (int) ( $origin['workflow_id'] ?? 0 ),
+            'sender' => $fields['sender'] ?? '',
+            'receiver' => $fields['receiver'] ?? '',
+            'message_type' => $fields['message_type'] ?? '',
+        );
+
+        if ( ! empty( $origin['attempts'] ) ) {
+            $context['attempts'] = (int) $origin['attempts'];
+        }
+
+        if ( ! empty( $fields['meta']['template'] ) ) {
+            $context['template'] = $fields['meta']['template'];
+        }
+
+        if ( Debug_Log::debug_mode_enabled() ) {
+            $context['content'] = (string) ( $fields['content'] ?? '' );
+
+            if ( ! empty( $fields['media_type'] ) ) {
+                $context['media_type'] = (string) $fields['media_type'];
+            }
+
+            // A local attachment travels as base64 in the same field; only a real
+            // link is worth a place in the log.
+            if ( preg_match( '#^https?://#i', (string) ( $fields['media_url'] ?? '' ) ) ) {
+                $context['media_url'] = (string) $fields['media_url'];
+            }
+
+            if ( ! empty( $details['wamid'] ) ) {
+                $context['wamid'] = (string) $details['wamid'];
+            }
+        }
+
+        return $context;
     }
 }

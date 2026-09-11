@@ -8,9 +8,18 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Added
+
+- The message history records the rendered text of each template send, with its language and variable values shown in the details modal
+- While debug mode is on, every delivered message is logged with the `dispatch_sent` code
+- New `Joinotify/Api/Template_Dispatch_Log` filter to redact template values before they are stored, while login codes are always masked
+- The debug log viewer indents JSON context so nested details stay readable
+
 ### Fixed
 
 - Templates with named variables (`{{nome}}`) were refused by WhatsApp because their values went out without `parameter_name`
+- OTP and builder-test sends were recorded under the `api` source instead of `otp` and `test`
+- The history type column showed the raw `template` slug instead of a translated label
 - The setup wizard's country list opened behind the full-screen wizard shell
 - The "Joinotify account" field showed an empty input after a key was saved instead of the key's masked prefix
 
