@@ -1605,7 +1605,13 @@ class Workflow_Processor {
      * component, with lowercase types, and button parameters split by button
      * index.
      *
+     * Header and body parameters of a template created with named variables
+     * (`{{nome}}`) also carry the `parameter_name` Meta requires for that
+     * format. Positional variables (`{{1}}`) are matched by order and go out
+     * without it, as do button parameters.
+     *
      * @since 2.3.0
+     * @version 2.5.0
      * @param array  $variables | Variable map stored on the action.
      * @param array  $payload | Runtime trigger payload.
      * @param string $mode | Placeholder resolution mode ('production' or 'sandbox').
@@ -1651,10 +1657,21 @@ class Workflow_Processor {
                 }
             }
 
-            $grouped[ $bucket ]['parameters'][] = array(
+            $parameter = array(
                 'type' => 'text',
-                'text' => $value,
             );
+
+            // Meta refuses a named template whose parameters do not say which
+            // variable they fill; a numeric key means the template is positional.
+            $key = trim( (string) ( $variable['key'] ?? '' ) );
+
+            if ( 'button' !== $component && '' !== $key && ! preg_match( '/^\d+$/', $key ) ) {
+                $parameter['parameter_name'] = $key;
+            }
+
+            $parameter['text'] = $value;
+
+            $grouped[ $bucket ]['parameters'][] = $parameter;
         }
 
         return array_values( $grouped );

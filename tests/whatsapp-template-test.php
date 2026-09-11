@@ -6,8 +6,9 @@
  * read side (Template_Repository normalizing what the API returns and listing
  * the variables each template expects, in both Meta dialects) and the write
  * side (Workflow_Processor turning the builder variable map into Meta's
- * `components` payload, grouped per component and with buttons addressed one by
- * one). No WordPress bootstrap is required.
+ * `components` payload, grouped per component, with buttons addressed one by
+ * one and named variables labelled with their `parameter_name`). No WordPress
+ * bootstrap is required.
  *
  * Run (Windows / Local):
  *   & "C:\path\to\Local\php.exe" tests/whatsapp-template-test.php
@@ -266,6 +267,33 @@ check( 'parameters carry the text type', 'text' === $components[1]['parameters']
 check( 'buttons declare sub_type and index', 'url' === $components[2]['sub_type'] && '1' === $components[2]['index'] );
 check( 'the header keeps its own bucket', 1 === count( $components[0]['parameters'] ) );
 check( 'non-button components carry no index', ! array_key_exists( 'index', $components[1] ) );
+check(
+	'positional parameters carry no parameter_name',
+	! array_key_exists( 'parameter_name', $components[0]['parameters'][0] )
+		&& ! array_key_exists( 'parameter_name', $components[1]['parameters'][0] )
+		&& ! array_key_exists( 'parameter_name', $components[2]['parameters'][0] )
+);
+
+// A template created with named variables is refused by Meta unless every
+// header and body parameter names the variable it fills.
+$components = Workflow_Processor::build_template_components( array(
+	array( 'component' => 'header', 'key' => 'pedido', 'index' => 0, 'value' => '1042' ),
+	array( 'component' => 'body', 'key' => 'nome', 'index' => 0, 'value' => 'Maria' ),
+	array( 'component' => 'body', 'key' => 'data_entrega', 'index' => 0, 'value' => '15/09' ),
+	array( 'component' => 'button', 'sub_type' => 'url', 'key' => '1', 'index' => 0, 'value' => '1042' ),
+), array() );
+
+check( 'named body parameters carry their name', 'nome' === ( $components[1]['parameters'][0]['parameter_name'] ?? null ) && 'data_entrega' === ( $components[1]['parameters'][1]['parameter_name'] ?? null ) );
+check( 'a named header parameter carries its name', 'pedido' === ( $components[0]['parameters'][0]['parameter_name'] ?? null ) );
+check( 'a named parameter keeps the Meta shape', array( 'type' => 'text', 'parameter_name' => 'nome', 'text' => 'Maria' ) === $components[1]['parameters'][0] );
+check( 'button parameters never carry a name', ! array_key_exists( 'parameter_name', $components[2]['parameters'][0] ) );
+
+$components = Workflow_Processor::build_template_components( array(
+	array( 'component' => 'body', 'value' => 'no key' ),
+	array( 'component' => 'body', 'key' => '', 'value' => 'empty key' ),
+), array() );
+
+check( 'a variable without a key is sent positionally', ! array_key_exists( 'parameter_name', $components[0]['parameters'][0] ) && ! array_key_exists( 'parameter_name', $components[0]['parameters'][1] ) );
 
 // Two URL buttons are addressed one by one, never merged.
 $components = Workflow_Processor::build_template_components( array(

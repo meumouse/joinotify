@@ -8,6 +8,12 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Fixed
+
+- **Templates created with named variables were refused by WhatsApp**
+    - A template whose variables are named (`{{nome}}`) instead of numbered (`{{1}}`) failed on every send — Meta answers `(#100) Invalid parameter` with "Parameter name is missing or empty" — because its header and body values went out without the `parameter_name` that format requires. Each value now names the variable it fills, from the key the builder already stores for it. Numbered templates and button values are sent exactly as before
+    - Covered by `tests/whatsapp-template-test.php`
+
 ## [2.4.0] - 2026-09-03
 
 ### Added
