@@ -166,6 +166,18 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.4.1 =
+* New: the message history shows what a template message actually said. The record keeps the template text with each value filled in, and the details window lists the template's language and the value given to each variable.
+* New: while debug mode is on, the debug log records every message delivered — template, text or media — not only the ones that fail. A failed template send always includes the template name, language and values.
+* New: login codes sent by template are never written to the history or the log. Developers can hide the values of other templates with the `Joinotify/Api/Template_Dispatch_Log` filter.
+* Changed: the debug log viewer lays structured details out over indented lines, so they are easier to read.
+* Fixed: templates with named variables, such as `{{nome}}`, were refused by WhatsApp.
+* Fixed: login codes and builder test messages were listed under the "API" source in the message history, instead of "OTP" and "Test message".
+* Fixed: the message history showed the raw word "template" in the type column instead of a translated label.
+* Fixed: the country list in the setup wizard opened behind the wizard itself.
+* Fixed: the "Joinotify account" field looked empty after a key was saved, instead of showing the key's masked prefix.
+* Removed: the "Plugin updates" row in Settings → About, which repeated what the plugins screen already shows.
+
 = 2.4.0 =
 * New: how many times a failed message is retried, and how long the first wait is, are now settings under Settings → General → Delivery retries. The default is 5 attempts starting 30 minutes apart, replacing the fixed budget of 120 attempts used until now. Choosing "Do not retry" keeps a failed message out of the queue altogether.
 * New: a resend that has not run yet can be cancelled from the message history. Select the records and use "Cancel resend"; they settle as "cancelled", a new status with its own tab. Records whose retry already ran are left alone.
@@ -241,6 +253,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.4.1 =
+Recommended for sites that send WhatsApp templates. Templates with named variables are no longer refused, and the message history now shows the text and values each template carried. Login codes are never stored.
 
 = 2.4.0 =
 Recommended for every installation. Failed sends now explain themselves on screen instead of only in the log, messages stuck in "queued" settle correctly, and a test message refused by WhatsApp is no longer reported as sent. Note one behaviour change: a failed message is now retried 5 times by default instead of 120, adjustable under Settings → General → Delivery retries.
