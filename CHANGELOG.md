@@ -8,6 +8,11 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Added
+
+- Joinotify Cloud sync, off by default: a card in Settings → Applications that, once switched on, sends this site's customers and events to your Joinotify account. It says what it sends before you turn it on, lets you leave out forms, carts, order items and full addresses, and tags every contact with the site's name or a tag of your choice
+- The sync queues what it sends in its own table and delivers it in batches from a scheduled task, never during a checkout or a page load; a batch that fails waits and tries again, and a revoked key, a site removed from the panel or a copy of the site at another address pauses it instead of sending test orders to real customers
+
 ## [2.4.2] - 2026-09-11
 
 ### Added

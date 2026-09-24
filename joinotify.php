@@ -76,10 +76,19 @@ register_deactivation_hook( __FILE__, function() {
 		'joinotify_purge_message_history_event',
 		'joinotify_scheduled_actions_event',
 		'joinotify_telemetry_dispatch_event',
+		'joinotify_cloud_sync_dispatch',
+		'joinotify_cloud_sync_report',
+		'joinotify_cloud_sync_report_daily',
+		'joinotify_cloud_sync_purge',
 	);
 
 	foreach ( $scheduled as $hook ) {
 		wp_clear_scheduled_hook( $hook );
+	}
+
+	// The sync's dispatch recurs on Action Scheduler when WooCommerce is there.
+	if ( function_exists( 'as_unschedule_all_actions' ) ) {
+		as_unschedule_all_actions( 'joinotify_cloud_sync_dispatch', array(), 'joinotify' );
 	}
 } );
 
