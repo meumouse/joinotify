@@ -253,7 +253,27 @@ class Payload {
 	 * @return array<string,mixed>
 	 */
 	public static function customer( $order ) {
-		$customer_id = (int) $order->get_customer_id();
+		$statuses = function_exists( 'wc_get_is_paid_statuses' ) ? wc_get_is_paid_statuses() : array( 'processing', 'completed' );
+		$history = self::history( (int) $order->get_customer_id(), (string) $order->get_billing_email() );
+		$this_paid = in_array( self::status( $order->get_status() ), $statuses, true );
+
+		// This order is the first paid one — or, not paid yet, there is none before it.
+		$history['is_first_order'] = $this_paid ? 1 === $history['orders_count'] : 0 === $history['orders_count'];
+
+		return $history;
+	}
+
+
+	/**
+	 * A customer's paid-order history — by account, or for a guest by the e-mail of their orders.
+	 * What the order events carry and what the backfill sends for each customer.
+	 *
+	 * @since 2.5.0
+	 * @param int $customer_id
+	 * @param string $email
+	 * @return array<string,mixed>
+	 */
+	public static function history( $customer_id, $email ) {
 		$statuses = function_exists( 'wc_get_is_paid_statuses' ) ? wc_get_is_paid_statuses() : array( 'processing', 'completed' );
 
 		$query = array(
@@ -266,10 +286,10 @@ class Payload {
 
 		if ( $customer_id > 0 ) {
 			$query['customer_id'] = $customer_id;
-		} elseif ( '' !== $order->get_billing_email() ) {
+		} elseif ( '' !== $email ) {
 			// A guest is known by the e-mail of their orders — the same person's orders placed while
 			// logged in count too, which is what they are.
-			$query['billing_email'] = $order->get_billing_email();
+			$query['billing_email'] = $email;
 		} else {
 			$query = null;
 		}
@@ -284,17 +304,15 @@ class Payload {
 
 		$first = $count > 0 ? $orders[0] : null;
 		$last = $count > 0 ? $orders[ $count - 1 ] : null;
-		$this_paid = in_array( self::status( $order->get_status() ), $statuses, true );
 
 		return array(
-			'id' => $customer_id,
+			'id' => (int) $customer_id,
 			'orders_count' => $count,
 			'total_spent' => self::money( $spent ),
 			'avg_order_value' => self::money( $count > 0 ? $spent / $count : 0 ),
 			'first_order_at' => $first ? self::iso( $first->get_date_created() ) : null,
 			'last_order_at' => $last ? self::iso( $last->get_date_created() ) : null,
-			// This order is the first paid one — or, not paid yet, there is none before it.
-			'is_first_order' => $this_paid ? 1 === $count : 0 === $count,
+			'last_order_status' => $last ? self::status( $last->get_status() ) : null,
 		);
 	}
 

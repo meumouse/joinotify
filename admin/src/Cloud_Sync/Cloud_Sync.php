@@ -5,6 +5,8 @@ namespace MeuMouse\Joinotify\Cloud_Sync;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
+use MeuMouse\Joinotify\Rest\Cloud_Sync_Action;
+use MeuMouse\Joinotify\Rest\Cloud_Sync_Status;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -87,6 +89,11 @@ class Cloud_Sync extends Integrations_Base {
 
 		Dispatcher::register();
 		Reporter::register();
+		Backfill::register();
+
+		// The monitor in the settings window: status, retries and the backfill.
+		new Cloud_Sync_Status();
+		new Cloud_Sync_Action();
 
 		add_action( 'admin_init', array( Outbox::class, 'maybe_create_table' ), 5 );
 		add_action( 'Joinotify/Upgraded', array( Outbox::class, 'maybe_create_table' ) );
@@ -286,6 +293,8 @@ class Cloud_Sync extends Integrations_Base {
 			'modal' => array(
 				'title' => __( 'Joinotify Cloud sync', 'joinotify' ),
 				'description' => self::consent_text(),
+				// Above the switches: whether it runs, what waits, and the backfill.
+				'blocks' => array( self::modal_component_block( 'cloud-sync-status' ) ),
 				'button_label' => __( 'Configure', 'joinotify' ),
 				'size' => 'medium',
 			),

@@ -34,6 +34,20 @@ msgstr ""
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:280
+msgid ""
+"%1$d of your %2$d users have a phone number, and there are %3$d orders "
+"placed without an account. Each person becomes a contact in Joinotify, "
+"tagged with this site; no flow starts for them. People without a phone "
+"number are left out, and contacts over your plan's limit are not created."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:309
+msgid ""
+"%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone "
+"number."
+msgstr ""
+
 #: admin/src/Builder/Messages.php:188
 #. translators: 1: condition title, 2: comparison operator label, 3: compared value
 msgid "%1$s %2$s: %3$s"
@@ -65,6 +79,20 @@ msgstr[1] ""
 #: app/src/builder/actions/utils/actionDescription.ts:93
 msgid "%d hour"
 msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/Cloud_Sync_Action.php:57
+#. translators: %d: number of items
+msgid "%d item discarded."
+msgid_plural "%d items discarded."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/Cloud_Sync_Action.php:51
+#. translators: %d: number of items
+msgid "%d item will be sent again."
+msgid_plural "%d items will be sent again."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -290,7 +318,7 @@ msgstr ""
 msgid "Abandoned cart is recovered"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:339
+#: admin/src/Cloud_Sync/Cloud_Sync.php:348
 msgid "Abandoned carts"
 msgstr ""
 
@@ -454,7 +482,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:367
+#: admin/src/Cloud_Sync/Cloud_Sync.php:376
 msgid ""
 "Adds an unticked checkbox to the checkout, the sign-up forms and My "
 "account. Who ticks it is opted in on Joinotify, with the checkbox text, "
@@ -728,6 +756,10 @@ msgstr ""
 msgid "Angola"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:50
+msgid "another address"
+msgstr ""
+
 #: admin/src/Integrations/Woocommerce.php:282
 msgid "Any digital product"
 msgstr ""
@@ -817,7 +849,7 @@ msgstr ""
 msgid "Aruba"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:366
+#: admin/src/Cloud_Sync/Cloud_Sync.php:375
 msgid "Ask customers for marketing consent"
 msgstr ""
 
@@ -1118,6 +1150,7 @@ msgstr ""
 
 #: app/src/components/builder/BuilderAiGenerateModal.vue:96
 #: app/src/components/builder/BuilderImportModal.vue:44
+#: app/src/components/fields/CloudSyncStatusField.vue:295
 #: app/src/components/fields/JoinotifyApiKeyField.vue:182
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:17
@@ -1454,7 +1487,7 @@ msgstr ""
 msgid "Configuration component not available for this action."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:289
+#: admin/src/Cloud_Sync/Cloud_Sync.php:298
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
 #: admin/src/Integrations/Otp_Login.php:109
@@ -1567,7 +1600,7 @@ msgstr ""
 msgid "Connection updated."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:372
+#: admin/src/Cloud_Sync/Cloud_Sync.php:381
 msgid "Consent checkbox text"
 msgstr ""
 
@@ -1864,6 +1897,10 @@ msgstr ""
 
 #: admin/src/Rest/Workflows_Status.php:57
 msgid "Could not update the workflow."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:282
+msgid "Counting your customers…"
 msgstr ""
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:117
@@ -2338,6 +2375,10 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:258
+msgid "Discard"
+msgstr ""
+
 #: app/src/pages/history/HistoryPage.vue:319
 msgid "Discard the pending retry of the selected messages"
 msgstr ""
@@ -2759,6 +2800,12 @@ msgstr ""
 msgid "Event"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:301
+msgid ""
+"Events reach only who buys or signs up from now on. Send the customers you "
+"already have, once, so your first campaign can reach them."
+msgstr ""
+
 #: admin/src/Core/Notification_Queue.php:114
 msgid "Every 5 minutes"
 msgstr ""
@@ -2767,7 +2814,7 @@ msgstr ""
 msgid "Every 6 hours"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:358
+#: admin/src/Cloud_Sync/Cloud_Sync.php:367
 msgid ""
 "Every contact this site sends gets this tag in Joinotify. Leave it empty to "
 "use the site's name."
@@ -2824,6 +2871,14 @@ msgstr ""
 
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:105
 msgid "Examples of the events that would be sent"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:263
+msgid "Existing customers"
+msgstr ""
+
+#: admin/src/Cloud_Sync/Backfill.php:148
+msgid "Existing customers are already being sent."
 msgstr ""
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:161
@@ -3070,7 +3125,7 @@ msgstr ""
 msgid "Form is sent"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:333
+#: admin/src/Cloud_Sync/Cloud_Sync.php:342
 msgid "Form submissions"
 msgstr ""
 
@@ -3190,6 +3245,14 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:128
 msgid "Gibraltar"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:234
+msgid "Given up"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:239
+msgid "Given up after every retry"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:171
@@ -3360,7 +3423,7 @@ msgstr ""
 msgid "Hungary"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:375
+#: admin/src/Cloud_Sync/Cloud_Sync.php:384
 #: admin/src/Cloud_Sync/Consent.php:149
 msgid "I want to receive offers and news on WhatsApp."
 msgstr ""
@@ -3441,6 +3504,10 @@ msgstr ""
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:96
 msgid "Importing…"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:63
+msgid "in conflict with another contact"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowTable.vue:86
@@ -3722,8 +3789,8 @@ msgid ""
 "fully without it."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:281
-#: admin/src/Cloud_Sync/Cloud_Sync.php:287
+#: admin/src/Cloud_Sync/Cloud_Sync.php:288
+#: admin/src/Cloud_Sync/Cloud_Sync.php:294
 #: admin/src/Cloud_Sync/Consent.php:611
 #: admin/src/Cloud_Sync/Consent.php:626
 msgid "Joinotify Cloud sync"
@@ -3798,6 +3865,14 @@ msgstr ""
 msgid "Kenya"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:62
+msgid "kept on the do-not-contact list"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:61
+msgid "kept opted out"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:192
 msgid "Kiribati"
 msgstr ""
@@ -3833,6 +3908,26 @@ msgstr ""
 msgid "Last"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:206
+msgid "Last delivery: %s."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:209
+msgid "Last error: %s."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:305
+msgid "Last run finished on %s."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:307
+msgid "Last run stopped because the sync was switched off."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:306
+msgid "Last run was stopped."
+msgstr ""
+
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:64
 msgid "Last synced:"
 msgstr ""
@@ -3857,7 +3952,7 @@ msgstr ""
 msgid "Lead capture via modal"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:340
+#: admin/src/Cloud_Sync/Cloud_Sync.php:349
 msgid "Leads and abandoned, recovered or lost carts from Flexify Checkout."
 msgstr ""
 
@@ -3978,6 +4073,10 @@ msgstr ""
 
 #: app/src/components/skeletons/PageShellSkeleton.vue:19
 msgid "Loading the setup wizard..."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:188
+msgid "Loading the sync status…"
 msgstr ""
 
 #: app/src/components/builder/BuilderCanvasView.vue:151
@@ -4675,6 +4774,10 @@ msgstr ""
 msgid "No products selected yet."
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:242
+msgid "no reason given"
+msgstr ""
+
 #: admin/src/Rest/History_Cancel_Retry.php:55
 #: admin/src/Rest/History_Delete.php:56
 #: admin/src/Rest/History_Export.php:48
@@ -4785,6 +4888,10 @@ msgstr ""
 msgid "not found in the account"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:208
+msgid "Nothing delivered yet."
+msgstr ""
+
 #: app/src/pages/queue/QueuePage.vue:382
 msgid "Nothing in the queue"
 msgstr ""
@@ -4820,11 +4927,15 @@ msgstr ""
 msgid "of"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:311
+msgid "Of those sent, %1$d %2$s."
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:624
 msgid "Off"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:352
+#: admin/src/Cloud_Sync/Cloud_Sync.php:361
 msgid ""
 "Off by default: city and state are always sent, the full address only when "
 "a flow needs it."
@@ -4836,6 +4947,10 @@ msgstr ""
 
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:32
 msgid "ok"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:64
+msgid "older than what Joinotify has"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:214
@@ -5008,7 +5123,7 @@ msgstr ""
 msgid "Order digital files"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:322
+#: admin/src/Cloud_Sync/Cloud_Sync.php:331
 msgid ""
 "Order events (created, paid, completed, refunded…), subscriptions, and each "
 "customer with their order count, total spent and last purchase."
@@ -5064,6 +5179,10 @@ msgstr ""
 
 #: admin/src/Integrations/Otp_Login.php:97
 msgid "OTP Login - Passwordless authentication"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:60
+msgid "over your plan's contact limit"
 msgstr ""
 
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:134
@@ -5382,7 +5501,7 @@ msgstr ""
 msgid "Product SKU"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:346
+#: admin/src/Cloud_Sync/Cloud_Sync.php:355
 msgid ""
 "Products, quantities and categories — what \"bought coffee\" audiences and "
 "cross-sell flows need."
@@ -5839,7 +5958,7 @@ msgstr ""
 msgid "Saving…"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:373
+#: admin/src/Cloud_Sync/Cloud_Sync.php:382
 msgid ""
 "Say what the customer agrees to receive, and on which channel. Leave it "
 "empty to use the default text."
@@ -6136,6 +6255,10 @@ msgstr ""
 msgid "Send a WhatsApp text message."
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:252
+msgid "Send again"
+msgstr ""
+
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:65
 msgid "Send an approved template through the official WhatsApp Cloud API."
 msgstr ""
@@ -6151,7 +6274,7 @@ msgstr ""
 msgid "Send an e-mail notification through Resend."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:351
+#: admin/src/Cloud_Sync/Cloud_Sync.php:360
 msgid "Send billing and shipping addresses"
 msgstr ""
 
@@ -6163,6 +6286,10 @@ msgstr ""
 
 #: admin/src/Integrations/Resend.php:105
 msgid "Send e-mail notifications for your automations through the Resend API."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:319
+msgid "Send existing customers"
 msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:164
@@ -6194,11 +6321,15 @@ msgstr ""
 msgid "Send text message"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:345
+#: admin/src/Cloud_Sync/Cloud_Sync.php:354
 msgid "Send the items of each order"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:282
+#: app/src/components/fields/CloudSyncStatusField.vue:290
+msgid "Send them"
+msgstr ""
+
+#: admin/src/Cloud_Sync/Cloud_Sync.php:289
 msgid ""
 "Send this site's customers and events to your Joinotify account, so its "
 "flows, audiences and campaigns work with your orders, sign-ups and carts."
@@ -6241,8 +6372,16 @@ msgstr ""
 msgid "Sender removed."
 msgstr ""
 
+#: admin/src/Rest/Cloud_Sync_Action.php:74
+msgid "Sending existing customers. You can leave this page."
+msgstr ""
+
 #: templates/otp-login/shared/otp-login-form.php:38
 msgid "Sending..."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:267
+msgid "Sending… %1$d queued so far, %2$d left out for having no phone number."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:934
@@ -6260,6 +6399,10 @@ msgstr ""
 #: app/src/composables/useMessageHistory.ts:58
 #: app/src/pages/history/HistoryPage.vue:74
 msgid "Sent"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:230
+msgid "Sent (7 days)"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Consent.php:673
@@ -6378,7 +6521,7 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:328
+#: admin/src/Cloud_Sync/Cloud_Sync.php:337
 msgid "Sign-ups and profile updates of users who have a phone number."
 msgstr ""
 
@@ -6408,6 +6551,10 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:107
 msgid "Somalia"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:157
+msgid "Something went wrong."
 msgstr ""
 
 #: app/src/builder/components/base/AttachmentsField.vue:171
@@ -6482,6 +6629,10 @@ msgstr ""
 msgid "Sticker URL"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:274
+msgid "Stop"
+msgstr ""
+
 #: admin/src/Admin/Builder/Registry.php:574
 #: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
@@ -6490,6 +6641,10 @@ msgstr ""
 #: app/src/builder/actions/definitions/stopFunnel.ts:26
 #: app/src/builder/actions/definitions/stopFunnel.ts:35
 msgid "Stop funnel"
+msgstr ""
+
+#: admin/src/Rest/Cloud_Sync_Action.php:79
+msgid "Stopped. Customers already queued will still be sent."
 msgstr ""
 
 #: app/src/builder/actions/utils/actionDescription.ts:240
@@ -6548,6 +6703,14 @@ msgstr ""
 msgid "Sweden"
 msgstr ""
 
+#: admin/src/Cloud_Sync/Backfill.php:144
+msgid "Switch the sync on and save before sending existing customers."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:211
+msgid "Switch the sync on and save to start sending. Nothing is sent before that."
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:37
 msgid "Switzerland"
 msgstr ""
@@ -6562,6 +6725,18 @@ msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneActions.vue:156
 msgid "Sync numbers from Joinotify"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:199
+msgid "Sync off"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:198
+msgid "Sync on"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:197
+msgid "Sync paused"
 msgstr ""
 
 #: app/src/components/fields/WhatsappTemplateField.vue:177
@@ -6590,7 +6765,7 @@ msgstr ""
 msgid "System status:"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:357
+#: admin/src/Cloud_Sync/Cloud_Sync.php:366
 msgid "Tag for contacts from this site"
 msgstr ""
 
@@ -6818,6 +6993,12 @@ msgstr ""
 msgid "The Joinotify API did not return a key for this site."
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:42
+msgid ""
+"The Joinotify key of this site was revoked or cannot send this data. "
+"Connect the site again in the Connection tab; the sync resumes on its own."
+msgstr ""
+
 #: admin/src/Api/Connect.php:361
 msgid "The Joinotify panel did not return an API key."
 msgstr ""
@@ -6928,6 +7109,10 @@ msgstr ""
 
 #: admin/src/Rest/Phone_Remove.php:48
 msgid "The sender phone number was removed successfully!"
+msgstr ""
+
+#: admin/src/Rest/Cloud_Sync_Action.php:65
+msgid "The sync will try again in a moment."
 msgstr ""
 
 #: app/src/pages/history/components/HistoryDetailsModal.vue:159
@@ -7141,8 +7326,22 @@ msgid ""
 "undone."
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:48
+#. translators: 1: this site's address, 2: the address the key was issued to
+msgid ""
+"This site is at %1$s, but its Joinotify key was issued to %2$s. If this is "
+"a staging copy, leave it paused: it would send test orders to real "
+"customers. If the site moved, connect it again in the Connection tab."
+msgstr ""
+
 #: admin/src/Rest/Cloud_Connect_Key.php:92
 msgid "This site is no longer connected to Joinotify."
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:44
+msgid ""
+"This site was removed from your Joinotify account. Connect it again in the "
+"Connection tab to resume."
 msgstr ""
 
 #: app/src/builder/components/base/SessionWindowNotice.vue:80
@@ -7673,6 +7872,7 @@ msgstr ""
 msgid "True branch"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:220
 #: app/src/pages/history/HistoryPage.vue:303
 #: app/src/pages/queue/QueuePage.vue:241
 #: app/src/pages/workflows/WorkflowsPage.vue:85
@@ -7773,6 +7973,10 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:25
 msgid "United States"
+msgstr ""
+
+#: admin/src/Rest/Cloud_Sync_Action.php:82
+msgid "Unknown action."
 msgstr ""
 
 #: admin/src/AI/AI_Manager.php:169
@@ -8058,6 +8262,10 @@ msgstr ""
 msgid "Wait until %s"
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:226
+msgid "Waiting"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:188
 msgid "Wallis and Futuna"
 msgstr ""
@@ -8268,7 +8476,7 @@ msgid ""
 "country code are never changed."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:307
+#: admin/src/Cloud_Sync/Cloud_Sync.php:316
 msgid ""
 "When switched on, this site sends to Joinotify (api.joinotify.com): the "
 "name, e-mail and phone number of customers and of the users who register; "
@@ -8308,6 +8516,14 @@ msgstr ""
 msgid "will be removed permanently."
 msgstr ""
 
+#: app/src/components/fields/CloudSyncStatusField.vue:59
+msgid "with an invalid phone number"
+msgstr ""
+
+#: app/src/components/fields/CloudSyncStatusField.vue:58
+msgid "without a phone number"
+msgstr ""
+
 #: admin/src/Builder/Utils.php:101
 #: admin/src/Integrations/Woocommerce.php:101
 #: admin/src/Integrations/Woocommerce.php:355
@@ -8319,7 +8535,7 @@ msgstr ""
 msgid "WooCommerce is not active."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:321
+#: admin/src/Cloud_Sync/Cloud_Sync.php:330
 msgid "WooCommerce orders and customers"
 msgstr ""
 
@@ -8349,7 +8565,7 @@ msgstr ""
 msgid "WordPress Multisite"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:327
+#: admin/src/Cloud_Sync/Cloud_Sync.php:336
 msgid "WordPress users"
 msgstr ""
 
@@ -8461,7 +8677,7 @@ msgstr ""
 msgid "WPForms"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:334
+#: admin/src/Cloud_Sync/Cloud_Sync.php:343
 msgid ""
 "WPForms and Elementor Pro submissions that carry a phone number. Every "
 "field of the form is sent."

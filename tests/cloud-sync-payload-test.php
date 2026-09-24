@@ -106,6 +106,25 @@ check( 'custom alone is not a name', ! Emitters::is_custom_name( 'custom' ) && !
 check( 'uppercase and dashes are refused, as the platform would', ! Emitters::is_custom_name( 'custom.Quote' ) && ! Emitters::is_custom_name( 'custom.quote-requested' ) );
 check( 'not a string, not a name', ! Emitters::is_custom_name( array( 'custom.x' ) ) );
 
+echo "\nContact::to_sync_row\n";
+
+$row = Contact::to_sync_row( array(
+	'ref' => array( 'kind' => 'wc_customer', 'id' => '42' ),
+	'phone' => '+5511987654321',
+	'first_name' => 'Ana',
+	'last_name' => 'Souza',
+	'email' => 'ana@example.com',
+	'attributes' => array( 'wc_orders_count' => 3 ),
+	'tags' => array( 'Loja' ),
+	'consent' => array( 'status' => 'opted_in', 'evidence' => 'x — checkout — loja.test' ),
+), '2026-09-24T12:00:00Z' );
+
+check( 'the block\'s snake_case becomes the route\'s camelCase', 'Ana' === $row['firstName'] && 'Souza' === $row['lastName'] && ! isset( $row['first_name'] ) );
+check( 'who, how to reach and what they hold go as they are', '42' === $row['ref']['id'] && '+5511987654321' === $row['phone'] && 3 === $row['attributes']['wc_orders_count'] );
+check( 'tags and consent ride along', array( 'Loja' ) === $row['tags'] && 'opted_in' === $row['consent']['status'] );
+check( 'the row says when its values were read', '2026-09-24T12:00:00Z' === $row['occurredAt'] );
+check( 'what the block does not have, the row does not invent', ! isset( $row['country'] ) && ! isset( $row['removeTags'] ) );
+
 echo "\nConsent::block_consent\n";
 
 $ticked = Consent::block_consent( array( 'text' => 'Quero receber ofertas no WhatsApp.', 'where' => 'checkout', 'order_id' => 1234, 'at' => 1790000000 ), false, 'loja.test' );

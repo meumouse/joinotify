@@ -62,7 +62,8 @@ class Catalog {
 			$found['elementor_pro'] = array( 'version' => (string) ELEMENTOR_PRO_VERSION );
 		}
 
-		if ( class_exists( '\MeuMouse\Flexify_Checkout\Flexify_Checkout' ) && Flexify_Checkout::is_recovery_carts_active() ) {
+		// The native module and the standalone add-on fire the same hooks; this checks for either.
+		if ( Flexify_Checkout::is_recovery_carts_active() ) {
 			$found['flexify_checkout'] = array( 'version' => defined( 'FLEXIFY_CHECKOUT_VERSION' ) ? (string) FLEXIFY_CHECKOUT_VERSION : '' );
 		}
 
@@ -263,6 +264,7 @@ class Catalog {
 			'avg_order_value' => $orders > 0 ? '180.30' : '0.00',
 			'first_order_at' => $orders > 0 ? '2026-03-02T15:10:00Z' : null,
 			'last_order_at' => $orders > 0 ? '2026-09-24T12:00:00Z' : null,
+			'last_order_status' => $orders > 0 ? 'completed' : null,
 			'is_first_order' => 1 === $orders,
 		);
 	}

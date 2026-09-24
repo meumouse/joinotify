@@ -219,6 +219,121 @@ class Contact {
 
 
 	/**
+	 * A customer with an account, for the backfill: who they are in the store, and their history.
+	 * Without WooCommerce, the WordPress user.
+	 *
+	 * @since 2.5.0
+	 * @param \WP_User $user
+	 * @return array<string,mixed>|null
+	 */
+	public static function from_customer( $user ) {
+		if ( ! function_exists( 'wc_get_orders' ) ) {
+			return self::from_user( $user );
+		}
+
+		$history = Payload::history( (int) $user->ID, '' );
+		$roles = array_values( (array) $user->roles );
+		$first = (string) get_user_meta( $user->ID, 'billing_first_name', true );
+		$last = (string) get_user_meta( $user->ID, 'billing_last_name', true );
+
+		return self::block( array( 'kind' => 'wc_customer', 'id' => (string) $user->ID ), array(
+			'phone' => Payload::user_phone( $user->ID ),
+			'country' => get_user_meta( $user->ID, 'billing_country', true ),
+			'first_name' => '' !== $first ? $first : $user->first_name,
+			'last_name' => '' !== $last ? $last : $user->last_name,
+			'email' => $user->user_email,
+			'user_id' => $user->ID,
+		), array_merge( self::history_pack( $history ), array(
+			'wp_registered_at' => Payload::iso( strtotime( (string) $user->user_registered . ' UTC' ) ),
+			'wp_role' => $roles[0] ?? '',
+			'wc_billing_city' => get_user_meta( $user->ID, 'billing_city', true ),
+			'wc_billing_state' => get_user_meta( $user->ID, 'billing_state', true ),
+		) ) );
+	}
+
+
+	/**
+	 * A buyer without an account, for the backfill: known by their latest order.
+	 *
+	 * @since 2.5.0
+	 * @param \WC_Order $order
+	 * @return array<string,mixed>|null
+	 */
+	public static function from_guest( $order ) {
+		$history = Payload::history( 0, (string) $order->get_billing_email() );
+		$phone = (string) $order->get_billing_phone();
+
+		return self::block( self::anonymous_ref( 'wc_guest', $order->get_billing_email(), $phone ), array(
+			'phone' => $phone,
+			'country' => $order->get_billing_country(),
+			'first_name' => $order->get_billing_first_name(),
+			'last_name' => $order->get_billing_last_name(),
+			'email' => $order->get_billing_email(),
+			'order_id' => $order->get_id(),
+		), array_merge( self::history_pack( $history ), array(
+			'wc_billing_city' => $order->get_billing_city(),
+			'wc_billing_state' => $order->get_billing_state(),
+		) ) );
+	}
+
+
+	/**
+	 * The WooCommerce pack values of a history.
+	 *
+	 * @since 2.5.0
+	 * @param array<string,mixed> $history Payload::history().
+	 * @return array<string,mixed>
+	 */
+	private static function history_pack( $history ) {
+		return array(
+			'wc_orders_count' => (int) $history['orders_count'],
+			'wc_total_spent' => (float) $history['total_spent'],
+			'wc_avg_order_value' => (float) $history['avg_order_value'],
+			'wc_first_order_at' => $history['first_order_at'],
+			'wc_last_order_at' => $history['last_order_at'],
+			'wc_last_order_status' => $history['last_order_status'] ?? null,
+		);
+	}
+
+
+	/**
+	 * A contact block as a row of `POST /contacts/sync`: the same person, in the route's camelCase.
+	 * Pure, for the harness.
+	 *
+	 * @since 2.5.0
+	 * @param array<string,mixed> $block
+	 * @param string $occurred_at ISO 8601 — when the values were read.
+	 * @return array<string,mixed>
+	 */
+	public static function to_sync_row( $block, $occurred_at ) {
+		$names = array(
+			'ref' => 'ref',
+			'phone' => 'phone',
+			'country' => 'country',
+			'first_name' => 'firstName',
+			'last_name' => 'lastName',
+			'email' => 'email',
+			'locale' => 'locale',
+			'attributes' => 'attributes',
+			'tags' => 'tags',
+			'remove_tags' => 'removeTags',
+			'consent' => 'consent',
+		);
+		$row = array();
+
+		foreach ( $names as $from => $to ) {
+			if ( isset( $block[ $from ] ) ) {
+				$row[ $to ] = $block[ $from ];
+			}
+		}
+
+		$row['occurredAt'] = $occurred_at;
+
+		return $row;
+	}
+
+
+	/**
 	 * The person behind a cart or a form: the logged-in user when there is one, a lead otherwise.
 	 *
 	 * @since 2.5.0

@@ -22,6 +22,7 @@ import ColorPickerField from './ColorPickerField.vue';
 import ColorScaleField from './ColorScaleField.vue';
 import CloudConnectField from './CloudConnectField.vue';
 import JoinotifyApiKeyField from './JoinotifyApiKeyField.vue';
+import CloudSyncStatusField from './CloudSyncStatusField.vue';
 import WhatsappTemplateField from './WhatsappTemplateField.vue';
 
 const registry = new Map();
@@ -80,6 +81,7 @@ registerAlias('color-scale', ColorScaleField);
 registerAlias('color-scale-field', ColorScaleField);
 registerAlias('cloud-connect', CloudConnectField);
 registerAlias('joinotify-api-key', JoinotifyApiKeyField);
+registerAlias('cloud-sync-status', CloudSyncStatusField);
 
 /**
  * Convert a snake_case or kebab-case key into camelCase.

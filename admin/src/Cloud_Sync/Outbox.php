@@ -564,6 +564,46 @@ class Outbox {
 
 
 	/**
+	 * What became of the contact rows written since a moment — the backfill's report: how many are
+	 * waiting, sent, given up on, and why the platform skipped or kept some of the sent ones.
+	 *
+	 * @since 2.5.0
+	 * @param string $since `Y-m-d H:i:s`, UTC.
+	 * @return array{pending: int, sent: int, dead: int, notes: array<string,int>}
+	 */
+	public static function contact_results( $since ) {
+		global $wpdb;
+
+		$results = array( 'pending' => 0, 'sent' => 0, 'dead' => 0, 'notes' => array() );
+
+		if ( get_option( self::DB_VERSION_OPTION ) !== self::DB_VERSION ) {
+			return $results;
+		}
+
+		$rows = $wpdb->get_results( $wpdb->prepare(
+			'SELECT status, last_error, COUNT(*) AS total FROM ' . self::table() . " WHERE kind = 'contact' AND created_at >= %s GROUP BY status, last_error",
+			(string) $since
+		), ARRAY_A );
+
+		foreach ( (array) $rows as $row ) {
+			$total = (int) $row['total'];
+			$status = 'sending' === $row['status'] ? 'pending' : (string) $row['status'];
+
+			if ( isset( $results[ $status ] ) && 'notes' !== $status ) {
+				$results[ $status ] += $total;
+			}
+
+			if ( 'sent' === $status && '' !== (string) $row['last_error'] ) {
+				$note = (string) $row['last_error'];
+				$results['notes'][ $note ] = ( $results['notes'][ $note ] ?? 0 ) + $total;
+			}
+		}
+
+		return $results;
+	}
+
+
+	/**
 	 * The rows that carry an e-mail address — what the WordPress privacy exporter lists and the
 	 * eraser removes. A text match on the JSON: the address is in the contact block and in the
 	 * order's billing, never in a column of its own.
