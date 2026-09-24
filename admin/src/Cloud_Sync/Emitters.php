@@ -570,6 +570,25 @@ class Emitters {
 
 
 	/**
+	 * Note a change another part of the sync made to a user — the marketing preference — so the
+	 * end of the request sends it with the rest.
+	 *
+	 * @since 2.5.0
+	 * @param int $user_id
+	 * @param string $field
+	 * @return void
+	 */
+	public static function user_changed( $user_id, $field ) {
+		if ( ! Cloud_Sync::syncs( 'wordpress' ) && ! Cloud_Sync::syncs( 'woocommerce' ) ) {
+			return;
+		}
+
+		self::$changed[ (int) $user_id ][ (string) $field ] = true;
+		self::defer_users();
+	}
+
+
+	/**
 	 * Send the users this request registered or changed.
 	 *
 	 * @since 2.5.0

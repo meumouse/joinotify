@@ -49,6 +49,26 @@ class Webhooks {
 
 
     /**
+     * Events this site subscribes to, with what enabled features add.
+     *
+     * @since 2.5.0
+     * @return string[]
+     */
+    public static function events() {
+        /**
+         * Filter the events the site's endpoint subscribes to — where the Joinotify Cloud sync adds
+         * the consent changes it mirrors on the site's users.
+         *
+         * @since 2.5.0
+         * @param string[] $events
+         */
+        $events = (array) apply_filters( 'Joinotify/Cloud_Api/Webhook_Events', self::EVENTS );
+
+        return array_values( array_unique( array_map( 'strval', $events ) ) );
+    }
+
+
+    /**
      * Public URL the API delivers to.
      *
      * @since 2.3.0
@@ -130,7 +150,7 @@ class Webhooks {
         $response = Cloud_Client::request( 'POST', '/webhook-endpoints', array(
             'name' => wp_parse_url( home_url(), PHP_URL_HOST ) . ' (Joinotify plugin)',
             'url' => $url,
-            'events' => self::EVENTS,
+            'events' => self::events(),
         ) );
 
         if ( is_wp_error( $response ) ) {

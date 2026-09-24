@@ -3,7 +3,8 @@
  * Standalone test harness for the pure parts of what the Joinotify Cloud sync sends: how a form's
  * fields are read (Payload::form_fields), who someone without an account is (Contact::anonymous_ref),
  * where pack values land in the account (Contact::map_attributes) and which names an extension may
- * send through joinotify_track() (Emitters::is_custom_name).
+ * send through joinotify_track() (Emitters::is_custom_name), and the consent a contact block carries,
+ * the phone match of a platform opt-out and the refs an erasure names (Consent).
  *
  * No WordPress bootstrap: the few WP functions reached are stubbed below.
  *
@@ -38,7 +39,9 @@ function remove_accents( $text ) { return strtr( $text, array( 'á' => 'a', 'ã'
 require __DIR__ . '/../admin/src/Cloud_Sync/Payload.php';
 require __DIR__ . '/../admin/src/Cloud_Sync/Contact.php';
 require __DIR__ . '/../admin/src/Cloud_Sync/Emitters.php';
+require __DIR__ . '/../admin/src/Cloud_Sync/Consent.php';
 
+use MeuMouse\Joinotify\Cloud_Sync\Consent;
 use MeuMouse\Joinotify\Cloud_Sync\Contact;
 use MeuMouse\Joinotify\Cloud_Sync\Emitters;
 use MeuMouse\Joinotify\Cloud_Sync\Payload;
@@ -102,6 +105,31 @@ check( 'the platform\'s own names are not an extension\'s', ! Emitters::is_custo
 check( 'custom alone is not a name', ! Emitters::is_custom_name( 'custom' ) && ! Emitters::is_custom_name( 'custom.' ) );
 check( 'uppercase and dashes are refused, as the platform would', ! Emitters::is_custom_name( 'custom.Quote' ) && ! Emitters::is_custom_name( 'custom.quote-requested' ) );
 check( 'not a string, not a name', ! Emitters::is_custom_name( array( 'custom.x' ) ) );
+
+echo "\nConsent::block_consent\n";
+
+$ticked = Consent::block_consent( array( 'text' => 'Quero receber ofertas no WhatsApp.', 'where' => 'checkout', 'order_id' => 1234, 'at' => 1790000000 ), false, 'loja.test' );
+check( 'a ticked box is an opt-in', 'opted_in' === $ticked['status'] );
+check( '…whose evidence is the exact text, where and the site', 'Quero receber ofertas no WhatsApp. — checkout, order #1234 — loja.test' === $ticked['evidence'] );
+check( '…and when, in UTC', '2026-09-21T14:13:20Z' === $ticked['at'] );
+check( 'unticked in My account is an opt-out, whatever was stored', array( 'status' => 'opted_out', 'reason' => 'my_account' ) === Consent::block_consent( array( 'text' => 'x', 'at' => 1 ), true, 'loja.test' ) );
+check( 'nothing stored, nothing said', null === Consent::block_consent( null, false, 'loja.test' ) );
+check( 'evidence without its text is no evidence', null === Consent::block_consent( array( 'text' => ' ', 'at' => 1 ), false, 'loja.test' ) );
+check( 'evidence fits the platform\'s 500 characters', 500 === mb_strlen( Consent::block_consent( array( 'text' => str_repeat( 'á', 600 ) ), false, 'loja.test' )['evidence'] ) );
+
+echo "\nConsent::same_phone\n";
+
+check( 'the platform\'s number with its country is the store\'s without it', Consent::same_phone( '5511987654321', '11987654321' ) );
+check( 'a trunk zero is not a different line', Consent::same_phone( '011987654321', '5511987654321' ) );
+check( 'another number with the same last digits is not the same line', ! Consent::same_phone( '5511987654321', '21987654321' ) );
+check( 'too short to tell', ! Consent::same_phone( '4321', '5511987654321' ) );
+
+echo "\nConsent::refs_of\n";
+
+$refs = Consent::refs_of( 'Ana@Example.com', 42 );
+check( 'a user is erased as user and as customer', array( 'kind' => 'wp_user', 'id' => '42' ) === $refs[0] && array( 'kind' => 'wc_customer', 'id' => '42' ) === $refs[1] );
+check( '…and as the guest and the lead of their e-mail', hash( 'sha256', 'ana@example.com' ) === $refs[2]['id'] && 'lead' === $refs[3]['kind'] );
+check( 'someone without an account is only a guest and a lead', 2 === count( Consent::refs_of( 'b@example.com', 0 ) ) );
 
 echo "\n{$assertions} assertions, {$failures} failure(s).\n";
 exit( $failures > 0 ? 1 : 0 );

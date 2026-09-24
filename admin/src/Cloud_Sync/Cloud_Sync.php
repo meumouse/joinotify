@@ -68,6 +68,9 @@ class Cloud_Sync extends Integrations_Base {
 		'cloud_sync_send_address' => 'no',
 		'cloud_sync_send_items' => 'yes',
 		'cloud_sync_source_tag' => '',
+		// Asking customers is the owner's decision, and the box itself starts unticked (LGPD).
+		'cloud_sync_consent_checkbox' => 'no',
+		'cloud_sync_consent_text' => '',
 	);
 
 
@@ -96,6 +99,9 @@ class Cloud_Sync extends Integrations_Base {
 		// A plugin switched on or off changes what this site can send.
 		add_action( 'activated_plugin', array( Reporter::class, 'schedule' ) );
 		add_action( 'deactivated_plugin', array( Reporter::class, 'schedule' ) );
+
+		// The privacy tools answer for what was sent even after the switch is off.
+		Consent::register();
 
 		if ( ! self::is_enabled() ) {
 			return;
@@ -298,7 +304,7 @@ class Cloud_Sync extends Integrations_Base {
 	 * @return string
 	 */
 	public static function consent_text() {
-		return __( 'When switched on, this site sends to Joinotify (api.joinotify.com): the name, e-mail and phone number of customers and of the users who register; each order\'s number, status, totals, payment and shipping method and, if you allow it below, its items and addresses; the forms and carts you choose below; and, for the site itself, its address, name, the Joinotify version and which WooCommerce, form and checkout plugins are active. Nothing is sent before you switch it on, and switching it off stops it at once.', 'joinotify' );
+		return __( 'When switched on, this site sends to Joinotify (api.joinotify.com): the name, e-mail and phone number of customers and of the users who register; each order\'s number, status, totals, payment and shipping method and, if you allow it below, its items and addresses; the forms and carts you choose below; and, for the site itself, its address, name, the Joinotify version and which WooCommerce, form and checkout plugins are active. If you ask customers for marketing consent, whether they agreed, with the checkbox text and when. Joinotify tells this site when a customer opts in or out there, and the WordPress privacy eraser asks Joinotify to erase the contacts this site sent. Nothing is sent before you switch it on, and switching it off stops it at once.', 'joinotify' );
 	}
 
 
@@ -352,6 +358,21 @@ class Cloud_Sync extends Integrations_Base {
 				esc_html__( 'Every contact this site sends gets this tag in Joinotify. Leave it empty to use the site\'s name.', 'joinotify' ),
 				array(
 					'placeholder' => wp_specialchars_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES ),
+					'default' => '',
+				)
+			),
+			self::field_toggle(
+				'cloud_sync_consent_checkbox',
+				esc_html__( 'Ask customers for marketing consent', 'joinotify' ),
+				esc_html__( 'Adds an unticked checkbox to the checkout, the sign-up forms and My account. Who ticks it is opted in on Joinotify, with the checkbox text, where and when as evidence; who unticks it in My account is opted out.', 'joinotify' ),
+				array( 'default' => self::DEFAULTS['cloud_sync_consent_checkbox'] )
+			),
+			self::field_text(
+				'cloud_sync_consent_text',
+				esc_html__( 'Consent checkbox text', 'joinotify' ),
+				esc_html__( 'Say what the customer agrees to receive, and on which channel. Leave it empty to use the default text.', 'joinotify' ),
+				array(
+					'placeholder' => __( 'I want to receive offers and news on WhatsApp.', 'joinotify' ),
 					'default' => '',
 				)
 			),

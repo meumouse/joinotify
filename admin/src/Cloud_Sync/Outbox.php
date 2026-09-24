@@ -564,6 +564,56 @@ class Outbox {
 
 
 	/**
+	 * The rows that carry an e-mail address — what the WordPress privacy exporter lists and the
+	 * eraser removes. A text match on the JSON: the address is in the contact block and in the
+	 * order's billing, never in a column of its own.
+	 *
+	 * @since 2.5.0
+	 * @param string $email
+	 * @param int $limit
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function rows_with_email( $email, $limit = 100 ) {
+		global $wpdb;
+
+		$email = trim( (string) $email );
+
+		if ( '' === $email || get_option( self::DB_VERSION_OPTION ) !== self::DB_VERSION ) {
+			return array();
+		}
+
+		return (array) $wpdb->get_results( $wpdb->prepare(
+			'SELECT id, event_id, kind, name, status, created_at, sent_at FROM ' . self::table() . ' WHERE payload LIKE %s ORDER BY id DESC LIMIT %d',
+			'%"' . $wpdb->esc_like( $email ) . '"%',
+			max( 1, (int) $limit )
+		), ARRAY_A );
+	}
+
+
+	/**
+	 * Remove every row that carries an e-mail address, sent or not.
+	 *
+	 * @since 2.5.0
+	 * @param string $email
+	 * @return int Rows removed.
+	 */
+	public static function erase_email( $email ) {
+		global $wpdb;
+
+		$email = trim( (string) $email );
+
+		if ( '' === $email || get_option( self::DB_VERSION_OPTION ) !== self::DB_VERSION ) {
+			return 0;
+		}
+
+		return (int) $wpdb->query( $wpdb->prepare(
+			'DELETE FROM ' . self::table() . ' WHERE payload LIKE %s',
+			'%"' . $wpdb->esc_like( $email ) . '"%'
+		) );
+	}
+
+
+	/**
 	 * Drop the table and its version — on uninstall.
 	 *
 	 * @since 2.5.0
