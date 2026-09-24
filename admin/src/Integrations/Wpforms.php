@@ -262,7 +262,7 @@ class Wpforms extends Integrations_Base {
      * Fires when PayPal payment status notifies the site
      *
      * @since 1.1.0
-     * @version 1.4.7
+     * @version 2.5.0
      * @param array $fields | Sanitized entry field values/properties
      * @param array $form_data | Form data and settings
      * @param int $payment_id | PayPal Payment ID
@@ -289,9 +289,10 @@ class Wpforms extends Integrations_Base {
             'integration' => 'wpforms',
             'id' => absint( $form_data['id'] ),
             'fields' => $fields,
-            'entry' => $entry,
+            // this hook carries no raw entry; the payment id is the id of the entry that holds it
+            'entry' => array(),
             'form_data' => $form_data,
-            'entry_id' => $entry_id,
+            'entry_id' => absint( $payment_id ),
         ));
 
         Workflow_Processor::process_workflows( $payload );

@@ -183,8 +183,23 @@ class Outbox {
 	 * @return string|false The event id, or false when the row could not be written.
 	 */
 	public static function push_event( $name, $data, $contact = null, $occurred_at = null ) {
+		/**
+		 * Filter an event's data before it is queued — where a store adds what its flows need to
+		 * read, for one event or for all. Returning `false` drops the event.
+		 *
+		 * @since 2.5.0
+		 * @param array<string,mixed>|false $data
+		 * @param string $name
+		 * @param array<string,mixed>|null $contact
+		 */
+		$data = apply_filters( 'Joinotify/Cloud_Sync/Event_Data', $data, $name, $contact );
+
+		if ( false === $data ) {
+			return false;
+		}
+
 		$id = wp_generate_uuid4();
-		$envelope = self::envelope( $id, $name, $data, $contact, home_url(), $occurred_at ?? time() );
+		$envelope = self::envelope( $id, $name, (array) $data, $contact, home_url(), $occurred_at ?? time() );
 
 		return self::insert( $id, 'event', $name, $envelope ) ? $id : false;
 	}

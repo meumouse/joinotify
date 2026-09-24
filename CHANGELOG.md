@@ -12,6 +12,13 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 - Joinotify Cloud sync, off by default: a card in Settings → Applications that, once switched on, sends this site's customers and events to your Joinotify account. It says what it sends before you turn it on, lets you leave out forms, carts, order items and full addresses, and tags every contact with the site's name or a tag of your choice
 - The sync queues what it sends in its own table and delivers it in batches from a scheduled task, never during a checkout or a page load; a batch that fails waits and tries again, and a revoked key, a site removed from the panel or a copy of the site at another address pauses it instead of sending test orders to real customers
+- What the sync sends as events: WooCommerce orders (created, paid, every status change, completed, cancelled, failed, refunded) with the customer's order history and the links to pay, view and review them; new customers; WooCommerce Subscriptions (created, activated, renewed, renewal failed, expired, cancelled); WordPress sign-ups and changes of phone, name or e-mail; WPForms and Elementor forms that carry a phone or an e-mail; and Flexify Checkout's collected leads and abandoned, recovered and lost carts. "Created" and "paid" go out once per order however often the status changes, and a failure building an event never interrupts the checkout
+- `joinotify_track( $name, $data, $contact )` sends an event of your own (named `custom.*`) to your Joinotify flows through the same queue
+
+### Fixed
+
+- The "New order" trigger now also runs for orders placed with the WooCommerce checkout block, which never fired it
+- The WPForms PayPal Standard trigger no longer reads an entry that hook does not provide, which raised PHP warnings and sent an empty entry id
 
 ## [2.4.2] - 2026-09-11
 

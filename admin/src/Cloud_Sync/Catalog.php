@@ -95,7 +95,7 @@ class Catalog {
 				'wc.order.cancelled' => array( 'order' => array_merge( $order, array( 'status' => 'cancelled' ) ), 'customer' => self::sample_customer(), 'links' => self::sample_links() ),
 				'wc.order.failed' => array( 'order' => array_merge( $order, array( 'status' => 'failed' ) ), 'customer' => self::sample_customer(), 'links' => self::sample_links() ),
 				'wc.order.refunded' => array( 'order' => array_merge( $order, array( 'status' => 'refunded' ) ), 'refund' => array( 'id' => 1235, 'amount' => '189.90', 'reason' => 'Produto com defeito', 'full' => true ), 'customer' => self::sample_customer() ),
-				'wc.customer.created' => array( 'customer' => self::sample_customer( 0 ) ),
+				'wc.customer.created' => array( 'customer' => array_merge( self::sample_user(), array( 'orders_count' => 0 ) ) ),
 			),
 			'woocommerce_subscriptions' => array(
 				'wcs.subscription.created' => array( 'subscription' => $subscription, 'order' => $order ),
@@ -124,7 +124,7 @@ class Catalog {
 			),
 			'flexify_checkout' => array(
 				'fcrc.lead.collected' => array( 'cart' => self::sample_cart() ),
-				'fcrc.cart.abandoned' => array( 'cart' => self::sample_cart() ),
+				'fcrc.cart.abandoned' => array( 'cart' => self::sample_cart(), 'order' => $order, 'links' => self::sample_links() ),
 				'fcrc.cart.recovered' => array( 'cart' => self::sample_cart(), 'order' => $order ),
 				'fcrc.cart.lost' => array( 'cart' => self::sample_cart() ),
 			),
@@ -214,7 +214,6 @@ class Catalog {
 			'date_paid' => null,
 			'customer_id' => 42,
 			'customer_note' => '',
-			'is_first_order' => false,
 			'billing' => array(
 				'first_name' => 'Ana',
 				'last_name' => 'Souza',
@@ -296,8 +295,18 @@ class Catalog {
 			'billing_period' => 'month',
 			'billing_interval' => 1,
 			'next_payment_at' => '2026-10-24T12:00:00Z',
+			'customer_id' => 42,
+			'billing' => array(
+				'first_name' => 'Ana',
+				'last_name' => 'Souza',
+				'email' => 'ana@example.com',
+				'phone' => '+5511987654321',
+				'city' => 'São Paulo',
+				'state' => 'SP',
+				'country' => 'BR',
+			),
 			'line_items' => array(
-				array( 'product_id' => 88, 'name' => 'Clube do café', 'quantity' => 1, 'total' => '59.90' ),
+				array( 'product_id' => 88, 'variation_id' => 0, 'sku' => 'CLUBE-CAFE', 'name' => 'Clube do café', 'quantity' => 1, 'price' => '59.90', 'total' => '59.90', 'categories' => array( 'Assinaturas' ) ),
 			),
 		);
 	}
@@ -326,13 +335,13 @@ class Catalog {
 	private static function sample_cart() {
 		return array(
 			'id' => 555,
-			'token' => 'fcrc-8f2c1a',
 			'total' => '189.90',
 			'currency' => 'BRL',
-			'recovery_url' => 'https://example.com/checkout/?recovery=fcrc-8f2c1a',
-			'items' => array(
-				array( 'product_id' => 77, 'name' => 'Café especial 500 g', 'quantity' => 2, 'total' => '179.90' ),
-			),
+			'recovery_url' => 'https://example.com/checkout/?recovery_cart=555',
+			'first_name' => 'Ana',
+			'last_name' => 'Souza',
+			'email' => 'ana@example.com',
+			'phone' => '+5511987654321',
 		);
 	}
 }

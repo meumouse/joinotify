@@ -102,6 +102,7 @@ class Cloud_Sync extends Integrations_Base {
 		}
 
 		add_action( 'admin_init', array( __CLASS__, 'ensure_scheduled' ) );
+		Emitters::subscribe();
 
 		/**
 		 * Syncing is on: where the emitters subscribe to the site's hooks.
