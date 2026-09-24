@@ -17,6 +17,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 - "Send existing customers" in the sync's window sends the users and guest buyers the store already has as contacts, once, with their order history and without starting any flow. It shows how many would be sent before you confirm, runs in the background in steps that resume after a failure, and reports what was sent, left out for having no phone number or kept out by your plan's contact limit
 - The sync's window shows whether it is on, why it is paused (a revoked key, a site removed from the panel, or a copy of the site at another address) with a "Try again" button, how many events wait, were sent and were given up on, and lets you send the given-up ones again or discard them
 - WordPress's "Export Personal Data" and "Erase Personal Data" tools cover the sync: the consent records and the queued events of the person, and erasing also asks Joinotify to erase the contacts this site sent for them
+- "Send webhook" workflow action: posts the trigger's data (the order with the customer's history and links, the user, the cart or the form entry) or a JSON of your own with placeholders to any public URL — n8n, Zapier, Make, a Joinotify Cloud flow or your ERP — with optional headers and an HMAC signature checked the same way as Joinotify's webhooks
 - `joinotify_track( $name, $data, $contact )` sends an event of your own (named `custom.*`) to your Joinotify flows through the same queue
 
 ### Fixed

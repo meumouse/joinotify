@@ -384,6 +384,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Otp_Login\\Shortcode',
 			'MeuMouse\\Joinotify\\Otp_Login\\Woocommerce_Login',
 			'MeuMouse\\Joinotify\\Cloud_Sync\\Cloud_Sync',
+			'MeuMouse\\Joinotify\\Builder\\Webhook_Action',
 			'MeuMouse\\Joinotify\\Core\\Logger',
 		));
 

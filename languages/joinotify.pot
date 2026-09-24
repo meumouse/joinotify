@@ -304,6 +304,10 @@ msgstr ""
 msgid "A message id is required."
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:90
+msgid "A public address. Local and private network addresses are refused."
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:297
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
@@ -1001,6 +1005,7 @@ msgstr ""
 msgid "Billing full address format"
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:104
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:143
 #: app/src/pages/history/components/HistoryDetailsModal.vue:58
 msgid "Body"
@@ -2066,6 +2071,10 @@ msgstr ""
 msgid "Custom color"
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:108
+msgid "Custom JSON"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:225
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:80
 msgid "Custom variables"
@@ -2450,7 +2459,7 @@ msgid "Document"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:121
-#: admin/src/Core/Init.php:557
+#: admin/src/Core/Init.php:558
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
 msgstr ""
@@ -3320,6 +3329,10 @@ msgstr ""
 msgid "Header"
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:122
+msgid "Headers"
+msgstr ""
+
 #: admin/src/Integrations/Elementor_Forms.php:137
 msgid "Hello {{ field_id=[FIELD_ID] }}!"
 msgstr ""
@@ -3842,6 +3855,10 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:208
 msgid "Jordan"
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:113
+msgid "JSON"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:26
@@ -4405,6 +4422,10 @@ msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:92
 msgid "Meta rejected this template."
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:94
+msgid "Method"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:46
@@ -5082,8 +5103,19 @@ msgstr ""
 msgid "Optional. Friendly name shown as the sender of the e-mails."
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:126
+msgid "Optional. One \"Name: value\" per line."
+msgstr ""
+
 #: admin/src/Integrations/Telegram.php:144
 msgid "Optional. Used only when a workflow action does not specify a chat id."
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:132
+msgid ""
+"Optional. When set, each request carries X-Joinotify-Timestamp and "
+"X-Joinotify-Signature-256 (sha256 HMAC of \"timestamp.body\"), so the "
+"receiver can tell it came from this site."
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:179
@@ -5408,6 +5440,12 @@ msgstr ""
 
 #: app/src/builder/components/base/PlaceholderList.vue:15
 msgid "Placeholders"
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:117
+msgid ""
+"Placeholders are replaced before sending. It must be valid JSON once they "
+"are."
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:22
@@ -6325,6 +6363,12 @@ msgstr ""
 msgid "Send the items of each order"
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:66
+msgid ""
+"Send the trigger's data, or a JSON of your own, to any URL: n8n, Zapier, "
+"Make, a Joinotify Cloud flow or your ERP."
+msgstr ""
+
 #: app/src/components/fields/CloudSyncStatusField.vue:290
 msgid "Send them"
 msgstr ""
@@ -6333,6 +6377,11 @@ msgstr ""
 msgid ""
 "Send this site's customers and events to your Joinotify account, so its "
 "flows, audiences and campaigns work with your orders, sign-ups and carts."
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:65
+#: admin/src/Builder/Webhook_Action.php:75
+msgid "Send webhook"
 msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:87
@@ -6427,13 +6476,17 @@ msgstr ""
 msgid "Set an expiration"
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:156
+msgid "Set the URL"
+msgstr ""
+
 #: app/src/pages/onboarding/OnboardingPage.vue:236
 msgid "Set up Joinotify"
 msgstr ""
 
 #: admin/src/Admin/Menu.php:95
 #: admin/src/Admin/Menu.php:96
-#: admin/src/Core/Init.php:536
+#: admin/src/Core/Init.php:537
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:310
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -6523,6 +6576,10 @@ msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:337
 msgid "Sign-ups and profile updates of users who have a phone number."
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:130
+msgid "Signing secret"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:58
@@ -7138,6 +7195,10 @@ msgstr ""
 msgid ""
 "The trigger used by this flow is no longer registered. This flow will not "
 "be processed until you select an available trigger."
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:107
+msgid "The trigger's data (order, customer, user, cart)"
 msgstr ""
 
 #: app/src/builder/actions/settings/LoopSettings.vue:69
@@ -8012,6 +8073,7 @@ msgstr ""
 msgid "Update variable"
 msgstr ""
 
+#: admin/src/Builder/Webhook_Action.php:86
 #: admin/src/Integrations/Whatsapp_Interactive.php:206
 msgid "URL"
 msgstr ""
