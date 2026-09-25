@@ -36,6 +36,7 @@ There are two equivalent ways to extend it:
 | `joinotify_register_settings_tab($tab)` | `Joinotify/Admin/Settings/Section_Tabs` | `{id, name, icon, section}` |
 | `joinotify_register_settings_section($section)` | `Joinotify/Admin/Settings/Schema` | `{id, title, layout?, cards}` |
 | `joinotify_register_rest_route($route)` | `Joinotify/Rest/Routes` | `{route, methods?, callback, permission?, args?}` |
+| `joinotify_track($name, $data, $contact)` | `Cloud_Sync\Emitters::track()` | queue a `custom.*` site event for Joinotify Cloud ([details](#joinotify-cloud-sync)) |
 
 Other useful filters: `Joinotify/Builder/Action_Settings_Schema` (custom/overridden action settings
 schema), `Joinotify/Builder/Action_Default_Data` (custom/overridden action default data),
@@ -663,6 +664,68 @@ add_filter( 'Joinotify/Api/Template_Dispatch_Log', function( $template, $context
 `$template` carries `name`, `language`, `text` (what goes into `content`),
 `rendered_from`, `masked`, `parameters` and `components`; `$context` is the
 dispatch context (`source`, `workflow_id`, ...).
+
+---
+
+## Joinotify Cloud sync
+
+When the owner switches on **Joinotify Cloud sync** (Settings → Applications), the plugin sends
+the site's customers to the connected Joinotify account as contacts and what happens on the site
+as **site events**, which start the account's flows through the "Site event" trigger. Everything
+goes through a local outbox table and is sent in batches from a scheduled task — never during the
+request that caused it. Nothing is queued while the switch is off.
+
+### Sending your own events
+
+```php
+// Queue a custom event. The name must be "custom." plus 1–3 segments of [a-z0-9_].
+// Returns the event id, or false when the sync is off or the name is out of the custom space.
+joinotify_track(
+    'custom.quote.requested',
+    array( 'quote' => array( 'id' => 991, 'total' => '1290.00' ) ),   // read in flows as {{trigger.quote.total}}
+    array(                                                              // optional: who it is about
+        'ref'        => array( 'kind' => 'wp_user', 'id' => (string) $user_id ),
+        'phone'      => '+5511987654321',
+        'email'      => 'ana@example.com',
+        'first_name' => 'Ana',
+    )
+);
+
+// Describe it in the catalog the site reports, so the flow editor offers it with its fields.
+add_filter( 'Joinotify/Cloud_Sync/Catalog', function( $entries ) {
+    $entries[] = array(
+        'name'          => 'custom.quote.requested',
+        'schemaVersion' => 1,
+        'sample'        => array( 'quote' => array( 'id' => 1, 'total' => '100.00' ) ), // made-up values only
+    );
+
+    return $entries;
+} );
+```
+
+The contact block needs a `ref`: without one the event is still recorded, but reaches no contact. Joinotify finds the person by the `ref` first and by the phone after. A `ref` kind is one of `wp_user`,
+`wc_customer`, `wc_guest` or `lead`; for the last two the id must be a hash (the plugin uses
+`Contact::anonymous_ref()`, the SHA-256 of the lowercase e-mail), never personal data in the clear.
+
+### Filters
+
+| Filter | Receives | Use it to |
+|---|---|---|
+| `Joinotify/Cloud_Sync/Event_Data` | `$data, $name, $contact` | add data to one event or all of them; return `false` to drop the event |
+| `Joinotify/Cloud_Sync/Order_Data` | `$data, $order` | add an order meta to every order the sync sends |
+| `Joinotify/Cloud_Sync/Contact_Block` | `$block, $fields` | add a tag or attribute to the contact of every event and backfill row |
+| `Joinotify/Cloud_Sync/Catalog` | `$entries` | describe `custom.*` events (see above) |
+| `Joinotify/Cloud_Sync/Integrations` | `$found` | report an integration the site has, as `id => { version }` |
+| `Joinotify/Cloud_Sync/Settings_Fields` | `$fields` | add a field to the sync's settings window |
+| `Joinotify/Cloud_Api/Webhook_Events` | `$events` | subscribe the site's webhook endpoint to more Joinotify events |
+| `Joinotify/Builder/Webhook_Action/Trigger_Body` | `$body, $event_data` | change what the "Send webhook" action sends in "trigger's data" mode |
+
+The action `Joinotify/Cloud_Sync/Ready` fires once the sync is on and its emitters are listening —
+the place to hook your own emitters. Platform webhook deliveries (including `contact.opted_in` /
+`contact.opted_out`) reach `Joinotify/Cloud_Api/Webhook_Event` as `( $field, $value )`.
+
+The event catalog, with a sample of every event's data, is published in the Joinotify
+documentation ("Catálogo de eventos do site"); the samples come from `Cloud_Sync\Catalog::definitions()`.
 
 ---
 
