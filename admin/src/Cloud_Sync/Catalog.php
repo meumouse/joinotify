@@ -95,7 +95,7 @@ class Catalog {
 				'wc.order.completed' => array( 'order' => array_merge( $order, array( 'status' => 'completed' ) ), 'customer' => self::sample_customer(), 'links' => self::sample_links() ),
 				'wc.order.cancelled' => array( 'order' => array_merge( $order, array( 'status' => 'cancelled' ) ), 'customer' => self::sample_customer(), 'links' => self::sample_links() ),
 				'wc.order.failed' => array( 'order' => array_merge( $order, array( 'status' => 'failed' ) ), 'customer' => self::sample_customer(), 'links' => self::sample_links() ),
-				'wc.order.refunded' => array( 'order' => array_merge( $order, array( 'status' => 'refunded' ) ), 'refund' => array( 'id' => 1235, 'amount' => '189.90', 'reason' => 'Produto com defeito', 'full' => true ), 'customer' => self::sample_customer() ),
+				'wc.order.refunded' => array( 'order' => array_merge( $order, array( 'status' => 'refunded' ) ), 'refund' => array( 'id' => 1235, 'amount' => '189.90', 'reason' => 'Produto com defeito', 'full' => true ), 'customer' => self::sample_customer(), 'links' => self::sample_links() ),
 				'wc.customer.created' => array( 'customer' => array_merge( self::sample_user(), array( 'orders_count' => 0 ) ) ),
 			),
 			'woocommerce_subscriptions' => array(

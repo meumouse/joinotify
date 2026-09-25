@@ -7053,7 +7053,8 @@ msgstr ""
 #: app/src/components/fields/CloudSyncStatusField.vue:42
 msgid ""
 "The Joinotify key of this site was revoked or cannot send this data. "
-"Connect the site again in the Connection tab; the sync resumes on its own."
+"Connect the site again in the WhatsApp card of Settings → Applications; the "
+"sync resumes on its own."
 msgstr ""
 
 #: admin/src/Api/Connect.php:361
@@ -7392,7 +7393,8 @@ msgstr ""
 msgid ""
 "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is "
 "a staging copy, leave it paused: it would send test orders to real "
-"customers. If the site moved, connect it again in the Connection tab."
+"customers. If the site moved, connect it again in the WhatsApp card of "
+"Settings → Applications."
 msgstr ""
 
 #: admin/src/Rest/Cloud_Connect_Key.php:92
@@ -7402,7 +7404,7 @@ msgstr ""
 #: app/src/components/fields/CloudSyncStatusField.vue:44
 msgid ""
 "This site was removed from your Joinotify account. Connect it again in the "
-"Connection tab to resume."
+"WhatsApp card of Settings → Applications to resume."
 msgstr ""
 
 #: app/src/builder/components/base/SessionWindowNotice.vue:80

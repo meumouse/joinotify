@@ -39,13 +39,13 @@ const pauseText = computed(() => {
 
   switch (value.paused) {
     case 'auth':
-      return __('The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the Connection tab; the sync resumes on its own.', textDomain);
+      return __('The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.', textDomain);
     case 'site_missing':
-      return __('This site was removed from your Joinotify account. Connect it again in the Connection tab to resume.', textDomain);
+      return __('This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.', textDomain);
     case 'url_mismatch':
       return sprintf(
         /* translators: 1: this site's address, 2: the address the key was issued to */
-        __('This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the Connection tab.', textDomain),
+        __('This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.', textDomain),
         value.site_url || '',
         value.registered_url || __('another address', textDomain),
       );
