@@ -8,6 +8,10 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Fixed
+
+- The "Connect to Joinotify" button no longer ends in "invalid code": the plugin sent the site address under a name the Joinotify API does not read when trading the connection code for a key
+
 ## [2.4.2] - 2026-09-11
 
 ### Added
