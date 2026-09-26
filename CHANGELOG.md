@@ -24,6 +24,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 - The "New order" trigger now also runs for orders placed with the WooCommerce checkout block, which never fired it
 - The WPForms PayPal Standard trigger no longer reads an entry that hook does not provide, which raised PHP warnings and sent an empty entry id
+- The "Connect to Joinotify" button no longer ends in "invalid code": the plugin sent the site address under a name the Joinotify API does not read when trading the connection code for a key
 
 ## [2.4.2] - 2026-09-11
 
