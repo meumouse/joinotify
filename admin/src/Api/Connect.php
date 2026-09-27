@@ -320,7 +320,7 @@ class Connect {
      * the default origin is the first sender in that listing.
      *
      * @since 2.3.0
-     * @version 2.4.0
+     * @version 2.4.3
      * @param string $code | Single-use code.
      * @return array|\WP_Error
      */
@@ -334,7 +334,8 @@ class Connect {
             ),
             'body' => wp_json_encode( array(
                 'code' => $code,
-                'siteUrl' => home_url(),
+                // `site` is the name /keys/exchange reads; `siteUrl` is what /sites/bootstrap reads.
+                'site' => home_url(),
             ) ),
             'timeout' => 30,
         ) );
