@@ -269,6 +269,7 @@ async function stageFiles() {
 		'app/package.json',
 		'app/package-lock.json',
 		'app/vite.config.js',
+		'app/vite-plugins/wporg-i18n-calls.js',
 		'app/tailwind.config.js',
 		'app/postcss.config.js',
 		'app/tsconfig.json',

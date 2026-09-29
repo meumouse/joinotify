@@ -64,6 +64,15 @@ class Frontend_Assets {
             10,
             3
         );
+
+        // Same reason: the WordPress.org language-pack merge is wired by
+        // Settings_Assets only in wp-admin.
+        add_filter(
+            'pre_load_script_translations',
+            array( Settings_Assets::class, 'merge_language_pack_translations' ),
+            10,
+            4
+        );
     }
 
 

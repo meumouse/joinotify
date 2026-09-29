@@ -242,6 +242,12 @@ examples in [`DEVELOPERS.md`](DEVELOPERS.md):
   runtime via `wp.i18n.setLocaleData` per script handle.
 - When **adding/changing strings**: run `npm run pot` in `languages/`, translate
   (`npm run translate` / `:ai`) and compile (`compile:mo`, `compile:php`, `compile:json`).
+- **WordPress.org extracts the originals from the built package.** `vite build` rewrites every
+  `utils/i18n` call into `wp.i18n.__("Text","joinotify")`
+  ([`app/vite-plugins/wporg-i18n-calls.js`](app/vite-plugins/wporg-i18n-calls.js)) so `make-pot` can see
+  it, and `Settings_Assets::merge_language_pack_translations` merges the per-chunk language-pack
+  JSONs. Keep passing `textDomain` (or `'joinotify'`) — any other domain fails the build. Importing
+  the local `.po` files into translate.wordpress.org is in [`languages/README.md`](languages/README.md).
 - Each script handle's `.json` carries **only the strings its own bundle uses**. The handle list is
   derived from `app/src/entries/*` and the `mountPage('<handle>', …)` call in each entry, so a new
   page needs no separate list — but an entry without a resolvable handle fails the build.

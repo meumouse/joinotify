@@ -274,6 +274,51 @@ Como o `.pot` do Joinotify tem origem mista (PT legado + EN novo), **prefira `tr
 
 ---
 
+## WordPress.org translations
+
+Release packages ship only `joinotify.pot`; installs from the directory get their locales as
+language packs built from [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/joinotify/).
+WordPress.org extracts the originals itself, by running `wp i18n make-pot` over the committed
+package, so the local `.po` files can only be imported there for strings that extraction finds.
+
+### What makes the Vue strings extractable
+
+`make-pot` reads JavaScript calls named `__`/`_n`/`_x`/`_nx` (or `something.__`) with a
+**literal** text domain. The source calls the `utils/i18n` wrapper as `__('Text', textDomain)`, which
+the minifier turns into `l("Text",a)`, so before 2.4.3 WordPress.org held only the PHP strings.
+[`app/vite-plugins/wporg-i18n-calls.js`](../app/vite-plugins/wporg-i18n-calls.js) rewrites every call
+to a `utils/i18n` function into `wp.i18n.__("Text","joinotify")` during `vite build`, and fails the
+build when a call passes another domain. Keep writing `__('Text', textDomain)` in the source.
+
+To see what WordPress.org will extract from a build, run WP-CLI against the plugin root:
+
+```bash
+wp i18n make-pot . /tmp/wporg.pot --slug=joinotify --domain=joinotify --exclude=languages,release,.wporg-svn
+```
+
+### How the language-pack JSONs load
+
+WordPress.org writes one JSON per built file, `joinotify-<locale>-<md5(app/dist/…js)>.json` in
+`wp-content/languages/plugins/`. Core only reads the one for the enqueued entry (`settings/app.js`),
+while the strings live in the chunks it imports. `Settings_Assets::merge_language_pack_translations`
+(`pre_load_script_translations`) walks the entry's imports in the Vite manifest and merges their
+JSONs. A handle-named JSON bundled in `languages/` (a `--ship-locales` package) still wins.
+
+### Importing the local translations
+
+1. Release a version built with the step above, so the Stable and Development projects list the Vue
+   strings (WordPress.org re-extracts on every commit to `trunk/` and every new tag).
+2. Open the plugin's project on translate.wordpress.org, pick the locale, then **Stable (latest
+   release)** and, at the bottom of the string list, **Import Translations**. Upload
+   `languages/joinotify-<locale>.po` as is — GlotPress matches entries by `msgid`/`msgctxt` and
+   ignores the `#:` references. Repeat for **Development (trunk)**. Skip `en_US`: English is the
+   source language there.
+3. Without editor rights the import lands as suggestions **waiting** for approval. A Project
+   Translation Editor (PTE) for the locale can approve them, or import straight as current; the
+   plugin's committers can request PTE rights for their own plugin through the Polyglots team.
+4. A language pack is built once the Stable project of that locale reaches the directory's threshold
+   (90% of strings), so both the PHP and the Vue strings count towards it.
+
 ## Integração com o build de release
 
 Durante `npm run build` (na raiz do plugin, via `scripts/build.mjs`), a etapa de

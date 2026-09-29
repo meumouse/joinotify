@@ -10,6 +10,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ### Fixed
 
+- The strings of the admin screens built in Vue (settings, setup wizard, builder, workflows, history and queue) reach translate.wordpress.org, where only the PHP strings were listed before, so their translations can be contributed and imported there. Sites that receive translations as WordPress.org language packs load them for every script chunk of those screens, not only for the entry file
 - The "Connect to Joinotify" button no longer ends in "invalid code": the plugin sent the site address under a name the Joinotify API does not read when trading the connection code for a key
 
 ## [2.4.2] - 2026-09-11
