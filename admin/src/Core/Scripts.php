@@ -82,6 +82,58 @@ class Scripts {
 
 
     /**
+     * List every built script a Vite entry runs: the entry file itself plus each
+     * chunk it imports, statically or dynamically.
+     *
+     * WordPress only enqueues the entry, but the chunks carry most of the code,
+     * so anything keyed by script file (such as the translation JSONs WordPress.org
+     * generates per file) has to cover them too.
+     *
+     * @since 2.4.3
+     * @param string $entry_file Entry file relative to the dist root, e.g. settings/app.js.
+     * @return array<int,string> Files relative to the dist root, entry first.
+     */
+    public static function get_entry_script_files( $entry_file ) {
+        $manifest = self::get_manifest();
+        $entry_file = ltrim( (string) $entry_file, '/' );
+        $pending = array();
+
+        foreach ( $manifest as $key => $chunk ) {
+            if ( is_array( $chunk ) && ! empty( $chunk['isEntry'] ) && isset( $chunk['file'] ) && $entry_file === $chunk['file'] ) {
+                $pending[] = $key;
+                break;
+            }
+        }
+
+        $files = array();
+        $visited = array();
+
+        while ( ! empty( $pending ) ) {
+            $key = array_shift( $pending );
+
+            if ( isset( $visited[ $key ] ) || empty( $manifest[ $key ] ) || ! is_array( $manifest[ $key ] ) ) {
+                continue;
+            }
+
+            $visited[ $key ] = true;
+            $chunk = $manifest[ $key ];
+
+            if ( ! empty( $chunk['file'] ) && '.js' === substr( $chunk['file'], -3 ) ) {
+                $files[] = $chunk['file'];
+            }
+
+            foreach ( array( 'imports', 'dynamicImports' ) as $field ) {
+                if ( ! empty( $chunk[ $field ] ) && is_array( $chunk[ $field ] ) ) {
+                    $pending = array_merge( $pending, $chunk[ $field ] );
+                }
+            }
+        }
+
+        return $files;
+    }
+
+
+    /**
      * Get the manifest entry for a source file.
      *
      * @param string $entry_source Relative entry source.

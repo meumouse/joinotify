@@ -44,6 +44,7 @@ class Settings_Assets extends Abstract_Assets {
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ), 100 );
         add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
         add_filter( 'load_script_translation_file', array( __CLASS__, 'resolve_script_translation_file' ), 10, 3 );
+        add_filter( 'pre_load_script_translations', array( __CLASS__, 'merge_language_pack_translations' ), 10, 4 );
     }
 
 
@@ -82,6 +83,83 @@ class Settings_Assets extends Abstract_Assets {
         }
 
         return $file;
+    }
+
+
+    /**
+     * Assemble a script's translations from the WordPress.org language pack.
+     *
+     * translate.wordpress.org emits one JSON per built file that holds strings,
+     * named "{domain}-{locale}-{md5(path)}.json". Core only looks for the file of
+     * the enqueued entry, but a Vite entry is a thin loader and its strings live in
+     * the chunks it imports (`chunks/PageHeader-<hash>.js`, …), which are never
+     * enqueued. Without this merge, a site running on language packs would see
+     * every Vue screen in English.
+     *
+     * Bundled handle-named JSONs (packages built with --ship-locales) still win:
+     * when one exists this steps aside and core loads it as before.
+     *
+     * @since 2.4.3
+     * @param string|false|null $translations Translations short-circuited by an earlier filter.
+     * @param string|false      $file         Translation file core is about to read.
+     * @param string            $handle       Script handle being translated.
+     * @param string            $domain       Text domain.
+     * @return string|false|null JSON translations, or the untouched value to let core continue.
+     */
+    public static function merge_language_pack_translations( $translations, $file, $handle, $domain ) {
+        static $merged = array();
+
+        if ( null !== $translations || 'joinotify' !== $domain ) {
+            return $translations;
+        }
+
+        $locale = determine_locale();
+        $key = $locale . '|' . $handle;
+
+        if ( array_key_exists( $key, $merged ) ) {
+            return $merged[ $key ];
+        }
+
+        $merged[ $key ] = null;
+
+        if ( 'en_US' === $locale || is_readable( trailingslashit( JOINOTIFY_DIR ) . "languages/joinotify-{$locale}-{$handle}.json" ) ) {
+            return null;
+        }
+
+        $script = wp_scripts()->query( $handle );
+        $dist_url = trailingslashit( JOINOTIFY_URL ) . Scripts::DIST_URL_PATH;
+
+        if ( ! $script || ! is_string( $script->src ) || 0 !== strpos( $script->src, $dist_url ) ) {
+            return null;
+        }
+
+        $messages = array();
+
+        foreach ( Scripts::get_entry_script_files( substr( $script->src, strlen( $dist_url ) ) ) as $script_file ) {
+            $pack = WP_LANG_DIR . "/plugins/joinotify-{$locale}-" . md5( Scripts::DIST_URL_PATH . $script_file ) . '.json';
+
+            if ( ! is_readable( $pack ) ) {
+                continue;
+            }
+
+            $data = json_decode( (string) file_get_contents( $pack ), true );
+
+            if ( ! empty( $data['locale_data']['messages'] ) && is_array( $data['locale_data']['messages'] ) ) {
+                // The first file's "" header (plural forms, language) is kept.
+                $messages += $data['locale_data']['messages'];
+            }
+        }
+
+        if ( empty( $messages ) ) {
+            return null;
+        }
+
+        $merged[ $key ] = wp_json_encode( array(
+            'domain' => 'messages',
+            'locale_data' => array( 'messages' => (object) $messages ),
+        ) );
+
+        return $merged[ $key ];
     }
 
 

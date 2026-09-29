@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import wporgI18nCalls from './vite-plugins/wporg-i18n-calls.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -34,7 +35,7 @@ function stripEmojiPickerRemoteAssets() {
 
 export default defineConfig({
   base: './',
-  plugins: [vue(), stripEmojiPickerRemoteAssets()],
+  plugins: [vue(), stripEmojiPickerRemoteAssets(), wporgI18nCalls()],
   build: {
     outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
