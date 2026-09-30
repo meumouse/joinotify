@@ -19,6 +19,7 @@ import ToastStack from '../../components/toasts/ToastStack.vue';
 import { createDefinitions } from './useDefinitions';
 import ConnectionState from './components/ConnectionState.vue';
 import ContactsTab from './tabs/ContactsTab.vue';
+import FieldsTagsTab from './tabs/FieldsTagsTab.vue';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -40,6 +41,7 @@ const canWrite = computed(() => mode.value === 'full');
  */
 const tabs = [
   { id: 'contacts', label: __('Contacts', textDomain), component: ContactsTab },
+  { id: 'fields', label: __('Fields & tags', textDomain), component: FieldsTagsTab },
 ];
 
 const route = ref(parseHash());

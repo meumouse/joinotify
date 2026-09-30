@@ -239,6 +239,63 @@ export function createContactsApiClient(bootstrap: any) {
     exportContact(id: string) {
       return get('/admin/contacts/export', { id });
     },
+
+    /**
+     * Creates a custom field, or changes one when `id` is given.
+     *
+     * @since 2.5.0
+     * @param {string} id Field id, or an empty string to create.
+     * @param {Object} field Field values.
+     * @returns {Promise<{message: string, field: Object}>} The saved field.
+     */
+    saveField(id: string, field: Record<string, unknown>) {
+      return post('/admin/contacts/fields/save', { id, field });
+    },
+
+    /**
+     * Erases a custom field and its value on every contact.
+     *
+     * @since 2.5.0
+     * @param {string} id Field id.
+     * @returns {Promise<{message: string}>} The result.
+     */
+    deleteField(id: string) {
+      return post('/admin/contacts/fields/delete', { id });
+    },
+
+    /**
+     * Creates a tag, or changes one when `id` is given.
+     *
+     * @since 2.5.0
+     * @param {string} id Tag id, or an empty string to create.
+     * @param {Object} tag `{ name, description, color }`.
+     * @returns {Promise<{message: string, tag: Object}>} The saved tag.
+     */
+    saveTag(id: string, tag: Record<string, unknown>) {
+      return post('/admin/contacts/tags/save', { id, tag });
+    },
+
+    /**
+     * Erases a tag and takes it off every contact.
+     *
+     * @since 2.5.0
+     * @param {string} id Tag id.
+     * @returns {Promise<{message: string}>} The result.
+     */
+    deleteTag(id: string) {
+      return post('/admin/contacts/tags/delete', { id });
+    },
+
+    /**
+     * Puts a tag on (or takes it off) the listed contacts, or every contact the filters select.
+     *
+     * @since 2.5.0
+     * @param {Object} payload `{ tag_id, action, contact_ids?, filters? }`.
+     * @returns {Promise<{message: string, affected: number}>} How many contacts changed.
+     */
+    applyTag(payload: Record<string, unknown>) {
+      return post('/admin/contacts/tags/apply', payload);
+    },
   };
 }
 

@@ -24,11 +24,16 @@ import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
 import PerPageSelect from '../../../components/workflows/PerPageSelect.vue';
 import ContactDrawer from '../components/ContactDrawer.vue';
 import ContactFormModal from '../components/ContactFormModal.vue';
+import BulkTagModal from '../components/BulkTagModal.vue';
+import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
 import TagChip from '../components/TagChip.vue';
 
 const { api, bootstrap, canWrite, definitions, notifyError, route, navigate } = useContactsContext();
 
-const list = useContactList(api, { audience_id: route.value.params.audience_id || '' });
+const list = useContactList(api, {
+  audience_id: route.value.params.audience_id || '',
+  tag_id: route.value.params.tag_id || '',
+});
 const {
   items,
   loading,
@@ -36,16 +41,23 @@ const {
   filters,
   sort,
   pagination,
+  selectedIds,
   hasFilters,
   pageSummary,
+  allVisibleSelected,
+  partiallyVisibleSelected,
   fetchItems,
   setFilter,
   clearFilters,
   setSort,
   goToPage,
   setPerPage,
+  toggleSelected,
+  toggleSelectAll,
   replaceItem,
 } = list;
+
+const bulkAction = ref('');
 
 const searchTerm = ref('');
 const openContactId = ref(route.value.params.id || '');
@@ -216,6 +228,24 @@ onMounted(() => {
           >
             {{ exporting ? __('Exporting…', textDomain) : __('Export CSV', textDomain) }}
           </button>
+          <template v-if="canWrite">
+            <button
+              type="button"
+              class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="loading || !pagination.total_items"
+              @click="bulkAction = 'add'"
+            >
+              {{ selectedIds.size ? `${__('Add tag', textDomain)} (${selectedIds.size})` : __('Add tag', textDomain) }}
+            </button>
+            <button
+              type="button"
+              class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              :disabled="loading || !pagination.total_items"
+              @click="bulkAction = 'remove'"
+            >
+              {{ selectedIds.size ? `${__('Remove tag', textDomain)} (${selectedIds.size})` : __('Remove tag', textDomain) }}
+            </button>
+          </template>
         </div>
         <div class="flex items-center gap-3">
           <button
@@ -238,6 +268,14 @@ onMounted(() => {
         <table class="min-w-full divide-y divide-slate-100 text-left">
           <thead>
             <tr class="text-[12px] uppercase tracking-wide text-slate-400">
+              <th v-if="canWrite" class="px-3 py-3">
+                <BaseCheckbox
+                  :aria-label="__('Select all visible contacts', textDomain)"
+                  :indeterminate="partiallyVisibleSelected"
+                  :model-value="allVisibleSelected"
+                  @change="toggleSelectAll($event)"
+                />
+              </th>
               <th class="px-3 py-3 font-medium">{{ __('Contact', textDomain) }}</th>
               <th class="px-3 py-3 font-medium">{{ __('Phone', textDomain) }}</th>
               <th class="px-3 py-3 font-medium">{{ __('Tags', textDomain) }}</th>
@@ -255,6 +293,13 @@ onMounted(() => {
               @click="openContact(contact.id)"
               @keydown.enter="openContact(contact.id)"
             >
+              <td v-if="canWrite" class="px-3 py-3" @click.stop>
+                <BaseCheckbox
+                  :aria-label="`${__('Select', textDomain)} ${contactName(contact) || formatPhone(contact.phone)}`"
+                  :model-value="selectedIds.has(contact.id)"
+                  @change="toggleSelected(contact.id, $event)"
+                />
+              </td>
               <td class="px-3 py-3">
                 <span class="block font-medium text-slate-800">{{ contactName(contact) || '—' }}</span>
                 <span v-if="contact.email" class="block text-[12px] text-slate-400">{{ contact.email }}</span>
@@ -311,6 +356,16 @@ onMounted(() => {
       @close="openContactId = ''"
       @deleted="onDeleted"
       @edit="openEdit"
+    />
+
+    <BulkTagModal
+      :action="bulkAction || 'add'"
+      :contact-ids="[...selectedIds]"
+      :filters="filters"
+      :open="Boolean(bulkAction)"
+      :total="pagination.total_items"
+      @applied="bulkAction = ''; fetchItems()"
+      @close="bulkAction = ''"
     />
 
     <ContactFormModal

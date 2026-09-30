@@ -28,5 +28,10 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Contacts_Delete',
 		'\MeuMouse\Joinotify\Rest\Contacts_Consent',
 		'\MeuMouse\Joinotify\Rest\Contacts_Export',
+		'\MeuMouse\Joinotify\Rest\Contacts_Field_Save',
+		'\MeuMouse\Joinotify\Rest\Contacts_Field_Delete',
+		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Save',
+		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Delete',
+		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Apply',
 	);
 }

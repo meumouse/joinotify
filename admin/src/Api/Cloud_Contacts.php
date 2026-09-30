@@ -338,6 +338,10 @@ class Cloud_Contacts {
 				return __( 'A contact with this phone number already exists.', 'joinotify' );
 			case 'contact_limit_reached':
 				return __( 'Your plan reached its contact limit. Upgrade the plan to add more contacts.', 'joinotify' );
+			case 'contact_field_exists':
+				return __( 'A custom field with this key already exists, possibly archived.', 'joinotify' );
+			case 'contact_field_limit_reached':
+				return __( 'Your plan reached its custom field limit, archived fields included. Erase a field you no longer need or upgrade the plan.', 'joinotify' );
 		}
 
 		if ( '' !== $message ) {
@@ -999,6 +1003,237 @@ class Cloud_Contacts {
 
 			return self::success( 200, $tags, array( 'total' => count( $tags ) ) );
 		}, $force );
+	}
+
+
+	/**
+	 * Types a custom field can have.
+	 *
+	 * @since 2.5.0
+	 * @var string[]
+	 */
+	const FIELD_TYPES = array( 'text', 'number', 'date', 'datetime', 'boolean', 'select', 'multi_select', 'email', 'url', 'phone' );
+
+
+	/**
+	 * Create a custom field. Its key and type never change afterwards.
+	 *
+	 * @since 2.5.0
+	 * @param array $data Payload built by field_payload().
+	 * @return array Envelope.
+	 */
+	public static function create_field( $data ) {
+		return self::after_write( self::call( 'POST', '/contacts/fields', array(), $data ), array( 'fields', 'fields_archived' ) );
+	}
+
+
+	/**
+	 * Change a field's label, options (the whole list), position, or archive it.
+	 *
+	 * @since 2.5.0
+	 * @param string $id   Field id.
+	 * @param array  $data Payload built by field_payload().
+	 * @return array Envelope.
+	 */
+	public static function update_field( $id, $data ) {
+		return self::after_write( self::call( 'PATCH', '/contacts/fields/' . $id, array(), (object) $data ), array( 'fields', 'fields_archived' ) );
+	}
+
+
+	/**
+	 * Erase a field and its value on every contact.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Field id.
+	 * @return array Envelope.
+	 */
+	public static function delete_field( $id ) {
+		return self::after_write( self::call( 'DELETE', '/contacts/fields/' . $id, array( 'confirm' => true ) ), array( 'fields', 'fields_archived' ) );
+	}
+
+
+	/**
+	 * Keep only what a field write may carry.
+	 *
+	 * @since 2.5.0
+	 * @param array  $input Values typed on the screen.
+	 * @param string $mode  'create' or 'update'.
+	 * @return array
+	 */
+	public static function field_payload( $input, $mode = 'create' ) {
+		$input = is_array( $input ) ? $input : array();
+		$payload = array();
+
+		if ( 'create' === $mode ) {
+			$key = isset( $input['key'] ) && is_string( $input['key'] ) ? strtolower( trim( $input['key'] ) ) : '';
+			$type = isset( $input['type'] ) && in_array( $input['type'], self::FIELD_TYPES, true ) ? $input['type'] : '';
+
+			if ( 1 === preg_match( '/^[a-z][a-z0-9_]{0,39}$/', $key ) ) {
+				$payload['key'] = $key;
+			}
+
+			if ( '' !== $type ) {
+				$payload['type'] = $type;
+			}
+		}
+
+		if ( isset( $input['label'] ) ) {
+			$label = self::text( $input['label'], 80 );
+
+			if ( '' !== $label ) {
+				$payload['label'] = $label;
+			}
+		}
+
+		$type = 'create' === $mode ? ( $payload['type'] ?? '' ) : ( isset( $input['type'] ) ? (string) $input['type'] : '' );
+
+		// Only the choice types take options; the platform refuses them on any other type.
+		if ( isset( $input['options'] ) && is_array( $input['options'] ) && in_array( $type, array( 'select', 'multi_select' ), true ) ) {
+			$options = array();
+
+			foreach ( $input['options'] as $option ) {
+				$option = self::text( $option, 80 );
+
+				if ( '' !== $option && ! in_array( $option, $options, true ) ) {
+					$options[] = $option;
+				}
+			}
+
+			$payload['options'] = array_slice( $options, 0, 100 );
+		}
+
+		if ( isset( $input['position'] ) && is_numeric( $input['position'] ) ) {
+			$payload['position'] = max( 0, min( 10000, (int) $input['position'] ) );
+		}
+
+		if ( 'update' === $mode && isset( $input['archived'] ) && is_bool( $input['archived'] ) ) {
+			$payload['archived'] = $input['archived'];
+		}
+
+		return $payload;
+	}
+
+
+	/**
+	 * Create a contact tag.
+	 *
+	 * @since 2.5.0
+	 * @param array $data Payload built by tag_payload().
+	 * @return array Envelope.
+	 */
+	public static function create_tag( $data ) {
+		return self::after_write( self::call( 'POST', '/contacts/tags', array(), $data ), array( 'tags' ) );
+	}
+
+
+	/**
+	 * Rename a tag, or change its description or color.
+	 *
+	 * @since 2.5.0
+	 * @param string $id   Tag id.
+	 * @param array  $data Payload built by tag_payload().
+	 * @return array Envelope.
+	 */
+	public static function update_tag( $id, $data ) {
+		return self::after_write( self::call( 'PATCH', '/contacts/tags/' . $id, array(), (object) $data ), array( 'tags' ) );
+	}
+
+
+	/**
+	 * Erase a tag and take it off every contact.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Tag id.
+	 * @return array Envelope.
+	 */
+	public static function delete_tag( $id ) {
+		return self::after_write( self::call( 'DELETE', '/contacts/tags/' . $id ), array( 'tags' ) );
+	}
+
+
+	/**
+	 * Put a tag on, or take it off, many contacts at once: the listed ids (up to 1,000) or every
+	 * contact the listing filters select. Starts no flow and sends no webhook.
+	 *
+	 * @since 2.5.0
+	 * @param string   $tag_id      Tag id.
+	 * @param string   $action      'add' or 'remove'.
+	 * @param string[] $contact_ids Contact ids; when empty, `$filters` decide.
+	 * @param array    $filters     Filters read by list_filters().
+	 * @return array Envelope; `data.affected` counts the contacts that changed.
+	 */
+	public static function apply_tag( $tag_id, $action, $contact_ids = array(), $filters = array() ) {
+		$body = array(
+			'tagId' => $tag_id,
+			'action' => 'remove' === $action ? 'remove' : 'add',
+		);
+
+		$ids = array_values( array_unique( array_filter( (array) $contact_ids, array( __CLASS__, 'is_id' ) ) ) );
+
+		if ( ! empty( $ids ) ) {
+			$body['contactIds'] = array_slice( $ids, 0, 1000 );
+		} else {
+			$query = self::list_filters( $filters );
+
+			// The bulk route takes the audience filter as an object, not as the listing's JSON.
+			if ( isset( $query['filter'] ) ) {
+				$query['filter'] = json_decode( $query['filter'], true );
+			}
+
+			$body['query'] = (object) $query;
+		}
+
+		return self::after_write( self::call( 'POST', '/contacts/tags/apply', array(), $body ), array( 'tags' ) );
+	}
+
+
+	/**
+	 * Keep only what a tag write may carry.
+	 *
+	 * @since 2.5.0
+	 * @param array $input Values typed on the screen.
+	 * @return array
+	 */
+	public static function tag_payload( $input ) {
+		$input = is_array( $input ) ? $input : array();
+		$payload = array();
+
+		if ( isset( $input['name'] ) ) {
+			$name = self::text( $input['name'], 60 );
+
+			if ( '' !== $name ) {
+				$payload['name'] = $name;
+			}
+		}
+
+		if ( array_key_exists( 'description', $input ) ) {
+			$description = self::text( $input['description'], 200 );
+			$payload['description'] = '' === $description ? null : $description;
+		}
+
+		if ( array_key_exists( 'color', $input ) ) {
+			$color = is_string( $input['color'] ) ? strtolower( trim( $input['color'] ) ) : '';
+			$payload['color'] = 1 === preg_match( '/^[a-z0-9-]{1,32}$/', $color ) ? $color : null;
+		}
+
+		return $payload;
+	}
+
+
+	/**
+	 * Drop the cached definitions a successful write made stale.
+	 *
+	 * @since 2.5.0
+	 * @param array    $envelope Envelope of the write.
+	 * @param string[] $names    Cache names to drop.
+	 * @return array The same envelope.
+	 */
+	private static function after_write( $envelope, $names ) {
+		if ( $envelope['ok'] && function_exists( 'delete_transient' ) ) {
+			self::flush_cache( $names );
+		}
+
+		return $envelope;
 	}
 
 

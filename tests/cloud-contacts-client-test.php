@@ -192,6 +192,28 @@ check( 'markup, scripts and control characters are stripped', 'Ana Souza' === Cl
 check( 'the length is capped in characters', 'ção' === Cloud_Contacts::text( 'çãoção', 3 ) );
 check( 'arrays and booleans are not text', '' === Cloud_Contacts::text( array( 'a' ) ) && '' === Cloud_Contacts::text( true ) );
 
+echo "\nCloud_Contacts::field_payload / tag_payload\n";
+
+$field = Cloud_Contacts::field_payload( array( 'key' => 'Plano_Contratado', 'label' => ' Plano ', 'type' => 'select', 'options' => array( 'Start', '', 'Pro', 'Start' ), 'position' => 99999 ), 'create' );
+check( 'a field key is lowercased', 'plano_contratado' === $field['key'] );
+check( 'the options of a choice field are unique and non-empty', array( 'Start', 'Pro' ) === $field['options'] );
+check( 'the position is capped', 10000 === $field['position'] );
+check( 'a key starting with a digit is refused', ! isset( Cloud_Contacts::field_payload( array( 'key' => '1abc', 'label' => 'x', 'type' => 'text' ) )['key'] ) );
+check( 'an unknown type is refused', ! isset( Cloud_Contacts::field_payload( array( 'key' => 'abc', 'type' => 'json' ) )['type'] ) );
+check( 'options on a text field are dropped', ! isset( Cloud_Contacts::field_payload( array( 'key' => 'abc', 'type' => 'text', 'options' => array( 'a' ) ) )['options'] ) );
+
+$field_update = Cloud_Contacts::field_payload( array( 'key' => 'other', 'type' => 'multi_select', 'label' => 'Interesses', 'options' => array( 'a' ), 'archived' => true ), 'update' );
+check( 'an edit never sends the key or the type', ! isset( $field_update['key'] ) && ! isset( $field_update['type'] ) );
+check( 'an edit keeps the options of a choice field', array( 'a' ) === $field_update['options'] );
+check( 'an edit can archive', true === $field_update['archived'] );
+check( 'archiving is not part of a create', ! isset( Cloud_Contacts::field_payload( array( 'archived' => true ), 'create' )['archived'] ) );
+
+$tag = Cloud_Contacts::tag_payload( array( 'name' => ' Clientes VIP ', 'description' => '', 'color' => 'Green' ) );
+check( 'a tag keeps its trimmed name', 'Clientes VIP' === $tag['name'] );
+check( 'an emptied description is cleared', array_key_exists( 'description', $tag ) && null === $tag['description'] );
+check( 'a palette color is lowercased', 'green' === $tag['color'] );
+check( 'a hex color is not a palette name', null === Cloud_Contacts::tag_payload( array( 'color' => '#22c55e' ) )['color'] );
+
 echo "\n{$assertions} assertions, {$failures} failures\n";
 exit( $failures > 0 ? 1 : 0 );
 
