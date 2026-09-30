@@ -8,6 +8,7 @@
  */
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
+import { Check, ChevronDown } from '@boxicons/vue';
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
@@ -287,9 +288,7 @@ onBeforeUnmount(() => {
         {{ selectedLabel }}
       </span>
 
-      <svg class="h-4 w-4 shrink-0 text-slate-400 transition duration-150" :class="isOpen ? 'rotate-180' : ''" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
+      <ChevronDown class="h-4 w-4 shrink-0 text-slate-400 transition duration-150" :class="isOpen ? 'rotate-180' : ''" aria-hidden="true" />
     </button>
 
     <Teleport to="body">
@@ -356,15 +355,11 @@ onBeforeUnmount(() => {
               </div>
             </div>
 
-            <svg
+            <Check
               v-if="isSelected(option)"
               class="h-4 w-4 shrink-0 text-primary-700"
-              viewBox="0 0 20 20"
-              fill="none"
               aria-hidden="true"
-            >
-              <path d="M4.5 10.5L8 14L15.5 6.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+            />
           </li>
           </ul>
         </div>

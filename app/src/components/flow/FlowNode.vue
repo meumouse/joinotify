@@ -11,6 +11,7 @@ import { Cog, Copy, DotsVerticalRounded, File, Repeat, Trash } from '@boxicons/v
 import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
+import { resolveFlowNodeIcon } from './flowNodeIcons';
 import { resolveSvgMarkup } from '../../utils/icon';
 import { __, textDomain } from '../../utils/i18n';
 
@@ -62,7 +63,7 @@ const contextIconSvg = computed(() => String(props.data.contextIconSvg || '').tr
 const contextIcon = computed(() => String(props.data.contextIcon || '').trim());
 const contextIconUrl = computed(() => String(props.data.contextIconUrl || '').trim());
 const displayIcon = computed(() => String(props.data.icon || fallbackConfig.value?.icon || '').trim());
-const resolvedBoxiconClass = computed(() => normalizeBoxiconClass(displayIcon.value));
+const resolvedIconComponent = computed(() => resolveFlowNodeIcon(displayIcon.value));
 const displayColorClass = computed(() => fallbackConfig.value?.color || 'bg-slate-500');
 
 // Inline media preview for the WhatsApp media-message node: render the configured
@@ -158,35 +159,6 @@ function iconGlyph(value: string) {
   const normalized = String(value || '').trim();
   return normalized ? normalized.slice(0, 1).toUpperCase() : 'A';
 }
-
-function isBoxiconClass(value: string) {
-  return /^bx[lrs]?-/.test(String(value || '').trim());
-}
-
-function normalizeBoxiconClass(value: string) {
-  const normalized = String(value || '').trim().toLowerCase();
-
-  if (!normalized) {
-    return '';
-  }
-
-  if (isBoxiconClass(normalized)) {
-    return normalized;
-  }
-
-  const split = normalized.split(/\s+/).filter(Boolean);
-  const classToken = split.find((token) => isBoxiconClass(token));
-
-  if (classToken) {
-    return classToken;
-  }
-
-  if (/^[a-z0-9-]+$/.test(normalized)) {
-    return `bx-${normalized}`;
-  }
-
-  return '';
-}
 </script>
 
 <template>
@@ -237,7 +209,7 @@ function normalizeBoxiconClass(value: string) {
           class="flow-node-action-icon flex h-4 w-4 items-center justify-center"
           v-html="resolvedIconSvg"
         />
-        <i v-else-if="resolvedBoxiconClass" :class="`bx ${resolvedBoxiconClass} text-white`" style="font-size: 14px;" />
+        <component :is="resolvedIconComponent" v-else-if="resolvedIconComponent" class="h-4 w-4 text-white" aria-hidden="true" />
         <span v-else class="text-[11px] font-semibold uppercase tracking-[0.18em]">
           {{ iconGlyph(displayIcon || data.label) }}
         </span>

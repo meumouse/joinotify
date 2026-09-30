@@ -10,6 +10,7 @@
  */
 import { __, textDomain } from '../../utils/i18n';
 import StartOptionCard from './StartOptionCard.vue';
+import { ArrowLeftStroke, ArrowToTopStroke, ClipboardDetail, FilePlus, Sparkles } from '@boxicons/vue';
 
 defineProps({
   creating: { type: Boolean, default: false },
@@ -38,10 +39,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
         @click="$emit('scratch')"
       >
         <template #icon>
-          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M7 3h10a1 1 0 0 1 1 1v2h-2.5L14 3H10L8.5 6H6V4a1 1 0 0 1 1-1Z" />
-            <path d="M6 6h12v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1Z" stroke-dasharray="2 2" />
-          </svg>
+          <FilePlus class="h-7 w-7" aria-hidden="true" />
         </template>
       </StartOptionCard>
 
@@ -53,11 +51,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
         @click="$emit('template')"
       >
         <template #icon>
-          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" />
-            <path d="M9 8h6M9 12h6M9 16h4" />
-            <path d="M9 4V2h6v2" />
-          </svg>
+          <ClipboardDetail class="h-7 w-7" aria-hidden="true" />
         </template>
       </StartOptionCard>
 
@@ -69,12 +63,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
         @click="$emit('import')"
       >
         <template #icon>
-          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M9 3h6v3h3v15H6V6h3z" />
-            <path d="M9 3l3 3 3-3" />
-            <path d="M9 12h6" />
-            <path d="M10 15l2-2 2 2" />
-          </svg>
+          <ArrowToTopStroke class="h-7 w-7" aria-hidden="true" />
         </template>
       </StartOptionCard>
 
@@ -86,9 +75,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
         @click="$emit('ai')"
       >
         <template #icon>
-          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="currentColor" aria-hidden="true">
-            <path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z" />
-          </svg>
+          <Sparkles class="h-7 w-7" aria-hidden="true" />
         </template>
       </StartOptionCard>
     </div>
@@ -99,7 +86,7 @@ defineEmits(['scratch', 'template', 'import', 'ai', 'back']);
         class="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-primary-700"
         @click="$emit('back')"
       >
-        <span aria-hidden="true">&larr;</span>
+        <ArrowLeftStroke class="h-4 w-4" aria-hidden="true" />
         <span>{{ __('Back to dashboard', textDomain) }}</span>
       </button>
     </div>

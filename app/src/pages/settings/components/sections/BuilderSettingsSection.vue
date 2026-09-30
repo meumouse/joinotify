@@ -11,6 +11,7 @@
 import { ref } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
 import BuilderVariableModal from '../modals/BuilderVariableModal.vue';
+import { Plus } from '@boxicons/vue';
 
 const props = defineProps({
   items: { type: Array, default: () => [] },
@@ -88,9 +89,7 @@ function onDelete(item) {
         class="inline-flex shrink-0 items-center gap-2 rounded-[8px] bg-primary-600 px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-primary-700"
         @click="openCreate"
       >
-        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M10 4.5v11M4.5 10h11" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
-        </svg>
+        <Plus class="h-4 w-4" aria-hidden="true" />
         {{ __('Add variable', textDomain) }}
       </button>
     </div>

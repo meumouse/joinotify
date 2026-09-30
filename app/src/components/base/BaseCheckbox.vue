@@ -9,6 +9,7 @@
  * @since 2.0.0
  */
 import { computed, ref, watch } from 'vue';
+import { Check } from '@boxicons/vue';
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
@@ -70,13 +71,10 @@ function handleChange(event) {
         aria-hidden="true"
         class="absolute inset-0 rounded-md border border-slate-300 bg-white transition peer-focus-visible:ring-4 peer-focus-visible:ring-primary-700/10 peer-checked:border-primary-700 peer-checked:bg-primary-700"
       />
-      <svg
+      <Check
         aria-hidden="true"
-        viewBox="0 0 20 20"
-        class="absolute inset-0 h-5 w-5 scale-0 fill-none stroke-white stroke-[2.5] transition peer-checked:scale-100"
-      >
-        <path d="M4 10.5L8.1 14.5L16 5.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
+        class="absolute inset-0 h-5 w-5 scale-0 text-white transition peer-checked:scale-100"
+      />
     </span>
 
     <span v-if="label" class="text-sm font-medium text-slate-700">{{ label }}</span>

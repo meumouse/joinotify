@@ -8,6 +8,7 @@ import Field from './Field.vue';
 import PhoneField from './PhoneField.vue';
 import Loader from './Loader.vue';
 import FormCheckbox from './FormCheckbox.vue';
+import { Eye, EyeSlash } from '@boxicons/vue';
 
 /**
  * Root login widget that orchestrates phone, OTP, and password flows.
@@ -806,60 +807,8 @@ onBeforeUnmount(() => {
                 :aria-label="showPassword ? t('Hide password') : t('Show password')"
                 @click="showPassword = !showPassword"
               >
-                <svg
-                  v-if="!showPassword"
-                  aria-hidden="true"
-                  class="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2.95862 12.951C2.68046 12.3479 2.68046 11.6523 2.95862 11.0492C4.53779 7.6253 7.99237 5.25 11.9999 5.25C16.0075 5.25 19.4621 7.62531 21.0413 11.0492C21.3194 11.6523 21.3194 12.3479 21.0413 12.951C19.4621 16.3749 16.0075 18.7502 11.9999 18.7502C7.99237 18.7502 4.53779 16.3749 2.95862 12.951Z"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-                  <path
-                    d="M15.625 12C15.625 14.002 14.002 15.625 12 15.625C9.99797 15.625 8.375 14.002 8.375 12C8.375 9.99797 9.99797 8.375 12 8.375C14.002 8.375 15.625 9.99797 15.625 12Z"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-                </svg>
-                <svg
-                  v-else
-                  aria-hidden="true"
-                  class="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M3 3L21 21" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
-                  <path
-                    d="M10.58 10.58A3 3 0 0013.42 13.42"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-                  <path
-                    d="M9.88 5.08A10.4 10.4 0 0112 4.75C16.0075 4.75 19.4621 7.12531 21.0413 10.5492C21.3194 11.1523 21.3194 11.8479 21.0413 12.451C20.3337 14.0046 19.234 15.31 17.866 16.25"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-                  <path
-                    d="M6.12 6.12C4.57872 7.32617 3.30035 8.93047 2.95862 10.0492C2.68046 10.6523 2.68046 11.3479 2.95862 11.951C4.53779 15.3749 7.99237 17.7502 11.9999 17.7502C13.5083 17.7502 14.9295 17.4353 16.16 16.87"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  />
-                </svg>
+                <Eye v-if="!showPassword" class="h-5 w-5" aria-hidden="true" />
+                <EyeSlash v-else class="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </Field>

@@ -10,7 +10,7 @@
 export interface FlowNodeConfig {
   type: string;
   label: string;
-  /** Boxicon class name (e.g. "bx-zap"). Use with <i class="bx {icon}"> */
+  /** Boxicons name (e.g. "bx-zap"), rendered through resolveFlowNodeIcon() */
   icon: string;
   /** Tailwind background color class applied to the icon badge */
   color: string;

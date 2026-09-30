@@ -8,6 +8,10 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Changed
+
+- The interface icons of the admin screens and of the OTP login form come from Boxicons, the set the builder already used, instead of a mix of drawn icons. Builder nodes whose icon is only named (such as a wait, condition or stop step without its own artwork) now show that icon, where they showed an empty badge before
+
 ### Fixed
 
 - The strings of the admin screens built in Vue (settings, setup wizard, builder, workflows, history and queue) reach translate.wordpress.org, where only the PHP strings were listed before, so their translations can be contributed and imported there. Sites that receive translations as WordPress.org language packs load them for every script chunk of those screens, not only for the entry file

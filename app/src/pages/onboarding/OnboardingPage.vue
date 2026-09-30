@@ -23,6 +23,7 @@ import AiStep from './components/steps/AiStep.vue';
 import DocsStep from './components/steps/DocsStep.vue';
 import PrivacyStep from './components/steps/PrivacyStep.vue';
 import FinishStep from './components/steps/FinishStep.vue';
+import { X } from '@boxicons/vue';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -250,9 +251,7 @@ onBeforeUnmount(() => {
           :disabled="busy"
           @click="skipWizard"
         >
-          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
-          </svg>
+          <X class="h-5 w-5" aria-hidden="true" />
         </button>
       </div>
 

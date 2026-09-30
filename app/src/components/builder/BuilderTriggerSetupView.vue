@@ -16,6 +16,7 @@ import BrandMark from '../brand/BrandMark.vue';
 import TriggerCard from './TriggerCard.vue';
 import TriggerStepFooter from './TriggerStepFooter.vue';
 import WorkflowNameField from './WorkflowNameField.vue';
+import { Search, X } from '@boxicons/vue';
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -137,9 +138,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
       :aria-label="__('Close', textDomain)"
       @click="$emit('close')"
     >
-      <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-        <path d="M1 1l14 14M15 1L1 15" />
-      </svg>
+      <X class="h-4 w-4" aria-hidden="true" />
       <span class="sr-only">{{ __('Close', textDomain) }}</span>
     </button>
 
@@ -164,10 +163,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
 
         <div class="relative mt-8">
           <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true">
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-              <circle cx="9" cy="9" r="6" />
-              <path d="M14 14l4 4" />
-            </svg>
+            <Search class="h-4 w-4" aria-hidden="true" />
           </span>
           <input
             v-model="search"

@@ -11,6 +11,7 @@
  */
 import { computed } from 'vue';
 import { __, textDomain } from '../../../utils/i18n';
+import { X } from '@boxicons/vue';
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -96,7 +97,7 @@ const payloadJson = computed(() => (template.value ? JSON.stringify(template.val
         <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
           <h2 class="text-[16px] font-semibold text-slate-800">{{ __('Message details', textDomain) }}</h2>
           <button type="button" class="rounded-md p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600" @click="$emit('close')">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M18.3 5.71 12 12.01l-6.3-6.3-1.41 1.41 6.3 6.3-6.3 6.3 1.41 1.41 6.3-6.3 6.3 6.3 1.41-1.41-6.3-6.3 6.3-6.3z"></path></svg>
+            <X class="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
 

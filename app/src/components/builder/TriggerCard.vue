@@ -9,6 +9,8 @@
  *
  * @since 2.0.0
  */
+import { Check } from '@boxicons/vue';
+
 const props = defineProps({
   title: { type: String, required: true },
   description: { type: String, default: '' },
@@ -36,9 +38,7 @@ defineEmits(['click']);
       class="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-700 text-white"
       aria-hidden="true"
     >
-      <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3.5 8.5l3 3 6-7" />
-      </svg>
+      <Check class="h-4 w-4" />
     </span>
     <div class="mx-auto flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50">
       <span

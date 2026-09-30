@@ -18,6 +18,7 @@
 import { computed, inject, onMounted, ref } from 'vue';
 import SelectField from './SelectField.vue';
 import { __, textDomain } from '../../utils/i18n';
+import { RefreshCw } from '@boxicons/vue';
 
 const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
@@ -177,16 +178,11 @@ onMounted(() => load());
         :title="__('Sync templates with your account', textDomain)"
         @click="sync"
       >
-        <svg
+        <RefreshCw
           class="h-4 w-4 shrink-0"
           :class="loading || syncing ? 'animate-spin' : ''"
-          viewBox="0 0 20 20"
-          fill="none"
           aria-hidden="true"
-        >
-          <path d="M15.5 5.5A6.5 6.5 0 1 0 16.9 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
-          <path d="M16 3v3h-3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+        />
         <span>{{ syncing ? __('Syncing…', textDomain) : __('Sync', textDomain) }}</span>
       </button>
     </div>

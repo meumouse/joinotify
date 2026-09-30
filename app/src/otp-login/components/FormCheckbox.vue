@@ -1,4 +1,6 @@
 <script setup>
+import { Check } from '@boxicons/vue';
+
 /**
  * Styled checkbox with v-model support for the "remember me" option.
  *
@@ -61,20 +63,7 @@ function onChange(event) {
         class="joinotify-otp-login__checkbox-box grid size-5 place-items-center rounded-md border bg-white transition
                [&>svg]:hidden [&>svg]:size-3.5 [&>svg]:text-white peer-checked:[&>svg]:block"
       >
-        <svg
-          aria-hidden="true"
-          fill="none"
-          viewBox="0 0 14 14"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M11.667 3.5L5.25 9.917 2.333 7"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.94437"
-          />
-        </svg>
+        <Check aria-hidden="true" />
       </div>
     </div>
     <span class="text-sm text-slate-600">{{ props.label }}</span>

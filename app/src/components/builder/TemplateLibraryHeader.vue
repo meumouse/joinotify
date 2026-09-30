@@ -9,6 +9,7 @@
  * @since 2.0.0
  */
 import { __, textDomain } from '../../utils/i18n';
+import { Bolt } from '@boxicons/vue';
 </script>
 
 <template>
@@ -16,9 +17,7 @@ import { __, textDomain } from '../../utils/i18n';
     <span
       class="inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-800 ring-1 ring-inset ring-primary-100"
     >
-      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
-      </svg>
+      <Bolt pack="filled" class="h-3.5 w-3.5" aria-hidden="true" />
       {{ __('Automation templates', textDomain) }}
     </span>
 

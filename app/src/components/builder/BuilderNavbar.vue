@@ -15,6 +15,7 @@ import BaseButton from '../base/BaseButton.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BrandMark from '../brand/BrandMark.vue';
 import { DotsHorizontalRounded } from '@boxicons/vue';
+import { ArrowLeftStroke, ArrowToBottomStroke, Cog, FilePlus, Grid, Pencil } from '@boxicons/vue';
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -152,56 +153,34 @@ onBeforeUnmount(() => {
             :aria-label="__('Actions menu', textDomain)"
             @click="toggleMenu"
           >
-            <DotsHorizontalRounded :size="22" />
+            <DotsHorizontalRounded :width="22" :height="22" />
           </button>
           <div
             v-if="menuOpen"
             class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-soft"
           >
             <button type="button" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('edit-title'); closeMenu()">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 20h9" />
-                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-              </svg>
+              <Pencil class="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               {{ __('Edit workflow title', textDomain) }}
             </button>
             <button type="button" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 hover:bg-primary-50" @click="$emit('export'); closeMenu()">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <path d="M7 10l5 5 5-5" />
-                <path d="M12 15V3" />
-              </svg>
+              <ArrowToBottomStroke class="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               {{ __('Export workflow', textDomain) }}
             </button>
             <a :href="newUrl" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 no-underline hover:bg-primary-50" @click="handleNavClick($event, 'new')">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
-                <path d="M14 2v6h6" />
-                <path d="M12 12v6M9 15h6" />
-              </svg>
+              <FilePlus class="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               {{ __('Create a new workflow', textDomain) }}
             </a>
             <a :href="dashboardUrl" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 no-underline hover:bg-primary-50" @click="handleNavClick($event, 'back')">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-              </svg>
+              <Grid class="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               {{ __('View all workflows', textDomain) }}
             </a>
             <a :href="settingsUrl" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 no-underline hover:bg-primary-50" @click="closeMenu">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
-              </svg>
+              <Cog class="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               {{ __('Plugin settings', textDomain) }}
             </a>
             <a :href="backUrl" class="flex w-full items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm text-slate-700 no-underline hover:bg-primary-50" @click="handleNavClick($event, 'back')">
-              <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M19 12H5" />
-                <path d="M12 19l-7-7 7-7" />
-              </svg>
+              <ArrowLeftStroke class="h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
               {{ __('Back to dashboard', textDomain) }}
             </a>
           </div>
