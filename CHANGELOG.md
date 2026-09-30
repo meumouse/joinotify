@@ -20,6 +20,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 - WordPress's "Export Personal Data" and "Erase Personal Data" tools cover the sync: the consent records and the queued events of the person, and erasing also asks Joinotify to erase the contacts this site sent for them
 - "Send webhook" workflow action: posts the trigger's data (the order with the customer's history and links, the user, the cart or the form entry) or a JSON of your own with placeholders to any public URL — n8n, Zapier, Make, a Joinotify Cloud flow or your ERP — with optional headers and an HMAC signature checked the same way as Joinotify's webhooks
 - `joinotify_track( $name, $data, $contact )` sends an event of your own (named `custom.*`) to your Joinotify flows through the same queue
+- Joinotify → Audiences & Contacts, a screen for the contact base of your Joinotify account. The base stays on Joinotify: the screen reads and changes it through the site's own REST routes, so the API key never reaches the browser. Before showing anything it asks Joinotify what the site's key may do, and says so when the site is not connected, the key was revoked, the account is blocked by billing (with a link to the panel page that resolves it) or the key is restricted to some numbers, in which case the screen is read only
 
 ### Changed
 
