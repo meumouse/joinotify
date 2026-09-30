@@ -10,6 +10,7 @@
  */
 import { computed } from 'vue';
 import { __, textDomain } from '../../../utils/i18n';
+import BaseDatePicker from '../../../components/base/BaseDatePicker.vue';
 import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
 // The admin's global input styles turn a native checkbox into an empty circle; this one hides it.
 import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
@@ -26,7 +27,7 @@ const emit = defineEmits(['update:modelValue']);
 const inputClass =
   'w-full rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[14px] text-slate-700 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none';
 
-const inputType = computed(() => ({ email: 'email', url: 'url', phone: 'tel', number: 'number', date: 'date' })[props.field.type] || 'text');
+const inputType = computed(() => ({ email: 'email', url: 'url', phone: 'tel', number: 'number' })[props.field.type] || 'text');
 
 const selectOptions = computed(() => [
   { label: __('— None —', textDomain), value: '' },
@@ -43,7 +44,7 @@ const booleanValue = computed(() => (props.modelValue === true ? 'true' : props.
 
 const listValue = computed(() => (Array.isArray(props.modelValue) ? props.modelValue : []));
 
-// <input type="datetime-local"> speaks local "YYYY-MM-DDTHH:mm"; the platform, ISO 8601.
+// The date picker and the time input speak local "YYYY-MM-DD" and "HH:mm"; the platform, ISO 8601.
 const localDateTime = computed(() => {
   if (!props.modelValue) {
     return '';
@@ -60,6 +61,9 @@ const localDateTime = computed(() => {
   return new Date(date.getTime() - offset).toISOString().slice(0, 16);
 });
 
+const datePart = computed(() => localDateTime.value.slice(0, 10));
+const timePart = computed(() => localDateTime.value.slice(11, 16));
+
 function onInput(event) {
   const value = event.target.value;
 
@@ -71,10 +75,16 @@ function onInput(event) {
   emit('update:modelValue', value);
 }
 
-function onDateTime(event) {
-  const value = event.target.value;
-
-  emit('update:modelValue', value ? new Date(value).toISOString() : '');
+/**
+ * Join the picked day and time into ISO 8601. A day without a time is midnight;
+ * clearing the day clears the value.
+ *
+ * @since 2.5.0
+ * @param {string} day Local `YYYY-MM-DD`.
+ * @param {string} time Local `HH:mm`.
+ */
+function onDateTime(day, time) {
+  emit('update:modelValue', day ? new Date(`${day}T${time || '00:00'}`).toISOString() : '');
 }
 
 function onBoolean(value) {
@@ -120,14 +130,27 @@ function toggleOption(option, checked) {
       <span v-if="!(field.options || []).length" class="text-[13px] text-slate-400">{{ __('This field has no options yet.', textDomain) }}</span>
     </div>
 
-    <input
-      v-else-if="field.type === 'datetime'"
-      type="datetime-local"
-      :class="inputClass"
+    <BaseDatePicker
+      v-else-if="field.type === 'date'"
       :disabled="disabled"
-      :value="localDateTime"
-      @input="onDateTime"
+      :model-value="typeof modelValue === 'string' ? modelValue.slice(0, 10) : ''"
+      @update:model-value="$emit('update:modelValue', $event || '')"
     />
+
+    <div v-else-if="field.type === 'datetime'" class="flex gap-2">
+      <div class="flex-1">
+        <BaseDatePicker :disabled="disabled" :model-value="datePart" @update:model-value="onDateTime($event, timePart)" />
+      </div>
+      <input
+        type="time"
+        class="w-32"
+        :class="inputClass"
+        :aria-label="__('Time', textDomain)"
+        :disabled="disabled || !datePart"
+        :value="timePart"
+        @input="onDateTime(datePart, $event.target.value)"
+      />
+    </div>
 
     <input
       v-else

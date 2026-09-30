@@ -21,6 +21,7 @@ import {
   ruleTypeLabel,
   takesValue,
 } from '../audienceFilter';
+import BaseDatePicker from '../../../components/base/BaseDatePicker.vue';
 import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
 
 const props = defineProps({
@@ -78,7 +79,7 @@ const choiceOptions = computed(() => [
   ...(customField.value?.options || []).map((option) => ({ label: option, value: option })),
 ]);
 
-const inputType = computed(() => ({ number: 'number', date: 'date', datetime: 'date' })[fieldType.value] || 'text');
+const inputType = computed(() => (fieldType.value === 'number' ? 'number' : 'text'));
 
 function setType(type) {
   const fresh = newRule(type, props.schema);
@@ -142,6 +143,9 @@ const summary = computed(() =>
             :options="[{ label: __('Yes', textDomain), value: 'true' }, { label: __('No', textDomain), value: 'false' }]"
             @update:model-value="rule.value = $event === 'true'"
           />
+        </div>
+        <div v-else-if="rule.type === 'field' && (fieldType === 'date' || fieldType === 'datetime')" class="w-48">
+          <BaseDatePicker :model-value="typeof rule.value === 'string' ? rule.value.slice(0, 10) : ''" @update:model-value="setValue($event || '')" />
         </div>
         <input
           v-else
