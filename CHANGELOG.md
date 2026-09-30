@@ -10,7 +10,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ### Added
 
-- The settings screen asks administrators to rate Joinotify on WordPress.org once the plugin has been in use for at least an hour. "Leave a review" and "I already did" end the request for that user, while "Maybe later" or closing the dialog hides it for a week. Sites upgrading from an earlier version count their use from the setup wizard or their oldest workflow, and the delay, snooze length, link and visibility can be changed through `Joinotify/Admin/Review_Prompt/*` filters
+- The settings screen and the workflow builder ask administrators to rate Joinotify on WordPress.org once the plugin has been in use for at least ten minutes. In the builder the request waits until no dialog, node settings drawer or action library is open. "Leave a review" and "I already did" end the request for that user, while "Maybe later" or the close button hides it for a week. A click outside the dialog does not dismiss it. Sites upgrading from an earlier version count their use from the setup wizard or their oldest workflow, and the delay, snooze length, link and visibility can be changed through `Joinotify/Admin/Review_Prompt/*` filters
 
 ### Changed
 

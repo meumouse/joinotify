@@ -4,7 +4,7 @@
  * ModalDialog.vue frontend component.
  *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.5.0
  */
 import { __, textDomain } from '../../utils/i18n';
 
@@ -22,6 +22,7 @@ defineProps({
   description: { type: String, default: '' },
   eyebrow: { type: String, default: '' },
   sizeClass: { type: String, default: 'max-w-2xl' },
+  closeOnBackdrop: { type: Boolean, default: true },
 });
 
 defineEmits(['close']);
@@ -29,7 +30,14 @@ defineEmits(['close']);
 
 <template>
   <div v-if="open" class="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto px-4 py-4 sm:py-6">
-    <button class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" type="button" :aria-label="__('Close dialog', textDomain)" @click="$emit('close')" />
+    <button
+      v-if="closeOnBackdrop"
+      class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
+      type="button"
+      :aria-label="__('Close dialog', textDomain)"
+      @click="$emit('close')"
+    />
+    <div v-else class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" aria-hidden="true" />
 
     <div
       class="relative z-10 w-full max-h-[calc(100dvh-4rem)] overflow-y-auto rounded-lg border border-white/20 bg-white p-6 shadow-soft sm:max-h-[calc(100dvh-5rem)]"

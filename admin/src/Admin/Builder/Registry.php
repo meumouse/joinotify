@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Admin\Builder;
 
+use MeuMouse\Joinotify\Admin\Review_Prompt;
 use MeuMouse\Joinotify\Admin\Settings\Repository;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Api\Workflow_Templates;
@@ -41,6 +42,7 @@ class Registry {
 	 * Build the Vue bootstrap payload for the workflow builder.
 	 *
 	 * @since 1.4.7
+	 * @version 2.5.0
 	 * @param int $post_id Workflow post ID.
 	 * @return array<string,mixed>
 	 */
@@ -76,6 +78,7 @@ class Registry {
 				'manage_options' => current_user_can( 'manage_options' ),
 				'can_edit' => current_user_can( 'manage_options' ),
 			),
+			'review_prompt' => Review_Prompt::get_client_payload(),
 			'rest' => array(
 				'root' => esc_url_raw( rest_url( 'joinotify/v1' ) ),
 				'nonce' => wp_create_nonce( 'wp_rest' ),

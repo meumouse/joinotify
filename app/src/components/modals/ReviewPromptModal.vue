@@ -5,13 +5,15 @@
  *
  * Asks the site owner for a WordPress.org review once the plugin has been in
  * use for a while. The review button is a real link, so the new tab opens from
- * the click itself and is never caught by a popup blocker.
+ * the click itself and is never caught by a popup blocker. A click on the
+ * backdrop does not close it: the X counts as "Maybe later", so leaving the
+ * dialog is always a deliberate answer.
  *
  * @since 2.5.0
  * @version 2.5.0
  */
-import { __, textDomain } from '../../../../utils/i18n';
-import ModalDialog from '../../../../components/modals/ModalDialog.vue';
+import { __, textDomain } from '../../utils/i18n';
+import ModalDialog from './ModalDialog.vue';
 
 defineProps({
   open: { type: Boolean, default: false },
@@ -27,6 +29,7 @@ defineEmits(['rate', 'later', 'dismiss']);
     :eyebrow="__('Joinotify', textDomain)"
     :title="__('Enjoying Joinotify?', textDomain)"
     size-class="max-w-lg"
+    :close-on-backdrop="false"
     @close="$emit('later')"
   >
     <div class="flex items-center gap-1 text-amber-400" aria-hidden="true">

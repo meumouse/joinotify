@@ -8,9 +8,9 @@ use MeuMouse\Joinotify\Core\Onboarding;
 defined('ABSPATH') || exit;
 
 /**
- * Decides when the settings screen asks for a WordPress.org review.
+ * Decides when the settings screen and the workflow builder ask for a WordPress.org review.
  *
- * The request only appears once the site has had Joinotify for a while — an hour
+ * The request only appears once the site has had Joinotify for a while — ten minutes
  * by default, counted from the first admin request that loaded the plugin — so
  * nobody is asked to rate something they have not tried yet. The answer is kept
  * per user: "Leave a review" and "I already did" end the prompt for good, while
@@ -69,7 +69,7 @@ class Review_Prompt {
      *
      * Sites that ran Joinotify before this option existed are backdated to the
      * earliest trace they left — the setup wizard completion or the oldest
-     * workflow — so a long-time user is not made to wait another hour.
+     * workflow — so a long-time user is not made to wait again.
      *
      * @since 2.5.0
      * @return int
@@ -177,9 +177,9 @@ class Review_Prompt {
          * Filter the minimum time the plugin must be in use before the prompt appears, in seconds.
          *
          * @since 2.5.0
-         * @param int $delay Delay. Default one hour.
+         * @param int $delay Delay. Default ten minutes.
          */
-        $delay = (int) apply_filters( 'Joinotify/Admin/Review_Prompt/Delay', HOUR_IN_SECONDS );
+        $delay = (int) apply_filters( 'Joinotify/Admin/Review_Prompt/Delay', 10 * MINUTE_IN_SECONDS );
 
         if ( time() - self::get_first_use() < max( 0, $delay ) ) {
             return false;
@@ -196,7 +196,7 @@ class Review_Prompt {
         }
 
         /**
-         * Filter whether the settings screen shows the review prompt.
+         * Filter whether the settings screen and the workflow builder show the review prompt.
          *
          * @since 2.5.0
          * @param bool $show Whether to show the prompt.
@@ -206,7 +206,7 @@ class Review_Prompt {
 
 
     /**
-     * Payload consumed by the settings application.
+     * Payload consumed by the settings and builder applications.
      *
      * @since 2.5.0
      * @return array{show:bool,review_url:string}

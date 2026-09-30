@@ -22,7 +22,8 @@ import IntegrationSettingsModal from './components/modals/IntegrationSettingsMod
 import ConfirmDialog from '../../components/modals/ConfirmDialog.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
 import DebugLogModal from './components/cards/DebugLogModal.vue';
-import ReviewPromptModal from './components/modals/ReviewPromptModal.vue';
+import ReviewPromptModal from '../../components/modals/ReviewPromptModal.vue';
+import { useReviewPrompt } from '../../composables/useReviewPrompt';
 import { createDebugLogger } from '../../utils/debug';
 
 const props = defineProps({
@@ -52,9 +53,6 @@ const confirm = reactive({ open: false, title: '', description: '', action: null
 const isHydrated = ref(false);
 const toastTimers = new Map();
 const activeSectionStorageKey = 'joinotify-settings-active-section';
-const reviewPromptDelay = 2000;
-const reviewPromptReady = ref(false);
-let reviewPromptTimer = null;
 
 syncSettings(bootstrap.value.settings || {});
 
@@ -70,11 +68,17 @@ const generalVisibleFields = computed(() => filterFields(['joinotify_default_cou
 const aboutVisibleFields = computed(() => filterFields(['enable_usage_tracking', 'enable_message_history']));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
 const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
-const reviewPrompt = computed(() => bootstrap.value.review_prompt || { show: false, review_url: '' });
-
-// Never stack the review request on top of a dialog the user opened on purpose.
-const reviewPromptOpen = computed(() => {
-  return reviewPromptReady.value && !logsOpen.value && !integrationConfigOpen.value && !confirm.open;
+const {
+  open: reviewPromptOpen,
+  reviewUrl: reviewPromptUrl,
+  answer: answerReviewPrompt,
+} = useReviewPrompt({
+  payload: () => bootstrap.value.review_prompt,
+  api,
+  // Never stack the review request on top of a dialog the user opened on purpose.
+  blocked: () => logsOpen.value || integrationConfigOpen.value || confirm.open,
+  onRated: () => toast(__('Thank you for supporting Joinotify!', textDomain), 'success', __('Review', textDomain)),
+  log: (event, context) => debugLogger.log(event, context),
 });
 
 const activeSectionId = ref(getInitialActiveSectionId());
@@ -119,32 +123,7 @@ onMounted(() => {
   window.setTimeout(() => {
     isHydrated.value = true;
   }, 300);
-
-  if (reviewPrompt.value.show && reviewPrompt.value.review_url) {
-    reviewPromptTimer = window.setTimeout(() => {
-      reviewPromptReady.value = true;
-      debugLogger.log('review-prompt:shown');
-    }, reviewPromptDelay);
-  }
 });
-
-async function answerReviewPrompt(status) {
-  reviewPromptReady.value = false;
-  debugLogger.log('review-prompt:answered', { status });
-
-  if (status === 'rated') {
-    toast(__('Thank you for supporting Joinotify!', textDomain), 'success', __('Review', textDomain));
-  }
-
-  try {
-    await api.post('/admin/user/review-prompt', { status });
-  } catch (error) {
-    debugLogger.log('review-prompt:save-failed', {
-      status,
-      error: error instanceof Error ? error.message : String(error),
-    });
-  }
-}
 
 
 
@@ -296,10 +275,6 @@ function updateSetting(key, value) {
 onBeforeUnmount(() => {
   toastTimers.forEach((timer) => window.clearTimeout(timer));
   toastTimers.clear();
-
-  if (reviewPromptTimer) {
-    window.clearTimeout(reviewPromptTimer);
-  }
 });
 
 async function saveSettings() {
@@ -810,7 +785,7 @@ function canConfigureIntegration(integration) {
 
     <ReviewPromptModal
       :open="reviewPromptOpen"
-      :review-url="reviewPrompt.review_url"
+      :review-url="reviewPromptUrl"
       @rate="answerReviewPrompt('rated')"
       @later="answerReviewPrompt('later')"
       @dismiss="answerReviewPrompt('dismissed')"

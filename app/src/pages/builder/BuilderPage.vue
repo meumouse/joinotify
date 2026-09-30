@@ -25,6 +25,9 @@ import BuilderStartView from '../../components/builder/BuilderStartView.vue';
 import BuilderTemplateLibraryView from '../../components/builder/BuilderTemplateLibraryView.vue';
 import BuilderTriggerSetupView from '../../components/builder/BuilderTriggerSetupView.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
+import ReviewPromptModal from '../../components/modals/ReviewPromptModal.vue';
+import { useReviewPrompt } from '../../composables/useReviewPrompt';
+import { createApiClient } from '../../utils/api';
 import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { triggerNeedsSetup } from '../../utils/triggerSettings';
@@ -212,6 +215,28 @@ const hideCanvasNavbar = computed(() => store.loading.workflow);
 const actionSidebarOpen = computed(() => Boolean(actionModalOpen.value));
 const isSavingTitle = computed(() => titleSaving.value || store.loading.save);
 const isUpdatingStatus = computed(() => Boolean(store.loading.status));
+// The review request waits while the user is inside a dialog, the node settings
+// drawer or the action library, so it never interrupts an edit in progress.
+const {
+  open: reviewPromptOpen,
+  reviewUrl: reviewPromptUrl,
+  answer: answerReviewPrompt,
+} = useReviewPrompt({
+  payload: () => bootstrap.value?.review_prompt,
+  api: createApiClient(props.bootstrap),
+  blocked: () =>
+    importModalOpen.value ||
+    aiModalOpen.value ||
+    actionModalOpen.value ||
+    titleModalOpen.value ||
+    testPhoneModalOpen.value ||
+    triggerWarningModalOpen.value ||
+    leaveConfirmOpen.value ||
+    Boolean(store.drawerOpen) ||
+    Boolean(store.loading.workflow),
+  onRated: () => pushToast(__('Thank you for supporting Joinotify!', textDomain), 'success', __('Review', textDomain)),
+  log: (event, context) => debugLogger.log(event, context),
+});
 const categoryOptions = computed(() => {
   const categories = [...new Set(templates.value.map((template) => template.category).filter(Boolean))];
 
@@ -1471,6 +1496,14 @@ function setChangeTriggerUrl(active) {
       </div>
     </div>
   </ModalDialog>
+
+  <ReviewPromptModal
+    :open="reviewPromptOpen"
+    :review-url="reviewPromptUrl"
+    @rate="answerReviewPrompt('rated')"
+    @later="answerReviewPrompt('later')"
+    @dismiss="answerReviewPrompt('dismissed')"
+  />
 
   <ToastStack :toasts="toasts" @dismiss="dismissToast" />
 </template>
