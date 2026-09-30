@@ -22,6 +22,7 @@ import ContactsTab from './tabs/ContactsTab.vue';
 import AudiencesTab from './tabs/AudiencesTab.vue';
 import FieldsTagsTab from './tabs/FieldsTagsTab.vue';
 import SourcesTab from './tabs/SourcesTab.vue';
+import SuppressionsTab from './tabs/SuppressionsTab.vue';
 import { createApiClient } from '../../utils/api';
 
 const props = defineProps({
@@ -47,6 +48,7 @@ const tabs = [
   { id: 'audiences', label: __('Audiences', textDomain), component: AudiencesTab },
   { id: 'fields', label: __('Fields & tags', textDomain), component: FieldsTagsTab },
   { id: 'sources', label: __('Sources', textDomain), component: SourcesTab },
+  { id: 'suppressions', label: __('Suppression list', textDomain), component: SuppressionsTab },
 ];
 
 const route = ref(parseHash());

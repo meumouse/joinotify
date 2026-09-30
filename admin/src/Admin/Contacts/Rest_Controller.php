@@ -41,5 +41,10 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Audiences_Delete',
 		'\MeuMouse\Joinotify\Rest\Audiences_Schema',
 		'\MeuMouse\Joinotify\Rest\Audiences_Preview',
+		'\MeuMouse\Joinotify\Rest\Contacts_Merge',
+		'\MeuMouse\Joinotify\Rest\Contacts_Import',
+		'\MeuMouse\Joinotify\Rest\Suppressions_List',
+		'\MeuMouse\Joinotify\Rest\Suppressions_Save',
+		'\MeuMouse\Joinotify\Rest\Suppressions_Delete',
 	);
 }

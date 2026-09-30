@@ -1222,6 +1222,236 @@ class Cloud_Contacts {
 	}
 
 
+	/**
+	 * Merge a duplicate into a contact. The contact of `$id` stays; the duplicate is erased once
+	 * its conversations, tags, history and campaigns moved to it. An opt-out of either wins.
+	 *
+	 * @since 2.5.0
+	 * @param string $id           Contact that stays.
+	 * @param string $duplicate_id Contact that is merged and erased.
+	 * @return array Envelope.
+	 */
+	public static function merge_contacts( $id, $duplicate_id ) {
+		return self::after_write( self::call( 'POST', '/contacts/' . $id . '/merge', array(), array( 'duplicateId' => $duplicate_id ) ), array( 'tags' ) );
+	}
+
+
+	// ── Imports ─────────────────────────────────────────────────────────────────────────────
+
+
+	/**
+	 * Most rows a batch may carry.
+	 *
+	 * @since 2.5.0
+	 * @var int
+	 */
+	const BATCH_SIZE = 500;
+
+
+	/**
+	 * Open an import record, whose counters add up the batches sent with its id.
+	 *
+	 * @since 2.5.0
+	 * @param string $filename Name of the file imported.
+	 * @param int    $total    Rows it holds (informative).
+	 * @return array Envelope; `data.id` is the import id.
+	 */
+	public static function open_import( $filename, $total ) {
+		$filename = self::text( $filename, 200 );
+
+		return self::call( 'POST', '/contacts/imports', array(), array(
+			'filename' => '' === $filename ? null : $filename,
+			'total' => max( 0, min( 1000000, (int) $total ) ),
+		) );
+	}
+
+
+	/**
+	 * Close an import as `completed` or `failed`.
+	 *
+	 * @since 2.5.0
+	 * @param string $id     Import id.
+	 * @param string $status 'completed' or 'failed'.
+	 * @return array Envelope.
+	 */
+	public static function close_import( $id, $status ) {
+		return self::call( 'PATCH', '/contacts/imports/' . $id, array(), array( 'status' => 'failed' === $status ? 'failed' : 'completed' ) );
+	}
+
+
+	/**
+	 * Create or update up to 500 contacts by phone. Answers 200 even when rows fail: each row's
+	 * result comes back in order. Sends no webhook.
+	 *
+	 * @since 2.5.0
+	 * @param array $rows    Rows built by batch_row().
+	 * @param array $options `on_duplicate` ('update'|'skip'), `default_country`, `import_id`,
+	 *     `opt_in_evidence`.
+	 * @return array Envelope; `data` holds `results` and `summary`.
+	 */
+	public static function batch_contacts( $rows, $options = array() ) {
+		$body = array(
+			'contacts' => array_values( array_slice( $rows, 0, self::BATCH_SIZE ) ),
+			'options' => array(
+				'onDuplicate' => 'skip' === ( $options['on_duplicate'] ?? '' ) ? 'skip' : 'update',
+			),
+		);
+
+		if ( ! empty( $options['default_country'] ) && 1 === preg_match( '/^[A-Z]{2}$/', (string) $options['default_country'] ) ) {
+			$body['options']['defaultCountry'] = (string) $options['default_country'];
+		}
+
+		if ( ! empty( $options['import_id'] ) && self::is_id( $options['import_id'] ) ) {
+			$body['options']['importId'] = $options['import_id'];
+		}
+
+		$evidence = self::text( $options['opt_in_evidence'] ?? '', 500 );
+
+		if ( strlen( $evidence ) >= 3 ) {
+			$body['options']['optIn'] = array( 'evidence' => $evidence );
+		}
+
+		return self::after_write( self::call( 'POST', '/contacts/batch', array(), $body ), array( 'tags' ) );
+	}
+
+
+	/**
+	 * Keep only what a row of an import may carry. Pure, for the harness.
+	 *
+	 * @since 2.5.0
+	 * @param array $row Values read from a file, in the platform's camelCase.
+	 * @return array|null Null without a phone.
+	 */
+	public static function batch_row( $row ) {
+		$row = is_array( $row ) ? $row : array();
+		$clean = array();
+		$limits = array(
+			'phone' => 40,
+			'firstName' => 80,
+			'lastName' => 80,
+			'name' => 160,
+			'email' => 254,
+			'timezone' => 64,
+		);
+
+		foreach ( $limits as $key => $limit ) {
+			$value = self::text( $row[ $key ] ?? '', $limit );
+
+			if ( '' !== $value ) {
+				$clean[ $key ] = $value;
+			}
+		}
+
+		if ( empty( $clean['phone'] ) || strlen( (string) preg_replace( '/\D/', '', $clean['phone'] ) ) < 8 ) {
+			return null;
+		}
+
+		$locale = self::text( $row['locale'] ?? '', 10 );
+
+		if ( 1 === preg_match( '/^[a-z]{2}(-[A-Z]{2})?$/', $locale ) ) {
+			$clean['locale'] = $locale;
+		}
+
+		if ( ! empty( $row['attributes'] ) && is_array( $row['attributes'] ) ) {
+			$attributes = self::attributes( $row['attributes'] );
+
+			if ( ! empty( $attributes ) ) {
+				$clean['attributes'] = $attributes;
+			}
+		}
+
+		$tags = array();
+
+		foreach ( is_array( $row['tags'] ?? null ) ? $row['tags'] : explode( ',', (string) ( $row['tags'] ?? '' ) ) as $tag ) {
+			$tag = self::text( $tag, 60 );
+
+			if ( '' !== $tag && ! in_array( $tag, $tags, true ) ) {
+				$tags[] = $tag;
+			}
+		}
+
+		if ( ! empty( $tags ) ) {
+			$clean['tags'] = array_slice( $tags, 0, 20 );
+		}
+
+		return $clean;
+	}
+
+
+	// ── Suppressions ────────────────────────────────────────────────────────────────────────
+
+
+	/**
+	 * Why a phone or BSUID is on the suppression list.
+	 *
+	 * @since 2.5.0
+	 * @var string[]
+	 */
+	const SUPPRESSION_REASONS = array( 'opt_out', 'invalid_number', 'meta_marketing_block', 'manual' );
+
+
+	/**
+	 * List the suppression list: phones and BSUIDs that never get a marketing campaign.
+	 *
+	 * @since 2.5.0
+	 * @param array $args `page`, `per_page`, `reason`, `search`.
+	 * @return array Envelope.
+	 */
+	public static function list_suppressions( $args = array() ) {
+		$query = self::page_window( $args['page'] ?? 1, $args['per_page'] ?? 25 );
+		$search = self::text( $args['search'] ?? '', 60 );
+
+		if ( '' !== $search ) {
+			$query['q'] = $search;
+		}
+
+		if ( isset( $args['reason'] ) && in_array( $args['reason'], self::SUPPRESSION_REASONS, true ) ) {
+			$query['reason'] = $args['reason'];
+		}
+
+		return self::call( 'GET', '/suppressions', $query );
+	}
+
+
+	/**
+	 * Add a phone or BSUID to the suppression list, as `manual`. One already listed stays as it is.
+	 *
+	 * @since 2.5.0
+	 * @param string $identity        Phone or BSUID.
+	 * @param string $note            Optional note.
+	 * @param string $default_country Region of a phone typed without country code.
+	 * @return array Envelope.
+	 */
+	public static function add_suppression( $identity, $note = '', $default_country = '' ) {
+		$body = array( 'identity' => self::text( $identity, 160 ) );
+		$note = self::text( $note, 300 );
+
+		if ( '' !== $note ) {
+			$body['note'] = $note;
+		}
+
+		if ( 1 === preg_match( '/^[A-Z]{2}$/', (string) $default_country ) ) {
+			$body['defaultCountry'] = $default_country;
+		}
+
+		return self::call( 'POST', '/suppressions', array(), $body );
+	}
+
+
+	/**
+	 * Take a phone or BSUID off the suppression list. Rows of an opt-out or of a Meta marketing
+	 * block need `$confirm`; the contact stays opted out until it opts in again.
+	 *
+	 * @since 2.5.0
+	 * @param string $id      Suppression id.
+	 * @param bool   $confirm Confirm the removal of an opt-out or Meta block row.
+	 * @return array Envelope.
+	 */
+	public static function delete_suppression( $id, $confirm = false ) {
+		return self::call( 'DELETE', '/suppressions/' . $id, $confirm ? array( 'confirm' => true ) : array() );
+	}
+
+
 	// ── Audiences ───────────────────────────────────────────────────────────────────────────
 
 

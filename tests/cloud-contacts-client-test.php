@@ -253,6 +253,24 @@ check( 'archiving is not part of a create', ! isset( $audience['archived'] ) );
 check( 'an edit can archive', true === Cloud_Contacts::audience_payload( array( 'archived' => true ), 'update' )['archived'] );
 check( 'an invalid filter is left out of the payload', ! isset( Cloud_Contacts::audience_payload( array( 'name' => 'x', 'filter' => $deep ) )['filter'] ) );
 
+echo "\nCloud_Contacts::batch_row\n";
+
+$imported = Cloud_Contacts::batch_row( array(
+	'phone' => ' (41) 98711-1527 ',
+	'name' => 'Ana Souza',
+	'email' => 'ana@example.com',
+	'locale' => 'pt-BR',
+	'tags' => 'Clientes, VIP, Clientes, ',
+	'attributes' => array( 'cidade' => 'Curitiba', 'vazio' => '' ),
+	'unknown' => 'x',
+) );
+check( 'an imported row keeps what it may carry', '(41) 98711-1527' === $imported['phone'] && 'Ana Souza' === $imported['name'] && 'pt-BR' === $imported['locale'] );
+check( 'tags typed as a list become unique names', array( 'Clientes', 'VIP' ) === $imported['tags'] );
+check( 'empty custom fields are left out of an import', array( 'cidade' => 'Curitiba' ) === $imported['attributes'] );
+check( 'unknown columns never reach the platform', ! isset( $imported['unknown'] ) );
+check( 'a row without a phone is skipped', null === Cloud_Contacts::batch_row( array( 'email' => 'x@y.z' ) ) );
+check( 'a row whose phone is too short is skipped', null === Cloud_Contacts::batch_row( array( 'phone' => '1234' ) ) );
+
 echo "\n{$assertions} assertions, {$failures} failures\n";
 exit( $failures > 0 ? 1 : 0 );
 

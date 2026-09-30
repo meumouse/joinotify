@@ -362,6 +362,64 @@ export function createContactsApiClient(bootstrap: any) {
     previewAudience(filter: Record<string, unknown>) {
       return post('/admin/audiences/preview', { filter });
     },
+
+    /**
+     * Merges a duplicate into a contact; the duplicate is erased.
+     *
+     * @since 2.5.0
+     * @param {string} id Contact that stays.
+     * @param {string} duplicateId Contact merged into it.
+     * @returns {Promise<{message: string, contact: Object}>} The merged contact.
+     */
+    mergeContacts(id: string, duplicateId: string) {
+      return post('/admin/contacts/merge', { id, duplicate_id: duplicateId });
+    },
+
+    /**
+     * Runs one step of an import: `open`, `batch` or `close`.
+     *
+     * @since 2.5.0
+     * @param {Object} payload Step and its data.
+     * @returns {Promise<Object>} The step's result.
+     */
+    importStep(payload: Record<string, unknown>) {
+      return post('/admin/contacts/import', payload);
+    },
+
+    /**
+     * Lists the suppression list.
+     *
+     * @since 2.5.0
+     * @param {Object} params `page`, `per_page`, `reason`, `search`.
+     * @returns {Promise<{items: Array, pagination: Object}>} One page of suppressions.
+     */
+    listSuppressions(params: Record<string, unknown>) {
+      return get('/admin/suppressions', params);
+    },
+
+    /**
+     * Adds a phone to the suppression list.
+     *
+     * @since 2.5.0
+     * @param {string} identity Phone or BSUID.
+     * @param {string} note Optional note.
+     * @returns {Promise<{message: string}>} The result.
+     */
+    addSuppression(identity: string, note: string) {
+      return post('/admin/suppressions/save', { identity, note });
+    },
+
+    /**
+     * Takes a row off the suppression list.
+     *
+     * @since 2.5.0
+     * @param {string} id Suppression id.
+     * @param {boolean} confirm Confirms the removal of an opt-out or Meta block row.
+     * @returns {Promise<{message: string}>} The result.
+     */
+    deleteSuppression(id: string, confirm: boolean) {
+      return post('/admin/suppressions/delete', { id, confirm });
+    },
   };
 }
 

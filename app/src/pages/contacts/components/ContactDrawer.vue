@@ -24,13 +24,14 @@ import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseDrawer from '../../../components/base/BaseDrawer.vue';
 import ConfirmActionModal from '../../../components/workflows/ConfirmActionModal.vue';
 import ConsentModal from './ConsentModal.vue';
+import MergeModal from './MergeModal.vue';
 import TagChip from './TagChip.vue';
 
 const props = defineProps({
   contactId: { type: String, default: '' },
 });
 
-const emit = defineEmits(['close', 'edit', 'changed', 'deleted']);
+const emit = defineEmits(['close', 'edit', 'changed', 'deleted', 'merged']);
 
 const { api, bootstrap, canWrite, definitions, toast, notifyError } = useContactsContext();
 
@@ -48,6 +49,14 @@ const consentSaving = ref(false);
 const confirmDelete = ref(false);
 const deleting = ref(false);
 const exporting = ref(false);
+const mergeOpen = ref(false);
+
+async function onMerged(merged) {
+  mergeOpen.value = false;
+  await load();
+  emit('changed', merged);
+  emit('merged');
+}
 
 const locale = computed(() => bootstrap.locale || '');
 const displayName = computed(() => contact.value?.name || [contact.value?.firstName, contact.value?.lastName].filter(Boolean).join(' ') || contact.value?.profileName || formatPhone(contact.value?.phone));
@@ -210,6 +219,7 @@ defineExpose({ reload: load });
           variant="secondary"
           @click="consentMode = 'opt_out'"
         />
+        <BaseButton size="sm" :title="__('Merge a duplicate', textDomain)" variant="ghost" @click="mergeOpen = true" />
         <BaseButton :loading="exporting" size="sm" :title="__('Export data', textDomain)" variant="ghost" @click="exportData" />
         <BaseButton size="sm" :title="__('Erase', textDomain)" variant="danger" @click="confirmDelete = true" />
       </div>
@@ -319,6 +329,8 @@ defineExpose({ reload: load });
       </template>
     </div>
   </BaseDrawer>
+
+  <MergeModal :contact="contact" :open="mergeOpen" @close="mergeOpen = false" @merged="onMerged" />
 
   <ConsentModal
     :loading="consentSaving"

@@ -14,8 +14,67 @@ msgstr ""
 msgid "-1001234567890 or {{ telegram_chat_id }}"
 msgstr ""
 
+#: app/src/pages/contacts/components/FormRuleEditor.vue:27
+msgid "— Detect automatically —"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:37
+msgid "— Do not send —"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:66
+msgid "— Ignore —"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:32
+msgid "— No consent field —"
+msgstr ""
+
+#: app/src/pages/contacts/components/AttributeInput.vue:30
+#: app/src/pages/contacts/components/AttributeInput.vue:35
+msgid "— None —"
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterRuleRow.vue:77
+msgid "— Pick —"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:76
+msgid "— Pick a custom field —"
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterRuleRow.vue:48
+msgid "— Pick a field —"
+msgstr ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:34
+#: app/src/pages/contacts/components/FilterRuleRow.vue:72
+msgid "— Pick a tag —"
+msgstr ""
+
 #: app/src/composables/useSenderOptions.ts:38
 msgid "— Select a sender —"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:85
+#. translators: %s: field label
+msgid ""
+"\"%s\" and its value on every contact are erased. Audiences that filter by "
+"it stop matching. This cannot be undone; archive the field instead to keep "
+"its values."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:96
+#. translators: %s: tag name
+msgid "\"%s\" is taken off every contact and erased. This cannot be undone."
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterRuleRow.vue:160
+msgid "(edit it in the Joinotify panel)"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:114
+msgid "(erased contact)"
 msgstr ""
 
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:35
@@ -32,6 +91,10 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:257
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 msgid "{{ wc_billing_phone }} or +5511999990000"
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:205
+msgid "%1$d of %2$d conditions, up to 3 levels of groups."
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:280
@@ -63,10 +126,27 @@ msgstr ""
 msgid "%1$s WhatsApp replied: %2$s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:853
+#: app/src/pages/contacts/components/MergeModal.vue:125
+msgid ""
+"%1$s will be erased after its conversations, tags, history and campaigns "
+"move to %2$s. Its fields only fill the empty ones, and an opt-out of either "
+"wins. This cannot be undone."
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:262
+msgid "%1$s: %2$d contacts. Tell what each column is."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:856
 #. translators: %d: number of retry attempts
 msgid "%d attempt"
 msgid_plural "%d attempts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:216
+msgid "%d contact"
+msgid_plural "%d contacts"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -122,6 +202,12 @@ msgid_plural "%d numbers imported."
 msgstr[0] ""
 msgstr[1] ""
 
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:165
+msgid "%d option"
+msgid_plural "%d options"
+msgstr[0] ""
+msgstr[1] ""
+
 #: admin/src/Rest/Queue_Cancel.php:55
 #. translators: %d: number of cancelled scheduled items
 msgid "%d scheduled item was cancelled."
@@ -166,6 +252,10 @@ msgstr ""
 #: app/src/components/settings/NodeSettingsDrawer.vue:52
 #. translators: %s is the name of the action or trigger being configured.
 msgid "%s settings"
+msgstr ""
+
+#: app/src/pages/contacts/components/MergeModal.vue:98
+msgid "%s stays. Search the duplicate that should be merged into it."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:1035
@@ -215,18 +305,19 @@ msgstr ""
 #: app/src/composables/useMessageHistory.ts:90
 #: app/src/composables/useProcessingQueue.ts:84
 #: app/src/composables/useWorkflows.ts:199
+#: app/src/pages/contacts/useContactList.ts:48
 msgid "0 results"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:147
+#: admin/src/Admin/Settings/Registry.php:148
 msgid "120 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:144
+#: admin/src/Admin/Settings/Registry.php:145
 msgid "15 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:271
+#: admin/src/Admin/Settings/Registry.php:272
 msgid "180 days"
 msgstr ""
 
@@ -242,18 +333,18 @@ msgstr ""
 msgid "24h limit:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:268
-#: admin/src/Admin/Settings/Registry.php:287
+#: admin/src/Admin/Settings/Registry.php:269
+#: admin/src/Admin/Settings/Registry.php:288
 msgid "30 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:146
 #: admin/src/Integrations/Flexify_Checkout.php:253
 #: admin/src/Integrations/Flexify_Checkout.php:261
 msgid "30 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:272
+#: admin/src/Admin/Settings/Registry.php:273
 msgid "365 days"
 msgstr ""
 
@@ -261,40 +352,59 @@ msgstr ""
 msgid "41912345678"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:143
+#: admin/src/Admin/Settings/Registry.php:144
 msgid "5 minutes"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1410
+#: app/src/pages/builder/BuilderPage.vue:1441
 #: app/src/pages/history/HistoryPage.vue:284
 #: app/src/pages/settings/components/cards/PhoneActions.vue:126
 #: app/src/pages/settings/components/cards/PhoneActions.vue:212
 msgid "5541987111527"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:269
-#: admin/src/Admin/Settings/Registry.php:288
+#: admin/src/Admin/Settings/Registry.php:270
+#: admin/src/Admin/Settings/Registry.php:289
 msgid "60 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:146
+#: admin/src/Admin/Settings/Registry.php:147
 msgid "60 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:286
+#: admin/src/Admin/Settings/Registry.php:287
 msgid "7 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:270
-#: admin/src/Admin/Settings/Registry.php:289
+#: admin/src/Admin/Settings/Registry.php:271
+#: admin/src/Admin/Settings/Registry.php:290
 msgid "90 days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1547
+#: app/src/pages/contacts/components/FormRuleEditor.vue:89
+msgid ""
+"A checkbox the person ticks to agree to receive offers. Unticked, the "
+"contact is sent without consent."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Save.php:62
+#: app/src/pages/contacts/components/FieldFormModal.vue:92
+msgid "A choice field needs at least one option."
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:1577
 msgid "A condition is missing its branches."
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:237
+#: admin/src/Api/Cloud_Contacts.php:338
+msgid "A contact with this phone number already exists."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:344
+msgid "A custom field with this key already exists, possibly archived."
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:238
 msgid ""
 "A few questions and your site is ready to send WhatsApp messages. "
 "Everything here can be changed later in Settings."
@@ -304,11 +414,11 @@ msgstr ""
 msgid "A message id is required."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:90
+#: admin/src/Builder/Webhook_Action.php:96
 msgid "A public address. Local and private network addresses are refused."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:297
+#: admin/src/Admin/Settings/Registry.php:298
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
@@ -326,8 +436,12 @@ msgstr ""
 msgid "Abandoned carts"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:233
-#: admin/src/Admin/Settings/Registry.php:348
+#: app/src/pages/contacts/tabs/SourcesTab.vue:69
+msgid "Abandoned carts (Flexify Checkout)"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:234
+#: admin/src/Admin/Settings/Registry.php:349
 msgid "About"
 msgstr ""
 
@@ -355,16 +469,19 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:158
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:152
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:176
 #: app/src/pages/history/HistoryPage.vue:380
 #: app/src/pages/queue/QueuePage.vue:303
 msgid "Actions"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:152
+#: app/src/components/builder/BuilderNavbar.vue:153
 msgid "Actions menu"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:206
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
@@ -380,13 +497,13 @@ msgstr ""
 msgid "Activate your license before connecting."
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:142
+#: app/src/components/builder/BuilderNavbar.vue:143
 #: app/src/components/workflows/WorkflowTableRow.vue:37
 #: app/src/composables/useWorkflows.ts:187
 msgid "Active"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:133
+#: app/src/components/builder/BuilderNavbar.vue:134
 msgid "Active workflow"
 msgstr ""
 
@@ -400,34 +517,44 @@ msgid ""
 "(placeholders)."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/ContactsTab.vue:337
+msgid ""
+"Add a contact by hand, or turn on the sync of your integrations to bring "
+"your customers and leads."
+msgstr ""
+
 #: app/src/components/flow/FlowCanvas.vue:833
 msgid "Add a documentation note"
 msgstr ""
 
+#: app/src/pages/contacts/components/BulkTagModal.vue:81
+msgid "Add a tag"
+msgstr ""
+
 #: app/src/components/flow/FlowCanvas.vue:846
-#: app/src/components/flow/FlowNode.vue:478
-#: app/src/components/flow/FlowNode.vue:479
+#: app/src/components/flow/FlowNode.vue:455
+#: app/src/components/flow/FlowNode.vue:456
 msgid "Add action"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:429
+#: app/src/components/flow/FlowNode.vue:406
 msgid "Add action (False)"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:404
+#: app/src/components/flow/FlowNode.vue:381
 msgid "Add action (True)"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:430
+#: app/src/components/flow/FlowNode.vue:407
 msgid "Add action to the false branch"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:460
-#: app/src/components/flow/FlowNode.vue:461
+#: app/src/components/flow/FlowNode.vue:437
+#: app/src/components/flow/FlowNode.vue:438
 msgid "Add action to the loop body"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:405
+#: app/src/components/flow/FlowNode.vue:382
 msgid "Add action to the true branch"
 msgstr ""
 
@@ -435,12 +562,38 @@ msgstr ""
 msgid "Add an action"
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:149
+msgid "Add at least one complete condition."
+msgstr ""
+
 #: app/src/builder/components/base/AttachmentsField.vue:237
 msgid "Add attachment"
 msgstr ""
 
-#: app/src/components/settings/SchemaFieldRenderer.vue:294
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:87
+msgid "Add condition"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:159
+#: app/src/pages/contacts/components/ContactFormModal.vue:247
+#: app/src/pages/contacts/tabs/ContactsTab.vue:223
+msgid "Add contact"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:162
+msgid "Add field"
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:96
+msgid "Add group"
+msgstr ""
+
+#: app/src/components/settings/SchemaFieldRenderer.vue:308
 msgid "Add item"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:294
+msgid "Add mapping"
 msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:195
@@ -453,7 +606,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:67
 #: admin/src/Admin/Menu.php:68
-#: app/src/components/workflows/EmptyState.vue:17
+#: app/src/components/workflows/EmptyState.vue:18
 #: app/src/pages/workflows/WorkflowsPage.vue:82
 msgid "Add new workflow"
 msgstr ""
@@ -462,12 +615,25 @@ msgstr ""
 msgid "Add note"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1392
+#: admin/src/Contacts/Contact_Actions.php:204
+msgid "Add or remove tags of the contact on Joinotify."
+msgstr ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:109
+#: app/src/pages/contacts/tabs/ContactsTab.vue:241
+msgid "Add tag"
+msgstr ""
+
+#: app/src/pages/builder/BuilderPage.vue:1423
 msgid "Add test phone number"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:145
+msgid "Add to the list"
+msgstr ""
+
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:263
-#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:94
+#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:93
 msgid "Add variable"
 msgstr ""
 
@@ -479,7 +645,13 @@ msgid ""
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:157
+#: app/src/pages/contacts/components/ContactDrawer.vue:256
 msgid "Added"
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:40
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:43
+msgid "Added by hand"
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:224
@@ -491,6 +663,13 @@ msgid ""
 "Adds an unticked checkbox to the checkout, the sign-up forms and My "
 "account. Who ticks it is opted in on Joinotify, with the checkbox text, "
 "where and when as evidence; who unticks it in My account is opted out."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:266
+msgid ""
+"Adds an unticked checkbox to the checkout, the sign-up forms and My "
+"account. Who ticks it is opted in with the checkbox text as evidence; who "
+"unticks it in My account is opted out."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:136
@@ -523,7 +702,7 @@ msgstr ""
 msgid "Afghanistan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:162
+#: admin/src/Admin/Settings/Registry.php:163
 msgid "AI engine"
 msgstr ""
 
@@ -574,6 +753,10 @@ msgstr ""
 msgid "Algeria"
 msgstr ""
 
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:50
+msgid "all"
+msgstr ""
+
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:60
 #: app/src/composables/useMessageHistory.ts:57
@@ -582,7 +765,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:219
+#: app/src/pages/builder/BuilderPage.vue:249
 msgid "All categories"
 msgstr ""
 
@@ -598,7 +781,7 @@ msgstr ""
 msgid "All levels"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:595
+#: app/src/pages/settings/SettingsPage.vue:609
 msgid "All options will return to the plugin defaults."
 msgstr ""
 
@@ -608,6 +791,10 @@ msgstr ""
 
 #: admin/src/Admin/History/Registry.php:347
 msgid "All sources"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:75
+msgid "All tags"
 msgstr ""
 
 #: admin/src/Rest/Builder_Test.php:152
@@ -729,7 +916,11 @@ msgstr ""
 msgid "Already have an account?"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:429
+#: app/src/pages/contacts/components/ImportModal.vue:159
+msgid "already in the base (skipped)"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:432
 #: app/src/builder/actions/definitions/timeDelay.ts:61
 #: app/src/builder/actions/definitions/timeDelay.ts:89
 #: app/src/builder/actions/definitions/timeDelay.ts:96
@@ -748,6 +939,16 @@ msgstr ""
 msgid "An account is already registered with this phone number."
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:180
+msgid ""
+"An audience is a saved filter over your contacts. It is recounted every "
+"time it is used, so new contacts that match join it on their own."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:342
+msgid "An audience with this name already exists."
+msgstr ""
+
 #: admin/src/Rest/Settings_Reset.php:44
 msgid "An error occurred while resetting the settings."
 msgstr ""
@@ -764,8 +965,24 @@ msgstr ""
 msgid "another address"
 msgstr ""
 
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:51
+msgid "any"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:78
+msgid "Any consent"
+msgstr ""
+
 #: admin/src/Integrations/Woocommerce.php:282
 msgid "Any digital product"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:45
+msgid "Any reason"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:79
+msgid "Any source"
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:328
@@ -773,6 +990,7 @@ msgid "Any status"
 msgstr ""
 
 #: admin/src/Admin/History/Registry.php:352
+#: app/src/pages/contacts/labels.ts:42
 msgid "API"
 msgstr ""
 
@@ -796,7 +1014,7 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:336
+#: admin/src/Admin/Settings/Registry.php:337
 msgid "Applications"
 msgstr ""
 
@@ -817,15 +1035,25 @@ msgid ""
 "delivered outside the 24-hour window."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:574
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:184
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:174
+msgid "Archive"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:136
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:160
+msgid "Archived"
+msgstr ""
+
+#: app/src/pages/settings/SettingsPage.vue:588
 msgid "Are you sure you want to clear the debug logs?"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:481
+#: app/src/pages/settings/SettingsPage.vue:495
 msgid "Are you sure you want to remove this sender?"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:453
+#: app/src/pages/settings/SettingsPage.vue:467
 msgid ""
 "Are you sure you want to remove this variable? Workflows that use it will "
 "no longer resolve it."
@@ -843,7 +1071,7 @@ msgstr ""
 msgid "Artificial intelligence"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:157
+#: admin/src/Admin/Settings/Registry.php:158
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
@@ -879,8 +1107,51 @@ msgstr ""
 msgid "Attachments"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:37
+#: app/src/pages/history/components/HistoryDetailsModal.vue:38
 msgid "Attempts"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:155
+msgid "Audience"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:85
+msgid "Audience archived."
+msgstr ""
+
+#: admin/src/Rest/Audiences_Save.php:62
+msgid "Audience created."
+msgstr ""
+
+#: admin/src/Rest/Audiences_Delete.php:53
+msgid "Audience erased."
+msgstr ""
+
+#: admin/src/Rest/Audiences_Delete.php:43
+#: admin/src/Rest/Audiences_Detail.php:43
+msgid "Audience not found."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:85
+msgid "Audience restored."
+msgstr ""
+
+#: admin/src/Rest/Audiences_Save.php:62
+msgid "Audience updated."
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:162
+#: app/src/pages/contacts/ContactsPage.vue:48
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:85
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:98
+msgid "Audiences"
+msgstr ""
+
+#: admin/src/Admin/Contacts/Registry.php:45
+#: admin/src/Admin/Menu.php:76
+#: admin/src/Admin/Menu.php:77
+#: app/src/pages/contacts/ContactsPage.vue:123
+msgid "Audiences & Contacts"
 msgstr ""
 
 #: admin/src/Validations/Media_Types.php:41
@@ -917,11 +1188,11 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:283
+#: admin/src/Admin/Settings/Registry.php:284
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:265
+#: admin/src/Admin/Settings/Registry.php:266
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
@@ -929,7 +1200,7 @@ msgstr ""
 msgid "Automatically generated"
 msgstr ""
 
-#: app/src/components/builder/TemplateLibraryHeader.vue:22
+#: app/src/components/builder/TemplateLibraryHeader.vue:21
 msgid "Automation templates"
 msgstr ""
 
@@ -949,12 +1220,13 @@ msgstr ""
 #: app/src/components/builder/BuilderImportView.vue:42
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:46
 #: app/src/components/builder/TriggerStepFooter.vue:30
-#: app/src/pages/onboarding/OnboardingPage.vue:342
+#: app/src/pages/contacts/components/ImportModal.vue:315
+#: app/src/pages/onboarding/OnboardingPage.vue:341
 msgid "Back"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:205
-#: app/src/components/builder/BuilderStartChooser.vue:103
+#: app/src/components/builder/BuilderNavbar.vue:184
+#: app/src/components/builder/BuilderStartChooser.vue:90
 msgid "Back to dashboard"
 msgstr ""
 
@@ -1005,9 +1277,13 @@ msgstr ""
 msgid "Billing full address format"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:104
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:42
+msgid "Blocked by Meta for marketing"
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:110
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:143
-#: app/src/pages/history/components/HistoryDetailsModal.vue:58
+#: app/src/pages/history/components/HistoryDetailsModal.vue:59
 msgid "Body"
 msgstr ""
 
@@ -1072,26 +1348,26 @@ msgstr ""
 msgid "Build your first automation or review the full settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:219
-#: admin/src/Admin/Settings/Registry.php:342
-#: app/src/pages/builder/BuilderPage.vue:610
-#: app/src/pages/builder/BuilderPage.vue:665
-#: app/src/pages/builder/BuilderPage.vue:770
-#: app/src/pages/builder/BuilderPage.vue:790
-#: app/src/pages/builder/BuilderPage.vue:807
-#: app/src/pages/builder/BuilderPage.vue:819
-#: app/src/pages/builder/BuilderPage.vue:1047
-#: app/src/pages/builder/BuilderPage.vue:1056
-#: app/src/pages/builder/BuilderPage.vue:1083
-#: app/src/pages/builder/BuilderPage.vue:1135
-#: app/src/pages/builder/BuilderPage.vue:1147
-#: app/src/pages/builder/BuilderPage.vue:1153
-#: app/src/pages/builder/BuilderPage.vue:1189
-#: app/src/pages/builder/BuilderPage.vue:1195
-#: app/src/pages/settings/SettingsPage.vue:442
-#: app/src/pages/settings/SettingsPage.vue:445
-#: app/src/pages/settings/SettingsPage.vue:458
-#: app/src/pages/settings/SettingsPage.vue:460
+#: admin/src/Admin/Settings/Registry.php:220
+#: admin/src/Admin/Settings/Registry.php:343
+#: app/src/pages/builder/BuilderPage.vue:640
+#: app/src/pages/builder/BuilderPage.vue:695
+#: app/src/pages/builder/BuilderPage.vue:800
+#: app/src/pages/builder/BuilderPage.vue:820
+#: app/src/pages/builder/BuilderPage.vue:837
+#: app/src/pages/builder/BuilderPage.vue:849
+#: app/src/pages/builder/BuilderPage.vue:1077
+#: app/src/pages/builder/BuilderPage.vue:1086
+#: app/src/pages/builder/BuilderPage.vue:1113
+#: app/src/pages/builder/BuilderPage.vue:1165
+#: app/src/pages/builder/BuilderPage.vue:1177
+#: app/src/pages/builder/BuilderPage.vue:1183
+#: app/src/pages/builder/BuilderPage.vue:1219
+#: app/src/pages/builder/BuilderPage.vue:1225
+#: app/src/pages/settings/SettingsPage.vue:456
+#: app/src/pages/settings/SettingsPage.vue:459
+#: app/src/pages/settings/SettingsPage.vue:472
+#: app/src/pages/settings/SettingsPage.vue:474
 msgid "Builder"
 msgstr ""
 
@@ -1128,7 +1404,7 @@ msgid ""
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:136
-#: app/src/pages/history/components/HistoryDetailsModal.vue:59
+#: app/src/pages/history/components/HistoryDetailsModal.vue:60
 msgid "Button"
 msgstr ""
 
@@ -1141,12 +1417,22 @@ msgstr ""
 msgid "Buttons"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SourcesTab.vue:52
+msgid ""
+"Buyers of every order (with or without an account), their order history and "
+"their subscriptions."
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:202
 msgid "Cambodia"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:93
 msgid "Cameroon"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:214
+msgid "Campaign frequency"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:25
@@ -1159,9 +1445,16 @@ msgstr ""
 #: app/src/components/fields/JoinotifyApiKeyField.vue:182
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:17
-#: app/src/pages/builder/BuilderPage.vue:1384
-#: app/src/pages/builder/BuilderPage.vue:1422
-#: app/src/pages/builder/BuilderPage.vue:1468
+#: app/src/pages/builder/BuilderPage.vue:1415
+#: app/src/pages/builder/BuilderPage.vue:1453
+#: app/src/pages/builder/BuilderPage.vue:1499
+#: app/src/pages/contacts/components/AudienceEditor.vue:239
+#: app/src/pages/contacts/components/BulkTagModal.vue:105
+#: app/src/pages/contacts/components/ConsentModal.vue:63
+#: app/src/pages/contacts/components/ContactFormModal.vue:246
+#: app/src/pages/contacts/components/FieldFormModal.vue:166
+#: app/src/pages/contacts/components/MergeModal.vue:131
+#: app/src/pages/contacts/components/TagFormModal.vue:107
 #: app/src/pages/queue/QueuePage.vue:371
 #: app/src/pages/settings/components/cards/PhoneActions.vue:247
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:255
@@ -1245,9 +1538,17 @@ msgstr ""
 msgid "Change number"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:301
-#: app/src/pages/builder/BuilderPage.vue:1450
+#: app/src/pages/contacts/tabs/ContactsTab.vue:336
+msgid "Change or clear the filters to see more contacts."
+msgstr ""
+
+#: app/src/components/flow/FlowNode.vue:278
+#: app/src/pages/builder/BuilderPage.vue:1481
 msgid "Change trigger"
+msgstr ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:82
+msgid "Changes the contacts at once, without starting any flow or sending webhooks."
 msgstr ""
 
 #: app/src/components/fields/ColorScaleField.vue:177
@@ -1282,6 +1583,14 @@ msgstr ""
 msgid "Check whether the order was paid"
 msgstr ""
 
+#: app/src/pages/contacts/components/ConnectionState.vue:49
+msgid "Check your connection and try again."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:272
+msgid "Checkbox text"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:50
 msgid "Chile"
 msgstr ""
@@ -1290,7 +1599,7 @@ msgstr ""
 msgid "China"
 msgstr ""
 
-#: app/src/components/builder/TemplateLibraryHeader.vue:30
+#: app/src/components/builder/TemplateLibraryHeader.vue:29
 msgid ""
 "Choose a ready-made flow, import it with one click, and adjust it your way. "
 "Search by categories or names."
@@ -1308,13 +1617,13 @@ msgstr ""
 msgid "Choose one of the validated senders available in your account."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:111
+#: admin/src/Admin/Settings/Registry.php:112
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
 msgstr ""
 
-#: app/src/components/builder/BuilderStartChooser.vue:28
+#: app/src/components/builder/BuilderStartChooser.vue:29
 msgid "Choose the option you prefer to start building the workflow."
 msgstr ""
 
@@ -1324,11 +1633,11 @@ msgid ""
 "message."
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:157
+#: app/src/components/builder/BuilderTriggerSetupView.vue:156
 msgid "Choose the source"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:241
+#: app/src/components/builder/BuilderTriggerSetupView.vue:237
 msgid "Choose the trigger"
 msgstr ""
 
@@ -1336,6 +1645,13 @@ msgstr ""
 msgid ""
 "Choose whether the workflow should wait for a period, a fixed date, or a "
 "relative offset at a specific time."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:303
+msgid ""
+"Choose which forms create contacts and which of their fields are the phone, "
+"e-mail, name, consent and custom fields. A form without a rule is read by "
+"the field types and labels."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:223
@@ -1361,6 +1677,7 @@ msgstr ""
 msgid "Clear date"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/ContactsTab.vue:202
 #: app/src/pages/history/HistoryPage.vue:295
 #: app/src/pages/queue/QueuePage.vue:228
 msgid "Clear filters"
@@ -1368,7 +1685,7 @@ msgstr ""
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:40
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:248
-#: app/src/pages/settings/SettingsPage.vue:573
+#: app/src/pages/settings/SettingsPage.vue:587
 msgid "Clear logs"
 msgstr ""
 
@@ -1388,21 +1705,27 @@ msgstr ""
 msgid "Click here to log in"
 msgstr ""
 
+#: app/src/pages/contacts/labels.ts:129
+msgid "Clicked a campaign"
+msgstr ""
+
 #: admin/src/Integrations/Integrations_Base.php:916
 #: app/src/builder/actions/components/ActionLibraryModal.vue:290
 #: app/src/components/base/BaseDrawer.vue:30
 #: app/src/components/builder/BuilderActionPickerModal.vue:43
-#: app/src/components/builder/BuilderTriggerSetupView.vue:137
-#: app/src/components/builder/BuilderTriggerSetupView.vue:143
-#: app/src/components/modals/ModalDialog.vue:54
-#: app/src/components/toasts/ToastStack.vue:80
-#: app/src/components/toasts/ToastStack.vue:88
-#: app/src/pages/history/components/HistoryDetailsModal.vue:181
+#: app/src/components/builder/BuilderTriggerSetupView.vue:138
+#: app/src/components/builder/BuilderTriggerSetupView.vue:142
+#: app/src/components/modals/ModalDialog.vue:62
+#: app/src/components/toasts/ToastStack.vue:81
+#: app/src/components/toasts/ToastStack.vue:85
+#: app/src/pages/contacts/components/ImportModal.vue:352
+#: app/src/pages/contacts/tabs/SourcesTab.vue:325
+#: app/src/pages/history/components/HistoryDetailsModal.vue:182
 msgid "Close"
 msgstr ""
 
-#: app/src/components/modals/ModalDialog.vue:32
-#: app/src/components/modals/ModalDialog.vue:51
+#: app/src/components/modals/ModalDialog.vue:37
+#: app/src/components/modals/ModalDialog.vue:59
 msgid "Close dialog"
 msgstr ""
 
@@ -1415,8 +1738,8 @@ msgstr ""
 msgid "Close panel"
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:248
 #: app/src/pages/onboarding/OnboardingPage.vue:249
+#: app/src/pages/onboarding/OnboardingPage.vue:250
 msgid "Close setup"
 msgstr ""
 
@@ -1436,6 +1759,14 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:51
 msgid "Colombia"
+msgstr ""
+
+#: app/src/pages/contacts/components/TagFormModal.vue:87
+msgid "Color"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:269
+msgid "Column"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:76
@@ -1459,11 +1790,11 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:132
+#: app/src/pages/history/components/HistoryDetailsModal.vue:133
 msgid "Component"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:561
+#: admin/src/Admin/Builder/Registry.php:564
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:106
@@ -1477,14 +1808,14 @@ msgstr ""
 msgid "Condition rule"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:465
+#: admin/src/Admin/Builder/Registry.php:468
 #: app/src/builder/actions/definitions/condition.ts:121
 #: app/src/builder/actions/definitions/condition.ts:132
 #: app/src/builder/actions/settings/ConditionSettings.vue:180
 msgid "Condition type"
 msgstr ""
 
-#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:182
+#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:183
 msgid "Configuration component not available"
 msgstr ""
 
@@ -1500,6 +1831,7 @@ msgstr ""
 #: admin/src/Integrations/Telegram.php:115
 #: admin/src/Integrations/Whatsapp.php:75
 #: admin/src/Integrations/Woocommerce.php:116
+#: app/src/pages/contacts/tabs/SourcesTab.vue:325
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
 msgid "Configure"
 msgstr ""
@@ -1516,7 +1848,7 @@ msgid ""
 "sender used for the login form."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:670
+#: app/src/pages/settings/SettingsPage.vue:684
 msgid ""
 "Configure senders, integrations, the builder and general plugin behavior. "
 "If you need help, visit our "
@@ -1546,6 +1878,14 @@ msgstr ""
 msgid "Connect"
 msgstr ""
 
+#: app/src/pages/contacts/components/ConnectionState.vue:28
+msgid "Connect this site to Joinotify"
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:321
+msgid "Connect this site to Joinotify to manage your contacts."
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp.php:74
 msgid ""
 "Connect this site to your Joinotify account to deliver messages through the "
@@ -1555,6 +1895,10 @@ msgstr ""
 #: admin/src/Admin/Onboarding/Registry.php:109
 #: app/src/components/fields/CloudConnectField.vue:199
 msgid "Connect to Joinotify"
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:64
+msgid "Connect with Joinotify"
 msgstr ""
 
 #: admin/src/Api/Sender_Sync.php:60
@@ -1601,31 +1945,94 @@ msgstr ""
 msgid "Connecting…"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:518
+#: app/src/pages/settings/SettingsPage.vue:532
 msgid "Connection updated."
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:212
+#: app/src/pages/contacts/components/ContactDrawer.vue:265
+#: app/src/pages/contacts/components/FilterRuleRow.vue:43
+#: app/src/pages/contacts/tabs/ContactsTab.vue:185
+#: app/src/pages/contacts/tabs/ContactsTab.vue:285
+msgid "Consent"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:381
 msgid "Consent checkbox text"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:653
+#: admin/src/Cloud_Sync/Consent.php:655
 msgid "Consent given on"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Consent.php:58
+msgid "Consent recorded."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:190
+#: app/src/pages/contacts/tabs/ContactsTab.vue:282
+msgid "Contact"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Save.php:59
+msgid "Contact added."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Delete.php:55
+msgid "Contact erased."
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:237
 msgid "Contact name"
 msgstr ""
 
+#: admin/src/Rest/Contacts_Activity.php:43
+#: admin/src/Rest/Contacts_Consent.php:47
+#: admin/src/Rest/Contacts_Delete.php:43
+#: admin/src/Rest/Contacts_Detail.php:44
+msgid "Contact not found."
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:238
 msgid "Contact phone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1640
+#: admin/src/Rest/Contacts_Save.php:50
+msgid "Contact updated."
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:123
+#: app/src/pages/contacts/components/ContactDrawer.vue:143
+#: app/src/pages/contacts/components/ContactDrawer.vue:174
+#: app/src/pages/contacts/components/ContactFormModal.vue:128
+#: app/src/pages/contacts/components/MergeModal.vue:82
+#: app/src/pages/contacts/ContactsPage.vue:47
+#: app/src/pages/contacts/ContactsPage.vue:91
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:156
+msgid "Contacts"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:288
+msgid "Contacts already in the base"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Merge.php:57
+msgid "Contacts merged."
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:48
+msgid "Contacts that match"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:173
+msgid "contains"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:1670
 msgid "Contains"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:156
+#: app/src/pages/history/components/HistoryDetailsModal.vue:157
 #: app/src/pages/history/HistoryPage.vue:379
 msgid "Content"
 msgstr ""
@@ -1639,7 +2046,7 @@ msgid "Context"
 msgstr ""
 
 #: app/src/components/builder/TriggerStepFooter.vue:32
-#: app/src/pages/onboarding/OnboardingPage.vue:349
+#: app/src/pages/onboarding/OnboardingPage.vue:348
 msgid "Continue"
 msgstr ""
 
@@ -1669,7 +2076,7 @@ msgstr ""
 msgid "Could not clear the history."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:583
+#: app/src/pages/settings/SettingsPage.vue:597
 msgid "Could not clear the logs."
 msgstr ""
 
@@ -1677,8 +2084,8 @@ msgstr ""
 msgid "Could not clear the queue."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:95
-#: admin/src/Admin/Settings/Registry.php:678
+#: admin/src/Admin/Builder/Registry.php:98
+#: admin/src/Admin/Settings/Registry.php:681
 msgid "Could not complete the operation."
 msgstr ""
 
@@ -1687,11 +2094,11 @@ msgstr ""
 msgid "Could not connect with that key."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:864
+#: app/src/pages/builder/BuilderPage.vue:894
 msgid "Could not create the workflow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1081
+#: app/src/pages/builder/BuilderPage.vue:1111
 msgid "Could not delete the action."
 msgstr ""
 
@@ -1718,7 +2125,7 @@ msgstr ""
 msgid "Could not export the processing queue."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:320
+#: app/src/pages/settings/SettingsPage.vue:334
 msgid "Could not export the settings."
 msgstr ""
 
@@ -1739,11 +2146,11 @@ msgstr ""
 msgid "Could not finish the connection."
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:188
+#: app/src/pages/onboarding/OnboardingPage.vue:189
 msgid "Could not finish the setup."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:348
+#: app/src/pages/settings/SettingsPage.vue:362
 msgid "Could not import the settings."
 msgstr ""
 
@@ -1755,6 +2162,18 @@ msgstr ""
 msgid "Could not load actions."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:43
+msgid "Could not load the audiences."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:107
+msgid "Could not load the contact."
+msgstr ""
+
+#: app/src/pages/contacts/useContactList.ts:88
+msgid "Could not load the contacts."
+msgstr ""
+
 #: app/src/composables/useMessageHistory.ts:132
 #: app/src/composables/useMessageHistory.ts:140
 msgid "Could not load the message history."
@@ -1763,6 +2182,14 @@ msgstr ""
 #: app/src/composables/useProcessingQueue.ts:138
 #: app/src/composables/useProcessingQueue.ts:143
 msgid "Could not load the processing queue."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:164
+msgid "Could not load the sources."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:60
+msgid "Could not load the suppression list."
 msgstr ""
 
 #: app/src/stores/useWorkflowBuilderStore.ts:982
@@ -1776,32 +2203,44 @@ msgid "Could not load workflows."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:183
-#: app/src/components/fields/WhatsappTemplateField.vue:112
+#: app/src/components/fields/WhatsappTemplateField.vue:113
 msgid "Could not load your message templates."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:549
+#: app/src/pages/settings/SettingsPage.vue:563
 msgid "Could not open the logs."
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:48
+msgid "Could not reach the Joinotify platform"
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:323
+msgid "Could not reach the Joinotify platform. Check your connection and try again."
 msgstr ""
 
 #: admin/src/Api/Cloud_Client.php:1271
 msgid "Could not read the Joinotify account data."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:939
+#: app/src/pages/builder/BuilderPage.vue:969
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:63
 msgid "Could not read the selected file."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:460
+#: app/src/pages/contacts/components/ImportModal.vue:125
+msgid "Could not read this file. Save it as CSV (UTF-8) and try again."
+msgstr ""
+
+#: app/src/pages/settings/SettingsPage.vue:474
 msgid "Could not remove the variable."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:490
+#: app/src/pages/settings/SettingsPage.vue:504
 msgid "Could not remove."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:604
+#: app/src/pages/settings/SettingsPage.vue:618
 msgid "Could not reset."
 msgstr ""
 
@@ -1821,34 +2260,34 @@ msgstr ""
 msgid "Could not run the scheduled item."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1133
-#: app/src/pages/builder/BuilderPage.vue:1151
+#: app/src/pages/builder/BuilderPage.vue:1163
+#: app/src/pages/builder/BuilderPage.vue:1181
 msgid "Could not run the workflow test."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:875
+#: app/src/pages/builder/BuilderPage.vue:905
 msgid "Could not save the selected trigger."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1193
+#: app/src/pages/builder/BuilderPage.vue:1223
 msgid "Could not save the test phone number."
 msgstr ""
 
 #: admin/src/Rest/Builder_Variables_Save.php:46
-#: app/src/pages/settings/SettingsPage.vue:445
+#: app/src/pages/settings/SettingsPage.vue:459
 msgid "Could not save the variable."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:608
-#: app/src/pages/builder/BuilderPage.vue:1054
+#: app/src/pages/builder/BuilderPage.vue:638
+#: app/src/pages/builder/BuilderPage.vue:1084
 msgid "Could not save the workflow."
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:121
+#: app/src/pages/onboarding/OnboardingPage.vue:122
 msgid "Could not save this step."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:285
+#: app/src/pages/settings/SettingsPage.vue:299
 msgid "Could not save."
 msgstr ""
 
@@ -1874,16 +2313,16 @@ msgid "Could not start the connection."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:213
-#: app/src/components/fields/WhatsappTemplateField.vue:143
+#: app/src/components/fields/WhatsappTemplateField.vue:144
 msgid "Could not sync your message templates."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:370
-#: app/src/pages/settings/SettingsPage.vue:381
+#: app/src/pages/settings/SettingsPage.vue:384
+#: app/src/pages/settings/SettingsPage.vue:395
 msgid "Could not sync your numbers."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:523
+#: app/src/pages/settings/SettingsPage.vue:537
 msgid "Could not update the connection."
 msgstr ""
 
@@ -1892,11 +2331,11 @@ msgstr ""
 msgid "Could not update the status."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:799
+#: app/src/pages/builder/BuilderPage.vue:829
 msgid "Could not update the workflow status."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:817
+#: app/src/pages/builder/BuilderPage.vue:847
 msgid "Could not update the workflow status. Please try again."
 msgstr ""
 
@@ -1904,8 +2343,16 @@ msgstr ""
 msgid "Could not update the workflow."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:170
+msgid "counted %s"
+msgstr ""
+
 #: app/src/components/fields/CloudSyncStatusField.vue:282
 msgid "Counting your customers…"
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:214
+msgid "Counting…"
 msgstr ""
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:117
@@ -1950,38 +2397,66 @@ msgid ""
 "account."
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:182
+#: app/src/components/builder/BuilderNavbar.vue:172
 msgid "Create a new workflow"
 msgstr ""
 
-#: app/src/components/workflows/EmptyState.vue:16
+#: app/src/components/workflows/EmptyState.vue:17
 msgid "Create a new workflow to start automating your processes."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:202
+msgid ""
+"Create an audience to group contacts by their fields, tags or consent — for "
+"example, opted-in customers from one city."
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:43
 msgid "Create an automation"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:220
+#: app/src/pages/contacts/components/AudienceEditor.vue:240
+msgid "Create audience"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:284
+msgid "Create custom fields in the Fields & tags tab to map site data to them."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:221
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:89
+#: app/src/pages/contacts/components/FieldFormModal.vue:167
+msgid "Create field"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:92
 msgid "Create from scratch"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:90
+#: admin/src/Admin/Builder/Registry.php:93
 #: admin/src/Builder/Workflow_Manager.php:130
 msgid "Create from template"
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:184
+#: app/src/components/builder/BuilderCanvasView.vue:189
 msgid "Create or import a workflow, choose a trigger, and start adding actions."
 msgstr ""
 
-#: app/src/components/builder/BuilderStartChooser.vue:82
+#: admin/src/Contacts/Contact_Actions.php:121
+msgid ""
+"Create or update the contact on Joinotify with the trigger's data: name, "
+"e-mail, tags, custom fields and marketing consent."
+msgstr ""
+
+#: app/src/pages/contacts/components/TagFormModal.vue:108
+msgid "Create tag"
+msgstr ""
+
+#: app/src/components/builder/BuilderStartChooser.vue:71
 msgid "Create with AI"
 msgstr ""
 
@@ -1990,23 +2465,33 @@ msgid "Create workflow with AI"
 msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:135
-#: app/src/components/builder/BuilderStartChooser.vue:66
+#: app/src/components/builder/BuilderStartChooser.vue:60
 msgid "Create your automation workflow by importing a file."
 msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:129
-#: app/src/components/builder/BuilderStartChooser.vue:50
+#: app/src/components/builder/BuilderStartChooser.vue:48
 msgid "Create your automation workflow from a template you choose."
 msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:123
-#: app/src/components/builder/BuilderStartChooser.vue:35
+#: app/src/components/builder/BuilderStartChooser.vue:36
 msgid "Create your automation workflow from scratch."
 msgstr ""
 
 #: app/src/components/workflows/WorkflowTable.vue:101
 #: app/src/components/workflows/WorkflowTableHeader.vue:36
+#: app/src/pages/contacts/components/ImportModal.vue:334
+#: app/src/pages/contacts/labels.ts:121
 msgid "Created"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:161
+msgid "created at the same time by another path"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:317
+msgid "Creates contacts"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:168
@@ -2071,12 +2556,54 @@ msgstr ""
 msgid "Custom color"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:108
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:69
+msgid "Custom field archived. It keeps its values but accepts no new ones."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Save.php:66
+msgid "Custom field created."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Delete.php:53
+msgid "Custom field erased."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Delete.php:43
+msgid "Custom field not found."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:69
+msgid "Custom field restored."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Save.php:49
+msgid "Custom field updated."
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:74
+msgid "Custom field: %s"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:160
+#: app/src/pages/contacts/components/ContactDrawer.vue:289
+#: app/src/pages/contacts/components/ContactFormModal.vue:201
+#: app/src/pages/contacts/components/FieldFormModal.vue:107
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:71
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:110
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:133
+msgid "Custom fields"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:103
+msgid "Custom fields filled by this form"
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:114
 msgid "Custom JSON"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:225
-#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:80
+#: admin/src/Admin/Settings/Registry.php:226
+#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:81
 msgid "Custom variables"
 msgstr ""
 
@@ -2104,13 +2631,13 @@ msgstr ""
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:302
+#: admin/src/Admin/Settings/Registry.php:303
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:423
-#: admin/src/Admin/Builder/Registry.php:451
+#: admin/src/Admin/Builder/Registry.php:426
+#: admin/src/Admin/Builder/Registry.php:454
 #: app/src/builder/actions/definitions/timeDelay.ts:58
 #: app/src/builder/actions/definitions/timeDelay.ts:71
 #: app/src/builder/actions/definitions/timeDelay.ts:82
@@ -2118,10 +2645,15 @@ msgstr ""
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:195
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:30
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:155
-#: app/src/pages/history/components/HistoryDetailsModal.vue:29
+#: app/src/pages/contacts/labels.ts:145
+#: app/src/pages/history/components/HistoryDetailsModal.vue:30
 #: app/src/pages/history/HistoryPage.vue:372
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:171
 msgid "Date"
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:146
+msgid "Date and time"
 msgstr ""
 
 #: admin/src/Core/Helpers.php:40
@@ -2136,7 +2668,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:443
+#: admin/src/Admin/Builder/Registry.php:446
 #: app/src/builder/actions/definitions/timeDelay.ts:66
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:46
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:38
@@ -2148,7 +2680,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:277
+#: admin/src/Admin/Settings/Registry.php:278
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:125
 msgid "Debug logs"
 msgstr ""
@@ -2157,11 +2689,11 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:282
+#: admin/src/Admin/Settings/Registry.php:283
 msgid "Debug logs retention"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:244
+#: admin/src/Admin/Settings/Registry.php:245
 msgid "Debug mode"
 msgstr ""
 
@@ -2182,7 +2714,7 @@ msgstr ""
 msgid "Default country"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:110
+#: admin/src/Admin/Settings/Registry.php:111
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:25
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:65
 msgid "Default country code"
@@ -2194,16 +2726,16 @@ msgid ""
 "send from a different number by default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:179
+#: admin/src/Admin/Settings/Registry.php:180
 msgid "Default temperature"
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:86
+#: app/src/components/builder/BuilderCanvasView.vue:87
 #: app/src/components/flow/FlowCanvas.vue:189
 msgid "Define the trigger that starts the workflow"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:106
+#: admin/src/Admin/Settings/Registry.php:107
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2223,7 +2755,7 @@ msgid ""
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:549
+#: admin/src/Admin/Builder/Registry.php:552
 #: admin/src/Builder/Actions.php:32
 #: app/src/builder/actions/definitions/timeDelay.ts:31
 #: app/src/builder/actions/definitions/timeDelay.ts:46
@@ -2237,7 +2769,7 @@ msgstr ""
 msgid "Delay mode"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:418
+#: admin/src/Admin/Builder/Registry.php:421
 #: app/src/builder/actions/definitions/timeDelay.ts:56
 msgid "Delay type"
 msgstr ""
@@ -2246,7 +2778,7 @@ msgstr ""
 msgid "Delay until a fixed date"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:328
+#: app/src/components/flow/FlowNode.vue:305
 #: app/src/pages/history/HistoryPage.vue:200
 #: app/src/pages/workflows/WorkflowsPage.vue:90
 msgid "Delete"
@@ -2297,7 +2829,7 @@ msgid ""
 "cannot receive them."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:126
+#: admin/src/Admin/Settings/Registry.php:127
 msgid "Delivery retries"
 msgstr ""
 
@@ -2307,6 +2839,11 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:40
 msgid "Denmark"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Consent.php:54
+#: app/src/pages/contacts/components/ContactFormModal.vue:119
+msgid "Describe how the contact gave consent."
 msgstr ""
 
 #: app/src/components/builder/BuilderAiGenerateModal.vue:63
@@ -2331,7 +2868,7 @@ msgid ""
 "trigger context."
 msgstr ""
 
-#: app/src/components/builder/BuilderStartChooser.vue:83
+#: app/src/components/builder/BuilderStartChooser.vue:72
 msgid "Describe what you want and let AI build the workflow for you."
 msgstr ""
 
@@ -2343,11 +2880,16 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+#: app/src/pages/contacts/components/TagFormModal.vue:82
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:229
 msgid "Description (optional)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:254
+#: app/src/pages/contacts/components/ContactDrawer.vue:234
+msgid "Details"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:255
 msgid "Developer integration"
 msgstr ""
 
@@ -2380,7 +2922,7 @@ msgstr ""
 msgid "Digital product access granted"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:565
+#: admin/src/Admin/Settings/Registry.php:566
 msgid "Disabled"
 msgstr ""
 
@@ -2405,7 +2947,7 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:603
+#: admin/src/Admin/Builder/Registry.php:606
 #: admin/src/Integrations/Woocommerce.php:1260
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
@@ -2426,7 +2968,7 @@ msgstr ""
 msgid "Discount: %s"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1448
+#: app/src/pages/builder/BuilderPage.vue:1479
 msgid "Dismiss"
 msgstr ""
 
@@ -2449,7 +2991,7 @@ msgstr ""
 msgid "Do not remind me again"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:846
+#: admin/src/Admin/Settings/Registry.php:849
 msgid "Do not retry"
 msgstr ""
 
@@ -2459,7 +3001,7 @@ msgid "Document"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:121
-#: admin/src/Core/Init.php:558
+#: admin/src/Core/Init.php:563
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
 msgstr ""
@@ -2469,8 +3011,16 @@ msgstr ""
 msgid "Doe"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1641
+#: app/src/pages/contacts/audienceFilter.ts:174
+msgid "does not contain"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:1671
 msgid "Does not contain"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:186
+msgid "does not have"
 msgstr ""
 
 #: app/src/components/flow/StickyNote.vue:301
@@ -2483,6 +3033,10 @@ msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:212
 msgid "Download every record matching the current filters as a JSON file"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:229
+msgid "Download the contacts matching the filters as a CSV file"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:76
@@ -2530,7 +3084,7 @@ msgstr ""
 msgid "Due"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:319
+#: app/src/components/flow/FlowNode.vue:296
 msgid "Duplicate"
 msgstr ""
 
@@ -2542,6 +3096,15 @@ msgstr ""
 msgid "E-commerce"
 msgstr ""
 
+#: admin/src/Contacts/Contact_Actions.php:96
+#: app/src/pages/contacts/components/ContactDrawer.vue:250
+#: app/src/pages/contacts/components/ContactFormModal.vue:188
+#: app/src/pages/contacts/components/FormRuleEditor.vue:72
+#: app/src/pages/contacts/components/ImportModal.vue:71
+#: app/src/pages/contacts/labels.ts:150
+msgid "E-mail"
+msgstr ""
+
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:31
 msgid "E-mail address or a placeholder that resolves to one."
 msgstr ""
@@ -2550,20 +3113,56 @@ msgstr ""
 msgid "e.g. , (comma)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:174
+#: app/src/pages/contacts/components/ConsentModal.vue:57
+msgid "e.g. Agreed by WhatsApp on 29/09/2026"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:175
 msgid ""
 "e.g. Always answer in Brazilian Portuguese, in a friendly and objective "
 "tone."
+msgstr ""
+
+#: app/src/pages/contacts/components/ConsentModal.vue:57
+msgid "e.g. Asked to stop receiving messages"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:107
+msgid "e.g. Customer, VIP"
 msgstr ""
 
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:82
 msgid "e.g. greeting"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:296
+msgid "e.g. Imported, Fair 2026"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:114
+msgid "e.g. Lead"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:99
+msgid "e.g. Lead, Newsletter"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:227
+msgid "e.g. Sign-up form at the store counter, 29/09/2026"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:310
+msgid "e.g. Sign-up sheet of the store event, 09/2026"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:100
 msgid ""
 "e.g. Thank {{ wc_billing_first_name }} for order #{{ order_id }} and "
 "confirm it is being prepared."
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:194
+msgid "e.g. Ticked \"I want offers\" on order {{ wc_order_number }}"
 msgstr ""
 
 #: app/src/components/builder/BuilderAiGenerateModal.vue:73
@@ -2574,6 +3173,10 @@ msgstr ""
 
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:100
 msgid "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:229
+msgid "Each source can add its own tags, on top of the tag of this site."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:312
@@ -2591,27 +3194,51 @@ msgid "Ecuador"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowRowActions.vue:31
-#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:122
+#: app/src/pages/contacts/components/ContactDrawer.vue:207
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:181
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:171
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:220
+#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:121
 msgid "Edit"
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:179
+msgid "Edit audience"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:159
+msgid "Edit contact"
+msgstr ""
+
+#: app/src/pages/contacts/components/FieldFormModal.vue:124
+msgid "Edit custom field"
 msgstr ""
 
 #: admin/src/Core/Workflow_Post_Type.php:56
 msgid "Edit flow"
 msgstr ""
 
+#: app/src/pages/contacts/components/TagFormModal.vue:72
+msgid "Edit tag"
+msgstr ""
+
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:132
 msgid "Edit variable"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:125
-#: admin/src/Admin/Menu.php:126
-#: admin/src/Admin/Menu.php:140
+#: admin/src/Admin/Menu.php:134
+#: admin/src/Admin/Menu.php:135
+#: admin/src/Admin/Menu.php:149
 msgid "Edit workflow"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:166
-#: app/src/pages/builder/BuilderPage.vue:1380
+#: app/src/components/builder/BuilderNavbar.vue:164
+#: app/src/pages/builder/BuilderPage.vue:1411
 msgid "Edit workflow title"
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:122
+msgid "Edited"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:27
@@ -2649,7 +3276,7 @@ msgstr ""
 msgid "Emojis"
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:181
+#: app/src/components/builder/BuilderCanvasView.vue:186
 msgid "Empty canvas"
 msgstr ""
 
@@ -2657,7 +3284,7 @@ msgstr ""
 msgid "Enable debug mode"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:213
+#: admin/src/Admin/Settings/Registry.php:214
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -2671,11 +3298,11 @@ msgstr ""
 msgid "Enable the integration to access its settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:245
+#: admin/src/Admin/Settings/Registry.php:246
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:565
+#: admin/src/Admin/Settings/Registry.php:566
 msgid "Enabled"
 msgstr ""
 
@@ -2691,18 +3318,30 @@ msgstr ""
 msgid "End the workflow at this point."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:163
+#: app/src/pages/contacts/audienceFilter.ts:176
+msgid "ends with"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:213
+msgid "Engagement"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:164
 msgid ""
 "Engine used to generate content. WordPress AI covers every provider "
 "configured in Settings → Connectors; extensions can register additional "
 "engines."
 msgstr ""
 
+#: app/src/components/modals/ReviewPromptModal.vue:30
+msgid "Enjoying Joinotify?"
+msgstr ""
+
 #: admin/src/Otp_Login/Auth_Flow_Service.php:229
 msgid "Enter a password to create the account."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1402
+#: app/src/pages/builder/BuilderPage.vue:1433
 #: app/src/pages/settings/components/cards/PhoneActions.vue:118
 msgid ""
 "Enter a phone number to receive test messages from the builder. Use "
@@ -2782,14 +3421,54 @@ msgstr ""
 msgid "Equatorial Guinea"
 msgstr ""
 
+#: app/src/pages/contacts/components/ContactDrawer.vue:224
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:187
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:177
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:223
+msgid "Erase"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:216
+msgid "Erase audience"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:88
+msgid "Erase field"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:344
+msgid "Erase for good"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:99
+msgid "Erase tag"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:220
+msgid "Erase this audience?"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:348
+msgid "Erase this contact?"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:82
+msgid "Erase this custom field?"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:93
+msgid "Erase this tag?"
+msgstr ""
+
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:34
 msgid "error"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:38
+#: app/src/pages/contacts/ContactsPage.vue:98
+#: app/src/pages/history/components/HistoryDetailsModal.vue:39
 #: app/src/pages/history/HistoryPage.vue:378
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
-#: app/src/pages/settings/SettingsPage.vue:285
+#: app/src/pages/settings/SettingsPage.vue:299
 msgid "Error"
 msgstr ""
 
@@ -2805,7 +3484,7 @@ msgstr ""
 msgid "Ethiopia"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:676
+#: admin/src/Cloud_Sync/Consent.php:678
 msgid "Event"
 msgstr ""
 
@@ -2823,10 +3502,18 @@ msgstr ""
 msgid "Every 6 hours"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SourcesTab.vue:251
+msgid "Every contact sent by this site carries it. Empty uses the site name."
+msgstr ""
+
 #: admin/src/Cloud_Sync/Cloud_Sync.php:367
 msgid ""
 "Every contact this site sends gets this tag in Joinotify. Leave it empty to "
 "use the site's name."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:81
+msgid "Every form with a phone or an e-mail"
 msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:189
@@ -2919,8 +3606,8 @@ msgstr ""
 #: app/src/components/workflows/WorkflowRowActions.vue:41
 #: app/src/pages/history/HistoryPage.vue:423
 #: app/src/pages/queue/QueuePage.vue:363
-#: app/src/pages/settings/SettingsPage.vue:317
-#: app/src/pages/settings/SettingsPage.vue:320
+#: app/src/pages/settings/SettingsPage.vue:331
+#: app/src/pages/settings/SettingsPage.vue:334
 msgid "Export"
 msgstr ""
 
@@ -2930,8 +3617,16 @@ msgid "Export all"
 msgstr ""
 
 #: app/src/composables/useWorkflows.ts:20
-#: app/src/pages/history/components/HistoryDetailsModal.vue:178
+#: app/src/pages/history/components/HistoryDetailsModal.vue:179
 msgid "Export as JSON"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:232
+msgid "Export CSV"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:223
+msgid "Export data"
 msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:206
@@ -2943,11 +3638,12 @@ msgstr ""
 msgid "Export settings"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:174
+#: app/src/components/builder/BuilderNavbar.vue:168
 msgid "Export workflow"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:178
+#: app/src/pages/contacts/tabs/ContactsTab.vue:232
+#: app/src/pages/history/components/HistoryDetailsModal.vue:179
 #: app/src/pages/history/HistoryPage.vue:339
 #: app/src/pages/queue/QueuePage.vue:255
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
@@ -2955,12 +3651,13 @@ msgid "Exporting…"
 msgstr ""
 
 #: app/src/composables/useMessageHistory.ts:59
+#: app/src/pages/contacts/components/ImportModal.vue:337
 #: app/src/pages/history/HistoryPage.vue:75
 msgid "Failed"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:401
 #: app/src/pages/settings/SettingsPage.vue:415
+#: app/src/pages/settings/SettingsPage.vue:429
 msgid "Failed to send message."
 msgstr ""
 
@@ -2968,7 +3665,7 @@ msgstr ""
 msgid "Falkland Islands (Malvinas)"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:411
+#: app/src/components/flow/FlowNode.vue:388
 msgid "False"
 msgstr ""
 
@@ -2984,10 +3681,20 @@ msgstr ""
 msgid "Federated States of Micronesia"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:477
+#: app/src/pages/contacts/audienceFilter.ts:209
+#: app/src/pages/contacts/components/FilterRuleRow.vue:41
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:150
+msgid "Field"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:480
 #: app/src/builder/actions/definitions/condition.ts:123
 #: app/src/builder/actions/settings/ConditionSettings.vue:209
 msgid "Field ID"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:167
+msgid "Field key"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:173
@@ -3005,6 +3712,10 @@ msgstr ""
 #: admin/src/Builder/Messages.php:170
 #. translators: %s: form field ID
 msgid "Field with ID <span class=\"builder-placeholder\">%s</span> is not empty"
+msgstr ""
+
+#: app/src/pages/contacts/ContactsPage.vue:49
+msgid "Fields & tags"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:186
@@ -3053,7 +3764,21 @@ msgstr ""
 msgid "First"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:140
+#: app/src/pages/contacts/components/ImportModal.vue:270
+msgid "First line"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:147
+#: app/src/pages/contacts/components/ContactFormModal.vue:176
+#: app/src/pages/contacts/components/ImportModal.vue:68
+msgid "First name"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:76
+msgid "First name (or full name)"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:141
 msgid "First retry after"
 msgstr ""
 
@@ -3092,7 +3817,11 @@ msgstr ""
 msgid "Flexify Checkout for WooCommerce"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:253
+#: app/src/pages/contacts/labels.ts:44
+msgid "Flow"
+msgstr ""
+
+#: app/src/components/builder/BuilderTriggerSetupView.vue:249
 msgid "Flow name"
 msgstr ""
 
@@ -3120,6 +3849,10 @@ msgstr ""
 
 #: templates/otp-login/shared/otp-login-form.php:59
 msgid "Forgot your password?"
+msgstr ""
+
+#: admin/src/Contacts/Sources.php:614
+msgid "Form"
 msgstr ""
 
 #: admin/src/Integrations/Wpforms.php:198
@@ -3152,6 +3885,14 @@ msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:37
 msgid "Formal"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:301
+msgid "Forms"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:63
+msgid "Forms (WPForms and Elementor)"
 msgstr ""
 
 #: admin/src/Integrations/Integrations_Base.php:114
@@ -3189,6 +3930,10 @@ msgid ""
 "Resend."
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:70
+msgid "Full name"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:97
 msgid "Gabon"
 msgstr ""
@@ -3197,8 +3942,8 @@ msgstr ""
 msgid "Gambia"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:99
-#: admin/src/Admin/Settings/Registry.php:324
+#: admin/src/Admin/Settings/Registry.php:100
+#: admin/src/Admin/Settings/Registry.php:325
 #: admin/src/Builder/Actions.php:121
 #: app/src/stores/useWorkflowBuilderStore.ts:154
 #: app/src/stores/useWorkflowBuilderStore.ts:249
@@ -3228,7 +3973,7 @@ msgstr ""
 msgid "Generate a WooCommerce coupon and notify the customer."
 msgstr ""
 
-#: app/src/components/builder/BuilderStartChooser.vue:84
+#: app/src/components/builder/BuilderStartChooser.vue:73
 msgid "Generate with AI"
 msgstr ""
 
@@ -3256,6 +4001,22 @@ msgstr ""
 msgid "Gibraltar"
 msgstr ""
 
+#: admin/src/Rest/Audiences_Save.php:52
+msgid "Give the audience a name and at least one condition."
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:144
+msgid "Give the audience a name."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Save.php:58
+msgid "Give the field a label and a type."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Save.php:47
+msgid "Give the tag a name."
+msgstr ""
+
 #: app/src/components/fields/CloudSyncStatusField.vue:234
 msgid "Given up"
 msgstr ""
@@ -3264,7 +4025,7 @@ msgstr ""
 msgid "Given up after every retry"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:171
+#: admin/src/Admin/Settings/Registry.php:172
 msgid "Global instructions"
 msgstr ""
 
@@ -3276,7 +4037,7 @@ msgstr ""
 msgid "Go to settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1644
+#: admin/src/Admin/Builder/Registry.php:1674
 msgid "Greater than"
 msgstr ""
 
@@ -3321,15 +4082,19 @@ msgstr ""
 msgid "Haiti"
 msgstr ""
 
+#: app/src/pages/contacts/audienceFilter.ts:185
+msgid "has"
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:143
 #: admin/src/Integrations/Whatsapp_Interactive.php:172
 #: admin/src/Integrations/Whatsapp_Interactive.php:202
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:140
-#: app/src/pages/history/components/HistoryDetailsModal.vue:57
+#: app/src/pages/history/components/HistoryDetailsModal.vue:58
 msgid "Header"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:122
+#: admin/src/Builder/Webhook_Action.php:128
 msgid "Headers"
 msgstr ""
 
@@ -3351,7 +4116,7 @@ msgstr ""
 msgid "Hello, this is a test message."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:672
+#: app/src/pages/settings/SettingsPage.vue:686
 msgid "Help Center"
 msgstr ""
 
@@ -3367,11 +4132,12 @@ msgstr ""
 msgid "Hide what would be sent"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:77
+#: admin/src/Admin/Menu.php:86
+#: app/src/pages/contacts/components/ContactDrawer.vue:242
 msgid "History"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:264
+#: admin/src/Admin/Settings/Registry.php:265
 msgid "History retention"
 msgstr ""
 
@@ -3399,23 +4165,27 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:442
+#: admin/src/Admin/Builder/Registry.php:445
 #: app/src/builder/actions/definitions/timeDelay.ts:65
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:45
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:37
 msgid "Hours"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:180
+#: admin/src/Admin/Settings/Registry.php:181
 msgid ""
 "How creative the answers are, from 0 (predictable) to 1 (varied). Actions "
 "may override it."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:132
+#: admin/src/Admin/Settings/Registry.php:133
 msgid ""
 "How many times a failed message is retried before it is given up on. Choose "
 "\"Do not retry\" to record the failure without ever sending again."
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:192
+msgid "How the consent was obtained"
 msgstr ""
 
 #: admin/src/Integrations/Otp_Login.php:129
@@ -3428,12 +4198,22 @@ msgstr ""
 msgid "How this site is identified"
 msgstr ""
 
-#: app/src/components/builder/BuilderStartChooser.vue:25
+#: app/src/pages/contacts/components/ConsentModal.vue:51
+#: app/src/pages/contacts/components/ContactFormModal.vue:222
+#: app/src/pages/contacts/components/ImportModal.vue:309
+msgid "How was the consent obtained?"
+msgstr ""
+
+#: app/src/components/builder/BuilderStartChooser.vue:26
 msgid "How would you like to create your new workflow?"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:34
 msgid "Hungary"
+msgstr ""
+
+#: app/src/components/modals/ReviewPromptModal.vue:54
+msgid "I already did"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:384
@@ -3450,6 +4230,12 @@ msgstr ""
 msgid "Identifier"
 msgstr ""
 
+#: app/src/pages/contacts/components/FieldFormModal.vue:144
+msgid ""
+"Identifies the field in audience filters, imports and the API. It cannot "
+"change after the field is created."
+msgstr ""
+
 #: app/src/builder/components/base/SessionWindowNotice.vue:91
 msgid ""
 "If this workflow starts the conversation, put a “WhatsApp: Template "
@@ -3460,6 +4246,10 @@ msgstr ""
 msgid "Ignore actions already processed."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SourcesTab.vue:317
+msgid "Ignored"
+msgstr ""
+
 #: admin/src/Validations/Media_Types.php:38
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:32
 msgid "Image"
@@ -3468,9 +4258,10 @@ msgstr ""
 #: app/src/components/builder/BuilderImportModal.vue:45
 #: app/src/components/builder/BuilderImportView.vue:27
 #: app/src/components/builder/BuilderImportView.vue:41
-#: app/src/pages/settings/SettingsPage.vue:345
-#: app/src/pages/settings/SettingsPage.vue:348
+#: app/src/pages/contacts/labels.ts:41
 #: app/src/pages/settings/SettingsPage.vue:359
+#: app/src/pages/settings/SettingsPage.vue:362
+#: app/src/pages/settings/SettingsPage.vue:373
 msgid "Import"
 msgstr ""
 
@@ -3478,45 +4269,73 @@ msgstr ""
 msgid "Import / export settings"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:318
+msgid "Import %d contacts"
+msgstr ""
+
 #: app/src/components/builder/BuilderImportView.vue:28
 msgid "Import a real Joinotify export"
 msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:134
-#: app/src/components/builder/BuilderStartChooser.vue:65
+#: app/src/components/builder/BuilderStartChooser.vue:59
 msgid "Import a template"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:249
+msgid "Import contacts"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:224
+msgid "Import CSV"
+msgstr ""
+
 #: admin/src/Builder/Workflow_Manager.php:136
-#: app/src/components/builder/BuilderStartChooser.vue:67
+#: app/src/components/builder/BuilderStartChooser.vue:61
 msgid "Import file"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:330
+msgid "Import finished."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Import.php:58
+msgid "Import not found."
+msgstr ""
+
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:96
-#: app/src/pages/settings/SettingsPage.vue:332
+#: app/src/pages/settings/SettingsPage.vue:346
 msgid "Import settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:91
+#: admin/src/Admin/Builder/Registry.php:94
 #: app/src/components/builder/BuilderImportModal.vue:27
 msgid "Import template"
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:132
+#: app/src/components/builder/TemplateCard.vue:119
 msgid "Import workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1271
+#: app/src/pages/contacts/labels.ts:123
+msgid "Imported"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:1274
 #. translators: %s: random number appended to the imported automation name
 msgid "Imported automation #%s"
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:132
+#: app/src/components/builder/TemplateCard.vue:119
 msgid "Importing..."
 msgstr ""
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:96
 msgid "Importing…"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:330
+msgid "Importing… %1$d of %2$d"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:63
@@ -3528,14 +4347,14 @@ msgstr ""
 msgid "In trash"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:142
+#: app/src/components/builder/BuilderNavbar.vue:143
 #: app/src/components/workflows/WorkflowTableRow.vue:38
 #: app/src/composables/useWorkflows.ts:188
 #: app/src/pages/queue/QueuePage.vue:342
 msgid "Inactive"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:133
+#: app/src/components/builder/BuilderNavbar.vue:134
 msgid "Inactive workflow"
 msgstr ""
 
@@ -3566,7 +4385,7 @@ msgid "Info"
 msgstr ""
 
 #: admin/src/Views/Builder.php:35
-#: app/src/components/builder/BuilderCanvasView.vue:149
+#: app/src/components/builder/BuilderCanvasView.vue:154
 msgid "Initializing builder"
 msgstr ""
 
@@ -3591,7 +4410,7 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:944
+#: admin/src/Admin/Settings/Registry.php:947
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
@@ -3600,7 +4419,7 @@ msgstr ""
 msgid "Insufficient data to create the coupon."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:118
+#: app/src/pages/builder/BuilderPage.vue:121
 msgid "Integration not active"
 msgstr ""
 
@@ -3609,7 +4428,7 @@ msgstr ""
 msgid "Integration settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:212
+#: admin/src/Admin/Settings/Registry.php:213
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
 msgstr ""
@@ -3624,12 +4443,16 @@ msgstr ""
 msgid "Internal summary"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:254
+#: app/src/components/builder/BuilderTriggerSetupView.vue:250
 msgid "internal use"
 msgstr ""
 
 #: admin/src/AI/AI_Manager.php:127
 msgid "Invalid AI request."
+msgstr ""
+
+#: admin/src/Rest/User_Review_Prompt.php:44
+msgid "Invalid answer."
 msgstr ""
 
 #: templates/otp-login/shared/otp-login-form.php:64
@@ -3640,8 +4463,8 @@ msgstr ""
 msgid "Invalid file type. Select a .json file."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:954
-#: app/src/pages/settings/SettingsPage.vue:359
+#: app/src/pages/builder/BuilderPage.vue:984
+#: app/src/pages/settings/SettingsPage.vue:373
 #: app/src/parsers/workflowParser.ts:512
 msgid "Invalid file."
 msgstr ""
@@ -3655,6 +4478,7 @@ msgstr ""
 msgid "Invalid JSON."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:41
 #: templates/otp-login/shared/otp-login-form.php:63
 msgid "Invalid number"
 msgstr ""
@@ -3691,7 +4515,7 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:303
+#: admin/src/Admin/Settings/Registry.php:304
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
 
@@ -3699,20 +4523,86 @@ msgstr ""
 msgid "Irreversible actions for clearing configuration and logs."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1642
+#: app/src/pages/contacts/audienceFilter.ts:169
+#: app/src/pages/contacts/audienceFilter.ts:170
+msgid "is"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:182
+msgid "is after"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:178
+msgid "is at least"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:180
+msgid "is at most"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:181
+msgid "is before"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:188
+#: app/src/pages/contacts/audienceFilter.ts:190
+#: app/src/pages/contacts/audienceFilter.ts:191
+msgid "is empty"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:1672
 msgid "Is empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1638
+#: admin/src/Admin/Builder/Registry.php:1668
 msgid "Is equal to"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1643
+#: app/src/pages/contacts/audienceFilter.ts:187
+#: app/src/pages/contacts/audienceFilter.ts:189
+#: app/src/pages/contacts/audienceFilter.ts:192
+msgid "is filled"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:177
+msgid "is greater than"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:179
+msgid "is less than"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:194
+msgid "is no"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:184
+msgid "is none of"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:171
+#: app/src/pages/contacts/audienceFilter.ts:172
+msgid "is not"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:1673
 msgid "Is not empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1639
+#: admin/src/Admin/Builder/Registry.php:1669
 msgid "Is not equal to"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:183
+msgid "is one of"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:271
+msgid "Is the"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:193
+msgid "is yes"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:217
@@ -3780,10 +4670,12 @@ msgstr ""
 #: app/src/components/brand/BrandMark.vue:15
 #: app/src/components/brand/BrandMark.vue:17
 #: app/src/components/layout/PageHeader.vue:32
-#: app/src/pages/builder/BuilderPage.vue:734
-#: app/src/pages/onboarding/OnboardingPage.vue:207
+#: app/src/components/modals/ReviewPromptModal.vue:29
+#: app/src/composables/useToasts.ts:59
+#: app/src/pages/builder/BuilderPage.vue:764
+#: app/src/pages/onboarding/OnboardingPage.vue:208
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
-#: app/src/pages/settings/SettingsPage.vue:210
+#: app/src/pages/settings/SettingsPage.vue:224
 msgid "Joinotify"
 msgstr ""
 
@@ -3804,9 +4696,14 @@ msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:288
 #: admin/src/Cloud_Sync/Cloud_Sync.php:294
-#: admin/src/Cloud_Sync/Consent.php:611
-#: admin/src/Cloud_Sync/Consent.php:626
+#: admin/src/Cloud_Sync/Consent.php:613
+#: admin/src/Cloud_Sync/Consent.php:628
+#: app/src/pages/contacts/tabs/SourcesTab.vue:213
 msgid "Joinotify Cloud sync"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:250
+msgid "Joinotify contact"
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:86
@@ -3816,7 +4713,7 @@ msgid ""
 "is the only credential the plugin needs."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:158
+#: admin/src/Admin/Settings/Registry.php:159
 msgid ""
 "Joinotify generates AI content through the WordPress AI Client. Pick the "
 "provider and store its credentials once in Settings → Connectors, and every "
@@ -3839,17 +4736,17 @@ msgid ""
 "gets the first automation running in a couple of minutes."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:663
+#: admin/src/Cloud_Sync/Consent.php:665
 msgid "Joinotify marketing consent"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:106
-#: admin/src/Admin/Menu.php:107
-#: admin/src/Admin/Menu.php:119
+#: admin/src/Admin/Menu.php:115
+#: admin/src/Admin/Menu.php:116
+#: admin/src/Admin/Menu.php:128
 msgid "Joinotify setup"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:571
+#: admin/src/Admin/Settings/Registry.php:572
 msgid "Joinotify version"
 msgstr ""
 
@@ -3857,7 +4754,7 @@ msgstr ""
 msgid "Jordan"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:113
+#: admin/src/Builder/Webhook_Action.php:119
 msgid "JSON"
 msgstr ""
 
@@ -3865,8 +4762,8 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:267
-#: admin/src/Admin/Settings/Registry.php:285
+#: admin/src/Admin/Settings/Registry.php:268
+#: admin/src/Admin/Settings/Registry.php:286
 msgid "Keep forever"
 msgstr ""
 
@@ -3887,7 +4784,12 @@ msgid "kept on the do-not-contact list"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:61
+#: app/src/pages/contacts/components/ImportModal.vue:162
 msgid "kept opted out"
+msgstr ""
+
+#: app/src/pages/contacts/components/FieldFormModal.vue:134
+msgid "Key"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:192
@@ -3910,11 +4812,22 @@ msgid "Kyrgyzstan"
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:152
+#: app/src/pages/contacts/components/FieldFormModal.vue:129
 msgid "Label"
 msgstr ""
 
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:153
 msgid "Label (optional)"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:196
+msgid ""
+"Labels that group contacts: customers, leads of a form, VIPs… Integrations "
+"create the tags they use on their own."
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:72
+msgid "Language (e.g. pt-BR)"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:203
@@ -3931,6 +4844,26 @@ msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:209
 msgid "Last error: %s."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:287
+msgid "Last interaction"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:258
+#: app/src/pages/contacts/tabs/ContactsTab.vue:83
+msgid "Last message received"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:260
+msgid "Last message sent"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:153
+#: app/src/pages/contacts/components/ContactFormModal.vue:182
+#: app/src/pages/contacts/components/FormRuleEditor.vue:80
+#: app/src/pages/contacts/components/ImportModal.vue:69
+msgid "Last name"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:305
@@ -3973,15 +4906,39 @@ msgstr ""
 msgid "Leads and abandoned, recovered or lost carts from Flexify Checkout."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SourcesTab.vue:70
+msgid ""
+"Leads collected at checkout and carts that were abandoned, recovered or "
+"lost."
+msgstr ""
+
+#: app/src/components/modals/ReviewPromptModal.vue:72
+msgid "Leave a review"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:184
+msgid "Leave as it is"
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:264
 msgid "Leave blank to remove a reaction already sent."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1469
+#: app/src/pages/contacts/components/ContactFormModal.vue:218
+msgid ""
+"Leave it unticked when you do not have that consent: the contact still "
+"receives the messages of your workflows, but not campaigns."
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:291
+msgid "Leave them as they are"
+msgstr ""
+
+#: app/src/pages/builder/BuilderPage.vue:1500
 msgid "Leave without saving"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1457
+#: app/src/pages/builder/BuilderPage.vue:1488
 msgid "Leave without saving?"
 msgstr ""
 
@@ -4006,7 +4963,7 @@ msgstr ""
 msgid "Lesotho"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1645
+#: admin/src/Admin/Builder/Registry.php:1675
 msgid "Less than"
 msgstr ""
 
@@ -4042,6 +4999,14 @@ msgstr ""
 msgid "Liechtenstein"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:346
+msgid "Line %d"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:343
+msgid "Lines not imported"
+msgstr ""
+
 #: app/src/builder/actions/definitions/loop.ts:103
 #: app/src/builder/actions/settings/LoopSettings.vue:69
 #: app/src/builder/actions/settings/LoopSettings.vue:72
@@ -4060,19 +5025,23 @@ msgstr ""
 msgid "Load keys"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:92
+#: app/src/pages/contacts/components/ContactDrawer.vue:324
+msgid "Load more"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:95
 msgid "Load workflow"
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:152
+#: app/src/components/builder/BuilderCanvasView.vue:157
 msgid "Loading actions..."
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:220
+#: app/src/components/builder/BuilderCanvasView.vue:225
 msgid "Loading flow canvas"
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:150
+#: app/src/components/builder/BuilderCanvasView.vue:155
 msgid "Loading senders..."
 msgstr ""
 
@@ -4096,17 +5065,25 @@ msgstr ""
 msgid "Loading the sync status…"
 msgstr ""
 
-#: app/src/components/builder/BuilderCanvasView.vue:151
+#: app/src/components/builder/BuilderCanvasView.vue:156
 msgid "Loading trigger..."
 msgstr ""
 
+#: app/src/pages/contacts/components/ContactDrawer.vue:191
+#: app/src/pages/contacts/components/ContactDrawer.vue:328
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:149
+#: app/src/pages/contacts/tabs/ContactsTab.vue:267
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:144
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:201
+#: app/src/pages/contacts/tabs/SourcesTab.vue:201
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:166
 #: app/src/pages/history/HistoryPage.vue:356
 #: app/src/pages/queue/QueuePage.vue:282
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:105
+#: admin/src/Admin/Settings/Registry.php:106
 msgid "Location and phone numbers"
 msgstr ""
 
@@ -4140,14 +5117,14 @@ msgstr ""
 msgid "Login successful."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:543
-#: app/src/pages/settings/SettingsPage.vue:549
-#: app/src/pages/settings/SettingsPage.vue:580
-#: app/src/pages/settings/SettingsPage.vue:583
+#: app/src/pages/settings/SettingsPage.vue:557
+#: app/src/pages/settings/SettingsPage.vue:563
+#: app/src/pages/settings/SettingsPage.vue:594
+#: app/src/pages/settings/SettingsPage.vue:597
 msgid "Logs"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:580
+#: app/src/pages/settings/SettingsPage.vue:594
 msgid "Logs cleared successfully."
 msgstr ""
 
@@ -4166,7 +5143,7 @@ msgid "Loop"
 msgstr ""
 
 #: app/src/builder/actions/definitions/loop.ts:89
-#: app/src/components/flow/FlowNode.vue:442
+#: app/src/components/flow/FlowNode.vue:419
 msgid "Loop body"
 msgstr ""
 
@@ -4190,15 +5167,15 @@ msgstr ""
 msgid "Madagascar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:255
+#: admin/src/Admin/Settings/Registry.php:256
 msgid "Maintains support integrations and advanced contracts available."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:239
+#: admin/src/Admin/Settings/Registry.php:240
 msgid "Maintenance and preference"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:234
+#: admin/src/Admin/Settings/Registry.php:235
 msgid "Maintenance, logs, updates, and environment details."
 msgstr ""
 
@@ -4222,7 +5199,7 @@ msgstr ""
 msgid "Malta"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:193
+#: admin/src/Admin/Settings/Registry.php:194
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
 
@@ -4231,14 +5208,14 @@ msgstr ""
 msgid "Manage workflows"
 msgstr ""
 
-#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:82
+#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:83
 msgid ""
 "Map an entity (post type) and a meta key to a named variable. The variable "
 "becomes available in the flow builder and is replaced at runtime with the "
 "matching post meta value."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:226
+#: admin/src/Admin/Settings/Registry.php:227
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
@@ -4251,8 +5228,14 @@ msgstr ""
 msgid "Mark as inactive"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:652
+#: admin/src/Cloud_Sync/Consent.php:654
+#: admin/src/Contacts/Contact_Actions.php:181
+#: app/src/pages/contacts/tabs/SourcesTab.vue:264
 msgid "Marketing consent"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:87
+msgid "Marketing consent field"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:198
@@ -4271,13 +5254,17 @@ msgstr ""
 msgid "Mauritius"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:131
+#: admin/src/Admin/Settings/Registry.php:132
 msgid "Maximum attempts"
 msgstr ""
 
 #: app/src/builder/actions/settings/LoopSettings.vue:90
 #: app/src/builder/actions/settings/LoopSettings.vue:93
 msgid "Maximum items"
+msgstr ""
+
+#: app/src/components/modals/ReviewPromptModal.vue:63
+msgid "Maybe later"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:116
@@ -4307,7 +5294,7 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:182
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:105
-#: app/src/pages/history/components/HistoryDetailsModal.vue:35
+#: app/src/pages/history/components/HistoryDetailsModal.vue:36
 msgid "Media type"
 msgstr ""
 
@@ -4317,7 +5304,7 @@ msgstr ""
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:68
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:112
-#: app/src/pages/history/components/HistoryDetailsModal.vue:164
+#: app/src/pages/history/components/HistoryDetailsModal.vue:165
 msgid "Media URL"
 msgstr ""
 
@@ -4332,6 +5319,19 @@ msgstr ""
 #: admin/src/Integrations/Woocommerce.php:492
 #. translators: %s: site URL
 msgid "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews"
+msgstr ""
+
+#: app/src/pages/contacts/components/MergeModal.vue:132
+msgid "Merge"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:222
+#: app/src/pages/contacts/components/MergeModal.vue:95
+msgid "Merge a duplicate"
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:128
+msgid "Merged with a duplicate"
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:144
@@ -4356,13 +5356,13 @@ msgstr ""
 msgid "Message content, media or message history"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:97
+#: app/src/pages/history/components/HistoryDetailsModal.vue:98
 msgid "Message details"
 msgstr ""
 
 #: admin/src/Admin/History/Registry.php:368
-#: admin/src/Admin/Menu.php:76
-#: admin/src/Admin/Settings/Registry.php:259
+#: admin/src/Admin/Menu.php:85
+#: admin/src/Admin/Settings/Registry.php:260
 #: app/src/pages/history/HistoryPage.vue:220
 msgid "Message history"
 msgstr ""
@@ -4377,7 +5377,7 @@ msgstr ""
 msgid "Message ID"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:409
+#: app/src/pages/settings/SettingsPage.vue:423
 msgid "Message sent."
 msgstr ""
 
@@ -4407,11 +5407,15 @@ msgstr ""
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:482
+#: admin/src/Admin/Builder/Registry.php:485
 #: app/src/builder/actions/definitions/condition.ts:124
 #: app/src/builder/actions/settings/ConditionSettings.vue:203
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
 msgid "Meta key"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:289
+msgid "Meta key, e.g. _billing_cpf"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:88
@@ -4424,7 +5428,7 @@ msgstr ""
 msgid "Meta rejected this template."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:94
+#: admin/src/Builder/Webhook_Action.php:100
 msgid "Method"
 msgstr ""
 
@@ -4444,7 +5448,7 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:441
+#: admin/src/Admin/Builder/Registry.php:444
 #: app/src/builder/actions/definitions/timeDelay.ts:64
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:44
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:36
@@ -4498,7 +5502,7 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:445
+#: admin/src/Admin/Builder/Registry.php:448
 #: app/src/builder/actions/definitions/timeDelay.ts:68
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:48
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:40
@@ -4525,6 +5529,10 @@ msgstr ""
 msgid "Mozambique"
 msgstr ""
 
+#: app/src/pages/contacts/labels.ts:149
+msgid "Multiple choice"
+msgstr ""
+
 #: app/src/parsers/workflowParser.ts:89
 #: app/src/parsers/workflowParser.ts:576
 #: app/src/serializers/workflowSerializer.ts:169
@@ -4535,13 +5543,13 @@ msgstr ""
 msgid "My automation"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:158
-#: admin/src/Admin/Builder/Registry.php:1064
+#: admin/src/Admin/Builder/Registry.php:161
+#: admin/src/Admin/Builder/Registry.php:1067
 #. translators: %s: random number appended to the default automation name
 msgid "My automation #%s"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:259
+#: app/src/components/builder/BuilderTriggerSetupView.vue:255
 msgid "My automation #129720"
 msgstr ""
 
@@ -4550,7 +5558,14 @@ msgid "Myanmar"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowTableHeader.vue:35
+#: app/src/pages/contacts/components/AudienceEditor.vue:187
+#: app/src/pages/contacts/components/TagFormModal.vue:77
+#: app/src/pages/contacts/tabs/ContactsTab.vue:82
 msgid "Name"
+msgstr ""
+
+#: app/src/pages/contacts/components/MergeModal.vue:105
+msgid "Name, e-mail or phone"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:118
@@ -4578,8 +5593,27 @@ msgstr ""
 msgid "Never expires"
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:179
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:138
+msgid "New audience"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:193
 msgid "New Caledonia"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:305
+msgid ""
+"New contacts are created opted in, and existing ones only if their consent "
+"was unknown. An opt-out is never undone."
+msgstr ""
+
+#: app/src/pages/contacts/components/FieldFormModal.vue:124
+msgid "New custom field"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:136
+msgid "New field"
 msgstr ""
 
 #: admin/src/Core/Workflow_Post_Type.php:55
@@ -4598,6 +5632,11 @@ msgstr ""
 msgid "New subscription created"
 msgstr ""
 
+#: app/src/pages/contacts/components/TagFormModal.vue:72
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:198
+msgid "New tag"
+msgstr ""
+
 #: admin/src/Integrations/Wordpress.php:87
 msgid "New user registration"
 msgstr ""
@@ -4606,14 +5645,18 @@ msgstr ""
 msgid "New variable"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:129
-#: app/src/pages/builder/BuilderPage.vue:763
-#: app/src/pages/builder/BuilderPage.vue:825
+#: app/src/components/builder/BuilderNavbar.vue:130
+#: app/src/pages/builder/BuilderPage.vue:793
+#: app/src/pages/builder/BuilderPage.vue:855
 msgid "New workflow"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:57
 msgid "New Zealand"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:81
+msgid "Newest first"
 msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:47
@@ -4644,17 +5687,24 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:560
-#: admin/src/Admin/Settings/Registry.php:584
-#: admin/src/Admin/Settings/Registry.php:589
-#: admin/src/Admin/Settings/Registry.php:594
+#: admin/src/Admin/Settings/Registry.php:561
+#: admin/src/Admin/Settings/Registry.php:585
+#: admin/src/Admin/Settings/Registry.php:590
+#: admin/src/Admin/Settings/Registry.php:595
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
 #: admin/src/Integrations/Elementor_Forms.php:167
 #: app/src/builder/actions/settings/ConditionSettings.vue:104
 #: app/src/builder/actions/utils/actionDescription.ts:186
+#: app/src/pages/contacts/components/AttributeInput.vue:37
+#: app/src/pages/contacts/components/ContactDrawer.vue:78
+#: app/src/pages/contacts/components/FilterRuleRow.vue:142
 msgid "No"
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:43
+msgid "No access to the contact base"
 msgstr ""
 
 #: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:148
@@ -4683,16 +5733,24 @@ msgid ""
 "until one is."
 msgstr ""
 
-#: app/src/components/fields/WhatsappTemplateField.vue:89
+#: app/src/components/fields/WhatsappTemplateField.vue:90
 msgid ""
 "No approved template of this type was found on your account. Create it in "
 "the Joinotify panel and sync again."
 msgstr ""
 
-#: app/src/components/fields/WhatsappTemplateField.vue:90
+#: app/src/components/fields/WhatsappTemplateField.vue:91
 msgid ""
 "No approved template was found on your account. Create it in the Joinotify "
 "panel and sync again."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:199
+msgid "No archived audiences"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:199
+msgid "No audiences yet"
 msgstr ""
 
 #: admin/src/Validations/Conditions.php:36
@@ -4711,11 +5769,27 @@ msgstr ""
 msgid "No configuration required"
 msgstr ""
 
+#: app/src/pages/contacts/components/ContactDrawer.vue:272
+msgid "No consent recorded for marketing messages."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:332
+msgid "No contact matches these filters"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:332
+msgid "No contacts yet"
+msgstr ""
+
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:29
 msgid "No country matches that search."
 msgstr ""
 
-#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:100
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:186
+msgid "No custom fields yet."
+msgstr ""
+
+#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:99
 msgid "No custom variable yet. Click “Add variable” to create your first one."
 msgstr ""
 
@@ -4744,11 +5818,15 @@ msgstr ""
 msgid "No flow found."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SourcesTab.vue:337
+msgid "No form was found on this site."
+msgstr ""
+
 #: app/src/pages/history/HistoryPage.vue:434
 msgid "No history records match the current filters."
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:225
+#: app/src/components/builder/BuilderTriggerSetupView.vue:221
 msgid "No integrations found."
 msgstr ""
 
@@ -4779,7 +5857,7 @@ msgid ""
 "Joinotify account."
 msgstr ""
 
-#: app/src/components/fields/SelectField.vue:336
+#: app/src/components/fields/SelectField.vue:335
 msgid "No options available"
 msgstr ""
 
@@ -4815,6 +5893,14 @@ msgstr ""
 msgid "No sender available"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:230
+msgid "No tags yet."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:285
+msgid "No tags."
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:293
 msgid ""
 "No template found. Create one on the Joinotify panel and approve it with "
@@ -4829,12 +5915,20 @@ msgstr ""
 msgid "No test phone number registered."
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:113
+#: app/src/components/builder/TemplateCard.vue:104
 msgid "No trigger"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:294
+#: app/src/components/builder/BuilderTriggerSetupView.vue:290
 msgid "No triggers available for this integration."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:306
+msgid "No user of this site has this e-mail or phone."
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:163
+msgid "no valid phone number"
 msgstr ""
 
 #: app/src/components/base/VariablePicker.vue:139
@@ -4857,7 +5951,7 @@ msgstr ""
 msgid "No workflow steps are currently waiting to run."
 msgstr ""
 
-#: app/src/components/workflows/EmptyState.vue:15
+#: app/src/components/workflows/EmptyState.vue:16
 #: app/src/pages/workflows/WorkflowsPage.vue:86
 msgid "No workflows found"
 msgstr ""
@@ -4877,7 +5971,7 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:775
+#: admin/src/Admin/Settings/Registry.php:778
 msgid "None"
 msgstr ""
 
@@ -4905,8 +5999,21 @@ msgstr ""
 msgid "Norway"
 msgstr ""
 
-#: app/src/components/fields/WhatsappTemplateField.vue:71
+#: app/src/pages/contacts/tabs/SourcesTab.vue:237
+msgid "Not active on this site."
+msgstr ""
+
+#: app/src/components/fields/WhatsappTemplateField.vue:72
 msgid "not found in the account"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:174
+msgid "Note"
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:191
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:142
+msgid "Note (optional)"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:208
@@ -4915,6 +6022,10 @@ msgstr ""
 
 #: app/src/pages/queue/QueuePage.vue:382
 msgid "Nothing in the queue"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:319
+msgid "Nothing recorded yet."
 msgstr ""
 
 #: admin/src/Rest/History_Export.php:54
@@ -4931,13 +6042,28 @@ msgstr ""
 msgid "Notification"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:117
+#: app/src/pages/contacts/labels.ts:144
+msgid "Number"
+msgstr ""
+
+#: admin/src/Rest/Suppressions_Save.php:59
+msgid "Number added to the suppression list."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:118
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:376
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:133
+msgid ""
+"Numbers on this list never receive a marketing campaign, whatever their "
+"consent. Workflow messages are not affected. Opt-outs land here on their "
+"own."
+msgstr ""
+
+#: app/src/pages/settings/SettingsPage.vue:390
 msgid "Numbers synced."
 msgstr ""
 
@@ -4945,14 +6071,20 @@ msgstr ""
 #: app/src/composables/useMessageHistory.ts:96
 #: app/src/composables/useProcessingQueue.ts:90
 #: app/src/composables/useWorkflows.ts:204
+#: app/src/pages/contacts/useContactList.ts:54
 msgid "of"
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:53
+msgid "of these conditions"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:311
 msgid "Of those sent, %1$d %2$s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:624
+#: admin/src/Admin/Settings/Registry.php:625
+#: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "Off"
 msgstr ""
 
@@ -4978,7 +6110,8 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:624
+#: admin/src/Admin/Settings/Registry.php:625
+#: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "On"
 msgstr ""
 
@@ -4987,6 +6120,14 @@ msgid ""
 "On the official WhatsApp Cloud API, this kind of message only reaches a "
 "contact within 24 hours of their last reply. Outside that window Meta "
 "refuses it."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:275
+msgid "On the suppression list"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:299
+msgid "On this site"
 msgstr ""
 
 #: app/src/builder/actions/settings/LoopSettings.vue:74
@@ -5006,22 +6147,36 @@ msgid ""
 "example pt_BR or en_US."
 msgstr ""
 
+#: app/src/pages/contacts/components/ConsentModal.vue:42
+msgid ""
+"Only record consent the contact actually gave. The evidence is kept with "
+"the contact and shown if the consent is ever questioned."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:82
+msgid "Only the forms switched on below"
+msgstr ""
+
 #: app/src/components/fields/JoinotifyApiKeyField.vue:195
 msgid ""
 "Only the public prefix of your key is shown. Remove it to connect a "
 "different account."
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:215
+#: app/src/components/builder/BuilderNavbar.vue:194
 msgid "Open documentation"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1449
+#: app/src/pages/builder/BuilderPage.vue:1480
 msgid "Open integration settings"
 msgstr ""
 
 #: app/src/components/fields/CloudConnectField.vue:208
 msgid "Open panel"
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:65
+msgid "Open settings"
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/AiStep.vue:52
@@ -5030,6 +6185,14 @@ msgstr ""
 
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:47
 msgid "Open the documentation"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:237
+msgid "Open the existing contact"
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:71
+msgid "Open the Joinotify panel"
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:139
@@ -5048,26 +6211,47 @@ msgstr ""
 msgid "Open trigger actions"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:593
+#: admin/src/Admin/Settings/Registry.php:594
 msgid "OpenSSL extension"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:240
+#: admin/src/Admin/Settings/Registry.php:241
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:471
+#: admin/src/Admin/Builder/Registry.php:474
 #: app/src/builder/actions/definitions/condition.ts:122
 #: app/src/builder/actions/definitions/condition.ts:133
 #: app/src/builder/actions/settings/ConditionSettings.vue:187
 msgid "Operator"
 msgstr ""
 
+#: admin/src/Rest/Contacts_Consent.php:61
+msgid "Opt-out recorded. The contact will not receive marketing messages."
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:131
+#: app/src/pages/contacts/labels.ts:25
+#: app/src/pages/contacts/labels.ts:126
+msgid "Opted in"
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:130
+msgid "Opted in and not suppressed"
+msgstr ""
+
 #: admin/src/Cloud_Sync/Consent.php:522
 msgid "Opted in on Joinotify"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:657
+#: app/src/pages/contacts/components/AudienceEditor.vue:133
+#: app/src/pages/contacts/labels.ts:27
+#: app/src/pages/contacts/labels.ts:127
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:40
+msgid "Opted out"
+msgstr ""
+
+#: admin/src/Cloud_Sync/Consent.php:659
 msgid "Opted out of marketing on"
 msgstr ""
 
@@ -5103,7 +6287,7 @@ msgstr ""
 msgid "Optional. Friendly name shown as the sender of the e-mails."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:126
+#: admin/src/Builder/Webhook_Action.php:132
 msgid "Optional. One \"Name: value\" per line."
 msgstr ""
 
@@ -5111,7 +6295,7 @@ msgstr ""
 msgid "Optional. Used only when a workflow action does not specify a chat id."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:132
+#: admin/src/Builder/Webhook_Action.php:138
 msgid ""
 "Optional. When set, each request carries X-Joinotify-Timestamp and "
 "X-Joinotify-Signature-256 (sha256 HMAC of \"timestamp.body\"), so the "
@@ -5119,12 +6303,16 @@ msgid ""
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:179
-#: app/src/components/flow/FlowNode.vue:273
+#: app/src/components/flow/FlowNode.vue:250
 msgid "Options"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:601
+#: app/src/pages/settings/SettingsPage.vue:615
 msgid "Options have been reset."
+msgstr ""
+
+#: app/src/pages/contacts/components/FieldFormModal.vue:154
+msgid "Options, one per line"
 msgstr ""
 
 #: app/src/components/builder/BuilderImportView.vue:36
@@ -5163,6 +6351,10 @@ msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:202
 msgid "Order fully refunded"
+msgstr ""
+
+#: admin/src/Contacts/Sources.php:242
+msgid "Order meta or checkout field (type the key)"
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:1482
@@ -5211,6 +6403,10 @@ msgstr ""
 
 #: admin/src/Integrations/Otp_Login.php:97
 msgid "OTP Login - Passwordless authentication"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:160
+msgid "over the plan's contact limit"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:60
@@ -5298,7 +6494,7 @@ msgstr ""
 msgid "Pause the workflow before the next step."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:149
+#: app/src/pages/history/components/HistoryDetailsModal.vue:150
 msgid "Payload sent"
 msgstr ""
 
@@ -5308,6 +6504,10 @@ msgstr ""
 
 #: admin/src/Integrations/Wpforms.php:94
 msgid "Payment processed by PayPal"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:58
+msgid "People who register on the site, and changes to their phone, name or e-mail."
 msgstr ""
 
 #: admin/src/Builder/Messages.php:328
@@ -5320,8 +6520,8 @@ msgstr ""
 msgid "Percentage discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:422
-#: admin/src/Admin/Builder/Registry.php:437
+#: admin/src/Admin/Builder/Registry.php:425
+#: admin/src/Admin/Builder/Registry.php:440
 #: app/src/builder/actions/definitions/timeDelay.ts:57
 #: app/src/builder/actions/definitions/timeDelay.ts:62
 #: app/src/builder/actions/definitions/timeDelay.ts:90
@@ -5343,7 +6543,7 @@ msgstr ""
 msgid "Persona / system message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:172
+#: admin/src/Admin/Settings/Registry.php:173
 msgid ""
 "Persona, tone and rules prepended to every AI generation. Each action can "
 "add its own instructions on top of this."
@@ -5355,6 +6555,18 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:56
 msgid "Philippines"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:89
+#: app/src/pages/contacts/components/ContactDrawer.vue:248
+#: app/src/pages/contacts/components/ContactFormModal.vue:52
+#: app/src/pages/contacts/components/FormRuleEditor.vue:68
+#: app/src/pages/contacts/components/ImportModal.vue:67
+#: app/src/pages/contacts/labels.ts:152
+#: app/src/pages/contacts/tabs/ContactsTab.vue:283
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:138
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:172
+msgid "Phone"
 msgstr ""
 
 #: templates/otp-login/myaccount/form-login.php:88
@@ -5386,27 +6598,31 @@ msgstr ""
 msgid "Phone numbers, contacts or customer data"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:192
-#: admin/src/Admin/Settings/Registry.php:330
+#: app/src/pages/contacts/components/ContactFormModal.vue:52
+msgid "Phone with country code"
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:193
+#: admin/src/Admin/Settings/Registry.php:331
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
-#: app/src/pages/settings/SettingsPage.vue:370
-#: app/src/pages/settings/SettingsPage.vue:376
-#: app/src/pages/settings/SettingsPage.vue:381
-#: app/src/pages/settings/SettingsPage.vue:401
-#: app/src/pages/settings/SettingsPage.vue:409
+#: app/src/pages/settings/SettingsPage.vue:384
+#: app/src/pages/settings/SettingsPage.vue:390
+#: app/src/pages/settings/SettingsPage.vue:395
 #: app/src/pages/settings/SettingsPage.vue:415
-#: app/src/pages/settings/SettingsPage.vue:488
-#: app/src/pages/settings/SettingsPage.vue:490
-#: app/src/pages/settings/SettingsPage.vue:518
-#: app/src/pages/settings/SettingsPage.vue:523
+#: app/src/pages/settings/SettingsPage.vue:423
+#: app/src/pages/settings/SettingsPage.vue:429
+#: app/src/pages/settings/SettingsPage.vue:502
+#: app/src/pages/settings/SettingsPage.vue:504
+#: app/src/pages/settings/SettingsPage.vue:532
+#: app/src/pages/settings/SettingsPage.vue:537
 msgid "Phones"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:199
+#: admin/src/Admin/Settings/Registry.php:200
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:578
+#: admin/src/Admin/Settings/Registry.php:579
 msgid "PHP version"
 msgstr ""
 
@@ -5414,8 +6630,23 @@ msgstr ""
 msgid "Pick a color"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:253
+msgid ""
+"Pick a CSV file with a header line and one contact per line. Every contact "
+"needs a phone number; a number without the country code is read in the "
+"default country of your settings."
+msgstr ""
+
 #: app/src/builder/components/base/AttachmentsField.vue:201
 msgid "Pick a file from the library"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Apply.php:50
+msgid "Pick a tag."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Merge.php:47
+msgid "Pick another contact to merge into this one."
 msgstr ""
 
 #: app/src/components/fields/ColorScaleField.vue:141
@@ -5430,6 +6661,14 @@ msgstr ""
 msgid "Pick shade %s"
 msgstr ""
 
+#: app/src/pages/contacts/components/TagPicker.vue:91
+msgid "Pick tags…"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:284
+msgid "Pick the column that holds the phone number."
+msgstr ""
+
 #: admin/src/Integrations/Otp_Login.php:160
 msgid "Pixel"
 msgstr ""
@@ -5442,7 +6681,7 @@ msgstr ""
 msgid "Placeholders"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:117
+#: admin/src/Builder/Webhook_Action.php:123
 msgid ""
 "Placeholders are replaced before sending. It must be valid JSON once they "
 "are."
@@ -5464,7 +6703,7 @@ msgstr ""
 msgid "Please wait before requesting another code."
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:198
+#: app/src/components/builder/BuilderNavbar.vue:180
 msgid "Plugin settings"
 msgstr ""
 
@@ -5472,7 +6711,7 @@ msgstr ""
 msgid "plugin_version missing; version normalized automatically."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:100
+#: admin/src/Admin/Settings/Registry.php:101
 msgid "Plugin's basic preferences, WhatsApp connection, and notifications."
 msgstr ""
 
@@ -5482,6 +6721,10 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:129
 msgid "Portugal"
+msgstr ""
+
+#: app/src/pages/contacts/components/FieldFormModal.vue:159
+msgid "Position"
 msgstr ""
 
 #: app/src/registries/triggerRegistry.ts:304
@@ -5508,6 +6751,10 @@ msgid ""
 "repeated."
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:213
+msgid "Preview"
+msgstr ""
+
 #: app/src/components/workflows/PaginationControls.vue:46
 msgid "Previous"
 msgstr ""
@@ -5520,8 +6767,8 @@ msgstr ""
 msgid "Primary color"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:85
-#: admin/src/Admin/Menu.php:86
+#: admin/src/Admin/Menu.php:94
+#: admin/src/Admin/Menu.php:95
 #: admin/src/Admin/Queue/Registry.php:523
 #: app/src/pages/queue/QueuePage.vue:174
 msgid "Processing queue"
@@ -5586,7 +6833,7 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:204
+#: admin/src/Admin/Settings/Registry.php:205
 msgid "Quick Tools"
 msgstr ""
 
@@ -5594,8 +6841,21 @@ msgstr ""
 msgid "Re-import from Joinotify"
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:130
+msgid "Reachable"
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:256
 msgid "React with an emoji to a message the contact sent. Cloud API only."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:154
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:173
+msgid "Reason"
+msgstr ""
+
+#: app/src/pages/contacts/components/ConsentModal.vue:51
+msgid "Reason (optional)"
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:68
@@ -5611,7 +6871,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:45
-#: app/src/pages/history/components/HistoryDetailsModal.vue:33
+#: app/src/pages/history/components/HistoryDetailsModal.vue:34
 #: app/src/pages/history/HistoryPage.vue:373
 #: app/src/pages/queue/QueuePage.vue:301
 #: app/src/pages/settings/components/cards/PhoneActions.vue:201
@@ -5626,13 +6886,34 @@ msgstr ""
 msgid "Recipient phone"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:260
+#: admin/src/Contacts/Contact_Actions.php:188
+msgid ""
+"Record an opt-in only when the trigger means the person agreed, e.g. a "
+"ticked checkbox. An opt-out always wins, and an opt-in never replaces an "
+"earlier opt-out."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:261
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
 "History screen."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:678
+#: admin/src/Contacts/Contact_Actions.php:185
+#: app/src/pages/contacts/components/ConsentModal.vue:46
+#: app/src/pages/contacts/components/ConsentModal.vue:67
+#: app/src/pages/contacts/components/ContactDrawer.vue:211
+msgid "Record opt-in"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:186
+#: app/src/pages/contacts/components/ConsentModal.vue:46
+#: app/src/pages/contacts/components/ConsentModal.vue:67
+#: app/src/pages/contacts/components/ContactDrawer.vue:218
+msgid "Record opt-out"
+msgstr ""
+
+#: admin/src/Cloud_Sync/Consent.php:680
 msgid "Recorded on"
 msgstr ""
 
@@ -5654,6 +6935,7 @@ msgstr ""
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/ContactsTab.vue:260
 #: app/src/pages/queue/QueuePage.vue:274
 msgid "Refresh"
 msgstr ""
@@ -5670,6 +6952,10 @@ msgstr ""
 msgid "Refund amount"
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:167
+msgid "refused"
+msgstr ""
+
 #: templates/otp-login/myaccount/form-login.php:61
 #: templates/otp-login/myaccount/form-login.php:106
 msgid "Register"
@@ -5681,7 +6967,7 @@ msgid ""
 "available sender to use the default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:198
+#: admin/src/Admin/Settings/Registry.php:199
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:59
 msgid "Registered senders"
 msgstr ""
@@ -5695,26 +6981,55 @@ msgid "Remember me"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:169
-#: app/src/components/settings/SchemaFieldRenderer.vue:319
+#: app/src/components/settings/SchemaFieldRenderer.vue:333
+#: app/src/pages/contacts/components/FilterRuleRow.vue:164
+#: app/src/pages/contacts/tabs/SourcesTab.vue:291
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:187
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:126
-#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:130
+#: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:129
 msgid "Remove"
+msgstr ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:81
+msgid "Remove a tag"
 msgstr ""
 
 #: app/src/builder/components/base/AttachmentsField.vue:181
 msgid "Remove attachment"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:207
+msgid "Remove from the list"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:213
+msgid "Remove from the suppression list?"
+msgstr ""
+
+#: app/src/pages/contacts/components/FilterGroupEditor.vue:55
+msgid "Remove group"
+msgstr ""
+
 #: app/src/components/fields/JoinotifyApiKeyField.vue:163
 msgid "Remove key"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:480
+#: app/src/pages/settings/SettingsPage.vue:494
 msgid "Remove sender"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:452
+#: app/src/pages/contacts/components/BulkTagModal.vue:109
+#: app/src/pages/contacts/components/TagChip.vue:27
+#: app/src/pages/contacts/tabs/ContactsTab.vue:249
+msgid "Remove tag"
+msgstr ""
+
+#: app/src/pages/settings/SettingsPage.vue:466
 msgid "Remove variable"
+msgstr ""
+
+#: admin/src/Rest/Suppressions_Delete.php:55
+msgid "Removed from the suppression list."
 msgstr ""
 
 #: app/src/components/fields/JoinotifyApiKeyField.vue:192
@@ -5747,6 +7062,12 @@ msgstr ""
 msgid "Request"
 msgstr ""
 
+#: app/src/pages/contacts/context.ts:66
+#: app/src/services/contactsApi.ts:46
+#: app/src/services/contactsApi.ts:108
+msgid "Request failed."
+msgstr ""
+
 #: app/src/components/settings/NodeSettingsRenderer.vue:243
 msgid "Required configuration for this trigger to run correctly."
 msgstr ""
@@ -5772,8 +7093,8 @@ msgstr ""
 msgid "Resend settings"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:601
-#: app/src/pages/settings/SettingsPage.vue:604
+#: app/src/pages/settings/SettingsPage.vue:615
+#: app/src/pages/settings/SettingsPage.vue:618
 msgid "Reset"
 msgstr ""
 
@@ -5782,7 +7103,7 @@ msgid "Reset base shade override"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:33
-#: app/src/pages/settings/SettingsPage.vue:594
+#: app/src/pages/settings/SettingsPage.vue:608
 msgid "Reset settings"
 msgstr ""
 
@@ -5790,12 +7111,14 @@ msgstr ""
 msgid "Resize"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:36
+#: app/src/pages/history/components/HistoryDetailsModal.vue:37
 msgid "Response code"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowRowActions.vue:59
 #: app/src/composables/useWorkflows.ts:30
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:184
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:174
 msgid "Restore"
 msgstr ""
 
@@ -5811,7 +7134,7 @@ msgid ""
 "product\" to run for every downloaded file."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:875
+#: admin/src/Admin/Settings/Registry.php:878
 msgid "Retries are turned off, so this wait is not used."
 msgstr ""
 
@@ -5863,6 +7186,11 @@ msgstr ""
 msgid "Reuse the generated value in any later message with:"
 msgstr ""
 
+#: app/src/pages/builder/BuilderPage.vue:242
+#: app/src/pages/settings/SettingsPage.vue:80
+msgid "Review"
+msgstr ""
+
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:57
 msgid "Review integrations, senders, history retention and the advanced options."
 msgstr ""
@@ -5886,7 +7214,7 @@ msgstr ""
 msgid "Rule data"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:139
+#: app/src/components/builder/BuilderNavbar.vue:140
 msgid "Run test"
 msgstr ""
 
@@ -5952,31 +7280,44 @@ msgstr ""
 msgid "Saudi Arabia"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1385
+#: app/src/pages/builder/BuilderPage.vue:1416
 msgid "Save"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1470
+#: app/src/pages/builder/BuilderPage.vue:1501
 msgid "Save and leave"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1428
+#: app/src/pages/builder/BuilderPage.vue:1459
 msgid "Save and run test"
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:240
+#: app/src/pages/contacts/components/ContactFormModal.vue:247
+#: app/src/pages/contacts/components/FieldFormModal.vue:167
+#: app/src/pages/contacts/components/TagFormModal.vue:108
 #: app/src/pages/settings/components/SettingsActionBar.vue:23
 msgid "Save changes"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:138
+#: admin/src/Contacts/Contact_Actions.php:120
+#: admin/src/Contacts/Contact_Actions.php:133
+msgid "Save contact"
+msgstr ""
+
+#: app/src/components/builder/BuilderNavbar.vue:139
 msgid "Save flow"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:788
+#: app/src/pages/contacts/tabs/SourcesTab.vue:341
+msgid "Save sources"
+msgstr ""
+
+#: app/src/pages/builder/BuilderPage.vue:818
 msgid "Save the workflow before activating it."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:280
+#: app/src/pages/settings/SettingsPage.vue:294
 msgid "Saved"
 msgstr ""
 
@@ -5984,11 +7325,11 @@ msgstr ""
 msgid "Saved Joinotify API key"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:88
+#: admin/src/Admin/Builder/Registry.php:91
 msgid "Saving workflow..."
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:142
+#: app/src/components/builder/BuilderNavbar.vue:143
 msgid "Saving..."
 msgstr ""
 
@@ -6002,7 +7343,7 @@ msgid ""
 "empty to use the default text."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:424
+#: admin/src/Admin/Builder/Registry.php:427
 #: app/src/builder/actions/definitions/timeDelay.ts:59
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/composables/useProcessingQueue.ts:61
@@ -6027,12 +7368,26 @@ msgid "Scheduler"
 msgstr ""
 
 #: app/src/components/base/BaseSearchInput.vue:16
+#: app/src/pages/contacts/audienceFilter.ts:215
+#: app/src/pages/contacts/components/FilterRuleRow.vue:44
 msgid "Search"
 msgstr ""
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:326
 #: app/src/builder/actions/components/ActionLibraryModal.vue:330
 msgid "Search actions"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:120
+msgid "Search by name"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:171
+msgid "Search by name, e-mail or phone"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:150
+msgid "Search by phone"
 msgstr ""
 
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:46
@@ -6047,8 +7402,8 @@ msgstr ""
 msgid "Search for a country"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:175
-#: app/src/components/builder/BuilderTriggerSetupView.vue:176
+#: app/src/components/builder/BuilderTriggerSetupView.vue:171
+#: app/src/components/builder/BuilderTriggerSetupView.vue:172
 msgid "Search integration"
 msgstr ""
 
@@ -6085,11 +7440,12 @@ msgstr ""
 msgid "Search workflows..."
 msgstr ""
 
-#: app/src/components/fields/SelectField.vue:318
+#: app/src/components/fields/SelectField.vue:317
 msgid "Search..."
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:141
+#: app/src/pages/contacts/components/MergeModal.vue:122
 msgid "Searching…"
 msgstr ""
 
@@ -6106,7 +7462,7 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:440
+#: admin/src/Admin/Builder/Registry.php:443
 #: app/src/builder/actions/definitions/timeDelay.ts:63
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:35
 msgid "Seconds"
@@ -6122,8 +7478,16 @@ msgstr ""
 msgid "Section title"
 msgstr ""
 
+#: app/src/pages/contacts/ContactsPage.vue:145
+msgid "Sections"
+msgstr ""
+
 #: templates/otp-login/shared/otp-login-form.php:34
 msgid "Secure access"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:177
+msgid "See contacts"
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:63
@@ -6134,8 +7498,13 @@ msgstr ""
 msgid "See options"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:213
+msgid "See the contacts with this tag"
+msgstr ""
+
 #: app/src/components/workflows/WorkflowTable.vue:71
 #: app/src/components/workflows/WorkflowTableRow.vue:51
+#: app/src/pages/contacts/tabs/ContactsTab.vue:301
 #: app/src/pages/history/HistoryPage.vue:393
 #: app/src/pages/queue/QueuePage.vue:311
 msgid "Select"
@@ -6174,6 +7543,10 @@ msgstr ""
 msgid "Select a workflow action to configure it."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/ContactsTab.vue:276
+msgid "Select all visible contacts"
+msgstr ""
+
 #: app/src/pages/queue/QueuePage.vue:294
 msgid "Select all visible items"
 msgstr ""
@@ -6199,7 +7572,7 @@ msgid "Select an operator"
 msgstr ""
 
 #: app/src/components/base/BaseListboxSelect.vue:81
-#: app/src/components/fields/SelectField.vue:65
+#: app/src/components/fields/SelectField.vue:66
 msgid "Select an option"
 msgstr ""
 
@@ -6226,6 +7599,10 @@ msgstr ""
 
 #: app/src/components/base/BaseDatePicker.vue:329
 msgid "Select year"
+msgstr ""
+
+#: app/src/pages/contacts/components/AudienceEditor.vue:129
+msgid "Selected"
 msgstr ""
 
 #: app/src/components/builder/BuilderImportModal.vue:36
@@ -6330,6 +7707,10 @@ msgstr ""
 msgid "Send existing customers"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SourcesTab.vue:255
+msgid "Send full addresses (city and state are always sent)"
+msgstr ""
+
 #: admin/src/Integrations/Elementor_Forms.php:164
 msgid "Send media"
 msgstr ""
@@ -6360,10 +7741,11 @@ msgid "Send text message"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:354
+#: app/src/pages/contacts/tabs/SourcesTab.vue:254
 msgid "Send the items of each order"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:66
+#: admin/src/Builder/Webhook_Action.php:72
 msgid ""
 "Send the trigger's data, or a JSON of your own, to any URL: n8n, Zapier, "
 "Make, a Joinotify Cloud flow or your ERP."
@@ -6379,8 +7761,8 @@ msgid ""
 "flows, audiences and campaigns work with your orders, sign-ups and carts."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:65
-#: admin/src/Builder/Webhook_Action.php:75
+#: admin/src/Builder/Webhook_Action.php:71
+#: admin/src/Builder/Webhook_Action.php:81
 msgid "Send webhook"
 msgstr ""
 
@@ -6399,7 +7781,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:32
+#: app/src/pages/history/components/HistoryDetailsModal.vue:33
 #: app/src/pages/history/HistoryPage.vue:374
 #: app/src/pages/settings/components/cards/PhoneActions.vue:188
 msgid "Sender"
@@ -6417,7 +7799,7 @@ msgstr ""
 msgid "Sender phone"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:488
+#: app/src/pages/settings/SettingsPage.vue:502
 msgid "Sender removed."
 msgstr ""
 
@@ -6433,12 +7815,26 @@ msgstr ""
 msgid "Sending… %1$d queued so far, %2$d left out for having no phone number."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:934
+#: app/src/pages/contacts/tabs/SourcesTab.vue:281
+msgid ""
+"Sends a user or order meta (a CPF, a birthday, a checkout field) into a "
+"custom field of the contact. It only fills fields that are empty on "
+"Joinotify: what someone typed in the panel wins."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:937
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
 "normalized error codes. Never your site address, phone numbers, contacts or "
 "message content. Off by default."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:215
+msgid ""
+"Sends the customers, users and leads of this site to your contact base, and "
+"what they do here as events your flows can react to. Contacts are queued "
+"and sent in the background, never during a checkout."
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:77
@@ -6454,7 +7850,7 @@ msgstr ""
 msgid "Sent (7 days)"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:673
+#: admin/src/Cloud_Sync/Consent.php:675
 msgid "Sent to Joinotify"
 msgstr ""
 
@@ -6476,29 +7872,29 @@ msgstr ""
 msgid "Set an expiration"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:156
+#: admin/src/Builder/Webhook_Action.php:162
 msgid "Set the URL"
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:236
+#: app/src/pages/onboarding/OnboardingPage.vue:237
 msgid "Set up Joinotify"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:95
-#: admin/src/Admin/Menu.php:96
-#: admin/src/Core/Init.php:537
+#: admin/src/Admin/Menu.php:104
+#: admin/src/Admin/Menu.php:105
+#: admin/src/Core/Init.php:542
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
-#: app/src/components/flow/FlowNode.vue:310
+#: app/src/components/flow/FlowNode.vue:287
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/settings/SettingsPage.vue:668
+#: app/src/pages/settings/SettingsPage.vue:682
 msgid "Settings"
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:317
+#: app/src/pages/settings/SettingsPage.vue:331
 msgid "Settings exported."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:280
+#: app/src/pages/settings/SettingsPage.vue:294
 msgid "Settings have been saved."
 msgstr ""
 
@@ -6506,7 +7902,7 @@ msgstr ""
 msgid "Settings imported successfully."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:345
+#: app/src/pages/settings/SettingsPage.vue:359
 msgid "Settings imported."
 msgstr ""
 
@@ -6514,13 +7910,13 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:677
+#: admin/src/Admin/Settings/Registry.php:680
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr ""
 
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/onboarding/OnboardingPage.vue:263
+#: app/src/pages/onboarding/OnboardingPage.vue:262
 msgid "Setup"
 msgstr ""
 
@@ -6536,7 +7932,7 @@ msgstr ""
 msgid "Shade %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:249
+#: admin/src/Admin/Settings/Registry.php:250
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:40
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:51
 msgid "Share anonymous usage data"
@@ -6554,12 +7950,21 @@ msgstr ""
 msgid "Short"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/ContactsTab.vue:209
 #: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:174
 msgid "Show all"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:141
+msgid "Show archived fields (%d)"
+msgstr ""
+
 #: templates/otp-login/shared/otp-login-form.php:58
 msgid "Show password"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/ContactsTab.vue:207
+msgid "Showing the contacts of the audience"
 msgstr ""
 
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:233
@@ -6578,20 +7983,36 @@ msgstr ""
 msgid "Sign-ups and profile updates of users who have a phone number."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:130
+#: admin/src/Builder/Webhook_Action.php:136
 msgid "Signing secret"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:175
+msgid "Since"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:58
 msgid "Singapore"
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:336
+#: app/src/pages/contacts/labels.ts:148
+msgid "Single choice"
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:279
+msgid "Site data in custom fields"
+msgstr ""
+
+#: app/src/pages/onboarding/OnboardingPage.vue:335
 msgid "Skip setup for now"
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:349
+#: app/src/pages/onboarding/OnboardingPage.vue:348
 msgid "Skip this step"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:336
+msgid "Skipped"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:156
@@ -6610,16 +8031,35 @@ msgstr ""
 msgid "Somalia"
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:227
+msgid "Some of them"
+msgstr ""
+
 #: app/src/components/fields/CloudSyncStatusField.vue:157
 msgid "Something went wrong."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/ContactsTab.vue:193
+msgid "Sort by"
+msgstr ""
+
 #: app/src/builder/components/base/AttachmentsField.vue:171
-#: app/src/pages/history/components/HistoryDetailsModal.vue:31
+#: app/src/pages/contacts/tabs/ContactsTab.vue:189
+#: app/src/pages/contacts/tabs/ContactsTab.vue:286
+#: app/src/pages/history/components/HistoryDetailsModal.vue:32
 #: app/src/pages/history/HistoryPage.vue:251
 #: app/src/pages/history/HistoryPage.vue:376
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:210
 msgid "Source"
+msgstr ""
+
+#: app/src/pages/contacts/ContactsPage.vue:50
+#: app/src/pages/contacts/tabs/SourcesTab.vue:185
+msgid "Sources"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Sources_Save.php:66
+msgid "Sources saved."
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:28
@@ -6646,7 +8086,7 @@ msgstr ""
 msgid "Sri Lanka"
 msgstr ""
 
-#: app/src/components/builder/TemplateLibraryHeader.vue:26
+#: app/src/components/builder/TemplateLibraryHeader.vue:25
 msgid "Start automating your site from a template"
 msgstr ""
 
@@ -6656,25 +8096,29 @@ msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:122
 #: admin/src/Builder/Workflow_Manager.php:124
-#: app/src/components/builder/BuilderStartChooser.vue:34
-#: app/src/components/builder/BuilderStartChooser.vue:36
+#: app/src/components/builder/BuilderStartChooser.vue:35
+#: app/src/components/builder/BuilderStartChooser.vue:37
 msgid "Start from scratch"
 msgstr ""
 
 #: admin/src/Builder/Workflow_Manager.php:128
-#: app/src/components/builder/BuilderStartChooser.vue:49
+#: app/src/components/builder/BuilderStartChooser.vue:47
 msgid "Start with a template"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:677
+#: app/src/pages/contacts/audienceFilter.ts:175
+msgid "starts with"
+msgstr ""
+
+#: admin/src/Cloud_Sync/Consent.php:679
 #: app/src/components/workflows/WorkflowTableHeader.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:30
+#: app/src/pages/history/components/HistoryDetailsModal.vue:31
 #: app/src/pages/history/HistoryPage.vue:377
 #: app/src/pages/queue/QueuePage.vue:302
 msgid "Status"
 msgstr ""
 
-#: app/src/pages/onboarding/OnboardingPage.vue:276
+#: app/src/pages/onboarding/OnboardingPage.vue:275
 msgid "Step"
 msgstr ""
 
@@ -6690,7 +8134,7 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:574
+#: admin/src/Admin/Builder/Registry.php:577
 #: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
 msgstr ""
@@ -6708,7 +8152,7 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:279
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -6752,6 +8196,20 @@ msgid ""
 "%s/product/sample-sunglasses/#reviews"
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:134
+msgid "Suppressed"
+msgstr ""
+
+#: app/src/pages/contacts/ContactsPage.vue:51
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:85
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:102
+msgid "Suppression list"
+msgstr ""
+
+#: admin/src/Rest/Suppressions_Delete.php:45
+msgid "Suppression not found."
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:175
 msgid "Suriname"
 msgstr ""
@@ -6772,7 +8230,7 @@ msgstr ""
 msgid "Switzerland"
 msgstr ""
 
-#: app/src/components/fields/WhatsappTemplateField.vue:190
+#: app/src/components/fields/WhatsappTemplateField.vue:186
 msgid "Sync"
 msgstr ""
 
@@ -6796,12 +8254,12 @@ msgstr ""
 msgid "Sync paused"
 msgstr ""
 
-#: app/src/components/fields/WhatsappTemplateField.vue:177
+#: app/src/components/fields/WhatsappTemplateField.vue:178
 msgid "Sync templates with your account"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
-#: app/src/components/fields/WhatsappTemplateField.vue:190
+#: app/src/components/fields/WhatsappTemplateField.vue:186
 msgid "Syncing…"
 msgstr ""
 
@@ -6814,7 +8272,7 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:296
+#: admin/src/Admin/Settings/Registry.php:297
 msgid "System status"
 msgstr ""
 
@@ -6822,12 +8280,103 @@ msgstr ""
 msgid "System status:"
 msgstr ""
 
+#: app/src/pages/contacts/audienceFilter.ts:210
+#: app/src/pages/contacts/components/BulkTagModal.vue:87
+#: app/src/pages/contacts/components/FilterRuleRow.vue:42
+#: app/src/pages/contacts/components/TagFormModal.vue:99
+#: app/src/pages/contacts/tabs/ContactsTab.vue:181
+msgid "Tag"
+msgstr ""
+
+#: app/src/pages/contacts/audienceFilter.ts:211
+#: app/src/pages/contacts/labels.ts:124
+msgid "Tag added"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Apply.php:67
+#. translators: %d: number of contacts
+msgid "Tag added to %d contact."
+msgid_plural "Tag added to %d contacts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Contacts/Contact_Actions.php:203
+#: admin/src/Contacts/Contact_Actions.php:213
+msgid "Tag contact"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Save.php:57
+msgid "Tag created."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Delete.php:53
+msgid "Tag erased."
+msgstr ""
+
 #: admin/src/Cloud_Sync/Cloud_Sync.php:366
 msgid "Tag for contacts from this site"
 msgstr ""
 
+#: admin/src/Contacts/Contact_Actions.php:108
+msgid "Tag names separated by commas. Tags that do not exist yet are created."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Delete.php:43
+msgid "Tag not found."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:249
+msgid "Tag of this site"
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:125
+msgid "Tag removed"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Tag_Apply.php:65
+#. translators: %d: number of contacts
+msgid "Tag removed from %d contact."
+msgid_plural "Tag removed from %d contacts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/Contacts_Tag_Save.php:57
+msgid "Tag updated."
+msgstr ""
+
 #: admin/src/Integrations/Wordpress.php:259
 msgid "tag1, tag2"
+msgstr ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:63
+#: app/src/pages/contacts/components/ContactDrawer.vue:281
+#: app/src/pages/contacts/components/ContactFormModal.vue:195
+#: app/src/pages/contacts/components/TagFormModal.vue:55
+#: app/src/pages/contacts/tabs/ContactsTab.vue:284
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:110
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:195
+msgid "Tags"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:73
+msgid "Tags (separated by commas)"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:295
+msgid "Tags for every imported contact"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:105
+msgid "Tags to add"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:98
+#: app/src/pages/contacts/tabs/SourcesTab.vue:241
+msgid "Tags to add, separated by commas"
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:112
+msgid "Tags to remove"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:205
@@ -6877,8 +8426,8 @@ msgstr ""
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:80
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:264
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
-#: app/src/pages/builder/BuilderPage.vue:908
-#: app/src/pages/history/components/HistoryDetailsModal.vue:120
+#: app/src/pages/builder/BuilderPage.vue:938
+#: app/src/pages/history/components/HistoryDetailsModal.vue:121
 #: app/src/pages/history/HistoryPage.vue:94
 msgid "Template"
 msgstr ""
@@ -6895,11 +8444,11 @@ msgstr ""
 msgid "Test message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:116
+#: admin/src/Admin/Settings/Registry.php:117
 msgid "Test phone"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1399
+#: app/src/pages/builder/BuilderPage.vue:1430
 #: app/src/pages/settings/components/cards/PhoneActions.vue:116
 msgid "Test phone number"
 msgstr ""
@@ -6908,7 +8457,10 @@ msgstr ""
 msgid "Test sender"
 msgstr ""
 
+#: app/src/pages/contacts/labels.ts:143
 #: app/src/pages/history/HistoryPage.vue:91
+#: app/vite-plugins/wporg-i18n-calls.js:8
+#: app/vite-plugins/wporg-i18n-calls.js:13
 msgid "Text"
 msgstr ""
 
@@ -6924,7 +8476,24 @@ msgstr ""
 msgid "Thailand"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:139
+#: app/src/pages/builder/BuilderPage.vue:242
+#: app/src/pages/settings/SettingsPage.vue:80
+msgid "Thank you for supporting Joinotify!"
+msgstr ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:98
+msgid "The %d contact matching the current filters"
+msgid_plural "All %d contacts matching the current filters"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/src/pages/contacts/components/BulkTagModal.vue:94
+msgid "The %d selected contact"
+msgid_plural "The %d selected contacts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/src/pages/builder/BuilderPage.vue:142
 #. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s integration that this flow's trigger depends on is currently "
@@ -6932,14 +8501,14 @@ msgid ""
 "again."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:149
+#: app/src/pages/builder/BuilderPage.vue:152
 #. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s integration that this flow's trigger depends on is not available. "
 "This flow will not be processed until the integration is available again."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:133
+#: app/src/pages/builder/BuilderPage.vue:136
 #. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s plugin this trigger depends on is not installed or active. This flow "
@@ -6947,12 +8516,12 @@ msgid ""
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:63
-#: app/src/pages/builder/BuilderPage.vue:668
+#: app/src/pages/builder/BuilderPage.vue:698
 #: app/src/stores/useWorkflowBuilderStore.ts:1233
 msgid "The AI could not generate the workflow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:654
+#: app/src/pages/builder/BuilderPage.vue:684
 msgid "The AI could not generate the workflow. Please try again."
 msgstr ""
 
@@ -6972,16 +8541,49 @@ msgstr ""
 msgid "The API did not return a signing secret for this endpoint."
 msgstr ""
 
+#: admin/src/Api/Cloud_Contacts.php:332
+msgid ""
+"The API key of this site is not allowed to do this. Operations on the whole "
+"contact base need a key that is not restricted to some numbers."
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:44
+msgid "The API key of this site is not allowed to read the contact base."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:564
+msgid ""
+"The API key of this site is restricted to some numbers: it lists only the "
+"contacts that talked to them and cannot change the contact base."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:326
+#: app/src/pages/contacts/components/ConnectionState.vue:34
+msgid ""
+"The API key of this site was revoked or is invalid. Connect the site to "
+"Joinotify again."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:217
+msgid ""
+"The audience is erased; its contacts are not. A draft campaign that used it "
+"will fail its check until you pick another audience."
+msgstr ""
+
 #: app/src/composables/useWorkflows.ts:447
 #: app/src/composables/useWorkflows.ts:462
 msgid "The bulk action failed."
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:93
+msgid "The checkbox text; its label is used when empty"
 msgstr ""
 
 #: admin/src/Otp_Login/Auth_Flow_Service.php:144
 msgid "The code you entered is invalid or has expired."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:333
+#: app/src/pages/settings/SettingsPage.vue:347
 msgid ""
 "The configuration in the file will be merged into your current settings. "
 "This cannot be undone."
@@ -6991,10 +8593,49 @@ msgstr ""
 msgid "The connection response was incomplete. Start the connection again."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:748
+#: app/src/pages/contacts/components/ConnectionState.vue:33
+msgid "The connection to Joinotify was lost"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:217
+msgid "The contact agreed to receive marketing messages"
+msgstr ""
+
+#: app/src/pages/contacts/ContactsPage.vue:124
+msgid ""
+"The contact base of your Joinotify account: people added by hand, by your "
+"integrations and by your workflows, the fields and tags that organize them "
+"and the audiences built from them."
+msgstr ""
+
+#: admin/src/Cloud_Sync/Consent.php:750
 msgid ""
 "The contact could not be erased on Joinotify now. Erase it from the "
 "Joinotify panel, or run this request again later."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:345
+msgid ""
+"The contact is erased from your Joinotify account with its conversations, "
+"messages, tags and history. Its suppression rows stay, without the phone, "
+"and campaign recipients are anonymized. This is the erasure request of the "
+"LGPD and GDPR and cannot be undone."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:197
+msgid "The contact keeps exactly the tags listed here."
+msgstr ""
+
+#: app/src/pages/contacts/components/ConsentModal.vue:43
+msgid ""
+"The contact stops receiving marketing messages and their number goes to the "
+"suppression list until they opt in again."
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:92
+msgid ""
+"The contact's phone, usually a placeholder of the trigger. The phone or the "
+"e-mail is required."
 msgstr ""
 
 #: admin/src/Core/Telemetry.php:144
@@ -7005,14 +8646,24 @@ msgstr ""
 msgid "The coupon already exists."
 msgstr ""
 
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:134
+msgid ""
+"The data your contacts carry beyond name, phone and e-mail: city, plan, "
+"birthday…"
+msgstr ""
+
 #: admin/src/Rest/Debug_Download.php:43
 #: admin/src/Rest/Debug_Logs.php:61
-#: app/src/pages/settings/SettingsPage.vue:543
+#: app/src/pages/settings/SettingsPage.vue:557
 msgid "The debug log is empty."
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:97
 msgid "The exact payload for this site right now"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Save.php:59
+msgid "The existing contact was updated."
 msgstr ""
 
 #: app/src/composables/useMessageHistory.ts:358
@@ -7024,8 +8675,17 @@ msgstr ""
 msgid "The file does not contain any settings to import."
 msgstr ""
 
+#: app/src/pages/contacts/components/ImportModal.vue:114
+msgid "The file needs a header line and at least one contact."
+msgstr ""
+
 #: admin/src/Notifications/Channels/Resend_Channel.php:274
 msgid "The files below were too large to attach, so you can download them here:"
+msgstr ""
+
+#: admin/src/Rest/Audiences_Preview.php:47
+#: admin/src/Rest/Audiences_Save.php:48
+msgid "The filter is not valid: use up to 3 levels of groups and 30 conditions."
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:104
@@ -7034,7 +8694,7 @@ msgid ""
 "detail."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:152
+#: app/src/pages/builder/BuilderPage.vue:155
 msgid ""
 "The integration that this flow's trigger depends on is not available. This "
 "flow will not be processed until the integration is available again."
@@ -7057,16 +8717,44 @@ msgid ""
 "sync resumes on its own."
 msgstr ""
 
-#: admin/src/Api/Connect.php:361
+#: admin/src/Api/Connect.php:362
 msgid "The Joinotify panel did not return an API key."
 msgstr ""
 
-#: admin/src/Api/Connect.php:352
+#: admin/src/Api/Connect.php:353
 msgid "The Joinotify panel refused this connection. Start the connection again."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:354
+msgid ""
+"The Joinotify platform refused the data sent. Review the fields and try "
+"again."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:358
+#. translators: %d: HTTP status code
+msgid "The Joinotify platform returned an error (HTTP %d)."
+msgstr ""
+
+#: admin/src/Contacts/Contact_Actions.php:163
+msgid ""
+"The key of a custom field (see Joinotify → Audiences & Contacts → Fields & "
+"tags) and its value. They only fill fields that are empty on Joinotify."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Field_Save.php:54
+#: app/src/pages/contacts/components/FieldFormModal.vue:82
+msgid ""
+"The key starts with a lowercase letter and holds only lowercase letters, "
+"digits and underscores, up to 40 characters."
 msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneActions.vue:225
 msgid "The message is prefilled and can be adjusted before sending the test."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:210
+msgid "The number can receive marketing campaigns again if it has consent."
 msgstr ""
 
 #: admin/src/Rest/Phone_Check_Connection.php:66
@@ -7145,7 +8833,7 @@ msgid ""
 "undone."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1122
+#: admin/src/Admin/Builder/Registry.php:1125
 msgid "The selected template was not found."
 msgstr ""
 
@@ -7169,11 +8857,15 @@ msgstr ""
 msgid "The sender phone number was removed successfully!"
 msgstr ""
 
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:196
+msgid "The suppression list is empty"
+msgstr ""
+
 #: admin/src/Rest/Cloud_Sync_Action.php:65
 msgid "The sync will try again in a moment."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:159
+#: app/src/pages/history/components/HistoryDetailsModal.vue:160
 msgid ""
 "The template text was not available when this message was sent, so its name "
 "and variables are shown instead."
@@ -7188,17 +8880,17 @@ msgstr ""
 msgid "The test message was sent successfully!"
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:244
+#: app/src/components/builder/BuilderTriggerSetupView.vue:240
 msgid "The trigger that starts this flow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:143
+#: app/src/pages/builder/BuilderPage.vue:146
 msgid ""
 "The trigger used by this flow is no longer registered. This flow will not "
 "be processed until you select an available trigger."
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:107
+#: admin/src/Builder/Webhook_Action.php:113
 msgid "The trigger's data (order, customer, user, cart)"
 msgstr ""
 
@@ -7252,11 +8944,11 @@ msgstr ""
 msgid "The workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1484
+#: admin/src/Admin/Builder/Registry.php:1514
 msgid "The workflow content is invalid."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1504
+#: admin/src/Admin/Builder/Registry.php:1534
 msgid "The workflow has more than one trigger."
 msgstr ""
 
@@ -7264,7 +8956,7 @@ msgstr ""
 msgid "The workflow has no content to test."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1498
+#: admin/src/Admin/Builder/Registry.php:1528
 msgid "The workflow has no trigger."
 msgstr ""
 
@@ -7272,13 +8964,17 @@ msgstr ""
 msgid "The workflow is not published."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1510
+#: admin/src/Admin/Builder/Registry.php:1540
 msgid "The workflow trigger is not configured."
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:280
-#: app/src/components/flow/FlowNode.vue:282
+#: app/src/components/flow/FlowNode.vue:257
+#: app/src/components/flow/FlowNode.vue:259
 msgid "There are required settings not configured"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:304
+msgid "These contacts agreed to receive marketing messages"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionSettings.vue:152
@@ -7287,7 +8983,7 @@ msgid ""
 "own nested actions."
 msgstr ""
 
-#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:183
+#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:184
 msgid ""
 "This action is registered, but the frontend component is not available yet. "
 "The workflow can still be saved safely."
@@ -7349,6 +9045,10 @@ msgstr ""
 msgid "This feature will be released soon."
 msgstr ""
 
+#: app/src/pages/contacts/components/AttributeInput.vue:119
+msgid "This field has no options yet."
+msgstr ""
+
 #: admin/src/Admin/Settings/Transfer.php:135
 msgid "This file is not a valid Joinotify settings export."
 msgstr ""
@@ -7373,8 +9073,23 @@ msgstr ""
 msgid "This number is no longer connected on your Joinotify account."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:425
+#: admin/src/Rest/Suppressions_Save.php:58
+msgid "This number was already on the suppression list."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:209
+msgid ""
+"This person asked to stop receiving messages, or Meta blocks marketing to "
+"them. Taking the number off the list does not opt them in: they stay opted "
+"out until they agree again."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:426
 msgid "This plugin needs to be installed and active to enable this integration."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:336
+msgid "This record no longer exists on the Joinotify platform."
 msgstr ""
 
 #: admin/src/Admin/Queue/Registry.php:604
@@ -7386,6 +9101,10 @@ msgstr ""
 msgid ""
 "This scheduled item will be removed and will never run. This cannot be "
 "undone."
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:39
+msgid "This site"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:48
@@ -7415,7 +9134,7 @@ msgstr ""
 msgid "This template is still awaiting Meta approval and cannot be delivered yet."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:146
+#: app/src/pages/history/components/HistoryDetailsModal.vue:147
 msgid "This template was sent without variables."
 msgstr ""
 
@@ -7542,13 +9261,13 @@ msgid ""
 "before this one."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1464
+#: app/src/pages/builder/BuilderPage.vue:1495
 msgid ""
 "This workflow has unsaved changes. If you leave now, your changes will be "
 "lost."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:456
+#: admin/src/Admin/Builder/Registry.php:459
 #: app/src/builder/actions/definitions/timeDelay.ts:72
 #: app/src/builder/actions/definitions/timeDelay.ts:83
 #: app/src/builder/actions/definitions/timeDelay.ts:91
@@ -7872,6 +9591,15 @@ msgstr ""
 msgid "Too many code requests. Please wait a few minutes and try again."
 msgstr ""
 
+#: app/src/pages/contacts/context.ts:56
+#. translators: %d: seconds to wait
+msgid "Too many requests to the Joinotify platform. Try again in %d seconds."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:334
+msgid "Too many requests to the Joinotify platform. Wait a moment and try again."
+msgstr ""
+
 #: templates/otp-login/shared/otp-login-form.php:65
 msgid "Too short"
 msgstr ""
@@ -7885,7 +9613,7 @@ msgid "Trash"
 msgstr ""
 
 #: app/src/components/builder/BuilderCanvasTrigger.vue:59
-#: app/src/components/builder/BuilderCanvasView.vue:78
+#: app/src/components/builder/BuilderCanvasView.vue:79
 #: app/src/components/flow/FlowCanvas.vue:183
 #: app/src/components/flow/FlowCanvas.vue:194
 #: app/src/components/settings/NodeSettingsDrawer.vue:38
@@ -7895,7 +9623,7 @@ msgstr ""
 msgid "Trigger"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:115
+#: app/src/pages/builder/BuilderPage.vue:118
 msgid "Trigger no longer available"
 msgstr ""
 
@@ -7903,7 +9631,7 @@ msgstr ""
 msgid "Trigger settings"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1440
+#: app/src/pages/builder/BuilderPage.vue:1471
 msgid "Trigger warning"
 msgstr ""
 
@@ -7919,7 +9647,7 @@ msgstr ""
 msgid "Trigger when an order status changes."
 msgstr ""
 
-#: app/src/components/builder/TemplateCard.vue:112
+#: app/src/components/builder/TemplateCard.vue:103
 msgid "Trigger:"
 msgstr ""
 
@@ -7927,7 +9655,7 @@ msgstr ""
 msgid "Triggers for the WordPress core."
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:386
+#: app/src/components/flow/FlowNode.vue:363
 msgid "True"
 msgstr ""
 
@@ -7936,6 +9664,12 @@ msgid "True branch"
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:220
+#: app/src/pages/contacts/components/ConnectionState.vue:79
+#: app/src/pages/contacts/components/ContactDrawer.vue:195
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:145
+#: app/src/pages/contacts/tabs/ContactsTab.vue:216
+#: app/src/pages/contacts/tabs/SourcesTab.vue:205
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:162
 #: app/src/pages/history/HistoryPage.vue:303
 #: app/src/pages/queue/QueuePage.vue:241
 #: app/src/pages/workflows/WorkflowsPage.vue:85
@@ -7954,6 +9688,10 @@ msgstr ""
 msgid "Turkmenistan"
 msgstr ""
 
+#: app/src/pages/contacts/components/FormRuleEditor.vue:63
+msgid "Turn the submissions of this form into contacts"
+msgstr ""
+
 #: app/src/pages/settings/components/sections/AboutSettingsSection.vue:45
 msgid ""
 "Turn this on to enable debug mode and inspect errors and other relevant "
@@ -7965,7 +9703,9 @@ msgid "Tuvalu"
 msgstr ""
 
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:105
-#: app/src/pages/history/components/HistoryDetailsModal.vue:34
+#: app/src/pages/contacts/components/FieldFormModal.vue:149
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:151
+#: app/src/pages/history/components/HistoryDetailsModal.vue:35
 #: app/src/pages/history/HistoryPage.vue:375
 msgid "Type"
 msgstr ""
@@ -7974,11 +9714,23 @@ msgstr ""
 msgid "Type at least 2 characters…"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:492
+#: admin/src/Admin/Builder/Registry.php:495
 #: app/src/builder/actions/definitions/condition.ts:126
 msgid "Type label"
 msgstr ""
 
+#: admin/src/Rest/Contacts_Save.php:55
+#: app/src/pages/contacts/components/ContactFormModal.vue:114
+msgid "Type the phone number of the contact."
+msgstr ""
+
+#: admin/src/Rest/Suppressions_Save.php:47
+msgid "Type the phone number to suppress."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:124
+#: app/src/pages/contacts/tabs/ContactsTab.vue:175
+#: app/src/pages/contacts/tabs/SuppressionsTab.vue:151
 #: app/src/pages/queue/QueuePage.vue:217
 msgid "Type to filter…"
 msgstr ""
@@ -8038,6 +9790,10 @@ msgstr ""
 msgid "United States"
 msgstr ""
 
+#: app/src/pages/contacts/labels.ts:26
+msgid "Unknown"
+msgstr ""
+
 #: admin/src/Rest/Cloud_Sync_Action.php:82
 msgid "Unknown action."
 msgstr ""
@@ -8046,12 +9802,24 @@ msgstr ""
 msgid "Unknown AI error."
 msgstr ""
 
+#: app/src/pages/contacts/components/AudienceEditor.vue:132
+msgid "Unknown consent"
+msgstr ""
+
+#: admin/src/Rest/Contacts_Consent.php:63
+msgid "Unknown consent action."
+msgstr ""
+
+#: admin/src/Rest/Contacts_Import.php:65
+msgid "Unknown import step."
+msgstr ""
+
 #: admin/src/Integrations/Woocommerce.php:641
 #: admin/src/Integrations/Woocommerce.php:908
 msgid "Unlimited"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1458
+#: app/src/pages/builder/BuilderPage.vue:1489
 msgid "Unsaved changes"
 msgstr ""
 
@@ -8067,16 +9835,36 @@ msgstr ""
 msgid "Up to three buttons. Titles are limited to 20 characters by WhatsApp."
 msgstr ""
 
+#: app/src/pages/contacts/components/ContactFormModal.vue:238
+msgid "Update it with these data"
+msgstr ""
+
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:241
 msgid "Update logs"
+msgstr ""
+
+#: app/src/pages/contacts/components/ImportModal.vue:290
+msgid "Update them (filled values replace, tags are added)"
 msgstr ""
 
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:263
 msgid "Update variable"
 msgstr ""
 
-#: admin/src/Builder/Webhook_Action.php:86
+#: app/src/pages/contacts/components/ImportModal.vue:335
+#: app/src/pages/contacts/tabs/AudiencesTab.vue:157
+msgid "Updated"
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactFormModal.vue:241
+msgid ""
+"Updating replaces the tags of the existing contact and leaves its consent "
+"as it is."
+msgstr ""
+
+#: admin/src/Builder/Webhook_Action.php:92
 #: admin/src/Integrations/Whatsapp_Interactive.php:206
+#: app/src/pages/contacts/labels.ts:151
 msgid "URL"
 msgstr ""
 
@@ -8096,7 +9884,7 @@ msgstr ""
 msgid "Use a formal and professional tone."
 msgstr ""
 
-#: app/src/components/builder/BuilderStartChooser.vue:51
+#: app/src/components/builder/BuilderStartChooser.vue:49
 msgid "Use a template"
 msgstr ""
 
@@ -8152,6 +9940,10 @@ msgstr ""
 msgid "User login"
 msgstr ""
 
+#: admin/src/Contacts/Sources.php:238
+msgid "User meta (type the key)"
+msgstr ""
+
 #: admin/src/Integrations/Elementor.php:155
 #: admin/src/Integrations/Flexify_Checkout.php:375
 #: admin/src/Integrations/Woocommerce.php:1498
@@ -8186,12 +9978,13 @@ msgstr ""
 msgid "Uzbekistan"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:487
+#: admin/src/Admin/Builder/Registry.php:490
+#: admin/src/Contacts/Contact_Actions.php:173
 #: app/src/builder/actions/definitions/condition.ts:125
 #: app/src/builder/actions/settings/ConditionSettings.vue:223
 #: app/src/builder/actions/settings/ConditionSettings.vue:230
 #: app/src/builder/actions/settings/ConditionSettings.vue:237
-#: app/src/pages/history/components/HistoryDetailsModal.vue:134
+#: app/src/pages/history/components/HistoryDetailsModal.vue:135
 msgid "Value"
 msgstr ""
 
@@ -8199,7 +9992,7 @@ msgstr ""
 msgid "Value of a form field"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:125
+#: app/src/pages/history/components/HistoryDetailsModal.vue:126
 msgid "Values hidden"
 msgstr ""
 
@@ -8211,7 +10004,7 @@ msgstr ""
 msgid "Vanuatu"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:133
+#: app/src/pages/history/components/HistoryDetailsModal.vue:134
 msgid "Variable"
 msgstr ""
 
@@ -8226,7 +10019,7 @@ msgstr ""
 msgid "Variable removed successfully."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:458
+#: app/src/pages/settings/SettingsPage.vue:472
 msgid "Variable removed."
 msgstr ""
 
@@ -8234,7 +10027,7 @@ msgstr ""
 msgid "Variable saved successfully."
 msgstr ""
 
-#: app/src/pages/settings/SettingsPage.vue:442
+#: app/src/pages/settings/SettingsPage.vue:456
 msgid "Variable saved."
 msgstr ""
 
@@ -8278,7 +10071,7 @@ msgstr ""
 msgid "Vietnam"
 msgstr ""
 
-#: app/src/components/builder/BuilderNavbar.vue:191
+#: app/src/components/builder/BuilderNavbar.vue:176
 msgid "View all workflows"
 msgstr ""
 
@@ -8304,7 +10097,7 @@ msgstr ""
 msgid "Wait %1$s %2$s and run at %3$s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:882
+#: admin/src/Admin/Settings/Registry.php:885
 #. translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480"
 msgid ""
 "Wait before the first retry. Every attempt then doubles it — with what is "
@@ -8385,6 +10178,10 @@ msgstr ""
 msgid "We sent a code to %s."
 msgstr ""
 
+#: app/src/pages/contacts/labels.ts:45
+msgid "Webhook"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:41
 msgid "week"
 msgstr ""
@@ -8397,7 +10194,7 @@ msgstr ""
 msgid "weeks"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:444
+#: admin/src/Admin/Builder/Registry.php:447
 #: app/src/builder/actions/definitions/timeDelay.ts:67
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:47
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
@@ -8411,6 +10208,10 @@ msgstr ""
 
 #: app/src/components/builder/BuilderAiGenerateModal.vue:70
 msgid "What should this workflow do?"
+msgstr ""
+
+#: app/src/pages/contacts/components/FormRuleEditor.vue:92
+msgid "What the person agreed to"
 msgstr ""
 
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:147
@@ -8436,6 +10237,10 @@ msgstr ""
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:207
 msgid "WhatsApp message sent with the generated coupon."
+msgstr ""
+
+#: app/src/pages/contacts/components/ContactDrawer.vue:253
+msgid "WhatsApp name"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:82
@@ -8492,7 +10297,7 @@ msgstr ""
 msgid "WhatsApp: Location"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:591
+#: admin/src/Admin/Builder/Registry.php:594
 #: admin/src/Integrations/Whatsapp.php:185
 #: app/src/builder/actions/definitions/whatsappMedia.ts:32
 #: app/src/builder/actions/definitions/whatsappMedia.ts:46
@@ -8526,7 +10331,7 @@ msgstr ""
 msgid "WhatsApp: Template message"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:581
+#: admin/src/Admin/Builder/Registry.php:584
 #: admin/src/Integrations/Whatsapp.php:172
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
@@ -8555,14 +10360,18 @@ msgid ""
 "switching it off stops it at once."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:127
+#: admin/src/Admin/Settings/Registry.php:128
 msgid ""
 "When WhatsApp refuses a message for a reason that may pass — a timeout, a "
 "rate limit, an outage — Joinotify parks it and tries again. Each attempt "
 "waits twice as long as the one before it."
 msgstr ""
 
-#: app/src/components/builder/BuilderTriggerSetupView.vue:160
+#: app/src/pages/contacts/tabs/SourcesTab.vue:228
+msgid "Where contacts come from"
+msgstr ""
+
+#: app/src/components/builder/BuilderTriggerSetupView.vue:159
 msgid ""
 "Where the trigger fires from. Select an integration to see its available "
 "triggers."
@@ -8570,6 +10379,12 @@ msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:122
 msgid "Where to look when you need a feature explained."
+msgstr ""
+
+#: app/src/pages/contacts/tabs/SourcesTab.vue:64
+msgid ""
+"Whoever sends a form with a phone or an e-mail, read through the rules "
+"below."
 msgstr ""
 
 #: app/src/pages/workflows/WorkflowsPage.vue:302
@@ -8600,6 +10415,7 @@ msgid "WooCommerce is not active."
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:330
+#: app/src/pages/contacts/tabs/SourcesTab.vue:51
 msgid "WooCommerce orders and customers"
 msgstr ""
 
@@ -8625,26 +10441,27 @@ msgid ""
 "use."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:559
+#: admin/src/Admin/Settings/Registry.php:560
 msgid "WordPress Multisite"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:336
+#: app/src/pages/contacts/tabs/SourcesTab.vue:57
 msgid "WordPress users"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:554
+#: admin/src/Admin/Settings/Registry.php:555
 msgid "WordPress version"
 msgstr ""
 
 #: admin/src/Admin/History/Registry.php:348
-#: app/src/pages/history/components/HistoryDetailsModal.vue:112
+#: app/src/pages/history/components/HistoryDetailsModal.vue:113
 #: app/src/pages/queue/QueuePage.vue:204
 #: app/src/pages/queue/QueuePage.vue:298
 msgid "Workflow"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:804
+#: app/src/pages/builder/BuilderPage.vue:834
 msgid "Workflow activated."
 msgstr ""
 
@@ -8652,26 +10469,26 @@ msgstr ""
 msgid "Workflow API is not available."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:55
+#: admin/src/Admin/Builder/Registry.php:57
 msgid "Workflow builder"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:805
+#: app/src/pages/builder/BuilderPage.vue:835
 msgid "Workflow deactivated."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:663
+#: app/src/pages/builder/BuilderPage.vue:693
 msgid "Workflow generated. Review the steps and click Save flow to keep it."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1382
+#: app/src/pages/builder/BuilderPage.vue:1413
 #: app/src/registries/triggerRegistry.ts:251
 #: app/src/registries/triggerRegistry.ts:280
 #: app/src/registries/triggerRegistry.ts:309
 msgid "Workflow name"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:770
+#: app/src/pages/builder/BuilderPage.vue:800
 msgid "Workflow name updated. Click Save flow to persist changes."
 msgstr ""
 
@@ -8680,9 +10497,9 @@ msgstr ""
 msgid "Workflow not found or invalid post type."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:93
-#: admin/src/Admin/Builder/Registry.php:1172
-#: admin/src/Admin/Builder/Registry.php:1242
+#: admin/src/Admin/Builder/Registry.php:96
+#: admin/src/Admin/Builder/Registry.php:1175
+#: admin/src/Admin/Builder/Registry.php:1245
 #: admin/src/Rest/Builder_Test.php:58
 msgid "Workflow not found."
 msgstr ""
@@ -8691,16 +10508,16 @@ msgstr ""
 msgid "Workflow not saved yet."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1219
+#: admin/src/Admin/Builder/Registry.php:1222
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1045
+#: app/src/pages/builder/BuilderPage.vue:1075
 msgid "Workflow saved successfully."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:87
-#: admin/src/Admin/Builder/Registry.php:1220
+#: admin/src/Admin/Builder/Registry.php:90
+#: admin/src/Admin/Builder/Registry.php:1223
 msgid "Workflow saved."
 msgstr ""
 
@@ -8715,8 +10532,8 @@ msgid ""
 "the wait, or cancel it to stop the processing."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1145
-#: app/src/pages/builder/BuilderPage.vue:1187
+#: app/src/pages/builder/BuilderPage.vue:1175
+#: app/src/pages/builder/BuilderPage.vue:1217
 #: app/src/stores/useWorkflowBuilderStore.ts:1990
 msgid "Workflow test queued."
 msgstr ""
@@ -8731,7 +10548,7 @@ msgstr ""
 msgid "workflows"
 msgstr ""
 
-#: admin/src/Admin/Menu.php:153
+#: admin/src/Admin/Menu.php:162
 msgid "Workflows per page"
 msgstr ""
 
@@ -8757,6 +10574,10 @@ msgstr ""
 msgid "Write in markdown to document your flow…"
 msgstr ""
 
+#: app/src/pages/contacts/labels.ts:43
+msgid "Wrote to you"
+msgstr ""
+
 #: admin/src/Core/Helpers.php:43
 msgid "year"
 msgstr ""
@@ -8769,7 +10590,7 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:446
+#: admin/src/Admin/Builder/Registry.php:449
 #: app/src/builder/actions/definitions/timeDelay.ts:69
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:49
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:41
@@ -8781,15 +10602,22 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:560
-#: admin/src/Admin/Settings/Registry.php:584
+#: admin/src/Admin/Settings/Registry.php:561
+#: admin/src/Admin/Settings/Registry.php:585
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
 #: admin/src/Integrations/Elementor_Forms.php:166
 #: app/src/builder/actions/settings/ConditionSettings.vue:103
 #: app/src/builder/actions/utils/actionDescription.ts:182
+#: app/src/pages/contacts/components/AttributeInput.vue:36
+#: app/src/pages/contacts/components/ContactDrawer.vue:78
+#: app/src/pages/contacts/components/FilterRuleRow.vue:142
 msgid "Yes"
+msgstr ""
+
+#: app/src/pages/contacts/labels.ts:147
+msgid "Yes / no"
 msgstr ""
 
 #: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:114
@@ -8801,11 +10629,12 @@ msgstr ""
 msgid "You can run the setup wizard again at any time."
 msgstr ""
 
-#: admin/src/Admin/Menu.php:169
-#: admin/src/Admin/Menu.php:184
-#: admin/src/Admin/Menu.php:200
-#: admin/src/Admin/Menu.php:227
-#: admin/src/Admin/Menu.php:243
+#: admin/src/Admin/Menu.php:178
+#: admin/src/Admin/Menu.php:193
+#: admin/src/Admin/Menu.php:209
+#: admin/src/Admin/Menu.php:225
+#: admin/src/Admin/Menu.php:252
+#: admin/src/Admin/Menu.php:268
 msgid "You do not have permission to access this page."
 msgstr ""
 
@@ -8817,7 +10646,13 @@ msgstr ""
 msgid "You do not have permission to edit workflows."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:94
+#: app/src/components/modals/ReviewPromptModal.vue:42
+msgid ""
+"You have been automating your messages with Joinotify for a while now. If "
+"it is helping you, would you take a minute to rate it on WordPress.org?"
+msgstr ""
+
+#: admin/src/Admin/Builder/Registry.php:97
 msgid "You have unsaved changes."
 msgstr ""
 
@@ -8837,13 +10672,31 @@ msgstr ""
 msgid "Your access code is: %1$s. This code expires in %2$d minutes."
 msgstr ""
 
+#: app/src/pages/contacts/components/ConnectionState.vue:29
+msgid ""
+"Your contacts and audiences live on the Joinotify platform. Connect the "
+"site to list them, add contacts by hand and sync the ones your integrations "
+"collect."
+msgstr ""
+
 #: admin/src/Rest/Cloud_Connect_Finish.php:51
 #: admin/src/Rest/Cloud_Connect_Key.php:59
 #: admin/src/Rest/Cloud_Connect_License.php:52
 #: admin/src/Rest/Onboarding_Connect.php:57
 #: app/src/components/fields/CloudConnectField.vue:133
-#: app/src/pages/onboarding/OnboardingPage.vue:201
+#: app/src/pages/onboarding/OnboardingPage.vue:202
 msgid "Your Joinotify account is connected."
+msgstr ""
+
+#: app/src/pages/contacts/components/ConnectionState.vue:38
+msgid "Your Joinotify account needs attention"
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:328
+#: app/src/pages/contacts/components/ConnectionState.vue:39
+msgid ""
+"Your Joinotify account needs attention before it can be used. Open the "
+"panel to resolve the billing."
 msgstr ""
 
 #: admin/src/Api/Connect.php:176
@@ -8859,6 +10712,20 @@ msgstr ""
 
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:45
 msgid "Your order is confirmed"
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:340
+msgid "Your plan reached its contact limit. Upgrade the plan to add more contacts."
+msgstr ""
+
+#: admin/src/Api/Cloud_Contacts.php:346
+msgid ""
+"Your plan reached its custom field limit, archived fields included. Erase a "
+"field you no longer need or upgrade the plan."
+msgstr ""
+
+#: app/src/components/modals/ReviewPromptModal.vue:45
+msgid "Your review helps other people find the plugin and keeps us improving it."
 msgstr ""
 
 #: admin/src/Core/Telemetry.php:140

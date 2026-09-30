@@ -25,6 +25,7 @@ import PerPageSelect from '../../../components/workflows/PerPageSelect.vue';
 import ContactDrawer from '../components/ContactDrawer.vue';
 import ContactFormModal from '../components/ContactFormModal.vue';
 import BulkTagModal from '../components/BulkTagModal.vue';
+import ImportModal from '../components/ImportModal.vue';
 import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
 import TagChip from '../components/TagChip.vue';
 
@@ -58,6 +59,7 @@ const {
 } = list;
 
 const bulkAction = ref('');
+const importOpen = ref(false);
 
 const searchTerm = ref('');
 const openContactId = ref(route.value.params.id || '');
@@ -219,6 +221,7 @@ onMounted(() => {
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex flex-wrap items-center gap-3">
           <BaseButton v-if="canWrite" :title="__('Add contact', textDomain)" @click="openCreate" />
+          <BaseButton v-if="canWrite" :title="__('Import CSV', textDomain)" variant="secondary" @click="importOpen = true" />
           <button
             type="button"
             class="rounded-[8px] border border-slate-200 px-4 py-2 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
@@ -355,8 +358,11 @@ onMounted(() => {
       @changed="replaceItem"
       @close="openContactId = ''"
       @deleted="onDeleted"
+      @merged="fetchItems"
       @edit="openEdit"
     />
+
+    <ImportModal :open="importOpen" @close="importOpen = false" @imported="fetchItems(); definitions.load(true)" />
 
     <BulkTagModal
       :action="bulkAction || 'add'"
