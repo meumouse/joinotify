@@ -119,8 +119,9 @@ joinotify_register_action_description( 'my_app_send_sms', function( $data, $work
 ```
 
 **Settings field components** (`settings_schema[].component`): `input`, `textarea`, `number`,
-`select` (with `options: [{label, value}]`), `date`, `time`, `code`, `switch`, plus nested `group`
-and `repeater`. Common keys: `key`, `label`, `component`, `required`, `placeholder`, `options`,
+`select` (with `options: [{label, value}]`), `date`, `time`, `code`, `switch`, `placeholder` (a
+one-line input with the variable picker of the trigger's placeholders — resolve it in the handler
+with `joinotify_replace_placeholders()`), plus nested `group` and `repeater`. Common keys: `key`, `label`, `component`, `required`, `placeholder`, `options`,
 `rows`, `description`, `componentProps`, and `condition` (an array of `{key, value, operator}` for
 conditional visibility — operators: `eq`, `neq`, `in`, `not_in`, `truthy`, `falsy`).
 

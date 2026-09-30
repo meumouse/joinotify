@@ -29,6 +29,9 @@ class Contacts {
 
 		// What the integrations add to the contacts the Cloud sync sends.
 		Sources::register();
+
+		// "Save contact" and "Tag contact" in the workflow builder.
+		new Contact_Actions();
 	}
 
 

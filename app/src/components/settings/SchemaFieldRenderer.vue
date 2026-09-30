@@ -5,9 +5,11 @@
  * Recursive renderer that turns a workflow field schema into the appropriate
  * base control (input, textarea, select, switch) and supports nested group and
  * repeater fields. Evaluates conditional visibility and emits immutable patches
- * for object and array values.
+ * for object and array values. A `placeholder` field gets the variable picker
+ * when the caller passes the trigger's placeholders.
  *
  * @since 2.0.0
+ * @version 2.5.0
  */
 import { computed } from 'vue';
 import BaseButton from '../base/BaseButton.vue';
@@ -16,6 +18,7 @@ import BaseListboxSelect from '../base/BaseListboxSelect.vue';
 import BaseSwitch from '../base/BaseSwitch.vue';
 import BaseTextarea from '../base/BaseTextarea.vue';
 import AttachmentsField from '../../builder/components/base/AttachmentsField.vue';
+import BaseTextFieldVariables from '../../builder/components/base/BaseTextFieldVariables.vue';
 import { __, textDomain } from '../../utils/i18n';
 import type { WorkflowFieldCondition, WorkflowFieldSchema } from '../../types/workflowBuilder';
 
@@ -24,6 +27,7 @@ const props = defineProps<{
   modelValue: unknown;
   rootValue?: Record<string, unknown>;
   disabled?: boolean;
+  placeholders?: unknown[];
 }>();
 
 const emit = defineEmits<{
@@ -218,8 +222,17 @@ const inputType = computed(() => {
         {{ field.label }}
       </span>
 
+      <BaseTextFieldVariables
+        v-if="field.component === 'placeholder' && placeholders && placeholders.length"
+        :model-value="String(fieldValue ?? '')"
+        :placeholder="field.placeholder || ''"
+        :placeholders="(placeholders as any[])"
+        :disabled="disabled"
+        @update:model-value="fieldValue = $event"
+      />
+
       <BaseInput
-        v-if="field.component === 'input' || field.component === 'number' || field.component === 'date' || field.component === 'time' || field.component === 'placeholder' || field.component === 'custom'"
+        v-else-if="field.component === 'input' || field.component === 'number' || field.component === 'date' || field.component === 'time' || field.component === 'placeholder' || field.component === 'custom'"
         v-model="fieldValue"
         :type="inputType"
         :placeholder="field.placeholder || ''"
@@ -278,6 +291,7 @@ const inputType = computed(() => {
           :model-value="(fieldValue as Record<string, unknown>)?.[child.key]"
           :root-value="(fieldValue as Record<string, unknown>) || getRootValue()"
           :disabled="disabled"
+          :placeholders="placeholders"
           @update:model-value="emitObjectPatch(child.key, $event)"
         />
       </div>
@@ -328,6 +342,7 @@ const inputType = computed(() => {
               :model-value="(repeaterItems[index] as Record<string, unknown>)?.[child.key]"
               :root-value="(repeaterItems[index] as Record<string, unknown>) || getRootValue()"
               :disabled="disabled"
+              :placeholders="placeholders"
               @update:model-value="updateRepeaterItem(index, child.key, $event)"
             />
           </div>
