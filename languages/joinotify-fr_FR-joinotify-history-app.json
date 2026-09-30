@@ -37,6 +37,12 @@
       "Cancel": [
         "Annuler"
       ],
+      "Cancel resend": [
+        "Annuler le renvoi"
+      ],
+      "Cancelled": [
+        "Annulé"
+      ],
       "Clear all": [
         "Tout effacer"
       ],
@@ -52,17 +58,26 @@
       "Close": [
         "Fermer"
       ],
+      "Component": [
+        "Composant"
+      ],
       "Confirm": [
         "Confirmer"
       ],
       "Content": [
         "Contenu"
       ],
+      "Could not cancel the resend.": [
+        "Impossible d'annuler le renvoi."
+      ],
       "Could not clear the history.": [
         "Impossible de vider l'historique."
       ],
       "Could not delete the selected records.": [
         "Impossible de supprimer les enregistrements sélectionnés."
+      ],
+      "Could not export the message history.": [
+        "Impossible d'exporter l'historique des messages."
       ],
       "Could not load the message history.": [
         "Impossible de charger l'historique des messages."
@@ -79,6 +94,18 @@
       "Delete selected records": [
         "Supprimer les enregistrements sélectionnés"
       ],
+      "Discard the pending retry of the selected messages": [
+        "Annuler la tentative de réessai en attente des messages sélectionnés"
+      ],
+      "Download every record matching the current filters as a JSON file": [
+        "Télécharger chaque enregistrement correspondant aux filtres actuels sous forme de fichier JSON"
+      ],
+      "Download the selected records as a JSON file": [
+        "Télécharger les enregistrements sélectionnés sous forme de fichier JSON"
+      ],
+      "Download this record as a JSON file": [
+        "Télécharger cet enregistrement au format JSON"
+      ],
       "End date": [
         "Date de fin"
       ],
@@ -91,6 +118,15 @@
       "Export": [
         "Exporter"
       ],
+      "Export all": [
+        "Exporter tout"
+      ],
+      "Export as JSON": [
+        "Exporter en JSON"
+      ],
+      "Export selected": [
+        "Exporter sélectionné"
+      ],
       "Exporting…": [
         "Exportation…"
       ],
@@ -102,6 +138,9 @@
       ],
       "Header": [
         "En-tête"
+      ],
+      "Items per page": [
+        "Articles par page"
       ],
       "Joinotify": [
         "Joinotify"
@@ -138,6 +177,9 @@
       ],
       "of": [
         "de"
+      ],
+      "Payload sent": [
+        "Charge utile envoyée"
       ],
       "Previous month": [
         "Mois précédent"
@@ -193,8 +235,20 @@
       "Text": [
         "Texte"
       ],
+      "The export holds only the %1$d most recent of the %2$d matching records.": [
+        "L'exportation ne contient que les %1$d plus récents des %2$d enregistrements correspondants."
+      ],
+      "The selected messages will not be sent again. Records without a pending resend are left untouched.": [
+        "Les messages sélectionnés ne seront pas renvoyés. Les enregistrements sans renvoi en attente restent inchangés."
+      ],
       "The selected records will be permanently removed. This action cannot be undone.": [
         "Les enregistrements sélectionnés seront définitivement supprimés. Cette action ne peut pas être annulée."
+      ],
+      "The template text was not available when this message was sent, so its name and variables are shown instead.": [
+        "Le texte du modèle n'était pas disponible lorsque ce message a été envoyé, donc son nom et ses variables sont affichés à la place."
+      ],
+      "This template was sent without variables.": [
+        "Ce modèle a été envoyé sans variables."
       ],
       "To": [
         "À"
@@ -207,6 +261,12 @@
       ],
       "Value": [
         "Valeur"
+      ],
+      "Values hidden": [
+        "Valeurs cachées"
+      ],
+      "Variable": [
+        "Variable"
       ],
       "Workflow": [
         "Flux de travail"

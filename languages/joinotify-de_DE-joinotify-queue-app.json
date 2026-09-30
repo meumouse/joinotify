@@ -43,6 +43,9 @@
       "Could not clear the queue.": [
         "Die Warteschlange konnte nicht gelöscht werden."
       ],
+      "Could not export the processing queue.": [
+        "Konnte die Verarbeitungswarteschlange nicht exportieren."
+      ],
       "Could not load the processing queue.": [
         "Die Verarbeitungswarteschlange konnte nicht geladen werden."
       ],
@@ -51,6 +54,15 @@
       ],
       "Dispatch now": [
         "Jetzt versenden"
+      ],
+      "Download every item matching the current filters as a JSON file": [
+        "Laden Sie jedes Element, das den aktuellen Filtern entspricht, als JSON-Datei herunter"
+      ],
+      "Download the selected items as a JSON file": [
+        "Laden Sie die ausgewählten Elemente als JSON-Datei herunter"
+      ],
+      "Download this item as a JSON file": [
+        "Laden Sie dieses Element als JSON-Datei herunter"
       ],
       "Due": [
         "Fällig"
@@ -64,11 +76,20 @@
       "Export": [
         "Exportieren"
       ],
+      "Export all": [
+        "Alle exportieren"
+      ],
+      "Export selected": [
+        "Ausgewählte exportieren"
+      ],
       "Exporting…": [
         "Exportiere…"
       ],
       "Inactive": [
         "Inaktiv"
+      ],
+      "Items per page": [
+        "Elemente pro Seite"
       ],
       "Joinotify": [
         "Joinotify"
@@ -114,6 +135,9 @@
       ],
       "Select": [
         "Auswählen"
+      ],
+      "Select all visible items": [
+        "Alle sichtbaren Elemente auswählen"
       ],
       "Select an option": [
         "Wählen Sie eine Option"

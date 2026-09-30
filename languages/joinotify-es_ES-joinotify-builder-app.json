@@ -494,6 +494,9 @@
       "End the workflow at this point.": [
         "Finaliza el flujo de trabajo en este punto."
       ],
+      "Enjoying Joinotify?": [
+        "¿Disfrutando de Joinotify?"
+      ],
       "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
         "Introduce un número de teléfono para recibir mensajes de prueba del creador. Usa el formato internacional y solo números."
       ],
@@ -602,6 +605,12 @@
       "How would you like to create your new workflow?": [
         "¿Cómo te gustaría crear tu nuevo flujo de trabajo?"
       ],
+      "I already did": [
+        "Ya lo hice"
+      ],
+      "If this workflow starts the conversation, put a “WhatsApp: Template message” step before this one to open the window.": [
+        "Si este flujo de trabajo inicia la conversación, coloca un paso de “WhatsApp: Mensaje de plantilla” antes de este para abrir la ventana."
+      ],
       "Image": [
         "Imagen"
       ],
@@ -674,6 +683,9 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Leave a review": [
+        "Dejar una reseña"
+      ],
       "Leave without saving": [
         "¿Salir sin guardar?"
       ],
@@ -724,6 +736,9 @@
       ],
       "Maximum items": [
         "Máximo de elementos"
+      ],
+      "Maybe later": [
+        "Quizás más tarde"
       ],
       "Media": [
         "Medios"
@@ -829,6 +844,9 @@
       ],
       "Node settings": [
         "Configuración del nodo"
+      ],
+      "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it.": [
+        "En la API oficial de WhatsApp Cloud, este tipo de mensaje solo llega a un contacto dentro de las 24 horas de su última respuesta. Fuera de esa ventana, Meta lo rechaza."
       ],
       "One entry per line, or use the delimiter below": [
         "Una entrada por línea, o utiliza el delimitador a continuación"
@@ -964,6 +982,9 @@
       ],
       "Reuse the generated value in any later message with:": [
         "Reutilizar el valor generado en cualquier mensaje posterior con:"
+      ],
+      "Review": [
+        "Revisar"
       ],
       "Route this node to a specific engine. Leave on the default to use the provider from settings.": [
         "Dirige este nodo a un motor específico. Deja en el predeterminado para usar el proveedor de la configuración."
@@ -1148,6 +1169,9 @@
       "Test phone number": [
         "Número de teléfono de prueba"
       ],
+      "Thank you for supporting Joinotify!": [
+        "¡Gracias por apoyar a Joinotify!"
+      ],
       "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.": [
         "La integración %s de la que depende el disparador de este flujo está actualmente desactivada. Este flujo no se procesará hasta que la integración se active nuevamente."
       ],
@@ -1193,6 +1217,9 @@
       "This list may be out of date.": [
         "Esta lista puede estar desactualizada."
       ],
+      "This step needs an open conversation": [
+        "Este paso necesita una conversación abierta"
+      ],
       "This template is still awaiting Meta approval and cannot be delivered yet.": [
         "Esta plantilla aún está a la espera de la aprobación de Meta y no se puede entregar todavía."
       ],
@@ -1204,6 +1231,9 @@
       ],
       "This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one.": [
         "Este disparador no tiene configuraciones adicionales. Usa “Cambiar disparador” en el menú del nodo para elegir uno diferente."
+      ],
+      "This workflow already has a template step, which opens the window. Keep it before this one.": [
+        "Este flujo de trabajo ya tiene un paso de plantilla, que abre la ventana. Mantenlo antes de este."
       ],
       "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
         "Este flujo de trabajo tiene cambios no guardados. Si sales ahora, tus cambios se perderán."
@@ -1403,8 +1433,14 @@
       "You are the support agent for Store X. Be cordial and concise.": [
         "Eres el agente de soporte para la Tienda X. Sé cordial y conciso."
       ],
+      "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?": [
+        "Has estado automatizando tus mensajes con Joinotify durante un tiempo. Si te está ayudando, ¿te tomarías un minuto para calificarlo en WordPress.org?"
+      ],
       "Your order is confirmed": [
         "Tu pedido está confirmado"
+      ],
+      "Your review helps other people find the plugin and keeps us improving it.": [
+        "Tu reseña ayuda a otras personas a encontrar el plugin y nos mantiene mejorándolo."
       ],
       "Zoom in": [
         "Acercar"

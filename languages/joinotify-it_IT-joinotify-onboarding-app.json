@@ -13,6 +13,9 @@
       "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
         "Alcune domande e il tuo sito è pronto per inviare messaggi WhatsApp. Tutto qui può essere modificato in seguito nelle Impostazioni."
       ],
+      "AI features are turned off in this WordPress installation.": [
+        "Le funzionalità AI sono disattivate in questa installazione di WordPress."
+      ],
       "Back": [
         "Indietro"
       ],
@@ -106,6 +109,9 @@
       "Never collected": [
         "Mai raccolto"
       ],
+      "No AI provider is set up in WordPress yet. The AI actions stay unavailable until one is.": [
+        "Nessun fornitore di AI è ancora configurato in WordPress. Le azioni AI rimangono non disponibili fino a quando non viene configurato uno."
+      ],
       "No country matches that search.": [
         "Nessun paese corrisponde a quella ricerca."
       ],
@@ -114,6 +120,9 @@
       ],
       "Off by default. You can change this at any time in Settings → About.": [
         "Disattivato per impostazione predefinita. Puoi cambiarlo in qualsiasi momento in Impostazioni → Informazioni."
+      ],
+      "Open Settings → Connectors": [
+        "Apri Impostazioni → Connettori"
       ],
       "Open the documentation": [
         "Apri la documentazione"
@@ -169,6 +178,9 @@
       "The exact payload for this site right now": [
         "Il payload esatto per questo sito in questo momento"
       ],
+      "The provider and its API key are stored by WordPress, not by Joinotify, so every plugin on the site shares the same setup.": [
+        "Il fornitore e la sua chiave API sono memorizzati da WordPress, non da Joinotify, quindi ogni plugin sul sito condivide la stessa configurazione."
+      ],
       "We pre-selected %s based on this site’s language setting.": [
         "Abbiamo pre-selezionato %s in base alle impostazioni della lingua di questo sito."
       ],
@@ -183,6 +195,9 @@
       ],
       "When a phone number reaches a workflow without a country code, Joinotify completes it with the country you choose here. Numbers that already carry a country code are never changed.": [
         "Quando un numero di telefono raggiunge un flusso di lavoro senza un prefisso internazionale, Joinotify lo completa con il paese che scegli qui. I numeri che già portano un prefisso internazionale non vengono mai modificati."
+      ],
+      "WordPress already has an AI provider set up. The AI actions are ready to use.": [
+        "WordPress ha già un fornitore di AI configurato. Le azioni AI sono pronte per l'uso."
       ],
       "You skipped connecting a Joinotify account, so workflows will build and save but will not send anything yet. Add your API key in Settings → General whenever you are ready.": [
         "Hai saltato la connessione a un account Joinotify, quindi i flussi di lavoro verranno creati e salvati ma non invieranno ancora nulla. Aggiungi la tua chiave API in Impostazioni → Generale quando sei pronto."

@@ -7,6 +7,12 @@
         "lang": "es_ES",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created.": [
+        "%1$d de tus %2$d usuarios tienen un número de teléfono, y hay %3$d pedidos realizados sin cuenta. Cada persona se convierte en un contacto en Joinotify, etiquetado con este sitio; no se inicia ningún flujo para ellos. Las personas sin un número de teléfono quedan fuera, y los contactos que superan el límite de tu plan no se crean."
+      ],
+      "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number.": [
+        "%1$d enviados, %2$d en espera, %3$d abandonados, %4$d excluidos por no tener número de teléfono."
+      ],
       "%d number imported.": [
         "%d número importado."
       ],
@@ -36,6 +42,9 @@
       ],
       "All options will return to the plugin defaults.": [
         "Todas las opciones volverán a los valores predeterminados del plugin."
+      ],
+      "another address": [
+        "otra dirección"
       ],
       "application": [
         "aplicación"
@@ -190,6 +199,9 @@
       "Could not update the connection.": [
         "No se pudo actualizar la conexión."
       ],
+      "Counting your customers…": [
+        "Contando tus clientes…"
+      ],
       "Critical": [
         "Crítico"
       ],
@@ -216,6 +228,9 @@
       ],
       "Diagnostics": [
         "Diagnósticos"
+      ],
+      "Discard": [
+        "Descartar"
       ],
       "Disconnect": [
         "Desconectar"
@@ -244,6 +259,9 @@
       "Enable the integration to access its settings.": [
         "Habilita la integración para acceder a su configuración."
       ],
+      "Enjoying Joinotify?": [
+        "¿Disfrutando de Joinotify?"
+      ],
       "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
         "Introduce un número de teléfono para recibir mensajes de prueba del creador. Usa el formato internacional y solo números."
       ],
@@ -265,6 +283,9 @@
       "Error": [
         "Error"
       ],
+      "Events reach only who buys or signs up from now on. Send the customers you already have, once, so your first campaign can reach them.": [
+        "Los eventos solo llegan a quienes compran o se registran a partir de ahora. Envía a los clientes que ya tienes, una vez, para que tu primera campaña pueda alcanzarlos."
+      ],
       "Example": [
         "Ejemplo"
       ],
@@ -276,6 +297,9 @@
       ],
       "Example value (optional)": [
         "Valor de ejemplo (opcional)"
+      ],
+      "Existing customers": [
+        "Clientes existentes"
       ],
       "Export": [
         "Exportar"
@@ -295,6 +319,12 @@
       "Get a key on the Joinotify panel": [
         "Obtén una clave en el panel de Joinotify"
       ],
+      "Given up": [
+        "Rendirse"
+      ],
+      "Given up after every retry": [
+        "Rendirse después de cada reintento"
+      ],
       "Group by category": [
         "Agrupar por categoría"
       ],
@@ -310,6 +340,9 @@
       "Hook": [
         "Gancho"
       ],
+      "I already did": [
+        "Ya lo hice"
+      ],
       "Import": [
         "Importar"
       ],
@@ -321,6 +354,9 @@
       ],
       "Importing…": [
         "Importando…"
+      ],
+      "in conflict with another contact": [
+        "en conflicto con otro contacto"
       ],
       "info": [
         "info"
@@ -358,8 +394,29 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "kept on the do-not-contact list": [
+        "mantenido en la lista de no contactar"
+      ],
+      "kept opted out": [
+        "mantenido excluido"
+      ],
       "Label (optional)": [
         "Etiqueta (opcional)"
+      ],
+      "Last delivery: %s.": [
+        "Última entrega: %s."
+      ],
+      "Last error: %s.": [
+        "Último error: %s."
+      ],
+      "Last run finished on %s.": [
+        "Última ejecución finalizada el %s."
+      ],
+      "Last run stopped because the sync was switched off.": [
+        "Última ejecución detenida porque la sincronización fue desactivada."
+      ],
+      "Last run was stopped.": [
+        "Última ejecución fue detenida."
       ],
       "Last synced:": [
         "Última sincronización:"
@@ -367,11 +424,17 @@
       "latest post": [
         "última publicación"
       ],
+      "Leave a review": [
+        "Dejar una reseña"
+      ],
       "Level": [
         "Nivel"
       ],
       "Load keys": [
         "Cargar claves"
+      ],
+      "Loading the sync status…": [
+        "Cargando el estado de la sincronización…"
       ],
       "Loading…": [
         "Cargando…"
@@ -388,6 +451,9 @@
       "Map an entity and meta key to a named variable available in the builder.": [
         "Mapear una entidad y clave meta a una variable nombrada disponible en el generador."
       ],
+      "Maybe later": [
+        "Quizás más tarde"
+      ],
       "Message": [
         "Mensaje"
       ],
@@ -402,6 +468,12 @@
       ],
       "New variable": [
         "Nueva variable"
+      ],
+      "No approved template of this type was found on your account. Create it in the Joinotify panel and sync again.": [
+        "No se encontró ninguna plantilla aprobada de este tipo en tu cuenta. Créala en el panel de Joinotify y sincroniza de nuevo."
+      ],
+      "No approved template was found on your account. Create it in the Joinotify panel and sync again.": [
+        "No se encontró ninguna plantilla aprobada en tu cuenta. Créala en el panel de Joinotify y sincroniza de nuevo."
       ],
       "No custom variable yet. Click “Add variable” to create your first one.": [
         "Aún no hay variable personalizada. Haz clic en “Agregar variable” para crear la tuya primera."
@@ -421,11 +493,20 @@
       "No options available": [
         "No hay opciones disponibles"
       ],
+      "no reason given": [
+        "sin razón dada"
+      ],
       "No sender available": [
         "No hay remitente disponible"
       ],
       "No variables available.": [
         "No hay variables disponibles."
+      ],
+      "not found in the account": [
+        "no encontrado en la cuenta"
+      ],
+      "Nothing delivered yet.": [
+        "Nada entregado aún."
       ],
       "Notice": [
         "Aviso"
@@ -433,8 +514,14 @@
       "Numbers synced.": [
         "Números sincronizados."
       ],
+      "Of those sent, %1$d %2$s.": [
+        "De los enviados, %1$d %2$s."
+      ],
       "ok": [
         "ok"
+      ],
+      "older than what Joinotify has": [
+        "más antiguo que lo que tiene Joinotify"
       ],
       "Only the public prefix of your key is shown. Remove it to connect a different account.": [
         "Solo se muestra el prefijo público de tu clave. Elimínalo para conectar una cuenta diferente."
@@ -447,6 +534,9 @@
       ],
       "Options have been reset.": [
         "Las opciones han sido restablecidas."
+      ],
+      "over your plan's contact limit": [
+        "sobre el límite de contactos de tu plan"
       ],
       "Paste the API key issued for this site on the Joinotify panel.": [
         "Pega la clave API emitida para este sitio en el panel de Joinotify."
@@ -523,6 +613,9 @@
       "Reset settings": [
         "Restablecer configuraciones"
       ],
+      "Review": [
+        "Revisar"
+      ],
       "Sample value shown in the builder": [
         "Valor de muestra mostrado en el constructor"
       ],
@@ -568,14 +661,29 @@
       "Send": [
         "Enviar"
       ],
+      "Send again": [
+        "Enviar de nuevo"
+      ],
+      "Send existing customers": [
+        "Enviar clientes existentes"
+      ],
       "Send test message": [
         "Enviar mensaje de prueba"
+      ],
+      "Send them": [
+        "Enviarlos"
       ],
       "Sender": [
         "Remitente"
       ],
       "Sender removed.": [
         "Remitente eliminado."
+      ],
+      "Sending… %1$d queued so far, %2$d left out for having no phone number.": [
+        "Enviando… %1$d en cola hasta ahora, %2$d excluidos por no tener número de teléfono."
+      ],
+      "Sent (7 days)": [
+        "Enviado (7 días)"
       ],
       "Server": [
         "Servidor"
@@ -601,11 +709,35 @@
       "Shown in the variable picker": [
         "Mostrado en el selector de variables"
       ],
+      "Something went wrong.": [
+        "Algo salió mal."
+      ],
       "Source": [
         "Fuente"
       ],
+      "Stop": [
+        "Detener"
+      ],
+      "Switch the sync on and save to start sending. Nothing is sent before that.": [
+        "Activa la sincronización y guarda para comenzar a enviar. No se envía nada antes de eso."
+      ],
+      "Sync": [
+        "Sincronizar"
+      ],
       "Sync numbers from Joinotify": [
         "Sincronizar números desde Joinotify"
+      ],
+      "Sync off": [
+        "Sincronización desactivada"
+      ],
+      "Sync on": [
+        "Sincronización activada"
+      ],
+      "Sync paused": [
+        "Sincronización en pausa"
+      ],
+      "Sync templates with your account": [
+        "Sincroniza las plantillas con tu cuenta"
       ],
       "Syncing…": [
         "Sincronizando…"
@@ -619,11 +751,17 @@
       "Test sender": [
         "Remitente de prueba"
       ],
+      "Thank you for supporting Joinotify!": [
+        "¡Gracias por apoyar a Joinotify!"
+      ],
       "The configuration in the file will be merged into your current settings. This cannot be undone.": [
         "La configuración en el archivo se fusionará con tus ajustes actuales. Esto no se puede deshacer."
       ],
       "The debug log is empty.": [
         "El registro de depuración está vacío."
+      ],
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
+        "La clave de Joinotify de este sitio fue revocada o no puede enviar estos datos. Conecta el sitio de nuevo en la tarjeta de WhatsApp de Configuración → Aplicaciones; la sincronización se reanuda por sí sola."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "El mensaje está prellenado y se puede ajustar antes de enviar la prueba."
@@ -637,11 +775,20 @@
       "This integration will be available soon.": [
         "Esta integración estará disponible pronto."
       ],
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
+        "Este sitio está en %1$s, pero su clave de Joinotify fue emitida a %2$s. Si esta es una copia de staging, déjala en pausa: enviaría pedidos de prueba a clientes reales. Si el sitio se movió, conéctalo de nuevo en la tarjeta de WhatsApp de Ajustes → Aplicaciones."
+      ],
+      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
+        "Este sitio fue eliminado de tu cuenta de Joinotify. Conéctalo de nuevo en la tarjeta de WhatsApp de Ajustes → Aplicaciones para reanudar."
+      ],
       "This text variable may not work in this context": [
         "Esta variable de texto puede no funcionar en este contexto"
       ],
       "Toggle %s": [
         "Alternar %s"
+      ],
+      "Try again": [
+        "Intenta de nuevo"
       ],
       "Turn this on to enable debug mode and inspect errors and other relevant information.": [
         "Activa esto para habilitar el modo de depuración e inspeccionar errores y otra información relevante."
@@ -676,20 +823,35 @@
       "View the recent events recorded by the plugin.": [
         "Ver los eventos recientes registrados por el plugin."
       ],
+      "Waiting": [
+        "Esperando"
+      ],
       "warning": [
         "advertencia"
       ],
       "Warning": [
         "Advertencia"
       ],
+      "with an invalid phone number": [
+        "con un número de teléfono inválido"
+      ],
+      "without a phone number": [
+        "sin un número de teléfono"
+      ],
       "WordPress": [
         "WordPress"
+      ],
+      "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?": [
+        "Has estado automatizando tus mensajes con Joinotify durante un tiempo. Si te está ayudando, ¿te tomarías un minuto para calificarlo en WordPress.org?"
       ],
       "Your Joinotify account is connected.": [
         "Tu cuenta de Joinotify está conectada."
       ],
       "Your numbers are connected on the Joinotify panel. Sync to import them here, along with their verified name, quality rating and 24-hour messaging limit.": [
         "Tus números están conectados en el panel de Joinotify. Sincroniza para importarlos aquí, junto con su nombre verificado, calificación de calidad y límite de mensajería de 24 horas."
+      ],
+      "Your review helps other people find the plugin and keeps us improving it.": [
+        "Tu reseña ayuda a otras personas a encontrar el plugin y nos mantiene mejorándolo."
       ]
     }
   }

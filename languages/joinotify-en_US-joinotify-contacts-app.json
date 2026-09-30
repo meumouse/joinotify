@@ -1,0 +1,1209 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "en_US",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "— Detect automatically —": [
+        "— Detect automatically —"
+      ],
+      "— Do not send —": [
+        "— Do not send —"
+      ],
+      "— Ignore —": [
+        "— Ignore —"
+      ],
+      "— No consent field —": [
+        "— No consent field —"
+      ],
+      "— None —": [
+        "— None —"
+      ],
+      "— Pick —": [
+        "— Pick —"
+      ],
+      "— Pick a custom field —": [
+        "— Pick a custom field —"
+      ],
+      "— Pick a field —": [
+        "— Pick a field —"
+      ],
+      "— Pick a tag —": [
+        "— Pick a tag —"
+      ],
+      "\"%s\" and its value on every contact are erased. Audiences that filter by it stop matching. This cannot be undone; archive the field instead to keep its values.": [
+        "\"%s\" and its value on every contact are erased. Audiences that filter by it stop matching. This cannot be undone; archive the field instead to keep its values."
+      ],
+      "\"%s\" is taken off every contact and erased. This cannot be undone.": [
+        "\"%s\" is taken off every contact and erased. This cannot be undone."
+      ],
+      "(edit it in the Joinotify panel)": [
+        "(edit it in the Joinotify panel)"
+      ],
+      "(erased contact)": [
+        "(erased contact)"
+      ],
+      "%1$d of %2$d conditions, up to 3 levels of groups.": [
+        "%1$d of %2$d conditions, up to 3 levels of groups."
+      ],
+      "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created.": [
+        "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created."
+      ],
+      "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number.": [
+        "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number."
+      ],
+      "%1$s will be erased after its conversations, tags, history and campaigns move to %2$s. Its fields only fill the empty ones, and an opt-out of either wins. This cannot be undone.": [
+        "%1$s will be erased after its conversations, tags, history and campaigns move to %2$s. Its fields only fill the empty ones, and an opt-out of either wins. This cannot be undone."
+      ],
+      "%1$s: %2$d contacts. Tell what each column is.": [
+        "%1$s: %2$d contacts. Tell what each column is."
+      ],
+      "%d contact": [
+        "%d contact"
+      ],
+      "%d option": [
+        "%d option"
+      ],
+      "%s stays. Search the duplicate that should be merged into it.": [
+        "%s stays. Search the duplicate that should be merged into it."
+      ],
+      "0 results": [
+        "0 results"
+      ],
+      "A checkbox the person ticks to agree to receive offers. Unticked, the contact is sent without consent.": [
+        "A checkbox the person ticks to agree to receive offers. Unticked, the contact is sent without consent."
+      ],
+      "A choice field needs at least one option.": [
+        "A choice field needs at least one option."
+      ],
+      "Abandoned carts (Flexify Checkout)": [
+        "Abandoned carts (Flexify Checkout)"
+      ],
+      "Actions": [
+        "Actions"
+      ],
+      "Add a contact by hand, or turn on the sync of your integrations to bring your customers and leads.": [
+        "Add a contact by hand, or turn on the sync of your integrations to bring your customers and leads."
+      ],
+      "Add a tag": [
+        "Add a tag"
+      ],
+      "Add at least one complete condition.": [
+        "Add at least one complete condition."
+      ],
+      "Add condition": [
+        "Add condition"
+      ],
+      "Add contact": [
+        "Add contact"
+      ],
+      "Add group": [
+        "Add group"
+      ],
+      "Add mapping": [
+        "Add mapping"
+      ],
+      "Add tag": [
+        "Add tag"
+      ],
+      "Add to the list": [
+        "Add to the list"
+      ],
+      "Added": [
+        "Added"
+      ],
+      "Added by hand": [
+        "Added by hand"
+      ],
+      "Adds an unticked checkbox to the checkout, the sign-up forms and My account. Who ticks it is opted in with the checkbox text as evidence; who unticks it in My account is opted out.": [
+        "Adds an unticked checkbox to the checkout, the sign-up forms and My account. Who ticks it is opted in with the checkbox text as evidence; who unticks it in My account is opted out."
+      ],
+      "all": [
+        "all"
+      ],
+      "All tags": [
+        "All tags"
+      ],
+      "already in the base (skipped)": [
+        "already in the base (skipped)"
+      ],
+      "An audience is a saved filter over your contacts. It is recounted every time it is used, so new contacts that match join it on their own.": [
+        "An audience is a saved filter over your contacts. It is recounted every time it is used, so new contacts that match join it on their own."
+      ],
+      "another address": [
+        "another address"
+      ],
+      "any": [
+        "any"
+      ],
+      "Any consent": [
+        "Any consent"
+      ],
+      "Any reason": [
+        "Any reason"
+      ],
+      "Any source": [
+        "Any source"
+      ],
+      "API": [
+        "API"
+      ],
+      "Archive": [
+        "Archive"
+      ],
+      "Archived": [
+        "Archived"
+      ],
+      "Audience": [
+        "Audience"
+      ],
+      "Audience archived.": [
+        "Audience archived."
+      ],
+      "Audience restored.": [
+        "Audience restored."
+      ],
+      "Audiences": [
+        "Audiences"
+      ],
+      "Audiences & Contacts": [
+        "Audiences & Contacts"
+      ],
+      "Back": [
+        "Back"
+      ],
+      "Blocked by Meta for marketing": [
+        "Blocked by Meta for marketing"
+      ],
+      "Buyers of every order (with or without an account), their order history and their subscriptions.": [
+        "Buyers of every order (with or without an account), their order history and their subscriptions."
+      ],
+      "Campaign frequency": [
+        "Campaign frequency"
+      ],
+      "Cancel": [
+        "Cancel"
+      ],
+      "Change or clear the filters to see more contacts.": [
+        "Change or clear the filters to see more contacts."
+      ],
+      "Changes the contacts at once, without starting any flow or sending webhooks.": [
+        "Changes the contacts at once, without starting any flow or sending webhooks."
+      ],
+      "Check your connection and try again.": [
+        "Check your connection and try again."
+      ],
+      "Checkbox text": [
+        "Checkbox text"
+      ],
+      "Choose which forms create contacts and which of their fields are the phone, e-mail, name, consent and custom fields. A form without a rule is read by the field types and labels.": [
+        "Choose which forms create contacts and which of their fields are the phone, e-mail, name, consent and custom fields. A form without a rule is read by the field types and labels."
+      ],
+      "Clear filters": [
+        "Clear filters"
+      ],
+      "Clicked a campaign": [
+        "Clicked a campaign"
+      ],
+      "Close": [
+        "Close"
+      ],
+      "Close dialog": [
+        "Close dialog"
+      ],
+      "Close drawer": [
+        "Close drawer"
+      ],
+      "Color": [
+        "Color"
+      ],
+      "Column": [
+        "Column"
+      ],
+      "Configure": [
+        "Configure"
+      ],
+      "Confirm": [
+        "Confirm"
+      ],
+      "Connect this site to Joinotify": [
+        "Connect this site to Joinotify"
+      ],
+      "Connect with Joinotify": [
+        "Connect with Joinotify"
+      ],
+      "Consent": [
+        "Consent"
+      ],
+      "Contact": [
+        "Contact"
+      ],
+      "Contacts": [
+        "Contacts"
+      ],
+      "Contacts already in the base": [
+        "Contacts already in the base"
+      ],
+      "Contacts that match": [
+        "Contacts that match"
+      ],
+      "contains": [
+        "contains"
+      ],
+      "Could not load the audiences.": [
+        "Could not load the audiences."
+      ],
+      "Could not load the contact.": [
+        "Could not load the contact."
+      ],
+      "Could not load the contacts.": [
+        "Could not load the contacts."
+      ],
+      "Could not load the sources.": [
+        "Could not load the sources."
+      ],
+      "Could not load the suppression list.": [
+        "Could not load the suppression list."
+      ],
+      "Could not reach the Joinotify platform": [
+        "Could not reach the Joinotify platform"
+      ],
+      "Could not read this file. Save it as CSV (UTF-8) and try again.": [
+        "Could not read this file. Save it as CSV (UTF-8) and try again."
+      ],
+      "counted %s": [
+        "counted %s"
+      ],
+      "Counting your customers…": [
+        "Counting your customers…"
+      ],
+      "Counting…": [
+        "Counting…"
+      ],
+      "Create an audience to group contacts by their fields, tags or consent — for example, opted-in customers from one city.": [
+        "Create an audience to group contacts by their fields, tags or consent — for example, opted-in customers from one city."
+      ],
+      "Create audience": [
+        "Create audience"
+      ],
+      "Create custom fields in the Fields & tags tab to map site data to them.": [
+        "Create custom fields in the Fields & tags tab to map site data to them."
+      ],
+      "Create field": [
+        "Create field"
+      ],
+      "Create tag": [
+        "Create tag"
+      ],
+      "Created": [
+        "Created"
+      ],
+      "created at the same time by another path": [
+        "created at the same time by another path"
+      ],
+      "Creates contacts": [
+        "Creates contacts"
+      ],
+      "Custom field archived. It keeps its values but accepts no new ones.": [
+        "Custom field archived. It keeps its values but accepts no new ones."
+      ],
+      "Custom field restored.": [
+        "Custom field restored."
+      ],
+      "Custom field: %s": [
+        "Custom field: %s"
+      ],
+      "Custom fields": [
+        "Custom fields"
+      ],
+      "Custom fields filled by this form": [
+        "Custom fields filled by this form"
+      ],
+      "Date": [
+        "Date"
+      ],
+      "Date and time": [
+        "Date and time"
+      ],
+      "Describe how the contact gave consent.": [
+        "Describe how the contact gave consent."
+      ],
+      "Description (optional)": [
+        "Description (optional)"
+      ],
+      "Details": [
+        "Details"
+      ],
+      "Discard": [
+        "Discard"
+      ],
+      "does not contain": [
+        "does not contain"
+      ],
+      "does not have": [
+        "does not have"
+      ],
+      "Download the contacts matching the filters as a CSV file": [
+        "Download the contacts matching the filters as a CSV file"
+      ],
+      "E-mail": [
+        "E-mail"
+      ],
+      "e.g. Agreed by WhatsApp on 29/09/2026": [
+        "e.g. Agreed by WhatsApp on 09/29/2026"
+      ],
+      "e.g. Asked to stop receiving messages": [
+        "e.g. Asked to stop receiving messages"
+      ],
+      "e.g. Imported, Fair 2026": [
+        "e.g. Imported, Fair 2026"
+      ],
+      "e.g. Lead, Newsletter": [
+        "e.g. Lead, Newsletter"
+      ],
+      "e.g. Sign-up form at the store counter, 29/09/2026": [
+        "e.g. Sign-up form at the store counter, 09/29/2026"
+      ],
+      "e.g. Sign-up sheet of the store event, 09/2026": [
+        "e.g. Sign-up sheet of the store event, 09/2026"
+      ],
+      "Each source can add its own tags, on top of the tag of this site.": [
+        "Each source can add its own tags, on top of the tag of this site."
+      ],
+      "Edit": [
+        "Edit"
+      ],
+      "Edit audience": [
+        "Edit audience"
+      ],
+      "Edit contact": [
+        "Edit contact"
+      ],
+      "Edit custom field": [
+        "Edit custom field"
+      ],
+      "Edit tag": [
+        "Edit tag"
+      ],
+      "Edited": [
+        "Edited"
+      ],
+      "ends with": [
+        "ends with"
+      ],
+      "Engagement": [
+        "Engagement"
+      ],
+      "Enter phone number": [
+        "Enter phone number"
+      ],
+      "Erase": [
+        "Erase"
+      ],
+      "Erase audience": [
+        "Erase audience"
+      ],
+      "Erase field": [
+        "Erase field"
+      ],
+      "Erase for good": [
+        "Erase for good"
+      ],
+      "Erase tag": [
+        "Erase tag"
+      ],
+      "Erase this audience?": [
+        "Erase this audience?"
+      ],
+      "Erase this contact?": [
+        "Erase this contact?"
+      ],
+      "Erase this custom field?": [
+        "Erase this custom field?"
+      ],
+      "Erase this tag?": [
+        "Erase this tag?"
+      ],
+      "Error": [
+        "Error"
+      ],
+      "Events reach only who buys or signs up from now on. Send the customers you already have, once, so your first campaign can reach them.": [
+        "Events reach only who buys or signs up from now on. Send the customers you already have, once, so your first campaign can reach them."
+      ],
+      "Every contact sent by this site carries it. Empty uses the site name.": [
+        "Every contact sent by this site carries it. Empty uses the site name."
+      ],
+      "Every form with a phone or an e-mail": [
+        "Every form with a phone or an e-mail"
+      ],
+      "Existing customers": [
+        "Existing customers"
+      ],
+      "Export CSV": [
+        "Export CSV"
+      ],
+      "Export data": [
+        "Export data"
+      ],
+      "Exporting…": [
+        "Exporting…"
+      ],
+      "Failed": [
+        "Failed"
+      ],
+      "Field": [
+        "Field"
+      ],
+      "Fields & tags": [
+        "Fields & tags"
+      ],
+      "First line": [
+        "First line"
+      ],
+      "First name": [
+        "First name"
+      ],
+      "First name (or full name)": [
+        "First name (or full name)"
+      ],
+      "Flow": [
+        "Flow"
+      ],
+      "Forms": [
+        "Forms"
+      ],
+      "Forms (WPForms and Elementor)": [
+        "Forms (WPForms and Elementor)"
+      ],
+      "Full name": [
+        "Full name"
+      ],
+      "Give the audience a name.": [
+        "Give the audience a name."
+      ],
+      "Given up": [
+        "Given up"
+      ],
+      "Given up after every retry": [
+        "Given up after every retry"
+      ],
+      "has": [
+        "has"
+      ],
+      "History": [
+        "History"
+      ],
+      "How was the consent obtained?": [
+        "How was the consent obtained?"
+      ],
+      "Identifies the field in audience filters, imports and the API. It cannot change after the field is created.": [
+        "Identifies the field in audience filters, imports and the API. It cannot change after the field is created."
+      ],
+      "Ignored": [
+        "Ignored"
+      ],
+      "Import": [
+        "Import"
+      ],
+      "Import %d contacts": [
+        "Import %d contacts"
+      ],
+      "Import contacts": [
+        "Import contacts"
+      ],
+      "Import CSV": [
+        "Import CSV"
+      ],
+      "Import finished.": [
+        "Import finished."
+      ],
+      "Imported": [
+        "Imported"
+      ],
+      "Importing… %1$d of %2$d": [
+        "Importing… %1$d of %2$d"
+      ],
+      "in conflict with another contact": [
+        "in conflict with another contact"
+      ],
+      "Invalid number": [
+        "Invalid number"
+      ],
+      "is": [
+        "is"
+      ],
+      "is after": [
+        "is after"
+      ],
+      "is at least": [
+        "is at least"
+      ],
+      "is at most": [
+        "is at most"
+      ],
+      "is before": [
+        "is before"
+      ],
+      "is empty": [
+        "is empty"
+      ],
+      "is filled": [
+        "is filled"
+      ],
+      "is greater than": [
+        "is greater than"
+      ],
+      "is less than": [
+        "is less than"
+      ],
+      "is no": [
+        "is no"
+      ],
+      "is none of": [
+        "is none of"
+      ],
+      "is not": [
+        "is not"
+      ],
+      "is one of": [
+        "is one of"
+      ],
+      "Is the": [
+        "Is the"
+      ],
+      "is yes": [
+        "is yes"
+      ],
+      "Items per page": [
+        "Items per page"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Joinotify Cloud sync": [
+        "Joinotify Cloud sync"
+      ],
+      "kept on the do-not-contact list": [
+        "kept on the do-not-contact list"
+      ],
+      "kept opted out": [
+        "kept opted out"
+      ],
+      "Key": [
+        "Key"
+      ],
+      "Label": [
+        "Label"
+      ],
+      "Labels that group contacts: customers, leads of a form, VIPs… Integrations create the tags they use on their own.": [
+        "Labels that group contacts: customers, leads of a form, VIPs… Integrations create the tags they use on their own."
+      ],
+      "Language (e.g. pt-BR)": [
+        "Language (e.g. pt-BR)"
+      ],
+      "Last delivery: %s.": [
+        "Last delivery: %s."
+      ],
+      "Last error: %s.": [
+        "Last error: %s."
+      ],
+      "Last interaction": [
+        "Last interaction"
+      ],
+      "Last message received": [
+        "Last message received"
+      ],
+      "Last message sent": [
+        "Last message sent"
+      ],
+      "Last name": [
+        "Last name"
+      ],
+      "Last run finished on %s.": [
+        "Last run finished on %s."
+      ],
+      "Last run stopped because the sync was switched off.": [
+        "Last run stopped because the sync was switched off."
+      ],
+      "Last run was stopped.": [
+        "Last run was stopped."
+      ],
+      "Leads collected at checkout and carts that were abandoned, recovered or lost.": [
+        "Leads collected at checkout and carts that were abandoned, recovered or lost."
+      ],
+      "Leave it unticked when you do not have that consent: the contact still receives the messages of your workflows, but not campaigns.": [
+        "Leave it unticked when you do not have that consent: the contact still receives the messages of your workflows, but not campaigns."
+      ],
+      "Leave them as they are": [
+        "Leave them as they are"
+      ],
+      "Line %d": [
+        "Line %d"
+      ],
+      "Lines not imported": [
+        "Lines not imported"
+      ],
+      "Load more": [
+        "Load more"
+      ],
+      "Loading the sync status…": [
+        "Loading the sync status…"
+      ],
+      "Loading…": [
+        "Loading…"
+      ],
+      "Marketing consent": [
+        "Marketing consent"
+      ],
+      "Marketing consent field": [
+        "Marketing consent field"
+      ],
+      "Merge": [
+        "Merge"
+      ],
+      "Merge a duplicate": [
+        "Merge a duplicate"
+      ],
+      "Merged with a duplicate": [
+        "Merged with a duplicate"
+      ],
+      "Meta key, e.g. _billing_cpf": [
+        "Meta key, e.g. _billing_cpf"
+      ],
+      "Multiple choice": [
+        "Multiple choice"
+      ],
+      "Name": [
+        "Name"
+      ],
+      "Name, e-mail or phone": [
+        "Name, e-mail or phone"
+      ],
+      "New audience": [
+        "New audience"
+      ],
+      "New contacts are created opted in, and existing ones only if their consent was unknown. An opt-out is never undone.": [
+        "New contacts are created opted in, and existing ones only if their consent was unknown. An opt-out is never undone."
+      ],
+      "New custom field": [
+        "New custom field"
+      ],
+      "New field": [
+        "New field"
+      ],
+      "New tag": [
+        "New tag"
+      ],
+      "Newest first": [
+        "Newest first"
+      ],
+      "No": [
+        "No"
+      ],
+      "No access to the contact base": [
+        "No access to the contact base"
+      ],
+      "No archived audiences": [
+        "No archived audiences"
+      ],
+      "No audiences yet": [
+        "No audiences yet"
+      ],
+      "No consent recorded for marketing messages.": [
+        "No consent recorded for marketing messages."
+      ],
+      "No contact matches these filters": [
+        "No contact matches these filters"
+      ],
+      "No contacts yet": [
+        "No contacts yet"
+      ],
+      "No custom fields yet.": [
+        "No custom fields yet."
+      ],
+      "No form was found on this site.": [
+        "No form was found on this site."
+      ],
+      "no reason given": [
+        "no reason given"
+      ],
+      "No tags yet.": [
+        "No tags yet."
+      ],
+      "No tags.": [
+        "No tags."
+      ],
+      "No user of this site has this e-mail or phone.": [
+        "No user of this site has this e-mail or phone."
+      ],
+      "no valid phone number": [
+        "no valid phone number"
+      ],
+      "Not active on this site.": [
+        "Not active on this site."
+      ],
+      "Note": [
+        "Note"
+      ],
+      "Note (optional)": [
+        "Note (optional)"
+      ],
+      "Nothing delivered yet.": [
+        "Nothing delivered yet."
+      ],
+      "Nothing recorded yet.": [
+        "Nothing recorded yet."
+      ],
+      "Number": [
+        "Number"
+      ],
+      "Numbers on this list never receive a marketing campaign, whatever their consent. Workflow messages are not affected. Opt-outs land here on their own.": [
+        "Numbers on this list never receive a marketing campaign, whatever their consent. Workflow messages are not affected. Opt-outs land here on their own."
+      ],
+      "of": [
+        "of"
+      ],
+      "of these conditions": [
+        "of these conditions"
+      ],
+      "Of those sent, %1$d %2$s.": [
+        "Of those sent, %1$d %2$s."
+      ],
+      "Off": [
+        "Off"
+      ],
+      "older than what Joinotify has": [
+        "older than what Joinotify has"
+      ],
+      "On": [
+        "On"
+      ],
+      "On the suppression list": [
+        "On the suppression list"
+      ],
+      "On this site": [
+        "On this site"
+      ],
+      "Only record consent the contact actually gave. The evidence is kept with the contact and shown if the consent is ever questioned.": [
+        "Only record consent the contact actually gave. The evidence is kept with the contact and shown if the consent is ever questioned."
+      ],
+      "Only the forms switched on below": [
+        "Only the forms switched on below"
+      ],
+      "Open settings": [
+        "Open settings"
+      ],
+      "Open the existing contact": [
+        "Open the existing contact"
+      ],
+      "Open the Joinotify panel": [
+        "Open the Joinotify panel"
+      ],
+      "Opted in": [
+        "Opted in"
+      ],
+      "Opted in and not suppressed": [
+        "Opted in and not suppressed"
+      ],
+      "Opted out": [
+        "Opted out"
+      ],
+      "Options, one per line": [
+        "Options, one per line"
+      ],
+      "over the plan's contact limit": [
+        "over the plan's contact limit"
+      ],
+      "over your plan's contact limit": [
+        "over your plan's contact limit"
+      ],
+      "People who register on the site, and changes to their phone, name or e-mail.": [
+        "People who register on the site, and changes to their phone, name or e-mail."
+      ],
+      "Phone": [
+        "Phone"
+      ],
+      "Phone with country code": [
+        "Phone with country code"
+      ],
+      "Pick a CSV file with a header line and one contact per line. Every contact needs a phone number; a number without the country code is read in the default country of your settings.": [
+        "Pick a CSV file with a header line and one contact per line. Every contact needs a phone number; a number without the country code is read in the default country of your settings."
+      ],
+      "Pick tags…": [
+        "Pick tags…"
+      ],
+      "Pick the column that holds the phone number.": [
+        "Pick the column that holds the phone number."
+      ],
+      "Position": [
+        "Position"
+      ],
+      "Preview": [
+        "Preview"
+      ],
+      "Reachable": [
+        "Reachable"
+      ],
+      "Reason": [
+        "Reason"
+      ],
+      "Reason (optional)": [
+        "Reason (optional)"
+      ],
+      "Record opt-in": [
+        "Record opt-in"
+      ],
+      "Record opt-out": [
+        "Record opt-out"
+      ],
+      "Refresh": [
+        "Refresh"
+      ],
+      "refused": [
+        "refused"
+      ],
+      "Remove": [
+        "Remove"
+      ],
+      "Remove a tag": [
+        "Remove a tag"
+      ],
+      "Remove from the list": [
+        "Remove from the list"
+      ],
+      "Remove from the suppression list?": [
+        "Remove from the suppression list?"
+      ],
+      "Remove group": [
+        "Remove group"
+      ],
+      "Remove tag": [
+        "Remove tag"
+      ],
+      "Request failed.": [
+        "Request failed."
+      ],
+      "Restore": [
+        "Restore"
+      ],
+      "Save changes": [
+        "Save changes"
+      ],
+      "Save sources": [
+        "Save sources"
+      ],
+      "Search": [
+        "Search"
+      ],
+      "Search by name": [
+        "Search by name"
+      ],
+      "Search by name, e-mail or phone": [
+        "Search by name, e-mail or phone"
+      ],
+      "Search by phone": [
+        "Search by phone"
+      ],
+      "Searching…": [
+        "Searching…"
+      ],
+      "Sections": [
+        "Sections"
+      ],
+      "See contacts": [
+        "See contacts"
+      ],
+      "See the contacts with this tag": [
+        "See the contacts with this tag"
+      ],
+      "Select": [
+        "Select"
+      ],
+      "Select all visible contacts": [
+        "Select all visible contacts"
+      ],
+      "Select an option": [
+        "Select an option"
+      ],
+      "Selected": [
+        "Selected"
+      ],
+      "Send again": [
+        "Send again"
+      ],
+      "Send existing customers": [
+        "Send existing customers"
+      ],
+      "Send full addresses (city and state are always sent)": [
+        "Send full addresses (city and state are always sent)"
+      ],
+      "Send the items of each order": [
+        "Send the items of each order"
+      ],
+      "Send them": [
+        "Send them"
+      ],
+      "Sending… %1$d queued so far, %2$d left out for having no phone number.": [
+        "Sending… %1$d queued so far, %2$d left out for having no phone number."
+      ],
+      "Sends a user or order meta (a CPF, a birthday, a checkout field) into a custom field of the contact. It only fills fields that are empty on Joinotify: what someone typed in the panel wins.": [
+        "Sends a user or order meta (a CPF, a birthday, a checkout field) into a custom field of the contact. It only fills fields that are empty on Joinotify: what someone typed in the panel wins."
+      ],
+      "Sends the customers, users and leads of this site to your contact base, and what they do here as events your flows can react to. Contacts are queued and sent in the background, never during a checkout.": [
+        "Sends the customers, users and leads of this site to your contact base, and what they do here as events your flows can react to. Contacts are queued and sent in the background, never during a checkout."
+      ],
+      "Sent (7 days)": [
+        "Sent (7 days)"
+      ],
+      "Show all": [
+        "Show all"
+      ],
+      "Show archived fields (%d)": [
+        "Show archived fields (%d)"
+      ],
+      "Showing the contacts of the audience": [
+        "Showing the contacts of the audience"
+      ],
+      "Since": [
+        "Since"
+      ],
+      "Single choice": [
+        "Single choice"
+      ],
+      "Site data in custom fields": [
+        "Site data in custom fields"
+      ],
+      "Skipped": [
+        "Skipped"
+      ],
+      "Some of them": [
+        "Some of them"
+      ],
+      "Something went wrong.": [
+        "Something went wrong."
+      ],
+      "Sort by": [
+        "Sort by"
+      ],
+      "Source": [
+        "Source"
+      ],
+      "Sources": [
+        "Sources"
+      ],
+      "starts with": [
+        "starts with"
+      ],
+      "Stop": [
+        "Stop"
+      ],
+      "Suppressed": [
+        "Suppressed"
+      ],
+      "Suppression list": [
+        "Suppression list"
+      ],
+      "Switch the sync on and save to start sending. Nothing is sent before that.": [
+        "Switch the sync on and save to start sending. Nothing is sent before that."
+      ],
+      "Sync off": [
+        "Sync off"
+      ],
+      "Sync on": [
+        "Sync on"
+      ],
+      "Sync paused": [
+        "Sync paused"
+      ],
+      "Tag": [
+        "Tag"
+      ],
+      "Tag added": [
+        "Tag added"
+      ],
+      "Tag of this site": [
+        "Tag of this site"
+      ],
+      "Tag removed": [
+        "Tag removed"
+      ],
+      "Tags": [
+        "Tags"
+      ],
+      "Tags (separated by commas)": [
+        "Tags (separated by commas)"
+      ],
+      "Tags for every imported contact": [
+        "Tags for every imported contact"
+      ],
+      "Tags to add, separated by commas": [
+        "Tags to add, separated by commas"
+      ],
+      "Text": [
+        "Text"
+      ],
+      "The %d contact matching the current filters": [
+        "The %d contact matching the current filters"
+      ],
+      "The %d selected contact": [
+        "The %d selected contact"
+      ],
+      "The API key of this site is not allowed to read the contact base.": [
+        "The API key of this site is not allowed to read the contact base."
+      ],
+      "The API key of this site was revoked or is invalid. Connect the site to Joinotify again.": [
+        "The API key of this site was revoked or is invalid. Connect the site to Joinotify again."
+      ],
+      "The audience is erased; its contacts are not. A draft campaign that used it will fail its check until you pick another audience.": [
+        "The audience is erased; its contacts are not. A draft campaign that used it will fail its check until you pick another audience."
+      ],
+      "The checkbox text; its label is used when empty": [
+        "The checkbox text; its label is used when empty"
+      ],
+      "The connection to Joinotify was lost": [
+        "The connection to Joinotify was lost"
+      ],
+      "The contact agreed to receive marketing messages": [
+        "The contact agreed to receive marketing messages"
+      ],
+      "The contact base of your Joinotify account: people added by hand, by your integrations and by your workflows, the fields and tags that organize them and the audiences built from them.": [
+        "The contact base of your Joinotify account: people added by hand, by your integrations and by your workflows, the fields and tags that organize them and the audiences built from them."
+      ],
+      "The contact is erased from your Joinotify account with its conversations, messages, tags and history. Its suppression rows stay, without the phone, and campaign recipients are anonymized. This is the erasure request of the LGPD and GDPR and cannot be undone.": [
+        "The contact is erased from your Joinotify account with its conversations, messages, tags and history. Its suppression rows stay, without the phone, and campaign recipients are anonymized. This is the erasure request of the LGPD and GDPR and cannot be undone."
+      ],
+      "The contact keeps exactly the tags listed here.": [
+        "The contact keeps exactly the tags listed here."
+      ],
+      "The contact stops receiving marketing messages and their number goes to the suppression list until they opt in again.": [
+        "The contact stops receiving marketing messages and their number goes to the suppression list until they opt in again."
+      ],
+      "The data your contacts carry beyond name, phone and e-mail: city, plan, birthday…": [
+        "The data your contacts carry beyond name, phone and e-mail: city, plan, birthday…"
+      ],
+      "The file needs a header line and at least one contact.": [
+        "The file needs a header line and at least one contact."
+      ],
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
+        "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own."
+      ],
+      "The key starts with a lowercase letter and holds only lowercase letters, digits and underscores, up to 40 characters.": [
+        "The key starts with a lowercase letter and holds only lowercase letters, digits and underscores, up to 40 characters."
+      ],
+      "The number can receive marketing campaigns again if it has consent.": [
+        "The number can receive marketing campaigns again if it has consent."
+      ],
+      "The suppression list is empty": [
+        "The suppression list is empty"
+      ],
+      "These contacts agreed to receive marketing messages": [
+        "These contacts agreed to receive marketing messages"
+      ],
+      "This field has no options yet.": [
+        "This field has no options yet."
+      ],
+      "This person asked to stop receiving messages, or Meta blocks marketing to them. Taking the number off the list does not opt them in: they stay opted out until they agree again.": [
+        "This person asked to stop receiving messages, or Meta blocks marketing to them. Taking the number off the list does not opt them in: they stay opted out until they agree again."
+      ],
+      "This site": [
+        "This site"
+      ],
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
+        "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications."
+      ],
+      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
+        "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume."
+      ],
+      "Too many requests to the Joinotify platform. Try again in %d seconds.": [
+        "Too many requests to the Joinotify platform. Try again in %d seconds."
+      ],
+      "Try again": [
+        "Try again"
+      ],
+      "Turn the submissions of this form into contacts": [
+        "Turn the submissions of this form into contacts"
+      ],
+      "Type": [
+        "Type"
+      ],
+      "Type the phone number of the contact.": [
+        "Type the phone number of the contact."
+      ],
+      "Type to filter…": [
+        "Type to filter…"
+      ],
+      "Unknown": [
+        "Unknown"
+      ],
+      "Unknown consent": [
+        "Unknown consent"
+      ],
+      "Update it with these data": [
+        "Update it with these data"
+      ],
+      "Update them (filled values replace, tags are added)": [
+        "Update them (filled values replace, tags are added)"
+      ],
+      "Updated": [
+        "Updated"
+      ],
+      "Updating replaces the tags of the existing contact and leaves its consent as it is.": [
+        "Updating replaces the tags of the existing contact and leaves its consent as it is."
+      ],
+      "URL": [
+        "URL"
+      ],
+      "Waiting": [
+        "Waiting"
+      ],
+      "Webhook": [
+        "Webhook"
+      ],
+      "What the person agreed to": [
+        "What the person agreed to"
+      ],
+      "WhatsApp name": [
+        "WhatsApp name"
+      ],
+      "Where contacts come from": [
+        "Where contacts come from"
+      ],
+      "Whoever sends a form with a phone or an e-mail, read through the rules below.": [
+        "Whoever sends a form with a phone or an e-mail, read through the rules below."
+      ],
+      "with an invalid phone number": [
+        "with an invalid phone number"
+      ],
+      "without a phone number": [
+        "without a phone number"
+      ],
+      "WooCommerce orders and customers": [
+        "WooCommerce orders and customers"
+      ],
+      "WordPress users": [
+        "WordPress users"
+      ],
+      "Wrote to you": [
+        "Wrote to you"
+      ],
+      "Yes": [
+        "Yes"
+      ],
+      "Yes / no": [
+        "Yes / no"
+      ],
+      "Your contacts and audiences live on the Joinotify platform. Connect the site to list them, add contacts by hand and sync the ones your integrations collect.": [
+        "Your contacts and audiences live on the Joinotify platform. Connect the site to list them, add contacts by hand and sync the ones your integrations collect."
+      ],
+      "Your Joinotify account needs attention": [
+        "Your Joinotify account needs attention"
+      ],
+      "Your Joinotify account needs attention before it can be used. Open the panel to resolve the billing.": [
+        "Your Joinotify account needs attention before it can be used. Open the panel to resolve the billing."
+      ]
+    }
+  }
+}

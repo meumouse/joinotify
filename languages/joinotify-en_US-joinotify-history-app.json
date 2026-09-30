@@ -37,6 +37,12 @@
       "Cancel": [
         "Cancel"
       ],
+      "Cancel resend": [
+        "Cancel resend"
+      ],
+      "Cancelled": [
+        "Cancelled"
+      ],
       "Clear all": [
         "Clear all"
       ],
@@ -52,17 +58,26 @@
       "Close": [
         "Close"
       ],
+      "Component": [
+        "Component"
+      ],
       "Confirm": [
         "Confirm"
       ],
       "Content": [
         "Content"
       ],
+      "Could not cancel the resend.": [
+        "Could not cancel the resend."
+      ],
       "Could not clear the history.": [
         "Could not clear the history."
       ],
       "Could not delete the selected records.": [
         "Could not delete the selected records."
+      ],
+      "Could not export the message history.": [
+        "Could not export the message history."
       ],
       "Could not load the message history.": [
         "Could not load the message history."
@@ -79,6 +94,18 @@
       "Delete selected records": [
         "Delete selected records"
       ],
+      "Discard the pending retry of the selected messages": [
+        "Discard the pending retry of the selected messages"
+      ],
+      "Download every record matching the current filters as a JSON file": [
+        "Download every record matching the current filters as a JSON file"
+      ],
+      "Download the selected records as a JSON file": [
+        "Download the selected records as a JSON file"
+      ],
+      "Download this record as a JSON file": [
+        "Download this record as a JSON file"
+      ],
       "End date": [
         "End date"
       ],
@@ -91,6 +118,15 @@
       "Export": [
         "Export"
       ],
+      "Export all": [
+        "Export all"
+      ],
+      "Export as JSON": [
+        "Export as JSON"
+      ],
+      "Export selected": [
+        "Export selected"
+      ],
       "Exporting…": [
         "Exporting…"
       ],
@@ -102,6 +138,9 @@
       ],
       "Header": [
         "Header"
+      ],
+      "Items per page": [
+        "Items per page"
       ],
       "Joinotify": [
         "Joinotify"
@@ -138,6 +177,9 @@
       ],
       "of": [
         "of"
+      ],
+      "Payload sent": [
+        "Payload sent"
       ],
       "Previous month": [
         "Previous month"
@@ -193,8 +235,20 @@
       "Text": [
         "Text"
       ],
+      "The export holds only the %1$d most recent of the %2$d matching records.": [
+        "The export holds only the %1$d most recent of the %2$d matching records."
+      ],
+      "The selected messages will not be sent again. Records without a pending resend are left untouched.": [
+        "The selected messages will not be sent again. Records without a pending resend are left untouched."
+      ],
       "The selected records will be permanently removed. This action cannot be undone.": [
         "The selected records will be permanently removed. This action cannot be undone."
+      ],
+      "The template text was not available when this message was sent, so its name and variables are shown instead.": [
+        "The template text was not available when this message was sent, so its name and variables are shown instead."
+      ],
+      "This template was sent without variables.": [
+        "This template was sent without variables."
       ],
       "To": [
         "To"
@@ -207,6 +261,12 @@
       ],
       "Value": [
         "Value"
+      ],
+      "Values hidden": [
+        "Values hidden"
+      ],
+      "Variable": [
+        "Variable"
       ],
       "Workflow": [
         "Workflow"

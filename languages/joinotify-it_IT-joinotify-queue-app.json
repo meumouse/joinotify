@@ -43,6 +43,9 @@
       "Could not clear the queue.": [
         "Impossibile cancellare la coda."
       ],
+      "Could not export the processing queue.": [
+        "Impossibile esportare la coda di elaborazione."
+      ],
       "Could not load the processing queue.": [
         "Impossibile caricare la coda di elaborazione."
       ],
@@ -51,6 +54,15 @@
       ],
       "Dispatch now": [
         "Invia ora"
+      ],
+      "Download every item matching the current filters as a JSON file": [
+        "Scarica ogni elemento che corrisponde ai filtri attuali come file JSON"
+      ],
+      "Download the selected items as a JSON file": [
+        "Scarica gli elementi selezionati come file JSON"
+      ],
+      "Download this item as a JSON file": [
+        "Scarica questo elemento come file JSON"
       ],
       "Due": [
         "Scadenza"
@@ -64,11 +76,20 @@
       "Export": [
         "Esporta"
       ],
+      "Export all": [
+        "Esporta tutto"
+      ],
+      "Export selected": [
+        "Esporta selezionati"
+      ],
       "Exporting…": [
         "Esportazione in corso…"
       ],
       "Inactive": [
         "Inattivo"
+      ],
+      "Items per page": [
+        "Elementi per pagina"
       ],
       "Joinotify": [
         "Joinotify"
@@ -114,6 +135,9 @@
       ],
       "Select": [
         "Seleziona"
+      ],
+      "Select all visible items": [
+        "Seleziona tutti gli elementi visibili"
       ],
       "Select an option": [
         "Seleziona un'opzione"

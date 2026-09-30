@@ -494,6 +494,9 @@
       "End the workflow at this point.": [
         "End the workflow at this point."
       ],
+      "Enjoying Joinotify?": [
+        "Enjoying Joinotify?"
+      ],
       "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
         "Enter a phone number to receive test messages from the builder. Use international format and numbers only."
       ],
@@ -602,6 +605,12 @@
       "How would you like to create your new workflow?": [
         "How would you like to create your new workflow?"
       ],
+      "I already did": [
+        "I already did"
+      ],
+      "If this workflow starts the conversation, put a “WhatsApp: Template message” step before this one to open the window.": [
+        "If this workflow starts the conversation, put a “WhatsApp: Template message” step before this one to open the window."
+      ],
       "Image": [
         "Image"
       ],
@@ -674,6 +683,9 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Leave a review": [
+        "Leave a review"
+      ],
       "Leave without saving": [
         "Leave without saving"
       ],
@@ -724,6 +736,9 @@
       ],
       "Maximum items": [
         "Maximum items"
+      ],
+      "Maybe later": [
+        "Maybe later"
       ],
       "Media": [
         "Media"
@@ -829,6 +844,9 @@
       ],
       "Node settings": [
         "Node settings"
+      ],
+      "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it.": [
+        "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it."
       ],
       "One entry per line, or use the delimiter below": [
         "One entry per line, or use the delimiter below"
@@ -964,6 +982,9 @@
       ],
       "Reuse the generated value in any later message with:": [
         "Reuse the generated value in any later message with:"
+      ],
+      "Review": [
+        "Review"
       ],
       "Route this node to a specific engine. Leave on the default to use the provider from settings.": [
         "Route this node to a specific engine. Leave on the default to use the provider from settings."
@@ -1148,6 +1169,9 @@
       "Test phone number": [
         "Test phone number"
       ],
+      "Thank you for supporting Joinotify!": [
+        "Thank you for supporting Joinotify!"
+      ],
       "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.": [
         "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again."
       ],
@@ -1193,6 +1217,9 @@
       "This list may be out of date.": [
         "This list may be out of date."
       ],
+      "This step needs an open conversation": [
+        "This step needs an open conversation"
+      ],
       "This template is still awaiting Meta approval and cannot be delivered yet.": [
         "This template is still awaiting Meta approval and cannot be delivered yet."
       ],
@@ -1204,6 +1231,9 @@
       ],
       "This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one.": [
         "This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one."
+      ],
+      "This workflow already has a template step, which opens the window. Keep it before this one.": [
+        "This workflow already has a template step, which opens the window. Keep it before this one."
       ],
       "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
         "This workflow has unsaved changes. If you leave now, your changes will be lost."
@@ -1403,8 +1433,14 @@
       "You are the support agent for Store X. Be cordial and concise.": [
         "You are the support agent for Store X. Be cordial and concise."
       ],
+      "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?": [
+        "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?"
+      ],
       "Your order is confirmed": [
         "Your order is confirmed"
+      ],
+      "Your review helps other people find the plugin and keeps us improving it.": [
+        "Your review helps other people find the plugin and keeps us improving it."
       ],
       "Zoom in": [
         "Zoom in"

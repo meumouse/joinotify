@@ -43,6 +43,9 @@
       "Could not clear the queue.": [
         "No se pudo limpiar la cola."
       ],
+      "Could not export the processing queue.": [
+        "No se pudo exportar la cola de procesamiento."
+      ],
       "Could not load the processing queue.": [
         "No se pudo cargar la cola de procesamiento."
       ],
@@ -51,6 +54,15 @@
       ],
       "Dispatch now": [
         "Enviar ahora"
+      ],
+      "Download every item matching the current filters as a JSON file": [
+        "Descargar cada elemento que coincida con los filtros actuales como un archivo JSON"
+      ],
+      "Download the selected items as a JSON file": [
+        "Descargar los elementos seleccionados como un archivo JSON"
+      ],
+      "Download this item as a JSON file": [
+        "Descargar este elemento como un archivo JSON"
       ],
       "Due": [
         "Vencido"
@@ -64,11 +76,20 @@
       "Export": [
         "Exportar"
       ],
+      "Export all": [
+        "Exportar todo"
+      ],
+      "Export selected": [
+        "Exportar seleccionados"
+      ],
       "Exporting…": [
         "Exportando…"
       ],
       "Inactive": [
         "Inactivo"
+      ],
+      "Items per page": [
+        "Elementos por página"
       ],
       "Joinotify": [
         "Joinotify"
@@ -114,6 +135,9 @@
       ],
       "Select": [
         "Seleccionar"
+      ],
+      "Select all visible items": [
+        "Seleccionar todos los elementos visibles"
       ],
       "Select an option": [
         "Selecciona una opción"

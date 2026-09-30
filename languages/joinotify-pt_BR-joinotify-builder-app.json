@@ -494,6 +494,9 @@
       "End the workflow at this point.": [
         "Encerre o fluxo de trabalho neste ponto."
       ],
+      "Enjoying Joinotify?": [
+        "Gostando do Joinotify?"
+      ],
       "Enter a phone number to receive test messages from the builder. Use international format and numbers only.": [
         "Insira um número de telefone para receber mensagens de teste do construtor. Use apenas números e formatos internacionais."
       ],
@@ -602,6 +605,12 @@
       "How would you like to create your new workflow?": [
         "Como você gostaria de criar seu novo fluxo de trabalho?"
       ],
+      "I already did": [
+        "Eu já fiz"
+      ],
+      "If this workflow starts the conversation, put a “WhatsApp: Template message” step before this one to open the window.": [
+        "Se este fluxo de trabalho iniciar a conversa, coloque um passo “WhatsApp: Mensagem de modelo” antes deste para abrir a janela."
+      ],
       "Image": [
         "Imagem"
       ],
@@ -674,6 +683,9 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Leave a review": [
+        "Deixe uma avaliação"
+      ],
       "Leave without saving": [
         "Sair sem salvar"
       ],
@@ -724,6 +736,9 @@
       ],
       "Maximum items": [
         "Itens máximos"
+      ],
+      "Maybe later": [
+        "Talvez mais tarde"
       ],
       "Media": [
         "Mídia"
@@ -829,6 +844,9 @@
       ],
       "Node settings": [
         "Configurações do nó"
+      ],
+      "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it.": [
+        "Na API oficial do WhatsApp Cloud, esse tipo de mensagem só chega a um contato dentro de 24 horas da última resposta dele. Fora dessa janela, a Meta a recusa."
       ],
       "One entry per line, or use the delimiter below": [
         "Uma entrada por linha, ou use o delimitador abaixo"
@@ -964,6 +982,9 @@
       ],
       "Reuse the generated value in any later message with:": [
         "Reutilize o valor gerado em qualquer mensagem posterior com:"
+      ],
+      "Review": [
+        "Revisar"
       ],
       "Route this node to a specific engine. Leave on the default to use the provider from settings.": [
         "Roteie este nó para um mecanismo específico. Deixe no padrão para usar o provedor das configurações."
@@ -1148,6 +1169,9 @@
       "Test phone number": [
         "Número de telefone de teste"
       ],
+      "Thank you for supporting Joinotify!": [
+        "Obrigado por apoiar o Joinotify!"
+      ],
       "The %s integration that this flow's trigger depends on is currently disabled. This flow will not be processed until the integration is enabled again.": [
         "A integração %s da qual o gatilho deste fluxo depende está atualmente desativada. Este fluxo não será processado até que a integração seja ativada novamente."
       ],
@@ -1193,6 +1217,9 @@
       "This list may be out of date.": [
         "Esta lista pode estar desatualizada."
       ],
+      "This step needs an open conversation": [
+        "Este passo precisa de uma conversa aberta"
+      ],
       "This template is still awaiting Meta approval and cannot be delivered yet.": [
         "Este modelo ainda está aguardando aprovação do Meta e não pode ser entregue ainda."
       ],
@@ -1204,6 +1231,9 @@
       ],
       "This trigger has no additional settings. Use “Change trigger” in the node menu to pick a different one.": [
         "Esse gatilho não possui configurações adicionais. Use “Alterar gatilho” no menu do nó para escolher um diferente."
+      ],
+      "This workflow already has a template step, which opens the window. Keep it before this one.": [
+        "Este fluxo já tem um passo de modelo, que abre a janela. Mantenha-o antes deste."
       ],
       "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
         "Este fluxo tem alterações não salvas. Se você sair agora, suas alterações serão perdidas."
@@ -1403,8 +1433,14 @@
       "You are the support agent for Store X. Be cordial and concise.": [
         "Você é o agente de suporte da Loja X. Seja cordial e conciso."
       ],
+      "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?": [
+        "Você está automatizando suas mensagens com o Joinotify há um tempo. Se isso está te ajudando, você poderia dedicar um minuto para avaliá-lo no WordPress.org?"
+      ],
       "Your order is confirmed": [
         "Seu pedido está confirmado"
+      ],
+      "Your review helps other people find the plugin and keeps us improving it.": [
+        "Sua avaliação ajuda outras pessoas a encontrar o plugin e nos mantém melhorando."
       ],
       "Zoom in": [
         "Aproximar"

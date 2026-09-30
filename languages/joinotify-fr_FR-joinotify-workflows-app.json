@@ -37,6 +37,9 @@
       "Confirm": [
         "Confirmer"
       ],
+      "Could not export the workflows.": [
+        "Impossible d'exporter les workflows."
+      ],
       "Could not load workflows.": [
         "Impossible de charger les flux de travail."
       ],
@@ -55,11 +58,17 @@
       "Delete permanently": [
         "Supprimer définitivement"
       ],
+      "Download this workflow as a JSON file": [
+        "Télécharger ce flux de travail au format JSON"
+      ],
       "Edit": [
         "Modifier"
       ],
       "Export": [
         "Exporter"
+      ],
+      "Export as JSON": [
+        "Exporter en JSON"
       ],
       "First": [
         "Premier"
@@ -72,6 +81,9 @@
       ],
       "items": [
         "éléments"
+      ],
+      "Items per page": [
+        "Articles par page"
       ],
       "Joinotify": [
         "Joinotify"

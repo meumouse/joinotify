@@ -1,0 +1,1209 @@
+{
+  "domain": "joinotify",
+  "locale_data": {
+    "joinotify": {
+      "": {
+        "domain": "joinotify",
+        "lang": "pt_PT",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "— Detect automatically —": [
+        "— Detectar automaticamente —"
+      ],
+      "— Do not send —": [
+        "— Não enviar —"
+      ],
+      "— Ignore —": [
+        "— Ignorar —"
+      ],
+      "— No consent field —": [
+        "— Sem campo de consentimento —"
+      ],
+      "— None —": [
+        "— Nenhum —"
+      ],
+      "— Pick —": [
+        "— Escolher —"
+      ],
+      "— Pick a custom field —": [
+        "— Escolher um campo personalizado —"
+      ],
+      "— Pick a field —": [
+        "— Escolher um campo —"
+      ],
+      "— Pick a tag —": [
+        "— Escolher uma etiqueta —"
+      ],
+      "\"%s\" and its value on every contact are erased. Audiences that filter by it stop matching. This cannot be undone; archive the field instead to keep its values.": [
+        "\"%s\" e o seu valor em cada contacto são apagados. As audiências que filtram por isso deixam de corresponder. Isto não pode ser desfeito; arquive o campo em vez disso para manter os seus valores."
+      ],
+      "\"%s\" is taken off every contact and erased. This cannot be undone.": [
+        "\"%s\" é removido de cada contacto e apagado. Isto não pode ser desfeito."
+      ],
+      "(edit it in the Joinotify panel)": [
+        "(edite-o no painel do Joinotify)"
+      ],
+      "(erased contact)": [
+        "(contacto apagado)"
+      ],
+      "%1$d of %2$d conditions, up to 3 levels of groups.": [
+        "%1$d de %2$d condições, até 3 níveis de grupos."
+      ],
+      "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created.": [
+        "%1$d dos seus %2$d utilizadores têm um número de telefone, e há %3$d encomendas feitas sem conta. Cada pessoa torna-se um contacto no Joinotify, etiquetado com este site; nenhum fluxo começa para eles. Pessoas sem número de telefone são excluídas, e contactos acima do limite do seu plano não são criados."
+      ],
+      "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number.": [
+        "%1$d enviados, %2$d à espera, %3$d desistiram, %4$d excluídos por não terem número de telefone."
+      ],
+      "%1$s will be erased after its conversations, tags, history and campaigns move to %2$s. Its fields only fill the empty ones, and an opt-out of either wins. This cannot be undone.": [
+        "%1$s será apagado após as suas conversas, etiquetas, histórico e campanhas serem movidos para %2$s. Os seus campos apenas preenchem os vazios, e uma opção de saída de qualquer um prevalece. Isto não pode ser desfeito."
+      ],
+      "%1$s: %2$d contacts. Tell what each column is.": [
+        "%1$s: %2$d contactos. Diga o que cada coluna representa."
+      ],
+      "%d contact": [
+        "%d contacto"
+      ],
+      "%d option": [
+        "%d opção"
+      ],
+      "%s stays. Search the duplicate that should be merged into it.": [
+        "%s permanece. Procure o duplicado que deve ser fundido nele."
+      ],
+      "0 results": [
+        "0 resultados"
+      ],
+      "A checkbox the person ticks to agree to receive offers. Unticked, the contact is sent without consent.": [
+        "Uma caixa de seleção que a pessoa marca para concordar em receber ofertas. Sem marcar, o contacto é enviado sem consentimento."
+      ],
+      "A choice field needs at least one option.": [
+        "Um campo de escolha precisa de pelo menos uma opção."
+      ],
+      "Abandoned carts (Flexify Checkout)": [
+        "Carrinhos abandonados (Flexify Checkout)"
+      ],
+      "Actions": [
+        "Ações"
+      ],
+      "Add a contact by hand, or turn on the sync of your integrations to bring your customers and leads.": [
+        "Adicione um contacto manualmente ou ative a sincronização das suas integrações para trazer os seus clientes e leads."
+      ],
+      "Add a tag": [
+        "Adicionar uma etiqueta"
+      ],
+      "Add at least one complete condition.": [
+        "Adicione pelo menos uma condição completa."
+      ],
+      "Add condition": [
+        "Adicionar condição"
+      ],
+      "Add contact": [
+        "Adicionar contacto"
+      ],
+      "Add group": [
+        "Adicionar grupo"
+      ],
+      "Add mapping": [
+        "Adicionar mapeamento"
+      ],
+      "Add tag": [
+        "Adicionar etiqueta"
+      ],
+      "Add to the list": [
+        "Adicionar à lista"
+      ],
+      "Added": [
+        "Adicionado"
+      ],
+      "Added by hand": [
+        "Adicionado manualmente"
+      ],
+      "Adds an unticked checkbox to the checkout, the sign-up forms and My account. Who ticks it is opted in with the checkbox text as evidence; who unticks it in My account is opted out.": [
+        "Adiciona uma caixa de seleção desmarcada ao checkout, aos formulários de inscrição e à Minha conta. Quem a marca está optado com o texto da caixa de seleção como evidência; quem a desmarca na Minha conta está optado por sair."
+      ],
+      "all": [
+        "todos"
+      ],
+      "All tags": [
+        "Todas as etiquetas"
+      ],
+      "already in the base (skipped)": [
+        "já na base (ignoradas)"
+      ],
+      "An audience is a saved filter over your contacts. It is recounted every time it is used, so new contacts that match join it on their own.": [
+        "Um público é um filtro salvo sobre os seus contactos. É recontado sempre que é utilizado, por isso novos contactos que correspondem juntam-se automaticamente."
+      ],
+      "another address": [
+        "outro endereço"
+      ],
+      "any": [
+        "qualquer"
+      ],
+      "Any consent": [
+        "Qualquer consentimento"
+      ],
+      "Any reason": [
+        "Qualquer razão"
+      ],
+      "Any source": [
+        "Qualquer fonte"
+      ],
+      "API": [
+        "API"
+      ],
+      "Archive": [
+        "Arquivar"
+      ],
+      "Archived": [
+        "Arquivado"
+      ],
+      "Audience": [
+        "Público"
+      ],
+      "Audience archived.": [
+        "Público arquivado."
+      ],
+      "Audience restored.": [
+        "Público restaurado."
+      ],
+      "Audiences": [
+        "Públicos"
+      ],
+      "Audiences & Contacts": [
+        "Públicos & Contactos"
+      ],
+      "Back": [
+        "Voltar"
+      ],
+      "Blocked by Meta for marketing": [
+        "Bloqueado pelo Meta para marketing"
+      ],
+      "Buyers of every order (with or without an account), their order history and their subscriptions.": [
+        "Compradores de cada pedido (com ou sem conta), o histórico de pedidos e as suas subscrições."
+      ],
+      "Campaign frequency": [
+        "Frequência da campanha"
+      ],
+      "Cancel": [
+        "Cancelar"
+      ],
+      "Change or clear the filters to see more contacts.": [
+        "Altere ou limpe os filtros para ver mais contactos."
+      ],
+      "Changes the contacts at once, without starting any flow or sending webhooks.": [
+        "Altera os contactos de uma só vez, sem iniciar qualquer fluxo ou enviar webhooks."
+      ],
+      "Check your connection and try again.": [
+        "Verifique a sua ligação e tente novamente."
+      ],
+      "Checkbox text": [
+        "Texto da caixa de seleção"
+      ],
+      "Choose which forms create contacts and which of their fields are the phone, e-mail, name, consent and custom fields. A form without a rule is read by the field types and labels.": [
+        "Escolha quais formulários criam contactos e quais dos seus campos são o telefone, e-mail, nome, consentimento e campos personalizados. Um formulário sem uma regra é lido pelos tipos de campo e rótulos."
+      ],
+      "Clear filters": [
+        "Limpar filtros"
+      ],
+      "Clicked a campaign": [
+        "Clicou numa campanha"
+      ],
+      "Close": [
+        "Fechar"
+      ],
+      "Close dialog": [
+        "Fechar diálogo"
+      ],
+      "Close drawer": [
+        "Fechar gaveta"
+      ],
+      "Color": [
+        "Cor"
+      ],
+      "Column": [
+        "Coluna"
+      ],
+      "Configure": [
+        "Configurar"
+      ],
+      "Confirm": [
+        "Confirmar"
+      ],
+      "Connect this site to Joinotify": [
+        "Conecte este site ao Joinotify"
+      ],
+      "Connect with Joinotify": [
+        "Conectar com o Joinotify"
+      ],
+      "Consent": [
+        "Consentimento"
+      ],
+      "Contact": [
+        "Contacto"
+      ],
+      "Contacts": [
+        "Contactos"
+      ],
+      "Contacts already in the base": [
+        "Contactos já na base"
+      ],
+      "Contacts that match": [
+        "Contactos que correspondem"
+      ],
+      "contains": [
+        "contém"
+      ],
+      "Could not load the audiences.": [
+        "Não foi possível carregar as audiências."
+      ],
+      "Could not load the contact.": [
+        "Não foi possível carregar o contacto."
+      ],
+      "Could not load the contacts.": [
+        "Não foi possível carregar os contactos."
+      ],
+      "Could not load the sources.": [
+        "Não foi possível carregar as fontes."
+      ],
+      "Could not load the suppression list.": [
+        "Não foi possível carregar a lista de supressão."
+      ],
+      "Could not reach the Joinotify platform": [
+        "Não foi possível aceder à plataforma Joinotify"
+      ],
+      "Could not read this file. Save it as CSV (UTF-8) and try again.": [
+        "Não foi possível ler este ficheiro. Guarde-o como CSV (UTF-8) e tente novamente."
+      ],
+      "counted %s": [
+        "contados %s"
+      ],
+      "Counting your customers…": [
+        "A contar os seus clientes…"
+      ],
+      "Counting…": [
+        "A contar…"
+      ],
+      "Create an audience to group contacts by their fields, tags or consent — for example, opted-in customers from one city.": [
+        "Crie uma audiência para agrupar contactos pelos seus campos, etiquetas ou consentimento — por exemplo, clientes que optaram por receber informações de uma cidade."
+      ],
+      "Create audience": [
+        "Criar audiência"
+      ],
+      "Create custom fields in the Fields & tags tab to map site data to them.": [
+        "Crie campos personalizados na aba Campos & etiquetas para mapear os dados do site para eles."
+      ],
+      "Create field": [
+        "Criar campo"
+      ],
+      "Create tag": [
+        "Criar etiqueta"
+      ],
+      "Created": [
+        "Criado"
+      ],
+      "created at the same time by another path": [
+        "criado ao mesmo tempo por outro caminho"
+      ],
+      "Creates contacts": [
+        "Cria contactos"
+      ],
+      "Custom field archived. It keeps its values but accepts no new ones.": [
+        "Campo personalizado arquivado. Mantém os seus valores, mas não aceita novos."
+      ],
+      "Custom field restored.": [
+        "Campo personalizado restaurado."
+      ],
+      "Custom field: %s": [
+        "Campo personalizado: %s"
+      ],
+      "Custom fields": [
+        "Campos personalizados"
+      ],
+      "Custom fields filled by this form": [
+        "Campos personalizados preenchidos por este formulário"
+      ],
+      "Date": [
+        "Data"
+      ],
+      "Date and time": [
+        "Data e hora"
+      ],
+      "Describe how the contact gave consent.": [
+        "Descreva como o contacto deu consentimento."
+      ],
+      "Description (optional)": [
+        "Descrição (opcional)"
+      ],
+      "Details": [
+        "Detalhes"
+      ],
+      "Discard": [
+        "Descartar"
+      ],
+      "does not contain": [
+        "não contém"
+      ],
+      "does not have": [
+        "não tem"
+      ],
+      "Download the contacts matching the filters as a CSV file": [
+        "Descarregar os contactos que correspondem aos filtros como um ficheiro CSV"
+      ],
+      "E-mail": [
+        "E-mail"
+      ],
+      "e.g. Agreed by WhatsApp on 29/09/2026": [
+        "ex. Acordado pelo WhatsApp a 29/09/2026"
+      ],
+      "e.g. Asked to stop receiving messages": [
+        "ex. Pediu para parar de receber mensagens"
+      ],
+      "e.g. Imported, Fair 2026": [
+        "ex. Importado, Feira 2026"
+      ],
+      "e.g. Lead, Newsletter": [
+        "ex. Lead, Newsletter"
+      ],
+      "e.g. Sign-up form at the store counter, 29/09/2026": [
+        "ex. Formulário de inscrição no balcão da loja, 29/09/2026"
+      ],
+      "e.g. Sign-up sheet of the store event, 09/2026": [
+        "ex. Folha de inscrição do evento da loja, 09/2026"
+      ],
+      "Each source can add its own tags, on top of the tag of this site.": [
+        "Cada fonte pode adicionar as suas próprias etiquetas, além da etiqueta deste site."
+      ],
+      "Edit": [
+        "Editar"
+      ],
+      "Edit audience": [
+        "Editar audiência"
+      ],
+      "Edit contact": [
+        "Editar contacto"
+      ],
+      "Edit custom field": [
+        "Editar campo personalizado"
+      ],
+      "Edit tag": [
+        "Editar etiqueta"
+      ],
+      "Edited": [
+        "Editado"
+      ],
+      "ends with": [
+        "termina com"
+      ],
+      "Engagement": [
+        "Engajamento"
+      ],
+      "Enter phone number": [
+        "Introduza o número de telefone"
+      ],
+      "Erase": [
+        "Apagar"
+      ],
+      "Erase audience": [
+        "Apagar audiência"
+      ],
+      "Erase field": [
+        "Apagar campo"
+      ],
+      "Erase for good": [
+        "Apagar para sempre"
+      ],
+      "Erase tag": [
+        "Apagar etiqueta"
+      ],
+      "Erase this audience?": [
+        "Apagar esta audiência?"
+      ],
+      "Erase this contact?": [
+        "Apagar este contacto?"
+      ],
+      "Erase this custom field?": [
+        "Apagar este campo personalizado?"
+      ],
+      "Erase this tag?": [
+        "Apagar esta etiqueta?"
+      ],
+      "Error": [
+        "Erro"
+      ],
+      "Events reach only who buys or signs up from now on. Send the customers you already have, once, so your first campaign can reach them.": [
+        "Os eventos alcançam apenas quem compra ou se inscreve a partir de agora. Envie aos clientes que já tem, uma vez, para que a sua primeira campanha os possa alcançar."
+      ],
+      "Every contact sent by this site carries it. Empty uses the site name.": [
+        "Cada contacto enviado por este site o transporta. Vazio utiliza o nome do site."
+      ],
+      "Every form with a phone or an e-mail": [
+        "Cada formulário com um telefone ou um e-mail"
+      ],
+      "Existing customers": [
+        "Clientes existentes"
+      ],
+      "Export CSV": [
+        "Exportar CSV"
+      ],
+      "Export data": [
+        "Exportar dados"
+      ],
+      "Exporting…": [
+        "A exportar…"
+      ],
+      "Failed": [
+        "Falhou"
+      ],
+      "Field": [
+        "Campo"
+      ],
+      "Fields & tags": [
+        "Campos & etiquetas"
+      ],
+      "First line": [
+        "Primeira linha"
+      ],
+      "First name": [
+        "Primeiro nome"
+      ],
+      "First name (or full name)": [
+        "Primeiro nome (ou nome completo)"
+      ],
+      "Flow": [
+        "Fluxo"
+      ],
+      "Forms": [
+        "Formulários"
+      ],
+      "Forms (WPForms and Elementor)": [
+        "Formulários (WPForms e Elementor)"
+      ],
+      "Full name": [
+        "Nome completo"
+      ],
+      "Give the audience a name.": [
+        "Dê um nome à audiência."
+      ],
+      "Given up": [
+        "Desistido"
+      ],
+      "Given up after every retry": [
+        "Desistido após cada tentativa"
+      ],
+      "has": [
+        "tem"
+      ],
+      "History": [
+        "Histórico"
+      ],
+      "How was the consent obtained?": [
+        "Como foi obtido o consentimento?"
+      ],
+      "Identifies the field in audience filters, imports and the API. It cannot change after the field is created.": [
+        "Identifica o campo nos filtros de audiência, importações e na API. Não pode ser alterado após a criação do campo."
+      ],
+      "Ignored": [
+        "Ignorado"
+      ],
+      "Import": [
+        "Importar"
+      ],
+      "Import %d contacts": [
+        "Importar %d contactos"
+      ],
+      "Import contacts": [
+        "Importar contactos"
+      ],
+      "Import CSV": [
+        "Importar CSV"
+      ],
+      "Import finished.": [
+        "Importação concluída."
+      ],
+      "Imported": [
+        "Importado"
+      ],
+      "Importing… %1$d of %2$d": [
+        "A importar… %1$d de %2$d"
+      ],
+      "in conflict with another contact": [
+        "em conflito com outro contacto"
+      ],
+      "Invalid number": [
+        "Número inválido"
+      ],
+      "is": [
+        "é"
+      ],
+      "is after": [
+        "é depois"
+      ],
+      "is at least": [
+        "é pelo menos"
+      ],
+      "is at most": [
+        "é no máximo"
+      ],
+      "is before": [
+        "é antes"
+      ],
+      "is empty": [
+        "está vazio"
+      ],
+      "is filled": [
+        "está preenchido"
+      ],
+      "is greater than": [
+        "é maior que"
+      ],
+      "is less than": [
+        "é menor que"
+      ],
+      "is no": [
+        "não é"
+      ],
+      "is none of": [
+        "não é nenhum de"
+      ],
+      "is not": [
+        "não é"
+      ],
+      "is one of": [
+        "é um de"
+      ],
+      "Is the": [
+        "É o"
+      ],
+      "is yes": [
+        "é sim"
+      ],
+      "Items per page": [
+        "Itens por página"
+      ],
+      "Joinotify": [
+        "Joinotify"
+      ],
+      "Joinotify Cloud sync": [
+        "Sincronização na nuvem do Joinotify"
+      ],
+      "kept on the do-not-contact list": [
+        "mantido na lista de não contactar"
+      ],
+      "kept opted out": [
+        "mantido opt-out"
+      ],
+      "Key": [
+        "Chave"
+      ],
+      "Label": [
+        "Rótulo"
+      ],
+      "Labels that group contacts: customers, leads of a form, VIPs… Integrations create the tags they use on their own.": [
+        "Etiquetas que agrupam contactos: clientes, leads de um formulário, VIPs… As integrações criam as etiquetas que utilizam por conta própria."
+      ],
+      "Language (e.g. pt-BR)": [
+        "Idioma (ex. pt-BR)"
+      ],
+      "Last delivery: %s.": [
+        "Última entrega: %s."
+      ],
+      "Last error: %s.": [
+        "Último erro: %s."
+      ],
+      "Last interaction": [
+        "Última interação"
+      ],
+      "Last message received": [
+        "Última mensagem recebida"
+      ],
+      "Last message sent": [
+        "Última mensagem enviada"
+      ],
+      "Last name": [
+        "Último nome"
+      ],
+      "Last run finished on %s.": [
+        "Última execução terminada em %s."
+      ],
+      "Last run stopped because the sync was switched off.": [
+        "Última execução foi interrompida porque a sincronização foi desligada."
+      ],
+      "Last run was stopped.": [
+        "Última execução foi interrompida."
+      ],
+      "Leads collected at checkout and carts that were abandoned, recovered or lost.": [
+        "Leads coletados no checkout e carrinhos que foram abandonados, recuperados ou perdidos."
+      ],
+      "Leave it unticked when you do not have that consent: the contact still receives the messages of your workflows, but not campaigns.": [
+        "Deixe desmarcado quando não tiver esse consentimento: o contacto ainda recebe as mensagens dos seus fluxos de trabalho, mas não campanhas."
+      ],
+      "Leave them as they are": [
+        "Deixe-os como estão"
+      ],
+      "Line %d": [
+        "Linha %d"
+      ],
+      "Lines not imported": [
+        "Linhas não importadas"
+      ],
+      "Load more": [
+        "Carregar mais"
+      ],
+      "Loading the sync status…": [
+        "A carregar o estado da sincronização…"
+      ],
+      "Loading…": [
+        "A carregar…"
+      ],
+      "Marketing consent": [
+        "Consentimento de marketing"
+      ],
+      "Marketing consent field": [
+        "Campo de consentimento de marketing"
+      ],
+      "Merge": [
+        "Fundir"
+      ],
+      "Merge a duplicate": [
+        "Fundir um duplicado"
+      ],
+      "Merged with a duplicate": [
+        "Fundido com um duplicado"
+      ],
+      "Meta key, e.g. _billing_cpf": [
+        "Chave meta, ex. _billing_cpf"
+      ],
+      "Multiple choice": [
+        "Escolha múltipla"
+      ],
+      "Name": [
+        "Nome"
+      ],
+      "Name, e-mail or phone": [
+        "Nome, e-mail ou telefone"
+      ],
+      "New audience": [
+        "Nova audiência"
+      ],
+      "New contacts are created opted in, and existing ones only if their consent was unknown. An opt-out is never undone.": [
+        "Novos contactos são criados com consentimento, e os existentes apenas se o seu consentimento era desconhecido. Um opt-out nunca é desfeito."
+      ],
+      "New custom field": [
+        "Novo campo personalizado"
+      ],
+      "New field": [
+        "Novo campo"
+      ],
+      "New tag": [
+        "Nova etiqueta"
+      ],
+      "Newest first": [
+        "Mais recentes primeiro"
+      ],
+      "No": [
+        "Não"
+      ],
+      "No access to the contact base": [
+        "Sem acesso à base de contactos"
+      ],
+      "No archived audiences": [
+        "Sem audiências arquivadas"
+      ],
+      "No audiences yet": [
+        "Sem audiências ainda"
+      ],
+      "No consent recorded for marketing messages.": [
+        "Nenhum consentimento registado para mensagens de marketing."
+      ],
+      "No contact matches these filters": [
+        "Nenhum contacto corresponde a estes filtros"
+      ],
+      "No contacts yet": [
+        "Ainda sem contactos"
+      ],
+      "No custom fields yet.": [
+        "Ainda sem campos personalizados."
+      ],
+      "No form was found on this site.": [
+        "Nenhum formulário foi encontrado neste site."
+      ],
+      "no reason given": [
+        "nenhuma razão dada"
+      ],
+      "No tags yet.": [
+        "Ainda sem etiquetas."
+      ],
+      "No tags.": [
+        "Sem etiquetas."
+      ],
+      "No user of this site has this e-mail or phone.": [
+        "Nenhum utilizador deste site tem este e-mail ou telefone."
+      ],
+      "no valid phone number": [
+        "nenhum número de telefone válido"
+      ],
+      "Not active on this site.": [
+        "Não ativo neste site."
+      ],
+      "Note": [
+        "Nota"
+      ],
+      "Note (optional)": [
+        "Nota (opcional)"
+      ],
+      "Nothing delivered yet.": [
+        "Nada entregue ainda."
+      ],
+      "Nothing recorded yet.": [
+        "Nada registado ainda."
+      ],
+      "Number": [
+        "Número"
+      ],
+      "Numbers on this list never receive a marketing campaign, whatever their consent. Workflow messages are not affected. Opt-outs land here on their own.": [
+        "Os números nesta lista nunca recebem uma campanha de marketing, independentemente do seu consentimento. As mensagens de fluxo não são afetadas. As desistências vão parar aqui por conta própria."
+      ],
+      "of": [
+        "de"
+      ],
+      "of these conditions": [
+        "destas condições"
+      ],
+      "Of those sent, %1$d %2$s.": [
+        "Dos enviados, %1$d %2$s."
+      ],
+      "Off": [
+        "Desligado"
+      ],
+      "older than what Joinotify has": [
+        "mais antigo do que o que o Joinotify tem"
+      ],
+      "On": [
+        "Ligado"
+      ],
+      "On the suppression list": [
+        "Na lista de supressão"
+      ],
+      "On this site": [
+        "Neste site"
+      ],
+      "Only record consent the contact actually gave. The evidence is kept with the contact and shown if the consent is ever questioned.": [
+        "Registe apenas o consentimento que o contacto realmente deu. A evidência é mantida com o contacto e mostrada se o consentimento for alguma vez questionado."
+      ],
+      "Only the forms switched on below": [
+        "Apenas os formulários ativados abaixo"
+      ],
+      "Open settings": [
+        "Abrir definições"
+      ],
+      "Open the existing contact": [
+        "Abrir o contacto existente"
+      ],
+      "Open the Joinotify panel": [
+        "Abrir o painel do Joinotify"
+      ],
+      "Opted in": [
+        "Optou por participar"
+      ],
+      "Opted in and not suppressed": [
+        "Optou por participar e não está suprimido"
+      ],
+      "Opted out": [
+        "Optou por não participar"
+      ],
+      "Options, one per line": [
+        "Opções, uma por linha"
+      ],
+      "over the plan's contact limit": [
+        "acima do limite de contactos do plano"
+      ],
+      "over your plan's contact limit": [
+        "acima do limite de contactos do seu plano"
+      ],
+      "People who register on the site, and changes to their phone, name or e-mail.": [
+        "Pessoas que se registam no site, e alterações ao seu telefone, nome ou e-mail."
+      ],
+      "Phone": [
+        "Telefone"
+      ],
+      "Phone with country code": [
+        "Telefone com código de país"
+      ],
+      "Pick a CSV file with a header line and one contact per line. Every contact needs a phone number; a number without the country code is read in the default country of your settings.": [
+        "Escolha um ficheiro CSV com uma linha de cabeçalho e um contacto por linha. Cada contacto precisa de um número de telefone; um número sem o código de país é lido no país padrão das suas definições."
+      ],
+      "Pick tags…": [
+        "Escolha etiquetas…"
+      ],
+      "Pick the column that holds the phone number.": [
+        "Escolha a coluna que contém o número de telefone."
+      ],
+      "Position": [
+        "Posição"
+      ],
+      "Preview": [
+        "Pré-visualização"
+      ],
+      "Reachable": [
+        "Acessível"
+      ],
+      "Reason": [
+        "Razão"
+      ],
+      "Reason (optional)": [
+        "Razão (opcional)"
+      ],
+      "Record opt-in": [
+        "Registar opt-in"
+      ],
+      "Record opt-out": [
+        "Registar opt-out"
+      ],
+      "Refresh": [
+        "Atualizar"
+      ],
+      "refused": [
+        "recusou"
+      ],
+      "Remove": [
+        "Remover"
+      ],
+      "Remove a tag": [
+        "Remover uma etiqueta"
+      ],
+      "Remove from the list": [
+        "Remover da lista"
+      ],
+      "Remove from the suppression list?": [
+        "Remover da lista de supressão?"
+      ],
+      "Remove group": [
+        "Remover grupo"
+      ],
+      "Remove tag": [
+        "Remover etiqueta"
+      ],
+      "Request failed.": [
+        "Pedido falhou."
+      ],
+      "Restore": [
+        "Restaurar"
+      ],
+      "Save changes": [
+        "Guardar alterações"
+      ],
+      "Save sources": [
+        "Salvar fontes"
+      ],
+      "Search": [
+        "Pesquisar"
+      ],
+      "Search by name": [
+        "Pesquisar por nome"
+      ],
+      "Search by name, e-mail or phone": [
+        "Pesquisar por nome, e-mail ou telefone"
+      ],
+      "Search by phone": [
+        "Pesquisar por telefone"
+      ],
+      "Searching…": [
+        "A procurar…"
+      ],
+      "Sections": [
+        "Secções"
+      ],
+      "See contacts": [
+        "Ver contactos"
+      ],
+      "See the contacts with this tag": [
+        "Ver os contactos com esta etiqueta"
+      ],
+      "Select": [
+        "Selecionar"
+      ],
+      "Select all visible contacts": [
+        "Selecionar todos os contactos visíveis"
+      ],
+      "Select an option": [
+        "Selecione uma opção"
+      ],
+      "Selected": [
+        "Selecionado"
+      ],
+      "Send again": [
+        "Enviar novamente"
+      ],
+      "Send existing customers": [
+        "Enviar clientes existentes"
+      ],
+      "Send full addresses (city and state are always sent)": [
+        "Enviar endereços completos (cidade e estado são sempre enviados)"
+      ],
+      "Send the items of each order": [
+        "Enviar os itens de cada pedido"
+      ],
+      "Send them": [
+        "Enviá-los"
+      ],
+      "Sending… %1$d queued so far, %2$d left out for having no phone number.": [
+        "A enviar… %1$d na fila até agora, %2$d deixados de fora por não terem número de telefone."
+      ],
+      "Sends a user or order meta (a CPF, a birthday, a checkout field) into a custom field of the contact. It only fills fields that are empty on Joinotify: what someone typed in the panel wins.": [
+        "Envia um meta de utilizador ou de pedido (um CPF, uma data de nascimento, um campo de checkout) para um campo personalizado do contacto. Apenas preenche campos que estão vazios no Joinotify: o que alguém digitou no painel prevalece."
+      ],
+      "Sends the customers, users and leads of this site to your contact base, and what they do here as events your flows can react to. Contacts are queued and sent in the background, never during a checkout.": [
+        "Envia os clientes, utilizadores e leads deste site para a sua base de contactos, e o que eles fazem aqui como eventos que os seus fluxos podem reagir. Os contactos são colocados em fila e enviados em segundo plano, nunca durante um checkout."
+      ],
+      "Sent (7 days)": [
+        "Enviado (7 dias)"
+      ],
+      "Show all": [
+        "Mostrar tudo"
+      ],
+      "Show archived fields (%d)": [
+        "Mostrar campos arquivados (%d)"
+      ],
+      "Showing the contacts of the audience": [
+        "A mostrar os contactos da audiência"
+      ],
+      "Since": [
+        "Desde"
+      ],
+      "Single choice": [
+        "Escolha única"
+      ],
+      "Site data in custom fields": [
+        "Dados do site em campos personalizados"
+      ],
+      "Skipped": [
+        "Ignorado"
+      ],
+      "Some of them": [
+        "Alguns deles"
+      ],
+      "Something went wrong.": [
+        "Algo correu mal."
+      ],
+      "Sort by": [
+        "Ordenar por"
+      ],
+      "Source": [
+        "Fonte"
+      ],
+      "Sources": [
+        "Fontes"
+      ],
+      "starts with": [
+        "começa com"
+      ],
+      "Stop": [
+        "Parar"
+      ],
+      "Suppressed": [
+        "Suprimido"
+      ],
+      "Suppression list": [
+        "Lista de supressão"
+      ],
+      "Switch the sync on and save to start sending. Nothing is sent before that.": [
+        "Ative a sincronização e guarde para começar a enviar. Nada é enviado antes disso."
+      ],
+      "Sync off": [
+        "Sincronização desligada"
+      ],
+      "Sync on": [
+        "Sincronização ligada"
+      ],
+      "Sync paused": [
+        "Sincronização pausada"
+      ],
+      "Tag": [
+        "Etiqueta"
+      ],
+      "Tag added": [
+        "Etiqueta adicionada"
+      ],
+      "Tag of this site": [
+        "Tag deste site"
+      ],
+      "Tag removed": [
+        "Tag removida"
+      ],
+      "Tags": [
+        "Tags"
+      ],
+      "Tags (separated by commas)": [
+        "Tags (separadas por vírgulas)"
+      ],
+      "Tags for every imported contact": [
+        "Tags para cada contacto importado"
+      ],
+      "Tags to add, separated by commas": [
+        "Tags a adicionar, separadas por vírgulas"
+      ],
+      "Text": [
+        "Texto"
+      ],
+      "The %d contact matching the current filters": [
+        "O %d contacto que corresponde aos filtros atuais"
+      ],
+      "The %d selected contact": [
+        "O %d contacto selecionado"
+      ],
+      "The API key of this site is not allowed to read the contact base.": [
+        "A chave da API deste site não tem permissão para ler a base de contactos."
+      ],
+      "The API key of this site was revoked or is invalid. Connect the site to Joinotify again.": [
+        "A chave da API deste site foi revogada ou é inválida. Conecte o site ao Joinotify novamente."
+      ],
+      "The audience is erased; its contacts are not. A draft campaign that used it will fail its check until you pick another audience.": [
+        "A audiência foi apagada; os seus contactos não. Uma campanha em rascunho que a utilizou falhará a sua verificação até que escolha outra audiência."
+      ],
+      "The checkbox text; its label is used when empty": [
+        "O texto da caixa de seleção; o seu rótulo é utilizado quando está vazio"
+      ],
+      "The connection to Joinotify was lost": [
+        "A conexão com o Joinotify foi perdida"
+      ],
+      "The contact agreed to receive marketing messages": [
+        "O contacto concordou em receber mensagens de marketing"
+      ],
+      "The contact base of your Joinotify account: people added by hand, by your integrations and by your workflows, the fields and tags that organize them and the audiences built from them.": [
+        "A base de contactos da sua conta Joinotify: pessoas adicionadas manualmente, pelas suas integrações e pelos seus fluxos de trabalho, os campos e etiquetas que os organizam e as audiências construídas a partir deles."
+      ],
+      "The contact is erased from your Joinotify account with its conversations, messages, tags and history. Its suppression rows stay, without the phone, and campaign recipients are anonymized. This is the erasure request of the LGPD and GDPR and cannot be undone.": [
+        "O contacto é apagado da sua conta Joinotify com as suas conversas, mensagens, etiquetas e histórico. As suas linhas de supressão permanecem, sem o telefone, e os destinatários da campanha são anonimizados. Este é o pedido de eliminação da LGPD e GDPR e não pode ser desfeito."
+      ],
+      "The contact keeps exactly the tags listed here.": [
+        "O contacto mantém exatamente as etiquetas listadas aqui."
+      ],
+      "The contact stops receiving marketing messages and their number goes to the suppression list until they opt in again.": [
+        "O contacto deixa de receber mensagens de marketing e o seu número vai para a lista de supressão até que opte novamente."
+      ],
+      "The data your contacts carry beyond name, phone and e-mail: city, plan, birthday…": [
+        "Os dados que os seus contactos transportam além do nome, telefone e e-mail: cidade, plano, aniversário…"
+      ],
+      "The file needs a header line and at least one contact.": [
+        "O ficheiro precisa de uma linha de cabeçalho e pelo menos um contacto."
+      ],
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
+        "A chave do Joinotify deste site foi revogada ou não pode enviar estes dados. Conecte o site novamente no cartão do WhatsApp em Definições → Aplicações; a sincronização retoma-se automaticamente."
+      ],
+      "The key starts with a lowercase letter and holds only lowercase letters, digits and underscores, up to 40 characters.": [
+        "A chave começa com uma letra minúscula e contém apenas letras minúsculas, dígitos e sublinhados, até 40 caracteres."
+      ],
+      "The number can receive marketing campaigns again if it has consent.": [
+        "O número pode receber campanhas de marketing novamente se tiver consentimento."
+      ],
+      "The suppression list is empty": [
+        "A lista de supressão está vazia"
+      ],
+      "These contacts agreed to receive marketing messages": [
+        "Estes contactos concordaram em receber mensagens de marketing"
+      ],
+      "This field has no options yet.": [
+        "Este campo ainda não tem opções."
+      ],
+      "This person asked to stop receiving messages, or Meta blocks marketing to them. Taking the number off the list does not opt them in: they stay opted out until they agree again.": [
+        "Esta pessoa pediu para parar de receber mensagens, ou a Meta bloqueia o marketing para eles. Retirar o número da lista não os opta novamente: eles permanecem optados por não receber até concordarem novamente."
+      ],
+      "This site": [
+        "Este site"
+      ],
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
+        "Este site está em %1$s, mas a sua chave Joinotify foi emitida para %2$s. Se esta for uma cópia de teste, mantenha-a pausada: enviaria pedidos de teste a clientes reais. Se o site foi movido, ligue-o novamente no cartão do WhatsApp em Definições → Aplicações."
+      ],
+      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
+        "Este site foi removido da sua conta Joinotify. Ligue-o novamente no cartão do WhatsApp em Definições → Aplicações para retomar."
+      ],
+      "Too many requests to the Joinotify platform. Try again in %d seconds.": [
+        "Demasiadas solicitações à plataforma Joinotify. Tente novamente em %d segundos."
+      ],
+      "Try again": [
+        "Tente novamente"
+      ],
+      "Turn the submissions of this form into contacts": [
+        "Transforme as submissões deste formulário em contactos"
+      ],
+      "Type": [
+        "Tipo"
+      ],
+      "Type the phone number of the contact.": [
+        "Digite o número de telefone do contacto."
+      ],
+      "Type to filter…": [
+        "Digite para filtrar…"
+      ],
+      "Unknown": [
+        "Desconhecido"
+      ],
+      "Unknown consent": [
+        "Consentimento desconhecido"
+      ],
+      "Update it with these data": [
+        "Atualize-o com estes dados"
+      ],
+      "Update them (filled values replace, tags are added)": [
+        "Atualize-os (valores preenchidos substituem, tags são adicionadas)"
+      ],
+      "Updated": [
+        "Atualizado"
+      ],
+      "Updating replaces the tags of the existing contact and leaves its consent as it is.": [
+        "A atualização substitui as tags do contacto existente e mantém o seu consentimento como está."
+      ],
+      "URL": [
+        "URL"
+      ],
+      "Waiting": [
+        "Aguardando"
+      ],
+      "Webhook": [
+        "Webhook"
+      ],
+      "What the person agreed to": [
+        "O que a pessoa concordou"
+      ],
+      "WhatsApp name": [
+        "Nome do WhatsApp"
+      ],
+      "Where contacts come from": [
+        "De onde vêm os contactos"
+      ],
+      "Whoever sends a form with a phone or an e-mail, read through the rules below.": [
+        "Quem enviar um formulário com um telefone ou um e-mail, leia as regras abaixo."
+      ],
+      "with an invalid phone number": [
+        "com um número de telefone inválido"
+      ],
+      "without a phone number": [
+        "sem um número de telefone"
+      ],
+      "WooCommerce orders and customers": [
+        "Pedidos e clientes do WooCommerce"
+      ],
+      "WordPress users": [
+        "Utilizadores do WordPress"
+      ],
+      "Wrote to you": [
+        "Escreveu para si"
+      ],
+      "Yes": [
+        "Sim"
+      ],
+      "Yes / no": [
+        "Sim / não"
+      ],
+      "Your contacts and audiences live on the Joinotify platform. Connect the site to list them, add contacts by hand and sync the ones your integrations collect.": [
+        "Os seus contactos e audiências vivem na plataforma Joinotify. Conecte o site para listá-los, adicione contactos manualmente e sincronize os que as suas integrações recolhem."
+      ],
+      "Your Joinotify account needs attention": [
+        "A sua conta Joinotify precisa de atenção"
+      ],
+      "Your Joinotify account needs attention before it can be used. Open the panel to resolve the billing.": [
+        "A sua conta Joinotify precisa de atenção antes de poder ser utilizada. Abra o painel para resolver a faturação."
+      ]
+    }
+  }
+}

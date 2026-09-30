@@ -43,6 +43,9 @@
       "Could not clear the queue.": [
         "Could not clear the queue."
       ],
+      "Could not export the processing queue.": [
+        "Could not export the processing queue."
+      ],
       "Could not load the processing queue.": [
         "Could not load the processing queue."
       ],
@@ -51,6 +54,15 @@
       ],
       "Dispatch now": [
         "Dispatch now"
+      ],
+      "Download every item matching the current filters as a JSON file": [
+        "Download every item matching the current filters as a JSON file"
+      ],
+      "Download the selected items as a JSON file": [
+        "Download the selected items as a JSON file"
+      ],
+      "Download this item as a JSON file": [
+        "Download this item as a JSON file"
       ],
       "Due": [
         "Due"
@@ -64,11 +76,20 @@
       "Export": [
         "Export"
       ],
+      "Export all": [
+        "Export all"
+      ],
+      "Export selected": [
+        "Export selected"
+      ],
       "Exporting…": [
         "Exporting…"
       ],
       "Inactive": [
         "Inactive"
+      ],
+      "Items per page": [
+        "Items per page"
       ],
       "Joinotify": [
         "Joinotify"
@@ -114,6 +135,9 @@
       ],
       "Select": [
         "Select"
+      ],
+      "Select all visible items": [
+        "Select all visible items"
       ],
       "Select an option": [
         "Select an option"
