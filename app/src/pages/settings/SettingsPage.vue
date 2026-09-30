@@ -65,6 +65,13 @@ const builderVariables = computed(() => bootstrap.value.builder_variables || { i
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
 
 const generalVisibleFields = computed(() => filterFields(['joinotify_default_country_code', 'ai_provider']));
+// Switches of the General section that open a modal of their own options (the Cloud sync).
+const generalModalFields = computed(() =>
+  (bootstrap.value.schema || [])
+    .filter((section) => section.id === 'general')
+    .flatMap((section) => (section.cards || []).flatMap((card) => card.fields || []))
+    .filter((field) => field && field.modal && Array.isArray(field.modal.fields))
+);
 const aboutVisibleFields = computed(() => filterFields(['enable_usage_tracking', 'enable_message_history']));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
 const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
@@ -637,6 +644,30 @@ function openIntegrationConfig(slug) {
   integrationConfigOpen.value = true;
 }
 
+/**
+ * Open the modal of a General switch, shaped like an integration so the
+ * integration modal renders its options and blocks.
+ *
+ * @since 2.5.0
+ * @param {Object} field Switch field carrying `modal`.
+ */
+function openFieldConfig(field) {
+  const integration = {
+    slug: field.key,
+    title: field.modal?.title || field.label,
+    setting_key: field.key,
+    settings: field.modal?.fields || [],
+    modal: field.modal || {},
+  };
+
+  if (!canConfigureIntegration(integration)) {
+    return;
+  }
+
+  selectedIntegration.value = integration;
+  integrationConfigOpen.value = true;
+}
+
 function closeIntegrationConfig() {
   debugLogger.log('integrations:close-config');
   integrationConfigOpen.value = false;
@@ -699,8 +730,10 @@ function canConfigureIntegration(integration) {
           <GeneralSettingsSection
             v-if="activeSectionId === 'general'"
             :general-visible-fields="generalVisibleFields"
+            :general-modal-fields="generalModalFields"
             :settings="settings"
             @update-setting="updateSetting"
+            @configure="openFieldConfig"
           />
 
           <PhonesSettingsSection

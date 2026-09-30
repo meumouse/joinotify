@@ -27,10 +27,11 @@ defined('ABSPATH') || exit;
  * (why it is paused, where fields live), `Catalog` (the events and their samples) and, per
  * integration, the emitters that write events to the outbox.
  *
- * Registered as an Applications card rather than a settings tab of its own: the card and its modal
- * are the plugin's declarative settings, and need no screen of their own.
+ * Its switch sits in Settings → General, with a "Configure" button that opens the modal of its
+ * options and monitor — the plugin's declarative settings, with no screen of their own.
  *
  * @since 2.5.0
+ * @version 2.5.0
  * @package MeuMouse\Joinotify\Cloud_Sync
  * @author MeuMouse.com
  */
@@ -84,7 +85,7 @@ class Cloud_Sync extends Integrations_Base {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->register_settings_tab( 90 );
+		add_filter( 'Joinotify/Admin/Settings/Schema', array( __CLASS__, 'add_general_card' ) );
 		add_filter( 'Joinotify/Admin/Set_Default_Options', array( __CLASS__, 'add_defaults' ) );
 
 		Dispatcher::register();
@@ -277,32 +278,54 @@ class Cloud_Sync extends Integrations_Base {
 
 
 	/**
-	 * The Applications card and its modal.
+	 * The switch in Settings → General, with its modal.
+	 *
+	 * The switch field carries the modal (`modal.fields` are its options, `modal.blocks` the
+	 * monitor), and the card repeats those fields under `settings` so the settings repository knows
+	 * how to sanitize them.
 	 *
 	 * @since 2.5.0
-	 * @param array<string,array<string,mixed>> $integrations
-	 * @return array<string,array<string,mixed>>
+	 * @param array<int,array<string,mixed>> $schema Settings schema.
+	 * @return array<int,array<string,mixed>>
 	 */
-	public function add_integration_item( $integrations ) {
-		$integrations['cloud_sync'] = array(
+	public static function add_general_card( $schema ) {
+		$options = self::get_integration_settings();
+
+		$card = array(
+			'id' => 'general-cloud-sync',
 			'title' => __( 'Joinotify Cloud sync', 'joinotify' ),
 			'description' => __( 'Send this site\'s customers and events to your Joinotify account, so its flows, audiences and campaigns work with your orders, sign-ups and carts.', 'joinotify' ),
-			'category' => 'others',
-			'settings' => self::get_integration_settings(),
-			'defaults' => self::DEFAULTS,
-			'modal' => array(
-				'title' => __( 'Joinotify Cloud sync', 'joinotify' ),
-				'description' => self::consent_text(),
-				// Above the switches: whether it runs, what waits, and the backfill.
-				'blocks' => array( self::modal_component_block( 'cloud-sync-status' ) ),
-				'button_label' => __( 'Configure', 'joinotify' ),
-				'size' => 'medium',
+			'fields' => array(
+				self::field_toggle(
+					self::SETTING,
+					esc_html__( 'Joinotify Cloud sync', 'joinotify' ),
+					esc_html__( 'Send this site\'s customers and events to your Joinotify account, so its flows, audiences and campaigns work with your orders, sign-ups and carts.', 'joinotify' ),
+					array(
+						'default' => self::DEFAULTS[ self::SETTING ],
+						// What switching it on sends, shown next to the switch before it is switched on.
+						'disclosure' => self::consent_text(),
+						'modal' => array(
+							'title' => __( 'Joinotify Cloud sync', 'joinotify' ),
+							'description' => self::consent_text(),
+							// Above the switches: whether it runs, what waits, and the backfill.
+							'blocks' => array( self::modal_component_block( 'cloud-sync-status' ) ),
+							'button_label' => __( 'Configure', 'joinotify' ),
+							'size' => 'medium',
+							'fields' => $options,
+						),
+					)
+				),
 			),
-			'icon' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.944 11.112C18.507 7.67 15.56 5 12 5 9.244 5 6.85 6.611 5.757 9.15 3.609 9.792 2 11.82 2 14c0 2.757 2.243 5 5 5h11c2.206 0 4-1.794 4-4a4.01 4.01 0 0 0-3.056-3.888zM18 17H7c-1.654 0-3-1.346-3-3 0-1.404 1.199-2.756 2.673-3.015l.581-.102.192-.558C8.149 8.274 9.895 7 12 7c2.757 0 5 2.243 5 5v1h1c1.103 0 2 .897 2 2s-.897 2-2 2z"></path><path d="m10 12.586-1.293-1.293-1.414 1.414L10 15.414l5.707-5.707-1.414-1.414z"></path></svg>',
-			'setting_key' => self::SETTING,
+			'settings' => $options,
 		);
 
-		return $integrations;
+		foreach ( $schema as $index => $section ) {
+			if ( 'general' === ( $section['id'] ?? '' ) ) {
+				$schema[ $index ]['cards'][] = $card;
+			}
+		}
+
+		return $schema;
 	}
 
 

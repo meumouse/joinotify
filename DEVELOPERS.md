@@ -675,7 +675,7 @@ dispatch context (`source`, `workflow_id`, ...).
 
 ## Joinotify Cloud sync
 
-When the owner switches on **Joinotify Cloud sync** (Settings → Applications, or the Sources tab of
+When the owner switches on **Joinotify Cloud sync** (Settings → General, or the Sources tab of
 Joinotify → Audiences & Contacts, where each source also gets its own tags, site meta can be mapped
 to custom fields and each form gets a rule), the plugin sends
 the site's customers to the connected Joinotify account as contacts and what happens on the site
