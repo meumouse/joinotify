@@ -214,9 +214,12 @@ function itemShellClass(item, index) {
     'border-slate-200',
     'transition',
     'focus-within:z-30',
-    'focus-within:border-primary-700',
-    'focus-within:ring-4',
-    'focus-within:ring-primary-100',
+    'focus-within:border-primary',
+    'focus-within:outline',
+    'focus-within:outline-1',
+    'focus-within:-outline-offset-2',
+    'focus-within:outline-primary',
+    'focus-within:shadow-none',
   ];
 
   if (index > 0) {
@@ -284,7 +287,7 @@ function buildSelectField(item, index) {
 
     <div
       v-if="!usesCompositeGroup"
-      class="joinotify-input-group mt-2 flex overflow-hidden rounded-lg border border-slate-200 bg-white transition focus-within:border-primary-700 focus-within:ring-4 focus-within:ring-primary-100"
+      class="joinotify-input-group mt-2 flex overflow-hidden rounded-lg border border-slate-200 bg-white transition focus-within:border-primary focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-primary focus-within:shadow-none"
       :class="[disabled ? 'bg-slate-50' : '', groupClass]"
     >
       <div

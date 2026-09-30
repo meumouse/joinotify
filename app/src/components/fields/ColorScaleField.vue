@@ -155,7 +155,7 @@ function shadeValue(step) {
           <div class="flex flex-wrap items-center gap-3">
             <input
               :value="currentBaseColor"
-              class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+              class="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:bg-white focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-50"
               :disabled="disabled"
               placeholder="#4f46e5"
               type="text"
@@ -209,7 +209,7 @@ function shadeValue(step) {
 
             <input
               :value="shadeValue(step)"
-              class="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+              class="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-50"
               readonly
               type="text"
             >

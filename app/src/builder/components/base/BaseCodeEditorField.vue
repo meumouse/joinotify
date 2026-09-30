@@ -51,7 +51,7 @@ function handleChange(event: Event) {
       :placeholder="placeholder"
       :disabled="disabled"
       spellcheck="false"
-      class="min-h-[220px] w-full rounded-lg border border-slate-200 bg-slate-950 px-4 py-3 font-mono text-sm leading-6 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10 disabled:cursor-not-allowed disabled:bg-slate-900"
+      class="min-h-[220px] w-full rounded-lg border border-slate-200 bg-slate-950 px-4 py-3 font-mono text-sm leading-6 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-900"
       @input="handleInput"
       @change="handleChange"
     />

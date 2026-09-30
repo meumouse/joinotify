@@ -328,7 +328,7 @@ function selectAction(action: ActionDefinition) {
                 v-model="query"
                 type="search"
                 :placeholder="__('Search actions', textDomain)"
-                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-700/10"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:bg-white focus:shadow-none"
               />
             </label>
           </div>

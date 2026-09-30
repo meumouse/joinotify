@@ -170,7 +170,7 @@ const skeletonContexts = computed(() => Array.from({ length: 5 }, (_, index) => 
             type="search"
             :placeholder="__('Search integration', textDomain)"
             :aria-label="__('Search integration', textDomain)"
-            class="w-full rounded-[12px] border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10"
+            class="w-full rounded-[12px] border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
           >
         </div>
 

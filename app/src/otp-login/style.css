@@ -57,8 +57,10 @@
 
   .joinotify-otp-login__input:focus {
     border-color: var(--joinotify-primary);
+    outline: 1px solid var(--joinotify-primary);
+    outline-offset: -2px;
     background-color: #fff;
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--joinotify-primary) 16%, transparent);
+    box-shadow: none;
   }
 
   .joinotify-otp-login__button {

@@ -215,7 +215,7 @@ const exportTitle = computed(() =>
                 :value="searchTerm"
                 type="search"
                 :placeholder="__('Type to filter…', textDomain)"
-                class="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[14px] text-slate-700 focus:border-primary-400 focus:outline-none"
+                class="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-[14px] text-slate-700 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
                 @input="applySearch"
               />
             </div>

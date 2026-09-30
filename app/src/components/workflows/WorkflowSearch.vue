@@ -27,7 +27,7 @@ defineEmits(['update:modelValue', 'clear']);
       <input
         :value="modelValue"
         :placeholder="placeholder"
-        class="w-full rounded-[8px] border border-slate-200 bg-white px-4 py-2.5 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-50"
+        class="w-full rounded-[8px] border border-slate-200 bg-white px-4 py-2.5 text-sm text-ink outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
         type="search"
         @input="$emit('update:modelValue', $event.target.value)"
       >
