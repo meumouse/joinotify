@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Admin\Settings;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Default_Options;
+use MeuMouse\Joinotify\Admin\Review_Prompt;
 use MeuMouse\Joinotify\Api\Sender_Sync;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Core\Helpers;
@@ -633,6 +634,7 @@ class Registry {
      * Build the full bootstrap payload for the frontend application.
      *
      * @since 1.4.7
+     * @version 2.5.0
      * @return array<string,mixed>
      */
     public static function get_bootstrap_data() {
@@ -657,6 +659,7 @@ class Registry {
             'permissions' => array(
                 'manage_options' => current_user_can( 'manage_options' ),
             ),
+            'review_prompt' => Review_Prompt::get_client_payload(),
             'rest' => array(
                 'root' => esc_url_raw( rest_url( 'joinotify/v1' ) ),
                 'nonce' => wp_create_nonce( 'wp_rest' ),

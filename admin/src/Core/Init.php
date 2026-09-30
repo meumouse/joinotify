@@ -340,12 +340,14 @@ class Init {
 	 * Instance only the explicitly allowed classes on init.
 	 * 
 	 * @since 1.4.6
+	 * @version 2.5.0
 	 * @return void
 	 */
 	public function instance_admin_init_classes() {
 		$classes = apply_filters( 'Joinotify/Init/Admin_Init_Classes', array(
 			'MeuMouse\\Joinotify\\Admin\\Admin',
 			'MeuMouse\\Joinotify\\Core\\Upgrader',
+			'MeuMouse\\Joinotify\\Admin\\Review_Prompt',
 		));
 
 		if ( ! is_array( $classes ) || empty( $classes ) ) {

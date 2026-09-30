@@ -41,5 +41,6 @@ class Rest_Controller extends Abstract_Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Delete',
         '\MeuMouse\Joinotify\Rest\Builder_Variables_Meta_Keys',
         '\MeuMouse\Joinotify\Rest\User_Dismiss_Tip',
+        '\MeuMouse\Joinotify\Rest\User_Review_Prompt',
     );
 }
