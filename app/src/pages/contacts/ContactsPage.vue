@@ -20,6 +20,8 @@ import { createDefinitions } from './useDefinitions';
 import ConnectionState from './components/ConnectionState.vue';
 import ContactsTab from './tabs/ContactsTab.vue';
 import FieldsTagsTab from './tabs/FieldsTagsTab.vue';
+import SourcesTab from './tabs/SourcesTab.vue';
+import { createApiClient } from '../../utils/api';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -42,6 +44,7 @@ const canWrite = computed(() => mode.value === 'full');
 const tabs = [
   { id: 'contacts', label: __('Contacts', textDomain), component: ContactsTab },
   { id: 'fields', label: __('Fields & tags', textDomain), component: FieldsTagsTab },
+  { id: 'sources', label: __('Sources', textDomain), component: SourcesTab },
 ];
 
 const route = ref(parseHash());
@@ -101,6 +104,9 @@ provide(CONTACTS_CONTEXT, {
   navigate,
   route: computed(() => route.value),
 });
+
+// The Cloud sync monitor (shared with Settings) reads its client from here.
+provide('joinotifyApi', createApiClient(props.bootstrap));
 
 onMounted(() => window.addEventListener('hashchange', onHashChange));
 onBeforeUnmount(() => window.removeEventListener('hashchange', onHashChange));

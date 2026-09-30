@@ -33,5 +33,7 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Save',
 		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Delete',
 		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Apply',
+		'\MeuMouse\Joinotify\Rest\Contacts_Sources',
+		'\MeuMouse\Joinotify\Rest\Contacts_Sources_Save',
 	);
 }

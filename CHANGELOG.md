@@ -25,6 +25,9 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 - Contacts can be added by hand, with their phone in international format, name, e-mail, tags, every custom field of the account in an input that matches its type and, optionally, the marketing consent with its evidence. When the phone already belongs to another contact the dialog offers to open that contact or to update it with what was typed
 - The Fields & tags tab creates, edits, archives, restores and erases the account's custom fields (text, number, date, date and time, yes/no, single or multiple choice, e-mail, URL, phone), suggesting the key from the label, and creates, edits and erases tags with a color from the panel's palette. Each tag shows how many contacts carry it and opens them in the Contacts tab
 - A tag can be added to or removed from the selected contacts, or from every contact the current filters select, at once and without starting any flow
+- The Sources tab of Audiences & Contacts gathers the Joinotify Cloud sync: its switch and monitor, each source (WooCommerce, WordPress users, forms, abandoned carts) with its own tags on top of the site's tag, order items and addresses, and the marketing consent checkbox. The same settings keep working from the sync's window in Settings
+- User and order meta (a CPF, a birthday, any checkout field) can be sent into custom fields of the contact. They only fill fields that are empty on Joinotify, so what someone typed in the panel wins
+- Each WPForms or Elementor form can get a rule: whether it creates contacts at all, which fields are the phone, e-mail, first and last name, which checkbox is the marketing consent (sent as an opt-in with the text you set, the form and the moment as evidence), the tags to add and which fields fill custom fields. "Only the forms switched on" skips every form without a rule; a form without a rule is still read by its field types and labels
 
 ### Changed
 

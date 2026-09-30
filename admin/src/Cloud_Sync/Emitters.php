@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Cloud_Sync;
 
+use MeuMouse\Joinotify\Contacts\Sources;
 use MeuMouse\Joinotify\Integrations\Flexify_Checkout;
 
 // Exit if accessed directly.
@@ -643,6 +644,11 @@ class Emitters {
 	/**
 	 * Queue a form submission that says who sent it.
 	 *
+	 * A form the owner configured on the Sources tab of Audiences & Contacts is read through its
+	 * rule (which fields are the phone, e-mail, name, consent and custom fields, and the tags to
+	 * add); a form left out there is skipped. Any other form keeps the reading by field type and
+	 * label.
+	 *
 	 * @since 2.5.0
 	 * @param array<string,string> $form `plugin`, `id`, `title`.
 	 * @param array<int,array<string,string>> $fields `{ id, label, type, value }`.
@@ -650,26 +656,28 @@ class Emitters {
 	 * @return void
 	 */
 	private static function emit_form( $form, $fields, $entry_id ) {
-		$parsed = Payload::form_fields( $fields );
-
-		// A form with neither phone nor e-mail says nothing about anyone the account can reach.
-		if ( '' === $parsed['phone'] && '' === $parsed['email'] ) {
+		if ( ! Sources::form_allowed( (string) $form['plugin'], (string) $form['id'] ) ) {
 			return;
 		}
 
-		$name = preg_split( '/\s+/', trim( $parsed['name'] ), 2 );
+		$parsed = Payload::form_fields( $fields );
+		$rule = Sources::form_rule( (string) $form['plugin'], (string) $form['id'] );
+		$person = Sources::map_form( $rule ?? array(), $fields, $parsed, array(
+			'title' => (string) $form['title'],
+			'host' => (string) wp_parse_url( home_url(), PHP_URL_HOST ),
+		), gmdate( 'Y-m-d\TH:i:s\Z' ) );
+
+		// A form with neither phone nor e-mail says nothing about anyone the account can reach.
+		if ( '' === $person['phone'] && '' === $person['email'] ) {
+			return;
+		}
 
 		Outbox::push_event( 'form.submitted', array(
 			'form' => $form,
 			'entry_id' => (string) $entry_id,
 			'fields' => $parsed['fields'],
 			'page_url' => self::page_url(),
-		), Contact::from_lead( array(
-			'phone' => $parsed['phone'],
-			'email' => $parsed['email'],
-			'first_name' => $name[0] ?? '',
-			'last_name' => $name[1] ?? '',
-		), get_current_user_id() ) );
+		), Contact::from_lead( array_merge( $person, array( 'source' => 'forms' ) ), get_current_user_id() ) );
 	}
 
 
@@ -753,6 +761,7 @@ class Emitters {
 			'email' => $cart['email'],
 			'first_name' => $cart['first_name'],
 			'last_name' => $cart['last_name'],
+			'source' => 'carts',
 		) ) );
 	}
 

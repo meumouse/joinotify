@@ -26,6 +26,9 @@ class Contacts {
 		// old one can be trusted.
 		add_action( 'Joinotify/Cloud_Api/Connected', array( __CLASS__, 'flush_cache' ) );
 		add_action( 'Joinotify/Cloud_Api/Disconnected', array( __CLASS__, 'flush_cache' ) );
+
+		// What the integrations add to the contacts the Cloud sync sends.
+		Sources::register();
 	}
 
 
