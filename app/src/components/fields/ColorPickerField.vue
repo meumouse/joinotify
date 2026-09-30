@@ -117,7 +117,7 @@ function resetFromBlur() {
         :value="textValue"
         :placeholder="placeholder"
         :disabled="disabled"
-        class="joinotify-otp-login__input w-40 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+        class="joinotify-otp-login__input w-40 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-50"
         inputmode="text"
         type="text"
         @input="syncFromText"

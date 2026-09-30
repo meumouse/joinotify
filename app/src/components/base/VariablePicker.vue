@@ -108,7 +108,7 @@ function select(placeholder: string) {
         <input
           v-model="search"
           type="text"
-          class="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10"
+          class="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
           :placeholder="__('Search variables...', textDomain)"
         />
 

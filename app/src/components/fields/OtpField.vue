@@ -87,7 +87,7 @@ function digitLabel(index) {
       :key="index"
       :ref="(el) => (inputRefs[index] = el)"
       :value="digits[index]"
-      class="h-14 border border-slate-200 bg-slate-50 text-center text-xl font-semibold text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100"
+      class="h-14 border border-slate-200 bg-slate-50 text-center text-xl font-semibold text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
       type="text"
       inputmode="numeric"
       autocomplete="one-time-code"

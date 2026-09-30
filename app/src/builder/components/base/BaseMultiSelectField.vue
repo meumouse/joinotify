@@ -48,7 +48,7 @@ function handleChange(event: Event) {
       multiple
       :disabled="disabled"
       :value="selectedValues"
-      class="min-h-[140px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10 disabled:cursor-not-allowed disabled:bg-slate-50"
+      class="min-h-[140px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-50"
       @change="handleChange"
     >
       <option v-if="placeholder" disabled value="">

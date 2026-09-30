@@ -15,6 +15,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 ### Changed
 
 - The interface icons of the admin screens and of the OTP login form come from Boxicons, the set the builder already used, instead of a mix of drawn icons. Builder nodes whose icon is only named (such as a wait, condition or stop step without its own artwork) now show that icon, where they showed an empty badge before
+- Focused fields and selectors in the admin screens and the OTP login form are outlined by a solid two-pixel border in the primary color, where a soft glow surrounded them before. The field keeps its size, so its text does not move when it takes focus
 
 ### Fixed
 

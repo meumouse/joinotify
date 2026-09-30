@@ -240,7 +240,7 @@ watch(isOpen, (open) => {
         :name="name"
         type="button"
         :disabled="disabled"
-        class="flex w-full items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-left text-sm outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10 disabled:cursor-not-allowed disabled:bg-slate-50"
+        class="flex w-full items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-left text-sm outline-none transition focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-50"
         :class="displayValue ? 'text-slate-700' : 'text-slate-400'"
         @click="toggle"
       >
@@ -292,7 +292,7 @@ watch(isOpen, (open) => {
             >
               <ListboxButton
                 :aria-label="__('Select month', textDomain)"
-                class="flex w-full items-center justify-between gap-1 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[13px] font-medium capitalize text-slate-700 outline-none transition hover:bg-slate-50 focus:border-primary-700 focus:ring-2 focus:ring-primary-700/10"
+                class="flex w-full items-center justify-between gap-1 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[13px] font-medium capitalize text-slate-700 outline-none transition hover:bg-slate-50 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
               >
                 <span class="truncate">{{ monthLabel }}</span>
                 <ChevronDown :width="14" :height="14" class="shrink-0 text-slate-400" />
@@ -327,7 +327,7 @@ watch(isOpen, (open) => {
             >
               <ListboxButton
                 :aria-label="__('Select year', textDomain)"
-                class="flex w-full items-center justify-between gap-1 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[13px] font-medium text-slate-700 outline-none transition hover:bg-slate-50 focus:border-primary-700 focus:ring-2 focus:ring-primary-700/10"
+                class="flex w-full items-center justify-between gap-1 rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[13px] font-medium text-slate-700 outline-none transition hover:bg-slate-50 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
               >
                 <span class="truncate">{{ viewYear }}</span>
                 <ChevronDown :width="14" :height="14" class="shrink-0 text-slate-400" />

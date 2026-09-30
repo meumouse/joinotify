@@ -26,7 +26,7 @@ defineEmits(['update:modelValue']);
       :name="name"
       :rows="field.rows || 4"
       :placeholder="field.placeholder || ''"
-      class="w-full resize-y rounded-lg border border-slate-200 bg-white px-4 py-3 text-[14px] leading-6 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:ring-4 focus:ring-primary-100"
+      class="w-full resize-y rounded-lg border border-slate-200 bg-white px-4 py-3 text-[14px] leading-6 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />

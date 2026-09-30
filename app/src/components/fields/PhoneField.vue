@@ -266,7 +266,7 @@ function handleInput() {
         :name="name"
         type="tel"
         :placeholder="field.placeholder || __('Enter phone number', textDomain)"
-        class="joinotify-phone-field__input w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-4 text-[16px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100 md:px-5 md:py-5 md:text-[17px]"
+        class="joinotify-phone-field__input w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-4 text-[16px] leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:bg-white focus:shadow-none md:px-5 md:py-5 md:text-[17px]"
         autocomplete="tel"
         inputmode="tel"
         @input="handleInput"

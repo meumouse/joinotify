@@ -250,7 +250,7 @@ onBeforeUnmount(() => {
   <label class="flex flex-col gap-1.5">
     <span v-if="label" class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{{ label }}</span>
 
-    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition focus-within:border-primary-700 focus-within:ring-4 focus-within:ring-primary-700/10">
+    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition focus-within:border-primary focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-primary focus-within:shadow-none">
       <div class="flex items-stretch">
         <div class="relative w-full">
           <input

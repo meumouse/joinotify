@@ -104,7 +104,7 @@ function handleSelect(value: string | number) {
         <ListboxButton
           :id="id"
           :name="name"
-          class="flex w-full items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-left text-sm text-slate-700 outline-none transition focus:border-primary-700 focus:ring-4 focus:ring-primary-700/10 disabled:cursor-not-allowed disabled:bg-slate-50"
+          class="flex w-full items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-left text-sm text-slate-700 outline-none transition focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none disabled:cursor-not-allowed disabled:bg-slate-50"
         >
           <span class="truncate" :class="{ 'text-slate-400': !selectedOption }">{{ buttonLabel }}</span>
           <ChevronDown :width="16" :height="16" class="shrink-0 text-slate-400" />

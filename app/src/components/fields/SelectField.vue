@@ -74,7 +74,7 @@ const buttonBaseClass = computed(() => {
     return 'border-0 bg-transparent rounded-none focus:border-transparent focus:ring-0';
   }
 
-  return 'rounded-[8px] border border-slate-200 bg-white focus:border-primary-700 focus:ring-4 focus:ring-primary-100';
+  return 'rounded-[8px] border border-slate-200 bg-white focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:shadow-none';
 });
 const buttonHoverClass = computed(() => {
   if (props.embedded) {
@@ -313,7 +313,7 @@ onBeforeUnmount(() => {
               ref="searchEl"
               v-model="query"
               type="text"
-              class="w-full rounded-[6px] border border-slate-200 bg-slate-50 px-3 py-2 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary-700 focus:bg-white focus:ring-4 focus:ring-primary-100"
+              class="w-full rounded-[6px] border border-slate-200 bg-slate-50 px-3 py-2 text-[14px] text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-primary focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-primary focus:bg-white focus:shadow-none"
               :placeholder="field.searchPlaceholder || __('Search...', textDomain)"
             />
           </div>
