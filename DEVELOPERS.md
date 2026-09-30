@@ -124,8 +124,9 @@ joinotify_register_action_description( 'my_app_send_sms', function( $data, $work
 > separate call above.
 
 **Settings field components** (`settings_schema[].component`): `input`, `textarea`, `number`,
-`select` (with `options: [{label, value}]`), `date`, `time`, `code`, `switch`, plus nested `group`
-and `repeater`. Common keys: `key`, `label`, `component`, `required`, `placeholder`, `options`,
+`select` (with `options: [{label, value}]`), `date`, `time`, `code`, `switch`, `placeholder` (a
+one-line input with the variable picker of the trigger's placeholders — resolve it in the handler
+with `joinotify_replace_placeholders()`), plus nested `group` and `repeater`. Common keys: `key`, `label`, `component`, `required`, `placeholder`, `options`,
 `rows`, `description`, `componentProps`, and `condition` (an array of `{key, value, operator}` for
 conditional visibility — operators: `eq`, `neq`, `in`, `not_in`, `truthy`, `falsy`).
 
@@ -674,7 +675,9 @@ dispatch context (`source`, `workflow_id`, ...).
 
 ## Joinotify Cloud sync
 
-When the owner switches on **Joinotify Cloud sync** (Settings → Applications), the plugin sends
+When the owner switches on **Joinotify Cloud sync** (Settings → Applications, or the Sources tab of
+Joinotify → Audiences & Contacts, where each source also gets its own tags, site meta can be mapped
+to custom fields and each form gets a rule), the plugin sends
 the site's customers to the connected Joinotify account as contacts and what happens on the site
 as **site events**, which start the account's flows through the "Site event" trigger. Everything
 goes through a local outbox table and is sent in batches from a scheduled task — never during the
@@ -718,7 +721,8 @@ The contact block needs a `ref`: without one the event is still recorded, but re
 |---|---|---|
 | `Joinotify/Cloud_Sync/Event_Data` | `$data, $name, $contact` | add data to one event or all of them; return `false` to drop the event |
 | `Joinotify/Cloud_Sync/Order_Data` | `$data, $order` | add an order meta to every order the sync sends |
-| `Joinotify/Cloud_Sync/Contact_Block` | `$block, $fields` | add a tag or attribute to the contact of every event and backfill row |
+| `Joinotify/Cloud_Sync/Contact_Block` | `$block, $fields` | add a tag or attribute to the contact of every event and backfill row; `$fields['source']` says which integration built it (`woocommerce`, `wordpress`, `forms`, `carts`) |
+| `Joinotify/Contacts/Sources/Forms` | `$forms` | list a form of another plugin on the Sources tab, as `{ plugin, id, title, fields: [{ id, label, type }] }` |
 | `Joinotify/Cloud_Sync/Catalog` | `$entries` | describe `custom.*` events (see above) |
 | `Joinotify/Cloud_Sync/Integrations` | `$found` | report an integration the site has, as `id => { version }` |
 | `Joinotify/Cloud_Sync/Settings_Fields` | `$fields` | add a field to the sync's settings window |

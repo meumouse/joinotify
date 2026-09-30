@@ -28,6 +28,7 @@ class Settings_Assets extends Abstract_Assets {
         'joinotify-workflows'         => 'src/entries/workflows.js',
         'joinotify-history'           => 'src/entries/history.js',
         'joinotify-queue'             => 'src/entries/queue.js',
+        'joinotify-contacts'          => 'src/entries/contacts.js',
     );
 
 
@@ -235,6 +236,7 @@ class Settings_Assets extends Abstract_Assets {
      * endpoint it should request to hydrate itself.
      *
      * @since 2.0.0
+     * @version 2.5.0
      * @param string $page Admin page slug.
      * @return array<string,mixed>|null
      */
@@ -246,6 +248,7 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify-workflows'         => array( 'page' => 'workflows', 'endpoint' => 'admin/workflows/bootstrap' ),
             'joinotify-history'           => array( 'page' => 'history', 'endpoint' => 'admin/history/bootstrap' ),
             'joinotify-queue'             => array( 'page' => 'queue', 'endpoint' => 'admin/queue/bootstrap' ),
+            'joinotify-contacts'          => array( 'page' => 'contacts', 'endpoint' => 'admin/contacts/bootstrap' ),
         );
 
         if ( ! isset( $map[ $page ] ) ) {
@@ -293,7 +296,7 @@ class Settings_Assets extends Abstract_Assets {
      * Build a stable script handle for each admin page.
      *
      * @since 1.4.7
-     * @version 1.4.7
+     * @version 2.5.0
      * @param string $page Admin page slug.
      * @return string
      */
@@ -305,6 +308,7 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify-workflows'         => 'joinotify-workflows-app',
             'joinotify-history'           => 'joinotify-history-app',
             'joinotify-queue'             => 'joinotify-queue-app',
+            'joinotify-contacts'          => 'joinotify-contacts-app',
         );
 
         return isset( $handles[ $page ] ) ? $handles[ $page ] : 'joinotify-vite-app';
@@ -324,7 +328,7 @@ class Settings_Assets extends Abstract_Assets {
      * surrounding inline scripts intact.
      *
      * @since 1.4.7
-     * @version 2.0.0
+     * @version 2.5.0
      * @param string $tag Script tag HTML (may include translation/inline scripts).
      * @param string $handle Script handle.
      * @param string $src Script URL.
@@ -339,6 +343,7 @@ class Settings_Assets extends Abstract_Assets {
             'joinotify-workflows-app',
             'joinotify-history-app',
             'joinotify-queue-app',
+            'joinotify-contacts-app',
             'joinotify-vite-app',
         );
 

@@ -80,7 +80,9 @@ class Contact {
 	 *
 	 * @since 2.5.0
 	 * @param array<string,string>|null $ref
-	 * @param array<string,mixed> $fields `phone`, `country`, `first_name`, `last_name`, `email`.
+	 * @param array<string,mixed> $fields `phone`, `country`, `first_name`, `last_name`, `email`, and for the
+	 *     block filter: `source` (the integration), `order_id`, `user_id`, and a form's `attributes`,
+	 *     `tags` and `consent`.
 	 * @param array<string,mixed> $pack Pack key → value.
 	 * @return array<string,mixed>|null Null without a ref — nobody to say who it is.
 	 */
@@ -153,6 +155,7 @@ class Contact {
 			'last_name' => $order->get_billing_last_name(),
 			'email' => $order->get_billing_email(),
 			'order_id' => $order->get_id(),
+			'source' => 'woocommerce',
 		), array(
 			'wc_orders_count' => (int) $customer['orders_count'],
 			'wc_total_spent' => (float) $customer['total_spent'],
@@ -183,6 +186,7 @@ class Contact {
 			'last_name' => $user->last_name,
 			'email' => $user->user_email,
 			'user_id' => $user->ID,
+			'source' => 'wordpress',
 		), array(
 			'wp_registered_at' => Payload::iso( strtotime( (string) $user->user_registered . ' UTC' ) ),
 			'wp_role' => $roles[0] ?? '',
@@ -211,6 +215,7 @@ class Contact {
 			'first_name' => $subscription->get_billing_first_name(),
 			'last_name' => $subscription->get_billing_last_name(),
 			'email' => $subscription->get_billing_email(),
+			'source' => 'woocommerce',
 		), array(
 			'wcs_status' => Payload::status( $subscription->get_status() ),
 			'wcs_next_payment_at' => Payload::iso( (int) $subscription->get_time( 'next_payment' ) ),
@@ -243,6 +248,7 @@ class Contact {
 			'last_name' => '' !== $last ? $last : $user->last_name,
 			'email' => $user->user_email,
 			'user_id' => $user->ID,
+			'source' => 'woocommerce',
 		), array_merge( self::history_pack( $history ), array(
 			'wp_registered_at' => Payload::iso( strtotime( (string) $user->user_registered . ' UTC' ) ),
 			'wp_role' => $roles[0] ?? '',
@@ -270,6 +276,7 @@ class Contact {
 			'last_name' => $order->get_billing_last_name(),
 			'email' => $order->get_billing_email(),
 			'order_id' => $order->get_id(),
+			'source' => 'woocommerce',
 		), array_merge( self::history_pack( $history ), array(
 			'wc_billing_city' => $order->get_billing_city(),
 			'wc_billing_state' => $order->get_billing_state(),

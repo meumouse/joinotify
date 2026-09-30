@@ -30,7 +30,7 @@ class Menu {
      * Add admin menu.
      *
      * @since 1.0.0
-     * @version 2.0.0
+     * @version 2.5.0
      * @return void
      */
     public function add_admin_menu() {
@@ -69,6 +69,15 @@ class Menu {
             'manage_options',
             'joinotify-workflows-builder',
             array( $this, 'render_builder_page' )
+        );
+
+        add_submenu_page(
+            'joinotify-workflows',
+            esc_html__( 'Audiences & Contacts', 'joinotify' ),
+            esc_html__( 'Audiences & Contacts', 'joinotify' ),
+            'manage_options',
+            'joinotify-contacts',
+            array( $this, 'render_contacts_page' )
         );
 
         add_submenu_page(
@@ -186,6 +195,22 @@ class Menu {
 
         // The Vue app fetches its bootstrap payload over REST (admin/history/bootstrap).
         include JOINOTIFY_SRC . 'Views/History.php';
+    }
+
+
+    /**
+     * Display the Vue "Audiences & Contacts" screen.
+     *
+     * @since 2.5.0
+     * @return void
+     */
+    public function render_contacts_page() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( 'You do not have permission to access this page.', 'joinotify' ) );
+        }
+
+        // The Vue app fetches its bootstrap payload over REST (admin/contacts/bootstrap).
+        include JOINOTIFY_SRC . 'Views/Contacts.php';
     }
 
 

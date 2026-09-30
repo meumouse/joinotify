@@ -312,6 +312,7 @@ class Init {
 	 * registrations still fire within the same dispatch cycle.
 	 *
 	 * @since 2.0.0
+	 * @version 2.5.0
 	 * @return void
 	 */
 	public function instance_rest_classes() {
@@ -322,6 +323,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Admin\\Onboarding\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\History\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Admin\\Queue\\Rest_Controller',
+			'MeuMouse\\Joinotify\\Admin\\Contacts\\Rest_Controller',
 			'MeuMouse\\Joinotify\\Rest\\Extensions_Controller',
 			'MeuMouse\\Joinotify\\Otp_Login\\Rest_Controller',
 		));
@@ -364,7 +366,7 @@ class Init {
 	 * Instance only the explicitly allowed classes on wp_loaded.
 	 * 
 	 * @since 1.4.6
-	 * @version 1.4.7
+	 * @version 2.5.0
 	 * @return void
 	 */
 	public function instance_wp_loaded_classes() {
@@ -386,6 +388,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Otp_Login\\Shortcode',
 			'MeuMouse\\Joinotify\\Otp_Login\\Woocommerce_Login',
 			'MeuMouse\\Joinotify\\Cloud_Sync\\Cloud_Sync',
+			'MeuMouse\\Joinotify\\Contacts\\Contacts',
 			'MeuMouse\\Joinotify\\Builder\\Webhook_Action',
 			'MeuMouse\\Joinotify\\Core\\Logger',
 		));

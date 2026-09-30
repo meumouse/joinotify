@@ -172,6 +172,7 @@ const placeholderItems = computed(() => {
           :field="field"
           :model-value="readFieldValue(field.key)"
           :root-value="(modelValue as Record<string, unknown>)"
+          :placeholders="placeholderItems"
           @update:model-value="updateFieldValue(field.key, $event)"
         />
       </div>

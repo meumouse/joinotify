@@ -533,12 +533,14 @@ class Consent {
 	/**
 	 * The users a platform contact is: by e-mail, then by the phone they keep.
 	 *
+	 * Public so the "Audiences & Contacts" screen can link a contact to the site's users.
+	 *
 	 * @since 2.5.0
 	 * @param string $email
 	 * @param string $phone In E.164, as the platform sends it.
 	 * @return array<int,int>
 	 */
-	private static function users_of( $email, $phone ) {
+	public static function users_of( $email, $phone ) {
 		$ids = array();
 		$user = '' !== $email ? get_user_by( 'email', $email ) : false;
 
