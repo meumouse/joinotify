@@ -295,15 +295,14 @@ class Outbox {
 		}
 
 		$ids = array_map( 'intval', $ids );
-		$in = implode( ',', $ids );
+		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 		// A token of this claim, not the time: two dispatchers in the same second would otherwise
 		// read back each other's rows.
 		$token = wp_generate_uuid4();
 
 		$wpdb->query( $wpdb->prepare(
-			"UPDATE {$table} SET status = 'sending', claimed_at = %s, claim_token = %s WHERE status = 'pending' AND id IN ({$in})",
-			$now,
-			$token
+			"UPDATE {$table} SET status = 'sending', claimed_at = %s, claim_token = %s WHERE status = 'pending' AND id IN ({$placeholders})",
+			array_merge( array( $now, $token ), $ids )
 		) );
 
 		$rows = $wpdb->get_results( $wpdb->prepare(
