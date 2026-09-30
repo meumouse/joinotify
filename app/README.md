@@ -43,6 +43,7 @@ npm install
 |-----------------|-----------|
 | `npm run dev`   | Servidor de desenvolvimento do Vite (HMR). |
 | `npm run build` | Build de produção → `app/dist/`. |
+| `npm run test:browser` | Teste de navegador do sanitizador de HTML do canvas (Chromium headless; na primeira vez, `npx playwright install chromium`). |
 
 Da raiz do plugin também é possível disparar só o build do frontend:
 

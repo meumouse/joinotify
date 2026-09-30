@@ -12,6 +12,7 @@ import { Handle, Position } from '@vue-flow/core';
 import { onClickOutside } from '@vueuse/core';
 import { getFlowNodeConfig } from './flowNodeTypes';
 import { resolveSvgMarkup } from '../../utils/icon';
+import { sanitizeHtml } from '../../utils/html';
 import { __, textDomain } from '../../utils/i18n';
 
 export interface FlowNodeData {
@@ -77,6 +78,10 @@ const hasMediaPreview = computed(() => isMediaAction.value && Boolean(mediaUrl.v
 // Hide the generic "Media: image" line when the preview already conveys it,
 // but keep a caption (or the configure hint when nothing is set yet).
 const showDescription = computed(() => Boolean(props.data.description) && !(hasMediaPreview.value && !hasCaption.value));
+// The description is stored workflow content: it arrives from imported files, remote templates
+// and the AI generator as well as from this builder, so it is reduced to the formatting allowlist
+// here, at the sink, whatever the server did to it on the way.
+const safeDescription = computed(() => sanitizeHtml(String(props.data.description || '')));
 const mediaFileName = computed(() => {
   const url = mediaUrl.value;
 
@@ -373,10 +378,10 @@ function normalizeBoxiconClass(value: string) {
     </div>
 
     <div v-if="showDescription" class="px-3 py-2.5">
-      <!-- Descriptions are plugin-generated HTML (bold spans, placeholder pills, <br>). -->
+      <!-- Descriptions are HTML (bold spans, placeholder pills, <br>), sanitized by safeDescription. -->
       <div
         class="builder-node-description line-clamp-3 whitespace-pre-line text-xs leading-relaxed text-slate-400"
-        v-html="data.description"
+        v-html="safeDescription"
       />
     </div>
 

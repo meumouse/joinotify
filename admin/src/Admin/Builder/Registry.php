@@ -1366,7 +1366,34 @@ class Registry {
 			$sanitized[] = self::sanitize_workflow_node( $item );
 		}
 
-		return Helpers::decode_emoji_deep( $sanitized );
+		// The decode turns every entity back into its character, and `&lt;img onerror&gt;` is an entity
+		// that wp_kses_post() kept as harmless text. Descriptions are rendered as HTML by the canvas,
+		// so they are filtered again after it, never only before.
+		return self::kses_descriptions_deep( Helpers::decode_emoji_deep( $sanitized ) );
+	}
+
+
+	/**
+	 * Re-applies wp_kses_post() to every `description` in a sanitized workflow tree.
+	 *
+	 * @since 2.5.0
+	 * @param mixed $value Workflow content, or any part of it.
+	 * @return mixed
+	 */
+	private static function kses_descriptions_deep( $value ) {
+		if ( ! is_array( $value ) ) {
+			return $value;
+		}
+
+		foreach ( $value as $key => $item ) {
+			if ( 'description' === $key && is_string( $item ) ) {
+				$value[ $key ] = wp_kses_post( $item );
+			} elseif ( is_array( $item ) ) {
+				$value[ $key ] = self::kses_descriptions_deep( $item );
+			}
+		}
+
+		return $value;
 	}
 
 
