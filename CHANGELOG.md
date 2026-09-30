@@ -11,6 +11,15 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 ### Added
 
 - The settings screen and the workflow builder ask administrators to rate Joinotify on WordPress.org once the plugin has been in use for at least ten minutes. In the builder the request waits until no dialog, node settings drawer or action library is open. "Leave a review" and "I already did" end the request for that user, while "Maybe later" or the close button hides it for a week. A click outside the dialog does not dismiss it. Sites upgrading from an earlier version count their use from the setup wizard or their oldest workflow, and the delay, snooze length, link and visibility can be changed through `Joinotify/Admin/Review_Prompt/*` filters
+- Joinotify Cloud sync, off by default: a card in Settings → Applications that, once switched on, sends this site's customers and events to your Joinotify account. It says what it sends before you turn it on, lets you leave out forms, carts, order items and full addresses, and tags every contact with the site's name or a tag of your choice
+- The sync queues what it sends in its own table and delivers it in batches from a scheduled task, never during a checkout or a page load; a batch that fails waits and tries again, and a revoked key, a site removed from the panel or a copy of the site at another address pauses it instead of sending test orders to real customers
+- What the sync sends as events: WooCommerce orders (created, paid, every status change, completed, cancelled, failed, refunded) with the customer's order history and the links to pay, view and review them; new customers; WooCommerce Subscriptions (created, activated, renewed, renewal failed, expired, cancelled); WordPress sign-ups and changes of phone, name or e-mail; WPForms and Elementor forms that carry a phone or an e-mail; and Flexify Checkout's collected leads and abandoned, recovered and lost carts. "Created" and "paid" go out once per order however often the status changes, and a failure building an event never interrupts the checkout
+- Marketing consent for the sync, off by default: an unticked checkbox, with your own text, in the classic and block checkouts, the sign-up forms and My account. Who ticks it is opted in on Joinotify with the checkbox text, where and when as evidence; who unticks it in My account is opted out there too; and an opt-in or opt-out made on Joinotify updates the customer's preference on the site
+- "Send existing customers" in the sync's window sends the users and guest buyers the store already has as contacts, once, with their order history and without starting any flow. It shows how many would be sent before you confirm, runs in the background in steps that resume after a failure, and reports what was sent, left out for having no phone number or kept out by your plan's contact limit
+- The sync's window shows whether it is on, why it is paused (a revoked key, a site removed from the panel, or a copy of the site at another address) with a "Try again" button, how many events wait, were sent and were given up on, and lets you send the given-up ones again or discard them
+- WordPress's "Export Personal Data" and "Erase Personal Data" tools cover the sync: the consent records and the queued events of the person, and erasing also asks Joinotify to erase the contacts this site sent for them
+- "Send webhook" workflow action: posts the trigger's data (the order with the customer's history and links, the user, the cart or the form entry) or a JSON of your own with placeholders to any public URL — n8n, Zapier, Make, a Joinotify Cloud flow or your ERP — with optional headers and an HMAC signature checked the same way as Joinotify's webhooks
+- `joinotify_track( $name, $data, $contact )` sends an event of your own (named `custom.*`) to your Joinotify flows through the same queue
 
 ### Changed
 
@@ -20,6 +29,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 ### Fixed
 
 - The strings of the admin screens built in Vue (settings, setup wizard, builder, workflows, history and queue) reach translate.wordpress.org, where only the PHP strings were listed before, so their translations can be contributed and imported there. Sites that receive translations as WordPress.org language packs load them for every script chunk of those screens, not only for the entry file
+- The "New order" trigger now also runs for orders placed with the WooCommerce checkout block, which never fired it
+- The WPForms PayPal Standard trigger no longer reads an entry that hook does not provide, which raised PHP warnings and sent an empty entry id
 - The "Connect to Joinotify" button no longer ends in "invalid code": the plugin sent the site address under a name the Joinotify API does not read when trading the connection code for a key
 
 ## [2.4.2] - 2026-09-11

@@ -679,3 +679,21 @@ function joinotify_dispatch_notification( $args ) {
 	return Channel_Manager::dispatch( Notification_Message::from_array( is_array( $args ) ? $args : array() ) );
 }
 
+
+/**
+ * Send an event of your own to the flows of the connected Joinotify account.
+ *
+ * The event is queued and sent in the background with the site's other events, and only when the
+ * owner switched on syncing with Joinotify Cloud — otherwise nothing is queued and false comes
+ * back. Its name lives in the `custom.` space (`custom.quote.requested`); describe it
+ * in the catalog through the `Joinotify/Cloud_Sync/Catalog` filter so the flow builder can offer it.
+ *
+ * @since 2.5.0
+ * @param string $name `custom.` and up to three segments of lowercase letters, digits and underscores.
+ * @param array<string,mixed> $data What the flow reads as `{{trigger.*}}`.
+ * @param array<string,mixed>|null $contact Who it is about: `ref` (`{ kind, id }`), `phone`, `email`, `first_name`, `last_name`, `country`, `attributes`, `tags`.
+ * @return string|false The event id, or false when it was not queued.
+ */
+function joinotify_track( $name, $data = array(), $contact = null ) {
+	return \MeuMouse\Joinotify\Cloud_Sync\Emitters::track( $name, $data, $contact );
+}

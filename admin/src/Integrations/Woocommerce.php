@@ -57,6 +57,9 @@ class Woocommerce extends Integrations_Base {
                 // before hook used is "woocommerce_new_order", but products isent received
                 add_action( 'woocommerce_checkout_order_processed', array( $this, 'process_workflow_on_new_order' ), 10, 1 );
 
+                // the checkout block places orders through the Store API, which never fires the hook above
+                add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'process_workflow_on_block_checkout_order' ), 10, 1 );
+
                 // when order is processing
                 add_action( 'woocommerce_order_status_processing', array( $this, 'process_workflow_order_processed' ), 10, 3 );
 
@@ -1534,8 +1537,22 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Process workflow on receive new order placed through the checkout block
+     *
+     * @since 2.5.0
+     * @param \WC_Order $order | Order object
+     * @return void
+     */
+    public function process_workflow_on_block_checkout_order( $order ) {
+        if ( $order instanceof \WC_Order ) {
+            $this->process_workflow_on_new_order( $order->get_id() );
+        }
+    }
+
+
+    /**
      * Process workflow on receive new order on WooCommerce
-     * 
+     *
      * @since 1.0.0
      * @version 1.4.7
      * @param int $order_id  | Order ID

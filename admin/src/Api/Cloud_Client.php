@@ -105,13 +105,16 @@ class Cloud_Client {
      * Perform an authenticated request against the Cloud API.
      *
      * @since 1.4.8
+     * @version 2.5.0
      * @param string $method | HTTP method.
      * @param string $path | Path beginning with a slash (e.g. '/messages').
      * @param array|null $body | JSON body for write requests.
      * @param int $timeout | Request timeout in seconds.
+     * @param array<string,string> $headers | Extra headers (e.g. an `Idempotency-Key`). They never
+     *     replace the credential or the content type.
      * @return array|\WP_Error | Raw wp_remote_* response or WP_Error.
      */
-    public static function request( $method, $path, $body = null, $timeout = 30 ) {
+    public static function request( $method, $path, $body = null, $timeout = 30, $headers = array() ) {
         $token = Helpers::cloud_api_token();
 
         if ( '' === $token ) {
@@ -120,11 +123,11 @@ class Cloud_Client {
 
         $args = array(
             'method' => strtoupper( $method ),
-            'headers' => array(
+            'headers' => array_merge( is_array( $headers ) ? $headers : array(), array(
                 'Authorization' => 'Bearer ' . $token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-            ),
+            ) ),
             'timeout' => $timeout,
         );
 
