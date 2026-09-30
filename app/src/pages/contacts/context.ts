@@ -10,10 +10,12 @@
 import { inject, type ComputedRef, type InjectionKey } from 'vue';
 import { __, sprintf, textDomain } from '../../utils/i18n';
 import { CloudRequestError, type ContactsApiClient } from '../../services/contactsApi';
+import type { Definitions } from './useDefinitions';
 
 export interface ContactsContext {
   api: ContactsApiClient;
   bootstrap: Record<string, any>;
+  definitions: Definitions;
   canWrite: ComputedRef<boolean>;
   toast: (message: string, tone?: string, title?: string) => void;
   notifyError: (error: unknown, fallback?: string) => void;

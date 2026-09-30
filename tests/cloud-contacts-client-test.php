@@ -128,6 +128,70 @@ check( 'a 403 on the listing too is no access at all', Cloud_Contacts::MODE_FORB
 check( 'an outage is unreachable, not a verdict', Cloud_Contacts::MODE_UNREACHABLE === Cloud_Contacts::classify_probe( Cloud_Contacts::failure( 0, 'network_error' ), $never )['mode'] );
 check( 'a 429 on the probe is unreachable too', Cloud_Contacts::MODE_UNREACHABLE === Cloud_Contacts::classify_probe( $limited, $never )['mode'] );
 
+echo "\nCloud_Contacts::list_filters\n";
+
+$filters = Cloud_Contacts::list_filters( array(
+	'search' => '  <b>Ana</b> ',
+	'tag_id' => 'tag_1',
+	'opt_in_status' => 'opted_in',
+	'source' => 'site',
+	'audience_id' => 'aud-9',
+) );
+check( 'the screen filters become the platform query', array( 'q' => 'Ana', 'tagId' => 'tag_1', 'optInStatus' => 'opted_in', 'source' => 'site', 'audienceId' => 'aud-9' ) === $filters );
+check( 'an unknown consent or source is dropped', array() === Cloud_Contacts::list_filters( array( 'opt_in_status' => 'maybe', 'source' => 'ftp', 'tag_id' => '../x' ) ) );
+
+$tree = Cloud_Contacts::list_filters( array( 'filter' => array( 'op' => 'and', 'rules' => array( array( 'type' => 'consent', 'op' => 'is', 'value' => 'opted_in' ) ) ) ) );
+check( 'an audience filter travels as JSON', '{"op":"and","rules":[{"type":"consent","op":"is","value":"opted_in"}]}' === $tree['filter'] );
+check( 'a filter without op and rules is dropped', array() === Cloud_Contacts::list_filters( array( 'filter' => '{"x":1}' ) ) );
+
+echo "\nCloud_Contacts::contact_payload — create\n";
+
+$create = Cloud_Contacts::contact_payload( array(
+	'phone' => ' +55 41 98711-1527 ',
+	'firstName' => 'Ana',
+	'lastName' => '',
+	'email' => 'ana@example.com',
+	'locale' => 'pt-BR',
+	'defaultCountry' => 'BR',
+	'attributes' => array( 'cidade' => 'Curitiba', 'vazio' => '', 'interesses' => array( 'a', '', 'b', 'a' ), 'vip' => true, 'bad key!' => 'x' ),
+	'tagIds' => array( 't1', 't1', '../evil', 't2' ),
+	'optIn' => array( 'evidence' => 'Checkbox on the store sign-up form' ),
+	'hacker' => 'ignored',
+), 'create' );
+check( 'the phone is trimmed but kept as typed', '+55 41 98711-1527' === $create['phone'] );
+check( 'empty values are left out on create', ! array_key_exists( 'lastName', $create ) && ! isset( $create['attributes']['vazio'] ) );
+check( 'a multi-select keeps unique, non-empty items', array( 'a', 'b' ) === $create['attributes']['interesses'] );
+check( 'a boolean field keeps its type', true === $create['attributes']['vip'] );
+check( 'a malformed field key is dropped', ! isset( $create['attributes']['bad key!'] ) );
+check( 'tag ids are unique and valid', array( 't1', 't2' ) === $create['tagIds'] );
+check( 'the consent evidence travels on create', 'Checkbox on the store sign-up form' === $create['optIn']['evidence'] );
+check( 'unknown keys never reach the platform', ! isset( $create['hacker'] ) );
+check( 'the default country is kept', 'BR' === $create['defaultCountry'] );
+
+check( 'a two-character evidence is not consent', ! isset( Cloud_Contacts::contact_payload( array( 'phone' => '1', 'optIn' => array( 'evidence' => 'ok' ) ) )['optIn'] ) );
+check( 'a malformed locale is dropped', ! isset( Cloud_Contacts::contact_payload( array( 'locale' => 'portuguese' ) )['locale'] ) );
+
+echo "\nCloud_Contacts::contact_payload — update\n";
+
+$update = Cloud_Contacts::contact_payload( array(
+	'firstName' => 'Ana Maria',
+	'lastName' => '',
+	'attributes' => array( 'cidade' => '', 'interesses' => array() ),
+	'tagIds' => array(),
+	'optIn' => array( 'evidence' => 'Never on update' ),
+), 'update' );
+check( 'a present, empty value clears it', array_key_exists( 'lastName', $update ) && null === $update['lastName'] );
+check( 'an absent key stays absent', ! array_key_exists( 'email', $update ) );
+check( 'an emptied custom field is cleared', null === $update['attributes']['cidade'] && null === $update['attributes']['interesses'] );
+check( 'an empty tag list removes every tag', array() === $update['tagIds'] );
+check( 'consent is never changed by an edit', ! isset( $update['optIn'] ) );
+
+echo "\nCloud_Contacts::text\n";
+
+check( 'markup, scripts and control characters are stripped', 'Ana Souza' === Cloud_Contacts::text( "<script>alert(1)</script><b>Ana</b>\x00Souza" ) );
+check( 'the length is capped in characters', 'ção' === Cloud_Contacts::text( 'çãoção', 3 ) );
+check( 'arrays and booleans are not text', '' === Cloud_Contacts::text( array( 'a' ) ) && '' === Cloud_Contacts::text( true ) );
+
 echo "\n{$assertions} assertions, {$failures} failures\n";
 exit( $failures > 0 ? 1 : 0 );
 

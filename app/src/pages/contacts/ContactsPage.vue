@@ -16,7 +16,9 @@ import { useToasts } from '../../composables/useToasts';
 import { CONTACTS_CONTEXT, errorMessage } from './context';
 import PageHeader from '../../components/layout/PageHeader.vue';
 import ToastStack from '../../components/toasts/ToastStack.vue';
+import { createDefinitions } from './useDefinitions';
 import ConnectionState from './components/ConnectionState.vue';
+import ContactsTab from './tabs/ContactsTab.vue';
 
 const props = defineProps({
   bootstrap: { type: Object, default: () => ({}) },
@@ -26,6 +28,7 @@ const state = reactive({ ...props.bootstrap });
 const api = createContactsApiClient(props.bootstrap);
 const { toasts, toast, dismissToast } = useToasts();
 const refreshing = ref(false);
+const definitions = createDefinitions(api);
 
 const mode = computed(() => state.capability?.mode || (state.connection?.connected ? 'unreachable' : 'disconnected'));
 const usable = computed(() => mode.value === 'full' || mode.value === 'read_only');
@@ -35,7 +38,9 @@ const canWrite = computed(() => mode.value === 'full');
  * Tabs of the screen, in display order. Each phase of the screen registers
  * its panel here.
  */
-const tabs = [];
+const tabs = [
+  { id: 'contacts', label: __('Contacts', textDomain), component: ContactsTab },
+];
 
 const route = ref(parseHash());
 const activeTab = computed(() => {
@@ -43,6 +48,7 @@ const activeTab = computed(() => {
 
   return found ? found.id : tabs[0]?.id || '';
 });
+const panelKey = computed(() => `${activeTab.value}?${new URLSearchParams(route.value.params).toString()}`);
 const activePanel = computed(() => tabs.find((tab) => tab.id === activeTab.value)?.component || null);
 
 function parseHash() {
@@ -86,6 +92,7 @@ function notifyError(error, fallback = '') {
 provide(CONTACTS_CONTEXT, {
   api,
   bootstrap: state,
+  definitions,
   canWrite,
   toast,
   notifyError,
@@ -136,7 +143,8 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', onHashChange));
           </button>
         </nav>
 
-        <component :is="activePanel" v-if="activePanel" :key="activeTab" />
+        <!-- Keyed by the params too: "see the contacts of this audience" reopens the tab filtered. -->
+        <component :is="activePanel" v-if="activePanel" :key="panelKey" />
       </template>
     </div>
 

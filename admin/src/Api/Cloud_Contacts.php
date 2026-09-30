@@ -598,6 +598,410 @@ class Cloud_Contacts {
 	}
 
 
+	// ── Contacts ────────────────────────────────────────────────────────────────────────────
+
+
+	/**
+	 * Values the listing filters accept.
+	 *
+	 * @since 2.5.0
+	 * @var array<string,string[]>
+	 */
+	const FILTER_ENUMS = array(
+		'optInStatus' => array( 'opted_in', 'opted_out', 'unknown' ),
+		'source' => array( 'manual', 'import', 'api', 'inbound', 'flow', 'webhook', 'site' ),
+		'sort' => array( 'recent', 'name', 'last_inbound' ),
+	);
+
+
+	/**
+	 * List contacts, one page at a time.
+	 *
+	 * @since 2.5.0
+	 * @param array $args `page`, `per_page`, `sort` and the filters read by list_filters().
+	 * @return array Envelope; `data` holds the contacts and `meta` the total.
+	 */
+	public static function list_contacts( $args = array() ) {
+		$query = self::page_window( isset( $args['page'] ) ? $args['page'] : 1, isset( $args['per_page'] ) ? $args['per_page'] : 25 );
+		$sort = isset( $args['sort'] ) ? (string) $args['sort'] : '';
+
+		if ( in_array( $sort, self::FILTER_ENUMS['sort'], true ) ) {
+			$query['sort'] = $sort;
+		}
+
+		return self::call( 'GET', '/contacts', array_merge( $query, self::list_filters( $args ) ) );
+	}
+
+
+	/**
+	 * Translate the screen's filters into the platform's query, dropping what is not valid.
+	 *
+	 * @since 2.5.0
+	 * @param array $args `search`, `tag_id`, `opt_in_status`, `source`, `audience_id`, `filter`.
+	 * @return array<string,string>
+	 */
+	public static function list_filters( $args ) {
+		$filters = array();
+		$search = isset( $args['search'] ) ? self::text( $args['search'], 120 ) : '';
+
+		if ( '' !== $search ) {
+			$filters['q'] = $search;
+		}
+
+		if ( isset( $args['tag_id'] ) && self::is_id( $args['tag_id'] ) ) {
+			$filters['tagId'] = $args['tag_id'];
+		}
+
+		if ( isset( $args['opt_in_status'] ) && in_array( $args['opt_in_status'], self::FILTER_ENUMS['optInStatus'], true ) ) {
+			$filters['optInStatus'] = $args['opt_in_status'];
+		}
+
+		if ( isset( $args['source'] ) && in_array( $args['source'], self::FILTER_ENUMS['source'], true ) ) {
+			$filters['source'] = $args['source'];
+		}
+
+		if ( isset( $args['audience_id'] ) && self::is_id( $args['audience_id'] ) ) {
+			$filters['audienceId'] = $args['audience_id'];
+		}
+
+		if ( ! empty( $args['filter'] ) ) {
+			$filter = is_string( $args['filter'] ) ? json_decode( $args['filter'], true ) : $args['filter'];
+
+			if ( is_array( $filter ) && isset( $filter['op'], $filter['rules'] ) ) {
+				$json = json_encode( $filter );
+
+				if ( is_string( $json ) && strlen( $json ) <= 20000 ) {
+					$filters['filter'] = $json;
+				}
+			}
+		}
+
+		return $filters;
+	}
+
+
+	/**
+	 * Read one contact, with the suppression rows that match it.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Contact id.
+	 * @return array Envelope.
+	 */
+	public static function get_contact( $id ) {
+		return self::call( 'GET', '/contacts/' . $id );
+	}
+
+
+	/**
+	 * Read what happened to a contact, newest first.
+	 *
+	 * @since 2.5.0
+	 * @param string $id       Contact id.
+	 * @param int    $page     1-based page.
+	 * @param int    $per_page Page size.
+	 * @return array Envelope.
+	 */
+	public static function contact_activity( $id, $page = 1, $per_page = 25 ) {
+		return self::call( 'GET', '/contacts/' . $id . '/activity', self::page_window( $page, $per_page ) );
+	}
+
+
+	/**
+	 * Create a contact, or update the one that already has the phone when `$upsert` is set.
+	 *
+	 * @since 2.5.0
+	 * @param array $data   Payload built by contact_payload().
+	 * @param bool  $upsert Update an existing contact instead of answering 409.
+	 * @return array Envelope.
+	 */
+	public static function create_contact( $data, $upsert = false ) {
+		return self::call( 'POST', '/contacts', $upsert ? array( 'upsert' => true ) : array(), (object) $data );
+	}
+
+
+	/**
+	 * Change a contact. Absent keys stay as they are, `null` clears a value and `tagIds` is the
+	 * complete set of tags.
+	 *
+	 * @since 2.5.0
+	 * @param string $id   Contact id.
+	 * @param array  $data Payload built by contact_payload().
+	 * @return array Envelope.
+	 */
+	public static function update_contact( $id, $data ) {
+		return self::call( 'PATCH', '/contacts/' . $id, array(), (object) $data );
+	}
+
+
+	/**
+	 * Erase a contact for good, with its conversations, tags and history.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Contact id.
+	 * @return array Envelope.
+	 */
+	public static function delete_contact( $id ) {
+		return self::call( 'DELETE', '/contacts/' . $id );
+	}
+
+
+	/**
+	 * Record the contact's marketing consent, with how it was obtained.
+	 *
+	 * @since 2.5.0
+	 * @param string $id       Contact id.
+	 * @param string $evidence How the consent was obtained, 3 to 500 characters.
+	 * @return array Envelope.
+	 */
+	public static function opt_in( $id, $evidence ) {
+		return self::call( 'POST', '/contacts/' . $id . '/opt-in', array(), array( 'evidence' => self::text( $evidence, 500 ) ) );
+	}
+
+
+	/**
+	 * Withdraw the contact's consent and add its phone to the suppression list.
+	 *
+	 * @since 2.5.0
+	 * @param string $id     Contact id.
+	 * @param string $reason Optional reason.
+	 * @return array Envelope.
+	 */
+	public static function opt_out( $id, $reason = '' ) {
+		$reason = self::text( $reason, 500 );
+
+		return self::call( 'POST', '/contacts/' . $id . '/opt-out', array(), '' === $reason ? (object) array() : array( 'reason' => $reason ) );
+	}
+
+
+	/**
+	 * The whole base, or what the filters select, as CSV.
+	 *
+	 * @since 2.5.0
+	 * @param array $args Filters read by list_filters().
+	 * @return array Envelope; `data` holds the CSV text.
+	 */
+	public static function export_contacts( $args = array() ) {
+		return self::call( 'GET', '/contacts/export', self::list_filters( $args ) );
+	}
+
+
+	/**
+	 * Everything the account keeps about a contact (the LGPD access request), as JSON.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Contact id.
+	 * @return array Envelope.
+	 */
+	public static function export_contact( $id ) {
+		return self::call( 'GET', '/contacts/' . $id . '/export' );
+	}
+
+
+	/**
+	 * Keep only what a contact write may carry, in the platform's shape.
+	 *
+	 * On create, empty values are dropped. On update, a key that is present but empty becomes
+	 * `null`, which is how the platform clears a value; keys that are absent stay absent.
+	 *
+	 * @since 2.5.0
+	 * @param array  $input Values typed on the screen, in the platform's camelCase.
+	 * @param string $mode  'create' or 'update'.
+	 * @return array
+	 */
+	public static function contact_payload( $input, $mode = 'create' ) {
+		$input = is_array( $input ) ? $input : array();
+		$update = 'update' === $mode;
+		$payload = array();
+		$limits = array(
+			'phone' => 40,
+			'firstName' => 80,
+			'lastName' => 80,
+			'email' => 254,
+			'timezone' => 64,
+		);
+
+		foreach ( $limits as $key => $limit ) {
+			if ( ! array_key_exists( $key, $input ) ) {
+				continue;
+			}
+
+			$value = self::text( $input[ $key ], $limit );
+
+			if ( '' !== $value ) {
+				$payload[ $key ] = $value;
+			} elseif ( $update ) {
+				$payload[ $key ] = null;
+			}
+		}
+
+		if ( array_key_exists( 'locale', $input ) ) {
+			$locale = self::text( $input['locale'], 10 );
+
+			if ( 1 === preg_match( '/^[a-z]{2}(-[A-Z]{2})?$/', $locale ) ) {
+				$payload['locale'] = $locale;
+			} elseif ( $update && '' === $locale ) {
+				$payload['locale'] = null;
+			}
+		}
+
+		if ( isset( $input['defaultCountry'] ) && is_string( $input['defaultCountry'] ) && 1 === preg_match( '/^[A-Z]{2}$/', $input['defaultCountry'] ) ) {
+			$payload['defaultCountry'] = $input['defaultCountry'];
+		}
+
+		if ( isset( $input['attributes'] ) && is_array( $input['attributes'] ) ) {
+			$attributes = self::attributes( $input['attributes'], $update );
+
+			if ( ! empty( $attributes ) ) {
+				$payload['attributes'] = $attributes;
+			}
+		}
+
+		if ( array_key_exists( 'tagIds', $input ) && is_array( $input['tagIds'] ) ) {
+			$tags = array_values( array_unique( array_filter( $input['tagIds'], array( __CLASS__, 'is_id' ) ) ) );
+
+			// On update the list is the complete set, so an empty one removes every tag.
+			if ( $update || ! empty( $tags ) ) {
+				$payload['tagIds'] = array_slice( $tags, 0, 50 );
+			}
+		}
+
+		if ( ! $update && isset( $input['optIn']['evidence'] ) ) {
+			$evidence = self::text( $input['optIn']['evidence'], 500 );
+
+			if ( strlen( $evidence ) >= 3 ) {
+				$payload['optIn'] = array( 'evidence' => $evidence );
+			}
+		}
+
+		return $payload;
+	}
+
+
+	/**
+	 * Custom field values: a key per field, a scalar or a list of strings per value.
+	 *
+	 * @since 2.5.0
+	 * @param array $attributes Raw values by field key.
+	 * @param bool  $update     Empty values become `null` (clear) instead of being dropped.
+	 * @return array
+	 */
+	public static function attributes( $attributes, $update = false ) {
+		$clean = array();
+
+		foreach ( $attributes as $key => $value ) {
+			if ( ! is_string( $key ) || 1 !== preg_match( '/^[A-Za-z0-9_.-]{1,64}$/', $key ) ) {
+				continue;
+			}
+
+			if ( is_array( $value ) ) {
+				$list = array();
+
+				foreach ( $value as $item ) {
+					if ( is_scalar( $item ) && '' !== self::text( $item, 200 ) ) {
+						$list[] = self::text( $item, 200 );
+					}
+				}
+
+				if ( ! empty( $list ) ) {
+					$clean[ $key ] = array_values( array_unique( $list ) );
+				} elseif ( $update ) {
+					$clean[ $key ] = null;
+				}
+
+				continue;
+			}
+
+			if ( is_bool( $value ) || is_int( $value ) || is_float( $value ) ) {
+				$clean[ $key ] = $value;
+				continue;
+			}
+
+			$text = null === $value ? '' : self::text( $value, 1000 );
+
+			if ( '' !== $text ) {
+				$clean[ $key ] = $text;
+			} elseif ( $update ) {
+				$clean[ $key ] = null;
+			}
+		}
+
+		return $clean;
+	}
+
+
+	/**
+	 * Plain text: no markup, no control characters, trimmed and capped.
+	 *
+	 * @since 2.5.0
+	 * @param mixed $value Raw value.
+	 * @param int   $limit Maximum length in characters.
+	 * @return string
+	 */
+	public static function text( $value, $limit = 255 ) {
+		if ( ! is_scalar( $value ) || is_bool( $value ) ) {
+			return '';
+		}
+
+		// Like wp_strip_all_tags(): a script or style block goes with its content.
+		$text = (string) preg_replace( '/[\x00-\x1F\x7F]+/u', ' ', (string) $value );
+		$text = trim( strip_tags( (string) preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text ) ) );
+
+		return function_exists( 'mb_substr' ) ? mb_substr( $text, 0, $limit ) : substr( $text, 0, $limit );
+	}
+
+
+	// ── Fields and tags ─────────────────────────────────────────────────────────────────────
+
+
+	/**
+	 * The account's custom fields, in their display order.
+	 *
+	 * @since 2.5.0
+	 * @param bool $archived Include archived fields.
+	 * @param bool $force    Skip the cache.
+	 * @return array Envelope.
+	 */
+	public static function list_fields( $archived = false, $force = false ) {
+		return self::cached( $archived ? 'fields_archived' : 'fields', function () use ( $archived ) {
+			return self::call( 'GET', '/contacts/fields', $archived ? array( 'archived' => true ) : array() );
+		}, $force );
+	}
+
+
+	/**
+	 * Every contact tag of the account, with how many contacts carry it.
+	 *
+	 * The platform pages tags by 200; a base with more is read in up to five pages.
+	 *
+	 * @since 2.5.0
+	 * @param bool $force Skip the cache.
+	 * @return array Envelope.
+	 */
+	public static function list_tags( $force = false ) {
+		return self::cached( 'tags', function () {
+			$tags = array();
+
+			for ( $page = 1; $page <= 5; $page++ ) {
+				$envelope = self::call( 'GET', '/contacts/tags', self::page_window( $page, 200 ) );
+
+				if ( ! $envelope['ok'] ) {
+					return $envelope;
+				}
+
+				$rows = is_array( $envelope['data'] ) ? $envelope['data'] : array();
+				$tags = array_merge( $tags, $rows );
+				$total = isset( $envelope['meta']['total'] ) ? (int) $envelope['meta']['total'] : count( $tags );
+
+				if ( count( $rows ) < 200 || count( $tags ) >= $total ) {
+					break;
+				}
+			}
+
+			return self::success( 200, $tags, array( 'total' => count( $tags ) ) );
+		}, $force );
+	}
+
+
 	/**
 	 * Forget every cached definition, e.g. after a write or a new connection.
 	 *

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{vue,js}', '../templates/otp-login/**/*.php'],
+  content: ['./src/**/*.{vue,js,ts}', '../templates/otp-login/**/*.php'],
   important: true,
   theme: {
     extend: {

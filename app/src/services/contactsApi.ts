@@ -136,6 +136,109 @@ export function createContactsApiClient(bootstrap: any) {
     bootstrap() {
       return api.get('/admin/contacts/bootstrap?refresh=1');
     },
+
+    /**
+     * Loads the custom fields and tags of the account.
+     *
+     * @since 2.5.0
+     * @param {boolean} [refresh] Skip the server cache.
+     * @param {boolean} [archived] Include archived fields.
+     * @returns {Promise<{fields: Array, tags: Array}>} The definitions.
+     */
+    definitions(refresh = false, archived = false) {
+      return get('/admin/contacts/definitions', { refresh: refresh ? 1 : '', archived: archived ? 1 : '' });
+    },
+
+    /**
+     * Lists contacts.
+     *
+     * @since 2.5.0
+     * @param {Object} params `page`, `per_page`, `sort`, `search`, `tag_id`, `opt_in_status`, `source`, `audience_id`.
+     * @returns {Promise<{items: Array, pagination: Object}>} One page of contacts.
+     */
+    listContacts(params: Record<string, unknown>) {
+      return get('/admin/contacts', params);
+    },
+
+    /**
+     * Loads one contact and the site's users that are the same person.
+     *
+     * @since 2.5.0
+     * @param {string} id Contact id.
+     * @returns {Promise<{contact: Object, wp_users: Array}>} The contact.
+     */
+    contact(id: string) {
+      return get('/admin/contacts/detail', { id });
+    },
+
+    /**
+     * Loads a contact's history.
+     *
+     * @since 2.5.0
+     * @param {string} id Contact id.
+     * @param {number} [page] Page.
+     * @returns {Promise<{items: Array, pagination: Object}>} One page of activity.
+     */
+    activity(id: string, page = 1) {
+      return get('/admin/contacts/activity', { id, page, per_page: 20 });
+    },
+
+    /**
+     * Creates a contact, or changes one when `id` is given.
+     *
+     * @since 2.5.0
+     * @param {Object} payload `{ id?, contact, upsert? }`.
+     * @returns {Promise<{message: string, contact: Object}>} The saved contact.
+     */
+    saveContact(payload: Record<string, unknown>) {
+      return post('/admin/contacts/save', payload);
+    },
+
+    /**
+     * Erases a contact for good.
+     *
+     * @since 2.5.0
+     * @param {string} id Contact id.
+     * @returns {Promise<{message: string}>} The result.
+     */
+    deleteContact(id: string) {
+      return post('/admin/contacts/delete', { id });
+    },
+
+    /**
+     * Records an opt-in (with evidence) or an opt-out (with an optional reason).
+     *
+     * @since 2.5.0
+     * @param {string} id Contact id.
+     * @param {'opt_in'|'opt_out'} action Consent action.
+     * @param {string} text Evidence or reason.
+     * @returns {Promise<{message: string, contact: Object}>} The updated contact.
+     */
+    consent(id: string, action: 'opt_in' | 'opt_out', text: string) {
+      return post('/admin/contacts/consent', action === 'opt_in' ? { id, action, evidence: text } : { id, action, reason: text });
+    },
+
+    /**
+     * Exports the contacts the filters select as CSV.
+     *
+     * @since 2.5.0
+     * @param {Object} filters Listing filters.
+     * @returns {Promise<{filename: string, content: string}>} The file.
+     */
+    exportContacts(filters: Record<string, unknown>) {
+      return get('/admin/contacts/export', filters);
+    },
+
+    /**
+     * Exports everything the account keeps about one contact as JSON.
+     *
+     * @since 2.5.0
+     * @param {string} id Contact id.
+     * @returns {Promise<{filename: string, content: Object}>} The file.
+     */
+    exportContact(id: string) {
+      return get('/admin/contacts/export', { id });
+    },
   };
 }
 
