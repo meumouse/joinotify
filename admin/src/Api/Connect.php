@@ -320,7 +320,7 @@ class Connect {
      * the default origin is the first sender in that listing.
      *
      * @since 2.3.0
-     * @version 2.4.3
+     * @version 2.5.0
      * @param string $code | Single-use code.
      * @return array|\WP_Error
      */
