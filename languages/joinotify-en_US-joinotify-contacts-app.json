@@ -202,6 +202,9 @@
       "Choose which forms create contacts and which of their fields are the phone, e-mail, name, consent and custom fields. A form without a rule is read by the field types and labels.": [
         "Choose which forms create contacts and which of their fields are the phone, e-mail, name, consent and custom fields. A form without a rule is read by the field types and labels."
       ],
+      "Clear date": [
+        "Clear date"
+      ],
       "Clear filters": [
         "Clear filters"
       ],
@@ -700,6 +703,9 @@
       "Newest first": [
         "Newest first"
       ],
+      "Next month": [
+        "Next month"
+      ],
       "No": [
         "No"
       ],
@@ -844,6 +850,9 @@
       "Preview": [
         "Preview"
       ],
+      "Previous month": [
+        "Previous month"
+      ],
       "Reachable": [
         "Reachable"
       ],
@@ -922,11 +931,20 @@
       "Select": [
         "Select"
       ],
+      "Select a date": [
+        "Select a date"
+      ],
       "Select all visible contacts": [
         "Select all visible contacts"
       ],
       "Select an option": [
         "Select an option"
+      ],
+      "Select month": [
+        "Select month"
+      ],
+      "Select year": [
+        "Select year"
       ],
       "Selected": [
         "Selected"
@@ -1116,6 +1134,9 @@
       ],
       "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
         "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume."
+      ],
+      "Time": [
+        "Time"
       ],
       "Too many requests to the Joinotify platform. Try again in %d seconds.": [
         "Too many requests to the Joinotify platform. Try again in %d seconds."

@@ -2187,6 +2187,7 @@ return [
 		'weeks' => 'weeks',
 		'Weeks' => 'Weeks',
 		'Western Sahara' => 'Western Sahara',
+		'What is sent' => 'What is sent',
 		'What should this workflow do?' => 'What should this workflow do?',
 		'What the person agreed to' => 'What the person agreed to',
 		'What this sends' => 'What this sends',

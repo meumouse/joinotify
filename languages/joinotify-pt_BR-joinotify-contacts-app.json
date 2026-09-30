@@ -202,6 +202,9 @@
       "Choose which forms create contacts and which of their fields are the phone, e-mail, name, consent and custom fields. A form without a rule is read by the field types and labels.": [
         "Escolha quais formulários criam contatos e quais de seus campos são o telefone, e-mail, nome, consentimento e campos personalizados. Um formulário sem uma regra é lido pelos tipos de campo e rótulos."
       ],
+      "Clear date": [
+        "Limpar data"
+      ],
       "Clear filters": [
         "Limpar filtros"
       ],
@@ -700,6 +703,9 @@
       "Newest first": [
         "Mais recentes primeiro"
       ],
+      "Next month": [
+        "Próximo mês"
+      ],
       "No": [
         "Não"
       ],
@@ -844,6 +850,9 @@
       "Preview": [
         "Prévia"
       ],
+      "Previous month": [
+        "Mês anterior"
+      ],
       "Reachable": [
         "Acessível"
       ],
@@ -922,11 +931,20 @@
       "Select": [
         "Selecionar"
       ],
+      "Select a date": [
+        "Selecione uma data"
+      ],
       "Select all visible contacts": [
         "Selecionar todos os contatos visíveis"
       ],
       "Select an option": [
         "Selecione uma opção"
+      ],
+      "Select month": [
+        "Selecionar mês"
+      ],
+      "Select year": [
+        "Selecionar ano"
       ],
       "Selected": [
         "Selecionado"
@@ -1116,6 +1134,9 @@
       ],
       "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
         "Este site foi removido da sua conta Joinotify. Conecte-o novamente no cartão do WhatsApp em Configurações → Aplicações para retomar."
+      ],
+      "Time": [
+        "Hora"
       ],
       "Too many requests to the Joinotify platform. Try again in %d seconds.": [
         "Muitas solicitações para a plataforma Joinotify. Tente novamente em %d segundos."

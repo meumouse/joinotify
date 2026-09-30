@@ -22,7 +22,7 @@ msgstr "— Detectar automaticamente —"
 msgid "— Do not send —"
 msgstr "— Não enviar —"
 
-#: app/src/pages/contacts/components/ImportModal.vue:66
+#: app/src/pages/contacts/components/ImportModal.vue:67
 msgid "— Ignore —"
 msgstr "— Ignorar —"
 
@@ -30,12 +30,12 @@ msgstr "— Ignorar —"
 msgid "— No consent field —"
 msgstr "— Sem campo de consentimento —"
 
-#: app/src/pages/contacts/components/AttributeInput.vue:30
-#: app/src/pages/contacts/components/AttributeInput.vue:35
+#: app/src/pages/contacts/components/AttributeInput.vue:33
+#: app/src/pages/contacts/components/AttributeInput.vue:38
 msgid "— None —"
 msgstr "— Nenhum —"
 
-#: app/src/pages/contacts/components/FilterRuleRow.vue:77
+#: app/src/pages/contacts/components/FilterRuleRow.vue:78
 msgid "— Pick —"
 msgstr "— Escolher —"
 
@@ -43,12 +43,12 @@ msgstr "— Escolher —"
 msgid "— Pick a custom field —"
 msgstr "— Escolher um campo personalizado —"
 
-#: app/src/pages/contacts/components/FilterRuleRow.vue:48
+#: app/src/pages/contacts/components/FilterRuleRow.vue:49
 msgid "— Pick a field —"
 msgstr "— Escolher um campo —"
 
 #: app/src/pages/contacts/components/BulkTagModal.vue:34
-#: app/src/pages/contacts/components/FilterRuleRow.vue:72
+#: app/src/pages/contacts/components/FilterRuleRow.vue:73
 msgid "— Pick a tag —"
 msgstr "— Escolher uma etiqueta —"
 
@@ -56,7 +56,7 @@ msgstr "— Escolher uma etiqueta —"
 msgid "— Select a sender —"
 msgstr "— Selecione um remetente —"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:85
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:86
 #. translators: %s: field label
 msgid ""
 "\"%s\" and its value on every contact are erased. Audiences that filter by "
@@ -67,12 +67,12 @@ msgstr ""
 "filtram por isso deixam de corresponder. Isto não pode ser desfeito; "
 "arquive o campo em vez disso para manter os seus valores."
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:96
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:97
 #. translators: %s: tag name
 msgid "\"%s\" is taken off every contact and erased. This cannot be undone."
 msgstr "\"%s\" é removido de cada contacto e apagado. Isto não pode ser desfeito."
 
-#: app/src/pages/contacts/components/FilterRuleRow.vue:160
+#: app/src/pages/contacts/components/FilterRuleRow.vue:164
 msgid "(edit it in the Joinotify panel)"
 msgstr "(edite-o no painel do Joinotify)"
 
@@ -146,7 +146,7 @@ msgstr ""
 "serem movidos para %2$s. Os seus campos apenas preenchem os vazios, e uma "
 "opção de saída de qualquer um prevalece. Isto não pode ser desfeito."
 
-#: app/src/pages/contacts/components/ImportModal.vue:262
+#: app/src/pages/contacts/components/ImportModal.vue:263
 msgid "%1$s: %2$d contacts. Tell what each column is."
 msgstr "%1$s: %2$d contactos. Diga o que cada coluna representa."
 
@@ -156,7 +156,7 @@ msgid "%d attempt"
 msgid_plural "%d attempts"
 msgstr[0] "%d tentativa"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:216
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:218
 msgid "%d contact"
 msgid_plural "%d contacts"
 msgstr[0] "%d contacto"
@@ -205,7 +205,7 @@ msgid "%d number imported."
 msgid_plural "%d numbers imported."
 msgstr[0] "%d número importado."
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:165
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:167
 msgid "%d option"
 msgid_plural "%d options"
 msgstr[0] "%d opção"
@@ -438,7 +438,7 @@ msgstr ""
 msgid "Abandoned cart is recovered"
 msgstr "Carrinho abandonado recuperado"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:348
+#: admin/src/Cloud_Sync/Cloud_Sync.php:371
 msgid "Abandoned carts"
 msgstr "Carrinhos abandonados"
 
@@ -476,7 +476,7 @@ msgid "Action"
 msgstr "Ação"
 
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:158
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:152
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:154
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:176
 #: app/src/pages/history/HistoryPage.vue:380
 #: app/src/pages/queue/QueuePage.vue:303
@@ -584,8 +584,8 @@ msgstr "Adicionar anexo"
 msgid "Add condition"
 msgstr "Adicionar condição"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:159
-#: app/src/pages/contacts/components/ContactFormModal.vue:247
+#: app/src/pages/contacts/components/ContactFormModal.vue:160
+#: app/src/pages/contacts/components/ContactFormModal.vue:248
 #: app/src/pages/contacts/tabs/ContactsTab.vue:223
 msgid "Add contact"
 msgstr "Adicionar contacto"
@@ -629,7 +629,7 @@ msgstr "Adicionar nota"
 msgid "Add or remove tags of the contact on Joinotify."
 msgstr "Adicionar ou remover etiquetas do contacto no Joinotify."
 
-#: app/src/pages/contacts/components/BulkTagModal.vue:109
+#: app/src/pages/contacts/components/BulkTagModal.vue:123
 #: app/src/pages/contacts/tabs/ContactsTab.vue:241
 msgid "Add tag"
 msgstr "Adicionar etiqueta"
@@ -672,7 +672,7 @@ msgstr "Adicionado manualmente"
 msgid "Address"
 msgstr "Endereço"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:376
+#: admin/src/Cloud_Sync/Cloud_Sync.php:399
 msgid ""
 "Adds an unticked checkbox to the checkout, the sign-up forms and My "
 "account. Who ticks it is opted in on Joinotify, with the checkbox text, "
@@ -806,7 +806,7 @@ msgstr "Todos os fluxos"
 msgid "All levels"
 msgstr "Todos os níveis"
 
-#: app/src/pages/settings/SettingsPage.vue:609
+#: app/src/pages/settings/SettingsPage.vue:616
 msgid "All options will return to the plugin defaults."
 msgstr "Todas as opções voltarão aos padrões do plugin."
 
@@ -949,7 +949,7 @@ msgstr "Permite definir um tempo de espera antes que a ação seja executada."
 msgid "Already have an account?"
 msgstr "Já tem uma conta?"
 
-#: app/src/pages/contacts/components/ImportModal.vue:159
+#: app/src/pages/contacts/components/ImportModal.vue:160
 msgid "already in the base (skipped)"
 msgstr "já na base (ignoradas)"
 
@@ -1078,24 +1078,24 @@ msgstr ""
 "ser entregues fora da janela de 24 horas."
 
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:184
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:174
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:176
 msgid "Archive"
 msgstr "Arquivar"
 
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:136
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:160
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:162
 msgid "Archived"
 msgstr "Arquivado"
 
-#: app/src/pages/settings/SettingsPage.vue:588
+#: app/src/pages/settings/SettingsPage.vue:595
 msgid "Are you sure you want to clear the debug logs?"
 msgstr "Tem a certeza de que deseja limpar os registos de depuração?"
 
-#: app/src/pages/settings/SettingsPage.vue:495
+#: app/src/pages/settings/SettingsPage.vue:502
 msgid "Are you sure you want to remove this sender?"
 msgstr "Tem a certeza de que deseja remover este remetente?"
 
-#: app/src/pages/settings/SettingsPage.vue:467
+#: app/src/pages/settings/SettingsPage.vue:474
 msgid ""
 "Are you sure you want to remove this variable? Workflows that use it will "
 "no longer resolve it."
@@ -1125,7 +1125,7 @@ msgstr "Inteligência Artificial"
 msgid "Aruba"
 msgstr "Aruba"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:375
+#: admin/src/Cloud_Sync/Cloud_Sync.php:398
 msgid "Ask customers for marketing consent"
 msgstr "Perguntar aos clientes pelo consentimento de marketing"
 
@@ -1278,7 +1278,7 @@ msgstr "Azerbaijão"
 #: app/src/components/builder/BuilderImportView.vue:42
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:46
 #: app/src/components/builder/TriggerStepFooter.vue:30
-#: app/src/pages/contacts/components/ImportModal.vue:315
+#: app/src/pages/contacts/components/ImportModal.vue:316
 #: app/src/pages/onboarding/OnboardingPage.vue:341
 msgid "Back"
 msgstr "Voltar"
@@ -1428,10 +1428,10 @@ msgstr "Crie a sua primeira automação ou reveja as configurações completas."
 #: app/src/pages/builder/BuilderPage.vue:1183
 #: app/src/pages/builder/BuilderPage.vue:1219
 #: app/src/pages/builder/BuilderPage.vue:1225
-#: app/src/pages/settings/SettingsPage.vue:456
-#: app/src/pages/settings/SettingsPage.vue:459
-#: app/src/pages/settings/SettingsPage.vue:472
-#: app/src/pages/settings/SettingsPage.vue:474
+#: app/src/pages/settings/SettingsPage.vue:463
+#: app/src/pages/settings/SettingsPage.vue:466
+#: app/src/pages/settings/SettingsPage.vue:479
+#: app/src/pages/settings/SettingsPage.vue:481
 msgid "Builder"
 msgstr "Construtor"
 
@@ -1517,9 +1517,9 @@ msgstr "Canadá"
 #: app/src/pages/builder/BuilderPage.vue:1453
 #: app/src/pages/builder/BuilderPage.vue:1499
 #: app/src/pages/contacts/components/AudienceEditor.vue:239
-#: app/src/pages/contacts/components/BulkTagModal.vue:105
+#: app/src/pages/contacts/components/BulkTagModal.vue:119
 #: app/src/pages/contacts/components/ConsentModal.vue:63
-#: app/src/pages/contacts/components/ContactFormModal.vue:246
+#: app/src/pages/contacts/components/ContactFormModal.vue:247
 #: app/src/pages/contacts/components/FieldFormModal.vue:166
 #: app/src/pages/contacts/components/MergeModal.vue:131
 #: app/src/pages/contacts/components/TagFormModal.vue:107
@@ -1776,7 +1776,7 @@ msgstr "Limpar filtros"
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:40
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:248
-#: app/src/pages/settings/SettingsPage.vue:587
+#: app/src/pages/settings/SettingsPage.vue:594
 msgid "Clear logs"
 msgstr "Limpar registos"
 
@@ -1802,14 +1802,14 @@ msgstr "Clicou numa campanha"
 
 #: admin/src/Integrations/Integrations_Base.php:916
 #: app/src/builder/actions/components/ActionLibraryModal.vue:290
-#: app/src/components/base/BaseDrawer.vue:30
+#: app/src/components/base/BaseDrawer.vue:33
 #: app/src/components/builder/BuilderActionPickerModal.vue:43
 #: app/src/components/builder/BuilderTriggerSetupView.vue:138
 #: app/src/components/builder/BuilderTriggerSetupView.vue:142
 #: app/src/components/modals/ModalDialog.vue:62
 #: app/src/components/toasts/ToastStack.vue:81
 #: app/src/components/toasts/ToastStack.vue:85
-#: app/src/pages/contacts/components/ImportModal.vue:352
+#: app/src/pages/contacts/components/ImportModal.vue:353
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
 #: app/src/pages/history/components/HistoryDetailsModal.vue:182
 msgid "Close"
@@ -1820,7 +1820,7 @@ msgstr "Fechar"
 msgid "Close dialog"
 msgstr "Fechar diálogo"
 
-#: app/src/components/base/BaseDrawer.vue:25
+#: app/src/components/base/BaseDrawer.vue:28
 msgid "Close drawer"
 msgstr "Fechar gaveta"
 
@@ -1856,7 +1856,7 @@ msgstr "Colômbia"
 msgid "Color"
 msgstr "Cor"
 
-#: app/src/pages/contacts/components/ImportModal.vue:269
+#: app/src/pages/contacts/components/ImportModal.vue:270
 msgid "Column"
 msgstr "Coluna"
 
@@ -1914,7 +1914,7 @@ msgstr "Componente de configuração não disponível"
 msgid "Configuration component not available for this action."
 msgstr "Componente de configuração não disponível para esta ação."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:298
+#: admin/src/Cloud_Sync/Cloud_Sync.php:312
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
 #: admin/src/Integrations/Otp_Login.php:109
@@ -1924,6 +1924,7 @@ msgstr "Componente de configuração não disponível para esta ação."
 #: admin/src/Integrations/Woocommerce.php:116
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
+#: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:62
 msgid "Configure"
 msgstr "Configurar"
 
@@ -1943,7 +1944,7 @@ msgstr ""
 "Configure como os códigos de verificação são entregues, o tema visual e o "
 "remetente utilizado para o formulário de login."
 
-#: app/src/pages/settings/SettingsPage.vue:684
+#: app/src/pages/settings/SettingsPage.vue:715
 msgid ""
 "Configure senders, integrations, the builder and general plugin behavior. "
 "If you need help, visit our "
@@ -2051,19 +2052,19 @@ msgstr "Conectando WooCommerce, WPForms, Elementor e as outras integrações"
 msgid "Connecting…"
 msgstr "Conectando…"
 
-#: app/src/pages/settings/SettingsPage.vue:532
+#: app/src/pages/settings/SettingsPage.vue:539
 msgid "Connection updated."
 msgstr "Conexão atualizada."
 
 #: app/src/pages/contacts/audienceFilter.ts:212
 #: app/src/pages/contacts/components/ContactDrawer.vue:265
-#: app/src/pages/contacts/components/FilterRuleRow.vue:43
+#: app/src/pages/contacts/components/FilterRuleRow.vue:44
 #: app/src/pages/contacts/tabs/ContactsTab.vue:185
 #: app/src/pages/contacts/tabs/ContactsTab.vue:285
 msgid "Consent"
 msgstr "Consentimento"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:381
+#: admin/src/Cloud_Sync/Cloud_Sync.php:404
 msgid "Consent checkbox text"
 msgstr "Texto da caixa de seleção de consentimento"
 
@@ -2110,7 +2111,7 @@ msgstr "Contacto atualizado."
 #: admin/src/Contacts/Contact_Actions.php:123
 #: app/src/pages/contacts/components/ContactDrawer.vue:143
 #: app/src/pages/contacts/components/ContactDrawer.vue:174
-#: app/src/pages/contacts/components/ContactFormModal.vue:128
+#: app/src/pages/contacts/components/ContactFormModal.vue:129
 #: app/src/pages/contacts/components/MergeModal.vue:82
 #: app/src/pages/contacts/ContactsPage.vue:47
 #: app/src/pages/contacts/ContactsPage.vue:91
@@ -2118,7 +2119,7 @@ msgstr "Contacto atualizado."
 msgid "Contacts"
 msgstr "Contactos"
 
-#: app/src/pages/contacts/components/ImportModal.vue:288
+#: app/src/pages/contacts/components/ImportModal.vue:289
 msgid "Contacts already in the base"
 msgstr "Contactos já na base"
 
@@ -2182,7 +2183,7 @@ msgstr "Não foi possível limpar os logs de depuração."
 msgid "Could not clear the history."
 msgstr "Não foi possível limpar o histórico."
 
-#: app/src/pages/settings/SettingsPage.vue:597
+#: app/src/pages/settings/SettingsPage.vue:604
 msgid "Could not clear the logs."
 msgstr "Não foi possível limpar os logs."
 
@@ -2231,7 +2232,7 @@ msgstr "Não foi possível exportar o histórico de mensagens."
 msgid "Could not export the processing queue."
 msgstr "Não foi possível exportar a fila de processamento."
 
-#: app/src/pages/settings/SettingsPage.vue:334
+#: app/src/pages/settings/SettingsPage.vue:341
 msgid "Could not export the settings."
 msgstr "Não foi possível exportar as definições."
 
@@ -2256,7 +2257,7 @@ msgstr "Não foi possível finalizar a conexão."
 msgid "Could not finish the setup."
 msgstr "Não foi possível finalizar a configuração."
 
-#: app/src/pages/settings/SettingsPage.vue:362
+#: app/src/pages/settings/SettingsPage.vue:369
 msgid "Could not import the settings."
 msgstr "Não foi possível importar as definições."
 
@@ -2313,7 +2314,7 @@ msgstr "Não foi possível carregar os fluxos de trabalho."
 msgid "Could not load your message templates."
 msgstr "Não foi possível carregar os seus modelos de mensagem."
 
-#: app/src/pages/settings/SettingsPage.vue:563
+#: app/src/pages/settings/SettingsPage.vue:570
 msgid "Could not open the logs."
 msgstr "Não foi possível abrir os registos."
 
@@ -2336,21 +2337,21 @@ msgstr "Não foi possível ler os dados da conta Joinotify."
 msgid "Could not read the selected file."
 msgstr "Não foi possível ler o ficheiro selecionado."
 
-#: app/src/pages/contacts/components/ImportModal.vue:125
+#: app/src/pages/contacts/components/ImportModal.vue:126
 msgid "Could not read this file. Save it as CSV (UTF-8) and try again."
 msgstr ""
 "Não foi possível ler este ficheiro. Guarde-o como CSV (UTF-8) e tente "
 "novamente."
 
-#: app/src/pages/settings/SettingsPage.vue:474
+#: app/src/pages/settings/SettingsPage.vue:481
 msgid "Could not remove the variable."
 msgstr "Não foi possível remover a variável."
 
-#: app/src/pages/settings/SettingsPage.vue:504
+#: app/src/pages/settings/SettingsPage.vue:511
 msgid "Could not remove."
 msgstr "Não foi possível remover."
 
-#: app/src/pages/settings/SettingsPage.vue:618
+#: app/src/pages/settings/SettingsPage.vue:625
 msgid "Could not reset."
 msgstr "Não foi possível redefinir."
 
@@ -2384,7 +2385,7 @@ msgid "Could not save the test phone number."
 msgstr "Não foi possível guardar o número de telefone de teste."
 
 #: admin/src/Rest/Builder_Variables_Save.php:46
-#: app/src/pages/settings/SettingsPage.vue:459
+#: app/src/pages/settings/SettingsPage.vue:466
 msgid "Could not save the variable."
 msgstr "Não foi possível guardar a variável."
 
@@ -2397,7 +2398,7 @@ msgstr "Não foi possível guardar o fluxo de trabalho."
 msgid "Could not save this step."
 msgstr "Não foi possível salvar este passo."
 
-#: app/src/pages/settings/SettingsPage.vue:299
+#: app/src/pages/settings/SettingsPage.vue:306
 msgid "Could not save."
 msgstr "Não foi possível guardar."
 
@@ -2427,12 +2428,12 @@ msgstr "Não foi possível iniciar a conexão."
 msgid "Could not sync your message templates."
 msgstr "Não foi possível sincronizar os seus modelos de mensagem."
 
-#: app/src/pages/settings/SettingsPage.vue:384
-#: app/src/pages/settings/SettingsPage.vue:395
+#: app/src/pages/settings/SettingsPage.vue:391
+#: app/src/pages/settings/SettingsPage.vue:402
 msgid "Could not sync your numbers."
 msgstr "Não foi possível sincronizar os seus números."
 
-#: app/src/pages/settings/SettingsPage.vue:537
+#: app/src/pages/settings/SettingsPage.vue:544
 msgid "Could not update the connection."
 msgstr "Não foi possível atualizar a conexão."
 
@@ -2610,12 +2611,12 @@ msgstr "Crie o seu fluxo de trabalho de automação do zero."
 
 #: app/src/components/workflows/WorkflowTable.vue:101
 #: app/src/components/workflows/WorkflowTableHeader.vue:36
-#: app/src/pages/contacts/components/ImportModal.vue:334
+#: app/src/pages/contacts/components/ImportModal.vue:335
 #: app/src/pages/contacts/labels.ts:121
 msgid "Created"
 msgstr "Criado"
 
-#: app/src/pages/contacts/components/ImportModal.vue:161
+#: app/src/pages/contacts/components/ImportModal.vue:162
 msgid "created at the same time by another path"
 msgstr "criado ao mesmo tempo por outro caminho"
 
@@ -2687,7 +2688,7 @@ msgstr "Bloco personalizado não disponível."
 msgid "Custom color"
 msgstr "Cor personalizada"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:69
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:70
 msgid "Custom field archived. It keeps its values but accepts no new ones."
 msgstr "Campo personalizado arquivado. Mantém os seus valores, mas não aceita novos."
 
@@ -2703,7 +2704,7 @@ msgstr "Campo personalizado apagado."
 msgid "Custom field not found."
 msgstr "Campo personalizado não encontrado."
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:69
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:70
 msgid "Custom field restored."
 msgstr "Campo personalizado restaurado."
 
@@ -2711,17 +2712,17 @@ msgstr "Campo personalizado restaurado."
 msgid "Custom field updated."
 msgstr "Campo personalizado atualizado."
 
-#: app/src/pages/contacts/components/ImportModal.vue:74
+#: app/src/pages/contacts/components/ImportModal.vue:75
 msgid "Custom field: %s"
 msgstr "Campo personalizado: %s"
 
 #: admin/src/Contacts/Contact_Actions.php:160
 #: app/src/pages/contacts/components/ContactDrawer.vue:289
-#: app/src/pages/contacts/components/ContactFormModal.vue:201
+#: app/src/pages/contacts/components/ContactFormModal.vue:202
 #: app/src/pages/contacts/components/FieldFormModal.vue:107
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:71
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:110
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:133
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:72
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:111
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:134
 msgid "Custom fields"
 msgstr "Campos personalizados"
 
@@ -2987,7 +2988,7 @@ msgid "Denmark"
 msgstr "Dinamarca"
 
 #: admin/src/Rest/Contacts_Consent.php:54
-#: app/src/pages/contacts/components/ContactFormModal.vue:119
+#: app/src/pages/contacts/components/ContactFormModal.vue:120
 msgid "Describe how the contact gave consent."
 msgstr "Descreva como o contacto deu consentimento."
 
@@ -3257,9 +3258,9 @@ msgstr "E-commerce"
 
 #: admin/src/Contacts/Contact_Actions.php:96
 #: app/src/pages/contacts/components/ContactDrawer.vue:250
-#: app/src/pages/contacts/components/ContactFormModal.vue:188
+#: app/src/pages/contacts/components/ContactFormModal.vue:189
 #: app/src/pages/contacts/components/FormRuleEditor.vue:72
-#: app/src/pages/contacts/components/ImportModal.vue:71
+#: app/src/pages/contacts/components/ImportModal.vue:72
 #: app/src/pages/contacts/labels.ts:150
 msgid "E-mail"
 msgstr "E-mail"
@@ -3294,7 +3295,7 @@ msgstr "ex. Cliente, VIP"
 msgid "e.g. greeting"
 msgstr "ex. saudação"
 
-#: app/src/pages/contacts/components/ImportModal.vue:296
+#: app/src/pages/contacts/components/ImportModal.vue:297
 msgid "e.g. Imported, Fair 2026"
 msgstr "ex. Importado, Feira 2026"
 
@@ -3306,11 +3307,11 @@ msgstr "ex. Lead"
 msgid "e.g. Lead, Newsletter"
 msgstr "ex. Lead, Newsletter"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:227
+#: app/src/pages/contacts/components/ContactFormModal.vue:228
 msgid "e.g. Sign-up form at the store counter, 29/09/2026"
 msgstr "ex. Formulário de inscrição no balcão da loja, 29/09/2026"
 
-#: app/src/pages/contacts/components/ImportModal.vue:310
+#: app/src/pages/contacts/components/ImportModal.vue:311
 msgid "e.g. Sign-up sheet of the store event, 09/2026"
 msgstr "ex. Folha de inscrição do evento da loja, 09/2026"
 
@@ -3364,8 +3365,8 @@ msgstr "Equador"
 #: app/src/components/workflows/WorkflowRowActions.vue:31
 #: app/src/pages/contacts/components/ContactDrawer.vue:207
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:181
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:171
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:220
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:173
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:222
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:121
 msgid "Edit"
 msgstr "Editar"
@@ -3374,7 +3375,7 @@ msgstr "Editar"
 msgid "Edit audience"
 msgstr "Editar audiência"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:159
+#: app/src/pages/contacts/components/ContactFormModal.vue:160
 msgid "Edit contact"
 msgstr "Editar contacto"
 
@@ -3604,8 +3605,8 @@ msgstr "Guiné Equatorial"
 
 #: app/src/pages/contacts/components/ContactDrawer.vue:224
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:187
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:177
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:223
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:179
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:225
 msgid "Erase"
 msgstr "Apagar"
 
@@ -3613,7 +3614,7 @@ msgstr "Apagar"
 msgid "Erase audience"
 msgstr "Apagar audiência"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:88
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:89
 msgid "Erase field"
 msgstr "Apagar campo"
 
@@ -3621,7 +3622,7 @@ msgstr "Apagar campo"
 msgid "Erase for good"
 msgstr "Apagar para sempre"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:99
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:100
 msgid "Erase tag"
 msgstr "Apagar etiqueta"
 
@@ -3633,11 +3634,11 @@ msgstr "Apagar esta audiência?"
 msgid "Erase this contact?"
 msgstr "Apagar este contacto?"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:82
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:83
 msgid "Erase this custom field?"
 msgstr "Apagar este campo personalizado?"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:93
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:94
 msgid "Erase this tag?"
 msgstr "Apagar esta etiqueta?"
 
@@ -3649,7 +3650,7 @@ msgstr "erro"
 #: app/src/pages/history/components/HistoryDetailsModal.vue:39
 #: app/src/pages/history/HistoryPage.vue:378
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
-#: app/src/pages/settings/SettingsPage.vue:299
+#: app/src/pages/settings/SettingsPage.vue:306
 msgid "Error"
 msgstr "Erro"
 
@@ -3692,7 +3693,7 @@ msgstr ""
 "Cada contacto enviado por este site o transporta. Vazio utiliza o nome do "
 "site."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:367
+#: admin/src/Cloud_Sync/Cloud_Sync.php:390
 msgid ""
 "Every contact this site sends gets this tag in Joinotify. Leave it empty to "
 "use the site's name."
@@ -3800,8 +3801,8 @@ msgstr "Expira em %s"
 #: app/src/components/workflows/WorkflowRowActions.vue:41
 #: app/src/pages/history/HistoryPage.vue:423
 #: app/src/pages/queue/QueuePage.vue:363
-#: app/src/pages/settings/SettingsPage.vue:331
-#: app/src/pages/settings/SettingsPage.vue:334
+#: app/src/pages/settings/SettingsPage.vue:338
+#: app/src/pages/settings/SettingsPage.vue:341
 msgid "Export"
 msgstr "Exportar"
 
@@ -3845,13 +3846,13 @@ msgid "Exporting…"
 msgstr "A exportar…"
 
 #: app/src/composables/useMessageHistory.ts:59
-#: app/src/pages/contacts/components/ImportModal.vue:337
+#: app/src/pages/contacts/components/ImportModal.vue:338
 #: app/src/pages/history/HistoryPage.vue:75
 msgid "Failed"
 msgstr "Falhou"
 
-#: app/src/pages/settings/SettingsPage.vue:415
-#: app/src/pages/settings/SettingsPage.vue:429
+#: app/src/pages/settings/SettingsPage.vue:422
+#: app/src/pages/settings/SettingsPage.vue:436
 msgid "Failed to send message."
 msgstr "Falhou ao enviar a mensagem."
 
@@ -3876,8 +3877,8 @@ msgid "Federated States of Micronesia"
 msgstr "Estados Federados da Micronésia"
 
 #: app/src/pages/contacts/audienceFilter.ts:209
-#: app/src/pages/contacts/components/FilterRuleRow.vue:41
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:150
+#: app/src/pages/contacts/components/FilterRuleRow.vue:42
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:152
 msgid "Field"
 msgstr "Campo"
 
@@ -3964,13 +3965,13 @@ msgstr "Finlândia"
 msgid "First"
 msgstr "Primeiro"
 
-#: app/src/pages/contacts/components/ImportModal.vue:270
+#: app/src/pages/contacts/components/ImportModal.vue:271
 msgid "First line"
 msgstr "Primeira linha"
 
 #: admin/src/Contacts/Contact_Actions.php:147
-#: app/src/pages/contacts/components/ContactFormModal.vue:176
-#: app/src/pages/contacts/components/ImportModal.vue:68
+#: app/src/pages/contacts/components/ContactFormModal.vue:177
+#: app/src/pages/contacts/components/ImportModal.vue:69
 msgid "First name"
 msgstr "Primeiro nome"
 
@@ -4067,7 +4068,7 @@ msgstr "ID do formulário"
 msgid "Form is sent"
 msgstr "Formulário enviado"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:342
+#: admin/src/Cloud_Sync/Cloud_Sync.php:365
 msgid "Form submissions"
 msgstr "Submissões de formulários"
 
@@ -4132,7 +4133,7 @@ msgstr ""
 "Endereço de envio utilizado para entregar os e-mails. O domínio deve ser "
 "verificado no Resend."
 
-#: app/src/pages/contacts/components/ImportModal.vue:70
+#: app/src/pages/contacts/components/ImportModal.vue:71
 msgid "Full name"
 msgstr "Nome completo"
 
@@ -4322,7 +4323,7 @@ msgstr "Olá {{ field_id=[nome] }}, veja este ficheiro!"
 msgid "Hello, this is a test message."
 msgstr "Olá, esta é uma mensagem de teste."
 
-#: app/src/pages/settings/SettingsPage.vue:686
+#: app/src/pages/settings/SettingsPage.vue:717
 msgid "Help Center"
 msgstr "Centro de Ajuda"
 
@@ -4411,8 +4412,8 @@ msgid "How this site is identified"
 msgstr "Como este site é identificado"
 
 #: app/src/pages/contacts/components/ConsentModal.vue:51
-#: app/src/pages/contacts/components/ContactFormModal.vue:222
-#: app/src/pages/contacts/components/ImportModal.vue:309
+#: app/src/pages/contacts/components/ContactFormModal.vue:223
+#: app/src/pages/contacts/components/ImportModal.vue:310
 msgid "How was the consent obtained?"
 msgstr "Como foi obtido o consentimento?"
 
@@ -4428,7 +4429,7 @@ msgstr "Hungria"
 msgid "I already did"
 msgstr "Já fiz"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:384
+#: admin/src/Cloud_Sync/Cloud_Sync.php:407
 #: admin/src/Cloud_Sync/Consent.php:149
 msgid "I want to receive offers and news on WhatsApp."
 msgstr "Quero receber ofertas e novidades no WhatsApp."
@@ -4475,9 +4476,9 @@ msgstr "Imagem"
 #: app/src/components/builder/BuilderImportView.vue:27
 #: app/src/components/builder/BuilderImportView.vue:41
 #: app/src/pages/contacts/labels.ts:41
-#: app/src/pages/settings/SettingsPage.vue:359
-#: app/src/pages/settings/SettingsPage.vue:362
-#: app/src/pages/settings/SettingsPage.vue:373
+#: app/src/pages/settings/SettingsPage.vue:366
+#: app/src/pages/settings/SettingsPage.vue:369
+#: app/src/pages/settings/SettingsPage.vue:380
 msgid "Import"
 msgstr "Importar"
 
@@ -4485,7 +4486,7 @@ msgstr "Importar"
 msgid "Import / export settings"
 msgstr "Importar / exportar definições"
 
-#: app/src/pages/contacts/components/ImportModal.vue:318
+#: app/src/pages/contacts/components/ImportModal.vue:319
 msgid "Import %d contacts"
 msgstr "Importar %d contactos"
 
@@ -4498,7 +4499,7 @@ msgstr "Importar uma exportação real do Joinotify"
 msgid "Import a template"
 msgstr "Importar um modelo"
 
-#: app/src/pages/contacts/components/ImportModal.vue:249
+#: app/src/pages/contacts/components/ImportModal.vue:250
 msgid "Import contacts"
 msgstr "Importar contactos"
 
@@ -4511,7 +4512,7 @@ msgstr "Importar CSV"
 msgid "Import file"
 msgstr "Importar ficheiro"
 
-#: app/src/pages/contacts/components/ImportModal.vue:330
+#: app/src/pages/contacts/components/ImportModal.vue:331
 msgid "Import finished."
 msgstr "Importação concluída."
 
@@ -4520,7 +4521,7 @@ msgid "Import not found."
 msgstr "Importação não encontrada."
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:96
-#: app/src/pages/settings/SettingsPage.vue:346
+#: app/src/pages/settings/SettingsPage.vue:353
 msgid "Import settings"
 msgstr "Importar definições"
 
@@ -4550,7 +4551,7 @@ msgstr "A importar..."
 msgid "Importing…"
 msgstr "A importar…"
 
-#: app/src/pages/contacts/components/ImportModal.vue:330
+#: app/src/pages/contacts/components/ImportModal.vue:331
 msgid "Importing… %1$d of %2$d"
 msgstr "A importar… %1$d de %2$d"
 
@@ -4685,7 +4686,7 @@ msgid "Invalid file type. Select a .json file."
 msgstr "Tipo de ficheiro inválido. Selecione um ficheiro .json."
 
 #: app/src/pages/builder/BuilderPage.vue:984
-#: app/src/pages/settings/SettingsPage.vue:373
+#: app/src/pages/settings/SettingsPage.vue:380
 #: app/src/parsers/workflowParser.ts:512
 msgid "Invalid file."
 msgstr "Ficheiro inválido."
@@ -4818,7 +4819,7 @@ msgstr "Não é igual a"
 msgid "is one of"
 msgstr "é um de"
 
-#: app/src/pages/contacts/components/ImportModal.vue:271
+#: app/src/pages/contacts/components/ImportModal.vue:272
 msgid "Is the"
 msgstr "É o"
 
@@ -4898,7 +4899,7 @@ msgstr "johndoe@email.com"
 #: app/src/pages/builder/BuilderPage.vue:764
 #: app/src/pages/onboarding/OnboardingPage.vue:208
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
-#: app/src/pages/settings/SettingsPage.vue:224
+#: app/src/pages/settings/SettingsPage.vue:231
 msgid "Joinotify"
 msgstr "Joinotify"
 
@@ -4920,8 +4921,9 @@ msgstr ""
 "mensagens e sugerir fluxos de trabalho inteiros. Isto é opcional e pode "
 "configurá-lo mais tarde — o plugin funciona totalmente sem isso."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:288
-#: admin/src/Cloud_Sync/Cloud_Sync.php:294
+#: admin/src/Cloud_Sync/Cloud_Sync.php:296
+#: admin/src/Cloud_Sync/Cloud_Sync.php:301
+#: admin/src/Cloud_Sync/Cloud_Sync.php:308
 #: admin/src/Cloud_Sync/Consent.php:613
 #: admin/src/Cloud_Sync/Consent.php:628
 #: app/src/pages/contacts/tabs/SourcesTab.vue:213
@@ -5022,7 +5024,7 @@ msgid "kept on the do-not-contact list"
 msgstr "mantido na lista de não contactar"
 
 #: app/src/components/fields/CloudSyncStatusField.vue:61
-#: app/src/pages/contacts/components/ImportModal.vue:162
+#: app/src/pages/contacts/components/ImportModal.vue:163
 msgid "kept opted out"
 msgstr "mantido opt-out"
 
@@ -5062,7 +5064,7 @@ msgstr "Rótulo"
 msgid "Label (optional)"
 msgstr "Rótulo (opcional)"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:196
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:198
 msgid ""
 "Labels that group contacts: customers, leads of a form, VIPs… Integrations "
 "create the tags they use on their own."
@@ -5070,7 +5072,7 @@ msgstr ""
 "Etiquetas que agrupam contactos: clientes, leads de um formulário, VIPs… As "
 "integrações criam as etiquetas que utilizam por conta própria."
 
-#: app/src/pages/contacts/components/ImportModal.vue:72
+#: app/src/pages/contacts/components/ImportModal.vue:73
 msgid "Language (e.g. pt-BR)"
 msgstr "Idioma (ex. pt-BR)"
 
@@ -5104,9 +5106,9 @@ msgid "Last message sent"
 msgstr "Última mensagem enviada"
 
 #: admin/src/Contacts/Contact_Actions.php:153
-#: app/src/pages/contacts/components/ContactFormModal.vue:182
+#: app/src/pages/contacts/components/ContactFormModal.vue:183
 #: app/src/pages/contacts/components/FormRuleEditor.vue:80
-#: app/src/pages/contacts/components/ImportModal.vue:69
+#: app/src/pages/contacts/components/ImportModal.vue:70
 msgid "Last name"
 msgstr "Último nome"
 
@@ -5146,7 +5148,7 @@ msgstr "Captura de leads via checkout"
 msgid "Lead capture via modal"
 msgstr "Captura de leads via modal"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:349
+#: admin/src/Cloud_Sync/Cloud_Sync.php:372
 msgid "Leads and abandoned, recovered or lost carts from Flexify Checkout."
 msgstr "Leads e carrinhos abandonados, recuperados ou perdidos do Flexify Checkout."
 
@@ -5170,7 +5172,7 @@ msgstr "Deixar como está"
 msgid "Leave blank to remove a reaction already sent."
 msgstr "Deixe em branco para remover uma reação já enviada."
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:218
+#: app/src/pages/contacts/components/ContactFormModal.vue:219
 msgid ""
 "Leave it unticked when you do not have that consent: the contact still "
 "receives the messages of your workflows, but not campaigns."
@@ -5178,7 +5180,7 @@ msgstr ""
 "Deixe desmarcado quando não tiver esse consentimento: o contacto ainda "
 "recebe as mensagens dos seus fluxos de trabalho, mas não campanhas."
 
-#: app/src/pages/contacts/components/ImportModal.vue:291
+#: app/src/pages/contacts/components/ImportModal.vue:292
 msgid "Leave them as they are"
 msgstr "Deixe-os como estão"
 
@@ -5253,11 +5255,11 @@ msgstr "Líbia"
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
-#: app/src/pages/contacts/components/ImportModal.vue:346
+#: app/src/pages/contacts/components/ImportModal.vue:347
 msgid "Line %d"
 msgstr "Linha %d"
 
-#: app/src/pages/contacts/components/ImportModal.vue:343
+#: app/src/pages/contacts/components/ImportModal.vue:344
 msgid "Lines not imported"
 msgstr "Linhas não importadas"
 
@@ -5327,8 +5329,8 @@ msgstr "A carregar o gatilho..."
 #: app/src/pages/contacts/components/ContactDrawer.vue:328
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:149
 #: app/src/pages/contacts/tabs/ContactsTab.vue:267
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:144
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:201
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:146
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:203
 #: app/src/pages/contacts/tabs/SourcesTab.vue:201
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:166
 #: app/src/pages/history/HistoryPage.vue:356
@@ -5371,14 +5373,14 @@ msgstr "Modelo de código de login"
 msgid "Login successful."
 msgstr "Início de sessão bem-sucedido."
 
-#: app/src/pages/settings/SettingsPage.vue:557
-#: app/src/pages/settings/SettingsPage.vue:563
-#: app/src/pages/settings/SettingsPage.vue:594
-#: app/src/pages/settings/SettingsPage.vue:597
+#: app/src/pages/settings/SettingsPage.vue:564
+#: app/src/pages/settings/SettingsPage.vue:570
+#: app/src/pages/settings/SettingsPage.vue:601
+#: app/src/pages/settings/SettingsPage.vue:604
 msgid "Logs"
 msgstr "Registos"
 
-#: app/src/pages/settings/SettingsPage.vue:594
+#: app/src/pages/settings/SettingsPage.vue:601
 msgid "Logs cleared successfully."
 msgstr "Registos limpos com sucesso."
 
@@ -5640,7 +5642,7 @@ msgstr ""
 msgid "Message ID"
 msgstr "ID da mensagem"
 
-#: app/src/pages/settings/SettingsPage.vue:423
+#: app/src/pages/settings/SettingsPage.vue:430
 msgid "Message sent."
 msgstr "Mensagem enviada."
 
@@ -5873,7 +5875,7 @@ msgstr "Nova audiência"
 msgid "New Caledonia"
 msgstr "Nova Caledónia"
 
-#: app/src/pages/contacts/components/ImportModal.vue:305
+#: app/src/pages/contacts/components/ImportModal.vue:306
 msgid ""
 "New contacts are created opted in, and existing ones only if their consent "
 "was unknown. An opt-out is never undone."
@@ -5885,7 +5887,7 @@ msgstr ""
 msgid "New custom field"
 msgstr "Novo campo personalizado"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:136
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:137
 msgid "New field"
 msgstr "Novo campo"
 
@@ -5906,7 +5908,7 @@ msgid "New subscription created"
 msgstr "Nova subscrição criada"
 
 #: app/src/pages/contacts/components/TagFormModal.vue:72
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:198
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:200
 msgid "New tag"
 msgstr "Nova etiqueta"
 
@@ -5970,9 +5972,9 @@ msgstr "Niue"
 #: admin/src/Integrations/Elementor_Forms.php:167
 #: app/src/builder/actions/settings/ConditionSettings.vue:104
 #: app/src/builder/actions/utils/actionDescription.ts:186
-#: app/src/pages/contacts/components/AttributeInput.vue:37
+#: app/src/pages/contacts/components/AttributeInput.vue:40
 #: app/src/pages/contacts/components/ContactDrawer.vue:78
-#: app/src/pages/contacts/components/FilterRuleRow.vue:142
+#: app/src/pages/contacts/components/FilterRuleRow.vue:143
 msgid "No"
 msgstr "Não"
 
@@ -6066,7 +6068,7 @@ msgstr "Ainda sem contactos"
 msgid "No country matches that search."
 msgstr "Nenhum país corresponde a essa pesquisa."
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:186
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:188
 msgid "No custom fields yet."
 msgstr "Ainda sem campos personalizados."
 
@@ -6178,7 +6180,7 @@ msgstr "Nenhum item agendado selecionado."
 msgid "No sender available"
 msgstr "Nenhum remetente disponível"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:230
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:232
 msgid "No tags yet."
 msgstr "Ainda sem etiquetas."
 
@@ -6214,7 +6216,7 @@ msgstr "Nenhum gatilho disponível para esta integração."
 msgid "No user of this site has this e-mail or phone."
 msgstr "Nenhum utilizador deste site tem este e-mail ou telefone."
 
-#: app/src/pages/contacts/components/ImportModal.vue:163
+#: app/src/pages/contacts/components/ImportModal.vue:164
 msgid "no valid phone number"
 msgstr "nenhum número de telefone válido"
 
@@ -6357,7 +6359,7 @@ msgstr ""
 "independentemente do seu consentimento. As mensagens de fluxo não são "
 "afetadas. As desistências vão parar aqui por conta própria."
 
-#: app/src/pages/settings/SettingsPage.vue:390
+#: app/src/pages/settings/SettingsPage.vue:397
 msgid "Numbers synced."
 msgstr "Números sincronizados."
 
@@ -6382,7 +6384,7 @@ msgstr "Dos enviados, %1$d %2$s."
 msgid "Off"
 msgstr "Desligado"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:361
+#: admin/src/Cloud_Sync/Cloud_Sync.php:384
 msgid ""
 "Off by default: city and state are always sent, the full address only when "
 "a flow needs it."
@@ -6498,7 +6500,7 @@ msgstr "Abrir Definições → Conectores"
 msgid "Open the documentation"
 msgstr "Abrir a documentação"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:237
+#: app/src/pages/contacts/components/ContactFormModal.vue:238
 msgid "Open the existing contact"
 msgstr "Abrir o contacto existente"
 
@@ -6631,7 +6633,7 @@ msgstr ""
 msgid "Options"
 msgstr "Opções"
 
-#: app/src/pages/settings/SettingsPage.vue:615
+#: app/src/pages/settings/SettingsPage.vue:622
 msgid "Options have been reset."
 msgstr "As opções foram redefinidas."
 
@@ -6667,7 +6669,7 @@ msgstr "Pedido concluído"
 msgid "Order digital files"
 msgstr "Encomendar ficheiros digitais"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:331
+#: admin/src/Cloud_Sync/Cloud_Sync.php:354
 msgid ""
 "Order events (created, paid, completed, refunded…), subscriptions, and each "
 "customer with their order count, total spent and last purchase."
@@ -6731,7 +6733,7 @@ msgstr "OTP"
 msgid "OTP Login - Passwordless authentication"
 msgstr "Login OTP - Autenticação sem palavra-passe"
 
-#: app/src/pages/contacts/components/ImportModal.vue:160
+#: app/src/pages/contacts/components/ImportModal.vue:161
 msgid "over the plan's contact limit"
 msgstr "acima do limite de contactos do plano"
 
@@ -6896,9 +6898,9 @@ msgstr "Filipinas"
 
 #: admin/src/Contacts/Contact_Actions.php:89
 #: app/src/pages/contacts/components/ContactDrawer.vue:248
-#: app/src/pages/contacts/components/ContactFormModal.vue:52
+#: app/src/pages/contacts/components/ContactFormModal.vue:53
 #: app/src/pages/contacts/components/FormRuleEditor.vue:68
-#: app/src/pages/contacts/components/ImportModal.vue:67
+#: app/src/pages/contacts/components/ImportModal.vue:68
 #: app/src/pages/contacts/labels.ts:152
 #: app/src/pages/contacts/tabs/ContactsTab.vue:283
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:138
@@ -6935,23 +6937,23 @@ msgstr "Números de telefone já validados e disponíveis para uso em fluxos."
 msgid "Phone numbers, contacts or customer data"
 msgstr "Números de telefone, contactos ou dados de clientes"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:52
+#: app/src/pages/contacts/components/ContactFormModal.vue:53
 msgid "Phone with country code"
 msgstr "Telefone com código de país"
 
 #: admin/src/Admin/Settings/Registry.php:193
 #: admin/src/Admin/Settings/Registry.php:331
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
-#: app/src/pages/settings/SettingsPage.vue:384
-#: app/src/pages/settings/SettingsPage.vue:390
-#: app/src/pages/settings/SettingsPage.vue:395
-#: app/src/pages/settings/SettingsPage.vue:415
-#: app/src/pages/settings/SettingsPage.vue:423
-#: app/src/pages/settings/SettingsPage.vue:429
-#: app/src/pages/settings/SettingsPage.vue:502
-#: app/src/pages/settings/SettingsPage.vue:504
-#: app/src/pages/settings/SettingsPage.vue:532
-#: app/src/pages/settings/SettingsPage.vue:537
+#: app/src/pages/settings/SettingsPage.vue:391
+#: app/src/pages/settings/SettingsPage.vue:397
+#: app/src/pages/settings/SettingsPage.vue:402
+#: app/src/pages/settings/SettingsPage.vue:422
+#: app/src/pages/settings/SettingsPage.vue:430
+#: app/src/pages/settings/SettingsPage.vue:436
+#: app/src/pages/settings/SettingsPage.vue:509
+#: app/src/pages/settings/SettingsPage.vue:511
+#: app/src/pages/settings/SettingsPage.vue:539
+#: app/src/pages/settings/SettingsPage.vue:544
 msgid "Phones"
 msgstr "Telefones"
 
@@ -6967,7 +6969,7 @@ msgstr "Versão PHP"
 msgid "Pick a color"
 msgstr "Escolha uma cor"
 
-#: app/src/pages/contacts/components/ImportModal.vue:253
+#: app/src/pages/contacts/components/ImportModal.vue:254
 msgid ""
 "Pick a CSV file with a header line and one contact per line. Every contact "
 "needs a phone number; a number without the country code is read in the "
@@ -7005,7 +7007,7 @@ msgstr "Escolha o tom %s"
 msgid "Pick tags…"
 msgstr "Escolha etiquetas…"
 
-#: app/src/pages/contacts/components/ImportModal.vue:284
+#: app/src/pages/contacts/components/ImportModal.vue:285
 msgid "Pick the column that holds the phone number."
 msgstr "Escolha a coluna que contém o número de telefone."
 
@@ -7132,7 +7134,7 @@ msgstr "A pesquisa de produtos não está disponível."
 msgid "Product SKU"
 msgstr "SKU do produto"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:355
+#: admin/src/Cloud_Sync/Cloud_Sync.php:378
 msgid ""
 "Products, quantities and categories — what \"bought coffee\" audiences and "
 "cross-sell flows need."
@@ -7307,7 +7309,7 @@ msgstr "Atualizando conexão"
 msgid "Refund amount"
 msgstr "Valor do reembolso"
 
-#: app/src/pages/contacts/components/ImportModal.vue:167
+#: app/src/pages/contacts/components/ImportModal.vue:168
 msgid "refused"
 msgstr "recusou"
 
@@ -7339,7 +7341,7 @@ msgstr "Lembrar-me"
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:169
 #: app/src/components/settings/SchemaFieldRenderer.vue:333
-#: app/src/pages/contacts/components/FilterRuleRow.vue:164
+#: app/src/pages/contacts/components/FilterRuleRow.vue:168
 #: app/src/pages/contacts/tabs/SourcesTab.vue:291
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:187
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:126
@@ -7371,17 +7373,17 @@ msgstr "Remover grupo"
 msgid "Remove key"
 msgstr "Remover chave"
 
-#: app/src/pages/settings/SettingsPage.vue:494
+#: app/src/pages/settings/SettingsPage.vue:501
 msgid "Remove sender"
 msgstr "Remover remetente"
 
-#: app/src/pages/contacts/components/BulkTagModal.vue:109
+#: app/src/pages/contacts/components/BulkTagModal.vue:123
 #: app/src/pages/contacts/components/TagChip.vue:27
 #: app/src/pages/contacts/tabs/ContactsTab.vue:249
 msgid "Remove tag"
 msgstr "Remover etiqueta"
 
-#: app/src/pages/settings/SettingsPage.vue:466
+#: app/src/pages/settings/SettingsPage.vue:473
 msgid "Remove variable"
 msgstr "Remover variável"
 
@@ -7452,8 +7454,8 @@ msgstr "Reenviar e-mail"
 msgid "Resend settings"
 msgstr "Configurações de reenviar"
 
-#: app/src/pages/settings/SettingsPage.vue:615
-#: app/src/pages/settings/SettingsPage.vue:618
+#: app/src/pages/settings/SettingsPage.vue:622
+#: app/src/pages/settings/SettingsPage.vue:625
 msgid "Reset"
 msgstr "Reiniciar"
 
@@ -7462,7 +7464,7 @@ msgid "Reset base shade override"
 msgstr "Reiniciar sobreposição de tom base"
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:33
-#: app/src/pages/settings/SettingsPage.vue:608
+#: app/src/pages/settings/SettingsPage.vue:615
 msgid "Reset settings"
 msgstr "Reiniciar definições"
 
@@ -7477,7 +7479,7 @@ msgstr "Código de resposta"
 #: app/src/components/workflows/WorkflowRowActions.vue:59
 #: app/src/composables/useWorkflows.ts:30
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:184
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:174
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:176
 msgid "Restore"
 msgstr "Restaurar"
 
@@ -7555,7 +7557,7 @@ msgid "Reuse the generated value in any later message with:"
 msgstr "Reutilizar o valor gerado em qualquer mensagem posterior com:"
 
 #: app/src/pages/builder/BuilderPage.vue:242
-#: app/src/pages/settings/SettingsPage.vue:80
+#: app/src/pages/settings/SettingsPage.vue:87
 msgid "Review"
 msgstr "Rever"
 
@@ -7666,7 +7668,7 @@ msgid "Save and run test"
 msgstr "Guardar e executar teste"
 
 #: app/src/pages/contacts/components/AudienceEditor.vue:240
-#: app/src/pages/contacts/components/ContactFormModal.vue:247
+#: app/src/pages/contacts/components/ContactFormModal.vue:248
 #: app/src/pages/contacts/components/FieldFormModal.vue:167
 #: app/src/pages/contacts/components/TagFormModal.vue:108
 #: app/src/pages/settings/components/SettingsActionBar.vue:23
@@ -7690,7 +7692,7 @@ msgstr "Salvar fontes"
 msgid "Save the workflow before activating it."
 msgstr "Guarde o fluxo de trabalho antes de o ativar."
 
-#: app/src/pages/settings/SettingsPage.vue:294
+#: app/src/pages/settings/SettingsPage.vue:301
 msgid "Saved"
 msgstr "Guardado"
 
@@ -7710,7 +7712,7 @@ msgstr "A guardar..."
 msgid "Saving…"
 msgstr "A guardar…"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:382
+#: admin/src/Cloud_Sync/Cloud_Sync.php:405
 msgid ""
 "Say what the customer agrees to receive, and on which channel. Leave it "
 "empty to use the default text."
@@ -7744,7 +7746,7 @@ msgstr "Agendador"
 
 #: app/src/components/base/BaseSearchInput.vue:16
 #: app/src/pages/contacts/audienceFilter.ts:215
-#: app/src/pages/contacts/components/FilterRuleRow.vue:44
+#: app/src/pages/contacts/components/FilterRuleRow.vue:45
 msgid "Search"
 msgstr "Pesquisar"
 
@@ -7875,7 +7877,7 @@ msgstr "Veja exatamente o que seria enviado"
 msgid "See options"
 msgstr "Ver opções"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:213
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:215
 msgid "See the contacts with this tag"
 msgstr "Ver os contactos com esta etiqueta"
 
@@ -8087,7 +8089,7 @@ msgstr ""
 msgid "Send an e-mail notification through Resend."
 msgstr "Enviar uma notificação por e-mail através do Resend."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:360
+#: admin/src/Cloud_Sync/Cloud_Sync.php:383
 msgid "Send billing and shipping addresses"
 msgstr "Enviar endereços de faturação e entrega"
 
@@ -8146,7 +8148,7 @@ msgstr "Enviar mensagem de teste"
 msgid "Send text message"
 msgstr "Enviar mensagem de texto"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:354
+#: admin/src/Cloud_Sync/Cloud_Sync.php:377
 #: app/src/pages/contacts/tabs/SourcesTab.vue:254
 msgid "Send the items of each order"
 msgstr "Enviar os itens de cada pedido"
@@ -8163,7 +8165,8 @@ msgstr ""
 msgid "Send them"
 msgstr "Enviá-los"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:289
+#: admin/src/Cloud_Sync/Cloud_Sync.php:297
+#: admin/src/Cloud_Sync/Cloud_Sync.php:302
 msgid ""
 "Send this site's customers and events to your Joinotify account, so its "
 "flows, audiences and campaigns work with your orders, sign-ups and carts."
@@ -8210,7 +8213,7 @@ msgstr "Nome do remetente"
 msgid "Sender phone"
 msgstr "Telefone do remetente"
 
-#: app/src/pages/settings/SettingsPage.vue:502
+#: app/src/pages/settings/SettingsPage.vue:509
 msgid "Sender removed."
 msgstr "Remetente removido."
 
@@ -8314,15 +8317,15 @@ msgstr "Configurar Joinotify"
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:287
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/settings/SettingsPage.vue:682
+#: app/src/pages/settings/SettingsPage.vue:713
 msgid "Settings"
 msgstr "Configurações"
 
-#: app/src/pages/settings/SettingsPage.vue:331
+#: app/src/pages/settings/SettingsPage.vue:338
 msgid "Settings exported."
 msgstr "Configurações exportadas."
 
-#: app/src/pages/settings/SettingsPage.vue:294
+#: app/src/pages/settings/SettingsPage.vue:301
 msgid "Settings have been saved."
 msgstr "As configurações foram guardadas."
 
@@ -8330,7 +8333,7 @@ msgstr "As configurações foram guardadas."
 msgid "Settings imported successfully."
 msgstr "Configurações importadas com sucesso."
 
-#: app/src/pages/settings/SettingsPage.vue:359
+#: app/src/pages/settings/SettingsPage.vue:366
 msgid "Settings imported."
 msgstr "Configurações importadas."
 
@@ -8383,7 +8386,7 @@ msgstr "Curto"
 msgid "Show all"
 msgstr "Mostrar tudo"
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:141
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:143
 msgid "Show archived fields (%d)"
 msgstr "Mostrar campos arquivados (%d)"
 
@@ -8407,7 +8410,7 @@ msgstr "Sierra Leão"
 msgid "Sign in"
 msgstr "Iniciar sessão"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:337
+#: admin/src/Cloud_Sync/Cloud_Sync.php:360
 msgid "Sign-ups and profile updates of users who have a phone number."
 msgstr ""
 "Inscrições e atualizações de perfil de utilizadores que têm um número de "
@@ -8441,7 +8444,7 @@ msgstr "Saltar configuração por agora"
 msgid "Skip this step"
 msgstr "Saltar este passo"
 
-#: app/src/pages/contacts/components/ImportModal.vue:336
+#: app/src/pages/contacts/components/ImportModal.vue:337
 msgid "Skipped"
 msgstr "Ignorado"
 
@@ -8718,7 +8721,7 @@ msgstr "Estado do sistema:"
 
 #: app/src/pages/contacts/audienceFilter.ts:210
 #: app/src/pages/contacts/components/BulkTagModal.vue:87
-#: app/src/pages/contacts/components/FilterRuleRow.vue:42
+#: app/src/pages/contacts/components/FilterRuleRow.vue:43
 #: app/src/pages/contacts/components/TagFormModal.vue:99
 #: app/src/pages/contacts/tabs/ContactsTab.vue:181
 msgid "Tag"
@@ -8748,7 +8751,7 @@ msgstr "Etiqueta criada."
 msgid "Tag erased."
 msgstr "Etiqueta apagada."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:366
+#: admin/src/Cloud_Sync/Cloud_Sync.php:389
 msgid "Tag for contacts from this site"
 msgstr "Tag para contactos deste site"
 
@@ -8786,19 +8789,19 @@ msgstr "tag1, tag2"
 
 #: app/src/pages/contacts/components/BulkTagModal.vue:63
 #: app/src/pages/contacts/components/ContactDrawer.vue:281
-#: app/src/pages/contacts/components/ContactFormModal.vue:195
+#: app/src/pages/contacts/components/ContactFormModal.vue:196
 #: app/src/pages/contacts/components/TagFormModal.vue:55
 #: app/src/pages/contacts/tabs/ContactsTab.vue:284
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:110
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:195
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:111
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:197
 msgid "Tags"
 msgstr "Tags"
 
-#: app/src/pages/contacts/components/ImportModal.vue:73
+#: app/src/pages/contacts/components/ImportModal.vue:74
 msgid "Tags (separated by commas)"
 msgstr "Tags (separadas por vírgulas)"
 
-#: app/src/pages/contacts/components/ImportModal.vue:295
+#: app/src/pages/contacts/components/ImportModal.vue:296
 msgid "Tags for every imported contact"
 msgstr "Tags para cada contacto importado"
 
@@ -8915,16 +8918,16 @@ msgid "Thailand"
 msgstr "Tailândia"
 
 #: app/src/pages/builder/BuilderPage.vue:242
-#: app/src/pages/settings/SettingsPage.vue:80
+#: app/src/pages/settings/SettingsPage.vue:87
 msgid "Thank you for supporting Joinotify!"
 msgstr "Obrigado por apoiar o Joinotify!"
 
-#: app/src/pages/contacts/components/BulkTagModal.vue:98
+#: app/src/pages/contacts/components/BulkTagModal.vue:112
 msgid "The %d contact matching the current filters"
 msgid_plural "All %d contacts matching the current filters"
 msgstr[0] "O %d contacto que corresponde aos filtros atuais"
 
-#: app/src/pages/contacts/components/BulkTagModal.vue:94
+#: app/src/pages/contacts/components/BulkTagModal.vue:102
 msgid "The %d selected contact"
 msgid_plural "The %d selected contacts"
 msgstr[0] "O %d contacto selecionado"
@@ -9038,7 +9041,7 @@ msgstr "O texto da caixa de seleção; o seu rótulo é utilizado quando está v
 msgid "The code you entered is invalid or has expired."
 msgstr "O código que introduziu é inválido ou expirou."
 
-#: app/src/pages/settings/SettingsPage.vue:347
+#: app/src/pages/settings/SettingsPage.vue:354
 msgid ""
 "The configuration in the file will be merged into your current settings. "
 "This cannot be undone."
@@ -9054,7 +9057,8 @@ msgstr "A resposta da conexão estava incompleta. Inicie a conexão novamente."
 msgid "The connection to Joinotify was lost"
 msgstr "A conexão com o Joinotify foi perdida"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:217
+#: app/src/pages/contacts/components/ContactFormModal.vue:216
+#: app/src/pages/contacts/components/ContactFormModal.vue:218
 msgid "The contact agreed to receive marketing messages"
 msgstr "O contacto concordou em receber mensagens de marketing"
 
@@ -9089,7 +9093,7 @@ msgstr ""
 "sem o telefone, e os destinatários da campanha são anonimizados. Este é o "
 "pedido de eliminação da LGPD e GDPR e não pode ser desfeito."
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:197
+#: app/src/pages/contacts/components/ContactFormModal.vue:198
 msgid "The contact keeps exactly the tags listed here."
 msgstr "O contacto mantém exatamente as etiquetas listadas aqui."
 
@@ -9117,7 +9121,7 @@ msgstr "O conteúdo dos seus fluxos de trabalho"
 msgid "The coupon already exists."
 msgstr "O cupão já existe."
 
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:134
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:135
 msgid ""
 "The data your contacts carry beyond name, phone and e-mail: city, plan, "
 "birthday…"
@@ -9127,7 +9131,7 @@ msgstr ""
 
 #: admin/src/Rest/Debug_Download.php:43
 #: admin/src/Rest/Debug_Logs.php:61
-#: app/src/pages/settings/SettingsPage.vue:557
+#: app/src/pages/settings/SettingsPage.vue:564
 msgid "The debug log is empty."
 msgstr "O registo de depuração está vazio."
 
@@ -9150,7 +9154,7 @@ msgstr ""
 msgid "The file does not contain any settings to import."
 msgstr "O arquivo não contém nenhuma configuração para importar."
 
-#: app/src/pages/contacts/components/ImportModal.vue:114
+#: app/src/pages/contacts/components/ImportModal.vue:115
 msgid "The file needs a header line and at least one contact."
 msgstr "O ficheiro precisa de uma linha de cabeçalho e pelo menos um contacto."
 
@@ -9503,7 +9507,8 @@ msgstr "O gatilho do fluxo de trabalho não está configurado."
 msgid "There are required settings not configured"
 msgstr "Existem definições obrigatórias não configuradas"
 
-#: app/src/pages/contacts/components/ImportModal.vue:304
+#: app/src/pages/contacts/components/ImportModal.vue:303
+#: app/src/pages/contacts/components/ImportModal.vue:305
 msgid "These contacts agreed to receive marketing messages"
 msgstr "Estes contactos concordaram em receber mensagens de marketing"
 
@@ -9596,7 +9601,7 @@ msgstr ""
 msgid "This feature will be released soon."
 msgstr "Esta funcionalidade será lançada em breve."
 
-#: app/src/pages/contacts/components/AttributeInput.vue:119
+#: app/src/pages/contacts/components/AttributeInput.vue:130
 msgid "This field has no options yet."
 msgstr "Este campo ainda não tem opções."
 
@@ -9860,6 +9865,7 @@ msgstr ""
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:200
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:146
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:160
+#: app/src/pages/contacts/components/AttributeInput.vue:148
 msgid "Time"
 msgstr "Tempo"
 
@@ -10343,7 +10349,7 @@ msgstr "Tuvalu"
 
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:105
 #: app/src/pages/contacts/components/FieldFormModal.vue:149
-#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:151
+#: app/src/pages/contacts/tabs/FieldsTagsTab.vue:153
 #: app/src/pages/history/components/HistoryDetailsModal.vue:35
 #: app/src/pages/history/HistoryPage.vue:375
 msgid "Type"
@@ -10359,7 +10365,7 @@ msgid "Type label"
 msgstr "Digite o rótulo"
 
 #: admin/src/Rest/Contacts_Save.php:55
-#: app/src/pages/contacts/components/ContactFormModal.vue:114
+#: app/src/pages/contacts/components/ContactFormModal.vue:115
 msgid "Type the phone number of the contact."
 msgstr "Digite o número de telefone do contacto."
 
@@ -10474,7 +10480,7 @@ msgstr "Fluxo de trabalho sem título"
 msgid "Up to three buttons. Titles are limited to 20 characters by WhatsApp."
 msgstr "Até três botões. Os títulos estão limitados a 20 caracteres pelo WhatsApp."
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:238
+#: app/src/pages/contacts/components/ContactFormModal.vue:239
 msgid "Update it with these data"
 msgstr "Atualize-o com estes dados"
 
@@ -10482,7 +10488,7 @@ msgstr "Atualize-o com estes dados"
 msgid "Update logs"
 msgstr "Registos de atualização"
 
-#: app/src/pages/contacts/components/ImportModal.vue:290
+#: app/src/pages/contacts/components/ImportModal.vue:291
 msgid "Update them (filled values replace, tags are added)"
 msgstr "Atualize-os (valores preenchidos substituem, tags são adicionadas)"
 
@@ -10490,12 +10496,12 @@ msgstr "Atualize-os (valores preenchidos substituem, tags são adicionadas)"
 msgid "Update variable"
 msgstr "Atualizar variável"
 
-#: app/src/pages/contacts/components/ImportModal.vue:335
+#: app/src/pages/contacts/components/ImportModal.vue:336
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:157
 msgid "Updated"
 msgstr "Atualizado"
 
-#: app/src/pages/contacts/components/ContactFormModal.vue:241
+#: app/src/pages/contacts/components/ContactFormModal.vue:242
 msgid ""
 "Updating replaces the tags of the existing contact and leaves its consent "
 "as it is."
@@ -10666,7 +10672,7 @@ msgstr "Nome da variável"
 msgid "Variable removed successfully."
 msgstr "Variável removida com sucesso."
 
-#: app/src/pages/settings/SettingsPage.vue:472
+#: app/src/pages/settings/SettingsPage.vue:479
 msgid "Variable removed."
 msgstr "Variável removida."
 
@@ -10674,7 +10680,7 @@ msgstr "Variável removida."
 msgid "Variable saved successfully."
 msgstr "Variável guardada com sucesso."
 
-#: app/src/pages/settings/SettingsPage.vue:456
+#: app/src/pages/settings/SettingsPage.vue:463
 msgid "Variable saved."
 msgstr "Variável guardada."
 
@@ -10863,6 +10869,10 @@ msgstr "Semanas"
 msgid "Western Sahara"
 msgstr "Sahara Ocidental"
 
+#: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:47
+msgid "What is sent"
+msgstr "O que é enviado"
+
 #: app/src/components/builder/BuilderAiGenerateModal.vue:70
 msgid "What should this workflow do?"
 msgstr "O que deve fazer este fluxo de trabalho?"
@@ -11007,7 +11017,7 @@ msgstr ""
 "país, o Joinotify completa-o com o país que escolher aqui. Números que já "
 "têm um código de país nunca são alterados."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:316
+#: admin/src/Cloud_Sync/Cloud_Sync.php:339
 msgid ""
 "When switched on, this site sends to Joinotify (api.joinotify.com): the "
 "name, e-mail and phone number of customers and of the users who register; "
@@ -11095,7 +11105,7 @@ msgstr "WooCommerce"
 msgid "WooCommerce is not active."
 msgstr "WooCommerce não está ativo."
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:330
+#: admin/src/Cloud_Sync/Cloud_Sync.php:353
 #: app/src/pages/contacts/tabs/SourcesTab.vue:51
 msgid "WooCommerce orders and customers"
 msgstr "Pedidos e clientes do WooCommerce"
@@ -11128,7 +11138,7 @@ msgstr ""
 msgid "WordPress Multisite"
 msgstr "WordPress Multisite"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:336
+#: admin/src/Cloud_Sync/Cloud_Sync.php:359
 #: app/src/pages/contacts/tabs/SourcesTab.vue:57
 msgid "WordPress users"
 msgstr "Utilizadores do WordPress"
@@ -11250,7 +11260,7 @@ msgstr "Fluxos de trabalho por página"
 msgid "WPForms"
 msgstr "WPForms"
 
-#: admin/src/Cloud_Sync/Cloud_Sync.php:343
+#: admin/src/Cloud_Sync/Cloud_Sync.php:366
 msgid ""
 "WPForms and Elementor Pro submissions that carry a phone number. Every "
 "field of the form is sent."
@@ -11306,9 +11316,9 @@ msgstr "Iémen"
 #: admin/src/Integrations/Elementor_Forms.php:166
 #: app/src/builder/actions/settings/ConditionSettings.vue:103
 #: app/src/builder/actions/utils/actionDescription.ts:182
-#: app/src/pages/contacts/components/AttributeInput.vue:36
+#: app/src/pages/contacts/components/AttributeInput.vue:39
 #: app/src/pages/contacts/components/ContactDrawer.vue:78
-#: app/src/pages/contacts/components/FilterRuleRow.vue:142
+#: app/src/pages/contacts/components/FilterRuleRow.vue:143
 msgid "Yes"
 msgstr "Sim"
 

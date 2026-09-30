@@ -1,10 +1,10 @@
 === Joinotify ===
 Contributors: meumouse
-Tags: whatsapp, automation, woocommerce, notifications, workflow, join, notify, joinotify, cloud api, meta, 
+Tags: whatsapp, automation, woocommerce, notifications, workflow, join, notify, joinotify, cloud api, meta, broadcast, audiences, contacts
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.4.2
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,28 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.5.0 =
+* New: Joinotify → Audiences & Contacts, a screen for the contact base of your Joinotify account. List, search, filter and export contacts; add them by hand or import a CSV file; edit, opt in, opt out, merge, export or erase a contact; and manage custom fields, tags, saved audiences and the suppression list. The base stays on Joinotify and the API key never reaches the browser. A key restricted to some numbers makes the screen read only.
+* New: Joinotify Cloud sync, off by default under Settings → General. Once switched on, it sends this site's customers and events to your Joinotify account: WooCommerce orders and subscriptions, new customers, WordPress sign-ups and profile changes, WPForms and Elementor forms, and Flexify Checkout leads and carts. It says what it sends before you turn it on, lets you leave out forms, carts, order items and full addresses, and tags every contact with the site's name or a tag of your choice.
+* New: the sync delivers in batches from a scheduled task, never during a checkout or a page load. A failed batch is tried again. A revoked key, a site removed from the panel or a copy of the site at another address pauses the sync instead of sending test orders to real customers. Its window shows what is waiting, sent or given up on and why it is paused, with a "Try again" button.
+* New: "Send existing customers" sends the users and guest buyers the store already has as contacts, once and in the background, without starting any flow.
+* New: an optional marketing consent checkbox, unticked by default, for the classic and block checkouts, the sign-up forms and My account. Consent is recorded on Joinotify with its evidence, and an opt-in or opt-out made on Joinotify updates the customer's preference on the site.
+* New: each source can add its own tags and send user and order meta into custom fields, and each WPForms or Elementor form can get a rule choosing its phone, e-mail, name, consent checkbox, tags and custom fields.
+* New: "Save contact" and "Tag contact" workflow actions, in a new Contacts tab of the action library, create or update the contact on Joinotify from any trigger. They need the Cloud sync switched on.
+* New: "Send webhook" workflow action, which posts the trigger's data or a JSON of your own to any public URL, with optional headers and an HMAC signature.
+* New: developers can send their own events to Joinotify flows with `joinotify_track( $name, $data, $contact )`.
+* New: WordPress's "Export Personal Data" and "Erase Personal Data" tools cover the sync's consent records and queued events, and erasing also asks Joinotify to erase the contacts this site sent.
+* New: after ten minutes of use, the settings screen and the builder ask administrators to rate Joinotify on WordPress.org. "Maybe later" hides the request for a week.
+* New: action settings declared with the `placeholder` component get the trigger's variable picker.
+* Changed: the admin screens and the OTP login form draw every icon with Boxicons, and builder steps that only named an icon now show it.
+* Changed: focused fields are outlined by a solid border in the primary color instead of a soft glow, so their text no longer moves.
+* Fixed: the strings of the Vue admin screens now reach translate.wordpress.org, and language packs load them for every part of those screens.
+* Fixed: the "New order" trigger never ran for orders placed with the WooCommerce checkout block.
+* Fixed: the WPForms PayPal Standard trigger raised PHP warnings and sent an empty entry id.
+* Fixed: the "Connect to Joinotify" button ended in "invalid code".
+* Fixed: a workflow step's description could run script in the builder when it came from an imported workflow, a template or an AI-generated flow.
+* Fixed: actions added with `joinotify_register_action()` lost their description in the action library.
+
 = 2.4.2 =
 * New: the workflows, message history and processing queue screens export to a JSON file. Export one row from its "Export" action, the rows you selected, or — in the history and the queue — everything matching the current filters. A single workflow downloads as the same file the builder exports, so it can be imported again; several download together in one file. The processing queue gained row selection for this. A history export stops at the 5,000 most recent records and tells you when it does.
 * New: the workflows, message history and processing queue tables have an "Items per page" selector with 10, 25, 50, 100 or 200 rows. Each screen remembers your choice, and changing it keeps the first visible row on screen instead of jumping back to page 1.
@@ -277,6 +299,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.5.0 =
+Recommended for every installation. Fixes the "Connect to Joinotify" button, the "New order" trigger on the checkout block and script running from a builder step's description. Adds Audiences & Contacts and the Joinotify Cloud sync, which stays off until you switch it on.
 
 = 2.4.2 =
 Recommended for sites that send WhatsApp templates: values with line breaks or prices no longer get a template refused. If a template uses `{{ wc_shipping_address }}` for the delivery address, switch it to `{{ wc_shipping_full_address }}` — the first has always returned the shipping cost.

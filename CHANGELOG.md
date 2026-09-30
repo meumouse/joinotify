@@ -8,6 +8,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-09-30
+
 ### Added
 
 - The settings screen and the workflow builder ask administrators to rate Joinotify on WordPress.org once the plugin has been in use for at least ten minutes. In the builder the request waits until no dialog, node settings drawer or action library is open. "Leave a review" and "I already did" end the request for that user, while "Maybe later" or the close button hides it for a week. A click outside the dialog does not dismiss it. Sites upgrading from an earlier version count their use from the setup wizard or their oldest workflow, and the delay, snooze length, link and visibility can be changed through `Joinotify/Admin/Review_Prompt/*` filters
@@ -565,7 +567,11 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.3.4...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/meumouse/joinotify/compare/v2.4.2...v2.5.0
+[2.4.2]: https://github.com/meumouse/joinotify/compare/v2.4.1...v2.4.2
+[2.4.1]: https://github.com/meumouse/joinotify/compare/v2.4.0...v2.4.1
+[2.4.0]: https://github.com/meumouse/joinotify/compare/v2.3.4...v2.4.0
 [2.3.4]: https://github.com/meumouse/joinotify/compare/v2.3.3...v2.3.4
 [2.3.3]: https://github.com/meumouse/joinotify/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/meumouse/joinotify/compare/v2.3.1...v2.3.2
