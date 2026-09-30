@@ -118,6 +118,11 @@ joinotify_register_action_description( 'my_app_send_sms', function( $data, $work
 });
 ```
 
+> A string `description` always stays in the catalog as the library text. For backward
+> compatibility, a closure (or array callable) passed as `description` is still taken as the canvas
+> builder and removed from the catalog entry — but then the library card has no text, so prefer the
+> separate call above.
+
 **Settings field components** (`settings_schema[].component`): `input`, `textarea`, `number`,
 `select` (with `options: [{label, value}]`), `date`, `time`, `code`, `switch`, plus nested `group`
 and `repeater`. Common keys: `key`, `label`, `component`, `required`, `placeholder`, `options`,

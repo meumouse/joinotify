@@ -71,9 +71,13 @@ class Extensions {
 	 * auto-wire the related filters and are stripped from the catalog entry:
 	 * - handler      (callable) Runtime handler. See register_action_handler().
 	 * - description  (callable) Canvas description builder. See register_action_description().
+	 *                           Only a closure, invokable object or array callable counts: a
+	 *                           string is always the action library text and stays in the entry,
+	 *                           even one that names a PHP function (is_callable( 'Sleep' ) is true).
 	 * - fill_sender  (bool)     Auto-fill the WhatsApp sender on template import.
 	 *
 	 * @since 1.4.7
+	 * @version 2.5.0
 	 * @param array $definition Action definition.
 	 * @param int   $priority   add_filter priority. Default 10.
 	 * @return void
@@ -87,7 +91,7 @@ class Extensions {
 
 		// Pull convenience keys out before exposing the definition to the catalog.
 		$handler = isset( $definition['handler'] ) && is_callable( $definition['handler'] ) ? $definition['handler'] : null;
-		$description = isset( $definition['description'] ) && is_callable( $definition['description'] ) ? $definition['description'] : null;
+		$description = isset( $definition['description'] ) && ! is_string( $definition['description'] ) && is_callable( $definition['description'] ) ? $definition['description'] : null;
 		$fill_sender = ! empty( $definition['fill_sender'] );
 
 		// Optional inline category: when a label is supplied, the action's category tab is
@@ -98,7 +102,12 @@ class Extensions {
 		$category_icon = isset( $definition['category_icon'] ) ? (string) $definition['category_icon'] : '';
 		$category_priority = isset( $definition['category_priority'] ) ? (int) $definition['category_priority'] : $priority;
 
-		unset( $definition['handler'], $definition['description'], $definition['fill_sender'], $definition['category_label'], $definition['category_icon'], $definition['category_priority'] );
+		unset( $definition['handler'], $definition['fill_sender'], $definition['category_label'], $definition['category_icon'], $definition['category_priority'] );
+
+		// A builder is not catalog data; the library text is, so only the former comes out.
+		if ( $description ) {
+			unset( $definition['description'] );
+		}
 
 		add_filter( 'Joinotify/Builder/Actions', function( $actions ) use ( $definition ) {
 			$actions[] = $definition;

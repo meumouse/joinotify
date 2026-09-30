@@ -33,6 +33,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 - The WPForms PayPal Standard trigger no longer reads an entry that hook does not provide, which raised PHP warnings and sent an empty entry id
 - The "Connect to Joinotify" button no longer ends in "invalid code": the plugin sent the site address under a name the Joinotify API does not read when trading the connection code for a key
 - A workflow step's description can no longer run script in the builder: HTML hidden in an imported workflow, a template or an AI-generated flow now shows as text, and links in it only open web or e-mail addresses
+- Actions added with `joinotify_register_action()` show their description in the action library, which dropped it before. A closure passed as `description` is still taken as the canvas description, and a text is never called as one, even a single word that names a PHP function
 
 ## [2.4.2] - 2026-09-11
 
