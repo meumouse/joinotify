@@ -35,5 +35,11 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\Contacts_Tag_Apply',
 		'\MeuMouse\Joinotify\Rest\Contacts_Sources',
 		'\MeuMouse\Joinotify\Rest\Contacts_Sources_Save',
+		'\MeuMouse\Joinotify\Rest\Audiences_List',
+		'\MeuMouse\Joinotify\Rest\Audiences_Detail',
+		'\MeuMouse\Joinotify\Rest\Audiences_Save',
+		'\MeuMouse\Joinotify\Rest\Audiences_Delete',
+		'\MeuMouse\Joinotify\Rest\Audiences_Schema',
+		'\MeuMouse\Joinotify\Rest\Audiences_Preview',
 	);
 }

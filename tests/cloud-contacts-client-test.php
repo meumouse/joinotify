@@ -214,6 +214,45 @@ check( 'an emptied description is cleared', array_key_exists( 'description', $ta
 check( 'a palette color is lowercased', 'green' === $tag['color'] );
 check( 'a hex color is not a palette name', null === Cloud_Contacts::tag_payload( array( 'color' => '#22c55e' ) )['color'] );
 
+echo "\nCloud_Contacts::sanitize_filter / audience_payload\n";
+
+$tree = array(
+	'op' => 'and',
+	'rules' => array(
+		array( 'type' => 'consent', 'op' => 'is', 'value' => 'opted_in' ),
+		array( 'type' => 'field', 'key' => 'cidade', 'op' => 'eq', 'value' => '<b>Curitiba</b>', 'bad-key!' => 1 ),
+		array( 'op' => 'or', 'rules' => array(
+			array( 'type' => 'tag', 'op' => 'has', 'value' => array( 't1', array( 'nested' ) ) ),
+			array( 'type' => 'engagement', 'op' => 'inbound_within_days', 'value' => 30 ),
+		) ),
+	),
+);
+$clean = Cloud_Contacts::sanitize_filter( $tree );
+check( 'a valid tree survives', 'and' === $clean['op'] && 3 === count( $clean['rules'] ) );
+check( 'string values are plain text', 'Curitiba' === $clean['rules'][1]['value'] );
+check( 'malformed keys inside a condition are dropped', ! isset( $clean['rules'][1]['bad-key!'] ) );
+check( 'a nested group keeps its operator', 'or' === $clean['rules'][2]['op'] );
+check( 'lists keep only scalars', array( 't1' ) === $clean['rules'][2]['rules'][0]['value'] );
+check( 'condition types the screen does not draw are kept as they are', 30 === $clean['rules'][2]['rules'][1]['value'] );
+
+check( 'an unknown group operator is refused', null === Cloud_Contacts::sanitize_filter( array( 'op' => 'xor', 'rules' => array() ) ) );
+check( 'a condition without a type is refused', null === Cloud_Contacts::sanitize_filter( array( 'op' => 'and', 'rules' => array( array( 'op' => 'eq' ) ) ) ) );
+
+$deep = array( 'op' => 'and', 'rules' => array( array( 'op' => 'or', 'rules' => array( array( 'op' => 'and', 'rules' => array( array( 'op' => 'or', 'rules' => array() ) ) ) ) ) ) );
+check( 'a fourth level of groups is refused', null === Cloud_Contacts::sanitize_filter( $deep ) );
+
+$many = array( 'op' => 'and', 'rules' => array_fill( 0, 31, array( 'type' => 'search', 'value' => 'x' ) ) );
+check( 'more than 30 conditions are refused', null === Cloud_Contacts::sanitize_filter( $many ) );
+$many['rules'] = array_slice( $many['rules'], 0, 30 );
+check( '30 conditions are fine', null !== Cloud_Contacts::sanitize_filter( $many ) );
+
+$audience = Cloud_Contacts::audience_payload( array( 'name' => ' Clientes de Curitiba ', 'description' => '', 'filter' => $tree, 'archived' => true ), 'create' );
+check( 'an audience keeps its trimmed name and clean filter', 'Clientes de Curitiba' === $audience['name'] && $clean === $audience['filter'] );
+check( 'an emptied description is cleared', null === $audience['description'] );
+check( 'archiving is not part of a create', ! isset( $audience['archived'] ) );
+check( 'an edit can archive', true === Cloud_Contacts::audience_payload( array( 'archived' => true ), 'update' )['archived'] );
+check( 'an invalid filter is left out of the payload', ! isset( Cloud_Contacts::audience_payload( array( 'name' => 'x', 'filter' => $deep ) )['filter'] ) );
+
 echo "\n{$assertions} assertions, {$failures} failures\n";
 exit( $failures > 0 ? 1 : 0 );
 

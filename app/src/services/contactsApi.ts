@@ -296,6 +296,72 @@ export function createContactsApiClient(bootstrap: any) {
     applyTag(payload: Record<string, unknown>) {
       return post('/admin/contacts/tags/apply', payload);
     },
+
+    /**
+     * Lists saved audiences.
+     *
+     * @since 2.5.0
+     * @param {Object} params `page`, `per_page`, `search`, `archived`.
+     * @returns {Promise<{items: Array, pagination: Object}>} One page of audiences.
+     */
+    listAudiences(params: Record<string, unknown>) {
+      return get('/admin/audiences', params);
+    },
+
+    /**
+     * Loads one audience, recounted now.
+     *
+     * @since 2.5.0
+     * @param {string} id Audience id.
+     * @returns {Promise<{audience: Object}>} The audience.
+     */
+    audience(id: string) {
+      return get('/admin/audiences/detail', { id });
+    },
+
+    /**
+     * Creates an audience, or changes one when `id` is given.
+     *
+     * @since 2.5.0
+     * @param {string} id Audience id, or an empty string to create.
+     * @param {Object} audience `{ name, description, filter, archived? }`.
+     * @returns {Promise<{message: string, audience: Object}>} The saved audience.
+     */
+    saveAudience(id: string, audience: Record<string, unknown>) {
+      return post('/admin/audiences/save', { id, audience });
+    },
+
+    /**
+     * Erases an audience.
+     *
+     * @since 2.5.0
+     * @param {string} id Audience id.
+     * @returns {Promise<{message: string}>} The result.
+     */
+    deleteAudience(id: string) {
+      return post('/admin/audiences/delete', { id });
+    },
+
+    /**
+     * Loads the native fields and operators an audience filter accepts.
+     *
+     * @since 2.5.0
+     * @returns {Promise<{schema: {nativeFields: string[], operators: Record<string, string[]>}}>} The schema.
+     */
+    audienceSchema() {
+      return get('/admin/audiences/schema');
+    },
+
+    /**
+     * Counts who a filter selects, with up to ten sample contacts.
+     *
+     * @since 2.5.0
+     * @param {Object} filter Filter tree.
+     * @returns {Promise<{preview: Object}>} Counts by consent and a sample.
+     */
+    previewAudience(filter: Record<string, unknown>) {
+      return post('/admin/audiences/preview', { filter });
+    },
   };
 }
 

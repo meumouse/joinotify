@@ -19,6 +19,7 @@ import ToastStack from '../../components/toasts/ToastStack.vue';
 import { createDefinitions } from './useDefinitions';
 import ConnectionState from './components/ConnectionState.vue';
 import ContactsTab from './tabs/ContactsTab.vue';
+import AudiencesTab from './tabs/AudiencesTab.vue';
 import FieldsTagsTab from './tabs/FieldsTagsTab.vue';
 import SourcesTab from './tabs/SourcesTab.vue';
 import { createApiClient } from '../../utils/api';
@@ -43,6 +44,7 @@ const canWrite = computed(() => mode.value === 'full');
  */
 const tabs = [
   { id: 'contacts', label: __('Contacts', textDomain), component: ContactsTab },
+  { id: 'audiences', label: __('Audiences', textDomain), component: AudiencesTab },
   { id: 'fields', label: __('Fields & tags', textDomain), component: FieldsTagsTab },
   { id: 'sources', label: __('Sources', textDomain), component: SourcesTab },
 ];

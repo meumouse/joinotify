@@ -338,6 +338,8 @@ class Cloud_Contacts {
 				return __( 'A contact with this phone number already exists.', 'joinotify' );
 			case 'contact_limit_reached':
 				return __( 'Your plan reached its contact limit. Upgrade the plan to add more contacts.', 'joinotify' );
+			case 'audience_exists':
+				return __( 'An audience with this name already exists.', 'joinotify' );
 			case 'contact_field_exists':
 				return __( 'A custom field with this key already exists, possibly archived.', 'joinotify' );
 			case 'contact_field_limit_reached':
@@ -1217,6 +1219,246 @@ class Cloud_Contacts {
 		}
 
 		return $payload;
+	}
+
+
+	// ── Audiences ───────────────────────────────────────────────────────────────────────────
+
+
+	/**
+	 * Deepest nesting of groups an audience filter may have.
+	 *
+	 * @since 2.5.0
+	 * @var int
+	 */
+	const FILTER_MAX_DEPTH = 3;
+
+	/**
+	 * Most conditions an audience filter may hold, all groups together.
+	 *
+	 * @since 2.5.0
+	 * @var int
+	 */
+	const FILTER_MAX_RULES = 30;
+
+
+	/**
+	 * List saved audiences, with their last count (not recounted).
+	 *
+	 * @since 2.5.0
+	 * @param array $args `page`, `per_page`, `search`, `archived`.
+	 * @return array Envelope.
+	 */
+	public static function list_audiences( $args = array() ) {
+		$query = self::page_window( $args['page'] ?? 1, $args['per_page'] ?? 25 );
+		$search = self::text( $args['search'] ?? '', 80 );
+
+		if ( '' !== $search ) {
+			$query['q'] = $search;
+		}
+
+		if ( ! empty( $args['archived'] ) ) {
+			$query['archived'] = true;
+		}
+
+		return self::call( 'GET', '/audiences', $query );
+	}
+
+
+	/**
+	 * Read an audience, recounted now.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Audience id.
+	 * @return array Envelope.
+	 */
+	public static function get_audience( $id ) {
+		return self::call( 'GET', '/audiences/' . $id );
+	}
+
+
+	/**
+	 * Create an audience.
+	 *
+	 * @since 2.5.0
+	 * @param array $data Payload built by audience_payload().
+	 * @return array Envelope.
+	 */
+	public static function create_audience( $data ) {
+		return self::call( 'POST', '/audiences', array(), $data );
+	}
+
+
+	/**
+	 * Change an audience: name, description, filter, or archive it.
+	 *
+	 * @since 2.5.0
+	 * @param string $id   Audience id.
+	 * @param array  $data Payload built by audience_payload().
+	 * @return array Envelope.
+	 */
+	public static function update_audience( $id, $data ) {
+		return self::call( 'PATCH', '/audiences/' . $id, array(), (object) $data );
+	}
+
+
+	/**
+	 * Erase an audience. A draft campaign that used it fails its check afterwards.
+	 *
+	 * @since 2.5.0
+	 * @param string $id Audience id.
+	 * @return array Envelope.
+	 */
+	public static function delete_audience( $id ) {
+		return self::call( 'DELETE', '/audiences/' . $id );
+	}
+
+
+	/**
+	 * The native fields a filter accepts and the operators of each field type.
+	 *
+	 * @since 2.5.0
+	 * @param bool $force Skip the cache.
+	 * @return array Envelope.
+	 */
+	public static function audience_schema( $force = false ) {
+		return self::cached( 'schema', function () {
+			return self::call( 'GET', '/audiences/schema' );
+		}, $force );
+	}
+
+
+	/**
+	 * Count who a filter selects, by consent, with up to ten sample contacts. Saves nothing.
+	 *
+	 * @since 2.5.0
+	 * @param array $filter Filter built by sanitize_filter().
+	 * @return array Envelope.
+	 */
+	public static function preview_audience( $filter ) {
+		return self::call( 'POST', '/audiences/preview', array(), array( 'filter' => $filter ) );
+	}
+
+
+	/**
+	 * Keep only what an audience write may carry.
+	 *
+	 * @since 2.5.0
+	 * @param array  $input Values typed on the screen.
+	 * @param string $mode  'create' or 'update'.
+	 * @return array The payload; `filter` is missing when the one sent is not valid.
+	 */
+	public static function audience_payload( $input, $mode = 'create' ) {
+		$input = is_array( $input ) ? $input : array();
+		$payload = array();
+
+		if ( isset( $input['name'] ) ) {
+			$name = self::text( $input['name'], 80 );
+
+			if ( '' !== $name ) {
+				$payload['name'] = $name;
+			}
+		}
+
+		if ( array_key_exists( 'description', $input ) ) {
+			$description = self::text( $input['description'], 300 );
+			$payload['description'] = '' === $description ? null : $description;
+		}
+
+		if ( isset( $input['filter'] ) ) {
+			$filter = self::sanitize_filter( $input['filter'] );
+
+			if ( null !== $filter ) {
+				$payload['filter'] = $filter;
+			}
+		}
+
+		if ( 'update' === $mode && isset( $input['archived'] ) && is_bool( $input['archived'] ) ) {
+			$payload['archived'] = $input['archived'];
+		}
+
+		return $payload;
+	}
+
+
+	/**
+	 * Validate an audience filter tree: `and`/`or` groups up to three levels deep and 30 conditions
+	 * in all. Conditions keep their own keys (the platform defines them per `type`), with plain
+	 * values only. Pure, for the harness.
+	 *
+	 * @since 2.5.0
+	 * @param mixed $filter Raw tree.
+	 * @return array|null The clean tree, or null when it breaks a rule.
+	 */
+	public static function sanitize_filter( $filter ) {
+		$count = 0;
+		$clean = self::sanitize_group( $filter, 1, $count );
+
+		return null !== $clean && $count <= self::FILTER_MAX_RULES ? $clean : null;
+	}
+
+
+	/**
+	 * Validate one group of a filter tree.
+	 *
+	 * @since 2.5.0
+	 * @param mixed $group Raw group.
+	 * @param int   $depth Its level, from 1.
+	 * @param int   $count Conditions seen so far.
+	 * @return array|null
+	 */
+	private static function sanitize_group( $group, $depth, &$count ) {
+		if ( ! is_array( $group ) || $depth > self::FILTER_MAX_DEPTH || ! isset( $group['op'], $group['rules'] ) || ! in_array( $group['op'], array( 'and', 'or' ), true ) || ! is_array( $group['rules'] ) ) {
+			return null;
+		}
+
+		$rules = array();
+
+		foreach ( $group['rules'] as $rule ) {
+			if ( is_array( $rule ) && isset( $rule['rules'] ) && ! isset( $rule['type'] ) ) {
+				$nested = self::sanitize_group( $rule, $depth + 1, $count );
+
+				if ( null === $nested ) {
+					return null;
+				}
+
+				$rules[] = $nested;
+				continue;
+			}
+
+			if ( ! is_array( $rule ) || empty( $rule['type'] ) || ! is_string( $rule['type'] ) || 1 !== preg_match( '/^[a-z_]{1,40}$/', $rule['type'] ) ) {
+				return null;
+			}
+
+			$clean = array();
+
+			foreach ( $rule as $key => $value ) {
+				if ( ! is_string( $key ) || 1 !== preg_match( '/^[A-Za-z_]{1,40}$/', $key ) ) {
+					continue;
+				}
+
+				if ( is_array( $value ) ) {
+					$list = array();
+
+					foreach ( $value as $item ) {
+						if ( is_scalar( $item ) ) {
+							$list[] = is_string( $item ) ? self::text( $item, 200 ) : $item;
+						}
+					}
+
+					$clean[ $key ] = $list;
+				} elseif ( is_string( $value ) ) {
+					$clean[ $key ] = self::text( $value, 200 );
+				} elseif ( is_scalar( $value ) || null === $value ) {
+					$clean[ $key ] = $value;
+				}
+			}
+
+			$rules[] = $clean;
+			$count++;
+		}
+
+		return array( 'op' => $group['op'], 'rules' => $rules );
 	}
 
 
