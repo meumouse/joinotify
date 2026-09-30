@@ -13,6 +13,9 @@
       "5541987111527": [
         "5541987111527"
       ],
+      "Actions": [
+        "Ações"
+      ],
       "All": [
         "Todos"
       ],
@@ -84,6 +87,12 @@
       ],
       "Every history record will be permanently removed. This action cannot be undone.": [
         "Cada registo de histórico será removido permanentemente. Esta ação não pode ser desfeita."
+      ],
+      "Export": [
+        "Exportar"
+      ],
+      "Exporting…": [
+        "A exportar…"
       ],
       "Failed": [
         "Falhou"

@@ -39,7 +39,7 @@ msgstr ""
 msgid "%1$s %2$s: %3$s"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:256
+#: admin/src/Admin/Queue/Registry.php:282
 #. translators: 1: relative offset (e.g. "1 day(s)"), 2: time of day
 msgid "%1$s at %2$s"
 msgstr ""
@@ -184,9 +184,9 @@ msgid ""
 "hosting support to upgrade."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:88
-#: app/src/composables/useProcessingQueue.ts:61
-#: app/src/composables/useWorkflows.ts:192
+#: app/src/composables/useMessageHistory.ts:90
+#: app/src/composables/useProcessingQueue.ts:84
+#: app/src/composables/useWorkflows.ts:199
 msgid "0 results"
 msgstr ""
 
@@ -238,7 +238,7 @@ msgid "5 minutes"
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:1410
-#: app/src/pages/history/HistoryPage.vue:265
+#: app/src/pages/history/HistoryPage.vue:284
 #: app/src/pages/settings/components/cards/PhoneActions.vue:126
 #: app/src/pages/settings/components/cards/PhoneActions.vue:212
 msgid "5541987111527"
@@ -319,7 +319,8 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:260
+#: app/src/pages/history/HistoryPage.vue:380
+#: app/src/pages/queue/QueuePage.vue:303
 msgid "Actions"
 msgstr ""
 
@@ -344,8 +345,8 @@ msgid "Activate your license before connecting."
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:142
-#: app/src/components/workflows/WorkflowTableRow.vue:35
-#: app/src/composables/useWorkflows.ts:180
+#: app/src/components/workflows/WorkflowTableRow.vue:37
+#: app/src/composables/useWorkflows.ts:187
 msgid "Active"
 msgstr ""
 
@@ -417,7 +418,7 @@ msgstr ""
 #: admin/src/Admin/Menu.php:67
 #: admin/src/Admin/Menu.php:68
 #: app/src/components/workflows/EmptyState.vue:17
-#: app/src/pages/workflows/WorkflowsPage.vue:77
+#: app/src/pages/workflows/WorkflowsPage.vue:82
 msgid "Add new workflow"
 msgstr ""
 
@@ -532,8 +533,8 @@ msgstr ""
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:60
-#: app/src/composables/useMessageHistory.ts:55
-#: app/src/composables/useProcessingQueue.ts:52
+#: app/src/composables/useMessageHistory.ts:57
+#: app/src/composables/useProcessingQueue.ts:59
 #: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:142
 msgid "All"
 msgstr ""
@@ -562,7 +563,7 @@ msgstr ""
 msgid "All set"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:227
+#: admin/src/Admin/History/Registry.php:347
 msgid "All sources"
 msgstr ""
 
@@ -572,7 +573,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:58
 #: admin/src/Admin/Menu.php:59
-#: admin/src/Admin/Queue/Registry.php:390
+#: admin/src/Admin/Queue/Registry.php:490
 #: app/src/components/builder/TemplateCategorySelect.vue:32
 msgid "All workflows"
 msgstr ""
@@ -724,7 +725,7 @@ msgstr ""
 msgid "Any status"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:232
+#: admin/src/Admin/History/Registry.php:352
 msgid "API"
 msgstr ""
 
@@ -827,17 +828,17 @@ msgstr ""
 msgid "Attachments"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:35
+#: app/src/pages/history/components/HistoryDetailsModal.vue:37
 msgid "Attempts"
 msgstr ""
 
 #: admin/src/Validations/Media_Types.php:41
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:35
-#: app/src/pages/history/HistoryPage.vue:86
+#: app/src/pages/history/HistoryPage.vue:93
 msgid "Audio"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:202
+#: app/src/pages/history/HistoryPage.vue:221
 msgid ""
 "Audit every WhatsApp message dispatched by Joinotify, including workflow "
 "sends, retries and test messages."
@@ -954,7 +955,7 @@ msgid "Billing full address format"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:143
-#: app/src/pages/history/components/HistoryDetailsModal.vue:56
+#: app/src/pages/history/components/HistoryDetailsModal.vue:58
 msgid "Body"
 msgstr ""
 
@@ -1005,7 +1006,7 @@ msgid ""
 "workflow."
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:75
+#: app/src/pages/workflows/WorkflowsPage.vue:80
 msgid ""
 "Browse, filter and manage workflows with bulk selection, pagination and "
 "quick status switching."
@@ -1075,7 +1076,7 @@ msgid ""
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:136
-#: app/src/pages/history/components/HistoryDetailsModal.vue:57
+#: app/src/pages/history/components/HistoryDetailsModal.vue:59
 msgid "Button"
 msgstr ""
 
@@ -1108,36 +1109,36 @@ msgstr ""
 #: app/src/pages/builder/BuilderPage.vue:1384
 #: app/src/pages/builder/BuilderPage.vue:1422
 #: app/src/pages/builder/BuilderPage.vue:1468
-#: app/src/pages/queue/QueuePage.vue:312
+#: app/src/pages/queue/QueuePage.vue:371
 #: app/src/pages/settings/components/cards/PhoneActions.vue:247
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:255
 msgid "Cancel"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:229
+#: app/src/pages/queue/QueuePage.vue:263
 msgid "Cancel all"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:123
+#: app/src/pages/queue/QueuePage.vue:135
 msgid "Cancel all scheduled items"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:142
+#: app/src/pages/queue/QueuePage.vue:154
 msgid "Cancel item"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:174
-#: app/src/pages/history/HistoryPage.vue:193
-#: app/src/pages/history/HistoryPage.vue:303
+#: app/src/pages/history/HistoryPage.vue:181
+#: app/src/pages/history/HistoryPage.vue:200
+#: app/src/pages/history/HistoryPage.vue:322
 msgid "Cancel resend"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:126
+#: app/src/pages/queue/QueuePage.vue:138
 msgid "Cancel scheduled item"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:59
-#: app/src/pages/history/HistoryPage.vue:70
+#: app/src/composables/useMessageHistory.ts:61
+#: app/src/pages/history/HistoryPage.vue:77
 msgid "Cancelled"
 msgstr ""
 
@@ -1295,11 +1296,11 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:319
+#: app/src/pages/history/HistoryPage.vue:347
 msgid "Clear all"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:170
+#: app/src/pages/history/HistoryPage.vue:177
 msgid "Clear all history"
 msgstr ""
 
@@ -1307,8 +1308,8 @@ msgstr ""
 msgid "Clear date"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:276
-#: app/src/pages/queue/QueuePage.vue:204
+#: app/src/pages/history/HistoryPage.vue:295
+#: app/src/pages/queue/QueuePage.vue:228
 msgid "Clear filters"
 msgstr ""
 
@@ -1318,7 +1319,7 @@ msgstr ""
 msgid "Clear logs"
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:79
+#: app/src/pages/workflows/WorkflowsPage.vue:84
 msgid "Clear search"
 msgstr ""
 
@@ -1343,7 +1344,7 @@ msgstr ""
 #: app/src/components/modals/ModalDialog.vue:54
 #: app/src/components/toasts/ToastStack.vue:80
 #: app/src/components/toasts/ToastStack.vue:88
-#: app/src/pages/history/components/HistoryDetailsModal.vue:171
+#: app/src/pages/history/components/HistoryDetailsModal.vue:181
 msgid "Close"
 msgstr ""
 
@@ -1405,7 +1406,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:130
+#: app/src/pages/history/components/HistoryDetailsModal.vue:132
 msgid "Component"
 msgstr ""
 
@@ -1478,7 +1479,7 @@ msgstr ""
 #: app/src/components/fields/JoinotifyApiKeyField.vue:173
 #: app/src/components/modals/ConfirmDialog.vue:40
 #: app/src/components/workflows/ConfirmActionModal.vue:16
-#: app/src/pages/workflows/WorkflowsPage.vue:86
+#: app/src/pages/workflows/WorkflowsPage.vue:91
 msgid "Confirm"
 msgstr ""
 
@@ -1562,8 +1563,8 @@ msgstr ""
 msgid "Contains"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:154
-#: app/src/pages/history/HistoryPage.vue:351
+#: app/src/pages/history/components/HistoryDetailsModal.vue:156
+#: app/src/pages/history/HistoryPage.vue:379
 msgid "Content"
 msgstr ""
 
@@ -1588,12 +1589,12 @@ msgstr ""
 msgid "Costa Rica"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:287
-#: app/src/composables/useMessageHistory.ts:296
+#: app/src/composables/useMessageHistory.ts:289
+#: app/src/composables/useMessageHistory.ts:298
 msgid "Could not cancel the resend."
 msgstr ""
 
-#: app/src/composables/useProcessingQueue.ts:230
+#: app/src/composables/useProcessingQueue.ts:254
 msgid "Could not cancel the scheduled item."
 msgstr ""
 
@@ -1601,8 +1602,8 @@ msgstr ""
 msgid "Could not clear the debug logs."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:314
-#: app/src/composables/useMessageHistory.ts:322
+#: app/src/composables/useMessageHistory.ts:316
+#: app/src/composables/useMessageHistory.ts:324
 msgid "Could not clear the history."
 msgstr ""
 
@@ -1610,7 +1611,7 @@ msgstr ""
 msgid "Could not clear the logs."
 msgstr ""
 
-#: app/src/composables/useProcessingQueue.ts:234
+#: app/src/composables/useProcessingQueue.ts:258
 msgid "Could not clear the queue."
 msgstr ""
 
@@ -1632,8 +1633,8 @@ msgstr ""
 msgid "Could not delete the action."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:252
-#: app/src/composables/useMessageHistory.ts:260
+#: app/src/composables/useMessageHistory.ts:254
+#: app/src/composables/useMessageHistory.ts:262
 msgid "Could not delete the selected records."
 msgstr ""
 
@@ -1645,8 +1646,23 @@ msgstr ""
 msgid "Could not dismiss the tip."
 msgstr ""
 
+#: app/src/composables/useMessageHistory.ts:350
+#: app/src/composables/useMessageHistory.ts:364
+msgid "Could not export the message history."
+msgstr ""
+
+#: app/src/composables/useProcessingQueue.ts:299
+#: app/src/composables/useProcessingQueue.ts:304
+msgid "Could not export the processing queue."
+msgstr ""
+
 #: app/src/pages/settings/SettingsPage.vue:320
 msgid "Could not export the settings."
+msgstr ""
+
+#: app/src/composables/useWorkflows.ts:488
+#: app/src/composables/useWorkflows.ts:493
+msgid "Could not export the workflows."
 msgstr ""
 
 #: admin/src/Rest/Phone_Remove.php:42
@@ -1677,13 +1693,13 @@ msgstr ""
 msgid "Could not load actions."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:130
-#: app/src/composables/useMessageHistory.ts:138
+#: app/src/composables/useMessageHistory.ts:132
+#: app/src/composables/useMessageHistory.ts:140
 msgid "Could not load the message history."
 msgstr ""
 
-#: app/src/composables/useProcessingQueue.ts:114
-#: app/src/composables/useProcessingQueue.ts:119
+#: app/src/composables/useProcessingQueue.ts:138
+#: app/src/composables/useProcessingQueue.ts:143
 msgid "Could not load the processing queue."
 msgstr ""
 
@@ -1691,9 +1707,9 @@ msgstr ""
 msgid "Could not load workflow."
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:226
-#: app/src/composables/useWorkflows.ts:236
-#: app/src/composables/useWorkflows.ts:256
+#: app/src/composables/useWorkflows.ts:233
+#: app/src/composables/useWorkflows.ts:243
+#: app/src/composables/useWorkflows.ts:263
 msgid "Could not load workflows."
 msgstr ""
 
@@ -1739,7 +1755,7 @@ msgstr ""
 msgid "Could not retrieve the user last name"
 msgstr ""
 
-#: app/src/composables/useProcessingQueue.ts:226
+#: app/src/composables/useProcessingQueue.ts:250
 msgid "Could not run the scheduled item."
 msgstr ""
 
@@ -1809,8 +1825,8 @@ msgstr ""
 msgid "Could not update the connection."
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:361
-#: app/src/composables/useWorkflows.ts:369
+#: app/src/composables/useWorkflows.ts:368
+#: app/src/composables/useWorkflows.ts:376
 msgid "Could not update the status."
 msgstr ""
 
@@ -1922,7 +1938,7 @@ msgstr ""
 msgid "Create your automation workflow from scratch."
 msgstr ""
 
-#: app/src/components/workflows/WorkflowTable.vue:97
+#: app/src/components/workflows/WorkflowTable.vue:101
 #: app/src/components/workflows/WorkflowTableHeader.vue:36
 msgid "Created"
 msgstr ""
@@ -2032,8 +2048,8 @@ msgstr ""
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:195
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:30
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:155
-#: app/src/pages/history/components/HistoryDetailsModal.vue:27
-#: app/src/pages/history/HistoryPage.vue:344
+#: app/src/pages/history/components/HistoryDetailsModal.vue:29
+#: app/src/pages/history/HistoryPage.vue:372
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:171
 msgid "Date"
 msgstr ""
@@ -2042,7 +2058,7 @@ msgstr ""
 msgid "day"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:245
+#: admin/src/Admin/Queue/Registry.php:271
 msgid "day(s)"
 msgstr ""
 
@@ -2161,8 +2177,8 @@ msgid "Delay until a fixed date"
 msgstr ""
 
 #: app/src/components/flow/FlowNode.vue:328
-#: app/src/pages/history/HistoryPage.vue:193
-#: app/src/pages/workflows/WorkflowsPage.vue:85
+#: app/src/pages/history/HistoryPage.vue:200
+#: app/src/pages/workflows/WorkflowsPage.vue:90
 msgid "Delete"
 msgstr ""
 
@@ -2175,18 +2191,18 @@ msgstr ""
 msgid "Delete note"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowRowActions.vue:55
-#: app/src/composables/useWorkflows.ts:26
-#: app/src/pages/workflows/WorkflowsPage.vue:232
-#: app/src/pages/workflows/WorkflowsPage.vue:312
+#: app/src/components/workflows/WorkflowRowActions.vue:68
+#: app/src/composables/useWorkflows.ts:31
+#: app/src/pages/workflows/WorkflowsPage.vue:246
+#: app/src/pages/workflows/WorkflowsPage.vue:336
 msgid "Delete permanently"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:311
+#: app/src/pages/history/HistoryPage.vue:330
 msgid "Delete selected"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:177
+#: app/src/pages/history/HistoryPage.vue:184
 msgid "Delete selected records"
 msgstr ""
 
@@ -2298,7 +2314,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:300
+#: app/src/pages/history/HistoryPage.vue:319
 msgid "Discard the pending retry of the selected messages"
 msgstr ""
 
@@ -2340,10 +2356,10 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:119
-#: app/src/pages/queue/QueuePage.vue:142
-#: app/src/pages/queue/QueuePage.vue:301
-#: app/src/pages/queue/QueuePage.vue:304
+#: app/src/pages/queue/QueuePage.vue:131
+#: app/src/pages/queue/QueuePage.vue:154
+#: app/src/pages/queue/QueuePage.vue:351
+#: app/src/pages/queue/QueuePage.vue:354
 msgid "Dispatch now"
 msgstr ""
 
@@ -2387,10 +2403,38 @@ msgstr ""
 msgid "Double-click to write a note in markdown"
 msgstr ""
 
+#: app/src/pages/queue/QueuePage.vue:166
+msgid "Download every item matching the current filters as a JSON file"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:212
+msgid "Download every record matching the current filters as a JSON file"
+msgstr ""
+
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:76
 msgid ""
 "Download the plugin configuration as a JSON file or import it on another "
 "site. API keys are not included in the export."
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:165
+msgid "Download the selected items as a JSON file"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:211
+msgid "Download the selected records as a JSON file"
+msgstr ""
+
+#: app/src/pages/queue/QueuePage.vue:360
+msgid "Download this item as a JSON file"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:420
+msgid "Download this record as a JSON file"
+msgstr ""
+
+#: app/src/components/workflows/WorkflowRowActions.vue:38
+msgid "Download this workflow as a JSON file"
 msgstr ""
 
 #: app/src/components/builder/BuilderImportView.vue:35
@@ -2407,8 +2451,8 @@ msgid ""
 "match a real Joinotify export."
 msgstr ""
 
-#: app/src/composables/useProcessingQueue.ts:53
-#: app/src/pages/queue/QueuePage.vue:289
+#: app/src/composables/useProcessingQueue.ts:60
+#: app/src/pages/queue/QueuePage.vue:339
 msgid "Due"
 msgstr ""
 
@@ -2472,7 +2516,7 @@ msgstr ""
 msgid "Ecuador"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowRowActions.vue:28
+#: app/src/components/workflows/WorkflowRowActions.vue:31
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:122
 msgid "Edit"
 msgstr ""
@@ -2561,11 +2605,11 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:255
+#: app/src/pages/history/HistoryPage.vue:274
 msgid "End date"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:78
+#: app/src/pages/queue/QueuePage.vue:90
 msgid "End of workflow"
 msgstr ""
 
@@ -2668,8 +2712,8 @@ msgstr ""
 msgid "error"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:36
-#: app/src/pages/history/HistoryPage.vue:350
+#: app/src/pages/history/components/HistoryDetailsModal.vue:38
+#: app/src/pages/history/HistoryPage.vue:378
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
 #: app/src/pages/settings/SettingsPage.vue:285
 msgid "Error"
@@ -2695,13 +2739,13 @@ msgstr ""
 msgid "Every 6 hours"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:182
+#: app/src/pages/history/HistoryPage.vue:189
 msgid ""
 "Every history record will be permanently removed. This action cannot be "
 "undone."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:135
+#: app/src/pages/queue/QueuePage.vue:147
 msgid ""
 "Every pending scheduled item will be removed and will never run. This "
 "cannot be undone."
@@ -2770,9 +2814,27 @@ msgstr ""
 msgid "Expires in %s"
 msgstr ""
 
+#: app/src/components/workflows/WorkflowRowActions.vue:41
+#: app/src/pages/history/HistoryPage.vue:423
+#: app/src/pages/queue/QueuePage.vue:363
 #: app/src/pages/settings/SettingsPage.vue:317
 #: app/src/pages/settings/SettingsPage.vue:320
 msgid "Export"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:206
+#: app/src/pages/queue/QueuePage.vue:160
+msgid "Export all"
+msgstr ""
+
+#: app/src/composables/useWorkflows.ts:20
+#: app/src/pages/history/components/HistoryDetailsModal.vue:178
+msgid "Export as JSON"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:206
+#: app/src/pages/queue/QueuePage.vue:160
+msgid "Export selected"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
@@ -2783,12 +2845,15 @@ msgstr ""
 msgid "Export workflow"
 msgstr ""
 
+#: app/src/pages/history/components/HistoryDetailsModal.vue:178
+#: app/src/pages/history/HistoryPage.vue:339
+#: app/src/pages/queue/QueuePage.vue:255
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
 msgid "Exporting…"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:57
-#: app/src/pages/history/HistoryPage.vue:68
+#: app/src/composables/useMessageHistory.ts:59
+#: app/src/pages/history/HistoryPage.vue:75
 msgid "Failed"
 msgstr ""
 
@@ -3008,7 +3073,7 @@ msgstr ""
 msgid "Friendly"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:241
+#: app/src/pages/history/HistoryPage.vue:260
 msgid "From"
 msgstr ""
 
@@ -3146,7 +3211,7 @@ msgstr ""
 #: admin/src/Integrations/Whatsapp_Interactive.php:172
 #: admin/src/Integrations/Whatsapp_Interactive.php:202
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:140
-#: app/src/pages/history/components/HistoryDetailsModal.vue:55
+#: app/src/pages/history/components/HistoryDetailsModal.vue:57
 msgid "Header"
 msgstr ""
 
@@ -3208,7 +3273,7 @@ msgstr ""
 msgid "hour"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:244
+#: admin/src/Admin/Queue/Registry.php:270
 msgid "hour(s)"
 msgstr ""
 
@@ -3331,15 +3396,15 @@ msgstr ""
 msgid "Importing…"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowTable.vue:82
-#: app/src/components/workflows/WorkflowTableRow.vue:37
+#: app/src/components/workflows/WorkflowTable.vue:86
+#: app/src/components/workflows/WorkflowTableRow.vue:39
 msgid "In trash"
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:142
-#: app/src/components/workflows/WorkflowTableRow.vue:36
-#: app/src/composables/useWorkflows.ts:181
-#: app/src/pages/queue/QueuePage.vue:292
+#: app/src/components/workflows/WorkflowTableRow.vue:38
+#: app/src/composables/useWorkflows.ts:188
+#: app/src/pages/queue/QueuePage.vue:342
 msgid "Inactive"
 msgstr ""
 
@@ -3475,7 +3540,7 @@ msgstr ""
 msgid "Invalid request nonce."
 msgstr ""
 
-#: admin/src/Admin/Workflows/Registry.php:200
+#: admin/src/Admin/Workflows/Registry.php:202
 msgid "Invalid workflow action."
 msgstr ""
 
@@ -3857,8 +3922,8 @@ msgstr ""
 msgid "Loading trigger..."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:328
-#: app/src/pages/queue/QueuePage.vue:247
+#: app/src/pages/history/HistoryPage.vue:356
+#: app/src/pages/queue/QueuePage.vue:282
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
 msgstr ""
@@ -3983,8 +4048,8 @@ msgstr ""
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
 
-#: admin/src/Admin/Workflows/Registry.php:63
-#: app/src/pages/workflows/WorkflowsPage.vue:73
+#: admin/src/Admin/Workflows/Registry.php:65
+#: app/src/pages/workflows/WorkflowsPage.vue:78
 msgid "Manage workflows"
 msgstr ""
 
@@ -4000,11 +4065,11 @@ msgstr ""
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:20
+#: app/src/composables/useWorkflows.ts:24
 msgid "Mark as active"
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:21
+#: app/src/composables/useWorkflows.ts:25
 msgid "Mark as inactive"
 msgstr ""
 
@@ -4042,7 +4107,7 @@ msgid "Measurement unit applied to the border radius value."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:101
-#: app/src/pages/history/HistoryPage.vue:85
+#: app/src/pages/history/HistoryPage.vue:92
 msgid "Media"
 msgstr ""
 
@@ -4060,7 +4125,7 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:182
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:105
-#: app/src/pages/history/components/HistoryDetailsModal.vue:33
+#: app/src/pages/history/components/HistoryDetailsModal.vue:35
 msgid "Media type"
 msgstr ""
 
@@ -4070,7 +4135,7 @@ msgstr ""
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:68
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:112
-#: app/src/pages/history/components/HistoryDetailsModal.vue:162
+#: app/src/pages/history/components/HistoryDetailsModal.vue:164
 msgid "Media URL"
 msgstr ""
 
@@ -4109,18 +4174,18 @@ msgstr ""
 msgid "Message content, media or message history"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:95
+#: app/src/pages/history/components/HistoryDetailsModal.vue:97
 msgid "Message details"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:248
+#: admin/src/Admin/History/Registry.php:368
 #: admin/src/Admin/Menu.php:76
 #: admin/src/Admin/Settings/Registry.php:259
-#: app/src/pages/history/HistoryPage.vue:201
+#: app/src/pages/history/HistoryPage.vue:220
 msgid "Message history"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:209
+#: app/src/pages/history/HistoryPage.vue:228
 msgid ""
 "Message history recording is disabled. Enable it in Settings → About to "
 "start logging new messages."
@@ -4185,7 +4250,7 @@ msgstr ""
 msgid "minute"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:243
+#: admin/src/Admin/Queue/Registry.php:269
 msgid "minute(s)"
 msgstr ""
 
@@ -4239,7 +4304,7 @@ msgstr ""
 msgid "month"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:247
+#: admin/src/Admin/Queue/Registry.php:273
 msgid "month(s)"
 msgstr ""
 
@@ -4255,7 +4320,7 @@ msgstr ""
 msgid "Months"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:275
+#: app/src/pages/queue/QueuePage.vue:325
 msgid "more"
 msgstr ""
 
@@ -4263,10 +4328,10 @@ msgstr ""
 msgid "Morocco"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowRowActions.vue:37
-#: app/src/composables/useWorkflows.ts:19
-#: app/src/pages/workflows/WorkflowsPage.vue:232
-#: app/src/pages/workflows/WorkflowsPage.vue:287
+#: app/src/components/workflows/WorkflowRowActions.vue:50
+#: app/src/composables/useWorkflows.ts:23
+#: app/src/pages/workflows/WorkflowsPage.vue:246
+#: app/src/pages/workflows/WorkflowsPage.vue:301
 msgid "Move to trash"
 msgstr ""
 
@@ -4369,7 +4434,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:257
+#: app/src/pages/queue/QueuePage.vue:300
 msgid "Next action"
 msgstr ""
 
@@ -4493,7 +4558,7 @@ msgstr ""
 msgid "No flow found."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:394
+#: app/src/pages/history/HistoryPage.vue:434
 msgid "No history records match the current filters."
 msgstr ""
 
@@ -4514,7 +4579,7 @@ msgstr ""
 msgid "No logs available."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:393
+#: app/src/pages/history/HistoryPage.vue:433
 msgid "No messages found"
 msgstr ""
 
@@ -4546,10 +4611,12 @@ msgstr ""
 
 #: admin/src/Rest/History_Cancel_Retry.php:55
 #: admin/src/Rest/History_Delete.php:56
+#: admin/src/Rest/History_Export.php:48
 msgid "No records selected."
 msgstr ""
 
 #: admin/src/Rest/Queue_Cancel.php:61
+#: admin/src/Rest/Queue_Export.php:48
 #: admin/src/Rest/Queue_Run.php:50
 msgid "No scheduled item selected."
 msgstr ""
@@ -4596,22 +4663,23 @@ msgstr ""
 msgid "No WhatsApp Cloud API token is configured."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:324
+#: app/src/pages/queue/QueuePage.vue:383
 msgid "No workflow steps are currently waiting to run."
 msgstr ""
 
 #: app/src/components/workflows/EmptyState.vue:15
-#: app/src/pages/workflows/WorkflowsPage.vue:81
+#: app/src/pages/workflows/WorkflowsPage.vue:86
 msgid "No workflows found"
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:83
+#: app/src/pages/workflows/WorkflowsPage.vue:88
 msgid ""
 "No workflows match the current filters. Create a new workflow or switch "
 "tabs to see other results."
 msgstr ""
 
 #: admin/src/Rest/Workflows_Bulk.php:44
+#: admin/src/Rest/Workflows_Export.php:47
 msgid "No workflows selected."
 msgstr ""
 
@@ -4651,8 +4719,14 @@ msgstr ""
 msgid "not found in the account"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:323
+#: app/src/pages/queue/QueuePage.vue:382
 msgid "Nothing in the queue"
+msgstr ""
+
+#: admin/src/Rest/History_Export.php:54
+#: admin/src/Rest/Queue_Export.php:54
+#: admin/src/Rest/Workflows_Export.php:53
+msgid "Nothing to export."
 msgstr ""
 
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:52
@@ -4674,9 +4748,9 @@ msgid "Numbers synced."
 msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:34
-#: app/src/composables/useMessageHistory.ts:94
-#: app/src/composables/useProcessingQueue.ts:67
-#: app/src/composables/useWorkflows.ts:197
+#: app/src/composables/useMessageHistory.ts:96
+#: app/src/composables/useProcessingQueue.ts:90
+#: app/src/composables/useWorkflows.ts:204
 msgid "of"
 msgstr ""
 
@@ -4898,7 +4972,7 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:231
+#: admin/src/Admin/History/Registry.php:351
 msgid "OTP"
 msgstr ""
 
@@ -4987,7 +5061,7 @@ msgstr ""
 msgid "Pause the workflow before the next step."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:147
+#: app/src/pages/history/components/HistoryDetailsModal.vue:149
 msgid "Payload sent"
 msgstr ""
 
@@ -5205,8 +5279,8 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:85
 #: admin/src/Admin/Menu.php:86
-#: admin/src/Admin/Queue/Registry.php:423
-#: app/src/pages/queue/QueuePage.vue:150
+#: admin/src/Admin/Queue/Registry.php:523
+#: app/src/pages/queue/QueuePage.vue:174
 msgid "Processing queue"
 msgstr ""
 
@@ -5258,8 +5332,8 @@ msgstr ""
 msgid "Qatar"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:58
-#: app/src/pages/history/HistoryPage.vue:69
+#: app/src/composables/useMessageHistory.ts:60
+#: app/src/pages/history/HistoryPage.vue:76
 msgid "Queued"
 msgstr ""
 
@@ -5288,9 +5362,9 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:45
-#: app/src/pages/history/components/HistoryDetailsModal.vue:31
-#: app/src/pages/history/HistoryPage.vue:345
-#: app/src/pages/queue/QueuePage.vue:258
+#: app/src/pages/history/components/HistoryDetailsModal.vue:33
+#: app/src/pages/history/HistoryPage.vue:373
+#: app/src/pages/queue/QueuePage.vue:301
 #: app/src/pages/settings/components/cards/PhoneActions.vue:201
 msgid "Recipient"
 msgstr ""
@@ -5327,7 +5401,7 @@ msgstr ""
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:239
+#: app/src/pages/queue/QueuePage.vue:274
 msgid "Refresh"
 msgstr ""
 
@@ -5463,12 +5537,12 @@ msgstr ""
 msgid "Resize"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:34
+#: app/src/pages/history/components/HistoryDetailsModal.vue:36
 msgid "Response code"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowRowActions.vue:46
-#: app/src/composables/useWorkflows.ts:25
+#: app/src/components/workflows/WorkflowRowActions.vue:59
+#: app/src/composables/useWorkflows.ts:30
 msgid "Restore"
 msgstr ""
 
@@ -5520,7 +5594,7 @@ msgid ""
 "WooCommerce options)."
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:229
+#: admin/src/Admin/History/Registry.php:349
 msgid "Retry queue"
 msgstr ""
 
@@ -5672,8 +5746,8 @@ msgstr ""
 #: admin/src/Admin/Builder/Registry.php:424
 #: app/src/builder/actions/definitions/timeDelay.ts:59
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
-#: app/src/composables/useProcessingQueue.ts:54
-#: app/src/pages/queue/QueuePage.vue:289
+#: app/src/composables/useProcessingQueue.ts:61
+#: app/src/pages/queue/QueuePage.vue:339
 msgid "Scheduled"
 msgstr ""
 
@@ -5685,11 +5759,11 @@ msgstr ""
 msgid "Scheduled delay"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:256
+#: app/src/pages/queue/QueuePage.vue:299
 msgid "Scheduled for"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:155
+#: app/src/pages/queue/QueuePage.vue:179
 msgid "Scheduler"
 msgstr ""
 
@@ -5727,7 +5801,7 @@ msgstr ""
 msgid "Search products"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:261
+#: app/src/pages/history/HistoryPage.vue:280
 msgid "Search recipient or sender"
 msgstr ""
 
@@ -5739,7 +5813,7 @@ msgstr ""
 msgid "Search variables..."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:189
+#: app/src/pages/queue/QueuePage.vue:213
 msgid "Search workflow, recipient or action"
 msgstr ""
 
@@ -5748,7 +5822,7 @@ msgid "Search workflows"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowSearch.vue:16
-#: app/src/pages/workflows/WorkflowsPage.vue:78
+#: app/src/pages/workflows/WorkflowsPage.vue:83
 msgid "Search workflows..."
 msgstr ""
 
@@ -5764,7 +5838,7 @@ msgstr ""
 msgid "second"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:242
+#: admin/src/Admin/Queue/Registry.php:268
 msgid "second(s)"
 msgstr ""
 
@@ -5801,9 +5875,10 @@ msgstr ""
 msgid "See options"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowTable.vue:67
-#: app/src/components/workflows/WorkflowTableRow.vue:49
-#: app/src/pages/history/HistoryPage.vue:364
+#: app/src/components/workflows/WorkflowTable.vue:71
+#: app/src/components/workflows/WorkflowTableRow.vue:51
+#: app/src/pages/history/HistoryPage.vue:393
+#: app/src/pages/queue/QueuePage.vue:311
 msgid "Select"
 msgstr ""
 
@@ -5840,7 +5915,11 @@ msgstr ""
 msgid "Select a workflow action to configure it."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:340
+#: app/src/pages/queue/QueuePage.vue:294
+msgid "Select all visible items"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:368
 msgid "Select all visible messages"
 msgstr ""
 
@@ -6024,8 +6103,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:30
-#: app/src/pages/history/HistoryPage.vue:346
+#: app/src/pages/history/components/HistoryDetailsModal.vue:32
+#: app/src/pages/history/HistoryPage.vue:374
 #: app/src/pages/settings/components/cards/PhoneActions.vue:188
 msgid "Sender"
 msgstr ""
@@ -6062,8 +6141,8 @@ msgstr ""
 msgid "Senegal"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:56
-#: app/src/pages/history/HistoryPage.vue:67
+#: app/src/composables/useMessageHistory.ts:58
+#: app/src/pages/history/HistoryPage.vue:74
 msgid "Sent"
 msgstr ""
 
@@ -6208,9 +6287,9 @@ msgid "Somalia"
 msgstr ""
 
 #: app/src/builder/components/base/AttachmentsField.vue:171
-#: app/src/pages/history/components/HistoryDetailsModal.vue:29
-#: app/src/pages/history/HistoryPage.vue:232
-#: app/src/pages/history/HistoryPage.vue:348
+#: app/src/pages/history/components/HistoryDetailsModal.vue:31
+#: app/src/pages/history/HistoryPage.vue:251
+#: app/src/pages/history/HistoryPage.vue:376
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:210
 msgid "Source"
 msgstr ""
@@ -6243,7 +6322,7 @@ msgstr ""
 msgid "Start automating your site from a template"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:245
+#: app/src/pages/history/HistoryPage.vue:264
 msgid "Start date"
 msgstr ""
 
@@ -6260,9 +6339,9 @@ msgid "Start with a template"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowTableHeader.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:28
-#: app/src/pages/history/HistoryPage.vue:349
-#: app/src/pages/queue/QueuePage.vue:259
+#: app/src/pages/history/components/HistoryDetailsModal.vue:30
+#: app/src/pages/history/HistoryPage.vue:377
+#: app/src/pages/queue/QueuePage.vue:302
 msgid "Status"
 msgstr ""
 
@@ -6438,8 +6517,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:264
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
 #: app/src/pages/builder/BuilderPage.vue:908
-#: app/src/pages/history/components/HistoryDetailsModal.vue:118
-#: app/src/pages/history/HistoryPage.vue:87
+#: app/src/pages/history/components/HistoryDetailsModal.vue:120
+#: app/src/pages/history/HistoryPage.vue:94
 msgid "Template"
 msgstr ""
 
@@ -6451,7 +6530,7 @@ msgstr ""
 msgid "Template messages require the WhatsApp Cloud API transport."
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:230
+#: admin/src/Admin/History/Registry.php:350
 msgid "Test message"
 msgstr ""
 
@@ -6468,7 +6547,7 @@ msgstr ""
 msgid "Test sender"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:84
+#: app/src/pages/history/HistoryPage.vue:91
 msgid "Text"
 msgstr ""
 
@@ -6532,8 +6611,8 @@ msgstr ""
 msgid "The API did not return a signing secret for this endpoint."
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:440
-#: app/src/composables/useWorkflows.ts:455
+#: app/src/composables/useWorkflows.ts:447
+#: app/src/composables/useWorkflows.ts:462
 msgid "The bulk action failed."
 msgstr ""
 
@@ -6567,6 +6646,11 @@ msgstr ""
 
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:97
 msgid "The exact payload for this site right now"
+msgstr ""
+
+#: app/src/composables/useMessageHistory.ts:358
+#. translators: 1: number of exported records, 2: number of records matching the filters
+msgid "The export holds only the %1$d most recent of the %2$d matching records."
 msgstr ""
 
 #: admin/src/Admin/Settings/Transfer.php:146
@@ -6634,15 +6718,15 @@ msgid ""
 "every plugin on the site shares the same setup."
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:517
+#: admin/src/Admin/Queue/Registry.php:617
 msgid "The related workflow is not published, so it cannot run."
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:513
+#: admin/src/Admin/Queue/Registry.php:613
 msgid "The related workflow no longer exists; the schedule was removed."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:131
+#: app/src/pages/queue/QueuePage.vue:143
 msgid ""
 "The remaining actions will be executed right now, skipping the scheduled "
 "wait. This cannot be undone."
@@ -6659,11 +6743,11 @@ msgstr[1] ""
 msgid "The resend of this message was cancelled from the history screen."
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:526
+#: admin/src/Admin/Queue/Registry.php:626
 msgid "The scheduled actions were dispatched."
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:546
+#: admin/src/Admin/Queue/Registry.php:646
 msgid "The scheduled item was cancelled."
 msgstr ""
 
@@ -6671,7 +6755,7 @@ msgstr ""
 msgid "The selected channel cannot reach this recipient."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:186
+#: app/src/pages/history/HistoryPage.vue:193
 msgid ""
 "The selected messages will not be sent again. Records without a pending "
 "resend are left untouched."
@@ -6681,7 +6765,7 @@ msgstr ""
 msgid "The selected OTP delivery channel is not configured."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:189
+#: app/src/pages/history/HistoryPage.vue:196
 msgid ""
 "The selected records will be permanently removed. This action cannot be "
 "undone."
@@ -6691,11 +6775,11 @@ msgstr ""
 msgid "The selected template was not found."
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:236
+#: app/src/pages/workflows/WorkflowsPage.vue:250
 msgid "The selected workflows will be moved to trash and can be restored later."
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:235
+#: app/src/pages/workflows/WorkflowsPage.vue:249
 msgid ""
 "The selected workflows will be removed permanently and this action cannot "
 "be undone."
@@ -6711,7 +6795,7 @@ msgstr ""
 msgid "The sender phone number was removed successfully!"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:157
+#: app/src/pages/history/components/HistoryDetailsModal.vue:159
 msgid ""
 "The template text was not available when this message was sent, so its name "
 "and variables are shown instead."
@@ -6781,8 +6865,8 @@ msgid ""
 "required."
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:288
-#: app/src/pages/workflows/WorkflowsPage.vue:313
+#: app/src/pages/workflows/WorkflowsPage.vue:302
+#: app/src/pages/workflows/WorkflowsPage.vue:337
 msgid "The workflow"
 msgstr ""
 
@@ -6802,7 +6886,7 @@ msgstr ""
 msgid "The workflow has no trigger."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:301
+#: app/src/pages/queue/QueuePage.vue:351
 msgid "The workflow is not published."
 msgstr ""
 
@@ -6911,12 +6995,12 @@ msgstr ""
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:504
-#: admin/src/Admin/Queue/Registry.php:541
+#: admin/src/Admin/Queue/Registry.php:604
+#: admin/src/Admin/Queue/Registry.php:641
 msgid "This scheduled item no longer exists."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:138
+#: app/src/pages/queue/QueuePage.vue:150
 msgid ""
 "This scheduled item will be removed and will never run. This cannot be "
 "undone."
@@ -6934,7 +7018,7 @@ msgstr ""
 msgid "This template is still awaiting Meta approval and cannot be delivered yet."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:144
+#: app/src/pages/history/components/HistoryDetailsModal.vue:146
 msgid "This template was sent without variables."
 msgstr ""
 
@@ -7090,7 +7174,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:251
+#: app/src/pages/history/HistoryPage.vue:270
 msgid "To"
 msgstr ""
 
@@ -7347,8 +7431,8 @@ msgstr ""
 msgid "Toggle %s"
 msgstr ""
 
-#: app/src/components/workflows/WorkflowTable.vue:86
-#: app/src/components/workflows/WorkflowTableRow.vue:78
+#: app/src/components/workflows/WorkflowTable.vue:90
+#: app/src/components/workflows/WorkflowTableRow.vue:82
 msgid "Toggle status for"
 msgstr ""
 
@@ -7399,7 +7483,7 @@ msgstr ""
 msgid "Total number of items in the collection."
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:182
+#: app/src/composables/useWorkflows.ts:189
 msgid "Trash"
 msgstr ""
 
@@ -7454,9 +7538,9 @@ msgstr ""
 msgid "True branch"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:284
-#: app/src/pages/queue/QueuePage.vue:217
-#: app/src/pages/workflows/WorkflowsPage.vue:80
+#: app/src/pages/history/HistoryPage.vue:303
+#: app/src/pages/queue/QueuePage.vue:241
+#: app/src/pages/workflows/WorkflowsPage.vue:85
 msgid "Try again"
 msgstr ""
 
@@ -7483,8 +7567,8 @@ msgid "Tuvalu"
 msgstr ""
 
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:105
-#: app/src/pages/history/components/HistoryDetailsModal.vue:32
-#: app/src/pages/history/HistoryPage.vue:347
+#: app/src/pages/history/components/HistoryDetailsModal.vue:34
+#: app/src/pages/history/HistoryPage.vue:375
 msgid "Type"
 msgstr ""
 
@@ -7497,7 +7581,7 @@ msgstr ""
 msgid "Type label"
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:193
+#: app/src/pages/queue/QueuePage.vue:217
 msgid "Type to filter…"
 msgstr ""
 
@@ -7573,7 +7657,7 @@ msgstr ""
 msgid "Unsupported AI intent."
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:85
+#: app/src/composables/useWorkflows.ts:91
 msgid "Untitled workflow"
 msgstr ""
 
@@ -7704,7 +7788,7 @@ msgstr ""
 #: app/src/builder/actions/settings/ConditionSettings.vue:223
 #: app/src/builder/actions/settings/ConditionSettings.vue:230
 #: app/src/builder/actions/settings/ConditionSettings.vue:237
-#: app/src/pages/history/components/HistoryDetailsModal.vue:132
+#: app/src/pages/history/components/HistoryDetailsModal.vue:134
 msgid "Value"
 msgstr ""
 
@@ -7712,7 +7796,7 @@ msgstr ""
 msgid "Value of a form field"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:123
+#: app/src/pages/history/components/HistoryDetailsModal.vue:125
 msgid "Values hidden"
 msgstr ""
 
@@ -7724,7 +7808,7 @@ msgstr ""
 msgid "Vanuatu"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:131
+#: app/src/pages/history/components/HistoryDetailsModal.vue:133
 msgid "Variable"
 msgstr ""
 
@@ -7898,7 +7982,7 @@ msgstr ""
 msgid "week"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:246
+#: admin/src/Admin/Queue/Registry.php:272
 msgid "week(s)"
 msgstr ""
 
@@ -8066,11 +8150,11 @@ msgstr ""
 msgid "Where to look when you need a feature explained."
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:288
+#: app/src/pages/workflows/WorkflowsPage.vue:302
 msgid "will be moved to trash."
 msgstr ""
 
-#: app/src/pages/workflows/WorkflowsPage.vue:313
+#: app/src/pages/workflows/WorkflowsPage.vue:337
 msgid "will be removed permanently."
 msgstr ""
 
@@ -8115,10 +8199,10 @@ msgstr ""
 msgid "WordPress version"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:228
-#: app/src/pages/history/components/HistoryDetailsModal.vue:110
-#: app/src/pages/queue/QueuePage.vue:180
-#: app/src/pages/queue/QueuePage.vue:255
+#: admin/src/Admin/History/Registry.php:348
+#: app/src/pages/history/components/HistoryDetailsModal.vue:112
+#: app/src/pages/queue/QueuePage.vue:204
+#: app/src/pages/queue/QueuePage.vue:298
 msgid "Workflow"
 msgstr ""
 
@@ -8187,7 +8271,7 @@ msgstr ""
 msgid "Workflow status updated successfully."
 msgstr ""
 
-#: app/src/pages/queue/QueuePage.vue:151
+#: app/src/pages/queue/QueuePage.vue:175
 msgid ""
 "Workflow steps waiting on a delay before they run. Dispatch one now to skip "
 "the wait, or cancel it to stop the processing."
@@ -8205,7 +8289,7 @@ msgstr ""
 msgid "Workflow title"
 msgstr ""
 
-#: app/src/composables/useWorkflows.ts:189
+#: app/src/composables/useWorkflows.ts:196
 msgid "workflows"
 msgstr ""
 
@@ -8233,7 +8317,7 @@ msgstr ""
 msgid "year"
 msgstr ""
 
-#: admin/src/Admin/Queue/Registry.php:248
+#: admin/src/Admin/Queue/Registry.php:274
 msgid "year(s)"
 msgstr ""
 

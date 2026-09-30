@@ -61,6 +61,12 @@
       "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
         "Ogni elemento programmato in attesa sarà rimosso e non verrà mai eseguito. Questo non può essere annullato."
       ],
+      "Export": [
+        "Esporta"
+      ],
+      "Exporting…": [
+        "Esportazione in corso…"
+      ],
       "Inactive": [
         "Inattivo"
       ],
@@ -105,6 +111,9 @@
       ],
       "Search workflow, recipient or action": [
         "Cerca flusso di lavoro, destinatario o azione"
+      ],
+      "Select": [
+        "Seleziona"
       ],
       "Select an option": [
         "Seleziona un'opzione"

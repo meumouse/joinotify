@@ -61,6 +61,12 @@
       "Every pending scheduled item will be removed and will never run. This cannot be undone.": [
         "Cada item agendado pendente será removido e nunca será executado. Isto não pode ser desfeito."
       ],
+      "Export": [
+        "Exportar"
+      ],
+      "Exporting…": [
+        "A exportar…"
+      ],
       "Inactive": [
         "Inativo"
       ],
@@ -105,6 +111,9 @@
       ],
       "Search workflow, recipient or action": [
         "Pesquisar fluxo de trabalho, destinatário ou ação"
+      ],
+      "Select": [
+        "Selecionar"
       ],
       "Select an option": [
         "Selecione uma opção"
