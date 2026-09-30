@@ -61,6 +61,7 @@ const emit = defineEmits([
   'close-actions',
   'undo',
   'redo',
+  'loader-change',
 ]);
 
 const triggerDefinition = computed(() => {
@@ -107,6 +108,10 @@ let loaderWatchdogTimer: ReturnType<typeof setTimeout> | null = null;
 
 const loaderPending = computed(() => props.loading || !props.flowReady);
 const showFlowLoader = computed(() => loaderPending.value && !loaderWatchdogElapsed.value);
+
+// Tells the page when the full-screen loader covers the canvas, so page-level
+// dialogs (the review request) wait until the flow is actually on screen.
+watch(showFlowLoader, (visible) => emit('loader-change', visible), { immediate: true });
 
 function clearLoaderWatchdog() {
   if (loaderWatchdogTimer !== null) {

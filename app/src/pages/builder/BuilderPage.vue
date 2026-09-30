@@ -215,8 +215,12 @@ const hideCanvasNavbar = computed(() => store.loading.workflow);
 const actionSidebarOpen = computed(() => Boolean(actionModalOpen.value));
 const isSavingTitle = computed(() => titleSaving.value || store.loading.save);
 const isUpdatingStatus = computed(() => Boolean(store.loading.status));
-// The review request waits while the user is inside a dialog, the node settings
-// drawer or the action library, so it never interrupts an edit in progress.
+// Mirrors the canvas's full-screen loader, which stays up until the flow is
+// drawn (or its watchdog gives up), well after the workflow request returns.
+const canvasLoaderVisible = ref(false);
+// The review request waits for the canvas to be on screen and while the user is
+// inside a dialog, the node settings drawer or the action library, so it never
+// covers a loading screen or interrupts an edit in progress.
 const {
   open: reviewPromptOpen,
   reviewUrl: reviewPromptUrl,
@@ -233,7 +237,8 @@ const {
     triggerWarningModalOpen.value ||
     leaveConfirmOpen.value ||
     Boolean(store.drawerOpen) ||
-    Boolean(store.loading.workflow),
+    Boolean(store.loading.workflow) ||
+    (store.step === 'canvas' && canvasLoaderVisible.value),
   onRated: () => pushToast(__('Thank you for supporting Joinotify!', textDomain), 'success', __('Review', textDomain)),
   log: (event, context) => debugLogger.log(event, context),
 });
@@ -1378,6 +1383,7 @@ function setChangeTriggerUrl(active) {
         @open-actions="handleActionOpen"
         @select-action="handleActionSelect"
         @close-actions="closeActionSidebar"
+        @loader-change="canvasLoaderVisible = $event"
       />
     </template>
     </BuilderShell>
