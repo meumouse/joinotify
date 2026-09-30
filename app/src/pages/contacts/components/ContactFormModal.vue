@@ -18,6 +18,7 @@ import ModalDialog from '../../../components/modals/ModalDialog.vue';
 import PhoneField from '../../../components/fields/PhoneField.vue';
 import AttributeInput from './AttributeInput.vue';
 import TagPicker from './TagPicker.vue';
+import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -211,13 +212,13 @@ async function submit(upsert = false) {
           </div>
 
           <div v-if="!isEdit" class="rounded-[8px] border border-slate-200 p-4">
-            <label class="flex items-start gap-3 text-[14px] text-slate-700">
-              <input v-model="form.optIn" class="mt-1" type="checkbox" />
-              <span>
+            <div class="flex items-start gap-3 text-[14px] text-slate-700">
+              <BaseCheckbox id="joinotify-contact-opt-in" v-model="form.optIn" class="mt-0.5" :aria-label="__('The contact agreed to receive marketing messages', textDomain)" />
+              <label class="cursor-pointer" for="joinotify-contact-opt-in">
                 {{ __('The contact agreed to receive marketing messages', textDomain) }}
                 <span class="block text-[12px] text-slate-400">{{ __('Leave it unticked when you do not have that consent: the contact still receives the messages of your workflows, but not campaigns.', textDomain) }}</span>
-              </span>
-            </label>
+              </label>
+            </div>
             <label v-if="form.optIn" class="mt-3 flex flex-col gap-1">
               <span class="text-[12px] font-medium text-slate-500">{{ __('How was the consent obtained?', textDomain) }}</span>
               <textarea

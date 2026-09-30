@@ -10,6 +10,7 @@ import { __, _n, sprintf, textDomain } from '../../../utils/i18n';
 import { useContactsContext } from '../context';
 import { fieldTypeOptions, labelOf } from '../labels';
 import BaseButton from '../../../components/base/BaseButton.vue';
+import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
 import ConfirmActionModal from '../../../components/workflows/ConfirmActionModal.vue';
 import FieldFormModal from '../components/FieldFormModal.vue';
 import TagChip from '../components/TagChip.vue';
@@ -136,10 +137,11 @@ onMounted(() => {
           <BaseButton v-if="canWrite" size="sm" :title="__('New field', textDomain)" @click="fieldModal = { open: true, field: null }" />
         </div>
 
-        <label v-if="archivedCount" class="inline-flex items-center gap-2 text-[13px] text-slate-600">
-          <input v-model="showArchived" type="checkbox" />
-          {{ sprintf(__('Show archived fields (%d)', textDomain), archivedCount) }}
-        </label>
+        <BaseCheckbox
+          v-if="archivedCount"
+          v-model="showArchived"
+          :label="sprintf(__('Show archived fields (%d)', textDomain), archivedCount)"
+        />
 
         <div v-if="loading && !fields.length" class="py-10 text-center text-[14px] text-slate-400">{{ __('Loading…', textDomain) }}</div>
 

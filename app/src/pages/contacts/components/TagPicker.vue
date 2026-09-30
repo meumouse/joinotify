@@ -86,7 +86,7 @@ function close() {
       <input
         v-model="query"
         type="text"
-        class="min-w-[120px] flex-1 border-0 bg-transparent px-1 py-1 text-[14px] text-slate-700 shadow-none outline-none focus:shadow-none focus:outline-none"
+        class="joinotify-input-group__control min-w-[120px] flex-1 border-0 bg-transparent px-1 py-1 text-[14px] text-slate-700 shadow-none outline-none focus:shadow-none focus:outline-none"
         :disabled="disabled"
         :placeholder="selected.length ? '' : placeholder || __('Pick tags…', textDomain)"
         @blur="close"

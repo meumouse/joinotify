@@ -16,6 +16,7 @@ import { useContactsContext, errorMessage } from '../context';
 import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
 import ModalDialog from '../../../components/modals/ModalDialog.vue';
+import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
 
 defineProps({
   open: { type: Boolean, default: false },
@@ -298,13 +299,13 @@ const percent = computed(() => (rows.value.length ? Math.round((progress.value.d
           </div>
 
           <div class="rounded-[8px] border border-slate-200 p-4">
-            <label class="flex items-start gap-3 text-[14px] text-slate-700">
-              <input v-model="optIn" class="mt-1" type="checkbox" />
-              <span>
+            <div class="flex items-start gap-3 text-[14px] text-slate-700">
+              <BaseCheckbox id="joinotify-import-opt-in" v-model="optIn" class="mt-0.5" :aria-label="__('These contacts agreed to receive marketing messages', textDomain)" />
+              <label class="cursor-pointer" for="joinotify-import-opt-in">
                 {{ __('These contacts agreed to receive marketing messages', textDomain) }}
                 <span class="block text-[12px] text-slate-400">{{ __('New contacts are created opted in, and existing ones only if their consent was unknown. An opt-out is never undone.', textDomain) }}</span>
-              </span>
-            </label>
+              </label>
+            </div>
             <label v-if="optIn" class="mt-3 flex flex-col gap-1">
               <span class="text-[12px] font-medium text-slate-500">{{ __('How was the consent obtained?', textDomain) }}</span>
               <input v-model="evidence" :class="inputClass" :placeholder="__('e.g. Sign-up sheet of the store event, 09/2026', textDomain)" type="text" />

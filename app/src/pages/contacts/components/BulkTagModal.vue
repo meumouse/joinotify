@@ -88,16 +88,30 @@ async function submit() {
             <BaseListboxSelect v-model="tagId" :options="tagOptions" />
           </div>
 
-          <fieldset class="flex flex-col gap-2 text-[14px] text-slate-700">
-            <label v-if="contactIds.length" class="inline-flex items-center gap-2">
-              <input v-model="scope" type="radio" value="selected" />
+          <!-- Buttons rather than native radios, which the admin's global input styles leave unmarked. -->
+          <div class="flex flex-col gap-2" role="radiogroup">
+            <button
+              v-if="contactIds.length"
+              type="button"
+              role="radio"
+              class="rounded-[8px] px-4 py-2.5 text-left text-[14px] ring-1 transition"
+              :class="scope === 'selected' ? 'bg-primary-50 text-primary-800 ring-primary-600' : 'bg-white text-slate-700 ring-slate-200 hover:bg-slate-50'"
+              :aria-checked="scope === 'selected'"
+              @click="scope = 'selected'"
+            >
               {{ sprintf(_n('The %d selected contact', 'The %d selected contacts', contactIds.length, textDomain), contactIds.length) }}
-            </label>
-            <label class="inline-flex items-center gap-2">
-              <input v-model="scope" type="radio" value="filtered" />
+            </button>
+            <button
+              type="button"
+              role="radio"
+              class="rounded-[8px] px-4 py-2.5 text-left text-[14px] ring-1 transition"
+              :class="scope === 'filtered' ? 'bg-primary-50 text-primary-800 ring-primary-600' : 'bg-white text-slate-700 ring-slate-200 hover:bg-slate-50'"
+              :aria-checked="scope === 'filtered'"
+              @click="scope = 'filtered'"
+            >
               {{ sprintf(_n('The %d contact matching the current filters', 'All %d contacts matching the current filters', total, textDomain), total) }}
-            </label>
-          </fieldset>
+            </button>
+          </div>
 
           <p v-if="error" class="rounded-[8px] border border-danger/20 bg-danger/10 px-4 py-3 text-sm text-danger">{{ error }}</p>
 

@@ -11,6 +11,8 @@
 import { computed } from 'vue';
 import { __, textDomain } from '../../../utils/i18n';
 import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
+// The admin's global input styles turn a native checkbox into an empty circle; this one hides it.
+import BaseCheckbox from '../../../components/buttons/checkbox/BaseCheckbox.vue';
 
 const props = defineProps({
   field: { type: Object, required: true },
@@ -107,15 +109,14 @@ function toggleOption(option, checked) {
     />
 
     <div v-else-if="field.type === 'multi_select'" class="flex flex-wrap gap-x-4 gap-y-2 rounded-[8px] border border-slate-200 px-3 py-2">
-      <label v-for="option in field.options || []" :key="option" class="inline-flex items-center gap-2 text-[14px] text-slate-700">
-        <input
-          type="checkbox"
-          :checked="listValue.includes(option)"
-          :disabled="disabled"
-          @change="toggleOption(option, $event.target.checked)"
-        />
-        {{ option }}
-      </label>
+      <BaseCheckbox
+        v-for="option in field.options || []"
+        :key="option"
+        :disabled="disabled"
+        :label="option"
+        :model-value="listValue.includes(option)"
+        @change="toggleOption(option, $event)"
+      />
       <span v-if="!(field.options || []).length" class="text-[13px] text-slate-400">{{ __('This field has no options yet.', textDomain) }}</span>
     </div>
 
