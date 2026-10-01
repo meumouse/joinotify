@@ -1,6 +1,6 @@
 === Joinotify ===
 Contributors: meumouse
-Tags: whatsapp, woocommerce, automation, notifications, workflow
+Tags: whatsapp, automation, woocommerce, notifications, workflow, join, notify, joinotify, cloud api, meta, broadcast, audiences, contacts
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
