@@ -422,11 +422,24 @@ function joinotify_format_phone( $phone ) {
 /**
  * Get a Joinotify plugin setting value.
  *
+ * The Joinotify API key (`whatsapp_cloud_api_token`) is stored sealed since 2.6.0
+ * and may come from the `JOINOTIFY_CLOUD_API_TOKEN` constant, so it is answered
+ * through Helpers::cloud_api_token(), in the clear, as before.
+ *
  * @since 2.0.0
+ * @version 2.6.0
  * @param string $key | Setting key.
  * @return mixed Setting value, or false when the key is not set.
  */
 function joinotify_get_setting( $key ) {
+	if ( 'whatsapp_cloud_api_token' === $key ) {
+		if ( false === Admin::get_setting( $key ) && ! Helpers::cloud_api_token_locked() ) {
+			return false;
+		}
+
+		return Helpers::cloud_api_token();
+	}
+
 	return Admin::get_setting( $key );
 }
 

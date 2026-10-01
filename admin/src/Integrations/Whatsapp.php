@@ -93,7 +93,7 @@ class Whatsapp extends Integrations_Base {
      * account's numbers imported before the site can send anything.
      *
      * @since 2.3.0
-     * @version 2.4.1
+     * @version 2.6.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
@@ -118,6 +118,8 @@ class Whatsapp extends Integrations_Base {
                         // is stored and what its public prefix is, never its value.
                         'connected' => '' !== $token,
                         'key_prefix' => '' !== $token ? substr( $token, 0, 14 ) : '',
+                        // Defined by JOINOTIFY_CLOUD_API_TOKEN: shown, never replaceable here.
+                        'locked' => Helpers::cloud_api_token_locked(),
                     ),
                 )
             ),

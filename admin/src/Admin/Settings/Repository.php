@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Admin\Settings;
 
 use MeuMouse\Joinotify\Admin\Default_Options;
 use MeuMouse\Joinotify\Core\Helpers;
+use MeuMouse\Joinotify\Core\Token_Vault;
 
 defined('ABSPATH') || exit;
 
@@ -25,6 +26,11 @@ class Repository {
     /**
      * Persist a settings payload and return the sanitized result.
      *
+     * The returned array is what was stored, so the API key in it is sealed —
+     * pass it through Registry::get_settings_for_client() before it reaches the
+     * browser, as every caller does.
+     *
+     * @version 2.6.0
      * @param array<string,mixed> $incoming
      * @return array<string,mixed>
      */
@@ -62,6 +68,14 @@ class Repository {
         }
 
         $sanitized = self::preserve_write_only( $sanitized, $current, Registry::get_write_only_keys() );
+        $sanitized = self::seal_api_key( $sanitized, $current );
+
+        // The `_is_set`/`_locked` flags are derived for the browser on every read
+        // (Registry::get_settings_for_client) and come back with the whole form;
+        // they describe the key, they are not settings of their own.
+        foreach ( Registry::get_write_only_keys() as $write_only_key ) {
+            unset( $sanitized[ $write_only_key . '_is_set' ], $sanitized[ $write_only_key . '_locked' ] );
+        }
 
         update_option( 'joinotify_settings', $sanitized );
 
@@ -111,6 +125,46 @@ class Repository {
                 $sanitized[ $key ] = $current[ $key ];
             }
         }
+
+        return $sanitized;
+    }
+
+
+    /**
+     * Keep the Joinotify API key sealed in the stored settings.
+     *
+     * A save usually hands back the sealed value it read (preserved above, or
+     * merged in by the wizard and the import), which is kept as it is. A key in
+     * the clear — the API key control puts the one it just connected with into
+     * the form — is sealed, unless it is the key already stored, in which case
+     * the stored value is kept instead of being sealed again with a new nonce.
+     *
+     * @since 2.6.0
+     * @param array<string,mixed> $sanitized Values about to be stored.
+     * @param array<string,mixed> $current   Values currently stored.
+     * @return array<string,mixed>
+     */
+    public static function seal_api_key( $sanitized, $current ) {
+        $key = 'whatsapp_cloud_api_token';
+
+        if ( ! isset( $sanitized[ $key ] ) || ! is_scalar( $sanitized[ $key ] ) ) {
+            return $sanitized;
+        }
+
+        $incoming = trim( (string) $sanitized[ $key ] );
+        $stored = isset( $current[ $key ] ) && is_scalar( $current[ $key ] ) ? trim( (string) $current[ $key ] ) : '';
+
+        if ( '' === $incoming || Token_Vault::is_encrypted( $incoming ) ) {
+            return $sanitized;
+        }
+
+        if ( Token_Vault::is_encrypted( $stored ) && Token_Vault::decrypt( $stored ) === $incoming ) {
+            $sanitized[ $key ] = $stored;
+
+            return $sanitized;
+        }
+
+        $sanitized[ $key ] = Token_Vault::encrypt( $incoming );
 
         return $sanitized;
     }

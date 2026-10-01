@@ -12,6 +12,7 @@
  *   & "C:\path\to\Local\php.exe" tests/upgrader-test.php
  *
  * @since 2.0.0
+ * @version 2.6.0
  */
 
 // The class file guards with `defined('ABSPATH') || exit;`.
@@ -85,6 +86,9 @@ check( 'completed routine is not repeated', ! has_pending( '1.0.0', array( 'work
 check( 'upgrade from 2.3.0 runs the licensing cleanup routine', has_pending( '2.3.0', array(), 'drop_licensing_2_4_0' ) );
 check( 'a site already on 2.4.0 skips the licensing cleanup', ! has_pending( '2.4.0', array(), 'drop_licensing_2_4_0' ) );
 check( 'non-array completed coerced safely', is_array( Upgrader::get_pending_routines( '1.0.0', 'oops' ) ) );
+check( 'upgrade from 2.5.1 seals the API key', has_pending( '2.5.1', array(), 'seal_cloud_api_token_2_6_0' ) );
+check( 'a site already on 2.6.0 skips the API key sealing', ! has_pending( '2.6.0', array(), 'seal_cloud_api_token_2_6_0' ) );
+check( 'the API key sealing runs once', ! has_pending( '2.5.1', array( 'seal_cloud_api_token_2_6_0' ), 'seal_cloud_api_token_2_6_0' ) );
 
 echo "\n== summary ==\n";
 echo "  {$assertions} assertions, {$failures} failures\n";

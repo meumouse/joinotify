@@ -207,6 +207,7 @@ class Upgrader {
      * idempotent — a routine may re-run if a previous attempt failed.
      *
      * @since 2.0.0
+     * @version 2.6.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_routines() {
@@ -220,6 +221,11 @@ class Upgrader {
                 'id' => 'drop_licensing_2_4_0',
                 'version' => '2.4.0',
                 'callback' => array( self::class, 'drop_licensing_data' ),
+            ),
+            array(
+                'id' => 'seal_cloud_api_token_2_6_0',
+                'version' => '2.6.0',
+                'callback' => array( self::class, 'seal_cloud_api_token' ),
             ),
         );
 
@@ -271,6 +277,45 @@ class Upgrader {
 
         // The update-polling cron events pointed at a class that is gone.
         Routines::unschedule_legacy_update_events();
+    }
+
+
+    /**
+     * Seal the Joinotify API key that an earlier version stored in the clear.
+     *
+     * Runs once. Reading never depended on it — a key without the `enc:v1:`
+     * prefix is still read as it is — so a site without the sodium extension
+     * simply keeps the key as it was, and the next settings save seals it if
+     * sodium shows up later. A sealed key is left alone, which makes a retry
+     * harmless.
+     *
+     * @since 2.6.0
+     * @return void
+     */
+    public static function seal_cloud_api_token() {
+        $settings = get_option( 'joinotify_settings', array() );
+
+        if ( ! is_array( $settings ) || ! isset( $settings['whatsapp_cloud_api_token'] ) || ! is_string( $settings['whatsapp_cloud_api_token'] ) ) {
+            return;
+        }
+
+        $token = trim( $settings['whatsapp_cloud_api_token'] );
+
+        if ( '' === $token || Token_Vault::is_encrypted( $token ) || ! Token_Vault::is_available() ) {
+            return;
+        }
+
+        $sealed = Token_Vault::encrypt( $token );
+
+        // Only a value that opens back to the same key replaces it: a failure here
+        // must never cost the site its connection.
+        if ( ! Token_Vault::is_encrypted( $sealed ) || Token_Vault::decrypt( $sealed ) !== $token ) {
+            return;
+        }
+
+        $settings['whatsapp_cloud_api_token'] = $sealed;
+
+        update_option( 'joinotify_settings', $settings );
     }
 
 

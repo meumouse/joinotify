@@ -69,7 +69,12 @@ class Registry {
     /**
      * The settings as the browser is allowed to see them.
      *
+     * The API key defined by the `JOINOTIFY_CLOUD_API_TOKEN` constant counts as
+     * set, and is flagged `whatsapp_cloud_api_token_locked` so the screen knows
+     * it cannot be changed from there.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array<string,mixed> $settings Full settings array.
      * @return array<string,mixed>
      */
@@ -82,6 +87,13 @@ class Registry {
             $settings[ $key . '_is_set' ] = '' !== trim( (string) $settings[ $key ] );
             $settings[ $key ] = '';
         }
+
+        if ( Helpers::cloud_api_token_locked() ) {
+            $settings['whatsapp_cloud_api_token'] = '';
+            $settings['whatsapp_cloud_api_token_is_set'] = true;
+        }
+
+        $settings['whatsapp_cloud_api_token_locked'] = Helpers::cloud_api_token_locked();
 
         return $settings;
     }

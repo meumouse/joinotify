@@ -139,15 +139,27 @@ class Helpers {
      * know which one the site owner used. The old fallback to the license
      * response object went away with the licensing system in 2.4.0.
      *
+     * The API key is the exception on both counts: the `JOINOTIFY_CLOUD_API_TOKEN`
+     * constant, when defined, wins over the option, and the option holds it sealed
+     * (see Token_Vault), so it is opened here. A key stored in the clear by an
+     * earlier version is still read as it is.
+     *
      * @since 1.4.8
-     * @version 2.4.0
+     * @version 2.6.0
      * @param string $setting_key | Settings key holding the credential.
      * @return string
      */
     private static function cloud_credential( $setting_key ) {
-        $stored = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
+        $is_token = 'whatsapp_cloud_api_token' === $setting_key;
 
-        return is_string( $stored ) ? trim( $stored ) : '';
+        if ( $is_token && self::cloud_api_token_locked() ) {
+            return trim( (string) constant('JOINOTIFY_CLOUD_API_TOKEN') );
+        }
+
+        $stored = \MeuMouse\Joinotify\Admin\Admin::get_setting( $setting_key );
+        $stored = is_string( $stored ) ? trim( $stored ) : '';
+
+        return $is_token ? Token_Vault::decrypt( $stored ) : $stored;
     }
 
 
@@ -155,10 +167,42 @@ class Helpers {
      * WhatsApp Cloud API bearer token (sk_live_... / sk_test_...).
      *
      * @since 1.4.8
-     * @return string
+     * @version 2.6.0
+     * @return string The key in the clear — never send it to the browser.
      */
     public static function cloud_api_token() {
         return self::cloud_credential('whatsapp_cloud_api_token');
+    }
+
+
+    /**
+     * Whether the API key comes from the `JOINOTIFY_CLOUD_API_TOKEN` constant.
+     *
+     * A key defined in `wp-config.php` wins over the one in the settings and cannot be
+     * replaced or removed from the admin: the screens show it as connected and locked.
+     *
+     * @since 2.6.0
+     * @return bool
+     */
+    public static function cloud_api_token_locked() {
+        return defined('JOINOTIFY_CLOUD_API_TOKEN')
+            && is_scalar( constant('JOINOTIFY_CLOUD_API_TOKEN') )
+            && '' !== trim( (string) constant('JOINOTIFY_CLOUD_API_TOKEN') );
+    }
+
+
+    /**
+     * The API key as the settings option should hold it: sealed when sodium is available.
+     *
+     * Idempotent — a value already sealed comes back untouched — so every writer can pass
+     * whatever it has without the risk of sealing twice.
+     *
+     * @since 2.6.0
+     * @param string $token | Key in the clear, or as read from the option.
+     * @return string
+     */
+    public static function seal_cloud_api_token( $token ) {
+        return Token_Vault::encrypt( $token );
     }
 
 
