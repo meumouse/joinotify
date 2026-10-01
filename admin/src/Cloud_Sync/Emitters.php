@@ -203,6 +203,7 @@ class Emitters {
 	 * Queue an order event: the order, the customer's history, the links, and who they are.
 	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @param string $name
 	 * @param \WC_Order $order
 	 * @param array<string,mixed> $extra More data for this event.
@@ -216,7 +217,7 @@ class Emitters {
 			array_merge( array(
 				'order' => Payload::order( $order ),
 				'customer' => $customer,
-				'links' => Payload::links( $order ),
+				'links' => Payload::links( $order, $name ),
 			), $extra ),
 			Contact::from_order( $order, $customer )
 		);
@@ -477,6 +478,7 @@ class Emitters {
 
 	/**
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @param \WC_Subscription $subscription
 	 * @return void
 	 */
@@ -484,7 +486,7 @@ class Emitters {
 		$order = self::last_order( $subscription );
 		self::emit_subscription( 'wcs.subscription.payment_failed', $subscription, $order ? array(
 			'order' => Payload::order( $order ),
-			'links' => Payload::links( $order ),
+			'links' => Payload::links( $order, 'wcs.subscription.payment_failed' ),
 		) : array() );
 	}
 
@@ -790,6 +792,7 @@ class Emitters {
 	 * An order left unpaid is an abandoned cart with an order attached.
 	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @param int $order_id
 	 * @param int $cart_id
 	 * @return void
@@ -798,7 +801,7 @@ class Emitters {
 		$order = self::order( $order_id );
 		self::emit_cart( 'fcrc.cart.abandoned', $cart_id, $order ? array(
 			'order' => Payload::order( $order ),
-			'links' => Payload::links( $order ),
+			'links' => Payload::links( $order, 'fcrc.cart.abandoned' ),
 		) : array() );
 	}
 

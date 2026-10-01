@@ -167,6 +167,7 @@ class Webhook_Action {
 	 * The trigger's data, as the sync's events carry it.
 	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @param array $event_data The workflow's runtime payload.
 	 * @return array<string,mixed>
 	 */
@@ -183,7 +184,7 @@ class Webhook_Action {
 		if ( $order instanceof \WC_Order && ! $order instanceof \WC_Order_Refund ) {
 			$body['order'] = Payload::order( $order );
 			$body['customer'] = Payload::customer( $order );
-			$body['links'] = Payload::links( $order );
+			$body['links'] = Payload::links( $order, 'webhook' );
 		}
 
 		$subscription = ! empty( $event_data['subscription_id'] ) && function_exists( 'wcs_get_subscription' ) ? wcs_get_subscription( (int) $event_data['subscription_id'] ) : null;
