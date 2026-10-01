@@ -19,6 +19,8 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+class QuotaError extends Error {}
+
 function buildSystemPrompt(targetLanguage) {
   return [
     "You are a professional software localizer for Joinotify, a WordPress plugin that automates WhatsApp messaging.",
@@ -32,7 +34,7 @@ function buildSystemPrompt(targetLanguage) {
     "- Do NOT translate brand/product names: Joinotify, WhatsApp, WooCommerce, WPForms, Elementor, PayPal, Pix, Flexify Checkout, OpenAI, ChatGPT, MeuMouse.com.",
     "- Translate UI text only. Never add explanations, quotes or extra characters.",
     "",
-    "You will receive a JSON object whose values are strings keyed by numeric ids.",
+    "You will receive a JSON object keyed by numeric ids. Each value is either the string to translate or an object { \"text\": string, \"context\": string }, where the context only disambiguates the text (e.g. \"post type singular name\", or \"plural form of ...\" for the plural of a count) and must never be translated or included in the answer.",
     "Respond with a JSON object using the SAME ids as keys and the translated strings as values. Do not add or omit keys.",
   ].join("\n");
 }
@@ -40,7 +42,7 @@ function buildSystemPrompt(targetLanguage) {
 async function requestBatch(batch, targetLanguage, config) {
   const payload = {};
   batch.forEach((item, index) => {
-    payload[String(index)] = item.msgid;
+    payload[String(index)] = item.context ? { text: item.msgid, context: item.context } : item.msgid;
   });
 
   const body = {
@@ -75,6 +77,15 @@ async function requestBatch(batch, targetLanguage, config) {
       continue;
     }
 
+    // A 429 also means the account ran out of credits, which no retry fixes.
+    if (response.status === 429) {
+      const detail = await response.clone().json().catch(() => null);
+
+      if (detail?.error?.type === "insufficient_quota") {
+        throw new QuotaError(`OpenAI quota exhausted: ${detail.error.message}`);
+      }
+    }
+
     if (response.status === 429 || response.status >= 500) {
       lastError = new Error(`HTTP ${response.status}`);
       const delay = Math.pow(2, attempt + 1) * 1000;
@@ -106,7 +117,7 @@ async function requestBatch(batch, targetLanguage, config) {
     batch.forEach((item, index) => {
       const value = parsed[String(index)];
       if (typeof value === "string") {
-        translations[item.msgid] = value;
+        translations[item.key ?? item.msgid] = value;
       }
     });
 
@@ -117,8 +128,8 @@ async function requestBatch(batch, targetLanguage, config) {
 }
 
 /**
- * Translates an array of { msgid } entries into the target language.
- * Returns a map of msgid -> translated string.
+ * Translates an array of { key, msgid, context } entries into the target language.
+ * Returns a map of key (msgid when absent) -> translated string.
  */
 export async function translateStringsOpenAI(strings, langInfo) {
   if (strings.length === 0) {
@@ -153,6 +164,11 @@ export async function translateStringsOpenAI(strings, langInfo) {
       const batchTranslations = await requestBatch(batch, langInfo.name, config);
       Object.assign(translations, batchTranslations);
     } catch (error) {
+      // Every later batch would fail the same way, so stop the whole run.
+      if (error instanceof QuotaError) {
+        throw error;
+      }
+
       console.error(`    Error translating batch ${batchNum}: ${error.message}`);
     }
 

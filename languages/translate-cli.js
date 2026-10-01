@@ -20,17 +20,24 @@ const BATCH_SIZE = 50;
 const DELAY_BETWEEN_BATCHES = 1000;
 const MAX_RETRIES = 3;
 
+// `plural` is the locale's Plural-Forms rule, as WordPress core ships it.
 const LANGUAGES = {
-  en_US: { code: "en", name: "English (United States)" },
-  es_ES: { code: "es", name: "Spanish (Spain)" },
-  pt_BR: { code: "pt", name: "Portuguese (Brazil)" },
-  pt_PT: { code: "pt-PT", name: "Portuguese (Portugal)" },
-  de_DE: { code: "de", name: "German (Germany)" },
-  fr_FR: { code: "fr", name: "French (France)" },
-  it_IT: { code: "it", name: "Italian (Italy)" },
-//  nl_NL: { code: "nl", name: "Dutch (Netherlands)" },
-//  zh_CN: { code: "zh-CN", name: "Chinese (Simplified)" },
+  en_US: { code: "en", name: "English (United States)", plural: "nplurals=2; plural=(n != 1);" },
+  es_ES: { code: "es", name: "Spanish (Spain)", plural: "nplurals=2; plural=(n != 1);" },
+  pt_BR: { code: "pt", name: "Portuguese (Brazil)", plural: "nplurals=2; plural=(n > 1);" },
+  pt_PT: { code: "pt-PT", name: "Portuguese (Portugal)", plural: "nplurals=2; plural=(n != 1);" },
+  de_DE: { code: "de", name: "German (Germany)", plural: "nplurals=2; plural=(n != 1);" },
+  fr_FR: { code: "fr", name: "French (France)", plural: "nplurals=2; plural=(n > 1);" },
+  it_IT: { code: "it", name: "Italian (Italy)", plural: "nplurals=2; plural=(n != 1);" },
+//  nl_NL: { code: "nl", name: "Dutch (Netherlands)", plural: "nplurals=2; plural=(n != 1);" },
+//  zh_CN: { code: "zh-CN", name: "Chinese (Simplified)", plural: "nplurals=1; plural=0;" },
 };
+
+// gettext's separator between a message context and its msgid.
+const CONTEXT_GLUE = "\u0004";
+
+// Suffix of the key under which an entry's plural form is translated.
+const PLURAL_SUFFIX = "\u0000plural";
 
 const ENGINES = new Set(["google", "openai"]);
 const DEFAULT_ENGINE = "google";
@@ -112,50 +119,87 @@ function parsePoFile(filePath) {
   return gettextParser.po.parse(content);
 }
 
+function getPluralCount(langCode) {
+  const match = /nplurals\s*=\s*(\d+)/.exec(LANGUAGES[langCode].plural);
+
+  return match ? Number(match[1]) : 2;
+}
+
+function toEntryKey(msgctxt, msgid) {
+  return msgctxt ? `${msgctxt}${CONTEXT_GLUE}${msgid}` : msgid;
+}
+
+/**
+ * Index every entry of the template, in every context, by "context\4msgid".
+ *
+ * Only the default context was read before, so strings passed through `_x()`
+ * never reached the catalogues.
+ */
 function extractMsgIds(poData) {
-  const translations = poData.translations[""] || {};
   const msgIds = new Map();
 
-  for (const [msgid, entry] of Object.entries(translations)) {
-    if (msgid === "") {
-      continue;
-    }
+  for (const [msgctxt, entries] of Object.entries(poData.translations || {})) {
+    for (const [msgid, entry] of Object.entries(entries)) {
+      if (msgid === "") {
+        continue;
+      }
 
-    msgIds.set(msgid, entry);
+      msgIds.set(toEntryKey(msgctxt, msgid), entry);
+    }
   }
 
   return msgIds;
 }
 
+/**
+ * Queue what is still untranslated.
+ *
+ * Each item carries the text to translate, the key its translation is stored
+ * under and, when the bare text is ambiguous, a context for the engine. A
+ * plural entry queues its singular and its plural form separately, so a
+ * catalogue that only has the singular gets the plural without re-translating
+ * the rest.
+ */
 function findStringsToTranslate(
   potMsgIds,
   existingPoData,
-  { retranslateIdentical = false, isEnglishTarget = false } = {}
+  { retranslateIdentical = false, isEnglishTarget = false, pluralCount = 2 } = {}
 ) {
   const toTranslate = [];
-  const existingTranslations = existingPoData?.translations?.[""] || {};
 
-  for (const [msgid, potEntry] of potMsgIds) {
-    const existing = existingTranslations[msgid];
+  // For non-English targets, a translation equal to the source string is
+  // almost always an untranslated passthrough left by a previous run. The
+  // default incremental check treats a non-empty msgstr as "done" and would
+  // skip it forever, so opt in to re-queueing those entries. (Legitimately
+  // identical strings — brand/country names — are re-sent but returned
+  // unchanged by the engine, so this only costs a few extra tokens.)
+  const isPassthrough = (translation, source) =>
+    retranslateIdentical && !isEnglishTarget && translation === source;
 
-    const isEmpty = !existing || !existing.msgstr || existing.msgstr[0] === "";
+  for (const [key, potEntry] of potMsgIds) {
+    const existing = existingPoData?.translations?.[potEntry.msgctxt || ""]?.[potEntry.msgid];
+    const msgstr = existing?.msgstr || [];
 
-    // For non-English targets, a translation equal to the source string is
-    // almost always an untranslated passthrough left by a previous run. The
-    // default incremental check treats a non-empty msgstr as "done" and would
-    // skip it forever, so opt in to re-queueing those entries. (Legitimately
-    // identical strings — brand/country names — are re-sent but returned
-    // unchanged by the engine, so this only costs a few extra tokens.)
-    const isIdenticalPassthrough =
-      retranslateIdentical &&
-      !isEnglishTarget &&
-      existing &&
-      existing.msgstr &&
-      existing.msgstr[0] === msgid;
-
-    if (isEmpty || isIdenticalPassthrough) {
+    if (!msgstr[0] || isPassthrough(msgstr[0], potEntry.msgid)) {
       toTranslate.push({
-        msgid,
+        key,
+        msgid: potEntry.msgid,
+        context: potEntry.msgctxt || "",
+        comments: potEntry.comments,
+      });
+    }
+
+    if (!potEntry.msgid_plural) {
+      continue;
+    }
+
+    const pluralForms = Array.from({ length: pluralCount - 1 }, (_, index) => msgstr[index + 1]);
+
+    if (pluralForms.some((form) => !form) || isPassthrough(msgstr[1], potEntry.msgid_plural)) {
+      toTranslate.push({
+        key: key + PLURAL_SUFFIX,
+        msgid: potEntry.msgid_plural,
+        context: [`plural form of "${potEntry.msgid}"`, potEntry.msgctxt].filter(Boolean).join("; "),
         comments: potEntry.comments,
       });
     }
@@ -221,8 +265,8 @@ async function translateStringsGoogle(strings, targetLangCode) {
     try {
       const translatedArray = await translateBatchWithRetry(stringsToTranslate, targetLangCode);
 
-      for (let j = 0; j < stringsToTranslate.length; j++) {
-        translations[stringsToTranslate[j]] = translatedArray[j];
+      for (let j = 0; j < batch.length; j++) {
+        translations[batch[j].key] = translatedArray[j];
       }
     } catch (error) {
       console.error(`    Error translating batch: ${error.message}`);
@@ -238,31 +282,36 @@ async function translateStringsGoogle(strings, targetLangCode) {
 
 function createPoFile(potData, existingPoData, newTranslations, langCode) {
   const poData = JSON.parse(JSON.stringify(potData));
-  const headers = poData.translations[""][""];
+  const pluralCount = getPluralCount(langCode);
 
-  headers.msgstr[0] = headers.msgstr[0]
-    .replace("LANGUAGE <LL@li.org>", `${LANGUAGES[langCode].name}`)
-    .replace("Language: \\n", `Language: ${langCode.replace("_", "-")}\\n`)
-    .replace(
-      "PO-Revision-Date: ",
-      `PO-Revision-Date: ${new Date().toISOString()}\\n`
-    );
+  // gettext-parser writes the header entry from `headers`, so that is where the
+  // locale's language and plural rule go.
+  poData.headers = {
+    ...poData.headers,
+    Language: langCode,
+    "Plural-Forms": LANGUAGES[langCode].plural,
+  };
 
-  const existingTranslations = existingPoData?.translations?.[""] || {};
+  for (const [msgctxt, entries] of Object.entries(poData.translations)) {
+    for (const [msgid, entry] of Object.entries(entries)) {
+      if (msgid === "") {
+        continue;
+      }
 
-  for (const msgid of Object.keys(poData.translations[""])) {
-    if (msgid === "") {
-      continue;
-    }
+      const key = toEntryKey(msgctxt, msgid);
+      const existing = existingPoData?.translations?.[msgctxt]?.[msgid]?.msgstr || [];
+      const singular = newTranslations[key] || existing[0] || "";
 
-    if (newTranslations[msgid]) {
-      poData.translations[""][msgid].msgstr = [newTranslations[msgid]];
-    } else if (
-      existingTranslations[msgid] &&
-      existingTranslations[msgid].msgstr &&
-      existingTranslations[msgid].msgstr[0]
-    ) {
-      poData.translations[""][msgid].msgstr = existingTranslations[msgid].msgstr;
+      if (!entry.msgid_plural) {
+        entry.msgstr = [singular];
+        continue;
+      }
+
+      entry.msgstr = [singular];
+
+      for (let index = 1; index < pluralCount; index++) {
+        entry.msgstr.push(newTranslations[key + PLURAL_SUFFIX] || existing[index] || "");
+      }
     }
   }
 
@@ -343,6 +392,7 @@ async function main() {
     const stringsToTranslate = findStringsToTranslate(potMsgIds, existingPoData, {
       retranslateIdentical,
       isEnglishTarget: langInfo.code === "en",
+      pluralCount: getPluralCount(langCode),
     });
     let poData;
 

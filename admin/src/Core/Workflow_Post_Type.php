@@ -41,7 +41,7 @@ class Workflow_Post_Type {
      * Register "joinotify-workflow" post type
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.5.1
      * @return void
      */
     public function register_joinotify_workflow_post_type() {
@@ -50,7 +50,7 @@ class Workflow_Post_Type {
             'singular_name'      => _x( 'Flow', 'post type singular name', 'joinotify' ),
             'menu_name'          => _x( 'Flows', 'admin menu', 'joinotify' ),
             'name_admin_bar'     => _x( 'Flow', 'add new on admin bar', 'joinotify' ),
-            'add_new'            => _x( 'Add new', 'fluxo', 'joinotify' ),
+            'add_new'            => _x( 'Add new', 'flow', 'joinotify' ),
             'add_new_item'       => __( 'Add new flow', 'joinotify' ),
             'new_item'           => __( 'New flow', 'joinotify' ),
             'edit_item'          => __( 'Edit flow', 'joinotify' ),
