@@ -5,12 +5,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "x-domain: joinotify\n"
+"Language: pt_PT\n"
 
 #: admin/src/Integrations/Woocommerce.php:442
 msgid "12345"
 msgstr "12345"
 
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:34
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:35
 msgid "-1001234567890 or {{ telegram_chat_id }}"
 msgstr "-1001234567890 ou {{ telegram_chat_id }}"
 
@@ -80,19 +81,19 @@ msgstr "(edite-o no painel do Joinotify)"
 msgid "(erased contact)"
 msgstr "(contacto apagado)"
 
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:35
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:36
 msgid "{{ wc_billing_email }} or customer@example.com"
 msgstr "{{ wc_billing_email }} ou customer@example.com"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:320
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:321
 msgid "{{ wc_billing_first_name }} or a fixed value"
 msgstr "{{ wc_billing_first_name }} ou um valor fixo"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:217
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:257
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:218
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:87
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:96
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:258
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:47
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr "{{ wc_billing_phone }} ou +5511999990000"
 
@@ -155,43 +156,51 @@ msgstr "%1$s: %2$d contactos. Diga o que cada coluna representa."
 msgid "%d attempt"
 msgid_plural "%d attempts"
 msgstr[0] "%d tentativa"
+msgstr[1] "%d tentativas"
 
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:218
 msgid "%d contact"
 msgid_plural "%d contacts"
 msgstr[0] "%d contacto"
+msgstr[1] "%d contactos"
 
 #: app/src/builder/actions/utils/actionDescription.ts:95
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dia"
+msgstr[1] "%d dias"
 
 #: app/src/builder/actions/utils/actionDescription.ts:93
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
+msgstr[1] "%d horas"
 
 #: admin/src/Rest/Cloud_Sync_Action.php:57
 #. translators: %d: number of items
 msgid "%d item discarded."
 msgid_plural "%d items discarded."
 msgstr[0] "%d item descartado."
+msgstr[1] "%d itens descartados."
 
 #: admin/src/Rest/Cloud_Sync_Action.php:51
 #. translators: %d: number of items
 msgid "%d item will be sent again."
 msgid_plural "%d items will be sent again."
 msgstr[0] "%d item será enviado novamente."
+msgstr[1] "%d itens serão enviados novamente."
 
 #: app/src/builder/actions/utils/actionDescription.ts:91
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
+msgstr[1] "%d minutos"
 
 #: app/src/builder/actions/utils/actionDescription.ts:99
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d mês"
+msgstr[1] "%d meses"
 
 #: admin/src/Rest/Cloud_Numbers_Sync.php:52
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:38
@@ -199,43 +208,51 @@ msgstr[0] "%d mês"
 msgid "%d number imported from your Joinotify account."
 msgid_plural "%d numbers imported from your Joinotify account."
 msgstr[0] "%d número importado da sua conta Joinotify."
+msgstr[1] "%d números importados da sua conta Joinotify."
 
 #: app/src/components/fields/JoinotifyApiKeyField.vue:96
 msgid "%d number imported."
 msgid_plural "%d numbers imported."
 msgstr[0] "%d número importado."
+msgstr[1] "%d números importados."
 
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:167
 msgid "%d option"
 msgid_plural "%d options"
 msgstr[0] "%d opção"
+msgstr[1] "%d opções"
 
 #: admin/src/Rest/Queue_Cancel.php:55
 #. translators: %d: number of cancelled scheduled items
 msgid "%d scheduled item was cancelled."
 msgid_plural "%d scheduled items were cancelled."
 msgstr[0] "%d item agendado foi cancelado."
+msgstr[1] "%d itens agendados foram cancelados."
 
 #: app/src/builder/actions/utils/actionDescription.ts:89
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d segundo"
+msgstr[1] "%d segundos"
 
 #: admin/src/Rest/History_Cancel_Retry.php:81
 #. translators: %d: number of selected records that had no resend pending
 msgid "%d selected record had no resend pending."
 msgid_plural "%d selected records had no resend pending."
 msgstr[0] "%d registo selecionado não tinha reenvio pendente."
+msgstr[1] "%d registos selecionados não tinham reenvio pendente."
 
 #: app/src/builder/actions/utils/actionDescription.ts:97
 msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] "%d semana"
+msgstr[1] "%d semanas"
 
 #: app/src/builder/actions/utils/actionDescription.ts:101
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d ano"
+msgstr[1] "%d anos"
 
 #: app/src/builder/actions/utils/validators.ts:48
 msgid "%s is required."
@@ -301,9 +318,9 @@ msgstr ""
 "<strong>Joinotify</strong> requer PHP versão 8.1 ou superior. Contacte o "
 "suporte do seu alojamento para atualizar."
 
-#: app/src/composables/useMessageHistory.ts:90
-#: app/src/composables/useProcessingQueue.ts:84
-#: app/src/composables/useWorkflows.ts:199
+#: app/src/composables/useMessageHistory.ts:107
+#: app/src/composables/useProcessingQueue.ts:108
+#: app/src/composables/useWorkflows.ts:214
 #: app/src/pages/contacts/useContactList.ts:48
 msgid "0 results"
 msgstr "0 resultados"
@@ -505,7 +522,7 @@ msgstr "Ative a sua licença antes de conectar."
 
 #: app/src/components/builder/BuilderNavbar.vue:143
 #: app/src/components/workflows/WorkflowTableRow.vue:37
-#: app/src/composables/useWorkflows.ts:187
+#: app/src/composables/useWorkflows.ts:202
 msgid "Active"
 msgstr "Ativo"
 
@@ -533,7 +550,7 @@ msgstr ""
 "Adicione um contacto manualmente ou ative a sincronização das suas "
 "integrações para trazer os seus clientes e leads."
 
-#: app/src/components/flow/FlowCanvas.vue:833
+#: app/src/components/flow/FlowCanvas.vue:834
 msgid "Add a documentation note"
 msgstr "Adicionar uma nota de documentação"
 
@@ -541,7 +558,7 @@ msgstr "Adicionar uma nota de documentação"
 msgid "Add a tag"
 msgstr "Adicionar uma etiqueta"
 
-#: app/src/components/flow/FlowCanvas.vue:846
+#: app/src/components/flow/FlowCanvas.vue:847
 #: app/src/components/flow/FlowNode.vue:455
 #: app/src/components/flow/FlowNode.vue:456
 msgid "Add action"
@@ -576,7 +593,7 @@ msgstr "Adicionar uma ação"
 msgid "Add at least one complete condition."
 msgstr "Adicione pelo menos uma condição completa."
 
-#: app/src/builder/components/base/AttachmentsField.vue:237
+#: app/src/builder/components/base/AttachmentsField.vue:238
 msgid "Add attachment"
 msgstr "Adicionar anexo"
 
@@ -598,7 +615,7 @@ msgstr "Adicionar campo"
 msgid "Add group"
 msgstr "Adicionar grupo"
 
-#: app/src/components/settings/SchemaFieldRenderer.vue:308
+#: app/src/components/settings/SchemaFieldRenderer.vue:310
 msgid "Add item"
 msgstr "Adicionar item"
 
@@ -621,7 +638,7 @@ msgstr "Adicionar novo fluxo"
 msgid "Add new workflow"
 msgstr "Adicionar novo fluxo de trabalho"
 
-#: app/src/components/flow/FlowCanvas.vue:837
+#: app/src/components/flow/FlowCanvas.vue:838
 msgid "Add note"
 msgstr "Adicionar nota"
 
@@ -701,7 +718,7 @@ msgstr ""
 "Adiciona a ação de cupão aos fluxos de trabalho do WooCommerce para que um "
 "fluxo de trabalho possa criar e enviar um cupão de desconto."
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:128
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:129
 msgid ""
 "Advance the date by the chosen offset, then run at the selected time of day "
 "(e.g. +1 day at 09:00)."
@@ -714,8 +731,8 @@ msgstr ""
 msgid "Advanced"
 msgstr "Avançado"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:119
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:139
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:120
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:140
 msgid "Advanced (model override)"
 msgstr "Avançado (substituição de modelo)"
 
@@ -739,10 +756,10 @@ msgstr "As funcionalidades de IA estão desativadas nesta instalação do WordPr
 msgid "AI generation failed."
 msgstr "Falha na geração de IA."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:123
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:129
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:143
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:149
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:124
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:130
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:144
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:150
 msgid "AI provider"
 msgstr "Fornecedor de IA"
 
@@ -784,8 +801,8 @@ msgstr "todos"
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:60
-#: app/src/composables/useMessageHistory.ts:57
-#: app/src/composables/useProcessingQueue.ts:59
+#: app/src/composables/useMessageHistory.ts:74
+#: app/src/composables/useProcessingQueue.ts:83
 #: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:142
 msgid "All"
 msgstr "Todos"
@@ -833,7 +850,7 @@ msgstr "Todas as mensagens de teste foram enviadas com sucesso."
 msgid "All workflows"
 msgstr "Todos os fluxos de trabalho"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:156
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:157
 msgid "Allow free shipping"
 msgstr "Permitir envio gratuito"
 
@@ -957,10 +974,10 @@ msgstr "já na base (ignoradas)"
 #: app/src/builder/actions/definitions/timeDelay.ts:61
 #: app/src/builder/actions/definitions/timeDelay.ts:89
 #: app/src/builder/actions/definitions/timeDelay.ts:96
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:148
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:179
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:113
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:133
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:149
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:180
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:114
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:134
 msgid "Amount"
 msgstr "Montante"
 
@@ -1069,7 +1086,7 @@ msgstr ""
 "sincronizada a partir da sua conta. Necessário nesse transporte, ignorado "
 "no relay legado."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:265
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:266
 msgid ""
 "Approved templates of your WhatsApp Business Account. Only these can be "
 "delivered outside the 24-hour window."
@@ -1133,7 +1150,7 @@ msgstr "Perguntar aos clientes pelo consentimento de marketing"
 msgid "at"
 msgstr "em"
 
-#: app/src/builder/components/base/AttachmentsField.vue:189
+#: app/src/builder/components/base/AttachmentsField.vue:190
 msgid ""
 "Attaches every digital file the customer purchased in this order. Resolved "
 "when the workflow runs, so it always matches the order that triggered it."
@@ -1142,7 +1159,7 @@ msgstr ""
 "Resolvido quando o fluxo de trabalho é executado, para que corresponda "
 "sempre à encomenda que o acionou."
 
-#: app/src/builder/components/base/AttachmentsField.vue:193
+#: app/src/builder/components/base/AttachmentsField.vue:194
 msgid ""
 "Attaches the file of the item currently being looped, so each iteration "
 "sends its own file. Only carries a file when the loop iterates the order "
@@ -1152,8 +1169,8 @@ msgstr ""
 "iteração envie o seu próprio ficheiro. Apenas transporta um ficheiro quando "
 "o loop itera os ficheiros digitais do pedido."
 
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:63
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:131
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:64
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:132
 msgid "Attachments"
 msgstr "Anexos"
 
@@ -1205,7 +1222,7 @@ msgid "Audiences & Contacts"
 msgstr "Públicos & Contactos"
 
 #: admin/src/Validations/Media_Types.php:41
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:35
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:36
 #: app/src/pages/history/HistoryPage.vue:93
 msgid "Audio"
 msgstr "Áudio"
@@ -1266,8 +1283,8 @@ msgstr "Modelos de automação"
 msgid "Available actions"
 msgstr "Ações disponíveis"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:232
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:169
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:233
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:170
 msgid "Available placeholders"
 msgstr "Placeholders disponíveis"
 
@@ -1342,7 +1359,7 @@ msgid "Blocked by Meta for marketing"
 msgstr "Bloqueado pelo Meta para marketing"
 
 #: admin/src/Builder/Webhook_Action.php:110
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:143
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:144
 #: app/src/pages/history/components/HistoryDetailsModal.vue:59
 msgid "Body"
 msgstr "Corpo"
@@ -1376,7 +1393,7 @@ msgstr "Token do bot"
 msgid "Botswana"
 msgstr "Botswana"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:151
+#: app/src/builder/actions/settings/ConditionSettings.vue:152
 msgid "Branching action"
 msgstr "Ação de ramificação"
 
@@ -1469,7 +1486,7 @@ msgstr ""
 "Conta empresarial que possui os modelos de mensagem. Preenchido quando você "
 "conecta."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:136
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:137
 #: app/src/pages/history/components/HistoryDetailsModal.vue:60
 msgid "Button"
 msgstr "Botão"
@@ -1551,7 +1568,7 @@ msgstr "Cancelar reenvio"
 msgid "Cancel scheduled item"
 msgstr "Cancelar item agendado"
 
-#: app/src/composables/useMessageHistory.ts:61
+#: app/src/composables/useMessageHistory.ts:78
 #: app/src/pages/history/HistoryPage.vue:77
 msgid "Cancelled"
 msgstr "Cancelado"
@@ -1560,8 +1577,8 @@ msgstr "Cancelado"
 msgid "Cape Verde"
 msgstr "Cabo Verde"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:141
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:144
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:142
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:145
 msgid "Caption"
 msgstr "Legenda"
 
@@ -1581,7 +1598,7 @@ msgstr "Carrinho recuperado"
 msgid "Cart total"
 msgstr "Total do carrinho"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:36
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:37
 msgid "Casual"
 msgstr "Casual"
 
@@ -1633,15 +1650,15 @@ msgstr ""
 msgid "Channel"
 msgstr "Canal"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:80
+#: app/src/builder/actions/settings/LoopSettings.vue:81
 msgid "Character that separates the entries. Leave empty to split by line break."
 msgstr ""
 "Caractere que separa as entradas. Deixe em branco para separar por quebra "
 "de linha."
 
 #: app/src/builder/actions/definitions/telegramText.ts:55
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:30
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:33
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:31
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:34
 msgid "Chat id"
 msgstr "ID do chat"
 
@@ -1687,7 +1704,7 @@ msgstr ""
 msgid "Choose an action to insert below the selected block."
 msgstr "Escolha uma ação para inserir abaixo do bloco selecionado."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:159
+#: app/src/builder/actions/settings/ConditionSettings.vue:160
 msgid "Choose and configure the workflow trigger before adding conditions."
 msgstr ""
 "Escolha e configure o gatilho do fluxo de trabalho antes de adicionar "
@@ -1725,7 +1742,7 @@ msgstr "Escolha a fonte"
 msgid "Choose the trigger"
 msgstr "Escolha o gatilho"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:101
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:102
 msgid ""
 "Choose whether the workflow should wait for a period, a fixed date, or a "
 "relative offset at a specific time."
@@ -1844,7 +1861,7 @@ msgid "Code digit %s"
 msgstr "Código do dígito %s"
 
 #: app/src/builder/actions/definitions/loop.ts:99
-#: app/src/builder/actions/settings/LoopSettings.vue:59
+#: app/src/builder/actions/settings/LoopSettings.vue:60
 msgid "Collection"
 msgstr "Coleção"
 
@@ -1889,20 +1906,20 @@ msgstr "Componente"
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:78
 #: app/src/builder/actions/definitions/condition.ts:106
-#: app/src/builder/actions/settings/ConditionSettings.vue:174
+#: app/src/builder/actions/settings/ConditionSettings.vue:175
 #: app/src/builder/actions/utils/actionDescription.ts:214
 #: app/src/stores/useWorkflowBuilderStore.ts:1590
 msgid "Condition"
 msgstr "Condição"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:170
+#: app/src/builder/actions/settings/ConditionSettings.vue:171
 msgid "Condition rule"
 msgstr "Regra de condição"
 
 #: admin/src/Admin/Builder/Registry.php:468
 #: app/src/builder/actions/definitions/condition.ts:121
 #: app/src/builder/actions/definitions/condition.ts:132
-#: app/src/builder/actions/settings/ConditionSettings.vue:180
+#: app/src/builder/actions/settings/ConditionSettings.vue:181
 msgid "Condition type"
 msgstr "Tipo de condição"
 
@@ -1952,11 +1969,11 @@ msgstr ""
 "Configure remetentes, integrações, o construtor e o comportamento geral do "
 "plugin. Se precisar de ajuda, visite o nosso "
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:158
+#: app/src/builder/actions/settings/ConditionSettings.vue:159
 msgid "Configure the trigger first"
 msgstr "Configure o gatilho primeiro"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:117
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:118
 msgid "Configure the WooCommerce coupon generated by this action."
 msgstr "Configure o cupom do WooCommerce gerado por esta ação."
 
@@ -2165,12 +2182,12 @@ msgstr "Ilhas Cook"
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: app/src/composables/useMessageHistory.ts:289
-#: app/src/composables/useMessageHistory.ts:298
+#: app/src/composables/useMessageHistory.ts:306
+#: app/src/composables/useMessageHistory.ts:315
 msgid "Could not cancel the resend."
 msgstr "Não foi possível cancelar o reenvio."
 
-#: app/src/composables/useProcessingQueue.ts:254
+#: app/src/composables/useProcessingQueue.ts:278
 msgid "Could not cancel the scheduled item."
 msgstr "Não foi possível cancelar o item agendado."
 
@@ -2178,8 +2195,8 @@ msgstr "Não foi possível cancelar o item agendado."
 msgid "Could not clear the debug logs."
 msgstr "Não foi possível limpar os logs de depuração."
 
-#: app/src/composables/useMessageHistory.ts:316
-#: app/src/composables/useMessageHistory.ts:324
+#: app/src/composables/useMessageHistory.ts:333
+#: app/src/composables/useMessageHistory.ts:341
 msgid "Could not clear the history."
 msgstr "Não foi possível limpar o histórico."
 
@@ -2187,7 +2204,7 @@ msgstr "Não foi possível limpar o histórico."
 msgid "Could not clear the logs."
 msgstr "Não foi possível limpar os logs."
 
-#: app/src/composables/useProcessingQueue.ts:258
+#: app/src/composables/useProcessingQueue.ts:282
 msgid "Could not clear the queue."
 msgstr "Não foi possível limpar a fila."
 
@@ -2209,8 +2226,8 @@ msgstr "Não foi possível criar o fluxo de trabalho."
 msgid "Could not delete the action."
 msgstr "Não foi possível eliminar a ação."
 
-#: app/src/composables/useMessageHistory.ts:254
-#: app/src/composables/useMessageHistory.ts:262
+#: app/src/composables/useMessageHistory.ts:271
+#: app/src/composables/useMessageHistory.ts:279
 msgid "Could not delete the selected records."
 msgstr "Não foi possível eliminar os registos selecionados."
 
@@ -2222,13 +2239,13 @@ msgstr "Não foi possível desconectar."
 msgid "Could not dismiss the tip."
 msgstr "Não foi possível dispensar a dica."
 
-#: app/src/composables/useMessageHistory.ts:350
-#: app/src/composables/useMessageHistory.ts:364
+#: app/src/composables/useMessageHistory.ts:367
+#: app/src/composables/useMessageHistory.ts:381
 msgid "Could not export the message history."
 msgstr "Não foi possível exportar o histórico de mensagens."
 
-#: app/src/composables/useProcessingQueue.ts:299
-#: app/src/composables/useProcessingQueue.ts:304
+#: app/src/composables/useProcessingQueue.ts:323
+#: app/src/composables/useProcessingQueue.ts:328
 msgid "Could not export the processing queue."
 msgstr "Não foi possível exportar a fila de processamento."
 
@@ -2236,8 +2253,8 @@ msgstr "Não foi possível exportar a fila de processamento."
 msgid "Could not export the settings."
 msgstr "Não foi possível exportar as definições."
 
-#: app/src/composables/useWorkflows.ts:488
-#: app/src/composables/useWorkflows.ts:493
+#: app/src/composables/useWorkflows.ts:503
+#: app/src/composables/useWorkflows.ts:508
 msgid "Could not export the workflows."
 msgstr "Não foi possível exportar os fluxos de trabalho."
 
@@ -2281,13 +2298,13 @@ msgstr "Não foi possível carregar o contacto."
 msgid "Could not load the contacts."
 msgstr "Não foi possível carregar os contactos."
 
-#: app/src/composables/useMessageHistory.ts:132
-#: app/src/composables/useMessageHistory.ts:140
+#: app/src/composables/useMessageHistory.ts:149
+#: app/src/composables/useMessageHistory.ts:157
 msgid "Could not load the message history."
 msgstr "Não foi possível carregar o histórico de mensagens."
 
-#: app/src/composables/useProcessingQueue.ts:138
-#: app/src/composables/useProcessingQueue.ts:143
+#: app/src/composables/useProcessingQueue.ts:162
+#: app/src/composables/useProcessingQueue.ts:167
 msgid "Could not load the processing queue."
 msgstr "Não foi possível carregar a fila de processamento."
 
@@ -2303,13 +2320,13 @@ msgstr "Não foi possível carregar a lista de supressão."
 msgid "Could not load workflow."
 msgstr "Não foi possível carregar o fluxo de trabalho."
 
-#: app/src/composables/useWorkflows.ts:233
-#: app/src/composables/useWorkflows.ts:243
-#: app/src/composables/useWorkflows.ts:263
+#: app/src/composables/useWorkflows.ts:248
+#: app/src/composables/useWorkflows.ts:258
+#: app/src/composables/useWorkflows.ts:278
 msgid "Could not load workflows."
 msgstr "Não foi possível carregar os fluxos de trabalho."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:183
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:184
 #: app/src/components/fields/WhatsappTemplateField.vue:113
 msgid "Could not load your message templates."
 msgstr "Não foi possível carregar os seus modelos de mensagem."
@@ -2367,7 +2384,7 @@ msgstr "Não foi possível recuperar o primeiro nome do utilizador."
 msgid "Could not retrieve the user last name"
 msgstr "Não foi possível recuperar o último nome do utilizador."
 
-#: app/src/composables/useProcessingQueue.ts:250
+#: app/src/composables/useProcessingQueue.ts:274
 msgid "Could not run the scheduled item."
 msgstr "Não foi possível executar o item agendado."
 
@@ -2423,7 +2440,7 @@ msgstr "Não foi possível enviar a mensagem de teste do modelo."
 msgid "Could not start the connection."
 msgstr "Não foi possível iniciar a conexão."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:213
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:214
 #: app/src/components/fields/WhatsappTemplateField.vue:144
 msgid "Could not sync your message templates."
 msgstr "Não foi possível sincronizar os seus modelos de mensagem."
@@ -2437,8 +2454,8 @@ msgstr "Não foi possível sincronizar os seus números."
 msgid "Could not update the connection."
 msgstr "Não foi possível atualizar a conexão."
 
-#: app/src/composables/useWorkflows.ts:368
-#: app/src/composables/useWorkflows.ts:376
+#: app/src/composables/useWorkflows.ts:383
+#: app/src/composables/useWorkflows.ts:391
 msgid "Could not update the status."
 msgstr "Não foi possível atualizar o estado."
 
@@ -2468,11 +2485,11 @@ msgstr "A contar os seus clientes…"
 msgid "Counting…"
 msgstr "A contar…"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:117
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:118
 msgid "Coupon"
 msgstr "Cupão"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:126
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:127
 msgid "Coupon code"
 msgstr "Código do cupão"
 
@@ -2485,7 +2502,7 @@ msgstr "O cupão não expira"
 msgid "Coupon expires: %s"
 msgstr "O cupão expira: %s"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:207
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:208
 msgid "Coupon message"
 msgstr "Mensagem do cupão"
 
@@ -2624,7 +2641,7 @@ msgstr "criado ao mesmo tempo por outro caminho"
 msgid "Creates contacts"
 msgstr "Cria contactos"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:168
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:169
 msgid ""
 "Creativity from 0 (deterministic) to 2 (more creative). Leave empty to use "
 "the default."
@@ -2632,7 +2649,7 @@ msgstr ""
 "Criatividade de 0 (determinístico) a 2 (mais criativa). Deixe em branco "
 "para usar o padrão."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:143
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:144
 msgid "Creativity from 0 to 2. Leave empty to use the default."
 msgstr "Criatividade de 0 a 2. Deixe em branco para usar o padrão."
 
@@ -2648,7 +2665,7 @@ msgstr "Crítico"
 msgid "Croatia"
 msgstr "Croácia"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:97
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:98
 msgid "Cron unavailable"
 msgstr "Cron indisponível"
 
@@ -2676,7 +2693,7 @@ msgstr "Índice da iteração atual, começando em 0."
 msgid "Current iteration number, starting at 1."
 msgstr "Número da iteração atual, começando em 1."
 
-#: app/src/builder/components/base/AttachmentsField.vue:60
+#: app/src/builder/components/base/AttachmentsField.vue:61
 msgid "Current loop item file"
 msgstr "Ficheiro do item atual do loop"
 
@@ -2773,10 +2790,10 @@ msgstr "Zona de perigo"
 #: app/src/builder/actions/definitions/timeDelay.ts:58
 #: app/src/builder/actions/definitions/timeDelay.ts:71
 #: app/src/builder/actions/definitions/timeDelay.ts:82
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:40
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:195
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:30
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:155
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:41
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:196
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:31
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:156
 #: app/src/pages/contacts/labels.ts:145
 #: app/src/pages/history/components/HistoryDetailsModal.vue:30
 #: app/src/pages/history/HistoryPage.vue:372
@@ -2802,9 +2819,9 @@ msgstr "dias"
 
 #: admin/src/Admin/Builder/Registry.php:446
 #: app/src/builder/actions/definitions/timeDelay.ts:66
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:46
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:38
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:46
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:47
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:39
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:47
 msgid "Days"
 msgstr "Dias"
 
@@ -2833,8 +2850,8 @@ msgstr "Modo de depuração"
 msgid "Decide whether to share anonymous data that helps improve the plugin."
 msgstr "Decida se deseja partilhar dados anónimos que ajudam a melhorar o plugin."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:150
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:176
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:151
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:177
 msgid "Default"
 msgstr "Padrão"
 
@@ -2907,7 +2924,7 @@ msgstr ""
 msgid "Delay"
 msgstr "Atraso"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:101
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:102
 msgid "Delay mode"
 msgstr "Modo de atraso"
 
@@ -2936,7 +2953,7 @@ msgid "Delete note"
 msgstr "Eliminar nota"
 
 #: app/src/components/workflows/WorkflowRowActions.vue:68
-#: app/src/composables/useWorkflows.ts:31
+#: app/src/composables/useWorkflows.ts:46
 #: app/src/pages/workflows/WorkflowsPage.vue:246
 #: app/src/pages/workflows/WorkflowsPage.vue:336
 msgid "Delete permanently"
@@ -2950,8 +2967,8 @@ msgstr "Eliminar selecionados"
 msgid "Delete selected records"
 msgstr "Eliminar registos selecionados"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:80
-#: app/src/builder/actions/settings/LoopSettings.vue:83
+#: app/src/builder/actions/settings/LoopSettings.vue:81
+#: app/src/builder/actions/settings/LoopSettings.vue:84
 msgid "Delimiter"
 msgstr "Delimitador"
 
@@ -3004,7 +3021,7 @@ msgstr ""
 msgid "Describe the automation you want to generate."
 msgstr "Descreva a automação que deseja gerar."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:94
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:95
 msgid ""
 "Describe the value to generate. Use {{ placeholders }} to inject the "
 "trigger context."
@@ -3012,7 +3029,7 @@ msgstr ""
 "Descreva o valor a gerar. Use {{ placeholders }} para injetar o contexto do "
 "gatilho."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:94
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:95
 msgid ""
 "Describe what the AI should write. Use {{ placeholders }} to inject the "
 "trigger context."
@@ -3025,7 +3042,7 @@ msgid "Describe what you want and let AI build the workflow for you."
 msgstr "Descreva o que deseja e deixe a IA construir o fluxo de trabalho para si."
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:183
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:132
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:133
 #: app/src/registries/triggerRegistry.ts:252
 #: app/src/registries/triggerRegistry.ts:281
 #: app/src/registries/triggerRegistry.ts:310
@@ -3095,7 +3112,7 @@ msgstr "Desconectar"
 msgid "Disconnected"
 msgstr "Desconectado"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:138
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:139
 msgid "Discount"
 msgstr "Desconto"
 
@@ -3111,7 +3128,7 @@ msgstr "Cupão de desconto"
 msgid "Discount coupon: <span class=\"builder-placeholder\">%s</span>"
 msgstr "Cupão de desconto: <span class=\"builder-placeholder\">%s</span>"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:143
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:144
 msgid "Discount type"
 msgstr "Tipo de desconto"
 
@@ -3148,7 +3165,7 @@ msgid "Do not retry"
 msgstr "Não tentar novamente"
 
 #: admin/src/Validations/Media_Types.php:40
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:34
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:35
 msgid "Document"
 msgstr "Documento"
 
@@ -3239,7 +3256,7 @@ msgstr ""
 "Arraste e solte o ficheiro JSON do modelo ou clique para procurar. O "
 "formato deve corresponder a uma exportação real do Joinotify."
 
-#: app/src/composables/useProcessingQueue.ts:60
+#: app/src/composables/useProcessingQueue.ts:84
 #: app/src/pages/queue/QueuePage.vue:339
 msgid "Due"
 msgstr "Devido"
@@ -3265,11 +3282,11 @@ msgstr "E-commerce"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:31
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:32
 msgid "E-mail address or a placeholder that resolves to one."
 msgstr "Endereço de e-mail ou um espaço reservado que se resolve em um."
 
-#: app/src/builder/actions/settings/LoopSettings.vue:84
+#: app/src/builder/actions/settings/LoopSettings.vue:85
 msgid "e.g. , (comma)"
 msgstr "ex. , (vírgula)"
 
@@ -3291,7 +3308,7 @@ msgstr "ex. Pediu para parar de receber mensagens"
 msgid "e.g. Customer, VIP"
 msgstr "ex. Cliente, VIP"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:82
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:83
 msgid "e.g. greeting"
 msgstr "ex. saudação"
 
@@ -3315,7 +3332,7 @@ msgstr "ex. Formulário de inscrição no balcão da loja, 29/09/2026"
 msgid "e.g. Sign-up sheet of the store event, 09/2026"
 msgstr "ex. Folha de inscrição do evento da loja, 09/2026"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:100
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:101
 msgid ""
 "e.g. Thank {{ wc_billing_first_name }} for order #{{ order_id }} and "
 "confirm it is being prepared."
@@ -3336,7 +3353,7 @@ msgstr ""
 "envie ao cliente uma mensagem de agradecimento pelo WhatsApp com o número "
 "do pedido."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:100
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:101
 msgid "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
 msgstr "ex. Escreva uma saudação de uma linha para {{ wc_billing_first_name }}."
 
@@ -3346,7 +3363,7 @@ msgstr ""
 "Cada fonte pode adicionar as suas próprias etiquetas, além da etiqueta "
 "deste site."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:312
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:313
 msgid ""
 "Each template variable is filled at send time with the placeholder you map "
 "here."
@@ -3772,11 +3789,11 @@ msgstr "Clientes existentes"
 msgid "Existing customers are already being sent."
 msgstr "Clientes existentes já estão a ser enviados."
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:161
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:162
 msgid "Expiration"
 msgstr "Expiração"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:172
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:173
 msgid "Expiration mode"
 msgstr "Modo de expiração"
 
@@ -3811,7 +3828,7 @@ msgstr "Exportar"
 msgid "Export all"
 msgstr "Exportar tudo"
 
-#: app/src/composables/useWorkflows.ts:20
+#: app/src/composables/useWorkflows.ts:35
 #: app/src/pages/history/components/HistoryDetailsModal.vue:179
 msgid "Export as JSON"
 msgstr "Exportar como JSON"
@@ -3845,7 +3862,7 @@ msgstr "Exportar fluxo de trabalho"
 msgid "Exporting…"
 msgstr "A exportar…"
 
-#: app/src/composables/useMessageHistory.ts:59
+#: app/src/composables/useMessageHistory.ts:76
 #: app/src/pages/contacts/components/ImportModal.vue:338
 #: app/src/pages/history/HistoryPage.vue:75
 msgid "Failed"
@@ -3884,7 +3901,7 @@ msgstr "Campo"
 
 #: admin/src/Admin/Builder/Registry.php:480
 #: app/src/builder/actions/definitions/condition.ts:123
-#: app/src/builder/actions/settings/ConditionSettings.vue:209
+#: app/src/builder/actions/settings/ConditionSettings.vue:210
 msgid "Field ID"
 msgstr "ID do campo"
 
@@ -3919,7 +3936,7 @@ msgstr "Campos & etiquetas"
 msgid "Fiji"
 msgstr "Fiji"
 
-#: app/src/builder/components/base/AttachmentsField.vue:200
+#: app/src/builder/components/base/AttachmentsField.vue:201
 msgid "File"
 msgstr "Arquivo"
 
@@ -3928,12 +3945,12 @@ msgstr "Arquivo"
 msgid "File is too large. The maximum size is 5 MB."
 msgstr "O arquivo é muito grande. O tamanho máximo é 5 MB."
 
-#: app/src/builder/components/base/AttachmentsField.vue:55
-#: app/src/builder/components/base/AttachmentsField.vue:222
+#: app/src/builder/components/base/AttachmentsField.vue:56
+#: app/src/builder/components/base/AttachmentsField.vue:223
 msgid "File URL"
 msgstr "URL do arquivo"
 
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:64
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:65
 msgid ""
 "Files delivered with the e-mail. Large files are replaced by their download "
 "link so the message still goes out."
@@ -3941,7 +3958,7 @@ msgstr ""
 "Arquivos entregues com o e-mail. Arquivos grandes são substituídos pelo seu "
 "link de download para que a mensagem ainda seja enviada."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:132
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:133
 msgid ""
 "Files sent instead of the media URL above. Each file goes out as its own "
 "message, and the caption rides on the first one."
@@ -3983,12 +4000,12 @@ msgstr "Primeiro nome (ou nome completo)"
 msgid "First retry after"
 msgstr "Primeira tentativa após"
 
-#: app/src/components/flow/FlowCanvas.vue:801
+#: app/src/components/flow/FlowCanvas.vue:802
 msgid "Fit"
 msgstr "Ajustar"
 
-#: app/src/components/flow/FlowCanvas.vue:797
 #: app/src/components/flow/FlowCanvas.vue:798
+#: app/src/components/flow/FlowCanvas.vue:799
 msgid "Fit view"
 msgstr "Vista ajustada"
 
@@ -3997,7 +4014,7 @@ msgstr "Vista ajustada"
 msgid "Fixed amount"
 msgstr "Montante fixo"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:34
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:35
 msgid "Fixed cart discount"
 msgstr "Desconto fixo no carrinho"
 
@@ -4084,7 +4101,7 @@ msgstr "Submissões e envios do formulário."
 msgid "Form submitted"
 msgstr "Formulário submetido"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:37
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:38
 msgid "Formal"
 msgstr "Formal"
 
@@ -4117,7 +4134,7 @@ msgstr "Guiana Francesa"
 msgid "French Polynesia"
 msgstr "Polinésia Francesa"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:35
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:36
 msgid "Friendly"
 msgstr "Amigável"
 
@@ -4170,7 +4187,7 @@ msgstr ""
 msgid "Generate a named value with AI and reuse it in later messages."
 msgstr "Gerar um valor nomeado com IA e reutilizá-lo em mensagens posteriores."
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:120
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:121
 msgid "Generate a unique coupon automatically"
 msgstr "Gerar um cupão único automaticamente"
 
@@ -4294,7 +4311,7 @@ msgstr "tem"
 #: admin/src/Integrations/Whatsapp_Interactive.php:143
 #: admin/src/Integrations/Whatsapp_Interactive.php:172
 #: admin/src/Integrations/Whatsapp_Interactive.php:202
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:140
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:141
 #: app/src/pages/history/components/HistoryDetailsModal.vue:58
 msgid "Header"
 msgstr "Cabeçalho"
@@ -4374,8 +4391,8 @@ msgstr "horas"
 
 #: admin/src/Admin/Builder/Registry.php:445
 #: app/src/builder/actions/definitions/timeDelay.ts:65
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:45
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:37
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:46
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:38
 msgid "Hours"
 msgstr "Horas"
 
@@ -4468,7 +4485,7 @@ msgid "Ignored"
 msgstr "Ignorado"
 
 #: admin/src/Validations/Media_Types.php:38
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:32
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:33
 msgid "Image"
 msgstr "Imagem"
 
@@ -4566,7 +4583,7 @@ msgstr "Na lixeira"
 
 #: app/src/components/builder/BuilderNavbar.vue:143
 #: app/src/components/workflows/WorkflowTableRow.vue:38
-#: app/src/composables/useWorkflows.ts:188
+#: app/src/composables/useWorkflows.ts:203
 #: app/src/pages/queue/QueuePage.vue:342
 msgid "Inactive"
 msgstr "Inativo"
@@ -4617,7 +4634,7 @@ msgstr "Inserir uma variável de texto"
 msgid "Insert variable"
 msgstr "Inserir variável"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:42
+#: app/src/builder/actions/settings/LoopSettings.vue:43
 msgid ""
 "Inside the loop body you can use {{ loop_value }}, {{ loop_number }}, {{ "
 "loop_count }} and, for digital files, {{ loop_file_name }} and {{ "
@@ -4655,7 +4672,7 @@ msgstr "Configurações de integração"
 msgid "Integrations"
 msgstr "Integrações"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:133
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:134
 msgid "Internal coupon description"
 msgstr "Descrição interna do cupão"
 
@@ -4852,7 +4869,7 @@ msgstr "itens"
 msgid "Items per page"
 msgstr "Itens por página"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:63
+#: app/src/builder/actions/settings/LoopSettings.vue:64
 msgid "Iterate over"
 msgstr "Iterar sobre"
 
@@ -5207,8 +5224,8 @@ msgstr ""
 "método de envio, NÃO o endereço. Use %1$s para o endereço de entrega, ou "
 "%2$s para o mesmo valor sob um nome mais claro."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:129
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:133
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:130
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:134
 msgid "Length"
 msgstr "Comprimento"
 
@@ -5242,8 +5259,8 @@ msgstr "Nível"
 msgid "Liberia"
 msgstr "Libéria"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:124
-#: app/src/builder/components/base/AttachmentsField.vue:215
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:125
+#: app/src/builder/components/base/AttachmentsField.vue:216
 msgid "Library"
 msgstr "Biblioteca"
 
@@ -5264,12 +5281,12 @@ msgid "Lines not imported"
 msgstr "Linhas não importadas"
 
 #: app/src/builder/actions/definitions/loop.ts:103
-#: app/src/builder/actions/settings/LoopSettings.vue:69
-#: app/src/builder/actions/settings/LoopSettings.vue:72
+#: app/src/builder/actions/settings/LoopSettings.vue:70
+#: app/src/builder/actions/settings/LoopSettings.vue:73
 msgid "List"
 msgstr "Lista"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:34
+#: app/src/builder/actions/settings/LoopSettings.vue:35
 msgid "List from a placeholder"
 msgstr "Lista de um placeholder"
 
@@ -5301,7 +5318,7 @@ msgstr "A carregar o canvas do fluxo"
 msgid "Loading senders..."
 msgstr "A carregar remetentes..."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:272
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:273
 msgid "Loading templates…"
 msgstr "A carregar modelos…"
 
@@ -5384,7 +5401,7 @@ msgstr "Registos"
 msgid "Logs cleared successfully."
 msgstr "Registos limpos com sucesso."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:43
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:44
 msgid "Long"
 msgstr "Longo"
 
@@ -5407,7 +5424,7 @@ msgstr "Corpo do loop"
 msgid "Lost cart"
 msgstr "Carrinho perdido"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:77
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:78
 msgid "Lowercase letters, numbers, and underscores. Used as the token below."
 msgstr "Letras minúsculas, números e sublinhados. Usado como o token abaixo."
 
@@ -5481,11 +5498,11 @@ msgstr ""
 "Mapear uma entidade e chave meta para uma variável nomeada disponível no "
 "construtor."
 
-#: app/src/composables/useWorkflows.ts:24
+#: app/src/composables/useWorkflows.ts:39
 msgid "Mark as active"
 msgstr "Marcar como ativo"
 
-#: app/src/composables/useWorkflows.ts:25
+#: app/src/composables/useWorkflows.ts:40
 msgid "Mark as inactive"
 msgstr "Marcar como inativo"
 
@@ -5519,8 +5536,8 @@ msgstr "Maurício"
 msgid "Maximum attempts"
 msgstr "Máximo de tentativas"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:90
-#: app/src/builder/actions/settings/LoopSettings.vue:93
+#: app/src/builder/actions/settings/LoopSettings.vue:91
+#: app/src/builder/actions/settings/LoopSettings.vue:94
 msgid "Maximum items"
 msgstr "Máximo de itens"
 
@@ -5536,7 +5553,7 @@ msgstr "Mayotte"
 msgid "Measurement unit applied to the border radius value."
 msgstr "Unidade de medida aplicada ao valor do raio da borda."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:101
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:102
 #: app/src/pages/history/HistoryPage.vue:92
 msgid "Media"
 msgstr "Mídia"
@@ -5545,16 +5562,16 @@ msgstr "Mídia"
 msgid "Media caption"
 msgstr "Legenda da mídia"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:146
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:147
 msgid "Media caption... Use {{ placeholders }}"
 msgstr "Legenda da mídia... Use {{ placeholders }}"
 
-#: app/src/builder/components/base/AttachmentsField.vue:54
+#: app/src/builder/components/base/AttachmentsField.vue:55
 msgid "Media library file"
 msgstr "Ficheiro da biblioteca de mídia"
 
 #: admin/src/Integrations/Elementor_Forms.php:182
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:105
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:106
 #: app/src/pages/history/components/HistoryDetailsModal.vue:36
 msgid "Media type"
 msgstr "Tipo de mídia"
@@ -5564,7 +5581,7 @@ msgid "Media upload did not return an id."
 msgstr "O upload de media não retornou um id."
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:68
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:112
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:113
 #: app/src/pages/history/components/HistoryDetailsModal.vue:165
 msgid "Media URL"
 msgstr "URL da mídia"
@@ -5573,7 +5590,7 @@ msgstr "URL da mídia"
 msgid "Media: %s"
 msgstr "Mídia: %s"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:42
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:43
 msgid "Medium"
 msgstr "Médio"
 
@@ -5603,13 +5620,13 @@ msgstr "Fundido com um duplicado"
 #: app/src/builder/actions/definitions/resendEmail.ts:60
 #: app/src/builder/actions/definitions/telegramText.ts:56
 #: app/src/builder/actions/definitions/whatsappText.ts:57
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:222
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:51
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:54
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:40
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:43
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:52
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:55
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:223
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:52
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:55
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:41
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:44
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:53
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:56
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:174
 #: app/src/pages/settings/components/cards/PhoneActions.vue:223
 msgid "Message"
@@ -5672,13 +5689,13 @@ msgstr ""
 "As mensagens serão enviadas normalmente, mas os relatórios de entrega não "
 "puderam ser configurados:"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:90
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:91
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr "A Meta desativou este modelo. Já não pode ser enviado."
 
 #: admin/src/Admin/Builder/Registry.php:485
 #: app/src/builder/actions/definitions/condition.ts:124
-#: app/src/builder/actions/settings/ConditionSettings.vue:203
+#: app/src/builder/actions/settings/ConditionSettings.vue:204
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
 msgid "Meta key"
 msgstr "Chave meta"
@@ -5687,7 +5704,7 @@ msgstr "Chave meta"
 msgid "Meta key, e.g. _billing_cpf"
 msgstr "Chave meta, ex. _billing_cpf"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:88
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:89
 msgid ""
 "Meta paused this template because of low quality. It will not be delivered "
 "until it recovers."
@@ -5695,7 +5712,7 @@ msgstr ""
 "A Meta pausou este modelo devido à baixa qualidade. Não será entregue até "
 "que recupere."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:92
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:93
 msgid "Meta rejected this template."
 msgstr "A Meta rejeitou este modelo."
 
@@ -5721,8 +5738,8 @@ msgstr "minutos"
 
 #: admin/src/Admin/Builder/Registry.php:444
 #: app/src/builder/actions/definitions/timeDelay.ts:64
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:44
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:36
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:45
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:37
 msgid "Minutes"
 msgstr "Minutos"
 
@@ -5740,10 +5757,10 @@ msgstr "Campo de post em falta."
 msgid "Missing workflow_content field."
 msgstr "Campo workflow_content em falta."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:134
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:138
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:155
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:161
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:135
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:139
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:156
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:162
 msgid "Model"
 msgstr "Modelo"
 
@@ -5777,9 +5794,9 @@ msgstr "meses"
 
 #: admin/src/Admin/Builder/Registry.php:448
 #: app/src/builder/actions/definitions/timeDelay.ts:68
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:48
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:40
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:48
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:49
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:41
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:49
 msgid "Months"
 msgstr "Meses"
 
@@ -5792,7 +5809,7 @@ msgid "Morocco"
 msgstr "Marrocos"
 
 #: app/src/components/workflows/WorkflowRowActions.vue:50
-#: app/src/composables/useWorkflows.ts:23
+#: app/src/composables/useWorkflows.ts:38
 #: app/src/pages/workflows/WorkflowsPage.vue:246
 #: app/src/pages/workflows/WorkflowsPage.vue:301
 msgid "Move to trash"
@@ -5970,7 +5987,7 @@ msgstr "Niue"
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
 #: admin/src/Integrations/Elementor_Forms.php:167
-#: app/src/builder/actions/settings/ConditionSettings.vue:104
+#: app/src/builder/actions/settings/ConditionSettings.vue:105
 #: app/src/builder/actions/utils/actionDescription.ts:186
 #: app/src/pages/contacts/components/AttributeInput.vue:40
 #: app/src/pages/contacts/components/ContactDrawer.vue:78
@@ -6044,7 +6061,7 @@ msgstr "Nenhuma condição disponível para esta ação"
 msgid "No condition has been set for this action."
 msgstr "Nenhuma condição foi definida para esta ação."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:165
+#: app/src/builder/actions/settings/ConditionSettings.vue:166
 msgid "No conditions for this trigger"
 msgstr "Nenhuma condição para este gatilho"
 
@@ -6152,7 +6169,7 @@ msgstr "Nenhuma opção disponível"
 msgid "No OTP delivery channel is available."
 msgstr "Nenhum canal de entrega de OTP disponível."
 
-#: app/src/builder/components/base/PlaceholderList.vue:43
+#: app/src/builder/components/base/PlaceholderList.vue:56
 msgid "No placeholders available."
 msgstr "Nenhum placeholder disponível."
 
@@ -6188,7 +6205,7 @@ msgstr "Ainda sem etiquetas."
 msgid "No tags."
 msgstr "Sem etiquetas."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:293
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:294
 msgid ""
 "No template found. Create one on the Joinotify panel and approve it with "
 "Meta first."
@@ -6364,9 +6381,9 @@ msgid "Numbers synced."
 msgstr "Números sincronizados."
 
 #: app/src/components/workflows/PaginationControls.vue:34
-#: app/src/composables/useMessageHistory.ts:96
-#: app/src/composables/useProcessingQueue.ts:90
-#: app/src/composables/useWorkflows.ts:204
+#: app/src/composables/useMessageHistory.ts:113
+#: app/src/composables/useProcessingQueue.ts:114
+#: app/src/composables/useWorkflows.ts:219
 #: app/src/pages/contacts/useContactList.ts:54
 msgid "of"
 msgstr "de"
@@ -6433,11 +6450,11 @@ msgstr "Na lista de supressão"
 msgid "On this site"
 msgstr "Neste site"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:74
+#: app/src/builder/actions/settings/LoopSettings.vue:75
 msgid "One entry per line, or use the delimiter below"
 msgstr "Uma entrada por linha, ou use o delimitador abaixo"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:170
+#: app/src/builder/actions/settings/ConditionSettings.vue:171
 msgid ""
 "Only conditions and operators supported by the engine for this trigger are "
 "shown."
@@ -6537,7 +6554,7 @@ msgstr "Configurações operacionais do plugin e flags de desenvolvimento."
 #: admin/src/Admin/Builder/Registry.php:474
 #: app/src/builder/actions/definitions/condition.ts:122
 #: app/src/builder/actions/definitions/condition.ts:133
-#: app/src/builder/actions/settings/ConditionSettings.vue:187
+#: app/src/builder/actions/settings/ConditionSettings.vue:188
 msgid "Operator"
 msgstr "Operador"
 
@@ -6574,7 +6591,7 @@ msgstr "Optou por não participar em marketing em"
 msgid "Optional"
 msgstr "Opcional"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:90
+#: app/src/builder/actions/settings/LoopSettings.vue:91
 msgid "Optional cap on how many items are processed. Leave empty for no limit."
 msgstr ""
 "Limite opcional sobre quantos itens são processados. Deixe vazio para sem "
@@ -6588,11 +6605,11 @@ msgstr ""
 "Regras ou contexto opcionais para a IA (voz da marca, restrições, detalhes "
 "do produto)."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:108
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:109
 msgid "Optional rules, tone, and context for the AI."
 msgstr "Regras, tom e contexto opcionais para a IA."
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:141
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:142
 msgid "Optional text sent together with the media."
 msgstr "Texto opcional enviado juntamente com a mídia."
 
@@ -6664,8 +6681,8 @@ msgstr "Pedido abandonado"
 msgid "Order completed"
 msgstr "Pedido concluído"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:32
-#: app/src/builder/components/base/AttachmentsField.vue:56
+#: app/src/builder/actions/settings/LoopSettings.vue:33
+#: app/src/builder/components/base/AttachmentsField.vue:57
 msgid "Order digital files"
 msgstr "Encomendar ficheiros digitais"
 
@@ -6693,7 +6710,7 @@ msgstr "Pedido pago"
 msgid "Order partially refunded"
 msgstr "Pedido parcialmente reembolsado"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:33
+#: app/src/builder/actions/settings/LoopSettings.vue:34
 msgid "Order purchased items"
 msgstr "Itens comprados por ordem"
 
@@ -6741,8 +6758,8 @@ msgstr "acima do limite de contactos do plano"
 msgid "over your plan's contact limit"
 msgstr "acima do limite de contactos do seu plano"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:134
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:156
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:135
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:157
 msgid "Override the default model for this node only."
 msgstr "Substituir o modelo padrão apenas para este nó."
 
@@ -6853,7 +6870,7 @@ msgstr ""
 msgid "Percentage"
 msgstr "Percentagem"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:35
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:36
 msgid "Percentage discount"
 msgstr "Desconto percentual"
 
@@ -6863,20 +6880,20 @@ msgstr "Desconto percentual"
 #: app/src/builder/actions/definitions/timeDelay.ts:62
 #: app/src/builder/actions/definitions/timeDelay.ts:90
 #: app/src/builder/actions/definitions/timeDelay.ts:97
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:39
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:187
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:29
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:120
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:140
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:40
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:188
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:30
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:121
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:141
 msgid "Period"
 msgstr "Período"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:110
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:111
 msgid "Period delay"
 msgstr "Atraso de período"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:107
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:107
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:108
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:108
 msgid "Persona / system message"
 msgstr "Mensagem de persona / sistema"
 
@@ -6918,10 +6935,10 @@ msgstr "Número de telefone"
 msgid "Phone number ID"
 msgstr "ID do número de telefone"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:82
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:91
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:253
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:83
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:254
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 msgid "Phone number or a placeholder that resolves to one."
 msgstr "Número de telefone ou um espaço reservado que resolve para um."
 
@@ -6979,7 +6996,7 @@ msgstr ""
 "Cada contacto precisa de um número de telefone; um número sem o código de "
 "país é lido no país padrão das suas definições."
 
-#: app/src/builder/components/base/AttachmentsField.vue:201
+#: app/src/builder/components/base/AttachmentsField.vue:202
 msgid "Pick a file from the library"
 msgstr "Escolha um ficheiro da biblioteca"
 
@@ -7019,7 +7036,7 @@ msgstr "Pixel"
 msgid "Place name"
 msgstr "Nome do local"
 
-#: app/src/builder/components/base/PlaceholderList.vue:15
+#: app/src/builder/components/base/PlaceholderList.vue:16
 msgid "Placeholders"
 msgstr "Marcadores de posição"
 
@@ -7144,13 +7161,13 @@ msgstr ""
 
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:59
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:61
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:98
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:98
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:99
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:99
 msgid "Prompt"
 msgstr "Prompt"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:93
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:93
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:94
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:94
 msgid "Prompt / instructions"
 msgstr "Prompt / instruções"
 
@@ -7178,7 +7195,7 @@ msgstr "Produtos comprados"
 msgid "Qatar"
 msgstr "Catar"
 
-#: app/src/composables/useMessageHistory.ts:60
+#: app/src/composables/useMessageHistory.ts:77
 #: app/src/pages/history/HistoryPage.vue:76
 msgid "Queued"
 msgstr "Em fila"
@@ -7210,17 +7227,17 @@ msgstr "Razão (opcional)"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:68
 #: app/src/builder/actions/definitions/resendEmail.ts:58
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:216
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:31
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:34
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:82
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:85
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:91
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:94
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:253
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:42
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:45
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:217
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:32
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:35
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:83
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:254
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:257
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 #: app/src/pages/history/components/HistoryDetailsModal.vue:34
 #: app/src/pages/history/HistoryPage.vue:373
 #: app/src/pages/queue/QueuePage.vue:301
@@ -7284,11 +7301,11 @@ msgstr ""
 msgid "Recovery link from abandoned cart"
 msgstr "Link de recuperação do carrinho abandonado"
 
-#: app/src/components/flow/FlowCanvas.vue:821
+#: app/src/components/flow/FlowCanvas.vue:822
 msgid "Redo"
 msgstr "Refazer"
 
-#: app/src/components/flow/FlowCanvas.vue:822
+#: app/src/components/flow/FlowCanvas.vue:823
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr "Refazer (Ctrl+Shift+Z)"
 
@@ -7340,7 +7357,7 @@ msgid "Remember me"
 msgstr "Lembrar-me"
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:169
-#: app/src/components/settings/SchemaFieldRenderer.vue:333
+#: app/src/components/settings/SchemaFieldRenderer.vue:335
 #: app/src/pages/contacts/components/FilterRuleRow.vue:168
 #: app/src/pages/contacts/tabs/SourcesTab.vue:291
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:187
@@ -7353,7 +7370,7 @@ msgstr "Remover"
 msgid "Remove a tag"
 msgstr "Remover uma etiqueta"
 
-#: app/src/builder/components/base/AttachmentsField.vue:181
+#: app/src/builder/components/base/AttachmentsField.vue:182
 msgid "Remove attachment"
 msgstr "Remover anexo"
 
@@ -7477,7 +7494,7 @@ msgid "Response code"
 msgstr "Código de resposta"
 
 #: app/src/components/workflows/WorkflowRowActions.vue:59
-#: app/src/composables/useWorkflows.ts:30
+#: app/src/composables/useWorkflows.ts:45
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:184
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:176
 msgid "Restore"
@@ -7552,7 +7569,7 @@ msgstr "Retornado no webhook quando o contacto o toca."
 msgid "Réunion"
 msgstr "Reunião"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:88
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:89
 msgid "Reuse the generated value in any later message with:"
 msgstr "Reutilizar o valor gerado em qualquer mensagem posterior com:"
 
@@ -7573,8 +7590,8 @@ msgstr "Roménia"
 msgid "Rounding applied to cards, buttons, and form fields."
 msgstr "Arredondamento aplicado a cartões, botões e campos de formulário."
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:124
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:144
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:125
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:145
 msgid ""
 "Route this node to a specific engine. Leave on the default to use the "
 "provider from settings."
@@ -7582,7 +7599,7 @@ msgstr ""
 "Roteie este nó para um motor específico. Deixe no padrão para usar o "
 "fornecedor das definições."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:197
+#: app/src/builder/actions/settings/ConditionSettings.vue:198
 msgid "Rule data"
 msgstr "Dados da regra"
 
@@ -7594,7 +7611,7 @@ msgstr "Executar teste"
 msgid "Run the setup wizard"
 msgstr "Executar o assistente de configuração"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:53
+#: app/src/builder/actions/settings/LoopSettings.vue:54
 msgid ""
 "Runs the body once for each downloadable file granted in the order. Attach "
 "{{ loop item }} files inside the body to send one file per message."
@@ -7603,11 +7620,11 @@ msgstr ""
 "Anexe {{ loop item }} arquivos dentro do corpo para enviar um arquivo por "
 "mensagem."
 
-#: app/src/builder/actions/settings/LoopSettings.vue:50
+#: app/src/builder/actions/settings/LoopSettings.vue:51
 msgid "Runs the body once for each entry of the list below."
 msgstr "Executa o corpo uma vez para cada entrada da lista abaixo."
 
-#: app/src/builder/actions/settings/LoopSettings.vue:46
+#: app/src/builder/actions/settings/LoopSettings.vue:47
 msgid "Runs the body once for each product line in the order."
 msgstr "Executa o corpo uma vez para cada linha de produto na ordem."
 
@@ -7722,17 +7739,17 @@ msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:427
 #: app/src/builder/actions/definitions/timeDelay.ts:59
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:31
-#: app/src/composables/useProcessingQueue.ts:61
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:32
+#: app/src/composables/useProcessingQueue.ts:85
 #: app/src/pages/queue/QueuePage.vue:339
 msgid "Scheduled"
 msgstr "Agendado"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:151
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:152
 msgid "Scheduled date"
 msgstr "Data agendada"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:127
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:128
 msgid "Scheduled delay"
 msgstr "Atraso agendado"
 
@@ -7841,7 +7858,7 @@ msgstr "segundos"
 
 #: admin/src/Admin/Builder/Registry.php:443
 #: app/src/builder/actions/definitions/timeDelay.ts:63
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:35
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:36
 msgid "Seconds"
 msgstr "Segundos"
 
@@ -7889,7 +7906,7 @@ msgstr "Ver os contactos com esta etiqueta"
 msgid "Select"
 msgstr "Selecionar"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:67
+#: app/src/builder/actions/settings/ConditionSettings.vue:68
 msgid "Select a condition"
 msgstr "Selecionar uma condição"
 
@@ -7910,11 +7927,11 @@ msgstr "Selecione um nó para editar as suas definições."
 msgid "Select a sender"
 msgstr "Selecionar um remetente"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:272
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:273
 msgid "Select a template"
 msgstr "Selecionar um modelo"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:222
+#: app/src/builder/actions/settings/ConditionSettings.vue:223
 msgid "Select a value"
 msgstr "Selecionar um valor"
 
@@ -7946,7 +7963,7 @@ msgstr "Selecionar uma entidade"
 msgid "Select an entity and inform the meta key."
 msgstr "Selecione uma entidade e informe a chave meta."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:78
+#: app/src/builder/actions/settings/ConditionSettings.vue:79
 msgid "Select an operator"
 msgstr "Selecione um operador"
 
@@ -7959,12 +7976,12 @@ msgstr "Selecione uma opção"
 msgid "Select an order status"
 msgstr "Selecione um estado de pedido"
 
-#: app/src/builder/components/base/AttachmentsField.vue:136
+#: app/src/builder/components/base/AttachmentsField.vue:137
 #: app/src/components/base/BaseFileDropzone.vue:87
 msgid "Select file"
 msgstr "Selecione o ficheiro"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:65
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
 msgid "Select media"
 msgstr "Selecione a mídia"
 
@@ -8186,15 +8203,15 @@ msgstr "Enviar webhook"
 #: app/src/builder/actions/definitions/whatsappMedia.ts:63
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:79
 #: app/src/builder/actions/definitions/whatsappText.ts:56
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:211
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:73
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:77
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:82
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:86
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:37
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:212
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:74
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:78
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:83
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:87
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:245
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:249
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
 #: app/src/pages/history/components/HistoryDetailsModal.vue:33
 #: app/src/pages/history/HistoryPage.vue:374
 #: app/src/pages/settings/components/cards/PhoneActions.vue:188
@@ -8270,7 +8287,7 @@ msgstr ""
 msgid "Senegal"
 msgstr "Senegal"
 
-#: app/src/composables/useMessageHistory.ts:58
+#: app/src/composables/useMessageHistory.ts:75
 #: app/src/pages/history/HistoryPage.vue:74
 msgid "Sent"
 msgstr "Enviado"
@@ -8299,7 +8316,7 @@ msgstr ""
 "Defina um modelo de AUTENTICAÇÃO aprovado para entregar códigos de login "
 "através da API Cloud do WhatsApp."
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:164
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:165
 msgid "Set an expiration"
 msgstr "Definir uma expiração"
 
@@ -8377,7 +8394,7 @@ msgstr "Formato completo do endereço de envio"
 msgid "Shipping method"
 msgstr "Método de envio"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:41
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:42
 msgid "Short"
 msgstr "Curto"
 
@@ -8476,7 +8493,7 @@ msgstr "Algo correu mal."
 msgid "Sort by"
 msgstr "Ordenar por"
 
-#: app/src/builder/components/base/AttachmentsField.vue:171
+#: app/src/builder/components/base/AttachmentsField.vue:172
 #: app/src/pages/contacts/tabs/ContactsTab.vue:189
 #: app/src/pages/contacts/tabs/ContactsTab.vue:286
 #: app/src/pages/history/components/HistoryDetailsModal.vue:32
@@ -8594,8 +8611,8 @@ msgstr ""
 "partir da tela de registos de depuração."
 
 #: app/src/builder/actions/definitions/resendEmail.ts:59
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:41
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:44
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:42
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:45
 msgid "Subject"
 msgstr "Assunto"
 
@@ -8673,7 +8690,7 @@ msgstr "Suíça"
 msgid "Sync"
 msgstr "Sincronizar"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:285
 msgid "Sync now"
 msgstr "Sincronizar agora"
 
@@ -8697,7 +8714,7 @@ msgstr "Sincronização pausada"
 msgid "Sync templates with your account"
 msgstr "Sincronizar modelos com a sua conta"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:285
 #: app/src/components/fields/WhatsappTemplateField.vue:186
 msgid "Syncing…"
 msgstr "A sincronizar…"
@@ -8706,8 +8723,8 @@ msgstr "A sincronizar…"
 msgid "Syria"
 msgstr "Síria"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:112
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:112
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:113
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:113
 msgid "System message"
 msgstr "Mensagem do sistema"
 
@@ -8737,6 +8754,7 @@ msgstr "Etiqueta adicionada"
 msgid "Tag added to %d contact."
 msgid_plural "Tag added to %d contacts."
 msgstr[0] "Etiqueta adicionada a %d contacto."
+msgstr[1] "Etiqueta adicionada a %d contactos."
 
 #: admin/src/Contacts/Contact_Actions.php:203
 #: admin/src/Contacts/Contact_Actions.php:213
@@ -8777,7 +8795,8 @@ msgstr "Tag removida"
 #. translators: %d: number of contacts
 msgid "Tag removed from %d contact."
 msgid_plural "Tag removed from %d contacts."
-msgstr[0] "Tag removida de %d contacto."
+msgstr[0] "Etiqueta removida de %d contacto."
+msgstr[1] "Etiqueta removida de %d contactos."
 
 #: admin/src/Rest/Contacts_Tag_Save.php:57
 msgid "Tag updated."
@@ -8835,7 +8854,7 @@ msgstr "Tanzânia"
 msgid "Telegram"
 msgstr "Telegram"
 
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:30
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:31
 msgid ""
 "Telegram chat, group or channel id. Accepts a placeholder that resolves to "
 "one."
@@ -8857,16 +8876,16 @@ msgstr "Definições do Telegram"
 msgid "Telegram: message"
 msgstr "Telegram: mensagem"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:143
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:146
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:167
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:172
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:144
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:147
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:168
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:173
 msgid "Temperature"
 msgstr "Temperatura"
 
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:80
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:264
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:265
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:272
 #: app/src/pages/builder/BuilderPage.vue:938
 #: app/src/pages/history/components/HistoryDetailsModal.vue:121
 #: app/src/pages/history/HistoryPage.vue:94
@@ -8926,11 +8945,13 @@ msgstr "Obrigado por apoiar o Joinotify!"
 msgid "The %d contact matching the current filters"
 msgid_plural "All %d contacts matching the current filters"
 msgstr[0] "O %d contacto que corresponde aos filtros atuais"
+msgstr[1] "Todos os %d contactos que correspondem aos filtros atuais"
 
 #: app/src/pages/contacts/components/BulkTagModal.vue:102
 msgid "The %d selected contact"
 msgid_plural "The %d selected contacts"
 msgstr[0] "O %d contacto selecionado"
+msgstr[1] "Os %d contactos selecionados"
 
 #: app/src/pages/builder/BuilderPage.vue:142
 #. translators: %s is the integration name (e.g. WooCommerce).
@@ -9028,8 +9049,8 @@ msgstr ""
 "A audiência foi apagada; os seus contactos não. Uma campanha em rascunho "
 "que a utilizou falhará a sua verificação até que escolha outra audiência."
 
-#: app/src/composables/useWorkflows.ts:447
 #: app/src/composables/useWorkflows.ts:462
+#: app/src/composables/useWorkflows.ts:477
 msgid "The bulk action failed."
 msgstr "A ação em massa falhou."
 
@@ -9143,7 +9164,7 @@ msgstr "A carga útil exata para este site neste momento"
 msgid "The existing contact was updated."
 msgstr "O contacto existente foi atualizado."
 
-#: app/src/composables/useMessageHistory.ts:358
+#: app/src/composables/useMessageHistory.ts:375
 #. translators: 1: number of exported records, 2: number of records matching the filters
 msgid "The export holds only the %1$d most recent of the %2$d matching records."
 msgstr ""
@@ -9307,7 +9328,8 @@ msgstr ""
 #. translators: %d: number of messages whose resend was cancelled
 msgid "The resend of %d message was cancelled."
 msgid_plural "The resend of %d messages was cancelled."
-msgstr[0] "O reenvio da mensagem %d foi cancelado."
+msgstr[0] "O reenvio de %d mensagem foi cancelado."
+msgstr[1] "O reenvio de %d mensagens foi cancelado."
 
 #: admin/src/Api/Send_Error.php:104
 msgid "The resend of this message was cancelled from the history screen."
@@ -9416,7 +9438,7 @@ msgstr ""
 msgid "The trigger's data (order, customer, user, cart)"
 msgstr "Os dados do gatilho (pedido, cliente, utilizador, carrinho)"
 
-#: app/src/builder/actions/settings/LoopSettings.vue:69
+#: app/src/builder/actions/settings/LoopSettings.vue:70
 msgid ""
 "The value to iterate. Use {{ placeholders }} — each entry becomes one "
 "iteration."
@@ -9512,7 +9534,7 @@ msgstr "Existem definições obrigatórias não configuradas"
 msgid "These contacts agreed to receive marketing messages"
 msgstr "Estes contactos concordaram em receber mensagens de marketing"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:152
+#: app/src/builder/actions/settings/ConditionSettings.vue:153
 msgid ""
 "This action creates true and false branches. Each branch can contain its "
 "own nested actions."
@@ -9589,7 +9611,7 @@ msgstr ""
 "mensagens de forma livre dentro dessa janela — use uma mensagem de modelo "
 "aprovada para alcançá-los."
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:98
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:99
 msgid ""
 "This delay uses scheduled execution. The workflow environment does not "
 "report cron as available."
@@ -9621,7 +9643,7 @@ msgstr "Esta integração não tem definições adicionais."
 msgid "This integration will be available soon."
 msgstr "Esta integração estará disponível em breve."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:190
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:191
 msgid "This list may be out of date."
 msgstr "Esta lista pode estar desatualizada."
 
@@ -9697,7 +9719,7 @@ msgstr ""
 msgid "This step needs an open conversation"
 msgstr "Este passo precisa de uma conversa aberta"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:86
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:87
 msgid "This template is still awaiting Meta approval and cannot be delivered yet."
 msgstr ""
 "Este modelo ainda está à espera de aprovação da Meta e não pode ser "
@@ -9718,7 +9740,7 @@ msgstr "Esta variável de texto pode não funcionar neste contexto"
 msgid "This trigger depends on a plugin"
 msgstr "Este gatilho depende de um plugin"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:166
+#: app/src/builder/actions/settings/ConditionSettings.vue:167
 msgid "This trigger does not expose any conditions to evaluate."
 msgstr "Este gatilho não expõe quaisquer condições para avaliar."
 
@@ -9862,9 +9884,9 @@ msgstr ""
 #: app/src/builder/actions/definitions/timeDelay.ts:72
 #: app/src/builder/actions/definitions/timeDelay.ts:83
 #: app/src/builder/actions/definitions/timeDelay.ts:91
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:200
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:146
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:160
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:201
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:147
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:161
 #: app/src/pages/contacts/components/AttributeInput.vue:148
 msgid "Time"
 msgstr "Tempo"
@@ -9878,7 +9900,7 @@ msgid "Tip dismissed."
 msgstr "Dica desativada."
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:182
-#: app/src/builder/actions/settings/ConditionSettings.vue:173
+#: app/src/builder/actions/settings/ConditionSettings.vue:174
 msgid "Title"
 msgstr "Título"
 
@@ -10203,12 +10225,12 @@ msgstr "Tokelau"
 msgid "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...)."
 msgstr "Token fornecido pelo @BotFather quando cria um bot (ex: 123456:ABC-DEF...)."
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:120
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:124
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:121
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:125
 msgid "Tone"
 msgstr "Tom"
 
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:108
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:109
 msgid ""
 "Tone, personality, and brand rules for the AI. Optional — it adds to the "
 "global persona from settings."
@@ -10251,7 +10273,7 @@ msgstr "Demasiado curto"
 msgid "Total number of items in the collection."
 msgstr "Número total de itens na coleção."
 
-#: app/src/composables/useWorkflows.ts:189
+#: app/src/composables/useWorkflows.ts:204
 msgid "Trash"
 msgstr "Lixeira"
 
@@ -10347,7 +10369,7 @@ msgstr ""
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:105
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:106
 #: app/src/pages/contacts/components/FieldFormModal.vue:149
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:153
 #: app/src/pages/history/components/HistoryDetailsModal.vue:35
@@ -10380,16 +10402,16 @@ msgstr "Digite o número de telefone a suprimir."
 msgid "Type to filter…"
 msgstr "Digite para filtrar…"
 
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:56
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:57
 msgid "Type your e-mail... Use {{ placeholders }} and *bold*"
 msgstr "Escreva o seu e-mail... Use {{ placeholders }} e *negrito*"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:224
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:225
 msgid "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code }}"
 msgstr "Digite sua mensagem... Use {{ placeholders }} e {{ joinotify_coupon_code }}"
 
-#: app/src/builder/actions/settings/TelegramTextSettings.vue:45
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:57
+#: app/src/builder/actions/settings/TelegramTextSettings.vue:46
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:58
 msgid "Type your message... Use {{ placeholders }} and *bold*"
 msgstr "Digite sua mensagem... Use {{ placeholders }} e *negrito*"
 
@@ -10415,11 +10437,11 @@ msgstr "Ucrânia"
 msgid "Underline"
 msgstr "Sublinhado"
 
-#: app/src/components/flow/FlowCanvas.vue:811
+#: app/src/components/flow/FlowCanvas.vue:812
 msgid "Undo"
 msgstr "Desfazer"
 
-#: app/src/components/flow/FlowCanvas.vue:812
+#: app/src/components/flow/FlowCanvas.vue:813
 msgid "Undo (Ctrl+Z)"
 msgstr "Desfazer (Ctrl+Z)"
 
@@ -10472,7 +10494,7 @@ msgstr "Alterações não guardadas"
 msgid "Unsupported AI intent."
 msgstr "Intenção de IA não suportada."
 
-#: app/src/composables/useWorkflows.ts:91
+#: app/src/composables/useWorkflows.ts:106
 msgid "Untitled workflow"
 msgstr "Fluxo de trabalho sem título"
 
@@ -10563,11 +10585,11 @@ msgstr ""
 "Use o maior serviço de mensagens do mundo para notificar os seus clientes "
 "sobre eventos no seu website."
 
-#: app/src/builder/components/base/AttachmentsField.vue:137
+#: app/src/builder/components/base/AttachmentsField.vue:138
 msgid "Use this file"
 msgstr "Usar este ficheiro"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:65
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
 msgid "Use this media"
 msgstr "Use este media"
 
@@ -10634,9 +10656,9 @@ msgstr "Uzbequistão"
 #: admin/src/Admin/Builder/Registry.php:490
 #: admin/src/Contacts/Contact_Actions.php:173
 #: app/src/builder/actions/definitions/condition.ts:125
-#: app/src/builder/actions/settings/ConditionSettings.vue:223
-#: app/src/builder/actions/settings/ConditionSettings.vue:230
-#: app/src/builder/actions/settings/ConditionSettings.vue:237
+#: app/src/builder/actions/settings/ConditionSettings.vue:224
+#: app/src/builder/actions/settings/ConditionSettings.vue:231
+#: app/src/builder/actions/settings/ConditionSettings.vue:238
 #: app/src/pages/history/components/HistoryDetailsModal.vue:135
 msgid "Value"
 msgstr "Valor"
@@ -10649,7 +10671,7 @@ msgstr "Valor de um campo de formulário"
 msgid "Values hidden"
 msgstr "Valores ocultos"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:198
+#: app/src/builder/actions/settings/ConditionSettings.vue:199
 msgid "Values used by the condition engine."
 msgstr "Valores utilizados pelo motor de condições."
 
@@ -10662,8 +10684,8 @@ msgid "Variable"
 msgstr "Variável"
 
 #: app/src/builder/actions/definitions/dynamicPlaceholder.ts:58
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:76
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:81
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:77
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:82
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:143
 msgid "Variable name"
 msgstr "Nome da variável"
@@ -10684,7 +10706,7 @@ msgstr "Variável guardada com sucesso."
 msgid "Variable saved."
 msgstr "Variável guardada."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:311
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:312
 msgid "Variables"
 msgstr "Variáveis"
 
@@ -10713,7 +10735,7 @@ msgid "Verifying..."
 msgstr "A verificar..."
 
 #: admin/src/Validations/Media_Types.php:39
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:33
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:34
 msgid "Video"
 msgstr "Vídeo"
 
@@ -10859,9 +10881,9 @@ msgstr "semanas"
 
 #: admin/src/Admin/Builder/Registry.php:447
 #: app/src/builder/actions/definitions/timeDelay.ts:67
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:47
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:39
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:47
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:48
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:40
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:48
 msgid "Weeks"
 msgstr "Semanas"
 
@@ -10902,7 +10924,7 @@ msgstr "Fluxos de trabalho de automação do WhatsApp criados com Joinotify."
 msgid "WhatsApp Business Account ID"
 msgstr "ID da Conta do WhatsApp Business"
 
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:207
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:208
 msgid "WhatsApp message sent with the generated coupon."
 msgstr "Mensagem do WhatsApp enviada com o cupão gerado."
 
@@ -10910,17 +10932,17 @@ msgstr "Mensagem do WhatsApp enviada com o cupão gerado."
 msgid "WhatsApp name"
 msgstr "Nome do WhatsApp"
 
-#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:82
+#: app/src/builder/actions/settings/WhatsappMediaSettings.vue:83
 msgid "WhatsApp number that will send the media."
 msgstr "Número do WhatsApp que enviará a mídia."
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:64
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:73
-#: app/src/builder/actions/settings/WhatsappTextSettings.vue:33
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:74
+#: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 msgid "WhatsApp number that will send the message."
 msgstr "Número do WhatsApp que enviará a mensagem."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:245
 msgid "WhatsApp number that will send the template."
 msgstr "Número do WhatsApp que enviará o modelo."
 
@@ -11246,7 +11268,7 @@ msgstr "Teste de fluxo de trabalho na fila."
 msgid "Workflow title"
 msgstr "Título do fluxo de trabalho"
 
-#: app/src/composables/useWorkflows.ts:196
+#: app/src/composables/useWorkflows.ts:211
 msgid "workflows"
 msgstr "fluxos de trabalho"
 
@@ -11298,9 +11320,9 @@ msgstr "anos"
 
 #: admin/src/Admin/Builder/Registry.php:449
 #: app/src/builder/actions/definitions/timeDelay.ts:69
-#: app/src/builder/actions/settings/CreateCouponSettings.vue:49
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:41
-#: app/src/builder/actions/settings/TimeDelaySettings.vue:49
+#: app/src/builder/actions/settings/CreateCouponSettings.vue:50
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:42
+#: app/src/builder/actions/settings/TimeDelaySettings.vue:50
 msgid "Years"
 msgstr "Anos"
 
@@ -11314,7 +11336,7 @@ msgstr "Iémen"
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
 #: admin/src/Integrations/Elementor_Forms.php:166
-#: app/src/builder/actions/settings/ConditionSettings.vue:103
+#: app/src/builder/actions/settings/ConditionSettings.vue:104
 #: app/src/builder/actions/utils/actionDescription.ts:182
 #: app/src/pages/contacts/components/AttributeInput.vue:39
 #: app/src/pages/contacts/components/ContactDrawer.vue:78
@@ -11326,8 +11348,8 @@ msgstr "Sim"
 msgid "Yes / no"
 msgstr "Sim / não"
 
-#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:114
-#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:114
+#: app/src/builder/actions/settings/DynamicPlaceholderSettings.vue:115
+#: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:115
 msgid "You are the support agent for Store X. Be cordial and concise."
 msgstr "Você é o agente de suporte da Loja X. Seja cordial e conciso."
 
@@ -11429,7 +11451,7 @@ msgstr ""
 "importá-los aqui, juntamente com seu nome verificado, classificação de "
 "qualidade e limite de mensagens de 24 horas."
 
-#: app/src/builder/actions/settings/ResendEmailSettings.vue:45
+#: app/src/builder/actions/settings/ResendEmailSettings.vue:46
 msgid "Your order is confirmed"
 msgstr "A sua encomenda está confirmada"
 
@@ -11465,37 +11487,37 @@ msgstr "Zâmbia"
 msgid "Zimbabwe"
 msgstr "Zimbábue"
 
-#: app/src/components/flow/FlowCanvas.vue:779
 #: app/src/components/flow/FlowCanvas.vue:780
+#: app/src/components/flow/FlowCanvas.vue:781
 msgid "Zoom in"
 msgstr "Aproximar"
 
-#: app/src/components/flow/FlowCanvas.vue:788
 #: app/src/components/flow/FlowCanvas.vue:789
+#: app/src/components/flow/FlowCanvas.vue:790
 msgid "Zoom out"
 msgstr "Afastar"
 
 #: admin/src/Core/Workflow_Post_Type.php:53
-msgctxt "fluxo"
+msgctxt "flow"
 msgid "Add new"
-msgstr ""
+msgstr "Adicionar novo"
 
 #: admin/src/Core/Workflow_Post_Type.php:52
 msgctxt "add new on admin bar"
 msgid "Flow"
-msgstr ""
+msgstr "Fluxo"
 
 #: admin/src/Core/Workflow_Post_Type.php:50
 msgctxt "post type singular name"
 msgid "Flow"
-msgstr ""
+msgstr "Fluxo"
 
 #: admin/src/Core/Workflow_Post_Type.php:51
 msgctxt "admin menu"
 msgid "Flows"
-msgstr ""
+msgstr "Fluxos"
 
 #: admin/src/Core/Workflow_Post_Type.php:49
 msgctxt "post type general name"
 msgid "Flows"
-msgstr ""
+msgstr "Fluxos"

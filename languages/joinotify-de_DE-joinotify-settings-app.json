@@ -14,7 +14,8 @@
         "%1$d gesendet, %2$d wartend, %3$d aufgegeben, %4$d ausgeschlossen, weil sie keine Telefonnummer haben."
       ],
       "%d number imported.": [
-        "%d Nummer importiert."
+        "%d Nummer importiert.",
+        "%d Nummern importiert."
       ],
       "24h limit:": [
         "24h Limit:"

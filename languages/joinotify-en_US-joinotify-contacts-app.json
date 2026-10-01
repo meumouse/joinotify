@@ -62,10 +62,12 @@
         "%1$s: %2$d contacts. Tell what each column is."
       ],
       "%d contact": [
-        "%d contact"
+        "%d contact",
+        "%d contacts"
       ],
       "%d option": [
-        "%d option"
+        "%d option",
+        "%d options"
       ],
       "%s stays. Search the duplicate that should be merged into it.": [
         "%s stays. Search the duplicate that should be merged into it."
@@ -1064,10 +1066,12 @@
         "Text"
       ],
       "The %d contact matching the current filters": [
-        "The %d contact matching the current filters"
+        "The %d contact matching the current filters",
+        "All %d contacts matching the current filters"
       ],
       "The %d selected contact": [
-        "The %d selected contact"
+        "The %d selected contact",
+        "The %d selected contacts"
       ],
       "The API key of this site is not allowed to read the contact base.": [
         "The API key of this site is not allowed to read the contact base."

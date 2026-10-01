@@ -5,7 +5,7 @@
       "": {
         "domain": "joinotify",
         "lang": "fr_FR",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "nplurals=2; plural=(n > 1);"
       },
       "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created.": [
         "%1$d de vos %2$d utilisateurs ont un numéro de téléphone, et il y a %3$d commandes passées sans compte. Chaque personne devient un contact dans Joinotify, étiqueté avec ce site ; aucun flux ne commence pour eux. Les personnes sans numéro de téléphone sont exclues, et les contacts dépassant la limite de votre plan ne sont pas créés."
@@ -14,7 +14,8 @@
         "%1$d envoyés, %2$d en attente, %3$d abandonnés, %4$d exclus pour absence de numéro de téléphone."
       ],
       "%d number imported.": [
-        "%d numéro importé."
+        "%d numéro importé.",
+        "%d numéros importés."
       ],
       "24h limit:": [
         "Limite de 24h :"

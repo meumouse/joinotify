@@ -5,10 +5,11 @@
       "": {
         "domain": "joinotify",
         "lang": "fr_FR",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "nplurals=2; plural=(n > 1);"
       },
       "%d number imported from your Joinotify account.": [
-        "%d numéro importé de votre compte Joinotify."
+        "%d numéro importé de votre compte Joinotify.",
+        "%d numéros importés de votre compte Joinotify."
       ],
       "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
         "Quelques questions et votre site est prêt à envoyer des messages WhatsApp. Tout cela peut être modifié plus tard dans les paramètres."

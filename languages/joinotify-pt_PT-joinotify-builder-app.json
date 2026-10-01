@@ -23,25 +23,32 @@
         "{{ wc_billing_phone }} ou +5511999990000"
       ],
       "%d day": [
-        "%d dia"
+        "%d dia",
+        "%d dias"
       ],
       "%d hour": [
-        "%d hora"
+        "%d hora",
+        "%d horas"
       ],
       "%d minute": [
-        "%d minuto"
+        "%d minuto",
+        "%d minutos"
       ],
       "%d month": [
-        "%d mês"
+        "%d mês",
+        "%d meses"
       ],
       "%d second": [
-        "%d segundo"
+        "%d segundo",
+        "%d segundos"
       ],
       "%d week": [
-        "%d semana"
+        "%d semana",
+        "%d semanas"
       ],
       "%d year": [
-        "%d ano"
+        "%d ano",
+        "%d anos"
       ],
       "%s is required.": [
         "%s é obrigatório."

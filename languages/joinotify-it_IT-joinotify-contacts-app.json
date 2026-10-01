@@ -62,10 +62,12 @@
         "%1$s: %2$d contatti. Indica cosa rappresenta ogni colonna."
       ],
       "%d contact": [
-        "%d contatto"
+        "%d contatto",
+        "%d contatti"
       ],
       "%d option": [
-        "%d opzione"
+        "%d opzione",
+        "%d opzioni"
       ],
       "%s stays. Search the duplicate that should be merged into it.": [
         "%s rimane. Cerca il duplicato che dovrebbe essere unito in esso."
@@ -1064,10 +1066,12 @@
         "Testo"
       ],
       "The %d contact matching the current filters": [
-        "Il %d contatto che corrisponde ai filtri attuali"
+        "Il %d contatto che corrisponde ai filtri attuali",
+        "Tutti i %d contatti che corrispondono ai filtri attuali"
       ],
       "The %d selected contact": [
-        "Il %d contatto selezionato"
+        "Il %d contatto selezionato",
+        "I %d contatti selezionati"
       ],
       "The API key of this site is not allowed to read the contact base.": [
         "La chiave API di questo sito non è autorizzata a leggere la base contatti."

@@ -5,7 +5,7 @@
       "": {
         "domain": "joinotify",
         "lang": "pt_BR",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "nplurals=2; plural=(n > 1);"
       },
       "-1001234567890 or {{ telegram_chat_id }}": [
         "-1001234567890 ou {{ telegram_chat_id }}"

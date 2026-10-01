@@ -5,7 +5,7 @@
       "": {
         "domain": "joinotify",
         "lang": "fr_FR",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "nplurals=2; plural=(n > 1);"
       },
       "— Detect automatically —": [
         "— Détecter automatiquement —"
@@ -62,10 +62,12 @@
         "%1$s : %2$d contacts. Indiquez ce que chaque colonne représente."
       ],
       "%d contact": [
-        "%d contact"
+        "%d contact",
+        "%d contacts"
       ],
       "%d option": [
-        "%d option"
+        "%d option",
+        "%d options"
       ],
       "%s stays. Search the duplicate that should be merged into it.": [
         "%s reste. Recherchez le doublon qui doit être fusionné avec lui."
@@ -1064,10 +1066,12 @@
         "Texte"
       ],
       "The %d contact matching the current filters": [
-        "Le %d contact correspondant aux filtres actuels"
+        "Le %d contact correspondant aux filtres actuels",
+        "Les %d contacts correspondant aux filtres actuels"
       ],
       "The %d selected contact": [
-        "Le %d contact sélectionné"
+        "Le %d contact sélectionné",
+        "Les %d contacts sélectionnés"
       ],
       "The API key of this site is not allowed to read the contact base.": [
         "La clé API de ce site n'est pas autorisée à lire la base de contacts."

@@ -8,7 +8,8 @@
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
       "%d number imported from your Joinotify account.": [
-        "%d Nummer von Ihrem Joinotify-Konto importiert."
+        "%d Nummer aus Ihrem Joinotify-Konto importiert.",
+        "%d Nummern aus Ihrem Joinotify-Konto importiert."
       ],
       "A few questions and your site is ready to send WhatsApp messages. Everything here can be changed later in Settings.": [
         "Einige Fragen und Ihre Seite ist bereit, WhatsApp-Nachrichten zu senden. Alles hier kann später in den Einstellungen geändert werden."

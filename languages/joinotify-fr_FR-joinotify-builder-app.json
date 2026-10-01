@@ -5,7 +5,7 @@
       "": {
         "domain": "joinotify",
         "lang": "fr_FR",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "nplurals=2; plural=(n > 1);"
       },
       "-1001234567890 or {{ telegram_chat_id }}": [
         "-1001234567890 ou {{ telegram_chat_id }}"
@@ -23,25 +23,32 @@
         "{{ wc_billing_phone }} ou +5511999990000"
       ],
       "%d day": [
-        "%d jour"
+        "%d jour",
+        "%d jours"
       ],
       "%d hour": [
-        "%d heure"
+        "%d heure",
+        "%d heures"
       ],
       "%d minute": [
-        "%d minute"
+        "%d minute",
+        "%d minutes"
       ],
       "%d month": [
+        "%d mois",
         "%d mois"
       ],
       "%d second": [
-        "%d seconde"
+        "%d seconde",
+        "%d secondes"
       ],
       "%d week": [
-        "%d semaine"
+        "%d semaine",
+        "%d semaines"
       ],
       "%d year": [
-        "%d an"
+        "%d an",
+        "%d ans"
       ],
       "%s is required.": [
         "%s est requis."
