@@ -267,19 +267,20 @@ Orchestrated by [`scripts/build.mjs`](scripts/build.mjs), from the root:
 
 Full build order: **frontend → composer `--no-dev` → translations → staging → ZIP.** Flags:
 `--skip-app`, `--skip-composer`, `--skip-translations`, `--translate`, `--engine=<name>`,
-`--no-install`, `--no-zip`, `--ship-locales`. Initial setup: `cd app && npm install`;
+`--no-install`, `--no-zip`, `--pot-only`. Initial setup: `cd app && npm install`;
 `cd languages && npm install`; `cd admin && composer install`; `npm install` at the root.
 
 The build refuses to run when `joinotify.php` (header and `$plugin_version`), the `Stable tag` in
 `readme.txt` and `package.json` disagree — the gate lives in
 [`scripts/version.mjs`](scripts/version.mjs) and the SVN deploy shares it.
 
-**Only `joinotify.pot` ships.** WordPress.org generates and delivers every locale from
-translate.wordpress.org, and the plugin review team asks that packages not duplicate that channel,
-so the compiled catalogues (`.po`/`.mo`/`.l10n.php`/`.json`) stay out of the ZIP. Until the strings
-are imported and approved there, non-English installs fall back to English. `--ship-locales` builds
-a package that carries them, which is what installs outside the directory need — they get no
-language packs.
+**The compiled locales ship.** The ZIP carries `joinotify.pot` and every catalogue
+(`.po`/`.mo`/`.l10n.php`/`.json`) in `languages/`. 2.5.0 shipped the `.pot` alone, leaving every
+locale to translate.wordpress.org, and non-English installs fell back to English while the strings
+waited for approval there; 2.5.1 brought the catalogues back. A WordPress.org language pack still
+takes precedence over the bundled `.mo`/`.l10n.php` once one exists for the locale, so the bundled
+files cover locales without a pack and installs outside the directory, which never get one.
+`--pot-only` builds a package without them.
 
 ### Publishing to WordPress.org
 

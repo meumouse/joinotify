@@ -21,10 +21,9 @@
  *   --engine=<name>       Translation engine for --translate (default: openai).
  *   --no-install          Skip dependency install steps (npm ci / composer install deps).
  *   --no-zip              Stage files but don't create the .zip.
- *   --ship-locales        Also ship the compiled locales (.po/.mo/.l10n.php/.json).
- *                         Off by default: WordPress.org serves translations from
- *                         translate.wordpress.org, and its reviewers ask that the
- *                         package carry only joinotify.pot — see languageFilter().
+ *   --pot-only            Ship joinotify.pot without the compiled locales
+ *                         (.po/.mo/.l10n.php/.json), leaving every translation to
+ *                         translate.wordpress.org — see languageFilter().
  */
 
 import { spawnSync } from 'node:child_process';
@@ -67,9 +66,9 @@ const opts = {
 	engine: getOpt('--engine', 'openai'),
 	install: !hasFlag('--no-install'),
 	zip: !hasFlag('--no-zip'),
-	// WordPress.org distributes translations itself, so the package ships the
-	// .pot alone unless a build explicitly asks for the compiled locales.
-	potOnly: !hasFlag('--ship-locales'),
+	// The package carries the compiled locales unless a build asks for the
+	// .pot alone.
+	potOnly: hasFlag('--pot-only'),
 };
 
 /* ---------------------------------------------------------------- helpers */
@@ -154,11 +153,11 @@ const languageFilter = (src) => {
 		return true;
 	}
 
-	// Only joinotify.pot ships. WordPress.org generates and delivers every locale
-	// from translate.wordpress.org, and bundling compiled catalogues duplicates
-	// that channel — the plugin review team asks for them to be left out. Pass
-	// --ship-locales to build a package that carries them, which is what installs
-	// outside the directory need, since they get no language packs.
+	// The compiled locales ship with the plugin. A WordPress.org language pack,
+	// once translate.wordpress.org approves one, still takes precedence over the
+	// bundled .mo/.l10n.php, so these only cover locales without a pack and
+	// installs outside the directory, which never get one. --pot-only leaves them
+	// out.
 	if (opts.potOnly && path.extname(name) !== '.pot') {
 		return false;
 	}
@@ -331,8 +330,8 @@ async function main() {
 	const version = await resolveVersion(root, slug, warn);
 	console.log(`\n\x1b[1mBuilding ${slug} v${version}\x1b[0m\n`);
 
-	if (!opts.potOnly) {
-		log('Translations: shipping the compiled locales alongside joinotify.pot.');
+	if (opts.potOnly) {
+		log('Translations: shipping joinotify.pot without the compiled locales (--pot-only).');
 	}
 
 	buildFrontend();

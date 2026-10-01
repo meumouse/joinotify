@@ -160,21 +160,19 @@ O build executa, em ordem:
 | `npm run build:app` | Apenas o build do frontend (`app/dist`). |
 
 Flags úteis do `build.mjs`: `--skip-app`, `--skip-composer`, `--skip-translations`,
-`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`, `--ship-locales`.
+`--translate`, `--engine=<nome>`, `--no-install`, `--no-zip`, `--pot-only`.
 
 O build recusa rodar quando o `joinotify.php` (header e `$plugin_version`), o `Stable tag` do
 `readme.txt` e o `package.json` não declaram a mesma versão.
 
-### Traduções no pacote
+### Translations in the package
 
-Só o `joinotify.pot` **vai no ZIP**. O WordPress.org gera e entrega cada locale pelo
-[translate.wordpress.org](https://translate.wordpress.org/), e a equipe de revisão pede que o pacote
-não duplique esse canal — por isso os catálogos compilados (`.po`/`.mo`/`.l10n.php`/`.json`) ficam
-de fora. Até as strings serem importadas e aprovadas por lá, instalações não-inglesas caem para o
-inglês.
+The ZIP carries `joinotify.pot` and every compiled catalogue (`.po`/`.mo`/`.l10n.php`/`.json`).
+Once [translate.wordpress.org](https://translate.wordpress.org/) approves a language pack for a
+locale, WordPress loads that pack's `.mo`/`.l10n.php` ahead of the bundled one, so the bundled files
+cover locales without a pack and installs outside the directory, which never get one.
 
-A flag `--ship-locales` gera um pacote com os locales compilados, que é o que instalações fora do
-diretório precisam — elas não recebem *language packs*.
+The `--pot-only` flag builds a package with `joinotify.pot` alone.
 
 ---
 

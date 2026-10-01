@@ -97,7 +97,7 @@ class Settings_Assets extends Abstract_Assets {
      * enqueued. Without this merge, a site running on language packs would see
      * every Vue screen in English.
      *
-     * Bundled handle-named JSONs (packages built with --ship-locales) still win:
+     * Bundled handle-named JSONs (every package but a --pot-only build) still win:
      * when one exists this steps aside and core loads it as before.
      *
      * @since 2.4.3

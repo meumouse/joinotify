@@ -276,8 +276,10 @@ Como o `.pot` do Joinotify tem origem mista (PT legado + EN novo), **prefira `tr
 
 ## WordPress.org translations
 
-Release packages ship only `joinotify.pot`; installs from the directory get their locales as
-language packs built from [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/joinotify/).
+Release packages ship the compiled locales, and installs from the directory also get language
+packs built from [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/joinotify/)
+once a locale has one. WordPress loads a pack's `.mo`/`.l10n.php` ahead of the bundled one, so the
+bundled catalogues cover locales without a pack.
 WordPress.org extracts the originals itself, by running `wp i18n make-pot` over the committed
 package, so the local `.po` files can only be imported there for strings that extraction finds.
 
@@ -302,7 +304,8 @@ WordPress.org writes one JSON per built file, `joinotify-<locale>-<md5(app/dist/
 `wp-content/languages/plugins/`. Core only reads the one for the enqueued entry (`settings/app.js`),
 while the strings live in the chunks it imports. `Settings_Assets::merge_language_pack_translations`
 (`pre_load_script_translations`) walks the entry's imports in the Vite manifest and merges their
-JSONs. A handle-named JSON bundled in `languages/` (a `--ship-locales` package) still wins.
+JSONs. A handle-named JSON bundled in `languages/` (every package but a `--pot-only` build) still
+wins.
 
 ### Importing the local translations
 

@@ -180,7 +180,7 @@ check( 'does nothing for en_US', null === merge( 'joinotify-settings-app' ) );
 $current_locale = 'fr_FR';
 write_pack( 'fr_FR', 'chunks/shared-b2.js', array( 'Cancel' => array( 'Annuler' ) ) );
 write_file( JOINOTIFY_DIR . 'languages/joinotify-fr_FR-joinotify-queue-app.json', '{}' );
-check( 'defers to a bundled handle JSON (--ship-locales packages)', null === merge( 'joinotify-queue-app' ) );
+check( 'defers to a bundled handle JSON', null === merge( 'joinotify-queue-app' ) );
 
 // ---------------------------------------------------------------------------
 
