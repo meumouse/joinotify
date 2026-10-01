@@ -1012,10 +1012,12 @@ class Cloud_Client {
      * Shared post-flight: parse the response, decide retry/queue, record it.
      *
      * A refused send also carries `error_detail`, WhatsApp's explanation of
-     * the refusal, when the response had one.
+     * the refusal, when the response had one, and every answer from the API
+     * carries `meta_code` (Meta's error code, 0 when none) and `retry_after`
+     * (the seconds a 429 asks to wait, 0 when absent).
      *
      * @since 1.4.8
-     * @version 2.4.2
+     * @version 2.6.0
      * @param array|\WP_Error $response | wp_remote_* response.
      * @param array $fields | History fields.
      * @param bool $return_details | Whether to return details.
@@ -1066,6 +1068,11 @@ class Cloud_Client {
         // find the row it belongs to later.
         $fields['wamid'] = $parsed['wamid'];
         $details['wamid'] = $parsed['wamid'];
+
+        // What a caller needs to decide its next move on a refusal: Meta's own
+        // code, and how long a rate-limited answer asked to wait.
+        $details['meta_code'] = (int) $parsed['meta_code'];
+        $details['retry_after'] = (int) $parsed['retry_after'];
 
         // The code alone rarely says what to fix; WhatsApp's own words do.
         if ( ! $success && '' !== $parsed['error_detail'] ) {
