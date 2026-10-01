@@ -22,6 +22,7 @@ import { useActionSettingsUpdate } from '../../../composables/useActionSettingsU
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { createApiClient } from '../../../utils/api';
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 interface TemplateVariable {
   component: string;
@@ -45,7 +46,7 @@ interface RemoteTemplate {
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
-  availablePlaceholders: { type: Array, default: () => [] },
+  availablePlaceholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
   cronAvailable: { type: Boolean, default: true },
 });
 

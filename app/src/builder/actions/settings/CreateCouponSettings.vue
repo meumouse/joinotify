@@ -21,10 +21,11 @@ import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import { useSenderOptions } from '../../../composables/useSenderOptions';
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
-  availablePlaceholders: { type: Array, default: () => [] },
+  availablePlaceholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
   cronAvailable: { type: Boolean, default: true },
 });
 
@@ -144,7 +145,7 @@ function insertPlaceholder(placeholder: string) {
           @update:model-value="updateSettings({ discount_type: $event })"
         />
         <BaseNumberField
-          :model-value="settings.coupon_amount ?? ''"
+          :model-value="(settings.coupon_amount as string | number | undefined) ?? ''"
           :label="__('Amount', textDomain)"
           placeholder="10"
           :min="0"
@@ -175,7 +176,7 @@ function insertPlaceholder(placeholder: string) {
 
         <div v-if="String(expiry.type || 'period') === 'period'" class="grid gap-4 sm:grid-cols-2">
           <BaseNumberField
-            :model-value="expiry.delay_value ?? 1"
+            :model-value="(expiry.delay_value as string | number | undefined) ?? 1"
             :label="__('Amount', textDomain)"
             placeholder="1"
             :min="1"

@@ -40,6 +40,7 @@ export type WorkflowFieldComponent =
   | 'time'
   | 'code'
   | 'placeholder'
+  | 'attachments'
   | 'custom';
 
 /** A selectable option for a field. */
@@ -310,6 +311,12 @@ export interface BuilderBootstrap {
     requires_template_to_open_window?: boolean;
     template_action?: string;
     free_form_actions?: string[];
+  };
+  phones?: {
+    senders?: unknown[];
+    default_country_iso2?: string;
+    locale?: string;
+    [key: string]: unknown;
   };
   links?: Record<string, string>;
   permissions?: Record<string, unknown>;

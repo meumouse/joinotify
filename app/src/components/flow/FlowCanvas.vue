@@ -305,7 +305,8 @@ function flattenWorkflowNodes(nodes: WorkflowNode[] = []): WorkflowNode[] {
 }
 
 function buildFlowGraph(workflowNodes: WorkflowNode[] = []) {
-  const flowNodes: Node[] = [];
+  // `selected` is a GraphNode field, but Vue Flow copies it from the input node.
+  const flowNodes: Array<Node & { selected?: boolean }> = [];
   const flowEdges: Edge[] = [];
   const branchOffsetX = 260;
   const rowGapY = 180;

@@ -154,10 +154,10 @@ function ensureBootstrapped(): void {
  * resolving the icon markup.
  *
  * @since 2.0.0
- * @param {ActionDefinition|BackendActionDefinition} definition Raw definition.
+ * @param {BackendActionDefinition} definition Raw definition; an ActionDefinition also fits this wider shape.
  * @returns {ActionDefinition|null} The normalized definition, or null when it lacks an action slug.
  */
-function normalizeDefinition(definition: ActionDefinition | BackendActionDefinition): ActionDefinition | null {
+function normalizeDefinition(definition: BackendActionDefinition): ActionDefinition | null {
   const action = String(definition.action || definition.slug || definition.id || '').trim();
 
   if (!action) {
@@ -458,7 +458,7 @@ export function toWorkflowActionItem(action: string, data: Record<string, unknow
   return {
     id: String(data.id || `${action}-${Math.random().toString(36).slice(2, 10)}`),
     type: 'action',
-    data: nextData,
+    data: nextData as WorkflowActionItem['data'],
     children: {},
   };
 }

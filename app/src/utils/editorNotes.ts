@@ -59,7 +59,7 @@ export function createEditorNote(partial: Partial<WorkflowEditorNote> = {}): Wor
     position: partial.position ?? { x: 0, y: 0 },
     width: partial.width ?? DEFAULT_NOTE_WIDTH,
     height: partial.height ?? DEFAULT_NOTE_HEIGHT,
-  });
+  }) as WorkflowEditorNote;
 }
 
 /**

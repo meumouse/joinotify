@@ -8,7 +8,13 @@
  *
  * @since 2.0.0
  */
-import { computed, ref, unref, watch } from 'vue';
+import { computed, ref, unref, watch, type MaybeRefOrGetter } from 'vue';
+
+/** Page position and size to start from. */
+interface PaginationOptions {
+  currentPage?: number | string;
+  perPage?: number | string;
+}
 
 /**
  * Resolves the pagination source, supporting a getter function or ref/value.
@@ -17,7 +23,7 @@ import { computed, ref, unref, watch } from 'vue';
  * @param {Function|Ref<Array>|Array} source Items source.
  * @returns {Array} The resolved array of items.
  */
-function resolveSource(source) {
+function resolveSource<T>(source: MaybeRefOrGetter<T[] | null | undefined>): T[] {
   if (typeof source === 'function') {
     return source() || [];
   }
@@ -33,7 +39,7 @@ function resolveSource(source) {
  * @param {Object} [options] Pagination options (currentPage, perPage).
  * @returns {Object} Pagination state and navigation helpers.
  */
-export function usePagination(source, options = {}) {
+export function usePagination<T>(source: MaybeRefOrGetter<T[] | null | undefined>, options: PaginationOptions = {}) {
   const currentPage = ref(Number(options.currentPage) || 1);
   const perPage = ref(Number(options.perPage) || 20);
 
@@ -55,7 +61,7 @@ export function usePagination(source, options = {}) {
    * @since 2.0.0
    * @param {number} page The desired page number.
    */
-  function clampPage(page) {
+  function clampPage(page: number | string) {
     const nextPage = Number(page) || 1;
     currentPage.value = Math.min(Math.max(nextPage, 1), totalPages.value);
   }

@@ -4,14 +4,31 @@ import { createApiClient } from '../utils/api';
 import { downloadJson } from '../utils/downloadJson';
 import { DEFAULT_PER_PAGE, normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 
+/** A history record as the REST endpoint returns it; the page reads the other columns. */
+interface HistoryItem {
+  id: number | string;
+  can_cancel_retry?: boolean;
+  [key: string]: unknown;
+}
+
+/** The slice of the history screen bootstrap this composable reads. */
+interface HistoryBootstrap {
+  rest?: { root?: string; nonce?: string };
+  items?: unknown;
+  counts?: unknown;
+  pagination?: unknown;
+  sources?: unknown;
+  [key: string]: unknown;
+}
+
 const EMPTY_COUNTS = { all: 0, sent: 0, failed: 0, queued: 0, cancelled: 0 };
 
-function normalizeCounts(counts) {
+function normalizeCounts(counts: unknown): typeof EMPTY_COUNTS {
   return { ...EMPTY_COUNTS, ...(counts && typeof counts === 'object' ? counts : {}) };
 }
 
-function normalizePagination(pagination) {
-  const source = pagination && typeof pagination === 'object' ? pagination : {};
+function normalizePagination(pagination: unknown) {
+  const source = (pagination && typeof pagination === 'object' ? pagination : {}) as Record<string, unknown>;
 
   return {
     current_page: Number(source.current_page) || 1,
@@ -29,7 +46,7 @@ function normalizePagination(pagination) {
  * @version 2.4.2
  * @param {Object} bootstrap Bootstrap payload from the history screen.
  */
-export function useMessageHistory(bootstrap = {}) {
+export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
   const api = createApiClient(bootstrap);
   const hasApi = Boolean(bootstrap?.rest?.root);
 
@@ -37,10 +54,10 @@ export function useMessageHistory(bootstrap = {}) {
   const exporting = ref(false);
   const error = ref('');
   const notice = ref('');
-  const items = ref(Array.isArray(bootstrap.items) ? bootstrap.items : []);
+  const items = ref<HistoryItem[]>(Array.isArray(bootstrap.items) ? bootstrap.items : []);
   const counts = ref(normalizeCounts(bootstrap.counts));
   const pagination = ref(normalizePagination(bootstrap.pagination));
-  const sources = ref(Array.isArray(bootstrap.sources) ? bootstrap.sources : []);
+  const sources = ref<unknown[]>(Array.isArray(bootstrap.sources) ? bootstrap.sources : []);
   const storedPerPage = readStoredPerPage('history');
 
   const filters = ref({
@@ -51,7 +68,7 @@ export function useMessageHistory(bootstrap = {}) {
     date_to: '',
   });
 
-  const selectedIds = ref(new Set());
+  const selectedIds = ref(new Set<string>());
 
   const statusTabs = computed(() => [
     { label: __('All', textDomain), value: '', count: counts.value.all },
@@ -143,29 +160,29 @@ export function useMessageHistory(bootstrap = {}) {
     }
   }
 
-  let searchTimer = null;
+  let searchTimer: number | null = null;
 
   function applyFilters() {
     pagination.value = { ...pagination.value, current_page: 1 };
     fetchItems();
   }
 
-  function setStatusFilter(status) {
+  function setStatusFilter(status: string) {
     filters.value = { ...filters.value, status: status || '' };
     applyFilters();
   }
 
-  function setSourceFilter(source) {
+  function setSourceFilter(source: string) {
     filters.value = { ...filters.value, source: source || '' };
     applyFilters();
   }
 
-  function setDateRange(from, to) {
+  function setDateRange(from: string, to: string) {
     filters.value = { ...filters.value, date_from: from || '', date_to: to || '' };
     applyFilters();
   }
 
-  function setSearch(value) {
+  function setSearch(value: string) {
     filters.value = { ...filters.value, search: value || '' };
 
     if (searchTimer) {
@@ -175,7 +192,7 @@ export function useMessageHistory(bootstrap = {}) {
     searchTimer = window.setTimeout(applyFilters, 350);
   }
 
-  function goToPage(page) {
+  function goToPage(page: number) {
     const target = Math.min(Math.max(1, page), pagination.value.total_pages);
 
     if (target === pagination.value.current_page) {
@@ -198,7 +215,7 @@ export function useMessageHistory(bootstrap = {}) {
    * @since 2.4.2
    * @param {number} size The new page size.
    */
-  function setPerPage(size) {
+  function setPerPage(size: number | string) {
     const current = pagination.value;
     const nextSize = normalizePerPage(size, current.per_page);
 
@@ -217,7 +234,7 @@ export function useMessageHistory(bootstrap = {}) {
     fetchItems();
   }
 
-  function toggleSelected(id, checked) {
+  function toggleSelected(id: number | string, checked: boolean) {
     const next = new Set(selectedIds.value);
     const key = String(id);
 
@@ -230,7 +247,7 @@ export function useMessageHistory(bootstrap = {}) {
     selectedIds.value = next;
   }
 
-  function toggleSelectAll(checked) {
+  function toggleSelectAll(checked: boolean) {
     if (!checked) {
       selectedIds.value = new Set();
       return;
@@ -334,7 +351,7 @@ export function useMessageHistory(bootstrap = {}) {
    * @param {Object} body Either `{ ids }` or `{ all: true, ...filters }`.
    * @returns {Promise<void>} Resolves once the download has started or failed.
    */
-  async function requestExport(body) {
+  async function requestExport(body: Record<string, unknown>) {
     if (!hasApi || exporting.value) {
       return;
     }
@@ -389,7 +406,7 @@ export function useMessageHistory(bootstrap = {}) {
    * @param {number|string} id History record ID.
    * @returns {Promise<void>}
    */
-  function exportRecord(id) {
+  function exportRecord(id: number | string) {
     return requestExport({ ids: [String(id)] });
   }
 

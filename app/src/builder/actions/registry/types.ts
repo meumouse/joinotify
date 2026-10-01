@@ -72,7 +72,7 @@ export interface ActionDefinition {
   tags?: string[];
 }
 
-export interface BackendActionDefinition extends Partial<ActionDefinition> {
+export interface BackendActionDefinition extends Omit<Partial<ActionDefinition>, 'context' | 'priority'> {
   action?: string;
   slug?: string;
   id?: string;

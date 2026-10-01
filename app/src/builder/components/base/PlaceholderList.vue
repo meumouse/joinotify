@@ -9,13 +9,26 @@
  * @since 2.0.0
  */
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 defineProps({
-  placeholders: { type: Array, default: () => [] },
+  placeholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
   title: { type: String, default: () => __('Placeholders', textDomain) },
 });
 
 defineEmits(['select']);
+
+/**
+ * Resolve the token a placeholder entry inserts: the `placeholder` key of an
+ * object entry, or the entry itself when it is a plain string.
+ *
+ * @since 2.5.0
+ * @param {WorkflowPlaceholderItem|string} item Placeholder entry.
+ * @returns {string} The placeholder token.
+ */
+function placeholderToken(item: WorkflowPlaceholderItem | string): string {
+  return (item as WorkflowPlaceholderItem).placeholder || (item as string);
+}
 </script>
 
 <template>
@@ -30,12 +43,12 @@ defineEmits(['select']);
     <div v-if="Array.isArray(placeholders) && placeholders.length" class="flex flex-wrap gap-2">
       <button
         v-for="placeholder in placeholders"
-        :key="placeholder.placeholder || placeholder"
+        :key="placeholderToken(placeholder)"
         type="button"
         class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-primary-200 hover:bg-primary-50 hover:text-primary-800"
-        @click="$emit('select', placeholder.placeholder || placeholder)"
+        @click="$emit('select', placeholderToken(placeholder))"
       >
-        {{ placeholder.placeholder || placeholder }}
+        {{ placeholderToken(placeholder) }}
       </button>
     </div>
 

@@ -8,10 +8,11 @@
  * @since 2.0.0
  */
 import { computed } from 'vue';
+import type { WorkflowFieldOption } from '../../../types/workflowBuilder';
 
 const props = defineProps({
   modelValue: { type: Array, default: () => [] },
-  options: { type: Array, default: () => [] },
+  options: { type: Array as () => WorkflowFieldOption[], default: () => [] },
   label: { type: String, default: '' },
   placeholder: { type: String, default: '' },
   disabled: { type: Boolean, default: false },

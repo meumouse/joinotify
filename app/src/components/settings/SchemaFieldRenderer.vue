@@ -34,7 +34,9 @@ const emit = defineEmits<{
   (event: 'update:modelValue', value: unknown): void;
 }>();
 
-const fieldValue = computed({
+// The value's type follows field.component, which the template dispatches on,
+// so each control receives whatever shape its own v-model expects.
+const fieldValue = computed<any>({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value),
 });

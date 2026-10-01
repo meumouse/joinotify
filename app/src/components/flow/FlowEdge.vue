@@ -131,8 +131,8 @@ function removeTargetNode() {
     edgeId,
     sourceId: String(props.source || ''),
     targetId: String(props.target || ''),
-    sourceHandle: String(props.sourceHandle || ''),
-    targetHandle: String(props.targetHandle || ''),
+    sourceHandle: String(props.sourceHandleId || ''),
+    targetHandle: String(props.targetHandleId || ''),
   });
 }
 

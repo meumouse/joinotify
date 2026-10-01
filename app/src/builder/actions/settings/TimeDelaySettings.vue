@@ -16,10 +16,11 @@ import BaseTimeField from '../../components/base/BaseTimeField.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
-  availablePlaceholders: { type: Array, default: () => [] },
+  availablePlaceholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
   cronAvailable: { type: Boolean, default: true },
 });
 
@@ -71,7 +72,7 @@ function update(key: string, value: unknown) {
  * @param {unknown} value New delay type ('period', 'date' or 'scheduled').
  */
 function changeDelayType(value: unknown) {
-  const next = {
+  const next: Record<string, unknown> = {
     ...(props.modelValue as Record<string, unknown>),
     delay_type: value,
   };

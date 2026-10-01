@@ -332,7 +332,8 @@ and the `licensing-*-test.php` suite. Fixtures in `tests/fixtures/`.
 **Before finishing a change:**
 
 1. Run the relevant harness(es) if you touched migration, upgrade, cron, attachments, loop, or licensing.
-2. Frontend: `npm run build:app` (or `npm run dev`) and confirm it compiles with no TypeScript errors.
+2. Frontend: `npm run type-check --prefix app` (`vue-tsc`, which also checks the `.vue` files) and
+   `npm run build:app`. `vite build` only strips types, so it never reports a TypeScript error.
 3. Changed the release ZIP: `npm run build` and confirm the package is generated.
 4. Added/changed strings: regenerate the `.pot`.
 

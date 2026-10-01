@@ -9,10 +9,11 @@
  * @since 2.0.0
  */
 import BaseListboxSelect from '../../../components/base/BaseListboxSelect.vue';
+import type { WorkflowFieldOption } from '../../../types/workflowBuilder';
 
 defineProps({
   modelValue: { type: [String, Number, Boolean], default: '' },
-  options: { type: Array, default: () => [] },
+  options: { type: Array as () => WorkflowFieldOption[], default: () => [] },
   id: { type: String, default: '' },
   name: { type: String, default: '' },
   label: { type: String, default: '' },

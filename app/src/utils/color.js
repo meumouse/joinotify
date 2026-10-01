@@ -12,7 +12,7 @@ export const SHADE_STEPS = ['0', '50', '100', '200', '300', '400', '500', '600',
  *
  * Accepts 3-digit and 6-digit hex values and returns a lowercase 6-digit hex.
  *
- * @param {string} value Raw color value.
+ * @param {unknown} value Raw color value; anything that is not a hex string yields ''.
  * @return {string} Normalized color or empty string.
  */
 export function normalizeHex(value) {

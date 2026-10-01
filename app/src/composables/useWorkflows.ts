@@ -15,6 +15,21 @@ import { downloadJson } from '../utils/downloadJson';
 import { normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 import { useBulkSelection } from './useBulkSelection';
 import { usePagination } from './usePagination';
+import type { WorkflowCounts, WorkflowItem, WorkflowPagination, WorkflowStatus } from '../types/workflow';
+
+/** A workflow row as the REST endpoint (or the bootstrap) sends it, before normalization. */
+type RawWorkflow = Record<string, any>;
+
+/** The slice of the workflows screen bootstrap this composable reads. */
+interface WorkflowsBootstrap {
+  rest?: { root?: string; nonce?: string };
+  search_query?: string;
+  active_status?: string;
+  workflows?: RawWorkflow[];
+  pagination?: Partial<WorkflowPagination>;
+  loading_delay?: number;
+  [key: string]: unknown;
+}
 
 // Handled on the screen as a download, not sent to the bulk endpoint.
 const EXPORT_ACTION = { label: __('Export as JSON', textDomain), value: 'export' };
@@ -74,8 +89,8 @@ const MOCK_WORKFLOWS = [
  * @param {string} status The raw status.
  * @returns {string} A valid status value.
  */
-function normalizeStatus(status) {
-  return ['publish', 'draft', 'trash'].includes(status) ? status : 'publish';
+function normalizeStatus(status: unknown): WorkflowStatus {
+  return (['publish', 'draft', 'trash'] as unknown[]).includes(status) ? (status as WorkflowStatus) : 'publish';
 }
 
 /**
@@ -85,7 +100,7 @@ function normalizeStatus(status) {
  * @param {Object} workflow The raw workflow.
  * @returns {Object} The normalized workflow.
  */
-function normalizeWorkflow(workflow) {
+function normalizeWorkflow(workflow: RawWorkflow): WorkflowItem {
   return {
     id: workflow.id,
     name: workflow.name || __('Untitled workflow', textDomain),
@@ -106,9 +121,9 @@ function normalizeWorkflow(workflow) {
  * @param {Array} items The workflows.
  * @returns {Object} Counts keyed by status.
  */
-function countWorkflows(items) {
+function countWorkflows(items: WorkflowItem[]): WorkflowCounts {
   return items.reduce(
-    (accumulator, workflow) => {
+    (accumulator: WorkflowCounts, workflow) => {
       accumulator[workflow.status] += 1;
       return accumulator;
     },
@@ -123,7 +138,7 @@ function countWorkflows(items) {
  * @param {Array} items The raw workflows.
  * @returns {Array} The cloned, normalized workflows.
  */
-function cloneWorkflows(items) {
+function cloneWorkflows(items: RawWorkflow[]): WorkflowItem[] {
   return items.map((workflow) => normalizeWorkflow(workflow));
 }
 
@@ -135,7 +150,7 @@ function cloneWorkflows(items) {
  * @returns {Promise<void>} A promise resolving after the delay.
  */
 function simulateLatency(duration = 300) {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     window.setTimeout(resolve, duration);
   });
 }
@@ -148,7 +163,7 @@ function simulateLatency(duration = 300) {
  * @param {Object} [bootstrap] Bootstrap payload from the workflows screen.
  * @returns {Object} Listing state, computed values, and action methods.
  */
-export function useWorkflows(bootstrap = {}) {
+export function useWorkflows(bootstrap: WorkflowsBootstrap = {}) {
   const api = createApiClient(bootstrap);
   const hasApi = Boolean(bootstrap?.rest?.root);
 
@@ -156,7 +171,7 @@ export function useWorkflows(bootstrap = {}) {
   const error = ref('');
   const bulkActionLoading = ref(false);
   const exporting = ref(false);
-  const updateLoadingIds = ref(new Set());
+  const updateLoadingIds = ref(new Set<string>());
   const searchQuery = ref(bootstrap.search_query || '');
   const selectedStatus = ref(normalizeStatus(bootstrap.active_status));
   const baseWorkflows = cloneWorkflows(bootstrap.workflows?.length ? bootstrap.workflows : hasApi ? [] : MOCK_WORKFLOWS);
@@ -273,7 +288,7 @@ export function useWorkflows(bootstrap = {}) {
    * @since 2.0.0
    * @param {string} status The status to filter by.
    */
-  function setStatusFilter(status) {
+  function setStatusFilter(status: string) {
     selectedStatus.value = normalizeStatus(status);
   }
 
@@ -283,7 +298,7 @@ export function useWorkflows(bootstrap = {}) {
    * @since 2.0.0
    * @param {string} value The search string.
    */
-  function setSearchQuery(value) {
+  function setSearchQuery(value: string) {
     searchQuery.value = value || '';
   }
 
@@ -294,7 +309,7 @@ export function useWorkflows(bootstrap = {}) {
    * @since 2.4.2
    * @param {number} size The new page size.
    */
-  function setPerPage(size) {
+  function setPerPage(size: number | string) {
     const nextSize = normalizePerPage(size, pagination.perPage.value);
 
     if (nextSize === pagination.perPage.value) {
@@ -315,7 +330,7 @@ export function useWorkflows(bootstrap = {}) {
    * @param {string|number} id The workflow ID.
    * @returns {Object|undefined} The workflow, or undefined.
    */
-  function findWorkflow(id) {
+  function findWorkflow(id: string | number) {
     return workflows.value.find((workflow) => String(workflow.id) === String(id));
   }
 
@@ -326,7 +341,7 @@ export function useWorkflows(bootstrap = {}) {
    * @param {string|number} id The workflow ID.
    * @param {string} nextStatus The new status.
    */
-  function setWorkflowStatus(id, nextStatus) {
+  function setWorkflowStatus(id: string | number, nextStatus: string) {
     workflows.value = workflows.value.map((workflow) =>
       String(workflow.id) === String(id)
         ? {
@@ -346,7 +361,7 @@ export function useWorkflows(bootstrap = {}) {
    * @param {string} [forcedStatus] Force a specific status instead of toggling.
    * @returns {Promise<void>} Resolves once the status update completes.
    */
-  async function toggleWorkflowStatus(id, forcedStatus = '') {
+  async function toggleWorkflowStatus(id: string | number, forcedStatus = '') {
     const workflow = findWorkflow(id);
 
     if (!workflow || workflow.status === 'trash' || updateLoadingIds.value.has(String(id))) {
@@ -388,7 +403,7 @@ export function useWorkflows(bootstrap = {}) {
    * @param {string} action The bulk action key.
    * @param {Array} ids The affected workflow IDs (as strings).
    */
-  function applyBulkActionLocally(action, ids) {
+  function applyBulkActionLocally(action: string, ids: string[]) {
     if (action === 'delete_permanently') {
       workflows.value = workflows.value.filter((workflow) => !ids.includes(String(workflow.id)));
       return;
@@ -431,7 +446,7 @@ export function useWorkflows(bootstrap = {}) {
    * @param {Array} [ids] The affected workflow IDs (defaults to selection).
    * @returns {Promise<void>} Resolves once the action completes.
    */
-  async function applyBulkAction(action, ids = bulkSelection.selectedIds.value) {
+  async function applyBulkAction(action: string, ids = bulkSelection.selectedIds.value) {
     if (!action || !ids.length) {
       return;
     }
@@ -502,7 +517,7 @@ export function useWorkflows(bootstrap = {}) {
    * @since 2.0.0
    * @param {string} url The destination URL.
    */
-  function navigateTo(url) {
+  function navigateTo(url: string) {
     if (!url || typeof window === 'undefined') {
       return;
     }

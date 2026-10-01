@@ -7,7 +7,12 @@
  *
  * @since 2.0.0
  */
-import { computed, ref, unref, watch } from 'vue';
+import { computed, ref, unref, watch, type MaybeRefOrGetter } from 'vue';
+
+/** Any row that can be selected: it only needs an ID. */
+interface SelectableItem {
+  id: string | number;
+}
 
 /**
  * Resolves the source items, supporting either a getter function or a ref/value.
@@ -16,7 +21,7 @@ import { computed, ref, unref, watch } from 'vue';
  * @param {Function|Ref<Array>|Array} source Items source (function, ref, or array).
  * @returns {Array} The resolved array of items.
  */
-function resolveItems(source) {
+function resolveItems<T>(source: MaybeRefOrGetter<T[] | null | undefined>): T[] {
   if (typeof source === 'function') {
     return source() || [];
   }
@@ -31,7 +36,7 @@ function resolveItems(source) {
  * @param {string|number} id The raw ID.
  * @returns {string} The stringified ID.
  */
-function normalizeId(id) {
+function normalizeId(id: string | number): string {
   return String(id);
 }
 
@@ -42,8 +47,8 @@ function normalizeId(id) {
  * @param {Function|Ref<Array>|Array} sourceItems The visible items source.
  * @returns {Object} Selection state and mutators.
  */
-export function useBulkSelection(sourceItems) {
-  const selectedIds = ref([]);
+export function useBulkSelection<T extends SelectableItem>(sourceItems: MaybeRefOrGetter<T[] | null | undefined>) {
+  const selectedIds = ref<string[]>([]);
 
   const visibleItems = computed(() => resolveItems(sourceItems));
   const visibleIds = computed(() => visibleItems.value.map((item) => normalizeId(item.id)));
@@ -73,7 +78,7 @@ export function useBulkSelection(sourceItems) {
    * @param {string|number} id The item ID.
    * @returns {boolean} True when the ID is selected.
    */
-  function isSelected(id) {
+  function isSelected(id: string | number) {
     return selectedIds.value.includes(normalizeId(id));
   }
 
@@ -84,7 +89,7 @@ export function useBulkSelection(sourceItems) {
    * @param {string|number} id The item ID.
    * @param {boolean} checked Whether the item should be selected.
    */
-  function setSelected(id, checked) {
+  function setSelected(id: string | number, checked: boolean) {
     const normalizedId = normalizeId(id);
     const next = new Set(selectedIds.value);
 
@@ -103,7 +108,7 @@ export function useBulkSelection(sourceItems) {
    * @since 2.0.0
    * @param {string|number} id The item ID.
    */
-  function toggleSelected(id) {
+  function toggleSelected(id: string | number) {
     setSelected(id, !isSelected(id));
   }
 
@@ -114,7 +119,7 @@ export function useBulkSelection(sourceItems) {
    * @param {Array} items Items whose IDs should be updated.
    * @param {boolean} checked Whether the items should be selected.
    */
-  function setVisibleSelected(items, checked) {
+  function setVisibleSelected(items: SelectableItem[] | null | undefined, checked: boolean) {
     const ids = (items || []).map((item) => normalizeId(item.id));
     const next = new Set(selectedIds.value);
 
@@ -144,7 +149,7 @@ export function useBulkSelection(sourceItems) {
    * @since 2.0.0
    * @param {Array} allowedIds IDs that are permitted to stay selected.
    */
-  function syncSelection(allowedIds) {
+  function syncSelection(allowedIds: Array<string | number> | null | undefined) {
     const allowed = new Set((allowedIds || []).map((id) => normalizeId(id)));
     selectedIds.value = selectedIds.value.filter((id) => allowed.has(id));
   }

@@ -4,14 +4,38 @@ import { createApiClient } from '../utils/api';
 import { downloadJson } from '../utils/downloadJson';
 import { DEFAULT_PER_PAGE, normalizePerPage, pageKeepingFirstRow, readStoredPerPage, storePerPage } from '../utils/perPage';
 
+/** A scheduled segment as the REST endpoint returns it; the page reads the other columns. */
+interface QueueItem {
+  id: string;
+  [key: string]: unknown;
+}
+
+/** The slice of the queue screen bootstrap this composable reads. */
+interface QueueBootstrap {
+  rest?: { root?: string; nonce?: string };
+  items?: unknown;
+  counts?: unknown;
+  pagination?: unknown;
+  workflows?: unknown;
+  [key: string]: unknown;
+}
+
+/** The list the queue endpoints answer with, after a read or a write. */
+interface QueueListPayload {
+  items?: unknown;
+  counts?: unknown;
+  pagination?: unknown;
+  [key: string]: unknown;
+}
+
 const EMPTY_COUNTS = { all: 0, due: 0, scheduled: 0 };
 
-function normalizeCounts(counts) {
+function normalizeCounts(counts: unknown): typeof EMPTY_COUNTS {
   return { ...EMPTY_COUNTS, ...(counts && typeof counts === 'object' ? counts : {}) };
 }
 
-function normalizePagination(pagination) {
-  const source = pagination && typeof pagination === 'object' ? pagination : {};
+function normalizePagination(pagination: unknown) {
+  const source = (pagination && typeof pagination === 'object' ? pagination : {}) as Record<string, unknown>;
 
   return {
     current_page: Number(source.current_page) || 1,
@@ -30,7 +54,7 @@ function normalizePagination(pagination) {
  * @version 2.4.2
  * @param {Object} bootstrap Bootstrap payload from the queue screen.
  */
-export function useProcessingQueue(bootstrap = {}) {
+export function useProcessingQueue(bootstrap: QueueBootstrap = {}) {
   const api = createApiClient(bootstrap);
   const hasApi = Boolean(bootstrap?.rest?.root);
 
@@ -39,10 +63,10 @@ export function useProcessingQueue(bootstrap = {}) {
   const exporting = ref(false);
   const error = ref('');
   const notice = ref('');
-  const items = ref(Array.isArray(bootstrap.items) ? bootstrap.items : []);
+  const items = ref<QueueItem[]>(Array.isArray(bootstrap.items) ? bootstrap.items : []);
   const counts = ref(normalizeCounts(bootstrap.counts));
   const pagination = ref(normalizePagination(bootstrap.pagination));
-  const workflows = ref(Array.isArray(bootstrap.workflows) ? bootstrap.workflows : []);
+  const workflows = ref<unknown[]>(Array.isArray(bootstrap.workflows) ? bootstrap.workflows : []);
   const storedPerPage = readStoredPerPage('queue');
 
   const filters = ref({
@@ -53,7 +77,7 @@ export function useProcessingQueue(bootstrap = {}) {
 
   // Opaque segment ids ("as:123", "cron:<ts>:<hash>"). Every list refresh
   // clears the set, so it never outlives the rows it was picked from.
-  const selectedIds = ref(new Set());
+  const selectedIds = ref(new Set<string>());
 
   const statusTabs = computed(() => [
     { label: __('All', textDomain), value: '', count: counts.value.all },
@@ -116,7 +140,7 @@ export function useProcessingQueue(bootstrap = {}) {
     return { ...filters.value, per_page: pagination.value.per_page };
   }
 
-  function applyListPayload(response) {
+  function applyListPayload(response: QueueListPayload) {
     items.value = Array.isArray(response?.items) ? response.items : [];
     counts.value = normalizeCounts(response?.counts);
     pagination.value = normalizePagination(response?.pagination);
@@ -146,24 +170,24 @@ export function useProcessingQueue(bootstrap = {}) {
     }
   }
 
-  let searchTimer = null;
+  let searchTimer: number | null = null;
 
   function applyFilters() {
     pagination.value = { ...pagination.value, current_page: 1 };
     fetchItems();
   }
 
-  function setStatusFilter(status) {
+  function setStatusFilter(status: string) {
     filters.value = { ...filters.value, status: status || '' };
     applyFilters();
   }
 
-  function setWorkflowFilter(workflowId) {
+  function setWorkflowFilter(workflowId: number | string) {
     filters.value = { ...filters.value, workflow_id: Number(workflowId) || 0 };
     applyFilters();
   }
 
-  function setSearch(value) {
+  function setSearch(value: string) {
     filters.value = { ...filters.value, search: value || '' };
 
     if (searchTimer) {
@@ -173,7 +197,7 @@ export function useProcessingQueue(bootstrap = {}) {
     searchTimer = window.setTimeout(applyFilters, 350);
   }
 
-  function goToPage(page) {
+  function goToPage(page: number) {
     const target = Math.min(Math.max(1, page), pagination.value.total_pages);
 
     if (target === pagination.value.current_page) {
@@ -196,7 +220,7 @@ export function useProcessingQueue(bootstrap = {}) {
    * @since 2.4.2
    * @param {number} size The new page size.
    */
-  function setPerPage(size) {
+  function setPerPage(size: number | string) {
     const current = pagination.value;
     const nextSize = normalizePerPage(size, current.per_page);
 
@@ -215,7 +239,7 @@ export function useProcessingQueue(bootstrap = {}) {
     fetchItems();
   }
 
-  async function postAction(path, body, fallbackMessage) {
+  async function postAction(path: string, body: { id?: string; all?: boolean }, fallbackMessage: string) {
     if (!hasApi) {
       return false;
     }
@@ -246,11 +270,11 @@ export function useProcessingQueue(bootstrap = {}) {
     }
   }
 
-  function runNow(id) {
+  function runNow(id: string) {
     return postAction('/admin/queue/run', { id }, __('Could not run the scheduled item.', textDomain));
   }
 
-  function cancel(id) {
+  function cancel(id: string) {
     return postAction('/admin/queue/cancel', { id }, __('Could not cancel the scheduled item.', textDomain));
   }
 
@@ -258,7 +282,7 @@ export function useProcessingQueue(bootstrap = {}) {
     return postAction('/admin/queue/cancel', { all: true }, __('Could not clear the queue.', textDomain));
   }
 
-  function toggleSelected(id, checked) {
+  function toggleSelected(id: string, checked: boolean) {
     const next = new Set(selectedIds.value);
     const key = String(id);
 
@@ -271,7 +295,7 @@ export function useProcessingQueue(bootstrap = {}) {
     selectedIds.value = next;
   }
 
-  function toggleSelectAll(checked) {
+  function toggleSelectAll(checked: boolean) {
     selectedIds.value = checked ? new Set(items.value.map((item) => String(item.id))) : new Set();
   }
 
@@ -283,7 +307,7 @@ export function useProcessingQueue(bootstrap = {}) {
    * @param {Object} body Either `{ ids }` or `{ all: true, ...filters }`.
    * @returns {Promise<void>} Resolves once the download has started or failed.
    */
-  async function requestExport(body) {
+  async function requestExport(body: Record<string, unknown>) {
     if (!hasApi || exporting.value) {
       return;
     }
@@ -329,7 +353,7 @@ export function useProcessingQueue(bootstrap = {}) {
    * @param {string} id Opaque segment id.
    * @returns {Promise<void>}
    */
-  function exportItem(id) {
+  function exportItem(id: string) {
     return requestExport({ ids: [String(id)] });
   }
 

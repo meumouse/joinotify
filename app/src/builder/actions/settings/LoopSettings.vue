@@ -17,10 +17,11 @@ import BaseRichTextArea from '../../../components/base/BaseRichTextArea.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
-  availablePlaceholders: { type: Array, default: () => [] },
+  availablePlaceholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
   cronAvailable: { type: Boolean, default: true },
 });
 

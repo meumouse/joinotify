@@ -19,6 +19,7 @@ import ConditionProductsField from './ConditionProductsField.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 interface CatalogCondition {
   key: string;
@@ -31,7 +32,7 @@ interface CatalogCondition {
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
-  availablePlaceholders: { type: Array, default: () => [] },
+  availablePlaceholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
 });
 
 const emit = defineEmits(['update:modelValue', 'placeholder-selected']);

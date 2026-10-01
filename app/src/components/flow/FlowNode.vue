@@ -250,7 +250,7 @@ function iconGlyph(value: string) {
           :aria-label="__('Options', textDomain)"
           @click.stop="menuOpen = !menuOpen"
         >
-          <DotsVerticalRounded :size="16" />
+          <DotsVerticalRounded />
           <span
             v-if="needsSetup"
             class="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5"

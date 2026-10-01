@@ -241,7 +241,7 @@ function openActionsSidebar(payload?: { afterNodeId?: string; branchKey?: string
 
     <NodeSettingsDrawer
       :open="drawerOpen"
-      :node="selectedNode"
+      :node="selectedNode ?? undefined"
       :contexts="contexts"
       @close="$emit('close-drawer')"
       @update="$emit('update-node', $event)"

@@ -17,7 +17,7 @@ import { createApiClient } from '../utils/api';
  * @param {Object} bootstrap Bootstrap payload used to configure the API client.
  * @returns {Object} An object of endpoint helper methods.
  */
-export function createWorkflowApiClient(bootstrap) {
+export function createWorkflowApiClient(bootstrap: Record<string, unknown>) {
   const api = createApiClient(bootstrap);
 
   return {
@@ -28,7 +28,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {number|string} postId The workflow post ID.
      * @returns {Promise<Object>} The bootstrap response.
      */
-    loadBootstrap(postId) {
+    loadBootstrap(postId: number | string) {
       return api.get(`/admin/builder?id=${postId || 0}`);
     },
     /**
@@ -49,7 +49,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {string} action The action ID.
      * @returns {Promise<Object>} The action response.
      */
-    loadAction(action) {
+    loadAction(action: string) {
       return api.get(`/admin/builder/actions?action=${encodeURIComponent(action || '')}`);
     },
     /**
@@ -59,7 +59,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {number|string} postId The workflow post ID.
      * @returns {Promise<Object>} The workflow response.
      */
-    loadWorkflow(postId) {
+    loadWorkflow(postId: number | string) {
       return api.get(`/admin/builder/workflow?id=${postId}`);
     },
     /**
@@ -78,7 +78,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The creation payload.
      * @returns {Promise<Object>} The creation response.
      */
-    createWorkflow(body) {
+    createWorkflow(body: Record<string, unknown>) {
       return api.post('/admin/builder/create', body);
     },
     /**
@@ -88,7 +88,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The workflow payload.
      * @returns {Promise<Object>} The save response.
      */
-    saveWorkflow(body) {
+    saveWorkflow(body: Record<string, unknown>) {
       return api.post('/admin/builder/workflow', body);
     },
     /**
@@ -98,7 +98,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The settings payload.
      * @returns {Promise<Object>} The save response.
      */
-    saveSettings(body) {
+    saveSettings(body: Record<string, unknown>) {
       return api.post('/admin/settings', body);
     },
     /**
@@ -108,7 +108,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The status payload.
      * @returns {Promise<Object>} The update response.
      */
-    updateWorkflowStatus(body) {
+    updateWorkflowStatus(body: Record<string, unknown>) {
       return api.post('/admin/builder/status', body);
     },
     /**
@@ -118,7 +118,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The import payload.
      * @returns {Promise<Object>} The import response.
      */
-    importWorkflow(body) {
+    importWorkflow(body: Record<string, unknown>) {
       return api.post('/admin/builder/import', body);
     },
     /**
@@ -128,7 +128,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {number|string} postId The workflow post ID.
      * @returns {Promise<Object>} The export response.
      */
-    exportWorkflow(postId) {
+    exportWorkflow(postId: number | string) {
       return api.get(`/admin/builder/export?id=${postId}`);
     },
     /**
@@ -138,7 +138,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The test payload.
      * @returns {Promise<Object>} The test response.
      */
-    runWorkflowTest(body) {
+    runWorkflowTest(body: Record<string, unknown>) {
       return api.post('/admin/builder/test', body);
     },
     /**
@@ -148,7 +148,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The generation payload.
      * @returns {Promise<Object>} The generation response.
      */
-    generateAiWorkflow(body) {
+    generateAiWorkflow(body: Record<string, unknown>) {
       return api.post('/admin/ai/generate', body);
     },
     /**
@@ -158,7 +158,7 @@ export function createWorkflowApiClient(bootstrap) {
      * @param {Object} body The generation payload.
      * @returns {Promise<Object>} The generation response.
      */
-    generateAi(body) {
+    generateAi(body: Record<string, unknown>) {
       return api.post('/admin/ai/generate', body);
     },
   };

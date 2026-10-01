@@ -106,7 +106,7 @@ function serializeNodeData(node: WorkflowNode): Record<string, unknown> {
  * @returns {WorkflowNode[]} The serialized children.
  */
 function serializeLinearChildren(children: WorkflowNode[]): WorkflowNode[] {
-  return (children || []).map((child) => serializeWorkflowNode(child));
+  return (children || []).map((child) => serializeWorkflowNode(child)) as WorkflowNode[];
 }
 
 /**

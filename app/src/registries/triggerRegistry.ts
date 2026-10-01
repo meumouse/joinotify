@@ -104,7 +104,7 @@ function normalizeFieldSchema(field: unknown): WorkflowFieldSchema | null {
           }))
           .filter((item) => item.key)
       : undefined,
-    componentProps: source.componentProps && typeof source.componentProps === 'object' ? cloneSerializable(source.componentProps) : undefined,
+    componentProps: source.componentProps && typeof source.componentProps === 'object' ? cloneSerializable(source.componentProps as Record<string, unknown>) : undefined,
   };
 }
 
@@ -440,8 +440,8 @@ export function normalizeTriggerCatalog(rawTriggers: Record<string, Array<Record
         ...existing,
         ...trigger,
         schema: trigger.schema.length ? trigger.schema : existing?.schema || [],
-        contexts: trigger.contexts.length ? trigger.contexts : existing?.contexts || [],
-        context: trigger.contexts.length ? trigger.contexts : existing?.context || [],
+        contexts: trigger.contexts?.length ? trigger.contexts : existing?.contexts || [],
+        context: trigger.contexts?.length ? trigger.contexts : existing?.context || [],
         parseData: trigger.parseData || existing?.parseData,
         serializeData: trigger.serializeData || existing?.serializeData,
         preview: trigger.preview || existing?.preview,

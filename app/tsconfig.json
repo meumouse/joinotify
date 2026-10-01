@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2020",
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
+    "allowJs": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]

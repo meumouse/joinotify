@@ -16,6 +16,7 @@ import BaseTextFieldVariables from './BaseTextFieldVariables.vue';
 import BaseSelectField from './BaseSelectField.vue';
 import { ImagePlus, Trash, Plus } from '@boxicons/vue';
 import { __, textDomain } from '../../../utils/i18n';
+import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 type AttachmentSource = 'media' | 'url' | 'order_downloads' | 'loop_item';
 
@@ -28,7 +29,7 @@ interface AttachmentItem {
 
 const props = defineProps({
   modelValue: { type: Array, default: () => [] },
-  availablePlaceholders: { type: Array, default: () => [] },
+  availablePlaceholders: { type: Array as () => Array<WorkflowPlaceholderItem | string>, default: () => [] },
   disabled: { type: Boolean, default: false },
 });
 

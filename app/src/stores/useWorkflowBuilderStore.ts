@@ -117,7 +117,7 @@ function normalizePlaceholderEntry(placeholder: string, details: unknown): Workf
         ? ((item as Record<string, unknown>).triggers as unknown[]).map((trigger) => String(trigger))
         : [],
       replacement: (item as Record<string, unknown>).replacement && typeof (item as Record<string, unknown>).replacement === 'object'
-        ? cloneSerializable((item as Record<string, unknown>).replacement)
+        ? cloneSerializable((item as Record<string, unknown>).replacement as Record<string, unknown>)
         : {},
     })),
   };
@@ -160,7 +160,7 @@ function normalizePlaceholdersCatalog(raw: unknown): WorkflowPlaceholderGroup[] 
               category: typeof source.category === 'string' ? source.category : '',
               group: typeof source.group === 'string' ? source.group : '',
               triggers: Array.isArray(source.triggers) ? source.triggers.map((item) => String(item)) : [],
-              replacement: source.replacement && typeof source.replacement === 'object' ? cloneSerializable(source.replacement) : {},
+              replacement: source.replacement && typeof source.replacement === 'object' ? cloneSerializable(source.replacement as Record<string, unknown>) : {},
             },
           ],
         } satisfies WorkflowPlaceholderGroup;
@@ -475,7 +475,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
     setIntegrationAvailability((bootstrap.value as Record<string, unknown> | undefined)?.settings);
     debugLogger.log('bootstrap:api-ready', {
       debug_mode: Boolean(bootstrap.value?.debug_mode),
-      post_id: Number(bootstrap.value?.workflow?.post_id || 0) || 0,
+      post_id: Number((bootstrap.value?.workflow as Record<string, unknown> | undefined)?.post_id || 0) || 0,
     });
 
     const workflowState = (value?.workflow as Record<string, unknown> | undefined) || {};
@@ -2000,7 +2000,7 @@ export const useWorkflowBuilderStore = defineStore('joinotifyWorkflowBuilder', (
    * @param {Object} settings The settings payload.
    * @returns {Promise<Object>} The save response.
    */
-  async function saveSettings(settings) {
+  async function saveSettings(settings: Record<string, unknown>) {
     if (!api.value) {
       throw new Error(__('API client not initialized.', textDomain));
     }

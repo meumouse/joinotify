@@ -22,7 +22,7 @@ import { __, textDomain } from '../../utils/i18n';
 
 interface SelectOption {
   label: string;
-  value: string | number;
+  value: string | number | boolean;
   disabled?: boolean;
 }
 
@@ -81,7 +81,7 @@ const buttonLabel = computed(() =>
     : props.placeholder || __('Select an option', textDomain)
 );
 
-function handleSelect(value: string | number) {
+function handleSelect(value: string | number | boolean) {
   emit('update:modelValue', value);
   emit('change', value);
 }
