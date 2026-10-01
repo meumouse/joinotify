@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow, join, notify, 
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,11 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.5.1 =
+* Fixed: the plugin ships its translations again (Brazilian and European Portuguese, Spanish, German, French and Italian). Sites in those languages showed Joinotify in English since 2.5.0. A WordPress.org language pack, once a locale has one, still takes precedence.
+* Fixed: counts such as "%d contacts" or "%d days" use the plural form in every translated language instead of the singular.
+* Fixed: the labels of the workflow post type are translated.
+
 = 2.5.0 =
 * New: Joinotify → Audiences & Contacts, a screen for the contact base of your Joinotify account. List, search, filter and export contacts; add them by hand or import a CSV file; edit, opt in, opt out, merge, export or erase a contact; and manage custom fields, tags, saved audiences and the suppression list. The base stays on Joinotify and the API key never reaches the browser. A key restricted to some numbers makes the screen read only.
 * New: Joinotify Cloud sync, off by default under Settings → General. Once switched on, it sends this site's customers and events to your Joinotify account: WooCommerce orders and subscriptions, new customers, WordPress sign-ups and profile changes, WPForms and Elementor forms, and Flexify Checkout leads and carts. It says what it sends before you turn it on, lets you leave out forms, carts, order items and full addresses, and tags every contact with the site's name or a tag of your choice.
@@ -299,6 +304,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.5.1 =
+Recommended for sites not in English: brings back the translations 2.5.0 left out, so Joinotify no longer shows in English.
 
 = 2.5.0 =
 Recommended for every installation. Fixes the "Connect to Joinotify" button, the "New order" trigger on the checkout block and script running from a builder step's description. Adds Audiences & Contacts and the Joinotify Cloud sync, which stays off until you switch it on.

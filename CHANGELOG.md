@@ -8,6 +8,14 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.5.1] - 2026-09-30
+
+### Fixed
+
+- The plugin ships its translations again — Brazilian Portuguese, European Portuguese, Spanish, German, French and Italian. 2.5.0 left them out of the package to rely on translate.wordpress.org alone, so every site in those languages showed Joinotify in English while the strings waited for approval there. A language pack from WordPress.org, once a locale has one, is still loaded ahead of the bundled translation
+- Counts with a plural ("%d contacts", "%d days", "%d attempts" and the other 18) use the plural form in every translated language, where they kept the singular ("5 contato") or fell back to English
+- The labels of the workflow post type ("Flows", "Flow", "Add new") are translated, which they never were
+
 ## [2.5.0] - 2026-09-30
 
 ### Added
@@ -567,7 +575,8 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.5.1...HEAD
+[2.5.1]: https://github.com/meumouse/joinotify/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/meumouse/joinotify/compare/v2.4.2...v2.5.0
 [2.4.2]: https://github.com/meumouse/joinotify/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/meumouse/joinotify/compare/v2.4.0...v2.4.1
