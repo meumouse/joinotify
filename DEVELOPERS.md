@@ -606,8 +606,9 @@ if ( $result->is_success() ) { /* ... */ }
 `Channel_Manager::dispatch()` resolves the target channel (from the message or
 the `Joinotify/Notifications/Default_Channel` filter), validates
 `is_configured()`/`supports()`, dispatches, and logs failures. The default
-WhatsApp channel delegates to `Api\Controller`, so its retry queue and message
-history are preserved unchanged.
+WhatsApp channel (`whatsapp`, resolved to `Whatsapp_Cloud_Channel`) delegates
+to `Api\Cloud_Client`, so its retry queue and message history are preserved
+unchanged.
 
 **Related filters/actions:** `Joinotify/Notifications/Channels` (registry),
 `Joinotify/Notifications/Default_Channel` (fallback channel id),

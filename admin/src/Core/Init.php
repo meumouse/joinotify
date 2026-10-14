@@ -256,7 +256,7 @@ class Init {
 	 * built before admin_init fires.
 	 *
 	 * @since 1.4.6
-	 * @version 2.0.0
+	 * @version 2.5.2
 	 * @return void
 	 */
 	public function instance_init_classes() {
@@ -264,7 +264,6 @@ class Init {
 			'MeuMouse\\Joinotify\\Core\\Workflow_Post_Type',
 			'MeuMouse\\Joinotify\\Core\\Compatibility',
 			'MeuMouse\\Joinotify\\Builder\\Custom_Variables',
-			'MeuMouse\\Joinotify\\Api\\Controller',
 			'MeuMouse\\Joinotify\\Core\\Notification_Queue',
 			'MeuMouse\\Joinotify\\Core\\Message_History',
 			'MeuMouse\\Joinotify\\Core\\Debug_Log',
