@@ -385,6 +385,7 @@ thin, documented wrappers over the internal classes, so you never have to couple
 | `joinotify_get_message_history($args)` | `Message_History::get_items` | `array` |
 | `joinotify_send_whatsapp_message_text($sender, $receiver, $message, $delay)` | `Controller::send_message_text` | `int` |
 | `joinotify_send_whatsapp_message_media($sender, $receiver, $media_type, $media, $caption, $delay)` | `Controller::send_message_media` | `int` |
+| `joinotify_send_whatsapp_template($receiver, $template_name, $language, $components, $args)` | `Transport::send_message_template` (details) | `array{message_id, status}\|WP_Error` ([details](#sending-a-template-and-reading-the-outcome)) |
 
 ```php
 // Resolve {{ ... }} tokens against a payload (eg: inside a custom action handler).
@@ -404,6 +405,48 @@ foreach ( joinotify_get_workflows( array( 'fields' => 'ids' ) ) as $id ) {
     }
 }
 ```
+
+### Sending a template and reading the outcome
+
+`joinotify_send_whatsapp_template()` sends an approved template and tells you what happened, which
+the other send helpers (they answer an HTTP code) do not. It goes through the same path as the
+workflow actions — sender check, one-line parameters, message history, debug log — but makes a
+single attempt unless you ask for the retry queue.
+
+```php
+$result = joinotify_send_whatsapp_template(
+    '5541987654321',
+    'codigo_acesso',
+    'pt_BR',
+    array(
+        array( 'type' => 'body', 'parameters' => array( array( 'type' => 'text', 'text' => $code ) ) ),
+        array( 'type' => 'button', 'sub_type' => 'url', 'index' => '0', 'parameters' => array( array( 'type' => 'text', 'text' => $code ) ) ),
+    ),
+    array(
+        'context' => array( 'source' => 'otp' ), // masks the code in the message history
+    )
+);
+
+if ( is_wp_error( $result ) ) {
+    $data = $result->get_error_data(); // status, response_code, reason, detail, meta_code, retryable, retry_after (429)
+} else {
+    $wamid = $result['message_id']; // $result['status'] is 'sent'
+}
+```
+
+| `$args` key | Default | Meaning |
+|---|---|---|
+| `sender` | `joinotify_get_first_sender()` | origin number, digits only |
+| `queue_on_failure` | `false` | put a send refused for a transient reason (429, 5xx, API unreachable) in the retry queue; the helper then answers `status: 'queued'` with an empty `message_id` |
+| `context` | `array()` | dispatch context for the message history while the send runs (`source`: `otp`, `api`, …); the context set before the call is restored |
+
+The error codes are `joinotify_no_sender`, `joinotify_invalid_sender`, `joinotify_template_missing`,
+`joinotify_not_connected`, `joinotify_unreachable`, `joinotify_unauthorized` (401/403),
+`joinotify_payment_required` (402), `joinotify_rate_limited` (429, with `retry_after` in seconds),
+`joinotify_template_rejected` (Meta refused the template or its parameters) and
+`joinotify_send_failed`. `response_code` is the HTTP status of the Joinotify API (0 when it was not
+reached), `reason` the failure reason the history records, `detail` WhatsApp's own explanation, and
+`status` the HTTP status a REST route of yours can answer with.
 
 ---
 
@@ -722,6 +765,7 @@ The contact block needs a `ref`: without one the event is still recorded, but re
 |---|---|---|
 | `Joinotify/Cloud_Sync/Event_Data` | `$data, $name, $contact` | add data to one event or all of them; return `false` to drop the event |
 | `Joinotify/Cloud_Sync/Order_Data` | `$data, $order` | add an order meta to every order the sync sends |
+| `Joinotify/Cloud_Sync/Links` | `$links, $order, $event` | replace the order links (`payment_url`, `order_received_url`, `my_account_url`, `review_urls`) — a headless store points them at its own pages. `$event` is the site event (`wc.order.paid`, …) or `webhook` for the "Send webhook" action |
 | `Joinotify/Cloud_Sync/Contact_Block` | `$block, $fields` | add a tag or attribute to the contact of every event and backfill row; `$fields['source']` says which integration built it (`woocommerce`, `wordpress`, `forms`, `carts`) |
 | `Joinotify/Contacts/Sources/Forms` | `$forms` | list a form of another plugin on the Sources tab, as `{ plugin, id, title, fields: [{ id, label, type }] }` |
 | `Joinotify/Cloud_Sync/Catalog` | `$entries` | describe `custom.*` events (see above) |
@@ -740,6 +784,14 @@ documentation ("Catálogo de eventos do site"); the samples come from `Cloud_Syn
 ---
 
 ## Notes & gotchas
+
+- **The API key at rest.** The Joinotify API key is stored sealed in `joinotify_settings`
+  (`enc:v1:` + libsodium `crypto_secretbox`, keyed by `wp_salt( 'auth' )`). Read it with
+  `MeuMouse\Joinotify\Core\Helpers::cloud_api_token()` (or `joinotify_get_setting(
+  'whatsapp_cloud_api_token' )`), never from the option. Changing `AUTH_KEY`/`AUTH_SALT` makes the
+  sealed key unreadable and the site reads as disconnected until the key is pasted again. Define
+  `JOINOTIFY_CLOUD_API_TOKEN` in `wp-config.php` to keep the key out of the database altogether: it
+  wins over the stored one, and the settings screen shows it as connected and locked.
 
 - **Register early.** Hook your registrations on `plugins_loaded`/`init` so the filters are wired
   before the builder bootstrap and REST catalog are built.

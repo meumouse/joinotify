@@ -137,7 +137,7 @@ msgstr ""
 msgid "%1$s: %2$d contacts. Tell what each column is."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:856
+#: admin/src/Admin/Settings/Registry.php:868
 #. translators: %d: number of retry attempts
 msgid "%d attempt"
 msgid_plural "%d attempts"
@@ -196,7 +196,7 @@ msgid_plural "%d numbers imported from your Joinotify account."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:96
+#: app/src/components/fields/JoinotifyApiKeyField.vue:100
 msgid "%d number imported."
 msgid_plural "%d numbers imported."
 msgstr[0] ""
@@ -309,15 +309,15 @@ msgstr ""
 msgid "0 results"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:148
+#: admin/src/Admin/Settings/Registry.php:160
 msgid "120 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:157
 msgid "15 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:272
+#: admin/src/Admin/Settings/Registry.php:284
 msgid "180 days"
 msgstr ""
 
@@ -333,18 +333,18 @@ msgstr ""
 msgid "24h limit:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:269
-#: admin/src/Admin/Settings/Registry.php:288
+#: admin/src/Admin/Settings/Registry.php:281
+#: admin/src/Admin/Settings/Registry.php:300
 msgid "30 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:146
+#: admin/src/Admin/Settings/Registry.php:158
 #: admin/src/Integrations/Flexify_Checkout.php:253
 #: admin/src/Integrations/Flexify_Checkout.php:261
 msgid "30 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:273
+#: admin/src/Admin/Settings/Registry.php:285
 msgid "365 days"
 msgstr ""
 
@@ -352,7 +352,7 @@ msgstr ""
 msgid "41912345678"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:144
+#: admin/src/Admin/Settings/Registry.php:156
 msgid "5 minutes"
 msgstr ""
 
@@ -363,21 +363,21 @@ msgstr ""
 msgid "5541987111527"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:270
-#: admin/src/Admin/Settings/Registry.php:289
+#: admin/src/Admin/Settings/Registry.php:282
+#: admin/src/Admin/Settings/Registry.php:301
 msgid "60 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:147
+#: admin/src/Admin/Settings/Registry.php:159
 msgid "60 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:287
+#: admin/src/Admin/Settings/Registry.php:299
 msgid "7 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:271
-#: admin/src/Admin/Settings/Registry.php:290
+#: admin/src/Admin/Settings/Registry.php:283
+#: admin/src/Admin/Settings/Registry.php:302
 msgid "90 days"
 msgstr ""
 
@@ -410,7 +410,7 @@ msgid ""
 "Everything here can be changed later in Settings."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1359
+#: admin/src/Api/Cloud_Client.php:1366
 msgid "A message id is required."
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "A public address. Local and private network addresses are refused."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:298
+#: admin/src/Admin/Settings/Registry.php:310
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
@@ -440,8 +440,8 @@ msgstr ""
 msgid "Abandoned carts (Flexify Checkout)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:234
-#: admin/src/Admin/Settings/Registry.php:349
+#: admin/src/Admin/Settings/Registry.php:246
+#: admin/src/Admin/Settings/Registry.php:361
 msgid "About"
 msgstr ""
 
@@ -454,7 +454,7 @@ msgid "Account created successfully."
 msgstr ""
 
 #: app/src/components/fields/CloudConnectField.vue:180
-#: app/src/components/fields/JoinotifyApiKeyField.vue:202
+#: app/src/components/fields/JoinotifyApiKeyField.vue:209
 msgid "Account not connected"
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 msgid "Actions menu"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:206
+#: admin/src/Admin/Settings/Registry.php:218
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
@@ -493,7 +493,7 @@ msgstr ""
 msgid "Activate plugin"
 msgstr ""
 
-#: admin/src/Api/Connect.php:149
+#: admin/src/Api/Connect.php:150
 msgid "Activate your license before connecting."
 msgstr ""
 
@@ -702,7 +702,7 @@ msgstr ""
 msgid "Afghanistan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:163
+#: admin/src/Admin/Settings/Registry.php:175
 msgid "AI engine"
 msgstr ""
 
@@ -785,7 +785,7 @@ msgstr ""
 msgid "All options will return to the plugin defaults."
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:133
+#: admin/src/Admin/Onboarding/Registry.php:134
 msgid "All set"
 msgstr ""
 
@@ -1014,7 +1014,7 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:337
+#: admin/src/Admin/Settings/Registry.php:349
 msgid "Applications"
 msgstr ""
 
@@ -1067,11 +1067,11 @@ msgstr ""
 msgid "Armenia"
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:115
+#: admin/src/Admin/Onboarding/Registry.php:116
 msgid "Artificial intelligence"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:158
+#: admin/src/Admin/Settings/Registry.php:170
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
@@ -1188,11 +1188,11 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:284
+#: admin/src/Admin/Settings/Registry.php:296
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:266
+#: admin/src/Admin/Settings/Registry.php:278
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
@@ -1344,12 +1344,12 @@ msgstr ""
 msgid "Brunei"
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:134
+#: admin/src/Admin/Onboarding/Registry.php:135
 msgid "Build your first automation or review the full settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:220
-#: admin/src/Admin/Settings/Registry.php:343
+#: admin/src/Admin/Settings/Registry.php:232
+#: admin/src/Admin/Settings/Registry.php:355
 #: app/src/pages/builder/BuilderPage.vue:640
 #: app/src/pages/builder/BuilderPage.vue:695
 #: app/src/pages/builder/BuilderPage.vue:800
@@ -1397,7 +1397,7 @@ msgstr ""
 msgid "Burundi"
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:136
+#: admin/src/Integrations/Whatsapp.php:138
 msgid ""
 "Business account that owns the message templates. Filled in when you "
 "connect."
@@ -1442,7 +1442,7 @@ msgstr ""
 #: app/src/components/builder/BuilderAiGenerateModal.vue:96
 #: app/src/components/builder/BuilderImportModal.vue:44
 #: app/src/components/fields/CloudSyncStatusField.vue:295
-#: app/src/components/fields/JoinotifyApiKeyField.vue:182
+#: app/src/components/fields/JoinotifyApiKeyField.vue:186
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:17
 #: app/src/pages/builder/BuilderPage.vue:1415
@@ -1617,7 +1617,7 @@ msgstr ""
 msgid "Choose one of the validated senders available in your account."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:112
+#: admin/src/Admin/Settings/Registry.php:124
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
@@ -1863,7 +1863,7 @@ msgstr ""
 msgid "Configure the WooCommerce coupon generated by this action."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:173
+#: app/src/components/fields/JoinotifyApiKeyField.vue:177
 #: app/src/components/modals/ConfirmDialog.vue:40
 #: app/src/components/workflows/ConfirmActionModal.vue:16
 #: app/src/pages/workflows/WorkflowsPage.vue:91
@@ -1874,7 +1874,7 @@ msgstr ""
 msgid "Confirmation"
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:226
+#: app/src/components/fields/JoinotifyApiKeyField.vue:233
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:127
 msgid "Connect"
 msgstr ""
@@ -1893,7 +1893,7 @@ msgid ""
 "official WhatsApp Cloud API."
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:109
+#: admin/src/Admin/Onboarding/Registry.php:110
 #: app/src/components/fields/CloudConnectField.vue:199
 msgid "Connect to Joinotify"
 msgstr ""
@@ -1916,7 +1916,7 @@ msgid ""
 "API."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:188
+#: app/src/components/fields/JoinotifyApiKeyField.vue:192
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:95
 #: app/src/pages/settings/components/cards/PhoneActions.vue:45
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:118
@@ -1930,7 +1930,7 @@ msgid ""
 "site before you press Connect."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:238
+#: app/src/components/fields/JoinotifyApiKeyField.vue:245
 msgid ""
 "Connecting sends your key and this site’s address to %s so it can register "
 "the site and list your WhatsApp numbers."
@@ -1941,7 +1941,7 @@ msgid "Connecting WooCommerce, WPForms, Elementor and the other integrations"
 msgstr ""
 
 #: app/src/components/fields/CloudConnectField.vue:199
-#: app/src/components/fields/JoinotifyApiKeyField.vue:226
+#: app/src/components/fields/JoinotifyApiKeyField.vue:233
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:127
 msgid "Connecting…"
 msgstr ""
@@ -1962,7 +1962,7 @@ msgstr ""
 msgid "Consent checkbox text"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:655
+#: admin/src/Cloud_Sync/Consent.php:710
 msgid "Consent given on"
 msgstr ""
 
@@ -2086,11 +2086,11 @@ msgid "Could not clear the queue."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:98
-#: admin/src/Admin/Settings/Registry.php:681
+#: admin/src/Admin/Settings/Registry.php:693
 msgid "Could not complete the operation."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:83
+#: app/src/components/fields/JoinotifyApiKeyField.vue:87
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:68
 msgid "Could not connect with that key."
 msgstr ""
@@ -2108,7 +2108,7 @@ msgstr ""
 msgid "Could not delete the selected records."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:128
+#: app/src/components/fields/JoinotifyApiKeyField.vue:132
 msgid "Could not disconnect."
 msgstr ""
 
@@ -2155,7 +2155,7 @@ msgstr ""
 msgid "Could not import the settings."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1314
+#: admin/src/Api/Cloud_Client.php:1321
 msgid "Could not list the connected numbers."
 msgstr ""
 
@@ -2220,7 +2220,7 @@ msgstr ""
 msgid "Could not reach the Joinotify platform. Check your connection and try again."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1271
+#: admin/src/Api/Cloud_Client.php:1278
 msgid "Could not read the Joinotify account data."
 msgstr ""
 
@@ -2424,7 +2424,7 @@ msgstr ""
 msgid "Create custom fields in the Fields & tags tab to map site data to them."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:221
+#: admin/src/Admin/Settings/Registry.php:233
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
@@ -2603,7 +2603,7 @@ msgstr ""
 msgid "Custom JSON"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:226
+#: admin/src/Admin/Settings/Registry.php:238
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:81
 msgid "Custom variables"
 msgstr ""
@@ -2632,7 +2632,7 @@ msgstr ""
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:303
+#: admin/src/Admin/Settings/Registry.php:315
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
@@ -2681,7 +2681,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:290
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:125
 msgid "Debug logs"
 msgstr ""
@@ -2690,15 +2690,15 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:283
+#: admin/src/Admin/Settings/Registry.php:295
 msgid "Debug logs retention"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:245
+#: admin/src/Admin/Settings/Registry.php:257
 msgid "Debug mode"
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:128
+#: admin/src/Admin/Onboarding/Registry.php:129
 msgid "Decide whether to share anonymous data that helps improve the plugin."
 msgstr ""
 
@@ -2711,23 +2711,23 @@ msgstr ""
 msgid "Default chat id"
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:103
+#: admin/src/Admin/Onboarding/Registry.php:104
 msgid "Default country"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:111
+#: admin/src/Admin/Settings/Registry.php:123
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:25
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:65
 msgid "Default country code"
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:127
+#: admin/src/Integrations/Whatsapp.php:129
 msgid ""
 "Default origin for messages. Filled in when you connect; change it only to "
 "send from a different number by default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:180
+#: admin/src/Admin/Settings/Registry.php:192
 msgid "Default temperature"
 msgstr ""
 
@@ -2736,7 +2736,7 @@ msgstr ""
 msgid "Define the trigger that starts the workflow"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:107
+#: admin/src/Admin/Settings/Registry.php:119
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2830,7 +2830,7 @@ msgid ""
 "cannot receive them."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:127
+#: admin/src/Admin/Settings/Registry.php:139
 msgid "Delivery retries"
 msgstr ""
 
@@ -2890,7 +2890,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:255
+#: admin/src/Admin/Settings/Registry.php:267
 msgid "Developer integration"
 msgstr ""
 
@@ -2923,7 +2923,7 @@ msgstr ""
 msgid "Digital product access granted"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:566
+#: admin/src/Admin/Settings/Registry.php:578
 msgid "Disabled"
 msgstr ""
 
@@ -2992,7 +2992,7 @@ msgstr ""
 msgid "Do not remind me again"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:849
+#: admin/src/Admin/Settings/Registry.php:861
 msgid "Do not retry"
 msgstr ""
 
@@ -3001,7 +3001,7 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:121
+#: admin/src/Admin/Onboarding/Registry.php:122
 #: admin/src/Core/Init.php:563
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
@@ -3118,7 +3118,7 @@ msgstr ""
 msgid "e.g. Agreed by WhatsApp on 29/09/2026"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:175
+#: admin/src/Admin/Settings/Registry.php:187
 msgid ""
 "e.g. Always answer in Brazilian Portuguese, in a friendly and objective "
 "tone."
@@ -3285,7 +3285,7 @@ msgstr ""
 msgid "Enable debug mode"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:214
+#: admin/src/Admin/Settings/Registry.php:226
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -3299,11 +3299,11 @@ msgstr ""
 msgid "Enable the integration to access its settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:246
+#: admin/src/Admin/Settings/Registry.php:258
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:566
+#: admin/src/Admin/Settings/Registry.php:578
 msgid "Enabled"
 msgstr ""
 
@@ -3327,7 +3327,7 @@ msgstr ""
 msgid "Engagement"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:164
+#: admin/src/Admin/Settings/Registry.php:176
 msgid ""
 "Engine used to generate content. WordPress AI covers every provider "
 "configured in Settings → Connectors; extensions can register additional "
@@ -3485,7 +3485,7 @@ msgstr ""
 msgid "Ethiopia"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:678
+#: admin/src/Cloud_Sync/Consent.php:733
 msgid "Event"
 msgstr ""
 
@@ -3779,7 +3779,7 @@ msgstr ""
 msgid "First name (or full name)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:141
+#: admin/src/Admin/Settings/Registry.php:153
 msgid "First retry after"
 msgstr ""
 
@@ -3943,8 +3943,8 @@ msgstr ""
 msgid "Gambia"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:100
-#: admin/src/Admin/Settings/Registry.php:325
+#: admin/src/Admin/Settings/Registry.php:112
+#: admin/src/Admin/Settings/Registry.php:337
 #: admin/src/Builder/Actions.php:121
 #: app/src/stores/useWorkflowBuilderStore.ts:154
 #: app/src/stores/useWorkflowBuilderStore.ts:249
@@ -3990,7 +3990,7 @@ msgstr ""
 msgid "Germany"
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:234
+#: app/src/components/fields/JoinotifyApiKeyField.vue:241
 msgid "Get a key on the Joinotify panel"
 msgstr ""
 
@@ -4026,7 +4026,7 @@ msgstr ""
 msgid "Given up after every retry"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:172
+#: admin/src/Admin/Settings/Registry.php:184
 msgid "Global instructions"
 msgstr ""
 
@@ -4138,7 +4138,7 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:265
+#: admin/src/Admin/Settings/Registry.php:277
 msgid "History retention"
 msgstr ""
 
@@ -4173,13 +4173,13 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:181
+#: admin/src/Admin/Settings/Registry.php:193
 msgid ""
 "How creative the answers are, from 0 (predictable) to 1 (varied). Actions "
 "may override it."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:133
+#: admin/src/Admin/Settings/Registry.php:145
 msgid ""
 "How many times a failed message is retried before it is given up on. Choose "
 "\"Do not retry\" to record the failure without ever sending again."
@@ -4218,7 +4218,7 @@ msgid "I already did"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:407
-#: admin/src/Cloud_Sync/Consent.php:149
+#: admin/src/Cloud_Sync/Consent.php:151
 msgid "I want to receive offers and news on WhatsApp."
 msgstr ""
 
@@ -4411,7 +4411,7 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:947
+#: admin/src/Admin/Settings/Registry.php:959
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
@@ -4429,7 +4429,7 @@ msgstr ""
 msgid "Integration settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:213
+#: admin/src/Admin/Settings/Registry.php:225
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
 msgstr ""
@@ -4516,7 +4516,7 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:304
+#: admin/src/Admin/Settings/Registry.php:316
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
 
@@ -4698,8 +4698,8 @@ msgstr ""
 #: admin/src/Cloud_Sync/Cloud_Sync.php:296
 #: admin/src/Cloud_Sync/Cloud_Sync.php:301
 #: admin/src/Cloud_Sync/Cloud_Sync.php:308
-#: admin/src/Cloud_Sync/Consent.php:613
-#: admin/src/Cloud_Sync/Consent.php:628
+#: admin/src/Cloud_Sync/Consent.php:668
+#: admin/src/Cloud_Sync/Consent.php:683
 #: app/src/pages/contacts/tabs/SourcesTab.vue:213
 msgid "Joinotify Cloud sync"
 msgstr ""
@@ -4715,7 +4715,7 @@ msgid ""
 "is the only credential the plugin needs."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:159
+#: admin/src/Admin/Settings/Registry.php:171
 msgid ""
 "Joinotify generates AI content through the WordPress AI Client. Pick the "
 "provider and store its credentials once in Settings → Connectors, and every "
@@ -4738,7 +4738,7 @@ msgid ""
 "gets the first automation running in a couple of minutes."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:665
+#: admin/src/Cloud_Sync/Consent.php:720
 msgid "Joinotify marketing consent"
 msgstr ""
 
@@ -4748,7 +4748,7 @@ msgstr ""
 msgid "Joinotify setup"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:572
+#: admin/src/Admin/Settings/Registry.php:584
 msgid "Joinotify version"
 msgstr ""
 
@@ -4764,8 +4764,8 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:268
-#: admin/src/Admin/Settings/Registry.php:286
+#: admin/src/Admin/Settings/Registry.php:280
+#: admin/src/Admin/Settings/Registry.php:298
 msgid "Keep forever"
 msgstr ""
 
@@ -5085,7 +5085,7 @@ msgstr ""
 msgid "Loading…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:106
+#: admin/src/Admin/Settings/Registry.php:118
 msgid "Location and phone numbers"
 msgstr ""
 
@@ -5169,15 +5169,15 @@ msgstr ""
 msgid "Madagascar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:256
+#: admin/src/Admin/Settings/Registry.php:268
 msgid "Maintains support integrations and advanced contracts available."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:240
+#: admin/src/Admin/Settings/Registry.php:252
 msgid "Maintenance and preference"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:235
+#: admin/src/Admin/Settings/Registry.php:247
 msgid "Maintenance, logs, updates, and environment details."
 msgstr ""
 
@@ -5201,7 +5201,7 @@ msgstr ""
 msgid "Malta"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:194
+#: admin/src/Admin/Settings/Registry.php:206
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
 
@@ -5217,7 +5217,7 @@ msgid ""
 "matching post meta value."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:227
+#: admin/src/Admin/Settings/Registry.php:239
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
@@ -5230,7 +5230,7 @@ msgstr ""
 msgid "Mark as inactive"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:654
+#: admin/src/Cloud_Sync/Consent.php:709
 #: admin/src/Contacts/Contact_Actions.php:181
 #: app/src/pages/contacts/tabs/SourcesTab.vue:264
 msgid "Marketing consent"
@@ -5256,7 +5256,7 @@ msgstr ""
 msgid "Mauritius"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:132
+#: admin/src/Admin/Settings/Registry.php:144
 msgid "Maximum attempts"
 msgstr ""
 
@@ -5300,7 +5300,7 @@ msgstr ""
 msgid "Media type"
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1129
+#: admin/src/Api/Cloud_Client.php:1136
 msgid "Media upload did not return an id."
 msgstr ""
 
@@ -5364,7 +5364,7 @@ msgstr ""
 
 #: admin/src/Admin/History/Registry.php:368
 #: admin/src/Admin/Menu.php:85
-#: admin/src/Admin/Settings/Registry.php:260
+#: admin/src/Admin/Settings/Registry.php:272
 #: app/src/pages/history/HistoryPage.vue:220
 msgid "Message history"
 msgstr ""
@@ -5397,7 +5397,7 @@ msgstr ""
 msgid "Messages"
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:204
+#: app/src/components/fields/JoinotifyApiKeyField.vue:211
 msgid "Messages cannot be delivered until this site is connected."
 msgstr ""
 
@@ -5457,7 +5457,7 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1096
+#: admin/src/Api/Cloud_Client.php:1103
 msgid "Missing Cloud API token or phone number id for media upload."
 msgstr ""
 
@@ -5564,6 +5564,10 @@ msgstr ""
 #: app/src/pages/contacts/components/TagFormModal.vue:77
 #: app/src/pages/contacts/tabs/ContactsTab.vue:82
 msgid "Name"
+msgstr ""
+
+#: admin/src/Api/Transport.php:185
+msgid "Name the approved WhatsApp template to send."
 msgstr ""
 
 #: app/src/pages/contacts/components/MergeModal.vue:105
@@ -5689,10 +5693,10 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:561
-#: admin/src/Admin/Settings/Registry.php:585
-#: admin/src/Admin/Settings/Registry.php:590
-#: admin/src/Admin/Settings/Registry.php:595
+#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:597
+#: admin/src/Admin/Settings/Registry.php:602
+#: admin/src/Admin/Settings/Registry.php:607
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
@@ -5937,7 +5941,7 @@ msgstr ""
 msgid "No variables available."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1236
+#: admin/src/Api/Cloud_Client.php:1243
 msgid "No WhatsApp Business Account id is configured."
 msgstr ""
 
@@ -5947,6 +5951,10 @@ msgstr ""
 
 #: admin/src/Api/Cloud_Client.php:121
 msgid "No WhatsApp Cloud API token is configured."
+msgstr ""
+
+#: admin/src/Core/Functions.php:128
+msgid "No WhatsApp number is connected to Joinotify to send from."
 msgstr ""
 
 #: app/src/pages/queue/QueuePage.vue:383
@@ -5973,7 +5981,7 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:778
+#: admin/src/Admin/Settings/Registry.php:790
 msgid "None"
 msgstr ""
 
@@ -6052,7 +6060,7 @@ msgstr ""
 msgid "Number added to the suppression list."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:118
+#: admin/src/Admin/Settings/Registry.php:130
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
@@ -6085,7 +6093,7 @@ msgstr ""
 msgid "Of those sent, %1$d %2$s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:625
+#: admin/src/Admin/Settings/Registry.php:637
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "Off"
 msgstr ""
@@ -6112,7 +6120,7 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:625
+#: admin/src/Admin/Settings/Registry.php:637
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "On"
 msgstr ""
@@ -6159,7 +6167,7 @@ msgstr ""
 msgid "Only the forms switched on below"
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:195
+#: app/src/components/fields/JoinotifyApiKeyField.vue:202
 msgid ""
 "Only the public prefix of your key is shown. Remove it to connect a "
 "different account."
@@ -6213,11 +6221,11 @@ msgstr ""
 msgid "Open trigger actions"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:594
+#: admin/src/Admin/Settings/Registry.php:606
 msgid "OpenSSL extension"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:241
+#: admin/src/Admin/Settings/Registry.php:253
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
@@ -6242,7 +6250,7 @@ msgstr ""
 msgid "Opted in and not suppressed"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:522
+#: admin/src/Cloud_Sync/Consent.php:577
 msgid "Opted in on Joinotify"
 msgstr ""
 
@@ -6253,7 +6261,7 @@ msgstr ""
 msgid "Opted out"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:659
+#: admin/src/Cloud_Sync/Consent.php:714
 msgid "Opted out of marketing on"
 msgstr ""
 
@@ -6279,7 +6287,7 @@ msgstr ""
 msgid "Optional text sent together with the media."
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:116
+#: admin/src/Admin/Onboarding/Registry.php:117
 msgid ""
 "Optional. Adds AI-generated content and workflow suggestions, using the "
 "provider set up in WordPress."
@@ -6472,13 +6480,13 @@ msgstr ""
 msgid "Passwordless login settings"
 msgstr ""
 
-#: admin/src/Api/Connect.php:232
-#: app/src/components/fields/JoinotifyApiKeyField.vue:71
+#: admin/src/Api/Connect.php:241
+#: app/src/components/fields/JoinotifyApiKeyField.vue:75
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:57
 msgid "Paste the API key issued for this site on the Joinotify panel."
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:110
+#: admin/src/Admin/Onboarding/Registry.php:111
 msgid "Paste the API key issued for this site to start sending WhatsApp messages."
 msgstr ""
 
@@ -6545,7 +6553,7 @@ msgstr ""
 msgid "Persona / system message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:173
+#: admin/src/Admin/Settings/Registry.php:185
 msgid ""
 "Persona, tone and rules prepended to every AI generation. Each action can "
 "add its own instructions on top of this."
@@ -6577,7 +6585,7 @@ msgstr ""
 msgid "Phone number"
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:126
+#: admin/src/Integrations/Whatsapp.php:128
 msgid "Phone number ID"
 msgstr ""
 
@@ -6604,8 +6612,8 @@ msgstr ""
 msgid "Phone with country code"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:193
-#: admin/src/Admin/Settings/Registry.php:331
+#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:343
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/SettingsPage.vue:391
 #: app/src/pages/settings/SettingsPage.vue:397
@@ -6620,11 +6628,11 @@ msgstr ""
 msgid "Phones"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:200
+#: admin/src/Admin/Settings/Registry.php:212
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:579
+#: admin/src/Admin/Settings/Registry.php:591
 msgid "PHP version"
 msgstr ""
 
@@ -6713,7 +6721,7 @@ msgstr ""
 msgid "plugin_version missing; version normalized automatically."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:101
+#: admin/src/Admin/Settings/Registry.php:113
 msgid "Plugin's basic preferences, WhatsApp connection, and notifications."
 msgstr ""
 
@@ -6835,7 +6843,7 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:217
 msgid "Quick Tools"
 msgstr ""
 
@@ -6895,7 +6903,7 @@ msgid ""
 "earlier opt-out."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:261
+#: admin/src/Admin/Settings/Registry.php:273
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
 "History screen."
@@ -6915,7 +6923,7 @@ msgstr ""
 msgid "Record opt-out"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:680
+#: admin/src/Cloud_Sync/Consent.php:735
 msgid "Recorded on"
 msgstr ""
 
@@ -6969,7 +6977,7 @@ msgid ""
 "available sender to use the default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:199
+#: admin/src/Admin/Settings/Registry.php:211
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:59
 msgid "Registered senders"
 msgstr ""
@@ -7012,7 +7020,7 @@ msgstr ""
 msgid "Remove group"
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:163
+#: app/src/components/fields/JoinotifyApiKeyField.vue:167
 msgid "Remove key"
 msgstr ""
 
@@ -7034,13 +7042,13 @@ msgstr ""
 msgid "Removed from the suppression list."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:192
+#: app/src/components/fields/JoinotifyApiKeyField.vue:199
 msgid ""
 "Removing the key stops all message delivery from this site. The numbers "
 "already imported are kept."
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:173
+#: app/src/components/fields/JoinotifyApiKeyField.vue:177
 msgid "Removing…"
 msgstr ""
 
@@ -7136,7 +7144,7 @@ msgid ""
 "product\" to run for every downloaded file."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:878
+#: admin/src/Admin/Settings/Registry.php:890
 msgid "Retries are turned off, so this wait is not used."
 msgstr ""
 
@@ -7323,7 +7331,7 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:152
+#: app/src/components/fields/JoinotifyApiKeyField.vue:156
 msgid "Saved Joinotify API key"
 msgstr ""
 
@@ -7623,7 +7631,7 @@ msgstr ""
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:186
+#: admin/src/Integrations/Whatsapp.php:188
 msgid "Send a media message (image, file, document, and audio) with WhatsApp."
 msgstr ""
 
@@ -7654,7 +7662,7 @@ msgstr ""
 msgid "Send a text message to a Telegram chat, group or channel."
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:173
+#: admin/src/Integrations/Whatsapp.php:175
 msgid "Send a text message via WhatsApp."
 msgstr ""
 
@@ -7680,7 +7688,7 @@ msgstr ""
 msgid "Send an approved template through the official WhatsApp Cloud API."
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:203
+#: admin/src/Integrations/Whatsapp.php:205
 msgid ""
 "Send an approved template through the official WhatsApp Cloud API. Required "
 "to start a conversation or reply outside the 24-hour window."
@@ -7825,7 +7833,7 @@ msgid ""
 "Joinotify: what someone typed in the panel wins."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:937
+#: admin/src/Admin/Settings/Registry.php:949
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
@@ -7853,7 +7861,7 @@ msgstr ""
 msgid "Sent (7 days)"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:675
+#: admin/src/Cloud_Sync/Consent.php:730
 msgid "Sent to Joinotify"
 msgstr ""
 
@@ -7913,7 +7921,7 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:680
+#: admin/src/Admin/Settings/Registry.php:692
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr ""
@@ -7935,7 +7943,7 @@ msgstr ""
 msgid "Shade %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:250
+#: admin/src/Admin/Settings/Registry.php:262
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:40
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:51
 msgid "Share anonymous usage data"
@@ -8113,7 +8121,7 @@ msgstr ""
 msgid "starts with"
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:679
+#: admin/src/Cloud_Sync/Consent.php:734
 #: app/src/components/workflows/WorkflowTableHeader.vue:37
 #: app/src/pages/history/components/HistoryDetailsModal.vue:31
 #: app/src/pages/history/HistoryPage.vue:377
@@ -8155,7 +8163,7 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:279
+#: admin/src/Admin/Settings/Registry.php:291
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -8275,7 +8283,7 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:297
+#: admin/src/Admin/Settings/Registry.php:309
 msgid "System status"
 msgstr ""
 
@@ -8447,7 +8455,7 @@ msgstr ""
 msgid "Test message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:117
+#: admin/src/Admin/Settings/Registry.php:129
 msgid "Test phone"
 msgstr ""
 
@@ -8544,6 +8552,13 @@ msgstr ""
 msgid "The API did not return a signing secret for this endpoint."
 msgstr ""
 
+#: admin/src/Api/Connect.php:237
+#: admin/src/Rest/Cloud_Connect_Key.php:85
+msgid ""
+"The API key of this site is defined in wp-config.php "
+"(JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there."
+msgstr ""
+
 #: admin/src/Api/Cloud_Contacts.php:332
 msgid ""
 "The API key of this site is not allowed to do this. Operations on the whole "
@@ -8592,7 +8607,7 @@ msgid ""
 "This cannot be undone."
 msgstr ""
 
-#: admin/src/Api/Connect.php:87
+#: admin/src/Api/Connect.php:88
 msgid "The connection response was incomplete. Start the connection again."
 msgstr ""
 
@@ -8612,7 +8627,7 @@ msgid ""
 "and the audiences built from them."
 msgstr ""
 
-#: admin/src/Cloud_Sync/Consent.php:750
+#: admin/src/Cloud_Sync/Consent.php:805
 msgid ""
 "The contact could not be erased on Joinotify now. Erase it from the "
 "Joinotify panel, or run this request again later."
@@ -8710,8 +8725,22 @@ msgid ""
 "WhatsApp API. Connect it under Joinotify → Settings."
 msgstr ""
 
-#: admin/src/Api/Connect.php:185
+#: admin/src/Api/Transport.php:199
+msgid ""
+"The Joinotify account needs attention before it can send. Open the panel to "
+"resolve the billing."
+msgstr ""
+
+#: admin/src/Api/Transport.php:193
+msgid "The Joinotify API could not be reached."
+msgstr ""
+
+#: admin/src/Api/Connect.php:186
 msgid "The Joinotify API did not return a key for this site."
+msgstr ""
+
+#: admin/src/Api/Transport.php:196
+msgid "The Joinotify API refused the key of this site."
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:42
@@ -8721,11 +8750,11 @@ msgid ""
 "sync resumes on its own."
 msgstr ""
 
-#: admin/src/Api/Connect.php:362
+#: admin/src/Api/Connect.php:376
 msgid "The Joinotify panel did not return an API key."
 msgstr ""
 
-#: admin/src/Api/Connect.php:353
+#: admin/src/Api/Connect.php:367
 msgid "The Joinotify panel refused this connection. Start the connection again."
 msgstr ""
 
@@ -8849,6 +8878,10 @@ msgstr ""
 msgid ""
 "The selected workflows will be removed permanently and this action cannot "
 "be undone."
+msgstr ""
+
+#: admin/src/Api/Transport.php:181
+msgid "The sender is not one of the WhatsApp numbers connected to Joinotify."
 msgstr ""
 
 #: admin/src/Api/Send_Error.php:105
@@ -9027,7 +9060,7 @@ msgstr ""
 msgid "This action stops the workflow immediately. There are no editable settings."
 msgstr ""
 
-#: admin/src/Api/Connect.php:93
+#: admin/src/Api/Connect.php:94
 msgid ""
 "This connection attempt expired or did not start here. Start the connection "
 "again."
@@ -9070,6 +9103,12 @@ msgstr ""
 msgid "This integration will be available soon."
 msgstr ""
 
+#: app/src/components/fields/JoinotifyApiKeyField.vue:196
+msgid ""
+"This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can "
+"only be changed there."
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:191
 msgid "This list may be out of date."
 msgstr ""
@@ -9089,7 +9128,7 @@ msgid ""
 "out until they agree again."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:426
+#: admin/src/Admin/Settings/Registry.php:438
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 
@@ -9121,8 +9160,12 @@ msgid ""
 "Settings → Applications."
 msgstr ""
 
-#: admin/src/Rest/Cloud_Connect_Key.php:92
+#: admin/src/Rest/Cloud_Connect_Key.php:100
 msgid "This site is no longer connected to Joinotify."
+msgstr ""
+
+#: admin/src/Api/Transport.php:189
+msgid "This site is not connected to a Joinotify account."
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:44
@@ -9597,6 +9640,10 @@ msgstr ""
 msgid "Too many code requests. Please wait a few minutes and try again."
 msgstr ""
 
+#: admin/src/Api/Transport.php:202
+msgid "Too many messages were sent in a short time. Try again later."
+msgstr ""
+
 #: app/src/pages/contacts/context.ts:56
 #. translators: %d: seconds to wait
 msgid "Too many requests to the Joinotify platform. Try again in %d seconds."
@@ -9878,7 +9925,7 @@ msgstr ""
 msgid "Uruguay"
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:127
+#: admin/src/Admin/Onboarding/Registry.php:128
 msgid "Usage data"
 msgstr ""
 
@@ -9938,7 +9985,7 @@ msgid ""
 "password."
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:104
+#: admin/src/Admin/Onboarding/Registry.php:105
 msgid "Used to complete phone numbers that were typed without a country code."
 msgstr ""
 
@@ -10103,7 +10150,7 @@ msgstr ""
 msgid "Wait %1$s %2$s and run at %3$s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:885
+#: admin/src/Admin/Settings/Registry.php:897
 #. translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480"
 msgid ""
 "Wait before the first retry. Every attempt then doubles it — with what is "
@@ -10241,8 +10288,12 @@ msgstr ""
 msgid "WhatsApp automation workflows created with Joinotify."
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:135
+#: admin/src/Integrations/Whatsapp.php:137
 msgid "WhatsApp Business Account ID"
+msgstr ""
+
+#: admin/src/Api/Transport.php:209
+msgid "WhatsApp did not accept the message."
 msgstr ""
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:208
@@ -10265,6 +10316,10 @@ msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:245
 msgid "WhatsApp number that will send the template."
+msgstr ""
+
+#: admin/src/Api/Transport.php:206
+msgid "WhatsApp refused the template."
 msgstr ""
 
 #: admin/src/Api/Send_Error.php:76
@@ -10308,7 +10363,7 @@ msgid "WhatsApp: Location"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:594
-#: admin/src/Integrations/Whatsapp.php:185
+#: admin/src/Integrations/Whatsapp.php:187
 #: app/src/builder/actions/definitions/whatsappMedia.ts:32
 #: app/src/builder/actions/definitions/whatsappMedia.ts:46
 msgid "WhatsApp: Media message"
@@ -10334,15 +10389,15 @@ msgstr ""
 msgid "WhatsApp: Sticker"
 msgstr ""
 
-#: admin/src/Integrations/Whatsapp.php:202
-#: admin/src/Integrations/Whatsapp.php:212
+#: admin/src/Integrations/Whatsapp.php:204
+#: admin/src/Integrations/Whatsapp.php:214
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:51
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:64
 msgid "WhatsApp: Template message"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:584
-#: admin/src/Integrations/Whatsapp.php:172
+#: admin/src/Integrations/Whatsapp.php:174
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
 msgid "WhatsApp: Text message"
@@ -10370,7 +10425,7 @@ msgid ""
 "switching it off stops it at once."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:128
+#: admin/src/Admin/Settings/Registry.php:140
 msgid ""
 "When WhatsApp refuses a message for a reason that may pass — a timeout, a "
 "rate limit, an outage — Joinotify parks it and tries again. Each attempt "
@@ -10387,7 +10442,7 @@ msgid ""
 "triggers."
 msgstr ""
 
-#: admin/src/Admin/Onboarding/Registry.php:122
+#: admin/src/Admin/Onboarding/Registry.php:123
 msgid "Where to look when you need a feature explained."
 msgstr ""
 
@@ -10451,7 +10506,7 @@ msgid ""
 "use."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:560
+#: admin/src/Admin/Settings/Registry.php:572
 msgid "WordPress Multisite"
 msgstr ""
 
@@ -10460,7 +10515,7 @@ msgstr ""
 msgid "WordPress users"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:555
+#: admin/src/Admin/Settings/Registry.php:567
 msgid "WordPress version"
 msgstr ""
 
@@ -10612,8 +10667,8 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:561
-#: admin/src/Admin/Settings/Registry.php:585
+#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:597
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
@@ -10709,7 +10764,7 @@ msgid ""
 "panel to resolve the billing."
 msgstr ""
 
-#: admin/src/Api/Connect.php:176
+#: admin/src/Api/Connect.php:177
 msgid "Your license is not linked to a Joinotify Cloud account yet."
 msgstr ""
 

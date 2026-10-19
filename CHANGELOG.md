@@ -8,6 +8,24 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Added
+
+- The Joinotify API key can be defined in `wp-config.php` with `define( 'JOINOTIFY_CLOUD_API_TOKEN', 'sk_live_...' );`, which keeps it out of the database. It wins over the key saved in the settings, and the WhatsApp settings and the setup wizard show the site as connected with the key locked: it can only be changed or removed in `wp-config.php`
+- `joinotify_send_whatsapp_template( $receiver, $template_name, $language, $components, $args )` sends an approved WhatsApp template and answers the WhatsApp message id, or a `WP_Error` that says why it was refused — the Joinotify API's HTTP status, the reason (a blocked account, a refused template), WhatsApp's own explanation and, when the account is sending too fast, how many seconds to wait. It makes a single attempt unless asked to use the retry queue, and takes the message history context, so a login code is masked there
+- The `Joinotify/Cloud_Sync/Links` filter changes the links an order event carries — pay the order, see it, review its products — for example to point them at the pages of a headless storefront instead of the WordPress ones. It receives the order and the event they go out with
+
+### Changed
+
+- In the checkout block, a customer who already agreed to receive marketing messages now sees the consent checkbox ticked, where it was left out of the form, and what they send in it does not change the consent they gave
+
+### Fixed
+
+- The marketing consent checkbox of the checkout block is offered to every customer of a headless store. It was registered only when WooCommerce started without a signed-in customer who had already agreed, which a store that identifies the customer later in the request — by a token sent to the Store API — could not rely on
+
+### Security
+
+- The Joinotify API key is stored encrypted in the database (libsodium, with a key derived from the site's `AUTH_KEY` and `AUTH_SALT`). A key saved by an earlier version is encrypted once when the site updates, and keeps working until then. Changing those salts in `wp-config.php` makes the stored key unreadable, and the site has to be connected again. Servers without the sodium extension keep storing the key as before
+
 ## [2.5.1] - 2026-09-30
 
 ### Fixed

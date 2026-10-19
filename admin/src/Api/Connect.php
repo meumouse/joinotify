@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Api;
 
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 
 // Exit if accessed directly.
@@ -221,12 +222,20 @@ class Connect {
      * the API for the account's numbers, and puts the previous value back if it
      * does not. A site is never left holding a key that was just shown to fail.
      *
+     * A key defined in `wp-config.php` (`JOINOTIFY_CLOUD_API_TOKEN`) cannot be
+     * replaced from here: the constant would keep winning over what is stored.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param string $token | API key issued for this site (sk_live_...).
      * @return array|\WP_Error Stored credential summary, or the failure reason.
      */
     public static function connect_with_key( $token ) {
         $token = sanitize_text_field( $token );
+
+        if ( Helpers::cloud_api_token_locked() ) {
+            return new \WP_Error( 'joinotify_connect_key_locked', __( 'The API key of this site is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.', 'joinotify' ) );
+        }
 
         if ( '' === $token ) {
             return new \WP_Error( 'joinotify_connect_empty_key', __( 'Paste the API key issued for this site on the Joinotify panel.', 'joinotify' ) );
@@ -298,13 +307,18 @@ class Connect {
     /**
      * Write the API key to the setting every credential reader looks at.
      *
+     * Sealed on the way in (see Core\Token_Vault). A value read back from the
+     * option — the previous key put back after a failed test — is already
+     * sealed and is stored as it is.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array  $settings | Settings array to write into.
      * @param string $token    | Key to store ('' clears it).
      * @return void
      */
     protected static function write_token( $settings, $token ) {
-        $settings['whatsapp_cloud_api_token'] = $token;
+        $settings['whatsapp_cloud_api_token'] = Helpers::seal_cloud_api_token( $token );
 
         update_option( 'joinotify_settings', $settings );
 
@@ -377,7 +391,12 @@ class Connect {
     /**
      * Persist the credentials on the same settings the manual fields write to.
      *
+     * The key is sealed before it is stored (see Core\Token_Vault), and left
+     * alone when `JOINOTIFY_CLOUD_API_TOKEN` defines it: the constant wins anyway.
+     * Listeners of `Joinotify/Cloud_Api/Connected` still get it in the clear.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array $credentials | Result of exchange().
      * @return void
      */
@@ -385,7 +404,9 @@ class Connect {
         $settings = get_option( 'joinotify_settings', array() );
         $settings = is_array( $settings ) ? $settings : array();
 
-        $settings['whatsapp_cloud_api_token'] = $credentials['token'];
+        if ( ! Helpers::cloud_api_token_locked() ) {
+            $settings['whatsapp_cloud_api_token'] = Helpers::seal_cloud_api_token( $credentials['token'] );
+        }
 
         if ( '' !== $credentials['waba_id'] ) {
             $settings['whatsapp_waba_id'] = $credentials['waba_id'];

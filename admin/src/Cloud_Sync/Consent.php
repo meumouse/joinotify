@@ -88,6 +88,7 @@ class Consent {
 	 * consent the events carry and the checkboxes.
 	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @return void
 	 */
 	public static function register() {
@@ -114,6 +115,7 @@ class Consent {
 		// Checkout block: WooCommerce's additional checkout fields (8.9+). Older stores keep the classic one.
 		add_action( 'woocommerce_init', array( __CLASS__, 'register_block_field' ) );
 		add_action( 'woocommerce_set_additional_field_value', array( __CLASS__, 'save_block_field' ), 10, 4 );
+		add_filter( 'woocommerce_get_default_value_for_' . self::BLOCK_FIELD, array( __CLASS__, 'block_field_default' ), 10, 3 );
 
 		// Sign-up: WordPress's own form and WooCommerce's.
 		add_action( 'register_form', array( __CLASS__, 'render_signup' ) );
@@ -345,11 +347,19 @@ class Consent {
 
 
 	/**
+	 * Add the checkbox to the checkout block, for everyone.
+	 *
+	 * Registered whoever the visitor is: at `woocommerce_init` the user is not always known yet —
+	 * a headless store authenticates the Store API request with a token resolved later — and a
+	 * field missing from the registry is dropped from the order. Who already agreed sees it
+	 * ticked (block_field_default()) and has it ignored on save (save_block_field()).
+	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @return void
 	 */
 	public static function register_block_field() {
-		if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) || self::user_consents( get_current_user_id() ) ) {
+		if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
 			return;
 		}
 
@@ -371,7 +381,14 @@ class Consent {
 
 
 	/**
+	 * Ticked in the checkout block: record the consent on the order and the customer.
+	 *
+	 * A customer who already agreed keeps the consent they gave — its text, place and date stay
+	 * the evidence, the box arrives ticked by block_field_default() and saying nothing here is
+	 * not an opt-out (that is done in My account) — so their value is ignored either way.
+	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @param string $key
 	 * @param mixed $value
 	 * @param string $group
@@ -383,10 +400,48 @@ class Consent {
 			return;
 		}
 
+		if ( self::user_consents( (int) $object->get_customer_id() ) ) {
+			return;
+		}
+
 		$evidence = self::evidence( 'checkout' );
 		$object->update_meta_data( self::ORDER_META, $evidence );
 		$object->save_meta_data();
 		self::record_user( (int) $object->get_customer_id(), $evidence );
+	}
+
+
+	/**
+	 * The checkbox in the checkout block arrives ticked for a customer who already agreed.
+	 *
+	 * Asked when the order or customer has no value of its own, by which time a headless store
+	 * has resolved who the customer is. Only the order still being checked out gets the default:
+	 * an order placed before the customer agreed keeps showing what was asked then.
+	 *
+	 * @since 2.6.0
+	 * @param mixed $value Default so far (null).
+	 * @param string $group
+	 * @param \WC_Data|null $object Order or customer the value is read for.
+	 * @return mixed `'1'` (ticked) for a customer who consents, `$value` otherwise.
+	 */
+	public static function block_field_default( $value, $group = '', $object = null ) {
+		if ( null !== $value ) {
+			return $value;
+		}
+
+		if ( $object instanceof \WC_Order ) {
+			if ( 'checkout-draft' !== $object->get_status() ) {
+				return $value;
+			}
+
+			$user_id = (int) $object->get_customer_id();
+		} elseif ( $object instanceof \WC_Customer ) {
+			$user_id = (int) $object->get_id();
+		} else {
+			$user_id = (int) get_current_user_id();
+		}
+
+		return self::user_consents( $user_id ) ? '1' : $value;
 	}
 
 

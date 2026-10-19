@@ -68,6 +68,7 @@ class Registry {
             'ai' => self::get_ai_status(),
             'connection' => array(
                 'connected' => '' !== Helpers::cloud_api_token(),
+                'locked' => Helpers::cloud_api_token_locked(),
                 'panel_url' => esc_url_raw( JOINOTIFY_PANEL_URL ),
                 'api_host' => wp_parse_url( JOINOTIFY_CLOUD_API_BASE_URL, PHP_URL_HOST ),
             ),
@@ -169,9 +170,12 @@ class Registry {
      * Narrow the stored settings down to the keys the wizard touches.
      *
      * Credentials are reported as a boolean rather than echoed back: the wizard
-     * needs to know whether a key is already stored, never what it is.
+     * needs to know whether a key is already stored, never what it is. A key
+     * defined by the `JOINOTIFY_CLOUD_API_TOKEN` constant counts as stored and
+     * is flagged `_locked`.
      *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array<string,mixed> $settings Full settings array.
      * @return array<string,mixed>
      */
@@ -183,8 +187,11 @@ class Registry {
             $value = isset( $settings[ $key ] ) ? $settings[ $key ] : '';
 
             if ( in_array( $key, $secret_keys, true ) ) {
+                $locked = 'whatsapp_cloud_api_token' === $key && Helpers::cloud_api_token_locked();
+
                 $visible[ $key ] = '';
-                $visible[ $key . '_is_set' ] = '' !== trim( (string) $value );
+                $visible[ $key . '_is_set' ] = $locked || '' !== trim( (string) $value );
+                $visible[ $key . '_locked' ] = $locked;
 
                 continue;
             }

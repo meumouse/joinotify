@@ -83,6 +83,78 @@ function joinotify_send_whatsapp_message_media( $sender, $receiver, $media_type,
 
 
 /**
+ * Send an approved WhatsApp template and say what happened.
+ *
+ * Meant for integrations that need the outcome right away — a login code, a
+ * transactional notice sent from another plugin. The send goes through the
+ * same path as the workflow actions (sender check, one-line parameters, message
+ * history, debug log), but in a single attempt by default: a code that expires
+ * in minutes is worse than useless when a retry delivers it an hour later.
+ *
+ * `$args`:
+ * - `sender` — origin number in digits; defaults to the first connected sender.
+ * - `queue_on_failure` — put a send refused for a transient reason (rate limit,
+ *   API unavailable) in the retry queue; default false.
+ * - `context` — dispatch context for the message history while this send runs,
+ *   e.g. `array( 'source' => 'otp' )`, which masks the template values (login
+ *   codes) before they are stored. The context set before the call is restored.
+ *
+ * @since 2.6.0
+ * @param string $receiver      | Recipient phone, with or without the country code.
+ * @param string $template_name | Approved template name.
+ * @param string $language      | Template language code (e.g. pt_BR).
+ * @param array  $components    | Meta components with the parameters already resolved.
+ * @param array  $args          | Options: sender, queue_on_failure, context.
+ * @return array{message_id:string,status:string}|WP_Error `status` is `sent`, or `queued`
+ *         (with an empty `message_id`) when `queue_on_failure` put it in the retry queue. The
+ *         error data carries `status` (HTTP status to answer with), `response_code` (the
+ *         Joinotify API's, 0 when not reached), `reason`, `detail`, `meta_code`, `retryable`
+ *         and, for a 429, `retry_after` in seconds.
+ */
+function joinotify_send_whatsapp_template( string $receiver, string $template_name, string $language = 'pt_BR', array $components = array(), array $args = array() ) {
+	$args = wp_parse_args( $args, array(
+		'sender' => '',
+		'queue_on_failure' => false,
+		'context' => array(),
+	) );
+
+	$sender = is_scalar( $args['sender'] ) ? preg_replace( '/\D/', '', (string) $args['sender'] ) : '';
+
+	if ( '' === $sender ) {
+		$sender = preg_replace( '/\D/', '', (string) joinotify_get_first_sender() );
+	}
+
+	if ( '' === $sender ) {
+		return new WP_Error( 'joinotify_no_sender', __( 'No WhatsApp number is connected to Joinotify to send from.', 'joinotify' ), array(
+			'status' => 503,
+			'response_code' => 0,
+			'reason' => 'no_sender',
+			'detail' => '',
+			'meta_code' => 0,
+			'retryable' => false,
+		) );
+	}
+
+	$context = is_array( $args['context'] ) ? $args['context'] : array();
+	$previous_context = Message_History::get_context();
+
+	if ( ! empty( $context ) ) {
+		Message_History::set_context( $context );
+	}
+
+	try {
+		$details = Transport::send_message_template( $sender, $receiver, $template_name, $language, $components, 0, (bool) $args['queue_on_failure'], true );
+	} finally {
+		if ( ! empty( $context ) ) {
+			Message_History::set_context( $previous_context );
+		}
+	}
+
+	return Transport::template_send_result( $details );
+}
+
+
+/**
  * Prepare the receiver phone number with the correct format
  * 
  * @since 1.0.0
@@ -422,11 +494,24 @@ function joinotify_format_phone( $phone ) {
 /**
  * Get a Joinotify plugin setting value.
  *
+ * The Joinotify API key (`whatsapp_cloud_api_token`) is stored sealed since 2.6.0
+ * and may come from the `JOINOTIFY_CLOUD_API_TOKEN` constant, so it is answered
+ * through Helpers::cloud_api_token(), in the clear, as before.
+ *
  * @since 2.0.0
+ * @version 2.6.0
  * @param string $key | Setting key.
  * @return mixed Setting value, or false when the key is not set.
  */
 function joinotify_get_setting( $key ) {
+	if ( 'whatsapp_cloud_api_token' === $key ) {
+		if ( false === Admin::get_setting( $key ) && ! Helpers::cloud_api_token_locked() ) {
+			return false;
+		}
+
+		return Helpers::cloud_api_token();
+	}
+
 	return Admin::get_setting( $key );
 }
 

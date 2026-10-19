@@ -10,9 +10,11 @@
  * string in the form for the Save button to store unverified.
  *
  * The stored key is never read back into the browser: the backend reports only
- * whether one exists and its public prefix.
+ * whether one exists and its public prefix. A key defined in wp-config.php
+ * (`JOINOTIFY_CLOUD_API_TOKEN`) arrives as `locked` and cannot be removed here.
  *
  * @since 2.3.0
+ * @version 2.6.0
  */
 import { computed, inject, ref } from 'vue';
 import { __, _n, sprintf, textDomain } from '../../utils/i18n';
@@ -26,6 +28,7 @@ const props = defineProps({
   apiHost: { type: String, default: 'api.joinotify.com' },
   connected: { type: Boolean, default: false },
   keyPrefix: { type: String, default: '' },
+  locked: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -39,11 +42,12 @@ const successMsg = ref('');
 // Seeded by the backend, then owned by this component once the user acts. The
 // stored key never travels to the browser, so all it knows is whether one
 // exists and its public prefix.
-const connection = ref({ connected: props.connected, key_prefix: props.keyPrefix });
+const connection = ref({ connected: props.connected, key_prefix: props.keyPrefix, locked: props.locked });
 const accountName = ref('');
 const confirmingRemoval = ref(false);
 
 const isConnected = computed(() => connection.value.connected);
+const isLocked = computed(() => Boolean(connection.value.locked));
 
 // The leading `sk_live_`/`sk_test_` segment is public and identifies which key
 // is in use; the secret half is stood in for so the field reads as a filled
@@ -154,7 +158,7 @@ async function disconnect() {
         >
 
         <button
-          v-if="!confirmingRemoval"
+          v-if="!confirmingRemoval && !isLocked"
           type="button"
           class="inline-flex shrink-0 items-center rounded-[8px] border border-slate-200 bg-white px-3 py-3 text-[13px] font-medium text-slate-600 transition hover:border-rose-200 hover:text-rose-600 disabled:cursor-not-allowed disabled:opacity-50"
           :disabled="disabled || loading"
@@ -163,7 +167,7 @@ async function disconnect() {
           {{ __('Remove key', textDomain) }}
         </button>
 
-        <template v-else>
+        <template v-else-if="!isLocked">
           <button
             type="button"
             class="inline-flex shrink-0 items-center rounded-[8px] bg-danger px-3 py-3 text-[13px] font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
@@ -188,7 +192,10 @@ async function disconnect() {
         <span class="font-semibold text-emerald-700">{{ __('Connected', textDomain) }}</span>
         <template v-if="accountName"> — {{ accountName }}</template>
         &middot;
-        <template v-if="confirmingRemoval">
+        <template v-if="isLocked">
+          {{ __('This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.', textDomain) }}
+        </template>
+        <template v-else-if="confirmingRemoval">
           {{ __('Removing the key stops all message delivery from this site. The numbers already imported are kept.', textDomain) }}
         </template>
         <template v-else>

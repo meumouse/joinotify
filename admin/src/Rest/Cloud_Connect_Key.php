@@ -73,10 +73,18 @@ class Cloud_Connect_Key extends Abstract_Route {
      * this site was sending from, and wiping them would also wipe the message
      * history's ability to name the sender of past messages.
      *
+     * A key defined by `JOINOTIFY_CLOUD_API_TOKEN` is refused: the constant would
+     * keep the site connected whatever is cleared here.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @return \WP_REST_Response
      */
     protected function disconnect() {
+        if ( Helpers::cloud_api_token_locked() ) {
+            return $this->error_response( esc_html__( 'The API key of this site is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.', 'joinotify' ) );
+        }
+
         $settings = get_option( 'joinotify_settings', array() );
         $settings = is_array( $settings ) ? $settings : array();
 
@@ -100,13 +108,15 @@ class Cloud_Connect_Key extends Abstract_Route {
      * Describe the connection without ever handing the key back to the browser.
      *
      * @since 2.3.0
-     * @return array{connected:bool,key_prefix:string,phone_number_id:string,waba_id:string}
+     * @version 2.6.0
+     * @return array{connected:bool,locked:bool,key_prefix:string,phone_number_id:string,waba_id:string}
      */
     public static function connection_state() {
         $token = Helpers::cloud_api_token();
 
         return array(
             'connected' => '' !== $token,
+            'locked' => Helpers::cloud_api_token_locked(),
             // The leading `sk_live_`/`sk_test_` segment is public and is enough
             // to tell two keys apart; the secret half never needs to be read back.
             'key_prefix' => '' !== $token ? substr( $token, 0, 14 ) : '',

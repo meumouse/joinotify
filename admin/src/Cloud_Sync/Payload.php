@@ -220,10 +220,13 @@ class Payload {
 	 * Links a flow sends the customer: pay a pending order, see it, review what was bought.
 	 *
 	 * @since 2.5.0
+	 * @version 2.6.0
 	 * @param \WC_Order $order
+	 * @param string $event The site event the links go out with (`wc.order.paid`, ...), or `webhook`
+	 *                      when the "Send webhook" action builds them.
 	 * @return array<string,mixed>
 	 */
-	public static function links( $order ) {
+	public static function links( $order, $event = '' ) {
 		$review_urls = array();
 
 		foreach ( $order->get_items() as $item ) {
@@ -232,12 +235,31 @@ class Payload {
 			}
 		}
 
-		return array(
+		$links = array(
 			'payment_url' => (string) $order->get_checkout_payment_url(),
 			'order_received_url' => (string) $order->get_checkout_order_received_url(),
 			'my_account_url' => (string) $order->get_view_order_url(),
 			'review_urls' => array_values( array_unique( $review_urls ) ),
 		);
+
+		/**
+		 * Filter the links an order event carries to the customer.
+		 *
+		 * A store whose customers never see the WordPress front end — a headless storefront —
+		 * swaps the WooCommerce URLs for its own pages here. Keep the keys: flows read them as
+		 * `{{trigger.links.payment_url}}`, `order_received_url`, `my_account_url` and
+		 * `review_urls` (a list, one per product of the order).
+		 *
+		 * @since 2.6.0
+		 * @param array<string,mixed> $links `payment_url`, `order_received_url`, `my_account_url`, `review_urls`.
+		 * @param \WC_Order $order The order the links are for.
+		 * @param string $event The site event they go out with (`wc.order.created`, `wc.order.paid`,
+		 *                      `wcs.subscription.payment_failed`, `fcrc.cart.abandoned`, ...), or
+		 *                      `webhook` when the "Send webhook" workflow action builds them.
+		 */
+		$filtered = apply_filters( 'Joinotify/Cloud_Sync/Links', $links, $order, (string) $event );
+
+		return is_array( $filtered ) ? $filtered : $links;
 	}
 
 
