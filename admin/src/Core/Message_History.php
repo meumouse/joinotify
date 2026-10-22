@@ -406,13 +406,20 @@ class Message_History {
      * reached the device, was opened or was rejected arrives minutes later on
      * the status webhook.
      *
+     * `$meta` is merged into the row's `meta` column, one level deep, which is
+     * where the webhook keeps when each transition happened (`delivery`). The
+     * webhook does not promise order, so a `delivered` landing after `read`
+     * still has its time written down but leaves the status on `read`.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param string $wamid | WhatsApp message id (wamid...).
      * @param string $status | New delivery status.
      * @param string $error | Failure reason, when the status is a failure.
+     * @param array  $meta | Details to merge into the row's `meta` column.
      * @return bool True when a row was updated.
      */
-    public static function update_status_by_wamid( $wamid, $status, $error = '' ) {
+    public static function update_status_by_wamid( $wamid, $status, $error = '', $meta = array() ) {
         $wamid = sanitize_text_field( (string) $wamid );
         $status = sanitize_key( (string) $status );
 
@@ -422,15 +429,44 @@ class Message_History {
 
         global $wpdb;
 
-        $data = array( 'status' => $status );
-        $formats = array( '%s' );
+        $table = self::get_table_name();
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the WAMID is bound as %s.
+        $row = $wpdb->get_row( $wpdb->prepare( "SELECT id, status, meta FROM {$table} WHERE wamid = %s ORDER BY id DESC LIMIT 1", $wamid ), ARRAY_A );
+
+        if ( ! is_array( $row ) ) {
+            return false;
+        }
+
+        $data = array();
+        $formats = array();
+
+        if ( ! ( 'delivered' === $status && 'read' === (string) $row['status'] ) ) {
+            $data['status'] = $status;
+            $formats[] = '%s';
+        }
 
         if ( '' !== $error ) {
             $data['error'] = substr( sanitize_text_field( $error ), 0, 191 );
             $formats[] = '%s';
         }
 
-        $updated = $wpdb->update( self::get_table_name(), $data, array( 'wamid' => $wamid ), $formats, array( '%s' ) );
+        if ( is_array( $meta ) && ! empty( $meta ) ) {
+            $stored = self::decode_meta( $row['meta'] ?? '' );
+
+            foreach ( $meta as $key => $value ) {
+                $stored[ $key ] = is_array( $value ) && is_array( $stored[ $key ] ?? null ) ? array_merge( $stored[ $key ], $value ) : $value;
+            }
+
+            $data['meta'] = self::encode_meta( $stored );
+            $formats[] = '%s';
+        }
+
+        if ( empty( $data ) ) {
+            return false;
+        }
+
+        $updated = $wpdb->update( $table, $data, array( 'id' => (int) $row['id'] ), $formats, array( '%d' ) );
 
         if ( ! $updated ) {
             return false;
@@ -588,13 +624,14 @@ class Message_History {
      * Count history items grouped by status.
      *
      * @since 2.0.0
+     * @version 2.6.0
      * @return array<string,int>
      */
     public static function get_counts_by_status() {
         global $wpdb;
 
         $table = self::get_table_name();
-        $counts = array( 'all' => 0, 'sent' => 0, 'failed' => 0, 'queued' => 0, 'cancelled' => 0 );
+        $counts = array( 'all' => 0, 'sent' => 0, 'delivered' => 0, 'read' => 0, 'failed' => 0, 'queued' => 0, 'cancelled' => 0 );
 
         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the query takes no input.
         $rows = $wpdb->get_results( "SELECT status, COUNT(*) AS total FROM {$table} GROUP BY status", ARRAY_A );

@@ -258,8 +258,8 @@ class Cloud_Client {
     protected static function describe_error( $parsed ) {
         // 24h window closed — a free-form message will never be delivered; a
         // template is required. This is the single most common production error.
-        if ( 131047 === (int) $parsed['meta_code'] ) {
-            return 'window_closed_requires_template';
+        if ( Send_Error::WINDOW_CLOSED_META_CODE === (int) $parsed['meta_code'] ) {
+            return Send_Error::WINDOW_CLOSED;
         }
 
         if ( in_array( (int) $parsed['meta_code'], array( 132000, 132001, 132005, 132007, 132012, 132015, 132016 ), true ) ) {
@@ -1069,6 +1069,13 @@ class Cloud_Client {
         $fields['wamid'] = $parsed['wamid'];
         $details['wamid'] = $parsed['wamid'];
 
+        // Whether the contact's 24-hour window was open when WhatsApp answered,
+        // so a send outside it can be told apart in the history — and followed
+        // there until the webhook says it was delivered.
+        $fields['meta'] = array_merge( (array) ( $fields['meta'] ?? array() ), array(
+            'session_window' => self::session_window_state( (string) ( $fields['receiver'] ?? '' ), $parsed ),
+        ) );
+
         // What a caller needs to decide its next move on a refusal: Meta's own
         // code, and how long a rate-limited answer asked to wait.
         $details['meta_code'] = (int) $parsed['meta_code'];
@@ -1080,6 +1087,31 @@ class Cloud_Client {
         }
 
         return self::record_and_return( $fields, $details, $return_details );
+    }
+
+
+    /**
+     * State of a contact's 24-hour session window at send time.
+     *
+     * Only inbound messages, which arrive by webhook, open the window, so
+     * without a registered endpoint the plugin cannot tell and says `unknown`
+     * rather than claim a closed window. A 131047 refusal settles it either way.
+     *
+     * @since 2.6.0
+     * @param string $receiver | Recipient phone number.
+     * @param array $parsed | Result of parse_send_response().
+     * @return string `open`, `closed` or `unknown`.
+     */
+    protected static function session_window_state( $receiver, $parsed ) {
+        if ( Send_Error::WINDOW_CLOSED_META_CODE === (int) ( $parsed['meta_code'] ?? 0 ) ) {
+            return 'closed';
+        }
+
+        if ( ! Webhooks::is_registered() ) {
+            return 'unknown';
+        }
+
+        return Webhook_Handler::window_is_open( $receiver ) ? 'open' : 'closed';
     }
 
 

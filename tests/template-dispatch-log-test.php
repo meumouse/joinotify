@@ -82,6 +82,7 @@ function wp_json_encode( $value, $flags = 0 ) { return json_encode( $value, $fla
 function current_time( $type, $gmt = false ) { return gmdate( 'Y-m-d H:i:s' ); }
 function get_current_user_id() { return 0; }
 function untrailingslashit( $value ) { return rtrim( (string) $value, '/\\' ); }
+function get_date_from_gmt( $date ) { return (string) $date; }
 function __( $text, $domain = 'default' ) { return $text; }
 function joinotify_prepare_receiver( $receiver, $payload = array() ) { return preg_replace( '/\D/', '', (string) $receiver ); }
 function joinotify_convert_html_to_whatsapp( $text ) { return (string) $text; }
@@ -135,6 +136,44 @@ class Fake_Wpdb {
 
 	public function get_charset_collate() { return ''; }
 
+	/**
+	 * Only the `wamid = %s` lookup of update_status_by_wamid() is understood:
+	 * the bound value is kept and read back by get_row().
+	 */
+	public function prepare( $sql, ...$args ) {
+		return array( 'sql' => $sql, 'args' => is_array( $args[0] ?? null ) ? $args[0] : $args );
+	}
+
+	public function get_row( $query, $output = null ) {
+		$wamid = $query['args'][0] ?? '';
+
+		foreach ( $this->rows as $rows ) {
+			foreach ( array_reverse( $rows, true ) as $index => $row ) {
+				if ( ( $row['wamid'] ?? '' ) === $wamid ) {
+					return array_merge( $row, array( 'id' => $index + 1 ) );
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public function update( $table, $data, $where, $formats = null, $where_formats = null ) {
+		if ( count( $data ) !== count( (array) $formats ) ) {
+			$this->format_mismatches++;
+		}
+
+		$index = (int) ( $where['id'] ?? 0 ) - 1;
+
+		if ( ! isset( $this->rows[ $table ][ $index ] ) ) {
+			return 0;
+		}
+
+		$this->rows[ $table ][ $index ] = array_merge( $this->rows[ $table ][ $index ], $data );
+
+		return 1;
+	}
+
 	public function table( $name ) { return $this->rows[ $this->prefix . $name ] ?? array(); }
 }
 
@@ -181,8 +220,12 @@ namespace {
 
 require_once __DIR__ . '/../admin/src/Core/Message_History.php';
 require_once __DIR__ . '/../admin/src/Core/Debug_Log.php';
+require_once __DIR__ . '/../admin/src/Core/Phone_Manager.php';
 require_once __DIR__ . '/../admin/src/Api/Message_Dispatch.php';
+require_once __DIR__ . '/../admin/src/Api/Send_Error.php';
 require_once __DIR__ . '/../admin/src/Api/Template_Repository.php';
+require_once __DIR__ . '/../admin/src/Api/Webhooks.php';
+require_once __DIR__ . '/../admin/src/Api/Webhook_Handler.php';
 require_once __DIR__ . '/../admin/src/Api/Cloud_Client.php';
 require_once __DIR__ . '/../admin/src/Admin/History/Registry.php';
 
@@ -585,6 +628,64 @@ $meta = Message_History::decode_meta( rows( 'joinotify_message_history' )[0]['me
 
 check( 'a send stopped before the request is still described', 'pedido_pago' === ( $meta['template']['name'] ?? '' ) && 0 === count( $GLOBALS['http_requests'] ) );
 
+echo "\nCloud_Client — 24-hour session window on the history row\n";
+reset_state();
+seed_cache( array( order_template() ) );
+
+queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.OK' ) ) ) ) );
+Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', order_components(), 0, true, true );
+$meta = Message_History::decode_meta( rows( 'joinotify_message_history' )[0]['meta'] ?? '' );
+
+check( 'without delivery reports the window is unknown', 'unknown' === ( $meta['session_window'] ?? '' ) );
+check( 'the window sits next to the template details', 'pedido_pago' === ( $meta['template']['name'] ?? '' ) );
+
+reset_state();
+seed_cache( array( order_template() ) );
+update_option( \MeuMouse\Joinotify\Api\Webhooks::ENDPOINT_OPTION, 'we_1' );
+update_option( \MeuMouse\Joinotify\Api\Webhooks::SECRET_OPTION, 'whsec_1' );
+
+queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.OK' ) ) ) ) );
+Cloud_Client::send_message_template( '5541987111527', '5541988887777', 'pedido_pago', 'pt_BR', order_components(), 0, true, true );
+$meta = Message_History::decode_meta( rows( 'joinotify_message_history' )[0]['meta'] ?? '' );
+$item = Registry::build_item( rows( 'joinotify_message_history' )[0] );
+
+check( 'a template sent to a contact who never wrote is outside the window', 'closed' === ( $meta['session_window'] ?? '' ) );
+check( 'the sent row keeps its WAMID for the delivery webhook', 'wamid.OK' === rows( 'joinotify_message_history' )[0]['wamid'] );
+check( 'the history screen reads the window state', 'closed' === $item['session_window'] && 'sent' === $item['status'] );
+check( 'no delivery time is shown before the webhook reports one', '' === $item['delivered_at'] && '' === $item['read_at'] );
+
+\MeuMouse\Joinotify\Api\Webhook_Handler::open_window( '+55 41 98888-7777' );
+queue_response( 201, array( 'data' => array( 'messages' => array( array( 'id' => 'wamid.OK2' ) ) ) ) );
+Cloud_Client::send_message_text( '5541987111527', '5541988887777', 'Olá!', 0, true, true );
+$meta = Message_History::decode_meta( rows( 'joinotify_message_history' )[1]['meta'] ?? '' );
+
+check( 'a contact who wrote in the last 24 hours is inside the window', 'open' === ( $meta['session_window'] ?? '' ) );
+
+echo "\nMessage_History::update_status_by_wamid — delivery of a send outside the window\n";
+
+Message_History::update_status_by_wamid( 'wamid.OK', 'read', '', array( 'delivery' => array( 'read_at' => '2026-10-22 12:05:00' ) ) );
+Message_History::update_status_by_wamid( 'wamid.OK', 'delivered', '', array( 'delivery' => array( 'delivered_at' => '2026-10-22 12:01:00' ) ) );
+
+$row = rows( 'joinotify_message_history' )[0];
+$meta = Message_History::decode_meta( $row['meta'] ?? '' );
+$item = Registry::build_item( $row );
+
+check( 'a delivered report landing after read leaves the row on read', 'read' === $row['status'] );
+check( 'the late delivered report still keeps its time', '2026-10-22 12:01:00' === ( $meta['delivery']['delivered_at'] ?? '' ) );
+check( 'both transitions are kept side by side', '2026-10-22 12:05:00' === ( $meta['delivery']['read_at'] ?? '' ) );
+check( 'the window and template survive the status updates', 'closed' === ( $meta['session_window'] ?? '' ) && 'pedido_pago' === ( $meta['template']['name'] ?? '' ) );
+check( 'the history screen shows when it was delivered and read', '2026-10-22 12:01:00' === $item['delivered_at'] && '2026-10-22 12:05:00' === $item['read_at'] );
+check( 'every updated column has a format', 0 === $GLOBALS['wpdb']->format_mismatches );
+check( 'an unknown WAMID updates nothing', false === Message_History::update_status_by_wamid( 'wamid.NOPE', 'delivered' ) );
+
+reset_state();
+queue_response( 400, array( 'error' => array( 'type' => 'meta_error', 'meta' => array( 'error' => array( 'code' => 131047, 'message' => 'Re-engagement message' ) ) ) ) );
+$details = Cloud_Client::send_message_text( '5541987111527', '5541988887777', 'Olá!', 0, true, true );
+$meta = Message_History::decode_meta( rows( 'joinotify_message_history' )[0]['meta'] ?? '' );
+
+check( 'a 131047 refusal marks the row outside the window even without reports', 'closed' === ( $meta['session_window'] ?? '' ) );
+check( 'the refusal keeps the window-closed failure code', 'window_closed_requires_template' === $details['error'] );
+
 echo "\nCloud_Client::send_message_template — OTP and redaction\n";
 reset_state();
 Admin::$settings['enable_debug_mode'] = 'yes';
@@ -702,7 +803,7 @@ $context = context_of( $logs[0] ?? array() );
 
 check( 'a delivered text message is logged at info in debug mode', 1 === count( $logs ) && 'WhatsApp text message sent to 5541988887777' === $logs[0]['message'] );
 check( 'a text entry carries its body and no template block', 'Olá!' === ( $context['content'] ?? '' ) && ! isset( $context['template'] ) );
-check( 'a text history row has no meta', null === rows( 'joinotify_message_history' )[0]['meta'] );
+check( 'a text history row has no template details, only the window', array( 'session_window' => 'unknown' ) === Message_History::decode_meta( rows( 'joinotify_message_history' )[0]['meta'] ) );
 
 echo "\nMessage_History schema guard\n";
 reset_state();

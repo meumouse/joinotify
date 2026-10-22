@@ -100,7 +100,13 @@ class Webhook_Handler {
     /**
      * Record what actually happened to a message that was accepted earlier.
      *
+     * Each transition also leaves its time in the row's `delivery` details, so
+     * a message that was read still shows when it was delivered. A refusal for
+     * a closed 24-hour window marks the row as sent outside it, whatever the
+     * send path knew at the time.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array $status | Single status entry.
      * @return void
      */
@@ -113,10 +119,21 @@ class Webhook_Handler {
         }
 
         $error = '';
+        $timestamp = (int) ( $status['timestamp'] ?? 0 );
+
+        $meta = array(
+            'delivery' => array(
+                $state . '_at' => gmdate( 'Y-m-d H:i:s', $timestamp > 0 ? $timestamp : time() ),
+            ),
+        );
 
         if ( 'failed' === $state ) {
             $first = isset( $status['errors'][0] ) && is_array( $status['errors'][0] ) ? $status['errors'][0] : array();
             $error = (string) ( $first['title'] ?? $first['message'] ?? 'delivery_failed' );
+
+            if ( Send_Error::WINDOW_CLOSED_META_CODE === (int) ( $first['code'] ?? 0 ) ) {
+                $meta['session_window'] = 'closed';
+            }
 
             Debug_Log::record( array(
                 'level' => 'error',
@@ -133,7 +150,7 @@ class Webhook_Handler {
         // `sent` is already the status the send path recorded, so only the later
         // transitions are worth writing back.
         if ( in_array( $state, array( 'delivered', 'read', 'failed' ), true ) ) {
-            Message_History::update_status_by_wamid( $wamid, $state, $error );
+            Message_History::update_status_by_wamid( $wamid, $state, $error, $meta );
         }
     }
 

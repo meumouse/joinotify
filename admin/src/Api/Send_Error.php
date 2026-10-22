@@ -37,6 +37,14 @@ class Send_Error {
      */
     const WINDOW_CLOSED = 'window_closed_requires_template';
 
+    /**
+     * Meta's own error code for a closed 24-hour session window.
+     *
+     * @since 2.6.0
+     * @var int
+     */
+    const WINDOW_CLOSED_META_CODE = 131047;
+
 
     /**
      * Whether a failure code means the 24-hour session window is closed.

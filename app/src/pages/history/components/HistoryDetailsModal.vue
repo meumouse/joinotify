@@ -6,8 +6,12 @@
  * given to each variable and the components payload that went to WhatsApp.
  * The footer can export the record as JSON.
  *
+ * Whether the message went out inside the contact's 24-hour window, and when
+ * the delivery webhook reported it delivered, read or failed, show among the
+ * fields once known.
+ *
  * @since 2.0.0
- * @version 2.4.2
+ * @version 2.6.0
  */
 import { computed } from 'vue';
 import { __, textDomain } from '../../../utils/i18n';
@@ -23,12 +27,38 @@ const props = defineProps({
 
 defineEmits(['close', 'export']);
 
+const windowLabels = computed(() => ({
+  open: __('Inside the 24-hour window', textDomain),
+  closed: __('Outside the 24-hour window', textDomain),
+  unknown: __('Unknown (delivery reports are not set up)', textDomain),
+}));
+
 const rows = computed(() => {
   const entry = props.entry || {};
-
-  return [
+  const list = [
     { label: __('Date', textDomain), value: entry.created_at || '-' },
     { label: __('Status', textDomain), value: props.statusLabels[entry.status] || entry.status || '-' },
+  ];
+
+  // Rows recorded before the window was tracked carry no state at all.
+  if (entry.session_window) {
+    list.push({ label: __('Session window', textDomain), value: windowLabels.value[entry.session_window] || entry.session_window });
+  }
+
+  if (entry.delivered_at) {
+    list.push({ label: __('Delivered at', textDomain), value: entry.delivered_at });
+  }
+
+  if (entry.read_at) {
+    list.push({ label: __('Read at', textDomain), value: entry.read_at });
+  }
+
+  if (entry.failed_at) {
+    list.push({ label: __('Failed at', textDomain), value: entry.failed_at });
+  }
+
+  return [
+    ...list,
     { label: __('Source', textDomain), value: props.sourceLabels[entry.source] || entry.source || '-' },
     { label: __('Sender', textDomain), value: entry.sender || '-' },
     { label: __('Recipient', textDomain), value: entry.receiver || '-' },

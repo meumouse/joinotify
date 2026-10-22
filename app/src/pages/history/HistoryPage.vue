@@ -5,8 +5,11 @@
  * Records can be exported as JSON one by one (row action or details modal),
  * as the current selection, or as every record matching the filters.
  *
+ * A message sent outside the contact's 24-hour window is flagged next to its
+ * status, which the delivery webhook keeps moving to delivered, read or failed.
+ *
  * @since 2.0.0
- * @version 2.4.2
+ * @version 2.6.0
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -72,6 +75,8 @@ const enabled = computed(() => (props.bootstrap?.enabled ?? 'yes') === 'yes');
 
 const statusLabels = computed(() => ({
   sent: __('Sent', textDomain),
+  delivered: __('Delivered', textDomain),
+  read: __('Read', textDomain),
   failed: __('Failed', textDomain),
   queued: __('Queued', textDomain),
   cancelled: __('Cancelled', textDomain),
@@ -95,7 +100,7 @@ const typeLabels = computed(() => ({
 }));
 
 function statusBadgeClass(status) {
-  if (status === 'sent') {
+  if (status === 'sent' || status === 'delivered' || status === 'read') {
     return 'bg-emerald-50 text-emerald-700 ring-emerald-200';
   }
 
@@ -402,6 +407,13 @@ const exportTitle = computed(() =>
                   <td class="whitespace-nowrap px-3 py-3">
                     <span class="inline-flex rounded-full px-2.5 py-0.5 text-[12px] font-medium ring-1 ring-inset" :class="statusBadgeClass(entry.status)">
                       {{ statusLabels[entry.status] || entry.status }}
+                    </span>
+                    <span
+                      v-if="entry.session_window === 'closed'"
+                      class="ml-1.5 inline-flex rounded-full bg-amber-50 px-2.5 py-0.5 text-[12px] font-medium text-amber-700 ring-1 ring-inset ring-amber-200"
+                      :title="__('Sent while the contact had not replied in the last 24 hours.', textDomain)"
+                    >
+                      {{ __('Outside 24h window', textDomain) }}
                     </span>
                   </td>
                   <td

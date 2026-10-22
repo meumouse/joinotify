@@ -94,8 +94,8 @@ namespace MeuMouse\Joinotify\Core {
 	class Message_History {
 		public static $updates = array();
 
-		public static function update_status_by_wamid( $wamid, $status, $error = '' ) {
-			self::$updates[] = array( 'wamid' => $wamid, 'status' => $status, 'error' => $error );
+		public static function update_status_by_wamid( $wamid, $status, $error = '', $meta = array() ) {
+			self::$updates[] = array( 'wamid' => $wamid, 'status' => $status, 'error' => $error, 'meta' => $meta );
 
 			return true;
 		}
@@ -129,6 +129,7 @@ function wp_remote_retrieve_body( $response ) { return $response['body'] ?? ''; 
 function wp_json_encode( $value ) { return json_encode( $value ); }
 
 require_once __DIR__ . '/../admin/src/Core/Phone_Manager.php';
+require_once __DIR__ . '/../admin/src/Api/Send_Error.php';
 require_once __DIR__ . '/../admin/src/Api/Webhooks.php';
 require_once __DIR__ . '/../admin/src/Api/Webhook_Handler.php';
 
@@ -220,7 +221,7 @@ Webhook_Handler::handle( array(
 	'field' => 'messages',
 	'value' => array(
 		'statuses' => array(
-			array( 'id' => 'wamid.A', 'status' => 'delivered', 'recipient_id' => '5541987111527' ),
+			array( 'id' => 'wamid.A', 'status' => 'delivered', 'recipient_id' => '5541987111527', 'timestamp' => '1792670400' ),
 			array( 'id' => 'wamid.B', 'status' => 'read' ),
 			array( 'id' => 'wamid.C', 'status' => 'sent' ),
 			array(
@@ -239,6 +240,10 @@ check( 'sent is not written back again', 3 === count( Message_History::$updates 
 check( 'a failure carries its reason', 'failed' === Message_History::$updates[2]['status'] && 'Re-engagement message' === Message_History::$updates[2]['error'] );
 check( 'a failure is logged for the operator', 1 === count( Debug_Log::$records ) && 'error' === Debug_Log::$records[0]['level'] );
 check( 'the Meta error code is kept', '131047' === (string) Debug_Log::$records[0]['code'] );
+check( 'the delivery time comes from the webhook timestamp', gmdate( 'Y-m-d H:i:s', 1792670400 ) === ( Message_History::$updates[0]['meta']['delivery']['delivered_at'] ?? '' ) );
+check( 'each transition is timed under its own key', isset( Message_History::$updates[1]['meta']['delivery']['read_at'] ) && isset( Message_History::$updates[2]['meta']['delivery']['failed_at'] ) );
+check( 'a 131047 failure marks the row as sent outside the window', 'closed' === ( Message_History::$updates[2]['meta']['session_window'] ?? '' ) );
+check( 'a delivered report says nothing about the window', ! isset( Message_History::$updates[0]['meta']['session_window'] ) );
 
 echo "\nWebhook_Handler 24-hour window\n";
 reset_state();

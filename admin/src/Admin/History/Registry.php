@@ -52,7 +52,7 @@ class Registry {
      * closed 24-hour window stops looking like an opaque slug.
      *
      * @since 2.0.0
-     * @version 2.4.1
+     * @version 2.6.0
      * @param array<string,mixed> $row Raw DB row.
      * @return array<string,mixed>
      */
@@ -61,6 +61,8 @@ class Registry {
         $created_local = $created_gmt ? get_date_from_gmt( $created_gmt ) : '';
         $workflow_id = (int) ( $row['workflow_id'] ?? 0 );
         $error = (string) ( $row['error'] ?? '' );
+        $meta = Message_History::decode_meta( $row['meta'] ?? '' );
+        $window = (string) ( $meta['session_window'] ?? '' );
 
         return array(
             'id' => (int) ( $row['id'] ?? 0 ),
@@ -80,6 +82,13 @@ class Registry {
             // other message, and for rows recorded before schema 1.3.0.
             'template' => self::build_template( $row['meta'] ?? '' ),
             'status' => (string) ( $row['status'] ?? 'failed' ),
+            // `open`, `closed` (sent outside the 24-hour window) or `unknown`;
+            // empty for rows recorded before 2.6.0.
+            'session_window' => in_array( $window, array( 'open', 'closed', 'unknown' ), true ) ? $window : '',
+            // When the webhook reported each transition, in site time.
+            'delivered_at' => self::build_delivery_time( $meta, 'delivered_at' ),
+            'read_at' => self::build_delivery_time( $meta, 'read_at' ),
+            'failed_at' => self::build_delivery_time( $meta, 'failed_at' ),
             'response_code' => (int) ( $row['response_code'] ?? 0 ),
             'error' => $error,
             // An unmapped code falls back to itself: better a raw slug on screen
@@ -90,6 +99,21 @@ class Registry {
             // what the "Cancel resend" action acts on.
             'can_cancel_retry' => 'queued' === (string) ( $row['status'] ?? '' ) && '' !== (string) ( $row['queue_id'] ?? '' ),
         );
+    }
+
+
+    /**
+     * Read one delivery transition time out of a row's decoded `meta`.
+     *
+     * @since 2.6.0
+     * @param array<string,mixed> $meta Decoded `meta` column.
+     * @param string $key `delivered_at`, `read_at` or `failed_at`.
+     * @return string Site-local date time, or empty when the webhook never reported it.
+     */
+    public static function build_delivery_time( $meta, $key ) {
+        $gmt = (string) ( $meta['delivery'][ $key ] ?? '' );
+
+        return '' !== $gmt ? get_date_from_gmt( $gmt ) : '';
     }
 
 

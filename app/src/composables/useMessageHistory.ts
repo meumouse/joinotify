@@ -21,7 +21,7 @@ interface HistoryBootstrap {
   [key: string]: unknown;
 }
 
-const EMPTY_COUNTS = { all: 0, sent: 0, failed: 0, queued: 0, cancelled: 0 };
+const EMPTY_COUNTS = { all: 0, sent: 0, delivered: 0, read: 0, failed: 0, queued: 0, cancelled: 0 };
 
 function normalizeCounts(counts: unknown): typeof EMPTY_COUNTS {
   return { ...EMPTY_COUNTS, ...(counts && typeof counts === 'object' ? counts : {}) };
@@ -43,7 +43,7 @@ function normalizePagination(pagination: unknown) {
  * deletion and JSON export backed by the Joinotify REST endpoints.
  *
  * @since 2.0.0
- * @version 2.4.2
+ * @version 2.6.0
  * @param {Object} bootstrap Bootstrap payload from the history screen.
  */
 export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
@@ -73,6 +73,8 @@ export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
   const statusTabs = computed(() => [
     { label: __('All', textDomain), value: '', count: counts.value.all },
     { label: __('Sent', textDomain), value: 'sent', count: counts.value.sent },
+    { label: __('Delivered', textDomain), value: 'delivered', count: counts.value.delivered },
+    { label: __('Read', textDomain), value: 'read', count: counts.value.read },
     { label: __('Failed', textDomain), value: 'failed', count: counts.value.failed },
     { label: __('Queued', textDomain), value: 'queued', count: counts.value.queued },
     { label: __('Cancelled', textDomain), value: 'cancelled', count: counts.value.cancelled },
