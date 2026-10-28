@@ -94,6 +94,12 @@
       "Delete selected records": [
         "Ausgewählte Datensätze löschen"
       ],
+      "Delivered": [
+        "Zugestellt"
+      ],
+      "Delivered at": [
+        "Zugestellt am"
+      ],
       "Discard the pending retry of the selected messages": [
         "Verwerfen Sie den ausstehenden Wiederholungsversuch der ausgewählten Nachrichten"
       ],
@@ -133,11 +139,17 @@
       "Failed": [
         "Fehlgeschlagen"
       ],
+      "Failed at": [
+        "Fehlgeschlagen am"
+      ],
       "From": [
         "Von"
       ],
       "Header": [
         "Kopfzeile"
+      ],
+      "Inside the 24-hour window": [
+        "Innerhalb des 24-Stunden-Fensters"
       ],
       "Items per page": [
         "Elemente pro Seite"
@@ -178,6 +190,12 @@
       "of": [
         "von"
       ],
+      "Outside 24h window": [
+        "Außerhalb des 24-h-Fensters"
+      ],
+      "Outside the 24-hour window": [
+        "Außerhalb des 24-Stunden-Fensters"
+      ],
       "Payload sent": [
         "Gesendete Nutzlast"
       ],
@@ -186,6 +204,12 @@
       ],
       "Queued": [
         "In Warteschlange"
+      ],
+      "Read": [
+        "Gelesen"
+      ],
+      "Read at": [
+        "Gelesen am"
       ],
       "Recipient": [
         "Empfänger"
@@ -219,6 +243,12 @@
       ],
       "Sent": [
         "Gesendet"
+      ],
+      "Sent while the contact had not replied in the last 24 hours.": [
+        "Gesendet, während der Kontakt in den letzten 24 Stunden nicht geantwortet hatte."
+      ],
+      "Session window": [
+        "Servicefenster"
       ],
       "Source": [
         "Quelle"
@@ -258,6 +288,9 @@
       ],
       "Type": [
         "Typ"
+      ],
+      "Unknown (delivery reports are not set up)": [
+        "Unbekannt (Zustellberichte sind nicht eingerichtet)"
       ],
       "Value": [
         "Wert"

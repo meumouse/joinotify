@@ -776,6 +776,9 @@
       "This integration will be available soon.": [
         "Esta integración estará disponible pronto."
       ],
+      "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.": [
+        "Esta clave está definida en wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) y solo se puede cambiar allí."
+      ],
       "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
         "Este sitio está en %1$s, pero su clave de Joinotify fue emitida a %2$s. Si esta es una copia de staging, déjala en pausa: enviaría pedidos de prueba a clientes reales. Si el sitio se movió, conéctalo de nuevo en la tarjeta de WhatsApp de Ajustes → Aplicaciones."
       ],

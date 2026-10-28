@@ -15,6 +15,10 @@ msgstr "12345"
 msgid "-1001234567890 or {{ telegram_chat_id }}"
 msgstr "-1001234567890 oder {{ telegram_chat_id }}"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
+msgid "-23.5505 or a placeholder"
+msgstr "-23.5505 oder ein Platzhalter"
+
 #: app/src/pages/contacts/components/FormRuleEditor.vue:27
 msgid "— Detect automatically —"
 msgstr "— Automatisch erkennen —"
@@ -87,14 +91,15 @@ msgstr "(gelöschter Kontakt)"
 msgid "{{ wc_billing_email }} or customer@example.com"
 msgstr "{{ wc_billing_email }} oder customer@example.com"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:321
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:296
 msgid "{{ wc_billing_first_name }} or a fixed value"
 msgstr "{{ wc_billing_first_name }} oder einen festen Wert"
 
+#: app/src/builder/actions/settings/ConditionSettings.vue:216
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:218
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:87
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:96
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:258
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:450
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:47
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr "{{ wc_billing_phone }} oder +5511999990000"
@@ -154,7 +159,7 @@ msgstr ""
 msgid "%1$s: %2$d contacts. Tell what each column is."
 msgstr "%1$s: %2$d Kontakte. Sage, was jede Spalte ist."
 
-#: admin/src/Admin/Settings/Registry.php:856
+#: admin/src/Admin/Settings/Registry.php:868
 #. translators: %d: number of retry attempts
 msgid "%d attempt"
 msgid_plural "%d attempts"
@@ -213,7 +218,7 @@ msgid_plural "%d numbers imported from your Joinotify account."
 msgstr[0] "%d Nummer aus Ihrem Joinotify-Konto importiert."
 msgstr[1] "%d Nummern aus Ihrem Joinotify-Konto importiert."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:96
+#: app/src/components/fields/JoinotifyApiKeyField.vue:100
 msgid "%d number imported."
 msgid_plural "%d numbers imported."
 msgstr[0] "%d Nummer importiert."
@@ -321,22 +326,22 @@ msgstr ""
 "<strong>Joinotify</strong> benötigt PHP-Version 8.1 oder höher. "
 "Kontaktieren Sie Ihren Hosting-Support, um ein Upgrade durchzuführen."
 
-#: app/src/composables/useMessageHistory.ts:107
+#: app/src/composables/useMessageHistory.ts:109
 #: app/src/composables/useProcessingQueue.ts:108
 #: app/src/composables/useWorkflows.ts:214
 #: app/src/pages/contacts/useContactList.ts:48
 msgid "0 results"
 msgstr "0 Ergebnisse"
 
-#: admin/src/Admin/Settings/Registry.php:148
+#: admin/src/Admin/Settings/Registry.php:160
 msgid "120 minutes"
 msgstr "120 Minuten"
 
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:157
 msgid "15 minutes"
 msgstr "15 Minuten"
 
-#: admin/src/Admin/Settings/Registry.php:272
+#: admin/src/Admin/Settings/Registry.php:284
 msgid "180 days"
 msgstr "180 Tage"
 
@@ -348,22 +353,26 @@ msgstr "1x - Herren Baumwoll-T-Shirt (Musterprodukt)"
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr "1x - Sonnenbrille mit UV-Schutz (Musterprodukt)"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:289
+msgid "2026-12-31 23:59, +2 days or a placeholder"
+msgstr "2026-12-31 23:59, +2 days oder ein Platzhalter"
+
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:85
 msgid "24h limit:"
 msgstr "24h Limit:"
 
-#: admin/src/Admin/Settings/Registry.php:269
-#: admin/src/Admin/Settings/Registry.php:288
+#: admin/src/Admin/Settings/Registry.php:281
+#: admin/src/Admin/Settings/Registry.php:300
 msgid "30 days"
 msgstr "30 Tage"
 
-#: admin/src/Admin/Settings/Registry.php:146
+#: admin/src/Admin/Settings/Registry.php:158
 #: admin/src/Integrations/Flexify_Checkout.php:253
 #: admin/src/Integrations/Flexify_Checkout.php:261
 msgid "30 minutes"
 msgstr "30 Minuten"
 
-#: admin/src/Admin/Settings/Registry.php:273
+#: admin/src/Admin/Settings/Registry.php:285
 msgid "365 days"
 msgstr "365 Tage"
 
@@ -371,32 +380,32 @@ msgstr "365 Tage"
 msgid "41912345678"
 msgstr "41912345678"
 
-#: admin/src/Admin/Settings/Registry.php:144
+#: admin/src/Admin/Settings/Registry.php:156
 msgid "5 minutes"
 msgstr "5 Minuten"
 
 #: app/src/pages/builder/BuilderPage.vue:1441
-#: app/src/pages/history/HistoryPage.vue:284
+#: app/src/pages/history/HistoryPage.vue:289
 #: app/src/pages/settings/components/cards/PhoneActions.vue:126
 #: app/src/pages/settings/components/cards/PhoneActions.vue:212
 msgid "5541987111527"
 msgstr "5541987111527"
 
-#: admin/src/Admin/Settings/Registry.php:270
-#: admin/src/Admin/Settings/Registry.php:289
+#: admin/src/Admin/Settings/Registry.php:282
+#: admin/src/Admin/Settings/Registry.php:301
 msgid "60 days"
 msgstr "60 Tage"
 
-#: admin/src/Admin/Settings/Registry.php:147
+#: admin/src/Admin/Settings/Registry.php:159
 msgid "60 minutes"
 msgstr "60 Minuten"
 
-#: admin/src/Admin/Settings/Registry.php:287
+#: admin/src/Admin/Settings/Registry.php:299
 msgid "7 days"
 msgstr "7 Tage"
 
-#: admin/src/Admin/Settings/Registry.php:271
-#: admin/src/Admin/Settings/Registry.php:290
+#: admin/src/Admin/Settings/Registry.php:283
+#: admin/src/Admin/Settings/Registry.php:302
 msgid "90 days"
 msgstr "90 Tage"
 
@@ -413,7 +422,7 @@ msgstr ""
 msgid "A choice field needs at least one option."
 msgstr "Ein Auswahlfeld benötigt mindestens eine Option."
 
-#: admin/src/Admin/Builder/Registry.php:1577
+#: admin/src/Admin/Builder/Registry.php:1579
 msgid "A condition is missing its branches."
 msgstr "Ein Zustand fehlt seine Zweige."
 
@@ -435,7 +444,7 @@ msgstr ""
 "Einige Fragen und Ihre Seite ist bereit, WhatsApp-Nachrichten zu senden. "
 "Alles hier kann später in den Einstellungen geändert werden."
 
-#: admin/src/Api/Cloud_Client.php:1359
+#: admin/src/Api/Cloud_Client.php:1398
 msgid "A message id is required."
 msgstr "Eine Nachrichten-ID ist erforderlich."
 
@@ -445,7 +454,7 @@ msgstr ""
 "Eine öffentliche Adresse. Lokale und private Netzwerkadressen werden "
 "abgelehnt."
 
-#: admin/src/Admin/Settings/Registry.php:298
+#: admin/src/Admin/Settings/Registry.php:310
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 "Eine schnelle Übersicht über die WordPress-Umgebung, PHP und kritische "
@@ -472,8 +481,8 @@ msgstr "Abgebrochene Warenkörbe"
 msgid "Abandoned carts (Flexify Checkout)"
 msgstr "Warenkorbabbrüche (Flexify Checkout)"
 
-#: admin/src/Admin/Settings/Registry.php:234
-#: admin/src/Admin/Settings/Registry.php:349
+#: admin/src/Admin/Settings/Registry.php:246
+#: admin/src/Admin/Settings/Registry.php:361
 msgid "About"
 msgstr "Über"
 
@@ -486,7 +495,7 @@ msgid "Account created successfully."
 msgstr "Konto erfolgreich erstellt."
 
 #: app/src/components/fields/CloudConnectField.vue:180
-#: app/src/components/fields/JoinotifyApiKeyField.vue:202
+#: app/src/components/fields/JoinotifyApiKeyField.vue:209
 msgid "Account not connected"
 msgstr "Konto nicht verbunden"
 
@@ -504,7 +513,7 @@ msgstr "Aktion"
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:158
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:154
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:176
-#: app/src/pages/history/HistoryPage.vue:380
+#: app/src/pages/history/HistoryPage.vue:385
 #: app/src/pages/queue/QueuePage.vue:303
 msgid "Actions"
 msgstr "Aktionen"
@@ -513,7 +522,7 @@ msgstr "Aktionen"
 msgid "Actions menu"
 msgstr "Aktionsmenü"
 
-#: admin/src/Admin/Settings/Registry.php:206
+#: admin/src/Admin/Settings/Registry.php:218
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 "Aktionen zum Hinzufügen eines neuen Absenders und zum Senden einer "
@@ -527,7 +536,7 @@ msgstr "Aktivieren Sie die Rabattgutschein-Aktion"
 msgid "Activate plugin"
 msgstr "Plugin aktivieren"
 
-#: admin/src/Api/Connect.php:149
+#: admin/src/Api/Connect.php:150
 msgid "Activate your license before connecting."
 msgstr "Aktivieren Sie Ihre Lizenz, bevor Sie sich verbinden."
 
@@ -698,6 +707,7 @@ msgid "Added by hand"
 msgstr "Manuell hinzugefügt"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:224
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
 msgid "Address"
 msgstr "Adresse"
 
@@ -757,7 +767,7 @@ msgstr "Erweitert: zusätzliche Anweisungen / Dokumentation"
 msgid "Afghanistan"
 msgstr "Afghanistan"
 
-#: admin/src/Admin/Settings/Registry.php:163
+#: admin/src/Admin/Settings/Registry.php:175
 msgid "AI engine"
 msgstr "KI-Engine"
 
@@ -842,11 +852,11 @@ msgstr ""
 "Alle Optionen werden auf die Standardeinstellungen des Plugins "
 "zurückgesetzt."
 
-#: admin/src/Admin/Onboarding/Registry.php:133
+#: admin/src/Admin/Onboarding/Registry.php:134
 msgid "All set"
 msgstr "Alles bereit"
 
-#: admin/src/Admin/History/Registry.php:347
+#: admin/src/Admin/History/Registry.php:371
 msgid "All sources"
 msgstr "Alle Quellen"
 
@@ -1065,7 +1075,7 @@ msgstr "Jede Quelle"
 msgid "Any status"
 msgstr "Jeder Status"
 
-#: admin/src/Admin/History/Registry.php:352
+#: admin/src/Admin/History/Registry.php:376
 #: app/src/pages/contacts/labels.ts:42
 msgid "API"
 msgstr "API"
@@ -1090,7 +1100,7 @@ msgstr "Anwendung"
 msgid "applications"
 msgstr "Anwendungen"
 
-#: admin/src/Admin/Settings/Registry.php:337
+#: admin/src/Admin/Settings/Registry.php:349
 msgid "Applications"
 msgstr "Anwendungen"
 
@@ -1109,7 +1119,7 @@ msgstr ""
 "Joinotify-Panel; diese Liste wird von Ihrem Konto synchronisiert. "
 "Erforderlich bei diesem Transport, ignoriert bei der alten Weiterleitung."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:266
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:458
 msgid ""
 "Approved templates of your WhatsApp Business Account. Only these can be "
 "delivered outside the 24-hour window."
@@ -1151,11 +1161,11 @@ msgstr "Argentinien"
 msgid "Armenia"
 msgstr "Armenien"
 
-#: admin/src/Admin/Onboarding/Registry.php:115
+#: admin/src/Admin/Onboarding/Registry.php:116
 msgid "Artificial intelligence"
 msgstr "Künstliche Intelligenz"
 
-#: admin/src/Admin/Settings/Registry.php:158
+#: admin/src/Admin/Settings/Registry.php:170
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
@@ -1197,7 +1207,7 @@ msgstr ""
 msgid "Attachments"
 msgstr "Anhänge"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:38
+#: app/src/pages/history/components/HistoryDetailsModal.vue:68
 msgid "Attempts"
 msgstr "Versuche"
 
@@ -1246,11 +1256,11 @@ msgstr "Öffentlichkeiten & Kontakte"
 
 #: admin/src/Validations/Media_Types.php:41
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:36
-#: app/src/pages/history/HistoryPage.vue:93
+#: app/src/pages/history/HistoryPage.vue:98
 msgid "Audio"
 msgstr "Audio"
 
-#: app/src/pages/history/HistoryPage.vue:221
+#: app/src/pages/history/HistoryPage.vue:226
 msgid ""
 "Audit every WhatsApp message dispatched by Joinotify, including workflow "
 "sends, retries and test messages."
@@ -1282,13 +1292,13 @@ msgstr ""
 "Automatisiere das Senden von Nachrichten, wenn du ein WPForms-Formular mit "
 "einer Telefonnummer erhältst. Halte deine Kunden in Echtzeit informiert."
 
-#: admin/src/Admin/Settings/Registry.php:284
+#: admin/src/Admin/Settings/Registry.php:296
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 "Automatisch Protokolleinträge löschen, die älter sind als der ausgewählte "
 "Zeitraum."
 
-#: admin/src/Admin/Settings/Registry.php:266
+#: admin/src/Admin/Settings/Registry.php:278
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 "Automatisch Verlaufsdatensätze löschen, die älter sind als der ausgewählte "
@@ -1377,13 +1387,17 @@ msgstr "Bhutan"
 msgid "Billing full address format"
 msgstr "Vollständiges Rechnungsadresse-Format"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:275
+msgid "BLACK20 or a placeholder"
+msgstr "BLACK20 oder ein Platzhalter"
+
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:42
 msgid "Blocked by Meta for marketing"
 msgstr "Von Meta für Marketing blockiert"
 
 #: admin/src/Builder/Webhook_Action.php:110
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:144
-#: app/src/pages/history/components/HistoryDetailsModal.vue:59
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:259
+#: app/src/pages/history/components/HistoryDetailsModal.vue:89
 msgid "Body"
 msgstr "Inhalt"
 
@@ -1416,7 +1430,7 @@ msgstr "Bot-Token"
 msgid "Botswana"
 msgstr "Botswana"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:152
+#: app/src/builder/actions/settings/ConditionSettings.vue:163
 msgid "Branching action"
 msgstr "Verzweigungsaktion"
 
@@ -1448,14 +1462,14 @@ msgstr ""
 msgid "Brunei"
 msgstr "Brunei"
 
-#: admin/src/Admin/Onboarding/Registry.php:134
+#: admin/src/Admin/Onboarding/Registry.php:135
 msgid "Build your first automation or review the full settings."
 msgstr ""
 "Erstellen Sie Ihre erste Automatisierung oder überprüfen Sie die "
 "vollständigen Einstellungen."
 
-#: admin/src/Admin/Settings/Registry.php:220
-#: admin/src/Admin/Settings/Registry.php:343
+#: admin/src/Admin/Settings/Registry.php:232
+#: admin/src/Admin/Settings/Registry.php:355
 #: app/src/pages/builder/BuilderPage.vue:640
 #: app/src/pages/builder/BuilderPage.vue:695
 #: app/src/pages/builder/BuilderPage.vue:800
@@ -1503,7 +1517,7 @@ msgstr "Burkina Faso"
 msgid "Burundi"
 msgstr "Burundi"
 
-#: admin/src/Integrations/Whatsapp.php:136
+#: admin/src/Integrations/Whatsapp.php:185
 msgid ""
 "Business account that owns the message templates. Filled in when you "
 "connect."
@@ -1511,8 +1525,11 @@ msgstr ""
 "Geschäftskonto, das die Nachrichtenvorlagen besitzt. Wird ausgefüllt, wenn "
 "Sie sich verbinden."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:137
-#: app/src/pages/history/components/HistoryDetailsModal.vue:60
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:229
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:252
+#: app/src/pages/history/components/HistoryDetailsModal.vue:90
 msgid "Button"
 msgstr "Schaltfläche"
 
@@ -1552,7 +1569,7 @@ msgstr "Kanada"
 #: app/src/components/builder/BuilderAiGenerateModal.vue:96
 #: app/src/components/builder/BuilderImportModal.vue:44
 #: app/src/components/fields/CloudSyncStatusField.vue:295
-#: app/src/components/fields/JoinotifyApiKeyField.vue:182
+#: app/src/components/fields/JoinotifyApiKeyField.vue:186
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:17
 #: app/src/pages/builder/BuilderPage.vue:1415
@@ -1583,9 +1600,9 @@ msgstr "Alle geplanten Elemente abbrechen"
 msgid "Cancel item"
 msgstr "Element abbrechen"
 
-#: app/src/pages/history/HistoryPage.vue:181
-#: app/src/pages/history/HistoryPage.vue:200
-#: app/src/pages/history/HistoryPage.vue:322
+#: app/src/pages/history/HistoryPage.vue:186
+#: app/src/pages/history/HistoryPage.vue:205
+#: app/src/pages/history/HistoryPage.vue:327
 msgid "Cancel resend"
 msgstr "Wiederholung abbrechen"
 
@@ -1593,8 +1610,8 @@ msgstr "Wiederholung abbrechen"
 msgid "Cancel scheduled item"
 msgstr "Geplantes Element abbrechen"
 
-#: app/src/composables/useMessageHistory.ts:78
-#: app/src/pages/history/HistoryPage.vue:77
+#: app/src/composables/useMessageHistory.ts:80
+#: app/src/pages/history/HistoryPage.vue:82
 msgid "Cancelled"
 msgstr "Abgebrochen"
 
@@ -1606,6 +1623,11 @@ msgstr "Kap Verde"
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:145
 msgid "Caption"
 msgstr "Bildunterschrift"
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:200
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:523
+msgid "Card"
+msgstr "Karte"
 
 #: admin/src/Integrations/Flexify_Checkout.php:151
 msgid "Cart abandoned"
@@ -1709,6 +1731,16 @@ msgstr "Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
 msgid "Checkbox text"
 msgstr "Checkbox-Text"
 
+#: admin/src/Integrations/Whatsapp.php:61
+msgid ""
+"Checks whether the recipient wrote to the sender in the last 24 hours, so "
+"free text can still reach them. Unknown means the platform could not be "
+"asked: treat it as closed."
+msgstr ""
+"Prüft, ob der Empfänger dem Absender in den letzten 24 Stunden geschrieben "
+"hat, sodass freier Text ihn noch erreicht. Unbekannt bedeutet, dass die "
+"Plattform nicht abgefragt werden konnte: behandeln Sie es wie geschlossen."
+
 #: admin/src/Validations/Country_Codes.php:50
 msgid "Chile"
 msgstr "Chile"
@@ -1730,7 +1762,7 @@ msgstr ""
 msgid "Choose an action to insert below the selected block."
 msgstr "Wählen Sie eine Aktion aus, um sie unter dem ausgewählten Block einzufügen."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:160
+#: app/src/builder/actions/settings/ConditionSettings.vue:171
 msgid "Choose and configure the workflow trigger before adding conditions."
 msgstr ""
 "Wählen und konfigurieren Sie den Workflow-Auslöser, bevor Sie Bedingungen "
@@ -1742,7 +1774,7 @@ msgstr ""
 "Wählen Sie einen der validierten Absender aus, die in Ihrem Konto verfügbar "
 "sind."
 
-#: admin/src/Admin/Settings/Registry.php:112
+#: admin/src/Admin/Settings/Registry.php:124
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
@@ -1802,11 +1834,11 @@ msgstr ""
 msgid "Clear"
 msgstr "Löschen"
 
-#: app/src/pages/history/HistoryPage.vue:347
+#: app/src/pages/history/HistoryPage.vue:352
 msgid "Clear all"
 msgstr "Alles löschen"
 
-#: app/src/pages/history/HistoryPage.vue:177
+#: app/src/pages/history/HistoryPage.vue:182
 msgid "Clear all history"
 msgstr "Alle Verlaufsdaten löschen"
 
@@ -1815,7 +1847,7 @@ msgid "Clear date"
 msgstr "Datum löschen"
 
 #: app/src/pages/contacts/tabs/ContactsTab.vue:202
-#: app/src/pages/history/HistoryPage.vue:295
+#: app/src/pages/history/HistoryPage.vue:300
 #: app/src/pages/queue/QueuePage.vue:228
 msgid "Clear filters"
 msgstr "Filter löschen"
@@ -1857,7 +1889,7 @@ msgstr "Kampagne angeklickt"
 #: app/src/components/toasts/ToastStack.vue:85
 #: app/src/pages/contacts/components/ImportModal.vue:353
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
-#: app/src/pages/history/components/HistoryDetailsModal.vue:182
+#: app/src/pages/history/components/HistoryDetailsModal.vue:212
 msgid "Close"
 msgstr "Schließen"
 
@@ -1879,6 +1911,10 @@ msgstr "Panel schließen"
 #: app/src/pages/onboarding/OnboardingPage.vue:250
 msgid "Close setup"
 msgstr "Einrichtung schließen"
+
+#: admin/src/Admin/Builder/Registry.php:1710
+msgid "Closed"
+msgstr "Geschlossen"
 
 #: templates/otp-login/shared/otp-login-form.php:44
 #. translators: %d: position of the digit within the verification code
@@ -1927,28 +1963,28 @@ msgstr "Vollständiges E-Book (Musterprodukt)"
 msgid "Completed"
 msgstr "Abgeschlossen"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:133
+#: app/src/pages/history/components/HistoryDetailsModal.vue:163
 msgid "Component"
 msgstr "Komponente"
 
 #: admin/src/Admin/Builder/Registry.php:564
 #: admin/src/Builder/Actions.php:44
-#: app/src/builder/actions/definitions/condition.ts:78
-#: app/src/builder/actions/definitions/condition.ts:106
-#: app/src/builder/actions/settings/ConditionSettings.vue:175
+#: app/src/builder/actions/definitions/condition.ts:81
+#: app/src/builder/actions/definitions/condition.ts:112
+#: app/src/builder/actions/settings/ConditionSettings.vue:186
 #: app/src/builder/actions/utils/actionDescription.ts:214
 #: app/src/stores/useWorkflowBuilderStore.ts:1590
 msgid "Condition"
 msgstr "Bedingung"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:171
+#: app/src/builder/actions/settings/ConditionSettings.vue:182
 msgid "Condition rule"
 msgstr "Bedingungsregel"
 
 #: admin/src/Admin/Builder/Registry.php:468
-#: app/src/builder/actions/definitions/condition.ts:121
-#: app/src/builder/actions/definitions/condition.ts:132
-#: app/src/builder/actions/settings/ConditionSettings.vue:181
+#: app/src/builder/actions/definitions/condition.ts:127
+#: app/src/builder/actions/definitions/condition.ts:138
+#: app/src/builder/actions/settings/ConditionSettings.vue:192
 msgid "Condition type"
 msgstr "Bedingungstyp"
 
@@ -1966,7 +2002,7 @@ msgstr "Konfigurationskomponente für diese Aktion nicht verfügbar."
 #: admin/src/Integrations/Otp_Login.php:109
 #: admin/src/Integrations/Resend.php:115
 #: admin/src/Integrations/Telegram.php:115
-#: admin/src/Integrations/Whatsapp.php:75
+#: admin/src/Integrations/Whatsapp.php:122
 #: admin/src/Integrations/Woocommerce.php:116
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
@@ -1998,7 +2034,7 @@ msgstr ""
 "Konfigurieren Sie Absender, Integrationen, den Builder und das allgemeine "
 "Plugin-Verhalten. Wenn Sie Hilfe benötigen, besuchen Sie unser "
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:159
+#: app/src/builder/actions/settings/ConditionSettings.vue:170
 msgid "Configure the trigger first"
 msgstr "Konfigurieren Sie zuerst den Trigger"
 
@@ -2008,7 +2044,7 @@ msgstr ""
 "Konfigurieren Sie den WooCommerce-Gutschein, der durch diese Aktion "
 "generiert wird."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:173
+#: app/src/components/fields/JoinotifyApiKeyField.vue:177
 #: app/src/components/modals/ConfirmDialog.vue:40
 #: app/src/components/workflows/ConfirmActionModal.vue:16
 #: app/src/pages/workflows/WorkflowsPage.vue:91
@@ -2019,7 +2055,7 @@ msgstr "Bestätigen"
 msgid "Confirmation"
 msgstr "Bestätigung"
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:226
+#: app/src/components/fields/JoinotifyApiKeyField.vue:233
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:127
 msgid "Connect"
 msgstr "Verbinden"
@@ -2032,7 +2068,7 @@ msgstr "Verbinden Sie diese Seite mit Joinotify"
 msgid "Connect this site to Joinotify to manage your contacts."
 msgstr "Verbinden Sie diese Seite mit Joinotify, um Ihre Kontakte zu verwalten."
 
-#: admin/src/Integrations/Whatsapp.php:74
+#: admin/src/Integrations/Whatsapp.php:121
 msgid ""
 "Connect this site to your Joinotify account to deliver messages through the "
 "official WhatsApp Cloud API."
@@ -2040,7 +2076,7 @@ msgstr ""
 "Verbinden Sie diese Seite mit Ihrem Joinotify-Konto, um Nachrichten über "
 "die offizielle WhatsApp Cloud API zu senden."
 
-#: admin/src/Admin/Onboarding/Registry.php:109
+#: admin/src/Admin/Onboarding/Registry.php:110
 #: app/src/components/fields/CloudConnectField.vue:199
 msgid "Connect to Joinotify"
 msgstr "Mit Joinotify verbinden"
@@ -2065,7 +2101,7 @@ msgstr ""
 "Verbinden Sie Ihr Joinotify-Konto, um über die offizielle WhatsApp Cloud "
 "API zu senden."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:188
+#: app/src/components/fields/JoinotifyApiKeyField.vue:192
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:95
 #: app/src/pages/settings/components/cards/PhoneActions.vue:45
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:118
@@ -2083,7 +2119,7 @@ msgstr ""
 "aufgelistet werden können. Nichts verlässt diese Seite, bevor Sie auf "
 "Verbinden klicken."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:238
+#: app/src/components/fields/JoinotifyApiKeyField.vue:245
 msgid ""
 "Connecting sends your key and this site’s address to %s so it can register "
 "the site and list your WhatsApp numbers."
@@ -2097,7 +2133,7 @@ msgid "Connecting WooCommerce, WPForms, Elementor and the other integrations"
 msgstr "Verbinden von WooCommerce, WPForms, Elementor und den anderen Integrationen"
 
 #: app/src/components/fields/CloudConnectField.vue:199
-#: app/src/components/fields/JoinotifyApiKeyField.vue:226
+#: app/src/components/fields/JoinotifyApiKeyField.vue:233
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:127
 msgid "Connecting…"
 msgstr "Verbindung wird hergestellt…"
@@ -2118,7 +2154,7 @@ msgstr "Zustimmung"
 msgid "Consent checkbox text"
 msgstr "Zustimmung Checkbox-Text"
 
-#: admin/src/Cloud_Sync/Consent.php:655
+#: admin/src/Cloud_Sync/Consent.php:710
 msgid "Consent given on"
 msgstr "Zustimmung gegeben am"
 
@@ -2185,12 +2221,12 @@ msgstr "Kontakte, die übereinstimmen"
 msgid "contains"
 msgstr "enthält"
 
-#: admin/src/Admin/Builder/Registry.php:1670
+#: admin/src/Admin/Builder/Registry.php:1673
 msgid "Contains"
 msgstr "Enthält"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:157
-#: app/src/pages/history/HistoryPage.vue:379
+#: app/src/pages/history/components/HistoryDetailsModal.vue:187
+#: app/src/pages/history/HistoryPage.vue:384
 msgid "Content"
 msgstr "Inhalt"
 
@@ -2215,8 +2251,8 @@ msgstr "Cookinseln"
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: app/src/composables/useMessageHistory.ts:306
-#: app/src/composables/useMessageHistory.ts:315
+#: app/src/composables/useMessageHistory.ts:308
+#: app/src/composables/useMessageHistory.ts:317
 msgid "Could not cancel the resend."
 msgstr "Konnte das erneute Senden nicht abbrechen."
 
@@ -2228,8 +2264,8 @@ msgstr "Der geplante Artikel konnte nicht storniert werden."
 msgid "Could not clear the debug logs."
 msgstr "Die Debug-Protokolle konnten nicht gelöscht werden."
 
-#: app/src/composables/useMessageHistory.ts:333
-#: app/src/composables/useMessageHistory.ts:341
+#: app/src/composables/useMessageHistory.ts:335
+#: app/src/composables/useMessageHistory.ts:343
 msgid "Could not clear the history."
 msgstr "Die Historie konnte nicht gelöscht werden."
 
@@ -2242,11 +2278,11 @@ msgid "Could not clear the queue."
 msgstr "Die Warteschlange konnte nicht gelöscht werden."
 
 #: admin/src/Admin/Builder/Registry.php:98
-#: admin/src/Admin/Settings/Registry.php:681
+#: admin/src/Admin/Settings/Registry.php:693
 msgid "Could not complete the operation."
 msgstr "Die Operation konnte nicht abgeschlossen werden."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:83
+#: app/src/components/fields/JoinotifyApiKeyField.vue:87
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:68
 msgid "Could not connect with that key."
 msgstr "Konnte mit diesem Schlüssel nicht verbinden."
@@ -2259,12 +2295,12 @@ msgstr "Der Workflow konnte nicht erstellt werden."
 msgid "Could not delete the action."
 msgstr "Die Aktion konnte nicht gelöscht werden."
 
-#: app/src/composables/useMessageHistory.ts:271
-#: app/src/composables/useMessageHistory.ts:279
+#: app/src/composables/useMessageHistory.ts:273
+#: app/src/composables/useMessageHistory.ts:281
 msgid "Could not delete the selected records."
 msgstr "Die ausgewählten Datensätze konnten nicht gelöscht werden."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:128
+#: app/src/components/fields/JoinotifyApiKeyField.vue:132
 msgid "Could not disconnect."
 msgstr "Konnte nicht trennen."
 
@@ -2272,8 +2308,8 @@ msgstr "Konnte nicht trennen."
 msgid "Could not dismiss the tip."
 msgstr "Der Tipp konnte nicht abgelehnt werden."
 
-#: app/src/composables/useMessageHistory.ts:367
-#: app/src/composables/useMessageHistory.ts:381
+#: app/src/composables/useMessageHistory.ts:369
+#: app/src/composables/useMessageHistory.ts:383
 msgid "Could not export the message history."
 msgstr "Konnte die Nachrichtenhistorie nicht exportieren."
 
@@ -2311,7 +2347,7 @@ msgstr "Konnte die Einrichtung nicht beenden."
 msgid "Could not import the settings."
 msgstr "Die Einstellungen konnten nicht importiert werden."
 
-#: admin/src/Api/Cloud_Client.php:1314
+#: admin/src/Api/Cloud_Client.php:1353
 msgid "Could not list the connected numbers."
 msgstr "Konnte die verbundenen Nummern nicht auflisten."
 
@@ -2331,8 +2367,8 @@ msgstr "Konnte den Kontakt nicht laden."
 msgid "Could not load the contacts."
 msgstr "Konnte die Kontakte nicht laden."
 
-#: app/src/composables/useMessageHistory.ts:149
-#: app/src/composables/useMessageHistory.ts:157
+#: app/src/composables/useMessageHistory.ts:151
+#: app/src/composables/useMessageHistory.ts:159
 msgid "Could not load the message history."
 msgstr "Die Nachrichtenhistorie konnte nicht geladen werden."
 
@@ -2359,7 +2395,7 @@ msgstr "Der Workflow konnte nicht geladen werden."
 msgid "Could not load workflows."
 msgstr "Die Workflows konnten nicht geladen werden."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:184
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:376
 #: app/src/components/fields/WhatsappTemplateField.vue:113
 msgid "Could not load your message templates."
 msgstr "Konnte Ihre Nachrichtenvorlagen nicht laden."
@@ -2378,7 +2414,7 @@ msgstr ""
 "Konnte die Joinotify-Plattform nicht erreichen. Überprüfen Sie Ihre "
 "Verbindung und versuchen Sie es erneut."
 
-#: admin/src/Api/Cloud_Client.php:1271
+#: admin/src/Api/Cloud_Client.php:1310
 msgid "Could not read the Joinotify account data."
 msgstr "Konnte die Joinotify-Kontodaten nicht lesen."
 
@@ -2456,7 +2492,7 @@ msgstr "Konnte nicht speichern."
 msgid "Could not send one or more test messages."
 msgstr "Konnte eine oder mehrere Testnachrichten nicht senden."
 
-#: admin/src/Api/Send_Error.php:68
+#: admin/src/Api/Send_Error.php:76
 msgid "Could not send the message."
 msgstr "Konnte die Nachricht nicht senden."
 
@@ -2473,7 +2509,7 @@ msgstr "Konnte die Testvorlagen-Nachricht nicht senden."
 msgid "Could not start the connection."
 msgstr "Konnte die Verbindung nicht starten."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:214
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:406
 #: app/src/components/fields/WhatsappTemplateField.vue:144
 msgid "Could not sync your message templates."
 msgstr "Konnte Ihre Nachrichtenvorlagen nicht synchronisieren."
@@ -2523,6 +2559,7 @@ msgid "Coupon"
 msgstr "Gutschein"
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:127
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
 msgid "Coupon code"
 msgstr "Gutscheincode"
 
@@ -2555,7 +2592,7 @@ msgstr ""
 "Erstellen Sie einen Bot mit @BotFather und fügen Sie dessen Token unten "
 "ein. Die Ziel-Chat-ID wird bei jeder Workflow-Aktion festgelegt."
 
-#: admin/src/Integrations/Whatsapp.php:106
+#: admin/src/Integrations/Whatsapp.php:153
 msgid ""
 "Create a key for this site on the Joinotify panel and paste it here. "
 "Connecting validates the key and imports the WhatsApp numbers on your "
@@ -2595,7 +2632,7 @@ msgstr ""
 "Erstellen Sie benutzerdefinierte Felder im Tab Felder & Tags, um die "
 "Site-Daten zuzuordnen."
 
-#: admin/src/Admin/Settings/Registry.php:221
+#: admin/src/Admin/Settings/Registry.php:233
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
@@ -2789,7 +2826,7 @@ msgstr "Benutzerdefinierte Felder, die von diesem Formular ausgefüllt wurden"
 msgid "Custom JSON"
 msgstr "Benutzerdefiniertes JSON"
 
-#: admin/src/Admin/Settings/Registry.php:226
+#: admin/src/Admin/Settings/Registry.php:238
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:81
 msgid "Custom variables"
 msgstr "Benutzerdefinierte Variablen"
@@ -2818,7 +2855,7 @@ msgstr "Täglich"
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr "Daisy Avenue, 450 - Curitiba/PR - Brasilien (PLZ: 80000-100)"
 
-#: admin/src/Admin/Settings/Registry.php:303
+#: admin/src/Admin/Settings/Registry.php:315
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr "Gefahrenzone"
@@ -2833,8 +2870,8 @@ msgstr "Gefahrenzone"
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:156
 #: app/src/pages/contacts/labels.ts:145
-#: app/src/pages/history/components/HistoryDetailsModal.vue:30
-#: app/src/pages/history/HistoryPage.vue:372
+#: app/src/pages/history/components/HistoryDetailsModal.vue:39
+#: app/src/pages/history/HistoryPage.vue:377
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:171
 msgid "Date"
 msgstr "Datum"
@@ -2867,7 +2904,7 @@ msgstr "Tage"
 msgid "Debug"
 msgstr "Debuggen"
 
-#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:290
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:125
 msgid "Debug logs"
 msgstr "Debug-Protokolle"
@@ -2876,15 +2913,15 @@ msgstr "Debug-Protokolle"
 msgid "Debug logs cleared successfully!"
 msgstr "Debug-Protokolle erfolgreich gelöscht!"
 
-#: admin/src/Admin/Settings/Registry.php:283
+#: admin/src/Admin/Settings/Registry.php:295
 msgid "Debug logs retention"
 msgstr "Aufbewahrung der Debug-Protokolle"
 
-#: admin/src/Admin/Settings/Registry.php:245
+#: admin/src/Admin/Settings/Registry.php:257
 msgid "Debug mode"
 msgstr "Debug-Modus"
 
-#: admin/src/Admin/Onboarding/Registry.php:128
+#: admin/src/Admin/Onboarding/Registry.php:129
 msgid "Decide whether to share anonymous data that helps improve the plugin."
 msgstr ""
 "Entscheiden Sie, ob Sie anonyme Daten teilen möchten, die zur Verbesserung "
@@ -2899,17 +2936,17 @@ msgstr "Standard"
 msgid "Default chat id"
 msgstr "Standard-Chat-ID"
 
-#: admin/src/Admin/Onboarding/Registry.php:103
+#: admin/src/Admin/Onboarding/Registry.php:104
 msgid "Default country"
 msgstr "Standardland"
 
-#: admin/src/Admin/Settings/Registry.php:111
+#: admin/src/Admin/Settings/Registry.php:123
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:25
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:65
 msgid "Default country code"
 msgstr "Standard-Ländervorwahl"
 
-#: admin/src/Integrations/Whatsapp.php:127
+#: admin/src/Integrations/Whatsapp.php:176
 msgid ""
 "Default origin for messages. Filled in when you connect; change it only to "
 "send from a different number by default."
@@ -2917,7 +2954,7 @@ msgstr ""
 "Standardherkunft für Nachrichten. Wird beim Verbinden ausgefüllt; ändern "
 "Sie es nur, um standardmäßig von einer anderen Nummer zu senden."
 
-#: admin/src/Admin/Settings/Registry.php:180
+#: admin/src/Admin/Settings/Registry.php:192
 msgid "Default temperature"
 msgstr "Standardtemperatur"
 
@@ -2926,7 +2963,7 @@ msgstr "Standardtemperatur"
 msgid "Define the trigger that starts the workflow"
 msgstr "Definieren Sie den Auslöser, der den Workflow startet"
 
-#: admin/src/Admin/Settings/Registry.php:107
+#: admin/src/Admin/Settings/Registry.php:119
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2978,7 +3015,7 @@ msgid "Delay until a fixed date"
 msgstr "Verzögerung bis zu einem festen Datum"
 
 #: app/src/components/flow/FlowNode.vue:305
-#: app/src/pages/history/HistoryPage.vue:200
+#: app/src/pages/history/HistoryPage.vue:205
 #: app/src/pages/workflows/WorkflowsPage.vue:90
 msgid "Delete"
 msgstr "Löschen"
@@ -2999,11 +3036,11 @@ msgstr "Notiz löschen"
 msgid "Delete permanently"
 msgstr "Dauerhaft löschen"
 
-#: app/src/pages/history/HistoryPage.vue:330
+#: app/src/pages/history/HistoryPage.vue:335
 msgid "Delete selected"
 msgstr "Ausgewählte löschen"
 
-#: app/src/pages/history/HistoryPage.vue:184
+#: app/src/pages/history/HistoryPage.vue:189
 msgid "Delete selected records"
 msgstr "Ausgewählte Datensätze löschen"
 
@@ -3011,6 +3048,15 @@ msgstr "Ausgewählte Datensätze löschen"
 #: app/src/builder/actions/settings/LoopSettings.vue:84
 msgid "Delimiter"
 msgstr "Trennzeichen"
+
+#: app/src/composables/useMessageHistory.ts:76
+#: app/src/pages/history/HistoryPage.vue:78
+msgid "Delivered"
+msgstr "Zugestellt"
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:49
+msgid "Delivered at"
+msgstr "Zugestellt am"
 
 #: admin/src/Integrations/Otp_Login.php:128
 msgid "Delivery channel"
@@ -3032,7 +3078,7 @@ msgstr ""
 "Lieferberichte benötigen eine öffentlich erreichbare Adresse. Lokale und "
 "private Hosts können sie nicht empfangen."
 
-#: admin/src/Admin/Settings/Registry.php:127
+#: admin/src/Admin/Settings/Registry.php:139
 msgid "Delivery retries"
 msgstr "Lieferwiederholungen"
 
@@ -3101,7 +3147,7 @@ msgstr "Beschreibung (optional)"
 msgid "Details"
 msgstr "Details"
 
-#: admin/src/Admin/Settings/Registry.php:255
+#: admin/src/Admin/Settings/Registry.php:267
 msgid "Developer integration"
 msgstr "Entwicklerintegration"
 
@@ -3134,7 +3180,7 @@ msgstr "Digitales Produkt"
 msgid "Digital product access granted"
 msgstr "Zugriff auf digitales Produkt gewährt"
 
-#: admin/src/Admin/Settings/Registry.php:566
+#: admin/src/Admin/Settings/Registry.php:578
 msgid "Disabled"
 msgstr "Deaktiviert"
 
@@ -3142,7 +3188,7 @@ msgstr "Deaktiviert"
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: app/src/pages/history/HistoryPage.vue:319
+#: app/src/pages/history/HistoryPage.vue:324
 msgid "Discard the pending retry of the selected messages"
 msgstr ""
 "Verwerfen Sie den ausstehenden Wiederholungsversuch der ausgewählten "
@@ -3161,7 +3207,7 @@ msgstr "Getrennt"
 msgid "Discount"
 msgstr "Rabatt"
 
-#: admin/src/Admin/Builder/Registry.php:606
+#: admin/src/Admin/Builder/Registry.php:608
 #: admin/src/Integrations/Woocommerce.php:1260
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
@@ -3205,7 +3251,7 @@ msgstr "Dschibuti"
 msgid "Do not remind me again"
 msgstr "Erinnere mich nicht erneut"
 
-#: admin/src/Admin/Settings/Registry.php:849
+#: admin/src/Admin/Settings/Registry.php:861
 msgid "Do not retry"
 msgstr "Nicht erneut versuchen"
 
@@ -3214,8 +3260,8 @@ msgstr "Nicht erneut versuchen"
 msgid "Document"
 msgstr "Dokument"
 
-#: admin/src/Admin/Onboarding/Registry.php:121
-#: admin/src/Core/Init.php:563
+#: admin/src/Admin/Onboarding/Registry.php:122
+#: admin/src/Core/Init.php:562
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
 msgstr "Dokumentation"
@@ -3229,7 +3275,7 @@ msgstr "Doe"
 msgid "does not contain"
 msgstr "enthält nicht"
 
-#: admin/src/Admin/Builder/Registry.php:1671
+#: admin/src/Admin/Builder/Registry.php:1674
 msgid "Does not contain"
 msgstr "Enthält nicht"
 
@@ -3247,7 +3293,7 @@ msgstr ""
 "Laden Sie jedes Element, das den aktuellen Filtern entspricht, als "
 "JSON-Datei herunter"
 
-#: app/src/pages/history/HistoryPage.vue:212
+#: app/src/pages/history/HistoryPage.vue:217
 msgid "Download every record matching the current filters as a JSON file"
 msgstr ""
 "Laden Sie jeden Datensatz, der den aktuellen Filtern entspricht, als "
@@ -3270,7 +3316,7 @@ msgstr ""
 msgid "Download the selected items as a JSON file"
 msgstr "Laden Sie die ausgewählten Elemente als JSON-Datei herunter"
 
-#: app/src/pages/history/HistoryPage.vue:211
+#: app/src/pages/history/HistoryPage.vue:216
 msgid "Download the selected records as a JSON file"
 msgstr "Laden Sie die ausgewählten Datensätze als JSON-Datei herunter"
 
@@ -3278,7 +3324,7 @@ msgstr "Laden Sie die ausgewählten Datensätze als JSON-Datei herunter"
 msgid "Download this item as a JSON file"
 msgstr "Laden Sie dieses Element als JSON-Datei herunter"
 
-#: app/src/pages/history/HistoryPage.vue:420
+#: app/src/pages/history/HistoryPage.vue:432
 msgid "Download this record as a JSON file"
 msgstr "Laden Sie diesen Datensatz als JSON-Datei herunter"
 
@@ -3341,7 +3387,7 @@ msgstr "z.B. , (Komma)"
 msgid "e.g. Agreed by WhatsApp on 29/09/2026"
 msgstr "z.B. Vereinbart über WhatsApp am 29.09.2026"
 
-#: admin/src/Admin/Settings/Registry.php:175
+#: admin/src/Admin/Settings/Registry.php:187
 msgid ""
 "e.g. Always answer in Brazilian Portuguese, in a friendly and objective "
 "tone."
@@ -3414,7 +3460,7 @@ msgstr ""
 "Jede Quelle kann ihre eigenen Tags hinzufügen, zusätzlich zu dem Tag dieser "
 "Seite."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:313
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:536
 msgid ""
 "Each template variable is filled at send time with the placeholder you map "
 "here."
@@ -3521,7 +3567,7 @@ msgstr "Leinwand leer"
 msgid "Enable debug mode"
 msgstr "Debug-Modus aktivieren"
 
-#: admin/src/Admin/Settings/Registry.php:214
+#: admin/src/Admin/Settings/Registry.php:226
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -3539,15 +3585,15 @@ msgstr ""
 msgid "Enable the integration to access its settings."
 msgstr "Die Integration aktivieren, um auf ihre Einstellungen zuzugreifen."
 
-#: admin/src/Admin/Settings/Registry.php:246
+#: admin/src/Admin/Settings/Registry.php:258
 msgid "Enable to log additional error and process details."
 msgstr "Aktivieren, um zusätzliche Fehler- und Prozessdetails zu protokollieren."
 
-#: admin/src/Admin/Settings/Registry.php:566
+#: admin/src/Admin/Settings/Registry.php:578
 msgid "Enabled"
 msgstr "Aktiviert"
 
-#: app/src/pages/history/HistoryPage.vue:274
+#: app/src/pages/history/HistoryPage.vue:279
 msgid "End date"
 msgstr "Enddatum"
 
@@ -3567,7 +3613,7 @@ msgstr "endet mit"
 msgid "Engagement"
 msgstr "Engagement"
 
-#: admin/src/Admin/Settings/Registry.php:164
+#: admin/src/Admin/Settings/Registry.php:176
 msgid ""
 "Engine used to generate content. WordPress AI covers every provider "
 "configured in Settings → Connectors; extensions can register additional "
@@ -3715,8 +3761,8 @@ msgid "error"
 msgstr "Fehler"
 
 #: app/src/pages/contacts/ContactsPage.vue:98
-#: app/src/pages/history/components/HistoryDetailsModal.vue:39
-#: app/src/pages/history/HistoryPage.vue:378
+#: app/src/pages/history/components/HistoryDetailsModal.vue:69
+#: app/src/pages/history/HistoryPage.vue:383
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
 #: app/src/pages/settings/SettingsPage.vue:306
 msgid "Error"
@@ -3734,7 +3780,7 @@ msgstr "Eswatini (Swasiland)"
 msgid "Ethiopia"
 msgstr "Äthiopien"
 
-#: admin/src/Cloud_Sync/Consent.php:678
+#: admin/src/Cloud_Sync/Consent.php:733
 msgid "Event"
 msgstr "Ereignis"
 
@@ -3773,7 +3819,7 @@ msgstr ""
 msgid "Every form with a phone or an e-mail"
 msgstr "Jedes Formular mit einer Telefonnummer oder einer E-Mail"
 
-#: app/src/pages/history/HistoryPage.vue:189
+#: app/src/pages/history/HistoryPage.vue:194
 msgid ""
 "Every history record will be permanently removed. This action cannot be "
 "undone."
@@ -3867,20 +3913,20 @@ msgid "Expires in %s"
 msgstr "Läuft ab in %s"
 
 #: app/src/components/workflows/WorkflowRowActions.vue:41
-#: app/src/pages/history/HistoryPage.vue:423
+#: app/src/pages/history/HistoryPage.vue:435
 #: app/src/pages/queue/QueuePage.vue:363
 #: app/src/pages/settings/SettingsPage.vue:338
 #: app/src/pages/settings/SettingsPage.vue:341
 msgid "Export"
 msgstr "Exportieren"
 
-#: app/src/pages/history/HistoryPage.vue:206
+#: app/src/pages/history/HistoryPage.vue:211
 #: app/src/pages/queue/QueuePage.vue:160
 msgid "Export all"
 msgstr "Alle exportieren"
 
 #: app/src/composables/useWorkflows.ts:35
-#: app/src/pages/history/components/HistoryDetailsModal.vue:179
+#: app/src/pages/history/components/HistoryDetailsModal.vue:209
 msgid "Export as JSON"
 msgstr "Als JSON exportieren"
 
@@ -3892,7 +3938,7 @@ msgstr "CSV exportieren"
 msgid "Export data"
 msgstr "Daten exportieren"
 
-#: app/src/pages/history/HistoryPage.vue:206
+#: app/src/pages/history/HistoryPage.vue:211
 #: app/src/pages/queue/QueuePage.vue:160
 msgid "Export selected"
 msgstr "Ausgewählte exportieren"
@@ -3906,18 +3952,22 @@ msgid "Export workflow"
 msgstr "Workflow exportieren"
 
 #: app/src/pages/contacts/tabs/ContactsTab.vue:232
-#: app/src/pages/history/components/HistoryDetailsModal.vue:179
-#: app/src/pages/history/HistoryPage.vue:339
+#: app/src/pages/history/components/HistoryDetailsModal.vue:209
+#: app/src/pages/history/HistoryPage.vue:344
 #: app/src/pages/queue/QueuePage.vue:255
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
 msgid "Exporting…"
 msgstr "Exportiere…"
 
-#: app/src/composables/useMessageHistory.ts:76
+#: app/src/composables/useMessageHistory.ts:78
 #: app/src/pages/contacts/components/ImportModal.vue:338
-#: app/src/pages/history/HistoryPage.vue:75
+#: app/src/pages/history/HistoryPage.vue:80
 msgid "Failed"
 msgstr "Fehlgeschlagen"
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:57
+msgid "Failed at"
+msgstr "Fehlgeschlagen am"
 
 #: app/src/pages/settings/SettingsPage.vue:422
 #: app/src/pages/settings/SettingsPage.vue:436
@@ -3932,7 +3982,7 @@ msgstr "Falklandinseln (Malvinas)"
 msgid "False"
 msgstr "Falsch"
 
-#: app/src/builder/actions/definitions/condition.ts:118
+#: app/src/builder/actions/definitions/condition.ts:124
 msgid "False branch"
 msgstr "Falscher Zweig"
 
@@ -3951,8 +4001,8 @@ msgid "Field"
 msgstr "Feld"
 
 #: admin/src/Admin/Builder/Registry.php:480
-#: app/src/builder/actions/definitions/condition.ts:123
-#: app/src/builder/actions/settings/ConditionSettings.vue:210
+#: app/src/builder/actions/definitions/condition.ts:129
+#: app/src/builder/actions/settings/ConditionSettings.vue:236
 msgid "Field ID"
 msgstr "Feld-ID"
 
@@ -4048,7 +4098,7 @@ msgstr "Vorname"
 msgid "First name (or full name)"
 msgstr "Vorname (oder vollständiger Name)"
 
-#: admin/src/Admin/Settings/Registry.php:141
+#: admin/src/Admin/Settings/Registry.php:153
 msgid "First retry after"
 msgstr "Erster Versuch nach"
 
@@ -4190,7 +4240,7 @@ msgstr "Französisch-Polynesien"
 msgid "Friendly"
 msgstr "Freundlich"
 
-#: app/src/pages/history/HistoryPage.vue:260
+#: app/src/pages/history/HistoryPage.vue:265
 msgid "From"
 msgstr "Von"
 
@@ -4214,8 +4264,8 @@ msgstr "Gabon"
 msgid "Gambia"
 msgstr "Gambia"
 
-#: admin/src/Admin/Settings/Registry.php:100
-#: admin/src/Admin/Settings/Registry.php:325
+#: admin/src/Admin/Settings/Registry.php:112
+#: admin/src/Admin/Settings/Registry.php:337
 #: admin/src/Builder/Actions.php:121
 #: app/src/stores/useWorkflowBuilderStore.ts:154
 #: app/src/stores/useWorkflowBuilderStore.ts:249
@@ -4267,7 +4317,7 @@ msgstr "Georgia"
 msgid "Germany"
 msgstr "Deutschland"
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:234
+#: app/src/components/fields/JoinotifyApiKeyField.vue:241
 msgid "Get a key on the Joinotify panel"
 msgstr "Holen Sie sich einen Schlüssel im Joinotify-Panel"
 
@@ -4303,7 +4353,7 @@ msgstr "Aufgegeben"
 msgid "Given up after every retry"
 msgstr "Nach jedem Versuch aufgegeben"
 
-#: admin/src/Admin/Settings/Registry.php:172
+#: admin/src/Admin/Settings/Registry.php:184
 msgid "Global instructions"
 msgstr "Globale Anweisungen"
 
@@ -4315,7 +4365,7 @@ msgstr "Gehe zu Plugins"
 msgid "Go to settings"
 msgstr "Gehe zu den Einstellungen"
 
-#: admin/src/Admin/Builder/Registry.php:1674
+#: admin/src/Admin/Builder/Registry.php:1677
 msgid "Greater than"
 msgstr "Größer als"
 
@@ -4367,10 +4417,29 @@ msgstr "hat"
 #: admin/src/Integrations/Whatsapp_Interactive.php:143
 #: admin/src/Integrations/Whatsapp_Interactive.php:172
 #: admin/src/Integrations/Whatsapp_Interactive.php:202
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:141
-#: app/src/pages/history/components/HistoryDetailsModal.vue:58
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
+#: app/src/pages/history/components/HistoryDetailsModal.vue:88
 msgid "Header"
 msgstr "Kopfzeile"
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:237
+msgid "Header document"
+msgstr "Dokument der Kopfzeile"
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:239
+msgid "Header image"
+msgstr "Bild der Kopfzeile"
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:214
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:216
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:218
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
+msgid "Header location"
+msgstr "Standort der Kopfzeile"
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:235
+msgid "Header video"
+msgstr "Video der Kopfzeile"
 
 #: admin/src/Builder/Webhook_Action.php:128
 msgid "Headers"
@@ -4417,7 +4486,7 @@ msgstr "Ausblenden, was gesendet werden würde"
 msgid "History"
 msgstr "Verlauf"
 
-#: admin/src/Admin/Settings/Registry.php:265
+#: admin/src/Admin/Settings/Registry.php:277
 msgid "History retention"
 msgstr "Verlaufsaufbewahrung"
 
@@ -4452,7 +4521,7 @@ msgstr "Stunden"
 msgid "Hours"
 msgstr "Stunden"
 
-#: admin/src/Admin/Settings/Registry.php:181
+#: admin/src/Admin/Settings/Registry.php:193
 msgid ""
 "How creative the answers are, from 0 (predictable) to 1 (varied). Actions "
 "may override it."
@@ -4460,7 +4529,7 @@ msgstr ""
 "Wie kreativ die Antworten sind, von 0 (vorhersehbar) bis 1 "
 "(abwechslungsreich). Aktionen können dies überschreiben."
 
-#: admin/src/Admin/Settings/Registry.php:133
+#: admin/src/Admin/Settings/Registry.php:145
 msgid ""
 "How many times a failed message is retried before it is given up on. Choose "
 "\"Do not retry\" to record the failure without ever sending again."
@@ -4495,6 +4564,10 @@ msgstr "Wie wurde die Zustimmung eingeholt?"
 msgid "How would you like to create your new workflow?"
 msgstr "Wie möchten Sie Ihren neuen Workflow erstellen?"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
+msgid "https://example.com/file.jpg or a placeholder"
+msgstr "https://example.com/datei.jpg oder ein Platzhalter"
+
 #: admin/src/Validations/Country_Codes.php:34
 msgid "Hungary"
 msgstr "Ungarn"
@@ -4504,7 +4577,7 @@ msgid "I already did"
 msgstr "Habe ich bereits gemacht"
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:407
-#: admin/src/Cloud_Sync/Consent.php:149
+#: admin/src/Cloud_Sync/Consent.php:151
 msgid "I want to receive offers and news on WhatsApp."
 msgstr "Ich möchte Angebote und Neuigkeiten über WhatsApp erhalten."
 
@@ -4612,7 +4685,7 @@ msgstr "Workflow importieren"
 msgid "Imported"
 msgstr "Importiert"
 
-#: admin/src/Admin/Builder/Registry.php:1274
+#: admin/src/Admin/Builder/Registry.php:1276
 #. translators: %s: random number appended to the imported automation name
 msgid "Imported automation #%s"
 msgstr "Importierte Automatisierung #%s"
@@ -4693,6 +4766,10 @@ msgstr "Fügen Sie eine Textvariable ein"
 msgid "Insert variable"
 msgstr "Variable einfügen"
 
+#: app/src/pages/history/components/HistoryDetailsModal.vue:31
+msgid "Inside the 24-hour window"
+msgstr "Innerhalb des 24-Stunden-Fensters"
+
 #: app/src/builder/actions/settings/LoopSettings.vue:43
 msgid ""
 "Inside the loop body you can use {{ loop_value }}, {{ loop_number }}, {{ "
@@ -4708,7 +4785,7 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr "Installiere und aktiviere %s, um diesen Trigger zu verwenden."
 
-#: admin/src/Admin/Settings/Registry.php:947
+#: admin/src/Admin/Settings/Registry.php:959
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr "Installations-ID: %s"
@@ -4726,7 +4803,7 @@ msgstr "Integration nicht aktiv"
 msgid "Integration settings"
 msgstr "Integrations Einstellungen"
 
-#: admin/src/Admin/Settings/Registry.php:213
+#: admin/src/Admin/Settings/Registry.php:225
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
 msgstr "Integrationen"
@@ -4813,7 +4890,7 @@ msgstr "Irland"
 msgid "Irreversible"
 msgstr "Irreversibel"
 
-#: admin/src/Admin/Settings/Registry.php:304
+#: admin/src/Admin/Settings/Registry.php:316
 msgid "Irreversible actions and configuration cleanup."
 msgstr "Irreversible Aktionen und Bereinigung der Konfiguration."
 
@@ -4848,11 +4925,11 @@ msgstr "ist vor"
 msgid "is empty"
 msgstr "ist leer"
 
-#: admin/src/Admin/Builder/Registry.php:1672
+#: admin/src/Admin/Builder/Registry.php:1675
 msgid "Is empty"
 msgstr "Ist leer"
 
-#: admin/src/Admin/Builder/Registry.php:1668
+#: admin/src/Admin/Builder/Registry.php:1671
 msgid "Is equal to"
 msgstr "Ist gleich"
 
@@ -4883,11 +4960,11 @@ msgstr "ist keiner von"
 msgid "is not"
 msgstr "ist nicht"
 
-#: admin/src/Admin/Builder/Registry.php:1673
+#: admin/src/Admin/Builder/Registry.php:1676
 msgid "Is not empty"
 msgstr "Ist nicht leer"
 
-#: admin/src/Admin/Builder/Registry.php:1669
+#: admin/src/Admin/Builder/Registry.php:1672
 msgid "Is not equal to"
 msgstr "Ist ungleich"
 
@@ -4983,7 +5060,7 @@ msgstr "johndoe@email.com"
 msgid "Joinotify"
 msgstr "Joinotify"
 
-#: admin/src/Integrations/Whatsapp.php:105
+#: admin/src/Integrations/Whatsapp.php:152
 msgid "Joinotify account"
 msgstr "Joinotify-Konto"
 
@@ -5004,8 +5081,8 @@ msgstr ""
 #: admin/src/Cloud_Sync/Cloud_Sync.php:296
 #: admin/src/Cloud_Sync/Cloud_Sync.php:301
 #: admin/src/Cloud_Sync/Cloud_Sync.php:308
-#: admin/src/Cloud_Sync/Consent.php:613
-#: admin/src/Cloud_Sync/Consent.php:628
+#: admin/src/Cloud_Sync/Consent.php:668
+#: admin/src/Cloud_Sync/Consent.php:683
 #: app/src/pages/contacts/tabs/SourcesTab.vue:213
 msgid "Joinotify Cloud sync"
 msgstr "Joinotify Cloud-Synchronisierung"
@@ -5025,7 +5102,7 @@ msgstr ""
 "Sie ihn unten ein – es ist die einzige Berechtigung, die das Plugin "
 "benötigt."
 
-#: admin/src/Admin/Settings/Registry.php:159
+#: admin/src/Admin/Settings/Registry.php:171
 msgid ""
 "Joinotify generates AI content through the WordPress AI Client. Pick the "
 "provider and store its credentials once in Settings → Connectors, and every "
@@ -5057,7 +5134,7 @@ msgstr ""
 "Ihr Konto und bringt die erste Automatisierung in wenigen Minuten zum "
 "Laufen."
 
-#: admin/src/Cloud_Sync/Consent.php:665
+#: admin/src/Cloud_Sync/Consent.php:720
 msgid "Joinotify marketing consent"
 msgstr "Joinotify Marketing-Zustimmung"
 
@@ -5067,7 +5144,7 @@ msgstr "Joinotify Marketing-Zustimmung"
 msgid "Joinotify setup"
 msgstr "Joinotify Einrichtung"
 
-#: admin/src/Admin/Settings/Registry.php:572
+#: admin/src/Admin/Settings/Registry.php:584
 msgid "Joinotify version"
 msgstr "Joinotify-Version"
 
@@ -5083,16 +5160,16 @@ msgstr "JSON"
 msgid "Kazakhstan"
 msgstr "Kasachstan"
 
-#: admin/src/Admin/Settings/Registry.php:268
-#: admin/src/Admin/Settings/Registry.php:286
+#: admin/src/Admin/Settings/Registry.php:280
+#: admin/src/Admin/Settings/Registry.php:298
 msgid "Keep forever"
 msgstr "Für immer behalten"
 
-#: admin/src/Core/Workflow_Processor.php:2093
+#: admin/src/Core/Workflow_Processor.php:2352
 msgid "Keep the message concise, around two to four sentences."
 msgstr "Halten Sie die Nachricht kurz, etwa zwei bis vier Sätze."
 
-#: admin/src/Core/Workflow_Processor.php:2092
+#: admin/src/Core/Workflow_Processor.php:2351
 msgid "Keep the message very short, one or two sentences."
 msgstr "Halten Sie die Nachricht sehr kurz, ein oder zwei Sätze."
 
@@ -5214,6 +5291,7 @@ msgid "latest post"
 msgstr "neuester Beitrag"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:221
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:214
 msgid "Latitude"
 msgstr "Breitengrad"
 
@@ -5254,6 +5332,10 @@ msgstr "So belassen"
 #: admin/src/Integrations/Whatsapp_Interactive.php:264
 msgid "Leave blank to remove a reaction already sent."
 msgstr "Leer lassen, um eine bereits gesendete Reaktion zu entfernen."
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:279
+msgid "Leave empty to repeat the code from the body"
+msgstr "Leer lassen, um den Code aus dem Inhalt zu wiederholen"
 
 #: app/src/pages/contacts/components/ContactFormModal.vue:219
 msgid ""
@@ -5300,7 +5382,7 @@ msgstr "Länge"
 msgid "Lesotho"
 msgstr "Lesotho"
 
-#: admin/src/Admin/Builder/Registry.php:1675
+#: admin/src/Admin/Builder/Registry.php:1678
 msgid "Less than"
 msgstr "Weniger als"
 
@@ -5327,6 +5409,7 @@ msgid "Liberia"
 msgstr "Liberia"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:125
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:560
 #: app/src/builder/components/base/AttachmentsField.vue:216
 msgid "Library"
 msgstr "Bibliothek"
@@ -5385,7 +5468,7 @@ msgstr "Flow-Canvas wird geladen"
 msgid "Loading senders..."
 msgstr "Sender werden geladen..."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:273
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:465
 msgid "Loading templates…"
 msgstr "Vorlagen werden geladen…"
 
@@ -5417,13 +5500,13 @@ msgstr "Trigger wird geladen..."
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:203
 #: app/src/pages/contacts/tabs/SourcesTab.vue:201
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:166
-#: app/src/pages/history/HistoryPage.vue:356
+#: app/src/pages/history/HistoryPage.vue:361
 #: app/src/pages/queue/QueuePage.vue:282
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
 msgstr "Lädt…"
 
-#: admin/src/Admin/Settings/Registry.php:106
+#: admin/src/Admin/Settings/Registry.php:118
 msgid "Location and phone numbers"
 msgstr "Standort und Telefonnummern"
 
@@ -5473,6 +5556,7 @@ msgid "Long"
 msgstr "Lang"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:222
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:216
 msgid "Longitude"
 msgstr "Längengrad"
 
@@ -5507,15 +5591,15 @@ msgstr "Macau"
 msgid "Madagascar"
 msgstr "Madagaskar"
 
-#: admin/src/Admin/Settings/Registry.php:256
+#: admin/src/Admin/Settings/Registry.php:268
 msgid "Maintains support integrations and advanced contracts available."
 msgstr "Hält Integrationen und erweiterte Verträge bereit."
 
-#: admin/src/Admin/Settings/Registry.php:240
+#: admin/src/Admin/Settings/Registry.php:252
 msgid "Maintenance and preference"
 msgstr "Wartung und Präferenz"
 
-#: admin/src/Admin/Settings/Registry.php:235
+#: admin/src/Admin/Settings/Registry.php:247
 msgid "Maintenance, logs, updates, and environment details."
 msgstr "Wartung, Protokolle, Updates und Umgebungsdetails."
 
@@ -5539,7 +5623,7 @@ msgstr "Mali"
 msgid "Malta"
 msgstr "Malta"
 
-#: admin/src/Admin/Settings/Registry.php:194
+#: admin/src/Admin/Settings/Registry.php:206
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
 "Verwalten Sie Absender, validieren Sie neue Verbindungen und senden Sie "
@@ -5560,7 +5644,7 @@ msgstr ""
 "benannten Variablen zu. Die Variable wird im Flow-Builder verfügbar und zur "
 "Laufzeit mit dem entsprechenden Beitrag-Meta-Wert ersetzt."
 
-#: admin/src/Admin/Settings/Registry.php:227
+#: admin/src/Admin/Settings/Registry.php:239
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
@@ -5575,7 +5659,7 @@ msgstr "Als aktiv markieren"
 msgid "Mark as inactive"
 msgstr "Als inaktiv markieren"
 
-#: admin/src/Cloud_Sync/Consent.php:654
+#: admin/src/Cloud_Sync/Consent.php:709
 #: admin/src/Contacts/Contact_Actions.php:181
 #: app/src/pages/contacts/tabs/SourcesTab.vue:264
 msgid "Marketing consent"
@@ -5601,7 +5685,7 @@ msgstr "Mauretanien"
 msgid "Mauritius"
 msgstr "Mauritius"
 
-#: admin/src/Admin/Settings/Registry.php:132
+#: admin/src/Admin/Settings/Registry.php:144
 msgid "Maximum attempts"
 msgstr "Maximale Versuche"
 
@@ -5623,7 +5707,7 @@ msgid "Measurement unit applied to the border radius value."
 msgstr "Maßeinheit, die auf den Wert des Randradius angewendet wird."
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:102
-#: app/src/pages/history/HistoryPage.vue:92
+#: app/src/pages/history/HistoryPage.vue:97
 msgid "Media"
 msgstr "Medien"
 
@@ -5641,17 +5725,17 @@ msgstr "Datei aus der Mediathek"
 
 #: admin/src/Integrations/Elementor_Forms.php:182
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:106
-#: app/src/pages/history/components/HistoryDetailsModal.vue:36
+#: app/src/pages/history/components/HistoryDetailsModal.vue:66
 msgid "Media type"
 msgstr "Medientyp"
 
-#: admin/src/Api/Cloud_Client.php:1129
+#: admin/src/Api/Cloud_Client.php:1168
 msgid "Media upload did not return an id."
 msgstr "Der Medien-Upload hat keine ID zurückgegeben."
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:68
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:113
-#: app/src/pages/history/components/HistoryDetailsModal.vue:165
+#: app/src/pages/history/components/HistoryDetailsModal.vue:195
 msgid "Media URL"
 msgstr "Medien-URL"
 
@@ -5705,18 +5789,18 @@ msgstr "Nachricht"
 msgid "Message content, media or message history"
 msgstr "Nachrichteninhalt, Medien oder Nachrichtenverlauf"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:98
+#: app/src/pages/history/components/HistoryDetailsModal.vue:128
 msgid "Message details"
 msgstr "Nachrichtendetails"
 
-#: admin/src/Admin/History/Registry.php:368
+#: admin/src/Admin/History/Registry.php:392
 #: admin/src/Admin/Menu.php:85
-#: admin/src/Admin/Settings/Registry.php:260
-#: app/src/pages/history/HistoryPage.vue:220
+#: admin/src/Admin/Settings/Registry.php:272
+#: app/src/pages/history/HistoryPage.vue:225
 msgid "Message history"
 msgstr "Nachrichtverlauf"
 
-#: app/src/pages/history/HistoryPage.vue:228
+#: app/src/pages/history/HistoryPage.vue:233
 msgid ""
 "Message history recording is disabled. Enable it in Settings → About to "
 "start logging new messages."
@@ -5744,11 +5828,11 @@ msgstr "Nachrichtenvorlagen synchronisiert."
 
 #: admin/src/Integrations/Resend.php:85
 #: admin/src/Integrations/Telegram.php:85
-#: admin/src/Integrations/Whatsapp.php:50
+#: admin/src/Integrations/Whatsapp.php:97
 msgid "Messages"
 msgstr "Nachrichten"
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:204
+#: app/src/components/fields/JoinotifyApiKeyField.vue:211
 msgid "Messages cannot be delivered until this site is connected."
 msgstr "Nachrichten können nicht zugestellt werden, bis diese Seite verbunden ist."
 
@@ -5758,13 +5842,13 @@ msgstr ""
 "Nachrichten werden normal gesendet, aber Zustellberichte konnten nicht "
 "eingerichtet werden:"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:91
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:119
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr "Meta hat diese Vorlage deaktiviert. Sie kann nicht mehr gesendet werden."
 
 #: admin/src/Admin/Builder/Registry.php:485
-#: app/src/builder/actions/definitions/condition.ts:124
-#: app/src/builder/actions/settings/ConditionSettings.vue:204
+#: app/src/builder/actions/definitions/condition.ts:130
+#: app/src/builder/actions/settings/ConditionSettings.vue:230
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
 msgid "Meta key"
 msgstr "Meta-Schlüssel"
@@ -5773,7 +5857,7 @@ msgstr "Meta-Schlüssel"
 msgid "Meta key, e.g. _billing_cpf"
 msgstr "Meta-Schlüssel, z.B. _billing_cpf"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:89
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:117
 msgid ""
 "Meta paused this template because of low quality. It will not be delivered "
 "until it recovers."
@@ -5781,7 +5865,7 @@ msgstr ""
 "Meta hat diese Vorlage wegen geringer Qualität pausiert. Sie wird nicht "
 "zugestellt, bis sie sich erholt."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:93
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:121
 msgid "Meta rejected this template."
 msgstr "Meta hat diese Vorlage abgelehnt."
 
@@ -5812,7 +5896,7 @@ msgstr "Minuten"
 msgid "Minutes"
 msgstr "Minuten"
 
-#: admin/src/Api/Cloud_Client.php:1096
+#: admin/src/Api/Cloud_Client.php:1135
 msgid "Missing Cloud API token or phone number id for media upload."
 msgstr "Fehlendes Cloud-API-Token oder Telefonnummer-ID für den Medien-Upload."
 
@@ -5901,7 +5985,7 @@ msgid "My automation"
 msgstr "Meine Automatisierung"
 
 #: admin/src/Admin/Builder/Registry.php:161
-#: admin/src/Admin/Builder/Registry.php:1067
+#: admin/src/Admin/Builder/Registry.php:1069
 #. translators: %s: random number appended to the default automation name
 msgid "My automation #%s"
 msgstr "Meine Automatisierung #%s"
@@ -5914,12 +5998,17 @@ msgstr "Meine Automatisierung #129720"
 msgid "Myanmar"
 msgstr "Myanmar"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:218
 #: app/src/components/workflows/WorkflowTableHeader.vue:35
 #: app/src/pages/contacts/components/AudienceEditor.vue:187
 #: app/src/pages/contacts/components/TagFormModal.vue:77
 #: app/src/pages/contacts/tabs/ContactsTab.vue:82
 msgid "Name"
 msgstr "Name"
+
+#: admin/src/Api/Transport.php:185
+msgid "Name the approved WhatsApp template to send."
+msgstr "Geben Sie die genehmigte WhatsApp-Vorlage an, die gesendet werden soll."
 
 #: app/src/pages/contacts/components/MergeModal.vue:105
 msgid "Name, e-mail or phone"
@@ -6046,15 +6135,15 @@ msgstr "Nigeria"
 msgid "Niue"
 msgstr "Niue"
 
-#: admin/src/Admin/Settings/Registry.php:561
-#: admin/src/Admin/Settings/Registry.php:585
-#: admin/src/Admin/Settings/Registry.php:590
-#: admin/src/Admin/Settings/Registry.php:595
+#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:597
+#: admin/src/Admin/Settings/Registry.php:602
+#: admin/src/Admin/Settings/Registry.php:607
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
 #: admin/src/Integrations/Elementor_Forms.php:167
-#: app/src/builder/actions/settings/ConditionSettings.vue:105
+#: app/src/builder/actions/settings/ConditionSettings.vue:116
 #: app/src/builder/actions/utils/actionDescription.ts:186
 #: app/src/pages/contacts/components/AttributeInput.vue:40
 #: app/src/pages/contacts/components/ContactDrawer.vue:78
@@ -6128,7 +6217,7 @@ msgstr "Keine Bedingung für diese Aktion verfügbar."
 msgid "No condition has been set for this action."
 msgstr "Es wurde keine Bedingung für diese Aktion festgelegt."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:166
+#: app/src/builder/actions/settings/ConditionSettings.vue:177
 msgid "No conditions for this trigger"
 msgstr "Keine Bedingungen für diesen Trigger"
 
@@ -6191,7 +6280,7 @@ msgstr "Kein Flow gefunden."
 msgid "No form was found on this site."
 msgstr "Kein Formular auf dieser Seite gefunden."
 
-#: app/src/pages/history/HistoryPage.vue:434
+#: app/src/pages/history/HistoryPage.vue:446
 msgid "No history records match the current filters."
 msgstr "Keine Verlaufsdatensätze entsprechen den aktuellen Filtern."
 
@@ -6212,7 +6301,7 @@ msgstr "Kein Joinotify-Sender ist konfiguriert, um den Code zu liefern."
 msgid "No logs available."
 msgstr "Keine Protokolle verfügbar."
 
-#: app/src/pages/history/HistoryPage.vue:433
+#: app/src/pages/history/HistoryPage.vue:445
 msgid "No messages found"
 msgstr "Keine Nachrichten gefunden"
 
@@ -6272,7 +6361,7 @@ msgstr "Noch keine Tags."
 msgid "No tags."
 msgstr "Keine Tags."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:294
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:486
 msgid ""
 "No template found. Create one on the Joinotify panel and approve it with "
 "Meta first."
@@ -6308,7 +6397,7 @@ msgstr "keine gültige Telefonnummer"
 msgid "No variables available."
 msgstr "Keine Variablen verfügbar."
 
-#: admin/src/Api/Cloud_Client.php:1236
+#: admin/src/Api/Cloud_Client.php:1275
 msgid "No WhatsApp Business Account id is configured."
 msgstr "Keine WhatsApp Business Account-ID konfiguriert."
 
@@ -6319,6 +6408,12 @@ msgstr "Kein WhatsApp Business-Konto ist bisher mit diesem Token verknüpft."
 #: admin/src/Api/Cloud_Client.php:121
 msgid "No WhatsApp Cloud API token is configured."
 msgstr "Kein WhatsApp Cloud API-Token konfiguriert."
+
+#: admin/src/Core/Functions.php:131
+msgid "No WhatsApp number is connected to Joinotify to send from."
+msgstr ""
+"Es ist keine WhatsApp-Nummer mit Joinotify verbunden, von der gesendet "
+"werden kann."
 
 #: app/src/pages/queue/QueuePage.vue:383
 msgid "No workflow steps are currently waiting to run."
@@ -6347,7 +6442,7 @@ msgstr "Keine Workflows ausgewählt."
 msgid "Node settings"
 msgstr "Knoteneinstellungen"
 
-#: admin/src/Admin/Settings/Registry.php:778
+#: admin/src/Admin/Settings/Registry.php:790
 msgid "None"
 msgstr "Keine"
 
@@ -6428,7 +6523,7 @@ msgstr "Nummer"
 msgid "Number added to the suppression list."
 msgstr "Nummer zur Sperrliste hinzugefügt."
 
-#: admin/src/Admin/Settings/Registry.php:118
+#: admin/src/Admin/Settings/Registry.php:130
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
@@ -6451,7 +6546,7 @@ msgid "Numbers synced."
 msgstr "Nummern synchronisiert."
 
 #: app/src/components/workflows/PaginationControls.vue:34
-#: app/src/composables/useMessageHistory.ts:113
+#: app/src/composables/useMessageHistory.ts:115
 #: app/src/composables/useProcessingQueue.ts:114
 #: app/src/composables/useWorkflows.ts:219
 #: app/src/pages/contacts/useContactList.ts:54
@@ -6466,7 +6561,7 @@ msgstr "dieser Bedingungen"
 msgid "Of those sent, %1$d %2$s."
 msgstr "Von denen gesendet, %1$d %2$s."
 
-#: admin/src/Admin/Settings/Registry.php:625
+#: admin/src/Admin/Settings/Registry.php:637
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "Off"
 msgstr "Aus"
@@ -6485,6 +6580,10 @@ msgstr ""
 "Standardmäßig deaktiviert. Sie können dies jederzeit in Einstellungen → "
 "Über ändern."
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:225
+msgid "Offer expiration"
+msgstr "Ablauf des Angebots"
+
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:32
 msgid "ok"
 msgstr "ok"
@@ -6497,7 +6596,7 @@ msgstr "älter als das, was Joinotify hat"
 msgid "Oman"
 msgstr "Oman"
 
-#: admin/src/Admin/Settings/Registry.php:625
+#: admin/src/Admin/Settings/Registry.php:637
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "On"
 msgstr "Ein"
@@ -6524,7 +6623,7 @@ msgstr "Auf dieser Seite"
 msgid "One entry per line, or use the delimiter below"
 msgstr "Eine Eingabe pro Zeile oder verwenden Sie den untenstehenden Trenner"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:171
+#: app/src/builder/actions/settings/ConditionSettings.vue:182
 msgid ""
 "Only conditions and operators supported by the engine for this trigger are "
 "shown."
@@ -6555,13 +6654,17 @@ msgstr ""
 msgid "Only the forms switched on below"
 msgstr "Nur die unten aktivierten Formulare"
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:195
+#: app/src/components/fields/JoinotifyApiKeyField.vue:202
 msgid ""
 "Only the public prefix of your key is shown. Remove it to connect a "
 "different account."
 msgstr ""
 "Nur das öffentliche Präfix Ihres Schlüssels wird angezeigt. Entfernen Sie "
 "es, um ein anderes Konto zu verbinden."
+
+#: admin/src/Admin/Builder/Registry.php:1709
+msgid "Open"
+msgstr "Offen"
 
 #: app/src/components/builder/BuilderNavbar.vue:194
 msgid "Open documentation"
@@ -6613,18 +6716,18 @@ msgstr ""
 msgid "Open trigger actions"
 msgstr "Trigger-Aktionen öffnen"
 
-#: admin/src/Admin/Settings/Registry.php:594
+#: admin/src/Admin/Settings/Registry.php:606
 msgid "OpenSSL extension"
 msgstr "OpenSSL-Erweiterung"
 
-#: admin/src/Admin/Settings/Registry.php:241
+#: admin/src/Admin/Settings/Registry.php:253
 msgid "Operational plugin settings and development flags."
 msgstr "Betriebsplugin-Einstellungen und Entwicklungsflags."
 
 #: admin/src/Admin/Builder/Registry.php:474
-#: app/src/builder/actions/definitions/condition.ts:122
-#: app/src/builder/actions/definitions/condition.ts:133
-#: app/src/builder/actions/settings/ConditionSettings.vue:188
+#: app/src/builder/actions/definitions/condition.ts:128
+#: app/src/builder/actions/definitions/condition.ts:139
+#: app/src/builder/actions/settings/ConditionSettings.vue:199
 msgid "Operator"
 msgstr "Operator"
 
@@ -6642,7 +6745,7 @@ msgstr "Zugestimmt"
 msgid "Opted in and not suppressed"
 msgstr "Zugestimmt und nicht gesperrt"
 
-#: admin/src/Cloud_Sync/Consent.php:522
+#: admin/src/Cloud_Sync/Consent.php:577
 msgid "Opted in on Joinotify"
 msgstr "Auf Joinotify zugestimmt"
 
@@ -6653,10 +6756,11 @@ msgstr "Auf Joinotify zugestimmt"
 msgid "Opted out"
 msgstr "Abgemeldet"
 
-#: admin/src/Cloud_Sync/Consent.php:659
+#: admin/src/Cloud_Sync/Consent.php:714
 msgid "Opted out of marketing on"
 msgstr "Von Marketing abgemeldet"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:285
 #: app/src/pages/onboarding/components/StepIndicator.vue:56
 msgid "Optional"
 msgstr "Optional"
@@ -6683,7 +6787,11 @@ msgstr "Optionale Regeln, Ton und Kontext für die KI."
 msgid "Optional text sent together with the media."
 msgstr "Optionaler Text, der zusammen mit dem Medium gesendet wird."
 
-#: admin/src/Admin/Onboarding/Registry.php:116
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:293
+msgid "Optional: sent back when the button is tapped"
+msgstr "Optional: wird beim Tippen auf die Schaltfläche zurückgesendet"
+
+#: admin/src/Admin/Onboarding/Registry.php:117
 msgid ""
 "Optional. Adds AI-generated content and workflow suggestions, using the "
 "provider set up in WordPress."
@@ -6813,13 +6921,21 @@ msgstr "Sonstiges"
 msgid "Others"
 msgstr "Sonstiges"
 
-#: admin/src/Admin/History/Registry.php:351
+#: admin/src/Admin/History/Registry.php:375
 msgid "OTP"
 msgstr "OTP"
 
 #: admin/src/Integrations/Otp_Login.php:97
 msgid "OTP Login - Passwordless authentication"
 msgstr "OTP-Login - Passwortlose Authentifizierung"
+
+#: app/src/pages/history/HistoryPage.vue:416
+msgid "Outside 24h window"
+msgstr "Außerhalb des 24-h-Fensters"
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:32
+msgid "Outside the 24-hour window"
+msgstr "Außerhalb des 24-Stunden-Fensters"
 
 #: app/src/pages/contacts/components/ImportModal.vue:161
 msgid "over the plan's contact limit"
@@ -6889,15 +7005,15 @@ msgstr ""
 msgid "Passwordless login settings"
 msgstr "Einstellungen für passwortlosen Login"
 
-#: admin/src/Api/Connect.php:232
-#: app/src/components/fields/JoinotifyApiKeyField.vue:71
+#: admin/src/Api/Connect.php:241
+#: app/src/components/fields/JoinotifyApiKeyField.vue:75
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:57
 msgid "Paste the API key issued for this site on the Joinotify panel."
 msgstr ""
 "Fügen Sie den API-Schlüssel ein, der für diese Site im Joinotify-Panel "
 "ausgegeben wurde."
 
-#: admin/src/Admin/Onboarding/Registry.php:110
+#: admin/src/Admin/Onboarding/Registry.php:111
 msgid "Paste the API key issued for this site to start sending WhatsApp messages."
 msgstr ""
 "Fügen Sie den API-Schlüssel ein, der für diese Site ausgegeben wurde, um "
@@ -6919,7 +7035,7 @@ msgstr ""
 msgid "Pause the workflow before the next step."
 msgstr "Pausieren Sie den Workflow vor dem nächsten Schritt."
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:150
+#: app/src/pages/history/components/HistoryDetailsModal.vue:180
 msgid "Payload sent"
 msgstr "Gesendete Nutzlast"
 
@@ -6970,7 +7086,7 @@ msgstr "Zeitraum Verzögerung"
 msgid "Persona / system message"
 msgstr "Persona / Systemnachricht"
 
-#: admin/src/Admin/Settings/Registry.php:173
+#: admin/src/Admin/Settings/Registry.php:185
 msgid ""
 "Persona, tone and rules prepended to every AI generation. Each action can "
 "add its own instructions on top of this."
@@ -7004,13 +7120,13 @@ msgstr "Telefon"
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: admin/src/Integrations/Whatsapp.php:126
+#: admin/src/Integrations/Whatsapp.php:175
 msgid "Phone number ID"
 msgstr "Telefonnummer-ID"
 
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:254
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:446
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 msgid "Phone number or a placeholder that resolves to one."
 msgstr ""
@@ -7033,8 +7149,8 @@ msgstr "Telefonnummern, Kontakte oder Kundendaten"
 msgid "Phone with country code"
 msgstr "Telefon mit Landesvorwahl"
 
-#: admin/src/Admin/Settings/Registry.php:193
-#: admin/src/Admin/Settings/Registry.php:331
+#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:343
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/SettingsPage.vue:391
 #: app/src/pages/settings/SettingsPage.vue:397
@@ -7049,13 +7165,13 @@ msgstr "Telefon mit Landesvorwahl"
 msgid "Phones"
 msgstr "Telefone"
 
-#: admin/src/Admin/Settings/Registry.php:200
+#: admin/src/Admin/Settings/Registry.php:212
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 "Telefone, die bereits validiert sind und in Workflows verwendet werden "
 "können."
 
-#: admin/src/Admin/Settings/Registry.php:579
+#: admin/src/Admin/Settings/Registry.php:591
 msgid "PHP version"
 msgstr "PHP-Version"
 
@@ -7149,7 +7265,7 @@ msgstr "Plugin-Einstellungen"
 msgid "plugin_version missing; version normalized automatically."
 msgstr "plugin_version fehlt; Version wurde automatisch normalisiert."
 
-#: admin/src/Admin/Settings/Registry.php:101
+#: admin/src/Admin/Settings/Registry.php:113
 msgid "Plugin's basic preferences, WhatsApp connection, and notifications."
 msgstr ""
 "Grundlegende Einstellungen des Plugins, WhatsApp-Verbindung und "
@@ -7274,12 +7390,12 @@ msgstr "Gekaufte Produkte"
 msgid "Qatar"
 msgstr "Katar"
 
-#: app/src/composables/useMessageHistory.ts:77
-#: app/src/pages/history/HistoryPage.vue:76
+#: app/src/composables/useMessageHistory.ts:79
+#: app/src/pages/history/HistoryPage.vue:81
 msgid "Queued"
 msgstr "In Warteschlange"
 
-#: admin/src/Admin/Settings/Registry.php:205
+#: admin/src/Admin/Settings/Registry.php:217
 msgid "Quick Tools"
 msgstr "Schnelle Werkzeuge"
 
@@ -7297,6 +7413,15 @@ msgstr ""
 "Reagiere mit einem Emoji auf eine Nachricht, die der Kontakt gesendet hat. "
 "Nur Cloud-API."
 
+#: app/src/composables/useMessageHistory.ts:77
+#: app/src/pages/history/HistoryPage.vue:79
+msgid "Read"
+msgstr "Gelesen"
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:53
+msgid "Read at"
+msgstr "Gelesen am"
+
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:154
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:173
 msgid "Reason"
@@ -7307,7 +7432,9 @@ msgid "Reason (optional)"
 msgstr "Grund (optional)"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:68
+#: app/src/builder/actions/definitions/condition.ts:141
 #: app/src/builder/actions/definitions/resendEmail.ts:58
+#: app/src/builder/actions/settings/ConditionSettings.vue:215
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:217
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:32
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:35
@@ -7315,12 +7442,12 @@ msgstr "Grund (optional)"
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:254
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:257
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:446
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:449
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
-#: app/src/pages/history/components/HistoryDetailsModal.vue:34
-#: app/src/pages/history/HistoryPage.vue:373
+#: app/src/pages/history/components/HistoryDetailsModal.vue:64
+#: app/src/pages/history/HistoryPage.vue:378
 #: app/src/pages/queue/QueuePage.vue:301
 #: app/src/pages/settings/components/cards/PhoneActions.vue:201
 msgid "Recipient"
@@ -7345,7 +7472,7 @@ msgstr ""
 "Abmeldung hat immer Vorrang, und eine Einwilligung ersetzt niemals eine "
 "frühere Abmeldung."
 
-#: admin/src/Admin/Settings/Registry.php:261
+#: admin/src/Admin/Settings/Registry.php:273
 msgid ""
 "Record every dispatched WhatsApp message so it can be audited from the "
 "History screen."
@@ -7367,7 +7494,7 @@ msgstr "Einwilligung aufzeichnen"
 msgid "Record opt-out"
 msgstr "Abmeldung aufzeichnen"
 
-#: admin/src/Cloud_Sync/Consent.php:680
+#: admin/src/Cloud_Sync/Consent.php:735
 msgid "Recorded on"
 msgstr "Aufgezeichnet am"
 
@@ -7425,7 +7552,7 @@ msgstr ""
 "Registrierte Joinotify-Nummer, die verwendet wird, um OTP-Codes zu liefern. "
 "Lassen Sie den ersten verfügbaren Absender, um den Standard zu verwenden."
 
-#: admin/src/Admin/Settings/Registry.php:199
+#: admin/src/Admin/Settings/Registry.php:211
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:59
 msgid "Registered senders"
 msgstr "Registrierte Absender"
@@ -7468,7 +7595,7 @@ msgstr "Von der Sperrliste entfernen?"
 msgid "Remove group"
 msgstr "Gruppe entfernen"
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:163
+#: app/src/components/fields/JoinotifyApiKeyField.vue:167
 msgid "Remove key"
 msgstr "Schlüssel entfernen"
 
@@ -7490,7 +7617,7 @@ msgstr "Variable entfernen"
 msgid "Removed from the suppression list."
 msgstr "Von der Sperrliste entfernt."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:192
+#: app/src/components/fields/JoinotifyApiKeyField.vue:199
 msgid ""
 "Removing the key stops all message delivery from this site. The numbers "
 "already imported are kept."
@@ -7498,7 +7625,7 @@ msgstr ""
 "Das Entfernen des Schlüssels stoppt die gesamte Nachrichtenübermittlung von "
 "dieser Seite. Die bereits importierten Nummern bleiben erhalten."
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:173
+#: app/src/components/fields/JoinotifyApiKeyField.vue:177
 msgid "Removing…"
 msgstr "Entferne…"
 
@@ -7513,6 +7640,10 @@ msgstr "Zahlung für die Verlängerung erhalten"
 #: admin/src/Integrations/Elementor_Forms.php:157
 msgid "Replace information with "
 msgstr "Informationen ersetzen durch "
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:229
+msgid "Reply payload"
+msgstr "Payload der Antwort"
 
 #: admin/src/Validations/Country_Codes.php:98
 msgid "Republic of the Congo"
@@ -7571,7 +7702,7 @@ msgstr "Einstellungen zurücksetzen"
 msgid "Resize"
 msgstr "Größe ändern"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:37
+#: app/src/pages/history/components/HistoryDetailsModal.vue:67
 msgid "Response code"
 msgstr "Antwortcode"
 
@@ -7600,7 +7731,7 @@ msgstr ""
 "Sie \"Jedes digitale Produkt\", um für jede heruntergeladene Datei zu "
 "laufen."
 
-#: admin/src/Admin/Settings/Registry.php:878
+#: admin/src/Admin/Settings/Registry.php:890
 msgid "Retries are turned off, so this wait is not used."
 msgstr "Wiederholungen sind deaktiviert, daher wird diese Wartezeit nicht verwendet."
 
@@ -7640,7 +7771,7 @@ msgstr ""
 "Vollständige Lieferadresse des Benutzers abrufen (Format in den "
 "WooCommerce-Optionen konfigurierbar)."
 
-#: admin/src/Admin/History/Registry.php:349
+#: admin/src/Admin/History/Registry.php:373
 msgid "Retry queue"
 msgstr "Warteschlange erneut versuchen"
 
@@ -7684,7 +7815,7 @@ msgstr ""
 "Leiten Sie diesen Knoten an eine bestimmte Engine weiter. Lassen Sie die "
 "Standardeinstellung, um den Anbieter aus den Einstellungen zu verwenden."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:198
+#: app/src/builder/actions/settings/ConditionSettings.vue:209
 msgid "Rule data"
 msgstr "Regel-Daten"
 
@@ -7798,7 +7929,7 @@ msgstr "Speichern Sie den Workflow, bevor Sie ihn aktivieren."
 msgid "Saved"
 msgstr "Gespeichert"
 
-#: app/src/components/fields/JoinotifyApiKeyField.vue:152
+#: app/src/components/fields/JoinotifyApiKeyField.vue:156
 msgid "Saved Joinotify API key"
 msgstr "Gespeicherter Joinotify-API-Schlüssel"
 
@@ -7894,7 +8025,7 @@ msgstr "Nach Nachricht, Kontext oder Hook suchen…"
 msgid "Search products"
 msgstr "Produkte suchen"
 
-#: app/src/pages/history/HistoryPage.vue:280
+#: app/src/pages/history/HistoryPage.vue:285
 msgid "Search recipient or sender"
 msgstr "Empfänger oder Absender suchen"
 
@@ -7986,12 +8117,12 @@ msgstr "Die Kontakte mit diesem Tag anzeigen"
 #: app/src/components/workflows/WorkflowTable.vue:71
 #: app/src/components/workflows/WorkflowTableRow.vue:51
 #: app/src/pages/contacts/tabs/ContactsTab.vue:301
-#: app/src/pages/history/HistoryPage.vue:393
+#: app/src/pages/history/HistoryPage.vue:398
 #: app/src/pages/queue/QueuePage.vue:311
 msgid "Select"
 msgstr "Auswählen"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:68
+#: app/src/builder/actions/settings/ConditionSettings.vue:75
 msgid "Select a condition"
 msgstr "Bedingung auswählen"
 
@@ -8012,11 +8143,11 @@ msgstr "Wählen Sie einen Knoten aus, um dessen Einstellungen zu bearbeiten."
 msgid "Select a sender"
 msgstr "Absender auswählen"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:273
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:465
 msgid "Select a template"
 msgstr "Wählen Sie eine Vorlage"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:223
+#: app/src/builder/actions/settings/ConditionSettings.vue:249
 msgid "Select a value"
 msgstr "Wert auswählen"
 
@@ -8032,7 +8163,7 @@ msgstr "Alle sichtbaren Kontakte auswählen"
 msgid "Select all visible items"
 msgstr "Alle sichtbaren Elemente auswählen"
 
-#: app/src/pages/history/HistoryPage.vue:368
+#: app/src/pages/history/HistoryPage.vue:373
 msgid "Select all visible messages"
 msgstr "Alle sichtbaren Nachrichten auswählen"
 
@@ -8048,7 +8179,7 @@ msgstr "Entität auswählen"
 msgid "Select an entity and inform the meta key."
 msgstr "Wählen Sie eine Entität aus und geben Sie den Metaschlüssel an."
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:79
+#: app/src/builder/actions/settings/ConditionSettings.vue:86
 msgid "Select an operator"
 msgstr "Wählen Sie einen Operator"
 
@@ -8067,6 +8198,7 @@ msgid "Select file"
 msgstr "Datei auswählen"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:325
 msgid "Select media"
 msgstr "Medien auswählen"
 
@@ -8106,7 +8238,7 @@ msgstr ""
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr "Senden Sie Ihrem Benutzer einen Rabattgutschein per WhatsApp-Textnachricht."
 
-#: admin/src/Integrations/Whatsapp.php:186
+#: admin/src/Integrations/Whatsapp.php:235
 msgid "Send a media message (image, file, document, and audio) with WhatsApp."
 msgstr ""
 "Senden Sie eine Mediennachricht (Bild, Datei, Dokument und Audio) mit "
@@ -8149,7 +8281,7 @@ msgstr ""
 "Senden Sie eine Textnachricht an einen Telegram-Chat, eine Gruppe oder "
 "einen Kanal."
 
-#: admin/src/Integrations/Whatsapp.php:173
+#: admin/src/Integrations/Whatsapp.php:222
 msgid "Send a text message via WhatsApp."
 msgstr "Senden Sie eine Textnachricht über WhatsApp."
 
@@ -8173,11 +8305,11 @@ msgstr "Senden Sie eine WhatsApp-Textnachricht."
 msgid "Send again"
 msgstr "Erneut senden"
 
-#: app/src/builder/actions/definitions/whatsappTemplate.ts:65
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:90
 msgid "Send an approved template through the official WhatsApp Cloud API."
 msgstr "Senden Sie eine genehmigte Vorlage über die offizielle WhatsApp Cloud-API."
 
-#: admin/src/Integrations/Whatsapp.php:203
+#: admin/src/Integrations/Whatsapp.php:252
 msgid ""
 "Send an approved template through the official WhatsApp Cloud API. Required "
 "to start a conversation or reply outside the 24-hour window."
@@ -8288,19 +8420,20 @@ msgstr "Webhook senden"
 #: admin/src/Integrations/Whatsapp_Interactive.php:61
 #: app/src/builder/actions/definitions/whatsappAiMessage.ts:60
 #: app/src/builder/actions/definitions/whatsappMedia.ts:63
-#: app/src/builder/actions/definitions/whatsappTemplate.ts:79
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:105
 #: app/src/builder/actions/definitions/whatsappText.ts:56
+#: app/src/builder/actions/settings/ConditionSettings.vue:224
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:212
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:74
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:78
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:87
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:245
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:249
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:437
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:441
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
-#: app/src/pages/history/components/HistoryDetailsModal.vue:33
-#: app/src/pages/history/HistoryPage.vue:374
+#: app/src/pages/history/components/HistoryDetailsModal.vue:63
+#: app/src/pages/history/HistoryPage.vue:379
 #: app/src/pages/settings/components/cards/PhoneActions.vue:188
 msgid "Sender"
 msgstr "Absender"
@@ -8346,7 +8479,7 @@ msgstr ""
 "nur Felder ausgefüllt, die in Joinotify leer sind: was jemand im Panel "
 "eingegeben hat, hat Vorrang."
 
-#: admin/src/Admin/Settings/Registry.php:937
+#: admin/src/Admin/Settings/Registry.php:949
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
@@ -8375,7 +8508,7 @@ msgid "Senegal"
 msgstr "Senegal"
 
 #: app/src/composables/useMessageHistory.ts:75
-#: app/src/pages/history/HistoryPage.vue:74
+#: app/src/pages/history/HistoryPage.vue:77
 msgid "Sent"
 msgstr "Gesendet"
 
@@ -8383,9 +8516,15 @@ msgstr "Gesendet"
 msgid "Sent (7 days)"
 msgstr "Gesendet (7 Tage)"
 
-#: admin/src/Cloud_Sync/Consent.php:675
+#: admin/src/Cloud_Sync/Consent.php:730
 msgid "Sent to Joinotify"
 msgstr "An Joinotify gesendet"
+
+#: app/src/pages/history/HistoryPage.vue:414
+msgid "Sent while the contact had not replied in the last 24 hours."
+msgstr ""
+"Gesendet, während der Kontakt in den letzten 24 Stunden nicht geantwortet "
+"hatte."
 
 #: admin/src/Validations/Country_Codes.php:149
 msgid "Serbia"
@@ -8394,6 +8533,10 @@ msgstr "Serbien"
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:85
 msgid "Server"
 msgstr "Server"
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:45
+msgid "Session window"
+msgstr "Servicefenster"
 
 #: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:134
 msgid ""
@@ -8417,7 +8560,7 @@ msgstr "Joinotify einrichten"
 
 #: admin/src/Admin/Menu.php:104
 #: admin/src/Admin/Menu.php:105
-#: admin/src/Core/Init.php:542
+#: admin/src/Core/Init.php:541
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:287
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -8445,7 +8588,7 @@ msgstr "Einstellungen importiert."
 msgid "Settings reset successfully!"
 msgstr "Einstellungen erfolgreich zurückgesetzt!"
 
-#: admin/src/Admin/Settings/Registry.php:680
+#: admin/src/Admin/Settings/Registry.php:692
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
@@ -8467,7 +8610,7 @@ msgstr "Seychellen"
 msgid "Shade %s"
 msgstr "Schatten %s"
 
-#: admin/src/Admin/Settings/Registry.php:250
+#: admin/src/Admin/Settings/Registry.php:262
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:40
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:51
 msgid "Share anonymous usage data"
@@ -8583,9 +8726,9 @@ msgstr "Sortieren nach"
 #: app/src/builder/components/base/AttachmentsField.vue:172
 #: app/src/pages/contacts/tabs/ContactsTab.vue:189
 #: app/src/pages/contacts/tabs/ContactsTab.vue:286
-#: app/src/pages/history/components/HistoryDetailsModal.vue:32
-#: app/src/pages/history/HistoryPage.vue:251
-#: app/src/pages/history/HistoryPage.vue:376
+#: app/src/pages/history/components/HistoryDetailsModal.vue:62
+#: app/src/pages/history/HistoryPage.vue:256
+#: app/src/pages/history/HistoryPage.vue:381
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:210
 msgid "Source"
 msgstr "Quelle"
@@ -8615,7 +8758,7 @@ msgstr "Südsudan"
 msgid "Spain"
 msgstr "Spanien"
 
-#: app/src/builder/actions/definitions/condition.ts:107
+#: app/src/builder/actions/definitions/condition.ts:113
 msgid "Split the workflow into true and false branches."
 msgstr "Teilen Sie den Workflow in wahre und falsche Zweige auf."
 
@@ -8627,7 +8770,7 @@ msgstr "Sri Lanka"
 msgid "Start automating your site from a template"
 msgstr "Beginnen Sie mit der Automatisierung Ihrer Website von einer Vorlage"
 
-#: app/src/pages/history/HistoryPage.vue:264
+#: app/src/pages/history/HistoryPage.vue:269
 msgid "Start date"
 msgstr "Startdatum"
 
@@ -8647,10 +8790,10 @@ msgstr "Mit einer Vorlage beginnen"
 msgid "starts with"
 msgstr "beginnt mit"
 
-#: admin/src/Cloud_Sync/Consent.php:679
+#: admin/src/Cloud_Sync/Consent.php:734
 #: app/src/components/workflows/WorkflowTableHeader.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:31
-#: app/src/pages/history/HistoryPage.vue:377
+#: app/src/pages/history/components/HistoryDetailsModal.vue:40
+#: app/src/pages/history/HistoryPage.vue:382
 #: app/src/pages/queue/QueuePage.vue:302
 msgid "Status"
 msgstr "Status"
@@ -8671,7 +8814,7 @@ msgstr "Sticker-URL"
 msgid "Stop"
 msgstr "Stop"
 
-#: admin/src/Admin/Builder/Registry.php:577
+#: admin/src/Admin/Builder/Registry.php:579
 #: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
 msgstr "Automatisierung stoppen"
@@ -8691,7 +8834,7 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr "Stoppt den Workflow sofort"
 
-#: admin/src/Admin/Settings/Registry.php:279
+#: admin/src/Admin/Settings/Registry.php:291
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -8782,7 +8925,7 @@ msgstr "Schweiz"
 msgid "Sync"
 msgstr "Synchronisieren"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:285
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:477
 msgid "Sync now"
 msgstr "Jetzt synchronisieren"
 
@@ -8806,7 +8949,7 @@ msgstr "Synchronisierung pausiert"
 msgid "Sync templates with your account"
 msgstr "Synchronisieren Sie Vorlagen mit Ihrem Konto"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:285
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:477
 #: app/src/components/fields/WhatsappTemplateField.vue:186
 msgid "Syncing…"
 msgstr "Synchronisiere…"
@@ -8820,7 +8963,7 @@ msgstr "Syrien"
 msgid "System message"
 msgstr "Systemnachricht"
 
-#: admin/src/Admin/Settings/Registry.php:297
+#: admin/src/Admin/Settings/Registry.php:309
 msgid "System status"
 msgstr "Systemstatus"
 
@@ -8975,12 +9118,12 @@ msgstr "Telegram: Nachricht"
 msgid "Temperature"
 msgstr "Temperatur"
 
-#: app/src/builder/actions/definitions/whatsappTemplate.ts:80
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:265
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:272
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:106
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:457
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:464
 #: app/src/pages/builder/BuilderPage.vue:938
-#: app/src/pages/history/components/HistoryDetailsModal.vue:121
-#: app/src/pages/history/HistoryPage.vue:94
+#: app/src/pages/history/components/HistoryDetailsModal.vue:151
+#: app/src/pages/history/HistoryPage.vue:99
 msgid "Template"
 msgstr "Vorlage"
 
@@ -8992,11 +9135,11 @@ msgstr "Vorlagen-Sprache"
 msgid "Template messages require the WhatsApp Cloud API transport."
 msgstr "Vorlagen-Nachrichten erfordern den WhatsApp Cloud API-Transport."
 
-#: admin/src/Admin/History/Registry.php:350
+#: admin/src/Admin/History/Registry.php:374
 msgid "Test message"
 msgstr "Testnachricht"
 
-#: admin/src/Admin/Settings/Registry.php:117
+#: admin/src/Admin/Settings/Registry.php:129
 msgid "Test phone"
 msgstr "Testtelefon"
 
@@ -9010,7 +9153,7 @@ msgid "Test sender"
 msgstr "Testsender"
 
 #: app/src/pages/contacts/labels.ts:143
-#: app/src/pages/history/HistoryPage.vue:91
+#: app/src/pages/history/HistoryPage.vue:96
 #: app/vite-plugins/wporg-i18n-calls.js:8
 #: app/vite-plugins/wporg-i18n-calls.js:13
 msgid "Text"
@@ -9105,6 +9248,15 @@ msgstr ""
 msgid "The API did not return a signing secret for this endpoint."
 msgstr "Die API hat kein Signaturgeheimnis für diesen Endpunkt zurückgegeben."
 
+#: admin/src/Api/Connect.php:237
+#: admin/src/Rest/Cloud_Connect_Key.php:85
+msgid ""
+"The API key of this site is defined in wp-config.php "
+"(JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there."
+msgstr ""
+"Der API-Schlüssel dieser Website ist in wp-config.php "
+"(JOINOTIFY_CLOUD_API_TOKEN) festgelegt und kann nur dort geändert werden."
+
 #: admin/src/Api/Cloud_Contacts.php:332
 msgid ""
 "The API key of this site is not allowed to do this. Operations on the whole "
@@ -9166,7 +9318,7 @@ msgstr ""
 "Die Konfiguration in der Datei wird mit Ihren aktuellen Einstellungen "
 "zusammengeführt. Dies kann nicht rückgängig gemacht werden."
 
-#: admin/src/Api/Connect.php:87
+#: admin/src/Api/Connect.php:88
 msgid "The connection response was incomplete. Start the connection again."
 msgstr "Die Verbindungsantwort war unvollständig. Starten Sie die Verbindung erneut."
 
@@ -9189,7 +9341,7 @@ msgstr ""
 "Integrationen und durch Ihre Workflows hinzugefügt wurden, die Felder und "
 "Tags, die sie organisieren, und die daraus gebauten Zielgruppen."
 
-#: admin/src/Cloud_Sync/Consent.php:750
+#: admin/src/Cloud_Sync/Consent.php:805
 msgid ""
 "The contact could not be erased on Joinotify now. Erase it from the "
 "Joinotify panel, or run this request again later."
@@ -9260,7 +9412,7 @@ msgstr "Die genaue Payload für diese Seite gerade jetzt"
 msgid "The existing contact was updated."
 msgstr "Der vorhandene Kontakt wurde aktualisiert."
 
-#: app/src/composables/useMessageHistory.ts:375
+#: app/src/composables/useMessageHistory.ts:377
 #. translators: 1: number of exported records, 2: number of records matching the filters
 msgid "The export holds only the %1$d most recent of the %2$d matching records."
 msgstr ""
@@ -9305,7 +9457,7 @@ msgstr ""
 "verfügbar. Dieser Flow wird nicht verarbeitet, bis die Integration wieder "
 "verfügbar ist."
 
-#: admin/src/Api/Send_Error.php:106
+#: admin/src/Api/Send_Error.php:114
 msgid ""
 "The Joinotify account is not connected, so there is no way to reach the "
 "WhatsApp API. Connect it under Joinotify → Settings."
@@ -9314,9 +9466,25 @@ msgstr ""
 "die WhatsApp-API zu erreichen. Verbinden Sie es unter Joinotify → "
 "Einstellungen."
 
-#: admin/src/Api/Connect.php:185
+#: admin/src/Api/Transport.php:199
+msgid ""
+"The Joinotify account needs attention before it can send. Open the panel to "
+"resolve the billing."
+msgstr ""
+"Das Joinotify-Konto erfordert Ihre Aufmerksamkeit, bevor es senden kann. "
+"Öffnen Sie das Panel, um die Abrechnung zu klären."
+
+#: admin/src/Api/Transport.php:193
+msgid "The Joinotify API could not be reached."
+msgstr "Die Joinotify-API war nicht erreichbar."
+
+#: admin/src/Api/Connect.php:186
 msgid "The Joinotify API did not return a key for this site."
 msgstr "Die Joinotify API hat keinen Schlüssel für diese Seite zurückgegeben."
+
+#: admin/src/Api/Transport.php:196
+msgid "The Joinotify API refused the key of this site."
+msgstr "Die Joinotify-API hat den Schlüssel dieser Website abgelehnt."
 
 #: app/src/components/fields/CloudSyncStatusField.vue:42
 msgid ""
@@ -9329,11 +9497,11 @@ msgstr ""
 "Einstellungen → Anwendungen; die Synchronisierung wird automatisch "
 "fortgesetzt."
 
-#: admin/src/Api/Connect.php:362
+#: admin/src/Api/Connect.php:376
 msgid "The Joinotify panel did not return an API key."
 msgstr "Das Joinotify-Panel hat keinen API-Schlüssel zurückgegeben."
 
-#: admin/src/Api/Connect.php:353
+#: admin/src/Api/Connect.php:367
 msgid "The Joinotify panel refused this connection. Start the connection again."
 msgstr ""
 "Das Joinotify-Panel hat diese Verbindung abgelehnt. Starten Sie die "
@@ -9434,7 +9602,7 @@ msgid_plural "The resend of %d messages was cancelled."
 msgstr[0] "Der erneute Versand von %d Nachricht wurde abgebrochen."
 msgstr[1] "Der erneute Versand von %d Nachrichten wurde abgebrochen."
 
-#: admin/src/Api/Send_Error.php:104
+#: admin/src/Api/Send_Error.php:112
 msgid "The resend of this message was cancelled from the history screen."
 msgstr ""
 "Das erneute Senden dieser Nachricht wurde vom Verlauf-Bildschirm "
@@ -9452,7 +9620,7 @@ msgstr "Der geplante Artikel wurde storniert."
 msgid "The selected channel cannot reach this recipient."
 msgstr "Der ausgewählte Kanal kann diesen Empfänger nicht erreichen."
 
-#: app/src/pages/history/HistoryPage.vue:193
+#: app/src/pages/history/HistoryPage.vue:198
 msgid ""
 "The selected messages will not be sent again. Records without a pending "
 "resend are left untouched."
@@ -9464,7 +9632,7 @@ msgstr ""
 msgid "The selected OTP delivery channel is not configured."
 msgstr "Der ausgewählte OTP-Lieferkanal ist nicht konfiguriert."
 
-#: app/src/pages/history/HistoryPage.vue:196
+#: app/src/pages/history/HistoryPage.vue:201
 msgid ""
 "The selected records will be permanently removed. This action cannot be "
 "undone."
@@ -9472,7 +9640,7 @@ msgstr ""
 "Die ausgewählten Datensätze werden dauerhaft entfernt. Diese Aktion kann "
 "nicht rückgängig gemacht werden."
 
-#: admin/src/Admin/Builder/Registry.php:1125
+#: admin/src/Admin/Builder/Registry.php:1127
 msgid "The selected template was not found."
 msgstr "Die ausgewählte Vorlage wurde nicht gefunden."
 
@@ -9490,7 +9658,11 @@ msgstr ""
 "Die ausgewählten Workflows werden dauerhaft entfernt und diese Aktion kann "
 "nicht rückgängig gemacht werden."
 
-#: admin/src/Api/Send_Error.php:105
+#: admin/src/Api/Transport.php:181
+msgid "The sender is not one of the WhatsApp numbers connected to Joinotify."
+msgstr "Der Absender ist keine der mit Joinotify verbundenen WhatsApp-Nummern."
+
+#: admin/src/Api/Send_Error.php:113
 msgid ""
 "The sender number is not connected to this site. Check it under Joinotify → "
 "Settings → Phone numbers."
@@ -9510,7 +9682,7 @@ msgstr "Die Sperrliste ist leer"
 msgid "The sync will try again in a moment."
 msgstr "Die Synchronisierung wird in einem Moment erneut versucht."
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:160
+#: app/src/pages/history/components/HistoryDetailsModal.vue:190
 msgid ""
 "The template text was not available when this message was sent, so its name "
 "and variables are shown instead."
@@ -9561,7 +9733,7 @@ msgstr "Die Variable \"%s\" existiert bereits. Wählen Sie einen anderen Namen."
 msgid "The webhook endpoint could not be registered."
 msgstr "Der Webhook-Endpunkt konnte nicht registriert werden."
 
-#: admin/src/Api/Send_Error.php:109
+#: admin/src/Api/Send_Error.php:117
 msgid ""
 "The WhatsApp API could not find the sender number. Sync your numbers under "
 "Joinotify → Settings → Phone numbers."
@@ -9569,7 +9741,7 @@ msgstr ""
 "Die WhatsApp API konnte die Absendernummer nicht finden. Synchronisieren "
 "Sie Ihre Nummern unter Joinotify → Einstellungen → Telefonnummern."
 
-#: admin/src/Api/Send_Error.php:110
+#: admin/src/Api/Send_Error.php:118
 msgid ""
 "The WhatsApp API rate limit was reached. The message will be retried "
 "shortly."
@@ -9577,7 +9749,7 @@ msgstr ""
 "Das WhatsApp API-Rate-Limit wurde erreicht. Die Nachricht wird in Kürze "
 "erneut versucht."
 
-#: admin/src/Api/Send_Error.php:108
+#: admin/src/Api/Send_Error.php:116
 msgid ""
 "The WhatsApp API refused this request. The number may not be authorized to "
 "send on this account."
@@ -9585,7 +9757,7 @@ msgstr ""
 "Die WhatsApp API hat diese Anfrage abgelehnt. Die Nummer ist möglicherweise "
 "nicht autorisiert, von diesem Konto aus zu senden."
 
-#: admin/src/Api/Send_Error.php:107
+#: admin/src/Api/Send_Error.php:115
 msgid ""
 "The WhatsApp API rejected the credentials. Reconnect the Joinotify account "
 "under Joinotify → Settings."
@@ -9606,11 +9778,11 @@ msgstr ""
 msgid "The workflow"
 msgstr "Der Workflow"
 
-#: admin/src/Admin/Builder/Registry.php:1514
+#: admin/src/Admin/Builder/Registry.php:1516
 msgid "The workflow content is invalid."
 msgstr "Der Workflow-Inhalt ist ungültig."
 
-#: admin/src/Admin/Builder/Registry.php:1534
+#: admin/src/Admin/Builder/Registry.php:1536
 msgid "The workflow has more than one trigger."
 msgstr "Der Workflow hat mehr als einen Trigger."
 
@@ -9618,7 +9790,7 @@ msgstr "Der Workflow hat mehr als einen Trigger."
 msgid "The workflow has no content to test."
 msgstr "Der Workflow hat keinen Inhalt zum Testen."
 
-#: admin/src/Admin/Builder/Registry.php:1528
+#: admin/src/Admin/Builder/Registry.php:1530
 msgid "The workflow has no trigger."
 msgstr "Der Workflow hat keinen Trigger."
 
@@ -9626,7 +9798,7 @@ msgstr "Der Workflow hat keinen Trigger."
 msgid "The workflow is not published."
 msgstr "Der Workflow ist nicht veröffentlicht."
 
-#: admin/src/Admin/Builder/Registry.php:1540
+#: admin/src/Admin/Builder/Registry.php:1542
 msgid "The workflow trigger is not configured."
 msgstr "Der Workflow-Trigger ist nicht konfiguriert."
 
@@ -9640,7 +9812,7 @@ msgstr "Es sind erforderliche Einstellungen nicht konfiguriert"
 msgid "These contacts agreed to receive marketing messages"
 msgstr "Diese Kontakte haben zugestimmt, Marketingnachrichten zu erhalten"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:153
+#: app/src/builder/actions/settings/ConditionSettings.vue:164
 msgid ""
 "This action creates true and false branches. Each branch can contain its "
 "own nested actions."
@@ -9701,7 +9873,7 @@ msgstr ""
 "Diese Aktion stoppt den Workflow sofort. Es gibt keine bearbeitbaren "
 "Einstellungen."
 
-#: admin/src/Api/Connect.php:93
+#: admin/src/Api/Connect.php:94
 msgid ""
 "This connection attempt expired or did not start here. Start the connection "
 "again."
@@ -9709,7 +9881,7 @@ msgstr ""
 "Dieser Verbindungsversuch ist abgelaufen oder wurde hier nicht gestartet. "
 "Starten Sie die Verbindung erneut."
 
-#: admin/src/Api/Send_Error.php:103
+#: admin/src/Api/Send_Error.php:111
 msgid ""
 "This contact has not replied in the last 24 hours. WhatsApp only delivers "
 "free-form messages inside that window — use an approved template message to "
@@ -9751,7 +9923,15 @@ msgstr "Diese Integration hat keine zusätzlichen Einstellungen."
 msgid "This integration will be available soon."
 msgstr "Diese Integration wird bald verfügbar sein."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:191
+#: app/src/components/fields/JoinotifyApiKeyField.vue:196
+msgid ""
+"This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can "
+"only be changed there."
+msgstr ""
+"Dieser Schlüssel ist in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) "
+"festgelegt und kann nur dort geändert werden."
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:383
 msgid "This list may be out of date."
 msgstr "Diese Liste könnte veraltet sein."
 
@@ -9774,7 +9954,7 @@ msgstr ""
 "bedeutet nicht, dass sie wieder einwilligen: Sie bleiben abgemeldet, bis "
 "sie erneut zustimmen."
 
-#: admin/src/Admin/Settings/Registry.php:426
+#: admin/src/Admin/Settings/Registry.php:438
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 "Dieses Plugin muss installiert und aktiv sein, um diese Integration zu "
@@ -9815,9 +9995,13 @@ msgstr ""
 "verschoben wurde, verbinden Sie sie erneut im WhatsApp-Kartenbereich von "
 "Einstellungen → Anwendungen."
 
-#: admin/src/Rest/Cloud_Connect_Key.php:92
+#: admin/src/Rest/Cloud_Connect_Key.php:100
 msgid "This site is no longer connected to Joinotify."
 msgstr "Diese Seite ist nicht mehr mit Joinotify verbunden."
+
+#: admin/src/Api/Transport.php:189
+msgid "This site is not connected to a Joinotify account."
+msgstr "Diese Website ist mit keinem Joinotify-Konto verbunden."
 
 #: app/src/components/fields/CloudSyncStatusField.vue:44
 msgid ""
@@ -9832,13 +10016,22 @@ msgstr ""
 msgid "This step needs an open conversation"
 msgstr "Dieser Schritt benötigt ein offenes Gespräch"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:87
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:115
 msgid "This template is still awaiting Meta approval and cannot be delivered yet."
 msgstr ""
 "Diese Vorlage wartet noch auf die Genehmigung von Meta und kann noch nicht "
 "geliefert werden."
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:147
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:109
+msgid ""
+"This template still has a required value to fill: a header file or "
+"location, a coupon code or an offer expiration."
+msgstr ""
+"Diese Vorlage hat noch einen Pflichtwert, der ausgefüllt werden muss: eine "
+"Datei oder einen Standort für die Kopfzeile, einen Gutscheincode oder den "
+"Ablauf des Angebots."
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:177
 msgid "This template was sent without variables."
 msgstr "Diese Vorlage wurde ohne Variablen gesendet."
 
@@ -9853,7 +10046,7 @@ msgstr "Diese Textvariable funktioniert möglicherweise nicht in diesem Kontext"
 msgid "This trigger depends on a plugin"
 msgstr "Dieser Trigger hängt von einem Plugin ab"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:167
+#: app/src/builder/actions/settings/ConditionSettings.vue:178
 msgid "This trigger does not expose any conditions to evaluate."
 msgstr "Dieser Trigger gibt keine Bedingungen zur Bewertung an."
 
@@ -10030,11 +10223,11 @@ msgid "Tip dismissed."
 msgstr "Tipp abgelehnt."
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:182
-#: app/src/builder/actions/settings/ConditionSettings.vue:174
+#: app/src/builder/actions/settings/ConditionSettings.vue:185
 msgid "Title"
 msgstr "Titel"
 
-#: app/src/pages/history/HistoryPage.vue:270
+#: app/src/pages/history/HistoryPage.vue:275
 msgid "To"
 msgstr "An"
 
@@ -10381,6 +10574,12 @@ msgstr ""
 "Zu viele Code-Anfragen. Bitte warten Sie ein paar Minuten und versuchen Sie "
 "es erneut."
 
+#: admin/src/Api/Transport.php:202
+msgid "Too many messages were sent in a short time. Try again later."
+msgstr ""
+"Es wurden zu viele Nachrichten in kurzer Zeit gesendet. Versuchen Sie es "
+"später erneut."
+
 #: app/src/pages/contacts/context.ts:56
 #. translators: %d: seconds to wait
 msgid "Too many requests to the Joinotify platform. Try again in %d seconds."
@@ -10453,7 +10652,7 @@ msgstr "Trigger für den WordPress-Kern."
 msgid "True"
 msgstr "Wahr"
 
-#: app/src/builder/actions/definitions/condition.ts:117
+#: app/src/builder/actions/definitions/condition.ts:123
 msgid "True branch"
 msgstr "Wahr-Zweig"
 
@@ -10464,7 +10663,7 @@ msgstr "Wahr-Zweig"
 #: app/src/pages/contacts/tabs/ContactsTab.vue:216
 #: app/src/pages/contacts/tabs/SourcesTab.vue:205
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:162
-#: app/src/pages/history/HistoryPage.vue:303
+#: app/src/pages/history/HistoryPage.vue:308
 #: app/src/pages/queue/QueuePage.vue:241
 #: app/src/pages/workflows/WorkflowsPage.vue:85
 msgid "Try again"
@@ -10501,8 +10700,8 @@ msgstr "Tuvalu"
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:106
 #: app/src/pages/contacts/components/FieldFormModal.vue:149
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:153
-#: app/src/pages/history/components/HistoryDetailsModal.vue:35
-#: app/src/pages/history/HistoryPage.vue:375
+#: app/src/pages/history/components/HistoryDetailsModal.vue:65
+#: app/src/pages/history/HistoryPage.vue:380
 msgid "Type"
 msgstr "Typ"
 
@@ -10511,7 +10710,7 @@ msgid "Type at least 2 characters…"
 msgstr "Geben Sie mindestens 2 Zeichen ein…"
 
 #: admin/src/Admin/Builder/Registry.php:495
-#: app/src/builder/actions/definitions/condition.ts:126
+#: app/src/builder/actions/definitions/condition.ts:132
 msgid "Type label"
 msgstr "Bezeichnung eingeben"
 
@@ -10588,9 +10787,14 @@ msgstr "Vereinigtes Königreich"
 msgid "United States"
 msgstr "Vereinigte Staaten"
 
+#: admin/src/Admin/Builder/Registry.php:1711
 #: app/src/pages/contacts/labels.ts:26
 msgid "Unknown"
 msgstr "Unbekannt"
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:33
+msgid "Unknown (delivery reports are not set up)"
+msgstr "Unbekannt (Zustellberichte sind nicht eingerichtet)"
 
 #: admin/src/Rest/Cloud_Sync_Action.php:82
 msgid "Unknown action."
@@ -10674,15 +10878,15 @@ msgstr "URL"
 msgid "Uruguay"
 msgstr "Uruguay"
 
-#: admin/src/Admin/Onboarding/Registry.php:127
+#: admin/src/Admin/Onboarding/Registry.php:128
 msgid "Usage data"
 msgstr "Nutzungsdaten"
 
-#: admin/src/Core/Workflow_Processor.php:2087
+#: admin/src/Core/Workflow_Processor.php:2346
 msgid "Use a casual and relaxed tone."
 msgstr "Verwenden Sie einen lässigen und entspannten Ton."
 
-#: admin/src/Core/Workflow_Processor.php:2086
+#: admin/src/Core/Workflow_Processor.php:2345
 msgid "Use a formal and professional tone."
 msgstr "Verwenden Sie einen formellen und professionellen Ton."
 
@@ -10690,7 +10894,7 @@ msgstr "Verwenden Sie einen formellen und professionellen Ton."
 msgid "Use a template"
 msgstr "Verwenden Sie eine Vorlage"
 
-#: admin/src/Core/Workflow_Processor.php:2088
+#: admin/src/Core/Workflow_Processor.php:2347
 msgid "Use a warm and friendly tone."
 msgstr "Verwenden Sie einen warmen und freundlichen Ton."
 
@@ -10710,7 +10914,7 @@ msgstr "Verwenden Sie E-Mail und Passwort"
 msgid "Use the first available sender"
 msgstr "Verwenden Sie den ersten verfügbaren Absender"
 
-#: admin/src/Integrations/Whatsapp.php:69
+#: admin/src/Integrations/Whatsapp.php:116
 msgid ""
 "Use the world's largest messaging service to notify your customers about "
 "events on your website."
@@ -10723,6 +10927,7 @@ msgid "Use this file"
 msgstr "Diese Datei verwenden"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:325
 msgid "Use this media"
 msgstr "Verwenden Sie dieses Medium"
 
@@ -10740,7 +10945,7 @@ msgstr ""
 "Verwenden Sie Ihre Telefonnummer, um den Code zu erhalten oder sich mit "
 "E-Mail und Passwort anzumelden."
 
-#: admin/src/Admin/Onboarding/Registry.php:104
+#: admin/src/Admin/Onboarding/Registry.php:105
 msgid "Used to complete phone numbers that were typed without a country code."
 msgstr ""
 "Wird verwendet, um Telefonnummern zu vervollständigen, die ohne "
@@ -10790,11 +10995,11 @@ msgstr "Usbekistan"
 
 #: admin/src/Admin/Builder/Registry.php:490
 #: admin/src/Contacts/Contact_Actions.php:173
-#: app/src/builder/actions/definitions/condition.ts:125
-#: app/src/builder/actions/settings/ConditionSettings.vue:224
-#: app/src/builder/actions/settings/ConditionSettings.vue:231
-#: app/src/builder/actions/settings/ConditionSettings.vue:238
-#: app/src/pages/history/components/HistoryDetailsModal.vue:135
+#: app/src/builder/actions/definitions/condition.ts:131
+#: app/src/builder/actions/settings/ConditionSettings.vue:250
+#: app/src/builder/actions/settings/ConditionSettings.vue:257
+#: app/src/builder/actions/settings/ConditionSettings.vue:264
+#: app/src/pages/history/components/HistoryDetailsModal.vue:165
 msgid "Value"
 msgstr "Wert"
 
@@ -10802,11 +11007,11 @@ msgstr "Wert"
 msgid "Value of a form field"
 msgstr "Wert eines Formularfelds"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:126
+#: app/src/pages/history/components/HistoryDetailsModal.vue:156
 msgid "Values hidden"
 msgstr "Werte verborgen"
 
-#: app/src/builder/actions/settings/ConditionSettings.vue:199
+#: app/src/builder/actions/settings/ConditionSettings.vue:210
 msgid "Values used by the condition engine."
 msgstr "Werte, die von der Bedingungs-Engine verwendet werden."
 
@@ -10814,7 +11019,7 @@ msgstr "Werte, die von der Bedingungs-Engine verwendet werden."
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:134
+#: app/src/pages/history/components/HistoryDetailsModal.vue:164
 msgid "Variable"
 msgstr "Variable"
 
@@ -10841,7 +11046,7 @@ msgstr "Variable erfolgreich gespeichert."
 msgid "Variable saved."
 msgstr "Variable gespeichert."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:312
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:535
 msgid "Variables"
 msgstr "Variablen"
 
@@ -10860,6 +11065,10 @@ msgstr "Vatikanstadt"
 #: admin/src/Validations/Country_Codes.php:52
 msgid "Venezuela"
 msgstr "Venezuela"
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
+msgid "Verification code"
+msgstr "Bestätigungscode"
 
 #: templates/otp-login/shared/otp-login-form.php:49
 msgid "Verify OTP"
@@ -10909,7 +11118,7 @@ msgstr "Warten %1$s %2$s"
 msgid "Wait %1$s %2$s and run at %3$s"
 msgstr "Warten %1$s %2$s und ausführen um %3$s"
 
-#: admin/src/Admin/Settings/Registry.php:885
+#: admin/src/Admin/Settings/Registry.php:897
 #. translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480"
 msgid ""
 "Wait before the first retry. Every attempt then doubles it — with what is "
@@ -11048,7 +11257,7 @@ msgstr "Wozu die Person zugestimmt hat"
 msgid "What this sends"
 msgstr "Was dies sendet"
 
-#: admin/src/Integrations/Whatsapp.php:68
+#: admin/src/Integrations/Whatsapp.php:115
 #: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:47
 msgid "WhatsApp"
 msgstr "WhatsApp"
@@ -11057,13 +11266,21 @@ msgstr "WhatsApp"
 msgid "WhatsApp (Cloud API)"
 msgstr "WhatsApp (Cloud API)"
 
+#: admin/src/Integrations/Whatsapp.php:60
+msgid "WhatsApp 24-hour window"
+msgstr "24-Stunden-Fenster von WhatsApp"
+
 #: admin/src/Core/Workflow_Post_Type.php:67
 msgid "WhatsApp automation workflows created with Joinotify."
 msgstr "Mit Joinotify erstellte WhatsApp-Automatisierungs-Workflows."
 
-#: admin/src/Integrations/Whatsapp.php:135
+#: admin/src/Integrations/Whatsapp.php:184
 msgid "WhatsApp Business Account ID"
 msgstr "WhatsApp Business-Konto-ID"
+
+#: admin/src/Api/Transport.php:209
+msgid "WhatsApp did not accept the message."
+msgstr "WhatsApp hat die Nachricht nicht angenommen."
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:208
 msgid "WhatsApp message sent with the generated coupon."
@@ -11083,11 +11300,15 @@ msgstr "WhatsApp-Nummer, die die Medien sendet."
 msgid "WhatsApp number that will send the message."
 msgstr "WhatsApp-Nummer, die die Nachricht sendet."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:245
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:437
 msgid "WhatsApp number that will send the template."
 msgstr "WhatsApp-Nummer, die die Vorlage senden wird."
 
-#: admin/src/Api/Send_Error.php:76
+#: admin/src/Api/Transport.php:206
+msgid "WhatsApp refused the template."
+msgstr "WhatsApp hat die Vorlage abgelehnt."
+
+#: admin/src/Api/Send_Error.php:84
 msgid ""
 "WhatsApp refused the template. Check that it is approved, that its name and "
 "language match, and that every variable was filled."
@@ -11096,11 +11317,11 @@ msgstr ""
 "ob ihr Name und ihre Sprache übereinstimmen und ob jede Variable ausgefüllt "
 "wurde."
 
-#: admin/src/Integrations/Whatsapp.php:73
+#: admin/src/Integrations/Whatsapp.php:120
 msgid "WhatsApp settings"
 msgstr "WhatsApp-Einstellungen"
 
-#: app/src/builder/actions/definitions/whatsappTemplate.ts:77
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:102
 msgid "WhatsApp template message"
 msgstr "WhatsApp-Vorlagennachricht"
 
@@ -11130,8 +11351,8 @@ msgstr "WhatsApp: Link-Button"
 msgid "WhatsApp: Location"
 msgstr "WhatsApp: Standort"
 
-#: admin/src/Admin/Builder/Registry.php:594
-#: admin/src/Integrations/Whatsapp.php:185
+#: admin/src/Admin/Builder/Registry.php:596
+#: admin/src/Integrations/Whatsapp.php:234
 #: app/src/builder/actions/definitions/whatsappMedia.ts:32
 #: app/src/builder/actions/definitions/whatsappMedia.ts:46
 msgid "WhatsApp: Media message"
@@ -11157,15 +11378,15 @@ msgstr "WhatsApp: Antwort-Buttons"
 msgid "WhatsApp: Sticker"
 msgstr "WhatsApp: Sticker"
 
-#: admin/src/Integrations/Whatsapp.php:202
-#: admin/src/Integrations/Whatsapp.php:212
-#: app/src/builder/actions/definitions/whatsappTemplate.ts:51
-#: app/src/builder/actions/definitions/whatsappTemplate.ts:64
+#: admin/src/Integrations/Whatsapp.php:251
+#: admin/src/Integrations/Whatsapp.php:261
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:76
+#: app/src/builder/actions/definitions/whatsappTemplate.ts:89
 msgid "WhatsApp: Template message"
 msgstr "WhatsApp: Vorlagennachricht"
 
-#: admin/src/Admin/Builder/Registry.php:584
-#: admin/src/Integrations/Whatsapp.php:172
+#: admin/src/Admin/Builder/Registry.php:586
+#: admin/src/Integrations/Whatsapp.php:221
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
 msgid "WhatsApp: Text message"
@@ -11209,7 +11430,7 @@ msgstr ""
 "diese Seite gesendet hat. Nichts wird gesendet, bevor Sie es aktivieren, "
 "und das Deaktivieren stoppt es sofort."
 
-#: admin/src/Admin/Settings/Registry.php:128
+#: admin/src/Admin/Settings/Registry.php:140
 msgid ""
 "When WhatsApp refuses a message for a reason that may pass — a timeout, a "
 "rate limit, an outage — Joinotify parks it and tries again. Each attempt "
@@ -11232,7 +11453,7 @@ msgstr ""
 "Wo der Trigger ausgelöst wird. Wählen Sie eine Integration, um die "
 "verfügbaren Trigger zu sehen."
 
-#: admin/src/Admin/Onboarding/Registry.php:122
+#: admin/src/Admin/Onboarding/Registry.php:123
 msgid "Where to look when you need a feature explained."
 msgstr "Wohin schauen, wenn Sie eine Funktion erklärt haben möchten."
 
@@ -11300,7 +11521,7 @@ msgstr ""
 "WordPress hat bereits einen KI-Anbieter eingerichtet. Die KI-Aktionen sind "
 "einsatzbereit."
 
-#: admin/src/Admin/Settings/Registry.php:560
+#: admin/src/Admin/Settings/Registry.php:572
 msgid "WordPress Multisite"
 msgstr "WordPress Multisite"
 
@@ -11309,12 +11530,12 @@ msgstr "WordPress Multisite"
 msgid "WordPress users"
 msgstr "WordPress-Benutzer"
 
-#: admin/src/Admin/Settings/Registry.php:555
+#: admin/src/Admin/Settings/Registry.php:567
 msgid "WordPress version"
 msgstr "WordPress-Version"
 
-#: admin/src/Admin/History/Registry.php:348
-#: app/src/pages/history/components/HistoryDetailsModal.vue:113
+#: admin/src/Admin/History/Registry.php:372
+#: app/src/pages/history/components/HistoryDetailsModal.vue:143
 #: app/src/pages/queue/QueuePage.vue:204
 #: app/src/pages/queue/QueuePage.vue:298
 msgid "Workflow"
@@ -11361,8 +11582,8 @@ msgid "Workflow not found or invalid post type."
 msgstr "Workflow nicht gefunden oder ungültiger Beitragstyp."
 
 #: admin/src/Admin/Builder/Registry.php:96
-#: admin/src/Admin/Builder/Registry.php:1175
-#: admin/src/Admin/Builder/Registry.php:1245
+#: admin/src/Admin/Builder/Registry.php:1177
+#: admin/src/Admin/Builder/Registry.php:1247
 #: admin/src/Rest/Builder_Test.php:58
 msgid "Workflow not found."
 msgstr "Workflow nicht gefunden."
@@ -11371,7 +11592,7 @@ msgstr "Workflow nicht gefunden."
 msgid "Workflow not saved yet."
 msgstr "Workflow noch nicht gespeichert."
 
-#: admin/src/Admin/Builder/Registry.php:1222
+#: admin/src/Admin/Builder/Registry.php:1224
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 "Workflow als Entwurf gespeichert: Beheben Sie die gemeldeten Probleme, "
@@ -11382,7 +11603,7 @@ msgid "Workflow saved successfully."
 msgstr "Workflow erfolgreich gespeichert."
 
 #: admin/src/Admin/Builder/Registry.php:90
-#: admin/src/Admin/Builder/Registry.php:1223
+#: admin/src/Admin/Builder/Registry.php:1225
 msgid "Workflow saved."
 msgstr "Workflow gespeichert."
 
@@ -11434,7 +11655,7 @@ msgstr ""
 "WPForms- und Elementor Pro-Einreichungen, die eine Telefonnummer enthalten. "
 "Jedes Feld des Formulars wird gesendet."
 
-#: admin/src/Core/Workflow_Processor.php:2111
+#: admin/src/Core/Workflow_Processor.php:2370
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -11474,13 +11695,13 @@ msgstr "Jahre"
 msgid "Yemen"
 msgstr "Jemen"
 
-#: admin/src/Admin/Settings/Registry.php:561
-#: admin/src/Admin/Settings/Registry.php:585
+#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:597
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
 #: admin/src/Integrations/Elementor_Forms.php:166
-#: app/src/builder/actions/settings/ConditionSettings.vue:104
+#: app/src/builder/actions/settings/ConditionSettings.vue:115
 #: app/src/builder/actions/utils/actionDescription.ts:182
 #: app/src/pages/contacts/components/AttributeInput.vue:39
 #: app/src/pages/contacts/components/ContactDrawer.vue:78
@@ -11531,7 +11752,7 @@ msgstr ""
 msgid "You have unsaved changes."
 msgstr "Sie haben ungespeicherte Änderungen."
 
-#: admin/src/Core/Workflow_Processor.php:2094
+#: admin/src/Core/Workflow_Processor.php:2353
 msgid "You may write a longer, detailed message."
 msgstr "Sie können eine längere, detaillierte Nachricht schreiben."
 
@@ -11583,7 +11804,7 @@ msgstr ""
 "Dein Joinotify-Konto benötigt Aufmerksamkeit, bevor es verwendet werden "
 "kann. Öffne das Panel, um die Abrechnung zu klären."
 
-#: admin/src/Api/Connect.php:176
+#: admin/src/Api/Connect.php:177
 msgid "Your license is not linked to a Joinotify Cloud account yet."
 msgstr "Ihre Lizenz ist noch nicht mit einem Joinotify Cloud-Konto verknüpft."
 

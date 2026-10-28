@@ -10,6 +10,9 @@
       "-1001234567890 or {{ telegram_chat_id }}": [
         "-1001234567890 oder {{ telegram_chat_id }}"
       ],
+      "-23.5505 or a placeholder": [
+        "-23.5505 oder ein Platzhalter"
+      ],
       "— Select a sender —": [
         "— Wählen Sie einen Absender —"
       ],
@@ -55,6 +58,9 @@
       ],
       "%s settings": [
         "%s Einstellungen"
+      ],
+      "2026-12-31 23:59, +2 days or a placeholder": [
+        "2026-12-31 23:59, +2 days oder ein Platzhalter"
       ],
       "5541987111527": [
         "5541987111527"
@@ -112,6 +118,9 @@
       ],
       "Added": [
         "Hinzugefügt"
+      ],
+      "Address": [
+        "Adresse"
       ],
       "Advance the date by the chosen offset, then run at the selected time of day (e.g. +1 day at 09:00).": [
         "Verschieben Sie das Datum um den gewählten Offset und führen Sie es dann zur ausgewählten Tageszeit aus (z. B. +1 Tag um 09:00)."
@@ -185,6 +194,9 @@
       "Back to dashboard": [
         "Zurück zum Dashboard"
       ],
+      "BLACK20 or a placeholder": [
+        "BLACK20 oder ein Platzhalter"
+      ],
       "Body": [
         "Inhalt"
       ],
@@ -208,6 +220,9 @@
       ],
       "Caption": [
         "Bildunterschrift"
+      ],
+      "Card": [
+        "Karte"
       ],
       "Casual": [
         "Lässig"
@@ -599,11 +614,26 @@
       "Header": [
         "Kopfzeile"
       ],
+      "Header document": [
+        "Dokument der Kopfzeile"
+      ],
+      "Header image": [
+        "Bild der Kopfzeile"
+      ],
+      "Header location": [
+        "Standort der Kopfzeile"
+      ],
+      "Header video": [
+        "Video der Kopfzeile"
+      ],
       "Hours": [
         "Stunden"
       ],
       "How would you like to create your new workflow?": [
         "Wie möchten Sie Ihren neuen Workflow erstellen?"
+      ],
+      "https://example.com/file.jpg or a placeholder": [
+        "https://example.com/datei.jpg oder ein Platzhalter"
       ],
       "I already did": [
         "Habe ich bereits gemacht"
@@ -683,8 +713,14 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Latitude": [
+        "Breitengrad"
+      ],
       "Leave a review": [
         "Eine Bewertung hinterlassen"
+      ],
+      "Leave empty to repeat the code from the body": [
+        "Leer lassen, um den Code aus dem Inhalt zu wiederholen"
       ],
       "Leave without saving": [
         "Ohne Speichern verlassen"
@@ -724,6 +760,9 @@
       ],
       "Long": [
         "Lang"
+      ],
+      "Longitude": [
+        "Längengrad"
       ],
       "Loop": [
         "Schleife"
@@ -797,6 +836,9 @@
       "My automation #129720": [
         "Meine Automatisierung #129720"
       ],
+      "Name": [
+        "Name"
+      ],
       "New workflow": [
         "Neuer Workflow"
       ],
@@ -845,6 +887,9 @@
       "Node settings": [
         "Knoteneinstellungen"
       ],
+      "Offer expiration": [
+        "Ablauf des Angebots"
+      ],
       "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it.": [
         "Bei der offiziellen WhatsApp Cloud API erreicht diese Art von Nachricht nur einen Kontakt innerhalb von 24 Stunden nach seiner letzten Antwort. Außerhalb dieses Zeitraums lehnt Meta sie ab."
       ],
@@ -863,6 +908,9 @@
       "Operator": [
         "Operator"
       ],
+      "Optional": [
+        "Optional"
+      ],
       "Optional cap on how many items are processed. Leave empty for no limit.": [
         "Optionale Obergrenze für die Anzahl der verarbeiteten Elemente. Leer lassen für keine Begrenzung."
       ],
@@ -874,6 +922,9 @@
       ],
       "Optional text sent together with the media.": [
         "Optionaler Text, der zusammen mit dem Medium gesendet wird."
+      ],
+      "Optional: sent back when the button is tapped": [
+        "Optional: wird beim Tippen auf die Schaltfläche zurückgesendet"
       ],
       "Options": [
         "Optionen"
@@ -970,6 +1021,9 @@
       ],
       "Remove attachment": [
         "Anhang entfernen"
+      ],
+      "Reply payload": [
+        "Payload der Antwort"
       ],
       "Required configuration for this trigger to run correctly.": [
         "Erforderliche Konfiguration, damit dieser Trigger korrekt funktioniert."
@@ -1223,6 +1277,9 @@
       "This template is still awaiting Meta approval and cannot be delivered yet.": [
         "Diese Vorlage wartet noch auf die Genehmigung von Meta und kann noch nicht geliefert werden."
       ],
+      "This template still has a required value to fill: a header file or location, a coupon code or an offer expiration.": [
+        "Diese Vorlage hat noch einen Pflichtwert, der ausgefüllt werden muss: eine Datei oder einen Standort für die Kopfzeile, einen Gutscheincode oder den Ablauf des Angebots."
+      ],
       "This text variable may not work in this context": [
         "Diese Textvariable funktioniert möglicherweise nicht in diesem Kontext"
       ],
@@ -1345,6 +1402,9 @@
       ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "Variablen werden durch echte Daten ersetzt, wenn die Nachricht gesendet wird. Klicken Sie auf eine, um sie einzufügen."
+      ],
+      "Verification code": [
+        "Bestätigungscode"
       ],
       "Video": [
         "Video"

@@ -94,6 +94,12 @@
       "Delete selected records": [
         "Eliminar registros seleccionados"
       ],
+      "Delivered": [
+        "Entregado"
+      ],
+      "Delivered at": [
+        "Entregado el"
+      ],
       "Discard the pending retry of the selected messages": [
         "Descartar el reintento pendiente de los mensajes seleccionados"
       ],
@@ -133,11 +139,17 @@
       "Failed": [
         "Fallido"
       ],
+      "Failed at": [
+        "Falló el"
+      ],
       "From": [
         "De"
       ],
       "Header": [
         "Encabezado"
+      ],
+      "Inside the 24-hour window": [
+        "Dentro de la ventana de 24 horas"
       ],
       "Items per page": [
         "Elementos por página"
@@ -178,6 +190,12 @@
       "of": [
         "de"
       ],
+      "Outside 24h window": [
+        "Fuera de la ventana de 24 h"
+      ],
+      "Outside the 24-hour window": [
+        "Fuera de la ventana de 24 horas"
+      ],
       "Payload sent": [
         "Carga enviada"
       ],
@@ -186,6 +204,12 @@
       ],
       "Queued": [
         "En cola"
+      ],
+      "Read": [
+        "Leído"
+      ],
+      "Read at": [
+        "Leído el"
       ],
       "Recipient": [
         "Destinatario"
@@ -219,6 +243,12 @@
       ],
       "Sent": [
         "Enviado"
+      ],
+      "Sent while the contact had not replied in the last 24 hours.": [
+        "Enviado cuando el contacto no había respondido en las últimas 24 horas."
+      ],
+      "Session window": [
+        "Ventana de atención"
       ],
       "Source": [
         "Fuente"
@@ -258,6 +288,9 @@
       ],
       "Type": [
         "Tipo"
+      ],
+      "Unknown (delivery reports are not set up)": [
+        "Desconocida (los informes de entrega no están configurados)"
       ],
       "Value": [
         "Valor"

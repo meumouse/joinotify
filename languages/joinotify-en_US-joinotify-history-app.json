@@ -94,6 +94,12 @@
       "Delete selected records": [
         "Delete selected records"
       ],
+      "Delivered": [
+        "Delivered"
+      ],
+      "Delivered at": [
+        "Delivered at"
+      ],
       "Discard the pending retry of the selected messages": [
         "Discard the pending retry of the selected messages"
       ],
@@ -133,11 +139,17 @@
       "Failed": [
         "Failed"
       ],
+      "Failed at": [
+        "Failed at"
+      ],
       "From": [
         "From"
       ],
       "Header": [
         "Header"
+      ],
+      "Inside the 24-hour window": [
+        "Inside the 24-hour window"
       ],
       "Items per page": [
         "Items per page"
@@ -178,6 +190,12 @@
       "of": [
         "of"
       ],
+      "Outside 24h window": [
+        "Outside 24h window"
+      ],
+      "Outside the 24-hour window": [
+        "Outside the 24-hour window"
+      ],
       "Payload sent": [
         "Payload sent"
       ],
@@ -186,6 +204,12 @@
       ],
       "Queued": [
         "Queued"
+      ],
+      "Read": [
+        "Read"
+      ],
+      "Read at": [
+        "Read at"
       ],
       "Recipient": [
         "Recipient"
@@ -219,6 +243,12 @@
       ],
       "Sent": [
         "Sent"
+      ],
+      "Sent while the contact had not replied in the last 24 hours.": [
+        "Sent while the contact had not replied in the last 24 hours."
+      ],
+      "Session window": [
+        "Session window"
       ],
       "Source": [
         "Source"
@@ -258,6 +288,9 @@
       ],
       "Type": [
         "Type"
+      ],
+      "Unknown (delivery reports are not set up)": [
+        "Unknown (delivery reports are not set up)"
       ],
       "Value": [
         "Value"

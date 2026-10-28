@@ -10,6 +10,9 @@
       "-1001234567890 or {{ telegram_chat_id }}": [
         "-1001234567890 or {{ telegram_chat_id }}"
       ],
+      "-23.5505 or a placeholder": [
+        "-23.5505 or a placeholder"
+      ],
       "— Select a sender —": [
         "— Select a sender —"
       ],
@@ -55,6 +58,9 @@
       ],
       "%s settings": [
         "%s settings"
+      ],
+      "2026-12-31 23:59, +2 days or a placeholder": [
+        "2026-12-31 23:59, +2 days or a placeholder"
       ],
       "5541987111527": [
         "5541987111527"
@@ -112,6 +118,9 @@
       ],
       "Added": [
         "Added"
+      ],
+      "Address": [
+        "Address"
       ],
       "Advance the date by the chosen offset, then run at the selected time of day (e.g. +1 day at 09:00).": [
         "Advance the date by the chosen offset, then run at the selected time of day (e.g. +1 day at 09:00)."
@@ -185,6 +194,9 @@
       "Back to dashboard": [
         "Back to dashboard"
       ],
+      "BLACK20 or a placeholder": [
+        "BLACK20 or a placeholder"
+      ],
       "Body": [
         "Body"
       ],
@@ -208,6 +220,9 @@
       ],
       "Caption": [
         "Caption"
+      ],
+      "Card": [
+        "Card"
       ],
       "Casual": [
         "Casual"
@@ -599,11 +614,26 @@
       "Header": [
         "Header"
       ],
+      "Header document": [
+        "Header document"
+      ],
+      "Header image": [
+        "Header image"
+      ],
+      "Header location": [
+        "Header location"
+      ],
+      "Header video": [
+        "Header video"
+      ],
       "Hours": [
         "Hours"
       ],
       "How would you like to create your new workflow?": [
         "How would you like to create your new workflow?"
+      ],
+      "https://example.com/file.jpg or a placeholder": [
+        "https://example.com/file.jpg or a placeholder"
       ],
       "I already did": [
         "I already did"
@@ -683,8 +713,14 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Latitude": [
+        "Latitude"
+      ],
       "Leave a review": [
         "Leave a review"
+      ],
+      "Leave empty to repeat the code from the body": [
+        "Leave empty to repeat the code from the body"
       ],
       "Leave without saving": [
         "Leave without saving"
@@ -724,6 +760,9 @@
       ],
       "Long": [
         "Long"
+      ],
+      "Longitude": [
+        "Longitude"
       ],
       "Loop": [
         "Loop"
@@ -797,6 +836,9 @@
       "My automation #129720": [
         "My automation #129720"
       ],
+      "Name": [
+        "Name"
+      ],
       "New workflow": [
         "New workflow"
       ],
@@ -845,6 +887,9 @@
       "Node settings": [
         "Node settings"
       ],
+      "Offer expiration": [
+        "Offer expiration"
+      ],
       "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it.": [
         "On the official WhatsApp Cloud API, this kind of message only reaches a contact within 24 hours of their last reply. Outside that window Meta refuses it."
       ],
@@ -863,6 +908,9 @@
       "Operator": [
         "Operator"
       ],
+      "Optional": [
+        "Optional"
+      ],
       "Optional cap on how many items are processed. Leave empty for no limit.": [
         "Optional cap on how many items are processed. Leave empty for no limit."
       ],
@@ -874,6 +922,9 @@
       ],
       "Optional text sent together with the media.": [
         "Optional text sent together with the media."
+      ],
+      "Optional: sent back when the button is tapped": [
+        "Optional: sent back when the button is tapped"
       ],
       "Options": [
         "Options"
@@ -970,6 +1021,9 @@
       ],
       "Remove attachment": [
         "Remove attachment"
+      ],
+      "Reply payload": [
+        "Reply payload"
       ],
       "Required configuration for this trigger to run correctly.": [
         "Required configuration for this trigger to run correctly."
@@ -1223,6 +1277,9 @@
       "This template is still awaiting Meta approval and cannot be delivered yet.": [
         "This template is still awaiting Meta approval and cannot be delivered yet."
       ],
+      "This template still has a required value to fill: a header file or location, a coupon code or an offer expiration.": [
+        "This template still has a required value to fill: a header file or location, a coupon code or an offer expiration."
+      ],
       "This text variable may not work in this context": [
         "This text variable may not work in this context"
       ],
@@ -1345,6 +1402,9 @@
       ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "Variables are replaced with real data when the message is sent. Click one to insert it."
+      ],
+      "Verification code": [
+        "Verification code"
       ],
       "Video": [
         "Video"

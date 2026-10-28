@@ -94,6 +94,12 @@
       "Delete selected records": [
         "Supprimer les enregistrements sélectionnés"
       ],
+      "Delivered": [
+        "Distribué"
+      ],
+      "Delivered at": [
+        "Distribué le"
+      ],
       "Discard the pending retry of the selected messages": [
         "Annuler la tentative de réessai en attente des messages sélectionnés"
       ],
@@ -133,11 +139,17 @@
       "Failed": [
         "Échoué"
       ],
+      "Failed at": [
+        "Échoué le"
+      ],
       "From": [
         "De"
       ],
       "Header": [
         "En-tête"
+      ],
+      "Inside the 24-hour window": [
+        "Dans la fenêtre de 24 heures"
       ],
       "Items per page": [
         "Articles par page"
@@ -178,6 +190,12 @@
       "of": [
         "de"
       ],
+      "Outside 24h window": [
+        "Hors fenêtre de 24 h"
+      ],
+      "Outside the 24-hour window": [
+        "En dehors de la fenêtre de 24 heures"
+      ],
       "Payload sent": [
         "Charge utile envoyée"
       ],
@@ -186,6 +204,12 @@
       ],
       "Queued": [
         "En attente"
+      ],
+      "Read": [
+        "Lu"
+      ],
+      "Read at": [
+        "Lu le"
       ],
       "Recipient": [
         "Destinataire"
@@ -219,6 +243,12 @@
       ],
       "Sent": [
         "Envoyé"
+      ],
+      "Sent while the contact had not replied in the last 24 hours.": [
+        "Envoyé alors que le contact n’avait pas répondu au cours des dernières 24 heures."
+      ],
+      "Session window": [
+        "Fenêtre de service"
       ],
       "Source": [
         "Source"
@@ -258,6 +288,9 @@
       ],
       "Type": [
         "Type"
+      ],
+      "Unknown (delivery reports are not set up)": [
+        "Inconnue (les rapports de distribution ne sont pas configurés)"
       ],
       "Value": [
         "Valeur"
