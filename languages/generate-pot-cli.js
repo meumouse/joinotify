@@ -383,6 +383,39 @@ function extractStringsFromFile(filePath) {
   return results;
 }
 
+/**
+ * Read the translatable headers of the main plugin file.
+ *
+ * WordPress translates the name and description on the Plugins screen with the
+ * plugin's own text domain, as `wp i18n make-pot` extracts them, so they have to
+ * be in the catalogue like any other string.
+ */
+function extractPluginHeaders() {
+  const mainFile = path.join(PLUGIN_ROOT, `${TEXT_DOMAIN}.php`);
+  const source = fs.readFileSync(mainFile, "utf8");
+  const results = [];
+
+  for (const [header, comment] of [
+    ["Plugin Name", "Plugin Name of the plugin"],
+    ["Description", "Description of the plugin"],
+  ]) {
+    const match = new RegExp(`^[ \\t/*#@]*${header}:(.*)$`, "m").exec(source);
+    const value = match ? match[1].trim() : "";
+
+    if (value) {
+      results.push({
+        msgid: value,
+        plural: undefined,
+        context: undefined,
+        translatorsComment: comment,
+        reference: `${TEXT_DOMAIN}.php`,
+      });
+    }
+  }
+
+  return results;
+}
+
 function buildPotData(entries) {
   const translations = { "": {} };
 
@@ -441,7 +474,7 @@ function buildPotData(entries) {
 
 function main() {
   const files = walkFiles(PLUGIN_ROOT);
-  const extractedEntries = files.flatMap(extractStringsFromFile);
+  const extractedEntries = [...extractPluginHeaders(), ...files.flatMap(extractStringsFromFile)];
   const dedupedEntries = extractedEntries.sort((left, right) => {
     if (left.msgid !== right.msgid) {
       return left.msgid.localeCompare(right.msgid);
