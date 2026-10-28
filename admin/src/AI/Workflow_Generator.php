@@ -150,7 +150,7 @@ class Workflow_Generator {
         $lines[] = 'LINEAR STEPS ARE SIBLINGS: list the trigger first, then each action in order as items of the SAME top-level "workflow_content" array. Do NOT nest a linear step inside another node\'s "children".';
         $lines[] = 'Every non-condition node MUST set "children" to an empty array [].';
         $lines[] = 'CONDITION nodes are the ONLY nodes that use "children": action "condition" BRANCHES, so its "children" MUST be an object { "action_true": [ ...nodes ], "action_false": [ ...nodes ] }. Each branch is a flat array of sibling nodes in order (possibly empty); steps that run only when the condition matches go inside the matching branch.';
-        $lines[] = '  Condition data keys: { "title", "action": "condition", "condition": <condition key>, "condition_type": <operator>, "value_text": <value to compare>, "meta_key": <only when the condition requires meta_key>, "field_id": <only when the condition requires field_id> }.';
+        $lines[] = '  Condition data keys: { "title", "action": "condition", "condition": <condition key>, "condition_type": <operator>, "value_text": <value to compare>, "meta_key": <only when the condition requires meta_key>, "field_id": <only when the condition requires field_id>, "receiver": <recipient phone placeholder, only when the condition requires receiver>, "sender": <sender number, only when the condition requires sender; may be empty> }.';
         $lines[] = '  Pick "condition" + "condition_type" only from the CONDITIONS list for the chosen trigger below. Put the compared value in "value_text".';
         $lines[] = '';
         $lines[] = 'RULES:';

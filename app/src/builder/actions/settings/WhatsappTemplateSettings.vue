@@ -12,9 +12,11 @@
  * disabled, rejected).
  *
  * Besides the `{{...}}` tokens, a template may need values it has no token
- * for: the file of a media header, the coupon of a copy-code button and the
- * login code of an authentication button. Those slots carry a `format` (or the
- * `copy_code` sub-type) and get their own label and hint.
+ * for: the file or location of the header, the coupon of a copy-code button,
+ * the login code of an authentication button and the expiration of a
+ * limited-time offer. Those slots carry a `format` (or a button sub-type) and
+ * get their own label and hint. A carousel lists the slots of each card, which
+ * carry the card position in `card`.
  *
  * @since 2.3.0
  * @version 2.6.0
@@ -32,6 +34,7 @@ import { __, textDomain } from '../../../utils/i18n';
 import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 interface TemplateVariable {
+  card?: number;
   component: string;
   sub_type: string;
   index: number;
@@ -47,6 +50,12 @@ interface TemplateButton {
   url: string;
 }
 
+interface TemplateCard {
+  header_format: string;
+  body: string;
+  buttons: TemplateButton[];
+}
+
 interface RemoteTemplate {
   name: string;
   language: string;
@@ -57,6 +66,7 @@ interface RemoteTemplate {
   body: string;
   footer: string;
   buttons?: TemplateButton[];
+  cards?: TemplateCard[];
   variables: TemplateVariable[];
 }
 
@@ -136,11 +146,13 @@ function buildVariableMap(template: RemoteTemplate): TemplateVariable[] {
         item.component === variable.component &&
         item.key === variable.key &&
         Number(item.index) === Number(variable.index) &&
+        cardOf(item) === cardOf(variable) &&
         (item.sub_type || '') === (variable.sub_type || '') &&
         (item.format || '') === (variable.format || '')
     );
 
     return {
+      card: cardOf(variable),
       component: variable.component,
       sub_type: variable.sub_type || '',
       index: Number(variable.index || 0),
@@ -150,6 +162,17 @@ function buildVariableMap(template: RemoteTemplate): TemplateVariable[] {
       value: previous?.value || '',
     };
   });
+}
+
+/**
+ * Carousel card a slot belongs to, -1 outside a carousel.
+ *
+ * @since 2.6.0
+ * @param {TemplateVariable} variable Variable slot.
+ * @returns {number}
+ */
+function cardOf(variable: TemplateVariable): number {
+  return variable.card === undefined || variable.card === null ? -1 : Number(variable.card);
 }
 
 /**
@@ -164,7 +187,7 @@ function isMediaHeader(variable: TemplateVariable): boolean {
 }
 
 /**
- * Human-readable name of a variable slot.
+ * Human-readable name of a variable slot, prefixed with its carousel card.
  *
  * @since 2.3.0
  * @version 2.6.0
@@ -172,6 +195,40 @@ function isMediaHeader(variable: TemplateVariable): boolean {
  * @returns {string} Label shown above the placeholder field.
  */
 function variableLabel(variable: TemplateVariable): string {
+  const card = cardOf(variable);
+
+  return card >= 0 ? `${__('Card', textDomain)} ${card + 1} · ${slotLabel(variable)}` : slotLabel(variable);
+}
+
+/**
+ * Name of a variable slot within its message or card.
+ *
+ * @since 2.6.0
+ * @param {TemplateVariable} variable Variable slot.
+ * @returns {string}
+ */
+function slotLabel(variable: TemplateVariable): string {
+  if (variable.component === 'header' && variable.format === 'location') {
+    switch (variable.key) {
+      case 'latitude':
+        return `${__('Header location', textDomain)} · ${__('Latitude', textDomain)}`;
+      case 'longitude':
+        return `${__('Header location', textDomain)} · ${__('Longitude', textDomain)}`;
+      case 'name':
+        return `${__('Header location', textDomain)} · ${__('Name', textDomain)}`;
+      default:
+        return `${__('Header location', textDomain)} · ${__('Address', textDomain)}`;
+    }
+  }
+
+  if (variable.component === 'limited_time_offer') {
+    return __('Offer expiration', textDomain);
+  }
+
+  if (variable.component === 'button' && variable.sub_type === 'quick_reply') {
+    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · ${__('Reply payload', textDomain)}`;
+  }
+
   if (isMediaHeader(variable)) {
     switch (variable.format) {
       case 'video':
@@ -220,6 +277,20 @@ function variablePlaceholder(variable: TemplateVariable): string {
 
   if (variable.format === 'otp') {
     return __('Leave empty to repeat the code from the body', textDomain);
+  }
+
+  if (variable.format === 'location') {
+    return ['latitude', 'longitude'].includes(variable.key)
+      ? __('-23.5505 or a placeholder', textDomain)
+      : __('Optional', textDomain);
+  }
+
+  if (variable.component === 'limited_time_offer') {
+    return __('2026-12-31 23:59, +2 days or a placeholder', textDomain);
+  }
+
+  if (variable.sub_type === 'quick_reply') {
+    return __('Optional: sent back when the button is tapped', textDomain);
   }
 
   return __('{{ wc_billing_first_name }} or a fixed value', textDomain);
@@ -424,7 +495,7 @@ onMounted(() => loadTemplates());
 
       <div class="rounded-[8px] border border-slate-200 bg-slate-50 px-4 py-3">
         <p
-          v-if="MEDIA_FORMATS.includes(String(selected.header_format || '').toLowerCase())"
+          v-if="selected.header_format && selected.header_format !== 'TEXT'"
           class="mb-2 inline-flex items-center gap-1 rounded-[6px] bg-slate-200 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-600"
         >
           <ImagePlus class="text-sm" />
@@ -442,6 +513,21 @@ onMounted(() => loadTemplates());
             {{ button.text || button.type }}
           </span>
         </div>
+        <div v-if="selected.cards?.length" class="mt-3 flex gap-2 overflow-x-auto pb-1">
+          <div
+            v-for="(card, cardIndex) in selected.cards"
+            :key="`card-${cardIndex}`"
+            class="w-40 shrink-0 rounded-[8px] border border-slate-200 bg-white px-3 py-2"
+          >
+            <p class="text-[11px] font-medium uppercase tracking-wide text-slate-400">
+              {{ __('Card', textDomain) }} {{ cardIndex + 1 }} · {{ String(card.header_format || '').toLowerCase() }}
+            </p>
+            <p class="mt-1 whitespace-pre-line text-xs leading-4 text-slate-600">{{ card.body }}</p>
+            <p v-if="card.buttons?.length" class="mt-1 text-[11px] text-slate-400">
+              {{ card.buttons.map((button) => button.text || button.type).join(' · ') }}
+            </p>
+          </div>
+        </div>
       </div>
 
       <FieldGroup
@@ -452,7 +538,7 @@ onMounted(() => loadTemplates());
         <div class="space-y-3">
           <div
             v-for="(variable, position) in modelValue.variables"
-            :key="`${variable.component}-${variable.index}-${variable.sub_type}-${variable.format}-${variable.key}`"
+            :key="`${cardOf(variable)}-${variable.component}-${variable.index}-${variable.sub_type}-${variable.format}-${variable.key}`"
             class="flex items-end gap-2"
           >
             <div class="flex-1">

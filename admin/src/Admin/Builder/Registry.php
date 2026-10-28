@@ -568,6 +568,8 @@ class Registry {
 					'condition_type' => '',
 					'field_id' => '',
 					'meta_key' => '', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Node schema key, not a query argument.
+					'receiver' => '',
+					'sender' => '',
 					'value_text' => '',
 					'type_text' => '',
 				);
@@ -1660,6 +1662,7 @@ class Registry {
 	 *   triggers:  { trigger_id => [ { key, title, description, operators[], value_type, requires[] } ] }
 	 *
 	 * @since 2.0.0
+	 * @version 2.6.0
 	 * @return array<string,mixed>
 	 */
 	public static function get_conditions_catalog() {
@@ -1692,6 +1695,7 @@ class Registry {
 			'user_last_login' => array( 'type' => 'number' ),
 			'user_meta' => array( 'type' => 'text', 'requires' => array( 'meta_key' ) ),
 			'field_value' => array( 'type' => 'text', 'requires' => array( 'field_id' ) ),
+			'whatsapp_window' => array( 'type' => 'text', 'requires' => array( 'receiver', 'sender' ) ),
 		));
 
 		// Dynamic value options per condition key (e.g. WooCommerce statuses), so
@@ -1701,6 +1705,11 @@ class Registry {
 			'subscription_status' => self::get_subscription_status_condition_options(),
 			'payment_method' => self::get_payment_method_condition_options(),
 			'shipping_method' => self::get_shipping_method_condition_options(),
+			'whatsapp_window' => array(
+				array( 'label' => __( 'Open', 'joinotify' ), 'value' => 'open' ),
+				array( 'label' => __( 'Closed', 'joinotify' ), 'value' => 'closed' ),
+				array( 'label' => __( 'Unknown', 'joinotify' ), 'value' => 'unknown' ),
+			),
 		));
 
 		// Per-trigger condition map populated by each integration's add_conditions().
@@ -1961,6 +1970,7 @@ class Registry {
 	 * Build the legacy condition payload expected by the runtime.
 	 *
 	 * @since 1.4.7
+	 * @version 2.6.0
 	 * @param array<string,mixed> $data Node data.
 	 * @return array<string,mixed>
 	 */
@@ -1973,6 +1983,8 @@ class Registry {
 		$value = isset( $legacy['value'] ) ? $legacy['value'] : '';
 		$meta_key = isset( $data['meta_key'] ) ? sanitize_textarea_field( (string) $data['meta_key'] ) : ( isset( $legacy['meta_key'] ) ? sanitize_textarea_field( (string) $legacy['meta_key'] ) : '' );
 		$field_id = isset( $data['field_id'] ) ? sanitize_textarea_field( (string) $data['field_id'] ) : ( isset( $legacy['field_id'] ) ? sanitize_textarea_field( (string) $legacy['field_id'] ) : '' );
+		$receiver = isset( $data['receiver'] ) ? sanitize_text_field( (string) $data['receiver'] ) : ( isset( $legacy['receiver'] ) ? sanitize_text_field( (string) $legacy['receiver'] ) : '' );
+		$sender = isset( $data['sender'] ) ? sanitize_text_field( (string) $data['sender'] ) : ( isset( $legacy['sender'] ) ? sanitize_text_field( (string) $legacy['sender'] ) : '' );
 
 		$content = array(
 			'condition' => $condition,
@@ -1982,6 +1994,9 @@ class Registry {
 			'value_text' => $value_text,
 			'meta_key' => $meta_key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Node schema key, not a query argument.
 			'field_id' => $field_id,
+			// The contact and number whose 24-hour window `whatsapp_window` reads.
+			'receiver' => $receiver,
+			'sender' => $sender,
 		);
 
 		// Accept the products list from either the flat key (the builder UI binds
@@ -2045,7 +2060,9 @@ class Registry {
 	 * Each item says where a template placeholder lives (`component`, plus
 	 * `sub_type`/`index` for button variables), which placeholder key it is, and
 	 * the Joinotify token that fills it at send time. A value with no token
-	 * says what it holds in `format` (a media header, the login code).
+	 * says what it holds in `format` (a media header, a location, the login
+	 * code, an offer expiration), and `card` places a variable on a carousel
+	 * card (-1 outside a carousel).
 	 *
 	 * @since 2.3.0
 	 * @version 2.6.0
@@ -2066,11 +2083,13 @@ class Registry {
 
 			$component = isset( $variable['component'] ) ? sanitize_key( (string) $variable['component'] ) : 'body';
 
-			if ( ! in_array( $component, array( 'header', 'body', 'button' ), true ) ) {
+			if ( ! in_array( $component, array( 'header', 'body', 'button', 'limited_time_offer' ), true ) ) {
 				continue;
 			}
 
 			$clean[] = array(
+				// -1 outside a carousel, so absint() would turn it into the first card.
+				'card' => isset( $variable['card'] ) ? max( -1, (int) $variable['card'] ) : -1,
 				'component' => $component,
 				'sub_type' => isset( $variable['sub_type'] ) ? sanitize_key( (string) $variable['sub_type'] ) : '',
 				'index' => isset( $variable['index'] ) ? absint( $variable['index'] ) : 0,

@@ -168,7 +168,10 @@ function joinotify_send_whatsapp_template( string $receiver, string $template_na
  * button, the button's `url` with its token). A value with no token has an
  * empty `key`: a media header (`format` `image`, `video`, `document`), a
  * copy-code button (`sub_type` `copy_code`) or the login-code button of an
- * AUTHENTICATION template (`format` `otp`).
+ * AUTHENTICATION template (`format` `otp`). A location header is four
+ * variables (`format` `location`), an expiring offer one `limited_time_offer`
+ * variable, and the variables of a carousel card carry its position in `card`
+ * (-1 outside a carousel), as `cards` describes each card.
  *
  * @since 2.6.0
  * @param array $args | Optional `status`, `waba_id` and `force`.
@@ -201,7 +204,9 @@ function joinotify_get_whatsapp_template( string $name, string $language = '' ) 
  * Each variable is an entry of the template's `variables` with its `value`
  * set; a media header is a `header` entry with `format` (`image`, `video`,
  * `document`) and the file link (or a Meta media id) as its value, and a
- * `copy_code` button entry takes the coupon. Values are not run through the
+ * `copy_code` button entry takes the coupon. Location, offer expiration and
+ * carousel card entries are packed as their template lists them (see
+ * joinotify_get_whatsapp_templates()). Values are not run through the
  * Joinotify placeholders: they go out as given, brought to the one line Meta
  * accepts, and named variables carry their `parameter_name`.
  *

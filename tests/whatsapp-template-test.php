@@ -59,6 +59,7 @@ function sanitize_key( $key ) { return strtolower( preg_replace( '/[^a-zA-Z0-9_\
 function absint( $value ) { return abs( (int) $value ); }
 function __( $text, $domain = 'default' ) { return $text; }
 function wp_parse_url( $url, $component = -1 ) { return parse_url( $url, $component ); }
+function wp_timezone() { return new DateTimeZone( 'America/Sao_Paulo' ); }
 
 class WP_Error {
 	private $code;
@@ -485,6 +486,143 @@ $components = Workflow_Processor::components_from_values( array(
 ) );
 
 check( 'a filled OTP button keeps its own value', '111222' === $components[1]['parameters'][0]['text'] );
+
+echo "\nTemplate_Repository location, offers and carousels\n";
+reset_state();
+
+Cloud_Client::$response = array(
+	'data' => array(
+		array(
+			'name' => 'loja_endereco',
+			'components' => array(
+				array( 'type' => 'HEADER', 'format' => 'LOCATION' ),
+				array( 'type' => 'BODY', 'text' => 'Retire seu pedido {{1}}.' ),
+			),
+		),
+		array(
+			'name' => 'oferta_relampago',
+			'category' => 'MARKETING',
+			'components' => array(
+				array( 'type' => 'HEADER', 'format' => 'IMAGE' ),
+				array( 'type' => 'LIMITED_TIME_OFFER', 'limited_time_offer' => array( 'text' => 'Só hoje!', 'has_expiration' => true ) ),
+				array( 'type' => 'BODY', 'text' => 'Oi {{1}}' ),
+				array( 'type' => 'BUTTONS', 'buttons' => array( array( 'type' => 'COPY_CODE' ), array( 'type' => 'URL', 'text' => 'Comprar', 'url' => 'https://loja.test/{{1}}' ) ) ),
+			),
+		),
+		array(
+			'name' => 'oferta_sem_prazo',
+			'components' => array(
+				array( 'type' => 'LIMITED_TIME_OFFER', 'limited_time_offer' => array( 'text' => 'Oferta', 'has_expiration' => false ) ),
+				array( 'type' => 'BODY', 'text' => 'x' ),
+			),
+		),
+		array(
+			'name' => 'vitrine',
+			'category' => 'MARKETING',
+			'components' => array(
+				array( 'type' => 'BODY', 'text' => 'Olá {{1}}, veja:' ),
+				array(
+					'type' => 'CAROUSEL',
+					'cards' => array(
+						array(
+							'components' => array(
+								array( 'type' => 'HEADER', 'format' => 'IMAGE' ),
+								array( 'type' => 'BODY', 'text' => 'Camisa por {{1}}' ),
+								array( 'type' => 'BUTTONS', 'buttons' => array( array( 'type' => 'QUICK_REPLY', 'text' => 'Quero' ), array( 'type' => 'URL', 'text' => 'Ver', 'url' => 'https://loja.test/p/{{1}}' ) ) ),
+							),
+						),
+						array(
+							'components' => array(
+								array( 'type' => 'HEADER', 'format' => 'VIDEO' ),
+								array( 'type' => 'BODY', 'text' => 'Calça' ),
+							),
+						),
+					),
+				),
+			),
+		),
+	),
+);
+
+$templates = Template_Repository::get_templates()['templates'];
+$variables = $templates[0]['variables'];
+
+check( 'a location header lists its four fields', array( 'latitude', 'longitude', 'name', 'address' ) === array_column( array_slice( $variables, 0, 4 ), 'key' ) );
+check( 'location fields carry the location format', array( 'location' ) === array_values( array_unique( array_column( array_slice( $variables, 0, 4 ), 'format' ) ) ) );
+check( 'variables outside a carousel are on card -1', -1 === $variables[0]['card'] && -1 === $variables[4]['card'] );
+
+$variables = $templates[1]['variables'];
+
+check( 'an expiring offer asks for its expiration', 'limited_time_offer' === $variables[1]['component'] && 'expiration' === $variables[1]['format'] );
+check( 'the offer keeps its coupon and url buttons', 'copy_code' === $variables[3]['sub_type'] && 'url' === $variables[4]['sub_type'] );
+check( 'an offer without expiration asks nothing', array() === $templates[2]['variables'] );
+
+$variables = $templates[3]['variables'];
+$by_card = array();
+
+foreach ( $variables as $variable ) {
+	$by_card[ $variable['card'] ][] = $variable['component'] . ':' . $variable['sub_type'] . ':' . $variable['format'] . ':' . $variable['key'];
+}
+
+check( 'the bubble body stays outside the cards', array( 'body:::1' ) === $by_card[-1] );
+check( 'a card lists its header, body and buttons', array( 'header::image:', 'body:::1', 'button:quick_reply::', 'button:url::1' ) === $by_card[0] );
+check( 'each card is read on its own', array( 'header::video:' ) === $by_card[1] );
+check( 'the cards are described for the preview', 2 === count( $templates[3]['cards'] ) && 'IMAGE' === $templates[3]['cards'][0]['header_format'] && 'Calça' === $templates[3]['cards'][1]['body'] );
+check( 'a template without carousel has no cards', array() === $templates[0]['cards'] );
+
+echo "\nWorkflow_Processor location, offers and carousels\n";
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'header', 'format' => 'location', 'key' => 'latitude', 'value' => '-23,5505' ),
+	array( 'component' => 'header', 'format' => 'location', 'key' => 'longitude', 'value' => '-46.6333' ),
+	array( 'component' => 'header', 'format' => 'location', 'key' => 'name', 'value' => 'Loja Centro' ),
+	array( 'component' => 'header', 'format' => 'location', 'key' => 'address', 'value' => '' ),
+	array( 'component' => 'body', 'key' => '1', 'value' => 'hoje' ),
+) );
+
+check( 'the location fields fill one parameter', array( 'type' => 'header', 'parameters' => array( array( 'type' => 'location', 'location' => array( 'latitude' => '-23.5505', 'longitude' => '-46.6333', 'name' => 'Loja Centro' ) ) ) ) === $components[0] );
+
+/**
+ * Expiration sent for one offer value.
+ */
+function offer_expiration( $value ) {
+	$components = Workflow_Processor::components_from_values( array(
+		array( 'component' => 'limited_time_offer', 'format' => 'expiration', 'key' => '', 'value' => $value ),
+	) );
+
+	return $components[0]['parameters'][0]['limited_time_offer']['expiration_time_ms'] ?? null;
+}
+
+check( 'an offer component goes out with its type', 'limited_time_offer' === ( Workflow_Processor::components_from_values( array(
+	array( 'component' => 'limited_time_offer', 'format' => 'expiration', 'value' => '1767225600' ),
+) )[0]['type'] ?? '' ) );
+check( 'a timestamp in seconds becomes milliseconds', 1767225600000 == offer_expiration( '1767225600' ) );
+check( 'a timestamp in milliseconds is kept', 1767225600000 == offer_expiration( '1767225600000' ) );
+check( 'a date is read in the site timezone', 1767225600000 == offer_expiration( '2025-12-31 21:00' ) );
+check( 'an unreadable date drops the offer component', array() === Workflow_Processor::components_from_values( array(
+	array( 'component' => 'limited_time_offer', 'format' => 'expiration', 'value' => 'whenever' ),
+) ) );
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'body', 'key' => '1', 'value' => 'Ana' ),
+	array( 'card' => 1, 'component' => 'header', 'format' => 'video', 'value' => 'https://loja.test/b.mp4' ),
+	array( 'card' => 0, 'component' => 'header', 'format' => 'image', 'value' => 'https://loja.test/a.jpg' ),
+	array( 'card' => 0, 'component' => 'body', 'key' => '1', 'value' => 'R$ 50' ),
+	array( 'card' => 0, 'component' => 'button', 'sub_type' => 'quick_reply', 'index' => 0, 'value' => '' ),
+	array( 'card' => 0, 'component' => 'button', 'sub_type' => 'url', 'index' => 1, 'key' => '1', 'value' => 'camisa' ),
+) );
+
+check( 'the bubble body goes first', 'body' === $components[0]['type'] && 'Ana' === $components[0]['parameters'][0]['text'] );
+check( 'the cards go out in one carousel', 'carousel' === $components[1]['type'] && 2 === count( $components[1]['cards'] ) );
+check( 'cards are ordered by position', 0 === $components[1]['cards'][0]['card_index'] && 1 === $components[1]['cards'][1]['card_index'] );
+
+$card = $components[1]['cards'][0]['components'];
+
+check( 'a card header carries its media', array( 'link' => 'https://loja.test/a.jpg' ) === $card[0]['parameters'][0]['image'] );
+check( 'a card body carries its values', 'R$ 50' === $card[1]['parameters'][0]['text'] );
+check( 'an empty quick reply names its card and button', array( 'type' => 'payload', 'payload' => 'card_0_button_0' ) === $card[2]['parameters'][0] );
+check( 'a card url button keeps its index', 'url' === $card[3]['sub_type'] && '1' === $card[3]['index'] );
+check( 'the second card has its own header', 'video' === $components[1]['cards'][1]['components'][0]['parameters'][0]['type'] );
 
 echo "\n";
 echo $failures > 0
