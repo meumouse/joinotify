@@ -1020,6 +1020,7 @@ return [
 		'John' => 'John',
 		'johndoe@email.com' => 'johndoe@email.com',
 		'Joinotify' => 'Joinotify',
+		'Joinotify – WhatsApp Notifications & Marketing Automation' => 'Joinotify – Notificações e Automação de Marketing para WhatsApp',
 		'Joinotify account' => 'Conta do Joinotify',
 		'Joinotify API key' => 'Chave da API do Joinotify',
 		'Joinotify can use a language model to write message copy and suggest whole workflows. This is optional and you can set it up later — the plugin works fully without it.' => 'O Joinotify pode usar um modelo de linguagem para escrever textos de mensagens e sugerir fluxos de trabalho inteiros. Isto é opcional e pode configurá-lo mais tarde — o plugin funciona totalmente sem isso.',

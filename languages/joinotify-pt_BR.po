@@ -4661,7 +4661,9 @@ msgstr "Fluxo de trabalho inativo"
 msgid "Include the country code so the number is normalized correctly."
 msgstr "Inclua o código do país para que o número seja normalizado corretamente."
 
+#: joinotify.php
 #: admin/src/Core/Init.php:184
+#. Description of the plugin
 msgid ""
 "Increase customer satisfaction by automating WhatsApp messaging with "
 "Joinotify."
@@ -4988,6 +4990,11 @@ msgstr "joaodasilva@email.com"
 #: app/src/pages/settings/SettingsPage.vue:231
 msgid "Joinotify"
 msgstr "Joinotify"
+
+#: joinotify.php
+#. Plugin Name of the plugin
+msgid "Joinotify – WhatsApp Notifications & Marketing Automation"
+msgstr "Joinotify – Notificações e Automação de Marketing para WhatsApp"
 
 #: admin/src/Integrations/Whatsapp.php:152
 msgid "Joinotify account"
