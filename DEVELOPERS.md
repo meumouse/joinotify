@@ -386,6 +386,11 @@ thin, documented wrappers over the internal classes, so you never have to couple
 | `joinotify_send_whatsapp_message_text($sender, $receiver, $message, $delay)` | `Controller::send_message_text` | `int` |
 | `joinotify_send_whatsapp_message_media($sender, $receiver, $media_type, $media, $caption, $delay)` | `Controller::send_message_media` | `int` |
 | `joinotify_send_whatsapp_template($receiver, $template_name, $language, $components, $args)` | `Transport::send_message_template` (details) | `array{message_id, status}\|WP_Error` ([details](#sending-a-template-and-reading-the-outcome)) |
+| `joinotify_get_whatsapp_templates($args)` | `Template_Repository::get_templates` | `array\|WP_Error` ([details](#reading-templates-and-the-customer-service-window)) |
+| `joinotify_get_whatsapp_template($name, $language)` | `Template_Repository::find_or_fetch` | `array\|null` |
+| `joinotify_build_whatsapp_template_components($variables)` | `Workflow_Processor::components_from_values` | `array` (components) |
+| `joinotify_render_whatsapp_template($name, $language, $components)` | `Template_Repository::render` | `string` |
+| `joinotify_get_whatsapp_window($phone, $sender)` | `Contact_Window::get` | `array{state, expires_at, remaining_seconds}` |
 
 ```php
 // Resolve {{ ... }} tokens against a payload (eg: inside a custom action handler).
@@ -447,6 +452,58 @@ The error codes are `joinotify_no_sender`, `joinotify_invalid_sender`, `joinotif
 `joinotify_send_failed`. `response_code` is the HTTP status of the Joinotify API (0 when it was not
 reached), `reason` the failure reason the history records, `detail` WhatsApp's own explanation, and
 `status` the HTTP status a REST route of yours can answer with.
+
+### Reading templates and the customer service window
+
+A plugin that sends templates with its own placeholders — a recovery message, a reminder — reads
+the account's templates, fills their variables itself and hands the values over already
+resolved:
+
+```php
+$template = joinotify_get_whatsapp_template( 'carrinho_abandonado', 'pt_BR' );
+
+if ( $template && 'APPROVED' === $template['status'] ) {
+    $variables = array();
+
+    foreach ( $template['variables'] as $variable ) {
+        // `component` (header, body, button), `sub_type`, `index`, `key`, `label` and, for a URL
+        // button, `url` as declared ("https://shop.test/?r={{1}}"): the value replaces the token only.
+        $variables[] = array_merge( $variable, array( 'value' => my_value_for( $variable ) ) );
+    }
+
+    if ( 'IMAGE' === $template['header_format'] ) {
+        $variables[] = array( 'component' => 'header', 'format' => 'image', 'value' => $image_url );
+    }
+
+    $components = joinotify_build_whatsapp_template_components( $variables );
+    $result = joinotify_send_whatsapp_template( $phone, $template['name'], $template['language'], $components );
+}
+```
+
+`joinotify_build_whatsapp_template_components()` does not run the values through the Joinotify
+placeholders: a value goes out as given, brought to the one line Meta accepts (line breaks become
+commas, markup is dropped), and named variables carry their `parameter_name`. `header_format` is
+`TEXT`, `IMAGE`, `VIDEO`, `DOCUMENT`, `LOCATION`, or empty when the template has no header; a media
+header has no token, yet Meta refuses the send without its link.
+
+Free text and media reach a contact only inside the customer service window — 24 hours after the
+contact's last message, 72 hours after a click-to-WhatsApp ad. `joinotify_get_whatsapp_window()`
+asks the platform (`GET /contacts/{id}/window`) for one origin number:
+
+```php
+$window = joinotify_get_whatsapp_window( '5541987654321', $sender );
+
+if ( 'open' === $window['state'] && $window['remaining_seconds'] > 5 * MINUTE_IN_SECONDS ) {
+    joinotify_send_whatsapp_message_text( $sender, '5541987654321', $text );
+} else {
+    // closed or unknown: an approved template is always allowed.
+}
+```
+
+`state` is `open`, `closed` (also for a number that never wrote in) or `unknown` (not connected,
+platform unreachable, rate limited); `expires_at` is ISO 8601. The phone is matched once to a
+contact of the base and the id kept; an open answer is cached until a minute before it closes, a
+closed one for two minutes, and an inbound message forgets it.
 
 ---
 

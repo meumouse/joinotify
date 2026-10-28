@@ -131,6 +131,7 @@ function wp_json_encode( $value ) { return json_encode( $value ); }
 require_once __DIR__ . '/../admin/src/Core/Phone_Manager.php';
 require_once __DIR__ . '/../admin/src/Api/Send_Error.php';
 require_once __DIR__ . '/../admin/src/Api/Webhooks.php';
+require_once __DIR__ . '/../admin/src/Api/Contact_Window.php';
 require_once __DIR__ . '/../admin/src/Api/Webhook_Handler.php';
 
 use MeuMouse\Joinotify\Api\Cloud_Client;

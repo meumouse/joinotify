@@ -66,6 +66,7 @@ function get_option( $key, $default = false ) { global $options; return array_ke
 function update_option( $key, $value, $autoload = null ) { global $options; $options[ $key ] = $value; return true; }
 function get_transient( $key ) { global $transients; return array_key_exists( $key, $transients ) ? $transients[ $key ] : false; }
 function set_transient( $key, $value, $ttl = 0 ) { global $transients; $transients[ $key ] = $value; return true; }
+function delete_transient( $key ) { global $transients; unset( $transients[ $key ] ); return true; }
 function do_action( $hook, ...$args ) {}
 function apply_filters( $hook, $value = null, ...$args ) {
 	global $filters;
@@ -225,6 +226,7 @@ require_once __DIR__ . '/../admin/src/Api/Message_Dispatch.php';
 require_once __DIR__ . '/../admin/src/Api/Send_Error.php';
 require_once __DIR__ . '/../admin/src/Api/Template_Repository.php';
 require_once __DIR__ . '/../admin/src/Api/Webhooks.php';
+require_once __DIR__ . '/../admin/src/Api/Contact_Window.php';
 require_once __DIR__ . '/../admin/src/Api/Webhook_Handler.php';
 require_once __DIR__ . '/../admin/src/Api/Cloud_Client.php';
 require_once __DIR__ . '/../admin/src/Admin/History/Registry.php';

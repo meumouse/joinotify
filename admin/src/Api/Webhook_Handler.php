@@ -184,6 +184,7 @@ class Webhook_Handler {
      * Mark the 24-hour session window of a contact as open.
      *
      * @since 2.3.0
+     * @version 2.6.0
      * @param string $phone | Contact phone number.
      * @return void
      */
@@ -195,6 +196,9 @@ class Webhook_Handler {
         }
 
         set_transient( self::WINDOW_PREFIX . md5( $phone ), time(), DAY_IN_SECONDS );
+
+        // The platform has just seen the message too; the next read asks it again.
+        Contact_Window::forget( $phone );
     }
 
 
