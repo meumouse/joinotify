@@ -8,6 +8,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-10-28
+
 ### Added
 
 - The Joinotify API key can be defined in `wp-config.php` with `define( 'JOINOTIFY_CLOUD_API_TOKEN', 'sk_live_...' );`, which keeps it out of the database. It wins over the key saved in the settings, and the WhatsApp settings and the setup wizard show the site as connected with the key locked: it can only be changed or removed in `wp-config.php`
@@ -598,7 +600,8 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.5.1...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.0...HEAD
+[2.6.0]: https://github.com/meumouse/joinotify/compare/v2.5.1...v2.6.0
 [2.5.1]: https://github.com/meumouse/joinotify/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/meumouse/joinotify/compare/v2.4.2...v2.5.0
 [2.4.2]: https://github.com/meumouse/joinotify/compare/v2.4.1...v2.4.2

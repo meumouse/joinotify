@@ -1,7 +1,7 @@
 {
 	"name": "joinotify",
 	"private": true,
-	"version": "2.5.1",
+	"version": "2.6.0",
 	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"lint:php": "node scripts/lint-php.mjs",

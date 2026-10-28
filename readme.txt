@@ -4,7 +4,7 @@ Tags: whatsapp, automation, woocommerce, notifications, workflow, join, notify, 
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.5.1
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,15 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.6.0 =
+* New: the WhatsApp template action sends every kind of template header and button Meta offers: an image, video or document header (a link, a placeholder or a file from the media library), a location header, the coupon of a copy-code button, the code button of an authentication template, limited-time offers with their expiration, and carousels, where each card takes its own file, values and buttons. The panel shows what the template carries and does not save while a required value is missing.
+* New: a "WhatsApp 24-hour window" condition, offered on every trigger, branches a workflow on whether the recipient wrote in the last 24 hours, so free text can go out while the window is open and an approved template when it is not.
+* New: the Joinotify API key can be set in `wp-config.php` with `JOINOTIFY_CLOUD_API_TOKEN`, which keeps it out of the database and locks it in the settings.
+* New: developers can send WhatsApp templates, list and render them and read a contact's 24-hour window with `joinotify_send_whatsapp_template()`, `joinotify_get_whatsapp_templates()`, `joinotify_build_whatsapp_template_components()`, `joinotify_render_whatsapp_template()` and `joinotify_get_whatsapp_window()`, and change the links of an order event with the `Joinotify/Cloud_Sync/Links` filter.
+* Changed: in the checkout block, a customer who already agreed to marketing messages sees the consent checkbox ticked.
+* Fixed: the marketing consent checkbox of the checkout block is offered to every customer of a headless store.
+* Security: the Joinotify API key is stored encrypted in the database when the server has the sodium extension.
+
 = 2.5.1 =
 * Fixed: the plugin ships its translations again (Brazilian and European Portuguese, Spanish, German, French and Italian). Sites in those languages showed Joinotify in English since 2.5.0. A WordPress.org language pack, once a locale has one, still takes precedence.
 * Fixed: counts such as "%d contacts" or "%d days" use the plural form in every translated language instead of the singular.
@@ -304,6 +313,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.6.0 =
+Recommended for every installation. Templates with a media or location header, coupons, offers and carousels can be sent from workflows, a condition branches on the WhatsApp 24-hour window, and the API key is stored encrypted.
 
 = 2.5.1 =
 Recommended for sites not in English: brings back the translations 2.5.0 left out, so Joinotify no longer shows in English.
