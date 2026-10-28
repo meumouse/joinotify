@@ -31,6 +31,8 @@ function normalizeVariables(variables: unknown): Array<Record<string, unknown>> 
   return variables
     .filter((variable): variable is Record<string, unknown> => Boolean(variable) && typeof variable === 'object')
     .map((variable) => ({
+      // -1 outside a carousel; 0 is the first card, so it cannot default to it.
+      card: variable.card === undefined || variable.card === null || variable.card === '' ? -1 : Number(variable.card),
       component: String(variable.component || 'body'),
       sub_type: String(variable.sub_type || ''),
       index: Number(variable.index || 0),
@@ -42,9 +44,11 @@ function normalizeVariables(variables: unknown): Array<Record<string, unknown>> 
 
 /**
  * Whether the template needs a value Meta refuses to send without: the file of
- * a media header or the coupon of a copy-code button. The login code of an
- * authentication button is left out, since the backend repeats the body code
- * when it is empty.
+ * a media header, the coordinates of a location header, the coupon of a
+ * copy-code button or the expiration of a limited-time offer. The login code
+ * of an authentication button, the name and address of a location and the
+ * payload of a quick reply are left out, since they are optional or filled by
+ * the backend.
  *
  * @since 2.6.0
  * @param {unknown} variables Raw variable map.
@@ -52,7 +56,9 @@ function normalizeVariables(variables: unknown): Array<Record<string, unknown>> 
  */
 function hasMissingRequiredValue(variables: unknown): boolean {
   return normalizeVariables(variables).some((variable) => {
-    const required = (variable.component === 'header' && variable.format !== '') || variable.sub_type === 'copy_code';
+    const media = variable.component === 'header' && ['image', 'video', 'document'].includes(String(variable.format));
+    const coordinates = variable.component === 'header' && variable.format === 'location' && ['latitude', 'longitude'].includes(String(variable.key));
+    const required = media || coordinates || variable.sub_type === 'copy_code' || variable.component === 'limited_time_offer';
 
     return required && String(variable.value).trim() === '';
   });
@@ -100,7 +106,7 @@ export const whatsappTemplateDefinition: ActionDefinition = {
       { key: 'template_name', label: __('Template', textDomain) },
     ]),
     variables: hasMissingRequiredValue(data.variables)
-      ? __('This template needs a header file or a coupon code before it can be sent.', textDomain)
+      ? __('This template still has a required value to fill: a header file or location, a coupon code or an offer expiration.', textDomain)
       : '',
   }),
 };

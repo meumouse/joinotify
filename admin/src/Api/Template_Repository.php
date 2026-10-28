@@ -554,7 +554,8 @@ class Template_Repository {
             $keys = array();
 
             foreach ( $variables as $variable ) {
-                if ( ! is_array( $variable ) || ( $variable['component'] ?? '' ) !== $type ) {
+                // Carousel cards have variables of their own, outside this list.
+                if ( ! is_array( $variable ) || ( $variable['component'] ?? '' ) !== $type || (int) ( $variable['card'] ?? -1 ) >= 0 ) {
                     continue;
                 }
 
@@ -568,15 +569,16 @@ class Template_Repository {
             foreach ( array_values( (array) ( $component['parameters'] ?? array() ) ) as $position => $parameter ) {
                 $key = (string) ( $parameter['parameter_name'] ?? '' );
 
-                if ( '' === $key ) {
-                    $key = (string) ( $keys[ $position ] ?? '' );
+                $parameter_type = is_array( $parameter ) ? strtolower( (string) ( $parameter['type'] ?? 'text' ) ) : 'text';
+
+                // A media header, a location or a coupon fills no token, so it
+                // goes by what it holds instead of a made-up position.
+                if ( '' === $key && 'text' !== $parameter_type ) {
+                    $key = $parameter_type;
                 }
 
-                // A media header or a coupon has no token to be named after,
-                // so it goes by what it holds instead of a made-up position.
                 if ( '' === $key ) {
-                    $parameter_type = is_array( $parameter ) ? strtolower( (string) ( $parameter['type'] ?? 'text' ) ) : 'text';
-                    $key = 'text' !== $parameter_type ? $parameter_type : (string) ( $position + 1 );
+                    $key = '' !== ( $keys[ $position ] ?? '' ) ? $keys[ $position ] : (string) ( $position + 1 );
                 }
 
                 $flat[] = array(
@@ -625,6 +627,16 @@ class Template_Repository {
 
             case 'coupon_code':
                 return (string) ( $parameter['coupon_code'] ?? '' );
+
+            case 'location':
+                $location = (array) ( $parameter['location'] ?? array() );
+                $place = implode( ', ', array_filter( array( (string) ( $location['name'] ?? '' ), (string) ( $location['address'] ?? '' ) ) ) );
+                $point = sprintf( '%s, %s', (string) ( $location['latitude'] ?? '' ), (string) ( $location['longitude'] ?? '' ) );
+
+                return '' !== $place ? sprintf( '%s (%s)', $place, $point ) : $point;
+
+            case 'limited_time_offer':
+                return (string) ( $parameter['limited_time_offer']['expiration_time_ms'] ?? '' );
         }
 
         $json = wp_json_encode( $parameter );
@@ -750,7 +762,8 @@ class Template_Repository {
      * `header_format` says what the header carries (`TEXT`, `IMAGE`, `VIDEO`,
      * `DOCUMENT`, `LOCATION`), empty when the template has no header: a media
      * header has no text and no `{{...}}` token, yet Meta refuses the send
-     * without its parameter. `buttons` lists each button's type, text and URL.
+     * without its parameter. `buttons` lists each button's type, text and URL,
+     * and `cards` describes each card of a carousel the same way.
      *
      * @since 2.3.0
      * @version 2.6.0
@@ -759,6 +772,17 @@ class Template_Repository {
      */
     protected static function normalize( $template ) {
         $components = isset( $template['components'] ) && is_array( $template['components'] ) ? $template['components'] : array();
+        $cards = array();
+
+        foreach ( self::carousel_cards( $components ) as $card ) {
+            $card_components = (array) ( $card['components'] ?? array() );
+
+            $cards[] = array(
+                'header_format' => self::header_format( $card_components ),
+                'body' => self::component_text( $card_components, 'BODY' ),
+                'buttons' => self::extract_buttons( $card_components ),
+            );
+        }
 
         return array(
             'id' => (string) ( $template['id'] ?? '' ),
@@ -773,8 +797,27 @@ class Template_Repository {
             'body' => self::component_text( $components, 'BODY' ),
             'footer' => self::component_text( $components, 'FOOTER' ),
             'buttons' => self::extract_buttons( $components ),
+            'cards' => $cards,
             'variables' => self::extract_variables( $components ),
         );
+    }
+
+
+    /**
+     * Read the cards of a carousel template.
+     *
+     * @since 2.6.0
+     * @param array $components | Template components.
+     * @return array<int,array> The cards in order, empty when the template has no carousel.
+     */
+    protected static function carousel_cards( $components ) {
+        foreach ( $components as $component ) {
+            if ( is_array( $component ) && 'CAROUSEL' === strtoupper( (string) ( $component['type'] ?? '' ) ) ) {
+                return array_values( array_filter( (array) ( $component['cards'] ?? array() ), 'is_array' ) );
+            }
+        }
+
+        return array();
     }
 
 
@@ -840,15 +883,23 @@ class Template_Repository {
      * listed with an empty `key` and a `format` saying what they hold: a media
      * header (`image`, `video`, `document`) takes the file link, a copy-code
      * button (`sub_type` `copy_code`) takes the coupon, and the button of an
-     * AUTHENTICATION template (`format` `otp`) takes the login code. Every
-     * other variable has an empty `format`.
+     * AUTHENTICATION template (`format` `otp`) takes the login code. A location
+     * header is four variables (`format` `location`, keyed `latitude`,
+     * `longitude`, `name`, `address`), and a limited-time offer that expires
+     * takes its expiration (`component` `limited_time_offer`, `format`
+     * `expiration`). Every other variable has an empty `format`.
+     *
+     * Each card of a carousel lists its own header, body and buttons; `card` is
+     * the card position, -1 for anything outside a carousel. A quick-reply
+     * button in a card takes the payload sent back when it is tapped.
      *
      * @since 2.3.0
      * @version 2.6.0
      * @param array $components | Template components.
+     * @param int   $card | Card position when reading a carousel card, -1 otherwise.
      * @return array
      */
-    protected static function extract_variables( $components ) {
+    protected static function extract_variables( $components, $card = -1 ) {
         $variables = array();
 
         foreach ( $components as $component ) {
@@ -857,6 +908,23 @@ class Template_Repository {
             }
 
             $type = strtolower( (string) ( $component['type'] ?? '' ) );
+
+            if ( 'carousel' === $type && $card < 0 ) {
+                foreach ( array_values( array_filter( (array) ( $component['cards'] ?? array() ), 'is_array' ) ) as $position => $card_data ) {
+                    $variables = array_merge( $variables, self::extract_variables( (array) ( $card_data['components'] ?? array() ), $position ) );
+                }
+
+                continue;
+            }
+
+            // The offer text is fixed; only an offer that expires asks for when.
+            if ( 'limited_time_offer' === $type ) {
+                if ( ! empty( $component['limited_time_offer']['has_expiration'] ) ) {
+                    $variables[] = self::variable( 'limited_time_offer', '', 0, '', '', '', 'expiration', $card );
+                }
+
+                continue;
+            }
 
             if ( 'buttons' === $type ) {
                 foreach ( (array) ( $component['buttons'] ?? array() ) as $index => $button ) {
@@ -868,7 +936,7 @@ class Template_Repository {
                     $label = (string) ( $button['text'] ?? '' );
 
                     if ( 'COPY_CODE' === $button_type ) {
-                        $variables[] = self::variable( 'button', '', (int) $index, 'copy_code', $label );
+                        $variables[] = self::variable( 'button', '', (int) $index, 'copy_code', $label, '', '', $card );
 
                         continue;
                     }
@@ -876,7 +944,14 @@ class Template_Repository {
                     // Every OTP button — copy code, one-tap or zero-tap — goes
                     // out as a URL button whose single parameter is the code.
                     if ( 'OTP' === $button_type ) {
-                        $variables[] = self::variable( 'button', '', (int) $index, 'url', $label, '', 'otp' );
+                        $variables[] = self::variable( 'button', '', (int) $index, 'url', $label, '', 'otp', $card );
+
+                        continue;
+                    }
+
+                    // A carousel card names what each quick reply sends back.
+                    if ( 'QUICK_REPLY' === $button_type && $card >= 0 ) {
+                        $variables[] = self::variable( 'button', '', (int) $index, 'quick_reply', $label, '', '', $card );
 
                         continue;
                     }
@@ -886,7 +961,7 @@ class Template_Repository {
                     }
 
                     foreach ( self::tokens_in( (string) ( $button['url'] ?? '' ) ) as $token ) {
-                        $variables[] = self::variable( 'button', $token, (int) $index, 'url', $label, (string) ( $button['url'] ?? '' ) );
+                        $variables[] = self::variable( 'button', $token, (int) $index, 'url', $label, (string) ( $button['url'] ?? '' ), '', $card );
                     }
                 }
 
@@ -902,14 +977,22 @@ class Template_Repository {
                 $format = strtolower( (string) ( $component['format'] ?? '' ) );
 
                 if ( in_array( $format, array( 'image', 'video', 'document' ), true ) ) {
-                    $variables[] = self::variable( 'header', '', 0, '', '', '', $format );
+                    $variables[] = self::variable( 'header', '', 0, '', '', '', $format, $card );
+
+                    continue;
+                }
+
+                if ( 'location' === $format ) {
+                    foreach ( array( 'latitude', 'longitude', 'name', 'address' ) as $field ) {
+                        $variables[] = self::variable( 'header', $field, 0, '', '', '', 'location', $card );
+                    }
 
                     continue;
                 }
             }
 
             foreach ( self::tokens_in( (string) ( $component['text'] ?? '' ) ) as $token ) {
-                $variables[] = self::variable( $type, $token );
+                $variables[] = self::variable( $type, $token, 0, '', '', '', '', $card );
             }
         }
 
@@ -921,16 +1004,17 @@ class Template_Repository {
      * Build one entry of a template's variable list.
      *
      * @since 2.6.0
-     * @param string $component | header, body or button.
+     * @param string $component | header, body, button or limited_time_offer.
      * @param string $key | Token name, empty when the value has no token.
      * @param int    $index | Button position, 0 for anything else.
-     * @param string $sub_type | Button sub-type (url, copy_code), empty for anything else.
+     * @param string $sub_type | Button sub-type (url, copy_code, quick_reply), empty for anything else.
      * @param string $label | Button text.
      * @param string $url | URL a URL button declares, with its token.
-     * @param string $format | What a token-less value holds (image, video, document, otp).
+     * @param string $format | What a token-less value holds (image, video, document, location, otp, expiration).
+     * @param int    $card | Carousel card position, -1 outside a carousel.
      * @return array
      */
-    protected static function variable( $component, $key, $index = 0, $sub_type = '', $label = '', $url = '', $format = '' ) {
+    protected static function variable( $component, $key, $index = 0, $sub_type = '', $label = '', $url = '', $format = '', $card = -1 ) {
         return array(
             'component' => $component,
             'sub_type' => $sub_type,
@@ -939,6 +1023,7 @@ class Template_Repository {
             'label' => $label,
             'url' => $url,
             'format' => $format,
+            'card' => $card,
         );
     }
 

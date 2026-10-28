@@ -7,6 +7,7 @@
  * runtime reads), the settings schema, description builder, and validation.
  *
  * @since 2.0.0
+ * @version 2.6.0
  */
 import ConditionSettings from '../settings/ConditionSettings.vue';
 import { describeConditionAction, truncateDescription } from '../utils/actionDescription';
@@ -51,6 +52,8 @@ function normalizeConditionContent(data: Record<string, unknown>): Record<string
     value_text: valueText,
     meta_key: String(data.meta_key || legacy.meta_key || ''),
     field_id: String(data.field_id || legacy.field_id || ''),
+    receiver: String(data.receiver ?? legacy.receiver ?? ''),
+    sender: String(data.sender ?? legacy.sender ?? ''),
   };
 
   if (Array.isArray(data.products)) {
@@ -82,6 +85,9 @@ function normalizeConditionData(data: Record<string, unknown>): Record<string, u
     condition_type: String(conditionContent.type || ''),
     field_id: String(conditionContent.field_id || ''),
     meta_key: String(conditionContent.meta_key || ''),
+    // The contact and number whose 24-hour window `whatsapp_window` reads.
+    receiver: String(conditionContent.receiver || ''),
+    sender: String(conditionContent.sender || ''),
     // `value` is the comparison value the runtime actually reads
     // (condition_content.value); keep it as a flat key so it round-trips.
     value: conditionContent.value ?? '',
@@ -131,5 +137,7 @@ export const conditionDefinition: ActionDefinition = {
   validate: (data) => normalizeValidationErrors(requiredFieldErrors(data, [
     { key: 'condition', label: __('Condition type', textDomain) },
     { key: 'condition_type', label: __('Operator', textDomain) },
+    // The window belongs to one contact, so it cannot be read without one.
+    ...(data.condition === 'whatsapp_window' ? [{ key: 'receiver', label: __('Recipient', textDomain) }] : []),
   ])),
 };

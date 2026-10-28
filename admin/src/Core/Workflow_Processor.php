@@ -1653,8 +1653,17 @@ class Workflow_Processor {
      * repeats the login code, so when it is left empty it takes the first body
      * value, which is where that code lives.
      *
+     * A location header is built from its four variables (`format` `location`,
+     * keyed `latitude`, `longitude`, `name`, `address`). A `limited_time_offer`
+     * variable holds when the offer expires — a date, a Unix timestamp in
+     * seconds or milliseconds, or a relative time such as `+2 days` — and goes
+     * out in milliseconds. Variables with a `card` of 0 or more belong to that
+     * carousel card: each card is packed the same way and they all go out in
+     * one `carousel` component, where a quick-reply button left empty sends a
+     * payload naming its card and button.
+     *
      * @since 2.6.0
-     * @param array $variables | One entry per variable: component, sub_type, index, key, format and the resolved value.
+     * @param array $variables | One entry per variable: component, sub_type, index, key, format, card and the resolved value.
      * @return array
      */
     public static function components_from_values( $variables ) {
@@ -1662,11 +1671,60 @@ class Workflow_Processor {
             return array();
         }
 
+        $top_level = array();
+        $cards = array();
+
+        foreach ( $variables as $variable ) {
+            if ( ! is_array( $variable ) ) {
+                continue;
+            }
+
+            $card = (int) ( $variable['card'] ?? -1 );
+
+            if ( $card >= 0 ) {
+                $cards[ $card ][] = $variable;
+            } else {
+                $top_level[] = $variable;
+            }
+        }
+
+        $components = self::group_component_values( $top_level );
+
+        if ( ! empty( $cards ) ) {
+            ksort( $cards );
+            $carousel = array();
+
+            foreach ( $cards as $card_index => $card_variables ) {
+                $carousel[] = array(
+                    'card_index' => (int) $card_index,
+                    'components' => self::group_component_values( $card_variables, (int) $card_index ),
+                );
+            }
+
+            $components[] = array(
+                'type' => 'carousel',
+                'cards' => $carousel,
+            );
+        }
+
+        return $components;
+    }
+
+
+    /**
+     * Group the resolved values of one message (or one carousel card) per component.
+     *
+     * @since 2.6.0
+     * @param array $variables | Variables with their resolved value.
+     * @param int   $card | Carousel card position, -1 outside a carousel.
+     * @return array
+     */
+    protected static function group_component_values( $variables, $card = -1 ) {
         $grouped = array();
         $first_body = '';
 
         foreach ( $variables as $variable ) {
-            if ( is_array( $variable ) && 'body' === strtolower( (string) ( $variable['component'] ?? 'body' ) ) ) {
+            if ( 'body' === strtolower( (string) ( $variable['component'] ?? 'body' ) ) ) {
                 $first_body = is_scalar( $variable['value'] ?? '' ) ? (string) ( $variable['value'] ?? '' ) : '';
 
                 break;
@@ -1674,13 +1732,9 @@ class Workflow_Processor {
         }
 
         foreach ( $variables as $variable ) {
-            if ( ! is_array( $variable ) ) {
-                continue;
-            }
-
             $component = strtolower( (string) ( $variable['component'] ?? 'body' ) );
 
-            if ( ! in_array( $component, array( 'header', 'body', 'button' ), true ) ) {
+            if ( ! in_array( $component, array( 'header', 'body', 'button', 'limited_time_offer' ), true ) ) {
                 continue;
             }
 
@@ -1714,10 +1768,76 @@ class Workflow_Processor {
                 continue;
             }
 
+            // The four location variables fill one parameter between them.
+            if ( 'header' === $component && 'location' === $format ) {
+                $field = strtolower( trim( (string) ( $variable['key'] ?? '' ) ) );
+
+                if ( ! in_array( $field, array( 'latitude', 'longitude', 'name', 'address' ), true ) ) {
+                    continue;
+                }
+
+                $position = null;
+
+                foreach ( $grouped[ $bucket ]['parameters'] as $existing => $parameter ) {
+                    if ( 'location' === ( $parameter['type'] ?? '' ) ) {
+                        $position = $existing;
+
+                        break;
+                    }
+                }
+
+                if ( null === $position ) {
+                    $grouped[ $bucket ]['parameters'][] = array(
+                        'type' => 'location',
+                        'location' => array(),
+                    );
+                    $position = array_key_last( $grouped[ $bucket ]['parameters'] );
+                }
+
+                $text = self::prepare_template_text( $value );
+
+                // A decimal comma (-23,55) is what many sites store; Meta wants a point.
+                if ( in_array( $field, array( 'latitude', 'longitude' ), true ) ) {
+                    $text = str_replace( ',', '.', $text );
+                }
+
+                // Name and address are optional; an empty one is left out.
+                if ( '' !== $text ) {
+                    $grouped[ $bucket ]['parameters'][ $position ]['location'][ $field ] = $text;
+                }
+
+                continue;
+            }
+
+            if ( 'limited_time_offer' === $component ) {
+                $expiration = self::expiration_ms( $value );
+
+                // A missing or unreadable date would only earn a refusal.
+                if ( null !== $expiration ) {
+                    $grouped[ $bucket ]['parameters'][] = array(
+                        'type' => 'limited_time_offer',
+                        'limited_time_offer' => array( 'expiration_time_ms' => $expiration ),
+                    );
+                }
+
+                continue;
+            }
+
             if ( 'button' === $component && 'copy_code' === ( $grouped[ $bucket ]['sub_type'] ?? '' ) ) {
                 $grouped[ $bucket ]['parameters'][] = array(
                     'type' => 'coupon_code',
                     'coupon_code' => self::prepare_template_text( $value ),
+                );
+
+                continue;
+            }
+
+            if ( 'button' === $component && 'quick_reply' === ( $grouped[ $bucket ]['sub_type'] ?? '' ) ) {
+                $payload = self::prepare_template_text( $value );
+
+                $grouped[ $bucket ]['parameters'][] = array(
+                    'type' => 'payload',
+                    'payload' => '' !== $payload ? $payload : sprintf( 'card_%d_button_%d', max( 0, $card ), (int) ( $variable['index'] ?? 0 ) ),
                 );
 
                 continue;
@@ -1744,7 +1864,44 @@ class Workflow_Processor {
             $grouped[ $bucket ]['parameters'][] = $parameter;
         }
 
-        return array_values( $grouped );
+        // A component left without a parameter (an offer with no readable
+        // date) is dropped rather than sent empty.
+        return array_values( array_filter( $grouped, fn( $component ) => ! empty( $component['parameters'] ) ) );
+    }
+
+
+    /**
+     * Read when a limited-time offer expires, in the milliseconds Meta expects.
+     *
+     * Digits are a Unix timestamp: in milliseconds from 13 digits on, in
+     * seconds below. Anything else is read as a date or a relative time in the
+     * site's timezone.
+     *
+     * @since 2.6.0
+     * @param string $value | Resolved expiration.
+     * @return int|float|null Milliseconds since the epoch, or null when it cannot be read.
+     */
+    protected static function expiration_ms( $value ) {
+        $value = trim( (string) $value );
+
+        if ( '' === $value ) {
+            return null;
+        }
+
+        if ( preg_match( '/^\d+$/', $value ) ) {
+            $milliseconds = strlen( $value ) >= 13 ? (float) $value : (float) $value * 1000;
+        } else {
+            try {
+                $date = new \DateTimeImmutable( $value, wp_timezone() );
+            } catch ( \Exception $e ) {
+                return null;
+            }
+
+            $milliseconds = (float) $date->getTimestamp() * 1000;
+        }
+
+        // Milliseconds outgrow a 32-bit integer; only a 64-bit build sends an int.
+        return PHP_INT_SIZE >= 8 ? (int) $milliseconds : $milliseconds;
     }
 
 

@@ -7,17 +7,24 @@
  * operators and value inputs supported by the current workflow trigger, and
  * writes the chosen rule back into the action model.
  *
+ * A condition may require extra data: a meta key, a form field, or — for the
+ * WhatsApp 24-hour window — the recipient and the sender number whose window
+ * is read.
+ *
  * @since 2.0.0
+ * @version 2.6.0
  */
 import { computed } from 'vue';
 import BaseAlert from '../../components/base/BaseAlert.vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
+import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import PlaceholderList from '../../components/base/PlaceholderList.vue';
 import ConditionProductsField from './ConditionProductsField.vue';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
+import { useSenderOptions } from '../../../composables/useSenderOptions';
 import { __, textDomain } from '../../../utils/i18n';
 import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
@@ -89,6 +96,10 @@ const valueOptions = computed(() => {
 const requires = computed<string[]>(() => (Array.isArray(selectedCondition.value?.requires) ? selectedCondition.value!.requires! : []));
 const requiresMetaKey = computed(() => requires.value.includes('meta_key'));
 const requiresFieldId = computed(() => requires.value.includes('field_id'));
+const requiresReceiver = computed(() => requires.value.includes('receiver'));
+const requiresSender = computed(() => requires.value.includes('sender'));
+
+const senderOptions = useSenderOptions(() => model.value.sender);
 
 const currentOperator = computed(() => String(model.value.condition_type || ''));
 const showValueInput = computed(() => !!currentOperator.value && !OPERATORS_WITHOUT_VALUE.includes(currentOperator.value));
@@ -194,10 +205,25 @@ function setValue(value: unknown) {
       </FieldGroup>
 
       <FieldGroup
-        v-if="model.condition && (requiresMetaKey || requiresFieldId || showValueInput)"
+        v-if="model.condition && (requiresMetaKey || requiresFieldId || requiresReceiver || requiresSender || showValueInput)"
         :title="__('Rule data', textDomain)"
         :description="__('Values used by the condition engine.', textDomain)"
       >
+        <BaseTextFieldVariables
+          v-if="requiresReceiver"
+          :model-value="String(model.receiver || '')"
+          :label="__('Recipient', textDomain)"
+          :placeholder="__('{{ wc_billing_phone }} or +5511999990000', textDomain)"
+          :placeholders="availablePlaceholders"
+          @update:model-value="update('receiver', $event)"
+        />
+        <BaseSelectField
+          v-if="requiresSender"
+          :model-value="String(model.sender || '')"
+          :options="senderOptions"
+          :label="__('Sender', textDomain)"
+          @update:model-value="update('sender', $event)"
+        />
         <BaseTextField
           v-if="requiresMetaKey"
           :model-value="String(model.meta_key || '')"

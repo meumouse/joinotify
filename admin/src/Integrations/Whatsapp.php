@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
+use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 
 // Exit if accessed directly.
@@ -22,7 +23,7 @@ class Whatsapp extends Integrations_Base {
      * Construct function
      *
      * @since 1.1.0
-     * @version 1.4.7
+     * @version 2.6.0
      * @return void
      */
     public function __construct() {
@@ -33,7 +34,53 @@ class Whatsapp extends Integrations_Base {
         if ( Admin::get_setting('enable_whatsapp_integration') === 'yes' ) {
             add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_whatsapp_messages' ), 10, 1 );
             add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_whatsapp_category' ), 10, 1 );
+
+            // Late, so it reaches the conditions every integration registered.
+            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_window_condition' ), 99, 1 );
         }
+    }
+
+
+    /**
+     * Offer the 24-hour window condition on every trigger.
+     *
+     * Free text and media only reach a contact whose window is open, so any
+     * workflow that messages someone may need to branch on it — typically free
+     * text on the open branch and an approved template on the other. The
+     * window belongs to the contact, not to the event, so it fits every trigger.
+     *
+     * @since 2.6.0
+     * @param array $conditions | Conditions per trigger.
+     * @return array
+     */
+    public function add_window_condition( $conditions ) {
+        $conditions = is_array( $conditions ) ? $conditions : array();
+
+        $window = array(
+            'title' => __( 'WhatsApp 24-hour window', 'joinotify' ),
+            'description' => __( 'Checks whether the recipient wrote to the sender in the last 24 hours, so free text can still reach them. Unknown means the platform could not be asked: treat it as closed.', 'joinotify' ),
+        );
+
+        foreach ( Triggers::get_all_triggers() as $triggers ) {
+            foreach ( (array) $triggers as $trigger ) {
+                $id = is_array( $trigger ) ? (string) ( $trigger['data_trigger'] ?? '' ) : '';
+
+                if ( '' === $id ) {
+                    continue;
+                }
+
+                $existing = isset( $conditions[ $id ] ) && is_array( $conditions[ $id ] ) ? $conditions[ $id ] : array();
+
+                // A trigger with no conditions of its own carries the "nothing to
+                // check" placeholder, which would sit next to a real condition.
+                unset( $existing['no_action'] );
+
+                $existing['whatsapp_window'] = $window;
+                $conditions[ $id ] = $existing;
+            }
+        }
+
+        return $conditions;
     }
 
 

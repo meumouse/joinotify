@@ -44,9 +44,9 @@ class Conditions {
 
     /**
      * Check condition type and return allowed conditions type for condition key
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.6.0
      * @param string $condition_type | Condition key
      * @return array
      */
@@ -71,6 +71,7 @@ class Conditions {
             'items_in_cart'       => array( 'bigger_than', 'less_than', 'is', 'is_not' ),
             'field_value'         => array( 'contains', 'not_contain', 'is', 'is_not', 'empty', 'not_empty' ),
             'cart_recovered'      => array( 'is', 'is_not' ),
+            'whatsapp_window'     => array( 'is', 'is_not' ),
         ));
     
         return isset( $allowed_conditions_map[ $condition_type ] ) ? $allowed_conditions_map[ $condition_type ] : array();
@@ -81,7 +82,7 @@ class Conditions {
      * Gets comparison value based on condition type and context
      *
      * @since 1.0.0
-     * @version 2.1.0
+     * @version 2.6.0
      * @param string $condition_type | Condition type (e.g. 'order_total', 'user_role')
      * @param array $payload | Payload data
      * @return mixed Returns the value for comparison or null if not found
@@ -123,7 +124,11 @@ class Conditions {
         $refund = isset( $payload['refund_id'], $payload['hook'] ) && $payload['hook'] === 'woocommerce_order_partially_refunded'
             ? wc_get_order( $payload['refund_id'] )
             : null;
-    
+
+        // Reading the window costs a request to the platform, so it is only
+        // asked for when this is the condition being evaluated.
+        $whatsapp_window = 'whatsapp_window' === $condition_type ? self::get_whatsapp_window_state( $condition_content, $payload ) : null;
+
         // Map condition types to their respective value retrieval methods
         $value_map = apply_filters( 'Joinotify/Conditions/Get_Compare_Value', array(
             'user_role'             => $context instanceof \WP_User ? ( $context->roles[0] ?? null ) : null,
@@ -144,9 +149,38 @@ class Conditions {
             'shipping_method'       => ! empty( $shipping_items ) ? ( count( $shipping_items ) === 1 ? ( $first_item = reset( $shipping_items ) ) ? explode( ":", $first_item->get_method_id() )[0] : null : array_values( array_map( fn( $method ) => explode( ":", $method->get_method_id() )[0], $shipping_items ) ) ) : null,
             'field_value'           => $field_value,
             'cart_recovered'        => isset( $payload['cart_id'] ) ? get_post_meta( $payload['cart_id'], '_fcrc_purchased', true ) : null,
+            'whatsapp_window'       => $whatsapp_window,
         ), $condition_type, $payload );
-    
+
         return $value_map[$condition_type] ?? null;
+    }
+
+
+    /**
+     * Read the 24-hour window of the contact a `whatsapp_window` condition names.
+     *
+     * The recipient is a phone or a placeholder resolved against the payload,
+     * exactly as a message action resolves it, and the sender picks which of
+     * the account numbers the window is read on (empty for the first one). A
+     * recipient that resolves to nothing, or a platform that cannot be asked,
+     * answers `unknown` — which a workflow should treat like `closed`.
+     *
+     * @since 2.6.0
+     * @param array $condition_content | Condition settings (receiver, sender).
+     * @param array $payload | Payload data
+     * @return string `open`, `closed` or `unknown`.
+     */
+    protected static function get_whatsapp_window_state( $condition_content, $payload ) {
+        $receiver = joinotify_prepare_receiver( (string) ( $condition_content['receiver'] ?? '' ), $payload );
+        $sender = preg_replace( '/\D/', '', (string) ( $condition_content['sender'] ?? '' ) );
+
+        if ( '' === (string) $receiver ) {
+            return 'unknown';
+        }
+
+        $window = joinotify_get_whatsapp_window( (string) $receiver, (string) $sender );
+
+        return is_array( $window ) && isset( $window['state'] ) ? (string) $window['state'] : 'unknown';
     }
 
 
