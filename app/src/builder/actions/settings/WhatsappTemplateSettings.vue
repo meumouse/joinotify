@@ -11,7 +11,13 @@
  * surfaces the states that stop a template from being delivered (paused,
  * disabled, rejected).
  *
+ * Besides the `{{...}}` tokens, a template may need values it has no token
+ * for: the file of a media header, the coupon of a copy-code button and the
+ * login code of an authentication button. Those slots carry a `format` (or the
+ * `copy_code` sub-type) and get their own label and hint.
+ *
  * @since 2.3.0
+ * @version 2.6.0
  */
 import { computed, onMounted, ref, watch } from 'vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
@@ -21,6 +27,7 @@ import { useSenderOptions } from '../../../composables/useSenderOptions';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { createApiClient } from '../../../utils/api';
+import { ImagePlus } from '@boxicons/vue';
 import { __, textDomain } from '../../../utils/i18n';
 import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
@@ -30,7 +37,14 @@ interface TemplateVariable {
   index: number;
   key: string;
   label?: string;
+  format?: string;
   value?: string;
+}
+
+interface TemplateButton {
+  type: string;
+  text: string;
+  url: string;
 }
 
 interface RemoteTemplate {
@@ -38,11 +52,15 @@ interface RemoteTemplate {
   language: string;
   status: string;
   category: string;
+  header_format?: string;
   header: string;
   body: string;
   footer: string;
+  buttons?: TemplateButton[];
   variables: TemplateVariable[];
 }
+
+const MEDIA_FORMATS = ['image', 'video', 'document'];
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
@@ -101,6 +119,7 @@ const blockingStatus = computed(() => {
  * mapped to the same placeholder.
  *
  * @since 2.3.0
+ * @version 2.6.0
  * @param {RemoteTemplate} template Template whose variables should be mapped.
  * @returns {TemplateVariable[]} The variable map to store on the action.
  */
@@ -110,8 +129,15 @@ function buildVariableMap(template: RemoteTemplate): TemplateVariable[] {
     : [];
 
   return (template.variables || []).map((variable) => {
+    // Token-less slots share an empty key, so the sub-type and format tell a
+    // coupon from a login code on the same button position.
     const previous = current.find(
-      (item) => item.component === variable.component && item.key === variable.key && Number(item.index) === Number(variable.index)
+      (item) =>
+        item.component === variable.component &&
+        item.key === variable.key &&
+        Number(item.index) === Number(variable.index) &&
+        (item.sub_type || '') === (variable.sub_type || '') &&
+        (item.format || '') === (variable.format || '')
     );
 
     return {
@@ -120,19 +146,51 @@ function buildVariableMap(template: RemoteTemplate): TemplateVariable[] {
       index: Number(variable.index || 0),
       key: variable.key,
       label: variable.label || '',
+      format: variable.format || '',
       value: previous?.value || '',
     };
   });
 }
 
 /**
+ * Whether a slot holds the file of a media header.
+ *
+ * @since 2.6.0
+ * @param {TemplateVariable} variable Variable slot.
+ * @returns {boolean}
+ */
+function isMediaHeader(variable: TemplateVariable): boolean {
+  return variable.component === 'header' && MEDIA_FORMATS.includes(variable.format || '');
+}
+
+/**
  * Human-readable name of a variable slot.
  *
  * @since 2.3.0
+ * @version 2.6.0
  * @param {TemplateVariable} variable Variable slot.
  * @returns {string} Label shown above the placeholder field.
  */
 function variableLabel(variable: TemplateVariable): string {
+  if (isMediaHeader(variable)) {
+    switch (variable.format) {
+      case 'video':
+        return __('Header video', textDomain);
+      case 'document':
+        return __('Header document', textDomain);
+      default:
+        return __('Header image', textDomain);
+    }
+  }
+
+  if (variable.component === 'button' && variable.sub_type === 'copy_code') {
+    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · ${__('Coupon code', textDomain)}`;
+  }
+
+  if (variable.component === 'button' && variable.format === 'otp') {
+    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · ${__('Verification code', textDomain)}`;
+  }
+
   if (variable.component === 'button') {
     return `${__('Button', textDomain)} ${Number(variable.index) + 1} · {{${variable.key}}}`;
   }
@@ -142,6 +200,69 @@ function variableLabel(variable: TemplateVariable): string {
   }
 
   return `${__('Body', textDomain)} · {{${variable.key}}}`;
+}
+
+/**
+ * Example shown inside the field of a variable slot.
+ *
+ * @since 2.6.0
+ * @param {TemplateVariable} variable Variable slot.
+ * @returns {string}
+ */
+function variablePlaceholder(variable: TemplateVariable): string {
+  if (isMediaHeader(variable)) {
+    return __('https://example.com/file.jpg or a placeholder', textDomain);
+  }
+
+  if (variable.sub_type === 'copy_code') {
+    return __('BLACK20 or a placeholder', textDomain);
+  }
+
+  if (variable.format === 'otp') {
+    return __('Leave empty to repeat the code from the body', textDomain);
+  }
+
+  return __('{{ wc_billing_first_name }} or a fixed value', textDomain);
+}
+
+/**
+ * Open the WordPress media library and store the chosen file's URL on a
+ * media header slot.
+ *
+ * @since 2.6.0
+ * @param {number} position Index of the slot in the stored map.
+ * @param {string} format Media kind the template header accepts.
+ * @returns {void}
+ */
+function openMediaLibrary(position: number, format: string): void {
+  const wpMedia = (window as Window & {
+    wp?: {
+      media?: (...args: unknown[]) => {
+        on: (event: string, callback: () => void) => void;
+        state: () => { get: (key: string) => { first: () => { toJSON: () => { url?: string } } | undefined } };
+        open: () => void;
+      };
+    };
+  }).wp?.media;
+
+  if (!wpMedia) {
+    return;
+  }
+
+  // The library has no "document" type; any file stays selectable for it.
+  const library = format === 'image' || format === 'video' ? { type: format } : {};
+  const frame = wpMedia({ title: __('Select media', textDomain), button: { text: __('Use this media', textDomain) }, library, multiple: false });
+
+  frame.on('select', () => {
+    const attachment = frame.state().get('selection').first();
+    const url = String(attachment?.toJSON?.().url || '').trim();
+
+    if (url) {
+      updateVariable(position, url);
+    }
+  });
+
+  frame.open();
 }
 
 /**
@@ -302,9 +423,25 @@ onMounted(() => loadTemplates());
       </p>
 
       <div class="rounded-[8px] border border-slate-200 bg-slate-50 px-4 py-3">
+        <p
+          v-if="MEDIA_FORMATS.includes(String(selected.header_format || '').toLowerCase())"
+          class="mb-2 inline-flex items-center gap-1 rounded-[6px] bg-slate-200 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-600"
+        >
+          <ImagePlus class="text-sm" />
+          {{ String(selected.header_format).toLowerCase() }}
+        </p>
         <p v-if="selected.header" class="text-[13px] font-semibold text-slate-700">{{ selected.header }}</p>
         <p class="whitespace-pre-line text-[13px] leading-5 text-slate-600">{{ selected.body }}</p>
         <p v-if="selected.footer" class="mt-1 text-xs text-slate-400">{{ selected.footer }}</p>
+        <div v-if="selected.buttons?.length" class="mt-2 flex flex-wrap gap-1.5">
+          <span
+            v-for="(button, buttonIndex) in selected.buttons"
+            :key="`${buttonIndex}-${button.type}`"
+            class="rounded-[6px] border border-slate-200 bg-white px-2 py-0.5 text-xs text-slate-600"
+          >
+            {{ button.text || button.type }}
+          </span>
+        </div>
       </div>
 
       <FieldGroup
@@ -313,15 +450,30 @@ onMounted(() => loadTemplates());
         :description="__('Each template variable is filled at send time with the placeholder you map here.', textDomain)"
       >
         <div class="space-y-3">
-          <BaseTextFieldVariables
+          <div
             v-for="(variable, position) in modelValue.variables"
-            :key="`${variable.component}-${variable.index}-${variable.key}`"
-            :model-value="String(variable.value || '')"
-            :label="variableLabel(variable)"
-            :placeholder="__('{{ wc_billing_first_name }} or a fixed value', textDomain)"
-            :placeholders="availablePlaceholders"
-            @update:model-value="updateVariable(position, $event)"
-          />
+            :key="`${variable.component}-${variable.index}-${variable.sub_type}-${variable.format}-${variable.key}`"
+            class="flex items-end gap-2"
+          >
+            <div class="flex-1">
+              <BaseTextFieldVariables
+                :model-value="String(variable.value || '')"
+                :label="variableLabel(variable)"
+                :placeholder="variablePlaceholder(variable)"
+                :placeholders="availablePlaceholders"
+                @update:model-value="updateVariable(position, $event)"
+              />
+            </div>
+            <button
+              v-if="isMediaHeader(variable)"
+              type="button"
+              class="mb-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              @click="openMediaLibrary(position, String(variable.format))"
+            >
+              <ImagePlus class="text-base" />
+              {{ __('Library', textDomain) }}
+            </button>
+          </div>
         </div>
       </FieldGroup>
     </div>

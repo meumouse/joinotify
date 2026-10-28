@@ -529,9 +529,11 @@ class Template_Repository {
      *
      * The variable name comes from the template when it is known; without it
      * the position inside the component (1, 2, ...) stands in, which is what a
-     * positional template calls them anyway.
+     * positional template calls them anyway. A value that fills no token (a
+     * media header, a coupon) is named after its type (`image`, `coupon_code`).
      *
      * @since 2.4.1
+     * @version 2.6.0
      * @param array      $components | Meta components payload.
      * @param array|null $template | Normalized template, when known.
      * @return array<int,array{component:string,index:int,key:string,value:string}>
@@ -567,7 +569,14 @@ class Template_Repository {
                 $key = (string) ( $parameter['parameter_name'] ?? '' );
 
                 if ( '' === $key ) {
-                    $key = '' !== ( $keys[ $position ] ?? '' ) ? $keys[ $position ] : (string) ( $position + 1 );
+                    $key = (string) ( $keys[ $position ] ?? '' );
+                }
+
+                // A media header or a coupon has no token to be named after,
+                // so it goes by what it holds instead of a made-up position.
+                if ( '' === $key ) {
+                    $parameter_type = is_array( $parameter ) ? strtolower( (string) ( $parameter['type'] ?? 'text' ) ) : 'text';
+                    $key = 'text' !== $parameter_type ? $parameter_type : (string) ( $position + 1 );
                 }
 
                 $flat[] = array(
@@ -587,6 +596,7 @@ class Template_Repository {
      * Read the value a recipient sees for one Meta parameter object.
      *
      * @since 2.4.1
+     * @version 2.6.0
      * @param mixed $parameter | Meta parameter object.
      * @return string
      */
@@ -612,6 +622,9 @@ class Template_Repository {
 
             case 'payload':
                 return (string) ( $parameter['payload'] ?? '' );
+
+            case 'coupon_code':
+                return (string) ( $parameter['coupon_code'] ?? '' );
         }
 
         $json = wp_json_encode( $parameter );
@@ -737,7 +750,7 @@ class Template_Repository {
      * `header_format` says what the header carries (`TEXT`, `IMAGE`, `VIDEO`,
      * `DOCUMENT`, `LOCATION`), empty when the template has no header: a media
      * header has no text and no `{{...}}` token, yet Meta refuses the send
-     * without its parameter.
+     * without its parameter. `buttons` lists each button's type, text and URL.
      *
      * @since 2.3.0
      * @version 2.6.0
@@ -759,6 +772,7 @@ class Template_Repository {
             'header' => self::component_text( $components, 'HEADER' ),
             'body' => self::component_text( $components, 'BODY' ),
             'footer' => self::component_text( $components, 'FOOTER' ),
+            'buttons' => self::extract_buttons( $components ),
             'variables' => self::extract_variables( $components ),
         );
     }
@@ -822,6 +836,13 @@ class Template_Repository {
      * template declares it (`https://example.com/orders/{{1}}`): its value is
      * only the part that replaces the token, never a whole link.
      *
+     * Some values Meta requires have no `{{...}}` token at all, so they are
+     * listed with an empty `key` and a `format` saying what they hold: a media
+     * header (`image`, `video`, `document`) takes the file link, a copy-code
+     * button (`sub_type` `copy_code`) takes the coupon, and the button of an
+     * AUTHENTICATION template (`format` `otp`) takes the login code. Every
+     * other variable has an empty `format`.
+     *
      * @since 2.3.0
      * @version 2.6.0
      * @param array $components | Template components.
@@ -839,19 +860,33 @@ class Template_Repository {
 
             if ( 'buttons' === $type ) {
                 foreach ( (array) ( $component['buttons'] ?? array() ) as $index => $button ) {
-                    if ( ! is_array( $button ) || 'URL' !== strtoupper( (string) ( $button['type'] ?? '' ) ) ) {
+                    if ( ! is_array( $button ) ) {
+                        continue;
+                    }
+
+                    $button_type = strtoupper( (string) ( $button['type'] ?? '' ) );
+                    $label = (string) ( $button['text'] ?? '' );
+
+                    if ( 'COPY_CODE' === $button_type ) {
+                        $variables[] = self::variable( 'button', '', (int) $index, 'copy_code', $label );
+
+                        continue;
+                    }
+
+                    // Every OTP button — copy code, one-tap or zero-tap — goes
+                    // out as a URL button whose single parameter is the code.
+                    if ( 'OTP' === $button_type ) {
+                        $variables[] = self::variable( 'button', '', (int) $index, 'url', $label, '', 'otp' );
+
+                        continue;
+                    }
+
+                    if ( 'URL' !== $button_type ) {
                         continue;
                     }
 
                     foreach ( self::tokens_in( (string) ( $button['url'] ?? '' ) ) as $token ) {
-                        $variables[] = array(
-                            'component' => 'button',
-                            'sub_type' => 'url',
-                            'index' => (int) $index,
-                            'key' => $token,
-                            'label' => (string) ( $button['text'] ?? '' ),
-                            'url' => (string) ( $button['url'] ?? '' ),
-                        );
+                        $variables[] = self::variable( 'button', $token, (int) $index, 'url', $label, (string) ( $button['url'] ?? '' ) );
                     }
                 }
 
@@ -863,19 +898,80 @@ class Template_Repository {
                 continue;
             }
 
+            if ( 'header' === $type ) {
+                $format = strtolower( (string) ( $component['format'] ?? '' ) );
+
+                if ( in_array( $format, array( 'image', 'video', 'document' ), true ) ) {
+                    $variables[] = self::variable( 'header', '', 0, '', '', '', $format );
+
+                    continue;
+                }
+            }
+
             foreach ( self::tokens_in( (string) ( $component['text'] ?? '' ) ) as $token ) {
-                $variables[] = array(
-                    'component' => $type,
-                    'sub_type' => '',
-                    'index' => 0,
-                    'key' => $token,
-                    'label' => '',
-                    'url' => '',
-                );
+                $variables[] = self::variable( $type, $token );
             }
         }
 
         return $variables;
+    }
+
+
+    /**
+     * Build one entry of a template's variable list.
+     *
+     * @since 2.6.0
+     * @param string $component | header, body or button.
+     * @param string $key | Token name, empty when the value has no token.
+     * @param int    $index | Button position, 0 for anything else.
+     * @param string $sub_type | Button sub-type (url, copy_code), empty for anything else.
+     * @param string $label | Button text.
+     * @param string $url | URL a URL button declares, with its token.
+     * @param string $format | What a token-less value holds (image, video, document, otp).
+     * @return array
+     */
+    protected static function variable( $component, $key, $index = 0, $sub_type = '', $label = '', $url = '', $format = '' ) {
+        return array(
+            'component' => $component,
+            'sub_type' => $sub_type,
+            'index' => $index,
+            'key' => $key,
+            'label' => $label,
+            'url' => $url,
+            'format' => $format,
+        );
+    }
+
+
+    /**
+     * List the buttons of a template, so a preview can show them.
+     *
+     * @since 2.6.0
+     * @param array $components | Template components.
+     * @return array<int,array{type:string,text:string,url:string}>
+     */
+    protected static function extract_buttons( $components ) {
+        $buttons = array();
+
+        foreach ( $components as $component ) {
+            if ( ! is_array( $component ) || 'BUTTONS' !== strtoupper( (string) ( $component['type'] ?? '' ) ) ) {
+                continue;
+            }
+
+            foreach ( (array) ( $component['buttons'] ?? array() ) as $button ) {
+                if ( ! is_array( $button ) ) {
+                    continue;
+                }
+
+                $buttons[] = array(
+                    'type' => strtoupper( (string) ( $button['type'] ?? '' ) ),
+                    'text' => (string) ( $button['text'] ?? '' ),
+                    'url' => (string) ( $button['url'] ?? '' ),
+                );
+            }
+        }
+
+        return $buttons;
     }
 
 

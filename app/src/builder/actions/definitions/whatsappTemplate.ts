@@ -35,8 +35,27 @@ function normalizeVariables(variables: unknown): Array<Record<string, unknown>> 
       sub_type: String(variable.sub_type || ''),
       index: Number(variable.index || 0),
       key: String(variable.key || ''),
+      format: String(variable.format || ''),
       value: String(variable.value || ''),
     }));
+}
+
+/**
+ * Whether the template needs a value Meta refuses to send without: the file of
+ * a media header or the coupon of a copy-code button. The login code of an
+ * authentication button is left out, since the backend repeats the body code
+ * when it is empty.
+ *
+ * @since 2.6.0
+ * @param {unknown} variables Raw variable map.
+ * @returns {boolean} True when such a value is still empty.
+ */
+function hasMissingRequiredValue(variables: unknown): boolean {
+  return normalizeVariables(variables).some((variable) => {
+    const required = (variable.component === 'header' && variable.format !== '') || variable.sub_type === 'copy_code';
+
+    return required && String(variable.value).trim() === '';
+  });
 }
 
 /**
@@ -75,8 +94,13 @@ export const whatsappTemplateDefinition: ActionDefinition = {
   normalizeData: normalizeWhatsappTemplateData,
   serializeData: normalizeWhatsappTemplateData,
   buildDescription: (data) => truncateDescription(String(data.template_name || __('WhatsApp template message', textDomain))),
-  validate: (data) => normalizeValidationErrors(requiredFieldErrors(data, [
-    { key: 'sender', label: __('Sender', textDomain) },
-    { key: 'template_name', label: __('Template', textDomain) },
-  ])),
+  validate: (data) => normalizeValidationErrors({
+    ...requiredFieldErrors(data, [
+      { key: 'sender', label: __('Sender', textDomain) },
+      { key: 'template_name', label: __('Template', textDomain) },
+    ]),
+    variables: hasMissingRequiredValue(data.variables)
+      ? __('This template needs a header file or a coupon code before it can be sent.', textDomain)
+      : '',
+  }),
 };

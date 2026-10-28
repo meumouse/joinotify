@@ -58,6 +58,7 @@ function sanitize_text_field( $value ) { return is_scalar( $value ) ? trim( stri
 function sanitize_key( $key ) { return strtolower( preg_replace( '/[^a-zA-Z0-9_\-]/', '', (string) $key ) ); }
 function absint( $value ) { return abs( (int) $value ); }
 function __( $text, $domain = 'default' ) { return $text; }
+function wp_parse_url( $url, $component = -1 ) { return parse_url( $url, $component ); }
 
 class WP_Error {
 	private $code;
@@ -385,8 +386,9 @@ $templates = Template_Repository::get_templates()['templates'];
 check( 'a media header reports its format', 'IMAGE' === $templates[0]['header_format'] );
 check( 'a header without a format reads as text', 'TEXT' === $templates[1]['header_format'] );
 check( 'a template without a header has no format', '' === $templates[2]['header_format'] );
-check( 'a button variable carries the button url', 'https://loja.test/?sb_recover={{1}}' === $templates[0]['variables'][1]['url'] );
-check( 'a body variable has an empty url', '' === $templates[0]['variables'][0]['url'] );
+check( 'the media header comes before the body', 'image' === $templates[0]['variables'][0]['format'] && 'body' === $templates[0]['variables'][1]['component'] );
+check( 'a button variable carries the button url', 'https://loja.test/?sb_recover={{1}}' === $templates[0]['variables'][2]['url'] );
+check( 'a body variable has an empty url', '' === $templates[0]['variables'][1]['url'] );
 
 echo "\nWorkflow_Processor::components_from_values\n";
 
@@ -405,6 +407,84 @@ check( 'button values keep their index', '0' === $components[2]['index'] && 'abc
 check( 'the workflow builder resolves and packs the same way', Workflow_Processor::build_template_components( array(
 	array( 'component' => 'body', 'key' => '1', 'value' => 'x' ),
 ), array() ) === Workflow_Processor::components_from_values( array( array( 'component' => 'body', 'key' => '1', 'value' => 'x' ) ) ) );
+
+echo "\nTemplate_Repository values without a token\n";
+reset_state();
+
+Cloud_Client::$response = array(
+	'data' => array(
+		array(
+			'name' => 'promo_video',
+			'language' => 'pt_BR',
+			'category' => 'MARKETING',
+			'components' => array(
+				array( 'type' => 'HEADER', 'format' => 'VIDEO' ),
+				array( 'type' => 'BODY', 'text' => 'Oi {{1}}, use o cupom abaixo.' ),
+				array(
+					'type' => 'BUTTONS',
+					'buttons' => array(
+						array( 'type' => 'COPY_CODE', 'text' => 'Copiar código' ),
+						array( 'type' => 'URL', 'text' => 'Comprar', 'url' => 'https://loja.test/' ),
+						array( 'type' => 'QUICK_REPLY', 'text' => 'Parar' ),
+					),
+				),
+			),
+		),
+		array(
+			'name' => 'codigo_login',
+			'language' => 'pt_BR',
+			'category' => 'AUTHENTICATION',
+			'components' => array(
+				array( 'type' => 'BODY', 'text' => '*{{1}}* é seu código de verificação.' ),
+				array( 'type' => 'BUTTONS', 'buttons' => array( array( 'type' => 'OTP', 'otp_type' => 'COPY_CODE', 'text' => 'Copiar código' ) ) ),
+			),
+		),
+	),
+);
+
+$templates = Template_Repository::get_templates()['templates'];
+$variables = $templates[0]['variables'];
+
+check( 'a media header is listed as a variable', 'header' === $variables[0]['component'] && 'video' === $variables[0]['format'] && '' === $variables[0]['key'] );
+check( 'a text variable has an empty format', '' === $variables[1]['format'] && '1' === $variables[1]['key'] );
+check( 'a copy-code button is listed with its sub-type', 'button' === $variables[2]['component'] && 'copy_code' === $variables[2]['sub_type'] && 0 === $variables[2]['index'] );
+check( 'a URL button without a token and a quick reply add nothing', 3 === count( $variables ) );
+check( 'the buttons are listed for the preview', 3 === count( $templates[0]['buttons'] ) && 'COPY_CODE' === $templates[0]['buttons'][0]['type'] && 'Comprar' === $templates[0]['buttons'][1]['text'] );
+
+$variables = $templates[1]['variables'];
+
+check( 'an OTP button is listed as a URL button holding the code', 'button' === $variables[1]['component'] && 'url' === $variables[1]['sub_type'] && 'otp' === $variables[1]['format'] );
+
+echo "\nWorkflow_Processor values without a token\n";
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'header', 'format' => 'document', 'key' => '', 'value' => 'https://loja.test/notas/nota%20fiscal.pdf?v=2' ),
+	array( 'component' => 'body', 'key' => '1', 'value' => 'Ana' ),
+	array( 'component' => 'button', 'sub_type' => 'copy_code', 'index' => 0, 'key' => '', 'value' => ' BLACK20 ' ),
+) );
+
+check( 'a document header carries its file name', array( 'link' => 'https://loja.test/notas/nota%20fiscal.pdf?v=2', 'filename' => 'nota fiscal.pdf' ) === $components[0]['parameters'][0]['document'] );
+check( 'a copy-code button sends the coupon', array( 'type' => 'button', 'parameters' => array( array( 'type' => 'coupon_code', 'coupon_code' => 'BLACK20' ) ), 'sub_type' => 'copy_code', 'index' => '0' ) === $components[2] );
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'header', 'format' => 'image', 'key' => '', 'value' => ' 1234567890 ' ),
+) );
+
+check( 'a media id goes out as an id', array( 'id' => '1234567890' ) === $components[0]['parameters'][0]['image'] );
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'body', 'key' => '1', 'value' => '482913' ),
+	array( 'component' => 'button', 'sub_type' => 'url', 'format' => 'otp', 'index' => 0, 'key' => '', 'value' => '' ),
+) );
+
+check( 'an empty OTP button repeats the body code', array( array( 'type' => 'text', 'text' => '482913' ) ) === $components[1]['parameters'] );
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'body', 'key' => '1', 'value' => '482913' ),
+	array( 'component' => 'button', 'sub_type' => 'url', 'format' => 'otp', 'index' => 0, 'key' => '', 'value' => '111222' ),
+) );
+
+check( 'a filled OTP button keeps its own value', '111222' === $components[1]['parameters'][0]['text'] );
 
 echo "\n";
 echo $failures > 0

@@ -2044,9 +2044,11 @@ class Registry {
 	 *
 	 * Each item says where a template placeholder lives (`component`, plus
 	 * `sub_type`/`index` for button variables), which placeholder key it is, and
-	 * the Joinotify token that fills it at send time.
+	 * the Joinotify token that fills it at send time. A value with no token
+	 * says what it holds in `format` (a media header, the login code).
 	 *
 	 * @since 2.3.0
+	 * @version 2.6.0
 	 * @param array<int,mixed> $variables Raw variable map.
 	 * @return array<int,array<string,mixed>>
 	 */
@@ -2073,6 +2075,7 @@ class Registry {
 				'sub_type' => isset( $variable['sub_type'] ) ? sanitize_key( (string) $variable['sub_type'] ) : '',
 				'index' => isset( $variable['index'] ) ? absint( $variable['index'] ) : 0,
 				'key' => isset( $variable['key'] ) ? sanitize_text_field( (string) $variable['key'] ) : '',
+				'format' => isset( $variable['format'] ) ? sanitize_key( (string) $variable['format'] ) : '',
 				'value' => isset( $variable['value'] ) ? sanitize_textarea_field( (string) $variable['value'] ) : '',
 			);
 		}
