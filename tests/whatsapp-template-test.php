@@ -360,6 +360,52 @@ check( 'a button value is flattened too', 'a, b' === Workflow_Processor::build_t
 	array( 'component' => 'button', 'sub_type' => 'url', 'key' => '1', 'index' => 0, 'value' => "a\nb" ),
 ), array() )[0]['parameters'][0]['text'] );
 
+echo "\nTemplate_Repository header format and button links\n";
+reset_state();
+
+Cloud_Client::$response = array(
+	'data' => array(
+		array(
+			'name' => 'carrinho_foto',
+			'language' => 'pt_BR',
+			'status' => 'APPROVED',
+			'components' => array(
+				array( 'type' => 'HEADER', 'format' => 'IMAGE' ),
+				array( 'type' => 'BODY', 'text' => 'Oi {{1}}' ),
+				array( 'type' => 'BUTTONS', 'buttons' => array( array( 'type' => 'URL', 'text' => 'Voltar', 'url' => 'https://loja.test/?sb_recover={{1}}' ) ) ),
+			),
+		),
+		array( 'name' => 'texto', 'language' => 'pt_BR', 'components' => array( array( 'type' => 'HEADER', 'text' => 'Olá' ), array( 'type' => 'BODY', 'text' => 'x' ) ) ),
+		array( 'name' => 'sem_cabecalho', 'language' => 'pt_BR', 'components' => array( array( 'type' => 'BODY', 'text' => 'x' ) ) ),
+	),
+);
+
+$templates = Template_Repository::get_templates()['templates'];
+
+check( 'a media header reports its format', 'IMAGE' === $templates[0]['header_format'] );
+check( 'a header without a format reads as text', 'TEXT' === $templates[1]['header_format'] );
+check( 'a template without a header has no format', '' === $templates[2]['header_format'] );
+check( 'a button variable carries the button url', 'https://loja.test/?sb_recover={{1}}' === $templates[0]['variables'][1]['url'] );
+check( 'a body variable has an empty url', '' === $templates[0]['variables'][0]['url'] );
+
+echo "\nWorkflow_Processor::components_from_values\n";
+
+$components = Workflow_Processor::components_from_values( array(
+	array( 'component' => 'header', 'format' => 'image', 'key' => '', 'value' => ' https://loja.test/foto.jpg ' ),
+	array( 'component' => 'body', 'key' => 'nome', 'value' => 'Ana {{ first_name }}' ),
+	array( 'component' => 'body', 'key' => 'itens', 'value' => "Camisa\nCalça" ),
+	array( 'component' => 'button', 'sub_type' => 'url', 'index' => 0, 'key' => '1', 'value' => 'abc123' ),
+) );
+
+check( 'a media header goes out as a link', array( 'type' => 'header', 'parameters' => array( array( 'type' => 'image', 'image' => array( 'link' => 'https://loja.test/foto.jpg' ) ) ) ) === $components[0] );
+check( 'values are not run through the placeholders', 'Ana {{ first_name }}' === $components[1]['parameters'][0]['text'] );
+check( 'named body variables keep their parameter_name', 'nome' === $components[1]['parameters'][0]['parameter_name'] );
+check( 'resolved values are still brought to one line', 'Camisa, Calça' === $components[1]['parameters'][1]['text'] );
+check( 'button values keep their index', '0' === $components[2]['index'] && 'abc123' === $components[2]['parameters'][0]['text'] );
+check( 'the workflow builder resolves and packs the same way', Workflow_Processor::build_template_components( array(
+	array( 'component' => 'body', 'key' => '1', 'value' => 'x' ),
+), array() ) === Workflow_Processor::components_from_values( array( array( 'component' => 'body', 'key' => '1', 'value' => 'x' ) ) ) );
+
 echo "\n";
 echo $failures > 0
 	? "FAILED — {$failures} of {$assertions} assertions failed\n"

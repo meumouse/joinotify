@@ -1599,27 +1599,60 @@ class Workflow_Processor {
      *
      * The builder stores one entry per template variable, each carrying where it
      * belongs (`component`, and `sub_type`/`index` for button variables) and the
-     * Joinotify placeholder that fills it. Meta wants those grouped per
-     * component, with lowercase types, and button parameters split by button
-     * index.
-     *
-     * Header and body parameters of a template created with named variables
-     * (`{{nome}}`) also carry the `parameter_name` Meta requires for that
-     * format. Positional variables (`{{1}}`) are matched by order and go out
-     * without it, as do button parameters.
-     *
-     * Every value travels as a `text` parameter, numbers included: Meta has no
-     * numeric text type, and a digit string is what it expects for an order
-     * number or a count.
+     * Joinotify placeholder that fills it. The placeholders are resolved here;
+     * packing the values into Meta's dialect is components_from_values().
      *
      * @since 2.3.0
-     * @version 2.4.2
+     * @version 2.6.0
      * @param array  $variables | Variable map stored on the action.
      * @param array  $payload | Runtime trigger payload.
      * @param string $mode | Placeholder resolution mode ('production' or 'sandbox').
      * @return array
      */
     public static function build_template_components( $variables, $payload, $mode = 'production' ) {
+        if ( ! is_array( $variables ) || empty( $variables ) ) {
+            return array();
+        }
+
+        foreach ( $variables as $position => $variable ) {
+            if ( ! is_array( $variable ) ) {
+                continue;
+            }
+
+            $raw = (string) ( $variable['value'] ?? '' );
+
+            $variables[ $position ]['value'] = 'sandbox' === $mode
+                ? Placeholders::replace_placeholders( $raw, $payload, 'sandbox' )
+                : joinotify_prepare_message( $raw, $payload );
+        }
+
+        return self::components_from_values( $variables );
+    }
+
+
+    /**
+     * Pack variables whose values are already resolved into Meta's `components` payload.
+     *
+     * Meta wants the values grouped per component, with lowercase types, and
+     * button parameters split by button index. Nothing is resolved here: a value
+     * holding `{{ ... }}` goes out as written, which is what lets another plugin
+     * hand over values it resolved with its own placeholders.
+     *
+     * Header and body parameters of a template created with named variables
+     * (`{{nome}}`) also carry the `parameter_name` Meta requires for that
+     * format. Positional variables (`{{1}}`) are matched by order and go out
+     * without it, as do button parameters.
+     *
+     * Every text value travels as a `text` parameter, numbers included: Meta has
+     * no numeric text type, and a digit string is what it expects for an order
+     * number or a count. A header variable whose `format` is `image`, `video` or
+     * `document` is a media header instead, and its value is the file link.
+     *
+     * @since 2.6.0
+     * @param array $variables | One entry per variable: component, sub_type, index, key, format and the resolved value.
+     * @return array
+     */
+    public static function components_from_values( $variables ) {
         if ( ! is_array( $variables ) || empty( $variables ) ) {
             return array();
         }
@@ -1637,10 +1670,7 @@ class Workflow_Processor {
                 continue;
             }
 
-            $raw = (string) ( $variable['value'] ?? '' );
-            $value = 'sandbox' === $mode
-                ? Placeholders::replace_placeholders( $raw, $payload, 'sandbox' )
-                : joinotify_prepare_message( $raw, $payload );
+            $value = is_scalar( $variable['value'] ?? '' ) ? (string) ( $variable['value'] ?? '' ) : '';
 
             // Buttons are addressed one by one, so they cannot share a bucket.
             $bucket = 'button' === $component
@@ -1657,6 +1687,17 @@ class Workflow_Processor {
                     $grouped[ $bucket ]['sub_type'] = (string) ( $variable['sub_type'] ?? 'url' );
                     $grouped[ $bucket ]['index'] = (string) ( (int) ( $variable['index'] ?? 0 ) );
                 }
+            }
+
+            $format = strtolower( (string) ( $variable['format'] ?? '' ) );
+
+            if ( 'header' === $component && in_array( $format, array( 'image', 'video', 'document' ), true ) ) {
+                $grouped[ $bucket ]['parameters'][] = array(
+                    'type' => $format,
+                    $format => array( 'link' => trim( $value ) ),
+                );
+
+                continue;
             }
 
             $parameter = array(

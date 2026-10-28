@@ -734,7 +734,13 @@ class Template_Repository {
     /**
      * Reduce an API template to what the builder needs.
      *
+     * `header_format` says what the header carries (`TEXT`, `IMAGE`, `VIDEO`,
+     * `DOCUMENT`, `LOCATION`), empty when the template has no header: a media
+     * header has no text and no `{{...}}` token, yet Meta refuses the send
+     * without its parameter.
+     *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array $template | Raw template from the API.
      * @return array
      */
@@ -749,6 +755,7 @@ class Template_Repository {
             'category' => strtoupper( (string) ( $template['category'] ?? '' ) ),
             'quality' => strtoupper( (string) ( $template['quality_score']['score'] ?? '' ) ),
             'rejected_reason' => (string) ( $template['rejected_reason'] ?? '' ),
+            'header_format' => self::header_format( $components ),
             'header' => self::component_text( $components, 'HEADER' ),
             'body' => self::component_text( $components, 'BODY' ),
             'footer' => self::component_text( $components, 'FOOTER' ),
@@ -781,14 +788,42 @@ class Template_Repository {
 
 
     /**
+     * Read what the header of a template carries.
+     *
+     * Meta sends the format upper-cased; a text header may come without it,
+     * so a header holding text and no format still reads as `TEXT`.
+     *
+     * @since 2.6.0
+     * @param array $components | Template components.
+     * @return string `TEXT`, `IMAGE`, `VIDEO`, `DOCUMENT`, `LOCATION`, or empty without a header.
+     */
+    protected static function header_format( $components ) {
+        foreach ( $components as $component ) {
+            if ( ! is_array( $component ) || 'HEADER' !== strtoupper( (string) ( $component['type'] ?? '' ) ) ) {
+                continue;
+            }
+
+            $format = strtoupper( (string) ( $component['format'] ?? '' ) );
+
+            return '' !== $format ? $format : 'TEXT';
+        }
+
+        return '';
+    }
+
+
+    /**
      * List every variable the template expects, in the order Meta wants them.
      *
      * Both dialects Meta accepts are read: positional (`{{1}}`) and named
      * (`{{nome}}`). The `key` is what goes back in the parameter object, and the
      * `component` plus `index` say where the value belongs when the send payload
-     * is assembled.
+     * is assembled. A button variable also carries the button's `url` as the
+     * template declares it (`https://example.com/orders/{{1}}`): its value is
+     * only the part that replaces the token, never a whole link.
      *
      * @since 2.3.0
+     * @version 2.6.0
      * @param array $components | Template components.
      * @return array
      */
@@ -815,6 +850,7 @@ class Template_Repository {
                             'index' => (int) $index,
                             'key' => $token,
                             'label' => (string) ( $button['text'] ?? '' ),
+                            'url' => (string) ( $button['url'] ?? '' ),
                         );
                     }
                 }
@@ -834,6 +870,7 @@ class Template_Repository {
                     'index' => 0,
                     'key' => $token,
                     'label' => '',
+                    'url' => '',
                 );
             }
         }

@@ -7,6 +7,8 @@
  */
 
 use MeuMouse\Joinotify\Api\Transport;
+use MeuMouse\Joinotify\Api\Contact_Window;
+use MeuMouse\Joinotify\Api\Template_Repository;
 use MeuMouse\Joinotify\Api\Extensions;
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Placeholders;
@@ -15,6 +17,7 @@ use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Core\Workflow_Processor;
 use MeuMouse\Joinotify\Notifications\Channel_Manager;
 use MeuMouse\Joinotify\Notifications\Notification_Message;
 
@@ -151,6 +154,98 @@ function joinotify_send_whatsapp_template( string $receiver, string $template_na
 	}
 
 	return Transport::template_send_result( $details );
+}
+
+
+/**
+ * List the WhatsApp message templates of the connected account.
+ *
+ * Served from a 15-minute local cache of the platform's own mirror; `force`
+ * asks the platform to read Meta again. Every template says what it expects:
+ * `header_format` (`TEXT`, `IMAGE`, `VIDEO`, `DOCUMENT`, `LOCATION` or empty)
+ * and `variables`, one entry per value in the order Meta wants them
+ * (`component`, `sub_type`, `index`, `key`, `label` and, for a URL button, the
+ * button's `url` with its token).
+ *
+ * @since 2.6.0
+ * @param array $args | Optional `status`, `waba_id` and `force`.
+ * @return array|WP_Error `templates`, `total`, `waba_id`, `synced_at`, `stale`, `sync_error`.
+ */
+function joinotify_get_whatsapp_templates( array $args = array() ) {
+	return Template_Repository::get_templates( $args );
+}
+
+
+/**
+ * Find one WhatsApp message template by name.
+ *
+ * Reads the local copy first and loads the listing once when nothing local
+ * knows the template, so it is safe on a send path.
+ *
+ * @since 2.6.0
+ * @param string $name     | Template name as approved on Meta.
+ * @param string $language | Language to prefer (e.g. pt_BR); empty for any.
+ * @return array|null Normalized template (as in joinotify_get_whatsapp_templates()), or null.
+ */
+function joinotify_get_whatsapp_template( string $name, string $language = '' ) {
+	return Template_Repository::find_or_fetch( $name, $language );
+}
+
+
+/**
+ * Pack template values already resolved into the `components` of a template send.
+ *
+ * Each variable is an entry of the template's `variables` with its `value`
+ * set; a media header is a `header` entry with `format` (`image`, `video`,
+ * `document`) and the file link as its value. Values are not run through the
+ * Joinotify placeholders: they go out as given, brought to the one line Meta
+ * accepts, and named variables carry their `parameter_name`.
+ *
+ * @since 2.6.0
+ * @param array $variables | Variables with their resolved `value`.
+ * @return array Components for joinotify_send_whatsapp_template().
+ */
+function joinotify_build_whatsapp_template_components( array $variables ) {
+	return Workflow_Processor::components_from_values( $variables );
+}
+
+
+/**
+ * Write the text a recipient reads for a template and its components.
+ *
+ * Header, body and footer with the values in place; a template the site does
+ * not know is described by its name and values instead.
+ *
+ * @since 2.6.0
+ * @param string $name       | Template name.
+ * @param string $language   | Template language code.
+ * @param array  $components | Components as sent.
+ * @return string
+ */
+function joinotify_render_whatsapp_template( string $name, string $language = '', array $components = array() ) {
+	$rendered = Template_Repository::render( $name, $language, $components );
+
+	return (string) ( $rendered['text'] ?? '' );
+}
+
+
+/**
+ * Read the customer service window of a contact on one of the account numbers.
+ *
+ * Free text and media reach a contact only while the window opened by the
+ * contact's last message is open (24 hours, 72 hours after a click-to-WhatsApp
+ * ad); outside it only an approved template goes out. The platform answers for
+ * the window, webhooks or not. `unknown` means it could not be asked — not
+ * connected, unreachable, rate limited — so a caller that sends a template on
+ * anything but `open` is always right.
+ *
+ * @since 2.6.0
+ * @param string $phone  | Contact phone with the country code.
+ * @param string $sender | Origin number in digits; empty uses the first connected sender.
+ * @return array{state:string,expires_at:string,remaining_seconds:int}
+ */
+function joinotify_get_whatsapp_window( string $phone, string $sender = '' ) {
+	return Contact_Window::get( $phone, $sender );
 }
 
 
