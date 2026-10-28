@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: 			Joinotify
+ * Plugin Name: 			Joinotify – WhatsApp Notifications & Marketing Automation
  * Description: 			Increase customer satisfaction by automating WhatsApp messaging with Joinotify.
  * Plugin URI: 				https://joinotify.com/wordpress-plugin
  * Author: 					MeuMouse.com
