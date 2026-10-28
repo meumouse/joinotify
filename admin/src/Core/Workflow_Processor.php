@@ -1646,7 +1646,12 @@ class Workflow_Processor {
      * Every text value travels as a `text` parameter, numbers included: Meta has
      * no numeric text type, and a digit string is what it expects for an order
      * number or a count. A header variable whose `format` is `image`, `video` or
-     * `document` is a media header instead, and its value is the file link.
+     * `document` is a media header instead: its value is the file link, or the
+     * id of a file already uploaded to Meta, and a document also carries the
+     * file name read from the link. A `copy_code` button carries its value as
+     * the coupon. The button of an AUTHENTICATION template (`format` `otp`)
+     * repeats the login code, so when it is left empty it takes the first body
+     * value, which is where that code lives.
      *
      * @since 2.6.0
      * @param array $variables | One entry per variable: component, sub_type, index, key, format and the resolved value.
@@ -1658,6 +1663,15 @@ class Workflow_Processor {
         }
 
         $grouped = array();
+        $first_body = '';
+
+        foreach ( $variables as $variable ) {
+            if ( is_array( $variable ) && 'body' === strtolower( (string) ( $variable['component'] ?? 'body' ) ) ) {
+                $first_body = is_scalar( $variable['value'] ?? '' ) ? (string) ( $variable['value'] ?? '' ) : '';
+
+                break;
+            }
+        }
 
         foreach ( $variables as $variable ) {
             if ( ! is_array( $variable ) ) {
@@ -1694,10 +1708,23 @@ class Workflow_Processor {
             if ( 'header' === $component && in_array( $format, array( 'image', 'video', 'document' ), true ) ) {
                 $grouped[ $bucket ]['parameters'][] = array(
                     'type' => $format,
-                    $format => array( 'link' => trim( $value ) ),
+                    $format => self::media_header_object( $format, $value ),
                 );
 
                 continue;
+            }
+
+            if ( 'button' === $component && 'copy_code' === ( $grouped[ $bucket ]['sub_type'] ?? '' ) ) {
+                $grouped[ $bucket ]['parameters'][] = array(
+                    'type' => 'coupon_code',
+                    'coupon_code' => self::prepare_template_text( $value ),
+                );
+
+                continue;
+            }
+
+            if ( 'otp' === $format && '' === trim( $value ) ) {
+                $value = $first_body;
             }
 
             $parameter = array(
@@ -1718,6 +1745,40 @@ class Workflow_Processor {
         }
 
         return array_values( $grouped );
+    }
+
+
+    /**
+     * Describe the file of a media header the way Meta expects it.
+     *
+     * A value made of digits only is the id of a file uploaded to Meta; anything
+     * else is a link. A document sent by link also carries the file name, which
+     * is what the recipient sees on the attachment.
+     *
+     * @since 2.6.0
+     * @param string $format | image, video or document.
+     * @param string $value | File link or Meta media id.
+     * @return array
+     */
+    protected static function media_header_object( $format, $value ) {
+        $value = trim( (string) $value );
+
+        if ( preg_match( '/^\d+$/', $value ) ) {
+            return array( 'id' => $value );
+        }
+
+        $media = array( 'link' => $value );
+
+        if ( 'document' === $format ) {
+            $path = (string) wp_parse_url( $value, PHP_URL_PATH );
+            $filename = '' !== $path ? rawurldecode( basename( $path ) ) : '';
+
+            if ( '' !== $filename ) {
+                $media['filename'] = $filename;
+            }
+        }
+
+        return $media;
     }
 
 

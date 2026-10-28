@@ -162,10 +162,13 @@ function joinotify_send_whatsapp_template( string $receiver, string $template_na
  *
  * Served from a 15-minute local cache of the platform's own mirror; `force`
  * asks the platform to read Meta again. Every template says what it expects:
- * `header_format` (`TEXT`, `IMAGE`, `VIDEO`, `DOCUMENT`, `LOCATION` or empty)
- * and `variables`, one entry per value in the order Meta wants them
- * (`component`, `sub_type`, `index`, `key`, `label` and, for a URL button, the
- * button's `url` with its token).
+ * `header_format` (`TEXT`, `IMAGE`, `VIDEO`, `DOCUMENT`, `LOCATION` or empty),
+ * `buttons` and `variables`, one entry per value in the order Meta wants them
+ * (`component`, `sub_type`, `index`, `key`, `label`, `format` and, for a URL
+ * button, the button's `url` with its token). A value with no token has an
+ * empty `key`: a media header (`format` `image`, `video`, `document`), a
+ * copy-code button (`sub_type` `copy_code`) or the login-code button of an
+ * AUTHENTICATION template (`format` `otp`).
  *
  * @since 2.6.0
  * @param array $args | Optional `status`, `waba_id` and `force`.
@@ -197,7 +200,8 @@ function joinotify_get_whatsapp_template( string $name, string $language = '' ) 
  *
  * Each variable is an entry of the template's `variables` with its `value`
  * set; a media header is a `header` entry with `format` (`image`, `video`,
- * `document`) and the file link as its value. Values are not run through the
+ * `document`) and the file link (or a Meta media id) as its value, and a
+ * `copy_code` button entry takes the coupon. Values are not run through the
  * Joinotify placeholders: they go out as given, brought to the one line Meta
  * accepts, and named variables carry their `parameter_name`.
  *
