@@ -10,7 +10,7 @@
  * Run (Windows / Local):
  *   & "C:\path\to\Local\php.exe" tests/placeholder-modifiers-test.php
  *
- * @since 2.7.0
+ * @since 2.6.1
  */
 
 namespace MeuMouse\Joinotify\Core {

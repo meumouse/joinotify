@@ -376,7 +376,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 2.7.0
+     * @version 2.6.1
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -951,7 +951,7 @@ class Woocommerce extends Integrations_Base {
      * Returns the review link for each purchased product in the order
      *
      * @since 2.0.0
-     * @version 2.7.0
+     * @version 2.6.1
      * @param \WC_Order $order | The object of the request
      * @return string Review links formatted on separate lines
      */
@@ -974,7 +974,7 @@ class Woocommerce extends Integrations_Base {
      * "product/shirt/#reviews". The first product that accepts reviews wins; when none
      * does, the first purchased product that still exists is used anyway.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param \WC_Order $order | The object of the request
      * @return string Relative review link, or empty when no purchased product exists
      */
@@ -1006,7 +1006,7 @@ class Woocommerce extends Integrations_Base {
      * Variations count as their parent product, each product appears once, and
      * products that no longer exist or don't accept reviews are left out.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param \WC_Order $order | The object of the request
      * @return array Map of product ID => \WC_Product, in the order of the items
      */

@@ -469,7 +469,7 @@ class Extensions {
 	 * Return the changed value, or null (or any non-scalar) to keep it as it was.
 	 * Registering a built-in name (remove, replace, remove_home_url) replaces it.
 	 *
-	 * @since 2.7.0
+	 * @since 2.6.1
 	 * @param string   $name     Modifier name: lowercase letters, digits and underscores.
 	 * @param callable $callback Modifier: function( string $value, array $args, array $payload ): string|null.
 	 * @param int      $priority add_filter priority. Default 10.

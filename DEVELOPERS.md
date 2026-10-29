@@ -278,7 +278,7 @@ also override those for your own context. The built-ins remain as a backward-com
 
 ### Token modifiers
 
-Since 2.7.0 any token — static, parametric, `{{ loop_* }}` or one of your own — can carry
+Since 2.6.1 any token — static, parametric, `{{ loop_* }}` or one of your own — can carry
 **modifiers** after a pipe. They run left to right on the resolved value:
 
 ```

@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * This class manages the builder placeholders
  * 
  * @since 1.0.0
- * @version 2.7.0
+ * @version 2.6.1
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -69,7 +69,7 @@ class Placeholders {
      * "{{ wc_review_links | remove_home_url }}" (see get_modifiers()).
      *
      * @since 1.0.0
-     * @version 2.7.0
+     * @version 2.6.1
      * @param string $message | The message containing placeholders
      * @param array $payload | The placeholder context with array data
      * @param string $mode | Mode ('sandbox' or 'production')
@@ -323,7 +323,7 @@ class Placeholders {
      * Each modifier is a callable( string $value, array $args, array $payload ) that
      * returns the changed value, or null/non-scalar to keep the value as it was.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @return array Map of modifier name => callable.
      */
     public static function get_modifiers() {
@@ -350,7 +350,7 @@ class Placeholders {
         /**
          * Filter the modifiers a placeholder token can carry.
          *
-         * @since 2.7.0
+         * @since 2.6.1
          * @param array $modifiers Map of modifier name => callable( string $value, array $args, array $payload ): string|null.
          */
         $modifiers = apply_filters( 'Joinotify/Builder/Placeholder_Modifiers', $modifiers );
@@ -367,7 +367,7 @@ class Placeholders {
      * prefix and a site installed in a subfolder are handled; links to other sites
      * are left untouched.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param string $value | Text that may contain links
      * @return string
      */
@@ -397,7 +397,7 @@ class Placeholders {
      * "{{ wc_review_links | remove:"x" }}" becomes "\x1E0\x1F{{ wc_review_links }}\x1E0\x1F",
      * and the modifiers are kept in $modified_tokens under the same index.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param string $message | Text that may contain tokens with modifiers
      * @param array $modified_tokens | Filled with { original, base, modifiers } per index
      * @return string
@@ -440,7 +440,7 @@ class Placeholders {
      * Arguments are separated by commas and may be quoted with double or single
      * quotes, so a quoted argument can hold commas and pipes.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param string $chain | Text after the first pipe of a token
      * @return array List of { name, args }
      */
@@ -491,7 +491,7 @@ class Placeholders {
     /**
      * Parse the comma separated arguments of a modifier, unquoting quoted ones.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param string $raw | Text after the modifier name and colon
      * @return array
      */
@@ -525,7 +525,7 @@ class Placeholders {
      * A token whose base was not resolved goes back to the text it was written
      * with, modifiers included, so an unresolved token never blanks the message.
      *
-     * @since 2.7.0
+     * @since 2.6.1
      * @param string $message | Resolved text still holding the private markers
      * @param array $modified_tokens | Tokens found by extract_modified_tokens()
      * @param array $payload | Runtime payload

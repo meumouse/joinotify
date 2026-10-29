@@ -806,7 +806,7 @@ function joinotify_register_dynamic_placeholder( $pattern, $callback ) {
  * resolved value, the arguments and the payload; it returns the changed value (or
  * null to keep it). Built-in modifiers: remove, replace and remove_home_url.
  *
- * @since 2.7.0
+ * @since 2.6.1
  * @param string   $name     Modifier name: lowercase letters, digits and underscores.
  * @param callable $callback Modifier: function( string $value, array $args, array $payload ): string|null.
  * @return void
