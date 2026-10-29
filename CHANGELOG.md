@@ -8,6 +8,8 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.6.1] - 2026-10-28
+
 ### Added
 
 - Placeholders take modifiers after a pipe, applied in order to the value: `{{ wc_review_links | remove:"https://shop.com/" }}` removes a text, `replace:"from","to"` swaps one text for another, and `remove_home_url` turns every link to the site into a path relative to it — what the link of a WhatsApp template URL button whose base is the site address needs. They work on every token, including those of other plugins, and a token that does not resolve is left as written. Other plugins add their own with `joinotify_register_placeholder_modifier()` or the `Joinotify/Builder/Placeholder_Modifiers` filter
@@ -605,7 +607,8 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.1...HEAD
+[2.6.1]: https://github.com/meumouse/joinotify/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/meumouse/joinotify/compare/v2.5.1...v2.6.0
 [2.5.1]: https://github.com/meumouse/joinotify/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/meumouse/joinotify/compare/v2.4.2...v2.5.0

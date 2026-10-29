@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,10 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.6.1 =
+* New: variables take modifiers after a pipe: `{{ wc_review_links | remove:"https://shop.com/" }}` removes a text, `replace:"from","to"` swaps one text for another and `remove_home_url` keeps only the path of the site's links, which is what the link of a WhatsApp template URL button needs. Developers add their own with `joinotify_register_placeholder_modifier()`.
+* New: `{{ wc_first_product_review_path }}` gives the review link of the first purchased product without the site address, such as `product/shirt/#reviews`, to complete a URL button.
+
 = 2.6.0 =
 * New: the WhatsApp template action sends every kind of template header and button Meta offers: an image, video or document header (a link, a placeholder or a file from the media library), a location header, the coupon of a copy-code button, the code button of an authentication template, limited-time offers with their expiration, and carousels, where each card takes its own file, values and buttons. The panel shows what the template carries and does not save while a required value is missing.
 * New: a "WhatsApp 24-hour window" condition, offered on every trigger, branches a workflow on whether the recipient wrote in the last 24 hours, so free text can go out while the window is open and an approved template when it is not.
@@ -313,6 +317,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.6.1 =
+Variables take modifiers such as `remove_home_url`, and a new variable gives the review link of the first purchased product, ready to complete a WhatsApp template URL button.
 
 = 2.6.0 =
 Recommended for every installation. Templates with a media or location header, coupons, offers and carousels can be sent from workflows, a condition branches on the WhatsApp 24-hour window, and the API key is stored encrypted.
