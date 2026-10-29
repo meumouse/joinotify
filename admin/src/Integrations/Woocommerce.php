@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Integrations;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Cron\Schedule;
+use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
@@ -375,7 +376,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 2.4.2
+     * @version 2.7.0
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -494,6 +495,14 @@ class Woocommerce extends Integrations_Base {
                         /* translators: %s: site URL */
                         sprintf( esc_html__( 'Sunglasses with UV protection (Sample product): %s/product/sample-sunglasses/#reviews', 'joinotify' ), get_site_url() )
                     ),
+                ),
+            ),
+            '{{ wc_first_product_review_path }}' => array(
+                'triggers' => $trigger_names,
+                'description' => __( 'To retrieve the review link of the first purchased product without the site address (e.g. product/slug/#reviews), to complete the link of a URL button', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $order ? self::get_first_product_review_path( $order ) : '',
+                    'sandbox' => 'product/sample-t-shirt/#reviews',
                 ),
             ),
             '{{ wc_payment_url }}' => array(
@@ -942,15 +951,70 @@ class Woocommerce extends Integrations_Base {
      * Returns the review link for each purchased product in the order
      *
      * @since 2.0.0
+     * @version 2.7.0
      * @param \WC_Order $order | The object of the request
      * @return string Review links formatted on separate lines
      */
     public static function get_review_links( $order ) {
-        $items = $order->get_items();
         $review_links = array();
+
+        foreach ( self::get_reviewable_products( $order ) as $product_id => $product ) {
+            $review_url = get_permalink( $product_id ) . '#reviews';
+            $review_links[] = sprintf( '%s: %s', $product->get_name(), $review_url );
+        }
+
+        return ! empty( $review_links ) ? implode( "\n", $review_links ) : esc_html__( 'No item purchased.', 'joinotify' );
+    }
+
+
+    /**
+     * Returns the review link of the first purchased product, relative to the site address
+     *
+     * Meant to complete a URL button whose base is the site address, e.g.
+     * "product/shirt/#reviews". The first product that accepts reviews wins; when none
+     * does, the first purchased product that still exists is used anyway.
+     *
+     * @since 2.7.0
+     * @param \WC_Order $order | The object of the request
+     * @return string Relative review link, or empty when no purchased product exists
+     */
+    public static function get_first_product_review_path( $order ) {
+        $product_id = array_key_first( self::get_reviewable_products( $order ) );
+
+        if ( ! $product_id ) {
+            foreach ( $order->get_items() as $item ) {
+                $candidate = $item->get_product_id();
+
+                if ( $candidate && wc_get_product( $candidate ) ) {
+                    $product_id = $candidate;
+                    break;
+                }
+            }
+        }
+
+        if ( ! $product_id ) {
+            return '';
+        }
+
+        return Placeholders::strip_home_url( get_permalink( $product_id ) . '#reviews' );
+    }
+
+
+    /**
+     * Returns the purchased products whose review page a customer can be sent to
+     *
+     * Variations count as their parent product, each product appears once, and
+     * products that no longer exist or don't accept reviews are left out.
+     *
+     * @since 2.7.0
+     * @param \WC_Order $order | The object of the request
+     * @return array Map of product ID => \WC_Product, in the order of the items
+     */
+    public static function get_reviewable_products( $order ) {
+        $products = array();
         $processed = array();
 
-        foreach ( $items as $item ) {
+        foreach ( $order->get_items() as $item ) {
             // use the parent product id so variations point to the same review page
             $product_id = $item->get_product_id();
 
@@ -968,11 +1032,10 @@ class Woocommerce extends Integrations_Base {
                 continue;
             }
 
-            $review_url = get_permalink( $product_id ) . '#reviews';
-            $review_links[] = sprintf( '%s: %s', $product->get_name(), $review_url );
+            $products[ $product_id ] = $product;
         }
 
-        return ! empty( $review_links ) ? implode( "\n", $review_links ) : esc_html__( 'No item purchased.', 'joinotify' );
+        return $products;
     }
 
 

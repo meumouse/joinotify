@@ -800,6 +800,23 @@ function joinotify_register_dynamic_placeholder( $pattern, $callback ) {
 
 
 /**
+ * Register a modifier that any placeholder token can carry after a pipe.
+ *
+ * "{{ wc_order_total | my_modifier:"a","b" }}" calls the callback with the token's
+ * resolved value, the arguments and the payload; it returns the changed value (or
+ * null to keep it). Built-in modifiers: remove, replace and remove_home_url.
+ *
+ * @since 2.7.0
+ * @param string   $name     Modifier name: lowercase letters, digits and underscores.
+ * @param callable $callback Modifier: function( string $value, array $args, array $payload ): string|null.
+ * @return void
+ */
+function joinotify_register_placeholder_modifier( $name, $callback ) {
+	Extensions::register_placeholder_modifier( $name, $callback );
+}
+
+
+/**
  * Register a settings navigation tab.
  *
  * @since 1.4.7

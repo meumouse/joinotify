@@ -293,6 +293,10 @@ function variablePlaceholder(variable: TemplateVariable): string {
     return __('Optional: sent back when the button is tapped', textDomain);
   }
 
+  if (variable.sub_type === 'url') {
+    return __('End of the link, e.g. {{ wc_payment_url | remove_home_url }}', textDomain);
+  }
+
   return __('{{ wc_billing_first_name }} or a fixed value', textDomain);
 }
 

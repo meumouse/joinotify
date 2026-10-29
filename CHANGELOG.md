@@ -8,6 +8,11 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Added
+
+- Placeholders take modifiers after a pipe, applied in order to the value: `{{ wc_review_links | remove:"https://shop.com/" }}` removes a text, `replace:"from","to"` swaps one text for another, and `remove_home_url` turns every link to the site into a path relative to it — what the link of a WhatsApp template URL button whose base is the site address needs. They work on every token, including those of other plugins, and a token that does not resolve is left as written. Other plugins add their own with `joinotify_register_placeholder_modifier()` or the `Joinotify/Builder/Placeholder_Modifiers` filter
+- `{{ wc_first_product_review_path }}` gives the review link of the first purchased product without the site address, such as `product/shirt/#reviews`, to complete a URL button. It takes the first product open to reviews and, when none is, the first purchased product
+
 ## [2.6.0] - 2026-10-28
 
 ### Added

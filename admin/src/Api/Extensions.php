@@ -462,6 +462,39 @@ class Extensions {
 
 
 	/**
+	 * Register a modifier that any placeholder token can carry after a pipe.
+	 *
+	 * "{{ wc_order_total | my_modifier:"a","b" }}" calls the callback with the
+	 * resolved value of the token, the arguments ("a", "b") and the runtime payload.
+	 * Return the changed value, or null (or any non-scalar) to keep it as it was.
+	 * Registering a built-in name (remove, replace, remove_home_url) replaces it.
+	 *
+	 * @since 2.7.0
+	 * @param string   $name     Modifier name: lowercase letters, digits and underscores.
+	 * @param callable $callback Modifier: function( string $value, array $args, array $payload ): string|null.
+	 * @param int      $priority add_filter priority. Default 10.
+	 * @return void
+	 */
+	public static function register_placeholder_modifier( $name, $callback, $priority = 10 ) {
+		$name = strtolower( is_string( $name ) ? trim( $name ) : '' );
+
+		if ( ! preg_match( '/^[a-z0-9_]+$/', $name ) || ! is_callable( $callback ) ) {
+			return;
+		}
+
+		add_filter( 'Joinotify/Builder/Placeholder_Modifiers', function( $modifiers ) use ( $name, $callback ) {
+			if ( ! is_array( $modifiers ) ) {
+				$modifiers = array();
+			}
+
+			$modifiers[ $name ] = $callback;
+
+			return $modifiers;
+		}, $priority );
+	}
+
+
+	/**
 	 * ---------------------------------------------------------------------
 	 * Settings
 	 * ---------------------------------------------------------------------

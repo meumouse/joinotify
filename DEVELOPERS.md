@@ -33,6 +33,7 @@ There are two equivalent ways to extend it:
 | `joinotify_register_condition_value($type, $cb)` | `Joinotify/Conditions/Get_Compare_Value` | `cb($value_map, $type, $payload): mixed` |
 | `joinotify_register_placeholders($integration, $ph)` | `Joinotify/Builder/Placeholders_List` | `{'{{ x }}': {triggers, description, replacement}}` |
 | `joinotify_register_dynamic_placeholder($pattern, $cb)` | `Joinotify/Builder/Resolve_Dynamic_Token` | `cb($matches, $payload): string\|null` |
+| `joinotify_register_placeholder_modifier($name, $cb)` | `Joinotify/Builder/Placeholder_Modifiers` | `cb($value, $args, $payload): string\|null` |
 | `joinotify_register_settings_tab($tab)` | `Joinotify/Admin/Settings/Section_Tabs` | `{id, name, icon, section}` |
 | `joinotify_register_settings_section($section)` | `Joinotify/Admin/Settings/Schema` | `{id, title, layout?, cards}` |
 | `joinotify_register_rest_route($route)` | `Joinotify/Rest/Routes` | `{route, methods?, callback, permission?, args?}` |
@@ -274,6 +275,41 @@ joinotify_register_dynamic_placeholder( '/\{\{\s*my_app_field=\[(.+?)\]\s*\}\}/'
 Registered resolvers run **before** the built-in bracket handlers (`{{ field_id=[...] }}`,
 `{{ wc_checkout_field=[...] }}`, `{{ wc_download_link=[...] }}`, `{{ user_meta[...] }}`), so you can
 also override those for your own context. The built-ins remain as a backward-compatible fallback.
+
+### Token modifiers
+
+Since 2.7.0 any token — static, parametric, `{{ loop_* }}` or one of your own — can carry
+**modifiers** after a pipe. They run left to right on the resolved value:
+
+```
+{{ wc_review_links | remove:"https://shop.com/" }}
+{{ wc_payment_url | remove_home_url }}
+{{ field_id=[12] | replace:"R$ ","" | remove:"." }}
+```
+
+| Modifier | Effect |
+|---|---|
+| `remove:"text"` | Removes every occurrence of the text. |
+| `replace:"from","to"` | Replaces every occurrence of `from` with `to`. |
+| `remove_home_url` | Turns every link to this site into a path relative to it: `https://shop.com/product/shirt/` becomes `product/shirt/`. Handles `http`/`https`, `www.` and a site in a subfolder; links to other sites are kept. |
+
+Arguments are separated by commas and quoted with `"` or `'` (a quoted argument may hold commas and
+pipes, but never `}}`). A token whose base does not resolve is left exactly as written, modifiers
+included, and an unknown modifier is skipped. `{{ ai:NAME }}` tokens do not take modifiers yet.
+
+The typical use is the link of a WhatsApp template URL button: the template declares
+`https://shop.com/{{1}}`, so the variable must carry only what comes after the site address.
+`{{ wc_first_product_review_path }}` already does that for the review link of the first purchased
+product.
+
+Register your own modifier (a built-in name replaces the built-in):
+
+```php
+joinotify_register_placeholder_modifier( 'upper', function( $value, $args, $payload ) {
+    return mb_strtoupper( $value ); // null keeps the value unchanged
+});
+// {{ wc_billing_first_name | upper }}
+```
 
 ---
 

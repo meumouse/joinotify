@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
  * This class manages the builder placeholders
  * 
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.7.0
  * @package MeuMouse\Joinotify\Builder
  * @author MeuMouse.com
  */
@@ -65,8 +65,11 @@ class Placeholders {
     /**
      * Replace placeholders with actual values in the message
      *
+     * Any token may carry modifiers after a pipe, applied in order to its value:
+     * "{{ wc_review_links | remove_home_url }}" (see get_modifiers()).
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.0
      * @param string $message | The message containing placeholders
      * @param array $payload | The placeholder context with array data
      * @param string $mode | Mode ('sandbox' or 'production')
@@ -75,6 +78,12 @@ class Placeholders {
     public static function replace_placeholders( $message, $payload = array(), $mode = 'production' ) {
         $message = is_scalar( $message ) ? (string) $message : '';
         $payload = is_array( $payload ) ? $payload : array();
+
+        // Tokens carrying modifiers ("{{ token | remove:"x" }}") are reduced to their base
+        // token here and wrapped in private markers, so every branch below resolves them
+        // as usual; the modifiers are applied to the resolved value at the end.
+        $modified_tokens = array();
+        $message = self::extract_modified_tokens( $message, $modified_tokens );
 
         /**
          * Custom dynamic token resolvers registered by third parties.
@@ -300,7 +309,265 @@ class Placeholders {
         // caption, attachment URL, recipient, ...), not only in message bodies.
         $message = self::replace_loop_tokens( $message, $payload );
 
+        if ( ! empty( $modified_tokens ) ) {
+            $message = self::apply_token_modifiers( $message, $modified_tokens, $payload );
+        }
+
         return $message;
+    }
+
+
+    /**
+     * Get the modifiers a token can carry after a pipe: "{{ token | name:"arg" }}".
+     *
+     * Each modifier is a callable( string $value, array $args, array $payload ) that
+     * returns the changed value, or null/non-scalar to keep the value as it was.
+     *
+     * @since 2.7.0
+     * @return array Map of modifier name => callable.
+     */
+    public static function get_modifiers() {
+        $modifiers = array(
+            // remove every occurrence of a text: {{ token | remove:"https://shop.com/" }}
+            'remove' => function( $value, $args ) {
+                $search = isset( $args[0] ) ? (string) $args[0] : '';
+
+                return '' !== $search ? str_replace( $search, '', $value ) : $value;
+            },
+            // replace every occurrence of a text: {{ token | replace:"from","to" }}
+            'replace' => function( $value, $args ) {
+                $search = isset( $args[0] ) ? (string) $args[0] : '';
+                $replace = isset( $args[1] ) ? (string) $args[1] : '';
+
+                return '' !== $search ? str_replace( $search, $replace, $value ) : $value;
+            },
+            // turn every link to this site into a relative path: {{ token | remove_home_url }}
+            'remove_home_url' => function( $value ) {
+                return self::strip_home_url( $value );
+            },
+        );
+
+        /**
+         * Filter the modifiers a placeholder token can carry.
+         *
+         * @since 2.7.0
+         * @param array $modifiers Map of modifier name => callable( string $value, array $args, array $payload ): string|null.
+         */
+        $modifiers = apply_filters( 'Joinotify/Builder/Placeholder_Modifiers', $modifiers );
+
+        return is_array( $modifiers ) ? $modifiers : array();
+    }
+
+
+    /**
+     * Remove the site address from every link to this site in a text.
+     *
+     * "https://shop.com/product/shirt/#reviews" becomes "product/shirt/#reviews", ready
+     * to complete a URL button whose base is the site address. Both schemes, a "www."
+     * prefix and a site installed in a subfolder are handled; links to other sites
+     * are left untouched.
+     *
+     * @since 2.7.0
+     * @param string $value | Text that may contain links
+     * @return string
+     */
+    public static function strip_home_url( $value ) {
+        $value = is_scalar( $value ) ? (string) $value : '';
+        $home = wp_parse_url( home_url() );
+        $host = isset( $home['host'] ) ? preg_replace( '/^www\./i', '', $home['host'] ) : '';
+
+        if ( '' === $value || '' === $host ) {
+            return $value;
+        }
+
+        $port = isset( $home['port'] ) ? ':' . $home['port'] : '';
+        $path = isset( $home['path'] ) ? rtrim( $home['path'], '/' ) : '';
+
+        // the lookahead stops "shop.com" from matching inside "shop.com.br"
+        $pattern = '#(?:https?:)?//(?:www\.)?' . preg_quote( $host . $port . $path, '#' ) . '(?![^/?\#\s])/?#i';
+        $stripped = preg_replace( $pattern, '', $value );
+
+        return is_string( $stripped ) ? $stripped : $value;
+    }
+
+
+    /**
+     * Reduce each token carrying modifiers to its base token, wrapped in private markers.
+     *
+     * "{{ wc_review_links | remove:"x" }}" becomes "\x1E0\x1F{{ wc_review_links }}\x1E0\x1F",
+     * and the modifiers are kept in $modified_tokens under the same index.
+     *
+     * @since 2.7.0
+     * @param string $message | Text that may contain tokens with modifiers
+     * @param array $modified_tokens | Filled with { original, base, modifiers } per index
+     * @return string
+     */
+    protected static function extract_modified_tokens( $message, &$modified_tokens ) {
+        if ( false === strpos( $message, '|' ) || false === strpos( $message, '{{' ) ) {
+            return $message;
+        }
+
+        $extracted = preg_replace_callback( '/\{\{((?:(?!\}\}).)*?\|(?:(?!\}\}).)*?)\}\}/s', function( $matches ) use ( &$modified_tokens ) {
+            $parts = explode( '|', $matches[1], 2 );
+            $base = trim( $parts[0] );
+
+            // the rich text editor may store quotes as entities
+            $chain = html_entity_decode( $parts[1], ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+            $modifiers = self::parse_modifier_chain( $chain );
+
+            if ( '' === $base || empty( $modifiers ) ) {
+                return $matches[0];
+            }
+
+            $index = count( $modified_tokens );
+
+            $modified_tokens[ $index ] = array(
+                'original' => $matches[0],
+                'base' => '{{ ' . $base . ' }}',
+                'modifiers' => $modifiers,
+            );
+
+            return "\x1E{$index}\x1F{{ {$base} }}\x1E{$index}\x1F";
+        }, $message );
+
+        return is_string( $extracted ) ? $extracted : $message;
+    }
+
+
+    /**
+     * Parse a modifier chain such as: remove:"https://shop.com/" | replace:"a","b"
+     *
+     * Arguments are separated by commas and may be quoted with double or single
+     * quotes, so a quoted argument can hold commas and pipes.
+     *
+     * @since 2.7.0
+     * @param string $chain | Text after the first pipe of a token
+     * @return array List of { name, args }
+     */
+    protected static function parse_modifier_chain( $chain ) {
+        $segments = array();
+        $current = '';
+        $quote = '';
+        $length = strlen( $chain );
+
+        // split on the pipes that are outside quotes
+        for ( $i = 0; $i < $length; $i++ ) {
+            $char = $chain[ $i ];
+
+            if ( '' !== $quote ) {
+                $quote = $char === $quote ? '' : $quote;
+            } elseif ( '"' === $char || "'" === $char ) {
+                $quote = $char;
+            } elseif ( '|' === $char ) {
+                $segments[] = $current;
+                $current = '';
+                continue;
+            }
+
+            $current .= $char;
+        }
+
+        $segments[] = $current;
+        $modifiers = array();
+
+        foreach ( $segments as $segment ) {
+            $parts = explode( ':', trim( $segment ), 2 );
+            $name = strtolower( trim( $parts[0] ) );
+
+            if ( ! preg_match( '/^[a-z0-9_]+$/', $name ) ) {
+                continue;
+            }
+
+            $modifiers[] = array(
+                'name' => $name,
+                'args' => isset( $parts[1] ) ? self::parse_modifier_args( $parts[1] ) : array(),
+            );
+        }
+
+        return $modifiers;
+    }
+
+
+    /**
+     * Parse the comma separated arguments of a modifier, unquoting quoted ones.
+     *
+     * @since 2.7.0
+     * @param string $raw | Text after the modifier name and colon
+     * @return array
+     */
+    protected static function parse_modifier_args( $raw ) {
+        preg_match_all( '/\s*(?:"([^"]*)"|\'([^\']*)\'|([^,]*?))\s*(?:,|$)/', $raw, $matches, PREG_SET_ORDER );
+
+        $args = array();
+
+        foreach ( $matches as $match ) {
+            // the pattern ends with an empty match at the end of the string
+            if ( '' === $match[0] ) {
+                continue;
+            }
+
+            if ( isset( $match[1] ) && '' !== $match[1] ) {
+                $args[] = $match[1];
+            } elseif ( isset( $match[2] ) && '' !== $match[2] ) {
+                $args[] = $match[2];
+            } else {
+                $args[] = isset( $match[3] ) ? $match[3] : '';
+            }
+        }
+
+        return $args;
+    }
+
+
+    /**
+     * Apply the modifiers of each marked token to its resolved value.
+     *
+     * A token whose base was not resolved goes back to the text it was written
+     * with, modifiers included, so an unresolved token never blanks the message.
+     *
+     * @since 2.7.0
+     * @param string $message | Resolved text still holding the private markers
+     * @param array $modified_tokens | Tokens found by extract_modified_tokens()
+     * @param array $payload | Runtime payload
+     * @return string
+     */
+    protected static function apply_token_modifiers( $message, $modified_tokens, $payload = array() ) {
+        $modifiers = self::get_modifiers();
+
+        $applied = preg_replace_callback( '/\x1E(\d+)\x1F(.*?)\x1E\1\x1F/s', function( $matches ) use ( $modified_tokens, $modifiers, $payload ) {
+            $token = $modified_tokens[ (int) $matches[1] ] ?? null;
+
+            if ( ! $token ) {
+                return $matches[2];
+            }
+
+            if ( $matches[2] === $token['base'] ) {
+                return $token['original'];
+            }
+
+            $value = $matches[2];
+
+            foreach ( $token['modifiers'] as $modifier ) {
+                if ( ! isset( $modifiers[ $modifier['name'] ] ) || ! is_callable( $modifiers[ $modifier['name'] ] ) ) {
+                    if ( defined('JOINOTIFY_DEV_MODE') && JOINOTIFY_DEV_MODE ) {
+                        Logger::register_log( 'Unknown placeholder modifier: ' . $modifier['name'] );
+                    }
+
+                    continue;
+                }
+
+                $changed = call_user_func( $modifiers[ $modifier['name'] ], $value, $modifier['args'], $payload );
+
+                if ( is_scalar( $changed ) ) {
+                    $value = (string) $changed;
+                }
+            }
+
+            return $value;
+        }, $message );
+
+        // markers left unpaired (e.g. a resolver that dropped one) must never reach the recipient
+        return str_replace( array( "\x1E", "\x1F" ), '', is_string( $applied ) ? $applied : $message );
     }
 
 

@@ -44,12 +44,14 @@ const selection = ref({ start: 0, end: 0 });
 
 /**
  * Normalize a placeholder token into a comparable key: strip the outer braces,
- * collapse inner whitespace and lowercase it.
+ * collapse inner whitespace and lowercase it. Modifiers after a pipe are dropped,
+ * so "{{ wc_review_links | remove_home_url }}" shares the tip of its base token.
  */
 function normalizeKey(placeholder: string): string {
   return String(placeholder || '')
     .replace(/^\s*\{\{\s*/, '')
     .replace(/\s*\}\}\s*$/, '')
+    .replace(/\s*\|[\s\S]*$/, '')
     .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase();
