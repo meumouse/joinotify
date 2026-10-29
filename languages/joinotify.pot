@@ -6,7 +6,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "x-domain: joinotify\n"
 
-#: admin/src/Integrations/Woocommerce.php:442
+#: admin/src/Integrations/Woocommerce.php:443
 msgid "12345"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgstr ""
 msgid "{{ wc_billing_email }} or customer@example.com"
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:296
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:300
 msgid "{{ wc_billing_first_name }} or a fixed value"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr ""
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:218
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:87
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:96
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:450
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:454
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:47
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr ""
@@ -263,26 +263,26 @@ msgstr ""
 msgid "%s stays. Search the duplicate that should be merged into it."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1035
+#: admin/src/Integrations/Woocommerce.php:1098
 #. translators: %s: sample shipping cost, already formatted with the store currency
 msgid "%s via Express shipping"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:505
+#: admin/src/Integrations/Woocommerce.php:514
 #. translators: %s: site URL
 msgid "%s/checkout/pay/order/12345"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1398
+#: admin/src/Integrations/Woocommerce.php:1461
 #. translators: %s: percentage discount amount
 msgid "%s%%"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:426
+#: admin/src/Integrations/Woocommerce.php:427
 msgid "+55 11 91234-5678"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:434
+#: admin/src/Integrations/Woocommerce.php:435
 msgid "+55 41 91234-5678"
 msgstr ""
 
@@ -326,11 +326,11 @@ msgstr ""
 msgid "180 days"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:482
+#: admin/src/Integrations/Woocommerce.php:483
 msgid "1x - Men's cotton T-shirt (Sample product)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:482
+#: admin/src/Integrations/Woocommerce.php:483
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr ""
 
@@ -494,7 +494,7 @@ msgstr ""
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:135
+#: admin/src/Integrations/Woocommerce.php:136
 msgid "Activate discount coupon action"
 msgstr ""
 
@@ -682,7 +682,7 @@ msgid ""
 "unticks it in My account is opted out."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:136
+#: admin/src/Integrations/Woocommerce.php:137
 msgid ""
 "Adds the coupon action to WooCommerce workflows so a workflow can create "
 "and send a discount coupon."
@@ -849,7 +849,7 @@ msgid ""
 "reset."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1499
+#: admin/src/Integrations/Woocommerce.php:1562
 #: admin/src/Integrations/Wpforms.php:203
 msgid "Allows checking specific user metadata."
 msgstr ""
@@ -858,7 +858,7 @@ msgstr ""
 msgid "Allows checking the abandoned cart total amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1503
+#: admin/src/Integrations/Woocommerce.php:1566
 msgid "Allows checking the customer email for the order."
 msgstr ""
 
@@ -866,23 +866,23 @@ msgstr ""
 msgid "Allows checking the items present in the abandoned cart."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1491
+#: admin/src/Integrations/Woocommerce.php:1554
 msgid "Allows checking the order payment method."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1507
+#: admin/src/Integrations/Woocommerce.php:1570
 msgid "Allows checking the order refund amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1495
+#: admin/src/Integrations/Woocommerce.php:1558
 msgid "Allows checking the order shipping method."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1475
+#: admin/src/Integrations/Woocommerce.php:1538
 msgid "Allows checking the order status."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1479
+#: admin/src/Integrations/Woocommerce.php:1542
 msgid "Allows checking the order total."
 msgstr ""
 
@@ -890,7 +890,7 @@ msgstr ""
 msgid "Allows checking the post type that was published."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1487
+#: admin/src/Integrations/Woocommerce.php:1550
 msgid "Allows checking the products purchased in the order."
 msgstr ""
 
@@ -902,7 +902,7 @@ msgstr ""
 msgid "Allows checking the role of the user who requested the password reset."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1511
+#: admin/src/Integrations/Woocommerce.php:1574
 msgid "Allows checking the status of the created subscription."
 msgstr ""
 
@@ -914,7 +914,7 @@ msgstr ""
 msgid "Allows checking whether the abandoned cart was recovered."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1483
+#: admin/src/Integrations/Woocommerce.php:1546
 msgid "Allows checking whether the order was paid."
 msgstr ""
 
@@ -983,7 +983,7 @@ msgstr ""
 msgid "Any consent"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:282
+#: admin/src/Integrations/Woocommerce.php:283
 msgid "Any digital product"
 msgstr ""
 
@@ -995,7 +995,7 @@ msgstr ""
 msgid "Any source"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:328
+#: admin/src/Integrations/Woocommerce.php:329
 msgid "Any status"
 msgstr ""
 
@@ -1039,7 +1039,7 @@ msgid ""
 "from your account. Required on that transport, ignored on the legacy relay."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:458
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:462
 msgid ""
 "Approved templates of your WhatsApp Business Account. Only these can be "
 "delivered outside the 24-hour window."
@@ -1283,7 +1283,7 @@ msgstr ""
 msgid "Bhutan"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:148
+#: admin/src/Integrations/Woocommerce.php:149
 msgid "Billing full address format"
 msgstr ""
 
@@ -1301,8 +1301,8 @@ msgstr ""
 msgid "Body"
 msgstr ""
 
-#: app/src/components/base/BaseRichTextArea.vue:679
-#: app/src/components/base/BaseRichTextArea.vue:684
+#: app/src/components/base/BaseRichTextArea.vue:681
+#: app/src/components/base/BaseRichTextArea.vue:686
 msgid "Bold"
 msgstr ""
 
@@ -1515,7 +1515,7 @@ msgid "Caption"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:200
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:523
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:527
 msgid "Card"
 msgstr ""
 
@@ -1683,7 +1683,7 @@ msgid ""
 "the field types and labels."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:223
+#: admin/src/Integrations/Woocommerce.php:224
 msgid ""
 "Choose which order status should start this workflow. Select \"Any status\" "
 "to run on every status change."
@@ -1814,12 +1814,12 @@ msgstr ""
 msgid "Comoros"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:601
 #: admin/src/Integrations/Woocommerce.php:610
+#: admin/src/Integrations/Woocommerce.php:619
 msgid "Complete e-book (Sample product)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:450
+#: admin/src/Integrations/Woocommerce.php:451
 msgid "Completed"
 msgstr ""
 
@@ -1863,14 +1863,14 @@ msgstr ""
 #: admin/src/Integrations/Resend.php:115
 #: admin/src/Integrations/Telegram.php:115
 #: admin/src/Integrations/Whatsapp.php:122
-#: admin/src/Integrations/Woocommerce.php:116
+#: admin/src/Integrations/Woocommerce.php:117
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:62
 msgid "Configure"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:115
+#: admin/src/Integrations/Woocommerce.php:116
 msgid ""
 "Configure discount coupons and checkout field formatting with the native "
 "integration fields."
@@ -2236,7 +2236,7 @@ msgstr ""
 msgid "Could not load workflows."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:376
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:380
 #: app/src/components/fields/WhatsappTemplateField.vue:113
 msgid "Could not load your message templates."
 msgstr ""
@@ -2346,7 +2346,7 @@ msgstr ""
 msgid "Could not start the connection."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:406
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:410
 #: app/src/components/fields/WhatsappTemplateField.vue:144
 msgid "Could not sync your message templates."
 msgstr ""
@@ -2398,7 +2398,7 @@ msgstr ""
 msgid "Coupon code"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1427
+#: admin/src/Integrations/Woocommerce.php:1490
 msgid "Coupon does not expire"
 msgstr ""
 
@@ -2411,7 +2411,7 @@ msgstr ""
 msgid "Coupon message"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:140
+#: admin/src/Integrations/Woocommerce.php:141
 msgid "Coupon prefix"
 msgstr ""
 
@@ -2539,7 +2539,7 @@ msgstr ""
 msgid "Creativity from 0 to 2. Leave empty to use the default."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:568
+#: admin/src/Integrations/Woocommerce.php:577
 msgid "Credit card"
 msgstr ""
 
@@ -2559,7 +2559,7 @@ msgstr ""
 msgid "Cuba"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:553
+#: admin/src/Integrations/Woocommerce.php:562
 msgid "CUPOM10, FREESHIPPING"
 msgstr ""
 
@@ -2642,7 +2642,7 @@ msgstr ""
 msgid "Custom variables"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1502
+#: admin/src/Integrations/Woocommerce.php:1565
 msgid "Customer email"
 msgstr ""
 
@@ -2662,7 +2662,7 @@ msgstr ""
 msgid "Daily"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:474
+#: admin/src/Integrations/Woocommerce.php:475
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
@@ -2776,14 +2776,14 @@ msgid ""
 "options."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:149
+#: admin/src/Integrations/Woocommerce.php:150
 msgid ""
 "Defines the value used in the billing full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:158
+#: admin/src/Integrations/Woocommerce.php:159
 msgid ""
 "Defines the value used in the shipping full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
@@ -2949,7 +2949,7 @@ msgstr ""
 msgid "Digital file download link (order files loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:248
+#: admin/src/Integrations/Woocommerce.php:249
 msgid "Digital file downloaded"
 msgstr ""
 
@@ -2957,12 +2957,12 @@ msgstr ""
 msgid "Digital file name (order files loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:237
-#: admin/src/Integrations/Woocommerce.php:254
+#: admin/src/Integrations/Woocommerce.php:238
+#: admin/src/Integrations/Woocommerce.php:255
 msgid "Digital product"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:231
+#: admin/src/Integrations/Woocommerce.php:232
 msgid "Digital product access granted"
 msgstr ""
 
@@ -2992,7 +2992,7 @@ msgid "Discount"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:608
-#: admin/src/Integrations/Woocommerce.php:1260
+#: admin/src/Integrations/Woocommerce.php:1323
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
 msgid "Discount coupon"
@@ -3050,7 +3050,7 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:410
+#: admin/src/Integrations/Woocommerce.php:411
 #: admin/src/Integrations/Wordpress.php:175
 msgid "Doe"
 msgstr ""
@@ -3223,7 +3223,7 @@ msgstr ""
 msgid "Each source can add its own tags, on top of the tag of this site."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:536
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:540
 msgid ""
 "Each template variable is filled at send time with the placeholder you map "
 "here."
@@ -3315,8 +3315,8 @@ msgstr ""
 msgid "Emoji"
 msgstr ""
 
-#: app/src/components/base/BaseRichTextArea.vue:721
-#: app/src/components/base/BaseRichTextArea.vue:728
+#: app/src/components/base/BaseRichTextArea.vue:723
+#: app/src/components/base/BaseRichTextArea.vue:730
 msgid "Emojis"
 msgstr ""
 
@@ -3352,6 +3352,10 @@ msgstr ""
 
 #: app/src/pages/history/HistoryPage.vue:279
 msgid "End date"
+msgstr ""
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:297
+msgid "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
 msgstr ""
 
 #: app/src/pages/queue/QueuePage.vue:90
@@ -3582,9 +3586,9 @@ msgid ""
 "hooks you can extend it with. Keep this link handy."
 msgstr ""
 
-#: app/src/builder/components/base/BaseTextFieldVariables.vue:82
-#: app/src/components/base/BaseRichTextArea.vue:112
-#: app/src/components/base/RichTextPreview.vue:76
+#: app/src/builder/components/base/BaseTextFieldVariables.vue:84
+#: app/src/components/base/BaseRichTextArea.vue:114
+#: app/src/components/base/RichTextPreview.vue:78
 #: app/src/components/base/VariablePicker.vue:129
 msgid "Example"
 msgstr ""
@@ -3630,19 +3634,19 @@ msgid "Expiration mode"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:359
-#: admin/src/Integrations/Woocommerce.php:1420
+#: admin/src/Integrations/Woocommerce.php:1483
 #. translators: 1: date, 2: time of day
 msgid "Expires in %1$s - %2$s"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:352
-#: admin/src/Integrations/Woocommerce.php:1413
+#: admin/src/Integrations/Woocommerce.php:1476
 #. translators: 1: delay amount, 2: time unit (minutes, hours, days)
 msgid "Expires in %1$s %2$s"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:362
-#: admin/src/Integrations/Woocommerce.php:1423
+#: admin/src/Integrations/Woocommerce.php:1486
 #. translators: %s: date
 msgid "Expires in %s"
 msgstr ""
@@ -3840,7 +3844,7 @@ msgid "Fit view"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:328
-#: admin/src/Integrations/Woocommerce.php:1442
+#: admin/src/Integrations/Woocommerce.php:1505
 msgid "Fixed amount"
 msgstr ""
 
@@ -3873,7 +3877,7 @@ msgstr ""
 msgid "Flow name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:466
+#: admin/src/Integrations/Woocommerce.php:467
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr ""
 
@@ -4313,7 +4317,7 @@ msgid ""
 "message” step before this one to open the window."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:166
+#: admin/src/Integrations/Woocommerce.php:167
 msgid "Ignore actions already processed."
 msgstr ""
 
@@ -4492,7 +4496,7 @@ msgstr ""
 msgid "Installation ID: %s"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1288
+#: admin/src/Integrations/Woocommerce.php:1351
 msgid "Insufficient data to create the coupon."
 msgstr ""
 
@@ -4690,8 +4694,8 @@ msgstr ""
 msgid "It allows you to define a condition for an action to be executed."
 msgstr ""
 
-#: app/src/components/base/BaseRichTextArea.vue:692
-#: app/src/components/base/BaseRichTextArea.vue:697
+#: app/src/components/base/BaseRichTextArea.vue:694
+#: app/src/components/base/BaseRichTextArea.vue:699
 msgid "Italic"
 msgstr ""
 
@@ -4730,7 +4734,7 @@ msgid "Japan"
 msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:300
-#: admin/src/Integrations/Woocommerce.php:402
+#: admin/src/Integrations/Woocommerce.php:403
 #: admin/src/Integrations/Wordpress.php:167
 msgid "John"
 msgstr ""
@@ -5034,7 +5038,7 @@ msgstr ""
 msgid "Lebanon"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:585
+#: admin/src/Integrations/Woocommerce.php:594
 #. translators: 1: shipping address placeholder, 2: shipping cost and method placeholder
 msgid ""
 "Legacy name kept for existing workflows: it returns the shipping cost and "
@@ -5075,7 +5079,7 @@ msgid "Liberia"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:125
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:560
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:564
 #: app/src/builder/components/base/AttachmentsField.vue:216
 msgid "Library"
 msgstr ""
@@ -5134,7 +5138,7 @@ msgstr ""
 msgid "Loading senders..."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:465
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:469
 msgid "Loading templates…"
 msgstr ""
 
@@ -5406,7 +5410,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:492
+#: admin/src/Integrations/Woocommerce.php:493
 #. translators: %s: site URL
 msgid "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews"
 msgstr ""
@@ -5683,8 +5687,8 @@ msgstr ""
 msgid "Never collected"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:633
-#: admin/src/Integrations/Woocommerce.php:878
+#: admin/src/Integrations/Woocommerce.php:642
+#: admin/src/Integrations/Woocommerce.php:887
 msgid "Never expires"
 msgstr ""
 
@@ -5715,11 +5719,11 @@ msgstr ""
 msgid "New flow"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:184
+#: admin/src/Integrations/Woocommerce.php:185
 msgid "New order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:190
+#: admin/src/Integrations/Woocommerce.php:191
 msgid "New order (Processing)"
 msgstr ""
 
@@ -5888,12 +5892,12 @@ msgstr ""
 msgid "No custom variable yet. Click “Add variable” to create your first one."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:786
-#: admin/src/Integrations/Woocommerce.php:808
+#: admin/src/Integrations/Woocommerce.php:795
+#: admin/src/Integrations/Woocommerce.php:817
 msgid "No download available for this order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:758
+#: admin/src/Integrations/Woocommerce.php:767
 msgid "No downloadable item in this order."
 msgstr ""
 
@@ -5925,8 +5929,8 @@ msgstr ""
 msgid "No integrations found."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:937
-#: admin/src/Integrations/Woocommerce.php:975
+#: admin/src/Integrations/Woocommerce.php:946
+#: admin/src/Integrations/Woocommerce.php:966
 msgid "No item purchased."
 msgstr ""
 
@@ -5996,7 +6000,7 @@ msgstr ""
 msgid "No tags."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:486
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:490
 msgid ""
 "No template found. Create one on the Joinotify panel and approve it with "
 "Meta first."
@@ -6443,7 +6447,7 @@ msgstr ""
 msgid "Order abandoned"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:196
+#: admin/src/Integrations/Woocommerce.php:197
 #: app/src/registries/triggerRegistry.ts:246
 #: app/src/registries/triggerRegistry.ts:257
 #: app/src/registries/triggerRegistry.ts:264
@@ -6461,7 +6465,7 @@ msgid ""
 "customer with their order count, total spent and last purchase."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:202
+#: admin/src/Integrations/Woocommerce.php:203
 msgid "Order fully refunded"
 msgstr ""
 
@@ -6469,11 +6473,11 @@ msgstr ""
 msgid "Order meta or checkout field (type the key)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1482
+#: admin/src/Integrations/Woocommerce.php:1545
 msgid "Order paid"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:208
+#: admin/src/Integrations/Woocommerce.php:209
 msgid "Order partially refunded"
 msgstr ""
 
@@ -6481,19 +6485,19 @@ msgstr ""
 msgid "Order purchased items"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:220
-#: admin/src/Integrations/Woocommerce.php:1474
+#: admin/src/Integrations/Woocommerce.php:221
+#: admin/src/Integrations/Woocommerce.php:1537
 msgid "Order status"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:214
+#: admin/src/Integrations/Woocommerce.php:215
 #: app/src/registries/triggerRegistry.ts:275
 #: app/src/registries/triggerRegistry.ts:286
 #: app/src/registries/triggerRegistry.ts:293
 msgid "Order status changed"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1478
+#: admin/src/Integrations/Woocommerce.php:1541
 msgid "Order total"
 msgstr ""
 
@@ -6618,7 +6622,7 @@ msgstr ""
 msgid "Payload sent"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1490
+#: admin/src/Integrations/Woocommerce.php:1553
 msgid "Payment method"
 msgstr ""
 
@@ -6632,7 +6636,7 @@ msgstr ""
 
 #: admin/src/Builder/Messages.php:328
 #: admin/src/Integrations/Otp_Login.php:163
-#: admin/src/Integrations/Woocommerce.php:1442
+#: admin/src/Integrations/Woocommerce.php:1505
 msgid "Percentage"
 msgstr ""
 
@@ -6701,7 +6705,7 @@ msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:446
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:450
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 msgid "Phone number or a placeholder that resolves to one."
 msgstr ""
@@ -6861,11 +6865,11 @@ msgstr ""
 msgid "Post type"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:141
+#: admin/src/Integrations/Woocommerce.php:142
 msgid "Prefix used when Joinotify generates a coupon code automatically."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:167
+#: admin/src/Integrations/Woocommerce.php:168
 msgid ""
 "Prevents the same action from being processed again when the trigger is "
 "repeated."
@@ -6940,7 +6944,7 @@ msgstr ""
 msgid "Purchased item quantity (order items loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1486
+#: admin/src/Integrations/Woocommerce.php:1549
 msgid "Purchased products"
 msgstr ""
 
@@ -6998,8 +7002,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:446
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:449
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:450
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:453
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 #: app/src/pages/history/components/HistoryDetailsModal.vue:64
@@ -7079,7 +7083,7 @@ msgstr ""
 msgid "Refreshing connection"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1506
+#: admin/src/Integrations/Woocommerce.php:1569
 msgid "Refund amount"
 msgstr ""
 
@@ -7257,13 +7261,13 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:240
+#: admin/src/Integrations/Woocommerce.php:241
 msgid ""
 "Restrict this workflow to a single digital product. Leave \"Any digital "
 "product\" to run for every downloadable item in the order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:257
+#: admin/src/Integrations/Woocommerce.php:258
 msgid ""
 "Restrict this workflow to a single digital product. Leave \"Any digital "
 "product\" to run for every downloaded file."
@@ -7293,13 +7297,13 @@ msgstr ""
 msgid "Retrieve the cart total amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:463
+#: admin/src/Integrations/Woocommerce.php:464
 msgid ""
 "Retrieve the user's full billing address (format configurable in the "
 "WooCommerce options)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:471
+#: admin/src/Integrations/Woocommerce.php:472
 msgid ""
 "Retrieve the user's full shipping address (format configurable in the "
 "WooCommerce options)."
@@ -7653,8 +7657,8 @@ msgstr ""
 msgid "Select a date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:241
-#: admin/src/Integrations/Woocommerce.php:258
+#: admin/src/Integrations/Woocommerce.php:242
+#: admin/src/Integrations/Woocommerce.php:259
 msgid "Select a digital product"
 msgstr ""
 
@@ -7666,7 +7670,7 @@ msgstr ""
 msgid "Select a sender"
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:465
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:469
 msgid "Select a template"
 msgstr ""
 
@@ -7711,7 +7715,7 @@ msgstr ""
 msgid "Select an option"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:224
+#: admin/src/Integrations/Woocommerce.php:225
 msgid "Select an order status"
 msgstr ""
 
@@ -7721,7 +7725,7 @@ msgid "Select file"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:325
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:329
 msgid "Select media"
 msgstr ""
 
@@ -7753,7 +7757,7 @@ msgstr ""
 msgid "Send a contact card. Cloud API only, and only inside the 24-hour window."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1261
+#: admin/src/Integrations/Woocommerce.php:1324
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr ""
 
@@ -7851,7 +7855,7 @@ msgstr ""
 msgid "Send media"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:102
+#: admin/src/Integrations/Woocommerce.php:103
 msgid ""
 "Send messages regarding new orders, cancellations, refunds, and recovery of "
 "unpaid orders. Keep your customers updated."
@@ -7915,8 +7919,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:78
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:87
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:437
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:441
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:445
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
 #: app/src/pages/history/components/HistoryDetailsModal.vue:63
@@ -8084,11 +8088,11 @@ msgstr ""
 msgid "Share anonymous usage data"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:157
+#: admin/src/Integrations/Woocommerce.php:158
 msgid "Shipping full address format"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1494
+#: admin/src/Integrations/Woocommerce.php:1557
 msgid "Shipping method"
 msgstr ""
 
@@ -8327,7 +8331,7 @@ msgstr ""
 msgid "Subscription renewal expired"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1510
+#: admin/src/Integrations/Woocommerce.php:1573
 msgid "Subscription status"
 msgstr ""
 
@@ -8335,7 +8339,7 @@ msgstr ""
 msgid "Sudan"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:495
+#: admin/src/Integrations/Woocommerce.php:496
 #. translators: %s: site URL
 msgid ""
 "Sunglasses with UV protection (Sample product): "
@@ -8380,7 +8384,7 @@ msgstr ""
 msgid "Sync"
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:477
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:481
 msgid "Sync now"
 msgstr ""
 
@@ -8404,7 +8408,7 @@ msgstr ""
 msgid "Sync templates with your account"
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:477
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:481
 #: app/src/components/fields/WhatsappTemplateField.vue:186
 msgid "Syncing…"
 msgstr ""
@@ -8570,8 +8574,8 @@ msgid "Temperature"
 msgstr ""
 
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:106
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:457
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:464
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:461
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:468
 #: app/src/pages/builder/BuilderPage.vue:938
 #: app/src/pages/history/components/HistoryDetailsModal.vue:151
 #: app/src/pages/history/HistoryPage.vue:99
@@ -8796,7 +8800,7 @@ msgstr ""
 msgid "The content of your workflows"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1311
+#: admin/src/Integrations/Woocommerce.php:1374
 msgid "The coupon already exists."
 msgstr ""
 
@@ -9162,29 +9166,29 @@ msgid ""
 "The workflow can still be saved safely."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:203
+#: admin/src/Integrations/Woocommerce.php:204
 msgid "This action is triggered when an order is fully refunded."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:209
+#: admin/src/Integrations/Woocommerce.php:210
 msgid "This action is triggered when an order is partially refunded."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:215
+#: admin/src/Integrations/Woocommerce.php:216
 msgid "This action is triggered when an order's status changes."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:197
+#: admin/src/Integrations/Woocommerce.php:198
 msgid "This action is triggered when an order's status is changed to completed."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:249
+#: admin/src/Integrations/Woocommerce.php:250
 msgid ""
 "This action is triggered when the customer actually downloads a digital "
 "file from the order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:232
+#: admin/src/Integrations/Woocommerce.php:233
 msgid ""
 "This action is triggered when WooCommerce grants the download access of a "
 "digital product to the customer. This is the recommended trigger to deliver "
@@ -9244,7 +9248,7 @@ msgid ""
 "only be changed there."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:383
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:387
 msgid "This list may be out of date."
 msgstr ""
 
@@ -9378,13 +9382,13 @@ msgid ""
 "menu to pick a different one."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:191
+#: admin/src/Integrations/Woocommerce.php:192
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "a processing status."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:185
+#: admin/src/Integrations/Woocommerce.php:186
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "any status."
@@ -9490,13 +9494,13 @@ msgid ""
 "retrieve. Example: billing_phone"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:479
+#: admin/src/Integrations/Woocommerce.php:480
 msgid ""
 "To retrieve each purchased product and quantity from the order, separated "
 "by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:638
+#: admin/src/Integrations/Woocommerce.php:647
 msgid ""
 "To retrieve how many downloads the customer still has available. Returns "
 "the smallest amount when the files have different limits."
@@ -9514,43 +9518,43 @@ msgid ""
 "the respective ID."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:619
+#: admin/src/Integrations/Woocommerce.php:628
 msgid ""
 "To retrieve only the download links of the WooCommerce order, without the "
 "file name, separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:423
+#: admin/src/Integrations/Woocommerce.php:424
 msgid "To retrieve the billing phone from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:550
+#: admin/src/Integrations/Woocommerce.php:559
 msgid "To retrieve the coupon codes used in the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1437
+#: admin/src/Integrations/Woocommerce.php:1500
 msgid "To retrieve the coupon description."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1449
+#: admin/src/Integrations/Woocommerce.php:1512
 msgid ""
 "To retrieve the coupon discount amount formatted with a currency symbol or "
 "percentage. Example: 10%."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1445
+#: admin/src/Integrations/Woocommerce.php:1508
 msgid "To retrieve the coupon discount amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1433
+#: admin/src/Integrations/Woocommerce.php:1496
 msgid "To retrieve the coupon discount code."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1441
+#: admin/src/Integrations/Woocommerce.php:1504
 msgid "To retrieve the coupon discount type. Example: Percentage or fixed amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1453
+#: admin/src/Integrations/Woocommerce.php:1516
 msgid "To retrieve the coupon expiration. Example: Expires in 1 hour."
 msgstr ""
 
@@ -9558,32 +9562,32 @@ msgstr ""
 msgid "To retrieve the current date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:415
+#: admin/src/Integrations/Woocommerce.php:416
 msgid "To retrieve the customer billing email from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:399
+#: admin/src/Integrations/Woocommerce.php:400
 msgid "To retrieve the customer billing first name from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:407
+#: admin/src/Integrations/Woocommerce.php:408
 msgid "To retrieve the customer billing last name from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:654
+#: admin/src/Integrations/Woocommerce.php:663
 msgid ""
 "To retrieve the download links of a specific product in the WooCommerce "
 "order. Replace PRODUCT_ID with the product ID, for example: 128."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:606
+#: admin/src/Integrations/Woocommerce.php:615
 msgid ""
 "To retrieve the download name and link of each digital file in the "
 "WooCommerce order, separated by line. Only available after the download "
 "access has been granted."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:630
+#: admin/src/Integrations/Woocommerce.php:639
 msgid ""
 "To retrieve the expiration date of the download access. Returns the closest "
 "date when the files expire on different dates."
@@ -9593,21 +9597,21 @@ msgstr ""
 msgid "To retrieve the featured image URL of the post"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:646
+#: admin/src/Integrations/Woocommerce.php:655
 msgid "To retrieve the link to the downloads area in the customer My Account page"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:598
+#: admin/src/Integrations/Woocommerce.php:607
 msgid ""
 "To retrieve the name of each downloadable product in the WooCommerce order, "
 "separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:510
+#: admin/src/Integrations/Woocommerce.php:519
 msgid "To retrieve the order currency symbol"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:501
+#: admin/src/Integrations/Woocommerce.php:510
 msgid "To retrieve the order payment URL"
 msgstr ""
 
@@ -9652,20 +9656,26 @@ msgstr ""
 msgid "To retrieve the post title"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:487
+#: admin/src/Integrations/Woocommerce.php:488
 msgid ""
 "To retrieve the review link for each purchased product from the order, "
 "separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:573
+#: admin/src/Integrations/Woocommerce.php:502
+msgid ""
+"To retrieve the review link of the first purchased product without the site "
+"address (e.g. product/slug/#reviews), to complete the link of a URL button"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:582
 msgid ""
 "To retrieve the shipping cost and method of the WooCommerce order, for "
 "example \"$20.00 via Express shipping\". Returns only the method name when "
 "the shipping is free."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:431
+#: admin/src/Integrations/Woocommerce.php:432
 msgid "To retrieve the shipping phone from the WooCommerce order"
 msgstr ""
 
@@ -9689,47 +9699,47 @@ msgstr ""
 msgid "To retrieve the user last name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1908
+#: admin/src/Integrations/Woocommerce.php:1971
 #. translators: %s: checkout field label
 msgid "To retrieve the value of %s"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:593
+#: admin/src/Integrations/Woocommerce.php:602
 msgid ""
 "To retrieve the value of a specific checkout field in the WooCommerce "
 "order. Replace FIELD_ID with the checkout field ID, for example: "
 "billing_email."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:455
+#: admin/src/Integrations/Woocommerce.php:456
 msgid "To retrieve the WooCommerce order date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:439
+#: admin/src/Integrations/Woocommerce.php:440
 msgid "To retrieve the WooCommerce order number"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:558
+#: admin/src/Integrations/Woocommerce.php:567
 msgid "To retrieve the WooCommerce order payment method title"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:447
+#: admin/src/Integrations/Woocommerce.php:448
 msgid "To retrieve the WooCommerce order status"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:518
+#: admin/src/Integrations/Woocommerce.php:527
 msgid "To retrieve the WooCommerce order total"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:526
+#: admin/src/Integrations/Woocommerce.php:535
 msgid "To retrieve the WooCommerce total discount"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:542
+#: admin/src/Integrations/Woocommerce.php:551
 msgid "To retrieve the WooCommerce total refunded amount"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:534
+#: admin/src/Integrations/Woocommerce.php:543
 msgid "To retrieve the WooCommerce total tax"
 msgstr ""
 
@@ -9959,8 +9969,8 @@ msgstr ""
 msgid "Ukraine"
 msgstr ""
 
-#: app/src/components/base/BaseRichTextArea.vue:705
-#: app/src/components/base/BaseRichTextArea.vue:710
+#: app/src/components/base/BaseRichTextArea.vue:707
+#: app/src/components/base/BaseRichTextArea.vue:712
 msgid "Underline"
 msgstr ""
 
@@ -10013,8 +10023,8 @@ msgstr ""
 msgid "Unknown import step."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:641
-#: admin/src/Integrations/Woocommerce.php:908
+#: admin/src/Integrations/Woocommerce.php:650
+#: admin/src/Integrations/Woocommerce.php:917
 msgid "Unlimited"
 msgstr ""
 
@@ -10118,7 +10128,7 @@ msgid "Use this file"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:325
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:329
 msgid "Use this media"
 msgstr ""
 
@@ -10146,7 +10156,7 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor.php:155
 #: admin/src/Integrations/Flexify_Checkout.php:375
-#: admin/src/Integrations/Woocommerce.php:1498
+#: admin/src/Integrations/Woocommerce.php:1561
 #: admin/src/Integrations/Wordpress.php:310
 #: admin/src/Integrations/Wordpress.php:320
 #: admin/src/Integrations/Wordpress.php:326
@@ -10165,7 +10175,7 @@ msgstr ""
 msgid "User role"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:418
+#: admin/src/Integrations/Woocommerce.php:419
 #: admin/src/Integrations/Wordpress.php:183
 msgid "user@example.com"
 msgstr ""
@@ -10231,7 +10241,7 @@ msgstr ""
 msgid "Variable saved."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:535
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:539
 msgid "Variables"
 msgstr ""
 
@@ -10266,8 +10276,8 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:601
-#: admin/src/Integrations/Woocommerce.php:612
+#: admin/src/Integrations/Woocommerce.php:610
+#: admin/src/Integrations/Woocommerce.php:621
 msgid "Video lessons pack (Sample product)"
 msgstr ""
 
@@ -10469,7 +10479,7 @@ msgstr ""
 msgid "WhatsApp number that will send the message."
 msgstr ""
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:437
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:441
 msgid "WhatsApp number that will send the template."
 msgstr ""
 
@@ -10624,9 +10634,9 @@ msgid "without a phone number"
 msgstr ""
 
 #: admin/src/Builder/Utils.php:101
-#: admin/src/Integrations/Woocommerce.php:101
-#: admin/src/Integrations/Woocommerce.php:355
-#: admin/src/Integrations/Woocommerce.php:1241
+#: admin/src/Integrations/Woocommerce.php:102
+#: admin/src/Integrations/Woocommerce.php:356
+#: admin/src/Integrations/Woocommerce.php:1304
 msgid "WooCommerce"
 msgstr ""
 
@@ -10639,7 +10649,7 @@ msgstr ""
 msgid "WooCommerce orders and customers"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:114
+#: admin/src/Integrations/Woocommerce.php:115
 msgid "WooCommerce settings"
 msgstr ""
 

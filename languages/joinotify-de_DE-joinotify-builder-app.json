@@ -506,6 +506,9 @@
       "Empty canvas": [
         "Leinwand leer"
       ],
+      "End of the link, e.g. {{ wc_payment_url | remove_home_url }}": [
+        "Ende des Links, z. B. {{ wc_payment_url | remove_home_url }}"
+      ],
       "End the workflow at this point.": [
         "Beenden Sie den Workflow an dieser Stelle."
       ],

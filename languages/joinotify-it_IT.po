@@ -3554,6 +3554,10 @@ msgstr "Abilitato"
 msgid "End date"
 msgstr "Data di fine"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:297
+msgid "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
+msgstr "Parte finale del link, es. {{ wc_payment_url | remove_home_url }}"
+
 #: app/src/pages/queue/QueuePage.vue:90
 msgid "End of workflow"
 msgstr "Fine del flusso di lavoro"
@@ -10347,6 +10351,15 @@ msgid ""
 msgstr ""
 "Per recuperare il link per la recensione di ciascun prodotto acquistato "
 "dall'ordine, separati da riga"
+
+#: admin/src/Integrations/Woocommerce.php:502
+msgid ""
+"To retrieve the review link of the first purchased product without the site "
+"address (e.g. product/slug/#reviews), to complete the link of a URL button"
+msgstr ""
+"Per recuperare il link per la recensione del primo prodotto acquistato "
+"senza l'indirizzo del sito (es. product/slug/#reviews), per completare il "
+"link di un pulsante URL"
 
 #: admin/src/Integrations/Woocommerce.php:573
 msgid ""

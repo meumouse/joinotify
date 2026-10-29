@@ -506,6 +506,9 @@
       "Empty canvas": [
         "Toile vide"
       ],
+      "End of the link, e.g. {{ wc_payment_url | remove_home_url }}": [
+        "Fin du lien, ex. : {{ wc_payment_url | remove_home_url }}"
+      ],
       "End the workflow at this point.": [
         "Terminez le flux de travail à ce stade."
       ],

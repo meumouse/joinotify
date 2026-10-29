@@ -3597,6 +3597,10 @@ msgstr "Aktiviert"
 msgid "End date"
 msgstr "Enddatum"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:297
+msgid "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
+msgstr "Ende des Links, z. B. {{ wc_payment_url | remove_home_url }}"
+
 #: app/src/pages/queue/QueuePage.vue:90
 msgid "End of workflow"
 msgstr "Ende des Workflows"
@@ -10445,6 +10449,15 @@ msgid ""
 msgstr ""
 "Um den Bewertungslink für jedes gekaufte Produkt aus der Bestellung "
 "abzurufen, durch Zeilen getrennt"
+
+#: admin/src/Integrations/Woocommerce.php:502
+msgid ""
+"To retrieve the review link of the first purchased product without the site "
+"address (e.g. product/slug/#reviews), to complete the link of a URL button"
+msgstr ""
+"Um den Bewertungslink des ersten gekauften Produkts ohne die "
+"Website-Adresse abzurufen (z. B. product/slug/#reviews), um den Link einer "
+"URL-Schaltfläche zu vervollständigen"
 
 #: admin/src/Integrations/Woocommerce.php:573
 msgid ""

@@ -3504,6 +3504,10 @@ msgstr "Enabled"
 msgid "End date"
 msgstr "End date"
 
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:297
+msgid "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
+msgstr "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
+
 #: app/src/pages/queue/QueuePage.vue:90
 msgid "End of workflow"
 msgstr "End of workflow"
@@ -10163,6 +10167,14 @@ msgid ""
 msgstr ""
 "To retrieve the review link for each purchased product from the order, "
 "separated by line"
+
+#: admin/src/Integrations/Woocommerce.php:502
+msgid ""
+"To retrieve the review link of the first purchased product without the site "
+"address (e.g. product/slug/#reviews), to complete the link of a URL button"
+msgstr ""
+"To retrieve the review link of the first purchased product without the site "
+"address (e.g. product/slug/#reviews), to complete the link of a URL button"
 
 #: admin/src/Integrations/Woocommerce.php:573
 msgid ""
