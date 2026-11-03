@@ -30,6 +30,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ### Fixed
 
+- Saving a workflow dropped every backslash typed in it, so an escaped quote in the JSON body of a "Send webhook" action turned it into invalid JSON and the action never sent. Workflows and canvas notes now keep backslashes as typed; one lost in an earlier save has to be typed again
 - A local attachment was recorded in the message history with a broken media URL built from the file's bytes. The history now leaves the media URL empty for it
 
 ## [2.6.2] - 2026-11-02

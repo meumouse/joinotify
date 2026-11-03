@@ -362,6 +362,9 @@ class Helpers {
      * The credentials typed in actions are sealed first (see seal_action_secrets()), so every
      * save path — the builder, imports, templates, the AI — stores them the same way.
      *
+     * update_post_meta() unslashes what it stores, so the content is slashed first: a backslash
+     * typed in any field (an escaped quote in a JSON body, a regex) is kept as typed.
+     *
      * @since 1.4.3
      * @version 2.7.0
      * @param int   $post_id | Post ID
@@ -371,7 +374,7 @@ class Helpers {
     public static function update_workflow_content_meta( $post_id, $workflow_content ) {
         $prepared_content = self::encode_emoji_deep( self::seal_action_secrets( $workflow_content ) );
 
-        return update_post_meta( $post_id, 'joinotify_workflow_content', $prepared_content );
+        return update_post_meta( $post_id, 'joinotify_workflow_content', wp_slash( $prepared_content ) );
     }
 
 
@@ -511,9 +514,11 @@ class Helpers {
     /**
      * Update the visual-only canvas sticky notes (editor_notes) metadata.
      *
-     * These notes document the flow and never affect execution.
+     * These notes document the flow and never affect execution. Slashed for the same reason
+     * as update_workflow_content_meta().
      *
      * @since 2.0.0
+     * @version 2.7.0
      * @param int   $post_id | Post ID
      * @param array $editor_notes | Sticky notes data
      * @return bool|int
@@ -521,7 +526,7 @@ class Helpers {
     public static function update_workflow_editor_notes_meta( $post_id, $editor_notes ) {
         $prepared_notes = self::encode_emoji_deep( is_array( $editor_notes ) ? $editor_notes : array() );
 
-        return update_post_meta( $post_id, 'joinotify_editor_notes', $prepared_notes );
+        return update_post_meta( $post_id, 'joinotify_editor_notes', wp_slash( $prepared_notes ) );
     }
 
 
