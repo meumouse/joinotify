@@ -5892,6 +5892,10 @@ msgstr "Meta rejected this template."
 msgid "Method"
 msgstr "Method"
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
+msgid "Method and URL"
+msgstr "Method and URL"
+
 #: admin/src/Validations/Country_Codes.php:46
 msgid "Mexico"
 msgstr "Mexico"
@@ -7679,7 +7683,6 @@ msgstr "Reply payload"
 msgid "Republic of the Congo"
 msgstr "Republic of the Congo"
 
-#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "Request"
 msgstr "Request"

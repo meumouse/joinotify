@@ -89,7 +89,7 @@ const usageTokens = computed(() => {
 
 <template>
   <div class="space-y-4">
-    <FieldGroup :title="__('Request', textDomain)" :description="__('A public address. Local and private network addresses are refused.', textDomain)">
+    <FieldGroup :title="__('Method and URL', textDomain)" :description="__('A public address. Local and private network addresses are refused.', textDomain)">
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-[8rem_minmax(0,1fr)]">
         <BaseSelectField
           :model-value="method"

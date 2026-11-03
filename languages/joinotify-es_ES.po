@@ -5975,6 +5975,10 @@ msgstr "Meta rechazó esta plantilla."
 msgid "Method"
 msgstr "Método"
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
+msgid "Method and URL"
+msgstr "Método y URL"
+
 #: admin/src/Validations/Country_Codes.php:46
 msgid "Mexico"
 msgstr "México"
@@ -7785,7 +7789,6 @@ msgstr "Payload de la respuesta"
 msgid "Republic of the Congo"
 msgstr "República del Congo"
 
-#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "Request"
 msgstr "Solicitud"

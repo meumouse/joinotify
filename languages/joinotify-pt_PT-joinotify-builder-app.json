@@ -893,6 +893,9 @@
       "Method": [
         "Método"
       ],
+      "Method and URL": [
+        "Método e URL"
+      ],
       "Minutes": [
         "Minutos"
       ],
@@ -1120,9 +1123,6 @@
       ],
       "Reply payload": [
         "Payload da resposta"
-      ],
-      "Request": [
-        "Pedido"
       ],
       "Required configuration for this trigger to run correctly.": [
         "Configuração necessária para que este gatilho funcione corretamente."

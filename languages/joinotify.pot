@@ -5660,6 +5660,10 @@ msgstr ""
 msgid "Method"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
+msgid "Method and URL"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:46
 msgid "Mexico"
 msgstr ""
@@ -7377,7 +7381,6 @@ msgstr ""
 msgid "Republic of the Congo"
 msgstr ""
 
-#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "Request"
 msgstr ""

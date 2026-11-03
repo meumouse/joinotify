@@ -6024,6 +6024,10 @@ msgstr "Meta hat diese Vorlage abgelehnt."
 msgid "Method"
 msgstr "Methode"
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
+msgid "Method and URL"
+msgstr "Methode und URL"
+
 #: admin/src/Validations/Country_Codes.php:46
 msgid "Mexico"
 msgstr "Mexiko"
@@ -7848,7 +7852,6 @@ msgstr "Payload der Antwort"
 msgid "Republic of the Congo"
 msgstr "Republik Kongo"
 
-#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "Request"
 msgstr "Anfrage"

@@ -1210,6 +1210,7 @@ return [
 		'Meta paused this template because of low quality. It will not be delivered until it recovers.' => 'Meta ha messo in pausa questo modello a causa di bassa qualità. Non sarà consegnato finché non si riprende.',
 		'Meta rejected this template.' => 'Meta ha rifiutato questo modello.',
 		'Method' => 'Metodo',
+		'Method and URL' => 'Metodo e URL',
 		'Mexico' => 'Messico',
 		'minute' => 'minuto',
 		'minute(s)' => 'minuto(i)',

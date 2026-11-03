@@ -5972,6 +5972,10 @@ msgstr "Meta ha rifiutato questo modello."
 msgid "Method"
 msgstr "Metodo"
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
+msgid "Method and URL"
+msgstr "Metodo e URL"
+
 #: admin/src/Validations/Country_Codes.php:46
 msgid "Mexico"
 msgstr "Messico"
@@ -7781,7 +7785,6 @@ msgstr "Payload della risposta"
 msgid "Republic of the Congo"
 msgstr "Repubblica del Congo"
 
-#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "Request"
 msgstr "Richiesta"
