@@ -35,7 +35,7 @@ namespace MeuMouse\Joinotify\Builder {
 
 	class Triggers {
 		public static function get_trigger_names( $integration ) {
-			return array( 'woocommerce_checkout_order_processed' );
+			return array( 'woocommerce_payment_complete' );
 		}
 	}
 }
@@ -138,6 +138,7 @@ function comments_open( $id ) { global $closed_reviews; return ! in_array( $id, 
 function get_permalink( $id ) { return home_url() . '/product/item-' . $id . '/'; }
 
 require_once __DIR__ . '/../admin/src/Builder/Placeholders.php';
+require_once __DIR__ . '/../admin/src/Builder/Http_Request_Action.php';
 require_once __DIR__ . '/../admin/src/Integrations/Woocommerce.php';
 
 use MeuMouse\Joinotify\Builder\Placeholders;

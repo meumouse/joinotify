@@ -10,8 +10,11 @@
  * the delivery webhook reported it delivered, read or failed, show among the
  * fields once known.
  *
+ * A message that can be sent again offers it in the footer; a resend, and the
+ * message it resent, point at each other by record number.
+ *
  * @since 2.0.0
- * @version 2.6.0
+ * @version 2.7.0
  */
 import { computed } from 'vue';
 import { __, textDomain } from '../../../utils/i18n';
@@ -21,11 +24,12 @@ const props = defineProps({
   open: { type: Boolean, default: false },
   entry: { type: Object, default: () => ({}) },
   exporting: { type: Boolean, default: false },
+  loading: { type: Boolean, default: false },
   statusLabels: { type: Object, default: () => ({}) },
   sourceLabels: { type: Object, default: () => ({}) },
 });
 
-defineEmits(['close', 'export']);
+defineEmits(['close', 'export', 'resend']);
 
 const windowLabels = computed(() => ({
   open: __('Inside the 24-hour window', textDomain),
@@ -55,6 +59,14 @@ const rows = computed(() => {
 
   if (entry.failed_at) {
     list.push({ label: __('Failed at', textDomain), value: entry.failed_at });
+  }
+
+  if (entry.resent_from) {
+    list.push({ label: __('Resend of', textDomain), value: `#${entry.resent_from}` });
+  }
+
+  if (entry.resent_as) {
+    list.push({ label: __('Resent at', textDomain), value: `${entry.resent_at || '-'} (#${entry.resent_as})` });
   }
 
   return [
@@ -200,6 +212,15 @@ const payloadJson = computed(() => (template.value ? JSON.stringify(template.val
         </div>
 
         <div class="flex justify-end gap-3 border-t border-slate-100 px-6 py-4">
+          <button
+            v-if="entry.can_resend"
+            type="button"
+            class="rounded-[8px] bg-primary-600 px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+            :disabled="loading"
+            @click="$emit('resend')"
+          >
+            {{ __('Send again', textDomain) }}
+          </button>
           <button
             type="button"
             class="rounded-[8px] border border-slate-200 px-5 py-2.5 text-[14px] font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"

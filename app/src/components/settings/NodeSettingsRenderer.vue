@@ -17,7 +17,7 @@ import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { getActionDefinition as getLegacyActionDefinition } from '../../registries/actionRegistry';
 import { getTriggerDefinition } from '../../registries/triggerRegistry';
 import { getTriggerSettingsSchema } from '../../utils/triggerSettings';
-import { cloneSerializable, findWorkflowNodeLocation } from '../../utils/workflowTree';
+import { cloneSerializable, findWorkflowNodeLocation, walkWorkflowNodes } from '../../utils/workflowTree';
 import { __, textDomain } from '../../utils/i18n';
 import type { WorkflowNode } from '../../types/workflowBuilder';
 
@@ -131,6 +131,37 @@ const isInsideLoop = computed(() => {
   return false;
 });
 
+// Response tokens of the other "HTTP request" nodes that keep their response under a
+// name. Resolved at runtime by Http_Request_Action::replace_tokens(); a node that runs
+// before the request leaves the token as typed.
+const httpResponsePlaceholders = computed(() => {
+  const nodes = store.workflowContent;
+  const items: Array<{ placeholder: string; description: string; available: boolean }> = [];
+  const seen = new Set<string>();
+
+  if (!Array.isArray(nodes)) {
+    return items;
+  }
+
+  walkWorkflowNodes(nodes, (node) => {
+    const name = String(node.data?.response_var || '').trim();
+
+    if (node.id === props.node?.id || String(node.data?.action || '') !== 'http_request' || !name || seen.has(name)) {
+      return;
+    }
+
+    seen.add(name);
+    items.push(
+      { placeholder: `{{ http:${name}.status }}`, description: __('HTTP status code, such as 200', textDomain), available: true },
+      { placeholder: `{{ http:${name}.ok }}`, description: __('"true" when the status is 2xx', textDomain), available: true },
+      { placeholder: `{{ http:${name}.body }}`, description: __('Response body. Add .FIELD for a field of a JSON response.', textDomain), available: true },
+      { placeholder: `{{ http:${name}.error }}`, description: __('Why the request failed, empty when it worked', textDomain), available: true },
+    );
+  });
+
+  return items;
+});
+
 const placeholderItems = computed(() => {
   const trigger = currentTriggerSlug.value;
 
@@ -154,11 +185,12 @@ const placeholderItems = computed(() => {
   if (isInsideLoop.value) {
     return [
       ...LOOP_PLACEHOLDERS.map((item) => ({ ...item, available: true })),
+      ...httpResponsePlaceholders.value,
       ...catalogItems,
     ];
   }
 
-  return catalogItems;
+  return [...httpResponsePlaceholders.value, ...catalogItems];
 });
 
 // Re-sync the edit buffer only when the *selected node changes identity* — not on

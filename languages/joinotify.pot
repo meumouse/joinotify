@@ -6,7 +6,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "x-domain: joinotify\n"
 
-#: admin/src/Integrations/Woocommerce.php:443
+#: admin/src/Integrations/Woocommerce.php:637
 msgid "12345"
 msgstr ""
 
@@ -71,6 +71,11 @@ msgstr ""
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:97
 #. translators: %s: tag name
 msgid "\"%s\" is taken off every contact and erased. This cannot be undone."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:82
+#: app/src/components/settings/NodeSettingsRenderer.vue:156
+msgid "\"true\" when the status is 2xx"
 msgstr ""
 
 #: app/src/pages/contacts/components/FilterRuleRow.vue:164
@@ -142,7 +147,7 @@ msgstr ""
 msgid "%1$s: %2$d contacts. Tell what each column is."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:868
+#: admin/src/Admin/Settings/Registry.php:863
 #. translators: %d: number of retry attempts
 msgid "%d attempt"
 msgid_plural "%d attempts"
@@ -178,6 +183,20 @@ msgstr[1] ""
 #. translators: %d: number of items
 msgid "%d item will be sent again."
 msgid_plural "%d items will be sent again."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/History_Resend.php:91
+#. translators: %d: number of messages whose resend failed
+msgid "%d message failed again; its new record says why."
+msgid_plural "%d messages failed again; their new records say why."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/History_Resend.php:83
+#. translators: %d: number of messages sent again
+msgid "%d message was sent again."
+msgid_plural "%d messages were sent again."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -226,6 +245,13 @@ msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
+#: admin/src/Rest/History_Resend.php:99
+#. translators: %d: number of selected records that cannot be resent
+msgid "%d selected record cannot be resent."
+msgid_plural "%d selected records cannot be resent."
+msgstr[0] ""
+msgstr[1] ""
+
 #: admin/src/Rest/History_Cancel_Retry.php:81
 #. translators: %d: number of selected records that had no resend pending
 msgid "%d selected record had no resend pending."
@@ -263,26 +289,27 @@ msgstr ""
 msgid "%s stays. Search the duplicate that should be merged into it."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1098
+#: admin/src/Integrations/Woocommerce.php:1455
 #. translators: %s: sample shipping cost, already formatted with the store currency
 msgid "%s via Express shipping"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:514
+#: admin/src/Integrations/Woocommerce.php:708
 #. translators: %s: site URL
 msgid "%s/checkout/pay/order/12345"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1461
+#: admin/src/Integrations/Woocommerce.php:1818
 #. translators: %s: percentage discount amount
 msgid "%s%%"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:427
+#: admin/src/Integrations/Woocommerce.php:621
+#: admin/src/Integrations/Woocommerce.php:897
 msgid "+55 11 91234-5678"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:435
+#: admin/src/Integrations/Woocommerce.php:629
 msgid "+55 41 91234-5678"
 msgstr ""
 
@@ -307,7 +334,7 @@ msgid ""
 "hosting support to upgrade."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:109
+#: app/src/composables/useMessageHistory.ts:114
 #: app/src/composables/useProcessingQueue.ts:108
 #: app/src/composables/useWorkflows.ts:214
 #: app/src/pages/contacts/useContactList.ts:48
@@ -322,15 +349,15 @@ msgstr ""
 msgid "15 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:284
+#: admin/src/Admin/Settings/Registry.php:279
 msgid "180 days"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:483
+#: admin/src/Integrations/Woocommerce.php:677
 msgid "1x - Men's cotton T-shirt (Sample product)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:483
+#: admin/src/Integrations/Woocommerce.php:677
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr ""
 
@@ -342,8 +369,8 @@ msgstr ""
 msgid "24h limit:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:281
-#: admin/src/Admin/Settings/Registry.php:300
+#: admin/src/Admin/Settings/Registry.php:276
+#: admin/src/Admin/Settings/Registry.php:295
 msgid "30 days"
 msgstr ""
 
@@ -353,7 +380,7 @@ msgstr ""
 msgid "30 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:285
+#: admin/src/Admin/Settings/Registry.php:280
 msgid "365 days"
 msgstr ""
 
@@ -366,14 +393,14 @@ msgid "5 minutes"
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:1441
-#: app/src/pages/history/HistoryPage.vue:289
+#: app/src/pages/history/HistoryPage.vue:317
 #: app/src/pages/settings/components/cards/PhoneActions.vue:126
 #: app/src/pages/settings/components/cards/PhoneActions.vue:212
 msgid "5541987111527"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:282
-#: admin/src/Admin/Settings/Registry.php:301
+#: admin/src/Admin/Settings/Registry.php:277
+#: admin/src/Admin/Settings/Registry.php:296
 msgid "60 days"
 msgstr ""
 
@@ -381,12 +408,12 @@ msgstr ""
 msgid "60 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:299
+#: admin/src/Admin/Settings/Registry.php:294
 msgid "7 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:283
-#: admin/src/Admin/Settings/Registry.php:302
+#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:297
 msgid "90 days"
 msgstr ""
 
@@ -401,7 +428,7 @@ msgstr ""
 msgid "A choice field needs at least one option."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1579
+#: admin/src/Admin/Builder/Registry.php:1580
 msgid "A condition is missing its branches."
 msgstr ""
 
@@ -419,15 +446,22 @@ msgid ""
 "Everything here can be changed later in Settings."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1398
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:83
+msgid ""
+"A field of the JSON response; use dots for nested fields and list positions "
+"(body.items.0.id)"
+msgstr ""
+
+#: admin/src/Api/Cloud_Client.php:1417
 msgid "A message id is required."
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:96
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 msgid "A public address. Local and private network addresses are refused."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:310
+#: admin/src/Admin/Settings/Registry.php:305
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
@@ -450,7 +484,7 @@ msgid "Abandoned carts (Flexify Checkout)"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:246
-#: admin/src/Admin/Settings/Registry.php:361
+#: admin/src/Admin/Settings/Registry.php:356
 msgid "About"
 msgstr ""
 
@@ -481,7 +515,7 @@ msgstr ""
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:158
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:154
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:176
-#: app/src/pages/history/HistoryPage.vue:385
+#: app/src/pages/history/HistoryPage.vue:422
 #: app/src/pages/queue/QueuePage.vue:303
 msgid "Actions"
 msgstr ""
@@ -494,7 +528,7 @@ msgstr ""
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:136
+#: admin/src/Integrations/Woocommerce.php:208
 msgid "Activate discount coupon action"
 msgstr ""
 
@@ -517,6 +551,7 @@ msgid "Active workflow"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:157
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:88
 msgid "Add"
 msgstr ""
 
@@ -590,11 +625,16 @@ msgid "Add contact"
 msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:162
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:190
 msgid "Add field"
 msgstr ""
 
 #: app/src/pages/contacts/components/FilterGroupEditor.vue:96
 msgid "Add group"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:126
+msgid "Add header"
 msgstr ""
 
 #: app/src/components/settings/SchemaFieldRenderer.vue:310
@@ -626,6 +666,10 @@ msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:204
 msgid "Add or remove tags of the contact on Joinotify."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:115
+msgid "Add parameter"
 msgstr ""
 
 #: app/src/pages/contacts/components/BulkTagModal.vue:123
@@ -663,6 +707,10 @@ msgstr ""
 msgid "Added by hand"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:110
+msgid "Added to the URL, each value encoded for you."
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:224
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
 msgid "Address"
@@ -682,7 +730,7 @@ msgid ""
 "unticks it in My account is opted out."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:137
+#: admin/src/Integrations/Woocommerce.php:209
 msgid ""
 "Adds the coupon action to WooCommerce workflows so a workflow can create "
 "and send a discount coupon."
@@ -696,6 +744,7 @@ msgstr ""
 
 #: admin/src/Builder/Actions.php:127
 #: admin/src/Integrations/Integrations_Base.php:132
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:234
 msgid "Advanced"
 msgstr ""
 
@@ -769,7 +818,7 @@ msgstr ""
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:60
-#: app/src/composables/useMessageHistory.ts:74
+#: app/src/composables/useMessageHistory.ts:75
 #: app/src/composables/useProcessingQueue.ts:83
 #: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:142
 msgid "All"
@@ -799,7 +848,7 @@ msgstr ""
 msgid "All set"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:371
+#: admin/src/Admin/History/Registry.php:378
 msgid "All sources"
 msgstr ""
 
@@ -849,7 +898,7 @@ msgid ""
 "reset."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1562
+#: admin/src/Integrations/Woocommerce.php:1919
 #: admin/src/Integrations/Wpforms.php:203
 msgid "Allows checking specific user metadata."
 msgstr ""
@@ -858,7 +907,7 @@ msgstr ""
 msgid "Allows checking the abandoned cart total amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1566
+#: admin/src/Integrations/Woocommerce.php:1927
 msgid "Allows checking the customer email for the order."
 msgstr ""
 
@@ -866,23 +915,23 @@ msgstr ""
 msgid "Allows checking the items present in the abandoned cart."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1554
+#: admin/src/Integrations/Woocommerce.php:1911
 msgid "Allows checking the order payment method."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1570
+#: admin/src/Integrations/Woocommerce.php:1931
 msgid "Allows checking the order refund amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1558
+#: admin/src/Integrations/Woocommerce.php:1915
 msgid "Allows checking the order shipping method."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1538
+#: admin/src/Integrations/Woocommerce.php:1895
 msgid "Allows checking the order status."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1542
+#: admin/src/Integrations/Woocommerce.php:1899
 msgid "Allows checking the order total."
 msgstr ""
 
@@ -890,7 +939,7 @@ msgstr ""
 msgid "Allows checking the post type that was published."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1550
+#: admin/src/Integrations/Woocommerce.php:1907
 msgid "Allows checking the products purchased in the order."
 msgstr ""
 
@@ -902,10 +951,11 @@ msgstr ""
 msgid "Allows checking the role of the user who requested the password reset."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1574
+#: admin/src/Integrations/Woocommerce.php:1935
 msgid "Allows checking the status of the created subscription."
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:1923
 #: admin/src/Integrations/Wordpress.php:307
 msgid "Allows checking the user role that fired the trigger."
 msgstr ""
@@ -914,7 +964,7 @@ msgstr ""
 msgid "Allows checking whether the abandoned cart was recovered."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1546
+#: admin/src/Integrations/Woocommerce.php:1903
 msgid "Allows checking whether the order was paid."
 msgstr ""
 
@@ -930,7 +980,7 @@ msgstr ""
 msgid "already in the base (skipped)"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:432
+#: admin/src/Admin/Builder/Registry.php:433
 #: app/src/builder/actions/definitions/timeDelay.ts:61
 #: app/src/builder/actions/definitions/timeDelay.ts:89
 #: app/src/builder/actions/definitions/timeDelay.ts:96
@@ -983,7 +1033,7 @@ msgstr ""
 msgid "Any consent"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:283
+#: admin/src/Integrations/Woocommerce.php:471
 msgid "Any digital product"
 msgstr ""
 
@@ -995,11 +1045,15 @@ msgstr ""
 msgid "Any source"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:329
+#: admin/src/Integrations/Woocommerce.php:517
 msgid "Any status"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:376
+#: admin/src/Integrations/Woocommerce.php:392
+msgid "Anywhere"
+msgstr ""
+
+#: admin/src/Admin/History/Registry.php:383
 #: app/src/pages/contacts/labels.ts:42
 msgid "API"
 msgstr ""
@@ -1009,7 +1063,12 @@ msgid "API client not initialized."
 msgstr ""
 
 #: admin/src/Integrations/Resend.php:134
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:72
 msgid "API key"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:51
+msgid "API key in a header"
 msgstr ""
 
 #: admin/src/Core/Telemetry.php:143
@@ -1024,7 +1083,7 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:349
+#: admin/src/Admin/Settings/Registry.php:344
 msgid "Applications"
 msgstr ""
 
@@ -1117,7 +1176,7 @@ msgstr ""
 msgid "Attachments"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:68
+#: app/src/pages/history/components/HistoryDetailsModal.vue:80
 msgid "Attempts"
 msgstr ""
 
@@ -1166,11 +1225,11 @@ msgstr ""
 
 #: admin/src/Validations/Media_Types.php:41
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:36
-#: app/src/pages/history/HistoryPage.vue:98
+#: app/src/pages/history/HistoryPage.vue:104
 msgid "Audio"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:226
+#: app/src/pages/history/HistoryPage.vue:261
 msgid ""
 "Audit every WhatsApp message dispatched by Joinotify, including workflow "
 "sends, retries and test messages."
@@ -1185,6 +1244,8 @@ msgid "Austria"
 msgstr ""
 
 #: admin/src/Integrations/Integrations_Base.php:126
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:132
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:136
 msgid "Authentication"
 msgstr ""
 
@@ -1198,11 +1259,11 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:296
+#: admin/src/Admin/Settings/Registry.php:291
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:273
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
@@ -1235,6 +1296,10 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:373
+msgid "Back in stock notice sent"
+msgstr ""
+
 #: app/src/components/builder/BuilderNavbar.vue:184
 #: app/src/components/builder/BuilderStartChooser.vue:90
 msgid "Back to dashboard"
@@ -1263,6 +1328,14 @@ msgid ""
 "automatically."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:50
+msgid "Basic (user and password)"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:49
+msgid "Bearer token"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:143
 msgid "Belarus"
 msgstr ""
@@ -1283,7 +1356,7 @@ msgstr ""
 msgid "Bhutan"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:149
+#: admin/src/Integrations/Woocommerce.php:221
 msgid "Billing full address format"
 msgstr ""
 
@@ -1296,8 +1369,10 @@ msgid "Blocked by Meta for marketing"
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:110
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:164
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:168
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:259
-#: app/src/pages/history/components/HistoryDetailsModal.vue:89
+#: app/src/pages/history/components/HistoryDetailsModal.vue:101
 msgid "Body"
 msgstr ""
 
@@ -1363,7 +1438,7 @@ msgid "Build your first automation or review the full settings."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:232
-#: admin/src/Admin/Settings/Registry.php:355
+#: admin/src/Admin/Settings/Registry.php:350
 #: app/src/pages/builder/BuilderPage.vue:640
 #: app/src/pages/builder/BuilderPage.vue:695
 #: app/src/pages/builder/BuilderPage.vue:800
@@ -1421,7 +1496,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:252
-#: app/src/pages/history/components/HistoryDetailsModal.vue:90
+#: app/src/pages/history/components/HistoryDetailsModal.vue:102
 msgid "Button"
 msgstr ""
 
@@ -1438,6 +1513,11 @@ msgstr ""
 msgid ""
 "Buyers of every order (with or without an account), their order history and "
 "their subscriptions."
+msgstr ""
+
+#: admin/src/Builder/Http_Request_Action.php:101
+#: app/src/builder/actions/definitions/httpRequest.ts:138
+msgid "Call any API and use its response in the next actions."
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:202
@@ -1490,9 +1570,9 @@ msgstr ""
 msgid "Cancel item"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:186
-#: app/src/pages/history/HistoryPage.vue:205
-#: app/src/pages/history/HistoryPage.vue:327
+#: app/src/pages/history/HistoryPage.vue:201
+#: app/src/pages/history/HistoryPage.vue:233
+#: app/src/pages/history/HistoryPage.vue:364
 msgid "Cancel resend"
 msgstr ""
 
@@ -1500,8 +1580,8 @@ msgstr ""
 msgid "Cancel scheduled item"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:80
-#: app/src/pages/history/HistoryPage.vue:82
+#: app/src/composables/useMessageHistory.ts:81
+#: app/src/pages/history/HistoryPage.vue:88
 msgid "Cancelled"
 msgstr ""
 
@@ -1613,6 +1693,10 @@ msgstr ""
 msgid "Checkbox text"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:400
+msgid "Checkout"
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp.php:61
 msgid ""
 "Checks whether the recipient wrote to the sender in the last 24 hours, so "
@@ -1683,7 +1767,7 @@ msgid ""
 "the field types and labels."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:224
+#: admin/src/Integrations/Woocommerce.php:296
 msgid ""
 "Choose which order status should start this workflow. Select \"Any status\" "
 "to run on every status change."
@@ -1694,11 +1778,11 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:352
+#: app/src/pages/history/HistoryPage.vue:389
 msgid "Clear all"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:182
+#: app/src/pages/history/HistoryPage.vue:197
 msgid "Clear all history"
 msgstr ""
 
@@ -1707,7 +1791,7 @@ msgid "Clear date"
 msgstr ""
 
 #: app/src/pages/contacts/tabs/ContactsTab.vue:202
-#: app/src/pages/history/HistoryPage.vue:300
+#: app/src/pages/history/HistoryPage.vue:328
 #: app/src/pages/queue/QueuePage.vue:228
 msgid "Clear filters"
 msgstr ""
@@ -1749,7 +1833,7 @@ msgstr ""
 #: app/src/components/toasts/ToastStack.vue:85
 #: app/src/pages/contacts/components/ImportModal.vue:353
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
-#: app/src/pages/history/components/HistoryDetailsModal.vue:212
+#: app/src/pages/history/components/HistoryDetailsModal.vue:233
 msgid "Close"
 msgstr ""
 
@@ -1772,7 +1856,7 @@ msgstr ""
 msgid "Close setup"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1710
+#: admin/src/Admin/Builder/Registry.php:1711
 msgid "Closed"
 msgstr ""
 
@@ -1814,20 +1898,20 @@ msgstr ""
 msgid "Comoros"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:610
-#: admin/src/Integrations/Woocommerce.php:619
+#: admin/src/Integrations/Woocommerce.php:804
+#: admin/src/Integrations/Woocommerce.php:813
 msgid "Complete e-book (Sample product)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:451
+#: admin/src/Integrations/Woocommerce.php:645
 msgid "Completed"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:163
+#: app/src/pages/history/components/HistoryDetailsModal.vue:175
 msgid "Component"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:564
+#: admin/src/Admin/Builder/Registry.php:565
 #: admin/src/Builder/Actions.php:44
 #: app/src/builder/actions/definitions/condition.ts:81
 #: app/src/builder/actions/definitions/condition.ts:112
@@ -1841,7 +1925,7 @@ msgstr ""
 msgid "Condition rule"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:468
+#: admin/src/Admin/Builder/Registry.php:469
 #: app/src/builder/actions/definitions/condition.ts:127
 #: app/src/builder/actions/definitions/condition.ts:138
 #: app/src/builder/actions/settings/ConditionSettings.vue:192
@@ -1863,14 +1947,14 @@ msgstr ""
 #: admin/src/Integrations/Resend.php:115
 #: admin/src/Integrations/Telegram.php:115
 #: admin/src/Integrations/Whatsapp.php:122
-#: admin/src/Integrations/Woocommerce.php:117
+#: admin/src/Integrations/Woocommerce.php:189
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
 #: app/src/pages/settings/components/cards/IntegrationCard.vue:24
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:62
 msgid "Configure"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:116
+#: admin/src/Integrations/Woocommerce.php:188
 msgid ""
 "Configure discount coupons and checkout field formatting with the native "
 "integration fields."
@@ -2062,17 +2146,21 @@ msgstr ""
 msgid "contains"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1673
+#: admin/src/Admin/Builder/Registry.php:1674
 msgid "Contains"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:187
-#: app/src/pages/history/HistoryPage.vue:384
+#: app/src/pages/history/components/HistoryDetailsModal.vue:199
+#: app/src/pages/history/HistoryPage.vue:421
 msgid "Content"
 msgstr ""
 
 #: admin/src/Integrations/Integrations_Base.php:120
 msgid "Content & CMS"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:198
+msgid "Content type"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:214
@@ -2084,6 +2172,10 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:63
+msgid "Continue with the next actions"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:189
 msgid "Cook Islands"
 msgstr ""
@@ -2092,8 +2184,8 @@ msgstr ""
 msgid "Costa Rica"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:308
-#: app/src/composables/useMessageHistory.ts:317
+#: app/src/composables/useMessageHistory.ts:313
+#: app/src/composables/useMessageHistory.ts:322
 msgid "Could not cancel the resend."
 msgstr ""
 
@@ -2105,8 +2197,8 @@ msgstr ""
 msgid "Could not clear the debug logs."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:335
-#: app/src/composables/useMessageHistory.ts:343
+#: app/src/composables/useMessageHistory.ts:402
+#: app/src/composables/useMessageHistory.ts:410
 msgid "Could not clear the history."
 msgstr ""
 
@@ -2118,8 +2210,8 @@ msgstr ""
 msgid "Could not clear the queue."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:98
-#: admin/src/Admin/Settings/Registry.php:693
+#: admin/src/Admin/Builder/Registry.php:99
+#: admin/src/Admin/Settings/Registry.php:688
 msgid "Could not complete the operation."
 msgstr ""
 
@@ -2136,8 +2228,8 @@ msgstr ""
 msgid "Could not delete the action."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:273
-#: app/src/composables/useMessageHistory.ts:281
+#: app/src/composables/useMessageHistory.ts:278
+#: app/src/composables/useMessageHistory.ts:286
 msgid "Could not delete the selected records."
 msgstr ""
 
@@ -2149,8 +2241,8 @@ msgstr ""
 msgid "Could not dismiss the tip."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:369
-#: app/src/composables/useMessageHistory.ts:383
+#: app/src/composables/useMessageHistory.ts:436
+#: app/src/composables/useMessageHistory.ts:450
 msgid "Could not export the message history."
 msgstr ""
 
@@ -2188,7 +2280,7 @@ msgstr ""
 msgid "Could not import the settings."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1353
+#: admin/src/Api/Cloud_Client.php:1372
 msgid "Could not list the connected numbers."
 msgstr ""
 
@@ -2208,8 +2300,8 @@ msgstr ""
 msgid "Could not load the contacts."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:151
-#: app/src/composables/useMessageHistory.ts:159
+#: app/src/composables/useMessageHistory.ts:156
+#: app/src/composables/useMessageHistory.ts:164
 msgid "Could not load the message history."
 msgstr ""
 
@@ -2253,7 +2345,7 @@ msgstr ""
 msgid "Could not reach the Joinotify platform. Check your connection and try again."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1310
+#: admin/src/Api/Cloud_Client.php:1329
 msgid "Could not read the Joinotify account data."
 msgstr ""
 
@@ -2272,6 +2364,11 @@ msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:511
 msgid "Could not remove."
+msgstr ""
+
+#: app/src/composables/useMessageHistory.ts:358
+#: app/src/composables/useMessageHistory.ts:363
+msgid "Could not resend the messages."
 msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:625
@@ -2398,7 +2495,7 @@ msgstr ""
 msgid "Coupon code"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1490
+#: admin/src/Integrations/Woocommerce.php:1847
 msgid "Coupon does not expire"
 msgstr ""
 
@@ -2411,7 +2508,7 @@ msgstr ""
 msgid "Coupon message"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:141
+#: admin/src/Integrations/Woocommerce.php:213
 msgid "Coupon prefix"
 msgstr ""
 
@@ -2468,11 +2565,11 @@ msgstr ""
 msgid "Create field"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:92
+#: admin/src/Admin/Builder/Registry.php:93
 msgid "Create from scratch"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:93
+#: admin/src/Admin/Builder/Registry.php:94
 #: admin/src/Builder/Workflow_Manager.php:130
 msgid "Create from template"
 msgstr ""
@@ -2539,7 +2636,7 @@ msgstr ""
 msgid "Creativity from 0 to 2. Leave empty to use the default."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:577
+#: admin/src/Integrations/Woocommerce.php:771
 msgid "Credit card"
 msgstr ""
 
@@ -2559,7 +2656,7 @@ msgstr ""
 msgid "Cuba"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:562
+#: admin/src/Integrations/Woocommerce.php:756
 msgid "CUPOM10, FREESHIPPING"
 msgstr ""
 
@@ -2642,7 +2739,11 @@ msgstr ""
 msgid "Custom variables"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1565
+#: admin/src/Integrations/Woocommerce.php:338
+msgid "Customer account created"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:1926
 msgid "Customer email"
 msgstr ""
 
@@ -2662,17 +2763,17 @@ msgstr ""
 msgid "Daily"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:475
+#: admin/src/Integrations/Woocommerce.php:669
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:315
+#: admin/src/Admin/Settings/Registry.php:310
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:426
-#: admin/src/Admin/Builder/Registry.php:454
+#: admin/src/Admin/Builder/Registry.php:427
+#: admin/src/Admin/Builder/Registry.php:455
 #: app/src/builder/actions/definitions/timeDelay.ts:58
 #: app/src/builder/actions/definitions/timeDelay.ts:71
 #: app/src/builder/actions/definitions/timeDelay.ts:82
@@ -2681,8 +2782,8 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:156
 #: app/src/pages/contacts/labels.ts:145
-#: app/src/pages/history/components/HistoryDetailsModal.vue:39
-#: app/src/pages/history/HistoryPage.vue:377
+#: app/src/pages/history/components/HistoryDetailsModal.vue:43
+#: app/src/pages/history/HistoryPage.vue:414
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:171
 msgid "Date"
 msgstr ""
@@ -2703,7 +2804,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:446
+#: admin/src/Admin/Builder/Registry.php:447
 #: app/src/builder/actions/definitions/timeDelay.ts:66
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:47
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:39
@@ -2715,7 +2816,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:290
+#: admin/src/Admin/Settings/Registry.php:285
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:125
 msgid "Debug logs"
 msgstr ""
@@ -2724,7 +2825,7 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:295
+#: admin/src/Admin/Settings/Registry.php:290
 msgid "Debug logs retention"
 msgstr ""
 
@@ -2776,21 +2877,21 @@ msgid ""
 "options."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:150
+#: admin/src/Integrations/Woocommerce.php:222
 msgid ""
 "Defines the value used in the billing full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:159
+#: admin/src/Integrations/Woocommerce.php:231
 msgid ""
 "Defines the value used in the shipping full address variable. You can "
 "combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ "
 "state }}, and {{ postcode }}."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:552
+#: admin/src/Admin/Builder/Registry.php:553
 #: admin/src/Builder/Actions.php:32
 #: app/src/builder/actions/definitions/timeDelay.ts:31
 #: app/src/builder/actions/definitions/timeDelay.ts:46
@@ -2804,7 +2905,7 @@ msgstr ""
 msgid "Delay mode"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:421
+#: admin/src/Admin/Builder/Registry.php:422
 #: app/src/builder/actions/definitions/timeDelay.ts:56
 msgid "Delay type"
 msgstr ""
@@ -2814,7 +2915,7 @@ msgid "Delay until a fixed date"
 msgstr ""
 
 #: app/src/components/flow/FlowNode.vue:305
-#: app/src/pages/history/HistoryPage.vue:205
+#: app/src/pages/history/HistoryPage.vue:240
 #: app/src/pages/workflows/WorkflowsPage.vue:90
 msgid "Delete"
 msgstr ""
@@ -2835,11 +2936,11 @@ msgstr ""
 msgid "Delete permanently"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:335
+#: app/src/pages/history/HistoryPage.vue:372
 msgid "Delete selected"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:189
+#: app/src/pages/history/HistoryPage.vue:208
 msgid "Delete selected records"
 msgstr ""
 
@@ -2848,12 +2949,12 @@ msgstr ""
 msgid "Delimiter"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:76
-#: app/src/pages/history/HistoryPage.vue:78
+#: app/src/composables/useMessageHistory.ts:77
+#: app/src/pages/history/HistoryPage.vue:84
 msgid "Delivered"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:49
+#: app/src/pages/history/components/HistoryDetailsModal.vue:53
 msgid "Delivered at"
 msgstr ""
 
@@ -2949,7 +3050,7 @@ msgstr ""
 msgid "Digital file download link (order files loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:249
+#: admin/src/Integrations/Woocommerce.php:321
 msgid "Digital file downloaded"
 msgstr ""
 
@@ -2957,16 +3058,16 @@ msgstr ""
 msgid "Digital file name (order files loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:238
-#: admin/src/Integrations/Woocommerce.php:255
+#: admin/src/Integrations/Woocommerce.php:310
+#: admin/src/Integrations/Woocommerce.php:327
 msgid "Digital product"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:232
+#: admin/src/Integrations/Woocommerce.php:304
 msgid "Digital product access granted"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:578
+#: admin/src/Admin/Settings/Registry.php:573
 msgid "Disabled"
 msgstr ""
 
@@ -2974,7 +3075,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:324
+#: app/src/pages/history/HistoryPage.vue:361
 msgid "Discard the pending retry of the selected messages"
 msgstr ""
 
@@ -2991,8 +3092,8 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:608
-#: admin/src/Integrations/Woocommerce.php:1323
+#: admin/src/Admin/Builder/Registry.php:609
+#: admin/src/Integrations/Woocommerce.php:1680
 #: app/src/builder/actions/definitions/createCoupon.ts:43
 #: app/src/builder/actions/definitions/createCoupon.ts:72
 msgid "Discount coupon"
@@ -3035,7 +3136,7 @@ msgstr ""
 msgid "Do not remind me again"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:861
+#: admin/src/Admin/Settings/Registry.php:856
 msgid "Do not retry"
 msgstr ""
 
@@ -3045,12 +3146,13 @@ msgid "Document"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:122
-#: admin/src/Core/Init.php:562
+#: admin/src/Core/Init.php:563
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:411
+#: admin/src/Integrations/Woocommerce.php:605
+#: admin/src/Integrations/Woocommerce.php:881
 #: admin/src/Integrations/Wordpress.php:175
 msgid "Doe"
 msgstr ""
@@ -3059,7 +3161,7 @@ msgstr ""
 msgid "does not contain"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1674
+#: admin/src/Admin/Builder/Registry.php:1675
 msgid "Does not contain"
 msgstr ""
 
@@ -3075,7 +3177,7 @@ msgstr ""
 msgid "Download every item matching the current filters as a JSON file"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:217
+#: app/src/pages/history/HistoryPage.vue:252
 msgid "Download every record matching the current filters as a JSON file"
 msgstr ""
 
@@ -3093,7 +3195,7 @@ msgstr ""
 msgid "Download the selected items as a JSON file"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:216
+#: app/src/pages/history/HistoryPage.vue:251
 msgid "Download the selected records as a JSON file"
 msgstr ""
 
@@ -3101,7 +3203,7 @@ msgstr ""
 msgid "Download this item as a JSON file"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:432
+#: app/src/pages/history/HistoryPage.vue:486
 msgid "Download this record as a JSON file"
 msgstr ""
 
@@ -3169,6 +3271,10 @@ msgstr ""
 
 #: app/src/pages/contacts/components/ConsentModal.vue:57
 msgid "e.g. Asked to stop receiving messages"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:215
+msgid "e.g. customer"
 msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:107
@@ -3346,11 +3452,11 @@ msgstr ""
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:578
+#: admin/src/Admin/Settings/Registry.php:573
 msgid "Enabled"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:279
+#: app/src/pages/history/HistoryPage.vue:307
 msgid "End date"
 msgstr ""
 
@@ -3513,8 +3619,8 @@ msgid "error"
 msgstr ""
 
 #: app/src/pages/contacts/ContactsPage.vue:98
-#: app/src/pages/history/components/HistoryDetailsModal.vue:69
-#: app/src/pages/history/HistoryPage.vue:383
+#: app/src/pages/history/components/HistoryDetailsModal.vue:81
+#: app/src/pages/history/HistoryPage.vue:420
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
 #: app/src/pages/settings/SettingsPage.vue:306
 msgid "Error"
@@ -3564,7 +3670,7 @@ msgstr ""
 msgid "Every form with a phone or an e-mail"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:194
+#: app/src/pages/history/HistoryPage.vue:213
 msgid ""
 "Every history record will be permanently removed. This action cannot be "
 "undone."
@@ -3609,6 +3715,10 @@ msgstr ""
 msgid "Example post title"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:913
+msgid "Example product"
+msgstr ""
+
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:239
 msgid "Example value (optional)"
 msgstr ""
@@ -3634,38 +3744,38 @@ msgid "Expiration mode"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:359
-#: admin/src/Integrations/Woocommerce.php:1483
+#: admin/src/Integrations/Woocommerce.php:1840
 #. translators: 1: date, 2: time of day
 msgid "Expires in %1$s - %2$s"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:352
-#: admin/src/Integrations/Woocommerce.php:1476
+#: admin/src/Integrations/Woocommerce.php:1833
 #. translators: 1: delay amount, 2: time unit (minutes, hours, days)
 msgid "Expires in %1$s %2$s"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:362
-#: admin/src/Integrations/Woocommerce.php:1486
+#: admin/src/Integrations/Woocommerce.php:1843
 #. translators: %s: date
 msgid "Expires in %s"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowRowActions.vue:41
-#: app/src/pages/history/HistoryPage.vue:435
+#: app/src/pages/history/HistoryPage.vue:489
 #: app/src/pages/queue/QueuePage.vue:363
 #: app/src/pages/settings/SettingsPage.vue:338
 #: app/src/pages/settings/SettingsPage.vue:341
 msgid "Export"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:211
+#: app/src/pages/history/HistoryPage.vue:246
 #: app/src/pages/queue/QueuePage.vue:160
 msgid "Export all"
 msgstr ""
 
 #: app/src/composables/useWorkflows.ts:35
-#: app/src/pages/history/components/HistoryDetailsModal.vue:209
+#: app/src/pages/history/components/HistoryDetailsModal.vue:230
 msgid "Export as JSON"
 msgstr ""
 
@@ -3677,7 +3787,7 @@ msgstr ""
 msgid "Export data"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:211
+#: app/src/pages/history/HistoryPage.vue:246
 #: app/src/pages/queue/QueuePage.vue:160
 msgid "Export selected"
 msgstr ""
@@ -3691,20 +3801,20 @@ msgid "Export workflow"
 msgstr ""
 
 #: app/src/pages/contacts/tabs/ContactsTab.vue:232
-#: app/src/pages/history/components/HistoryDetailsModal.vue:209
-#: app/src/pages/history/HistoryPage.vue:344
+#: app/src/pages/history/components/HistoryDetailsModal.vue:230
+#: app/src/pages/history/HistoryPage.vue:381
 #: app/src/pages/queue/QueuePage.vue:255
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
 msgid "Exporting…"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:78
+#: app/src/composables/useMessageHistory.ts:79
 #: app/src/pages/contacts/components/ImportModal.vue:338
-#: app/src/pages/history/HistoryPage.vue:80
+#: app/src/pages/history/HistoryPage.vue:86
 msgid "Failed"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:57
+#: app/src/pages/history/components/HistoryDetailsModal.vue:61
 msgid "Failed at"
 msgstr ""
 
@@ -3739,7 +3849,7 @@ msgstr ""
 msgid "Field"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:480
+#: admin/src/Admin/Builder/Registry.php:481
 #: app/src/builder/actions/definitions/condition.ts:129
 #: app/src/builder/actions/settings/ConditionSettings.vue:236
 msgid "Field ID"
@@ -3844,7 +3954,7 @@ msgid "Fit view"
 msgstr ""
 
 #: admin/src/Builder/Messages.php:328
-#: admin/src/Integrations/Woocommerce.php:1505
+#: admin/src/Integrations/Woocommerce.php:1862
 msgid "Fixed amount"
 msgstr ""
 
@@ -3877,7 +3987,7 @@ msgstr ""
 msgid "Flow name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:467
+#: admin/src/Integrations/Woocommerce.php:661
 msgid "Flower Street, 123 - Curitiba/PR - Brazil (ZIP: 80000-000)"
 msgstr ""
 
@@ -3909,6 +4019,10 @@ msgstr ""
 
 #: admin/src/Integrations/Wpforms.php:198
 msgid "Form field value"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:57
+msgid "Form fields (URL encoded)"
 msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:109
@@ -3972,7 +4086,7 @@ msgstr ""
 msgid "Friendly"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:265
+#: app/src/pages/history/HistoryPage.vue:293
 msgid "From"
 msgstr ""
 
@@ -3995,7 +4109,7 @@ msgid "Gambia"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:112
-#: admin/src/Admin/Settings/Registry.php:337
+#: admin/src/Admin/Settings/Registry.php:332
 #: admin/src/Builder/Actions.php:121
 #: app/src/stores/useWorkflowBuilderStore.ts:154
 #: app/src/stores/useWorkflowBuilderStore.ts:249
@@ -4065,6 +4179,12 @@ msgstr ""
 msgid "Give the field a label and a type."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:211
+msgid ""
+"Give the response a name to use it in the next actions. Lowercase letters, "
+"numbers, - and _."
+msgstr ""
+
 #: admin/src/Rest/Contacts_Tag_Save.php:47
 msgid "Give the tag a name."
 msgstr ""
@@ -4089,7 +4209,7 @@ msgstr ""
 msgid "Go to settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1677
+#: admin/src/Admin/Builder/Registry.php:1678
 msgid "Greater than"
 msgstr ""
 
@@ -4142,7 +4262,7 @@ msgstr ""
 #: admin/src/Integrations/Whatsapp_Interactive.php:172
 #: admin/src/Integrations/Whatsapp_Interactive.php:202
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
-#: app/src/pages/history/components/HistoryDetailsModal.vue:88
+#: app/src/pages/history/components/HistoryDetailsModal.vue:100
 msgid "Header"
 msgstr ""
 
@@ -4161,11 +4281,16 @@ msgstr ""
 msgid "Header location"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:150
+msgid "Header name"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:235
 msgid "Header video"
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:128
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:121
 msgid "Headers"
 msgstr ""
 
@@ -4208,7 +4333,7 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:277
+#: admin/src/Admin/Settings/Registry.php:272
 msgid "History retention"
 msgstr ""
 
@@ -4236,7 +4361,7 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:445
+#: admin/src/Admin/Builder/Registry.php:446
 #: app/src/builder/actions/definitions/timeDelay.ts:65
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:46
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:38
@@ -4279,6 +4404,18 @@ msgstr ""
 msgid "How would you like to create your new workflow?"
 msgstr ""
 
+#: admin/src/Builder/Http_Request_Action.php:100
+#: admin/src/Builder/Http_Request_Action.php:130
+#: app/src/builder/actions/definitions/httpRequest.ts:66
+#: app/src/builder/actions/definitions/httpRequest.ts:137
+msgid "HTTP request"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:81
+#: app/src/components/settings/NodeSettingsRenderer.vue:155
+msgid "HTTP status code, such as 200"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
 msgid "https://example.com/file.jpg or a placeholder"
 msgstr ""
@@ -4317,7 +4454,7 @@ msgid ""
 "message” step before this one to open the window."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:167
+#: admin/src/Integrations/Woocommerce.php:239
 msgid "Ignore actions already processed."
 msgstr ""
 
@@ -4383,7 +4520,7 @@ msgstr ""
 msgid "Import settings"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:94
+#: admin/src/Admin/Builder/Registry.php:95
 #: app/src/components/builder/BuilderImportModal.vue:27
 msgid "Import template"
 msgstr ""
@@ -4396,7 +4533,7 @@ msgstr ""
 msgid "Imported"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1276
+#: admin/src/Admin/Builder/Registry.php:1277
 #. translators: %s: random number appended to the imported automation name
 msgid "Imported automation #%s"
 msgstr ""
@@ -4475,7 +4612,7 @@ msgstr ""
 msgid "Insert variable"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:31
+#: app/src/pages/history/components/HistoryDetailsModal.vue:35
 msgid "Inside the 24-hour window"
 msgstr ""
 
@@ -4491,12 +4628,12 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:959
+#: admin/src/Admin/Settings/Registry.php:954
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1351
+#: admin/src/Integrations/Woocommerce.php:1708
 msgid "Insufficient data to create the coupon."
 msgstr ""
 
@@ -4596,7 +4733,7 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:316
+#: admin/src/Admin/Settings/Registry.php:311
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
 
@@ -4631,11 +4768,11 @@ msgstr ""
 msgid "is empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1675
+#: admin/src/Admin/Builder/Registry.php:1676
 msgid "Is empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1671
+#: admin/src/Admin/Builder/Registry.php:1672
 msgid "Is equal to"
 msgstr ""
 
@@ -4666,11 +4803,11 @@ msgstr ""
 msgid "is not"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1676
+#: admin/src/Admin/Builder/Registry.php:1677
 msgid "Is not empty"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1672
+#: admin/src/Admin/Builder/Registry.php:1673
 msgid "Is not equal to"
 msgstr ""
 
@@ -4734,7 +4871,8 @@ msgid "Japan"
 msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:300
-#: admin/src/Integrations/Woocommerce.php:403
+#: admin/src/Integrations/Woocommerce.php:597
+#: admin/src/Integrations/Woocommerce.php:873
 #: admin/src/Integrations/Wordpress.php:167
 msgid "John"
 msgstr ""
@@ -4762,7 +4900,7 @@ msgstr ""
 
 #: joinotify.php
 #. Plugin Name of the plugin
-msgid "Joinotify – WhatsApp Notifications & Marketing Automation"
+msgid "Joinotify – Notifications & Marketing Automation"
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp.php:152
@@ -4833,7 +4971,7 @@ msgstr ""
 msgid "Joinotify setup"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:584
+#: admin/src/Admin/Settings/Registry.php:579
 msgid "Joinotify version"
 msgstr ""
 
@@ -4842,6 +4980,8 @@ msgid "Jordan"
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:119
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:56
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:175
 msgid "JSON"
 msgstr ""
 
@@ -4849,16 +4989,16 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:280
-#: admin/src/Admin/Settings/Registry.php:298
+#: admin/src/Admin/Settings/Registry.php:275
+#: admin/src/Admin/Settings/Registry.php:293
 msgid "Keep forever"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2352
+#: admin/src/Core/Workflow_Processor.php:2385
 msgid "Keep the message concise, around two to four sentences."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2351
+#: admin/src/Core/Workflow_Processor.php:2384
 msgid "Keep the message very short, one or two sentences."
 msgstr ""
 
@@ -5038,7 +5178,7 @@ msgstr ""
 msgid "Lebanon"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:594
+#: admin/src/Integrations/Woocommerce.php:788
 #. translators: 1: shipping address placeholder, 2: shipping cost and method placeholder
 msgid ""
 "Legacy name kept for existing workflows: it returns the shipping cost and "
@@ -5055,7 +5195,7 @@ msgstr ""
 msgid "Lesotho"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1678
+#: admin/src/Admin/Builder/Registry.php:1679
 msgid "Less than"
 msgstr ""
 
@@ -5122,7 +5262,7 @@ msgstr ""
 msgid "Load more"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:95
+#: admin/src/Admin/Builder/Registry.php:96
 msgid "Load workflow"
 msgstr ""
 
@@ -5170,7 +5310,7 @@ msgstr ""
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:203
 #: app/src/pages/contacts/tabs/SourcesTab.vue:201
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:166
-#: app/src/pages/history/HistoryPage.vue:361
+#: app/src/pages/history/HistoryPage.vue:398
 #: app/src/pages/queue/QueuePage.vue:282
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
@@ -5370,7 +5510,7 @@ msgid "Measurement unit applied to the border radius value."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:102
-#: app/src/pages/history/HistoryPage.vue:97
+#: app/src/pages/history/HistoryPage.vue:103
 msgid "Media"
 msgstr ""
 
@@ -5388,17 +5528,17 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:182
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:106
-#: app/src/pages/history/components/HistoryDetailsModal.vue:66
+#: app/src/pages/history/components/HistoryDetailsModal.vue:78
 msgid "Media type"
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1168
+#: admin/src/Api/Cloud_Client.php:1187
 msgid "Media upload did not return an id."
 msgstr ""
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:68
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:113
-#: app/src/pages/history/components/HistoryDetailsModal.vue:195
+#: app/src/pages/history/components/HistoryDetailsModal.vue:207
 msgid "Media URL"
 msgstr ""
 
@@ -5410,7 +5550,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:493
+#: admin/src/Integrations/Woocommerce.php:687
 #. translators: %s: site URL
 msgid "Men's cotton T-shirt (Sample product): %s/product/sample-t-shirt/#reviews"
 msgstr ""
@@ -5450,21 +5590,14 @@ msgstr ""
 msgid "Message content, media or message history"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:128
+#: app/src/pages/history/components/HistoryDetailsModal.vue:140
 msgid "Message details"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:392
+#: admin/src/Admin/History/Registry.php:400
 #: admin/src/Admin/Menu.php:85
-#: admin/src/Admin/Settings/Registry.php:272
-#: app/src/pages/history/HistoryPage.vue:225
+#: app/src/pages/history/HistoryPage.vue:260
 msgid "Message history"
-msgstr ""
-
-#: app/src/pages/history/HistoryPage.vue:233
-msgid ""
-"Message history recording is disabled. Enable it in Settings → About to "
-"start logging new messages."
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:263
@@ -5501,7 +5634,7 @@ msgstr ""
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:485
+#: admin/src/Admin/Builder/Registry.php:486
 #: app/src/builder/actions/definitions/condition.ts:130
 #: app/src/builder/actions/settings/ConditionSettings.vue:230
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:194
@@ -5523,7 +5656,12 @@ msgid "Meta rejected this template."
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:100
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:97
 msgid "Method"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
+msgid "Method and URL"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:46
@@ -5542,14 +5680,14 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:444
+#: admin/src/Admin/Builder/Registry.php:445
 #: app/src/builder/actions/definitions/timeDelay.ts:64
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:45
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:37
 msgid "Minutes"
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1135
+#: admin/src/Api/Cloud_Client.php:1154
 msgid "Missing Cloud API token or phone number id for media upload."
 msgstr ""
 
@@ -5596,7 +5734,7 @@ msgstr ""
 msgid "months"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:448
+#: admin/src/Admin/Builder/Registry.php:449
 #: app/src/builder/actions/definitions/timeDelay.ts:68
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:49
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:41
@@ -5627,6 +5765,10 @@ msgstr ""
 msgid "Multiple choice"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:396
+msgid "My Account page"
+msgstr ""
+
 #: app/src/parsers/workflowParser.ts:89
 #: app/src/parsers/workflowParser.ts:576
 #: app/src/serializers/workflowSerializer.ts:169
@@ -5637,8 +5779,8 @@ msgstr ""
 msgid "My automation"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:161
-#: admin/src/Admin/Builder/Registry.php:1069
+#: admin/src/Admin/Builder/Registry.php:162
+#: admin/src/Admin/Builder/Registry.php:1070
 #. translators: %s: random number appended to the default automation name
 msgid "My automation #%s"
 msgstr ""
@@ -5651,6 +5793,7 @@ msgstr ""
 msgid "Myanmar"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:69
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:218
 #: app/src/components/workflows/WorkflowTableHeader.vue:35
 #: app/src/pages/contacts/components/AudienceEditor.vue:187
@@ -5687,8 +5830,8 @@ msgstr ""
 msgid "Never collected"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:642
-#: admin/src/Integrations/Woocommerce.php:887
+#: admin/src/Integrations/Woocommerce.php:836
+#: admin/src/Integrations/Woocommerce.php:1244
 msgid "Never expires"
 msgstr ""
 
@@ -5719,12 +5862,8 @@ msgstr ""
 msgid "New flow"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:185
+#: admin/src/Integrations/Woocommerce.php:257
 msgid "New order"
-msgstr ""
-
-#: admin/src/Integrations/Woocommerce.php:191
-msgid "New order (Processing)"
 msgstr ""
 
 #: admin/src/Integrations/Woo_Subscriptions.php:69
@@ -5786,10 +5925,10 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:568
+#: admin/src/Admin/Settings/Registry.php:592
 #: admin/src/Admin/Settings/Registry.php:597
 #: admin/src/Admin/Settings/Registry.php:602
-#: admin/src/Admin/Settings/Registry.php:607
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
@@ -5852,6 +5991,10 @@ msgstr ""
 msgid "No audiences yet"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:55
+msgid "No body"
+msgstr ""
+
 #: admin/src/Validations/Conditions.php:36
 msgid "No condition available for this action"
 msgstr ""
@@ -5892,12 +6035,12 @@ msgstr ""
 msgid "No custom variable yet. Click “Add variable” to create your first one."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:795
-#: admin/src/Integrations/Woocommerce.php:817
+#: admin/src/Integrations/Woocommerce.php:1152
+#: admin/src/Integrations/Woocommerce.php:1174
 msgid "No download available for this order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:767
+#: admin/src/Integrations/Woocommerce.php:1124
 msgid "No downloadable item in this order."
 msgstr ""
 
@@ -5921,7 +6064,7 @@ msgstr ""
 msgid "No form was found on this site."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:446
+#: app/src/pages/history/HistoryPage.vue:500
 msgid "No history records match the current filters."
 msgstr ""
 
@@ -5929,8 +6072,8 @@ msgstr ""
 msgid "No integrations found."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:946
-#: admin/src/Integrations/Woocommerce.php:966
+#: admin/src/Integrations/Woocommerce.php:1303
+#: admin/src/Integrations/Woocommerce.php:1323
 msgid "No item purchased."
 msgstr ""
 
@@ -5942,7 +6085,7 @@ msgstr ""
 msgid "No logs available."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:445
+#: app/src/pages/history/HistoryPage.vue:499
 msgid "No messages found"
 msgstr ""
 
@@ -5979,6 +6122,7 @@ msgstr ""
 #: admin/src/Rest/History_Cancel_Retry.php:55
 #: admin/src/Rest/History_Delete.php:56
 #: admin/src/Rest/History_Export.php:48
+#: admin/src/Rest/History_Resend.php:54
 msgid "No records selected."
 msgstr ""
 
@@ -6034,7 +6178,7 @@ msgstr ""
 msgid "No variables available."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1275
+#: admin/src/Api/Cloud_Client.php:1294
 msgid "No WhatsApp Business Account id is configured."
 msgstr ""
 
@@ -6074,8 +6218,13 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:790
+#: admin/src/Admin/Settings/Registry.php:785
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:48
 msgid "None"
+msgstr ""
+
+#: admin/src/Rest/History_Resend.php:75
+msgid "None of the selected records can be resent."
 msgstr ""
 
 #: admin/src/Rest/History_Cancel_Retry.php:63
@@ -6171,7 +6320,7 @@ msgid "Numbers synced."
 msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:34
-#: app/src/composables/useMessageHistory.ts:115
+#: app/src/composables/useMessageHistory.ts:120
 #: app/src/composables/useProcessingQueue.ts:114
 #: app/src/composables/useWorkflows.ts:219
 #: app/src/pages/contacts/useContactList.ts:54
@@ -6186,7 +6335,7 @@ msgstr ""
 msgid "Of those sent, %1$d %2$s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:637
+#: admin/src/Admin/Settings/Registry.php:632
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "Off"
 msgstr ""
@@ -6217,7 +6366,7 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:637
+#: admin/src/Admin/Settings/Registry.php:632
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "On"
 msgstr ""
@@ -6270,7 +6419,7 @@ msgid ""
 "different account."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1709
+#: admin/src/Admin/Builder/Registry.php:1710
 msgid "Open"
 msgstr ""
 
@@ -6322,7 +6471,7 @@ msgstr ""
 msgid "Open trigger actions"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:606
+#: admin/src/Admin/Settings/Registry.php:601
 msgid "OpenSSL extension"
 msgstr ""
 
@@ -6330,7 +6479,7 @@ msgstr ""
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:474
+#: admin/src/Admin/Builder/Registry.php:475
 #: app/src/builder/actions/definitions/condition.ts:128
 #: app/src/builder/actions/definitions/condition.ts:139
 #: app/src/builder/actions/settings/ConditionSettings.vue:199
@@ -6447,11 +6596,15 @@ msgstr ""
 msgid "Order abandoned"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:197
+#: admin/src/Integrations/Woocommerce.php:269
 #: app/src/registries/triggerRegistry.ts:246
 #: app/src/registries/triggerRegistry.ts:257
 #: app/src/registries/triggerRegistry.ts:264
 msgid "Order completed"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:404
+msgid "Order confirmation page"
 msgstr ""
 
 #: app/src/builder/actions/settings/LoopSettings.vue:33
@@ -6465,7 +6618,7 @@ msgid ""
 "customer with their order count, total spent and last purchase."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:203
+#: admin/src/Integrations/Woocommerce.php:275
 msgid "Order fully refunded"
 msgstr ""
 
@@ -6473,11 +6626,11 @@ msgstr ""
 msgid "Order meta or checkout field (type the key)"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1545
+#: admin/src/Integrations/Woocommerce.php:1902
 msgid "Order paid"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:209
+#: admin/src/Integrations/Woocommerce.php:281
 msgid "Order partially refunded"
 msgstr ""
 
@@ -6485,19 +6638,19 @@ msgstr ""
 msgid "Order purchased items"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:221
-#: admin/src/Integrations/Woocommerce.php:1537
+#: admin/src/Integrations/Woocommerce.php:293
+#: admin/src/Integrations/Woocommerce.php:1894
 msgid "Order status"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:215
+#: admin/src/Integrations/Woocommerce.php:287
 #: app/src/registries/triggerRegistry.ts:275
 #: app/src/registries/triggerRegistry.ts:286
 #: app/src/registries/triggerRegistry.ts:293
 msgid "Order status changed"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1541
+#: admin/src/Integrations/Woocommerce.php:1898
 msgid "Order total"
 msgstr ""
 
@@ -6509,11 +6662,15 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:408
+msgid "Other (REST API, another plugin)"
+msgstr ""
+
 #: admin/src/Integrations/Integrations_Base.php:138
 msgid "Others"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:375
+#: admin/src/Admin/History/Registry.php:382
 msgid "OTP"
 msgstr ""
 
@@ -6521,11 +6678,11 @@ msgstr ""
 msgid "OTP Login - Passwordless authentication"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:416
+#: app/src/pages/history/HistoryPage.vue:453
 msgid "Outside 24h window"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:32
+#: app/src/pages/history/components/HistoryDetailsModal.vue:36
 msgid "Outside the 24-hour window"
 msgstr ""
 
@@ -6574,6 +6731,7 @@ msgstr ""
 msgid "Parent flow:"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:69
 #: templates/otp-login/myaccount/form-login.php:96
 #: templates/otp-login/shared/otp-login-form.php:55
 msgid "Password"
@@ -6618,11 +6776,15 @@ msgstr ""
 msgid "Pause the workflow before the next step."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:180
+#: app/src/pages/history/components/HistoryDetailsModal.vue:192
 msgid "Payload sent"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1553
+#: admin/src/Integrations/Woocommerce.php:263
+msgid "Payment confirmed"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:1910
 msgid "Payment method"
 msgstr ""
 
@@ -6636,7 +6798,7 @@ msgstr ""
 
 #: admin/src/Builder/Messages.php:328
 #: admin/src/Integrations/Otp_Login.php:163
-#: admin/src/Integrations/Woocommerce.php:1505
+#: admin/src/Integrations/Woocommerce.php:1862
 msgid "Percentage"
 msgstr ""
 
@@ -6644,8 +6806,8 @@ msgstr ""
 msgid "Percentage discount"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:425
-#: admin/src/Admin/Builder/Registry.php:440
+#: admin/src/Admin/Builder/Registry.php:426
+#: admin/src/Admin/Builder/Registry.php:441
 #: app/src/builder/actions/definitions/timeDelay.ts:57
 #: app/src/builder/actions/definitions/timeDelay.ts:62
 #: app/src/builder/actions/definitions/timeDelay.ts:90
@@ -6727,7 +6889,7 @@ msgid "Phone with country code"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:205
-#: admin/src/Admin/Settings/Registry.php:343
+#: admin/src/Admin/Settings/Registry.php:338
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/SettingsPage.vue:391
 #: app/src/pages/settings/SettingsPage.vue:397
@@ -6746,7 +6908,7 @@ msgstr ""
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:591
+#: admin/src/Admin/Settings/Registry.php:586
 msgid "PHP version"
 msgstr ""
 
@@ -6811,6 +6973,13 @@ msgid ""
 "are."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:181
+msgid ""
+"Placeholders inside quotes are replaced safely, even when the value has "
+"quotes or line breaks. A placeholder outside quotes, such as a number, must "
+"leave valid JSON once replaced."
+msgstr ""
+
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:22
 msgid "Placeholders, custom variables and the PHP extension API"
 msgstr ""
@@ -6865,11 +7034,11 @@ msgstr ""
 msgid "Post type"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:142
+#: admin/src/Integrations/Woocommerce.php:214
 msgid "Prefix used when Joinotify generates a coupon code automatically."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:168
+#: admin/src/Integrations/Woocommerce.php:240
 msgid ""
 "Prevents the same action from being processed again when the trigger is "
 "repeated."
@@ -6898,8 +7067,20 @@ msgstr ""
 msgid "Processing queue"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:367
+msgid "Product back in stock"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:355
+msgid "Product low in stock"
+msgstr ""
+
 #: app/src/components/settings/NodeSettingsRenderer.vue:35
 msgid "Product name of the current item."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:361
+msgid "Product out of stock"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:77
@@ -6944,7 +7125,7 @@ msgstr ""
 msgid "Purchased item quantity (order items loop)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1549
+#: admin/src/Integrations/Woocommerce.php:1906
 msgid "Purchased products"
 msgstr ""
 
@@ -6952,13 +7133,21 @@ msgstr ""
 msgid "Qatar"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:79
-#: app/src/pages/history/HistoryPage.vue:81
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:110
+msgid "Query parameters"
+msgstr ""
+
+#: app/src/composables/useMessageHistory.ts:80
+#: app/src/pages/history/HistoryPage.vue:87
 msgid "Queued"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:217
 msgid "Quick Tools"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:59
+msgid "Raw text"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:97
@@ -6973,12 +7162,12 @@ msgstr ""
 msgid "React with an emoji to a message the contact sent. Cloud API only."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:77
-#: app/src/pages/history/HistoryPage.vue:79
+#: app/src/composables/useMessageHistory.ts:78
+#: app/src/pages/history/HistoryPage.vue:85
 msgid "Read"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:53
+#: app/src/pages/history/components/HistoryDetailsModal.vue:57
 msgid "Read at"
 msgstr ""
 
@@ -7006,8 +7195,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:453
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
-#: app/src/pages/history/components/HistoryDetailsModal.vue:64
-#: app/src/pages/history/HistoryPage.vue:378
+#: app/src/pages/history/components/HistoryDetailsModal.vue:76
+#: app/src/pages/history/HistoryPage.vue:415
 #: app/src/pages/queue/QueuePage.vue:301
 #: app/src/pages/settings/components/cards/PhoneActions.vue:201
 msgid "Recipient"
@@ -7026,12 +7215,6 @@ msgid ""
 "Record an opt-in only when the trigger means the person agreed, e.g. a "
 "ticked checkbox. An opt-out always wins, and an opt-in never replaces an "
 "earlier opt-out."
-msgstr ""
-
-#: admin/src/Admin/Settings/Registry.php:273
-msgid ""
-"Record every dispatched WhatsApp message so it can be audited from the "
-"History screen."
 msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:185
@@ -7083,7 +7266,7 @@ msgstr ""
 msgid "Refreshing connection"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1569
+#: admin/src/Integrations/Woocommerce.php:1930
 msgid "Refund amount"
 msgstr ""
 
@@ -7116,6 +7299,7 @@ msgid "Remember me"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:169
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:81
 #: app/src/components/settings/SchemaFieldRenderer.vue:335
 #: app/src/pages/contacts/components/FilterRuleRow.vue:168
 #: app/src/pages/contacts/tabs/SourcesTab.vue:291
@@ -7207,7 +7391,7 @@ msgstr ""
 msgid "Request failed."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:243
+#: app/src/components/settings/NodeSettingsRenderer.vue:275
 msgid "Required configuration for this trigger to run correctly."
 msgstr ""
 
@@ -7228,8 +7412,24 @@ msgstr ""
 msgid "Resend e-mail"
 msgstr ""
 
+#: app/src/pages/history/HistoryPage.vue:205
+msgid "Resend messages"
+msgstr ""
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:65
+msgid "Resend of"
+msgstr ""
+
 #: admin/src/Integrations/Resend.php:113
 msgid "Resend settings"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:460
+msgid "Resent"
+msgstr ""
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:69
+msgid "Resent at"
 msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:622
@@ -7250,8 +7450,20 @@ msgstr ""
 msgid "Resize"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:67
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:211
+msgid "Response"
+msgstr ""
+
+#: app/src/components/settings/NodeSettingsRenderer.vue:157
+msgid "Response body. Add .FIELD for a field of a JSON response."
+msgstr ""
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:79
 msgid "Response code"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:214
+msgid "Response name"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowRowActions.vue:59
@@ -7261,19 +7473,25 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:241
+#: admin/src/Integrations/Woocommerce.php:313
 msgid ""
 "Restrict this workflow to a single digital product. Leave \"Any digital "
 "product\" to run for every downloadable item in the order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:258
+#: admin/src/Integrations/Woocommerce.php:330
 msgid ""
 "Restrict this workflow to a single digital product. Leave \"Any digital "
 "product\" to run for every downloaded file."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:890
+#: admin/src/Integrations/Woocommerce.php:347
+msgid ""
+"Restrict this workflow to the accounts created in one place. Leave "
+"\"Anywhere\" to run for every new customer account."
+msgstr ""
+
+#: admin/src/Admin/Settings/Registry.php:885
 msgid "Retries are turned off, so this wait is not used."
 msgstr ""
 
@@ -7297,19 +7515,19 @@ msgstr ""
 msgid "Retrieve the cart total amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:464
+#: admin/src/Integrations/Woocommerce.php:658
 msgid ""
 "Retrieve the user's full billing address (format configurable in the "
 "WooCommerce options)."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:472
+#: admin/src/Integrations/Woocommerce.php:666
 msgid ""
 "Retrieve the user's full shipping address (format configurable in the "
 "WooCommerce options)."
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:373
+#: admin/src/Admin/History/Registry.php:380
 msgid "Retry queue"
 msgstr ""
 
@@ -7460,11 +7678,15 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:158
+msgid "Saved — type a new one to replace it"
+msgstr ""
+
 #: app/src/components/fields/JoinotifyApiKeyField.vue:156
 msgid "Saved Joinotify API key"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:91
+#: admin/src/Admin/Builder/Registry.php:92
 msgid "Saving workflow..."
 msgstr ""
 
@@ -7482,7 +7704,7 @@ msgid ""
 "empty to use the default text."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:427
+#: admin/src/Admin/Builder/Registry.php:428
 #: app/src/builder/actions/definitions/timeDelay.ts:59
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:32
 #: app/src/composables/useProcessingQueue.ts:85
@@ -7554,7 +7776,7 @@ msgstr ""
 msgid "Search products"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:285
+#: app/src/pages/history/HistoryPage.vue:313
 msgid "Search recipient or sender"
 msgstr ""
 
@@ -7601,10 +7823,14 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:443
+#: admin/src/Admin/Builder/Registry.php:444
 #: app/src/builder/actions/definitions/timeDelay.ts:63
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:36
 msgid "Seconds"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:235
+msgid "Seconds to wait for the answer, from 1 to 30."
 msgstr ""
 
 #: admin/src/Integrations/Resend.php:135
@@ -7644,7 +7870,7 @@ msgstr ""
 #: app/src/components/workflows/WorkflowTable.vue:71
 #: app/src/components/workflows/WorkflowTableRow.vue:51
 #: app/src/pages/contacts/tabs/ContactsTab.vue:301
-#: app/src/pages/history/HistoryPage.vue:398
+#: app/src/pages/history/HistoryPage.vue:435
 #: app/src/pages/queue/QueuePage.vue:311
 msgid "Select"
 msgstr ""
@@ -7657,12 +7883,12 @@ msgstr ""
 msgid "Select a date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:242
-#: admin/src/Integrations/Woocommerce.php:259
+#: admin/src/Integrations/Woocommerce.php:314
+#: admin/src/Integrations/Woocommerce.php:331
 msgid "Select a digital product"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:280
+#: app/src/components/settings/NodeSettingsRenderer.vue:312
 msgid "Select a node to edit its settings."
 msgstr ""
 
@@ -7690,7 +7916,7 @@ msgstr ""
 msgid "Select all visible items"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:373
+#: app/src/pages/history/HistoryPage.vue:410
 msgid "Select all visible messages"
 msgstr ""
 
@@ -7715,8 +7941,13 @@ msgstr ""
 msgid "Select an option"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:225
+#: admin/src/Integrations/Woocommerce.php:297
 msgid "Select an order status"
+msgstr ""
+
+#: admin/src/Rest/History_Resend.php:62
+#. translators: %d: most messages a single resend sends
+msgid "Select at most %d messages to resend at once."
 msgstr ""
 
 #: app/src/builder/components/base/AttachmentsField.vue:137
@@ -7735,6 +7966,10 @@ msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneActions.vue:181
 msgid "Select the WhatsApp sender that will be used to deliver this test message."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:348
+msgid "Select where the account was created"
 msgstr ""
 
 #: app/src/components/base/BaseDatePicker.vue:329
@@ -7757,7 +7992,7 @@ msgstr ""
 msgid "Send a contact card. Cloud API only, and only inside the 24-hour window."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1324
+#: admin/src/Integrations/Woocommerce.php:1681
 msgid "Send a discount coupon to your user via WhatsApp text message."
 msgstr ""
 
@@ -7811,6 +8046,10 @@ msgid "Send a WhatsApp text message."
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:252
+#: app/src/pages/history/components/HistoryDetailsModal.vue:222
+#: app/src/pages/history/HistoryPage.vue:237
+#: app/src/pages/history/HistoryPage.vue:355
+#: app/src/pages/history/HistoryPage.vue:480
 msgid "Send again"
 msgstr ""
 
@@ -7855,7 +8094,7 @@ msgstr ""
 msgid "Send media"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:103
+#: admin/src/Integrations/Woocommerce.php:175
 msgid ""
 "Send messages regarding new orders, cancellations, refunds, and recovery of "
 "unpaid orders. Keep your customers updated."
@@ -7885,6 +8124,10 @@ msgstr ""
 msgid "Send the items of each order"
 msgstr ""
 
+#: app/src/pages/history/HistoryPage.vue:352
+msgid "Send the selected failed messages again"
+msgstr ""
+
 #: admin/src/Builder/Webhook_Action.php:72
 msgid ""
 "Send the trigger's data, or a JSON of your own, to any URL: n8n, Zapier, "
@@ -7893,6 +8136,10 @@ msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:290
 msgid "Send them"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:477
+msgid "Send this message again"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:297
@@ -7923,8 +8170,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:445
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
-#: app/src/pages/history/components/HistoryDetailsModal.vue:63
-#: app/src/pages/history/HistoryPage.vue:379
+#: app/src/pages/history/components/HistoryDetailsModal.vue:75
+#: app/src/pages/history/HistoryPage.vue:416
 #: app/src/pages/settings/components/cards/PhoneActions.vue:188
 msgid "Sender"
 msgstr ""
@@ -7964,7 +8211,7 @@ msgid ""
 "Joinotify: what someone typed in the panel wins."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:949
+#: admin/src/Admin/Settings/Registry.php:944
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
@@ -7983,8 +8230,8 @@ msgstr ""
 msgid "Senegal"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:75
-#: app/src/pages/history/HistoryPage.vue:77
+#: app/src/composables/useMessageHistory.ts:76
+#: app/src/pages/history/HistoryPage.vue:83
 msgid "Sent"
 msgstr ""
 
@@ -7996,7 +8243,7 @@ msgstr ""
 msgid "Sent to Joinotify"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:414
+#: app/src/pages/history/HistoryPage.vue:451
 msgid "Sent while the contact had not replied in the last 24 hours."
 msgstr ""
 
@@ -8008,7 +8255,7 @@ msgstr ""
 msgid "Server"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:45
+#: app/src/pages/history/components/HistoryDetailsModal.vue:49
 msgid "Session window"
 msgstr ""
 
@@ -8022,7 +8269,9 @@ msgstr ""
 msgid "Set an expiration"
 msgstr ""
 
+#: admin/src/Builder/Http_Request_Action.php:176
 #: admin/src/Builder/Webhook_Action.php:162
+#: app/src/builder/actions/definitions/httpRequest.ts:104
 msgid "Set the URL"
 msgstr ""
 
@@ -8032,7 +8281,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:104
 #: admin/src/Admin/Menu.php:105
-#: admin/src/Core/Init.php:541
+#: admin/src/Core/Init.php:542
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:287
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -8060,7 +8309,7 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:692
+#: admin/src/Admin/Settings/Registry.php:687
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr ""
@@ -8088,11 +8337,11 @@ msgstr ""
 msgid "Share anonymous usage data"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:158
+#: admin/src/Integrations/Woocommerce.php:230
 msgid "Shipping full address format"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1557
+#: admin/src/Integrations/Woocommerce.php:1914
 msgid "Shipping method"
 msgstr ""
 
@@ -8196,9 +8445,9 @@ msgstr ""
 #: app/src/builder/components/base/AttachmentsField.vue:172
 #: app/src/pages/contacts/tabs/ContactsTab.vue:189
 #: app/src/pages/contacts/tabs/ContactsTab.vue:286
-#: app/src/pages/history/components/HistoryDetailsModal.vue:62
-#: app/src/pages/history/HistoryPage.vue:256
-#: app/src/pages/history/HistoryPage.vue:381
+#: app/src/pages/history/components/HistoryDetailsModal.vue:74
+#: app/src/pages/history/HistoryPage.vue:284
+#: app/src/pages/history/HistoryPage.vue:418
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:210
 msgid "Source"
 msgstr ""
@@ -8240,7 +8489,7 @@ msgstr ""
 msgid "Start automating your site from a template"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:269
+#: app/src/pages/history/HistoryPage.vue:297
 msgid "Start date"
 msgstr ""
 
@@ -8262,8 +8511,8 @@ msgstr ""
 
 #: admin/src/Cloud_Sync/Consent.php:734
 #: app/src/components/workflows/WorkflowTableHeader.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:40
-#: app/src/pages/history/HistoryPage.vue:382
+#: app/src/pages/history/components/HistoryDetailsModal.vue:44
+#: app/src/pages/history/HistoryPage.vue:419
 #: app/src/pages/queue/QueuePage.vue:302
 msgid "Status"
 msgstr ""
@@ -8284,7 +8533,7 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:579
+#: admin/src/Admin/Builder/Registry.php:580
 #: admin/src/Builder/Actions.php:68
 msgid "Stop automation"
 msgstr ""
@@ -8292,6 +8541,10 @@ msgstr ""
 #: app/src/builder/actions/definitions/stopFunnel.ts:26
 #: app/src/builder/actions/definitions/stopFunnel.ts:35
 msgid "Stop funnel"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:64
+msgid "Stop the workflow"
 msgstr ""
 
 #: admin/src/Rest/Cloud_Sync_Action.php:79
@@ -8302,7 +8555,7 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:291
+#: admin/src/Admin/Settings/Registry.php:286
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -8331,7 +8584,7 @@ msgstr ""
 msgid "Subscription renewal expired"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1573
+#: admin/src/Integrations/Woocommerce.php:1934
 msgid "Subscription status"
 msgstr ""
 
@@ -8339,7 +8592,7 @@ msgstr ""
 msgid "Sudan"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:496
+#: admin/src/Integrations/Woocommerce.php:690
 #. translators: %s: site URL
 msgid ""
 "Sunglasses with UV protection (Sample product): "
@@ -8422,7 +8675,7 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:309
+#: admin/src/Admin/Settings/Registry.php:304
 msgid "System status"
 msgstr ""
 
@@ -8577,8 +8830,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:461
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:468
 #: app/src/pages/builder/BuilderPage.vue:938
-#: app/src/pages/history/components/HistoryDetailsModal.vue:151
-#: app/src/pages/history/HistoryPage.vue:99
+#: app/src/pages/history/components/HistoryDetailsModal.vue:163
+#: app/src/pages/history/HistoryPage.vue:105
 msgid "Template"
 msgstr ""
 
@@ -8590,7 +8843,7 @@ msgstr ""
 msgid "Template messages require the WhatsApp Cloud API transport."
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:374
+#: admin/src/Admin/History/Registry.php:381
 msgid "Test message"
 msgstr ""
 
@@ -8607,8 +8860,9 @@ msgstr ""
 msgid "Test sender"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:204
 #: app/src/pages/contacts/labels.ts:143
-#: app/src/pages/history/HistoryPage.vue:96
+#: app/src/pages/history/HistoryPage.vue:102
 #: app/vite-plugins/wporg-i18n-calls.js:8
 #: app/vite-plugins/wporg-i18n-calls.js:13
 msgid "Text"
@@ -8800,8 +9054,14 @@ msgstr ""
 msgid "The content of your workflows"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1374
+#: admin/src/Integrations/Woocommerce.php:1731
 msgid "The coupon already exists."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:132
+msgid ""
+"The credential is encrypted when the workflow is saved and is never shown "
+"again."
 msgstr ""
 
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:135
@@ -8824,7 +9084,7 @@ msgstr ""
 msgid "The existing contact was updated."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:377
+#: app/src/composables/useMessageHistory.ts:444
 #. translators: 1: number of exported records, 2: number of records matching the filters
 msgid "The export holds only the %1$d most recent of the %2$d matching records."
 msgstr ""
@@ -8989,7 +9249,13 @@ msgstr ""
 msgid "The selected channel cannot reach this recipient."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:198
+#: app/src/pages/history/HistoryPage.vue:221
+msgid ""
+"The selected failed messages will be sent to their recipients again, right "
+"now. Records that cannot be resent are left untouched."
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:217
 msgid ""
 "The selected messages will not be sent again. Records without a pending "
 "resend are left untouched."
@@ -8999,13 +9265,13 @@ msgstr ""
 msgid "The selected OTP delivery channel is not configured."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:201
+#: app/src/pages/history/HistoryPage.vue:228
 msgid ""
 "The selected records will be permanently removed. This action cannot be "
 "undone."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1127
+#: admin/src/Admin/Builder/Registry.php:1128
 msgid "The selected template was not found."
 msgstr ""
 
@@ -9041,7 +9307,7 @@ msgstr ""
 msgid "The sync will try again in a moment."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:190
+#: app/src/pages/history/components/HistoryDetailsModal.vue:202
 msgid ""
 "The template text was not available when this message was sent, so its name "
 "and variables are shown instead."
@@ -9067,6 +9333,7 @@ msgid ""
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:113
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:58
 msgid "The trigger's data (order, customer, user, cart)"
 msgstr ""
 
@@ -9109,6 +9376,10 @@ msgid ""
 "under Joinotify → Settings."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:84
+msgid "The whole response body"
+msgstr ""
+
 #: admin/src/AI/Providers/Wp_Ai_Client_Provider.php:103
 msgid ""
 "The WordPress AI Client is not available. WordPress 7.0 or later is "
@@ -9120,11 +9391,11 @@ msgstr ""
 msgid "The workflow"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1516
+#: admin/src/Admin/Builder/Registry.php:1517
 msgid "The workflow content is invalid."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1536
+#: admin/src/Admin/Builder/Registry.php:1537
 msgid "The workflow has more than one trigger."
 msgstr ""
 
@@ -9132,7 +9403,7 @@ msgstr ""
 msgid "The workflow has no content to test."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1530
+#: admin/src/Admin/Builder/Registry.php:1531
 msgid "The workflow has no trigger."
 msgstr ""
 
@@ -9140,7 +9411,7 @@ msgstr ""
 msgid "The workflow is not published."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1542
+#: admin/src/Admin/Builder/Registry.php:1543
 msgid "The workflow trigger is not configured."
 msgstr ""
 
@@ -9166,33 +9437,26 @@ msgid ""
 "The workflow can still be saved safely."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:204
+#: admin/src/Integrations/Woocommerce.php:276
 msgid "This action is triggered when an order is fully refunded."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:210
+#: admin/src/Integrations/Woocommerce.php:282
 msgid "This action is triggered when an order is partially refunded."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:216
+#: admin/src/Integrations/Woocommerce.php:288
 msgid "This action is triggered when an order's status changes."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:198
+#: admin/src/Integrations/Woocommerce.php:270
 msgid "This action is triggered when an order's status is changed to completed."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:250
+#: admin/src/Integrations/Woocommerce.php:322
 msgid ""
 "This action is triggered when the customer actually downloads a digital "
 "file from the order."
-msgstr ""
-
-#: admin/src/Integrations/Woocommerce.php:233
-msgid ""
-"This action is triggered when WooCommerce grants the download access of a "
-"digital product to the customer. This is the recommended trigger to deliver "
-"digital products, because the download links only exist from this moment on."
 msgstr ""
 
 #: app/src/builder/actions/settings/StopFunnelSettings.vue:26
@@ -9252,6 +9516,10 @@ msgstr ""
 msgid "This list may be out of date."
 msgstr ""
 
+#: app/src/pages/history/HistoryPage.vue:225
+msgid "This message will be sent to its recipient again, right now."
+msgstr ""
+
 #: admin/src/Rest/Phone_Check_Connection.php:67
 msgid "This number is no longer connected on your Joinotify account."
 msgstr ""
@@ -9267,7 +9535,7 @@ msgid ""
 "out until they agree again."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:438
+#: admin/src/Admin/Settings/Registry.php:433
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 
@@ -9327,7 +9595,7 @@ msgid ""
 "location, a coupon code or an offer expiration."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:177
+#: app/src/pages/history/components/HistoryDetailsModal.vue:189
 msgid "This template was sent without variables."
 msgstr ""
 
@@ -9376,22 +9644,52 @@ msgstr ""
 msgid "This trigger fires when a WPForms payment form is processed using PayPal."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:261
+#: app/src/components/settings/NodeSettingsRenderer.vue:293
 msgid ""
 "This trigger has no additional settings. Use “Change trigger” in the node "
 "menu to pick a different one."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:192
+#: admin/src/Integrations/Woocommerce.php:374
 msgid ""
-"This trigger is activated when a new order is received in WooCommerce with "
-"a processing status."
+"This trigger is activated for each customer WooCommerce notifies that a "
+"product is back in stock."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:186
+#: admin/src/Integrations/Woocommerce.php:264
+msgid "This trigger is activated once per order, when its payment is confirmed."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:258
 msgid ""
 "This trigger is activated when a new order is received in WooCommerce with "
 "any status."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:368
+msgid ""
+"This trigger is activated when a product that was out of stock is back in "
+"stock."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:356
+msgid ""
+"This trigger is activated when a sale brings a product to the low stock "
+"threshold."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:362
+msgid "This trigger is activated when a sale leaves a product out of stock."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:305
+msgid ""
+"This trigger is activated when the customer gets access to download a "
+"digital product."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:339
+msgid "This trigger is activated when WooCommerce creates a customer account."
 msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:182
@@ -9460,7 +9758,7 @@ msgid ""
 "lost."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:459
+#: admin/src/Admin/Builder/Registry.php:460
 #: app/src/builder/actions/definitions/timeDelay.ts:72
 #: app/src/builder/actions/definitions/timeDelay.ts:83
 #: app/src/builder/actions/definitions/timeDelay.ts:91
@@ -9469,6 +9767,11 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:161
 #: app/src/pages/contacts/components/AttributeInput.vue:148
 msgid "Time"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:235
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:238
+msgid "Timeout"
 msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:156
@@ -9484,7 +9787,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:275
+#: app/src/pages/history/HistoryPage.vue:303
 msgid "To"
 msgstr ""
 
@@ -9494,13 +9797,13 @@ msgid ""
 "retrieve. Example: billing_phone"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:480
+#: admin/src/Integrations/Woocommerce.php:674
 msgid ""
 "To retrieve each purchased product and quantity from the order, separated "
 "by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:647
+#: admin/src/Integrations/Woocommerce.php:841
 msgid ""
 "To retrieve how many downloads the customer still has available. Returns "
 "the smallest amount when the files have different limits."
@@ -9518,43 +9821,49 @@ msgid ""
 "the respective ID."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:628
+#: admin/src/Integrations/Woocommerce.php:822
 msgid ""
 "To retrieve only the download links of the WooCommerce order, without the "
 "file name, separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:424
+#: admin/src/Integrations/Woocommerce.php:618
 msgid "To retrieve the billing phone from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:559
+#: admin/src/Integrations/Woocommerce.php:894
+msgid ""
+"To retrieve the billing phone of the WooCommerce customer account. Empty "
+"when the account has no billing phone yet."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:753
 msgid "To retrieve the coupon codes used in the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1500
+#: admin/src/Integrations/Woocommerce.php:1857
 msgid "To retrieve the coupon description."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1512
+#: admin/src/Integrations/Woocommerce.php:1869
 msgid ""
 "To retrieve the coupon discount amount formatted with a currency symbol or "
 "percentage. Example: 10%."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1508
+#: admin/src/Integrations/Woocommerce.php:1865
 msgid "To retrieve the coupon discount amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1496
+#: admin/src/Integrations/Woocommerce.php:1853
 msgid "To retrieve the coupon discount code."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1504
+#: admin/src/Integrations/Woocommerce.php:1861
 msgid "To retrieve the coupon discount type. Example: Percentage or fixed amount."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1516
+#: admin/src/Integrations/Woocommerce.php:1873
 msgid "To retrieve the coupon expiration. Example: Expires in 1 hour."
 msgstr ""
 
@@ -9562,32 +9871,36 @@ msgstr ""
 msgid "To retrieve the current date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:416
+#: admin/src/Integrations/Woocommerce.php:610
 msgid "To retrieve the customer billing email from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:400
+#: admin/src/Integrations/Woocommerce.php:594
 msgid "To retrieve the customer billing first name from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:408
+#: admin/src/Integrations/Woocommerce.php:602
 msgid "To retrieve the customer billing last name from the WooCommerce order"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:663
+#: admin/src/Integrations/Woocommerce.php:857
 msgid ""
 "To retrieve the download links of a specific product in the WooCommerce "
 "order. Replace PRODUCT_ID with the product ID, for example: 128."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:615
+#: admin/src/Integrations/Woocommerce.php:809
 msgid ""
 "To retrieve the download name and link of each digital file in the "
 "WooCommerce order, separated by line. Only available after the download "
 "access has been granted."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:639
+#: admin/src/Integrations/Woocommerce.php:886
+msgid "To retrieve the email of the WooCommerce customer"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:833
 msgid ""
 "To retrieve the expiration date of the download access. Returns the closest "
 "date when the files expire on different dates."
@@ -9597,21 +9910,43 @@ msgstr ""
 msgid "To retrieve the featured image URL of the post"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:655
+#: admin/src/Integrations/Woocommerce.php:870
+msgid "To retrieve the first name of the WooCommerce customer"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:878
+msgid "To retrieve the last name of the WooCommerce customer"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:902
+msgid "To retrieve the link to the customer My Account page"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:849
 msgid "To retrieve the link to the downloads area in the customer My Account page"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:607
+#: admin/src/Integrations/Woocommerce.php:918
+msgid "To retrieve the link to the WooCommerce product page"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:801
 msgid ""
 "To retrieve the name of each downloadable product in the WooCommerce order, "
 "separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:519
+#: admin/src/Integrations/Woocommerce.php:910
+msgid ""
+"To retrieve the name of the WooCommerce product, with the attributes of a "
+"variation"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:713
 msgid "To retrieve the order currency symbol"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:510
+#: admin/src/Integrations/Woocommerce.php:704
 msgid "To retrieve the order payment URL"
 msgstr ""
 
@@ -9656,26 +9991,26 @@ msgstr ""
 msgid "To retrieve the post title"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:488
+#: admin/src/Integrations/Woocommerce.php:682
 msgid ""
 "To retrieve the review link for each purchased product from the order, "
 "separated by line"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:502
+#: admin/src/Integrations/Woocommerce.php:696
 msgid ""
 "To retrieve the review link of the first purchased product without the site "
 "address (e.g. product/slug/#reviews), to complete the link of a URL button"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:582
+#: admin/src/Integrations/Woocommerce.php:776
 msgid ""
 "To retrieve the shipping cost and method of the WooCommerce order, for "
 "example \"$20.00 via Express shipping\". Returns only the method name when "
 "the shipping is free."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:432
+#: admin/src/Integrations/Woocommerce.php:626
 msgid "To retrieve the shipping phone from the WooCommerce order"
 msgstr ""
 
@@ -9685,6 +10020,16 @@ msgstr ""
 
 #: admin/src/Integrations/Wordpress.php:188
 msgid "To retrieve the site URL"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:926
+msgid "To retrieve the SKU of the WooCommerce product"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:934
+msgid ""
+"To retrieve the stock quantity of the WooCommerce product. Empty when the "
+"product does not manage its stock."
 msgstr ""
 
 #: admin/src/Integrations/Wordpress.php:180
@@ -9699,47 +10044,47 @@ msgstr ""
 msgid "To retrieve the user last name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:1971
+#: admin/src/Integrations/Woocommerce.php:2738
 #. translators: %s: checkout field label
 msgid "To retrieve the value of %s"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:602
+#: admin/src/Integrations/Woocommerce.php:796
 msgid ""
 "To retrieve the value of a specific checkout field in the WooCommerce "
 "order. Replace FIELD_ID with the checkout field ID, for example: "
 "billing_email."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:456
+#: admin/src/Integrations/Woocommerce.php:650
 msgid "To retrieve the WooCommerce order date"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:440
+#: admin/src/Integrations/Woocommerce.php:634
 msgid "To retrieve the WooCommerce order number"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:567
+#: admin/src/Integrations/Woocommerce.php:761
 msgid "To retrieve the WooCommerce order payment method title"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:448
+#: admin/src/Integrations/Woocommerce.php:642
 msgid "To retrieve the WooCommerce order status"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:527
+#: admin/src/Integrations/Woocommerce.php:721
 msgid "To retrieve the WooCommerce order total"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:535
+#: admin/src/Integrations/Woocommerce.php:729
 msgid "To retrieve the WooCommerce total discount"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:551
+#: admin/src/Integrations/Woocommerce.php:745
 msgid "To retrieve the WooCommerce total refunded amount"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:543
+#: admin/src/Integrations/Woocommerce.php:737
 msgid "To retrieve the WooCommerce total tax"
 msgstr ""
 
@@ -9762,6 +10107,10 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:196
 msgid "Tokelau"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:72
+msgid "Token"
 msgstr ""
 
 #: admin/src/Integrations/Telegram.php:135
@@ -9831,7 +10180,7 @@ msgstr ""
 msgid "Trigger no longer available"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:241
+#: app/src/components/settings/NodeSettingsRenderer.vue:273
 msgid "Trigger settings"
 msgstr ""
 
@@ -9874,7 +10223,7 @@ msgstr ""
 #: app/src/pages/contacts/tabs/ContactsTab.vue:216
 #: app/src/pages/contacts/tabs/SourcesTab.vue:205
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:162
-#: app/src/pages/history/HistoryPage.vue:308
+#: app/src/pages/history/HistoryPage.vue:336
 #: app/src/pages/queue/QueuePage.vue:241
 #: app/src/pages/workflows/WorkflowsPage.vue:85
 msgid "Try again"
@@ -9909,8 +10258,8 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:106
 #: app/src/pages/contacts/components/FieldFormModal.vue:149
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:153
-#: app/src/pages/history/components/HistoryDetailsModal.vue:65
-#: app/src/pages/history/HistoryPage.vue:380
+#: app/src/pages/history/components/HistoryDetailsModal.vue:77
+#: app/src/pages/history/HistoryPage.vue:417
 msgid "Type"
 msgstr ""
 
@@ -9918,9 +10267,17 @@ msgstr ""
 msgid "Type at least 2 characters…"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:495
+#: admin/src/Admin/Builder/Registry.php:496
 #: app/src/builder/actions/definitions/condition.ts:132
 msgid "Type label"
+msgstr ""
+
+#: app/src/builder/actions/definitions/httpRequest.ts:129
+msgid "Type the credential, or choose no authentication."
+msgstr ""
+
+#: app/src/builder/actions/definitions/httpRequest.ts:125
+msgid "Type the JSON to send."
 msgstr ""
 
 #: admin/src/Rest/Contacts_Save.php:55
@@ -9994,12 +10351,12 @@ msgstr ""
 msgid "United States"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1711
+#: admin/src/Admin/Builder/Registry.php:1712
 #: app/src/pages/contacts/labels.ts:26
 msgid "Unknown"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:33
+#: app/src/pages/history/components/HistoryDetailsModal.vue:37
 msgid "Unknown (delivery reports are not set up)"
 msgstr ""
 
@@ -10023,8 +10380,8 @@ msgstr ""
 msgid "Unknown import step."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:650
-#: admin/src/Integrations/Woocommerce.php:917
+#: admin/src/Integrations/Woocommerce.php:844
+#: admin/src/Integrations/Woocommerce.php:1274
 msgid "Unlimited"
 msgstr ""
 
@@ -10073,6 +10430,8 @@ msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:92
 #: admin/src/Integrations/Whatsapp_Interactive.php:206
+#: app/src/builder/actions/definitions/httpRequest.ts:121
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:102
 #: app/src/pages/contacts/labels.ts:151
 msgid "URL"
 msgstr ""
@@ -10085,11 +10444,11 @@ msgstr ""
 msgid "Usage data"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2346
+#: admin/src/Core/Workflow_Processor.php:2379
 msgid "Use a casual and relaxed tone."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2345
+#: admin/src/Core/Workflow_Processor.php:2378
 msgid "Use a formal and professional tone."
 msgstr ""
 
@@ -10097,7 +10456,7 @@ msgstr ""
 msgid "Use a template"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2347
+#: admin/src/Core/Workflow_Processor.php:2380
 msgid "Use a warm and friendly tone."
 msgstr ""
 
@@ -10146,6 +10505,10 @@ msgstr ""
 msgid "Used to complete phone numbers that were typed without a country code."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:144
+msgid "User"
+msgstr ""
+
 #: admin/src/Integrations/Wordpress.php:93
 msgid "User login"
 msgstr ""
@@ -10156,7 +10519,7 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor.php:155
 #: admin/src/Integrations/Flexify_Checkout.php:375
-#: admin/src/Integrations/Woocommerce.php:1561
+#: admin/src/Integrations/Woocommerce.php:1918
 #: admin/src/Integrations/Wordpress.php:310
 #: admin/src/Integrations/Wordpress.php:320
 #: admin/src/Integrations/Wordpress.php:326
@@ -10169,13 +10532,15 @@ msgstr ""
 msgid "User password recovery"
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:1922
 #: admin/src/Integrations/Wordpress.php:306
 #: admin/src/Integrations/Wordpress.php:316
 #: admin/src/Integrations/Wordpress.php:332
 msgid "User role"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:419
+#: admin/src/Integrations/Woocommerce.php:613
+#: admin/src/Integrations/Woocommerce.php:889
 #: admin/src/Integrations/Wordpress.php:183
 msgid "user@example.com"
 msgstr ""
@@ -10188,13 +10553,14 @@ msgstr ""
 msgid "Uzbekistan"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:490
+#: admin/src/Admin/Builder/Registry.php:491
 #: admin/src/Contacts/Contact_Actions.php:173
 #: app/src/builder/actions/definitions/condition.ts:131
 #: app/src/builder/actions/settings/ConditionSettings.vue:250
 #: app/src/builder/actions/settings/ConditionSettings.vue:257
 #: app/src/builder/actions/settings/ConditionSettings.vue:264
-#: app/src/pages/history/components/HistoryDetailsModal.vue:165
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:75
+#: app/src/pages/history/components/HistoryDetailsModal.vue:177
 msgid "Value"
 msgstr ""
 
@@ -10202,7 +10568,7 @@ msgstr ""
 msgid "Value of a form field"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:156
+#: app/src/pages/history/components/HistoryDetailsModal.vue:168
 msgid "Values hidden"
 msgstr ""
 
@@ -10214,7 +10580,7 @@ msgstr ""
 msgid "Vanuatu"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:164
+#: app/src/pages/history/components/HistoryDetailsModal.vue:176
 msgid "Variable"
 msgstr ""
 
@@ -10276,8 +10642,8 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:610
-#: admin/src/Integrations/Woocommerce.php:621
+#: admin/src/Integrations/Woocommerce.php:804
+#: admin/src/Integrations/Woocommerce.php:815
 msgid "Video lessons pack (Sample product)"
 msgstr ""
 
@@ -10311,7 +10677,7 @@ msgstr ""
 msgid "Wait %1$s %2$s and run at %3$s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:897
+#: admin/src/Admin/Settings/Registry.php:892
 #. translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480"
 msgid ""
 "Wait before the first retry. Every attempt then doubles it — with what is "
@@ -10408,7 +10774,7 @@ msgstr ""
 msgid "weeks"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:447
+#: admin/src/Admin/Builder/Registry.php:448
 #: app/src/builder/actions/definitions/timeDelay.ts:67
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:48
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:40
@@ -10527,7 +10893,7 @@ msgstr ""
 msgid "WhatsApp: Location"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:596
+#: admin/src/Admin/Builder/Registry.php:597
 #: admin/src/Integrations/Whatsapp.php:234
 #: app/src/builder/actions/definitions/whatsappMedia.ts:32
 #: app/src/builder/actions/definitions/whatsappMedia.ts:46
@@ -10561,7 +10927,7 @@ msgstr ""
 msgid "WhatsApp: Template message"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:586
+#: admin/src/Admin/Builder/Registry.php:587
 #: admin/src/Integrations/Whatsapp.php:221
 #: app/src/builder/actions/definitions/whatsappText.ts:30
 #: app/src/builder/actions/definitions/whatsappText.ts:41
@@ -10590,6 +10956,10 @@ msgid ""
 "switching it off stops it at once."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:229
+msgid "When the request fails"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:140
 msgid ""
 "When WhatsApp refuses a message for a reason that may pass — a timeout, a "
@@ -10599,6 +10969,10 @@ msgstr ""
 
 #: app/src/pages/contacts/tabs/SourcesTab.vue:228
 msgid "Where contacts come from"
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:344
+msgid "Where the account was created"
 msgstr ""
 
 #: app/src/components/builder/BuilderTriggerSetupView.vue:159
@@ -10615,6 +10989,11 @@ msgstr ""
 msgid ""
 "Whoever sends a form with a phone or an e-mail, read through the rules "
 "below."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:85
+#: app/src/components/settings/NodeSettingsRenderer.vue:158
+msgid "Why the request failed, empty when it worked"
 msgstr ""
 
 #: app/src/pages/workflows/WorkflowsPage.vue:302
@@ -10634,9 +11013,9 @@ msgid "without a phone number"
 msgstr ""
 
 #: admin/src/Builder/Utils.php:101
-#: admin/src/Integrations/Woocommerce.php:102
-#: admin/src/Integrations/Woocommerce.php:356
-#: admin/src/Integrations/Woocommerce.php:1304
+#: admin/src/Integrations/Woocommerce.php:174
+#: admin/src/Integrations/Woocommerce.php:544
+#: admin/src/Integrations/Woocommerce.php:1661
 msgid "WooCommerce"
 msgstr ""
 
@@ -10649,7 +11028,7 @@ msgstr ""
 msgid "WooCommerce orders and customers"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:115
+#: admin/src/Integrations/Woocommerce.php:187
 msgid "WooCommerce settings"
 msgstr ""
 
@@ -10671,7 +11050,7 @@ msgid ""
 "use."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:572
+#: admin/src/Admin/Settings/Registry.php:567
 msgid "WordPress Multisite"
 msgstr ""
 
@@ -10680,12 +11059,12 @@ msgstr ""
 msgid "WordPress users"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:567
+#: admin/src/Admin/Settings/Registry.php:562
 msgid "WordPress version"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:372
-#: app/src/pages/history/components/HistoryDetailsModal.vue:143
+#: admin/src/Admin/History/Registry.php:379
+#: app/src/pages/history/components/HistoryDetailsModal.vue:155
 #: app/src/pages/queue/QueuePage.vue:204
 #: app/src/pages/queue/QueuePage.vue:298
 msgid "Workflow"
@@ -10699,7 +11078,7 @@ msgstr ""
 msgid "Workflow API is not available."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:57
+#: admin/src/Admin/Builder/Registry.php:58
 msgid "Workflow builder"
 msgstr ""
 
@@ -10727,9 +11106,9 @@ msgstr ""
 msgid "Workflow not found or invalid post type."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:96
-#: admin/src/Admin/Builder/Registry.php:1177
-#: admin/src/Admin/Builder/Registry.php:1247
+#: admin/src/Admin/Builder/Registry.php:97
+#: admin/src/Admin/Builder/Registry.php:1178
+#: admin/src/Admin/Builder/Registry.php:1248
 #: admin/src/Rest/Builder_Test.php:58
 msgid "Workflow not found."
 msgstr ""
@@ -10738,7 +11117,7 @@ msgstr ""
 msgid "Workflow not saved yet."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:1224
+#: admin/src/Admin/Builder/Registry.php:1225
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 
@@ -10746,8 +11125,8 @@ msgstr ""
 msgid "Workflow saved successfully."
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:90
-#: admin/src/Admin/Builder/Registry.php:1225
+#: admin/src/Admin/Builder/Registry.php:91
+#: admin/src/Admin/Builder/Registry.php:1226
 msgid "Workflow saved."
 msgstr ""
 
@@ -10794,7 +11173,7 @@ msgid ""
 "field of the form is sent."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2370
+#: admin/src/Core/Workflow_Processor.php:2403
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -10820,7 +11199,7 @@ msgstr ""
 msgid "years"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:449
+#: admin/src/Admin/Builder/Registry.php:450
 #: app/src/builder/actions/definitions/timeDelay.ts:69
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:50
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:42
@@ -10832,8 +11211,8 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
-#: admin/src/Admin/Settings/Registry.php:597
+#: admin/src/Admin/Settings/Registry.php:568
+#: admin/src/Admin/Settings/Registry.php:592
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
@@ -10882,11 +11261,11 @@ msgid ""
 "it is helping you, would you take a minute to rate it on WordPress.org?"
 msgstr ""
 
-#: admin/src/Admin/Builder/Registry.php:97
+#: admin/src/Admin/Builder/Registry.php:98
 msgid "You have unsaved changes."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2353
+#: admin/src/Core/Workflow_Processor.php:2386
 msgid "You may write a longer, detailed message."
 msgstr ""
 

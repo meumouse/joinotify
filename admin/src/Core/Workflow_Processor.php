@@ -824,6 +824,7 @@ class Workflow_Processor {
      * runtime matching extensible instead of hardcoded per integration.
      *
      * @since 2.0.0
+     * @version 2.7.0
      * @param array $trigger_data | Trigger node ({id,type,data})
      * @param array $payload | Runtime trigger payload
      * @return bool
@@ -868,6 +869,15 @@ class Workflow_Processor {
                     ) {
                         $match = false;
                     }
+                }
+            } elseif ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_created_customer' ) {
+                $trigger_source = isset( $settings['account_source'] ) && is_scalar( $settings['account_source'] )
+                    ? (string) $settings['account_source']
+                    : '';
+
+                // "none" or an unset filter => an account created anywhere
+                if ( '' !== $trigger_source && 'none' !== $trigger_source && $trigger_source !== (string) ( $payload['account_source'] ?? '' ) ) {
+                    $match = false;
                 }
             }
         } elseif ( $integration === 'wpforms' ) {
@@ -1192,9 +1202,9 @@ class Workflow_Processor {
 
     /**
      * Handle with workflow actions
-     * 
+     *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.0
      * @param array $action | Workflow actions array
      * @param int $post_id | Post ID
      * @param array $payload | Payload data
@@ -1270,6 +1280,29 @@ class Workflow_Processor {
                     return false;
                 }
             }
+        }
+
+        /**
+         * Actions whose handler writes onto the shared payload.
+         *
+         * The handlers in the map below capture a copy of the payload, so whatever they store
+         * is lost. A handler listed here receives the payload by reference instead, so a value
+         * it stores (an HTTP response, for example) reaches the actions that run after it and
+         * travels with the payload through delays. Same arguments and return as the map below,
+         * with the payload taken by reference.
+         *
+         * @since 2.7.0
+         * @param array $payload_actions Map of action_slug => callable( array $action_data, array $action, int $post_id, array &$event_data ): bool.
+         * @param array $action          Full action item ({id,type,data,children}).
+         * @param int   $post_id         Workflow post ID.
+         */
+        $payload_actions = apply_filters( 'Joinotify/Workflow_Processor/Payload_Actions', array(), $action, $post_id );
+
+        if ( is_array( $payload_actions ) && isset( $payload_actions[ $action_data['action'] ] ) && is_callable( $payload_actions[ $action_data['action'] ] ) ) {
+            $handler = $payload_actions[ $action_data['action'] ];
+
+            // called directly, not through call_user_func(), so the reference holds
+            return (bool) $handler( $action_data, $action, $post_id, $event_data );
         }
 
         /**

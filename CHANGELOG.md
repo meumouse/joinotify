@@ -8,6 +8,39 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-11-03
+
+### Added
+
+- A failed message can be sent again from the message history: from its "Send again" row action, from the details window, or as the selected rows, up to 50 at a time (the `Joinotify/Admin/History/Resend_Limit` filter changes it). A message whose automatic retry was cancelled can be resent too. Each resend is a single attempt, outside the retry queue, and records a row of its own with the source and workflow of the original; the original is flagged "Resent" and stops offering it, so one failure is never sent twice by accident. Login codes, templates whose values were hidden from the history, and local attachments, whose file the history does not keep, are not offered a resend
+- "Customer account created" WooCommerce trigger. It runs when WooCommerce creates a customer account on the My Account page, at the checkout (classic or block) or on the order confirmation page, and can be limited to one of them. It runs at the end of the request, because the checkout only saves the billing phone after WooCommerce reports the new account. The WordPress "New user registration" trigger still runs for these accounts too
+- "Product low in stock" and "Product out of stock" WooCommerce triggers, fired when a sale brings a product to the thresholds set in WooCommerce — the same moment WooCommerce sends its stock emails
+- "Product back in stock" WooCommerce trigger, run once when a product that was out of stock or on backorder goes back in stock. A variation and its variable product coming back together send one message
+- "Back in stock notice sent" WooCommerce trigger, run once for each customer WooCommerce notifies through its back in stock notifications, whether its email is on or off
+- `{{ wc_customer_first_name }}`, `{{ wc_customer_last_name }}`, `{{ wc_customer_email }}`, `{{ wc_customer_phone }}` and `{{ wc_my_account_url }}` for the customer triggers, read from the customer account (a back in stock notice signed up without logging in uses the account registered with its email, if any), and `{{ wc_product_name }}`, `{{ wc_product_url }}`, `{{ wc_product_sku }}` and `{{ wc_product_stock_quantity }}` for the product triggers
+- The "User role" and "User metadata" conditions on the "Customer account created" trigger
+- "HTTP request" workflow action: calls any public API with GET, POST, PUT, PATCH or DELETE, with query parameters, headers, a bearer, basic or API key credential, and a JSON, form, raw text or trigger's data body, and keeps the response under a name for the next actions: `{{ http:NAME.status }}`, `{{ http:NAME.ok }}`, `{{ http:NAME.error }}` and `{{ http:NAME.body.FIELD }}`, through delays too. Placeholders inside a JSON body's strings are filled without breaking it, whatever quotes the value has. The credential is encrypted when the workflow is saved and never shown again; on another site (an import, a template) it has to be typed again. Local and private network addresses are refused, also on redirects. The AI workflow generator does not use it
+- Developers: `writes_payload` on `joinotify_register_action()` (and `joinotify_register_payload_action_handler()`, the `Joinotify/Workflow_Processor/Payload_Actions` filter) gives a handler the payload by reference, so what it stores reaches the next actions. `Joinotify/Builder/Sealed_Action_Fields` seals an action's secret fields when a workflow is saved, and `Joinotify/AI/Workflow_Generator/Excluded_Actions` keeps actions out of AI generated workflows
+
+### Changed
+
+- "New order (Processing)" is now "Payment confirmed" (`woocommerce_payment_complete`). It runs once per order, when the payment gateway confirms the payment or the order moves from an unpaid status to Processing or Completed, so orders that go straight to Completed (virtual and downloadable products) now run it too, while an order moved back to Processing does not run it again. Saved workflows, imported files and templates move to the new trigger on their own; until the upgrade has run on the site, workflows still on the old trigger keep running. The `Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed` filter is replaced by `Joinotify/Process_Workflows/Woocommerce/Payment_Complete`
+- The WooCommerce order variables are no longer offered on the triggers that have no order (account and stock), where they always came out empty. The coupon variables are still offered on every WooCommerce trigger
+- The message history is always on. The "Message history" switch is gone from Settings → About, and sites that had turned it off start recording again; a message that must not be kept can still be dropped with the `Joinotify/Message_History/Should_Record` filter
+- An interactive, location, contact, reaction or sticker message keeps its WhatsApp payload in the history record, so a resend sends the same message and not its preview text
+
+### Fixed
+
+- Saving a workflow dropped every backslash typed in it, so an escaped quote in the JSON body of a "Send webhook" action turned it into invalid JSON and the action never sent. Workflows and canvas notes now keep backslashes as typed; one lost in an earlier save has to be typed again
+- A local attachment was recorded in the message history with a broken media URL built from the file's bytes. The history now leaves the media URL empty for it
+
+## [2.6.2] - 2026-11-02
+
+### Changed
+
+- The plugin is named "Joinotify – Notifications & Marketing Automation", dropping "WhatsApp" from its name: the WordPress.org guidelines do not allow a third-party trademark in a plugin's display name. The translated names in every bundled locale follow
+- "Tested up to" is declared only in `readme.txt`, the one place WordPress.org reads it. The header in `joinotify.php` could take precedence over the readme and show a compatibility the readme no longer stated
+
 ## [2.6.1] - 2026-10-28
 
 ### Added
@@ -607,7 +640,9 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.1...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/meumouse/joinotify/compare/v2.6.2...v2.7.0
+[2.6.2]: https://github.com/meumouse/joinotify/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/meumouse/joinotify/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/meumouse/joinotify/compare/v2.5.1...v2.6.0
 [2.5.1]: https://github.com/meumouse/joinotify/compare/v2.5.0...v2.5.1

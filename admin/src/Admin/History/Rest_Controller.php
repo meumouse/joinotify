@@ -23,6 +23,7 @@ class Rest_Controller extends Abstract_Rest_Controller {
 		'\MeuMouse\Joinotify\Rest\History_List',
 		'\MeuMouse\Joinotify\Rest\History_Delete',
 		'\MeuMouse\Joinotify\Rest\History_Cancel_Retry',
+		'\MeuMouse\Joinotify\Rest\History_Resend',
 		'\MeuMouse\Joinotify\Rest\History_Export',
 	);
 }

@@ -268,16 +268,18 @@ class Workflow_Generator {
      * Build the actions reference block.
      *
      * @since 2.0.0
+     * @version 2.7.0
      * @return string
      */
     protected static function build_actions_reference() {
         $catalog = Registry::get_actions_catalog();
+        $excluded = self::get_excluded_action_slugs();
         $lines = array();
 
         foreach ( $catalog as $action ) {
             $slug = $action['action'] ?? '';
 
-            if ( '' === $slug ) {
+            if ( '' === $slug || isset( $excluded[ $slug ] ) ) {
                 continue;
             }
 
@@ -716,19 +718,47 @@ class Workflow_Generator {
     /**
      * Set of action slugs currently registered in the plugin.
      *
+     * Leaves out the actions the AI may not use (see get_excluded_action_slugs()), so a
+     * generated node of one of them is dropped like a hallucinated slug.
+     *
      * @since 2.1.0
+     * @version 2.7.0
      * @return array<string,bool> Map of slug => true for O(1) lookups.
      */
     protected static function get_registered_action_slugs() {
         $slugs = array();
+        $excluded = self::get_excluded_action_slugs();
 
         foreach ( Registry::get_actions_catalog() as $action ) {
-            if ( ! empty( $action['action'] ) ) {
+            if ( ! empty( $action['action'] ) && ! isset( $excluded[ (string) $action['action'] ] ) ) {
                 $slugs[ (string) $action['action'] ] = true;
             }
         }
 
         return $slugs;
+    }
+
+
+    /**
+     * Action slugs the AI never puts in a workflow.
+     *
+     * The "HTTP request" action sends the store's data, and a credential, to the address it is
+     * given: a prompt that can steer the model — a product name, a form entry — must not be able
+     * to choose that address. The user adds the node by hand.
+     *
+     * @since 2.7.0
+     * @return array<string,bool> Map of slug => true.
+     */
+    protected static function get_excluded_action_slugs() {
+        /**
+         * Filter the action slugs the AI workflow generator never uses.
+         *
+         * @since 2.7.0
+         * @param array $slugs
+         */
+        $slugs = apply_filters( 'Joinotify/AI/Workflow_Generator/Excluded_Actions', array( 'http_request' ) );
+
+        return array_fill_keys( array_map( 'strval', is_array( $slugs ) ? $slugs : array() ), true );
     }
 
 

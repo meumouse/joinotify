@@ -389,6 +389,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Cloud_Sync\\Cloud_Sync',
 			'MeuMouse\\Joinotify\\Contacts\\Contacts',
 			'MeuMouse\\Joinotify\\Builder\\Webhook_Action',
+			'MeuMouse\\Joinotify\\Builder\\Http_Request_Action',
 			'MeuMouse\\Joinotify\\Core\\Logger',
 		));
 

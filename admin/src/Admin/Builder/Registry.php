@@ -33,9 +33,10 @@ class Registry {
 	 * upgrades can detect and migrate older structures deterministically.
 	 *
 	 * @since 2.0.0
+	 * @version 2.7.0
 	 * @var string
 	 */
-	const WORKFLOW_SCHEMA_VERSION = '2.0.0';
+	const WORKFLOW_SCHEMA_VERSION = '2.7.0';
 
 
 	/**

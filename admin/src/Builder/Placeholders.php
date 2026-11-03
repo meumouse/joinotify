@@ -69,7 +69,7 @@ class Placeholders {
      * "{{ wc_review_links | remove_home_url }}" (see get_modifiers()).
      *
      * @since 1.0.0
-     * @version 2.6.1
+     * @version 2.7.0
      * @param string $message | The message containing placeholders
      * @param array $payload | The placeholder context with array data
      * @param string $mode | Mode ('sandbox' or 'production')
@@ -308,6 +308,10 @@ class Placeholders {
         // centrally here so they work anywhere a token can be inserted (message,
         // caption, attachment URL, recipient, ...), not only in message bodies.
         $message = self::replace_loop_tokens( $message, $payload );
+
+        // Responses kept by the "HTTP request" action: {{ http:NAME.path }}. Resolved here
+        // for the same reason, before the modifiers, so they can carry them too.
+        $message = Http_Request_Action::replace_tokens( $message, $payload );
 
         if ( ! empty( $modified_tokens ) ) {
             $message = self::apply_token_modifiers( $message, $modified_tokens, $payload );

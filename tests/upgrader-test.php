@@ -89,6 +89,9 @@ check( 'non-array completed coerced safely', is_array( Upgrader::get_pending_rou
 check( 'upgrade from 2.5.1 seals the API key', has_pending( '2.5.1', array(), 'seal_cloud_api_token_2_6_0' ) );
 check( 'a site already on 2.6.0 skips the API key sealing', ! has_pending( '2.6.0', array(), 'seal_cloud_api_token_2_6_0' ) );
 check( 'the API key sealing runs once', ! has_pending( '2.5.1', array( 'seal_cloud_api_token_2_6_0' ), 'seal_cloud_api_token_2_6_0' ) );
+check( 'upgrade from 2.6.2 moves the workflows to the payment trigger', has_pending( '2.6.2', array(), Upgrader::PAYMENT_TRIGGER_ROUTINE ) );
+check( 'a site already on 2.7.0 skips the payment trigger move', ! has_pending( '2.7.0', array(), Upgrader::PAYMENT_TRIGGER_ROUTINE ) );
+check( 'a site upgraded from 2.0.0 gets both workflow routines', has_pending( '1.4.6', array(), 'workflows_schema_2_0_0' ) && has_pending( '1.4.6', array(), Upgrader::PAYMENT_TRIGGER_ROUTINE ) );
 
 echo "\n== summary ==\n";
 echo "  {$assertions} assertions, {$failures} failures\n";

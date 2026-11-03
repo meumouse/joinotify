@@ -338,7 +338,12 @@ class Cloud_Client {
      *
      * Audio is routed to send_whatsapp_audio() to match Controller semantics.
      *
+     * Only a link is kept as the history's media URL: a local attachment comes
+     * in as base64, and those bytes are neither a URL nor anything a resend
+     * from the history could send again.
+     *
      * @since 1.4.8
+     * @version 2.7.0
      * @param string $sender | Origin phone number.
      * @param string $receiver | Recipient phone number.
      * @param string $media_type | image|video|document|audio.
@@ -364,7 +369,7 @@ class Cloud_Client {
             'sender' => $sender,
             'receiver' => $receiver,
             'media_type' => $media_type,
-            'media_url' => $media,
+            'media_url' => preg_match( '#^https?://#i', (string) $media ) ? $media : '',
             'content' => $caption,
         );
 
@@ -650,7 +655,11 @@ class Cloud_Client {
      * of these types goes out through `/v1/{phone_number_id}/messages` in Meta's
      * own dialect. History and retry behave exactly like the other send paths.
      *
+     * The history row keeps the Meta object as JSON in its `meta` (`raw`), so
+     * a resend from the history screen sends the same message, not its preview.
+     *
      * @since 2.3.0
+     * @version 2.7.0
      * @param string $sender | Origin phone number.
      * @param string $receiver | Recipient phone number.
      * @param string $type | Meta message type (interactive, location, contacts, reaction, sticker).
@@ -671,6 +680,16 @@ class Cloud_Client {
             'sender' => $sender,
             'receiver' => $receiver,
             'content' => '' !== $preview ? $preview : $type,
+            // Encoded as one string: the object nests deeper than the `meta`
+            // column keeps, and its keys must reach WhatsApp untouched. One
+            // past the column's length cap no longer decodes, and is simply
+            // not offered for a resend.
+            'meta' => array(
+                'raw' => array(
+                    'type' => $type,
+                    'content' => (string) wp_json_encode( $content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ),
+                ),
+            ),
         );
 
         $queue_payload = array(

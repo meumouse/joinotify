@@ -267,11 +267,6 @@ class Registry {
                                 esc_html__( 'Developer integration', 'joinotify' ),
                                 esc_html__( 'Maintains support integrations and advanced contracts available.', 'joinotify' )
                             ),
-                            self::field_toggle(
-                                'enable_message_history',
-                                esc_html__( 'Message history', 'joinotify' ),
-                                esc_html__( 'Record every dispatched WhatsApp message so it can be audited from the History screen.', 'joinotify' )
-                            ),
                             self::field_select(
                                 'message_history_retention_days',
                                 esc_html__( 'History retention', 'joinotify' ),

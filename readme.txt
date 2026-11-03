@@ -1,10 +1,10 @@
-=== Joinotify – WhatsApp Notifications & Marketing Automation ===
+=== Joinotify – Notifications & Marketing Automation ===
 Contributors: meumouse
 Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.6.1
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 
 = Integrations =
 
-* WooCommerce — order status, refunds, subscriptions, digital product delivery, abandoned carts
+* WooCommerce — order status, confirmed payments, refunds, subscriptions, digital product delivery, abandoned carts, new customer accounts, low stock and back in stock alerts
 * WPForms, Elementor Forms and Flexify Checkout
 * WordPress user events
 * Telegram and Resend (e-mail) as additional delivery channels
@@ -71,8 +71,8 @@ Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify
 Contacted only when an administrator opens Joinotify → Audiences & Contacts on a site already connected to Joinotify. That screen lists and edits the contacts, custom fields, tags, audiences and suppression list of your Joinotify account, so each request sends your API key and what the administrator types or picks there: a search term or filter, the name, phone number, e-mail, custom field values, tags and consent evidence of a contact they add or edit, a phone number they add to the suppression list, and, when they import a CSV file, the columns they mapped of each row (the file is read in the browser and never stored on the site). Nothing is sent from the front end of the site. Opening the screen also asks Joinotify what the site's key may do, which sends only the key.
 Terms: https://joinotify.com/terms-and-conditions — Privacy: https://joinotify.com/policy-privacy
 
-**Webhook URLs you set in a workflow**
-Optional. Contacted only when a workflow you built has a "Send webhook" action and reaches it, at the URL you typed in that action. It receives either the data of the trigger (the order with its customer history and links, the user, the cart or the form entry) or the JSON you wrote in the action, with any headers you added. Local and private network addresses are refused. The terms and privacy policy are those of the service you point it to.
+**Webhook and API URLs you set in a workflow**
+Optional. Contacted only when a workflow you built has a "Send webhook" or "HTTP request" action and reaches it, at the URL you typed in that action. It receives either the data of the trigger (the order with its customer history and links, the user, the cart or the form entry), the JSON, form fields or text you wrote in the action, or nothing (a GET request), with the query parameters, headers and credential you added. The "HTTP request" action keeps the answer for the next actions of that workflow run. Local and private network addresses are refused. The terms and privacy policy are those of the service you point it to.
 
 **Joinotify panel — https://app.joinotify.com**
 Opened in your browser when you click to create or manage an API key. No data is sent from your site by the plugin itself.
@@ -176,6 +176,20 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 4. Settings, with integrations and senders.
 
 == Changelog ==
+
+= 2.7.0 =
+* New: "HTTP request" workflow action. It calls any public API with GET, POST, PUT, PATCH or DELETE, with query parameters, headers, a bearer, basic or API key credential and a JSON, form or raw body, and keeps the response for the next actions as `{{ http:NAME.status }}`, `{{ http:NAME.ok }}`, `{{ http:NAME.error }}` and `{{ http:NAME.body.FIELD }}`. The credential is stored encrypted and never shown again.
+* New: a failed message can be sent again from the message history, one at a time or up to 50 selected rows. The original is flagged "Resent", so one failure is never sent twice by accident.
+* New: "Customer account created", "Product low in stock", "Product out of stock", "Product back in stock" and "Back in stock notice sent" WooCommerce triggers, with customer and product variables such as `{{ wc_customer_first_name }}`, `{{ wc_my_account_url }}`, `{{ wc_product_name }}` and `{{ wc_product_stock_quantity }}`, and the "User role" and "User metadata" conditions on the account trigger.
+* New: developers can register action handlers that hand values to the next actions (`writes_payload` on `joinotify_register_action()`), seal an action's secret fields with the `Joinotify/Builder/Sealed_Action_Fields` filter and keep actions out of AI generated workflows with `Joinotify/AI/Workflow_Generator/Excluded_Actions`.
+* Changed: "New order (Processing)" is now "Payment confirmed". It runs once per order, when the payment is confirmed, so orders that go straight to Completed run it too and an order moved back to Processing does not run it again. Saved workflows move to it on their own. The `Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed` filter is replaced by `Joinotify/Process_Workflows/Woocommerce/Payment_Complete`.
+* Changed: the WooCommerce order variables are no longer offered on the account and stock triggers, where they always came out empty.
+* Changed: the message history is always on, and the "Message history" switch is gone from Settings → About. Interactive, location, contact, reaction and sticker messages keep their WhatsApp payload in the history, so a resend sends the same message.
+* Fixed: saving a workflow no longer drops the backslashes typed in it, which turned an escaped quote in the JSON body of a "Send webhook" action into invalid JSON. A backslash lost in an earlier save has to be typed again.
+* Fixed: a local attachment is no longer recorded in the message history with a broken media URL.
+
+= 2.6.2 =
+* Changed: the plugin is now named "Joinotify – Notifications & Marketing Automation", without a third-party trademark in its name, as the WordPress.org guidelines require. Nothing else changes.
 
 = 2.6.1 =
 * New: variables take modifiers after a pipe: `{{ wc_review_links | remove:"https://shop.com/" }}` removes a text, `replace:"from","to"` swaps one text for another and `remove_home_url` keeps only the path of the site's links, which is what the link of a WhatsApp template URL button needs. Developers add their own with `joinotify_register_placeholder_modifier()`.
@@ -317,6 +331,12 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+Adds an "HTTP request" action, resending of failed messages and WooCommerce account and stock triggers. "New order (Processing)" becomes "Payment confirmed"; saved workflows move to it on their own.
+
+= 2.6.2 =
+The plugin has a new name, "Joinotify – Notifications & Marketing Automation". Workflows, settings and messages are not affected.
 
 = 2.6.1 =
 Variables take modifiers such as `remove_home_url`, and a new variable gives the review link of the first purchased product, ready to complete a WhatsApp template URL button.

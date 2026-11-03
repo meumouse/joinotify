@@ -8,6 +8,7 @@ use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
+use MeuMouse\Joinotify\Core\Upgrader;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 use WC_Session_Handler;
@@ -31,10 +32,59 @@ defined('ABSPATH') || exit;
 class Woocommerce extends Integrations_Base {
 
     /**
+     * Order meta that records when the "Payment confirmed" trigger ran, so it runs once per order.
+     *
+     * @since 2.7.0
+     * @var string
+     */
+    const META_PAYMENT_CONFIRMED = '_joinotify_payment_confirmed';
+
+    /**
+     * Customer accounts created in this request, dispatched on shutdown (user ID => context).
+     *
+     * @since 2.7.0
+     * @var array<int,array<string,mixed>>
+     */
+    protected static $created_customers = array();
+
+    /**
+     * Products whose save is moving them from out of stock or on backorder to in stock.
+     *
+     * @since 2.7.0
+     * @var array<int,bool>
+     */
+    protected static $restocking = array();
+
+    /**
+     * Products announced back in stock in this request: "self" when the product itself was,
+     * "variation" for a variable product one of whose variations was.
+     *
+     * @since 2.7.0
+     * @var array<int,string>
+     */
+    protected static $restocked_products = array();
+
+    /**
+     * Stock alerts already dispatched in this request (hook and product ID).
+     *
+     * @since 2.7.0
+     * @var array<string,bool>
+     */
+    protected static $stock_alerts = array();
+
+    /**
+     * Back in stock notices already dispatched in this request (notice ID).
+     *
+     * @since 2.7.0
+     * @var array<int,bool>
+     */
+    protected static $stock_notices = array();
+
+    /**
      * Construct function
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.0
      * @return void
      */
     public function __construct() {
@@ -61,8 +111,30 @@ class Woocommerce extends Integrations_Base {
                 // the checkout block places orders through the Store API, which never fires the hook above
                 add_action( 'woocommerce_store_api_checkout_order_processed', array( $this, 'process_workflow_on_block_checkout_order' ), 10, 1 );
 
-                // when order is processing
-                add_action( 'woocommerce_order_status_processing', array( $this, 'process_workflow_order_processed' ), 10, 3 );
+                // when the payment of an order is confirmed: a gateway confirms it, or the order
+                // moves from an unpaid status to a paid one (cash on delivery, a manual change)
+                add_action( 'woocommerce_payment_complete', array( $this, 'process_workflow_payment_complete' ), 10, 2 );
+                add_action( 'woocommerce_order_status_changed', array( $this, 'process_workflow_payment_status_changed' ), 10, 3 );
+
+                // when a customer account is created, dispatched at the end of the request because the
+                // checkout only saves the billing phone after WooCommerce fires this hook
+                add_action( 'woocommerce_created_customer', array( $this, 'queue_customer_created' ), 10, 3 );
+
+                // when the stock of a product reaches the low or the no stock threshold
+                add_action( 'woocommerce_low_stock', array( $this, 'process_workflow_low_stock' ), 10, 1 );
+                add_action( 'woocommerce_no_stock', array( $this, 'process_workflow_no_stock' ), 10, 1 );
+
+                // when a product goes back in stock: the status before the save is read first, since
+                // the stock status hooks also fire for a product created in stock
+                add_action( 'woocommerce_before_product_object_save', array( $this, 'remember_restock' ), 10, 1 );
+                add_action( 'woocommerce_before_product_variation_object_save', array( $this, 'remember_restock' ), 10, 1 );
+                add_action( 'woocommerce_product_set_stock_status', array( $this, 'process_workflow_back_in_stock' ), 10, 3 );
+                add_action( 'woocommerce_variation_set_stock_status', array( $this, 'process_workflow_back_in_stock' ), 10, 3 );
+
+                // when WooCommerce notifies a customer who signed up for a back in stock notice. The
+                // email has no action of its own, so the filter that asks whether it is enabled is
+                // used: it runs once per notice, right before the email is sent
+                add_filter( 'woocommerce_email_enabled_customer_stock_notification', array( $this, 'process_workflow_customer_stock_notification' ), 10, 2 );
 
                 // when order is completed
                 add_action( 'woocommerce_order_status_completed', array( $this, 'process_workflow_order_completed' ), 10, 3 );
@@ -187,9 +259,9 @@ class Woocommerce extends Integrations_Base {
                 'require_settings' => false,
             ),
             array(
-                'data_trigger' => 'woocommerce_checkout_order_processed',
-                'title' => __( 'New order (Processing)', 'joinotify' ),
-                'description' => __( 'This trigger is activated when a new order is received in WooCommerce with a processing status.', 'joinotify' ),
+                'data_trigger' => 'woocommerce_payment_complete',
+                'title' => __( 'Payment confirmed', 'joinotify' ),
+                'description' => __( 'This trigger is activated once per order, when its payment is confirmed.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
@@ -230,7 +302,7 @@ class Woocommerce extends Integrations_Base {
             array(
                 'data_trigger' => 'woocommerce_grant_product_download_permissions',
                 'title' => __( 'Digital product access granted', 'joinotify' ),
-                'description' => __( 'This action is triggered when WooCommerce grants the download access of a digital product to the customer. This is the recommended trigger to deliver digital products, because the download links only exist from this moment on.', 'joinotify' ),
+                'description' => __( 'This trigger is activated when the customer gets access to download a digital product.', 'joinotify' ),
                 'require_settings' => false,
                 'settings' => array(
                     array(
@@ -261,9 +333,125 @@ class Woocommerce extends Integrations_Base {
                     ),
                 ),
             ),
+            array(
+                'data_trigger' => 'woocommerce_created_customer',
+                'title' => __( 'Customer account created', 'joinotify' ),
+                'description' => __( 'This trigger is activated when WooCommerce creates a customer account.', 'joinotify' ),
+                'require_settings' => false,
+                'settings' => array(
+                    array(
+                        'key' => 'account_source',
+                        'label' => __( 'Where the account was created', 'joinotify' ),
+                        'component' => 'select',
+                        'required' => false,
+                        'description' => __( 'Restrict this workflow to the accounts created in one place. Leave "Anywhere" to run for every new customer account.', 'joinotify' ),
+                        'placeholder' => __( 'Select where the account was created', 'joinotify' ),
+                        'options' => self::get_account_source_options(),
+                    ),
+                ),
+            ),
+            array(
+                'data_trigger' => 'woocommerce_low_stock',
+                'title' => __( 'Product low in stock', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a sale brings a product to the low stock threshold.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_no_stock',
+                'title' => __( 'Product out of stock', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a sale leaves a product out of stock.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_product_back_in_stock',
+                'title' => __( 'Product back in stock', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a product that was out of stock is back in stock.', 'joinotify' ),
+                'require_settings' => false,
+            ),
+            array(
+                'data_trigger' => 'woocommerce_customer_stock_notification',
+                'title' => __( 'Back in stock notice sent', 'joinotify' ),
+                'description' => __( 'This trigger is activated for each customer WooCommerce notifies that a product is back in stock.', 'joinotify' ),
+                'require_settings' => false,
+            ),
         );
 
         return $triggers;
+    }
+
+
+    /**
+     * Get the options of the "Customer account created" trigger setting.
+     *
+     * @since 2.7.0
+     * @return array<int,array<string,string>>
+     */
+    public static function get_account_source_options() {
+        return array(
+            array(
+                'label' => __( 'Anywhere', 'joinotify' ),
+                'value' => 'none',
+            ),
+            array(
+                'label' => __( 'My Account page', 'joinotify' ),
+                'value' => 'my_account',
+            ),
+            array(
+                'label' => __( 'Checkout', 'joinotify' ),
+                'value' => 'checkout',
+            ),
+            array(
+                'label' => __( 'Order confirmation page', 'joinotify' ),
+                'value' => 'order_confirmation',
+            ),
+            array(
+                'label' => __( 'Other (REST API, another plugin)', 'joinotify' ),
+                'value' => 'other',
+            ),
+        );
+    }
+
+
+    /**
+     * Triggers whose payload carries a customer and no order.
+     *
+     * @since 2.7.0
+     * @return array<int,string>
+     */
+    public static function get_customer_trigger_names() {
+        return array(
+            'woocommerce_created_customer',
+            'woocommerce_customer_stock_notification',
+        );
+    }
+
+
+    /**
+     * Triggers whose payload carries a product and no order.
+     *
+     * @since 2.7.0
+     * @return array<int,string>
+     */
+    public static function get_product_trigger_names() {
+        return array(
+            'woocommerce_low_stock',
+            'woocommerce_no_stock',
+            'woocommerce_product_back_in_stock',
+            'woocommerce_customer_stock_notification',
+        );
+    }
+
+
+    /**
+     * WooCommerce triggers that run for an order, the ones the order placeholders belong to.
+     *
+     * @since 2.7.0
+     * @return array<int,string>
+     */
+    public static function get_order_trigger_names() {
+        $without_order = array_merge( self::get_customer_trigger_names(), self::get_product_trigger_names() );
+
+        return array_values( array_diff( Triggers::get_trigger_names('woocommerce'), $without_order ) );
     }
 
 
@@ -376,7 +564,7 @@ class Woocommerce extends Integrations_Base {
      * Add WooCommerce placeholders on workflow builder
      * 
      * @since 1.0.0
-     * @version 2.6.1
+     * @version 2.7.0
      * @param array $placeholders | Current placeholders
      * @param array $payload | Payload data
      * @return array
@@ -384,8 +572,14 @@ class Woocommerce extends Integrations_Base {
     public function add_placeholders( $placeholders, $payload ) {
         $order = isset( $payload['order_id'] ) ? wc_get_order( $payload['order_id'] ) : null;
         $current_user = wp_get_current_user();
-        $trigger_names = Triggers::get_trigger_names('woocommerce');
+        $all_trigger_names = Triggers::get_trigger_names('woocommerce');
+        $trigger_names = self::get_order_trigger_names();
         $download_triggers = self::get_download_trigger_names();
+        $hook = is_array( $payload ) && isset( $payload['hook'] ) && is_string( $payload['hook'] ) ? $payload['hook'] : '';
+
+        // only loaded for the triggers that use them, since every message resolves this whole list
+        $customer = in_array( $hook, self::get_customer_trigger_names(), true ) ? self::get_payload_customer( $payload ) : null;
+        $product = in_array( $hook, self::get_product_trigger_names(), true ) ? self::get_payload_product( $payload ) : null;
 
         // No first-party trigger puts a refund in order_id, but a third-party payload still can
         // and a refund exposes no billing data of its own, so resolve against the parent order.
@@ -665,6 +859,86 @@ class Woocommerce extends Integrations_Base {
             ),
         );
 
+        $customer_triggers = self::get_customer_trigger_names();
+        $product_triggers = self::get_product_trigger_names();
+        $guest_email = isset( $payload['user_email'] ) && is_scalar( $payload['user_email'] ) ? (string) $payload['user_email'] : '';
+
+        // placeholders of the triggers that carry a customer and no order
+        $placeholders['woocommerce'] += array(
+            '{{ wc_customer_first_name }}' => array(
+                'triggers' => $customer_triggers,
+                'description' => __( 'To retrieve the first name of the WooCommerce customer', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $customer ? ( $customer->get_billing_first_name() ?: $customer->get_first_name() ) : '',
+                    'sandbox' => esc_html__( 'John', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_customer_last_name }}' => array(
+                'triggers' => $customer_triggers,
+                'description' => __( 'To retrieve the last name of the WooCommerce customer', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $customer ? ( $customer->get_billing_last_name() ?: $customer->get_last_name() ) : '',
+                    'sandbox' => esc_html__( 'Doe', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_customer_email }}' => array(
+                'triggers' => $customer_triggers,
+                'description' => __( 'To retrieve the email of the WooCommerce customer', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $customer ? $customer->get_email() : $guest_email,
+                    'sandbox' => esc_html__( 'user@example.com', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_customer_phone }}' => array(
+                'triggers' => $customer_triggers,
+                'description' => __( 'To retrieve the billing phone of the WooCommerce customer account. Empty when the account has no billing phone yet.', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $customer ? $customer->get_billing_phone() : '',
+                    'sandbox' => __( '+55 11 91234-5678', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_my_account_url }}' => array(
+                'triggers' => $customer_triggers,
+                'description' => __( 'To retrieve the link to the customer My Account page', 'joinotify' ),
+                'replacement' => array(
+                    'production' => self::get_my_account_url(),
+                    'sandbox' => self::get_my_account_url(),
+                ),
+            ),
+            '{{ wc_product_name }}' => array(
+                'triggers' => $product_triggers,
+                'description' => __( 'To retrieve the name of the WooCommerce product, with the attributes of a variation', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $product ? wp_strip_all_tags( $product->get_name() ) : '',
+                    'sandbox' => __( 'Example product', 'joinotify' ),
+                ),
+            ),
+            '{{ wc_product_url }}' => array(
+                'triggers' => $product_triggers,
+                'description' => __( 'To retrieve the link to the WooCommerce product page', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $product ? $product->get_permalink() : '',
+                    'sandbox' => get_site_url() . '/product/example-product/',
+                ),
+            ),
+            '{{ wc_product_sku }}' => array(
+                'triggers' => $product_triggers,
+                'description' => __( 'To retrieve the SKU of the WooCommerce product', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $product ? $product->get_sku() : '',
+                    'sandbox' => 'SKU-001',
+                ),
+            ),
+            '{{ wc_product_stock_quantity }}' => array(
+                'triggers' => $product_triggers,
+                'description' => __( 'To retrieve the stock quantity of the WooCommerce product. Empty when the product does not manage its stock.', 'joinotify' ),
+                'replacement' => array(
+                    'production' => $product ? self::get_product_stock_quantity( $product ) : '',
+                    'sandbox' => '3',
+                ),
+            ),
+        );
+
         // check if the payload has a 'settings' key
         if ( isset( $payload['settings'] ) ) {
             $coupon_settings = $payload['settings'];
@@ -673,7 +947,7 @@ class Woocommerce extends Integrations_Base {
             // iterate over the coupon placeholders and add them to the placeholders array
             foreach ( $coupon_placeholders as $placeholder_key => $placeholder_data ) {
                 $placeholders['woocommerce'][$placeholder_key] = array(
-                    'triggers' => $trigger_names,
+                    'triggers' => $all_trigger_names,
                     'description' => $placeholder_data['description'],
                     'replacement' => array(
                         'production' => $placeholder_data['replacement'],
@@ -703,9 +977,92 @@ class Woocommerce extends Integrations_Base {
             'woocommerce_grant_product_download_permissions',
             'woocommerce_download_product',
             'woocommerce_order_status_completed',
-            'woocommerce_checkout_order_processed',
+            'woocommerce_payment_complete',
             'woocommerce_order_status_changed',
         ));
+    }
+
+
+    /**
+     * Resolve the customer a customer-trigger payload is about.
+     *
+     * Reads the account of the payload user ID and, for a back in stock notice signed up
+     * without being logged in, the account registered with the notice email, if any.
+     *
+     * @since 2.7.0
+     * @param array $payload | Runtime trigger payload
+     * @return \WC_Customer|null
+     */
+    public static function get_payload_customer( $payload ) {
+        if ( ! is_array( $payload ) || ! class_exists('WC_Customer') ) {
+            return null;
+        }
+
+        $user_id = isset( $payload['user_id'] ) ? absint( $payload['user_id'] ) : 0;
+
+        if ( ! $user_id && ! empty( $payload['user_email'] ) && is_string( $payload['user_email'] ) ) {
+            $user = get_user_by( 'email', $payload['user_email'] );
+            $user_id = $user ? (int) $user->ID : 0;
+        }
+
+        if ( ! $user_id ) {
+            return null;
+        }
+
+        try {
+            $customer = new WC_Customer( $user_id );
+        } catch ( \Exception $e ) {
+            return null;
+        }
+
+        return $customer->get_id() ? $customer : null;
+    }
+
+
+    /**
+     * Resolve the product a product-trigger payload is about.
+     *
+     * @since 2.7.0
+     * @param array $payload | Runtime trigger payload
+     * @return \WC_Product|null
+     */
+    public static function get_payload_product( $payload ) {
+        if ( ! is_array( $payload ) || empty( $payload['product_id'] ) || ! function_exists('wc_get_product') ) {
+            return null;
+        }
+
+        $product = wc_get_product( absint( $payload['product_id'] ) );
+
+        return $product instanceof \WC_Product ? $product : null;
+    }
+
+
+    /**
+     * Stock quantity of a product as text, empty when it does not manage its stock.
+     *
+     * @since 2.7.0
+     * @param \WC_Product $product | Product
+     * @return string
+     */
+    public static function get_product_stock_quantity( $product ) {
+        $quantity = $product->get_stock_quantity();
+
+        return null === $quantity ? '' : (string) wc_stock_amount( $quantity );
+    }
+
+
+    /**
+     * Returns the link to the customer My Account page
+     *
+     * @since 2.7.0
+     * @return string
+     */
+    public static function get_my_account_url() {
+        if ( ! function_exists('wc_get_page_permalink') ) {
+            return '';
+        }
+
+        return (string) wc_get_page_permalink('myaccount');
     }
 
 
@@ -1524,9 +1881,9 @@ class Woocommerce extends Integrations_Base {
 
     /**
      * Add conditions for WooCommerce triggers
-     * 
+     *
      * @since 1.2.0
-     * @version 1.4.7
+     * @version 2.7.0
      * @param array $conditions | Current conditions
      * @return array
      */
@@ -1561,6 +1918,10 @@ class Woocommerce extends Integrations_Base {
                 'title' => __( 'User metadata', 'joinotify' ),
                 'description' => __( 'Allows checking specific user metadata.', 'joinotify' ),
             ),
+            'user_role' => array(
+                'title' => __( 'User role', 'joinotify' ),
+                'description' => __( 'Allows checking the user role that fired the trigger.', 'joinotify' ),
+            ),
             'customer_email' => array(
                 'title' => __( 'Customer email', 'joinotify' ),
                 'description' => __( 'Allows checking the customer email for the order.', 'joinotify' ),
@@ -1578,7 +1939,8 @@ class Woocommerce extends Integrations_Base {
         // Define triggers and their associated conditions
         $woocommerce_conditions = array(
             'woocommerce_new_order' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
-            'woocommerce_checkout_order_processed' => array( 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_payment_complete' => array( 'order_total', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
+            'woocommerce_created_customer' => array( 'user_role', 'user_meta' ),
             'woocommerce_order_status_completed' => array( 'customer_email', 'order_total', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta' ),
             'woocommerce_order_status_changed' => array( 'order_status', 'order_total', 'order_paid', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
             'woocommerce_order_partially_refunded' => array( 'refund_amount', 'products_purchased', 'payment_method', 'shipping_method', 'user_meta', 'customer_email' ),
@@ -1640,32 +2002,437 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
-     * Process workflow when order status is processing
-     * 
-     * @since 1.0.0
-     * @version 1.4.7
-     * @param int $order_id  | Order ID
-     * @param object $order | Order object
-     * @param array $status_transition | Status transition data
-     * @see https://woocommerce.github.io/code-reference/files/woocommerce-includes-class-wc-order.html#source-view.411
+     * Process workflow when a payment gateway confirms the payment of an order
+     *
+     * @since 2.7.0
+     * @param int $order_id | Order ID
+     * @param string $transaction_id | Transaction ID of the gateway
      * @return void
      */
-    public function process_workflow_order_processed( $order_id, $order, $status_transition ) {
+    public function process_workflow_payment_complete( $order_id, $transaction_id = '' ) {
+        $this->process_workflow_payment_confirmed( $order_id, $transaction_id );
+    }
+
+
+    /**
+     * Process workflow when an order moves from an unpaid status to a paid one
+     *
+     * Covers the payments no gateway confirms: cash on delivery, and an order an admin marks as
+     * processing or completed. A gateway that confirms the payment moves the order to a paid
+     * status too, which is why the trigger is recorded on the order and runs only once.
+     *
+     * @since 2.7.0
+     * @param int $order_id | Order ID
+     * @param string $old_status | Old status
+     * @param string $new_status | New status
+     * @return void
+     */
+    public function process_workflow_payment_status_changed( $order_id, $old_status, $new_status ) {
+        $paid_statuses = function_exists('wc_get_is_paid_statuses') ? wc_get_is_paid_statuses() : array( 'processing', 'completed' );
+
+        // processing -> completed is not a new payment
+        if ( ! in_array( $new_status, $paid_statuses, true ) || in_array( $old_status, $paid_statuses, true ) ) {
+            return;
+        }
+
+        $this->process_workflow_payment_confirmed( $order_id );
+    }
+
+
+    /**
+     * Run the "Payment confirmed" workflows of an order, once
+     *
+     * @since 2.7.0
+     * @param int $order_id | Order ID
+     * @param string $transaction_id | Transaction ID of the gateway, when it sent one
+     * @return void
+     */
+    protected function process_workflow_payment_confirmed( $order_id, $transaction_id = '' ) {
+        $order = wc_get_order( $order_id );
+
+        if ( ! $order instanceof \WC_Order || $order->get_meta( self::META_PAYMENT_CONFIRMED ) ) {
+            return;
+        }
+
+        $order->update_meta_data( self::META_PAYMENT_CONFIRMED, time() );
+        $order->save_meta_data();
+
         /**
          * Filter the payload before processing workflows
-         * 
-         * @since 1.3.0
+         *
+         * @since 2.7.0
          * @param array $payload | Payload to be processed
          */
-        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed', array(
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Payment_Complete', array(
             'type' => 'trigger',
-            'hook' => 'woocommerce_checkout_order_processed',
+            'hook' => 'woocommerce_payment_complete',
             'integration' => 'woocommerce',
-            'order_id' => $order_id,
-            'status_transition' => $status_transition,
+            'order_id' => $order->get_id(),
+            'transaction_id' => '' !== (string) $transaction_id ? (string) $transaction_id : $order->get_transaction_id(),
         ));
 
         Workflow_Processor::process_workflows( $payload );
+
+        // Until the 2.7.0 upgrade routine renames it, a workflow saved with the "New order
+        // (Processing)" trigger this one replaced still listens to the old slug.
+        if ( ! self::is_payment_trigger_migrated() ) {
+            Workflow_Processor::process_workflows( array_merge( $payload, array(
+                'hook' => 'woocommerce_checkout_order_processed',
+                'trigger' => 'woocommerce_payment_complete', // resolves the placeholders of the new trigger
+            )));
+        }
+    }
+
+
+    /**
+     * Whether the stored workflows were moved from the "New order (Processing)" trigger
+     *
+     * @since 2.7.0
+     * @return bool
+     */
+    protected static function is_payment_trigger_migrated() {
+        $completed = get_option( Upgrader::COMPLETED_OPTION, array() );
+
+        return is_array( $completed ) && in_array( Upgrader::PAYMENT_TRIGGER_ROUTINE, $completed, true );
+    }
+
+
+    /**
+     * Queue a customer account created by WooCommerce
+     *
+     * WooCommerce fires the hook inside wc_create_new_customer(), before the checkout saves the
+     * billing phone and address on the account, so the workflows run at the end of the request.
+     *
+     * @since 2.7.0
+     * @param int $customer_id | Customer (user) ID
+     * @param array $new_customer_data | Data the account was created with
+     * @param bool $password_generated | Whether WooCommerce generated the password
+     * @return void
+     */
+    public function queue_customer_created( $customer_id, $new_customer_data = array(), $password_generated = false ) {
+        $customer_id = absint( $customer_id );
+
+        if ( ! $customer_id ) {
+            return;
+        }
+
+        self::$created_customers[ $customer_id ] = array(
+            'account_source' => self::detect_account_source( $new_customer_data ),
+            'password_generated' => (bool) $password_generated,
+        );
+
+        // Before the shutdown callbacks at priority 0 (the telemetry flush among them), so what
+        // the workflows record in this request is still written.
+        if ( ! has_action( 'shutdown', array( $this, 'process_workflow_customers_created' ) ) ) {
+            add_action( 'shutdown', array( $this, 'process_workflow_customers_created' ), -10 );
+        }
+    }
+
+
+    /**
+     * Where WooCommerce created a customer account
+     *
+     * @since 2.7.0
+     * @param array $new_customer_data | Data the account was created with
+     * @return string One of my_account, checkout, order_confirmation or other.
+     */
+    public static function detect_account_source( $new_customer_data ) {
+        $source = is_array( $new_customer_data ) && isset( $new_customer_data['source'] ) && is_scalar( $new_customer_data['source'] )
+            ? (string) $new_customer_data['source']
+            : '';
+
+        // the checkout block and the order confirmation block name themselves
+        if ( 'store-api' === $source ) {
+            return 'checkout';
+        }
+
+        if ( 'delayed-account-creation' === $source ) {
+            return 'order_confirmation';
+        }
+
+        // the classic checkout and the My Account form leave the source unset
+        if ( did_action('woocommerce_checkout_process') ) {
+            return 'checkout';
+        }
+
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Only tells where the account came from; WooCommerce verified this nonce before creating it.
+        if ( isset( $_POST['woocommerce-register-nonce'] ) ) {
+            return 'my_account';
+        }
+
+        return 'other';
+    }
+
+
+    /**
+     * Process workflows for the customer accounts created in this request
+     *
+     * @since 2.7.0
+     * @return void
+     */
+    public function process_workflow_customers_created() {
+        $created = self::$created_customers;
+        self::$created_customers = array();
+
+        foreach ( $created as $customer_id => $context ) {
+            // an account removed in the same request, by a failed checkout for example
+            if ( ! get_userdata( $customer_id ) ) {
+                continue;
+            }
+
+            /**
+             * Filter the payload before processing workflows
+             *
+             * @since 2.7.0
+             * @param array $payload | Payload to be processed
+             */
+            $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Created_Customer', array(
+                'type' => 'trigger',
+                'hook' => 'woocommerce_created_customer',
+                'integration' => 'woocommerce',
+                'user_id' => $customer_id,
+                'account_source' => $context['account_source'],
+                'password_generated' => $context['password_generated'],
+            ));
+
+            Workflow_Processor::process_workflows( $payload );
+        }
+    }
+
+
+    /**
+     * Process workflow when the stock of a product reaches the low stock threshold
+     *
+     * @since 2.7.0
+     * @param \WC_Product $product | Product
+     * @return void
+     */
+    public function process_workflow_low_stock( $product ) {
+        if ( ! self::claim_stock_alert( 'woocommerce_low_stock', $product ) ) {
+            return;
+        }
+
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.7.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Low_Stock', self::get_product_payload( 'woocommerce_low_stock', $product ) );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when the stock of a product reaches the out of stock threshold
+     *
+     * @since 2.7.0
+     * @param \WC_Product $product | Product
+     * @return void
+     */
+    public function process_workflow_no_stock( $product ) {
+        if ( ! self::claim_stock_alert( 'woocommerce_no_stock', $product ) ) {
+            return;
+        }
+
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.7.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/No_Stock', self::get_product_payload( 'woocommerce_no_stock', $product ) );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Whether a stock alert has not run yet for the product in this request, claiming it
+     *
+     * @since 2.7.0
+     * @param string $hook | Trigger hook
+     * @param mixed $product | Product
+     * @return bool
+     */
+    protected static function claim_stock_alert( $hook, $product ) {
+        if ( ! $product instanceof \WC_Product || ! $product->get_id() ) {
+            return false;
+        }
+
+        $key = $hook . ':' . $product->get_id();
+
+        if ( isset( self::$stock_alerts[ $key ] ) ) {
+            return false;
+        }
+
+        self::$stock_alerts[ $key ] = true;
+
+        return true;
+    }
+
+
+    /**
+     * Build the payload of a product trigger
+     *
+     * @since 2.7.0
+     * @param string $hook | Trigger hook
+     * @param \WC_Product $product | Product
+     * @return array
+     */
+    protected static function get_product_payload( $hook, $product ) {
+        return array(
+            'type' => 'trigger',
+            'hook' => $hook,
+            'integration' => 'woocommerce',
+            'product_id' => $product->get_id(),
+        );
+    }
+
+
+    /**
+     * Remember a product whose save moves it from out of stock or on backorder to in stock
+     *
+     * Runs before the save, while the product still holds its previous stock status: the
+     * stock status hooks only carry the new one, and they also fire for a product created in
+     * stock, which is not a restock.
+     *
+     * @since 2.7.0
+     * @param \WC_Product $product | Product being saved
+     * @return void
+     */
+    public function remember_restock( $product ) {
+        if ( ! $product instanceof \WC_Product || ! $product->get_id() ) {
+            return;
+        }
+
+        $changes = $product->get_changes();
+
+        if ( ! isset( $changes['stock_status'] ) || 'instock' !== $changes['stock_status'] ) {
+            return;
+        }
+
+        $data = $product->get_data();
+        $previous = isset( $data['stock_status'] ) ? (string) $data['stock_status'] : '';
+
+        if ( in_array( $previous, array( 'outofstock', 'onbackorder' ), true ) ) {
+            self::$restocking[ $product->get_id() ] = true;
+        }
+    }
+
+
+    /**
+     * Process workflow when a product goes back in stock
+     *
+     * A variation coming back also brings its variable product back, so the variable product
+     * is only announced when none of its variations was, and a variation is skipped when the
+     * variable product itself was already announced in this request.
+     *
+     * @since 2.7.0
+     * @param int $product_id | Product ID
+     * @param string $stock_status | New stock status
+     * @param \WC_Product|null $product | Product
+     * @return void
+     */
+    public function process_workflow_back_in_stock( $product_id, $stock_status, $product = null ) {
+        $product_id = absint( $product_id );
+
+        if ( 'instock' !== $stock_status || empty( self::$restocking[ $product_id ] ) ) {
+            return;
+        }
+
+        unset( self::$restocking[ $product_id ] );
+
+        $product = $product instanceof \WC_Product ? $product : wc_get_product( $product_id );
+
+        if ( ! $product instanceof \WC_Product ) {
+            return;
+        }
+
+        $parent_id = (int) $product->get_parent_id();
+
+        if ( $parent_id ) {
+            if ( isset( self::$restocked_products[ $parent_id ] ) && 'self' === self::$restocked_products[ $parent_id ] ) {
+                return;
+            }
+
+            if ( ! isset( self::$restocked_products[ $parent_id ] ) ) {
+                self::$restocked_products[ $parent_id ] = 'variation';
+            }
+        } elseif ( isset( self::$restocked_products[ $product_id ] ) ) {
+            return;
+        }
+
+        self::$restocked_products[ $product_id ] = 'self';
+
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.7.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Product_Back_In_Stock', self::get_product_payload( 'woocommerce_product_back_in_stock', $product ) );
+
+        Workflow_Processor::process_workflows( $payload );
+    }
+
+
+    /**
+     * Process workflow when WooCommerce notifies a customer that a product is back in stock
+     *
+     * Hooked on the filter that asks whether the back in stock email is enabled, which
+     * WooCommerce runs once per notice right before sending it, whether the email is enabled or
+     * not. The filter value is always returned untouched.
+     *
+     * @since 2.7.0
+     * @param bool $enabled | Whether the email is enabled
+     * @param mixed $notification | The notice (Automattic\WooCommerce\Internal\StockNotifications\Notification)
+     * @return bool
+     */
+    public function process_workflow_customer_stock_notification( $enabled, $notification = null ) {
+        if ( ! is_object( $notification )
+            || ! method_exists( $notification, 'get_id' )
+            || ! method_exists( $notification, 'get_product_id' )
+            || ! method_exists( $notification, 'get_user_id' )
+            || ! method_exists( $notification, 'get_user_email' )
+        ) {
+            return $enabled;
+        }
+
+        $notification_id = (int) $notification->get_id();
+
+        // the email preview uses a notice that was never saved
+        if ( ! $notification_id || isset( self::$stock_notices[ $notification_id ] ) ) {
+            return $enabled;
+        }
+
+        self::$stock_notices[ $notification_id ] = true;
+
+        /**
+         * Filter the payload before processing workflows
+         *
+         * @since 2.7.0
+         * @param array $payload | Payload to be processed
+         */
+        $payload = apply_filters( 'Joinotify/Process_Workflows/Woocommerce/Customer_Stock_Notification', array(
+            'type' => 'trigger',
+            'hook' => 'woocommerce_customer_stock_notification',
+            'integration' => 'woocommerce',
+            'product_id' => (int) $notification->get_product_id(),
+            'user_id' => (int) $notification->get_user_id(),
+            'user_email' => (string) $notification->get_user_email(),
+            'notification_id' => $notification_id,
+        ));
+
+        // WooCommerce cancels a notice whose sending throws, so a failing workflow must not reach it
+        try {
+            Workflow_Processor::process_workflows( $payload );
+        } catch ( \Throwable $e ) {
+            Logger::register_log( sprintf( 'Back in stock notice %d: workflows failed: %s', $notification_id, $e->getMessage() ), 'ERROR' );
+        }
+
+        return $enabled;
     }
 
 

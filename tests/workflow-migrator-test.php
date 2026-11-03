@@ -96,8 +96,10 @@ function load_fixture( $name ) {
 echo "== version gate ==\n";
 check( 'needs_migration(1.2.5) is true', Workflow_Migrator::needs_migration( '1.2.5' ) === true );
 check( 'needs_migration(1.4.7) is true', Workflow_Migrator::needs_migration( '1.4.7' ) === true );
-check( 'needs_migration(2.0.0) is false', Workflow_Migrator::needs_migration( '2.0.0' ) === false );
-check( 'needs_migration(2.1.0) is false', Workflow_Migrator::needs_migration( '2.1.0' ) === false );
+check( 'needs_migration(2.0.0) is true (2.7.0 renamed a trigger)', Workflow_Migrator::needs_migration( '2.0.0' ) === true );
+check( 'needs_migration(2.6.2) is true', Workflow_Migrator::needs_migration( '2.6.2' ) === true );
+check( 'needs_migration(2.7.0) is false', Workflow_Migrator::needs_migration( '2.7.0' ) === false );
+check( 'needs_migration(2.8.0) is false', Workflow_Migrator::needs_migration( '2.8.0' ) === false );
 check( 'needs_migration("") is true', Workflow_Migrator::needs_migration( '' ) === true );
 
 echo "\n== fixture 725 (user_register, single whatsapp text) ==\n";
@@ -170,6 +172,31 @@ check( 'condition_content preserved', isset( $condition['data']['condition_conte
 check( 'nested true branch has whatsapp text', find_action_node( $condition['children']['action_true'], 'send_whatsapp_message_text' ) !== null );
 check( 'nested false branch has stop_funnel', find_action_node( $condition['children']['action_false'], 'stop_funnel' ) !== null );
 check( 'user_meta placeholder untouched in branch', find_action_node( $condition['children']['action_true'], 'send_whatsapp_message_text' )['data']['receiver'] === '{{ user_meta[billing_phone] }}' );
+
+echo "\n== 2.7.0: New order (Processing) becomes Payment confirmed ==\n";
+$processing = array(
+	array(
+		'id' => 'joinotify_trigger_1',
+		'type' => 'trigger',
+		'data' => array( 'title' => 'Paid orders', 'trigger' => 'woocommerce_checkout_order_processed', 'context' => 'woocommerce', 'settings' => array() ),
+		'children' => array(),
+	),
+	array(
+		'id' => 'joinotify_action_1',
+		'type' => 'action',
+		'data' => array( 'action' => 'send_whatsapp_message_text', 'receiver' => '{{ wc_billing_phone }}', 'trigger' => 'woocommerce_checkout_order_processed' ),
+		'children' => array(),
+	),
+);
+
+$from_2_0 = Workflow_Migrator::migrate_content( $processing, '2.0.0' );
+check( 'trigger slug renamed to woocommerce_payment_complete', $from_2_0[0]['data']['trigger'] === 'woocommerce_payment_complete' );
+check( 'trigger title kept', $from_2_0[0]['data']['title'] === 'Paid orders' );
+check( 'only trigger nodes are renamed', $from_2_0[1]['data']['trigger'] === 'woocommerce_checkout_order_processed' );
+check( 'other triggers untouched', Workflow_Migrator::migrate_node_to_2_7_0( array( 'type' => 'trigger', 'data' => array( 'trigger' => 'woocommerce_new_order' ) ) )['data']['trigger'] === 'woocommerce_new_order' );
+check( 'content already on 2.7.0 is not renamed again', Workflow_Migrator::migrate_content( $processing, '2.7.0' ) === $processing );
+check( 'a 1.x export reaches the new slug too', Workflow_Migrator::migrate_content( $processing, '1.4.7' )[0]['data']['trigger'] === 'woocommerce_payment_complete' );
+check( 'running the step twice is a no-op', Workflow_Migrator::migrate_to_2_7_0( $from_2_0 ) === $from_2_0 );
 
 echo "\n== idempotency (migrate twice == migrate once) ==\n";
 foreach ( array( 'joinotify-workflow-725.json', 'joinotify-workflow-727.json', 'joinotify-workflow-729.json', 'joinotify-workflow-146.json' ) as $fixture ) {

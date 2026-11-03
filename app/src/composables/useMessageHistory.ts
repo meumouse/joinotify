@@ -8,6 +8,7 @@ import { DEFAULT_PER_PAGE, normalizePerPage, pageKeepingFirstRow, readStoredPerP
 interface HistoryItem {
   id: number | string;
   can_cancel_retry?: boolean;
+  can_resend?: boolean;
   [key: string]: unknown;
 }
 
@@ -40,10 +41,10 @@ function normalizePagination(pagination: unknown) {
 
 /**
  * Server-side message history listing: filtering, pagination, selection,
- * deletion and JSON export backed by the Joinotify REST endpoints.
+ * deletion, resend and JSON export backed by the Joinotify REST endpoints.
  *
  * @since 2.0.0
- * @version 2.6.0
+ * @version 2.7.0
  * @param {Object} bootstrap Bootstrap payload from the history screen.
  */
 export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
@@ -86,6 +87,10 @@ export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
   // the whole selection and can answer whether a resend is left to cancel.
   const cancellableSelected = computed(
     () => items.value.filter((item) => item?.can_cancel_retry && selectedIds.value.has(String(item.id))).length
+  );
+
+  const resendableSelected = computed(
+    () => items.value.filter((item) => item?.can_resend && selectedIds.value.has(String(item.id))).length
   );
 
   const allVisibleSelected = computed(
@@ -320,6 +325,68 @@ export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
     }
   }
 
+  /**
+   * Send the given rows again, once, right away.
+   *
+   * Each resend records a row of its own, so the refreshed list arrives even
+   * when every message failed again: the new failed rows say why.
+   *
+   * @since 2.7.0
+   * @param {Array<number|string>} ids History record IDs.
+   * @returns {Promise<void>}
+   */
+  async function requestResend(ids: Array<number | string>) {
+    if (!hasApi || !ids.length) {
+      return;
+    }
+
+    loading.value = true;
+    error.value = '';
+    notice.value = '';
+
+    try {
+      const response = await api.post('/admin/history/resend', { ...listArgs(), ids: ids.map(String) });
+
+      if (Array.isArray(response?.items)) {
+        items.value = response.items;
+        counts.value = normalizeCounts(response?.counts);
+        pagination.value = normalizePagination(response?.pagination);
+        selectedIds.value = new Set();
+      }
+
+      if (response?.status === 'error') {
+        throw new Error(response.message || __('Could not resend the messages.', textDomain));
+      }
+
+      notice.value = response?.message || '';
+    } catch (resendError) {
+      error.value = resendError instanceof Error ? resendError.message : __('Could not resend the messages.', textDomain);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  /**
+   * Resend the selected rows that can be resent.
+   *
+   * @since 2.7.0
+   * @returns {Promise<void>}
+   */
+  function resendSelected() {
+    return requestResend(Array.from(selectedIds.value));
+  }
+
+  /**
+   * Resend a single record.
+   *
+   * @since 2.7.0
+   * @param {number|string} id History record ID.
+   * @returns {Promise<void>}
+   */
+  function resendRecord(id: number | string) {
+    return requestResend([id]);
+  }
+
   async function clearAll() {
     if (!hasApi) {
       return;
@@ -439,6 +506,7 @@ export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
     statusTabs,
     totalSelected,
     cancellableSelected,
+    resendableSelected,
     allVisibleSelected,
     partiallyVisibleSelected,
     pageSummary,
@@ -458,6 +526,8 @@ export function useMessageHistory(bootstrap: HistoryBootstrap = {}) {
     toggleSelectAll,
     removeSelected,
     cancelRetrySelected,
+    resendSelected,
+    resendRecord,
     clearAll,
     exportRecords,
     exportRecord,

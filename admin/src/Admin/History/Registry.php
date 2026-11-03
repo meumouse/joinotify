@@ -5,7 +5,6 @@ namespace MeuMouse\Joinotify\Admin\History;
 use MeuMouse\Joinotify\Api\Send_Error;
 use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Notification_Queue;
-use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Admin\Export;
 
 // Exit if accessed directly.
@@ -52,7 +51,7 @@ class Registry {
      * closed 24-hour window stops looking like an opaque slug.
      *
      * @since 2.0.0
-     * @version 2.6.0
+     * @version 2.7.0
      * @param array<string,mixed> $row Raw DB row.
      * @return array<string,mixed>
      */
@@ -98,6 +97,13 @@ class Registry {
             // True only while a resend is actually still on the books, which is
             // what the "Cancel resend" action acts on.
             'can_cancel_retry' => 'queued' === (string) ( $row['status'] ?? '' ) && '' !== (string) ( $row['queue_id'] ?? '' ),
+            // True when the row still holds the whole message and has not been
+            // resent yet, which is what the "Resend" action acts on.
+            'can_resend' => Resend::can_resend( $row ),
+            // The row this one is a resend of, and the row that resent this one.
+            'resent_from' => (int) ( $meta['resent_from'] ?? 0 ),
+            'resent_as' => (int) ( $meta['resent_as'] ?? 0 ),
+            'resent_at' => ! empty( $meta['resent_at'] ) ? get_date_from_gmt( (string) $meta['resent_at'] ) : '',
         );
     }
 
@@ -254,17 +260,18 @@ class Registry {
      * Build an exported record from a stored row.
      *
      * The list item minus what only the screen needs (the link back into the
-     * builder and the "Cancel resend" flag), plus the WhatsApp message id and
-     * the retry-queue item that the list leaves out.
+     * builder and the "Cancel resend" and "Resend" flags), plus the WhatsApp
+     * message id and the retry-queue item that the list leaves out.
      *
      * @since 2.4.2
+     * @version 2.7.0
      * @param array<string,mixed> $row Raw DB row.
      * @return array<string,mixed>
      */
     public static function build_export_item( $row ) {
         $item = self::build_item( $row );
 
-        unset( $item['workflow_edit_url'], $item['can_cancel_retry'] );
+        unset( $item['workflow_edit_url'], $item['can_cancel_retry'], $item['can_resend'] );
 
         $item['wamid'] = (string) ( $row['wamid'] ?? '' );
         $item['queue_id'] = (string) ( $row['queue_id'] ?? '' );
@@ -382,6 +389,7 @@ class Registry {
      * Build the bootstrap payload for the history Vue screen.
      *
      * @since 2.0.0
+     * @version 2.7.0
      * @return array<string,mixed>
      */
     public static function get_bootstrap_data() {
@@ -392,7 +400,6 @@ class Registry {
             'title' => __( 'Message history', 'joinotify' ),
             'date_format' => get_option( 'date_format' ),
             'time_format' => get_option( 'time_format' ),
-            'enabled' => Admin::get_setting( 'enable_message_history' ) === 'no' ? 'no' : 'yes',
             'sources' => self::get_source_options(),
             'items' => $list['items'],
             'counts' => $list['counts'],

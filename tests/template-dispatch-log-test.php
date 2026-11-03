@@ -159,6 +159,21 @@ class Fake_Wpdb {
 		return null;
 	}
 
+	/**
+	 * Only the `id = %d` meta lookup of mark_resent() is understood.
+	 */
+	public function get_var( $query ) {
+		$index = (int) ( $query['args'][0] ?? 0 ) - 1;
+
+		foreach ( $this->rows as $rows ) {
+			if ( isset( $rows[ $index ] ) ) {
+				return (string) ( $rows[ $index ]['meta'] ?? '' );
+			}
+		}
+
+		return null;
+	}
+
 	public function update( $table, $data, $where, $formats = null, $where_formats = null ) {
 		if ( count( $data ) !== count( (array) $formats ) ) {
 			$this->format_mismatches++;
@@ -229,6 +244,7 @@ require_once __DIR__ . '/../admin/src/Api/Webhooks.php';
 require_once __DIR__ . '/../admin/src/Api/Contact_Window.php';
 require_once __DIR__ . '/../admin/src/Api/Webhook_Handler.php';
 require_once __DIR__ . '/../admin/src/Api/Cloud_Client.php';
+require_once __DIR__ . '/../admin/src/Admin/History/Resend.php';
 require_once __DIR__ . '/../admin/src/Admin/History/Registry.php';
 
 use MeuMouse\Joinotify\Admin\Admin;
@@ -251,7 +267,6 @@ function reset_state() {
 	$GLOBALS['wpdb'] = new Fake_Wpdb();
 
 	Admin::$settings = array(
-		'enable_message_history' => 'yes',
 		'enable_debug_logs' => 'yes',
 		'enable_debug_mode' => 'no',
 	);
@@ -818,6 +833,42 @@ check( 'the migrated schema version is stored', Message_History::DB_VERSION === 
 
 Message_History::record( array( 'message_type' => 'text', 'status' => 'sent' ) );
 check( 'a current schema is not migrated again', 1 === count( $GLOBALS['db_delta'] ) );
+
+echo "\nMessage_History resend link\n";
+reset_state();
+
+Message_History::record( array( 'message_type' => 'text', 'status' => 'failed', 'sender' => '5541987111527', 'receiver' => '5541988887777', 'content' => 'Olá!' ) );
+Message_History::set_context( array( 'source' => 'workflow', 'resent_from' => 1 ) );
+Message_History::record( array( 'message_type' => 'text', 'status' => 'sent', 'content' => 'Olá!', 'meta' => array( 'session_window' => 'open' ) ) );
+Message_History::clear_context();
+
+$history = rows( 'joinotify_message_history' );
+$original = Message_History::decode_meta( $history[0]['meta'] ?? '' );
+$resent = Message_History::decode_meta( $history[1]['meta'] ?? '' );
+
+check( 'the resend row points back at the original, keeping its own meta', 1 === ( $resent['resent_from'] ?? 0 ) && 'open' === ( $resent['session_window'] ?? '' ) );
+check( 'the original is marked as resent as row 2', 2 === ( $original['resent_as'] ?? 0 ) && ! empty( $original['resent_at'] ) );
+check( 'the original keeps its failed status', 'failed' === $history[0]['status'] );
+check( '…and stops offering a resend', false === \MeuMouse\Joinotify\Admin\History\Resend::can_resend( array_merge( $history[0], array( 'id' => 1 ) ) ) );
+check( 'the list exposes both ends of the link', 2 === Registry::build_item( $history[0] )['resent_as'] && 1 === Registry::build_item( $history[1] )['resent_from'] );
+
+echo "\nCloud_Client::send_raw_message — resend payload\n";
+reset_state();
+
+$buttons = array(
+	'type' => 'button',
+	'body' => array( 'text' => 'Confirmar?' ),
+	'action' => array( 'buttons' => array( array( 'type' => 'reply', 'reply' => array( 'id' => 'sim', 'title' => 'Sim' ) ) ) ),
+);
+
+queue_response( 503, array() );
+Cloud_Client::send_raw_message( '5541987111527', '5541988887777', 'interactive', $buttons, 'Confirmar?', false, true );
+
+$row = rows( 'joinotify_message_history' )[0] ?? array();
+$raw = Message_History::decode_meta( $row['meta'] ?? '' )['raw'] ?? array();
+
+check( 'an interactive row keeps its Meta object as JSON', 'interactive' === ( $raw['type'] ?? '' ) && $buttons === json_decode( (string) ( $raw['content'] ?? '' ), true ) );
+check( '…which a resend sends as the same object', $buttons === ( \MeuMouse\Joinotify\Admin\History\Resend::build_request( array_merge( $row, array( 'id' => 1 ) ) )['raw_content'] ?? null ) );
 
 echo "\nHistory Registry::build_template\n";
 

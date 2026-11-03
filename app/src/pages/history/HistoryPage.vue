@@ -8,8 +8,11 @@
  * A message sent outside the contact's 24-hour window is flagged next to its
  * status, which the delivery webhook keeps moving to delivered, read or failed.
  *
+ * A failed or cancelled message can be sent again, one by one or as the
+ * selection; the original row is then flagged as resent.
+ *
  * @since 2.0.0
- * @version 2.6.0
+ * @version 2.7.0
  */
 import { computed, ref } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -40,6 +43,7 @@ const {
   statusTabs,
   totalSelected,
   cancellableSelected,
+  resendableSelected,
   allVisibleSelected,
   partiallyVisibleSelected,
   pageSummary,
@@ -57,6 +61,8 @@ const {
   toggleSelectAll,
   removeSelected,
   cancelRetrySelected,
+  resendSelected,
+  resendRecord,
   clearAll,
   exportRecords,
   exportRecord,
@@ -66,12 +72,12 @@ const detailsEntry = ref(null);
 const detailsOpen = ref(false);
 const confirmOpen = ref(false);
 const confirmKind = ref('');
+// The single row a row action or the details modal asked to resend.
+const resendTargetId = ref(null);
 
 const dateFrom = ref('');
 const dateTo = ref('');
 const searchTerm = ref('');
-
-const enabled = computed(() => (props.bootstrap?.enabled ?? 'yes') === 'yes');
 
 const statusLabels = computed(() => ({
   sent: __('Sent', textDomain),
@@ -164,16 +170,25 @@ function askConfirm(kind) {
   confirmOpen.value = true;
 }
 
+function askResendRecord(entry) {
+  resendTargetId.value = entry?.id ?? null;
+  detailsOpen.value = false;
+  askConfirm('resend-one');
+}
+
 function runConfirm() {
   const actions = {
     clear: clearAll,
     'cancel-retry': cancelRetrySelected,
+    resend: resendSelected,
+    'resend-one': () => resendRecord(resendTargetId.value),
   };
   const run = actions[confirmKind.value] || removeSelected;
 
   Promise.resolve(run()).finally(() => {
     confirmOpen.value = false;
     confirmKind.value = '';
+    resendTargetId.value = null;
   });
 }
 
@@ -184,6 +199,10 @@ const confirmTitle = computed(() => {
 
   if (confirmKind.value === 'cancel-retry') {
     return __('Cancel resend', textDomain);
+  }
+
+  if (confirmKind.value === 'resend' || confirmKind.value === 'resend-one') {
+    return __('Resend messages', textDomain);
   }
 
   return __('Delete selected records', textDomain);
@@ -198,12 +217,28 @@ const confirmDescription = computed(() => {
     return __('The selected messages will not be sent again. Records without a pending resend are left untouched.', textDomain);
   }
 
+  if (confirmKind.value === 'resend') {
+    return __('The selected failed messages will be sent to their recipients again, right now. Records that cannot be resent are left untouched.', textDomain);
+  }
+
+  if (confirmKind.value === 'resend-one') {
+    return __('This message will be sent to its recipient again, right now.', textDomain);
+  }
+
   return __('The selected records will be permanently removed. This action cannot be undone.', textDomain);
 });
 
-const confirmLabel = computed(() =>
-  confirmKind.value === 'cancel-retry' ? __('Cancel resend', textDomain) : __('Delete', textDomain)
-);
+const confirmLabel = computed(() => {
+  if (confirmKind.value === 'cancel-retry') {
+    return __('Cancel resend', textDomain);
+  }
+
+  if (confirmKind.value === 'resend' || confirmKind.value === 'resend-one') {
+    return __('Send again', textDomain);
+  }
+
+  return __('Delete', textDomain);
+});
 
 // With rows selected the export covers them; otherwise every record the
 // filters match, which is what the tooltip says.
@@ -225,13 +260,6 @@ const exportTitle = computed(() =>
         :title="__('Message history', textDomain)"
         :description="__('Audit every WhatsApp message dispatched by Joinotify, including workflow sends, retries and test messages.', textDomain)"
       />
-
-      <div
-        v-if="!enabled"
-        class="mt-4 rounded-[8px] border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] text-amber-800"
-      >
-        {{ __('Message history recording is disabled. Enable it in Settings → About to start logging new messages.', textDomain) }}
-      </div>
 
       <div class="mt-6 rounded-[8px] bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] ring-1 ring-slate-100">
         <div class="flex flex-col gap-4 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-6">
@@ -317,6 +345,15 @@ const exportTitle = computed(() =>
           <!-- Toolbar -->
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                class="rounded-[8px] bg-primary-50 px-4 py-2 text-[13px] font-semibold text-primary-700 transition hover:bg-primary-100 disabled:cursor-not-allowed disabled:opacity-50"
+                :disabled="!resendableSelected || loading"
+                :title="__('Send the selected failed messages again', textDomain)"
+                @click="askConfirm('resend')"
+              >
+                {{ __('Send again', textDomain) }}<span v-if="resendableSelected"> ({{ resendableSelected }})</span>
+              </button>
               <button
                 type="button"
                 class="rounded-[8px] bg-amber-50 px-4 py-2 text-[13px] font-semibold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
@@ -415,6 +452,13 @@ const exportTitle = computed(() =>
                     >
                       {{ __('Outside 24h window', textDomain) }}
                     </span>
+                    <span
+                      v-if="entry.resent_as"
+                      class="ml-1.5 inline-flex rounded-full bg-slate-100 px-2.5 py-0.5 text-[12px] font-medium text-slate-600 ring-1 ring-inset ring-slate-200"
+                      :title="entry.resent_at || ''"
+                    >
+                      {{ __('Resent', textDomain) }}
+                    </span>
                   </td>
                   <td
                     class="max-w-[240px] px-3 py-3"
@@ -425,6 +469,16 @@ const exportTitle = computed(() =>
                   </td>
                   <td class="max-w-[280px] px-3 py-3 text-slate-500">{{ contentPreview(entry.content) }}</td>
                   <td class="whitespace-nowrap px-3 py-3 text-right" @click.stop>
+                    <button
+                      v-if="entry.can_resend"
+                      type="button"
+                      class="mr-2 rounded-[8px] border border-primary-200 px-3 py-1.5 text-[13px] font-semibold text-primary-700 transition hover:bg-primary-50 disabled:cursor-not-allowed disabled:opacity-50"
+                      :disabled="loading"
+                      :title="__('Send this message again', textDomain)"
+                      @click="askResendRecord(entry)"
+                    >
+                      {{ __('Send again', textDomain) }}
+                    </button>
                     <button
                       type="button"
                       class="rounded-[8px] border border-slate-200 px-3 py-1.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
@@ -466,10 +520,12 @@ const exportTitle = computed(() =>
       :open="detailsOpen"
       :entry="detailsEntry || {}"
       :exporting="exporting"
+      :loading="loading"
       :status-labels="statusLabels"
       :source-labels="sourceLabels"
       @close="detailsOpen = false"
       @export="exportRecord(detailsEntry?.id)"
+      @resend="askResendRecord(detailsEntry)"
     />
 
     <ConfirmActionModal
