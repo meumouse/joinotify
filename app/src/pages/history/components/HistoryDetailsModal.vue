@@ -219,7 +219,7 @@ const payloadJson = computed(() => (template.value ? JSON.stringify(template.val
             :disabled="loading"
             @click="$emit('resend')"
           >
-            {{ __('Resend', textDomain) }}
+            {{ __('Send again', textDomain) }}
           </button>
           <button
             type="button"

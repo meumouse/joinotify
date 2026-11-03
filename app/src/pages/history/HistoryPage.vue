@@ -234,7 +234,7 @@ const confirmLabel = computed(() => {
   }
 
   if (confirmKind.value === 'resend' || confirmKind.value === 'resend-one') {
-    return __('Resend', textDomain);
+    return __('Send again', textDomain);
   }
 
   return __('Delete', textDomain);
@@ -352,7 +352,7 @@ const exportTitle = computed(() =>
                 :title="__('Send the selected failed messages again', textDomain)"
                 @click="askConfirm('resend')"
               >
-                {{ __('Resend', textDomain) }}<span v-if="resendableSelected"> ({{ resendableSelected }})</span>
+                {{ __('Send again', textDomain) }}<span v-if="resendableSelected"> ({{ resendableSelected }})</span>
               </button>
               <button
                 type="button"
@@ -477,7 +477,7 @@ const exportTitle = computed(() =>
                       :title="__('Send this message again', textDomain)"
                       @click="askResendRecord(entry)"
                     >
-                      {{ __('Resend', textDomain) }}
+                      {{ __('Send again', textDomain) }}
                     </button>
                     <button
                       type="button"

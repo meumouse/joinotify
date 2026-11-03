@@ -10,7 +10,7 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ### Added
 
-- A failed message can be sent again from the message history: from its "Resend" row action, from the details window, or as the selected rows, up to 50 at a time (the `Joinotify/Admin/History/Resend_Limit` filter changes it). A message whose automatic retry was cancelled can be resent too. Each resend is a single attempt, outside the retry queue, and records a row of its own with the source and workflow of the original; the original is flagged "Resent" and stops offering it, so one failure is never sent twice by accident. Login codes, templates whose values were hidden from the history, and local attachments, whose file the history does not keep, are not offered a resend
+- A failed message can be sent again from the message history: from its "Send again" row action, from the details window, or as the selected rows, up to 50 at a time (the `Joinotify/Admin/History/Resend_Limit` filter changes it). A message whose automatic retry was cancelled can be resent too. Each resend is a single attempt, outside the retry queue, and records a row of its own with the source and workflow of the original; the original is flagged "Resent" and stops offering it, so one failure is never sent twice by accident. Login codes, templates whose values were hidden from the history, and local attachments, whose file the history does not keep, are not offered a resend
 
 ### Changed
 
