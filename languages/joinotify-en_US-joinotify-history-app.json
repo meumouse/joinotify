@@ -82,6 +82,9 @@
       "Could not load the message history.": [
         "Could not load the message history."
       ],
+      "Could not resend the messages.": [
+        "Could not resend the messages."
+      ],
       "Date": [
         "Date"
       ],
@@ -175,9 +178,6 @@
       "Message history": [
         "Message history"
       ],
-      "Message history recording is disabled. Enable it in Settings → About to start logging new messages.": [
-        "Message history recording is disabled. Enable it in Settings → About to start logging new messages."
-      ],
       "Next month": [
         "Next month"
       ],
@@ -214,6 +214,18 @@
       "Recipient": [
         "Recipient"
       ],
+      "Resend messages": [
+        "Resend messages"
+      ],
+      "Resend of": [
+        "Resend of"
+      ],
+      "Resent": [
+        "Resent"
+      ],
+      "Resent at": [
+        "Resent at"
+      ],
       "Response code": [
         "Response code"
       ],
@@ -237,6 +249,15 @@
       ],
       "Select year": [
         "Select year"
+      ],
+      "Send again": [
+        "Send again"
+      ],
+      "Send the selected failed messages again": [
+        "Send the selected failed messages again"
+      ],
+      "Send this message again": [
+        "Send this message again"
       ],
       "Sender": [
         "Sender"
@@ -268,6 +289,9 @@
       "The export holds only the %1$d most recent of the %2$d matching records.": [
         "The export holds only the %1$d most recent of the %2$d matching records."
       ],
+      "The selected failed messages will be sent to their recipients again, right now. Records that cannot be resent are left untouched.": [
+        "The selected failed messages will be sent to their recipients again, right now. Records that cannot be resent are left untouched."
+      ],
       "The selected messages will not be sent again. Records without a pending resend are left untouched.": [
         "The selected messages will not be sent again. Records without a pending resend are left untouched."
       ],
@@ -276,6 +300,9 @@
       ],
       "The template text was not available when this message was sent, so its name and variables are shown instead.": [
         "The template text was not available when this message was sent, so its name and variables are shown instead."
+      ],
+      "This message will be sent to its recipient again, right now.": [
+        "This message will be sent to its recipient again, right now."
       ],
       "This template was sent without variables.": [
         "This template was sent without variables."

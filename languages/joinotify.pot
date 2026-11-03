@@ -7231,10 +7231,6 @@ msgstr ""
 
 #: admin/src/Integrations/Resend.php:104
 #: admin/src/Notifications/Channels/Resend_Channel.php:47
-#: app/src/pages/history/components/HistoryDetailsModal.vue:222
-#: app/src/pages/history/HistoryPage.vue:237
-#: app/src/pages/history/HistoryPage.vue:355
-#: app/src/pages/history/HistoryPage.vue:480
 msgid "Resend"
 msgstr ""
 
@@ -7854,6 +7850,10 @@ msgid "Send a WhatsApp text message."
 msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:252
+#: app/src/pages/history/components/HistoryDetailsModal.vue:222
+#: app/src/pages/history/HistoryPage.vue:237
+#: app/src/pages/history/HistoryPage.vue:355
+#: app/src/pages/history/HistoryPage.vue:480
 msgid "Send again"
 msgstr ""
 

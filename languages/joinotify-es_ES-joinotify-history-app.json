@@ -82,6 +82,9 @@
       "Could not load the message history.": [
         "No se pudo cargar el historial de mensajes."
       ],
+      "Could not resend the messages.": [
+        "No se pudieron reenviar los mensajes."
+      ],
       "Date": [
         "Fecha"
       ],
@@ -175,9 +178,6 @@
       "Message history": [
         "Historial de mensajes"
       ],
-      "Message history recording is disabled. Enable it in Settings → About to start logging new messages.": [
-        "La grabación del historial de mensajes está desactivada. Actívala en Configuración → Acerca de para comenzar a registrar nuevos mensajes."
-      ],
       "Next month": [
         "Próximo mes"
       ],
@@ -214,6 +214,18 @@
       "Recipient": [
         "Destinatario"
       ],
+      "Resend messages": [
+        "Reenviar mensajes"
+      ],
+      "Resend of": [
+        "Reenvío de"
+      ],
+      "Resent": [
+        "Reenviado"
+      ],
+      "Resent at": [
+        "Reenviado el"
+      ],
       "Response code": [
         "Código de respuesta"
       ],
@@ -237,6 +249,15 @@
       ],
       "Select year": [
         "Selecciona año"
+      ],
+      "Send again": [
+        "Enviar de nuevo"
+      ],
+      "Send the selected failed messages again": [
+        "Enviar de nuevo los mensajes fallidos seleccionados"
+      ],
+      "Send this message again": [
+        "Enviar este mensaje de nuevo"
       ],
       "Sender": [
         "Remitente"
@@ -268,6 +289,9 @@
       "The export holds only the %1$d most recent of the %2$d matching records.": [
         "La exportación contiene solo los %1$d más recientes de los %2$d registros coincidentes."
       ],
+      "The selected failed messages will be sent to their recipients again, right now. Records that cannot be resent are left untouched.": [
+        "Los mensajes fallidos seleccionados se enviarán de nuevo a sus destinatarios ahora mismo. Los registros que no se pueden reenviar no se modificarán."
+      ],
       "The selected messages will not be sent again. Records without a pending resend are left untouched.": [
         "Los mensajes seleccionados no se enviarán nuevamente. Los registros sin un reenvío pendiente quedan intactos."
       ],
@@ -276,6 +300,9 @@
       ],
       "The template text was not available when this message was sent, so its name and variables are shown instead.": [
         "El texto de la plantilla no estaba disponible cuando se envió este mensaje, por lo que se muestran su nombre y variables en su lugar."
+      ],
+      "This message will be sent to its recipient again, right now.": [
+        "Este mensaje se enviará de nuevo a su destinatario ahora mismo."
       ],
       "This template was sent without variables.": [
         "Esta plantilla fue enviada sin variables."

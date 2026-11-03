@@ -82,6 +82,9 @@
       "Could not load the message history.": [
         "Impossibile caricare la cronologia dei messaggi."
       ],
+      "Could not resend the messages.": [
+        "Impossibile reinviare i messaggi."
+      ],
       "Date": [
         "Data"
       ],
@@ -175,9 +178,6 @@
       "Message history": [
         "Cronologia messaggi"
       ],
-      "Message history recording is disabled. Enable it in Settings → About to start logging new messages.": [
-        "La registrazione della cronologia dei messaggi è disabilitata. Abilitala in Impostazioni → Informazioni per iniziare a registrare nuovi messaggi."
-      ],
       "Next month": [
         "Prossimo mese"
       ],
@@ -214,6 +214,18 @@
       "Recipient": [
         "Destinatario"
       ],
+      "Resend messages": [
+        "Reinvia i messaggi"
+      ],
+      "Resend of": [
+        "Reinvio di"
+      ],
+      "Resent": [
+        "Reinviato"
+      ],
+      "Resent at": [
+        "Reinviato il"
+      ],
       "Response code": [
         "Codice di risposta"
       ],
@@ -237,6 +249,15 @@
       ],
       "Select year": [
         "Seleziona anno"
+      ],
+      "Send again": [
+        "Invia di nuovo"
+      ],
+      "Send the selected failed messages again": [
+        "Invia di nuovo i messaggi non riusciti selezionati"
+      ],
+      "Send this message again": [
+        "Invia di nuovo questo messaggio"
       ],
       "Sender": [
         "Mittente"
@@ -268,6 +289,9 @@
       "The export holds only the %1$d most recent of the %2$d matching records.": [
         "L'esportazione contiene solo i %1$d più recenti dei %2$d record corrispondenti."
       ],
+      "The selected failed messages will be sent to their recipients again, right now. Records that cannot be resent are left untouched.": [
+        "I messaggi non riusciti selezionati verranno inviati di nuovo ai destinatari subito. I record che non possono essere reinviati restano invariati."
+      ],
       "The selected messages will not be sent again. Records without a pending resend are left untouched.": [
         "I messaggi selezionati non verranno inviati nuovamente. I record senza un reinvio in sospeso rimangono intatti."
       ],
@@ -276,6 +300,9 @@
       ],
       "The template text was not available when this message was sent, so its name and variables are shown instead.": [
         "Il testo del modello non era disponibile quando questo messaggio è stato inviato, quindi il suo nome e le variabili sono mostrati invece."
+      ],
+      "This message will be sent to its recipient again, right now.": [
+        "Questo messaggio verrà inviato di nuovo al destinatario subito."
       ],
       "This template was sent without variables.": [
         "Questo modello è stato inviato senza variabili."
