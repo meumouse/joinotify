@@ -73,6 +73,11 @@ msgstr ""
 msgid "\"%s\" is taken off every contact and erased. This cannot be undone."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:82
+#: app/src/components/settings/NodeSettingsRenderer.vue:156
+msgid "\"true\" when the status is 2xx"
+msgstr ""
+
 #: app/src/pages/contacts/components/FilterRuleRow.vue:164
 msgid "(edit it in the Joinotify panel)"
 msgstr ""
@@ -441,11 +446,18 @@ msgid ""
 "Everything here can be changed later in Settings."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:83
+msgid ""
+"A field of the JSON response; use dots for nested fields and list positions "
+"(body.items.0.id)"
+msgstr ""
+
 #: admin/src/Api/Cloud_Client.php:1417
 msgid "A message id is required."
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:96
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 msgid "A public address. Local and private network addresses are refused."
 msgstr ""
 
@@ -539,6 +551,7 @@ msgid "Active workflow"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:157
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:88
 msgid "Add"
 msgstr ""
 
@@ -612,11 +625,16 @@ msgid "Add contact"
 msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:162
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:190
 msgid "Add field"
 msgstr ""
 
 #: app/src/pages/contacts/components/FilterGroupEditor.vue:96
 msgid "Add group"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:126
+msgid "Add header"
 msgstr ""
 
 #: app/src/components/settings/SchemaFieldRenderer.vue:310
@@ -648,6 +666,10 @@ msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:204
 msgid "Add or remove tags of the contact on Joinotify."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:115
+msgid "Add parameter"
 msgstr ""
 
 #: app/src/pages/contacts/components/BulkTagModal.vue:123
@@ -685,6 +707,10 @@ msgstr ""
 msgid "Added by hand"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:110
+msgid "Added to the URL, each value encoded for you."
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:224
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
 msgid "Address"
@@ -718,6 +744,7 @@ msgstr ""
 
 #: admin/src/Builder/Actions.php:127
 #: admin/src/Integrations/Integrations_Base.php:132
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:234
 msgid "Advanced"
 msgstr ""
 
@@ -1036,7 +1063,12 @@ msgid "API client not initialized."
 msgstr ""
 
 #: admin/src/Integrations/Resend.php:134
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:72
 msgid "API key"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:51
+msgid "API key in a header"
 msgstr ""
 
 #: admin/src/Core/Telemetry.php:143
@@ -1212,6 +1244,8 @@ msgid "Austria"
 msgstr ""
 
 #: admin/src/Integrations/Integrations_Base.php:126
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:132
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:136
 msgid "Authentication"
 msgstr ""
 
@@ -1294,6 +1328,14 @@ msgid ""
 "automatically."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:50
+msgid "Basic (user and password)"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:49
+msgid "Bearer token"
+msgstr ""
+
 #: admin/src/Validations/Country_Codes.php:143
 msgid "Belarus"
 msgstr ""
@@ -1327,6 +1369,8 @@ msgid "Blocked by Meta for marketing"
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:110
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:164
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:168
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:259
 #: app/src/pages/history/components/HistoryDetailsModal.vue:101
 msgid "Body"
@@ -1469,6 +1513,11 @@ msgstr ""
 msgid ""
 "Buyers of every order (with or without an account), their order history and "
 "their subscriptions."
+msgstr ""
+
+#: admin/src/Builder/Http_Request_Action.php:101
+#: app/src/builder/actions/definitions/httpRequest.ts:138
+msgid "Call any API and use its response in the next actions."
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:202
@@ -2110,6 +2159,10 @@ msgstr ""
 msgid "Content & CMS"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:198
+msgid "Content type"
+msgstr ""
+
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:214
 msgid "Context"
 msgstr ""
@@ -2117,6 +2170,10 @@ msgstr ""
 #: app/src/components/builder/TriggerStepFooter.vue:32
 #: app/src/pages/onboarding/OnboardingPage.vue:348
 msgid "Continue"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:63
+msgid "Continue with the next actions"
 msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:189
@@ -3089,7 +3146,7 @@ msgid "Document"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:122
-#: admin/src/Core/Init.php:562
+#: admin/src/Core/Init.php:563
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
 msgstr ""
@@ -3214,6 +3271,10 @@ msgstr ""
 
 #: app/src/pages/contacts/components/ConsentModal.vue:57
 msgid "e.g. Asked to stop receiving messages"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:215
+msgid "e.g. customer"
 msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:107
@@ -3960,6 +4021,10 @@ msgstr ""
 msgid "Form field value"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:57
+msgid "Form fields (URL encoded)"
+msgstr ""
+
 #: admin/src/Integrations/Elementor_Forms.php:109
 msgid "Form ID"
 msgstr ""
@@ -4114,6 +4179,12 @@ msgstr ""
 msgid "Give the field a label and a type."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:211
+msgid ""
+"Give the response a name to use it in the next actions. Lowercase letters, "
+"numbers, - and _."
+msgstr ""
+
 #: admin/src/Rest/Contacts_Tag_Save.php:47
 msgid "Give the tag a name."
 msgstr ""
@@ -4210,11 +4281,16 @@ msgstr ""
 msgid "Header location"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:150
+msgid "Header name"
+msgstr ""
+
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:235
 msgid "Header video"
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:128
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:121
 msgid "Headers"
 msgstr ""
 
@@ -4326,6 +4402,18 @@ msgstr ""
 
 #: app/src/components/builder/BuilderStartChooser.vue:26
 msgid "How would you like to create your new workflow?"
+msgstr ""
+
+#: admin/src/Builder/Http_Request_Action.php:100
+#: admin/src/Builder/Http_Request_Action.php:130
+#: app/src/builder/actions/definitions/httpRequest.ts:66
+#: app/src/builder/actions/definitions/httpRequest.ts:137
+msgid "HTTP request"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:81
+#: app/src/components/settings/NodeSettingsRenderer.vue:155
+msgid "HTTP status code, such as 200"
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
@@ -4892,6 +4980,8 @@ msgid "Jordan"
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:119
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:56
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:175
 msgid "JSON"
 msgstr ""
 
@@ -4904,11 +4994,11 @@ msgstr ""
 msgid "Keep forever"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2362
+#: admin/src/Core/Workflow_Processor.php:2385
 msgid "Keep the message concise, around two to four sentences."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2361
+#: admin/src/Core/Workflow_Processor.php:2384
 msgid "Keep the message very short, one or two sentences."
 msgstr ""
 
@@ -5566,6 +5656,7 @@ msgid "Meta rejected this template."
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:100
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:97
 msgid "Method"
 msgstr ""
 
@@ -5698,6 +5789,7 @@ msgstr ""
 msgid "Myanmar"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:69
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:218
 #: app/src/components/workflows/WorkflowTableHeader.vue:35
 #: app/src/pages/contacts/components/AudienceEditor.vue:187
@@ -5893,6 +5985,10 @@ msgstr ""
 
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:199
 msgid "No audiences yet"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:55
+msgid "No body"
 msgstr ""
 
 #: admin/src/Validations/Conditions.php:36
@@ -6119,6 +6215,7 @@ msgid "Node settings"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:785
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:48
 msgid "None"
 msgstr ""
 
@@ -6630,6 +6727,7 @@ msgstr ""
 msgid "Parent flow:"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:69
 #: templates/otp-login/myaccount/form-login.php:96
 #: templates/otp-login/shared/otp-login-form.php:55
 msgid "Password"
@@ -6871,6 +6969,13 @@ msgid ""
 "are."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:181
+msgid ""
+"Placeholders inside quotes are replaced safely, even when the value has "
+"quotes or line breaks. A placeholder outside quotes, such as a number, must "
+"leave valid JSON once replaced."
+msgstr ""
+
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:22
 msgid "Placeholders, custom variables and the PHP extension API"
 msgstr ""
@@ -7024,6 +7129,10 @@ msgstr ""
 msgid "Qatar"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:110
+msgid "Query parameters"
+msgstr ""
+
 #: app/src/composables/useMessageHistory.ts:80
 #: app/src/pages/history/HistoryPage.vue:87
 msgid "Queued"
@@ -7031,6 +7140,10 @@ msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:217
 msgid "Quick Tools"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:59
+msgid "Raw text"
 msgstr ""
 
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:97
@@ -7182,6 +7295,7 @@ msgid "Remember me"
 msgstr ""
 
 #: app/src/builder/actions/settings/ConditionProductsField.vue:169
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:81
 #: app/src/components/settings/SchemaFieldRenderer.vue:335
 #: app/src/pages/contacts/components/FilterRuleRow.vue:168
 #: app/src/pages/contacts/tabs/SourcesTab.vue:291
@@ -7263,6 +7377,7 @@ msgstr ""
 msgid "Republic of the Congo"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:92
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:206
 msgid "Request"
 msgstr ""
@@ -7273,7 +7388,7 @@ msgstr ""
 msgid "Request failed."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:243
+#: app/src/components/settings/NodeSettingsRenderer.vue:275
 msgid "Required configuration for this trigger to run correctly."
 msgstr ""
 
@@ -7332,8 +7447,20 @@ msgstr ""
 msgid "Resize"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:211
+msgid "Response"
+msgstr ""
+
+#: app/src/components/settings/NodeSettingsRenderer.vue:157
+msgid "Response body. Add .FIELD for a field of a JSON response."
+msgstr ""
+
 #: app/src/pages/history/components/HistoryDetailsModal.vue:79
 msgid "Response code"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:214
+msgid "Response name"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowRowActions.vue:59
@@ -7548,6 +7675,10 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:158
+msgid "Saved — type a new one to replace it"
+msgstr ""
+
 #: app/src/components/fields/JoinotifyApiKeyField.vue:156
 msgid "Saved Joinotify API key"
 msgstr ""
@@ -7695,6 +7826,10 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:235
+msgid "Seconds to wait for the answer, from 1 to 30."
+msgstr ""
+
 #: admin/src/Integrations/Resend.php:135
 msgid ""
 "Secret key used to authenticate requests to Resend. Find it at "
@@ -7750,7 +7885,7 @@ msgstr ""
 msgid "Select a digital product"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:280
+#: app/src/components/settings/NodeSettingsRenderer.vue:312
 msgid "Select a node to edit its settings."
 msgstr ""
 
@@ -8131,7 +8266,9 @@ msgstr ""
 msgid "Set an expiration"
 msgstr ""
 
+#: admin/src/Builder/Http_Request_Action.php:176
 #: admin/src/Builder/Webhook_Action.php:162
+#: app/src/builder/actions/definitions/httpRequest.ts:104
 msgid "Set the URL"
 msgstr ""
 
@@ -8141,7 +8278,7 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:104
 #: admin/src/Admin/Menu.php:105
-#: admin/src/Core/Init.php:541
+#: admin/src/Core/Init.php:542
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:287
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
@@ -8401,6 +8538,10 @@ msgstr ""
 #: app/src/builder/actions/definitions/stopFunnel.ts:26
 #: app/src/builder/actions/definitions/stopFunnel.ts:35
 msgid "Stop funnel"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:64
+msgid "Stop the workflow"
 msgstr ""
 
 #: admin/src/Rest/Cloud_Sync_Action.php:79
@@ -8716,6 +8857,7 @@ msgstr ""
 msgid "Test sender"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:204
 #: app/src/pages/contacts/labels.ts:143
 #: app/src/pages/history/HistoryPage.vue:102
 #: app/vite-plugins/wporg-i18n-calls.js:8
@@ -8911,6 +9053,12 @@ msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:1731
 msgid "The coupon already exists."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:132
+msgid ""
+"The credential is encrypted when the workflow is saved and is never shown "
+"again."
 msgstr ""
 
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:135
@@ -9182,6 +9330,7 @@ msgid ""
 msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:113
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:58
 msgid "The trigger's data (order, customer, user, cart)"
 msgstr ""
 
@@ -9222,6 +9371,10 @@ msgstr ""
 msgid ""
 "The WhatsApp API rejected the credentials. Reconnect the Joinotify account "
 "under Joinotify → Settings."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:84
+msgid "The whole response body"
 msgstr ""
 
 #: admin/src/AI/Providers/Wp_Ai_Client_Provider.php:103
@@ -9488,7 +9641,7 @@ msgstr ""
 msgid "This trigger fires when a WPForms payment form is processed using PayPal."
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:261
+#: app/src/components/settings/NodeSettingsRenderer.vue:293
 msgid ""
 "This trigger has no additional settings. Use “Change trigger” in the node "
 "menu to pick a different one."
@@ -9611,6 +9764,11 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:161
 #: app/src/pages/contacts/components/AttributeInput.vue:148
 msgid "Time"
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:235
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:238
+msgid "Timeout"
 msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:156
@@ -9948,6 +10106,10 @@ msgstr ""
 msgid "Tokelau"
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:72
+msgid "Token"
+msgstr ""
+
 #: admin/src/Integrations/Telegram.php:135
 msgid "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...)."
 msgstr ""
@@ -10015,7 +10177,7 @@ msgstr ""
 msgid "Trigger no longer available"
 msgstr ""
 
-#: app/src/components/settings/NodeSettingsRenderer.vue:241
+#: app/src/components/settings/NodeSettingsRenderer.vue:273
 msgid "Trigger settings"
 msgstr ""
 
@@ -10105,6 +10267,14 @@ msgstr ""
 #: admin/src/Admin/Builder/Registry.php:496
 #: app/src/builder/actions/definitions/condition.ts:132
 msgid "Type label"
+msgstr ""
+
+#: app/src/builder/actions/definitions/httpRequest.ts:129
+msgid "Type the credential, or choose no authentication."
+msgstr ""
+
+#: app/src/builder/actions/definitions/httpRequest.ts:125
+msgid "Type the JSON to send."
 msgstr ""
 
 #: admin/src/Rest/Contacts_Save.php:55
@@ -10257,6 +10427,8 @@ msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:92
 #: admin/src/Integrations/Whatsapp_Interactive.php:206
+#: app/src/builder/actions/definitions/httpRequest.ts:121
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:102
 #: app/src/pages/contacts/labels.ts:151
 msgid "URL"
 msgstr ""
@@ -10269,11 +10441,11 @@ msgstr ""
 msgid "Usage data"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2356
+#: admin/src/Core/Workflow_Processor.php:2379
 msgid "Use a casual and relaxed tone."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2355
+#: admin/src/Core/Workflow_Processor.php:2378
 msgid "Use a formal and professional tone."
 msgstr ""
 
@@ -10281,7 +10453,7 @@ msgstr ""
 msgid "Use a template"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2357
+#: admin/src/Core/Workflow_Processor.php:2380
 msgid "Use a warm and friendly tone."
 msgstr ""
 
@@ -10328,6 +10500,10 @@ msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:105
 msgid "Used to complete phone numbers that were typed without a country code."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:144
+msgid "User"
 msgstr ""
 
 #: admin/src/Integrations/Wordpress.php:93
@@ -10380,6 +10556,7 @@ msgstr ""
 #: app/src/builder/actions/settings/ConditionSettings.vue:250
 #: app/src/builder/actions/settings/ConditionSettings.vue:257
 #: app/src/builder/actions/settings/ConditionSettings.vue:264
+#: app/src/builder/actions/settings/HttpRequestRowsField.vue:75
 #: app/src/pages/history/components/HistoryDetailsModal.vue:177
 msgid "Value"
 msgstr ""
@@ -10776,6 +10953,10 @@ msgid ""
 "switching it off stops it at once."
 msgstr ""
 
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:229
+msgid "When the request fails"
+msgstr ""
+
 #: admin/src/Admin/Settings/Registry.php:140
 msgid ""
 "When WhatsApp refuses a message for a reason that may pass — a timeout, a "
@@ -10805,6 +10986,11 @@ msgstr ""
 msgid ""
 "Whoever sends a form with a phone or an e-mail, read through the rules "
 "below."
+msgstr ""
+
+#: app/src/builder/actions/settings/HttpRequestSettings.vue:85
+#: app/src/components/settings/NodeSettingsRenderer.vue:158
+msgid "Why the request failed, empty when it worked"
 msgstr ""
 
 #: app/src/pages/workflows/WorkflowsPage.vue:302
@@ -10984,7 +11170,7 @@ msgid ""
 "field of the form is sent."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2380
+#: admin/src/Core/Workflow_Processor.php:2403
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -11076,7 +11262,7 @@ msgstr ""
 msgid "You have unsaved changes."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2363
+#: admin/src/Core/Workflow_Processor.php:2386
 msgid "You may write a longer, detailed message."
 msgstr ""
 
