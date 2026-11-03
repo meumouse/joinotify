@@ -9303,13 +9303,6 @@ msgid ""
 "file from the order."
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:305
-msgid ""
-"This action is triggered when WooCommerce grants the download access of a "
-"digital product to the customer. This is the recommended trigger to deliver "
-"digital products, because the download links only exist from this moment on."
-msgstr ""
-
 #: app/src/builder/actions/settings/StopFunnelSettings.vue:26
 msgid "This action stops the workflow immediately. There are no editable settings."
 msgstr ""
@@ -9503,26 +9496,12 @@ msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:374
 msgid ""
-"This trigger is activated once for each customer who signed up to the "
-"WooCommerce back in stock notifications of a product, when WooCommerce "
-"notifies them that it is back. Requires the back in stock notifications of "
-"WooCommerce. A customer who signed up without an account, or whose account "
-"has no billing phone, has no phone to message."
+"This trigger is activated for each customer WooCommerce notifies that a "
+"product is back in stock."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:264
-msgid ""
-"This trigger is activated once per order, when its payment is confirmed: "
-"the payment gateway confirms it, or the order moves from an unpaid status "
-"to Processing or Completed, as with cash on delivery or a manual change."
-msgstr ""
-
-#: admin/src/Integrations/Woocommerce.php:368
-msgid ""
-"This trigger is activated once when a product that was out of stock or on "
-"backorder goes back in stock, to alert the store or a fixed number. To "
-"message the customers who asked to be told, use \"Back in stock notice "
-"sent\"."
+msgid "This trigger is activated once per order, when its payment is confirmed."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:258
@@ -9531,29 +9510,30 @@ msgid ""
 "any status."
 msgstr ""
 
+#: admin/src/Integrations/Woocommerce.php:368
+msgid ""
+"This trigger is activated when a product that was out of stock is back in "
+"stock."
+msgstr ""
+
 #: admin/src/Integrations/Woocommerce.php:356
 msgid ""
-"This trigger is activated when a sale brings the stock of a product to the "
-"low stock threshold set in WooCommerce, the same moment WooCommerce sends "
-"its low stock email. It runs on every sale while the stock stays low. Only "
-"products that manage their stock are counted."
+"This trigger is activated when a sale brings a product to the low stock "
+"threshold."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:362
+msgid "This trigger is activated when a sale leaves a product out of stock."
+msgstr ""
+
+#: admin/src/Integrations/Woocommerce.php:305
 msgid ""
-"This trigger is activated when a sale brings the stock of a product to the "
-"out of stock threshold set in WooCommerce, the same moment WooCommerce "
-"sends its out of stock email. Only products that manage their stock are "
-"counted."
+"This trigger is activated when the customer gets access to download a "
+"digital product."
 msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:339
-msgid ""
-"This trigger is activated when WooCommerce creates a customer account: on "
-"the My Account page, at the checkout, or on the order confirmation page. It "
-"runs at the end of the request, once the billing phone of the checkout is "
-"saved. The \"New user registration\" trigger also runs for these accounts, "
-"so use only one of them for the same message."
+msgid "This trigger is activated when WooCommerce creates a customer account."
 msgstr ""
 
 #: admin/src/Integrations/Flexify_Checkout.php:182

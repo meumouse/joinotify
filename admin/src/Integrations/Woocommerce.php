@@ -261,7 +261,7 @@ class Woocommerce extends Integrations_Base {
             array(
                 'data_trigger' => 'woocommerce_payment_complete',
                 'title' => __( 'Payment confirmed', 'joinotify' ),
-                'description' => __( 'This trigger is activated once per order, when its payment is confirmed: the payment gateway confirms it, or the order moves from an unpaid status to Processing or Completed, as with cash on delivery or a manual change.', 'joinotify' ),
+                'description' => __( 'This trigger is activated once per order, when its payment is confirmed.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
@@ -302,7 +302,7 @@ class Woocommerce extends Integrations_Base {
             array(
                 'data_trigger' => 'woocommerce_grant_product_download_permissions',
                 'title' => __( 'Digital product access granted', 'joinotify' ),
-                'description' => __( 'This action is triggered when WooCommerce grants the download access of a digital product to the customer. This is the recommended trigger to deliver digital products, because the download links only exist from this moment on.', 'joinotify' ),
+                'description' => __( 'This trigger is activated when the customer gets access to download a digital product.', 'joinotify' ),
                 'require_settings' => false,
                 'settings' => array(
                     array(
@@ -336,7 +336,7 @@ class Woocommerce extends Integrations_Base {
             array(
                 'data_trigger' => 'woocommerce_created_customer',
                 'title' => __( 'Customer account created', 'joinotify' ),
-                'description' => __( 'This trigger is activated when WooCommerce creates a customer account: on the My Account page, at the checkout, or on the order confirmation page. It runs at the end of the request, once the billing phone of the checkout is saved. The "New user registration" trigger also runs for these accounts, so use only one of them for the same message.', 'joinotify' ),
+                'description' => __( 'This trigger is activated when WooCommerce creates a customer account.', 'joinotify' ),
                 'require_settings' => false,
                 'settings' => array(
                     array(
@@ -353,25 +353,25 @@ class Woocommerce extends Integrations_Base {
             array(
                 'data_trigger' => 'woocommerce_low_stock',
                 'title' => __( 'Product low in stock', 'joinotify' ),
-                'description' => __( 'This trigger is activated when a sale brings the stock of a product to the low stock threshold set in WooCommerce, the same moment WooCommerce sends its low stock email. It runs on every sale while the stock stays low. Only products that manage their stock are counted.', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a sale brings a product to the low stock threshold.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_no_stock',
                 'title' => __( 'Product out of stock', 'joinotify' ),
-                'description' => __( 'This trigger is activated when a sale brings the stock of a product to the out of stock threshold set in WooCommerce, the same moment WooCommerce sends its out of stock email. Only products that manage their stock are counted.', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a sale leaves a product out of stock.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_product_back_in_stock',
                 'title' => __( 'Product back in stock', 'joinotify' ),
-                'description' => __( 'This trigger is activated once when a product that was out of stock or on backorder goes back in stock, to alert the store or a fixed number. To message the customers who asked to be told, use "Back in stock notice sent".', 'joinotify' ),
+                'description' => __( 'This trigger is activated when a product that was out of stock is back in stock.', 'joinotify' ),
                 'require_settings' => false,
             ),
             array(
                 'data_trigger' => 'woocommerce_customer_stock_notification',
                 'title' => __( 'Back in stock notice sent', 'joinotify' ),
-                'description' => __( 'This trigger is activated once for each customer who signed up to the WooCommerce back in stock notifications of a product, when WooCommerce notifies them that it is back. Requires the back in stock notifications of WooCommerce. A customer who signed up without an account, or whose account has no billing phone, has no phone to message.', 'joinotify' ),
+                'description' => __( 'This trigger is activated for each customer WooCommerce notifies that a product is back in stock.', 'joinotify' ),
                 'require_settings' => false,
             ),
         );
