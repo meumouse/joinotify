@@ -244,18 +244,23 @@ class Message_History {
     /**
      * Record a dispatched message.
      *
+     * The history is always on: it is what the retry queue, the delivery
+     * webhook and the resend action all read back. A site that must not keep
+     * a given message can still drop it through the `Should_Record` filter.
+     *
+     * A `resent_from` key (set through the dispatch context by a resend from
+     * the history screen) is kept in the row's `meta`, and the row it points
+     * at is marked as resent.
+     *
      * @since 2.0.0
-     * @version 2.4.1
+     * @version 2.7.0
      * @param array<string,mixed> $entry Message fields. Recognized keys:
      *        sender, receiver, message_type, media_type, content, media_url,
-     *        meta, status, response_code, error, attempts, source, workflow_id.
+     *        meta, status, response_code, error, attempts, source, workflow_id,
+     *        resent_from.
      * @return int|false Inserted row ID, or false when skipped/failed.
      */
     public static function record( $entry ) {
-        if ( Admin::get_setting('enable_message_history') !== 'yes' ) {
-            return false;
-        }
-
         if ( ! is_array( $entry ) ) {
             return false;
         }
@@ -284,6 +289,13 @@ class Message_History {
         $source = isset( $entry['source'] ) ? sanitize_key( $entry['source'] ) : 'api';
         $message_type = isset( $entry['message_type'] ) ? sanitize_key( $entry['message_type'] ) : 'text';
         $status = isset( $entry['status'] ) ? sanitize_key( $entry['status'] ) : 'failed';
+        $resent_from = isset( $entry['resent_from'] ) ? absint( $entry['resent_from'] ) : 0;
+
+        if ( $resent_from > 0 ) {
+            $entry['meta'] = array_merge( is_array( $entry['meta'] ?? null ) ? $entry['meta'] : array(), array(
+                'resent_from' => $resent_from,
+            ) );
+        }
 
         $data = array(
             'created_at' => current_time( 'mysql', true ),
@@ -316,6 +328,10 @@ class Message_History {
         }
 
         $id = (int) $wpdb->insert_id;
+
+        if ( $resent_from > 0 ) {
+            self::mark_resent( $resent_from, $id );
+        }
 
         /**
          * Fires after a message history record is written.
@@ -795,6 +811,48 @@ class Message_History {
         }
 
         return $updated;
+    }
+
+
+    /**
+     * Note on a row that it was sent again, and as which row.
+     *
+     * The original is left as it was — still `failed` or `cancelled`, which is
+     * what happened to that dispatch — but it stops offering a resend, so one
+     * failure cannot be sent twice by accident. The new row offers its own
+     * when it fails too.
+     *
+     * @since 2.7.0
+     * @param int $id Row that was resent.
+     * @param int $resent_as Row recorded by the resend.
+     * @return bool True when the row was updated.
+     */
+    public static function mark_resent( $id, $resent_as ) {
+        $id = absint( $id );
+        $resent_as = absint( $resent_as );
+
+        if ( ! $id || ! $resent_as ) {
+            return false;
+        }
+
+        global $wpdb;
+
+        $table = self::get_table_name();
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $table is built from $wpdb->prefix and a class constant; the ID is bound as %d.
+        $meta = $wpdb->get_var( $wpdb->prepare( "SELECT meta FROM {$table} WHERE id = %d", $id ) );
+
+        if ( null === $meta ) {
+            return false;
+        }
+
+        $stored = self::decode_meta( $meta );
+        $stored['resent_as'] = $resent_as;
+        $stored['resent_at'] = current_time( 'mysql', true );
+
+        $updated = $wpdb->update( $table, array( 'meta' => self::encode_meta( $stored ) ), array( 'id' => $id ), array( '%s' ), array( '%d' ) );
+
+        return (bool) $updated;
     }
 
 

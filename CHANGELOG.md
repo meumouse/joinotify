@@ -8,6 +8,19 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Added
+
+- A failed message can be sent again from the message history: from its "Resend" row action, from the details window, or as the selected rows, up to 50 at a time (the `Joinotify/Admin/History/Resend_Limit` filter changes it). A message whose automatic retry was cancelled can be resent too. Each resend is a single attempt, outside the retry queue, and records a row of its own with the source and workflow of the original; the original is flagged "Resent" and stops offering it, so one failure is never sent twice by accident. Login codes, templates whose values were hidden from the history, and local attachments, whose file the history does not keep, are not offered a resend
+
+### Changed
+
+- The message history is always on. The "Message history" switch is gone from Settings → About, and sites that had turned it off start recording again; a message that must not be kept can still be dropped with the `Joinotify/Message_History/Should_Record` filter
+- An interactive, location, contact, reaction or sticker message keeps its WhatsApp payload in the history record, so a resend sends the same message and not its preview text
+
+### Fixed
+
+- A local attachment was recorded in the message history with a broken media URL built from the file's bytes. The history now leaves the media URL empty for it
+
 ## [2.6.2] - 2026-11-02
 
 ### Changed

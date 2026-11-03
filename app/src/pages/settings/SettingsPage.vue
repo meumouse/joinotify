@@ -72,7 +72,7 @@ const generalModalFields = computed(() =>
     .flatMap((section) => (section.cards || []).flatMap((card) => card.fields || []))
     .filter((field) => field && field.modal && Array.isArray(field.modal.fields))
 );
-const aboutVisibleFields = computed(() => filterFields(['enable_usage_tracking', 'enable_message_history']));
+const aboutVisibleFields = computed(() => filterFields(['enable_usage_tracking']));
 const debugToggleField = computed(() => fieldFor('enable_debug_mode'));
 const hasUnsavedChanges = computed(() => !deepEqual(settings, savedSettings.value));
 const {

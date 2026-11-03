@@ -57,7 +57,6 @@ class Default_Options {
             'create_coupon_prefix' => 'CUPOM_',
             'enable_ignore_processed_actions' => 'no',
             'enable_developer_integration' => 'yes',
-            'enable_message_history' => 'yes',
             'message_history_retention_days' => '90',
             // Retry policy for a failed send: how many attempts it gets, and the
             // wait before the first one, which then doubles on every attempt

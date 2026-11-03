@@ -142,7 +142,7 @@ msgstr ""
 msgid "%1$s: %2$d contacts. Tell what each column is."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:868
+#: admin/src/Admin/Settings/Registry.php:863
 #. translators: %d: number of retry attempts
 msgid "%d attempt"
 msgid_plural "%d attempts"
@@ -178,6 +178,20 @@ msgstr[1] ""
 #. translators: %d: number of items
 msgid "%d item will be sent again."
 msgid_plural "%d items will be sent again."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/History_Resend.php:91
+#. translators: %d: number of messages whose resend failed
+msgid "%d message failed again; its new record says why."
+msgid_plural "%d messages failed again; their new records say why."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/History_Resend.php:83
+#. translators: %d: number of messages sent again
+msgid "%d message was sent again."
+msgid_plural "%d messages were sent again."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -223,6 +237,13 @@ msgstr[1] ""
 #: app/src/builder/actions/utils/actionDescription.ts:89
 msgid "%d second"
 msgid_plural "%d seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/src/Rest/History_Resend.php:99
+#. translators: %d: number of selected records that cannot be resent
+msgid "%d selected record cannot be resent."
+msgid_plural "%d selected records cannot be resent."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -307,7 +328,7 @@ msgid ""
 "hosting support to upgrade."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:109
+#: app/src/composables/useMessageHistory.ts:114
 #: app/src/composables/useProcessingQueue.ts:108
 #: app/src/composables/useWorkflows.ts:214
 #: app/src/pages/contacts/useContactList.ts:48
@@ -322,7 +343,7 @@ msgstr ""
 msgid "15 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:284
+#: admin/src/Admin/Settings/Registry.php:279
 msgid "180 days"
 msgstr ""
 
@@ -342,8 +363,8 @@ msgstr ""
 msgid "24h limit:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:281
-#: admin/src/Admin/Settings/Registry.php:300
+#: admin/src/Admin/Settings/Registry.php:276
+#: admin/src/Admin/Settings/Registry.php:295
 msgid "30 days"
 msgstr ""
 
@@ -353,7 +374,7 @@ msgstr ""
 msgid "30 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:285
+#: admin/src/Admin/Settings/Registry.php:280
 msgid "365 days"
 msgstr ""
 
@@ -366,14 +387,14 @@ msgid "5 minutes"
 msgstr ""
 
 #: app/src/pages/builder/BuilderPage.vue:1441
-#: app/src/pages/history/HistoryPage.vue:289
+#: app/src/pages/history/HistoryPage.vue:317
 #: app/src/pages/settings/components/cards/PhoneActions.vue:126
 #: app/src/pages/settings/components/cards/PhoneActions.vue:212
 msgid "5541987111527"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:282
-#: admin/src/Admin/Settings/Registry.php:301
+#: admin/src/Admin/Settings/Registry.php:277
+#: admin/src/Admin/Settings/Registry.php:296
 msgid "60 days"
 msgstr ""
 
@@ -381,12 +402,12 @@ msgstr ""
 msgid "60 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:299
+#: admin/src/Admin/Settings/Registry.php:294
 msgid "7 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:283
-#: admin/src/Admin/Settings/Registry.php:302
+#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:297
 msgid "90 days"
 msgstr ""
 
@@ -419,7 +440,7 @@ msgid ""
 "Everything here can be changed later in Settings."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1398
+#: admin/src/Api/Cloud_Client.php:1417
 msgid "A message id is required."
 msgstr ""
 
@@ -427,7 +448,7 @@ msgstr ""
 msgid "A public address. Local and private network addresses are refused."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:310
+#: admin/src/Admin/Settings/Registry.php:305
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
@@ -450,7 +471,7 @@ msgid "Abandoned carts (Flexify Checkout)"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:246
-#: admin/src/Admin/Settings/Registry.php:361
+#: admin/src/Admin/Settings/Registry.php:356
 msgid "About"
 msgstr ""
 
@@ -481,7 +502,7 @@ msgstr ""
 #: app/src/pages/contacts/tabs/AudiencesTab.vue:158
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:154
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:176
-#: app/src/pages/history/HistoryPage.vue:385
+#: app/src/pages/history/HistoryPage.vue:422
 #: app/src/pages/queue/QueuePage.vue:303
 msgid "Actions"
 msgstr ""
@@ -769,7 +790,7 @@ msgstr ""
 
 #: app/src/builder/actions/components/ActionLibraryModal.vue:192
 #: app/src/components/builder/BuilderTemplateLibraryView.vue:60
-#: app/src/composables/useMessageHistory.ts:74
+#: app/src/composables/useMessageHistory.ts:75
 #: app/src/composables/useProcessingQueue.ts:83
 #: app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue:142
 msgid "All"
@@ -799,7 +820,7 @@ msgstr ""
 msgid "All set"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:371
+#: admin/src/Admin/History/Registry.php:378
 msgid "All sources"
 msgstr ""
 
@@ -999,7 +1020,7 @@ msgstr ""
 msgid "Any status"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:376
+#: admin/src/Admin/History/Registry.php:383
 #: app/src/pages/contacts/labels.ts:42
 msgid "API"
 msgstr ""
@@ -1024,7 +1045,7 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:349
+#: admin/src/Admin/Settings/Registry.php:344
 msgid "Applications"
 msgstr ""
 
@@ -1117,7 +1138,7 @@ msgstr ""
 msgid "Attachments"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:68
+#: app/src/pages/history/components/HistoryDetailsModal.vue:80
 msgid "Attempts"
 msgstr ""
 
@@ -1166,11 +1187,11 @@ msgstr ""
 
 #: admin/src/Validations/Media_Types.php:41
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:36
-#: app/src/pages/history/HistoryPage.vue:98
+#: app/src/pages/history/HistoryPage.vue:104
 msgid "Audio"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:226
+#: app/src/pages/history/HistoryPage.vue:261
 msgid ""
 "Audit every WhatsApp message dispatched by Joinotify, including workflow "
 "sends, retries and test messages."
@@ -1198,11 +1219,11 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:296
+#: admin/src/Admin/Settings/Registry.php:291
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:273
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
@@ -1297,7 +1318,7 @@ msgstr ""
 
 #: admin/src/Builder/Webhook_Action.php:110
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:259
-#: app/src/pages/history/components/HistoryDetailsModal.vue:89
+#: app/src/pages/history/components/HistoryDetailsModal.vue:101
 msgid "Body"
 msgstr ""
 
@@ -1363,7 +1384,7 @@ msgid "Build your first automation or review the full settings."
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:232
-#: admin/src/Admin/Settings/Registry.php:355
+#: admin/src/Admin/Settings/Registry.php:350
 #: app/src/pages/builder/BuilderPage.vue:640
 #: app/src/pages/builder/BuilderPage.vue:695
 #: app/src/pages/builder/BuilderPage.vue:800
@@ -1421,7 +1442,7 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:252
-#: app/src/pages/history/components/HistoryDetailsModal.vue:90
+#: app/src/pages/history/components/HistoryDetailsModal.vue:102
 msgid "Button"
 msgstr ""
 
@@ -1490,9 +1511,9 @@ msgstr ""
 msgid "Cancel item"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:186
-#: app/src/pages/history/HistoryPage.vue:205
-#: app/src/pages/history/HistoryPage.vue:327
+#: app/src/pages/history/HistoryPage.vue:201
+#: app/src/pages/history/HistoryPage.vue:233
+#: app/src/pages/history/HistoryPage.vue:364
 msgid "Cancel resend"
 msgstr ""
 
@@ -1500,8 +1521,8 @@ msgstr ""
 msgid "Cancel scheduled item"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:80
-#: app/src/pages/history/HistoryPage.vue:82
+#: app/src/composables/useMessageHistory.ts:81
+#: app/src/pages/history/HistoryPage.vue:88
 msgid "Cancelled"
 msgstr ""
 
@@ -1694,11 +1715,11 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:352
+#: app/src/pages/history/HistoryPage.vue:389
 msgid "Clear all"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:182
+#: app/src/pages/history/HistoryPage.vue:197
 msgid "Clear all history"
 msgstr ""
 
@@ -1707,7 +1728,7 @@ msgid "Clear date"
 msgstr ""
 
 #: app/src/pages/contacts/tabs/ContactsTab.vue:202
-#: app/src/pages/history/HistoryPage.vue:300
+#: app/src/pages/history/HistoryPage.vue:328
 #: app/src/pages/queue/QueuePage.vue:228
 msgid "Clear filters"
 msgstr ""
@@ -1749,7 +1770,7 @@ msgstr ""
 #: app/src/components/toasts/ToastStack.vue:85
 #: app/src/pages/contacts/components/ImportModal.vue:353
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
-#: app/src/pages/history/components/HistoryDetailsModal.vue:212
+#: app/src/pages/history/components/HistoryDetailsModal.vue:233
 msgid "Close"
 msgstr ""
 
@@ -1823,7 +1844,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:163
+#: app/src/pages/history/components/HistoryDetailsModal.vue:175
 msgid "Component"
 msgstr ""
 
@@ -2066,8 +2087,8 @@ msgstr ""
 msgid "Contains"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:187
-#: app/src/pages/history/HistoryPage.vue:384
+#: app/src/pages/history/components/HistoryDetailsModal.vue:199
+#: app/src/pages/history/HistoryPage.vue:421
 msgid "Content"
 msgstr ""
 
@@ -2092,8 +2113,8 @@ msgstr ""
 msgid "Costa Rica"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:308
-#: app/src/composables/useMessageHistory.ts:317
+#: app/src/composables/useMessageHistory.ts:313
+#: app/src/composables/useMessageHistory.ts:322
 msgid "Could not cancel the resend."
 msgstr ""
 
@@ -2105,8 +2126,8 @@ msgstr ""
 msgid "Could not clear the debug logs."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:335
-#: app/src/composables/useMessageHistory.ts:343
+#: app/src/composables/useMessageHistory.ts:402
+#: app/src/composables/useMessageHistory.ts:410
 msgid "Could not clear the history."
 msgstr ""
 
@@ -2119,7 +2140,7 @@ msgid "Could not clear the queue."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:98
-#: admin/src/Admin/Settings/Registry.php:693
+#: admin/src/Admin/Settings/Registry.php:688
 msgid "Could not complete the operation."
 msgstr ""
 
@@ -2136,8 +2157,8 @@ msgstr ""
 msgid "Could not delete the action."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:273
-#: app/src/composables/useMessageHistory.ts:281
+#: app/src/composables/useMessageHistory.ts:278
+#: app/src/composables/useMessageHistory.ts:286
 msgid "Could not delete the selected records."
 msgstr ""
 
@@ -2149,8 +2170,8 @@ msgstr ""
 msgid "Could not dismiss the tip."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:369
-#: app/src/composables/useMessageHistory.ts:383
+#: app/src/composables/useMessageHistory.ts:436
+#: app/src/composables/useMessageHistory.ts:450
 msgid "Could not export the message history."
 msgstr ""
 
@@ -2188,7 +2209,7 @@ msgstr ""
 msgid "Could not import the settings."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1353
+#: admin/src/Api/Cloud_Client.php:1372
 msgid "Could not list the connected numbers."
 msgstr ""
 
@@ -2208,8 +2229,8 @@ msgstr ""
 msgid "Could not load the contacts."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:151
-#: app/src/composables/useMessageHistory.ts:159
+#: app/src/composables/useMessageHistory.ts:156
+#: app/src/composables/useMessageHistory.ts:164
 msgid "Could not load the message history."
 msgstr ""
 
@@ -2253,7 +2274,7 @@ msgstr ""
 msgid "Could not reach the Joinotify platform. Check your connection and try again."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1310
+#: admin/src/Api/Cloud_Client.php:1329
 msgid "Could not read the Joinotify account data."
 msgstr ""
 
@@ -2272,6 +2293,11 @@ msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:511
 msgid "Could not remove."
+msgstr ""
+
+#: app/src/composables/useMessageHistory.ts:358
+#: app/src/composables/useMessageHistory.ts:363
+msgid "Could not resend the messages."
 msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:625
@@ -2666,7 +2692,7 @@ msgstr ""
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:315
+#: admin/src/Admin/Settings/Registry.php:310
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
@@ -2681,8 +2707,8 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:31
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:156
 #: app/src/pages/contacts/labels.ts:145
-#: app/src/pages/history/components/HistoryDetailsModal.vue:39
-#: app/src/pages/history/HistoryPage.vue:377
+#: app/src/pages/history/components/HistoryDetailsModal.vue:43
+#: app/src/pages/history/HistoryPage.vue:414
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:171
 msgid "Date"
 msgstr ""
@@ -2715,7 +2741,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:290
+#: admin/src/Admin/Settings/Registry.php:285
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:125
 msgid "Debug logs"
 msgstr ""
@@ -2724,7 +2750,7 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:295
+#: admin/src/Admin/Settings/Registry.php:290
 msgid "Debug logs retention"
 msgstr ""
 
@@ -2814,7 +2840,7 @@ msgid "Delay until a fixed date"
 msgstr ""
 
 #: app/src/components/flow/FlowNode.vue:305
-#: app/src/pages/history/HistoryPage.vue:205
+#: app/src/pages/history/HistoryPage.vue:240
 #: app/src/pages/workflows/WorkflowsPage.vue:90
 msgid "Delete"
 msgstr ""
@@ -2835,11 +2861,11 @@ msgstr ""
 msgid "Delete permanently"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:335
+#: app/src/pages/history/HistoryPage.vue:372
 msgid "Delete selected"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:189
+#: app/src/pages/history/HistoryPage.vue:208
 msgid "Delete selected records"
 msgstr ""
 
@@ -2848,12 +2874,12 @@ msgstr ""
 msgid "Delimiter"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:76
-#: app/src/pages/history/HistoryPage.vue:78
+#: app/src/composables/useMessageHistory.ts:77
+#: app/src/pages/history/HistoryPage.vue:84
 msgid "Delivered"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:49
+#: app/src/pages/history/components/HistoryDetailsModal.vue:53
 msgid "Delivered at"
 msgstr ""
 
@@ -2966,7 +2992,7 @@ msgstr ""
 msgid "Digital product access granted"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:578
+#: admin/src/Admin/Settings/Registry.php:573
 msgid "Disabled"
 msgstr ""
 
@@ -2974,7 +3000,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:324
+#: app/src/pages/history/HistoryPage.vue:361
 msgid "Discard the pending retry of the selected messages"
 msgstr ""
 
@@ -3035,7 +3061,7 @@ msgstr ""
 msgid "Do not remind me again"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:861
+#: admin/src/Admin/Settings/Registry.php:856
 msgid "Do not retry"
 msgstr ""
 
@@ -3075,7 +3101,7 @@ msgstr ""
 msgid "Download every item matching the current filters as a JSON file"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:217
+#: app/src/pages/history/HistoryPage.vue:252
 msgid "Download every record matching the current filters as a JSON file"
 msgstr ""
 
@@ -3093,7 +3119,7 @@ msgstr ""
 msgid "Download the selected items as a JSON file"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:216
+#: app/src/pages/history/HistoryPage.vue:251
 msgid "Download the selected records as a JSON file"
 msgstr ""
 
@@ -3101,7 +3127,7 @@ msgstr ""
 msgid "Download this item as a JSON file"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:432
+#: app/src/pages/history/HistoryPage.vue:486
 msgid "Download this record as a JSON file"
 msgstr ""
 
@@ -3346,11 +3372,11 @@ msgstr ""
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:578
+#: admin/src/Admin/Settings/Registry.php:573
 msgid "Enabled"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:279
+#: app/src/pages/history/HistoryPage.vue:307
 msgid "End date"
 msgstr ""
 
@@ -3513,8 +3539,8 @@ msgid "error"
 msgstr ""
 
 #: app/src/pages/contacts/ContactsPage.vue:98
-#: app/src/pages/history/components/HistoryDetailsModal.vue:69
-#: app/src/pages/history/HistoryPage.vue:383
+#: app/src/pages/history/components/HistoryDetailsModal.vue:81
+#: app/src/pages/history/HistoryPage.vue:420
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:54
 #: app/src/pages/settings/SettingsPage.vue:306
 msgid "Error"
@@ -3564,7 +3590,7 @@ msgstr ""
 msgid "Every form with a phone or an e-mail"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:194
+#: app/src/pages/history/HistoryPage.vue:213
 msgid ""
 "Every history record will be permanently removed. This action cannot be "
 "undone."
@@ -3652,20 +3678,20 @@ msgid "Expires in %s"
 msgstr ""
 
 #: app/src/components/workflows/WorkflowRowActions.vue:41
-#: app/src/pages/history/HistoryPage.vue:435
+#: app/src/pages/history/HistoryPage.vue:489
 #: app/src/pages/queue/QueuePage.vue:363
 #: app/src/pages/settings/SettingsPage.vue:338
 #: app/src/pages/settings/SettingsPage.vue:341
 msgid "Export"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:211
+#: app/src/pages/history/HistoryPage.vue:246
 #: app/src/pages/queue/QueuePage.vue:160
 msgid "Export all"
 msgstr ""
 
 #: app/src/composables/useWorkflows.ts:35
-#: app/src/pages/history/components/HistoryDetailsModal.vue:209
+#: app/src/pages/history/components/HistoryDetailsModal.vue:230
 msgid "Export as JSON"
 msgstr ""
 
@@ -3677,7 +3703,7 @@ msgstr ""
 msgid "Export data"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:211
+#: app/src/pages/history/HistoryPage.vue:246
 #: app/src/pages/queue/QueuePage.vue:160
 msgid "Export selected"
 msgstr ""
@@ -3691,20 +3717,20 @@ msgid "Export workflow"
 msgstr ""
 
 #: app/src/pages/contacts/tabs/ContactsTab.vue:232
-#: app/src/pages/history/components/HistoryDetailsModal.vue:209
-#: app/src/pages/history/HistoryPage.vue:344
+#: app/src/pages/history/components/HistoryDetailsModal.vue:230
+#: app/src/pages/history/HistoryPage.vue:381
 #: app/src/pages/queue/QueuePage.vue:255
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:88
 msgid "Exporting…"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:78
+#: app/src/composables/useMessageHistory.ts:79
 #: app/src/pages/contacts/components/ImportModal.vue:338
-#: app/src/pages/history/HistoryPage.vue:80
+#: app/src/pages/history/HistoryPage.vue:86
 msgid "Failed"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:57
+#: app/src/pages/history/components/HistoryDetailsModal.vue:61
 msgid "Failed at"
 msgstr ""
 
@@ -3972,7 +3998,7 @@ msgstr ""
 msgid "Friendly"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:265
+#: app/src/pages/history/HistoryPage.vue:293
 msgid "From"
 msgstr ""
 
@@ -3995,7 +4021,7 @@ msgid "Gambia"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:112
-#: admin/src/Admin/Settings/Registry.php:337
+#: admin/src/Admin/Settings/Registry.php:332
 #: admin/src/Builder/Actions.php:121
 #: app/src/stores/useWorkflowBuilderStore.ts:154
 #: app/src/stores/useWorkflowBuilderStore.ts:249
@@ -4142,7 +4168,7 @@ msgstr ""
 #: admin/src/Integrations/Whatsapp_Interactive.php:172
 #: admin/src/Integrations/Whatsapp_Interactive.php:202
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
-#: app/src/pages/history/components/HistoryDetailsModal.vue:88
+#: app/src/pages/history/components/HistoryDetailsModal.vue:100
 msgid "Header"
 msgstr ""
 
@@ -4208,7 +4234,7 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:277
+#: admin/src/Admin/Settings/Registry.php:272
 msgid "History retention"
 msgstr ""
 
@@ -4475,7 +4501,7 @@ msgstr ""
 msgid "Insert variable"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:31
+#: app/src/pages/history/components/HistoryDetailsModal.vue:35
 msgid "Inside the 24-hour window"
 msgstr ""
 
@@ -4491,7 +4517,7 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:959
+#: admin/src/Admin/Settings/Registry.php:954
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
@@ -4596,7 +4622,7 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:316
+#: admin/src/Admin/Settings/Registry.php:311
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
 
@@ -4833,7 +4859,7 @@ msgstr ""
 msgid "Joinotify setup"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:584
+#: admin/src/Admin/Settings/Registry.php:579
 msgid "Joinotify version"
 msgstr ""
 
@@ -4849,8 +4875,8 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:280
-#: admin/src/Admin/Settings/Registry.php:298
+#: admin/src/Admin/Settings/Registry.php:275
+#: admin/src/Admin/Settings/Registry.php:293
 msgid "Keep forever"
 msgstr ""
 
@@ -5170,7 +5196,7 @@ msgstr ""
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:203
 #: app/src/pages/contacts/tabs/SourcesTab.vue:201
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:166
-#: app/src/pages/history/HistoryPage.vue:361
+#: app/src/pages/history/HistoryPage.vue:398
 #: app/src/pages/queue/QueuePage.vue:282
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:188
 msgid "Loading…"
@@ -5370,7 +5396,7 @@ msgid "Measurement unit applied to the border radius value."
 msgstr ""
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:102
-#: app/src/pages/history/HistoryPage.vue:97
+#: app/src/pages/history/HistoryPage.vue:103
 msgid "Media"
 msgstr ""
 
@@ -5388,17 +5414,17 @@ msgstr ""
 
 #: admin/src/Integrations/Elementor_Forms.php:182
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:106
-#: app/src/pages/history/components/HistoryDetailsModal.vue:66
+#: app/src/pages/history/components/HistoryDetailsModal.vue:78
 msgid "Media type"
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1168
+#: admin/src/Api/Cloud_Client.php:1187
 msgid "Media upload did not return an id."
 msgstr ""
 
 #: app/src/builder/actions/definitions/whatsappMedia.ts:68
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:113
-#: app/src/pages/history/components/HistoryDetailsModal.vue:195
+#: app/src/pages/history/components/HistoryDetailsModal.vue:207
 msgid "Media URL"
 msgstr ""
 
@@ -5450,21 +5476,14 @@ msgstr ""
 msgid "Message content, media or message history"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:128
+#: app/src/pages/history/components/HistoryDetailsModal.vue:140
 msgid "Message details"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:392
+#: admin/src/Admin/History/Registry.php:400
 #: admin/src/Admin/Menu.php:85
-#: admin/src/Admin/Settings/Registry.php:272
-#: app/src/pages/history/HistoryPage.vue:225
+#: app/src/pages/history/HistoryPage.vue:260
 msgid "Message history"
-msgstr ""
-
-#: app/src/pages/history/HistoryPage.vue:233
-msgid ""
-"Message history recording is disabled. Enable it in Settings → About to "
-"start logging new messages."
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:263
@@ -5549,7 +5568,7 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1135
+#: admin/src/Api/Cloud_Client.php:1154
 msgid "Missing Cloud API token or phone number id for media upload."
 msgstr ""
 
@@ -5786,10 +5805,10 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:568
+#: admin/src/Admin/Settings/Registry.php:592
 #: admin/src/Admin/Settings/Registry.php:597
 #: admin/src/Admin/Settings/Registry.php:602
-#: admin/src/Admin/Settings/Registry.php:607
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
@@ -5921,7 +5940,7 @@ msgstr ""
 msgid "No form was found on this site."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:446
+#: app/src/pages/history/HistoryPage.vue:500
 msgid "No history records match the current filters."
 msgstr ""
 
@@ -5942,7 +5961,7 @@ msgstr ""
 msgid "No logs available."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:445
+#: app/src/pages/history/HistoryPage.vue:499
 msgid "No messages found"
 msgstr ""
 
@@ -5979,6 +5998,7 @@ msgstr ""
 #: admin/src/Rest/History_Cancel_Retry.php:55
 #: admin/src/Rest/History_Delete.php:56
 #: admin/src/Rest/History_Export.php:48
+#: admin/src/Rest/History_Resend.php:54
 msgid "No records selected."
 msgstr ""
 
@@ -6034,7 +6054,7 @@ msgstr ""
 msgid "No variables available."
 msgstr ""
 
-#: admin/src/Api/Cloud_Client.php:1275
+#: admin/src/Api/Cloud_Client.php:1294
 msgid "No WhatsApp Business Account id is configured."
 msgstr ""
 
@@ -6074,8 +6094,12 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:790
+#: admin/src/Admin/Settings/Registry.php:785
 msgid "None"
+msgstr ""
+
+#: admin/src/Rest/History_Resend.php:75
+msgid "None of the selected records can be resent."
 msgstr ""
 
 #: admin/src/Rest/History_Cancel_Retry.php:63
@@ -6171,7 +6195,7 @@ msgid "Numbers synced."
 msgstr ""
 
 #: app/src/components/workflows/PaginationControls.vue:34
-#: app/src/composables/useMessageHistory.ts:115
+#: app/src/composables/useMessageHistory.ts:120
 #: app/src/composables/useProcessingQueue.ts:114
 #: app/src/composables/useWorkflows.ts:219
 #: app/src/pages/contacts/useContactList.ts:54
@@ -6186,7 +6210,7 @@ msgstr ""
 msgid "Of those sent, %1$d %2$s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:637
+#: admin/src/Admin/Settings/Registry.php:632
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "Off"
 msgstr ""
@@ -6217,7 +6241,7 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:637
+#: admin/src/Admin/Settings/Registry.php:632
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "On"
 msgstr ""
@@ -6322,7 +6346,7 @@ msgstr ""
 msgid "Open trigger actions"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:606
+#: admin/src/Admin/Settings/Registry.php:601
 msgid "OpenSSL extension"
 msgstr ""
 
@@ -6513,7 +6537,7 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:375
+#: admin/src/Admin/History/Registry.php:382
 msgid "OTP"
 msgstr ""
 
@@ -6521,11 +6545,11 @@ msgstr ""
 msgid "OTP Login - Passwordless authentication"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:416
+#: app/src/pages/history/HistoryPage.vue:453
 msgid "Outside 24h window"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:32
+#: app/src/pages/history/components/HistoryDetailsModal.vue:36
 msgid "Outside the 24-hour window"
 msgstr ""
 
@@ -6618,7 +6642,7 @@ msgstr ""
 msgid "Pause the workflow before the next step."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:180
+#: app/src/pages/history/components/HistoryDetailsModal.vue:192
 msgid "Payload sent"
 msgstr ""
 
@@ -6727,7 +6751,7 @@ msgid "Phone with country code"
 msgstr ""
 
 #: admin/src/Admin/Settings/Registry.php:205
-#: admin/src/Admin/Settings/Registry.php:343
+#: admin/src/Admin/Settings/Registry.php:338
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/SettingsPage.vue:391
 #: app/src/pages/settings/SettingsPage.vue:397
@@ -6746,7 +6770,7 @@ msgstr ""
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:591
+#: admin/src/Admin/Settings/Registry.php:586
 msgid "PHP version"
 msgstr ""
 
@@ -6952,8 +6976,8 @@ msgstr ""
 msgid "Qatar"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:79
-#: app/src/pages/history/HistoryPage.vue:81
+#: app/src/composables/useMessageHistory.ts:80
+#: app/src/pages/history/HistoryPage.vue:87
 msgid "Queued"
 msgstr ""
 
@@ -6973,12 +6997,12 @@ msgstr ""
 msgid "React with an emoji to a message the contact sent. Cloud API only."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:77
-#: app/src/pages/history/HistoryPage.vue:79
+#: app/src/composables/useMessageHistory.ts:78
+#: app/src/pages/history/HistoryPage.vue:85
 msgid "Read"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:53
+#: app/src/pages/history/components/HistoryDetailsModal.vue:57
 msgid "Read at"
 msgstr ""
 
@@ -7006,8 +7030,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:453
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
-#: app/src/pages/history/components/HistoryDetailsModal.vue:64
-#: app/src/pages/history/HistoryPage.vue:378
+#: app/src/pages/history/components/HistoryDetailsModal.vue:76
+#: app/src/pages/history/HistoryPage.vue:415
 #: app/src/pages/queue/QueuePage.vue:301
 #: app/src/pages/settings/components/cards/PhoneActions.vue:201
 msgid "Recipient"
@@ -7026,12 +7050,6 @@ msgid ""
 "Record an opt-in only when the trigger means the person agreed, e.g. a "
 "ticked checkbox. An opt-out always wins, and an opt-in never replaces an "
 "earlier opt-out."
-msgstr ""
-
-#: admin/src/Admin/Settings/Registry.php:273
-msgid ""
-"Record every dispatched WhatsApp message so it can be audited from the "
-"History screen."
 msgstr ""
 
 #: admin/src/Contacts/Contact_Actions.php:185
@@ -7213,6 +7231,10 @@ msgstr ""
 
 #: admin/src/Integrations/Resend.php:104
 #: admin/src/Notifications/Channels/Resend_Channel.php:47
+#: app/src/pages/history/components/HistoryDetailsModal.vue:222
+#: app/src/pages/history/HistoryPage.vue:237
+#: app/src/pages/history/HistoryPage.vue:355
+#: app/src/pages/history/HistoryPage.vue:480
 msgid "Resend"
 msgstr ""
 
@@ -7228,8 +7250,24 @@ msgstr ""
 msgid "Resend e-mail"
 msgstr ""
 
+#: app/src/pages/history/HistoryPage.vue:205
+msgid "Resend messages"
+msgstr ""
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:65
+msgid "Resend of"
+msgstr ""
+
 #: admin/src/Integrations/Resend.php:113
 msgid "Resend settings"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:460
+msgid "Resent"
+msgstr ""
+
+#: app/src/pages/history/components/HistoryDetailsModal.vue:69
+msgid "Resent at"
 msgstr ""
 
 #: app/src/pages/settings/SettingsPage.vue:622
@@ -7250,7 +7288,7 @@ msgstr ""
 msgid "Resize"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:67
+#: app/src/pages/history/components/HistoryDetailsModal.vue:79
 msgid "Response code"
 msgstr ""
 
@@ -7273,7 +7311,7 @@ msgid ""
 "product\" to run for every downloaded file."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:890
+#: admin/src/Admin/Settings/Registry.php:885
 msgid "Retries are turned off, so this wait is not used."
 msgstr ""
 
@@ -7309,7 +7347,7 @@ msgid ""
 "WooCommerce options)."
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:373
+#: admin/src/Admin/History/Registry.php:380
 msgid "Retry queue"
 msgstr ""
 
@@ -7554,7 +7592,7 @@ msgstr ""
 msgid "Search products"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:285
+#: app/src/pages/history/HistoryPage.vue:313
 msgid "Search recipient or sender"
 msgstr ""
 
@@ -7644,7 +7682,7 @@ msgstr ""
 #: app/src/components/workflows/WorkflowTable.vue:71
 #: app/src/components/workflows/WorkflowTableRow.vue:51
 #: app/src/pages/contacts/tabs/ContactsTab.vue:301
-#: app/src/pages/history/HistoryPage.vue:398
+#: app/src/pages/history/HistoryPage.vue:435
 #: app/src/pages/queue/QueuePage.vue:311
 msgid "Select"
 msgstr ""
@@ -7690,7 +7728,7 @@ msgstr ""
 msgid "Select all visible items"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:373
+#: app/src/pages/history/HistoryPage.vue:410
 msgid "Select all visible messages"
 msgstr ""
 
@@ -7717,6 +7755,11 @@ msgstr ""
 
 #: admin/src/Integrations/Woocommerce.php:225
 msgid "Select an order status"
+msgstr ""
+
+#: admin/src/Rest/History_Resend.php:62
+#. translators: %d: most messages a single resend sends
+msgid "Select at most %d messages to resend at once."
 msgstr ""
 
 #: app/src/builder/components/base/AttachmentsField.vue:137
@@ -7885,6 +7928,10 @@ msgstr ""
 msgid "Send the items of each order"
 msgstr ""
 
+#: app/src/pages/history/HistoryPage.vue:352
+msgid "Send the selected failed messages again"
+msgstr ""
+
 #: admin/src/Builder/Webhook_Action.php:72
 msgid ""
 "Send the trigger's data, or a JSON of your own, to any URL: n8n, Zapier, "
@@ -7893,6 +7940,10 @@ msgstr ""
 
 #: app/src/components/fields/CloudSyncStatusField.vue:290
 msgid "Send them"
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:477
+msgid "Send this message again"
 msgstr ""
 
 #: admin/src/Cloud_Sync/Cloud_Sync.php:297
@@ -7923,8 +7974,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:445
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
-#: app/src/pages/history/components/HistoryDetailsModal.vue:63
-#: app/src/pages/history/HistoryPage.vue:379
+#: app/src/pages/history/components/HistoryDetailsModal.vue:75
+#: app/src/pages/history/HistoryPage.vue:416
 #: app/src/pages/settings/components/cards/PhoneActions.vue:188
 msgid "Sender"
 msgstr ""
@@ -7964,7 +8015,7 @@ msgid ""
 "Joinotify: what someone typed in the panel wins."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:949
+#: admin/src/Admin/Settings/Registry.php:944
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
@@ -7983,8 +8034,8 @@ msgstr ""
 msgid "Senegal"
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:75
-#: app/src/pages/history/HistoryPage.vue:77
+#: app/src/composables/useMessageHistory.ts:76
+#: app/src/pages/history/HistoryPage.vue:83
 msgid "Sent"
 msgstr ""
 
@@ -7996,7 +8047,7 @@ msgstr ""
 msgid "Sent to Joinotify"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:414
+#: app/src/pages/history/HistoryPage.vue:451
 msgid "Sent while the contact had not replied in the last 24 hours."
 msgstr ""
 
@@ -8008,7 +8059,7 @@ msgstr ""
 msgid "Server"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:45
+#: app/src/pages/history/components/HistoryDetailsModal.vue:49
 msgid "Session window"
 msgstr ""
 
@@ -8060,7 +8111,7 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:692
+#: admin/src/Admin/Settings/Registry.php:687
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr ""
@@ -8196,9 +8247,9 @@ msgstr ""
 #: app/src/builder/components/base/AttachmentsField.vue:172
 #: app/src/pages/contacts/tabs/ContactsTab.vue:189
 #: app/src/pages/contacts/tabs/ContactsTab.vue:286
-#: app/src/pages/history/components/HistoryDetailsModal.vue:62
-#: app/src/pages/history/HistoryPage.vue:256
-#: app/src/pages/history/HistoryPage.vue:381
+#: app/src/pages/history/components/HistoryDetailsModal.vue:74
+#: app/src/pages/history/HistoryPage.vue:284
+#: app/src/pages/history/HistoryPage.vue:418
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:210
 msgid "Source"
 msgstr ""
@@ -8240,7 +8291,7 @@ msgstr ""
 msgid "Start automating your site from a template"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:269
+#: app/src/pages/history/HistoryPage.vue:297
 msgid "Start date"
 msgstr ""
 
@@ -8262,8 +8313,8 @@ msgstr ""
 
 #: admin/src/Cloud_Sync/Consent.php:734
 #: app/src/components/workflows/WorkflowTableHeader.vue:37
-#: app/src/pages/history/components/HistoryDetailsModal.vue:40
-#: app/src/pages/history/HistoryPage.vue:382
+#: app/src/pages/history/components/HistoryDetailsModal.vue:44
+#: app/src/pages/history/HistoryPage.vue:419
 #: app/src/pages/queue/QueuePage.vue:302
 msgid "Status"
 msgstr ""
@@ -8302,7 +8353,7 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:291
+#: admin/src/Admin/Settings/Registry.php:286
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
@@ -8422,7 +8473,7 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:309
+#: admin/src/Admin/Settings/Registry.php:304
 msgid "System status"
 msgstr ""
 
@@ -8577,8 +8628,8 @@ msgstr ""
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:461
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:468
 #: app/src/pages/builder/BuilderPage.vue:938
-#: app/src/pages/history/components/HistoryDetailsModal.vue:151
-#: app/src/pages/history/HistoryPage.vue:99
+#: app/src/pages/history/components/HistoryDetailsModal.vue:163
+#: app/src/pages/history/HistoryPage.vue:105
 msgid "Template"
 msgstr ""
 
@@ -8590,7 +8641,7 @@ msgstr ""
 msgid "Template messages require the WhatsApp Cloud API transport."
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:374
+#: admin/src/Admin/History/Registry.php:381
 msgid "Test message"
 msgstr ""
 
@@ -8608,7 +8659,7 @@ msgid "Test sender"
 msgstr ""
 
 #: app/src/pages/contacts/labels.ts:143
-#: app/src/pages/history/HistoryPage.vue:96
+#: app/src/pages/history/HistoryPage.vue:102
 #: app/vite-plugins/wporg-i18n-calls.js:8
 #: app/vite-plugins/wporg-i18n-calls.js:13
 msgid "Text"
@@ -8824,7 +8875,7 @@ msgstr ""
 msgid "The existing contact was updated."
 msgstr ""
 
-#: app/src/composables/useMessageHistory.ts:377
+#: app/src/composables/useMessageHistory.ts:444
 #. translators: 1: number of exported records, 2: number of records matching the filters
 msgid "The export holds only the %1$d most recent of the %2$d matching records."
 msgstr ""
@@ -8989,7 +9040,13 @@ msgstr ""
 msgid "The selected channel cannot reach this recipient."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:198
+#: app/src/pages/history/HistoryPage.vue:221
+msgid ""
+"The selected failed messages will be sent to their recipients again, right "
+"now. Records that cannot be resent are left untouched."
+msgstr ""
+
+#: app/src/pages/history/HistoryPage.vue:217
 msgid ""
 "The selected messages will not be sent again. Records without a pending "
 "resend are left untouched."
@@ -8999,7 +9056,7 @@ msgstr ""
 msgid "The selected OTP delivery channel is not configured."
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:201
+#: app/src/pages/history/HistoryPage.vue:228
 msgid ""
 "The selected records will be permanently removed. This action cannot be "
 "undone."
@@ -9041,7 +9098,7 @@ msgstr ""
 msgid "The sync will try again in a moment."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:190
+#: app/src/pages/history/components/HistoryDetailsModal.vue:202
 msgid ""
 "The template text was not available when this message was sent, so its name "
 "and variables are shown instead."
@@ -9252,6 +9309,10 @@ msgstr ""
 msgid "This list may be out of date."
 msgstr ""
 
+#: app/src/pages/history/HistoryPage.vue:225
+msgid "This message will be sent to its recipient again, right now."
+msgstr ""
+
 #: admin/src/Rest/Phone_Check_Connection.php:67
 msgid "This number is no longer connected on your Joinotify account."
 msgstr ""
@@ -9267,7 +9328,7 @@ msgid ""
 "out until they agree again."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:438
+#: admin/src/Admin/Settings/Registry.php:433
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 
@@ -9327,7 +9388,7 @@ msgid ""
 "location, a coupon code or an offer expiration."
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:177
+#: app/src/pages/history/components/HistoryDetailsModal.vue:189
 msgid "This template was sent without variables."
 msgstr ""
 
@@ -9484,7 +9545,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: app/src/pages/history/HistoryPage.vue:275
+#: app/src/pages/history/HistoryPage.vue:303
 msgid "To"
 msgstr ""
 
@@ -9874,7 +9935,7 @@ msgstr ""
 #: app/src/pages/contacts/tabs/ContactsTab.vue:216
 #: app/src/pages/contacts/tabs/SourcesTab.vue:205
 #: app/src/pages/contacts/tabs/SuppressionsTab.vue:162
-#: app/src/pages/history/HistoryPage.vue:308
+#: app/src/pages/history/HistoryPage.vue:336
 #: app/src/pages/queue/QueuePage.vue:241
 #: app/src/pages/workflows/WorkflowsPage.vue:85
 msgid "Try again"
@@ -9909,8 +9970,8 @@ msgstr ""
 #: app/src/builder/actions/settings/TimeDelaySettings.vue:106
 #: app/src/pages/contacts/components/FieldFormModal.vue:149
 #: app/src/pages/contacts/tabs/FieldsTagsTab.vue:153
-#: app/src/pages/history/components/HistoryDetailsModal.vue:65
-#: app/src/pages/history/HistoryPage.vue:380
+#: app/src/pages/history/components/HistoryDetailsModal.vue:77
+#: app/src/pages/history/HistoryPage.vue:417
 msgid "Type"
 msgstr ""
 
@@ -9999,7 +10060,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:33
+#: app/src/pages/history/components/HistoryDetailsModal.vue:37
 msgid "Unknown (delivery reports are not set up)"
 msgstr ""
 
@@ -10194,7 +10255,7 @@ msgstr ""
 #: app/src/builder/actions/settings/ConditionSettings.vue:250
 #: app/src/builder/actions/settings/ConditionSettings.vue:257
 #: app/src/builder/actions/settings/ConditionSettings.vue:264
-#: app/src/pages/history/components/HistoryDetailsModal.vue:165
+#: app/src/pages/history/components/HistoryDetailsModal.vue:177
 msgid "Value"
 msgstr ""
 
@@ -10202,7 +10263,7 @@ msgstr ""
 msgid "Value of a form field"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:156
+#: app/src/pages/history/components/HistoryDetailsModal.vue:168
 msgid "Values hidden"
 msgstr ""
 
@@ -10214,7 +10275,7 @@ msgstr ""
 msgid "Vanuatu"
 msgstr ""
 
-#: app/src/pages/history/components/HistoryDetailsModal.vue:164
+#: app/src/pages/history/components/HistoryDetailsModal.vue:176
 msgid "Variable"
 msgstr ""
 
@@ -10311,7 +10372,7 @@ msgstr ""
 msgid "Wait %1$s %2$s and run at %3$s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:897
+#: admin/src/Admin/Settings/Registry.php:892
 #. translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480"
 msgid ""
 "Wait before the first retry. Every attempt then doubles it — with what is "
@@ -10671,7 +10732,7 @@ msgid ""
 "use."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:572
+#: admin/src/Admin/Settings/Registry.php:567
 msgid "WordPress Multisite"
 msgstr ""
 
@@ -10680,12 +10741,12 @@ msgstr ""
 msgid "WordPress users"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:567
+#: admin/src/Admin/Settings/Registry.php:562
 msgid "WordPress version"
 msgstr ""
 
-#: admin/src/Admin/History/Registry.php:372
-#: app/src/pages/history/components/HistoryDetailsModal.vue:143
+#: admin/src/Admin/History/Registry.php:379
+#: app/src/pages/history/components/HistoryDetailsModal.vue:155
 #: app/src/pages/queue/QueuePage.vue:204
 #: app/src/pages/queue/QueuePage.vue:298
 msgid "Workflow"
@@ -10832,8 +10893,8 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
-#: admin/src/Admin/Settings/Registry.php:597
+#: admin/src/Admin/Settings/Registry.php:568
+#: admin/src/Admin/Settings/Registry.php:592
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
