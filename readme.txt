@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.6.2
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,17 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.7.0 =
+* New: "HTTP request" workflow action. It calls any public API with GET, POST, PUT, PATCH or DELETE, with query parameters, headers, a bearer, basic or API key credential and a JSON, form or raw body, and keeps the response for the next actions as `{{ http:NAME.status }}`, `{{ http:NAME.ok }}`, `{{ http:NAME.error }}` and `{{ http:NAME.body.FIELD }}`. The credential is stored encrypted and never shown again.
+* New: a failed message can be sent again from the message history, one at a time or up to 50 selected rows. The original is flagged "Resent", so one failure is never sent twice by accident.
+* New: "Customer account created", "Product low in stock", "Product out of stock", "Product back in stock" and "Back in stock notice sent" WooCommerce triggers, with customer and product variables such as `{{ wc_customer_first_name }}`, `{{ wc_my_account_url }}`, `{{ wc_product_name }}` and `{{ wc_product_stock_quantity }}`, and the "User role" and "User metadata" conditions on the account trigger.
+* New: developers can register action handlers that hand values to the next actions (`writes_payload` on `joinotify_register_action()`), seal an action's secret fields with the `Joinotify/Builder/Sealed_Action_Fields` filter and keep actions out of AI generated workflows with `Joinotify/AI/Workflow_Generator/Excluded_Actions`.
+* Changed: "New order (Processing)" is now "Payment confirmed". It runs once per order, when the payment is confirmed, so orders that go straight to Completed run it too and an order moved back to Processing does not run it again. Saved workflows move to it on their own. The `Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed` filter is replaced by `Joinotify/Process_Workflows/Woocommerce/Payment_Complete`.
+* Changed: the WooCommerce order variables are no longer offered on the account and stock triggers, where they always came out empty.
+* Changed: the message history is always on, and the "Message history" switch is gone from Settings → About. Interactive, location, contact, reaction and sticker messages keep their WhatsApp payload in the history, so a resend sends the same message.
+* Fixed: saving a workflow no longer drops the backslashes typed in it, which turned an escaped quote in the JSON body of a "Send webhook" action into invalid JSON. A backslash lost in an earlier save has to be typed again.
+* Fixed: a local attachment is no longer recorded in the message history with a broken media URL.
+
 = 2.6.2 =
 * Changed: the plugin is now named "Joinotify – Notifications & Marketing Automation", without a third-party trademark in its name, as the WordPress.org guidelines require. Nothing else changes.
 
@@ -320,6 +331,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+Adds an "HTTP request" action, resending of failed messages and WooCommerce account and stock triggers. "New order (Processing)" becomes "Payment confirmed"; saved workflows move to it on their own.
 
 = 2.6.2 =
 The plugin has a new name, "Joinotify – Notifications & Marketing Automation". Workflows, settings and messages are not affected.

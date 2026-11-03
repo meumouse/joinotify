@@ -8,10 +8,11 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-11-03
+
 ### Added
 
 - A failed message can be sent again from the message history: from its "Send again" row action, from the details window, or as the selected rows, up to 50 at a time (the `Joinotify/Admin/History/Resend_Limit` filter changes it). A message whose automatic retry was cancelled can be resent too. Each resend is a single attempt, outside the retry queue, and records a row of its own with the source and workflow of the original; the original is flagged "Resent" and stops offering it, so one failure is never sent twice by accident. Login codes, templates whose values were hidden from the history, and local attachments, whose file the history does not keep, are not offered a resend
-
 - "Customer account created" WooCommerce trigger. It runs when WooCommerce creates a customer account on the My Account page, at the checkout (classic or block) or on the order confirmation page, and can be limited to one of them. It runs at the end of the request, because the checkout only saves the billing phone after WooCommerce reports the new account. The WordPress "New user registration" trigger still runs for these accounts too
 - "Product low in stock" and "Product out of stock" WooCommerce triggers, fired when a sale brings a product to the thresholds set in WooCommerce — the same moment WooCommerce sends its stock emails
 - "Product back in stock" WooCommerce trigger, run once when a product that was out of stock or on backorder goes back in stock. A variation and its variable product coming back together send one message
@@ -639,7 +640,8 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.2...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/meumouse/joinotify/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/meumouse/joinotify/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/meumouse/joinotify/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/meumouse/joinotify/compare/v2.5.1...v2.6.0
