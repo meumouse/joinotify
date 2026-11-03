@@ -359,15 +359,80 @@ class Helpers {
     /**
      * Update workflow content metadata encoding emoji beforehand.
      *
+     * The credentials typed in actions are sealed first (see seal_action_secrets()), so every
+     * save path — the builder, imports, templates, the AI — stores them the same way.
+     *
      * @since 1.4.3
+     * @version 2.7.0
      * @param int   $post_id | Post ID
      * @param array $workflow_content | Workflow content data
      * @return bool|int
      */
     public static function update_workflow_content_meta( $post_id, $workflow_content ) {
-        $prepared_content = self::encode_emoji_deep( $workflow_content );
+        $prepared_content = self::encode_emoji_deep( self::seal_action_secrets( $workflow_content ) );
 
         return update_post_meta( $post_id, 'joinotify_workflow_content', $prepared_content );
+    }
+
+
+    /**
+     * Seal the credentials typed in workflow actions with the Token_Vault.
+     *
+     * Walks the whole tree (children and branches included) and seals, in each node whose
+     * action declares them, the fields listed by the `Joinotify/Builder/Sealed_Action_Fields`
+     * filter. A value already sealed is left as it is, so saving again never seals it twice.
+     *
+     * @since 2.7.0
+     * @param mixed $content | Workflow content, or any part of it
+     * @return mixed
+     */
+    public static function seal_action_secrets( $content ) {
+        /**
+         * Fields of each action sealed at rest when a workflow is saved.
+         *
+         * @since 2.7.0
+         * @param array $fields Map of action slug => list of data keys.
+         */
+        $fields = apply_filters( 'Joinotify/Builder/Sealed_Action_Fields', array() );
+
+        if ( ! is_array( $fields ) || empty( $fields ) ) {
+            return $content;
+        }
+
+        return self::seal_node_secrets( $content, $fields );
+    }
+
+
+    /**
+     * Recursive part of seal_action_secrets().
+     *
+     * @since 2.7.0
+     * @param mixed $value | Part of the workflow tree
+     * @param array $fields | Map of action slug => data keys
+     * @return mixed
+     */
+    protected static function seal_node_secrets( $value, $fields ) {
+        if ( ! is_array( $value ) ) {
+            return $value;
+        }
+
+        $action = isset( $value['data']['action'] ) && is_string( $value['data']['action'] ) ? $value['data']['action'] : '';
+
+        if ( '' !== $action && isset( $fields[ $action ] ) && is_array( $fields[ $action ] ) ) {
+            foreach ( $fields[ $action ] as $key ) {
+                if ( isset( $value['data'][ $key ] ) && is_scalar( $value['data'][ $key ] ) ) {
+                    $value['data'][ $key ] = Token_Vault::encrypt( $value['data'][ $key ], Token_Vault::WORKFLOW_CONTEXT );
+                }
+            }
+        }
+
+        foreach ( $value as $key => $item ) {
+            if ( is_array( $item ) && 'data' !== $key ) {
+                $value[ $key ] = self::seal_node_secrets( $item, $fields );
+            }
+        }
+
+        return $value;
     }
 
 

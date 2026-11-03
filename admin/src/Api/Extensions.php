@@ -75,9 +75,11 @@ class Extensions {
 	 *                           string is always the action library text and stays in the entry,
 	 *                           even one that names a PHP function (is_callable( 'Sleep' ) is true).
 	 * - fill_sender  (bool)     Auto-fill the WhatsApp sender on template import.
+	 * - writes_payload (bool)   The handler takes the payload by reference and what it stores
+	 *                           reaches the later actions. See register_payload_action_handler().
 	 *
 	 * @since 1.4.7
-	 * @version 2.5.0
+	 * @version 2.7.0
 	 * @param array $definition Action definition.
 	 * @param int   $priority   add_filter priority. Default 10.
 	 * @return void
@@ -93,6 +95,7 @@ class Extensions {
 		$handler = isset( $definition['handler'] ) && is_callable( $definition['handler'] ) ? $definition['handler'] : null;
 		$description = isset( $definition['description'] ) && ! is_string( $definition['description'] ) && is_callable( $definition['description'] ) ? $definition['description'] : null;
 		$fill_sender = ! empty( $definition['fill_sender'] );
+		$writes_payload = ! empty( $definition['writes_payload'] );
 
 		// Optional inline category: when a label is supplied, the action's category tab is
 		// auto-registered so a single register_action() call can create its own tab. Devs
@@ -102,7 +105,7 @@ class Extensions {
 		$category_icon = isset( $definition['category_icon'] ) ? (string) $definition['category_icon'] : '';
 		$category_priority = isset( $definition['category_priority'] ) ? (int) $definition['category_priority'] : $priority;
 
-		unset( $definition['handler'], $definition['fill_sender'], $definition['category_label'], $definition['category_icon'], $definition['category_priority'] );
+		unset( $definition['handler'], $definition['fill_sender'], $definition['writes_payload'], $definition['category_label'], $definition['category_icon'], $definition['category_priority'] );
 
 		// A builder is not catalog data; the library text is, so only the former comes out.
 		if ( $description ) {
@@ -126,7 +129,9 @@ class Extensions {
 			), $category_priority );
 		}
 
-		if ( $handler ) {
+		if ( $handler && $writes_payload ) {
+			self::register_payload_action_handler( $slug, $handler );
+		} elseif ( $handler ) {
 			self::register_action_handler( $slug, $handler );
 		}
 
@@ -174,6 +179,36 @@ class Extensions {
 
 			return $actions;
 		}, 10, 4 );
+	}
+
+
+	/**
+	 * Register a runtime handler that writes onto the shared payload.
+	 *
+	 * Same arguments as register_action_handler(), with the payload taken by reference:
+	 * ($action_data, $action, $post_id, &$event_data). What the handler stores on $event_data
+	 * reaches the actions that run after it, and travels with the payload through delays, so
+	 * keep it small.
+	 *
+	 * @since 2.7.0
+	 * @param string   $slug     Action slug.
+	 * @param callable $callback Handler.
+	 * @return void
+	 */
+	public static function register_payload_action_handler( $slug, $callback ) {
+		$slug = sanitize_key( (string) $slug );
+
+		if ( empty( $slug ) || ! is_callable( $callback ) ) {
+			return;
+		}
+
+		add_filter( 'Joinotify/Workflow_Processor/Payload_Actions', function( $actions ) use ( $slug, $callback ) {
+			$actions[ $slug ] = function( $action_data, $action, $post_id, &$event_data ) use ( $callback ) {
+				return $callback( $action_data, $action, $post_id, $event_data );
+			};
+
+			return $actions;
+		}, 10, 1 );
 	}
 
 

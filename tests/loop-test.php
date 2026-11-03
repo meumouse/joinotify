@@ -292,6 +292,7 @@ check( 'resolved download item carries file_ref for the attachment', ( $items_f[
 
 echo "\n== Test G: loop tokens resolve centrally (message, caption AND attachment URL) ==\n";
 require __DIR__ . '/../admin/src/Builder/Placeholders.php';
+require __DIR__ . '/../admin/src/Builder/Http_Request_Action.php';
 
 $loop_payload = array(
 	'loop' => array(

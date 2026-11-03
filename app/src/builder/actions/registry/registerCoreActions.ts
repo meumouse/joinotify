@@ -3,7 +3,7 @@
  *
  * Registers the built-in builder action definitions (delay, condition, stop,
  * PHP snippet, WhatsApp text/media/AI messages, Telegram message, Resend
- * e-mail, smart variable, and coupon) into the action registry during bootstrap.
+ * e-mail, smart variable, coupon, and HTTP request) into the action registry during bootstrap.
  *
  * @since 2.0.0
  */
@@ -19,6 +19,7 @@ import { whatsappTextDefinition } from '../definitions/whatsappText';
 import { whatsappTemplateDefinition } from '../definitions/whatsappTemplate';
 import { telegramTextDefinition } from '../definitions/telegramText';
 import { resendEmailDefinition } from '../definitions/resendEmail';
+import { httpRequestDefinition } from '../definitions/httpRequest';
 import { registerBuilderAction } from './actionRegistry';
 
 /**
@@ -40,4 +41,5 @@ export function registerCoreActions(): void {
   registerBuilderAction(resendEmailDefinition);
   registerBuilderAction(dynamicPlaceholderDefinition);
   registerBuilderAction(createCouponDefinition);
+  registerBuilderAction(httpRequestDefinition);
 }

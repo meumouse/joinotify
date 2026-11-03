@@ -21,7 +21,11 @@ defined('ABSPATH') || exit;
  * a sealed value unreadable — the site then reads as disconnected and the key has to be
  * pasted again.
  *
+ * Since 2.7.0 it also seals the credentials typed in workflow actions (the "HTTP request"
+ * action's token), each kind under a context of its own, so they never share a key.
+ *
  * @since 2.6.0
+ * @version 2.7.0
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -42,6 +46,14 @@ class Token_Vault {
 	 * @var string
 	 */
 	const CONTEXT = 'joinotify-cloud-token';
+
+	/**
+	 * Context of the credentials typed in workflow actions.
+	 *
+	 * @since 2.7.0
+	 * @var string
+	 */
+	const WORKFLOW_CONTEXT = 'joinotify-workflow-secret';
 
 
 	/**
@@ -79,10 +91,12 @@ class Token_Vault {
 	 * or if sealing fails, the value is returned in the clear.
 	 *
 	 * @since 2.6.0
+	 * @version 2.7.0
 	 * @param mixed $plain Value to seal.
+	 * @param string $context What the value is, mixed into the key, so one secret's key never opens another's.
 	 * @return string
 	 */
-	public static function encrypt( $plain ) {
+	public static function encrypt( $plain, $context = self::CONTEXT ) {
 		$plain = is_scalar( $plain ) ? trim( (string) $plain ) : '';
 
 		if ( '' === $plain || self::is_encrypted( $plain ) || ! self::is_available() ) {
@@ -90,7 +104,7 @@ class Token_Vault {
 		}
 
 		try {
-			$key = self::key();
+			$key = self::key( $context );
 			$nonce = random_bytes( SODIUM_CRYPTO_SECRETBOX_NONCEBYTES );
 			$sealed = sodium_crypto_secretbox( $plain, $nonce, $key );
 
@@ -113,10 +127,12 @@ class Token_Vault {
 	 * tampered with — reads as empty, which the plugin treats as "not connected".
 	 *
 	 * @since 2.6.0
+	 * @version 2.7.0
 	 * @param mixed $stored Stored value.
+	 * @param string $context The context it was sealed under.
 	 * @return string
 	 */
-	public static function decrypt( $stored ) {
+	public static function decrypt( $stored, $context = self::CONTEXT ) {
 		$stored = is_scalar( $stored ) ? trim( (string) $stored ) : '';
 
 		if ( ! self::is_encrypted( $stored ) ) {
@@ -134,7 +150,7 @@ class Token_Vault {
 		}
 
 		try {
-			$key = self::key();
+			$key = self::key( $context );
 			$plain = sodium_crypto_secretbox_open(
 				substr( $raw, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES ),
 				substr( $raw, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES ),
@@ -156,9 +172,11 @@ class Token_Vault {
 	 * Derive the secretbox key from the site's auth salts.
 	 *
 	 * @since 2.6.0
+	 * @version 2.7.0
+	 * @param string $context
 	 * @return string Raw key, SODIUM_CRYPTO_SECRETBOX_KEYBYTES long.
 	 */
-	protected static function key() {
-		return sodium_crypto_generichash( wp_salt( 'auth' ) . self::CONTEXT, '', SODIUM_CRYPTO_SECRETBOX_KEYBYTES );
+	protected static function key( $context = self::CONTEXT ) {
+		return sodium_crypto_generichash( wp_salt( 'auth' ) . (string) $context, '', SODIUM_CRYPTO_SECRETBOX_KEYBYTES );
 	}
 }

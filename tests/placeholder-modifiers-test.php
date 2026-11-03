@@ -138,6 +138,7 @@ function comments_open( $id ) { global $closed_reviews; return ! in_array( $id, 
 function get_permalink( $id ) { return home_url() . '/product/item-' . $id . '/'; }
 
 require_once __DIR__ . '/../admin/src/Builder/Placeholders.php';
+require_once __DIR__ . '/../admin/src/Builder/Http_Request_Action.php';
 require_once __DIR__ . '/../admin/src/Integrations/Woocommerce.php';
 
 use MeuMouse\Joinotify\Builder\Placeholders;

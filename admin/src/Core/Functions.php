@@ -679,6 +679,20 @@ function joinotify_register_action_handler( $slug, $callback ) {
 
 
 /**
+ * Register a runtime handler that writes onto the shared payload, so what it stores reaches
+ * the actions that run after it.
+ *
+ * @since 2.7.0
+ * @param string   $slug     Action slug.
+ * @param callable $callback Handler ($action_data, $action, $post_id, &$event_data) => bool.
+ * @return void
+ */
+function joinotify_register_payload_action_handler( $slug, $callback ) {
+	Extensions::register_payload_action_handler( $slug, $callback );
+}
+
+
+/**
  * Register the canvas description builder for a custom action.
  *
  * @since 1.4.7

@@ -170,6 +170,41 @@ add_filter( 'Joinotify/Workflow_Processor/Branching_Actions', function( $slugs )
 });
 ```
 
+### Actions that hand a value to the next ones
+
+A regular handler gets a **copy** of the payload, so whatever it stores on `$event_data` is lost.
+Pass `'writes_payload' => true` and the handler takes the payload **by reference** instead: what it
+stores reaches the actions that run after it and travels with the payload through delays. The same
+`($action_data, $action, $post_id, &$event_data)` arguments, the `&` being the only difference:
+
+```php
+joinotify_register_action([
+    'action'         => 'my_app_lookup',
+    'title'          => __( 'My App: Look up the customer', 'my-textdomain' ),
+    'writes_payload' => true,
+    'handler'        => function( $action_data, $action, $post_id, &$event_data ) {
+        $event_data['my_app'] = [ 'tier' => 'gold' ]; // read it in your own resolver
+
+        return true;
+    },
+]);
+```
+
+The same wiring is available as `joinotify_register_payload_action_handler( $slug, $callback )`, and
+underneath as the `Joinotify/Workflow_Processor/Payload_Actions` filter (slug => callable). The
+payload goes into the scheduler's arguments when a delay follows, so keep what you store small.
+
+The built-in **HTTP request** action (`http_request`) uses it: the response it keeps under a name is
+read with `{{ http:NAME.status }}`, `{{ http:NAME.ok }}` (`true`/`false`), `{{ http:NAME.error }}`,
+`{{ http:NAME }}` (the body; a JSON object comes out as JSON) and `{{ http:NAME.body.a.b.0 }}` (a
+field of a JSON body, dots for nested keys and list positions). They resolve in
+`joinotify_replace_placeholders()` and accept token modifiers. A body above 4 KB, JSON encoded, is
+not kept (the status is) — `Joinotify/Builder/Http_Request_Action/Max_Stored_Bytes` changes the limit.
+Its credential is sealed with the Token_Vault on save, through `Joinotify/Builder/Sealed_Action_Fields`
+(action slug => data keys), which a custom action can use for its own secrets; open them with
+`Token_Vault::decrypt( $value, Token_Vault::WORKFLOW_CONTEXT )`. The AI workflow generator never uses
+it — `Joinotify/AI/Workflow_Generator/Excluded_Actions` lists the slugs it leaves out.
+
 ---
 
 ## Triggers & integrations

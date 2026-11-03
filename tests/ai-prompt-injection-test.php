@@ -201,6 +201,7 @@ use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 require __DIR__ . '/../admin/src/Core/Functions.php';
 require __DIR__ . '/../admin/src/Builder/Placeholders.php';
+require __DIR__ . '/../admin/src/Builder/Http_Request_Action.php';
 require __DIR__ . '/../admin/src/AI/AI_Request.php';
 require __DIR__ . '/../admin/src/AI/AI_Response.php';
 require __DIR__ . '/../admin/src/Core/Workflow_Processor.php';
