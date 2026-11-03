@@ -4958,8 +4958,8 @@ msgstr "Joinotify"
 
 #: joinotify.php
 #. Plugin Name of the plugin
-msgid "Joinotify – WhatsApp Notifications & Marketing Automation"
-msgstr "Joinotify – WhatsApp Notifications & Marketing Automation"
+msgid "Joinotify – Notifications & Marketing Automation"
+msgstr "Joinotify – Notifications & Marketing Automation"
 
 #: admin/src/Integrations/Whatsapp.php:152
 msgid "Joinotify account"

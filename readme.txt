@@ -1,10 +1,10 @@
-=== Joinotify – WhatsApp Notifications & Marketing Automation ===
+=== Joinotify – Notifications & Marketing Automation ===
 Contributors: meumouse
 Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.6.2 =
+* Changed: the plugin is now named "Joinotify – Notifications & Marketing Automation", without a third-party trademark in its name, as the WordPress.org guidelines require. Nothing else changes.
+
 = 2.6.1 =
 * New: variables take modifiers after a pipe: `{{ wc_review_links | remove:"https://shop.com/" }}` removes a text, `replace:"from","to"` swaps one text for another and `remove_home_url` keeps only the path of the site's links, which is what the link of a WhatsApp template URL button needs. Developers add their own with `joinotify_register_placeholder_modifier()`.
 * New: `{{ wc_first_product_review_path }}` gives the review link of the first purchased product without the site address, such as `product/shirt/#reviews`, to complete a URL button.
@@ -317,6 +320,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.6.2 =
+The plugin has a new name, "Joinotify – Notifications & Marketing Automation". Workflows, settings and messages are not affected.
 
 = 2.6.1 =
 Variables take modifiers such as `remove_home_url`, and a new variable gives the review link of the first purchased product, ready to complete a WhatsApp template URL button.

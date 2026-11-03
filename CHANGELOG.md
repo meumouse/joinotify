@@ -8,6 +8,13 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.6.2] - 2026-11-02
+
+### Changed
+
+- The plugin is named "Joinotify – Notifications & Marketing Automation", dropping "WhatsApp" from its name: the WordPress.org guidelines do not allow a third-party trademark in a plugin's display name. The translated names in every bundled locale follow
+- "Tested up to" is declared only in `readme.txt`, the one place WordPress.org reads it. The header in `joinotify.php` could take precedence over the readme and show a compatibility the readme no longer stated
+
 ## [2.6.1] - 2026-10-28
 
 ### Added
@@ -607,7 +614,8 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.1...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.6.2...HEAD
+[2.6.2]: https://github.com/meumouse/joinotify/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/meumouse/joinotify/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/meumouse/joinotify/compare/v2.5.1...v2.6.0
 [2.5.1]: https://github.com/meumouse/joinotify/compare/v2.5.0...v2.5.1
