@@ -824,6 +824,7 @@ class Workflow_Processor {
      * runtime matching extensible instead of hardcoded per integration.
      *
      * @since 2.0.0
+     * @version 2.7.0
      * @param array $trigger_data | Trigger node ({id,type,data})
      * @param array $payload | Runtime trigger payload
      * @return bool
@@ -868,6 +869,15 @@ class Workflow_Processor {
                     ) {
                         $match = false;
                     }
+                }
+            } elseif ( isset( $payload['hook'] ) && $payload['hook'] === 'woocommerce_created_customer' ) {
+                $trigger_source = isset( $settings['account_source'] ) && is_scalar( $settings['account_source'] )
+                    ? (string) $settings['account_source']
+                    : '';
+
+                // "none" or an unset filter => an account created anywhere
+                if ( '' !== $trigger_source && 'none' !== $trigger_source && $trigger_source !== (string) ( $payload['account_source'] ?? '' ) ) {
+                    $match = false;
                 }
             }
         } elseif ( $integration === 'wpforms' ) {

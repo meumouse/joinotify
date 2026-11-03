@@ -35,9 +35,10 @@ class Workflow_Migrator {
 	 * classes do not create a circular bootstrap dependency).
 	 *
 	 * @since 2.0.0
+	 * @version 2.7.0
 	 * @var string
 	 */
-	const CURRENT_SCHEMA_VERSION = '2.0.0';
+	const CURRENT_SCHEMA_VERSION = '2.7.0';
 
 
 	/**
@@ -116,6 +117,7 @@ class Workflow_Migrator {
 	 * deterministically.
 	 *
 	 * @since 2.0.0
+	 * @version 2.7.0
 	 * @return array<int,array<string,mixed>>
 	 */
 	public static function get_migration_steps() {
@@ -123,6 +125,10 @@ class Workflow_Migrator {
 			array(
 				'to' => '2.0.0',
 				'callback' => array( self::class, 'migrate_to_2_0_0' ),
+			),
+			array(
+				'to' => '2.7.0',
+				'callback' => array( self::class, 'migrate_to_2_7_0' ),
 			),
 		);
 
@@ -238,6 +244,50 @@ class Workflow_Migrator {
 		$data = self::migrate_placeholders_deep( $data, self::get_placeholder_map() );
 
 		$node['data'] = $data;
+
+		return $node;
+	}
+
+
+	/**
+	 * Migration step: bring content up to the 2.7.0 schema.
+	 *
+	 * The "New order (Processing)" trigger (`woocommerce_checkout_order_processed`) was
+	 * replaced by "Payment confirmed" (`woocommerce_payment_complete`), which runs for the
+	 * same orders and for the paid ones that skip the processing status.
+	 *
+	 * @since 2.7.0
+	 * @param array<int,mixed> $content Workflow content nodes.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function migrate_to_2_7_0( $content ) {
+		return self::walk_nodes( (array) $content, array( self::class, 'migrate_node_to_2_7_0' ) );
+	}
+
+
+	/**
+	 * Apply the 2.7.0 transforms to a single node.
+	 *
+	 * @since 2.7.0
+	 * @param array<string,mixed> $node Workflow node.
+	 * @return array<string,mixed>
+	 */
+	public static function migrate_node_to_2_7_0( $node ) {
+		if ( ! is_array( $node ) ) {
+			return array();
+		}
+
+		$renamed = array(
+			'woocommerce_checkout_order_processed' => 'woocommerce_payment_complete',
+		);
+
+		if ( isset( $node['type'], $node['data']['trigger'] )
+			&& 'trigger' === $node['type']
+			&& is_string( $node['data']['trigger'] )
+			&& isset( $renamed[ $node['data']['trigger'] ] )
+		) {
+			$node['data']['trigger'] = $renamed[ $node['data']['trigger'] ];
+		}
 
 		return $node;
 	}

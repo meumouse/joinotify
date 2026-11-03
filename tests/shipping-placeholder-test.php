@@ -31,7 +31,7 @@ namespace MeuMouse\Joinotify\Builder {
 
 	class Triggers {
 		public static function get_trigger_names( $integration ) {
-			return array( 'woocommerce_checkout_order_processed' );
+			return array( 'woocommerce_payment_complete' );
 		}
 	}
 }

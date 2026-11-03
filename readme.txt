@@ -35,7 +35,7 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 
 = Integrations =
 
-* WooCommerce — order status, refunds, subscriptions, digital product delivery, abandoned carts
+* WooCommerce — order status, confirmed payments, refunds, subscriptions, digital product delivery, abandoned carts, new customer accounts, low stock and back in stock alerts
 * WPForms, Elementor Forms and Flexify Checkout
 * WordPress user events
 * Telegram and Resend (e-mail) as additional delivery channels

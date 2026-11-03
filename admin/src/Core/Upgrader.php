@@ -74,6 +74,15 @@ class Upgrader {
      */
     const FRESH_INSTALL_VERSION = '0.0.0';
 
+    /**
+     * Routine that moves the stored workflows from the "New order (Processing)" trigger to
+     * "Payment confirmed". Until it completes, the payment trigger also runs the old slug.
+     *
+     * @since 2.7.0
+     * @var string
+     */
+    const PAYMENT_TRIGGER_ROUTINE = 'workflows_schema_2_7_0';
+
 
     /**
      * Construct function.
@@ -207,7 +216,7 @@ class Upgrader {
      * idempotent — a routine may re-run if a previous attempt failed.
      *
      * @since 2.0.0
-     * @version 2.6.0
+     * @version 2.7.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_routines() {
@@ -226,6 +235,11 @@ class Upgrader {
                 'id' => 'seal_cloud_api_token_2_6_0',
                 'version' => '2.6.0',
                 'callback' => array( self::class, 'seal_cloud_api_token' ),
+            ),
+            array(
+                'id' => self::PAYMENT_TRIGGER_ROUTINE,
+                'version' => '2.7.0',
+                'callback' => array( Workflow_Migrator::class, 'migrate_stored_workflows' ),
             ),
         );
 
