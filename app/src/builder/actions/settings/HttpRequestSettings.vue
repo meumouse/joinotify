@@ -22,6 +22,7 @@ import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseNumberField from '../../components/base/BaseNumberField.vue';
 import BaseCodeEditorField from '../../components/base/BaseCodeEditorField.vue';
+import BaseJsonEditorField from '../../components/base/BaseJsonEditorField.vue';
 import BaseAccordion from '../../components/base/BaseAccordion.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import HttpRequestRowsField from './HttpRequestRowsField.vue';
@@ -31,7 +32,9 @@ import {
   SEALED_PREFIX,
   checkJsonBody,
   checkJsonFields,
+  formatJsonBody,
   jsonFieldsToText,
+  lintJsonBody,
   jsonTextToFields,
   normalizeJsonFields,
   normalizeRows,
@@ -97,8 +100,9 @@ const fieldTypeOptions = [
   { label: __('Text', textDomain), value: 'text' },
   { label: __('Number', textDomain), value: 'number' },
   { label: __('Boolean', textDomain), value: 'boolean' },
-  { label: __('Null', textDomain), value: 'null' },
+  { label: __('Array', textDomain), value: 'array' },
   { label: __('JSON', textDomain), value: 'json' },
+  { label: __('Null', textDomain), value: 'null' },
 ];
 
 const fieldsErrors = computed(() => checkJsonFields(data.value.json_fields));
@@ -265,16 +269,18 @@ const usageTokens = computed(() => {
           <li v-for="error in fieldsErrors" :key="error">{{ error }}</li>
         </ul>
         <p class="text-xs text-slate-500">
-          {{ __('Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.', textDomain) }}
+          {{ __('Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean, Array and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. An array takes a JSON list, such as ["a", 2], or items separated by commas. Use JSON for a nested object.', textDomain) }}
         </p>
       </template>
 
       <template v-else-if="bodyMode === 'json'">
-        <BaseCodeEditorField
+        <BaseJsonEditorField
           :model-value="String(modelValue.body || '')"
           :label="__('JSON', textDomain)"
-          :rows="8"
           placeholder='{ "order": "{{ wc_order_number }}", "phone": "{{ wc_billing_phone }}" }'
+          :placeholders="availablePlaceholders"
+          :lint="lintJsonBody"
+          :format="formatJsonBody"
           @update:model-value="update('body', $event)"
         />
         <p v-if="jsonCheck.error" role="alert" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700">

@@ -231,7 +231,14 @@ check( 'a key takes placeholders', '{"order_1234":"x"}' === Http_Request_Action:
 check( 'a number that does not become one fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'n', 'value' => '{{ wc_billing_first_name }}', 'type' => 'number' ) ) ), $replace )[0] );
 check( 'a boolean that does not become one fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'b', 'value' => 'maybe', 'type' => 'boolean' ) ) ), $replace )[0] );
 check( 'an invalid JSON value fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'j', 'value' => '{ "a": 1, }', 'type' => 'json' ) ) ), $replace )[0] );
-check( 'an unknown type is sent as text', '{"a":"1"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => 'a', 'value' => '1', 'type' => 'date' ) ) ), $replace )[0] );
+check( 'an array splits a comma list into text items, without the empty ones', '{"tags":["vip","1234","recorrente"],"none":[]}' === Http_Request_Action::build_body( $fields( array(
+	array( 'key' => 'tags', 'value' => ' vip, {{ wc_order_number }} ,, recorrente ', 'type' => 'array' ),
+	array( 'key' => 'none', 'value' => '', 'type' => 'array' ),
+) ), $replace )[0] );
+check( 'an array typed as a JSON list keeps its types, placeholders filled inside strings', '{"items":[1,"ana+loja@example.com",{"a":true}]}' === Http_Request_Action::build_body( $fields( array( array( 'key' => 'items', 'value' => '[1, "{{ wc_billing_email }}", {"a": true}]', 'type' => 'array' ) ) ), $replace )[0] );
+check( 'a placeholder that gives a JSON list is sent as that list', array( 1, 'b' ) === Http_Request_Action::field_to_list( '{{ list }}', function( $text ) { return str_replace( '{{ list }}', '[1, "b"]', $text ); } ) );
+check( 'an array typed as an invalid JSON list or an object fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'x', 'value' => '[1, 2,]', 'type' => 'array' ) ) ), $replace )[0] && null === Http_Request_Action::field_to_list( '[{"a": 1}', $replace ) );
+check( 'an unknown type is sent as text','{"a":"1"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => 'a', 'value' => '1', 'type' => 'date' ) ) ), $replace )[0] );
 check( 'the trigger mode sends the trigger\'s data',array( '{"order":{"id":7}}', 'application/json' ) === Http_Request_Action::build_body( array( 'method' => 'POST', 'body_mode' => 'trigger' ), $replace, function() { return array( 'order' => array( 'id' => 7 ) ); } ) );
 
 echo "\nHttp_Request_Action::auth_header\n";

@@ -124,7 +124,7 @@ class Http_Request_Action {
 	 * @since 2.7.1
 	 * @var array
 	 */
-	const FIELD_TYPES = array( 'text', 'number', 'boolean', 'null', 'json' );
+	const FIELD_TYPES = array( 'text', 'number', 'boolean', 'array', 'json', 'null' );
 
 
 	/**
@@ -348,14 +348,57 @@ class Http_Request_Action {
 
 
 	/**
+	 * The list an "array" field sends.
+	 *
+	 * A value typed as a JSON list (`["a", 2]`) is filled like a JSON body and must stay a
+	 * list. Any other value has its placeholders replaced; when that gives a JSON list (a
+	 * placeholder holding one, such as `{{ http:NAME.body.items }}`) it is sent as it is,
+	 * otherwise it is split on commas into text items, trimmed, without the empty ones — so an
+	 * empty value is an empty list. Null when a typed JSON list is not valid or not a list.
+	 * Pure given $replace, for the harness.
+	 *
+	 * @since 2.7.1
+	 * @param string $typed The value as typed.
+	 * @param callable $replace Text => text with the placeholders replaced.
+	 * @return array|null
+	 */
+	public static function field_to_list( $typed, $replace ) {
+		$typed = (string) $typed;
+
+		if ( 0 === strpos( ltrim( $typed ), '[' ) ) {
+			$filled = self::fill_json( $typed, $replace );
+			$list = null === $filled ? null : json_decode( $filled, true );
+
+			return is_array( $list ) && array_is_list( $list ) ? $list : null;
+		}
+
+		$replaced = trim( (string) call_user_func( $replace, $typed ) );
+
+		if ( 0 === strpos( $replaced, '[' ) ) {
+			$list = json_decode( $replaced, true );
+
+			if ( is_array( $list ) && array_is_list( $list ) ) {
+				return $list;
+			}
+		}
+
+		$items = array_map( 'trim', explode( ',', $replaced ) );
+
+		return array_values( array_filter( $items, function( $item ) {
+			return '' !== $item;
+		} ) );
+	}
+
+
+	/**
 	 * Build a JSON object from key → value fields, as typed in the table of the JSON body.
 	 *
 	 * Each key and value has its placeholders replaced first. The value is then sent as its
 	 * type: text as a string; number, boolean and JSON parsed from the replaced text (a JSON
-	 * value has the placeholders inside its strings filled safely, like a JSON body); null as
-	 * null, whatever was typed. A row without a key is skipped and a repeated key keeps the
-	 * last row. Null when a value does not become its type. Pure given $replace, for the
-	 * harness.
+	 * value has the placeholders inside its strings filled safely, like a JSON body); an array
+	 * as a list (see field_to_list()); null as null, whatever was typed. A row without a key is
+	 * skipped and a repeated key keeps the last row. Null when a value does not become its
+	 * type. Pure given $replace, for the harness.
 	 *
 	 * @since 2.7.1
 	 * @param mixed $fields Rows of {key, value, type}.
@@ -384,6 +427,12 @@ class Http_Request_Action {
 				$value = null === $filled ? null : json_decode( $filled, true );
 
 				if ( null === $filled || JSON_ERROR_NONE !== json_last_error() ) {
+					return null;
+				}
+			} elseif ( 'array' === $type ) {
+				$value = self::field_to_list( $typed, $replace );
+
+				if ( null === $value ) {
 					return null;
 				}
 			} elseif ( 'null' === $type ) {
@@ -654,7 +703,7 @@ class Http_Request_Action {
 
 		if ( false === $body ) {
 			$reason = 'fields' === ( $action_data['json_input'] ?? 'raw' )
-				? 'a JSON body field does not become its type (number, boolean or JSON) once placeholders are replaced'
+				? 'a JSON body field does not become its type (number, boolean, array or JSON) once placeholders are replaced'
 				: 'the body is not valid JSON once placeholders are replaced';
 
 			Logger::register_log( sprintf( 'HTTP request (workflow %d): %s.', $post_id, $reason ), 'ERROR' );

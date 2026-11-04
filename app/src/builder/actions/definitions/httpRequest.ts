@@ -23,7 +23,22 @@ export interface HttpRequestRow {
 }
 
 // Types a JSON body field is sent as, as Http_Request_Action::FIELD_TYPES.
-export const JSON_FIELD_TYPES = ['text', 'number', 'boolean', 'null', 'json'];
+export const JSON_FIELD_TYPES = ['text', 'number', 'boolean', 'array', 'json', 'null'];
+
+// A value made of one placeholder and nothing else.
+const SINGLE_PLACEHOLDER = /^\{\{[\s\S]*?\}\}$/;
+
+/**
+ * The items of an "array" value that is not a JSON list: split on commas,
+ * trimmed, without the empty ones (Http_Request_Action::field_to_list).
+ *
+ * @since 2.7.1
+ * @param {string} value The value.
+ * @returns {string[]} The items.
+ */
+function commaItems(value: string): string[] {
+  return value.split(',').map((item) => item.trim()).filter(Boolean);
+}
 
 const BOOLEAN_WORDS = ['true', '1', 'yes', 'on', 'false', '0', 'no', 'off', ''];
 
@@ -32,6 +47,9 @@ export interface JsonBodyCheck {
   error: string;
   // Placeholders typed outside quotes, which must become a JSON value once replaced.
   bareTokens: string[];
+  // Where the syntax error is (1-based), when the browser tells.
+  line?: number;
+  column?: number;
 }
 
 const PLACEHOLDER_PATTERN = /\{\{[\s\S]*?\}\}/g;
@@ -123,6 +141,9 @@ export function checkJsonFields(fields: unknown): string[] {
         /* translators: %s: field name. */
         errors.push(sprintf(__('"%s" is set as JSON, but its value is not valid JSON.', textDomain), key));
       }
+    } else if (row.type === 'array' && value.startsWith('[') && checkJsonBody(value).error) {
+      /* translators: %s: field name. */
+      errors.push(sprintf(__('"%s" is set as an array, but its value is not a valid JSON list. Fix it, or type the items separated by commas.', textDomain), key));
     }
   }
 
@@ -132,7 +153,8 @@ export function checkJsonFields(fields: unknown): string[] {
 /**
  * Writes the JSON body fields as JSON text, for switching from the table to
  * typing the JSON. A number or boolean with a placeholder is written outside
- * quotes, the way the table sends it.
+ * quotes, the way the table sends it; so is an array that is one placeholder,
+ * which may hold a list, while a comma list becomes a list of strings.
  *
  * @since 2.7.1
  * @param {unknown} fields The rows.
@@ -149,6 +171,8 @@ export function jsonFieldsToText(fields: unknown): string {
         text = 'null';
       } else if (row.type === 'json') {
         text = value || 'null';
+      } else if (row.type === 'array') {
+        text = value.startsWith('[') || SINGLE_PLACEHOLDER.test(value) ? value : JSON.stringify(commaItems(value));
       } else if (row.type === 'number' && value) {
         text = value;
       } else if (row.type === 'boolean') {
@@ -189,7 +213,7 @@ export function jsonTextToFields(text: unknown): HttpRequestRow[] | null {
     }
 
     if (typeof value === 'object') {
-      return { key, value: JSON.stringify(value), type: 'json' };
+      return { key, value: JSON.stringify(value), type: Array.isArray(value) ? 'array' : 'json' };
     }
 
     const types: Record<string, string> = { number: 'number', boolean: 'boolean' };
@@ -252,42 +276,20 @@ function jsonErrorLocation(text: string, error: unknown): { line: number; column
  */
 export function checkJsonBody(template: unknown): JsonBodyCheck {
   const text = String(template ?? '');
-  const tokens = [...text.matchAll(PLACEHOLDER_PATTERN)].map((match) => ({ start: match.index ?? 0, value: match[0] }));
-  const bareTokens: string[] = [];
+  const tokens = scanPlaceholders(text);
+  const bareTokens = tokens.filter((token) => token.bare).map((token) => token.value);
 
   if (!text.trim()) {
     return { error: '', bareTokens };
   }
 
-  // Mask the tokens first, so a quote inside one ({{ x | remove:"a" }}) never flips the string state.
-  let masked = text.replace(PLACEHOLDER_PATTERN, (token) => token.replace(/[^\n]/g, 'x'));
-  let inString = false;
-  let escaped = false;
-  let next = 0;
+  // A placeholder inside quotes becomes x's, one outside a 0 padded with spaces: same length, same lines.
+  let masked = text;
 
-  for (let index = 0; index < masked.length && next < tokens.length; index++) {
-    if (index === tokens[next].start) {
-      if (!inString) {
-        const token = tokens[next].value;
+  for (const token of tokens) {
+    const mask = token.bare ? '0' + token.value.slice(1).replace(/[^\n]/g, ' ') : token.value.replace(/[^\n]/g, 'x');
 
-        bareTokens.push(token);
-        masked = masked.slice(0, index) + '0' + token.slice(1).replace(/[^\n]/g, ' ') + masked.slice(index + token.length);
-      }
-
-      index += tokens[next].value.length - 1;
-      next++;
-      continue;
-    }
-
-    const char = masked[index];
-
-    if (escaped) {
-      escaped = false;
-    } else if (char === '\\' && inString) {
-      escaped = true;
-    } else if (char === '"') {
-      inString = !inString;
-    }
+    masked = masked.slice(0, token.start) + mask + masked.slice(token.start + token.value.length);
   }
 
   try {
@@ -307,7 +309,99 @@ export function checkJsonBody(template: unknown): JsonBodyCheck {
         )
         : __('The JSON is not valid. Look for a missing or extra comma, quote, bracket or brace.', textDomain),
       bareTokens,
+      ...(location ? { line: location.line, column: location.column } : {}),
     };
+  }
+}
+
+/**
+ * Finds the placeholders of a JSON template and whether each one is typed
+ * outside quotes. The placeholders are masked before the quotes are followed,
+ * so a quote inside one ({{ x | remove:"a" }}) never flips the string state.
+ *
+ * @since 2.7.1
+ * @param {string} text The JSON template.
+ * @returns {Array<{ start: number, value: string, bare: boolean }>} The placeholders, in order.
+ */
+function scanPlaceholders(text: string): Array<{ start: number; value: string; bare: boolean }> {
+  const tokens = [...text.matchAll(PLACEHOLDER_PATTERN)].map((match) => ({ start: match.index ?? 0, value: match[0], bare: false }));
+  const masked = text.replace(PLACEHOLDER_PATTERN, (token) => token.replace(/[^\n]/g, 'x'));
+  let inString = false;
+  let escaped = false;
+  let next = 0;
+
+  for (let index = 0; index < masked.length && next < tokens.length; index++) {
+    if (index === tokens[next].start) {
+      tokens[next].bare = !inString;
+      index += tokens[next].value.length - 1;
+      next++;
+      continue;
+    }
+
+    const char = masked[index];
+
+    if (escaped) {
+      escaped = false;
+    } else if (char === '\\' && inString) {
+      escaped = true;
+    } else if (char === '"') {
+      inString = !inString;
+    }
+  }
+
+  return tokens;
+}
+
+/**
+ * The syntax error of a JSON template as an editor problem, for the lint
+ * gutter: at its line and column, or on the first line when the browser does
+ * not say where.
+ *
+ * @since 2.7.1
+ * @param {string} text The typed JSON.
+ * @returns {Array<{ line: number, column?: number, severity: 'error', message: string }>} The problem, if any.
+ */
+export function lintJsonBody(text: string): Array<{ line: number; column?: number; severity: 'error'; message: string }> {
+  const check = checkJsonBody(text);
+
+  return check.error ? [{ line: check.line || 1, column: check.column, severity: 'error', message: check.error }] : [];
+}
+
+/**
+ * Formats a JSON template with two-space indentation, keeping its placeholders
+ * as typed: the ones outside quotes stand in for a value while it is parsed and
+ * are put back after. Null when the template is not valid JSON.
+ *
+ * @since 2.7.1
+ * @param {unknown} template The typed JSON.
+ * @returns {string | null} The formatted JSON.
+ */
+export function formatJsonBody(template: unknown): string | null {
+  const text = String(template ?? '');
+  const bare: string[] = [];
+  let swapped = '';
+  let last = 0;
+
+  if (!text.trim()) {
+    return null;
+  }
+
+  for (const token of scanPlaceholders(text)) {
+    if (!token.bare) {
+      continue;
+    }
+
+    swapped += text.slice(last, token.start) + JSON.stringify(`__joinotify_placeholder_${bare.length}__`);
+    bare.push(token.value);
+    last = token.start + token.value.length;
+  }
+
+  try {
+    const formatted = JSON.stringify(JSON.parse(swapped + text.slice(last)), null, 2);
+
+    return formatted.replace(/"__joinotify_placeholder_(\d+)__"/g, (_match, index: string) => bare[Number(index)]);
+  } catch {
+    return null;
   }
 }
 
