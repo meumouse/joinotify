@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Admin\Workflows;
 
 use MeuMouse\Joinotify\Admin\Export;
 use MeuMouse\Joinotify\Admin\Builder\Registry as Builder_Registry;
+use MeuMouse\Joinotify\Core\Helpers;
 use WP_Query;
 use WP_Post;
 
@@ -91,7 +92,7 @@ class Registry {
 
 		return array(
 			'id' => $id,
-			'name' => get_the_title( $post ),
+			'name' => Helpers::get_workflow_title( $post ),
 			'created_at' => get_post_time( 'Y-m-d H:i:s', false, $post ),
 			'status' => $post->post_status,
 			'edit_url' => admin_url( 'admin.php?page=joinotify-workflows-builder&id=' . $id ),

@@ -5,6 +5,7 @@ namespace MeuMouse\Joinotify\Admin\Queue;
 use MeuMouse\Joinotify\Admin\Export;
 use MeuMouse\Joinotify\Cron\Schedule;
 use MeuMouse\Joinotify\Builder\Messages;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Workflow_Processor;
 
 // Exit if accessed directly.
@@ -202,7 +203,7 @@ class Registry {
             'id'                => self::build_segment_id( $segment ),
             'backend'           => (string) ( $segment['backend'] ?? '' ),
             'workflow_id'       => $post_id,
-            'workflow_title'    => $post_id ? get_the_title( $post_id ) : '',
+            'workflow_title'    => $post_id ? Helpers::get_workflow_title( $post_id ) : '',
             'workflow_exists'   => $post_id ? ( get_post_status( $post_id ) !== false ) : false,
             'workflow_published'=> $post_id ? ( get_post_status( $post_id ) === 'publish' ) : false,
             'workflow_edit_url' => $post_id ? admin_url( 'admin.php?page=joinotify-workflows-builder&id=' . $post_id ) : '',
@@ -501,7 +502,7 @@ class Registry {
 
             $options[] = array(
                 'value' => $post_id,
-                'label' => get_the_title( $post_id ) ?: ( '#' . $post_id ),
+                'label' => Helpers::get_workflow_title( $post_id ) ?:( '#' . $post_id ),
             );
         }
 

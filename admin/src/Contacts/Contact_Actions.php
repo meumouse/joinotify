@@ -8,6 +8,7 @@ use MeuMouse\Joinotify\Cloud_Sync\Consent;
 use MeuMouse\Joinotify\Cloud_Sync\Contact;
 use MeuMouse\Joinotify\Cloud_Sync\Outbox;
 use MeuMouse\Joinotify\Cloud_Sync\Payload;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Logger;
 
 defined('ABSPATH') || exit;
@@ -328,7 +329,7 @@ class Contact_Actions {
 			'now' => gmdate( 'Y-m-d\TH:i:s\Z' ),
 			'country' => Registry::default_country(),
 			'site_tag' => Cloud_Sync::source_tag(),
-			'workflow' => get_the_title( $post_id ),
+			'workflow' => Helpers::get_workflow_title( $post_id ),
 			'host' => (string) wp_parse_url( home_url(), PHP_URL_HOST ),
 		) );
 

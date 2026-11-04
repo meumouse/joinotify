@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Admin\History;
 
 use MeuMouse\Joinotify\Api\Send_Error;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Message_History;
 use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Admin\Export;
@@ -68,7 +69,7 @@ class Registry {
             'created_at' => $created_local,
             'created_at_gmt' => $created_gmt,
             'workflow_id' => $workflow_id,
-            'workflow_title' => $workflow_id ? get_the_title( $workflow_id ) : '',
+            'workflow_title' => $workflow_id ? Helpers::get_workflow_title( $workflow_id ) : '',
             'workflow_edit_url' => $workflow_id ? admin_url( 'admin.php?page=joinotify-workflows-builder&id=' . $workflow_id ) : '',
             'source' => (string) ( $row['source'] ?? 'api' ),
             'sender' => (string) ( $row['sender'] ?? '' ),

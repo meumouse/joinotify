@@ -201,7 +201,9 @@ class Registry {
 
 		return array(
 			'post_id' => $post_id,
-			'title' => get_the_title( $post ),
+			// Raw post_title, not get_the_title(): the builder edits and saves this
+			// value back, so texturized entities (&#8211;) must never reach it.
+			'title' => html_entity_decode( (string) $post->post_title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
 			'status' => $post->post_status,
 			'content' => $content,
 			'editor_notes' => $editor_notes,
@@ -880,7 +882,7 @@ class Registry {
 			$modified = isset( $workflow_state['post']['modified'] ) ? sanitize_text_field( (string) $workflow_state['post']['modified'] ) : $modified;
 			$category = isset( $workflow_state['post']['category'] ) ? sanitize_key( (string) $workflow_state['post']['category'] ) : $category;
 		} else {
-			$title = isset( $workflow_state['title'] ) ? sanitize_text_field( (string) $workflow_state['title'] ) : ( $post ? get_the_title( $post ) : '' );
+			$title = isset( $workflow_state['title'] ) ? sanitize_text_field( (string) $workflow_state['title'] ) : ( $post ? html_entity_decode( (string) $post->post_title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) : '' );
 			$status = isset( $workflow_state['status'] ) ? sanitize_key( (string) $workflow_state['status'] ) : ( $post ? $post->post_status : 'draft' );
 			$date = isset( $workflow_state['created_at'] ) ? sanitize_text_field( (string) $workflow_state['created_at'] ) : ( $post ? get_post_time( 'Y-m-d H:i:s', false, $post ) : $date );
 			$modified = isset( $workflow_state['updated_at'] ) ? sanitize_text_field( (string) $workflow_state['updated_at'] ) : ( $post ? get_post_modified_time( 'Y-m-d H:i:s', false, $post ) : $modified );

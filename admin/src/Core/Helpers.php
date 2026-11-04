@@ -492,8 +492,24 @@ class Helpers {
             },
             $decoded
         );
-        
+
         return $decoded;
+    }
+
+
+    /**
+     * Get a workflow title as plain text.
+     *
+     * get_the_title() runs wptexturize() and esc_html(), so a title like
+     * "A - B" comes back as "A &#8211; B". The admin app renders titles as
+     * text (not HTML), so the entities must be decoded before they reach it.
+     *
+     * @since 2.7.1
+     * @param int|\WP_Post $post | Workflow post ID or object
+     * @return string
+     */
+    public static function get_workflow_title( $post ) {
+        return html_entity_decode( (string) get_the_title( $post ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
     }
 
 
