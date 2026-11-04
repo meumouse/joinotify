@@ -8,6 +8,11 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Added
+
+- The JSON body of the "HTTP request" action can be built from a table of fields, one name → value per row, instead of typing the JSON. Each row picks how its value is sent: Text (in quotes, whatever it holds), Number, Boolean, Null or JSON, for a nested object or a list; names and values take placeholders. A new action starts on the table, and actions saved with a typed JSON body keep it. Switching between the table and the JSON carries what was built over to the side that is still empty. A value that does not become its type once its placeholders are replaced fails the request, and the builder flags a name used twice, or a number, boolean or JSON typed without placeholders that cannot become one
+- The "HTTP request" action checks the syntax of a JSON body as it is typed. A syntax error, such as a missing or extra comma, is shown under the editor with its line and column, and marks the action as needing setup on the canvas, instead of only failing when the workflow runs. A placeholder typed outside quotes counts as the value it becomes, as on the server, and is listed in a warning, since it must become a number, true, false or null once replaced
+
 ## [2.7.0] - 2026-11-03
 
 ### Added

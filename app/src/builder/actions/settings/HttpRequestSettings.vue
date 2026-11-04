@@ -10,7 +10,11 @@
  * The credential comes back from the server sealed (enc:v1:...); it is never
  * shown, and stays as it is until something new is typed over it.
  *
+ * A JSON body is built from a table of typed fields or typed as JSON, which is
+ * checked as it is typed.
+ *
  * @since 2.7.0
+ * @version 2.7.1
  */
 import { computed } from 'vue';
 import BaseTextField from '../../components/base/BaseTextField.vue';
@@ -22,8 +26,18 @@ import BaseAccordion from '../../components/base/BaseAccordion.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
 import HttpRequestRowsField from './HttpRequestRowsField.vue';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
-import { HTTP_METHODS, SEALED_PREFIX, normalizeRows, responseVarSlug } from '../definitions/httpRequest';
-import { __, textDomain } from '../../../utils/i18n';
+import {
+  HTTP_METHODS,
+  SEALED_PREFIX,
+  checkJsonBody,
+  checkJsonFields,
+  jsonFieldsToText,
+  jsonTextToFields,
+  normalizeJsonFields,
+  normalizeRows,
+  responseVarSlug,
+} from '../definitions/httpRequest';
+import { __, sprintf, textDomain } from '../../../utils/i18n';
 import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 const props = defineProps({
@@ -70,6 +84,66 @@ const secretLabel = computed(() => {
   }
 
   return authType.value === 'api_key' ? __('API key', textDomain) : __('Token', textDomain);
+});
+
+const jsonInput = computed(() => (data.value.json_input === 'raw' ? 'raw' : 'fields'));
+
+const jsonInputOptions = [
+  { label: __('Using the fields below', textDomain), value: 'fields' },
+  { label: __('Writing the JSON', textDomain), value: 'raw' },
+];
+
+const fieldTypeOptions = [
+  { label: __('Text', textDomain), value: 'text' },
+  { label: __('Number', textDomain), value: 'number' },
+  { label: __('Boolean', textDomain), value: 'boolean' },
+  { label: __('Null', textDomain), value: 'null' },
+  { label: __('JSON', textDomain), value: 'json' },
+];
+
+const fieldsErrors = computed(() => checkJsonFields(data.value.json_fields));
+
+/**
+ * Switch between the fields table and typing the JSON, carrying what was built
+ * over to the side that is still empty.
+ *
+ * @since 2.7.1
+ * @param {unknown} value 'fields' or 'raw'.
+ */
+function switchJsonInput(value: unknown) {
+  const next = value === 'raw' ? 'raw' : 'fields';
+  const fields = normalizeJsonFields(data.value.json_fields);
+  const body = String(data.value.body || '');
+  // One emit: update() spreads the current modelValue, so two calls in a row would drop the first.
+  const patch: Record<string, unknown> = { json_input: next };
+
+  if (next === 'raw' && !body.trim() && fields.length) {
+    patch.body = jsonFieldsToText(fields);
+  } else if (next === 'fields' && !fields.length && body.trim()) {
+    const rows = jsonTextToFields(body);
+
+    if (rows) {
+      patch.json_fields = rows;
+    }
+  }
+
+  emit('update:modelValue', { ...data.value, ...patch });
+}
+
+const jsonCheck = computed(() => checkJsonBody(data.value.body));
+
+const bareTokensWarning = computed(() => {
+  const tokens = [...new Set(jsonCheck.value.bareTokens)];
+
+  if (!tokens.length) {
+    return '';
+  }
+
+  return sprintf(
+    /* translators: %s: placeholders typed outside quotes, such as {{ wc_order_total }}. */
+    __('Outside quotes: %s. Once replaced, each must be a number, true, false or null, or the request fails. Put it in quotes to send it as text.', textDomain),
+    tokens.join(', '),
+  );
 });
 
 const responseName = computed(() => responseVarSlug(data.value.response_var));
@@ -169,7 +243,33 @@ const usageTokens = computed(() => {
         @update:model-value="update('body_mode', $event)"
       />
 
-      <template v-if="bodyMode === 'json'">
+      <BaseSelectField
+        v-if="bodyMode === 'json'"
+        :model-value="jsonInput"
+        :options="jsonInputOptions"
+        :label="__('Specify the body', textDomain)"
+        @update:model-value="switchJsonInput($event)"
+      />
+
+      <template v-if="bodyMode === 'json' && jsonInput === 'fields'">
+        <HttpRequestRowsField
+          :model-value="normalizeJsonFields(modelValue.json_fields)"
+          name-placeholder="number"
+          value-placeholder="{{ wc_billing_phone }}"
+          :add-label="__('Add field', textDomain)"
+          :placeholders="availablePlaceholders"
+          :type-options="fieldTypeOptions"
+          @update:model-value="update('json_fields', $event)"
+        />
+        <ul v-if="fieldsErrors.length" role="alert" class="space-y-1 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700">
+          <li v-for="error in fieldsErrors" :key="error">{{ error }}</li>
+        </ul>
+        <p class="text-xs text-slate-500">
+          {{ __('Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.', textDomain) }}
+        </p>
+      </template>
+
+      <template v-else-if="bodyMode === 'json'">
         <BaseCodeEditorField
           :model-value="String(modelValue.body || '')"
           :label="__('JSON', textDomain)"
@@ -177,6 +277,12 @@ const usageTokens = computed(() => {
           placeholder='{ "order": "{{ wc_order_number }}", "phone": "{{ wc_billing_phone }}" }'
           @update:model-value="update('body', $event)"
         />
+        <p v-if="jsonCheck.error" role="alert" class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700">
+          {{ jsonCheck.error }}
+        </p>
+        <p v-if="bareTokensWarning" class="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          {{ bareTokensWarning }}
+        </p>
         <p class="text-xs text-slate-500">
           {{ __('Placeholders inside quotes are replaced safely, even when the value has quotes or line breaks. A placeholder outside quotes, such as a number, must leave valid JSON once replaced.', textDomain) }}
         </p>

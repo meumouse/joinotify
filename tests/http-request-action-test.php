@@ -210,7 +210,29 @@ check( 'GET never sends a body', array( null, '' ) === Http_Request_Action::buil
 check( 'an invalid JSON body is false', false === Http_Request_Action::build_body( array( 'method' => 'POST', 'body_mode' => 'json', 'body' => '{ "a": {{ wc_billing_first_name }} }' ), $replace )[0] );
 check( 'form fields are URL encoded', array( 'email=ana%2Bloja%40example.com&n=1234', 'application/x-www-form-urlencoded' ) === Http_Request_Action::build_body( array( 'method' => 'POST', 'body_mode' => 'form', 'body_fields' => array( array( 'key' => 'email', 'value' => '{{ wc_billing_email }}' ), array( 'key' => 'n', 'value' => '{{ wc_order_number }}' ) ) ), $replace ) );
 check( 'raw text keeps its content type', array( 'Pedido 1234', 'text/csv' ) === Http_Request_Action::build_body( array( 'method' => 'PUT', 'body_mode' => 'raw', 'body' => 'Pedido {{ wc_order_number }}', 'content_type' => 'text/csv' ), $replace ) );
-check( 'the trigger mode sends the trigger\'s data', array( '{"order":{"id":7}}', 'application/json' ) === Http_Request_Action::build_body( array( 'method' => 'POST', 'body_mode' => 'trigger' ), $replace, function() { return array( 'order' => array( 'id' => 7 ) ); } ) );
+$fields = function( $rows ) {
+	return array( 'method' => 'POST', 'body_mode' => 'json', 'json_input' => 'fields', 'json_fields' => $rows );
+};
+
+check( 'a saved JSON body without json_input keeps its text', array( '{"n":"1234"}', 'application/json' ) === Http_Request_Action::build_body( array( 'method' => 'POST', 'body_mode' => 'json', 'body' => '{"n":"{{ wc_order_number }}"}', 'json_fields' => array( array( 'key' => 'x', 'value' => 'y' ) ) ), $replace ) );
+check( 'fields build an object, each value as its type', array( '{"number":"1234","total":1234,"price":19.9,"linkPreview":false,"sent":true,"coupon":null,"customer":{"email":"ana+loja@example.com","tags":["a"]}}', 'application/json' ) === Http_Request_Action::build_body( $fields( array(
+	array( 'key' => 'number', 'value' => '{{ wc_order_number }}' ),
+	array( 'key' => 'total', 'value' => '{{ wc_order_number }}', 'type' => 'number' ),
+	array( 'key' => 'price', 'value' => ' 19.90 ', 'type' => 'number' ),
+	array( 'key' => 'linkPreview', 'value' => 'false', 'type' => 'boolean' ),
+	array( 'key' => 'sent', 'value' => 'Yes', 'type' => 'boolean' ),
+	array( 'key' => 'coupon', 'value' => 'ignored', 'type' => 'null' ),
+	array( 'key' => 'customer', 'value' => '{ "email": "{{ wc_billing_email }}", "tags": ["a"] }', 'type' => 'json' ),
+) ), $replace ) );
+check( 'a text value with quotes and line breaks stays one string', '{"t":"say \"hi\"\nbye"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => 't', 'value' => "say \"hi\"\nbye" ) ) ), $replace )[0] );
+check( 'a row without a key is skipped and a repeated key keeps the last', '{"a":"2"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => ' ', 'value' => 'x' ), array( 'key' => 'a', 'value' => '1' ), array( 'key' => 'a', 'value' => '2' ) ) ), $replace )[0] );
+check( 'numeric keys and an empty table still send an object', '{"0":"x"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => '0', 'value' => 'x' ) ) ), $replace )[0] && '{}' === Http_Request_Action::build_body( $fields( array() ), $replace )[0] );
+check( 'a key takes placeholders', '{"order_1234":"x"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => 'order_{{ wc_order_number }}', 'value' => 'x' ) ) ), $replace )[0] );
+check( 'a number that does not become one fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'n', 'value' => '{{ wc_billing_first_name }}', 'type' => 'number' ) ) ), $replace )[0] );
+check( 'a boolean that does not become one fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'b', 'value' => 'maybe', 'type' => 'boolean' ) ) ), $replace )[0] );
+check( 'an invalid JSON value fails the body', false === Http_Request_Action::build_body( $fields( array( array( 'key' => 'j', 'value' => '{ "a": 1, }', 'type' => 'json' ) ) ), $replace )[0] );
+check( 'an unknown type is sent as text', '{"a":"1"}' === Http_Request_Action::build_body( $fields( array( array( 'key' => 'a', 'value' => '1', 'type' => 'date' ) ) ), $replace )[0] );
+check( 'the trigger mode sends the trigger\'s data',array( '{"order":{"id":7}}', 'application/json' ) === Http_Request_Action::build_body( array( 'method' => 'POST', 'body_mode' => 'trigger' ), $replace, function() { return array( 'order' => array( 'id' => 7 ) ); } ) );
 
 echo "\nHttp_Request_Action::auth_header\n";
 

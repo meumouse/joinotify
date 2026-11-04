@@ -119,9 +119,22 @@ class Http_Request_Action {
 
 
 	/**
+	 * Types a JSON body field is sent as.
+	 *
+	 * @since 2.7.1
+	 * @var array
+	 */
+	const FIELD_TYPES = array( 'text', 'number', 'boolean', 'null', 'json' );
+
+
+	/**
 	 * The data of a new node.
 	 *
+	 * A new node builds its JSON body from fields; a saved node without `json_input` keeps
+	 * the JSON it was written with.
+	 *
 	 * @since 2.7.0
+	 * @version 2.7.1
 	 * @return array
 	 */
 	public static function default_data() {
@@ -137,6 +150,8 @@ class Http_Request_Action {
 			'auth_header' => 'X-API-Key',
 			'auth_value' => '',
 			'body_mode' => 'none',
+			'json_input' => 'fields',
+			'json_fields' => array(),
 			'body' => '',
 			'body_fields' => array(),
 			'content_type' => 'text/plain',
@@ -333,10 +348,86 @@ class Http_Request_Action {
 
 
 	/**
+	 * Build a JSON object from key → value fields, as typed in the table of the JSON body.
+	 *
+	 * Each key and value has its placeholders replaced first. The value is then sent as its
+	 * type: text as a string; number, boolean and JSON parsed from the replaced text (a JSON
+	 * value has the placeholders inside its strings filled safely, like a JSON body); null as
+	 * null, whatever was typed. A row without a key is skipped and a repeated key keeps the
+	 * last row. Null when a value does not become its type. Pure given $replace, for the
+	 * harness.
+	 *
+	 * @since 2.7.1
+	 * @param mixed $fields Rows of {key, value, type}.
+	 * @param callable $replace Text => text with the placeholders replaced.
+	 * @return string|null
+	 */
+	public static function fields_to_json( $fields, $replace ) {
+		$object = array();
+
+		foreach ( is_array( $fields ) ? $fields : array() as $row ) {
+			if ( ! is_array( $row ) ) {
+				continue;
+			}
+
+			$key = trim( (string) call_user_func( $replace, is_scalar( $row['key'] ?? '' ) ? (string) ( $row['key'] ?? '' ) : '' ) );
+
+			if ( '' === $key ) {
+				continue;
+			}
+
+			$type = in_array( $row['type'] ?? '', self::FIELD_TYPES, true ) ? $row['type'] : 'text';
+			$typed = is_scalar( $row['value'] ?? '' ) ? (string) ( $row['value'] ?? '' ) : '';
+
+			if ( 'json' === $type ) {
+				$filled = self::fill_json( $typed, $replace );
+				$value = null === $filled ? null : json_decode( $filled, true );
+
+				if ( null === $filled || JSON_ERROR_NONE !== json_last_error() ) {
+					return null;
+				}
+			} elseif ( 'null' === $type ) {
+				$value = null;
+			} else {
+				$value = (string) call_user_func( $replace, $typed );
+
+				if ( 'number' === $type ) {
+					$number = trim( $value );
+
+					if ( ! is_numeric( $number ) ) {
+						return null;
+					}
+
+					$value = preg_match( '/^-?\d+$/', $number ) ? (int) $number : (float) $number;
+				} elseif ( 'boolean' === $type ) {
+					$flag = strtolower( trim( $value ) );
+
+					if ( in_array( $flag, array( 'true', '1', 'yes', 'on' ), true ) ) {
+						$value = true;
+					} elseif ( in_array( $flag, array( 'false', '0', 'no', 'off', '' ), true ) ) {
+						$value = false;
+					} else {
+						return null;
+					}
+				}
+			}
+
+			$object[ $key ] = $value;
+		}
+
+		// Cast to an object so numeric keys and an empty table still encode as {…}.
+		$encoded = wp_json_encode( (object) $object, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+
+		return is_string( $encoded ) ? $encoded : null;
+	}
+
+
+	/**
 	 * The body, and the content type it goes with, for a body mode. Null body when the mode
 	 * sends none; false when a JSON body is not valid. Pure given $replace, for the harness.
 	 *
 	 * @since 2.7.0
+	 * @version 2.7.1
 	 * @param array $action_data The action's settings.
 	 * @param callable $replace Text => text with the placeholders replaced.
 	 * @param callable|null $trigger_body () => the trigger's data, for the "trigger" mode.
@@ -356,7 +447,9 @@ class Http_Request_Action {
 				return array( (string) wp_json_encode( $data ), 'application/json' );
 
 			case 'json':
-				$body = self::fill_json( (string) ( $action_data['body'] ?? '' ), $replace );
+				$body = 'fields' === ( $action_data['json_input'] ?? 'raw' )
+					? self::fields_to_json( $action_data['json_fields'] ?? array(), $replace )
+					: self::fill_json( (string) ( $action_data['body'] ?? '' ), $replace );
 
 				return array( null === $body ? false : $body, 'application/json' );
 
@@ -523,6 +616,7 @@ class Http_Request_Action {
 	 * Run the action.
 	 *
 	 * @since 2.7.0
+	 * @version 2.7.1
 	 * @param array $action_data The action's settings.
 	 * @param array $action The workflow node.
 	 * @param int $post_id The workflow.
@@ -559,7 +653,11 @@ class Http_Request_Action {
 		} );
 
 		if ( false === $body ) {
-			Logger::register_log( sprintf( 'HTTP request (workflow %d): the body is not valid JSON once placeholders are replaced.', $post_id ), 'ERROR' );
+			$reason = 'fields' === ( $action_data['json_input'] ?? 'raw' )
+				? 'a JSON body field does not become its type (number, boolean or JSON) once placeholders are replaced'
+				: 'the body is not valid JSON once placeholders are replaced';
+
+			Logger::register_log( sprintf( 'HTTP request (workflow %d): %s.', $post_id, $reason ), 'ERROR' );
 
 			return self::fail( $action_data, $event_data, $name, 0, 'invalid_body' );
 		}
