@@ -8,11 +8,17 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+## [2.7.1] - 2026-11-04
+
 ### Added
 
 - The JSON body of the "HTTP request" action can be built from a table of fields, one name → value per row, instead of typing the JSON. Each row picks how its value is sent: Text (in quotes, whatever it holds), Number, Boolean, Array, JSON for a nested object, or Null; names and values take placeholders. An Array takes a JSON list (`["a", 2]`) or items separated by commas, sent as text; a placeholder that holds a JSON list, such as `{{ http:NAME.body.items }}`, is sent as that list. A new action starts on the table, and actions saved with a typed JSON body keep it. Switching between the table and the JSON carries what was built over to the side that is still empty. A value that does not become its type once its placeholders are replaced fails the request, and the builder flags a name used twice, or a number, boolean or JSON typed without placeholders that cannot become one
 - The "HTTP request" action checks the syntax of a JSON body as it is typed. A syntax error, such as a missing or extra comma, is shown under the editor with its line and column, and marks the action as needing setup on the canvas, instead of only failing when the workflow runs. A placeholder typed outside quotes counts as the value it becomes, as on the server, and is listed in a warning, since it must become a number, true, false or null once replaced
 - The JSON body of the "HTTP request" action is typed in a code editor (CodeMirror) with line numbers, highlighting, folding, bracket closing and a gutter that marks the line with a syntax error. Typing `{{` lists the workflow's variables with their descriptions, and the JSON literals are suggested too; a "Format" button indents the JSON while keeping placeholders typed outside quotes. The editor is loaded only when a JSON body is opened, so the builder does not load it otherwise
+
+### Fixed
+
+- Workflow titles reached the admin pages texturized and escaped, so a title such as `A - B` showed as `A &#8211; B` in the workflows list, the message history, the queue and the contact source label. The builder now reads the raw title, since it saves it back, which also repairs titles already saved with entities
 
 ## [2.7.0] - 2026-11-03
 
@@ -646,7 +652,8 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.0...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.1...HEAD
+[2.7.1]: https://github.com/meumouse/joinotify/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/meumouse/joinotify/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/meumouse/joinotify/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/meumouse/joinotify/compare/v2.6.0...v2.6.1

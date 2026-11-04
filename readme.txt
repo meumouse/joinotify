@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,11 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.7.1 =
+* New: the JSON body of the "HTTP request" action can be built from a table of fields, one name → value per row, each sent as Text, Number, Boolean, Array, JSON or Null. Names and values take variables. Actions saved with a typed JSON body keep it.
+* New: a typed JSON body is edited in a code editor with line numbers, syntax checking that points at the line and column of an error, a "Format" button, and variable suggestions when you type `{{`.
+* Fixed: workflow titles with dashes or quotes no longer show HTML entities such as `&#8211;` in the workflow list, message history and queue.
+
 = 2.7.0 =
 * New: "HTTP request" workflow action. It calls any public API with GET, POST, PUT, PATCH or DELETE, with query parameters, headers, a bearer, basic or API key credential and a JSON, form or raw body, and keeps the response for the next actions as `{{ http:NAME.status }}`, `{{ http:NAME.ok }}`, `{{ http:NAME.error }}` and `{{ http:NAME.body.FIELD }}`. The credential is stored encrypted and never shown again.
 * New: a failed message can be sent again from the message history, one at a time or up to 50 selected rows. The original is flagged "Resent", so one failure is never sent twice by accident.
@@ -331,6 +336,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.7.1 =
+Builds the JSON body of the "HTTP request" action from a table of fields, with a code editor and syntax checking for typed JSON. Existing actions keep their JSON body.
 
 = 2.7.0 =
 Adds an "HTTP request" action, resending of failed messages and WooCommerce account and stock triggers. "New order (Processing)" becomes "Payment confirmed"; saved workflows move to it on their own.
