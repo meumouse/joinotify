@@ -16,6 +16,15 @@
       "— Select a sender —": [
         "— Sélectionnez un expéditeur —"
       ],
+      "\"%s\" is set as a boolean: use true or false.": [
+        "« %s » est défini comme booléen : utilisez true ou false."
+      ],
+      "\"%s\" is set as a number, but its value is not one.": [
+        "« %s » est défini comme nombre, mais sa valeur n’en est pas un."
+      ],
+      "\"%s\" is set as JSON, but its value is not valid JSON.": [
+        "« %s » est défini comme JSON, mais sa valeur n’est pas un JSON valide."
+      ],
       "\"true\" when the status is 2xx": [
         "\"true\" quand le statut est 2xx"
       ],
@@ -67,6 +76,9 @@
       ],
       "5541987111527": [
         "5541987111527"
+      ],
+      "A field has a value but no name.": [
+        "Un champ a une valeur mais pas de nom."
       ],
       "A field of the JSON response; use dots for nested fields and list positions (body.items.0.id)": [
         "Un champ de la réponse JSON ; utilisez des points pour les champs imbriqués et les positions de liste (body.items.0.id)"
@@ -241,6 +253,9 @@
       ],
       "Bold": [
         "Gras"
+      ],
+      "Boolean": [
+        "Booléen"
       ],
       "Branching action": [
         "Action de ramification"
@@ -544,6 +559,9 @@
       ],
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "p. ex. Écrivez une salutation d'une ligne pour {{ wc_billing_first_name }}."
+      ],
+      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.": [
+        "Chaque champ devient une clé de l’objet JSON. Le texte est envoyé entre guillemets ; Nombre, Booléen et JSON sont lus depuis la valeur une fois ses variables remplacées, la requête échoue donc si la valeur ne devient pas ce type. Utilisez JSON pour un objet imbriqué ou une liste."
       ],
       "Each template variable is filled at send time with the placeholder you map here.": [
         "Chaque variable de modèle est remplie au moment de l'envoi avec le placeholder que vous mappez ici."
@@ -974,6 +992,12 @@
       "None": [
         "Aucun"
       ],
+      "Null": [
+        "Nul"
+      ],
+      "Number": [
+        "Numéro"
+      ],
       "Offer expiration": [
         "Expiration de l’offre"
       ],
@@ -1036,6 +1060,9 @@
       ],
       "Other": [
         "Autre"
+      ],
+      "Outside quotes: %s. Once replaced, each must be a number, true, false or null, or the request fails. Put it in quotes to send it as text.": [
+        "Hors des guillemets : %s. Une fois remplacé, chacun doit être un nombre, true, false ou null, sinon la requête échoue. Mettez-le entre guillemets pour l’envoyer comme texte."
       ],
       "Override the default model for this node only.": [
         "Remplacer le modèle par défaut pour ce nœud uniquement."
@@ -1292,6 +1319,9 @@
       "Source": [
         "Source"
       ],
+      "Specify the body": [
+        "Définir le corps"
+      ],
       "Split the workflow into true and false branches.": [
         "Divisez le flux de travail en branches vraies et fausses."
       ],
@@ -1369,6 +1399,15 @@
       ],
       "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
         "L'intégration dont dépend le déclencheur de ce flux n'est pas disponible. Ce flux ne sera pas traité tant que l'intégration ne sera pas à nouveau disponible."
+      ],
+      "The JSON is not valid near line %1$d, column %2$d. Look for a missing or extra comma, quote, bracket or brace.": [
+        "Le JSON n’est pas valide près de la ligne %1$d, colonne %2$d. Cherchez une virgule, un guillemet, un crochet ou une accolade manquant ou en trop."
+      ],
+      "The JSON is not valid. Look for a missing or extra comma, quote, bracket or brace.": [
+        "Le JSON n’est pas valide. Cherchez une virgule, un guillemet, un crochet ou une accolade manquant ou en trop."
+      ],
+      "The name \"%s\" is used more than once; only the last one is sent.": [
+        "Le nom « %s » est utilisé plus d’une fois ; seul le dernier est envoyé."
       ],
       "The trigger that starts this flow.": [
         "Le déclencheur qui démarre ce flux."
@@ -1538,6 +1577,9 @@
       "User": [
         "Utilisateur"
       ],
+      "Using the fields below": [
+        "Avec les champs ci-dessous"
+      ],
       "Value": [
         "Valeur"
       ],
@@ -1639,6 +1681,9 @@
       ],
       "Write in markdown to document your flow…": [
         "Écrivez en markdown pour documenter votre flux…"
+      ],
+      "Writing the JSON": [
+        "En écrivant le JSON"
       ],
       "Years": [
         "Années"

@@ -16,6 +16,15 @@
       "— Select a sender —": [
         "— Select a sender —"
       ],
+      "\"%s\" is set as a boolean: use true or false.": [
+        "\"%s\" is set as a boolean: use true or false."
+      ],
+      "\"%s\" is set as a number, but its value is not one.": [
+        "\"%s\" is set as a number, but its value is not one."
+      ],
+      "\"%s\" is set as JSON, but its value is not valid JSON.": [
+        "\"%s\" is set as JSON, but its value is not valid JSON."
+      ],
       "\"true\" when the status is 2xx": [
         "\"true\" when the status is 2xx"
       ],
@@ -67,6 +76,9 @@
       ],
       "5541987111527": [
         "5541987111527"
+      ],
+      "A field has a value but no name.": [
+        "A field has a value but no name."
       ],
       "A field of the JSON response; use dots for nested fields and list positions (body.items.0.id)": [
         "A field of the JSON response; use dots for nested fields and list positions (body.items.0.id)"
@@ -241,6 +253,9 @@
       ],
       "Bold": [
         "Bold"
+      ],
+      "Boolean": [
+        "Boolean"
       ],
       "Branching action": [
         "Branching action"
@@ -544,6 +559,9 @@
       ],
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
+      ],
+      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.": [
+        "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list."
       ],
       "Each template variable is filled at send time with the placeholder you map here.": [
         "Each template variable is filled at send time with the placeholder you map here."
@@ -974,6 +992,12 @@
       "None": [
         "None"
       ],
+      "Null": [
+        "Null"
+      ],
+      "Number": [
+        "Number"
+      ],
       "Offer expiration": [
         "Offer expiration"
       ],
@@ -1036,6 +1060,9 @@
       ],
       "Other": [
         "Other"
+      ],
+      "Outside quotes: %s. Once replaced, each must be a number, true, false or null, or the request fails. Put it in quotes to send it as text.": [
+        "Outside quotes: %s. Once replaced, each must be a number, true, false or null, or the request fails. Put it in quotes to send it as text."
       ],
       "Override the default model for this node only.": [
         "Override the default model for this node only."
@@ -1292,6 +1319,9 @@
       "Source": [
         "Source"
       ],
+      "Specify the body": [
+        "Specify the body"
+      ],
       "Split the workflow into true and false branches.": [
         "Split the workflow into true and false branches."
       ],
@@ -1369,6 +1399,15 @@
       ],
       "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
         "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again."
+      ],
+      "The JSON is not valid near line %1$d, column %2$d. Look for a missing or extra comma, quote, bracket or brace.": [
+        "The JSON is not valid near line %1$d, column %2$d. Look for a missing or extra comma, quote, bracket or brace."
+      ],
+      "The JSON is not valid. Look for a missing or extra comma, quote, bracket or brace.": [
+        "The JSON is not valid. Look for a missing or extra comma, quote, bracket or brace."
+      ],
+      "The name \"%s\" is used more than once; only the last one is sent.": [
+        "The name \"%s\" is used more than once; only the last one is sent."
       ],
       "The trigger that starts this flow.": [
         "The trigger that starts this flow."
@@ -1538,6 +1577,9 @@
       "User": [
         "User"
       ],
+      "Using the fields below": [
+        "Using the fields below"
+      ],
       "Value": [
         "Value"
       ],
@@ -1639,6 +1681,9 @@
       ],
       "Write in markdown to document your flow…": [
         "Write in markdown to document your flow…"
+      ],
+      "Writing the JSON": [
+        "Writing the JSON"
       ],
       "Years": [
         "Years"

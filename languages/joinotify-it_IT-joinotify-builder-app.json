@@ -16,6 +16,15 @@
       "— Select a sender —": [
         "— Seleziona un mittente —"
       ],
+      "\"%s\" is set as a boolean: use true or false.": [
+        "\"%s\" è impostato come booleano: usa true o false."
+      ],
+      "\"%s\" is set as a number, but its value is not one.": [
+        "\"%s\" è impostato come numero, ma il suo valore non lo è."
+      ],
+      "\"%s\" is set as JSON, but its value is not valid JSON.": [
+        "\"%s\" è impostato come JSON, ma il suo valore non è un JSON valido."
+      ],
       "\"true\" when the status is 2xx": [
         "\"true\" quando lo stato è 2xx"
       ],
@@ -67,6 +76,9 @@
       ],
       "5541987111527": [
         "5541987111527"
+      ],
+      "A field has a value but no name.": [
+        "Un campo ha un valore ma non ha un nome."
       ],
       "A field of the JSON response; use dots for nested fields and list positions (body.items.0.id)": [
         "Un campo della risposta JSON; usa i punti per i campi annidati e le posizioni nelle liste (body.items.0.id)"
@@ -241,6 +253,9 @@
       ],
       "Bold": [
         "Grassetto"
+      ],
+      "Boolean": [
+        "Booleano"
       ],
       "Branching action": [
         "Azione di ramificazione"
@@ -544,6 +559,9 @@
       ],
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "es. Scrivi un saluto di una riga per {{ wc_billing_first_name }}."
+      ],
+      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.": [
+        "Ogni campo diventa una chiave dell’oggetto JSON. Il testo viene inviato tra virgolette; Numero, Booleano e JSON vengono letti dal valore dopo la sostituzione dei segnaposto, quindi la richiesta non riesce se il valore non diventa di quel tipo. Usa JSON per un oggetto annidato o un elenco."
       ],
       "Each template variable is filled at send time with the placeholder you map here.": [
         "Ogni variabile del modello viene compilata al momento dell'invio con il segnaposto che mappi qui."
@@ -974,6 +992,12 @@
       "None": [
         "Nessuno"
       ],
+      "Null": [
+        "Nullo"
+      ],
+      "Number": [
+        "Numero"
+      ],
       "Offer expiration": [
         "Scadenza dell’offerta"
       ],
@@ -1036,6 +1060,9 @@
       ],
       "Other": [
         "Altro"
+      ],
+      "Outside quotes: %s. Once replaced, each must be a number, true, false or null, or the request fails. Put it in quotes to send it as text.": [
+        "Fuori dalle virgolette: %s. Una volta sostituito, ognuno deve essere un numero, true, false o null, altrimenti la richiesta non riesce. Mettilo tra virgolette per inviarlo come testo."
       ],
       "Override the default model for this node only.": [
         "Sovrascrivi il modello predefinito solo per questo nodo."
@@ -1292,6 +1319,9 @@
       "Source": [
         "Fonte"
       ],
+      "Specify the body": [
+        "Costruire il corpo"
+      ],
       "Split the workflow into true and false branches.": [
         "Dividi il flusso di lavoro in rami veri e falsi."
       ],
@@ -1369,6 +1399,15 @@
       ],
       "The integration that this flow's trigger depends on is not available. This flow will not be processed until the integration is available again.": [
         "L'integrazione da cui dipende il trigger di questo flusso non è disponibile. Questo flusso non sarà elaborato finché l'integrazione non sarà di nuovo disponibile."
+      ],
+      "The JSON is not valid near line %1$d, column %2$d. Look for a missing or extra comma, quote, bracket or brace.": [
+        "Il JSON non è valido vicino alla riga %1$d, colonna %2$d. Cerca una virgola, una virgoletta, una parentesi quadra o graffa mancante o di troppo."
+      ],
+      "The JSON is not valid. Look for a missing or extra comma, quote, bracket or brace.": [
+        "Il JSON non è valido. Cerca una virgola, una virgoletta, una parentesi quadra o graffa mancante o di troppo."
+      ],
+      "The name \"%s\" is used more than once; only the last one is sent.": [
+        "Il nome \"%s\" è usato più di una volta; viene inviato solo l’ultimo."
       ],
       "The trigger that starts this flow.": [
         "Il trigger che avvia questo flusso."
@@ -1538,6 +1577,9 @@
       "User": [
         "Utente"
       ],
+      "Using the fields below": [
+        "Con i campi qui sotto"
+      ],
       "Value": [
         "Valore"
       ],
@@ -1639,6 +1681,9 @@
       ],
       "Write in markdown to document your flow…": [
         "Scrivi in markdown per documentare il tuo flusso…"
+      ],
+      "Writing the JSON": [
+        "Scrivendo il JSON"
       ],
       "Years": [
         "Anni"
