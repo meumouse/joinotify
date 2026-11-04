@@ -22,6 +22,9 @@
       "\"%s\" is set as a number, but its value is not one.": [
         "\"%s\" está definido como número, pero su valor no es un número."
       ],
+      "\"%s\" is set as an array, but its value is not a valid JSON list. Fix it, or type the items separated by commas.": [
+        "\"%s\" está definido como array, pero su valor no es una lista JSON válida. Corrígelo o escribe los elementos separados por comas."
+      ],
       "\"%s\" is set as JSON, but its value is not valid JSON.": [
         "\"%s\" está definido como JSON, pero su valor no es un JSON válido."
       ],
@@ -208,6 +211,9 @@
       ],
       "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window.": [
         "Plantillas aprobadas de tu Cuenta de WhatsApp Business. Solo estas pueden ser entregadas fuera de la ventana de 24 horas."
+      ],
+      "Array": [
+        "Array"
       ],
       "at": [
         "en"
@@ -560,8 +566,8 @@
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "p. ej. Escribe un saludo de una línea para {{ wc_billing_first_name }}."
       ],
-      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.": [
-        "Cada campo se convierte en una clave del objeto JSON. El texto se envía entre comillas; Número, Booleano y JSON se leen del valor una vez sustituidos sus marcadores, así que la solicitud falla si el valor no se convierte en ese tipo. Usa JSON para un objeto anidado o una lista."
+      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean, Array and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. An array takes a JSON list, such as [\"a\", 2], or items separated by commas. Use JSON for a nested object.": [
+        "Cada campo se convierte en una clave del objeto JSON. El texto se envía entre comillas; Número, Booleano, Array y JSON se leen del valor una vez sustituidos sus marcadores, así que la solicitud falla si el valor no se convierte en ese tipo. Un array acepta una lista JSON, como [\"a\", 2], o elementos separados por comas. Usa JSON para un objeto anidado."
       ],
       "Each template variable is filled at send time with the placeholder you map here.": [
         "Cada variable de plantilla se completa en el momento del envío con el marcador de posición que mapeas aquí."
@@ -632,6 +638,9 @@
       "Fit view": [
         "Vista ajustada"
       ],
+      "Fix the JSON before formatting it.": [
+        "Corrige el JSON antes de formatearlo."
+      ],
       "Fixed cart discount": [
         "Descuento fijo en el carrito"
       ],
@@ -661,6 +670,9 @@
       ],
       "Formal": [
         "Formal"
+      ],
+      "Format": [
+        "Formatear"
       ],
       "Friendly": [
         "Amigable"
@@ -757,6 +769,9 @@
       ],
       "Inactive workflow": [
         "Flujo de trabajo inactivo"
+      ],
+      "Indent the JSON (it must be valid)": [
+        "Indentar el JSON (debe ser válido)"
       ],
       "Initializing builder": [
         "Inicializando constructor"
@@ -1522,6 +1537,9 @@
       ],
       "Type": [
         "Tipo"
+      ],
+      "Type {{ to list the variables, or press Ctrl+Space for suggestions.": [
+        "Escribe {{ para ver las variables, o pulsa Ctrl+Espacio para ver sugerencias."
       ],
       "Type at least 2 characters…": [
         "Escribe al menos 2 caracteres…"

@@ -22,6 +22,9 @@
       "\"%s\" is set as a number, but its value is not one.": [
         "\"%s\" is set as a number, but its value is not one."
       ],
+      "\"%s\" is set as an array, but its value is not a valid JSON list. Fix it, or type the items separated by commas.": [
+        "\"%s\" is set as an array, but its value is not a valid JSON list. Fix it, or type the items separated by commas."
+      ],
       "\"%s\" is set as JSON, but its value is not valid JSON.": [
         "\"%s\" is set as JSON, but its value is not valid JSON."
       ],
@@ -208,6 +211,9 @@
       ],
       "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window.": [
         "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window."
+      ],
+      "Array": [
+        "Array"
       ],
       "at": [
         "at"
@@ -560,8 +566,8 @@
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "e.g. Write a one-line greeting for {{ wc_billing_first_name }}."
       ],
-      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.": [
-        "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list."
+      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean, Array and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. An array takes a JSON list, such as [\"a\", 2], or items separated by commas. Use JSON for a nested object.": [
+        "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean, Array and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. An array takes a JSON list, such as [\"a\", 2], or items separated by commas. Use JSON for a nested object."
       ],
       "Each template variable is filled at send time with the placeholder you map here.": [
         "Each template variable is filled at send time with the placeholder you map here."
@@ -632,6 +638,9 @@
       "Fit view": [
         "Fit view"
       ],
+      "Fix the JSON before formatting it.": [
+        "Fix the JSON before formatting it."
+      ],
       "Fixed cart discount": [
         "Fixed cart discount"
       ],
@@ -661,6 +670,9 @@
       ],
       "Formal": [
         "Formal"
+      ],
+      "Format": [
+        "Format"
       ],
       "Friendly": [
         "Friendly"
@@ -757,6 +769,9 @@
       ],
       "Inactive workflow": [
         "Inactive workflow"
+      ],
+      "Indent the JSON (it must be valid)": [
+        "Indent the JSON (it must be valid)"
       ],
       "Initializing builder": [
         "Initializing builder"
@@ -1522,6 +1537,9 @@
       ],
       "Type": [
         "Type"
+      ],
+      "Type {{ to list the variables, or press Ctrl+Space for suggestions.": [
+        "Type {{ to list the variables, or press Ctrl+Space for suggestions."
       ],
       "Type at least 2 characters…": [
         "Type at least 2 characters…"

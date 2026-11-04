@@ -22,6 +22,9 @@
       "\"%s\" is set as a number, but its value is not one.": [
         "« %s » est défini comme nombre, mais sa valeur n’en est pas un."
       ],
+      "\"%s\" is set as an array, but its value is not a valid JSON list. Fix it, or type the items separated by commas.": [
+        "« %s » est défini comme tableau, mais sa valeur n’est pas une liste JSON valide. Corrigez-la, ou saisissez les éléments séparés par des virgules."
+      ],
       "\"%s\" is set as JSON, but its value is not valid JSON.": [
         "« %s » est défini comme JSON, mais sa valeur n’est pas un JSON valide."
       ],
@@ -208,6 +211,9 @@
       ],
       "Approved templates of your WhatsApp Business Account. Only these can be delivered outside the 24-hour window.": [
         "Modèles approuvés de votre compte WhatsApp Business. Seuls ceux-ci peuvent être livrés en dehors de la fenêtre de 24 heures."
+      ],
+      "Array": [
+        "Tableau"
       ],
       "at": [
         "à"
@@ -560,8 +566,8 @@
       "e.g. Write a one-line greeting for {{ wc_billing_first_name }}.": [
         "p. ex. Écrivez une salutation d'une ligne pour {{ wc_billing_first_name }}."
       ],
-      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. Use JSON for a nested object or a list.": [
-        "Chaque champ devient une clé de l’objet JSON. Le texte est envoyé entre guillemets ; Nombre, Booléen et JSON sont lus depuis la valeur une fois ses variables remplacées, la requête échoue donc si la valeur ne devient pas ce type. Utilisez JSON pour un objet imbriqué ou une liste."
+      "Each field becomes a key of the JSON object. Text is sent in quotes; Number, Boolean, Array and JSON are read from the value once its placeholders are replaced, so the request fails if the value does not become that type. An array takes a JSON list, such as [\"a\", 2], or items separated by commas. Use JSON for a nested object.": [
+        "Chaque champ devient une clé de l’objet JSON. Le texte est envoyé entre guillemets ; Nombre, Booléen, Tableau et JSON sont lus depuis la valeur une fois ses variables remplacées, la requête échoue donc si la valeur ne devient pas ce type. Un tableau accepte une liste JSON, comme [\"a\", 2], ou des éléments séparés par des virgules. Utilisez JSON pour un objet imbriqué."
       ],
       "Each template variable is filled at send time with the placeholder you map here.": [
         "Chaque variable de modèle est remplie au moment de l'envoi avec le placeholder que vous mappez ici."
@@ -632,6 +638,9 @@
       "Fit view": [
         "Ajuster la vue"
       ],
+      "Fix the JSON before formatting it.": [
+        "Corrigez le JSON avant de le formater."
+      ],
       "Fixed cart discount": [
         "Remise fixe sur le panier"
       ],
@@ -661,6 +670,9 @@
       ],
       "Formal": [
         "Formel"
+      ],
+      "Format": [
+        "Formater"
       ],
       "Friendly": [
         "Amical"
@@ -757,6 +769,9 @@
       ],
       "Inactive workflow": [
         "Flux de travail inactif"
+      ],
+      "Indent the JSON (it must be valid)": [
+        "Indenter le JSON (il doit être valide)"
       ],
       "Initializing builder": [
         "Initialisation du constructeur"
@@ -1522,6 +1537,9 @@
       ],
       "Type": [
         "Type"
+      ],
+      "Type {{ to list the variables, or press Ctrl+Space for suggestions.": [
+        "Tapez {{ pour lister les variables, ou appuyez sur Ctrl+Espace pour des suggestions."
       ],
       "Type at least 2 characters…": [
         "Tapez au moins 2 caractères…"
