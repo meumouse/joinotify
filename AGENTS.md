@@ -360,6 +360,26 @@ Report results **honestly**: if a test fails, say so and show the output.
   `.history`.
 - **Commit/push only when explicitly requested** by the user.
 
+### Changelog entries
+
+Applies to [`CHANGELOG.md`](CHANGELOG.md) and the `== Changelog ==` section of [`readme.txt`](readme.txt).
+
+- **One short, direct sentence per entry**, saying what changed for the user.
+- **What, not why or how:** no root causes, internal mechanics, edge-case lists or follow-up
+  sentences. Those belong in the commit message, the PR or [`DEVELOPERS.md`](DEVELOPERS.md).
+- **One change per entry.** A large feature becomes several short entries, never a paragraph.
+- Follow each file's format: `CHANGELOG.md` uses the Keep a Changelog sections (`Added`, `Changed`,
+  `Deprecated`, `Removed`, `Fixed`, `Security`) with no trailing period; `readme.txt` uses the
+  `* New:` / `* Changed:` / `* Fixed:` prefixes. Name hooks, functions and placeholders in backticks.
+- Prefix a change that needs action from the site owner with `**Heads-up:**`.
+
+```
+✗ Saving a workflow dropped every backslash typed in it, so an escaped quote in the JSON body of a
+  "Send webhook" action turned it into invalid JSON and the action never sent. Workflows and canvas
+  notes now keep backslashes as typed; one lost in an earlier save has to be typed again
+✓ Saving a workflow no longer drops the backslashes typed in it
+```
+
 ---
 
 ## 11. Delivery checklist
@@ -374,7 +394,7 @@ Report results **honestly**: if a test fails, say so and show the output.
 - [ ] No generated artifacts (`dist/`, `vendor/`, `node_modules/`) or secrets in the commit.
 - [ ] Relevant tests run; build green when applicable.
 - [ ] Commit follows Conventional Commits.
-- [ ] `CHANGELOG.md` updated for user-facing changes.
+- [ ] `CHANGELOG.md` updated for user-facing changes, one short sentence per entry (see §10).
 
 ---
 

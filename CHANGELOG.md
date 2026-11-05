@@ -4,300 +4,301 @@ All notable changes to Joinotify are recorded here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Two notes on the history below. Releases before 2.0.0 did not strictly follow SemVer — features shipped as patch releases more than once (1.2.2 added two locales, 1.3.3 added triggers and placeholders, 1.4.5 and 1.4.7 added features) — so the numbering of that period cannot be read as a compatibility promise. And the entries before 2.0.0 were carried over from the original history, keeping the level of detail they had at the time.
+Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not a compatibility promise.
 
 ## [Unreleased]
 
 ### Fixed
 
-- Changing an order's status in the admin could end in a fatal error (`Call to undefined function wc_get_cart_item_data_hash()`) when a WooCommerce workflow ran and the logged-in user had a stored cart. Filling the order address placeholders builds a WooCommerce cart outside the storefront, where WooCommerce does not load its cart functions, and the cart then failed to restore that user's stored cart when the request ended. Joinotify now loads those functions first, as WooCommerce does; the same applied to workflows run by cron or a REST request
+- WooCommerce workflows run outside the storefront, such as an order status change in the admin, no longer end in a fatal error
 
 ## [2.7.1] - 2026-11-04
 
 ### Added
 
-- The JSON body of the "HTTP request" action can be built from a table of fields, one name → value per row, instead of typing the JSON. Each row picks how its value is sent: Text (in quotes, whatever it holds), Number, Boolean, Array, JSON for a nested object, or Null; names and values take placeholders. An Array takes a JSON list (`["a", 2]`) or items separated by commas, sent as text; a placeholder that holds a JSON list, such as `{{ http:NAME.body.items }}`, is sent as that list. A new action starts on the table, and actions saved with a typed JSON body keep it. Switching between the table and the JSON carries what was built over to the side that is still empty. A value that does not become its type once its placeholders are replaced fails the request, and the builder flags a name used twice, or a number, boolean or JSON typed without placeholders that cannot become one
-- The "HTTP request" action checks the syntax of a JSON body as it is typed. A syntax error, such as a missing or extra comma, is shown under the editor with its line and column, and marks the action as needing setup on the canvas, instead of only failing when the workflow runs. A placeholder typed outside quotes counts as the value it becomes, as on the server, and is listed in a warning, since it must become a number, true, false or null once replaced
-- The JSON body of the "HTTP request" action is typed in a code editor (CodeMirror) with line numbers, highlighting, folding, bracket closing and a gutter that marks the line with a syntax error. Typing `{{` lists the workflow's variables with their descriptions, and the JSON literals are suggested too; a "Format" button indents the JSON while keeping placeholders typed outside quotes. The editor is loaded only when a JSON body is opened, so the builder does not load it otherwise
+- The JSON body of the "HTTP request" action can be built from a table of fields, each with its own type
+- The JSON body of the "HTTP request" action is checked as it is typed, showing the line and column of a syntax error
+- The JSON body of the "HTTP request" action is edited in a code editor with highlighting, a "Format" button and variable suggestions
 
 ### Fixed
 
-- Workflow titles reached the admin pages texturized and escaped, so a title such as `A - B` showed as `A &#8211; B` in the workflows list, the message history, the queue and the contact source label. The builder now reads the raw title, since it saves it back, which also repairs titles already saved with entities
+- Workflow titles no longer show HTML entities such as `&#8211;` in the admin pages
 
 ## [2.7.0] - 2026-11-03
 
 ### Added
 
-- A failed message can be sent again from the message history: from its "Send again" row action, from the details window, or as the selected rows, up to 50 at a time (the `Joinotify/Admin/History/Resend_Limit` filter changes it). A message whose automatic retry was cancelled can be resent too. Each resend is a single attempt, outside the retry queue, and records a row of its own with the source and workflow of the original; the original is flagged "Resent" and stops offering it, so one failure is never sent twice by accident. Login codes, templates whose values were hidden from the history, and local attachments, whose file the history does not keep, are not offered a resend
-- "Customer account created" WooCommerce trigger. It runs when WooCommerce creates a customer account on the My Account page, at the checkout (classic or block) or on the order confirmation page, and can be limited to one of them. It runs at the end of the request, because the checkout only saves the billing phone after WooCommerce reports the new account. The WordPress "New user registration" trigger still runs for these accounts too
-- "Product low in stock" and "Product out of stock" WooCommerce triggers, fired when a sale brings a product to the thresholds set in WooCommerce — the same moment WooCommerce sends its stock emails
-- "Product back in stock" WooCommerce trigger, run once when a product that was out of stock or on backorder goes back in stock. A variation and its variable product coming back together send one message
-- "Back in stock notice sent" WooCommerce trigger, run once for each customer WooCommerce notifies through its back in stock notifications, whether its email is on or off
-- `{{ wc_customer_first_name }}`, `{{ wc_customer_last_name }}`, `{{ wc_customer_email }}`, `{{ wc_customer_phone }}` and `{{ wc_my_account_url }}` for the customer triggers, read from the customer account (a back in stock notice signed up without logging in uses the account registered with its email, if any), and `{{ wc_product_name }}`, `{{ wc_product_url }}`, `{{ wc_product_sku }}` and `{{ wc_product_stock_quantity }}` for the product triggers
-- The "User role" and "User metadata" conditions on the "Customer account created" trigger
-- "HTTP request" workflow action: calls any public API with GET, POST, PUT, PATCH or DELETE, with query parameters, headers, a bearer, basic or API key credential, and a JSON, form, raw text or trigger's data body, and keeps the response under a name for the next actions: `{{ http:NAME.status }}`, `{{ http:NAME.ok }}`, `{{ http:NAME.error }}` and `{{ http:NAME.body.FIELD }}`, through delays too. Placeholders inside a JSON body's strings are filled without breaking it, whatever quotes the value has. The credential is encrypted when the workflow is saved and never shown again; on another site (an import, a template) it has to be typed again. Local and private network addresses are refused, also on redirects. The AI workflow generator does not use it
-- Developers: `writes_payload` on `joinotify_register_action()` (and `joinotify_register_payload_action_handler()`, the `Joinotify/Workflow_Processor/Payload_Actions` filter) gives a handler the payload by reference, so what it stores reaches the next actions. `Joinotify/Builder/Sealed_Action_Fields` seals an action's secret fields when a workflow is saved, and `Joinotify/AI/Workflow_Generator/Excluded_Actions` keeps actions out of AI generated workflows
+- Failed messages can be sent again from the message history, one at a time or up to 50 at once
+- "Customer account created" WooCommerce trigger
+- "Product low in stock" and "Product out of stock" WooCommerce triggers
+- "Product back in stock" WooCommerce trigger
+- "Back in stock notice sent" WooCommerce trigger
+- Customer and product variables for the new triggers, such as `{{ wc_customer_first_name }}` and `{{ wc_product_name }}`
+- "User role" and "User metadata" conditions on the "Customer account created" trigger
+- "HTTP request" workflow action, which calls any public API and keeps the response for the next actions
+- Developers: `writes_payload` on `joinotify_register_action()` lets a handler pass data to the next actions
+- Developers: `Joinotify/Builder/Sealed_Action_Fields` and `Joinotify/AI/Workflow_Generator/Excluded_Actions` filters
 
 ### Changed
 
-- "New order (Processing)" is now "Payment confirmed" (`woocommerce_payment_complete`). It runs once per order, when the payment gateway confirms the payment or the order moves from an unpaid status to Processing or Completed, so orders that go straight to Completed (virtual and downloadable products) now run it too, while an order moved back to Processing does not run it again. Saved workflows, imported files and templates move to the new trigger on their own; until the upgrade has run on the site, workflows still on the old trigger keep running. The `Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed` filter is replaced by `Joinotify/Process_Workflows/Woocommerce/Payment_Complete`
-- The WooCommerce order variables are no longer offered on the triggers that have no order (account and stock), where they always came out empty. The coupon variables are still offered on every WooCommerce trigger
-- The message history is always on. The "Message history" switch is gone from Settings → About, and sites that had turned it off start recording again; a message that must not be kept can still be dropped with the `Joinotify/Message_History/Should_Record` filter
-- An interactive, location, contact, reaction or sticker message keeps its WhatsApp payload in the history record, so a resend sends the same message and not its preview text
+- "New order (Processing)" is now "Payment confirmed", which runs once per order when the payment is confirmed
+- The `Joinotify/Process_Workflows/Woocommerce/Checkout_Order_Processed` filter is replaced by `Joinotify/Process_Workflows/Woocommerce/Payment_Complete`
+- WooCommerce order variables are no longer offered on the account and stock triggers
+- The message history is always on, and its switch is gone from Settings → About
+- Interactive, location, contact, reaction and sticker messages keep their WhatsApp payload in the history
 
 ### Fixed
 
-- Saving a workflow dropped every backslash typed in it, so an escaped quote in the JSON body of a "Send webhook" action turned it into invalid JSON and the action never sent. Workflows and canvas notes now keep backslashes as typed; one lost in an earlier save has to be typed again
-- A local attachment was recorded in the message history with a broken media URL built from the file's bytes. The history now leaves the media URL empty for it
+- Saving a workflow no longer drops the backslashes typed in it
+- Local attachments are no longer recorded in the history with a broken media URL
 
 ## [2.6.2] - 2026-11-02
 
 ### Changed
 
-- The plugin is named "Joinotify – Notifications & Marketing Automation", dropping "WhatsApp" from its name: the WordPress.org guidelines do not allow a third-party trademark in a plugin's display name. The translated names in every bundled locale follow
-- "Tested up to" is declared only in `readme.txt`, the one place WordPress.org reads it. The header in `joinotify.php` could take precedence over the readme and show a compatibility the readme no longer stated
+- The plugin is renamed "Joinotify – Notifications & Marketing Automation", following the WordPress.org trademark guidelines
+- "Tested up to" is declared only in `readme.txt`
 
 ## [2.6.1] - 2026-10-28
 
 ### Added
 
-- Placeholders take modifiers after a pipe, applied in order to the value: `{{ wc_review_links | remove:"https://shop.com/" }}` removes a text, `replace:"from","to"` swaps one text for another, and `remove_home_url` turns every link to the site into a path relative to it — what the link of a WhatsApp template URL button whose base is the site address needs. They work on every token, including those of other plugins, and a token that does not resolve is left as written. Other plugins add their own with `joinotify_register_placeholder_modifier()` or the `Joinotify/Builder/Placeholder_Modifiers` filter
-- `{{ wc_first_product_review_path }}` gives the review link of the first purchased product without the site address, such as `product/shirt/#reviews`, to complete a URL button. It takes the first product open to reviews and, when none is, the first purchased product
+- Placeholder modifiers after a pipe: `remove`, `replace` and `remove_home_url`
+- `joinotify_register_placeholder_modifier()` and the `Joinotify/Builder/Placeholder_Modifiers` filter for custom modifiers
+- `{{ wc_first_product_review_path }}` returns the review path of the first purchased product
 
 ## [2.6.0] - 2026-10-28
 
 ### Added
 
-- The Joinotify API key can be defined in `wp-config.php` with `define( 'JOINOTIFY_CLOUD_API_TOKEN', 'sk_live_...' );`, which keeps it out of the database. It wins over the key saved in the settings, and the WhatsApp settings and the setup wizard show the site as connected with the key locked: it can only be changed or removed in `wp-config.php`
-- `joinotify_send_whatsapp_template( $receiver, $template_name, $language, $components, $args )` sends an approved WhatsApp template and answers the WhatsApp message id, or a `WP_Error` that says why it was refused — the Joinotify API's HTTP status, the reason (a blocked account, a refused template), WhatsApp's own explanation and, when the account is sending too fast, how many seconds to wait. It makes a single attempt unless asked to use the retry queue, and takes the message history context, so a login code is masked there
-- Other plugins can work with the account's WhatsApp templates without reaching into Joinotify's classes: `joinotify_get_whatsapp_templates()` and `joinotify_get_whatsapp_template()` list and find them, `joinotify_build_whatsapp_template_components()` packs values they resolved with their own placeholders into what Meta expects (one-line values, named variables, a media header link), and `joinotify_render_whatsapp_template()` writes the text the recipient reads. Each template now says what its header carries (`header_format`) and, for a URL button, the link its variable completes (`url`)
-- `joinotify_get_whatsapp_window( $phone, $sender )` says whether free text still reaches a contact on a number — `open` with when it closes, `closed`, or `unknown` when the platform could not be asked. It reads the window from the Joinotify platform, so it answers without webhooks registered, and it caches the answer briefly; an inbound message forgets it
-- The WhatsApp template action sends templates with an image, video or document header: the panel asks for the file (a link, a placeholder or a file from the media library) and refuses to save without it, and a document goes out with its file name. It also fills the copy-code button of a marketing template with the coupon it is given, and the code button of an authentication template, which repeats the code from the body when left empty. The template preview shows the kind of header and the buttons. Templates listed through `joinotify_get_whatsapp_templates()` say the same: each value without a `{{...}}` token is a variable with a `format`, and `buttons` lists the buttons
-- The WhatsApp template action also sends templates with a location header (latitude and longitude, with an optional name and address), limited-time offers whose expiration is a date, a timestamp or a relative time such as `+2 days`, and carousels, where each card asks for its own header file, variables and buttons. The template preview shows the cards
-- A condition can branch a workflow on the WhatsApp 24-hour window of a recipient: open, closed, or unknown when the platform could not be asked. It is offered on every trigger, takes the recipient as a phone or a placeholder and the sender number whose window is read, and asks the platform only when the condition runs — so free text can go out on the open branch and an approved template on the other
-- The `Joinotify/Cloud_Sync/Links` filter changes the links an order event carries — pay the order, see it, review its products — for example to point them at the pages of a headless storefront instead of the WordPress ones. It receives the order and the event they go out with
+- The Joinotify API key can be defined in `wp-config.php` with `JOINOTIFY_CLOUD_API_TOKEN`
+- `joinotify_send_whatsapp_template()` sends an approved WhatsApp template from code
+- `joinotify_get_whatsapp_templates()`, `joinotify_get_whatsapp_template()`, `joinotify_build_whatsapp_template_components()` and `joinotify_render_whatsapp_template()` helpers for WhatsApp templates
+- `joinotify_get_whatsapp_window()` tells whether a contact's 24-hour window is open
+- The WhatsApp template action supports image, video and document headers, copy-code buttons and authentication code buttons
+- The WhatsApp template action supports location headers, limited-time offers and carousels
+- "WhatsApp 24-hour window" condition to branch a workflow on whether the window is open
+- `Joinotify/Cloud_Sync/Links` filter to change the links an order event carries
 
 ### Changed
 
-- In the checkout block, a customer who already agreed to receive marketing messages now sees the consent checkbox ticked, where it was left out of the form, and what they send in it does not change the consent they gave
+- The checkout block's consent checkbox is ticked for customers who already agreed to marketing messages
 
 ### Fixed
 
-- The marketing consent checkbox of the checkout block is offered to every customer of a headless store. It was registered only when WooCommerce started without a signed-in customer who had already agreed, which a store that identifies the customer later in the request — by a token sent to the Store API — could not rely on
+- The checkout block's marketing consent checkbox is offered to every customer of a headless store
 
 ### Security
 
-- The Joinotify API key is stored encrypted in the database (libsodium, with a key derived from the site's `AUTH_KEY` and `AUTH_SALT`). A key saved by an earlier version is encrypted once when the site updates, and keeps working until then. Changing those salts in `wp-config.php` makes the stored key unreadable, and the site has to be connected again. Servers without the sodium extension keep storing the key as before
+- The Joinotify API key is stored encrypted, so changing `AUTH_KEY` or `AUTH_SALT` requires connecting the site again
 
 ## [2.5.1] - 2026-09-30
 
 ### Fixed
 
-- The plugin ships its translations again — Brazilian Portuguese, European Portuguese, Spanish, German, French and Italian. 2.5.0 left them out of the package to rely on translate.wordpress.org alone, so every site in those languages showed Joinotify in English while the strings waited for approval there. A language pack from WordPress.org, once a locale has one, is still loaded ahead of the bundled translation
-- Counts with a plural ("%d contacts", "%d days", "%d attempts" and the other 18) use the plural form in every translated language, where they kept the singular ("5 contato") or fell back to English
-- The labels of the workflow post type ("Flows", "Flow", "Add new") are translated, which they never were
+- The plugin ships its bundled translations again
+- Counts such as "%d contacts" use the plural form in every translated language
+- The labels of the workflow post type are translated
 
 ## [2.5.0] - 2026-09-30
 
 ### Added
 
-- The settings screen and the workflow builder ask administrators to rate Joinotify on WordPress.org once the plugin has been in use for at least ten minutes. In the builder the request waits until no dialog, node settings drawer or action library is open. "Leave a review" and "I already did" end the request for that user, while "Maybe later" or the close button hides it for a week. A click outside the dialog does not dismiss it. Sites upgrading from an earlier version count their use from the setup wizard or their oldest workflow, and the delay, snooze length, link and visibility can be changed through `Joinotify/Admin/Review_Prompt/*` filters
-- Joinotify Cloud sync, off by default: a switch in Settings → General, with a "Configure" button for its options, that, once switched on, sends this site's customers and events to your Joinotify account. It says what it sends before you turn it on, lets you leave out forms, carts, order items and full addresses, and tags every contact with the site's name or a tag of your choice
-- The sync queues what it sends in its own table and delivers it in batches from a scheduled task, never during a checkout or a page load; a batch that fails waits and tries again, and a revoked key, a site removed from the panel or a copy of the site at another address pauses it instead of sending test orders to real customers
-- What the sync sends as events: WooCommerce orders (created, paid, every status change, completed, cancelled, failed, refunded) with the customer's order history and the links to pay, view and review them; new customers; WooCommerce Subscriptions (created, activated, renewed, renewal failed, expired, cancelled); WordPress sign-ups and changes of phone, name or e-mail; WPForms and Elementor forms that carry a phone or an e-mail; and Flexify Checkout's collected leads and abandoned, recovered and lost carts. "Created" and "paid" go out once per order however often the status changes, and a failure building an event never interrupts the checkout
-- Marketing consent for the sync, off by default: an unticked checkbox, with your own text, in the classic and block checkouts, the sign-up forms and My account. Who ticks it is opted in on Joinotify with the checkbox text, where and when as evidence; who unticks it in My account is opted out there too; and an opt-in or opt-out made on Joinotify updates the customer's preference on the site
-- "Send existing customers" in the sync's window sends the users and guest buyers the store already has as contacts, once, with their order history and without starting any flow. It shows how many would be sent before you confirm, runs in the background in steps that resume after a failure, and reports what was sent, left out for having no phone number or kept out by your plan's contact limit
-- The sync's window shows whether it is on, why it is paused (a revoked key, a site removed from the panel, or a copy of the site at another address) with a "Try again" button, how many events wait, were sent and were given up on, and lets you send the given-up ones again or discard them
-- WordPress's "Export Personal Data" and "Erase Personal Data" tools cover the sync: the consent records and the queued events of the person, and erasing also asks Joinotify to erase the contacts this site sent for them
-- "Send webhook" workflow action: posts the trigger's data (the order with the customer's history and links, the user, the cart or the form entry) or a JSON of your own with placeholders to any public URL — n8n, Zapier, Make, a Joinotify Cloud flow or your ERP — with optional headers and an HMAC signature checked the same way as Joinotify's webhooks
-- `joinotify_track( $name, $data, $contact )` sends an event of your own (named `custom.*`) to your Joinotify flows through the same queue
-- Joinotify → Audiences & Contacts, a screen for the contact base of your Joinotify account. The base stays on Joinotify: the screen reads and changes it through the site's own REST routes, so the API key never reaches the browser. Before showing anything it asks Joinotify what the site's key may do, and says so when the site is not connected, the key was revoked, the account is blocked by billing (with a link to the panel page that resolves it) or the key is restricted to some numbers, in which case the screen is read only
-- The Contacts tab of that screen lists the base with search by name, e-mail or phone, filters by tag, consent and source, three sort orders and pagination, and exports what the filters select as CSV. A contact opens in a side panel with its data, tags, custom fields, consent and evidence, suppression rows, the site's users with the same e-mail or phone and its history, and can be edited, opted in (with the evidence of how consent was obtained), opted out, exported as JSON or erased for good
-- Contacts can be added by hand, with their phone in international format, name, e-mail, tags, every custom field of the account in an input that matches its type and, optionally, the marketing consent with its evidence. When the phone already belongs to another contact the dialog offers to open that contact or to update it with what was typed
-- The Fields & tags tab creates, edits, archives, restores and erases the account's custom fields (text, number, date, date and time, yes/no, single or multiple choice, e-mail, URL, phone), suggesting the key from the label, and creates, edits and erases tags with a color from the panel's palette. Each tag shows how many contacts carry it and opens them in the Contacts tab
-- A tag can be added to or removed from the selected contacts, or from every contact the current filters select, at once and without starting any flow
-- The Sources tab of Audiences & Contacts gathers the Joinotify Cloud sync: its switch and monitor, each source (WooCommerce, WordPress users, forms, abandoned carts) with its own tags on top of the site's tag, order items and addresses, and the marketing consent checkbox. The same settings keep working from the sync's window in Settings
-- User and order meta (a CPF, a birthday, any checkout field) can be sent into custom fields of the contact. They only fill fields that are empty on Joinotify, so what someone typed in the panel wins
-- Each WPForms or Elementor form can get a rule: whether it creates contacts at all, which fields are the phone, e-mail, first and last name, which checkbox is the marketing consent (sent as an opt-in with the text you set, the form and the moment as evidence), the tags to add and which fields fill custom fields. "Only the forms switched on" skips every form without a rule; a form without a rule is still read by its field types and labels
-- "Save contact" and "Tag contact" workflow actions, in a new Contacts tab of the action library. They create or update the contact on Joinotify from any trigger — name, e-mail, tags to add and remove, custom fields and, when the trigger means the person agreed, an opt-in with its evidence (or an opt-out) — through the Cloud sync's queue, so a workflow never waits on Joinotify and a failure is retried. The contact is the trigger's customer or user only when the phone or e-mail typed in the action is theirs; anyone else is saved as a separate lead. They need the Cloud sync switched on and start no Joinotify flow
-- The Audiences tab lists the account's saved audiences with their last count, and creates, edits, archives, restores and erases them. The filter builder combines conditions on custom and native fields, tags, consent and a free search in "all"/"any" groups up to three levels and 30 conditions, while a preview counts who it selects by consent (reachable, opted in, unknown, opted out, suppressed) with a sample of them. Condition types built in the Joinotify panel that the builder does not draw are kept as they are, and "See contacts" opens the Contacts tab filtered by the audience
-- "Import CSV" in the Contacts tab reads the file in the browser (comma, semicolon or tab separated, quoted cells, UTF-8 with or without BOM), guesses what each column is from its header, and lets you map it to the phone, names, e-mail, language, tags or any custom field. It updates or leaves alone the contacts already in the base, adds tags to every row, can record the consent of all of them with its evidence, and sends the rows in batches of 500 under one import record while it shows the running totals and the lines not imported and why
-- The contact panel merges a duplicate into the open contact: its conversations, tags, history and campaigns move over, its fields only fill the empty ones and an opt-out of either wins
-- The Suppression list tab lists the numbers that never get a marketing campaign by reason, adds one by hand and takes one off, asking twice for an opt-out or a Meta marketing block, which stay opted out until they agree again
-- Action settings declared with the `placeholder` component get the variable picker of the trigger's placeholders, where they showed a plain input
+- A review request asks administrators to rate Joinotify on WordPress.org after ten minutes of use
+- Joinotify Cloud sync, off by default, sends the site's customers and events to the Joinotify account
+- The sync delivers events in background batches, retries failures and pauses on a revoked key or a copied site
+- Sync events for WooCommerce orders and subscriptions, sign-ups, forms and Flexify Checkout leads and carts
+- Optional marketing consent checkbox in the checkouts, sign-up forms and My account
+- "Send existing customers" sends the store's current customers to Joinotify once
+- Sync monitor with its status, pending and failed events, and retry or discard buttons
+- WordPress's personal data export and erase tools cover the sync
+- "Send webhook" workflow action, which posts the trigger's data or a custom JSON to any public URL
+- `joinotify_track()` sends custom events to Joinotify flows
+- Joinotify → Audiences & Contacts screen for the contact base of the Joinotify account
+- Contacts tab with search, filters, sorting, CSV export and a contact detail panel
+- Contacts can be added by hand
+- Fields & tags tab to manage the account's custom fields and tags
+- A tag can be added to or removed from many contacts at once
+- Sources tab that gathers the Cloud sync settings
+- User and order meta can fill the contact's custom fields
+- Per-form contact rules for WPForms and Elementor forms
+- "Save contact" and "Tag contact" workflow actions
+- Audiences tab with a filter builder and a count preview
+- CSV import of contacts
+- Duplicate contacts can be merged
+- Suppression list tab
+- Settings declared with the `placeholder` component get the variable picker
 
 ### Changed
 
-- The interface icons of the admin screens and of the OTP login form come from Boxicons, the set the builder already used, instead of a mix of drawn icons. Builder nodes whose icon is only named (such as a wait, condition or stop step without its own artwork) now show that icon, where they showed an empty badge before
-- Focused fields and selectors in the admin screens and the OTP login form are outlined by a solid two-pixel border in the primary color, where a soft glow surrounded them before. The field keeps its size, so its text does not move when it takes focus
+- Admin and OTP login icons come from Boxicons
+- Focused fields show a solid two-pixel outline instead of a glow
 
 ### Fixed
 
-- The strings of the admin screens built in Vue (settings, setup wizard, builder, workflows, history and queue) reach translate.wordpress.org, where only the PHP strings were listed before, so their translations can be contributed and imported there. Sites that receive translations as WordPress.org language packs load them for every script chunk of those screens, not only for the entry file
-- The "New order" trigger now also runs for orders placed with the WooCommerce checkout block, which never fired it
-- The WPForms PayPal Standard trigger no longer reads an entry that hook does not provide, which raised PHP warnings and sent an empty entry id
-- The "Connect to Joinotify" button no longer ends in "invalid code": the plugin sent the site address under a name the Joinotify API does not read when trading the connection code for a key
-- A workflow step's description can no longer run script in the builder: HTML hidden in an imported workflow, a template or an AI-generated flow now shows as text, and links in it only open web or e-mail addresses
-- Actions added with `joinotify_register_action()` show their description in the action library, which dropped it before. A closure passed as `description` is still taken as the canvas description, and a text is never called as one, even a single word that names a PHP function
+- Strings from the Vue admin screens reach translate.wordpress.org
+- The "New order" trigger runs for orders placed with the checkout block
+- The WPForms PayPal Standard trigger no longer raises PHP warnings
+- "Connect to Joinotify" no longer ends in "invalid code"
+- Workflow step descriptions can no longer run scripts in the builder
+- Actions registered with `joinotify_register_action()` show their description in the action library
 
 ## [2.4.2] - 2026-09-11
 
 ### Added
 
-- `{{ wc_shipping_method_total }}` returns the shipping cost and method of the WooCommerce order as plain text, for example "R$ 20,00 via SEDEX", or only the method name when the shipping is free
-- The workflows, message history and processing queue tables have an "Items per page" selector (10, 25, 50, 100 or 200). Each screen remembers the choice in the browser, and changing it keeps the first visible row on screen instead of jumping back to page 1
-- The workflows, message history and processing queue tables export to JSON. Each row has an "Export" action, the selected rows export together, and in the history and the queue the toolbar button exports every row matching the current filters when nothing is selected. One workflow downloads as the same file the builder exports, so it can be imported again; several download as one bundle. The processing queue gains row selection for this, and its export includes each item's runtime data and the actions it still has to run. A history export keeps the 5,000 most recent matching records and says so when it stops there
+- `{{ wc_shipping_method_total }}` returns the shipping cost and method as plain text
+- "Items per page" selector on the workflows, history and queue tables
+- JSON export on the workflows, history and queue tables
 
 ### Changed
 
-- A refused send now carries WhatsApp's own explanation: the builder test shows it after the description, and the debug log keeps it on every failed dispatch
-- The workflows, message history and processing queue tables show 25 rows per page by default instead of 20
+- Refused sends show WhatsApp's own explanation in the builder test and the debug log
+- Tables show 25 rows per page by default
 
 ### Fixed
 
-- Template variables are sent as one line of plain text, as WhatsApp requires: line breaks become commas, tags and entities are removed and runs of spaces collapse, so a multi-line address no longer gets the template refused and a WooCommerce price no longer arrives as raw HTML
-- Saving the test number and running the test announced a refused send in a success toast
-- Deleting records or cancelling a resend in the message history, or running or cancelling an item in the processing queue, reloaded the table without its filters, so a filtered view showed unrelated rows while its filter still looked active
-- Template sends recorded only the template name and variables in the history until someone opened the template picker, because nothing else loaded the template text; the first send on a site that has not listed its templates now loads them once
-- Template components built outside the workflow builder — by an extension, the OTP components filter or a retry queued by an earlier version — still reached WhatsApp with line breaks and were refused with error 132018; every template send now holds its text parameters to the same one-line rule
-- `{{ wc_shipping_address }}` was described as the shipping address, but it has always returned the shipping cost and method, so a template variable meant for the delivery address sent customers the price and carrier instead. Its value is unchanged, so existing messages send what they always sent, but it now arrives as plain text instead of WooCommerce price markup, and the builder describes it as the shipping cost and previews a cost instead of a street address. If you mapped it to an address, switch to `{{ wc_shipping_full_address }}`
+- Template variables are sent as one line of plain text, as WhatsApp requires
+- Saving the test number no longer announces a refused send as a success
+- Actions in the history and queue tables no longer lose the active filters
+- Template sends record their rendered text in the history from the first send
+- Template components built outside the builder are no longer refused with error 132018
+- **Heads-up:** `{{ wc_shipping_address }}` returns the shipping cost, not the address, so use `{{ wc_shipping_full_address }}` for the address
 
 ## [2.4.1] - 2026-09-11
 
 ### Added
 
-- The message history records the rendered text of each template send, with its language and variable values shown in the details modal
-- While debug mode is on, every delivered message is logged with the `dispatch_sent` code
-- New `Joinotify/Api/Template_Dispatch_Log` filter to redact template values before they are stored, while login codes are always masked
-- The debug log viewer indents JSON context so nested details stay readable
+- The message history records the rendered text of each template send
+- Debug mode logs every delivered message with the `dispatch_sent` code
+- `Joinotify/Api/Template_Dispatch_Log` filter to redact template values in the history
+- The debug log viewer indents JSON context
 
 ### Fixed
 
-- Templates with named variables (`{{nome}}`) were refused by WhatsApp because their values went out without `parameter_name`
-- OTP and builder-test sends were recorded under the `api` source instead of `otp` and `test`
-- The history type column showed the raw `template` slug instead of a translated label
-- The setup wizard's country list opened behind the full-screen wizard shell
-- The "Joinotify account" field showed an empty input after a key was saved instead of the key's masked prefix
+- Templates with named variables were refused by WhatsApp
+- OTP and builder-test sends were recorded under the `api` source
+- The history type column showed the raw `template` slug
+- The setup wizard's country list opened behind the wizard
+- The "Joinotify account" field showed an empty input after a key was saved
 
 ### Removed
 
-- The "Plugin updates" row in Settings → About, which only repeated what the plugin list already shows
+- The "Plugin updates" row in Settings → About
 
 ## [2.4.0] - 2026-09-03
 
 ### Added
 
-- Delivery retries are now configurable under Settings → General, with 5 attempts starting at 30 minutes by default and the option to not retry at all
-- Pending resends can be cancelled from the history screen, which settles the rows under the new `cancelled` status
-- The history table has an Error column with the human-readable failure reason
+- Delivery retries are configurable under Settings → General
+- Pending resends can be cancelled from the history screen
+- Error column in the history table
 
 ### Changed
 
-- The setup wizard now uses the same flat panel and card styling as the rest of the admin screens
+- The setup wizard uses the same styling as the other admin screens
 
 ### Fixed
 
-- `queued` history rows are now settled as `sent` or `failed` once their retry finishes
-- A test message refused by WhatsApp was announced with a success toast
-- Failed sends now explain the reason, such as the closed 24-hour window, in the test toasts and in the history instead of a generic error
+- `queued` history rows are settled as `sent` or `failed` once their retry finishes
+- A test message refused by WhatsApp was announced as a success
+- Failed sends explain the reason instead of a generic error
 
 ## [2.3.4] - 2026-09-01
 
-Three fixes for code that ran too late because `Core\Init` builds the plugin's classes from inside the `init`, `admin_init` and `wp_loaded` hooks.
-
 ### Fixed
 
-- Any log written before `wp_loaded` crashed the site with a fatal `ValueError: Path cannot be empty`
-- The `joinotify-workflow` post type was never registered, which let any Editor edit and delete workflows
-- The WooCommerce HPOS compatibility declaration never reached WooCommerce, so the plugin was listed as incompatible
+- Logs written before `wp_loaded` no longer crash the site with `ValueError: Path cannot be empty`
+- The `joinotify-workflow` post type is registered again, so Editors can no longer edit workflows
+- The WooCommerce HPOS compatibility declaration reaches WooCommerce again
 
 ## [2.3.3] - 2026-08-28
 
-Release tooling only, with no changes to the shipped package since 2.3.2.
+Release tooling only; the shipped package is unchanged since 2.3.2.
 
 ### Added
 
-- Local credentials and machine paths for the build and deploy scripts are read from a Git-ignored `.env`, documented in `.env.example`
-- The WordPress.org directory artwork lives in `.wordpress-org/`, which the deploy mirrors into the SVN `assets/` directory
+- Build and deploy scripts read local credentials from a Git-ignored `.env`
+- WordPress.org directory artwork lives in `.wordpress-org/` and is deployed to SVN `assets/`
 
 ### Fixed
 
-- The SVN deploy could corrupt its own working copy while creating a tag, failing with `E155033`
+- The SVN deploy no longer corrupts its working copy with `E155033`
 
 ## [2.3.2] - 2026-08-23
 
 ### Added
 
-- A "Source code and build" section in readme.txt, as required by the WordPress.org directory
-- New `npm run lint:php`, which parses every source file with a PHP 8.1 binary
-- New `Transport::is_ready()` method, which reports whether the site has a key to send with
+- "Source code and build" section in readme.txt
+- `npm run lint:php` checks every source file against PHP 8.1
+- `Transport::is_ready()` reports whether the site has a key to send with
 
 ### Changed
 
-- The phone number library moves to `giggsey/libphonenumber-for-php-lite` 9.0.37, shrinking `admin/vendor` from 22 MB to 3 MB while PHP 8.1 stays the minimum
-- The transport is no longer configurable and always resolves to the official API
-- The build strips the emoji picker's CDN URL by targeting the library constant instead of the address
+- The phone number library moves to `giggsey/libphonenumber-for-php-lite`, shrinking `admin/vendor` from 22 MB to 3 MB
+- The transport always resolves to the official API
+- The build strips the emoji picker's CDN URL more reliably
 
 ### Removed
 
-- **Heads-up:** the legacy Evolution / slots-manager transport and its shared embedded API key are gone, so sites still using it stop sending until the Joinotify account is connected
-- The `Joinotify/Transport/Active` filter, along with the transport choice
+- **Heads-up:** the legacy Evolution transport is removed, so sites using it must connect a Joinotify account to keep sending
+- The `Joinotify/Transport/Active` filter
 
 ## [2.3.1] - 2026-08-21
 
 ### Added
 
-- The builder warns when a step can only reach the contact within the 24-hour window, since only approved templates can start a conversation
+- The builder warns when a step only works within the 24-hour window
 
 ### Changed
 
 - WordPress 7.0 is now the minimum required version
-- **Heads-up:** AI now uses the WordPress AI Client configured under Settings → Connectors, so the plugin's own OpenAI and Anthropic keys are no longer used
-- The OTP login template is now picked from a list of approved authentication templates instead of typed
-- Compiled translation files no longer ship in the package, since WordPress.org delivers them through translate.wordpress.org
-- Adjustments requested in the WordPress.org review, such as enqueuing the builder styles, dropping inline JavaScript and undeclared external requests, and no longer deactivating the old "Joinotify OTP Login" plugin on its own
+- **Heads-up:** AI uses the WordPress AI Client under Settings → Connectors instead of the plugin's own keys
+- The OTP login template is picked from a list of approved authentication templates
+- Compiled translation files no longer ship in the package
+- Adjustments requested in the WordPress.org review
 
 ### Removed
 
-- **Heads-up:** the builder's "PHP Snippet" action, which relied on `eval()`, so saved snippet steps are no longer executed
+- **Heads-up:** the "PHP Snippet" action is removed, and saved snippet steps no longer run
 - The button that installed the cart recovery add-on from an external address
 
 ### Fixed
 
-- Accounts with more than 100 message templates lost the remainder in the selectors
-- Compliance issues reported by Plugin Check, such as unprepared queries, unescaped output and missing `translators:` comments
-- The `.pot` generator picked up strings already removed from the code and dropped the `translators:` comments
+- Accounts with more than 100 templates lost the rest in the selectors
+- Compliance issues reported by Plugin Check
+- The `.pot` generator kept removed strings and dropped `translators:` comments
 
 ## [2.3.0] - 2026-08-17
 
 ### Added
 
-- WhatsApp connection through the official Joinotify API, with one-click account authorization and multiple numbers per account
-- Meta-approved message templates, listed in the builder and sent through the new "WhatsApp: Template message" action
-- New message types from the official API: reply buttons, option list, link button, location, contact card, sticker and reaction
-- Real delivery confirmation, recording when each message was delivered, read or rejected
-- A 6-step setup wizard, shown right after activation
-- Anonymous usage data reporting, off by default, which never includes the site address, contacts, message content or credentials
-- A settings modal on the WhatsApp card to connect, validate and remove the Joinotify API key, which is never sent to the browser
-- New `Joinotify/Settings/Saved`, `Joinotify/Sender_Selected`, `Joinotify/Notification_Queue/Item_Retried` and `Joinotify/Debug_Log/Recorded` hooks for extensions
+- WhatsApp connection through the official Joinotify API, with multiple numbers per account
+- Meta-approved message templates and the "WhatsApp: Template message" action
+- Reply buttons, option list, link button, location, contact card, sticker and reaction messages
+- Delivery confirmation records when each message was delivered, read or rejected
+- A 6-step setup wizard shown after activation
+- Anonymous usage data reporting, off by default
+- WhatsApp card modal to connect, validate and remove the Joinotify API key
+- `Joinotify/Settings/Saved`, `Joinotify/Sender_Selected`, `Joinotify/Notification_Queue/Item_Retried` and `Joinotify/Debug_Log/Recorded` hooks
 
 ### Changed
 
-- The plugin is now 100% free and open source under the GNU GPL v2 or later, with the licensing system removed
-- Updates are now delivered by WordPress itself instead of the plugin's own update checker
-- The OTP login code is now delivered through an authentication template on the official API
-- Rate-limited sends are retried after exactly the wait time the API reports
-- Group actions are unavailable on the official API, which does not support sending to groups
-- The setup wizard is now displayed full screen, over the WordPress dashboard
-- The workflow template library is now served by the Joinotify API at `api.joinotify.com`
-- The Proxy API (deprecated) now ships turned off on new installations
+- The plugin is 100% free and open source under the GNU GPL v2 or later
+- Updates are delivered by WordPress instead of the plugin's own update checker
+- The OTP login code is sent through an authentication template
+- Rate-limited sends are retried after the wait time the API reports
+- Group actions are unavailable on the official API
+- The setup wizard is displayed full screen
+- The workflow template library is served by `api.joinotify.com`
+- The Proxy API ships turned off on new installations
 - The builder no longer offers actions from disabled integrations
-- Every WhatsApp action in the builder now displays the WhatsApp logo
-- Compliance with the WordPress.org plugin directory guidelines, including declared external services and the distributed Vue source code
+- WhatsApp actions display the WhatsApp logo
+- Compliance with the WordPress.org plugin directory guidelines
 
 ### Deprecated
 
-- "Enable Proxy API" under Settings → General, which will be removed in an upcoming version
+- "Enable Proxy API" under Settings → General
 
 ### Removed
 
@@ -305,15 +306,16 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- The plugin left its scheduled tasks behind on deactivation
-- **Heads-up:** monetary values arrived broken in messages, and since `{{ wc_order_total }}` and the other total variables now include the currency symbol, flows that prefix them with `{{ wc_currency_symbol }}` must drop it
+- Scheduled tasks are removed on deactivation
+- Monetary values arrived broken in messages
+- **Heads-up:** `{{ wc_order_total }}` and the other totals include the currency symbol, so drop any `{{ wc_currency_symbol }}` prefix
 
 ## [2.2.0] - 2026-08-03
 
 ### Added
 
-- "Loop" action in the flow builder, which runs its body actions once per item of a collection such as the order's digital files
-- New loop variables for the loop body, such as `{{ loop_value }}`, `{{ loop_index }}` and `{{ loop_file_name }}`
+- "Loop" action, which runs its body once per item of a collection
+- Loop variables such as `{{ loop_value }}`, `{{ loop_index }}` and `{{ loop_file_name }}`
 
 ### Removed
 
@@ -321,56 +323,56 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- The default country code was not applied to numbers without one, making the send fail
+- The default country code was not applied to numbers without one
 
 ## [2.1.0] - 2026-07-27
 
 ### Added
 
-- WooCommerce digital product delivery straight from the flow builder, sending files and PDFs by e-mail or WhatsApp
-- Attachments in the e-mail (Resend) and WhatsApp media actions, accepting media library files, links or the order's digital files
-- New WooCommerce triggers "Digital product access granted" and "Digital file downloaded", both with an optional per-product filter
-- New WooCommerce variables for digital products, such as file names, download links, expiration date and remaining downloads
+- WooCommerce digital product delivery by e-mail or WhatsApp from the flow builder
+- Attachments in the e-mail (Resend) and WhatsApp media actions
+- "Digital product access granted" and "Digital file downloaded" WooCommerce triggers
+- WooCommerce digital product variables, such as file names and download links
 
 ### Changed
 
-- Variables now respect the chosen trigger at send time as well
-- Groundwork for the new license server, with automatic migration and no user intervention
+- Variables respect the chosen trigger at send time
+- Groundwork for the new license server
 
 ### Fixed
 
-- Argument order in the WooCommerce partial refund trigger, which made the order variable receive the refund identifier
-- An expired or server-rejected license kept the premium features unlocked for up to 24 hours
-- Opening the license screen could deactivate the site's license when the expiration date had already passed
-- Lifetime licenses marked as "Unlimited" or "Lifetime" were treated as expired
-- The license activation response could be reused on deactivation, since both shared the same cache
+- The partial refund trigger passed the refund ID as the order
+- An expired license kept premium features unlocked for up to 24 hours
+- Opening the license screen could deactivate an expired license
+- "Unlimited" and "Lifetime" licenses were treated as expired
+- License activation and deactivation shared the same cache
 
 ## [2.0.0] - 2026-07-02
 
 ### Added
 
-- Artificial Intelligence in the flow builder, creating flows, messages, variables and PHP snippets from a text description
-- Custom text variables created from the site's content types and fields, including WooCommerce orders
-- Sent message history, with filters and a month-and-year date picker
+- AI in the flow builder, creating flows, messages and variables from a text description
+- Custom text variables from the site's content types and fields
+- Sent message history with filters
 - Passwordless login by code (OTP) sent via WhatsApp
-- Export and import all plugin settings in a JSON file
-- "Password reset request" trigger, with a reset link variable
-- New languages added: French, Italian, German and European Portuguese
+- Export and import of all plugin settings
+- "Password reset request" trigger
+- French, Italian, German and European Portuguese translations
 
 ### Changed
 
-- New visual canvas flow builder, with drag and drop, step connections, zoom and undo/redo
-- New message editor with visual formatting automatically converted to the WhatsApp standard
-- Media preview right in the WhatsApp media message step
-- Text variables highlighted and clickable inside the fields, with a warning when unavailable in the chosen trigger
-- Actions flag when there are required settings pending
-- A more complete condition catalog, with list-based selection and a product picker in the values
-- Message scheduling with a specific date and time, with a queue and reprocessing of failed notifications
+- New visual canvas flow builder with drag and drop, zoom and undo/redo
+- New message editor with formatting converted to the WhatsApp standard
+- Media preview in the WhatsApp media message step
+- Text variables are highlighted inside the fields
+- Actions flag pending required settings
+- Larger condition catalog with list-based selection
+- Message scheduling with a queue and reprocessing of failed notifications
 - "Integrations" tab renamed to "Apps"
 - Manual update check in the "About" tab
-- Automatic migration of flows from previous versions when updating the plugin
-- Performance optimizations in plugin loading and in the admin screens
-- Improved translation support (Portuguese, English and Spanish)
+- Flows from previous versions are migrated automatically
+- Performance optimizations
+- Improved Portuguese, English and Spanish translations
 
 ## 1.4.7 - 2026-04-12
 
@@ -380,7 +382,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Changed
 
-- Frontend technology switched to Vue.js, Vite and Tailwind CSS
+- Frontend switched to Vue.js, Vite and Tailwind CSS
 
 ## [1.4.6] - 2026-02-10
 
@@ -404,7 +406,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- Fatal error loading the "All flows" page, caused by the undefined `convert_to_screen()` function
+- Fatal error on the "All flows" page caused by the undefined `convert_to_screen()` function
 
 ## [1.4.4] - 2025-12-12
 
@@ -441,7 +443,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 ### Added
 
 - Caption for WhatsApp media messages
-- Post text variables, such as `{{ post_title }}`, `{{ post_link }}` and `{{ post_featured_image }}`
+- Post text variables, such as `{{ post_title }}` and `{{ post_link }}`
 
 ### Changed
 
@@ -457,7 +459,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- Priority and arguments of `add_action()` in the `Woo_Subscriptions` class passed outside the callback array
+- `add_action()` arguments in the `Woo_Subscriptions` class passed outside the callback array
 - Failure checking order payment status
 
 ## [1.3.5] - 2025-07-09
@@ -474,7 +476,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Added
 
-- Show version update notices
+- Version update notices
 
 ### Changed
 
@@ -482,15 +484,15 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- Cart recovery link is empty (Flexify Checkout - Abandoned cart recovery)
+- Empty cart recovery link (Flexify Checkout - Abandoned cart recovery)
 
 ## [1.3.3] - 2025-06-10
 
 ### Added
 
-- Receive notices when WhatsApp is disconnected
-- Flexify Checkout abandoned cart text variables, such as `{{ fcrc_first_name }}`, `{{ fcrc_phone }}` and `{{ fcrc_cart_total }}`
-- Triggers "Lead captured via modal" and "Lead captured via checkout" (Flexify Checkout - Abandoned cart recovery)
+- Notices when WhatsApp is disconnected
+- Flexify Checkout abandoned cart variables, such as `{{ fcrc_first_name }}` and `{{ fcrc_cart_total }}`
+- "Lead captured via modal" and "Lead captured via checkout" triggers (Flexify Checkout - Abandoned cart recovery)
 
 ### Removed
 
@@ -500,7 +502,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Changed
 
-- Fill in the sender when importing a flow
+- The sender is filled in when importing a flow
 
 ### Fixed
 
@@ -525,7 +527,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Security
 
-- Security fix for whether the sender is registered on the site
+- Check whether the sender is registered on the site
 
 ## [1.2.5] - 2025-03-24
 
@@ -535,7 +537,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- Fix to the hook calls of the Woo Subscriptions integration
+- Hook calls of the Woo Subscriptions integration
 
 ## [1.2.2] - 2025-03-17
 
@@ -548,7 +550,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Changed
 
-- WooCommerce total variables, such as `{{ wc_order_total }}`, now return formatted values with the currency symbol
+- WooCommerce total variables, such as `{{ wc_order_total }}`, include the currency symbol
 - Optimizations
 
 ### Removed
@@ -557,18 +559,18 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- Text variables in WooCommerce triggers in test mode were not being replaced correctly
+- Text variables in WooCommerce triggers were not replaced in test mode
 
 ## [1.2.0] - 2025-03-12
 
 ### Added
 
-- "giggsey/libphonenumber-for-php" library for formatting and validating phone numbers in international format
+- "giggsey/libphonenumber-for-php" library for international phone numbers
 - "Selectize" library for multi-selecting elements
 - "Payment method", "Shipping method" and "Order paid" conditions
-- Trigger: "Payment processed by PayPal"
-- "Routines" class for scheduled routines, starting with a phone connection check
-- Text variables for Inter Pix, bank slip and cart recovery, such as `{{ fc_inter_pix_copia_cola }}` and `{{ fcrc_recovery_link }}`
+- "Payment processed by PayPal" trigger
+- "Routines" class for scheduled routines
+- Inter Pix, bank slip and cart recovery variables, such as `{{ fc_inter_pix_copia_cola }}` and `{{ fcrc_recovery_link }}`
 
 ### Changed
 
@@ -598,12 +600,12 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Added
 
-- Enable debug mode
+- Debug mode
 - Integration with Elementor forms
-- WooCommerce text variables for billing, shipping, order status, totals, coupons and checkout fields, such as `{{ wc_billing_first_name }}` and `{{ wc_checkout_field=[FIELD_ID] }}`
-- Enable automatic updates
+- WooCommerce text variables, such as `{{ wc_billing_first_name }}` and `{{ wc_checkout_field=[FIELD_ID] }}`
+- Automatic updates
 - "PHP Snippet" action in the flow builder
-- "Discount coupon" action in the flow builder for the WooCommerce integration
+- "Discount coupon" action for the WooCommerce integration
 - Get WhatsApp group information
 
 ### Changed
@@ -624,7 +626,7 @@ Release tooling only, with no changes to the shipped package since 2.3.2.
 
 ### Fixed
 
-- PHP 7.4 compatibility fix
+- PHP 7.4 compatibility
 
 ## [1.0.4] - 2024-11-22
 
