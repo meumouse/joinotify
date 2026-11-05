@@ -8,6 +8,8 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 
 ## [Unreleased]
 
+## [2.7.2] - 2026-11-05
+
 ### Fixed
 
 - WooCommerce workflows run outside the storefront, such as an order status change in the admin, no longer end in a fatal error
@@ -658,7 +660,8 @@ Release tooling only; the shipped package is unchanged since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.1...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.2...HEAD
+[2.7.2]: https://github.com/meumouse/joinotify/compare/v2.7.1...v2.7.2
 [2.7.1]: https://github.com/meumouse/joinotify/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/meumouse/joinotify/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/meumouse/joinotify/compare/v2.6.1...v2.6.2

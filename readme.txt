@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.7.1
+Stable tag: 2.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.7.2 =
+* Fixed: WooCommerce workflows run outside the storefront, such as an order status change in the admin, no longer end in a fatal error.
+
 = 2.7.1 =
 * New: the JSON body of the "HTTP request" action can be built from a table of fields, each with its own type.
 * New: a typed JSON body is edited in a code editor with syntax checking, a "Format" button and variable suggestions.
@@ -333,6 +336,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.7.2 =
+Recommended for WooCommerce stores: changing an order status in the admin no longer ends in a fatal error.
 
 = 2.7.1 =
 Builds the JSON body of the "HTTP request" action from a table of fields, with a code editor and syntax checking for typed JSON. Existing actions keep their JSON body.
