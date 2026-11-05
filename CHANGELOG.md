@@ -8,6 +8,10 @@ Two notes on the history below. Releases before 2.0.0 did not strictly follow Se
 
 ## [Unreleased]
 
+### Fixed
+
+- Changing an order's status in the admin could end in a fatal error (`Call to undefined function wc_get_cart_item_data_hash()`) when a WooCommerce workflow ran and the logged-in user had a stored cart. Filling the order address placeholders builds a WooCommerce cart outside the storefront, where WooCommerce does not load its cart functions, and the cart then failed to restore that user's stored cart when the request ended. Joinotify now loads those functions first, as WooCommerce does; the same applied to workflows run by cron or a REST request
+
 ## [2.7.1] - 2026-11-04
 
 ### Added
