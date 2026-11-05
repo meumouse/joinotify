@@ -2614,6 +2614,7 @@ class Woocommerce extends Integrations_Base {
 	 * Ensure WooCommerce checkout context (session/customer) for admin screens.
 	 *
 	 * @since 1.4.5
+	 * @version 2.7.2
 	 * @return void
 	 */
 	public static function ensure_wc_checkout_context() {
@@ -2634,6 +2635,15 @@ class Woocommerce extends Integrations_Base {
 
 		// Ensure cart (optional but helps some setups).
 		if ( empty( WC()->cart ) ) {
+			/*
+			 * WC_Cart reads the stored cart on shutdown through wc_get_cart_item_data_hash() and
+			 * wc_add_notice(), which WooCommerce only loads on the frontend. Without these files,
+			 * an order status change in the admin, cron or a REST request ends in a fatal error
+			 * whenever the current user has a stored cart. Load them the way wc_load_cart() does.
+			 */
+			include_once WC_ABSPATH . 'includes/wc-cart-functions.php';
+			include_once WC_ABSPATH . 'includes/wc-notice-functions.php';
+
 			WC()->cart = new WC_Cart();
 		}
 	}
