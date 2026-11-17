@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.7.2
+Stable tag: 2.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,10 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
+= 2.7.3 =
+* New: `Joinotify/WooCommerce/Order_Types` filter, which sets the order types the WooCommerce triggers and the cloud sync run for.
+* Fixed: workflows and the cloud sync no longer run for orders that are not shop orders, such as the parts of a Headpress split payment.
+
 = 2.7.2 =
 * Fixed: WooCommerce workflows run outside the storefront, such as an order status change in the admin, no longer end in a fatal error.
 
@@ -336,6 +340,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.7.3 =
+Recommended for WooCommerce stores: order workflows no longer run for the hidden orders other plugins create, such as the parts of a Headpress split payment.
 
 = 2.7.2 =
 Recommended for WooCommerce stores: changing an order status in the admin no longer ends in a fatal error.
