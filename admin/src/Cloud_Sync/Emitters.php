@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Cloud_Sync;
 
 use MeuMouse\Joinotify\Contacts\Sources;
 use MeuMouse\Joinotify\Integrations\Flexify_Checkout;
+use MeuMouse\Joinotify\Integrations\Woocommerce;
 
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
@@ -28,6 +29,7 @@ defined('ABSPATH') || exit;
  * instant would carry nobody to reach.
  *
  * @since 2.5.0
+ * @version 2.7.3
  * @package MeuMouse\Joinotify\Cloud_Sync
  * @author MeuMouse.com
  */
@@ -245,16 +247,19 @@ class Emitters {
 
 
 	/**
-	 * A real order: not a refund, not a draft of the checkout block.
+	 * A real order: not a refund, not a draft of the checkout block, and one of the shop's order
+	 * types — the hidden orders other plugins keep for their own bookkeeping (such as the parts of
+	 * a Headpress split payment) are not orders the shop sold.
 	 *
 	 * @since 2.5.0
+	 * @version 2.7.3
 	 * @param mixed $order
 	 * @return \WC_Order|null
 	 */
 	private static function order( $order ) {
 		$order = is_numeric( $order ) ? wc_get_order( (int) $order ) : $order;
 
-		if ( ! $order instanceof \WC_Order || $order instanceof \WC_Order_Refund ) {
+		if ( ! $order instanceof \WC_Order || $order instanceof \WC_Order_Refund || ! Woocommerce::is_shop_order( $order ) ) {
 			return null;
 		}
 

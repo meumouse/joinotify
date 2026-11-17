@@ -893,6 +893,7 @@ The contact block needs a `ref`: without one the event is still recorded, but re
 |---|---|---|
 | `Joinotify/Cloud_Sync/Event_Data` | `$data, $name, $contact` | add data to one event or all of them; return `false` to drop the event |
 | `Joinotify/Cloud_Sync/Order_Data` | `$data, $order` | add an order meta to every order the sync sends |
+| `Joinotify/WooCommerce/Order_Types` | `$order_types` | set the order types the WooCommerce order triggers and the sync run for — `array( 'shop_order' )` by default, so the hidden orders other plugins create (such as Headpress split payment parts, `headpress_payment`) are skipped. Check an order with `Integrations\Woocommerce::is_shop_order( $order )` |
 | `Joinotify/Cloud_Sync/Links` | `$links, $order, $event` | replace the order links (`payment_url`, `order_received_url`, `my_account_url`, `review_urls`) — a headless store points them at its own pages. `$event` is the site event (`wc.order.paid`, …) or `webhook` for the "Send webhook" action |
 | `Joinotify/Cloud_Sync/Contact_Block` | `$block, $fields` | add a tag or attribute to the contact of every event and backfill row; `$fields['source']` says which integration built it (`woocommerce`, `wordpress`, `forms`, `carts`) |
 | `Joinotify/Contacts/Sources/Forms` | `$forms` | list a form of another plugin on the Sources tab, as `{ plugin, id, title, fields: [{ id, label, type }] }` |
