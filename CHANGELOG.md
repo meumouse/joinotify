@@ -8,6 +8,16 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 
 ## [Unreleased]
 
+## [2.7.3] - 2026-11-17
+
+### Added
+
+- `Joinotify/WooCommerce/Order_Types` filter, which sets the order types the WooCommerce triggers and the cloud sync run for
+
+### Fixed
+
+- Workflows and the cloud sync no longer run for orders that are not shop orders, such as the parts of a Headpress split payment
+
 ## [2.7.2] - 2026-11-05
 
 ### Fixed
@@ -660,7 +670,8 @@ Release tooling only; the shipped package is unchanged since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.2...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.3...HEAD
+[2.7.3]: https://github.com/meumouse/joinotify/compare/v2.7.2...v2.7.3
 [2.7.2]: https://github.com/meumouse/joinotify/compare/v2.7.1...v2.7.2
 [2.7.1]: https://github.com/meumouse/joinotify/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/meumouse/joinotify/compare/v2.6.2...v2.7.0

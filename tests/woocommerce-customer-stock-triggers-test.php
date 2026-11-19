@@ -7,7 +7,8 @@
  * from), "Product low in stock" / "Product out of stock" (once per request),
  * "Product back in stock" (only a real restock, one message per variable product)
  * and "Back in stock notice sent" (the email filter value stays untouched), plus the
- * placeholder scoping of the triggers that carry no order.
+ * placeholder scoping of the triggers that carry no order, and the order triggers skipping the
+ * orders that are not shop orders (2.7.3).
  *
  * No WordPress bootstrap is required: the workflow processor records the payloads
  * it receives instead of running them, and the WP/WC functions reached are stubbed.
@@ -207,13 +208,17 @@ function wc_get_product( $id ) {
 	return $products[ $id ] ?? false;
 }
 
-class WC_Order {
+abstract class WC_Abstract_Order {}
+
+class WC_Order extends WC_Abstract_Order {
 	public $id;
+	public $type;
 	public $meta = array();
 	public $meta_saves = 0;
 
-	public function __construct( $id ) { $this->id = $id; }
+	public function __construct( $id, $type = 'shop_order' ) { $this->id = $id; $this->type = $type; }
 	public function get_id() { return $this->id; }
+	public function get_type() { return $this->type; }
 	public function get_meta( $key ) { return $this->meta[ $key ] ?? ''; }
 	public function update_meta_data( $key, $value ) { $this->meta[ $key ] = $value; }
 	public function save_meta_data() { $this->meta_saves++; }
@@ -352,6 +357,37 @@ $options['joinotify_completed_upgrades'] = array( 'workflows_schema_2_7_0' );
 reset_request();
 $integration->process_workflow_payment_complete( 999 );
 check( 'a missing order runs nothing', array() === hooks_dispatched() );
+
+// ---------------------------------------------------------------------------
+echo "\n== Orders that are not shop orders ==\n";
+// ---------------------------------------------------------------------------
+
+reset_request();
+$orders[20] = new WC_Order( 20, 'headpress_payment' );
+$orders[21] = new WC_Order( 21, 'shop_order_refund' );
+$orders[22] = new WC_Order( 22 );
+
+check( 'a shop order is a shop order', Woocommerce::is_shop_order( 22 ) && Woocommerce::is_shop_order( $orders[22] ) );
+check( 'a split payment part is not', ! Woocommerce::is_shop_order( 20 ) && ! Woocommerce::is_shop_order( $orders[20] ) );
+check( 'a refund is not', ! Woocommerce::is_shop_order( 21 ) );
+check( 'a missing order is not', ! Woocommerce::is_shop_order( 999 ) && ! Woocommerce::is_shop_order( 0 ) && ! Woocommerce::is_shop_order( null ) );
+
+$integration->process_workflow_payment_status_changed( 20, 'pending', 'completed' );
+$integration->process_workflow_payment_complete( 20, 'tx-3' );
+check( 'a paid split payment part runs no "Payment confirmed"', array() === hooks_dispatched() );
+check( 'and is not flagged', '' === $orders[20]->get_meta( Woocommerce::META_PAYMENT_CONFIRMED ) );
+
+$integration->process_workflow_order_status_changed( 20, 'pending', 'completed' );
+$integration->process_workflow_order_completed( 20, $orders[20], array() );
+$integration->process_workflow_on_new_order( 20 );
+$integration->process_workflow_order_fully_refunded( 20, 21 );
+$integration->process_workflow_order_partially_refunded( 20, 21 );
+$integration->process_workflow_download_permissions_granted( 20 );
+check( 'nor any other order trigger', array() === hooks_dispatched() );
+
+$integration->process_workflow_order_status_changed( 22, 'processing', 'completed' );
+$integration->process_workflow_order_completed( 22, $orders[22], array() );
+check( 'a shop order still runs them', hooks_dispatched() === array( 'woocommerce_order_status_changed', 'woocommerce_order_status_completed' ) );
 
 // ---------------------------------------------------------------------------
 echo "\n== Customer account created ==\n";
