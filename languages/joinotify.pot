@@ -125,6 +125,19 @@ msgstr ""
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr ""
 
+#: admin/src/Integrations/Deprecated_Integrations.php:324
+#. translators: 1: number of workflows, 2: integration names (e.g. Telegram, Resend), 3: Joinotify version that removes them
+msgid ""
+"%1$d active workflow uses a deprecated integration (%2$s) that will be "
+"removed in Joinotify %3$s. Replace those steps with WhatsApp messages "
+"before updating."
+msgid_plural ""
+"%1$d active workflows use a deprecated integration (%2$s) that will be "
+"removed in Joinotify %3$s. Replace those steps with WhatsApp messages "
+"before updating."
+msgstr[0] ""
+msgstr[1] ""
+
 #: app/src/pages/contacts/components/AudienceEditor.vue:205
 msgid "%1$d of %2$d conditions, up to 3 levels of groups."
 msgstr ""
@@ -153,6 +166,14 @@ msgstr ""
 msgid "%1$s at %2$s"
 msgstr ""
 
+#: admin/src/Integrations/Deprecated_Integrations.php:153
+#: app/src/builder/actions/utils/deprecation.ts:25
+#. translators: 1: integration name (e.g. Telegram), 2: Joinotify version that removes it
+msgid ""
+"%1$s is deprecated and will be removed in Joinotify %2$s. Workflows that "
+"use it keep sending until then; move them to WhatsApp."
+msgstr ""
+
 #: admin/src/Rest/Builder_Test.php:180
 #. translators: 1: why the send failed, 2: the error returned by WhatsApp
 msgid "%1$s WhatsApp replied: %2$s"
@@ -169,7 +190,7 @@ msgstr ""
 msgid "%1$s: %2$d contacts. Tell what each column is."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:863
+#: admin/src/Admin/Settings/Registry.php:869
 #. translators: %d: number of retry attempts
 msgid "%d attempt"
 msgid_plural "%d attempts"
@@ -363,15 +384,15 @@ msgstr ""
 msgid "0 results"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:160
+#: admin/src/Admin/Settings/Registry.php:163
 msgid "120 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:157
+#: admin/src/Admin/Settings/Registry.php:160
 msgid "15 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:279
+#: admin/src/Admin/Settings/Registry.php:282
 msgid "180 days"
 msgstr ""
 
@@ -391,18 +412,18 @@ msgstr ""
 msgid "24h limit:"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:276
-#: admin/src/Admin/Settings/Registry.php:295
+#: admin/src/Admin/Settings/Registry.php:279
+#: admin/src/Admin/Settings/Registry.php:298
 msgid "30 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:158
+#: admin/src/Admin/Settings/Registry.php:161
 #: admin/src/Integrations/Flexify_Checkout.php:253
 #: admin/src/Integrations/Flexify_Checkout.php:261
 msgid "30 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:280
+#: admin/src/Admin/Settings/Registry.php:283
 msgid "365 days"
 msgstr ""
 
@@ -410,32 +431,32 @@ msgstr ""
 msgid "41912345678"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:156
+#: admin/src/Admin/Settings/Registry.php:159
 msgid "5 minutes"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1441
+#: app/src/pages/builder/BuilderPage.vue:1500
 #: app/src/pages/history/HistoryPage.vue:317
 #: app/src/pages/settings/components/cards/PhoneActions.vue:126
 #: app/src/pages/settings/components/cards/PhoneActions.vue:212
 msgid "5541987111527"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:277
-#: admin/src/Admin/Settings/Registry.php:296
+#: admin/src/Admin/Settings/Registry.php:280
+#: admin/src/Admin/Settings/Registry.php:299
 msgid "60 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:159
+#: admin/src/Admin/Settings/Registry.php:162
 msgid "60 minutes"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:294
+#: admin/src/Admin/Settings/Registry.php:297
 msgid "7 days"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:278
-#: admin/src/Admin/Settings/Registry.php:297
+#: admin/src/Admin/Settings/Registry.php:281
+#: admin/src/Admin/Settings/Registry.php:300
 msgid "90 days"
 msgstr ""
 
@@ -487,7 +508,7 @@ msgstr ""
 msgid "A public address. Local and private network addresses are refused."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:305
+#: admin/src/Admin/Settings/Registry.php:308
 msgid "A quick overview of the WordPress environment, PHP, and critical extensions."
 msgstr ""
 
@@ -509,8 +530,8 @@ msgstr ""
 msgid "Abandoned carts (Flexify Checkout)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:246
-#: admin/src/Admin/Settings/Registry.php:356
+#: admin/src/Admin/Settings/Registry.php:249
+#: admin/src/Admin/Settings/Registry.php:359
 msgid "About"
 msgstr ""
 
@@ -550,7 +571,7 @@ msgstr ""
 msgid "Actions menu"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:218
+#: admin/src/Admin/Settings/Registry.php:221
 msgid "Actions to add a new sender and send a test message."
 msgstr ""
 
@@ -593,7 +614,7 @@ msgid ""
 "your customers and leads."
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:834
+#: app/src/components/flow/FlowCanvas.vue:835
 msgid "Add a documentation note"
 msgstr ""
 
@@ -601,30 +622,30 @@ msgstr ""
 msgid "Add a tag"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:847
-#: app/src/components/flow/FlowNode.vue:455
-#: app/src/components/flow/FlowNode.vue:456
+#: app/src/components/flow/FlowCanvas.vue:848
+#: app/src/components/flow/FlowNode.vue:464
+#: app/src/components/flow/FlowNode.vue:465
 msgid "Add action"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:406
+#: app/src/components/flow/FlowNode.vue:415
 msgid "Add action (False)"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:381
+#: app/src/components/flow/FlowNode.vue:390
 msgid "Add action (True)"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:407
+#: app/src/components/flow/FlowNode.vue:416
 msgid "Add action to the false branch"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:437
-#: app/src/components/flow/FlowNode.vue:438
+#: app/src/components/flow/FlowNode.vue:446
+#: app/src/components/flow/FlowNode.vue:447
 msgid "Add action to the loop body"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:382
+#: app/src/components/flow/FlowNode.vue:391
 msgid "Add action to the true branch"
 msgstr ""
 
@@ -687,7 +708,7 @@ msgstr ""
 msgid "Add new workflow"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:838
+#: app/src/components/flow/FlowCanvas.vue:839
 msgid "Add note"
 msgstr ""
 
@@ -704,7 +725,7 @@ msgstr ""
 msgid "Add tag"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1423
+#: app/src/pages/builder/BuilderPage.vue:1482
 msgid "Add test phone number"
 msgstr ""
 
@@ -788,7 +809,7 @@ msgstr ""
 msgid "Afghanistan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:175
+#: admin/src/Admin/Settings/Registry.php:178
 msgid "AI engine"
 msgstr ""
 
@@ -851,7 +872,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:249
+#: app/src/pages/builder/BuilderPage.vue:281
 msgid "All categories"
 msgstr ""
 
@@ -1089,7 +1110,7 @@ msgstr ""
 msgid "API client not initialized."
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:134
+#: admin/src/Integrations/Resend.php:153
 #: app/src/builder/actions/settings/HttpRequestSettings.vue:89
 msgid "API key"
 msgstr ""
@@ -1110,7 +1131,7 @@ msgstr ""
 msgid "applications"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:344
+#: admin/src/Admin/Settings/Registry.php:347
 msgid "Applications"
 msgstr ""
 
@@ -1171,7 +1192,7 @@ msgstr ""
 msgid "Artificial intelligence"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:170
+#: admin/src/Admin/Settings/Registry.php:173
 #: admin/src/Integrations/AI_Messaging.php:48
 #: admin/src/Integrations/Integrations_Base.php:102
 msgid "Artificial Intelligence"
@@ -1290,11 +1311,11 @@ msgid ""
 "number. Keep your customers informed in real time."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:291
+#: admin/src/Admin/Settings/Registry.php:294
 msgid "Automatically delete debug log records older than the selected period."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:273
+#: admin/src/Admin/Settings/Registry.php:276
 msgid "Automatically delete history records older than the selected period."
 msgstr ""
 
@@ -1432,7 +1453,7 @@ msgstr ""
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:134
+#: admin/src/Integrations/Telegram.php:153
 msgid "Bot token"
 msgstr ""
 
@@ -1472,22 +1493,22 @@ msgstr ""
 msgid "Build your first automation or review the full settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:232
-#: admin/src/Admin/Settings/Registry.php:350
-#: app/src/pages/builder/BuilderPage.vue:640
-#: app/src/pages/builder/BuilderPage.vue:695
-#: app/src/pages/builder/BuilderPage.vue:800
-#: app/src/pages/builder/BuilderPage.vue:820
-#: app/src/pages/builder/BuilderPage.vue:837
-#: app/src/pages/builder/BuilderPage.vue:849
-#: app/src/pages/builder/BuilderPage.vue:1077
-#: app/src/pages/builder/BuilderPage.vue:1086
-#: app/src/pages/builder/BuilderPage.vue:1113
-#: app/src/pages/builder/BuilderPage.vue:1165
-#: app/src/pages/builder/BuilderPage.vue:1177
-#: app/src/pages/builder/BuilderPage.vue:1183
-#: app/src/pages/builder/BuilderPage.vue:1219
-#: app/src/pages/builder/BuilderPage.vue:1225
+#: admin/src/Admin/Settings/Registry.php:235
+#: admin/src/Admin/Settings/Registry.php:353
+#: app/src/pages/builder/BuilderPage.vue:699
+#: app/src/pages/builder/BuilderPage.vue:754
+#: app/src/pages/builder/BuilderPage.vue:859
+#: app/src/pages/builder/BuilderPage.vue:879
+#: app/src/pages/builder/BuilderPage.vue:896
+#: app/src/pages/builder/BuilderPage.vue:908
+#: app/src/pages/builder/BuilderPage.vue:1136
+#: app/src/pages/builder/BuilderPage.vue:1145
+#: app/src/pages/builder/BuilderPage.vue:1172
+#: app/src/pages/builder/BuilderPage.vue:1224
+#: app/src/pages/builder/BuilderPage.vue:1236
+#: app/src/pages/builder/BuilderPage.vue:1242
+#: app/src/pages/builder/BuilderPage.vue:1278
+#: app/src/pages/builder/BuilderPage.vue:1284
 #: app/src/pages/settings/SettingsPage.vue:463
 #: app/src/pages/settings/SettingsPage.vue:466
 #: app/src/pages/settings/SettingsPage.vue:479
@@ -1577,9 +1598,9 @@ msgstr ""
 #: app/src/components/fields/JoinotifyApiKeyField.vue:186
 #: app/src/components/modals/ConfirmDialog.vue:31
 #: app/src/components/workflows/ConfirmActionModal.vue:17
-#: app/src/pages/builder/BuilderPage.vue:1415
-#: app/src/pages/builder/BuilderPage.vue:1453
-#: app/src/pages/builder/BuilderPage.vue:1499
+#: app/src/pages/builder/BuilderPage.vue:1474
+#: app/src/pages/builder/BuilderPage.vue:1512
+#: app/src/pages/builder/BuilderPage.vue:1588
 #: app/src/pages/contacts/components/AudienceEditor.vue:239
 #: app/src/pages/contacts/components/BulkTagModal.vue:119
 #: app/src/pages/contacts/components/ConsentModal.vue:63
@@ -1679,8 +1700,8 @@ msgstr ""
 msgid "Change or clear the filters to see more contacts."
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:278
-#: app/src/pages/builder/BuilderPage.vue:1481
+#: app/src/components/flow/FlowNode.vue:287
+#: app/src/pages/builder/BuilderPage.vue:1540
 msgid "Change trigger"
 msgstr ""
 
@@ -1702,7 +1723,7 @@ msgstr ""
 msgid "Character that separates the entries. Leave empty to split by line break."
 msgstr ""
 
-#: app/src/builder/actions/definitions/telegramText.ts:55
+#: app/src/builder/actions/definitions/telegramText.ts:62
 #: app/src/builder/actions/settings/TelegramTextSettings.vue:31
 #: app/src/builder/actions/settings/TelegramTextSettings.vue:34
 msgid "Chat id"
@@ -1765,7 +1786,7 @@ msgstr ""
 msgid "Choose one of the validated senders available in your account."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:124
+#: admin/src/Admin/Settings/Registry.php:127
 msgid ""
 "Choose the fallback country when the phone number does not include a "
 "country code."
@@ -1921,7 +1942,7 @@ msgstr ""
 msgid "Column"
 msgstr ""
 
-#: app/src/pages/settings/components/cards/IntegrationCard.vue:76
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:84
 msgid "Coming soon"
 msgstr ""
 
@@ -1967,11 +1988,11 @@ msgstr ""
 msgid "Condition type"
 msgstr ""
 
-#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:183
+#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:190
 msgid "Configuration component not available"
 msgstr ""
 
-#: app/src/builder/actions/registry/actionRegistry.ts:213
+#: app/src/builder/actions/registry/actionRegistry.ts:219
 msgid "Configuration component not available for this action."
 msgstr ""
 
@@ -1979,12 +2000,12 @@ msgstr ""
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
 #: admin/src/Integrations/Otp_Login.php:109
-#: admin/src/Integrations/Resend.php:115
-#: admin/src/Integrations/Telegram.php:115
+#: admin/src/Integrations/Resend.php:130
+#: admin/src/Integrations/Telegram.php:130
 #: admin/src/Integrations/Whatsapp.php:122
 #: admin/src/Integrations/Woocommerce.php:189
 #: app/src/pages/contacts/tabs/SourcesTab.vue:325
-#: app/src/pages/settings/components/cards/IntegrationCard.vue:24
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:27
 #: app/src/pages/settings/components/sections/GeneralSettingsSection.vue:62
 msgid "Configure"
 msgstr ""
@@ -2246,7 +2267,7 @@ msgid "Could not clear the queue."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:99
-#: admin/src/Admin/Settings/Registry.php:688
+#: admin/src/Admin/Settings/Registry.php:694
 msgid "Could not complete the operation."
 msgstr ""
 
@@ -2255,11 +2276,11 @@ msgstr ""
 msgid "Could not connect with that key."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:894
+#: app/src/pages/builder/BuilderPage.vue:953
 msgid "Could not create the workflow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1111
+#: app/src/pages/builder/BuilderPage.vue:1170
 msgid "Could not delete the action."
 msgstr ""
 
@@ -2384,7 +2405,7 @@ msgstr ""
 msgid "Could not read the Joinotify account data."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:969
+#: app/src/pages/builder/BuilderPage.vue:1028
 #: app/src/pages/settings/components/cards/ImportExportSettings.vue:63
 msgid "Could not read the selected file."
 msgstr ""
@@ -2426,16 +2447,16 @@ msgstr ""
 msgid "Could not run the scheduled item."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1163
-#: app/src/pages/builder/BuilderPage.vue:1181
+#: app/src/pages/builder/BuilderPage.vue:1222
+#: app/src/pages/builder/BuilderPage.vue:1240
 msgid "Could not run the workflow test."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:905
+#: app/src/pages/builder/BuilderPage.vue:964
 msgid "Could not save the selected trigger."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1223
+#: app/src/pages/builder/BuilderPage.vue:1282
 msgid "Could not save the test phone number."
 msgstr ""
 
@@ -2444,8 +2465,8 @@ msgstr ""
 msgid "Could not save the variable."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:638
-#: app/src/pages/builder/BuilderPage.vue:1084
+#: app/src/pages/builder/BuilderPage.vue:697
+#: app/src/pages/builder/BuilderPage.vue:1143
 msgid "Could not save the workflow."
 msgstr ""
 
@@ -2497,11 +2518,11 @@ msgstr ""
 msgid "Could not update the status."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:829
+#: app/src/pages/builder/BuilderPage.vue:888
 msgid "Could not update the workflow status."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:847
+#: app/src/pages/builder/BuilderPage.vue:906
 msgid "Could not update the workflow status. Please try again."
 msgstr ""
 
@@ -2551,7 +2572,7 @@ msgstr ""
 msgid "Coupon: %s"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:114
+#: admin/src/Integrations/Telegram.php:129
 msgid ""
 "Create a bot with @BotFather and paste its token below. The destination "
 "chat id is set on each workflow action."
@@ -2590,7 +2611,7 @@ msgstr ""
 msgid "Create custom fields in the Fields & tags tab to map site data to them."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:233
+#: admin/src/Admin/Settings/Registry.php:236
 msgid ""
 "Create custom text variables mapped to post type meta keys to reuse in the "
 "flow builder."
@@ -2769,7 +2790,7 @@ msgstr ""
 msgid "Custom JSON"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:238
+#: admin/src/Admin/Settings/Registry.php:241
 #: app/src/pages/settings/components/sections/BuilderSettingsSection.vue:81
 msgid "Custom variables"
 msgstr ""
@@ -2802,7 +2823,7 @@ msgstr ""
 msgid "Daisy Avenue, 450 - Curitiba/PR - Brazil (ZIP: 80000-100)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:310
+#: admin/src/Admin/Settings/Registry.php:313
 #: app/src/pages/settings/components/cards/DangerZone.vue:19
 msgid "Danger zone"
 msgstr ""
@@ -2851,7 +2872,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:285
+#: admin/src/Admin/Settings/Registry.php:288
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:125
 msgid "Debug logs"
 msgstr ""
@@ -2860,11 +2881,11 @@ msgstr ""
 msgid "Debug logs cleared successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:290
+#: admin/src/Admin/Settings/Registry.php:293
 msgid "Debug logs retention"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:257
+#: admin/src/Admin/Settings/Registry.php:260
 msgid "Debug mode"
 msgstr ""
 
@@ -2877,7 +2898,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:143
+#: admin/src/Integrations/Telegram.php:162
 msgid "Default chat id"
 msgstr ""
 
@@ -2885,7 +2906,7 @@ msgstr ""
 msgid "Default country"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:123
+#: admin/src/Admin/Settings/Registry.php:126
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:25
 #: app/src/pages/onboarding/components/steps/CountryStep.vue:65
 msgid "Default country code"
@@ -2897,7 +2918,7 @@ msgid ""
 "send from a different number by default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:192
+#: admin/src/Admin/Settings/Registry.php:195
 msgid "Default temperature"
 msgstr ""
 
@@ -2906,7 +2927,7 @@ msgstr ""
 msgid "Define the trigger that starts the workflow"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:119
+#: admin/src/Admin/Settings/Registry.php:122
 msgid ""
 "Defines the default country used to format numbers and populate support "
 "options."
@@ -2949,7 +2970,7 @@ msgstr ""
 msgid "Delay until a fixed date"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:305
+#: app/src/components/flow/FlowNode.vue:314
 #: app/src/pages/history/HistoryPage.vue:240
 #: app/src/pages/workflows/WorkflowsPage.vue:90
 msgid "Delete"
@@ -3009,7 +3030,7 @@ msgid ""
 "cannot receive them."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:139
+#: admin/src/Admin/Settings/Registry.php:142
 msgid "Delivery retries"
 msgstr ""
 
@@ -3019,6 +3040,19 @@ msgstr ""
 
 #: admin/src/Validations/Country_Codes.php:40
 msgid "Denmark"
+msgstr ""
+
+#: app/src/components/flow/FlowNode.vue:240
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:75
+msgid "Deprecated"
+msgstr ""
+
+#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:156
+msgid "Deprecated step"
+msgstr ""
+
+#: app/src/pages/builder/BuilderPage.vue:1548
+msgid "Deprecated steps"
 msgstr ""
 
 #: admin/src/Rest/Contacts_Consent.php:54
@@ -3069,7 +3103,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:267
+#: admin/src/Admin/Settings/Registry.php:270
 msgid "Developer integration"
 msgstr ""
 
@@ -3102,7 +3136,7 @@ msgstr ""
 msgid "Digital product access granted"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:579
 msgid "Disabled"
 msgstr ""
 
@@ -3148,7 +3182,7 @@ msgstr ""
 msgid "Discount: %s"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1479
+#: app/src/pages/builder/BuilderPage.vue:1538
 msgid "Dismiss"
 msgstr ""
 
@@ -3171,7 +3205,7 @@ msgstr ""
 msgid "Do not remind me again"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:856
+#: admin/src/Admin/Settings/Registry.php:862
 msgid "Do not retry"
 msgstr ""
 
@@ -3181,7 +3215,7 @@ msgid "Document"
 msgstr ""
 
 #: admin/src/Admin/Onboarding/Registry.php:122
-#: admin/src/Core/Init.php:563
+#: admin/src/Core/Init.php:564
 #: app/src/pages/onboarding/components/steps/DocsStep.vue:34
 msgid "Documentation"
 msgstr ""
@@ -3265,7 +3299,7 @@ msgstr ""
 msgid "Due"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:296
+#: app/src/components/flow/FlowNode.vue:305
 msgid "Duplicate"
 msgstr ""
 
@@ -3298,7 +3332,7 @@ msgstr ""
 msgid "e.g. Agreed by WhatsApp on 29/09/2026"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:187
+#: admin/src/Admin/Settings/Registry.php:190
 msgid ""
 "e.g. Always answer in Brazilian Portuguese, in a friendly and objective "
 "tone."
@@ -3427,7 +3461,7 @@ msgid "Edit workflow"
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:164
-#: app/src/pages/builder/BuilderPage.vue:1411
+#: app/src/pages/builder/BuilderPage.vue:1470
 msgid "Edit workflow title"
 msgstr ""
 
@@ -3478,7 +3512,7 @@ msgstr ""
 msgid "Enable debug mode"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:226
+#: admin/src/Admin/Settings/Registry.php:229
 msgid ""
 "Enable integrations, manage dependencies, and adjust advanced options for "
 "each service."
@@ -3488,15 +3522,15 @@ msgstr ""
 msgid "Enable JavaScript to log in with a verification code or email and password."
 msgstr ""
 
-#: app/src/pages/settings/components/cards/IntegrationCard.vue:90
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:105
 msgid "Enable the integration to access its settings."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:258
+#: admin/src/Admin/Settings/Registry.php:261
 msgid "Enable to log additional error and process details."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:573
+#: admin/src/Admin/Settings/Registry.php:579
 msgid "Enabled"
 msgstr ""
 
@@ -3524,7 +3558,7 @@ msgstr ""
 msgid "Engagement"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:176
+#: admin/src/Admin/Settings/Registry.php:179
 msgid ""
 "Engine used to generate content. WordPress AI covers every provider "
 "configured in Settings → Connectors; extensions can register additional "
@@ -3539,7 +3573,7 @@ msgstr ""
 msgid "Enter a password to create the account."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1433
+#: app/src/pages/builder/BuilderPage.vue:1492
 #: app/src/pages/settings/components/cards/PhoneActions.vue:118
 msgid ""
 "Enter a phone number to receive test messages from the builder. Use "
@@ -3871,7 +3905,7 @@ msgstr ""
 msgid "Falkland Islands (Malvinas)"
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:388
+#: app/src/components/flow/FlowNode.vue:397
 msgid "False"
 msgstr ""
 
@@ -3984,16 +4018,16 @@ msgstr ""
 msgid "First name (or full name)"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:153
+#: admin/src/Admin/Settings/Registry.php:156
 msgid "First retry after"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:802
+#: app/src/components/flow/FlowCanvas.vue:803
 msgid "Fit"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:798
 #: app/src/components/flow/FlowCanvas.vue:799
+#: app/src/components/flow/FlowCanvas.vue:800
 msgid "Fit view"
 msgstr ""
 
@@ -4142,7 +4176,7 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:144
+#: admin/src/Integrations/Resend.php:163
 msgid ""
 "From address used to deliver the e-mails. The domain must be verified in "
 "Resend."
@@ -4160,8 +4194,8 @@ msgstr ""
 msgid "Gambia"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:112
-#: admin/src/Admin/Settings/Registry.php:332
+#: admin/src/Admin/Settings/Registry.php:115
+#: admin/src/Admin/Settings/Registry.php:335
 #: admin/src/Builder/Actions.php:121
 #: app/src/stores/useWorkflowBuilderStore.ts:154
 #: app/src/stores/useWorkflowBuilderStore.ts:249
@@ -4249,7 +4283,7 @@ msgstr ""
 msgid "Given up after every retry"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:184
+#: admin/src/Admin/Settings/Registry.php:187
 msgid "Global instructions"
 msgstr ""
 
@@ -4259,6 +4293,10 @@ msgstr ""
 
 #: app/src/pages/onboarding/components/steps/FinishStep.vue:55
 msgid "Go to settings"
+msgstr ""
+
+#: app/src/pages/builder/BuilderPage.vue:1570
+msgid "Got it"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:1680
@@ -4385,7 +4423,7 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:272
+#: admin/src/Admin/Settings/Registry.php:275
 msgid "History retention"
 msgstr ""
 
@@ -4420,13 +4458,13 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:193
+#: admin/src/Admin/Settings/Registry.php:196
 msgid ""
 "How creative the answers are, from 0 (predictable) to 1 (varied). Actions "
 "may override it."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:145
+#: admin/src/Admin/Settings/Registry.php:148
 msgid ""
 "How many times a failed message is retried before it is given up on. Choose "
 "\"Do not retry\" to record the failure without ever sending again."
@@ -4684,7 +4722,7 @@ msgstr ""
 msgid "Install and activate %s to use this trigger."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:954
+#: admin/src/Admin/Settings/Registry.php:960
 #. translators: %s: random identifier of this installation.
 msgid "Installation ID: %s"
 msgstr ""
@@ -4693,7 +4731,7 @@ msgstr ""
 msgid "Insufficient data to create the coupon."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:121
+#: app/src/pages/builder/BuilderPage.vue:127
 msgid "Integration not active"
 msgstr ""
 
@@ -4702,7 +4740,7 @@ msgstr ""
 msgid "Integration settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:225
+#: admin/src/Admin/Settings/Registry.php:228
 #: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
 msgid "Integrations"
 msgstr ""
@@ -4737,7 +4775,7 @@ msgstr ""
 msgid "Invalid file type. Select a .json file."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:984
+#: app/src/pages/builder/BuilderPage.vue:1043
 #: app/src/pages/settings/SettingsPage.vue:380
 #: app/src/parsers/workflowParser.ts:512
 msgid "Invalid file."
@@ -4789,7 +4827,7 @@ msgstr ""
 msgid "Irreversible"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:311
+#: admin/src/Admin/Settings/Registry.php:314
 msgid "Irreversible actions and configuration cleanup."
 msgstr ""
 
@@ -4947,7 +4985,7 @@ msgstr ""
 #: app/src/components/layout/PageHeader.vue:32
 #: app/src/components/modals/ReviewPromptModal.vue:29
 #: app/src/composables/useToasts.ts:59
-#: app/src/pages/builder/BuilderPage.vue:764
+#: app/src/pages/builder/BuilderPage.vue:823
 #: app/src/pages/onboarding/OnboardingPage.vue:208
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
 #: app/src/pages/settings/SettingsPage.vue:231
@@ -4994,7 +5032,7 @@ msgid ""
 "is the only credential the plugin needs."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:171
+#: admin/src/Admin/Settings/Registry.php:174
 msgid ""
 "Joinotify generates AI content through the WordPress AI Client. Pick the "
 "provider and store its credentials once in Settings → Connectors, and every "
@@ -5027,7 +5065,7 @@ msgstr ""
 msgid "Joinotify setup"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:579
+#: admin/src/Admin/Settings/Registry.php:585
 msgid "Joinotify version"
 msgstr ""
 
@@ -5046,16 +5084,16 @@ msgstr ""
 msgid "Kazakhstan"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:275
-#: admin/src/Admin/Settings/Registry.php:293
+#: admin/src/Admin/Settings/Registry.php:278
+#: admin/src/Admin/Settings/Registry.php:296
 msgid "Keep forever"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2385
+#: admin/src/Core/Workflow_Processor.php:2428
 msgid "Keep the message concise, around two to four sentences."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2384
+#: admin/src/Core/Workflow_Processor.php:2427
 msgid "Keep the message very short, one or two sentences."
 msgstr ""
 
@@ -5223,11 +5261,11 @@ msgstr ""
 msgid "Leave them as they are"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1500
+#: app/src/pages/builder/BuilderPage.vue:1589
 msgid "Leave without saving"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1488
+#: app/src/pages/builder/BuilderPage.vue:1577
 msgid "Leave without saving?"
 msgstr ""
 
@@ -5373,7 +5411,7 @@ msgstr ""
 msgid "Loading…"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:118
+#: admin/src/Admin/Settings/Registry.php:121
 msgid "Location and phone numbers"
 msgstr ""
 
@@ -5434,7 +5472,7 @@ msgid "Loop"
 msgstr ""
 
 #: app/src/builder/actions/definitions/loop.ts:89
-#: app/src/components/flow/FlowNode.vue:419
+#: app/src/components/flow/FlowNode.vue:428
 msgid "Loop body"
 msgstr ""
 
@@ -5458,15 +5496,15 @@ msgstr ""
 msgid "Madagascar"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:268
+#: admin/src/Admin/Settings/Registry.php:271
 msgid "Maintains support integrations and advanced contracts available."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:252
+#: admin/src/Admin/Settings/Registry.php:255
 msgid "Maintenance and preference"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:247
+#: admin/src/Admin/Settings/Registry.php:250
 msgid "Maintenance, logs, updates, and environment details."
 msgstr ""
 
@@ -5490,7 +5528,7 @@ msgstr ""
 msgid "Malta"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:206
+#: admin/src/Admin/Settings/Registry.php:209
 msgid "Manage senders, validate new connections, and send test messages."
 msgstr ""
 
@@ -5506,7 +5544,7 @@ msgid ""
 "matching post meta value."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:239
+#: admin/src/Admin/Settings/Registry.php:242
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:133
 msgid "Map an entity and meta key to a named variable available in the builder."
 msgstr ""
@@ -5545,7 +5583,7 @@ msgstr ""
 msgid "Mauritius"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:144
+#: admin/src/Admin/Settings/Registry.php:147
 msgid "Maximum attempts"
 msgstr ""
 
@@ -5628,8 +5666,8 @@ msgstr ""
 #: admin/src/Integrations/Whatsapp_Interactive.php:144
 #: admin/src/Integrations/Whatsapp_Interactive.php:173
 #: admin/src/Integrations/Whatsapp_Interactive.php:203
-#: app/src/builder/actions/definitions/resendEmail.ts:60
-#: app/src/builder/actions/definitions/telegramText.ts:56
+#: app/src/builder/actions/definitions/resendEmail.ts:67
+#: app/src/builder/actions/definitions/telegramText.ts:63
 #: app/src/builder/actions/definitions/whatsappText.ts:57
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:223
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:52
@@ -5673,8 +5711,8 @@ msgstr ""
 msgid "Message templates synced."
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:85
-#: admin/src/Integrations/Telegram.php:85
+#: admin/src/Integrations/Resend.php:91
+#: admin/src/Integrations/Telegram.php:91
 #: admin/src/Integrations/Whatsapp.php:97
 msgid "Messages"
 msgstr ""
@@ -5941,8 +5979,8 @@ msgid "New variable"
 msgstr ""
 
 #: app/src/components/builder/BuilderNavbar.vue:130
-#: app/src/pages/builder/BuilderPage.vue:793
-#: app/src/pages/builder/BuilderPage.vue:855
+#: app/src/pages/builder/BuilderPage.vue:852
+#: app/src/pages/builder/BuilderPage.vue:914
 msgid "New workflow"
 msgstr ""
 
@@ -5982,10 +6020,10 @@ msgstr ""
 msgid "Niue"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:568
-#: admin/src/Admin/Settings/Registry.php:592
-#: admin/src/Admin/Settings/Registry.php:597
-#: admin/src/Admin/Settings/Registry.php:602
+#: admin/src/Admin/Settings/Registry.php:574
+#: admin/src/Admin/Settings/Registry.php:598
+#: admin/src/Admin/Settings/Registry.php:603
+#: admin/src/Admin/Settings/Registry.php:608
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:124
@@ -6275,7 +6313,7 @@ msgstr ""
 msgid "Node settings"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:785
+#: admin/src/Admin/Settings/Registry.php:791
 #: app/src/builder/actions/settings/HttpRequestSettings.vue:65
 msgid "None"
 msgstr ""
@@ -6364,7 +6402,7 @@ msgstr ""
 msgid "Number added to the suppression list."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:130
+#: admin/src/Admin/Settings/Registry.php:133
 msgid ""
 "Number used as the default destination in test mailings. Please only "
 "include numbers with country code + area code."
@@ -6397,7 +6435,7 @@ msgstr ""
 msgid "Of those sent, %1$d %2$s."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:638
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "Off"
 msgstr ""
@@ -6428,7 +6466,7 @@ msgstr ""
 msgid "Oman"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:632
+#: admin/src/Admin/Settings/Registry.php:638
 #: app/src/pages/contacts/tabs/SourcesTab.vue:218
 msgid "On"
 msgstr ""
@@ -6489,7 +6527,7 @@ msgstr ""
 msgid "Open documentation"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1480
+#: app/src/pages/builder/BuilderPage.vue:1539
 msgid "Open integration settings"
 msgstr ""
 
@@ -6533,11 +6571,11 @@ msgstr ""
 msgid "Open trigger actions"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:601
+#: admin/src/Admin/Settings/Registry.php:607
 msgid "OpenSSL extension"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:253
+#: admin/src/Admin/Settings/Registry.php:256
 msgid "Operational plugin settings and development flags."
 msgstr ""
 
@@ -6610,7 +6648,7 @@ msgid ""
 "provider set up in WordPress."
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:153
+#: admin/src/Integrations/Resend.php:172
 msgid "Optional. Friendly name shown as the sender of the e-mails."
 msgstr ""
 
@@ -6618,7 +6656,7 @@ msgstr ""
 msgid "Optional. One \"Name: value\" per line."
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:144
+#: admin/src/Integrations/Telegram.php:163
 msgid "Optional. Used only when a workflow action does not specify a chat id."
 msgstr ""
 
@@ -6630,7 +6668,7 @@ msgid ""
 msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:179
-#: app/src/components/flow/FlowNode.vue:250
+#: app/src/components/flow/FlowNode.vue:259
 msgid "Options"
 msgstr ""
 
@@ -6835,7 +6873,7 @@ msgstr ""
 msgid "Paste the exported JSON here"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:114
+#: admin/src/Integrations/Resend.php:129
 msgid ""
 "Paste your Resend API key and set the verified sender address used to "
 "deliver e-mails."
@@ -6898,7 +6936,7 @@ msgstr ""
 msgid "Persona / system message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:185
+#: admin/src/Admin/Settings/Registry.php:188
 msgid ""
 "Persona, tone and rules prepended to every AI generation. Each action can "
 "add its own instructions on top of this."
@@ -6957,8 +6995,8 @@ msgstr ""
 msgid "Phone with country code"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:205
-#: admin/src/Admin/Settings/Registry.php:338
+#: admin/src/Admin/Settings/Registry.php:208
+#: admin/src/Admin/Settings/Registry.php:341
 #: app/src/pages/settings/components/cards/PhoneActions.vue:172
 #: app/src/pages/settings/SettingsPage.vue:391
 #: app/src/pages/settings/SettingsPage.vue:397
@@ -6973,11 +7011,11 @@ msgstr ""
 msgid "Phones"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:212
+#: admin/src/Admin/Settings/Registry.php:215
 msgid "Phones already validated and available for use in workflows."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:586
+#: admin/src/Admin/Settings/Registry.php:592
 msgid "PHP version"
 msgstr ""
 
@@ -7073,7 +7111,7 @@ msgstr ""
 msgid "plugin_version missing; version normalized automatically."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:113
+#: admin/src/Admin/Settings/Registry.php:116
 msgid "Plugin's basic preferences, WhatsApp connection, and notifications."
 msgstr ""
 
@@ -7211,7 +7249,7 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:217
+#: admin/src/Admin/Settings/Registry.php:220
 msgid "Quick Tools"
 msgstr ""
 
@@ -7251,7 +7289,7 @@ msgstr ""
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:68
 #: app/src/builder/actions/definitions/condition.ts:141
-#: app/src/builder/actions/definitions/resendEmail.ts:58
+#: app/src/builder/actions/definitions/resendEmail.ts:65
 #: app/src/builder/actions/settings/ConditionSettings.vue:215
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:217
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:32
@@ -7314,11 +7352,11 @@ msgstr ""
 msgid "Recovery link from abandoned cart"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:822
+#: app/src/components/flow/FlowCanvas.vue:823
 msgid "Redo"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:823
+#: app/src/components/flow/FlowCanvas.vue:824
 msgid "Redo (Ctrl+Shift+Z)"
 msgstr ""
 
@@ -7354,7 +7392,7 @@ msgid ""
 "available sender to use the default."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:211
+#: admin/src/Admin/Settings/Registry.php:214
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:59
 msgid "Registered senders"
 msgstr ""
@@ -7464,8 +7502,11 @@ msgstr ""
 msgid "Required configuration for this trigger to run correctly."
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:104
+#: admin/src/Integrations/Deprecated_Integrations.php:134
+#: admin/src/Integrations/Resend.php:117
+#: admin/src/Integrations/Resend.php:124
 #: admin/src/Notifications/Channels/Resend_Channel.php:47
+#: app/src/builder/actions/definitions/resendEmail.ts:55
 msgid "Resend"
 msgstr ""
 
@@ -7477,7 +7518,7 @@ msgstr ""
 msgid "Resend code in"
 msgstr ""
 
-#: app/src/builder/actions/definitions/resendEmail.ts:56
+#: app/src/builder/actions/definitions/resendEmail.ts:63
 msgid "Resend e-mail"
 msgstr ""
 
@@ -7489,7 +7530,7 @@ msgstr ""
 msgid "Resend of"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:113
+#: admin/src/Integrations/Resend.php:128
 msgid "Resend settings"
 msgstr ""
 
@@ -7560,7 +7601,7 @@ msgid ""
 "\"Anywhere\" to run for every new customer account."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:885
+#: admin/src/Admin/Settings/Registry.php:891
 msgid "Retries are turned off, so this wait is not used."
 msgstr ""
 
@@ -7612,7 +7653,7 @@ msgstr ""
 msgid "Reuse the generated value in any later message with:"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:242
+#: app/src/pages/builder/BuilderPage.vue:274
 #: app/src/pages/settings/SettingsPage.vue:87
 msgid "Review"
 msgstr ""
@@ -7706,15 +7747,15 @@ msgstr ""
 msgid "Saudi Arabia"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1416
+#: app/src/pages/builder/BuilderPage.vue:1475
 msgid "Save"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1501
+#: app/src/pages/builder/BuilderPage.vue:1590
 msgid "Save and leave"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1459
+#: app/src/pages/builder/BuilderPage.vue:1518
 msgid "Save and run test"
 msgstr ""
 
@@ -7739,7 +7780,7 @@ msgstr ""
 msgid "Save sources"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:818
+#: app/src/pages/builder/BuilderPage.vue:877
 msgid "Save the workflow before activating it."
 msgstr ""
 
@@ -7753,6 +7794,11 @@ msgstr ""
 
 #: app/src/components/fields/JoinotifyApiKeyField.vue:156
 msgid "Saved Joinotify API key"
+msgstr ""
+
+#: admin/src/Integrations/Resend.php:156
+#: admin/src/Integrations/Telegram.php:156
+msgid "Saved. Leave blank to keep the current value."
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:92
@@ -7902,7 +7948,7 @@ msgstr ""
 msgid "Seconds to wait for the answer, from 1 to 30."
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:135
+#: admin/src/Integrations/Resend.php:154
 msgid ""
 "Secret key used to authenticate requests to Resend. Find it at "
 "resend.com/api-keys."
@@ -8091,8 +8137,8 @@ msgstr ""
 msgid "Send a point on the map. Cloud API only, and only inside the 24-hour window."
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:165
-#: app/src/builder/actions/definitions/telegramText.ts:41
+#: admin/src/Integrations/Telegram.php:187
+#: app/src/builder/actions/definitions/telegramText.ts:46
 msgid "Send a text message to a Telegram chat, group or channel."
 msgstr ""
 
@@ -8132,8 +8178,8 @@ msgid ""
 "to start a conversation or reply outside the 24-hour window."
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:174
-#: app/src/builder/actions/definitions/resendEmail.ts:44
+#: admin/src/Integrations/Resend.php:196
+#: app/src/builder/actions/definitions/resendEmail.ts:49
 msgid "Send an e-mail notification through Resend."
 msgstr ""
 
@@ -8141,13 +8187,13 @@ msgstr ""
 msgid "Send billing and shipping addresses"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:173
-#: app/src/builder/actions/definitions/resendEmail.ts:31
-#: app/src/builder/actions/definitions/resendEmail.ts:43
+#: admin/src/Integrations/Resend.php:195
+#: app/src/builder/actions/definitions/resendEmail.ts:36
+#: app/src/builder/actions/definitions/resendEmail.ts:48
 msgid "Send e-mail (Resend)"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:105
+#: admin/src/Integrations/Resend.php:118
 msgid "Send e-mail notifications for your automations through the Resend API."
 msgstr ""
 
@@ -8175,7 +8221,7 @@ msgid ""
 "submitted. Connect with your customers instantly."
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:105
+#: admin/src/Integrations/Telegram.php:118
 msgid "Send notifications to Telegram chats, groups and channels through a bot."
 msgstr ""
 
@@ -8245,11 +8291,11 @@ msgstr ""
 msgid "Sender"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:143
+#: admin/src/Integrations/Resend.php:162
 msgid "Sender e-mail"
 msgstr ""
 
-#: admin/src/Integrations/Resend.php:152
+#: admin/src/Integrations/Resend.php:171
 msgid "Sender name"
 msgstr ""
 
@@ -8280,7 +8326,7 @@ msgid ""
 "Joinotify: what someone typed in the panel wins."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:944
+#: admin/src/Admin/Settings/Registry.php:950
 msgid ""
 "Sends plugin, WordPress and PHP versions, which integrations are switched "
 "on, and named events — which feature ran, whether a message succeeded, and "
@@ -8350,9 +8396,9 @@ msgstr ""
 
 #: admin/src/Admin/Menu.php:104
 #: admin/src/Admin/Menu.php:105
-#: admin/src/Core/Init.php:542
+#: admin/src/Core/Init.php:543
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
-#: app/src/components/flow/FlowNode.vue:287
+#: app/src/components/flow/FlowNode.vue:296
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
 #: app/src/pages/settings/SettingsPage.vue:713
 msgid "Settings"
@@ -8378,7 +8424,7 @@ msgstr ""
 msgid "Settings reset successfully!"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:687
+#: admin/src/Admin/Settings/Registry.php:693
 #: admin/src/Rest/Settings_Save.php:48
 msgid "Settings saved."
 msgstr ""
@@ -8400,7 +8446,7 @@ msgstr ""
 msgid "Shade %s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:262
+#: admin/src/Admin/Settings/Registry.php:265
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:40
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:51
 msgid "Share anonymous usage data"
@@ -8598,6 +8644,10 @@ msgstr ""
 msgid "Step saved."
 msgstr ""
 
+#: app/src/pages/builder/BuilderPage.vue:1562
+msgid "Steps to replace"
+msgstr ""
+
 #: admin/src/Integrations/Whatsapp_Interactive.php:250
 msgid "Sticker URL"
 msgstr ""
@@ -8628,13 +8678,13 @@ msgstr ""
 msgid "Stops the workflow immediately"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:286
+#: admin/src/Admin/Settings/Registry.php:289
 msgid ""
 "Store errors, warnings and failed requests in a dedicated table viewable "
 "from the debug logs screen."
 msgstr ""
 
-#: app/src/builder/actions/definitions/resendEmail.ts:59
+#: app/src/builder/actions/definitions/resendEmail.ts:66
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:42
 #: app/src/builder/actions/settings/ResendEmailSettings.vue:45
 msgid "Subject"
@@ -8748,7 +8798,7 @@ msgstr ""
 msgid "System message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:304
+#: admin/src/Admin/Settings/Registry.php:307
 msgid "System status"
 msgstr ""
 
@@ -8867,8 +8917,11 @@ msgstr ""
 msgid "Tanzania"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:104
+#: admin/src/Integrations/Deprecated_Integrations.php:128
+#: admin/src/Integrations/Telegram.php:117
+#: admin/src/Integrations/Telegram.php:124
 #: admin/src/Notifications/Channels/Telegram_Channel.php:45
+#: app/src/builder/actions/definitions/telegramText.ts:52
 msgid "Telegram"
 msgstr ""
 
@@ -8878,17 +8931,17 @@ msgid ""
 "one."
 msgstr ""
 
-#: app/src/builder/actions/definitions/telegramText.ts:53
+#: app/src/builder/actions/definitions/telegramText.ts:60
 msgid "Telegram message"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:113
+#: admin/src/Integrations/Telegram.php:128
 msgid "Telegram settings"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:164
-#: app/src/builder/actions/definitions/telegramText.ts:30
-#: app/src/builder/actions/definitions/telegramText.ts:40
+#: admin/src/Integrations/Telegram.php:186
+#: app/src/builder/actions/definitions/telegramText.ts:35
+#: app/src/builder/actions/definitions/telegramText.ts:45
 msgid "Telegram: message"
 msgstr ""
 
@@ -8902,7 +8955,7 @@ msgstr ""
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:106
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:461
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:468
-#: app/src/pages/builder/BuilderPage.vue:938
+#: app/src/pages/builder/BuilderPage.vue:997
 #: app/src/pages/history/components/HistoryDetailsModal.vue:163
 #: app/src/pages/history/HistoryPage.vue:105
 msgid "Template"
@@ -8920,11 +8973,11 @@ msgstr ""
 msgid "Test message"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:129
+#: admin/src/Admin/Settings/Registry.php:132
 msgid "Test phone"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1430
+#: app/src/pages/builder/BuilderPage.vue:1489
 #: app/src/pages/settings/components/cards/PhoneActions.vue:116
 msgid "Test phone number"
 msgstr ""
@@ -8954,7 +9007,7 @@ msgstr ""
 msgid "Thailand"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:242
+#: app/src/pages/builder/BuilderPage.vue:274
 #: app/src/pages/settings/SettingsPage.vue:87
 msgid "Thank you for supporting Joinotify!"
 msgstr ""
@@ -8971,7 +9024,7 @@ msgid_plural "The %d selected contacts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/src/pages/builder/BuilderPage.vue:142
+#: app/src/pages/builder/BuilderPage.vue:148
 #. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s integration that this flow's trigger depends on is currently "
@@ -8979,14 +9032,14 @@ msgid ""
 "again."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:152
+#: app/src/pages/builder/BuilderPage.vue:158
 #. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s integration that this flow's trigger depends on is not available. "
 "This flow will not be processed until the integration is available again."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:136
+#: app/src/pages/builder/BuilderPage.vue:142
 #. translators: %s is the integration name (e.g. WooCommerce).
 msgid ""
 "The %s plugin this trigger depends on is not installed or active. This flow "
@@ -8994,12 +9047,12 @@ msgid ""
 msgstr ""
 
 #: admin/src/AI/Workflow_Generator.php:63
-#: app/src/pages/builder/BuilderPage.vue:698
+#: app/src/pages/builder/BuilderPage.vue:757
 #: app/src/stores/useWorkflowBuilderStore.ts:1233
 msgid "The AI could not generate the workflow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:684
+#: app/src/pages/builder/BuilderPage.vue:743
 msgid "The AI could not generate the workflow. Please try again."
 msgstr ""
 
@@ -9186,7 +9239,7 @@ msgid ""
 "detail."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:155
+#: app/src/pages/builder/BuilderPage.vue:161
 msgid ""
 "The integration that this flow's trigger depends on is not available. This "
 "flow will not be processed until the integration is available again."
@@ -9418,7 +9471,7 @@ msgstr ""
 msgid "The trigger that starts this flow."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:146
+#: app/src/pages/builder/BuilderPage.vue:152
 msgid ""
 "The trigger used by this flow is no longer registered. This flow will not "
 "be processed until you select an available trigger."
@@ -9507,8 +9560,8 @@ msgstr ""
 msgid "The workflow trigger is not configured."
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:257
-#: app/src/components/flow/FlowNode.vue:259
+#: app/src/components/flow/FlowNode.vue:266
+#: app/src/components/flow/FlowNode.vue:268
 msgid "There are required settings not configured"
 msgstr ""
 
@@ -9523,7 +9576,7 @@ msgid ""
 "own nested actions."
 msgstr ""
 
-#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:184
+#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:191
 msgid ""
 "This action is registered, but the frontend component is not available yet. "
 "The workflow can still be saved safely."
@@ -9586,7 +9639,7 @@ msgstr ""
 msgid "This file is not a valid Joinotify settings export."
 msgstr ""
 
-#: app/src/pages/settings/components/cards/IntegrationCard.vue:34
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:37
 msgid "This integration depends on an installed and active plugin."
 msgstr ""
 
@@ -9594,7 +9647,7 @@ msgstr ""
 msgid "This integration has no additional settings."
 msgstr ""
 
-#: app/src/pages/settings/components/cards/IntegrationCard.vue:38
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:41
 msgid "This integration will be available soon."
 msgstr ""
 
@@ -9627,7 +9680,7 @@ msgid ""
 "out until they agree again."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:433
+#: admin/src/Admin/Settings/Registry.php:439
 msgid "This plugin needs to be installed and active to enable this integration."
 msgstr ""
 
@@ -9671,6 +9724,10 @@ msgstr ""
 msgid ""
 "This site was removed from your Joinotify account. Connect it again in the "
 "WhatsApp card of Settings → Applications to resume."
+msgstr ""
+
+#: app/src/builder/actions/components/DynamicActionSettingsRenderer.vue:157
+msgid "This step is deprecated and will be removed in a future version."
 msgstr ""
 
 #: app/src/builder/components/base/SessionWindowNotice.vue:80
@@ -9844,10 +9901,14 @@ msgid ""
 "before this one."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1495
+#: app/src/pages/builder/BuilderPage.vue:1584
 msgid ""
 "This workflow has unsaved changes. If you leave now, your changes will be "
 "lost."
+msgstr ""
+
+#: app/src/pages/builder/BuilderPage.vue:1547
+msgid "This workflow uses deprecated steps"
 msgstr ""
 
 #: admin/src/Admin/Builder/Registry.php:462
@@ -10136,7 +10197,7 @@ msgstr ""
 msgid "To retrieve the user last name"
 msgstr ""
 
-#: admin/src/Integrations/Woocommerce.php:2738
+#: admin/src/Integrations/Woocommerce.php:2837
 #. translators: %s: checkout field label
 msgid "To retrieve the value of %s"
 msgstr ""
@@ -10180,7 +10241,7 @@ msgstr ""
 msgid "To retrieve the WooCommerce total tax"
 msgstr ""
 
-#: app/src/pages/settings/components/cards/IntegrationCard.vue:97
+#: app/src/pages/settings/components/cards/IntegrationCard.vue:112
 msgid "Toggle %s"
 msgstr ""
 
@@ -10205,7 +10266,7 @@ msgstr ""
 msgid "Token"
 msgstr ""
 
-#: admin/src/Integrations/Telegram.php:135
+#: admin/src/Integrations/Telegram.php:154
 msgid "Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...)."
 msgstr ""
 
@@ -10268,7 +10329,7 @@ msgstr ""
 msgid "Trigger"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:118
+#: app/src/pages/builder/BuilderPage.vue:124
 msgid "Trigger no longer available"
 msgstr ""
 
@@ -10276,7 +10337,7 @@ msgstr ""
 msgid "Trigger settings"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1471
+#: app/src/pages/builder/BuilderPage.vue:1530
 msgid "Trigger warning"
 msgstr ""
 
@@ -10300,7 +10361,7 @@ msgstr ""
 msgid "Triggers for the WordPress core."
 msgstr ""
 
-#: app/src/components/flow/FlowNode.vue:363
+#: app/src/components/flow/FlowNode.vue:372
 msgid "True"
 msgstr ""
 
@@ -10428,11 +10489,11 @@ msgstr ""
 msgid "Underline"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:812
+#: app/src/components/flow/FlowCanvas.vue:813
 msgid "Undo"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:813
+#: app/src/components/flow/FlowCanvas.vue:814
 msgid "Undo (Ctrl+Z)"
 msgstr ""
 
@@ -10482,7 +10543,7 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1489
+#: app/src/pages/builder/BuilderPage.vue:1578
 msgid "Unsaved changes"
 msgstr ""
 
@@ -10541,11 +10602,11 @@ msgstr ""
 msgid "Usage data"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2379
+#: admin/src/Core/Workflow_Processor.php:2422
 msgid "Use a casual and relaxed tone."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2378
+#: admin/src/Core/Workflow_Processor.php:2421
 msgid "Use a formal and professional tone."
 msgstr ""
 
@@ -10553,7 +10614,7 @@ msgstr ""
 msgid "Use a template"
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2380
+#: admin/src/Core/Workflow_Processor.php:2423
 msgid "Use a warm and friendly tone."
 msgstr ""
 
@@ -10768,6 +10829,10 @@ msgstr ""
 msgid "View the recent events recorded by the plugin."
 msgstr ""
 
+#: admin/src/Integrations/Deprecated_Integrations.php:335
+msgid "View workflows"
+msgstr ""
+
 #: admin/src/Builder/Messages.php:127
 #. translators: 1: delay amount, 2: time unit (minutes, hours, days)
 msgid "Wait %1$s %2$s"
@@ -10778,7 +10843,7 @@ msgstr ""
 msgid "Wait %1$s %2$s and run at %3$s"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:892
+#: admin/src/Admin/Settings/Registry.php:898
 #. translators: %s: comma-separated list of waits in minutes, e.g. "30, 60, 120, 240, 480"
 msgid ""
 "Wait before the first retry. Every attempt then doubles it — with what is "
@@ -11061,7 +11126,7 @@ msgstr ""
 msgid "When the request fails"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:140
+#: admin/src/Admin/Settings/Registry.php:143
 msgid ""
 "When WhatsApp refuses a message for a reason that may pass — a timeout, a "
 "rate limit, an outage — Joinotify parks it and tries again. Each attempt "
@@ -11151,7 +11216,7 @@ msgid ""
 "use."
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:567
+#: admin/src/Admin/Settings/Registry.php:573
 msgid "WordPress Multisite"
 msgstr ""
 
@@ -11160,7 +11225,7 @@ msgstr ""
 msgid "WordPress users"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:562
+#: admin/src/Admin/Settings/Registry.php:568
 msgid "WordPress version"
 msgstr ""
 
@@ -11171,7 +11236,7 @@ msgstr ""
 msgid "Workflow"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:834
+#: app/src/pages/builder/BuilderPage.vue:893
 msgid "Workflow activated."
 msgstr ""
 
@@ -11183,22 +11248,22 @@ msgstr ""
 msgid "Workflow builder"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:835
+#: app/src/pages/builder/BuilderPage.vue:894
 msgid "Workflow deactivated."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:693
+#: app/src/pages/builder/BuilderPage.vue:752
 msgid "Workflow generated. Review the steps and click Save flow to keep it."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1413
+#: app/src/pages/builder/BuilderPage.vue:1472
 #: app/src/registries/triggerRegistry.ts:251
 #: app/src/registries/triggerRegistry.ts:280
 #: app/src/registries/triggerRegistry.ts:309
 msgid "Workflow name"
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:800
+#: app/src/pages/builder/BuilderPage.vue:859
 msgid "Workflow name updated. Click Save flow to persist changes."
 msgstr ""
 
@@ -11222,7 +11287,7 @@ msgstr ""
 msgid "Workflow saved as draft: fix the reported issues before publishing."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1075
+#: app/src/pages/builder/BuilderPage.vue:1134
 msgid "Workflow saved successfully."
 msgstr ""
 
@@ -11242,8 +11307,8 @@ msgid ""
 "the wait, or cancel it to stop the processing."
 msgstr ""
 
-#: app/src/pages/builder/BuilderPage.vue:1175
-#: app/src/pages/builder/BuilderPage.vue:1217
+#: app/src/pages/builder/BuilderPage.vue:1234
+#: app/src/pages/builder/BuilderPage.vue:1276
 #: app/src/stores/useWorkflowBuilderStore.ts:1990
 msgid "Workflow test queued."
 msgstr ""
@@ -11274,7 +11339,7 @@ msgid ""
 "field of the form is sent."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2403
+#: admin/src/Core/Workflow_Processor.php:2446
 msgid ""
 "Write a WhatsApp message in plain text. Reply with the message content "
 "only, without any preamble."
@@ -11316,8 +11381,8 @@ msgstr ""
 msgid "Yemen"
 msgstr ""
 
-#: admin/src/Admin/Settings/Registry.php:568
-#: admin/src/Admin/Settings/Registry.php:592
+#: admin/src/Admin/Settings/Registry.php:574
+#: admin/src/Admin/Settings/Registry.php:598
 #: admin/src/Builder/Messages.php:329
 #: admin/src/Builder/Messages.php:330
 #: admin/src/Integrations/Elementor_Forms.php:123
@@ -11370,7 +11435,7 @@ msgstr ""
 msgid "You have unsaved changes."
 msgstr ""
 
-#: admin/src/Core/Workflow_Processor.php:2386
+#: admin/src/Core/Workflow_Processor.php:2429
 msgid "You may write a longer, detailed message."
 msgstr ""
 
@@ -11454,13 +11519,13 @@ msgstr ""
 msgid "Zimbabwe"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:780
 #: app/src/components/flow/FlowCanvas.vue:781
+#: app/src/components/flow/FlowCanvas.vue:782
 msgid "Zoom in"
 msgstr ""
 
-#: app/src/components/flow/FlowCanvas.vue:789
 #: app/src/components/flow/FlowCanvas.vue:790
+#: app/src/components/flow/FlowCanvas.vue:791
 msgid "Zoom out"
 msgstr ""
 

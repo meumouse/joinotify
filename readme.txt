@@ -38,7 +38,7 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 * WooCommerce — order status, confirmed payments, refunds, subscriptions, digital product delivery, abandoned carts, new customer accounts, low stock and back in stock alerts
 * WPForms, Elementor Forms and Flexify Checkout
 * WordPress user events
-* Telegram and Resend (e-mail) as additional delivery channels
+* Telegram and Resend (e-mail) as additional delivery channels (deprecated, to be removed in 3.0.0)
 * AI-generated message content through the WordPress AI Client, using the provider set up in Settings → Connectors (optional)
 
 = Operations =

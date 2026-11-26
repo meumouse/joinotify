@@ -4,7 +4,7 @@
  * IntegrationCard.vue frontend component.
  *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.8.0
  */
 import { computed } from 'vue';
 import { __, sprintf, textDomain } from '../../../../utils/i18n';
@@ -19,6 +19,9 @@ const emit = defineEmits(['toggle', 'configure']);
 
 const hasSettings = computed(() => Array.isArray(props.card.settings) ? props.card.settings.length > 0 : Array.isArray(props.card.fields) && props.card.fields.length > 0);
 const isComingSoon = computed(() => Boolean(props.card.coming_soon || props.card.comming_soon));
+// Deprecated integrations stay usable (toggle and settings) until they are removed.
+const isDeprecated = computed(() => Boolean(props.card.deprecated));
+const deprecatedNotice = computed(() => String(props.card.deprecated_message || '').trim());
 const requiresPlugin = computed(() => Boolean(props.card.requires_plugin && !props.card.plugin_active));
 const toggleDisabled = computed(() => isComingSoon.value || requiresPlugin.value);
 const configLabel = computed(() => props.card?.modal?.button_label || __('Configure', textDomain));
@@ -67,6 +70,11 @@ const enabledProxy = computed({
 
     <div class="flex flex-1 flex-col px-6 py-6 text-center">
       <h3 class="text-[22px] font-semibold leading-7 text-slate-700">{{ card.title }}</h3>
+      <div v-if="isDeprecated" class="mt-2">
+        <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-800">
+          {{ __('Deprecated', textDomain) }}
+        </span>
+      </div>
       <p v-if="card.description" class="mt-5 text-[14px] leading-6 text-slate-500">
         {{ card.description }}
       </p>
@@ -74,6 +82,13 @@ const enabledProxy = computed({
       <div class="mt-5 space-y-3 text-left">
         <div v-if="isComingSoon" class="rounded-lg border border-primary-100 bg-primary-50 px-4 py-3 text-[13px] font-medium text-primary-700">
           {{ __('Coming soon', textDomain) }}
+        </div>
+
+        <div
+          v-if="isDeprecated && deprecatedNotice"
+          class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-5 text-amber-800"
+        >
+          {{ deprecatedNotice }}
         </div>
 
         <div

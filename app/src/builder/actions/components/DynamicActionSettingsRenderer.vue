@@ -150,6 +150,13 @@ const placeholderItems = computed(() => {
     />
 
     <template v-else>
+      <BaseAlert
+        v-if="definition?.deprecated"
+        tone="warning"
+        :title="__('Deprecated step', textDomain)"
+        :message="definition.deprecatedMessage || __('This step is deprecated and will be removed in a future version.', textDomain)"
+      />
+
       <component
         :is="settingsComponent"
         v-if="settingsComponent"

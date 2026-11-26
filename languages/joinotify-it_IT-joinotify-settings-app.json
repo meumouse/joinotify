@@ -224,6 +224,9 @@
       "Debug logs": [
         "Log di debug"
       ],
+      "Deprecated": [
+        "Deprecato"
+      ],
       "Description (optional)": [
         "Descrizione (opzionale)"
       ],

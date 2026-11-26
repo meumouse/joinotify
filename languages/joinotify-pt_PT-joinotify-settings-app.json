@@ -224,6 +224,9 @@
       "Debug logs": [
         "Registos de depuração"
       ],
+      "Deprecated": [
+        "Descontinuado"
+      ],
       "Description (optional)": [
         "Descrição (opcional)"
       ],

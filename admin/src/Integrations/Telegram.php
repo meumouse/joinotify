@@ -11,10 +11,16 @@ defined('ABSPATH') || exit;
 /**
  * Add integration with Telegram
  *
- * Registers the Telegram delivery channel (Bot API), the Applications settings
- * card and, while enabled, the "Telegram: message" builder action.
+ * Registers the Telegram delivery channel (Bot API) and the settings card.
+ *
+ * Deprecated since 2.8.0 and removed in Deprecated_Integrations::REMOVAL_VERSION:
+ * the card only shows on sites that still use the integration, and the builder
+ * no longer offers the "Telegram: message" action for new steps. Saved steps
+ * keep sending while the integration is enabled.
  *
  * @since 2.1.0
+ * @version 2.8.0
+ * @deprecated 2.8.0
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -32,6 +38,7 @@ class Telegram extends Integrations_Base {
      * Construct function
      *
      * @since 2.1.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
@@ -41,11 +48,8 @@ class Telegram extends Integrations_Base {
         // add integration on settings
         add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 42, 1 );
 
-        // add Telegram message action while the integration is enabled
-        if ( Admin::get_setting('enable_telegram_integration') === 'yes' ) {
-            add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_telegram_messages' ), 10, 1 );
-            add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_messages_category' ), 11, 1 );
-        }
+        // the builder action is no longer registered: it is deprecated, so the
+        // library and the AI generator stop offering it for new steps
     }
 
 
@@ -68,8 +72,10 @@ class Telegram extends Integrations_Base {
      *
      * Only appends it when no other messaging integration already declared it,
      * so enabling more than one messaging channel never duplicates the tab.
+     * No longer hooked since the Telegram action is deprecated.
      *
      * @since 2.1.0
+     * @deprecated 2.8.0
      * @param array $categories | Current categories
      * @return array
      */
@@ -94,11 +100,18 @@ class Telegram extends Integrations_Base {
     /**
      * Add integration item on settings
      *
+     * Only sites that still use Telegram see the card, flagged as deprecated.
+     *
      * @since 2.1.0
+     * @version 2.8.0
      * @param array $integrations | Current integrations
      * @return array
      */
     public function add_integration_item( $integrations ) {
+        if ( ! Deprecated_Integrations::is_in_use('telegram') ) {
+            return $integrations;
+        }
+
         $integrations['telegram'] = self::build_integration_item(
             'telegram',
             esc_html__( 'Telegram', 'joinotify' ),
@@ -107,6 +120,8 @@ class Telegram extends Integrations_Base {
             array(
                 'category' => 'channels',
                 'setting_key' => 'enable_telegram_integration',
+                'deprecated' => true,
+                'deprecated_message' => Deprecated_Integrations::get_message( __( 'Telegram', 'joinotify' ) ),
                 'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Telegram',
                 'settings' => self::get_integration_settings(),
                 'modal' => array(
@@ -125,16 +140,20 @@ class Telegram extends Integrations_Base {
      * Declarative settings rendered in the integration modal.
      *
      * @since 2.1.0
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
+        // the token is write-only: the form never receives it, so say when one is stored
+        $token_is_set = '' !== trim( (string) Admin::get_setting('telegram_bot_token') );
+
         return array(
             self::field_text(
                 'telegram_bot_token',
                 esc_html__( 'Bot token', 'joinotify' ),
                 esc_html__( 'Token provided by @BotFather when you create a bot (eg: 123456:ABC-DEF...).', 'joinotify' ),
                 array(
-                    'placeholder' => '123456789:ABCdef...',
+                    'placeholder' => $token_is_set ? __( 'Saved. Leave blank to keep the current value.', 'joinotify' ) : '123456789:ABCdef...',
                     'autocomplete' => 'off',
                 )
             ),
@@ -154,7 +173,10 @@ class Telegram extends Integrations_Base {
     /**
      * Add Telegram message action in the builder actions sidebar.
      *
+     * No longer hooked: the action is deprecated and not offered for new steps.
+     *
      * @since 2.1.0
+     * @deprecated 2.8.0
      * @param array $actions | Current actions
      * @return array
      */

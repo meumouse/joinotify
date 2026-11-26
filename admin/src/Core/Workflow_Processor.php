@@ -2209,13 +2209,24 @@ class Workflow_Processor {
      * resolved with the generic placeholder resolver — not joinotify_prepare_receiver,
      * which strips non-digits and would corrupt negative group ids / @usernames.
      *
+     * Deprecated with the Telegram integration: the step only sends while the
+     * integration is enabled, and is skipped with a warning otherwise.
+     *
      * @since 2.1.0
+     * @version 2.8.0
+     * @deprecated 2.8.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @param int $post_id | Workflow post ID
-     * @return void
+     * @return bool True when the message was sent.
      */
     public static function send_telegram_message_text( $action_data, $payload, $post_id = 0 ) {
+        if ( Admin::get_setting('enable_telegram_integration') !== 'yes' ) {
+            Logger::register_log( sprintf( 'Workflow #%d: Telegram step skipped because the Telegram integration is disabled. Telegram is deprecated and will be removed in Joinotify 3.0.0.', (int) $post_id ), 'WARNING' );
+
+            return false;
+        }
+
         $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
         $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
 
@@ -2246,6 +2257,8 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send Telegram message. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
+
+        return $result->is_success();
     }
 
 
@@ -2256,13 +2269,24 @@ class Workflow_Processor {
      * with the generic placeholder resolver (not joinotify_prepare_receiver, which
      * is phone-oriented). The subject travels in the message meta bag.
      *
+     * Deprecated with the Resend integration: the step only sends while the
+     * integration is enabled, and is skipped with a warning otherwise.
+     *
      * @since 2.1.0
+     * @version 2.8.0
+     * @deprecated 2.8.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @param int $post_id | Workflow post ID
-     * @return void
+     * @return bool True when the e-mail was sent.
      */
     public static function send_resend_email( $action_data, $payload, $post_id = 0 ) {
+        if ( Admin::get_setting('enable_resend_integration') !== 'yes' ) {
+            Logger::register_log( sprintf( 'Workflow #%d: Resend e-mail step skipped because the Resend integration is disabled. Resend is deprecated and will be removed in Joinotify 3.0.0.', (int) $post_id ), 'WARNING' );
+
+            return false;
+        }
+
         $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
         $subject = joinotify_prepare_message( $action_data['subject'] ?? '', $payload );
         $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
@@ -2299,6 +2323,8 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send Resend e-mail. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
+
+        return $result->is_success();
     }
 
 

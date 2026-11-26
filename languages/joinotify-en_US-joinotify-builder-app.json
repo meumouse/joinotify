@@ -40,6 +40,9 @@
       "{{ wc_billing_phone }} or +5511999990000": [
         "{{ wc_billing_phone }} or +5511999990000"
       ],
+      "%1$s is deprecated and will be removed in Joinotify %2$s. Workflows that use it keep sending until then; move them to WhatsApp.": [
+        "%1$s is deprecated and will be removed in Joinotify %2$s. Workflows that use it keep sending until then; move them to WhatsApp."
+      ],
       "%d day": [
         "%d day",
         "%d days"
@@ -497,6 +500,15 @@
       "Delimiter": [
         "Delimiter"
       ],
+      "Deprecated": [
+        "Deprecated"
+      ],
+      "Deprecated step": [
+        "Deprecated step"
+      ],
+      "Deprecated steps": [
+        "Deprecated steps"
+      ],
       "Describe the automation in plain language. The AI builds the trigger and steps; you review and adjust before saving.": [
         "Describe the automation in plain language. The AI builds the trigger and steps; you review and adjust before saving."
       ],
@@ -700,6 +712,9 @@
       ],
       "Give the response a name to use it in the next actions. Lowercase letters, numbers, - and _.": [
         "Give the response a name to use it in the next actions. Lowercase letters, numbers, - and _."
+      ],
+      "Got it": [
+        "Got it"
       ],
       "Header": [
         "Header"
@@ -1169,6 +1184,9 @@
       "Required configuration for this trigger to run correctly.": [
         "Required configuration for this trigger to run correctly."
       ],
+      "Resend": [
+        "Resend"
+      ],
       "Resend e-mail": [
         "Resend e-mail"
       ],
@@ -1349,6 +1367,9 @@
       "Start with a template": [
         "Start with a template"
       ],
+      "Steps to replace": [
+        "Steps to replace"
+      ],
       "Stop funnel": [
         "Stop funnel"
       ],
@@ -1369,6 +1390,9 @@
       ],
       "System message": [
         "System message"
+      ],
+      "Telegram": [
+        "Telegram"
       ],
       "Telegram chat, group or channel id. Accepts a placeholder that resolves to one.": [
         "Telegram chat, group or channel id. Accepts a placeholder that resolves to one."
@@ -1457,6 +1481,9 @@
       "This list may be out of date.": [
         "This list may be out of date."
       ],
+      "This step is deprecated and will be removed in a future version.": [
+        "This step is deprecated and will be removed in a future version."
+      ],
       "This step needs an open conversation": [
         "This step needs an open conversation"
       ],
@@ -1480,6 +1507,9 @@
       ],
       "This workflow has unsaved changes. If you leave now, your changes will be lost.": [
         "This workflow has unsaved changes. If you leave now, your changes will be lost."
+      ],
+      "This workflow uses deprecated steps": [
+        "This workflow uses deprecated steps"
       ],
       "Time": [
         "Time"

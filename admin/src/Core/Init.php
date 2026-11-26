@@ -365,7 +365,7 @@ class Init {
 	 * Instance only the explicitly allowed classes on wp_loaded.
 	 * 
 	 * @since 1.4.6
-	 * @version 2.5.0
+	 * @version 2.8.0
 	 * @return void
 	 */
 	public function instance_wp_loaded_classes() {
@@ -376,6 +376,7 @@ class Init {
 			'MeuMouse\\Joinotify\\Integrations\\Whatsapp_Interactive',
 			'MeuMouse\\Joinotify\\Integrations\\Telegram',
 			'MeuMouse\\Joinotify\\Integrations\\Resend',
+			'MeuMouse\\Joinotify\\Integrations\\Deprecated_Integrations',
 			'MeuMouse\\Joinotify\\Integrations\\AI_Messaging',
 			'MeuMouse\\Joinotify\\Integrations\\Flexify_Checkout',
 			'MeuMouse\\Joinotify\\Integrations\\Elementor',

@@ -47,6 +47,7 @@ class Registry {
      * stored, which `get_settings_for_client()` reports as a `_is_set` flag.
      *
      * @since 2.3.0
+     * @version 2.8.0
      * @return array<int,string>
      */
     public static function get_write_only_keys() {
@@ -62,6 +63,8 @@ class Registry {
          */
         return apply_filters( 'Joinotify/Admin/Settings/Write_Only_Keys', array(
             'whatsapp_cloud_api_token',
+            'telegram_bot_token',
+            'resend_api_key',
         ) );
     }
 
@@ -393,6 +396,7 @@ class Registry {
      * Build the integration cards used by the integrations section.
      *
      * @since 1.4.7
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_cards() {
@@ -428,6 +432,8 @@ class Registry {
                 'plugin_active' => $plugin_active,
                 'coming_soon' => $coming_soon,
                 'comming_soon' => $coming_soon,
+                'deprecated' => ! empty( $item['deprecated'] ),
+                'deprecated_message' => ! empty( $item['deprecated_message'] ) ? (string) $item['deprecated_message'] : '',
                 'modal' => $modal,
                 'disabled_message' => $requires_plugin && ! $plugin_active
                     ? esc_html__( 'This plugin needs to be installed and active to enable this integration.', 'joinotify' )

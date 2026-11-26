@@ -68,7 +68,7 @@ A aba **Settings > Applications** agrupa os cards em secoes por categoria. Cada 
 
 Categorias nativas (id => rotulo):
 
-- `channels` — Communication channels (WhatsApp, Telegram, Resend)
+- `channels` — Communication channels (WhatsApp; Telegram and Resend are deprecated since 2.8.0 and only show on sites that still use them)
 - `ai` — Artificial Intelligence (WordPress AI Client)
 - `ecommerce` — E-commerce (WooCommerce, Flexify Checkout)
 - `forms` — Forms & page builders (WPForms, Elementor)

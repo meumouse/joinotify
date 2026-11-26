@@ -31,6 +31,8 @@ import { createApiClient } from '../../utils/api';
 import { createWorkflowFileFromParts } from '../../parsers/workflowParser';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { triggerNeedsSetup } from '../../utils/triggerSettings';
+import { walkWorkflowNodes } from '../../utils/workflowTree';
+import { getBuilderAction } from '../../builder/actions/registry/actionRegistry';
 import { createDebugLogger } from '../../utils/debug';
 import { cloneValue } from '../../utils/object';
 
@@ -76,6 +78,10 @@ const autoOpenedTriggerSetupId = ref('');
 // it does not re-open on unrelated canvas re-renders.
 const triggerWarningModalOpen = ref(false);
 const triggerWarningHandledKey = ref('');
+// Warns once per opened workflow when it still has steps that use a deprecated
+// action (Telegram, Resend), which stop working when the integration is removed.
+const deprecatedWarningModalOpen = ref(false);
+const deprecatedWarningHandledId = ref(-1);
 // Confirmation shown when the user tries to leave the builder while the flow has
 // unsaved changes (store.dirty). Offers save-and-leave, leave-anyway, or cancel.
 const leaveConfirmOpen = ref(false);
@@ -155,6 +161,31 @@ const triggerWarningMessage = computed(() => {
         : __('The integration that this flow\'s trigger depends on is not available. This flow will not be processed until the integration is available again.', textDomain);
   }
 });
+// Steps of the loaded flow whose action is deprecated, with the notice of each.
+const deprecatedSteps = computed(() => {
+  const steps = [];
+
+  walkWorkflowNodes(store.workflowContent || [], (node) => {
+    if (node.type === 'trigger') {
+      return;
+    }
+
+    const definition = getBuilderAction(String(node.data?.action || ''));
+
+    if (definition?.deprecated) {
+      steps.push({
+        id: node.id,
+        title: String(node.data?.title || definition.title || ''),
+        message: definition.deprecatedMessage || '',
+      });
+    }
+  });
+
+  return steps;
+});
+const deprecatedStepMessages = computed(() =>
+  Array.from(new Set(deprecatedSteps.value.map((step) => step.message).filter(Boolean)))
+);
 const debugMode = computed(() => Boolean(bootstrap.value?.debug_mode));
 const debugLogger = createDebugLogger('Builder', () => debugMode.value);
 const isRunningTest = computed(() => store.loading.test || testPhoneSaving.value);
@@ -235,6 +266,7 @@ const {
     titleModalOpen.value ||
     testPhoneModalOpen.value ||
     triggerWarningModalOpen.value ||
+    deprecatedWarningModalOpen.value ||
     leaveConfirmOpen.value ||
     Boolean(store.drawerOpen) ||
     Boolean(store.loading.workflow) ||
@@ -399,6 +431,29 @@ watch(
   { immediate: true, deep: true }
 );
 
+// Once per opened workflow, and only after the trigger warning (if any) was
+// dismissed, so the two modals never stack.
+watch(
+  () => [store.step, store.loading.workflow, store.postId, deprecatedSteps.value.length, triggerWarningModalOpen.value],
+  () => {
+    if (store.step !== 'canvas' || store.loading.workflow || triggerWarningModalOpen.value) {
+      return;
+    }
+
+    if (!deprecatedSteps.value.length || deprecatedWarningHandledId.value === store.postId) {
+      return;
+    }
+
+    deprecatedWarningHandledId.value = store.postId;
+    deprecatedWarningModalOpen.value = true;
+    debugLogger.log('workflow:deprecated-steps-warning', {
+      workflow_id: store.postId,
+      steps: deprecatedSteps.value.map((step) => step.id),
+    });
+  },
+  { immediate: true }
+);
+
 function isEditableTarget(target) {
   const element = target instanceof HTMLElement ? target : null;
 
@@ -494,6 +549,10 @@ function goChangeTrigger() {
 
 function closeTriggerWarning() {
   triggerWarningModalOpen.value = false;
+}
+
+function closeDeprecatedWarning() {
+  deprecatedWarningModalOpen.value = false;
 }
 
 function changeTriggerFromWarning() {
@@ -1479,6 +1538,36 @@ function setChangeTriggerUrl(active) {
         <BaseButton :title="__('Dismiss', textDomain)" variant="ghost" @click="closeTriggerWarning" />
         <BaseButton :title="__('Open integration settings', textDomain)" variant="secondary" @click="openIntegrationsSettings" />
         <BaseButton :title="__('Change trigger', textDomain)" @click="changeTriggerFromWarning" />
+      </div>
+    </div>
+  </ModalDialog>
+
+  <ModalDialog
+    :open="deprecatedWarningModalOpen"
+    :title="__('This workflow uses deprecated steps', textDomain)"
+    :eyebrow="__('Deprecated steps', textDomain)"
+    sizeClass="max-w-xl"
+    @close="closeDeprecatedWarning"
+  >
+    <div class="space-y-6">
+      <BaseAlert
+        v-for="message in deprecatedStepMessages"
+        :key="message"
+        tone="warning"
+        :message="message"
+      />
+
+      <div class="space-y-2">
+        <p class="text-[13px] font-semibold text-slate-700">
+          {{ __('Steps to replace', textDomain) }}
+        </p>
+        <ul class="list-disc space-y-1 pl-5 text-[13px] leading-5 text-slate-600">
+          <li v-for="step in deprecatedSteps" :key="step.id">{{ step.title }}</li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
+        <BaseButton :title="__('Got it', textDomain)" @click="closeDeprecatedWarning" />
       </div>
     </div>
   </ModalDialog>

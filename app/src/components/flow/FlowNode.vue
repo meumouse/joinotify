@@ -30,6 +30,8 @@ export interface FlowNodeData {
   contextIconUrl?: string;
   hasSettings?: boolean;
   needsSetup?: boolean;
+  /** The step uses a deprecated action (e.g. Telegram or Resend). */
+  deprecated?: boolean;
   onRequestDelete?: (id: string) => void;
   onDuplicate?: (id: string) => void;
   onEdit?: (id: string, data: { label: string; description: string; config?: Record<string, unknown> }) => void;
@@ -52,6 +54,7 @@ const isLoop = computed(() => String(props.data.actionId || '').trim() === 'loop
 const isTrigger = computed(() => props.data.type === 'trigger');
 const isStopAutomation = computed(() => String(props.data.actionId || props.data.type || '').trim() === 'stop_funnel');
 const needsSetup = computed(() => Boolean(props.data.needsSetup));
+const isDeprecated = computed(() => Boolean(props.data.deprecated));
 // Every node has a menu: triggers expose "Change trigger" (+ Settings when the
 // trigger has settings); action nodes expose Settings + Delete.
 const showMenu = computed(() => true);
@@ -172,7 +175,7 @@ function iconGlyph(value: string) {
     :class="[
       selected
         ? 'border-primary-600 ring-2 ring-primary-600/20'
-        : needsSetup
+        : needsSetup || isDeprecated
           ? 'border-amber-300 ring-2 ring-amber-300/30 hover:border-amber-400'
           : 'border-slate-200 hover:border-slate-300 hover:shadow-lg',
     ]"
@@ -231,7 +234,13 @@ function iconGlyph(value: string) {
           {{ data.label }}
         </span>
         <p
-          v-if="!isTrigger && actionGroupLabel"
+          v-if="!isTrigger && isDeprecated"
+          class="truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-600"
+        >
+          {{ __('Deprecated', textDomain) }}
+        </p>
+        <p
+          v-else-if="!isTrigger && actionGroupLabel"
           class="truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400"
         >
           {{ actionGroupLabel }}

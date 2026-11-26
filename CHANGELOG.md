@@ -8,6 +8,20 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 
 ## [Unreleased]
 
+### Changed
+
+- **Heads-up:** Telegram and Resend steps no longer send while their integration is turned off
+- The builder no longer offers Telegram and Resend steps for new workflows
+- The Telegram and Resend settings cards only show on sites that still use them
+
+### Deprecated
+
+- The Telegram and Resend integrations, which will be removed in 3.0.0
+
+### Security
+
+- The Telegram bot token and the Resend API key are no longer sent to the browser
+
 ## [2.7.3] - 2026-11-17
 
 ### Added

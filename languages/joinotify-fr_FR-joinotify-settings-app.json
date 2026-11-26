@@ -224,6 +224,9 @@
       "Debug logs": [
         "Journaux de débogage"
       ],
+      "Deprecated": [
+        "Obsolète"
+      ],
       "Description (optional)": [
         "Description (facultatif)"
       ],

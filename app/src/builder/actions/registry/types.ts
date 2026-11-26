@@ -51,6 +51,15 @@ export interface ActionDefinition {
    * backend integration puts around its `Joinotify/Builder/Actions` filter.
    */
   requiresSetting?: string;
+  /**
+   * Deprecated actions are never offered in the action library, but saved
+   * nodes keep rendering with their settings UI and a deprecation notice.
+   *
+   * @since 2.8.0
+   */
+  deprecated?: boolean;
+  /** Notice shown on deprecated nodes and in their settings panel. */
+  deprecatedMessage?: string;
   hasSettings: boolean;
   priority: number;
   isExpansible?: boolean;
@@ -88,6 +97,9 @@ export interface BackendActionDefinition extends Omit<Partial<ActionDefinition>,
   category?: string;
   requires_setting?: string;
   requiresSetting?: string;
+  deprecated?: boolean;
+  deprecated_message?: string;
+  deprecatedMessage?: string;
   has_settings?: boolean;
   hasSettings?: boolean;
   priority?: number | string;

@@ -38,7 +38,7 @@ import {
   getActionDefinition,
   getActionRegistryPreview,
 } from '../../registries/actionRegistry';
-import { getActionRegistryRevision } from '../../builder/actions/registry/actionRegistry';
+import { getActionRegistryRevision, getBuilderAction } from '../../builder/actions/registry/actionRegistry';
 import { getTriggerContextDefinition, getTriggerDefinition } from '../../registries/triggerRegistry';
 import {
   branchKeysForAction,
@@ -219,6 +219,7 @@ function buildNodeData(node: WorkflowNode): FlowNodeData {
     icon,
     iconSvg,
     needsSetup: actionNeedsSetup(node, actionDefinition),
+    deprecated: Boolean(getBuilderAction(actionId)?.deprecated),
     onEdit: handleNodeEdit,
     onRequestDelete: handleRemoveRequest,
     onDuplicate: handleDuplicateRequest,

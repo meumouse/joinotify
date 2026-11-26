@@ -11,10 +11,16 @@ defined('ABSPATH') || exit;
 /**
  * Add integration with Resend
  *
- * Registers the Resend e-mail delivery channel, the Applications settings card
- * and, while enabled, the "Send e-mail (Resend)" builder action.
+ * Registers the Resend e-mail delivery channel and the settings card.
+ *
+ * Deprecated since 2.8.0 and removed in Deprecated_Integrations::REMOVAL_VERSION:
+ * the card only shows on sites that still use the integration, and the builder
+ * no longer offers the "Send e-mail (Resend)" action for new steps. Saved steps
+ * keep sending while the integration is enabled.
  *
  * @since 2.1.0
+ * @version 2.8.0
+ * @deprecated 2.8.0
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -32,6 +38,7 @@ class Resend extends Integrations_Base {
      * Construct function
      *
      * @since 2.1.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
@@ -41,11 +48,8 @@ class Resend extends Integrations_Base {
         // add integration on settings
         add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 43, 1 );
 
-        // add Resend e-mail action while the integration is enabled
-        if ( Admin::get_setting('enable_resend_integration') === 'yes' ) {
-            add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_resend_messages' ), 10, 1 );
-            add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_messages_category' ), 12, 1 );
-        }
+        // the builder action is no longer registered: it is deprecated, so the
+        // library and the AI generator stop offering it for new steps
     }
 
 
@@ -68,8 +72,10 @@ class Resend extends Integrations_Base {
      *
      * Only appends it when no other messaging integration already declared it,
      * so enabling more than one messaging channel never duplicates the tab.
+     * No longer hooked since the Resend action is deprecated.
      *
      * @since 2.1.0
+     * @deprecated 2.8.0
      * @param array $categories | Current categories
      * @return array
      */
@@ -94,11 +100,18 @@ class Resend extends Integrations_Base {
     /**
      * Add integration item on settings
      *
+     * Only sites that still use Resend see the card, flagged as deprecated.
+     *
      * @since 2.1.0
+     * @version 2.8.0
      * @param array $integrations | Current integrations
      * @return array
      */
     public function add_integration_item( $integrations ) {
+        if ( ! Deprecated_Integrations::is_in_use('resend') ) {
+            return $integrations;
+        }
+
         $integrations['resend'] = self::build_integration_item(
             'resend',
             esc_html__( 'Resend', 'joinotify' ),
@@ -107,6 +120,8 @@ class Resend extends Integrations_Base {
             array(
                 'category' => 'channels',
                 'setting_key' => 'enable_resend_integration',
+                'deprecated' => true,
+                'deprecated_message' => Deprecated_Integrations::get_message( __( 'Resend', 'joinotify' ) ),
                 'action_hook' => 'Joinotify/Settings/Tabs/Integrations/Resend',
                 'settings' => self::get_integration_settings(),
                 'modal' => array(
@@ -125,16 +140,20 @@ class Resend extends Integrations_Base {
      * Declarative settings rendered in the integration modal.
      *
      * @since 2.1.0
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
+        // the API key is write-only: the form never receives it, so say when one is stored
+        $api_key_is_set = '' !== trim( (string) Admin::get_setting('resend_api_key') );
+
         return array(
             self::field_text(
                 'resend_api_key',
                 esc_html__( 'API key', 'joinotify' ),
                 esc_html__( 'Secret key used to authenticate requests to Resend. Find it at resend.com/api-keys.', 'joinotify' ),
                 array(
-                    'placeholder' => 're_...',
+                    'placeholder' => $api_key_is_set ? __( 'Saved. Leave blank to keep the current value.', 'joinotify' ) : 're_...',
                     'autocomplete' => 'off',
                 )
             ),
@@ -163,7 +182,10 @@ class Resend extends Integrations_Base {
     /**
      * Add Resend e-mail action in the builder actions sidebar.
      *
+     * No longer hooked: the action is deprecated and not offered for new steps.
+     *
      * @since 2.1.0
+     * @deprecated 2.8.0
      * @param array $actions | Current actions
      * @return array
      */
