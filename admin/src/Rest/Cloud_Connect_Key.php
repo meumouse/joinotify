@@ -3,6 +3,7 @@
 namespace MeuMouse\Joinotify\Rest;
 
 use MeuMouse\Joinotify\Admin\Settings\Registry;
+use MeuMouse\Joinotify\Api\Cloud_Contacts;
 use MeuMouse\Joinotify\Api\Connect;
 use MeuMouse\Joinotify\Core\Helpers;
 use WP_REST_Request;
@@ -10,12 +11,13 @@ use WP_REST_Request;
 defined('ABSPATH') || exit;
 
 /**
- * Adopt, or forget, the Joinotify API key from the WhatsApp settings modal.
+ * Adopt, or forget, the Joinotify API key from the connection card of Settings → General.
  *
  * The same handshake the setup wizard runs, reachable from Settings so a site
  * can rotate or revoke its key long after the wizard is done.
  *
  * @since 2.3.0
+ * @version 2.8.0
  */
 class Cloud_Connect_Key extends Abstract_Route {
 
@@ -77,7 +79,7 @@ class Cloud_Connect_Key extends Abstract_Route {
      * keep the site connected whatever is cleared here.
      *
      * @since 2.3.0
-     * @version 2.6.0
+     * @version 2.8.0
      * @return \WP_REST_Response
      */
     protected function disconnect() {
@@ -94,6 +96,8 @@ class Cloud_Connect_Key extends Abstract_Route {
 
         update_option( 'joinotify_settings', $settings );
 
+        Connect::forget_account();
+
         do_action('Joinotify/Cloud_Api/Disconnected');
 
         return $this->success_response( array(
@@ -107,12 +111,18 @@ class Cloud_Connect_Key extends Abstract_Route {
     /**
      * Describe the connection without ever handing the key back to the browser.
      *
+     * Also what the connection card of Settings → General is drawn from, so it
+     * carries the account name stored at connect time and the last answer the
+     * API gave about the key. Neither costs a request: the card shows what is
+     * known and the user refreshes it by syncing.
+     *
      * @since 2.3.0
-     * @version 2.6.0
-     * @return array{connected:bool,locked:bool,key_prefix:string,phone_number_id:string,waba_id:string}
+     * @version 2.8.0
+     * @return array{connected:bool,locked:bool,key_prefix:string,phone_number_id:string,waba_id:string,account:string,mode:string,mode_message:string,action_url:string,panel_url:string,api_host:string}
      */
     public static function connection_state() {
         $token = Helpers::cloud_api_token();
+        $capability = Cloud_Contacts::cached_capability();
 
         return array(
             'connected' => '' !== $token,
@@ -122,6 +132,14 @@ class Cloud_Connect_Key extends Abstract_Route {
             'key_prefix' => '' !== $token ? substr( $token, 0, 14 ) : '',
             'phone_number_id' => Helpers::cloud_phone_number_id(),
             'waba_id' => Helpers::cloud_waba_id(),
+            'account' => '' !== $token ? Connect::account_name() : '',
+            // Empty while the API has not been asked yet: unknown, not broken.
+            'mode' => is_array( $capability ) ? (string) $capability['mode'] : '',
+            'mode_message' => is_array( $capability ) ? (string) $capability['message'] : '',
+            'action_url' => is_array( $capability ) ? (string) $capability['action_url'] : '',
+            'panel_url' => JOINOTIFY_PANEL_URL,
+            // Named next to the key field: connecting sends the key there.
+            'api_host' => (string) wp_parse_url( JOINOTIFY_CLOUD_API_BASE_URL, PHP_URL_HOST ),
         );
     }
 }

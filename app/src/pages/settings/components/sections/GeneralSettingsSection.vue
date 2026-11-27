@@ -3,29 +3,48 @@
 /**
  * GeneralSettingsSection.vue frontend component.
  *
- * Renders the general fields, and the switches that carry a modal of their
- * own options (the Joinotify Cloud sync): the switch, what switching it on
- * sends, and a "Configure" button that opens the modal once it is on.
+ * Opens with the Joinotify connection card, then renders the general fields,
+ * and the switches that carry a modal of their own options (the Joinotify
+ * Cloud sync): the switch, what switching it on sends, and a "Configure"
+ * button that opens the modal once it is on.
  *
  * @since 1.4.7
- * @version 2.5.0
+ * @version 2.8.0
  */
 import { __, textDomain } from '../../../../utils/i18n';
 import BaseButton from '../../../../components/base/BaseButton.vue';
 import FieldControl from '../../../../components/fields/FieldControl.vue';
 import FieldRow from '../../../../components/fields/FieldRow.vue';
+import JoinotifyConnectionCard from '../cards/JoinotifyConnectionCard.vue';
 
 defineProps({
   generalVisibleFields: { type: Array, default: () => [] },
   generalModalFields: { type: Array, default: () => [] },
   settings: { type: Object, default: () => ({}) },
+  connection: { type: Object, default: () => ({}) },
+  phones: { type: Object, default: () => ({ senders: [], sender_count: 0 }) },
+  syncing: { type: Boolean, default: false },
 });
 
-defineEmits(['update-setting', 'configure']);
+defineEmits(['update-setting', 'configure', 'update:connection', 'update:phones', 'sync', 'manage-numbers', 'notify']);
 </script>
 
 <template>
   <div class="space-y-2">
+    <JoinotifyConnectionCard
+      class="mb-6"
+      :connection="connection"
+      :phones="phones"
+      :settings="settings"
+      :syncing="syncing"
+      @update:connection="$emit('update:connection', $event)"
+      @update:phones="$emit('update:phones', $event)"
+      @update-setting="(key, value) => $emit('update-setting', key, value)"
+      @sync="$emit('sync')"
+      @manage-numbers="$emit('manage-numbers')"
+      @notify="(message, tone) => $emit('notify', message, tone)"
+    />
+
     <FieldRow
       v-for="field in generalVisibleFields"
       :key="field.key"

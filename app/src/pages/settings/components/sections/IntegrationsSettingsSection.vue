@@ -3,18 +3,18 @@
 /**
  * IntegrationsSettingsSection.vue frontend component.
  *
- * Renders the Applications cards with a top toolbar that lets the user filter by
- * category and switch the display mode. By default every application is shown in
+ * Renders the Integrations cards with a top toolbar that lets the user filter by
+ * category and switch the display mode. By default every integration is shown in
  * a single flat grid ("Show all"); the user can group the cards into stacked
  * category sections or narrow the list to a single category. Category chips and
  * section headers use Boxicons glyphs mapped from the category id, falling back
  * to the backend-provided SVG (or a generic grid icon) for unregistered ones.
  *
  * @since 1.4.7
- * @version 2.1.0
+ * @version 2.8.0
  */
 import { computed, ref } from 'vue';
-import { __, textDomain } from '../../../../utils/i18n';
+import { __, _n, sprintf, textDomain } from '../../../../utils/i18n';
 import {
   MessageDots,
   Brain,
@@ -239,7 +239,7 @@ const displayModes = computed(() => [
           <div>
             <h3 class="text-lg font-semibold text-slate-700">{{ section.label }}</h3>
             <p class="text-[13px] text-slate-500">
-              {{ section.integrations.length }} {{ section.integrations.length === 1 ? __('application', textDomain) : __('applications', textDomain) }}
+              {{ sprintf(_n('%d integration', '%d integrations', section.integrations.length, textDomain), section.integrations.length) }}
             </p>
           </div>
         </header>

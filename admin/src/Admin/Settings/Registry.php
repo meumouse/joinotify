@@ -11,6 +11,7 @@ use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Core\Notification_Queue;
 use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
+use MeuMouse\Joinotify\Rest\Cloud_Connect_Key;
 use MeuMouse\Joinotify\Builder\Custom_Variables;
 use MeuMouse\Joinotify\Validations\Country_Codes;
 use MeuMouse\Joinotify\AI\Provider_Registry;
@@ -326,6 +327,7 @@ class Registry {
      * Build the tabs used by the settings section navigation.
      *
      * @since 1.4.7
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_section_tabs() {
@@ -344,7 +346,7 @@ class Registry {
             ),
             array(
                 'id' => 'integrations',
-                'name' => __( 'Applications', 'joinotify' ),
+                'name' => __( 'Integrations', 'joinotify' ),
                 'icon' => '<svg class="joinotify-tab-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" ><path d="M4.5 11h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5C3.67 3 3 3.67 3 4.5v5c0 .83.67 1.5 1.5 1.5M5 5h4v4H5zm14.5-2h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5M19 9h-4V5h4zM4.5 21h5c.83 0 1.5-.67 1.5-1.5v-5c0-.83-.67-1.5-1.5-1.5h-5c-.83 0-1.5.67-1.5 1.5v5c0 .83.67 1.5 1.5 1.5m.5-6h4v4H5zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path></svg>',
                 'section' => 'integrations',
             ),
@@ -647,7 +649,7 @@ class Registry {
      * Build the full bootstrap payload for the frontend application.
      *
      * @since 1.4.7
-     * @version 2.5.0
+     * @version 2.8.0
      * @return array<string,mixed>
      */
     public static function get_bootstrap_data() {
@@ -659,6 +661,8 @@ class Registry {
             'section_tabs' => self::get_section_tabs(),
             'integrations' => self::get_integration_cards(),
             'integration_categories' => self::get_integration_categories(),
+            // The Joinotify connection card at the top of Settings → General.
+            'connection' => Cloud_Connect_Key::connection_state(),
             'phones' => self::get_phone_state(),
             'builder_variables' => array(
                 'items' => Custom_Variables::get_all(),
@@ -754,6 +758,7 @@ class Registry {
      * Return the built-in integration field components supported by the frontend.
      *
      * @since 1.4.7
+     * @version 2.8.0
      * @return array<int,string>
      */
     private static function get_supported_integration_field_components() {
@@ -761,6 +766,7 @@ class Registry {
             'toggle',
             'text',
             'textarea',
+            'richtext',
             'select',
             'phone',
             'input-group',

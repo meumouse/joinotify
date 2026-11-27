@@ -13,9 +13,20 @@
       "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number.": [
         "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number."
       ],
+      "%d integration": [
+        "%d integration",
+        "%d integrations"
+      ],
+      "%d number": [
+        "%d number",
+        "%d numbers"
+      ],
       "%d number imported.": [
         "%d number imported.",
         "%d numbers imported."
+      ],
+      "+%d more": [
+        "+%d more"
       ],
       "24h limit:": [
         "24h limit:"
@@ -32,6 +43,9 @@
       "Add variable": [
         "Add variable"
       ],
+      "Advanced": [
+        "Advanced"
+      ],
       "All": [
         "All"
       ],
@@ -47,11 +61,8 @@
       "another address": [
         "another address"
       ],
-      "application": [
-        "application"
-      ],
-      "applications": [
-        "applications"
+      "API key": [
+        "API key"
       ],
       "Are you sure you want to clear the debug logs?": [
         "Are you sure you want to clear the debug logs?"
@@ -70,6 +81,9 @@
       ],
       "Builder": [
         "Builder"
+      ],
+      "Business account that owns the message templates. Filled in when you connect.": [
+        "Business account that owns the message templates. Filled in when you connect."
       ],
       "Cancel": [
         "Cancel"
@@ -125,8 +139,17 @@
       "Connect": [
         "Connect"
       ],
+      "Connect again": [
+        "Connect again"
+      ],
+      "Connect this site to Joinotify": [
+        "Connect this site to Joinotify"
+      ],
       "Connect to Joinotify": [
         "Connect to Joinotify"
+      ],
+      "Connect with Joinotify": [
+        "Connect with Joinotify"
       ],
       "Connect your Joinotify account to send through the official WhatsApp Cloud API.": [
         "Connect your Joinotify account to send through the official WhatsApp Cloud API."
@@ -139,6 +162,9 @@
       ],
       "Connecting…": [
         "Connecting…"
+      ],
+      "Connection needs attention": [
+        "Connection needs attention"
       ],
       "Connection updated.": [
         "Connection updated."
@@ -224,6 +250,9 @@
       "Debug logs": [
         "Debug logs"
       ],
+      "Default origin for messages. Filled in when you connect; change it only to send from a different number by default.": [
+        "Default origin for messages. Filled in when you connect; change it only to send from a different number by default."
+      ],
       "Deprecated": [
         "Deprecated"
       ],
@@ -238,6 +267,9 @@
       ],
       "Disconnect": [
         "Disconnect"
+      ],
+      "Disconnect this site": [
+        "Disconnect this site"
       ],
       "Disconnected": [
         "Disconnected"
@@ -320,6 +352,9 @@
       "File is too large. The maximum size is 5 MB.": [
         "File is too large. The maximum size is 5 MB."
       ],
+      "Fix on the panel": [
+        "Fix on the panel"
+      ],
       "Get a key on the Joinotify panel": [
         "Get a key on the Joinotify panel"
       ],
@@ -346,6 +381,9 @@
       ],
       "I already did": [
         "I already did"
+      ],
+      "I already have an API key": [
+        "I already have an API key"
       ],
       "Import": [
         "Import"
@@ -398,6 +436,12 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Joinotify account": [
+        "Joinotify account"
+      ],
+      "Joinotify sends your WhatsApp messages through the official WhatsApp Cloud API. Connect your account to import your numbers and start sending.": [
+        "Joinotify sends your WhatsApp messages through the official WhatsApp Cloud API. Connect your account to import your numbers and start sending."
+      ],
       "kept on the do-not-contact list": [
         "kept on the do-not-contact list"
       ],
@@ -421,6 +465,9 @@
       ],
       "Last run was stopped.": [
         "Last run was stopped."
+      ],
+      "Last synced": [
+        "Last synced"
       ],
       "Last synced:": [
         "Last synced:"
@@ -449,6 +496,9 @@
       "Logs cleared successfully.": [
         "Logs cleared successfully."
       ],
+      "Manage numbers": [
+        "Manage numbers"
+      ],
       "Map an entity (post type) and a meta key to a named variable. The variable becomes available in the flow builder and is replaced at runtime with the matching post meta value.": [
         "Map an entity (post type) and a meta key to a named variable. The variable becomes available in the flow builder and is replaced at runtime with the matching post meta value."
       ],
@@ -469,6 +519,9 @@
       ],
       "Meta key": [
         "Meta key"
+      ],
+      "Never": [
+        "Never"
       ],
       "New variable": [
         "New variable"
@@ -506,6 +559,9 @@
       "No variables available.": [
         "No variables available."
       ],
+      "Not connected": [
+        "Not connected"
+      ],
       "not found in the account": [
         "not found in the account"
       ],
@@ -514,6 +570,9 @@
       ],
       "Notice": [
         "Notice"
+      ],
+      "Numbers": [
+        "Numbers"
       ],
       "Numbers synced.": [
         "Numbers synced."
@@ -544,6 +603,9 @@
       ],
       "Paste the API key issued for this site on the Joinotify panel.": [
         "Paste the API key issued for this site on the Joinotify panel."
+      ],
+      "Phone number ID": [
+        "Phone number ID"
       ],
       "Phone number that will receive the test WhatsApp message.": [
         "Phone number that will receive the test WhatsApp message."
@@ -625,6 +687,9 @@
       ],
       "Save changes": [
         "Save changes"
+      ],
+      "Save the settings to keep the new IDs.": [
+        "Save the settings to keep the new IDs."
       ],
       "Saved": [
         "Saved"
@@ -728,6 +793,9 @@
       "Sync": [
         "Sync"
       ],
+      "Sync numbers": [
+        "Sync numbers"
+      ],
       "Sync numbers from Joinotify": [
         "Sync numbers from Joinotify"
       ],
@@ -764,8 +832,11 @@
       "The debug log is empty.": [
         "The debug log is empty."
       ],
-      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
-        "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own."
+      "The Joinotify API refused the key of this site. It may have been revoked on the panel. Connect again to issue a new one.": [
+        "The Joinotify API refused the key of this site. It may have been revoked on the panel. Connect again to issue a new one."
+      ],
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
+        "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "The message is prefilled and can be adjusted before sending the test."
@@ -782,11 +853,14 @@
       "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.": [
         "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there."
       ],
-      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
-        "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications."
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General.": [
+        "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General."
       ],
-      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
-        "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume."
+      "This site is no longer connected to Joinotify.": [
+        "This site is no longer connected to Joinotify."
+      ],
+      "This site was removed from your Joinotify account. Connect it again in Settings → General to resume.": [
+        "This site was removed from your Joinotify account. Connect it again in Settings → General to resume."
       ],
       "This text variable may not work in this context": [
         "This text variable may not work in this context"
@@ -842,6 +916,9 @@
       "What is sent": [
         "What is sent"
       ],
+      "WhatsApp Business Account ID": [
+        "WhatsApp Business Account ID"
+      ],
       "with an invalid phone number": [
         "with an invalid phone number"
       ],
@@ -853,6 +930,9 @@
       ],
       "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?": [
         "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?"
+      ],
+      "Your Joinotify account is blocked for sending. Check your plan on the Joinotify panel.": [
+        "Your Joinotify account is blocked for sending. Check your plan on the Joinotify panel."
       ],
       "Your Joinotify account is connected.": [
         "Your Joinotify account is connected."

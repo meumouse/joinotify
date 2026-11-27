@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
-use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Builder\Triggers;
 use MeuMouse\Joinotify\Core\Helpers;
 
@@ -13,7 +12,7 @@ defined('ABSPATH') || exit;
  * Add integration with WhatsApp
  * 
  * @since 1.1.0
- * @version 1.4.7
+ * @version 2.8.0
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -22,22 +21,21 @@ class Whatsapp extends Integrations_Base {
     /**
      * Construct function
      *
+     * WhatsApp is what Joinotify sends through, so it is always on: the
+     * connection lives in Settings → General and an action run without one
+     * reports that the site is not connected. The settings card and the
+     * `enable_whatsapp_integration` switch it carried are gone since 2.8.0.
+     *
      * @since 1.1.0
-     * @version 2.6.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
-        // add integration on settings
-        add_filter( 'Joinotify/Settings/Tabs/Integrations', array( $this, 'add_integration_item' ), 10, 1 );
+        add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_whatsapp_messages' ), 10, 1 );
+        add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_whatsapp_category' ), 10, 1 );
 
-        // add WhatsApp message actions
-        if ( Admin::get_setting('enable_whatsapp_integration') === 'yes' ) {
-            add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_whatsapp_messages' ), 10, 1 );
-            add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_whatsapp_category' ), 10, 1 );
-
-            // Late, so it reaches the conditions every integration registered.
-            add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_window_condition' ), 99, 1 );
-        }
+        // Late, so it reaches the conditions every integration registered.
+        add_filter( 'Joinotify/Validations/Get_Action_Conditions', array( $this, 'add_window_condition' ), 99, 1 );
     }
 
 
@@ -105,8 +103,11 @@ class Whatsapp extends Integrations_Base {
 
     /**
      * Add integration item on settings
-     * 
+     *
+     * No longer hooked: the connection moved to Settings → General.
+     *
      * @since 1.3.0
+     * @deprecated 2.8.0
      * @param array $integrations | Current integrations
      * @return array
      */
@@ -139,8 +140,12 @@ class Whatsapp extends Integrations_Base {
      * not the whole job: the key has to be proven against the API and the
      * account's numbers imported before the site can send anything.
      *
+     * Only the deprecated settings card used it. The connection card of
+     * Settings → General replaced both.
+     *
      * @since 2.3.0
      * @version 2.6.0
+     * @deprecated 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {

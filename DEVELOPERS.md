@@ -381,6 +381,15 @@ Integrations) are declared the same way through `joinotify_register_integration(
 fully configurable from PHP alone. Toggle keys declared only in your schema (not in the plugin's
 default options) are still reset correctly to `'no'` when unchecked.
 
+A `textarea` field can be edited as rich text with a variable picker: set `'component' => 'richtext'`,
+a `placeholders` list and, in `component_props`, `single_line`, `allow_formatting` or `allow_emoji`
+(see [`docs/integrations.md`](docs/integrations.md)). The value is still stored as plain text.
+
+WhatsApp is always on since 2.8.0: it has no integration card, and the `enable_whatsapp_integration`
+setting is kept at `'yes'` for add-ons that still read it, but nothing in Joinotify does. The
+connection to Joinotify lives in a card at the top of Settings → General, fed by the `connection`
+key of the settings bootstrap (`Joinotify/Admin/Settings/Bootstrap_Data`).
+
 ### Custom field components
 
 Standard fields need no JavaScript. If your app needs a **custom control** (an OAuth "Connect"

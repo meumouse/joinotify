@@ -104,17 +104,18 @@ class Send_Error {
      * only settled once the request knows who is looking at it.
      *
      * @since 2.4.0
+     * @version 2.8.0
      * @return array<string,string>
      */
     protected static function messages() {
         return array(
             self::WINDOW_CLOSED => __( 'This contact has not replied in the last 24 hours. WhatsApp only delivers free-form messages inside that window — use an approved template message to reach them.', 'joinotify' ),
             'retry_cancelled' => __( 'The resend of this message was cancelled from the history screen.', 'joinotify' ),
-            'invalid_sender' => __( 'The sender number is not connected to this site. Check it under Joinotify → Settings → Phone numbers.', 'joinotify' ),
-            'cloud_no_token' => __( 'The Joinotify account is not connected, so there is no way to reach the WhatsApp API. Connect it under Joinotify → Settings.', 'joinotify' ),
-            'http_401' => __( 'The WhatsApp API rejected the credentials. Reconnect the Joinotify account under Joinotify → Settings.', 'joinotify' ),
+            'invalid_sender' => __( 'The sender number is not connected to this site. Check it under Joinotify → Settings → Phones.', 'joinotify' ),
+            'cloud_no_token' => __( 'The Joinotify account is not connected, so there is no way to reach the WhatsApp API. Connect it under Joinotify → Settings → General.', 'joinotify' ),
+            'http_401' => __( 'The WhatsApp API rejected the credentials. Reconnect the Joinotify account under Joinotify → Settings → General.', 'joinotify' ),
             'http_403' => __( 'The WhatsApp API refused this request. The number may not be authorized to send on this account.', 'joinotify' ),
-            'http_404' => __( 'The WhatsApp API could not find the sender number. Sync your numbers under Joinotify → Settings → Phone numbers.', 'joinotify' ),
+            'http_404' => __( 'The WhatsApp API could not find the sender number. Sync your numbers under Joinotify → Settings → Phones.', 'joinotify' ),
             'http_429' => __( 'The WhatsApp API rate limit was reached. The message will be retried shortly.', 'joinotify' ),
         );
     }

@@ -141,7 +141,7 @@ The plugin itself is free and every feature is unlocked. Building, testing and e
 
 = Where do I get the API key? =
 
-Create it for your site on the Joinotify panel at https://app.joinotify.com, then paste it in the setup wizard (step 2) or in Settings → General → WhatsApp Cloud API.
+Create it for your site on the Joinotify panel at https://app.joinotify.com, then paste it in the setup wizard (step 2) or in the Joinotify connection card at the top of Settings → General ("I already have an API key"). The same card can also connect the site through the panel, without a key to copy.
 
 = Can I send a message to anyone at any time? =
 

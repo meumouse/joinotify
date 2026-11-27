@@ -58,9 +58,9 @@ $integrations['minha_integracao'] = array(
 );
 ```
 
-## Categorias (aba Aplicativos)
+## Categories (Integrations tab)
 
-A aba **Settings > Applications** agrupa os cards em secoes por categoria. Cada integracao declara a categoria a que pertence pela chave `category`:
+The **Settings > Integrations** tab (called Applications before 2.8.0) groups the cards into sections by category. Each integration declares its category with the `category` key:
 
 ```php
 'category' => 'channels',
@@ -68,7 +68,7 @@ A aba **Settings > Applications** agrupa os cards em secoes por categoria. Cada 
 
 Categorias nativas (id => rotulo):
 
-- `channels` — Communication channels (WhatsApp; Telegram and Resend are deprecated since 2.8.0 and only show on sites that still use them)
+- `channels` — Communication channels (Telegram and Resend, deprecated since 2.8.0 and only shown on sites that still use them). WhatsApp has no card since 2.8.0: it is always on, and the Joinotify connection lives in a card at the top of **Settings > General**.
 - `ai` — Artificial Intelligence (WordPress AI Client)
 - `ecommerce` — E-commerce (WooCommerce, Flexify Checkout)
 - `forms` — Forms & page builders (WPForms, Elementor)
@@ -100,7 +100,7 @@ Depois basta os cards apontarem `'category' => 'crm'`.
 
 ### Icones das categorias
 
-A aba Aplicativos possui uma barra superior com filtro por categoria e seletor de modo de exibicao (`Exibir todos` / `Exibir por categoria`), mantendo todos os apps visiveis por padrao. Os icones dos chips e cabecalhos usam glifos do **Boxicons** mapeados pelo `id` da categoria no frontend (`app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue`). Para categorias nativas o mapa ja cobre os ids; para uma categoria propria sem mapeamento, o frontend usa o SVG informado em `icon` como fallback e, na ausencia dele, um icone de grade generico.
+The Integrations tab has a top bar with a category filter and a display mode switch (`Show all` / `Group by category`), with every card visible by default. The chip and section icons are **Boxicons** glyphs mapped from the category `id` in the frontend (`app/src/pages/settings/components/sections/IntegrationsSettingsSection.vue`). The map covers the native ids; a custom category without a mapping falls back to the SVG given in `icon` and, without one, to a generic grid icon.
 
 ## Tipos de campos suportados
 
@@ -116,6 +116,15 @@ Os campos declarativos podem usar os tipos nativos abaixo:
 - `input-group`
 
 O sistema tambem aceita componentes customizados atraves do campo `component`.
+
+### Rich text with variables (`component => 'richtext'`)
+
+Since 2.8.0 a `textarea` field can be edited in the rich text editor, with a variable picker, by setting `'component' => 'richtext'`. The value is still stored and sanitized as plain text. Extra keys:
+
+- `placeholders` — the variable list, each item `array( 'placeholder' => '{{ key }}', 'description' => '...', 'replacement' => array( 'sandbox' => 'sample' ) )`. A list that is costly to build (reading the WooCommerce checkout, for instance) belongs in the `Joinotify/Admin/Settings/Bootstrap_Data` filter, which only runs on the settings screen, not in the field definition, which runs on every request.
+- `component_props` — `single_line` (no line breaks), `allow_formatting` (bold, italic, underline) and `allow_emoji`, all three defaulting to the full editor.
+
+The WooCommerce full address formats use it: one line, variables only, with the list built by `Woocommerce::get_address_placeholders()` and filtered by `Joinotify/WooCommerce/Address_Format_Placeholders`.
 
 ### `input-group`
 

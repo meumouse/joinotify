@@ -1109,8 +1109,8 @@
       "The file needs a header line and at least one contact.": [
         "The file needs a header line and at least one contact."
       ],
-      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
-        "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own."
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
+        "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own."
       ],
       "The key starts with a lowercase letter and holds only lowercase letters, digits and underscores, up to 40 characters.": [
         "The key starts with a lowercase letter and holds only lowercase letters, digits and underscores, up to 40 characters."
@@ -1133,11 +1133,11 @@
       "This site": [
         "This site"
       ],
-      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
-        "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications."
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General.": [
+        "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General."
       ],
-      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
-        "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume."
+      "This site was removed from your Joinotify account. Connect it again in Settings → General to resume.": [
+        "This site was removed from your Joinotify account. Connect it again in Settings → General to resume."
       ],
       "Time": [
         "Time"

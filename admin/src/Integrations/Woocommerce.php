@@ -25,7 +25,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 2.7.3
+ * @version 2.8.0
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -82,9 +82,9 @@ class Woocommerce extends Integrations_Base {
 
     /**
      * Construct function
-     * 
+     *
      * @since 1.0.0
-     * @version 2.7.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
@@ -95,6 +95,9 @@ class Woocommerce extends Integrations_Base {
         if ( class_exists('WooCommerce') ) {
             // standard builder hooks (triggers, tab, content, placeholders, conditions)
             $this->register_builder_hooks( 20, 2 );
+
+            // variable list of the full address format fields on the settings screen
+            add_filter( 'Joinotify/Admin/Settings/Bootstrap_Data', array( $this, 'add_address_placeholders' ), 10, 1 );
 
             // add coupon action
             if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
@@ -196,9 +199,172 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Settings keys of the full address formats, by address type.
+     *
+     * @since 2.8.0
+     * @var array<string,string>
+     */
+    const ADDRESS_FORMAT_KEYS = array(
+        'billing' => 'woocommerce_billing_full_address_format',
+        'shipping' => 'woocommerce_shipping_full_address_format',
+    );
+
+
+    /**
+     * Shared options of the two full address format fields.
+     *
+     * Stored as plain text (the type stays `textarea`, so it is sanitized the
+     * same way), edited in the rich text editor on a single line: only the
+     * variable chips, no formatting, emoji or line breaks, because the value
+     * is dropped in the middle of other messages. The variable list is added
+     * when the settings screen loads (see add_address_placeholders), not here:
+     * this runs on every request and reading the checkout fields is not free.
+     *
+     * @since 2.8.0
+     * @return array<string,mixed>
+     */
+    protected static function address_format_field_extra() {
+        return array(
+            'component' => 'richtext',
+            'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
+            'rows' => 1,
+            'component_props' => array(
+                'single_line' => true,
+                'allow_formatting' => false,
+                'allow_emoji' => false,
+            ),
+        );
+    }
+
+
+    /**
+     * Give the full address format fields of the settings screen their variable list.
+     *
+     * @since 2.8.0
+     * @param array $data | Settings bootstrap payload.
+     * @return array
+     */
+    public function add_address_placeholders( $data ) {
+        if ( ! is_array( $data ) || empty( $data['integrations'] ) || ! is_array( $data['integrations'] ) ) {
+            return $data;
+        }
+
+        $types = array_flip( self::ADDRESS_FORMAT_KEYS );
+
+        foreach ( $data['integrations'] as $index => $card ) {
+            if ( ! is_array( $card ) || 'woocommerce' !== ( $card['slug'] ?? '' ) ) {
+                continue;
+            }
+
+            foreach ( array( 'fields', 'settings' ) as $property ) {
+                if ( empty( $card[ $property ] ) || ! is_array( $card[ $property ] ) ) {
+                    continue;
+                }
+
+                foreach ( $card[ $property ] as $field_index => $field ) {
+                    $key = is_array( $field ) ? (string) ( $field['key'] ?? '' ) : '';
+
+                    if ( isset( $types[ $key ] ) ) {
+                        $data['integrations'][ $index ][ $property ][ $field_index ]['placeholders'] = self::get_address_placeholders( $types[ $key ] );
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Variables a full address format can use, in the shape of the editor's variable list.
+     *
+     * The core address fields, then every checkout field of that section
+     * without its `billing_`/`shipping_` prefix, exactly the keys
+     * get_address_data() resolves.
+     *
+     * @since 2.8.0
+     * @param string $type | Address type: billing or shipping.
+     * @return array<int,array{placeholder:string,description:string,replacement:array{sandbox:string}}>
+     */
+    public static function get_address_placeholders( $type ) {
+        $type = 'shipping' === $type ? 'shipping' : 'billing';
+
+        $base = array(
+            'first_name' => array( __( 'First name', 'joinotify' ), 'Maria' ),
+            'last_name' => array( __( 'Last name', 'joinotify' ), 'Silva' ),
+            'company' => array( __( 'Company', 'joinotify' ), 'MeuMouse.com' ),
+            'address_1' => array( __( 'Address', 'joinotify' ), 'Rua das Flores' ),
+            'address_2' => array( __( 'Address line 2', 'joinotify' ), 'Apto 12' ),
+            'city' => array( __( 'City', 'joinotify' ), 'Curitiba' ),
+            'state' => array( __( 'State', 'joinotify' ), 'PR' ),
+            'postcode' => array( __( 'Postcode', 'joinotify' ), '80000-000' ),
+            'country' => array( __( 'Country', 'joinotify' ), 'BR' ),
+            'phone' => array( __( 'Phone', 'joinotify' ), '+55 41 99999-9999' ),
+        );
+
+        if ( 'billing' === $type ) {
+            $base['email'] = array( __( 'E-mail', 'joinotify' ), 'maria@example.com' );
+        }
+
+        $placeholders = array();
+
+        foreach ( $base as $key => $item ) {
+            $placeholders[ $key ] = array(
+                'placeholder' => sprintf( '{{ %s }}', $key ),
+                'description' => $item[0],
+                'replacement' => array( 'sandbox' => $item[1] ),
+            );
+        }
+
+        try {
+            $fields = self::export_checkout_fields( $type );
+        } catch ( \Throwable $e ) {
+            // A checkout that cannot be built here only costs the custom fields.
+            $fields = array();
+        }
+
+        foreach ( is_array( $fields ) ? $fields : array() as $field_id => $field ) {
+            // Without a checkout, export_checkout_fields() answers with the empty
+            // `billing`/`shipping` groups whatever the section asked for.
+            if ( ! is_array( $field ) || empty( $field ) ) {
+                continue;
+            }
+
+            $field_id = (string) $field_id;
+            $prefix = $type . '_';
+            $key = 0 === strpos( $field_id, $prefix ) ? substr( $field_id, strlen( $prefix ) ) : $field_id;
+
+            if ( '' === $key || isset( $placeholders[ $key ] ) || ! preg_match( '/^[a-zA-Z0-9_\-]+$/', $key ) ) {
+                continue;
+            }
+
+            $label = is_array( $field ) && ! empty( $field['label'] ) ? wp_strip_all_tags( (string) $field['label'] ) : $key;
+
+            $placeholders[ $key ] = array(
+                'placeholder' => sprintf( '{{ %s }}', $key ),
+                'description' => $label,
+                'replacement' => array( 'sandbox' => '' ),
+            );
+        }
+
+        /**
+         * Filter the variables offered by a full address format field.
+         *
+         * @since 2.8.0
+         * @param array  $placeholders Variables, keyed by token.
+         * @param string $type         Address type: billing or shipping.
+         */
+        $placeholders = apply_filters( 'Joinotify/WooCommerce/Address_Format_Placeholders', $placeholders, $type );
+
+        return array_values( is_array( $placeholders ) ? $placeholders : array() );
+    }
+
+
+    /**
      * Declarative settings rendered in the integrations modal.
      *
      * @since 1.4.7
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
@@ -219,20 +385,14 @@ class Woocommerce extends Integrations_Base {
             self::field_textarea(
                 'woocommerce_billing_full_address_format',
                 esc_html__( 'Billing full address format', 'joinotify' ),
-                esc_html__( 'Defines the value used in the billing full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.', 'joinotify' ),
-                array(
-                    'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-                    'rows' => 3,
-                )
+                esc_html__( 'Defines the value used in the billing full address variable. Pick the address fields from the variable list and add the text between them.', 'joinotify' ),
+                self::address_format_field_extra()
             ),
             self::field_textarea(
                 'woocommerce_shipping_full_address_format',
                 esc_html__( 'Shipping full address format', 'joinotify' ),
-                esc_html__( 'Defines the value used in the shipping full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.', 'joinotify' ),
-                array(
-                    'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-                    'rows' => 3,
-                )
+                esc_html__( 'Defines the value used in the shipping full address variable. Pick the address fields from the variable list and add the text between them.', 'joinotify' ),
+                self::address_format_field_extra()
             ),
             self::field_toggle(
                 'enable_ignore_processed_actions',

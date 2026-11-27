@@ -8,19 +8,31 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 
 ## [Unreleased]
 
+### Added
+
+- A Joinotify connection card at the top of Settings → General, with the account, the numbers and the last sync
+- WhatsApp steps in the builder warn when the site is not connected to Joinotify
+- The WooCommerce full address format fields have a variable picker
+- `Joinotify/WooCommerce/Address_Format_Placeholders` filter, which sets the variables those fields offer
+
 ### Changed
 
 - **Heads-up:** Telegram and Resend steps no longer send while their integration is turned off
+- **Heads-up:** WhatsApp is always on, so sites that had turned it off get their WhatsApp steps back
+- The Applications tab of Settings is now called Integrations and no longer has a WhatsApp card
+- The WooCommerce full address formats are edited on a single line, with variables only
 - The builder no longer offers Telegram and Resend steps for new workflows
 - The Telegram and Resend settings cards only show on sites that still use them
 
 ### Deprecated
 
 - The Telegram and Resend integrations, which will be removed in 3.0.0
+- The `enable_whatsapp_integration` setting, which nothing reads any more
 
 ### Security
 
 - The Telegram bot token and the Resend API key are no longer sent to the browser
+- Connecting through the Joinotify panel no longer sends the API key to the browser
 
 ## [2.7.3] - 2026-11-17
 

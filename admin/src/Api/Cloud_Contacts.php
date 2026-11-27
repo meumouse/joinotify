@@ -485,6 +485,27 @@ class Cloud_Contacts {
 
 
 	/**
+	 * The last capability answer, without asking the API again.
+	 *
+	 * For screens that only report the connection: a page load must not wait on
+	 * a round trip to show it. Null when no answer is cached, which is not a
+	 * verdict either way.
+	 *
+	 * @since 2.8.0
+	 * @return array{mode:string,message:string,action_url:string}|null
+	 */
+	public static function cached_capability() {
+		if ( ! Helpers::cloud_api_ready() ) {
+			return null;
+		}
+
+		$cached = get_transient( self::CACHE_PREFIX . 'mode' );
+
+		return is_array( $cached ) && isset( $cached['mode'] ) ? $cached : null;
+	}
+
+
+	/**
 	 * Find out what the site's key may do with the contact base.
 	 *
 	 * A key restricted to some numbers lists only the contacts that talked to those numbers and

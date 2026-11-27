@@ -13,9 +13,20 @@
       "%1$d sent, %2$d waiting, %3$d given up, %4$d left out for having no phone number.": [
         "%1$d enviados, %2$d en espera, %3$d abandonados, %4$d excluidos por no tener número de teléfono."
       ],
+      "%d integration": [
+        "%d integración",
+        "%d integraciones"
+      ],
+      "%d number": [
+        "%d número",
+        "%d números"
+      ],
       "%d number imported.": [
         "%d número importado.",
         "%d números importados."
+      ],
+      "+%d more": [
+        "+%d más"
       ],
       "24h limit:": [
         "Límite de 24h:"
@@ -32,6 +43,9 @@
       "Add variable": [
         "Añadir variable"
       ],
+      "Advanced": [
+        "Avanzado"
+      ],
       "All": [
         "Todo"
       ],
@@ -47,11 +61,8 @@
       "another address": [
         "otra dirección"
       ],
-      "application": [
-        "aplicación"
-      ],
-      "applications": [
-        "aplicaciones"
+      "API key": [
+        "Clave de API"
       ],
       "Are you sure you want to clear the debug logs?": [
         "¿Está seguro de que desea limpiar los registros de depuración?"
@@ -70,6 +81,9 @@
       ],
       "Builder": [
         "Constructor"
+      ],
+      "Business account that owns the message templates. Filled in when you connect.": [
+        "Cuenta de negocio que posee las plantillas de mensajes. Se completa al conectar."
       ],
       "Cancel": [
         "Cancelar"
@@ -125,8 +139,17 @@
       "Connect": [
         "Conectar"
       ],
+      "Connect again": [
+        "Volver a conectar"
+      ],
+      "Connect this site to Joinotify": [
+        "Conecta este sitio a Joinotify"
+      ],
       "Connect to Joinotify": [
         "Conectar a Joinotify"
+      ],
+      "Connect with Joinotify": [
+        "Conectar con Joinotify"
       ],
       "Connect your Joinotify account to send through the official WhatsApp Cloud API.": [
         "Conecta tu cuenta de Joinotify para enviar a través de la API oficial de WhatsApp Cloud."
@@ -139,6 +162,9 @@
       ],
       "Connecting…": [
         "Conectando…"
+      ],
+      "Connection needs attention": [
+        "La conexión necesita atención"
       ],
       "Connection updated.": [
         "Conexión actualizada."
@@ -224,6 +250,9 @@
       "Debug logs": [
         "Registros de depuración"
       ],
+      "Default origin for messages. Filled in when you connect; change it only to send from a different number by default.": [
+        "Origen por defecto para los mensajes. Se completa al conectar; cámbialo solo para enviar desde un número diferente por defecto."
+      ],
       "Deprecated": [
         "Obsoleto"
       ],
@@ -238,6 +267,9 @@
       ],
       "Disconnect": [
         "Desconectar"
+      ],
+      "Disconnect this site": [
+        "Desconectar este sitio"
       ],
       "Disconnected": [
         "Desconectado"
@@ -320,6 +352,9 @@
       "File is too large. The maximum size is 5 MB.": [
         "El archivo es demasiado grande. El tamaño máximo es de 5 MB."
       ],
+      "Fix on the panel": [
+        "Corregir en el panel"
+      ],
       "Get a key on the Joinotify panel": [
         "Obtén una clave en el panel de Joinotify"
       ],
@@ -346,6 +381,9 @@
       ],
       "I already did": [
         "Ya lo hice"
+      ],
+      "I already have an API key": [
+        "Ya tengo una clave de API"
       ],
       "Import": [
         "Importar"
@@ -398,6 +436,12 @@
       "Joinotify": [
         "Joinotify"
       ],
+      "Joinotify account": [
+        "Cuenta de Joinotify"
+      ],
+      "Joinotify sends your WhatsApp messages through the official WhatsApp Cloud API. Connect your account to import your numbers and start sending.": [
+        "Joinotify envía tus mensajes de WhatsApp a través de la API oficial de WhatsApp Cloud. Conecta tu cuenta para importar tus números y empezar a enviar."
+      ],
       "kept on the do-not-contact list": [
         "mantenido en la lista de no contactar"
       ],
@@ -421,6 +465,9 @@
       ],
       "Last run was stopped.": [
         "Última ejecución fue detenida."
+      ],
+      "Last synced": [
+        "Última sincronización"
       ],
       "Last synced:": [
         "Última sincronización:"
@@ -449,6 +496,9 @@
       "Logs cleared successfully.": [
         "Registros borrados con éxito."
       ],
+      "Manage numbers": [
+        "Gestionar números"
+      ],
       "Map an entity (post type) and a meta key to a named variable. The variable becomes available in the flow builder and is replaced at runtime with the matching post meta value.": [
         "Mapear una entidad (tipo de publicación) y una clave meta a una variable nombrada. La variable se vuelve disponible en el generador de flujos y se reemplaza en tiempo de ejecución con el valor meta de publicación correspondiente."
       ],
@@ -469,6 +519,9 @@
       ],
       "Meta key": [
         "Clave del meta dato"
+      ],
+      "Never": [
+        "Nunca"
       ],
       "New variable": [
         "Nueva variable"
@@ -506,6 +559,9 @@
       "No variables available.": [
         "No hay variables disponibles."
       ],
+      "Not connected": [
+        "No conectado"
+      ],
       "not found in the account": [
         "no encontrado en la cuenta"
       ],
@@ -514,6 +570,9 @@
       ],
       "Notice": [
         "Aviso"
+      ],
+      "Numbers": [
+        "Números"
       ],
       "Numbers synced.": [
         "Números sincronizados."
@@ -544,6 +603,9 @@
       ],
       "Paste the API key issued for this site on the Joinotify panel.": [
         "Pega la clave API emitida para este sitio en el panel de Joinotify."
+      ],
+      "Phone number ID": [
+        "ID de número de teléfono"
       ],
       "Phone number that will receive the test WhatsApp message.": [
         "Número de teléfono que recibirá el mensaje de prueba de WhatsApp."
@@ -625,6 +687,9 @@
       ],
       "Save changes": [
         "Guardar cambios"
+      ],
+      "Save the settings to keep the new IDs.": [
+        "Guarda los configuraciones para conservar los nuevos ID."
       ],
       "Saved": [
         "Guardado"
@@ -728,6 +793,9 @@
       "Sync": [
         "Sincronizar"
       ],
+      "Sync numbers": [
+        "Sincronizar números"
+      ],
       "Sync numbers from Joinotify": [
         "Sincronizar números desde Joinotify"
       ],
@@ -764,8 +832,11 @@
       "The debug log is empty.": [
         "El registro de depuración está vacío."
       ],
-      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
-        "La clave de Joinotify de este sitio fue revocada o no puede enviar estos datos. Conecta el sitio de nuevo en la tarjeta de WhatsApp de Configuración → Aplicaciones; la sincronización se reanuda por sí sola."
+      "The Joinotify API refused the key of this site. It may have been revoked on the panel. Connect again to issue a new one.": [
+        "La API de Joinotify rechazó la clave de este sitio. Puede que se haya revocado en el panel. Vuelve a conectar para emitir una nueva."
+      ],
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
+        "La clave de Joinotify de este sitio se revocó o no puede enviar estos datos. Vuelve a conectar el sitio en Configuraciones → General; la sincronización se reanuda sola."
       ],
       "The message is prefilled and can be adjusted before sending the test.": [
         "El mensaje está prellenado y se puede ajustar antes de enviar la prueba."
@@ -782,11 +853,14 @@
       "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.": [
         "Esta clave está definida en wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) y solo se puede cambiar allí."
       ],
-      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
-        "Este sitio está en %1$s, pero su clave de Joinotify fue emitida a %2$s. Si esta es una copia de staging, déjala en pausa: enviaría pedidos de prueba a clientes reales. Si el sitio se movió, conéctalo de nuevo en la tarjeta de WhatsApp de Ajustes → Aplicaciones."
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General.": [
+        "Este sitio está en %1$s, pero su clave de Joinotify se emitió para %2$s. Si es una copia de pruebas, déjala en pausa: enviaría pedidos de prueba a clientes reales. Si el sitio se mudó, vuelve a conectarlo en Configuraciones → General."
       ],
-      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
-        "Este sitio fue eliminado de tu cuenta de Joinotify. Conéctalo de nuevo en la tarjeta de WhatsApp de Ajustes → Aplicaciones para reanudar."
+      "This site is no longer connected to Joinotify.": [
+        "Este sitio ya no está conectado a Joinotify."
+      ],
+      "This site was removed from your Joinotify account. Connect it again in Settings → General to resume.": [
+        "Este sitio se eliminó de tu cuenta de Joinotify. Vuelve a conectarlo en Configuraciones → General para reanudar."
       ],
       "This text variable may not work in this context": [
         "Esta variable de texto puede no funcionar en este contexto"
@@ -842,6 +916,9 @@
       "What is sent": [
         "Qué se envía"
       ],
+      "WhatsApp Business Account ID": [
+        "ID de cuenta de WhatsApp Business"
+      ],
       "with an invalid phone number": [
         "con un número de teléfono inválido"
       ],
@@ -853,6 +930,9 @@
       ],
       "You have been automating your messages with Joinotify for a while now. If it is helping you, would you take a minute to rate it on WordPress.org?": [
         "Has estado automatizando tus mensajes con Joinotify durante un tiempo. Si te está ayudando, ¿te tomarías un minuto para calificarlo en WordPress.org?"
+      ],
+      "Your Joinotify account is blocked for sending. Check your plan on the Joinotify panel.": [
+        "Tu cuenta de Joinotify está bloqueada para envíos. Revisa tu plan en el panel de Joinotify."
       ],
       "Your Joinotify account is connected.": [
         "Tu cuenta de Joinotify está conectada."

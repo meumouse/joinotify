@@ -103,7 +103,7 @@ class Repository {
      * Write-only settings (the Joinotify API key) are blanked before they reach
      * the browser, so the settings form always submits them empty. Without this
      * the first press of Save after connecting — through the wizard or through
-     * the WhatsApp modal — would write that empty string back and silently
+     * the connection card of Settings → General — would write that empty string back and silently
      * disconnect the site. Clearing one is done through its own control, which
      * writes the option directly.
      *

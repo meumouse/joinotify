@@ -12,7 +12,7 @@
  *   & "C:\path\to\Local\php.exe" tests/upgrader-test.php
  *
  * @since 2.0.0
- * @version 2.6.0
+ * @version 2.8.0
  */
 
 // The class file guards with `defined('ABSPATH') || exit;`.
@@ -92,6 +92,39 @@ check( 'the API key sealing runs once', ! has_pending( '2.5.1', array( 'seal_clo
 check( 'upgrade from 2.6.2 moves the workflows to the payment trigger', has_pending( '2.6.2', array(), Upgrader::PAYMENT_TRIGGER_ROUTINE ) );
 check( 'a site already on 2.7.0 skips the payment trigger move', ! has_pending( '2.7.0', array(), Upgrader::PAYMENT_TRIGGER_ROUTINE ) );
 check( 'a site upgraded from 2.0.0 gets both workflow routines', has_pending( '1.4.6', array(), 'workflows_schema_2_0_0' ) && has_pending( '1.4.6', array(), Upgrader::PAYMENT_TRIGGER_ROUTINE ) );
+check( 'upgrade from 2.7.3 switches WhatsApp back on', has_pending( '2.7.3', array(), 'enable_whatsapp_2_8_0' ) );
+check( 'a site already on 2.8.0 skips the WhatsApp switch', ! has_pending( '2.8.0', array(), 'enable_whatsapp_2_8_0' ) );
+
+echo "\n== enable_whatsapp_integration ==\n";
+
+// Minimal option store: the routine only reads and writes joinotify_settings.
+$GLOBALS['joinotify_test_options'] = array();
+$GLOBALS['joinotify_test_writes'] = 0;
+
+function get_option( $name, $default = false ) {
+	return array_key_exists( $name, $GLOBALS['joinotify_test_options'] ) ? $GLOBALS['joinotify_test_options'][ $name ] : $default;
+}
+
+function update_option( $name, $value ) {
+	$GLOBALS['joinotify_test_options'][ $name ] = $value;
+	$GLOBALS['joinotify_test_writes']++;
+
+	return true;
+}
+
+$GLOBALS['joinotify_test_options']['joinotify_settings'] = array( 'enable_whatsapp_integration' => 'no', 'joinotify_default_country_code' => '55' );
+Upgrader::enable_whatsapp_integration();
+$stored = $GLOBALS['joinotify_test_options']['joinotify_settings'];
+check( 'a site that had WhatsApp off gets it back on', 'yes' === $stored['enable_whatsapp_integration'] );
+check( 'the other settings are kept', '55' === $stored['joinotify_default_country_code'] );
+
+$GLOBALS['joinotify_test_writes'] = 0;
+Upgrader::enable_whatsapp_integration();
+check( 'running it again writes nothing', 0 === $GLOBALS['joinotify_test_writes'] );
+
+$GLOBALS['joinotify_test_options'] = array();
+Upgrader::enable_whatsapp_integration();
+check( 'a site with no settings stored is left alone', ! isset( $GLOBALS['joinotify_test_options']['joinotify_settings'] ) );
 
 echo "\n== summary ==\n";
 echo "  {$assertions} assertions, {$failures} failures\n";
