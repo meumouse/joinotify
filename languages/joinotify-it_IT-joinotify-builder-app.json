@@ -1469,6 +1469,9 @@
       "The value to iterate. Use {{ placeholders }} — each entry becomes one iteration.": [
         "Il valore da iterare. Usa {{ placeholders }} — ogni voce diventa un'iterazione."
       ],
+      "The WhatsApp account of this sender does not have this template, so WhatsApp would refuse it. Choose a template from this list or another sender.": [
+        "L'account WhatsApp di questo mittente non ha questo modello, quindi WhatsApp lo rifiuterebbe. Scegli un modello da questo elenco o un altro mittente."
+      ],
       "The whole response body": [
         "L'intero corpo della risposta"
       ],

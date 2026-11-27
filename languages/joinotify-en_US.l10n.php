@@ -2057,6 +2057,7 @@ return [
 		'The variable "%s" already exists. Choose another name.' => 'The variable "%s" already exists. Choose another name.',
 		'The webhook endpoint could not be registered.' => 'The webhook endpoint could not be registered.',
 		'The WhatsApp account of the sending number has no template with this name in this language. Templates belong to one account: choose one of the sender\'s account, or send from a number of the account that owns it.' => 'The WhatsApp account of the sending number has no template with this name in this language. Templates belong to one account: choose one of the sender\'s account, or send from a number of the account that owns it.',
+		'The WhatsApp account of this sender does not have this template, so WhatsApp would refuse it. Choose a template from this list or another sender.' => 'The WhatsApp account of this sender does not have this template, so WhatsApp would refuse it. Choose a template from this list or another sender.',
 		'The WhatsApp API could not find the sender number. Sync your numbers under Joinotify → Settings → Phones.' => 'The WhatsApp API could not find the sender number. Sync your numbers under Joinotify → Settings → Phones.',
 		'The WhatsApp API rate limit was reached. The message will be retried shortly.' => 'The WhatsApp API rate limit was reached. The message will be retried shortly.',
 		'The WhatsApp API refused this request. The number may not be authorized to send on this account.' => 'The WhatsApp API refused this request. The number may not be authorized to send on this account.',

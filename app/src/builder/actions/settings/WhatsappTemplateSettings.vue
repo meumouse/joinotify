@@ -11,6 +11,11 @@
  * surfaces the states that stop a template from being delivered (paused,
  * disabled, rejected).
  *
+ * Templates belong to one business account, and Meta looks one up on the
+ * account of the sending number, so the list is the one of the action's
+ * sender and each option is a name in one language. A saved template the
+ * sender's account does not have is kept and pointed out.
+ *
  * The template list, the preview and the variable fields are shared with the
  * test message of the settings (useWhatsappTemplates, TemplatePreview and
  * TemplateVariablesForm); the slot rules live in utils/whatsappTemplates.
@@ -30,7 +35,7 @@ import { useWhatsappTemplates } from '../../../composables/useWhatsappTemplates'
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { createApiClient } from '../../../utils/api';
 import { __, textDomain } from '../../../utils/i18n';
-import { buildVariableMap, templateStatusWarning, type TemplateVariable } from '../../../utils/whatsappTemplates';
+import { buildVariableMap, templateStatusWarning, type RemoteTemplate, type TemplateVariable } from '../../../utils/whatsappTemplates';
 import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
 
 const props = defineProps({
@@ -45,11 +50,49 @@ const store = useWorkflowBuilderStore();
 const api = createApiClient(store.bootstrap);
 const senderOptions = useSenderOptions(() => (props.modelValue as Record<string, unknown>).sender);
 const { update } = useActionSettingsUpdate(props, emit);
-const { templates, loading, syncing, errorMsg, staleWarning, loadTemplates, syncTemplates } = useWhatsappTemplates(api);
+
+// Meta looks a template up on the account of the number that sends it, so the
+// list is the one of the action's sender. Without a sender (the action does
+// not run without one) the API answers for the default account.
+const senderWaba = computed(() => {
+  const sender = String((props.modelValue as Record<string, unknown>).sender || '').trim();
+  const senders = Array.isArray(store.bootstrap?.phones?.senders) ? store.bootstrap.phones.senders : [];
+  const match = senders.find((item: unknown) => item && typeof item === 'object' && (item as Record<string, unknown>).phone === sender);
+
+  return String((match as Record<string, unknown> | undefined)?.waba_id || '');
+});
+
+const { templates, loading, loaded, syncing, errorMsg, staleWarning, loadTemplates, syncTemplates } = useWhatsappTemplates(api, {
+  wabaId: () => senderWaba.value,
+});
 
 const templateName = computed(() => String((props.modelValue as Record<string, unknown>).template_name || ''));
+const templateLanguage = computed(() => String((props.modelValue as Record<string, unknown>).language || ''));
 
-const selected = computed(() => templates.value.find((template) => template.name === templateName.value) || null);
+/**
+ * Option value of a template: the same name can be approved in several languages.
+ *
+ * @since 2.8.0
+ * @param {RemoteTemplate} template Template from the list.
+ * @returns {string}
+ */
+function templateKeyOf(template: RemoteTemplate): string {
+  return `${template.name}|${template.language || ''}`;
+}
+
+// The stored name and language pick the template; an action saved before the
+// language was pinned falls back to the first one with that name.
+const selected = computed(() =>
+  templates.value.find((template) => template.name === templateName.value && template.language === templateLanguage.value)
+  || templates.value.find((template) => template.name === templateName.value)
+  || null
+);
+
+// A stored template the sender's account does not list would be refused with
+// Meta's 132001, so it is pointed out instead of silently replaced.
+const missingTemplate = computed(() =>
+  Boolean(templateName.value) && loaded.value && !loading.value && !errorMsg.value && !selected.value
+);
 
 const storedVariables = computed<TemplateVariable[]>(() =>
   Array.isArray((props.modelValue as Record<string, unknown>).variables)
@@ -57,30 +100,88 @@ const storedVariables = computed<TemplateVariable[]>(() =>
     : []
 );
 
-const templateOptions = computed(() =>
-  templates.value.map((template) => ({
-    value: template.name,
-    label: template.name,
-    meta: [template.category, template.language, template.status].filter(Boolean).join(' · '),
-  }))
-);
+const templateOptions = computed(() => {
+  const options = templates.value.map((template) => ({
+    value: templateKeyOf(template),
+    label: template.language ? `${template.name} · ${template.language}` : template.name,
+    meta: [template.category, template.status].filter(Boolean).join(' · '),
+  }));
+
+  // Keep a saved template visible in the field even when the list lacks it.
+  if (missingTemplate.value) {
+    options.unshift({
+      value: `${templateName.value}|${templateLanguage.value}`,
+      label: templateLanguage.value ? `${templateName.value} · ${templateLanguage.value}` : templateName.value,
+      meta: '',
+    });
+  }
+
+  return options;
+});
+
+const selectedKey = computed(() => {
+  if (selected.value) {
+    return templateKeyOf(selected.value);
+  }
+
+  return templateName.value ? `${templateName.value}|${templateLanguage.value}` : '';
+});
 
 // Anything other than APPROVED will be refused at send time, so it has to be
 // visible while the workflow is being built, not discovered in the logs.
 const blockingStatus = computed(() => (selected.value ? templateStatusWarning(selected.value.status) : ''));
 
-// Picking a template rewrites the variable slots and pins the language the
-// template was approved in — sending another language code is an error.
+/**
+ * Store the chosen template with its language and variable slots in one change.
+ *
+ * The language is the one the template was approved in — sending another
+ * language code is an error.
+ *
+ * @since 2.8.0
+ * @param {string} key Option value, `name|language`.
+ * @returns {void}
+ */
+function pickTemplate(key: string): void {
+  const template = templates.value.find((item) => templateKeyOf(item) === key);
+
+  if (!template) {
+    return;
+  }
+
+  emit('update:modelValue', {
+    ...(props.modelValue as Record<string, unknown>),
+    template_name: template.name,
+    language: template.language || '',
+    variables: buildVariableMap(template, storedVariables.value),
+  });
+}
+
+// Once the list is known, the stored language and slots follow the template
+// as Meta has it now. Nothing is emitted when they already match.
 watch(selected, (template) => {
   if (!template) {
     return;
   }
 
-  if (template.language && template.language !== (props.modelValue as Record<string, unknown>).language) {
-    update('language', template.language);
+  const language = template.language || templateLanguage.value;
+  const variables = buildVariableMap(template, storedVariables.value);
+
+  if (language === templateLanguage.value && JSON.stringify(variables) === JSON.stringify(storedVariables.value)) {
+    return;
   }
 
-  update('variables', buildVariableMap(template, storedVariables.value));
+  emit('update:modelValue', {
+    ...(props.modelValue as Record<string, unknown>),
+    language,
+    variables,
+  });
+});
+
+// Another sender may belong to another account, with other templates.
+watch(senderWaba, (wabaId, previous) => {
+  if (wabaId !== previous) {
+    loadTemplates();
+  }
 });
 
 onMounted(() => loadTemplates());
@@ -113,13 +214,17 @@ onMounted(() => loadTemplates());
     >
       <div class="space-y-2">
         <BaseSelectField
-          :model-value="templateName"
+          :model-value="selectedKey"
           :options="templateOptions"
           :label="__('Template', textDomain)"
           :placeholder="loading ? __('Loading templates…', textDomain) : __('Select a template', textDomain)"
           :disabled="loading"
-          @update:model-value="update('template_name', $event)"
+          @update:model-value="pickTemplate(String($event))"
         />
+
+        <p v-if="missingTemplate" class="rounded-[8px] border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
+          {{ __('The WhatsApp account of this sender does not have this template, so WhatsApp would refuse it. Choose a template from this list or another sender.', textDomain) }}
+        </p>
 
         <div class="flex items-center gap-3">
           <button

@@ -126,7 +126,7 @@ msgstr "{{ wc_billing_first_name }} ou um valor fixo"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:218
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:87
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:96
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:104
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:205
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:47
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr "{{ wc_billing_phone }} ou +5511999990000"
@@ -1231,7 +1231,7 @@ msgstr ""
 "sincronizada da sua conta. Necessário nesse transporte, ignorado no relay "
 "legado."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:112
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:213
 msgid ""
 "Approved templates of your WhatsApp Business Account. Only these can be "
 "delivered outside the 24-hour window."
@@ -3669,7 +3669,7 @@ msgstr ""
 msgid "Each source can add its own tags, on top of the tag of this site."
 msgstr "Cada fonte pode adicionar suas próprias tags, além da tag deste site."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:155
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:260
 msgid ""
 "Each template variable is filled at send time with the placeholder you map "
 "here."
@@ -5765,7 +5765,7 @@ msgstr "Carregando o canvas do fluxo"
 msgid "Loading senders..."
 msgstr "Carregando remetentes..."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:119
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
 #: app/src/pages/settings/components/cards/PhoneActions.vue:475
 msgid "Loading templates…"
 msgstr "Carregando modelos…"
@@ -6681,7 +6681,7 @@ msgstr "Nenhuma tag ainda."
 msgid "No tags."
 msgstr "Sem tags."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:140
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:245
 msgid ""
 "No template found. Create one on the Joinotify panel and approve it with "
 "Meta first."
@@ -7490,7 +7490,7 @@ msgstr "ID do número de telefone"
 
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:100
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:201
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 msgid "Phone number or a placeholder that resolves to one."
 msgstr "Número de telefone ou um placeholder que resolve para um."
@@ -7828,8 +7828,8 @@ msgstr "Razão (opcional)"
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:100
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:103
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:201
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:204
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 #: app/src/pages/history/components/HistoryDetailsModal.vue:76
@@ -8575,7 +8575,7 @@ msgstr "Selecione um nó para editar suas configurações."
 msgid "Select a sender"
 msgstr "Selecione um remetente"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:119
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
 #: app/src/pages/settings/components/cards/PhoneActions.vue:475
 msgid "Select a template"
 msgstr "Selecione um modelo"
@@ -8890,8 +8890,8 @@ msgstr "Enviar webhook"
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:78
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:87
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:91
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:95
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:192
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:196
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
 #: app/src/pages/history/components/HistoryDetailsModal.vue:75
@@ -9397,7 +9397,7 @@ msgstr "Suíça"
 msgid "Sync"
 msgstr "Sincronizar"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:131
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:236
 #: app/src/pages/settings/components/cards/PhoneActions.vue:491
 msgid "Sync now"
 msgstr "Sincronizar agora"
@@ -9426,7 +9426,7 @@ msgstr "Sincronização pausada"
 msgid "Sync templates with your account"
 msgstr "Sincronize templates com sua conta"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:131
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:236
 #: app/src/components/fields/WhatsappTemplateField.vue:186
 #: app/src/pages/settings/components/cards/PhoneActions.vue:491
 msgid "Syncing…"
@@ -9600,8 +9600,8 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:108
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:111
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:118
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:212
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:219
 #: app/src/pages/builder/BuilderPage.vue:997
 #: app/src/pages/history/components/HistoryDetailsModal.vue:163
 #: app/src/pages/history/HistoryPage.vue:105
@@ -10265,6 +10265,15 @@ msgstr ""
 "A conta do WhatsApp do número remetente não tem um modelo com esse nome "
 "nesse idioma. Cada modelo pertence a uma conta: escolha um modelo da conta "
 "do remetente ou envie de um número da conta dona do modelo."
+
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:226
+msgid ""
+"The WhatsApp account of this sender does not have this template, so "
+"WhatsApp would refuse it. Choose a template from this list or another "
+"sender."
+msgstr ""
+"A conta do WhatsApp deste remetente não tem este modelo, então o WhatsApp "
+"vai recusá-lo. Escolha um modelo desta lista ou outro remetente."
 
 #: admin/src/Api/Send_Error.php:148
 msgid ""
@@ -11703,7 +11712,7 @@ msgstr "Variável salva com sucesso."
 msgid "Variable saved."
 msgstr "Variável salva."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:154
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:259
 msgid "Variables"
 msgstr "Variáveis"
 
@@ -11964,7 +11973,7 @@ msgstr "Número do WhatsApp que enviará a mídia."
 msgid "WhatsApp number that will send the message."
 msgstr "Número do WhatsApp que enviará a mensagem."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:91
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:192
 msgid "WhatsApp number that will send the template."
 msgstr "Número do WhatsApp que enviará o modelo."
 

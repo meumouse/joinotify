@@ -28,6 +28,12 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 - A failed test message is no longer put in the retry queue, and its reason stays on screen in the test window
 - A refused test message names the cause when Meta gives one, such as a display name still under review
 
+### Fixed
+
+- The builder's template step lists the templates of its sender's WhatsApp account instead of always the default account, whose templates the sender could not send
+- The builder's template step keeps the language chosen for a template approved in more than one language
+- The builder's template step warns when its saved template is not in the sender's WhatsApp account
+
 ### Deprecated
 
 - The Telegram and Resend integrations, which will be removed in 3.0.0
