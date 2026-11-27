@@ -6,7 +6,10 @@
  * the only way to reach someone outside the 24-hour session window, which is
  * where business initiated workflows almost always run.
  *
+ * Always offered since 2.8.0: WhatsApp has no on/off switch any more.
+ *
  * @since 2.3.0
+ * @version 2.8.0
  */
 import WhatsappTemplateSettings from '../settings/WhatsappTemplateSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
@@ -91,7 +94,6 @@ export const whatsappTemplateDefinition: ActionDefinition = {
   icon: 'message-rounded',
   iconSvg: WHATSAPP_ICON,
   category: 'messages',
-  requiresSetting: 'enable_whatsapp_integration',
   hasSettings: true,
   priority: 105,
   isExpansible: false,

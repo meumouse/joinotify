@@ -6,7 +6,10 @@
  * Provides data normalization (sender, receiver, and AI settings), description
  * builder, and validation for the sender and prompt.
  *
+ * Always offered since 2.8.0: WhatsApp has no on/off switch any more.
+ *
  * @since 2.0.0
+ * @version 2.8.0
  */
 import WhatsappAiMessageSettings from '../settings/WhatsappAiMessageSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
@@ -46,7 +49,6 @@ export const whatsappAiMessageDefinition: ActionDefinition = {
   icon: 'message-rounded',
   iconSvg: WHATSAPP_ICON,
   category: 'ai',
-  requiresSetting: 'enable_whatsapp_integration',
   hasSettings: true,
   priority: 45,
   isExpansible: false,

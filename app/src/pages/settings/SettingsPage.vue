@@ -4,7 +4,7 @@
  * SettingsPage.vue frontend component.
  *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.8.0
  */
 import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, watch } from 'vue';
 import { __, textDomain } from '../../utils/i18n';
@@ -60,6 +60,7 @@ const sections = computed(() => bootstrap.value.section_tabs || []);
 const integrations = computed(() => bootstrap.value.integrations || []);
 const integrationCategories = computed(() => bootstrap.value.integration_categories || []);
 const phones = computed(() => bootstrap.value.phones || { senders: [], sender_count: 0 });
+const connection = computed(() => bootstrap.value.connection || {});
 const system = computed(() => bootstrap.value.system || {});
 const builderVariables = computed(() => bootstrap.value.builder_variables || { items: [], post_types: [] });
 const settingsFields = computed(() => flattenFields(bootstrap.value.schema || []));
@@ -162,6 +163,13 @@ function getInitialActiveSectionId() {
 
   if (typeof window === 'undefined') {
     return fallback;
+  }
+
+  // Back from the Joinotify panel: the connection card, on General, finishes the handshake.
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('code') && params.get('state')) {
+    return 'general';
   }
 
   const saved = window.localStorage.getItem(activeSectionStorageKey);
@@ -387,6 +395,9 @@ async function syncCloudNumbers() {
   try {
     const response = await api.post('/admin/cloud/numbers/sync', {});
 
+    // The sync also asks the API about the key again (see the connection card).
+    syncConnection(response?.connection);
+
     if (response?.status === 'error') {
       toast(response.message || __('Could not sync your numbers.', textDomain), 'danger', __('Phones', textDomain));
       debugLogger.log('phones:cloud-sync-failed', { error: response?.message || '' });
@@ -408,42 +419,84 @@ async function syncCloudNumbers() {
   }
 }
 
+/**
+ * Send a test message, as free text or as an approved template.
+ *
+ * A refused send still answers 200 with `status: 'error'`, and its reason (a
+ * closed 24-hour window, a template Meta refused, a number still on its
+ * display-name review) goes back to the modal, which keeps it on screen next
+ * to what was tried instead of in a toast that fades.
+ *
+ * @since 1.4.7
+ * @version 2.8.0
+ * @param {Object} payload Body of the test-message route.
+ * @returns {Promise<{ok: boolean, message: string}>}
+ */
 async function sendTestMessage(payload) {
-  debugLogger.log('phones:test-message-start', {
-    phone: payload?.phone || '',
-  });
+  const logContext = {
+    type: payload?.type || 'text',
+    template: payload?.template_name || '',
+  };
+
+  debugLogger.log('phones:test-message-start', logContext);
+
   try {
     const response = await api.post('/admin/settings/phones/test-message', payload);
 
-    // A refused send still answers 200 with `status: 'error'` — the reason it
-    // carries (a closed 24-hour window, most often) has to reach the toast as a
-    // failure, not be announced as a success.
     if (response?.status === 'error') {
-      toast(response.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
       debugLogger.log('phones:test-message-refused', {
-        phone: payload?.phone || '',
+        ...logContext,
         error_code: response?.error_code || '',
+        meta_code: response?.meta_code || 0,
       });
-      return false;
+      return { ok: false, message: response.message || __('Failed to send message.', textDomain) };
     }
 
     toast(response.message || __('Message sent.', textDomain), 'success', __('Phones', textDomain));
     debugLogger.log('phones:test-message-complete', {
-      phone: payload?.phone || '',
+      ...logContext,
+      message_id: response?.message_id || '',
     });
-    return true;
+    return { ok: true, message: response.message || '' };
   } catch (error) {
-    toast(error.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
     debugLogger.log('phones:test-message-failed', {
-      phone: payload?.phone || '',
+      ...logContext,
       error: error instanceof Error ? error.message : String(error),
     });
-    return false;
+    return { ok: false, message: error.message || __('Failed to send message.', textDomain) };
   }
 }
 
 function syncPhones(nextPhones) {
   bootstrap.value = { ...bootstrap.value, phones: cloneValue(nextPhones) };
+}
+
+/**
+ * Take a connection state the backend just reported.
+ *
+ * Connecting fills in the default origin and business account ids on the
+ * server, so they are copied into the form, both as the current and as the
+ * saved value: pressing Save afterwards must not write the ids the page
+ * loaded with back over them, and must not count them as unsaved changes.
+ *
+ * @since 2.8.0
+ * @param {Object} nextConnection Connection state from the backend.
+ * @returns {void}
+ */
+function syncConnection(nextConnection) {
+  if (!nextConnection || typeof nextConnection !== 'object') {
+    return;
+  }
+
+  bootstrap.value = { ...bootstrap.value, connection: cloneValue(nextConnection) };
+
+  const ids = {
+    whatsapp_phone_number_id: String(nextConnection.phone_number_id || ''),
+    whatsapp_waba_id: String(nextConnection.waba_id || ''),
+  };
+
+  Object.assign(settings, ids);
+  savedSettings.value = { ...savedSettings.value, ...ids };
 }
 
 function syncBuilderVariables(items) {
@@ -732,8 +785,16 @@ function canConfigureIntegration(integration) {
             :general-visible-fields="generalVisibleFields"
             :general-modal-fields="generalModalFields"
             :settings="settings"
+            :connection="connection"
+            :phones="phones"
+            :syncing="senderActionLoading"
             @update-setting="updateSetting"
             @configure="openFieldConfig"
+            @update:connection="syncConnection"
+            @update:phones="syncPhones"
+            @sync="syncCloudNumbers"
+            @manage-numbers="activeSectionId = 'phones'"
+            @notify="(message, tone) => toast(message, tone, __('Joinotify', textDomain))"
           />
 
           <PhonesSettingsSection

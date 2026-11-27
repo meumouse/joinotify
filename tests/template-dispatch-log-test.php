@@ -447,6 +447,11 @@ check( 'find() falls back to the snapshot on a cold cache', 'Olá {{1}}.' === ( 
 check( 'find() prefers the requested language', 'Hello {{1}}.' === ( Template_Repository::find( 'pedido_pago', 'en_US' )['body'] ?? '' ) );
 check( 'find() without a language still answers', null !== Template_Repository::find( 'pedido_pago' ) );
 
+// The OTP login asks with the language stored in its settings, which may be the
+// default pt_BR for a template approved in another language only.
+$other = Template_Repository::find( 'pedido_pago', 'es_ES' );
+check( 'find() with a language the template lacks answers another language', is_array( $other ) && in_array( $other['language'] ?? '', array( 'pt_BR', 'en_US' ), true ) );
+
 $cold = Template_Repository::render( 'pedido_pago', 'en_US', array(
 	array( 'type' => 'body', 'parameters' => array( array( 'type' => 'text', 'text' => 'Ana' ) ) ),
 ) );

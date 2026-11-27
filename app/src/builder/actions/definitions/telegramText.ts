@@ -6,10 +6,15 @@
  * configured in the Telegram integration. Provides data normalization (chat id
  * receiver, message), description builder, and validation.
  *
+ * Deprecated since 2.8.0: never offered in the action library, but saved nodes
+ * keep their settings UI until the integration is removed.
+ *
  * @since 2.1.0
+ * @version 2.8.0
  */
 import TelegramTextSettings from '../settings/TelegramTextSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
+import { deprecatedIntegrationMessage } from '../utils/deprecation';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import type { ActionDefinition } from '../registry/types';
 import { TELEGRAM_ICON } from './actionIcons';
@@ -43,6 +48,8 @@ export const telegramTextDefinition: ActionDefinition = {
   iconSvg: TELEGRAM_ICON,
   category: 'messages',
   requiresSetting: 'enable_telegram_integration',
+  deprecated: true,
+  deprecatedMessage: deprecatedIntegrationMessage(__('Telegram', textDomain)),
   hasSettings: true,
   priority: 60,
   isExpansible: false,

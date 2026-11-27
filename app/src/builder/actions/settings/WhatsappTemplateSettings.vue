@@ -11,66 +11,32 @@
  * surfaces the states that stop a template from being delivered (paused,
  * disabled, rejected).
  *
- * Besides the `{{...}}` tokens, a template may need values it has no token
- * for: the file or location of the header, the coupon of a copy-code button,
- * the login code of an authentication button and the expiration of a
- * limited-time offer. Those slots carry a `format` (or a button sub-type) and
- * get their own label and hint. A carousel lists the slots of each card, which
- * carry the card position in `card`.
+ * Templates belong to one business account, and Meta looks one up on the
+ * account of the sending number, so the list is the one of the action's
+ * sender and each option is a name in one language. A saved template the
+ * sender's account does not have is kept and pointed out.
+ *
+ * The template list, the preview and the variable fields are shared with the
+ * test message of the settings (useWhatsappTemplates, TemplatePreview and
+ * TemplateVariablesForm); the slot rules live in utils/whatsappTemplates.
  *
  * @since 2.3.0
- * @version 2.6.0
+ * @version 2.8.0
  */
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import BaseSelectField from '../../components/base/BaseSelectField.vue';
 import BaseTextFieldVariables from '../../components/base/BaseTextFieldVariables.vue';
 import FieldGroup from '../../components/base/FieldGroup.vue';
+import TemplatePreview from '../../../components/whatsapp/TemplatePreview.vue';
+import TemplateVariablesForm from '../../../components/whatsapp/TemplateVariablesForm.vue';
 import { useSenderOptions } from '../../../composables/useSenderOptions';
 import { useActionSettingsUpdate } from '../../../composables/useActionSettingsUpdate';
+import { useWhatsappTemplates } from '../../../composables/useWhatsappTemplates';
 import { useWorkflowBuilderStore } from '../../../stores/useWorkflowBuilderStore';
 import { createApiClient } from '../../../utils/api';
-import { ImagePlus } from '@boxicons/vue';
 import { __, textDomain } from '../../../utils/i18n';
+import { buildVariableMap, templateStatusWarning, type RemoteTemplate, type TemplateVariable } from '../../../utils/whatsappTemplates';
 import type { WorkflowPlaceholderItem } from '../../../types/workflowBuilder';
-
-interface TemplateVariable {
-  card?: number;
-  component: string;
-  sub_type: string;
-  index: number;
-  key: string;
-  label?: string;
-  format?: string;
-  value?: string;
-}
-
-interface TemplateButton {
-  type: string;
-  text: string;
-  url: string;
-}
-
-interface TemplateCard {
-  header_format: string;
-  body: string;
-  buttons: TemplateButton[];
-}
-
-interface RemoteTemplate {
-  name: string;
-  language: string;
-  status: string;
-  category: string;
-  header_format?: string;
-  header: string;
-  body: string;
-  footer: string;
-  buttons?: TemplateButton[];
-  cards?: TemplateCard[];
-  variables: TemplateVariable[];
-}
-
-const MEDIA_FORMATS = ['image', 'video', 'document'];
 
 const props = defineProps({
   modelValue: { type: Object, default: () => ({}) },
@@ -85,352 +51,137 @@ const api = createApiClient(store.bootstrap);
 const senderOptions = useSenderOptions(() => (props.modelValue as Record<string, unknown>).sender);
 const { update } = useActionSettingsUpdate(props, emit);
 
-const templates = ref<RemoteTemplate[]>([]);
-const loading = ref(false);
-const syncing = ref(false);
-const errorMsg = ref('');
-const staleWarning = ref('');
+// Meta looks a template up on the account of the number that sends it, so the
+// list is the one of the action's sender. Without a sender (the action does
+// not run without one) the API answers for the default account.
+const senderWaba = computed(() => {
+  const sender = String((props.modelValue as Record<string, unknown>).sender || '').trim();
+  const senders = Array.isArray(store.bootstrap?.phones?.senders) ? store.bootstrap.phones.senders : [];
+  const match = senders.find((item: unknown) => item && typeof item === 'object' && (item as Record<string, unknown>).phone === sender);
+
+  return String((match as Record<string, unknown> | undefined)?.waba_id || '');
+});
+
+const { templates, loading, loaded, syncing, errorMsg, staleWarning, loadTemplates, syncTemplates } = useWhatsappTemplates(api, {
+  wabaId: () => senderWaba.value,
+});
 
 const templateName = computed(() => String((props.modelValue as Record<string, unknown>).template_name || ''));
+const templateLanguage = computed(() => String((props.modelValue as Record<string, unknown>).language || ''));
 
-const selected = computed(() => templates.value.find((template) => template.name === templateName.value) || null);
+/**
+ * Option value of a template: the same name can be approved in several languages.
+ *
+ * @since 2.8.0
+ * @param {RemoteTemplate} template Template from the list.
+ * @returns {string}
+ */
+function templateKeyOf(template: RemoteTemplate): string {
+  return `${template.name}|${template.language || ''}`;
+}
 
-const templateOptions = computed(() =>
-  templates.value.map((template) => ({
-    value: template.name,
-    label: template.name,
-    meta: [template.category, template.language, template.status].filter(Boolean).join(' · '),
-  }))
+// The stored name and language pick the template; an action saved before the
+// language was pinned falls back to the first one with that name.
+const selected = computed(() =>
+  templates.value.find((template) => template.name === templateName.value && template.language === templateLanguage.value)
+  || templates.value.find((template) => template.name === templateName.value)
+  || null
 );
+
+// A stored template the sender's account does not list would be refused with
+// Meta's 132001, so it is pointed out instead of silently replaced.
+const missingTemplate = computed(() =>
+  Boolean(templateName.value) && loaded.value && !loading.value && !errorMsg.value && !selected.value
+);
+
+const storedVariables = computed<TemplateVariable[]>(() =>
+  Array.isArray((props.modelValue as Record<string, unknown>).variables)
+    ? ((props.modelValue as Record<string, unknown>).variables as TemplateVariable[])
+    : []
+);
+
+const templateOptions = computed(() => {
+  const options = templates.value.map((template) => ({
+    value: templateKeyOf(template),
+    label: template.language ? `${template.name} · ${template.language}` : template.name,
+    meta: [template.category, template.status].filter(Boolean).join(' · '),
+  }));
+
+  // Keep a saved template visible in the field even when the list lacks it.
+  if (missingTemplate.value) {
+    options.unshift({
+      value: `${templateName.value}|${templateLanguage.value}`,
+      label: templateLanguage.value ? `${templateName.value} · ${templateLanguage.value}` : templateName.value,
+      meta: '',
+    });
+  }
+
+  return options;
+});
+
+const selectedKey = computed(() => {
+  if (selected.value) {
+    return templateKeyOf(selected.value);
+  }
+
+  return templateName.value ? `${templateName.value}|${templateLanguage.value}` : '';
+});
 
 // Anything other than APPROVED will be refused at send time, so it has to be
 // visible while the workflow is being built, not discovered in the logs.
-const blockingStatus = computed(() => {
-  if (!selected.value || selected.value.status === 'APPROVED') {
-    return '';
-  }
-
-  switch (selected.value.status) {
-    case 'PENDING':
-      return __('This template is still awaiting Meta approval and cannot be delivered yet.', textDomain);
-    case 'PAUSED':
-      return __('Meta paused this template because of low quality. It will not be delivered until it recovers.', textDomain);
-    case 'DISABLED':
-      return __('Meta disabled this template. It can no longer be sent.', textDomain);
-    case 'REJECTED':
-      return __('Meta rejected this template.', textDomain);
-    default:
-      return '';
-  }
-});
+const blockingStatus = computed(() => (selected.value ? templateStatusWarning(selected.value.status) : ''));
 
 /**
- * Build the stored variable map for a template, keeping any value already
- * mapped to the same placeholder.
+ * Store the chosen template with its language and variable slots in one change.
  *
- * @since 2.3.0
- * @version 2.6.0
- * @param {RemoteTemplate} template Template whose variables should be mapped.
- * @returns {TemplateVariable[]} The variable map to store on the action.
- */
-function buildVariableMap(template: RemoteTemplate): TemplateVariable[] {
-  const current = Array.isArray((props.modelValue as Record<string, unknown>).variables)
-    ? ((props.modelValue as Record<string, unknown>).variables as TemplateVariable[])
-    : [];
-
-  return (template.variables || []).map((variable) => {
-    // Token-less slots share an empty key, so the sub-type and format tell a
-    // coupon from a login code on the same button position.
-    const previous = current.find(
-      (item) =>
-        item.component === variable.component &&
-        item.key === variable.key &&
-        Number(item.index) === Number(variable.index) &&
-        cardOf(item) === cardOf(variable) &&
-        (item.sub_type || '') === (variable.sub_type || '') &&
-        (item.format || '') === (variable.format || '')
-    );
-
-    return {
-      card: cardOf(variable),
-      component: variable.component,
-      sub_type: variable.sub_type || '',
-      index: Number(variable.index || 0),
-      key: variable.key,
-      label: variable.label || '',
-      format: variable.format || '',
-      value: previous?.value || '',
-    };
-  });
-}
-
-/**
- * Carousel card a slot belongs to, -1 outside a carousel.
+ * The language is the one the template was approved in — sending another
+ * language code is an error.
  *
- * @since 2.6.0
- * @param {TemplateVariable} variable Variable slot.
- * @returns {number}
- */
-function cardOf(variable: TemplateVariable): number {
-  return variable.card === undefined || variable.card === null ? -1 : Number(variable.card);
-}
-
-/**
- * Whether a slot holds the file of a media header.
- *
- * @since 2.6.0
- * @param {TemplateVariable} variable Variable slot.
- * @returns {boolean}
- */
-function isMediaHeader(variable: TemplateVariable): boolean {
-  return variable.component === 'header' && MEDIA_FORMATS.includes(variable.format || '');
-}
-
-/**
- * Human-readable name of a variable slot, prefixed with its carousel card.
- *
- * @since 2.3.0
- * @version 2.6.0
- * @param {TemplateVariable} variable Variable slot.
- * @returns {string} Label shown above the placeholder field.
- */
-function variableLabel(variable: TemplateVariable): string {
-  const card = cardOf(variable);
-
-  return card >= 0 ? `${__('Card', textDomain)} ${card + 1} · ${slotLabel(variable)}` : slotLabel(variable);
-}
-
-/**
- * Name of a variable slot within its message or card.
- *
- * @since 2.6.0
- * @param {TemplateVariable} variable Variable slot.
- * @returns {string}
- */
-function slotLabel(variable: TemplateVariable): string {
-  if (variable.component === 'header' && variable.format === 'location') {
-    switch (variable.key) {
-      case 'latitude':
-        return `${__('Header location', textDomain)} · ${__('Latitude', textDomain)}`;
-      case 'longitude':
-        return `${__('Header location', textDomain)} · ${__('Longitude', textDomain)}`;
-      case 'name':
-        return `${__('Header location', textDomain)} · ${__('Name', textDomain)}`;
-      default:
-        return `${__('Header location', textDomain)} · ${__('Address', textDomain)}`;
-    }
-  }
-
-  if (variable.component === 'limited_time_offer') {
-    return __('Offer expiration', textDomain);
-  }
-
-  if (variable.component === 'button' && variable.sub_type === 'quick_reply') {
-    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · ${__('Reply payload', textDomain)}`;
-  }
-
-  if (isMediaHeader(variable)) {
-    switch (variable.format) {
-      case 'video':
-        return __('Header video', textDomain);
-      case 'document':
-        return __('Header document', textDomain);
-      default:
-        return __('Header image', textDomain);
-    }
-  }
-
-  if (variable.component === 'button' && variable.sub_type === 'copy_code') {
-    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · ${__('Coupon code', textDomain)}`;
-  }
-
-  if (variable.component === 'button' && variable.format === 'otp') {
-    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · ${__('Verification code', textDomain)}`;
-  }
-
-  if (variable.component === 'button') {
-    return `${__('Button', textDomain)} ${Number(variable.index) + 1} · {{${variable.key}}}`;
-  }
-
-  if (variable.component === 'header') {
-    return `${__('Header', textDomain)} · {{${variable.key}}}`;
-  }
-
-  return `${__('Body', textDomain)} · {{${variable.key}}}`;
-}
-
-/**
- * Example shown inside the field of a variable slot.
- *
- * @since 2.6.0
- * @param {TemplateVariable} variable Variable slot.
- * @returns {string}
- */
-function variablePlaceholder(variable: TemplateVariable): string {
-  if (isMediaHeader(variable)) {
-    return __('https://example.com/file.jpg or a placeholder', textDomain);
-  }
-
-  if (variable.sub_type === 'copy_code') {
-    return __('BLACK20 or a placeholder', textDomain);
-  }
-
-  if (variable.format === 'otp') {
-    return __('Leave empty to repeat the code from the body', textDomain);
-  }
-
-  if (variable.format === 'location') {
-    return ['latitude', 'longitude'].includes(variable.key)
-      ? __('-23.5505 or a placeholder', textDomain)
-      : __('Optional', textDomain);
-  }
-
-  if (variable.component === 'limited_time_offer') {
-    return __('2026-12-31 23:59, +2 days or a placeholder', textDomain);
-  }
-
-  if (variable.sub_type === 'quick_reply') {
-    return __('Optional: sent back when the button is tapped', textDomain);
-  }
-
-  if (variable.sub_type === 'url') {
-    return __('End of the link, e.g. {{ wc_payment_url | remove_home_url }}', textDomain);
-  }
-
-  return __('{{ wc_billing_first_name }} or a fixed value', textDomain);
-}
-
-/**
- * Open the WordPress media library and store the chosen file's URL on a
- * media header slot.
- *
- * @since 2.6.0
- * @param {number} position Index of the slot in the stored map.
- * @param {string} format Media kind the template header accepts.
+ * @since 2.8.0
+ * @param {string} key Option value, `name|language`.
  * @returns {void}
  */
-function openMediaLibrary(position: number, format: string): void {
-  const wpMedia = (window as Window & {
-    wp?: {
-      media?: (...args: unknown[]) => {
-        on: (event: string, callback: () => void) => void;
-        state: () => { get: (key: string) => { first: () => { toJSON: () => { url?: string } } | undefined } };
-        open: () => void;
-      };
-    };
-  }).wp?.media;
+function pickTemplate(key: string): void {
+  const template = templates.value.find((item) => templateKeyOf(item) === key);
 
-  if (!wpMedia) {
+  if (!template) {
     return;
   }
 
-  // The library has no "document" type; any file stays selectable for it.
-  const library = format === 'image' || format === 'video' ? { type: format } : {};
-  const frame = wpMedia({ title: __('Select media', textDomain), button: { text: __('Use this media', textDomain) }, library, multiple: false });
-
-  frame.on('select', () => {
-    const attachment = frame.state().get('selection').first();
-    const url = String(attachment?.toJSON?.().url || '').trim();
-
-    if (url) {
-      updateVariable(position, url);
-    }
+  emit('update:modelValue', {
+    ...(props.modelValue as Record<string, unknown>),
+    template_name: template.name,
+    language: template.language || '',
+    variables: buildVariableMap(template, storedVariables.value),
   });
-
-  frame.open();
 }
 
-/**
- * Store the value mapped to one variable slot.
- *
- * @since 2.3.0
- * @param {number} position Index of the slot in the stored map.
- * @param {string} value Placeholder or literal filling the slot.
- * @returns {void}
- */
-function updateVariable(position: number, value: string): void {
-  const variables = Array.isArray((props.modelValue as Record<string, unknown>).variables)
-    ? [...((props.modelValue as Record<string, unknown>).variables as TemplateVariable[])]
-    : [];
-
-  if (!variables[position]) {
-    return;
-  }
-
-  variables[position] = { ...variables[position], value };
-  update('variables', variables);
-}
-
-/**
- * Load the templates of the account.
- *
- * @since 2.3.0
- * @param {boolean} [force] Ask the API to reconcile its mirror with Meta first.
- * @returns {Promise<void>}
- */
-async function loadTemplates(force = false): Promise<void> {
-  loading.value = true;
-  errorMsg.value = '';
-  staleWarning.value = '';
-
-  try {
-    const res = await api.get(`admin/builder/whatsapp-templates${force ? '?refresh=true' : ''}`);
-
-    if (res?.status === 'error') {
-      errorMsg.value = res.message || __('Could not load your message templates.', textDomain);
-      return;
-    }
-
-    templates.value = Array.isArray(res?.templates) ? res.templates : [];
-
-    if (res?.stale) {
-      staleWarning.value = res.sync_error || __('This list may be out of date.', textDomain);
-    }
-  } catch (error) {
-    errorMsg.value = error instanceof Error ? error.message : String(error);
-  } finally {
-    loading.value = false;
-  }
-}
-
-/**
- * Ask the API to reconcile its template mirror with Meta, then reload.
- *
- * @since 2.3.0
- * @returns {Promise<void>}
- */
-async function syncTemplates(): Promise<void> {
-  syncing.value = true;
-  errorMsg.value = '';
-
-  try {
-    const res = await api.post('admin/builder/whatsapp-templates/sync', {});
-
-    if (res?.status === 'error') {
-      errorMsg.value = res.message || __('Could not sync your message templates.', textDomain);
-      return;
-    }
-
-    templates.value = Array.isArray(res?.templates) ? res.templates : [];
-  } catch (error) {
-    errorMsg.value = error instanceof Error ? error.message : String(error);
-  } finally {
-    syncing.value = false;
-  }
-}
-
-// Picking a template rewrites the variable slots and pins the language the
-// template was approved in — sending another language code is an error.
+// Once the list is known, the stored language and slots follow the template
+// as Meta has it now. Nothing is emitted when they already match.
 watch(selected, (template) => {
   if (!template) {
     return;
   }
 
-  if (template.language && template.language !== (props.modelValue as Record<string, unknown>).language) {
-    update('language', template.language);
+  const language = template.language || templateLanguage.value;
+  const variables = buildVariableMap(template, storedVariables.value);
+
+  if (language === templateLanguage.value && JSON.stringify(variables) === JSON.stringify(storedVariables.value)) {
+    return;
   }
 
-  update('variables', buildVariableMap(template));
+  emit('update:modelValue', {
+    ...(props.modelValue as Record<string, unknown>),
+    language,
+    variables,
+  });
+});
+
+// Another sender may belong to another account, with other templates.
+watch(senderWaba, (wabaId, previous) => {
+  if (wabaId !== previous) {
+    loadTemplates();
+  }
 });
 
 onMounted(() => loadTemplates());
@@ -463,13 +214,17 @@ onMounted(() => loadTemplates());
     >
       <div class="space-y-2">
         <BaseSelectField
-          :model-value="templateName"
+          :model-value="selectedKey"
           :options="templateOptions"
           :label="__('Template', textDomain)"
           :placeholder="loading ? __('Loading templates…', textDomain) : __('Select a template', textDomain)"
           :disabled="loading"
-          @update:model-value="update('template_name', $event)"
+          @update:model-value="pickTemplate(String($event))"
         />
+
+        <p v-if="missingTemplate" class="rounded-[8px] border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
+          {{ __('The WhatsApp account of this sender does not have this template, so WhatsApp would refuse it. Choose a template from this list or another sender.', textDomain) }}
+        </p>
 
         <div class="flex items-center gap-3">
           <button
@@ -497,74 +252,18 @@ onMounted(() => loadTemplates());
         {{ blockingStatus }}
       </p>
 
-      <div class="rounded-[8px] border border-slate-200 bg-slate-50 px-4 py-3">
-        <p
-          v-if="selected.header_format && selected.header_format !== 'TEXT'"
-          class="mb-2 inline-flex items-center gap-1 rounded-[6px] bg-slate-200 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-slate-600"
-        >
-          <ImagePlus class="text-sm" />
-          {{ String(selected.header_format).toLowerCase() }}
-        </p>
-        <p v-if="selected.header" class="text-[13px] font-semibold text-slate-700">{{ selected.header }}</p>
-        <p class="whitespace-pre-line text-[13px] leading-5 text-slate-600">{{ selected.body }}</p>
-        <p v-if="selected.footer" class="mt-1 text-xs text-slate-400">{{ selected.footer }}</p>
-        <div v-if="selected.buttons?.length" class="mt-2 flex flex-wrap gap-1.5">
-          <span
-            v-for="(button, buttonIndex) in selected.buttons"
-            :key="`${buttonIndex}-${button.type}`"
-            class="rounded-[6px] border border-slate-200 bg-white px-2 py-0.5 text-xs text-slate-600"
-          >
-            {{ button.text || button.type }}
-          </span>
-        </div>
-        <div v-if="selected.cards?.length" class="mt-3 flex gap-2 overflow-x-auto pb-1">
-          <div
-            v-for="(card, cardIndex) in selected.cards"
-            :key="`card-${cardIndex}`"
-            class="w-40 shrink-0 rounded-[8px] border border-slate-200 bg-white px-3 py-2"
-          >
-            <p class="text-[11px] font-medium uppercase tracking-wide text-slate-400">
-              {{ __('Card', textDomain) }} {{ cardIndex + 1 }} · {{ String(card.header_format || '').toLowerCase() }}
-            </p>
-            <p class="mt-1 whitespace-pre-line text-xs leading-4 text-slate-600">{{ card.body }}</p>
-            <p v-if="card.buttons?.length" class="mt-1 text-[11px] text-slate-400">
-              {{ card.buttons.map((button) => button.text || button.type).join(' · ') }}
-            </p>
-          </div>
-        </div>
-      </div>
+      <TemplatePreview :template="selected" />
 
       <FieldGroup
-        v-if="Array.isArray(modelValue.variables) && modelValue.variables.length"
+        v-if="storedVariables.length"
         :title="__('Variables', textDomain)"
         :description="__('Each template variable is filled at send time with the placeholder you map here.', textDomain)"
       >
-        <div class="space-y-3">
-          <div
-            v-for="(variable, position) in modelValue.variables"
-            :key="`${cardOf(variable)}-${variable.component}-${variable.index}-${variable.sub_type}-${variable.format}-${variable.key}`"
-            class="flex items-end gap-2"
-          >
-            <div class="flex-1">
-              <BaseTextFieldVariables
-                :model-value="String(variable.value || '')"
-                :label="variableLabel(variable)"
-                :placeholder="variablePlaceholder(variable)"
-                :placeholders="availablePlaceholders"
-                @update:model-value="updateVariable(position, $event)"
-              />
-            </div>
-            <button
-              v-if="isMediaHeader(variable)"
-              type="button"
-              class="mb-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-              @click="openMediaLibrary(position, String(variable.format))"
-            >
-              <ImagePlus class="text-base" />
-              {{ __('Library', textDomain) }}
-            </button>
-          </div>
-        </div>
+        <TemplateVariablesForm
+          :variables="storedVariables"
+          :placeholders="availablePlaceholders"
+          @update:variables="update('variables', $event)"
+        />
       </FieldGroup>
     </div>
   </div>

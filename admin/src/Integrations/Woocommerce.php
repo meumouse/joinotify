@@ -25,7 +25,7 @@ defined('ABSPATH') || exit;
  * Add integration with WooCommerce
  * 
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.8.0
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -82,9 +82,9 @@ class Woocommerce extends Integrations_Base {
 
     /**
      * Construct function
-     * 
+     *
      * @since 1.0.0
-     * @version 2.7.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
@@ -95,6 +95,9 @@ class Woocommerce extends Integrations_Base {
         if ( class_exists('WooCommerce') ) {
             // standard builder hooks (triggers, tab, content, placeholders, conditions)
             $this->register_builder_hooks( 20, 2 );
+
+            // variable list of the full address format fields on the settings screen
+            add_filter( 'Joinotify/Admin/Settings/Bootstrap_Data', array( $this, 'add_address_placeholders' ), 10, 1 );
 
             // add coupon action
             if ( Admin::get_setting('enable_create_coupon_action') === 'yes' ) {
@@ -196,9 +199,172 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Settings keys of the full address formats, by address type.
+     *
+     * @since 2.8.0
+     * @var array<string,string>
+     */
+    const ADDRESS_FORMAT_KEYS = array(
+        'billing' => 'woocommerce_billing_full_address_format',
+        'shipping' => 'woocommerce_shipping_full_address_format',
+    );
+
+
+    /**
+     * Shared options of the two full address format fields.
+     *
+     * Stored as plain text (the type stays `textarea`, so it is sanitized the
+     * same way), edited in the rich text editor on a single line: only the
+     * variable chips, no formatting, emoji or line breaks, because the value
+     * is dropped in the middle of other messages. The variable list is added
+     * when the settings screen loads (see add_address_placeholders), not here:
+     * this runs on every request and reading the checkout fields is not free.
+     *
+     * @since 2.8.0
+     * @return array<string,mixed>
+     */
+    protected static function address_format_field_extra() {
+        return array(
+            'component' => 'richtext',
+            'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
+            'rows' => 1,
+            'component_props' => array(
+                'single_line' => true,
+                'allow_formatting' => false,
+                'allow_emoji' => false,
+            ),
+        );
+    }
+
+
+    /**
+     * Give the full address format fields of the settings screen their variable list.
+     *
+     * @since 2.8.0
+     * @param array $data | Settings bootstrap payload.
+     * @return array
+     */
+    public function add_address_placeholders( $data ) {
+        if ( ! is_array( $data ) || empty( $data['integrations'] ) || ! is_array( $data['integrations'] ) ) {
+            return $data;
+        }
+
+        $types = array_flip( self::ADDRESS_FORMAT_KEYS );
+
+        foreach ( $data['integrations'] as $index => $card ) {
+            if ( ! is_array( $card ) || 'woocommerce' !== ( $card['slug'] ?? '' ) ) {
+                continue;
+            }
+
+            foreach ( array( 'fields', 'settings' ) as $property ) {
+                if ( empty( $card[ $property ] ) || ! is_array( $card[ $property ] ) ) {
+                    continue;
+                }
+
+                foreach ( $card[ $property ] as $field_index => $field ) {
+                    $key = is_array( $field ) ? (string) ( $field['key'] ?? '' ) : '';
+
+                    if ( isset( $types[ $key ] ) ) {
+                        $data['integrations'][ $index ][ $property ][ $field_index ]['placeholders'] = self::get_address_placeholders( $types[ $key ] );
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Variables a full address format can use, in the shape of the editor's variable list.
+     *
+     * The core address fields, then every checkout field of that section
+     * without its `billing_`/`shipping_` prefix, exactly the keys
+     * get_address_data() resolves.
+     *
+     * @since 2.8.0
+     * @param string $type | Address type: billing or shipping.
+     * @return array<int,array{placeholder:string,description:string,replacement:array{sandbox:string}}>
+     */
+    public static function get_address_placeholders( $type ) {
+        $type = 'shipping' === $type ? 'shipping' : 'billing';
+
+        $base = array(
+            'first_name' => array( __( 'First name', 'joinotify' ), 'Maria' ),
+            'last_name' => array( __( 'Last name', 'joinotify' ), 'Silva' ),
+            'company' => array( __( 'Company', 'joinotify' ), 'MeuMouse.com' ),
+            'address_1' => array( __( 'Address', 'joinotify' ), 'Rua das Flores' ),
+            'address_2' => array( __( 'Address line 2', 'joinotify' ), 'Apto 12' ),
+            'city' => array( __( 'City', 'joinotify' ), 'Curitiba' ),
+            'state' => array( __( 'State', 'joinotify' ), 'PR' ),
+            'postcode' => array( __( 'Postcode', 'joinotify' ), '80000-000' ),
+            'country' => array( __( 'Country', 'joinotify' ), 'BR' ),
+            'phone' => array( __( 'Phone', 'joinotify' ), '+55 41 99999-9999' ),
+        );
+
+        if ( 'billing' === $type ) {
+            $base['email'] = array( __( 'E-mail', 'joinotify' ), 'maria@example.com' );
+        }
+
+        $placeholders = array();
+
+        foreach ( $base as $key => $item ) {
+            $placeholders[ $key ] = array(
+                'placeholder' => sprintf( '{{ %s }}', $key ),
+                'description' => $item[0],
+                'replacement' => array( 'sandbox' => $item[1] ),
+            );
+        }
+
+        try {
+            $fields = self::export_checkout_fields( $type );
+        } catch ( \Throwable $e ) {
+            // A checkout that cannot be built here only costs the custom fields.
+            $fields = array();
+        }
+
+        foreach ( is_array( $fields ) ? $fields : array() as $field_id => $field ) {
+            // Without a checkout, export_checkout_fields() answers with the empty
+            // `billing`/`shipping` groups whatever the section asked for.
+            if ( ! is_array( $field ) || empty( $field ) ) {
+                continue;
+            }
+
+            $field_id = (string) $field_id;
+            $prefix = $type . '_';
+            $key = 0 === strpos( $field_id, $prefix ) ? substr( $field_id, strlen( $prefix ) ) : $field_id;
+
+            if ( '' === $key || isset( $placeholders[ $key ] ) || ! preg_match( '/^[a-zA-Z0-9_\-]+$/', $key ) ) {
+                continue;
+            }
+
+            $label = is_array( $field ) && ! empty( $field['label'] ) ? wp_strip_all_tags( (string) $field['label'] ) : $key;
+
+            $placeholders[ $key ] = array(
+                'placeholder' => sprintf( '{{ %s }}', $key ),
+                'description' => $label,
+                'replacement' => array( 'sandbox' => '' ),
+            );
+        }
+
+        /**
+         * Filter the variables offered by a full address format field.
+         *
+         * @since 2.8.0
+         * @param array  $placeholders Variables, keyed by token.
+         * @param string $type         Address type: billing or shipping.
+         */
+        $placeholders = apply_filters( 'Joinotify/WooCommerce/Address_Format_Placeholders', $placeholders, $type );
+
+        return array_values( is_array( $placeholders ) ? $placeholders : array() );
+    }
+
+
+    /**
      * Declarative settings rendered in the integrations modal.
      *
      * @since 1.4.7
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
@@ -219,20 +385,14 @@ class Woocommerce extends Integrations_Base {
             self::field_textarea(
                 'woocommerce_billing_full_address_format',
                 esc_html__( 'Billing full address format', 'joinotify' ),
-                esc_html__( 'Defines the value used in the billing full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.', 'joinotify' ),
-                array(
-                    'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-                    'rows' => 3,
-                )
+                esc_html__( 'Defines the value used in the billing full address variable. Pick the address fields from the variable list and add the text between them.', 'joinotify' ),
+                self::address_format_field_extra()
             ),
             self::field_textarea(
                 'woocommerce_shipping_full_address_format',
                 esc_html__( 'Shipping full address format', 'joinotify' ),
-                esc_html__( 'Defines the value used in the shipping full address variable. You can combine placeholders like {{ address_1 }}, {{ number }}, {{ city }}, {{ state }}, and {{ postcode }}.', 'joinotify' ),
-                array(
-                    'placeholder' => '{{ address_1 }}, {{ number }}, {{ city }} - {{ state }} (CEP: {{ postcode }})',
-                    'rows' => 3,
-                )
+                esc_html__( 'Defines the value used in the shipping full address variable. Pick the address fields from the variable list and add the text between them.', 'joinotify' ),
+                self::address_format_field_extra()
             ),
             self::field_toggle(
                 'enable_ignore_processed_actions',
@@ -1962,6 +2122,64 @@ class Woocommerce extends Integrations_Base {
 
 
     /**
+     * Order types the order triggers run for
+     *
+     * WooCommerce fires the order hooks for every order type, including the hidden ones other
+     * plugins register for their own bookkeeping (such as the `headpress_payment` orders that carry
+     * each part of a Headpress split payment). Only the shop's own orders are what a workflow means
+     * by "an order".
+     *
+     * @since 2.7.3
+     * @return array<int,string>
+     */
+    public static function get_order_types() {
+        /**
+         * Filter the order types the WooCommerce order triggers and the cloud sync run for
+         *
+         * @since 2.7.3
+         * @param array $order_types | Order types, `shop_order` by default
+         */
+        $order_types = apply_filters( 'Joinotify/WooCommerce/Order_Types', array( 'shop_order' ) );
+
+        if ( ! is_array( $order_types ) ) {
+            return array( 'shop_order' );
+        }
+
+        return array_values( array_filter( array_map( 'strval', $order_types ) ) );
+    }
+
+
+    /**
+     * Whether an order is one of the shop's orders, and not a refund or an order of another type
+     *
+     * @since 2.7.3
+     * @param \WC_Abstract_Order|int|string $order | Order object or ID
+     * @return bool
+     */
+    public static function is_shop_order( $order ) {
+        $type = '';
+
+        if ( $order instanceof \WC_Abstract_Order ) {
+            $type = $order->get_type();
+        } elseif ( is_numeric( $order ) && (int) $order > 0 ) {
+            // Reads the stored type without loading the order, under HPOS and the posts table alike.
+            if ( class_exists( '\Automattic\WooCommerce\Utilities\OrderUtil' ) ) {
+                $type = \Automattic\WooCommerce\Utilities\OrderUtil::get_order_type( (int) $order );
+            } elseif ( function_exists('wc_get_order') ) {
+                $loaded = wc_get_order( (int) $order );
+                $type = $loaded ? $loaded->get_type() : '';
+            }
+        }
+
+        if ( empty( $type ) || 'shop_order_refund' === $type ) {
+            return false;
+        }
+
+        return in_array( (string) $type, self::get_order_types(), true );
+    }
+
+
+    /**
      * Process workflow on receive new order placed through the checkout block
      *
      * @since 2.5.0
@@ -1979,11 +2197,15 @@ class Woocommerce extends Integrations_Base {
      * Process workflow on receive new order on WooCommerce
      *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param int $order_id  | Order ID
      * @return void
      */
     public function process_workflow_on_new_order( $order_id ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          * 
@@ -2043,6 +2265,7 @@ class Woocommerce extends Integrations_Base {
      * Run the "Payment confirmed" workflows of an order, once
      *
      * @since 2.7.0
+     * @version 2.7.3
      * @param int $order_id | Order ID
      * @param string $transaction_id | Transaction ID of the gateway, when it sent one
      * @return void
@@ -2050,7 +2273,7 @@ class Woocommerce extends Integrations_Base {
     protected function process_workflow_payment_confirmed( $order_id, $transaction_id = '' ) {
         $order = wc_get_order( $order_id );
 
-        if ( ! $order instanceof \WC_Order || $order->get_meta( self::META_PAYMENT_CONFIRMED ) ) {
+        if ( ! $order instanceof \WC_Order || ! self::is_shop_order( $order ) || $order->get_meta( self::META_PAYMENT_CONFIRMED ) ) {
             return;
         }
 
@@ -2440,13 +2663,17 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order status is complete
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param int $order_id  | Order ID
      * @param object $order | Order object
      * @param array $status_transition | Status transition
      * @return void
      */
     public function process_workflow_order_completed( $order_id, $order, $status_transition ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          * 
@@ -2469,10 +2696,15 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when the download access of a digital product is granted
      *
      * @since 2.1.0
+     * @version 2.7.3
      * @param int $order_id | Order ID
      * @return void
      */
     public function process_workflow_download_permissions_granted( $order_id ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          *
@@ -2494,6 +2726,7 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when the customer downloads a digital file
      *
      * @since 2.1.0
+     * @version 2.7.3
      * @param string $user_email | Customer email
      * @param string $order_key  | Order key
      * @param int $product_id    | Product ID of the downloaded file
@@ -2503,6 +2736,10 @@ class Woocommerce extends Integrations_Base {
      * @return void
      */
     public function process_workflow_download_product( $user_email, $order_key, $product_id, $user_id, $download_id, $order_id ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          *
@@ -2528,12 +2765,16 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is fully refunded
      *
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param int $order_id  | Order ID
      * @param int $refund_id | Refund ID
      * @return void
      */
     public function process_workflow_order_fully_refunded( $order_id, $refund_id ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          * 
@@ -2556,12 +2797,16 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order is partially refunded
      * 
      * @since 1.0.0
-     * @version 2.1.0
+     * @version 2.7.3
      * @param int $order_id  | Order ID
      * @param int $refund_id | Refund ID
      * @return void
      */
     public function process_workflow_order_partially_refunded( $order_id, $refund_id ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          * 
@@ -2584,13 +2829,17 @@ class Woocommerce extends Integrations_Base {
      * Process workflow when order has status changed
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param int $order_id  | Order ID
      * @param string $old_status | Old status
      * @param string $new_status | New status
      * @return void
      */
     public function process_workflow_order_status_changed( $order_id, $old_status, $new_status ) {
+        if ( ! self::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          * 

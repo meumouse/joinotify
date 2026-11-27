@@ -1109,8 +1109,8 @@
       "The file needs a header line and at least one contact.": [
         "Le fichier a besoin d'une ligne d'en-tête et d'au moins un contact."
       ],
-      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in the WhatsApp card of Settings → Applications; the sync resumes on its own.": [
-        "La clé Joinotify de ce site a été révoquée ou ne peut pas envoyer ces données. Connectez à nouveau le site dans la carte WhatsApp des Paramètres → Applications ; la synchronisation reprend d'elle-même."
+      "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
+        "La clé Joinotify de ce site a été révoquée ou ne peut pas envoyer ces données. Reconnectez le site dans Paramètres → Général ; la synchronisation reprend d’elle-même."
       ],
       "The key starts with a lowercase letter and holds only lowercase letters, digits and underscores, up to 40 characters.": [
         "La clé commence par une lettre minuscule et ne contient que des lettres minuscules, des chiffres et des underscores, jusqu'à 40 caractères."
@@ -1133,11 +1133,11 @@
       "This site": [
         "Ce site"
       ],
-      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in the WhatsApp card of Settings → Applications.": [
-        "Ce site est à %1$s, mais sa clé Joinotify a été émise à %2$s. Si c'est une copie de staging, laissez-la en pause : elle enverrait des commandes de test à de vrais clients. Si le site a déménagé, reconnectez-le dans la carte WhatsApp des Paramètres → Applications."
+      "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General.": [
+        "Ce site est à l’adresse %1$s, mais sa clé Joinotify a été émise pour %2$s. S’il s’agit d’une copie de préproduction, laissez-la en pause : elle enverrait des commandes de test à de vrais clients. Si le site a déménagé, reconnectez-le dans Paramètres → Général."
       ],
-      "This site was removed from your Joinotify account. Connect it again in the WhatsApp card of Settings → Applications to resume.": [
-        "Ce site a été retiré de votre compte Joinotify. Reconnectez-le dans la carte WhatsApp des Paramètres → Applications pour reprendre."
+      "This site was removed from your Joinotify account. Connect it again in Settings → General to resume.": [
+        "Ce site a été retiré de votre compte Joinotify. Reconnectez-le dans Paramètres → Général pour reprendre."
       ],
       "Time": [
         "Temps"

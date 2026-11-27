@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
  * Add integration with Flexify Checkout for WooCommerce plugin
  * 
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.7.3
  * @package MeuMouse\Joinotify\Integrations
  * @author MeuMouse.com
  */
@@ -444,12 +444,16 @@ class Flexify_Checkout extends Integrations_Base {
      * Process workflow when a order is abandoned
      * 
      * @since 1.2.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param int $order_id | The abandoned order ID
      * @param int $cart_id | The abandoned cart ID
      * @return void
      */
     public function process_workflow_order_abandoned( $order_id, $cart_id ) {
+        if ( ! Woocommerce::is_shop_order( $order_id ) ) {
+            return;
+        }
+
         /**
          * Filter the payload before processing workflows
          * 

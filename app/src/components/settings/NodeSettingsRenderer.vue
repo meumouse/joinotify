@@ -8,10 +8,12 @@
  * emits update events back to the store while avoiding feedback loops.
  *
  * @since 2.0.0
+ * @version 2.8.0
  */
 import { computed, nextTick, ref, watch } from 'vue';
 import SchemaFieldRenderer from './SchemaFieldRenderer.vue';
 import DynamicActionSettingsRenderer from '../../builder/actions/components/DynamicActionSettingsRenderer.vue';
+import ConnectionNotice from '../../builder/components/base/ConnectionNotice.vue';
 import SessionWindowNotice from '../../builder/components/base/SessionWindowNotice.vue';
 import { useWorkflowBuilderStore } from '../../stores/useWorkflowBuilderStore';
 import { getActionDefinition as getLegacyActionDefinition } from '../../registries/actionRegistry';
@@ -295,6 +297,8 @@ async function copyPlaceholder(placeholder: string) {
     </template>
 
     <template v-else>
+      <ConnectionNotice :action="actionSlug" />
+
       <SessionWindowNotice :action="actionSlug" />
 
       <DynamicActionSettingsRenderer

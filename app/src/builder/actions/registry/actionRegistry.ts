@@ -121,6 +121,10 @@ function mergeDefinition(current: ActionDefinition | undefined, next: ActionDefi
     // by the integration toggle), so a hydration pass must not drop the gate
     // declared by the bundled definition.
     requiresSetting: next.requiresSetting || current?.requiresSetting || '',
+    // Same for the deprecation flag: a backend definition never un-deprecates
+    // a bundled one.
+    deprecated: Boolean(next.deprecated || current?.deprecated),
+    deprecatedMessage: next.deprecatedMessage || current?.deprecatedMessage || '',
     settingsComponent: next.settingsComponent || current?.settingsComponent,
     cardComponent: next.cardComponent || current?.cardComponent,
     normalizeData: next.normalizeData || current?.normalizeData,
@@ -177,6 +181,8 @@ function normalizeDefinition(definition: BackendActionDefinition): ActionDefinit
     context: cleanContext(definition.context || definition.contexts),
     category: String(definition.category || '').trim() || 'general',
     requiresSetting: String(definition.requiresSetting || definition.requires_setting || '').trim(),
+    deprecated: Boolean(definition.deprecated),
+    deprecatedMessage: String(definition.deprecatedMessage || definition.deprecated_message || '').trim(),
     hasSettings: Boolean(definition.hasSettings ?? definition.has_settings ?? false),
     priority: cleanPriority(definition.priority, 0),
     isExpansible: Boolean(definition.isExpansible ?? definition.is_expansible),
@@ -304,11 +310,12 @@ export function getBuilderAction(action: string): ActionDefinition | null {
  *
  * Definitions gated behind a plugin setting (`requiresSetting`) are left out
  * while that setting is off, so a disabled channel is never offered in the
- * action library. Single lookups (getBuilderAction) stay ungated so nodes saved
- * while the channel was enabled keep rendering.
+ * action library, and deprecated definitions are always left out. Single
+ * lookups (getBuilderAction) stay ungated so nodes saved while the channel was
+ * enabled keep rendering.
  *
  * @since 2.0.0
- * @version 2.4.0
+ * @version 2.8.0
  * @returns {ActionDefinition[]} The sorted list of enabled, available definitions.
  */
 export function getBuilderActions(): ActionDefinition[] {
@@ -317,6 +324,7 @@ export function getBuilderActions(): ActionDefinition[] {
   return Array.from(registry.values())
     .map((definition) => cloneDefinition(definition))
     .filter((definition) => definition.enabled !== false)
+    .filter((definition) => !definition.deprecated)
     .filter((definition) => isActionAvailable(definition.requiresSetting))
     .sort((left, right) => right.priority - left.priority || left.title.localeCompare(right.title));
 }

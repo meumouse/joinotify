@@ -22,7 +22,7 @@ defined('ABSPATH') || exit;
  * Process workflow content and send messages on fire hooks
  * 
  * @since 1.0.0
- * @version 1.4.7
+ * @version 2.7.3
  * @package MeuMouse\Joinotify\Core
  * @author MeuMouse.com
  */
@@ -110,11 +110,16 @@ class Workflow_Processor {
      * Process workflow for each called hook
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param array $payload | Payload data
      * @return void
      */
     public static function process_workflows( $payload ) {
+        // A payload filter that returns something else (false to skip the run) has nothing to run.
+        if ( ! is_array( $payload ) || empty( $payload['hook'] ) || ! is_string( $payload['hook'] ) ) {
+            return;
+        }
+
         $hook = $payload['hook'];
         $workflows = self::get_workflows_by_hook( $hook );
 
@@ -1476,7 +1481,7 @@ class Workflow_Processor {
      * Process scheduled actions
      * 
      * @since 1.0.0
-     * @version 1.4.7
+     * @version 2.7.3
      * @param int $post_id | Workflow ID
      * @param array $payload | Payload data
      * @param array $action_data | Action data
@@ -1492,6 +1497,18 @@ class Workflow_Processor {
             Logger::register_log( sprintf( 'Skipping scheduled action: workflow %d is not published.', $post_id ), 'WARNING' );
 
             return;
+        }
+
+        // A delay scheduled before 2.7.3 for an order of another type (such as a Headpress split
+        // payment part) must not resume. An order deleted since then still resumes, as before.
+        if ( is_array( $payload ) && ! empty( $payload['order_id'] ) && function_exists('wc_get_order') ) {
+            $order = wc_get_order( $payload['order_id'] );
+
+            if ( $order && ! Woocommerce::is_shop_order( $order ) ) {
+                Logger::register_log( sprintf( 'Skipping scheduled action: order %d of workflow %d is not a shop order.', (int) $payload['order_id'], $post_id ), 'WARNING' );
+
+                return;
+            }
         }
 
         $state_key = self::get_state_meta_key( $payload );
@@ -2192,13 +2209,24 @@ class Workflow_Processor {
      * resolved with the generic placeholder resolver — not joinotify_prepare_receiver,
      * which strips non-digits and would corrupt negative group ids / @usernames.
      *
+     * Deprecated with the Telegram integration: the step only sends while the
+     * integration is enabled, and is skipped with a warning otherwise.
+     *
      * @since 2.1.0
+     * @version 2.8.0
+     * @deprecated 2.8.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @param int $post_id | Workflow post ID
-     * @return void
+     * @return bool True when the message was sent.
      */
     public static function send_telegram_message_text( $action_data, $payload, $post_id = 0 ) {
+        if ( Admin::get_setting('enable_telegram_integration') !== 'yes' ) {
+            Logger::register_log( sprintf( 'Workflow #%d: Telegram step skipped because the Telegram integration is disabled. Telegram is deprecated and will be removed in Joinotify 3.0.0.', (int) $post_id ), 'WARNING' );
+
+            return false;
+        }
+
         $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
         $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
 
@@ -2229,6 +2257,8 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send Telegram message. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
+
+        return $result->is_success();
     }
 
 
@@ -2239,13 +2269,24 @@ class Workflow_Processor {
      * with the generic placeholder resolver (not joinotify_prepare_receiver, which
      * is phone-oriented). The subject travels in the message meta bag.
      *
+     * Deprecated with the Resend integration: the step only sends while the
+     * integration is enabled, and is skipped with a warning otherwise.
+     *
      * @since 2.1.0
+     * @version 2.8.0
+     * @deprecated 2.8.0
      * @param array $action_data | Action data
      * @param array $payload | Payload data
      * @param int $post_id | Workflow post ID
-     * @return void
+     * @return bool True when the e-mail was sent.
      */
     public static function send_resend_email( $action_data, $payload, $post_id = 0 ) {
+        if ( Admin::get_setting('enable_resend_integration') !== 'yes' ) {
+            Logger::register_log( sprintf( 'Workflow #%d: Resend e-mail step skipped because the Resend integration is disabled. Resend is deprecated and will be removed in Joinotify 3.0.0.', (int) $post_id ), 'WARNING' );
+
+            return false;
+        }
+
         $receiver = joinotify_prepare_message( $action_data['receiver'] ?? '', $payload );
         $subject = joinotify_prepare_message( $action_data['subject'] ?? '', $payload );
         $message = joinotify_prepare_message( $action_data['message'] ?? '', $payload );
@@ -2282,6 +2323,8 @@ class Workflow_Processor {
                 Logger::register_log( "Failed to send Resend e-mail. Response: " . Logger::stringify( $result->to_array() ), 'ERROR' );
             }
         }
+
+        return $result->is_success();
     }
 
 

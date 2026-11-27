@@ -7,6 +7,23 @@ em um construtor visual de arrastar e soltar. Conecte gatilhos do seu site (pedi
 WooCommerce, envios de formulários, ações de usuário, etc.) a ações como envio de mensagens
 de WhatsApp, condições, atrasos e muito mais — tudo sem escrever código.
 
+## Índice
+
+- [Licença](#licença)
+- [Principais recursos](#principais-recursos)
+- [Instalação](#instalação)
+  - [Via painel de administração](#via-painel-de-administração)
+  - [Via FTP](#via-ftp)
+  - [Requisitos](#requisitos)
+- [Arquitetura](#arquitetura)
+- [Desenvolvimento](#desenvolvimento)
+- [Build e empacotamento](#build-e-empacotamento)
+  - [Scripts de build](#scripts-de-build)
+  - [Translations in the package](#translations-in-the-package)
+- [Publicação no WordPress.org](#publicação-no-wordpressorg)
+- [Documentação](#documentação)
+- [Histórico de versões](#histórico-de-versões)
+
 ---
 
 #### Licença

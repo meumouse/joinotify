@@ -11,7 +11,12 @@
  * using <strong>/<em>/<u> tags, "\n" line breaks and {{ variable }} tokens, and
  * the same format is emitted back via update:modelValue / input / change.
  *
+ * `singleLine`, `allowFormatting` and `allowEmoji` narrow it down for values
+ * that are dropped in the middle of other text (an address format): one line,
+ * plain text and variable chips only. All three default to the full editor.
+ *
  * @since 2.0.0
+ * @version 2.8.0
  */
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import BoldIcon from '@boxicons/vue/Bold';
@@ -45,6 +50,11 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   rows: { type: Number, default: 5 },
   placeholders: { type: Array as () => Array<PlaceholderItem | string>, default: () => [] },
+  // One line: Enter does nothing, pasted line breaks become spaces.
+  singleLine: { type: Boolean, default: false },
+  // Bold, italic and underline (buttons and keyboard shortcuts).
+  allowFormatting: { type: Boolean, default: true },
+  allowEmoji: { type: Boolean, default: true },
 });
 
 const emit = defineEmits(['update:modelValue', 'input', 'change']);
@@ -68,8 +78,10 @@ let internalValue = String(props.modelValue || '');
 let savedRange: Range | null = null;
 let scrollHandler: (() => void) | null = null;
 
-const minHeight = computed(() => `${Math.max(props.rows, 1) * 1.5}rem`);
+const minHeight = computed(() => `${(props.singleLine ? 1 : Math.max(props.rows, 1)) * 1.5}rem`);
 const isEmpty = computed(() => !String(props.modelValue || '').trim());
+const hasVariables = computed(() => Array.isArray(props.placeholders) && props.placeholders.length > 0);
+const hasToolbar = computed(() => props.allowFormatting || props.allowEmoji || hasVariables.value);
 
 /**
  * Normalize a placeholder token into a comparable key: strip the outer braces,
@@ -242,8 +254,34 @@ function render() {
   }
 }
 
+/**
+ * Apply the editor options to a serialized value.
+ *
+ * Without formatting, tags a browser shortcut or a paste slipped in are
+ * dropped. On a single line, line breaks become spaces, and so do the
+ * non-breaking spaces contenteditable types for a trailing or doubled space,
+ * so the stored text is the plain text the user sees.
+ *
+ * @since 2.8.0
+ * @param {string} value Serialized editor content.
+ * @returns {string} Value to store.
+ */
+function normalizeOutput(value: string): string {
+  let next = value;
+
+  if (!props.allowFormatting) {
+    next = next.replace(/<\/?(strong|em|u)>/gi, '');
+  }
+
+  if (props.singleLine) {
+    next = next.replace(/ /g, ' ').replace(/[ \t]*[\r\n]+[ \t]*/g, ' ');
+  }
+
+  return next;
+}
+
 function pushValue() {
-  const next = serialize();
+  const next = normalizeOutput(serialize());
 
   if (next === internalValue) {
     return;
@@ -488,6 +526,17 @@ function handleInput() {
 }
 
 function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter' && props.singleLine) {
+    event.preventDefault();
+    return;
+  }
+
+  // contenteditable answers Ctrl/Cmd+B/I/U on its own, buttons or not.
+  if (!props.allowFormatting && (event.ctrlKey || event.metaKey) && ['b', 'i', 'u'].includes(event.key.toLowerCase())) {
+    event.preventDefault();
+    return;
+  }
+
   if (event.key === 'Enter' && !event.shiftKey) {
     event.preventDefault();
     document.execCommand('insertLineBreak');
@@ -497,7 +546,12 @@ function handleKeydown(event: KeyboardEvent) {
 
 function handlePaste(event: ClipboardEvent) {
   event.preventDefault();
-  const text = event.clipboardData?.getData('text/plain') || '';
+  let text = event.clipboardData?.getData('text/plain') || '';
+
+  if (props.singleLine) {
+    text = text.replace(/[ \t]*[\r\n]+[ \t]*/g, ' ');
+  }
+
   document.execCommand('insertText', false, text);
   handleInput();
 }
@@ -677,7 +731,8 @@ onBeforeUnmount(() => {
 
     <div class="relative">
       <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-        <div class="flex items-center gap-1 border-b border-slate-200 bg-slate-50 px-2 py-1.5">
+        <div v-if="hasToolbar" class="flex items-center gap-1 border-b border-slate-200 bg-slate-50 px-2 py-1.5">
+          <template v-if="allowFormatting">
           <Tooltip :content="__('Bold', textDomain)">
             <button
               type="button"
@@ -716,10 +771,11 @@ onBeforeUnmount(() => {
               <UnderlineIcon width="14" height="14" />
             </button>
           </Tooltip>
+          </template>
 
-          <div class="mx-1 h-4 w-px bg-slate-200" />
+          <div v-if="allowFormatting && allowEmoji" class="mx-1 h-4 w-px bg-slate-200" />
 
-          <div class="relative">
+          <div v-if="allowEmoji" class="relative">
             <Tooltip :content="__('Emojis', textDomain)">
               <button
                 ref="emojiButtonRef"
@@ -755,7 +811,7 @@ onBeforeUnmount(() => {
           </div>
 
           <VariablePicker
-            v-if="Array.isArray(placeholders) && placeholders.length"
+            v-if="hasVariables"
             :placeholders="placeholders"
             :disabled="disabled"
             @select="insertVariable"
@@ -765,13 +821,13 @@ onBeforeUnmount(() => {
         <div
           ref="editorRef"
           :id="id"
-          class="rte-editor w-full resize-y overflow-auto whitespace-pre-wrap break-words px-4 py-3 text-sm leading-6 text-slate-900 outline-none focus:ring-0"
-          :class="{ 'is-empty': isEmpty, 'cursor-not-allowed bg-slate-50': disabled }"
+          class="rte-editor w-full overflow-auto whitespace-pre-wrap break-words px-4 py-3 text-sm leading-6 text-slate-900 outline-none focus:ring-0"
+          :class="{ 'is-empty': isEmpty, 'cursor-not-allowed bg-slate-50': disabled, 'resize-y': !singleLine }"
           :contenteditable="!disabled"
           :data-placeholder="placeholder"
           :style="{ minHeight }"
           role="textbox"
-          aria-multiline="true"
+          :aria-multiline="singleLine ? 'false' : 'true'"
           @input="handleInput"
           @keydown="handleKeydown"
           @paste="handlePaste"

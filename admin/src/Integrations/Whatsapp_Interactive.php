@@ -2,7 +2,6 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
-use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Api\Transport;
 use MeuMouse\Joinotify\Builder\Placeholders;
 use MeuMouse\Joinotify\Core\Logger;
@@ -34,13 +33,11 @@ class Whatsapp_Interactive {
      * Construct function.
      *
      * @since 2.3.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
-        if ( Admin::get_setting('enable_whatsapp_integration') !== 'yes' ) {
-            return;
-        }
-
+        // WhatsApp is always on since 2.8.0 (see Whatsapp::__construct).
         add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_actions' ), 10, 1 );
         add_filter( 'Joinotify/Workflow_Processor/Action_Required_Config', array( $this, 'add_required_config' ), 10, 1 );
         add_filter( 'Joinotify/Workflow_Processor/Handle_Actions', array( $this, 'add_handlers' ), 10, 4 );

@@ -129,7 +129,12 @@ namespace MeuMouse\Joinotify\Core {
 }
 
 namespace MeuMouse\Joinotify\Admin {
-	class Admin { public static function get_setting( $key ) { return ''; } }
+	class Admin {
+		// The deprecated Telegram and Resend steps only send while their integration is enabled.
+		public static function get_setting( $key ) {
+			return in_array( $key, array( 'enable_telegram_integration', 'enable_resend_integration' ), true ) ? 'yes' : '';
+		}
+	}
 }
 
 namespace MeuMouse\Joinotify\Integrations {

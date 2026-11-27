@@ -2,8 +2,6 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
-use MeuMouse\Joinotify\Admin\Admin;
-
 // Exit if accessed directly.
 defined('ABSPATH') || exit;
 
@@ -25,13 +23,13 @@ class AI_Messaging extends Integrations_Base {
      * Construct function
      *
      * @since 2.0.0
+     * @version 2.8.0
      * @return void
      */
     public function __construct() {
-        if ( Admin::get_setting('enable_whatsapp_integration') === 'yes' ) {
-            add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_ai_actions' ), 20, 1 );
-            add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_ai_category' ), 10, 1 );
-        }
+        // WhatsApp is always on since 2.8.0 (see Whatsapp::__construct).
+        add_filter( 'Joinotify/Builder/Actions', array( $this, 'add_ai_actions' ), 20, 1 );
+        add_filter( 'Joinotify/Builder/Action_Categories', array( $this, 'add_ai_category' ), 10, 1 );
     }
 
 

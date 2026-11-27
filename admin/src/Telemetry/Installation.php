@@ -4,6 +4,7 @@ namespace MeuMouse\Joinotify\Telemetry;
 
 use MeuMouse\Joinotify\Admin\Admin;
 use MeuMouse\Joinotify\Core\Debug_Log;
+use MeuMouse\Joinotify\Core\Helpers;
 use MeuMouse\Joinotify\Integrations\Integrations_Base;
 
 // Exit if accessed directly.
@@ -206,11 +207,19 @@ class Installation {
     /**
      * Integration slugs currently switched on.
      *
+     * WhatsApp has no settings card since 2.8.0, so it counts as active when
+     * the site is connected to Joinotify.
+     *
      * @since 2.3.0
+     * @version 2.8.0
      * @return array<int,string>
      */
     private static function active_integrations() {
         $active = array();
+
+        if ( Helpers::cloud_api_ready() ) {
+            $active[] = 'whatsapp';
+        }
 
         if ( ! class_exists( Integrations_Base::class ) ) {
             return $active;

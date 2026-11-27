@@ -59,6 +59,36 @@ class Send_Error {
 
 
     /**
+     * Describe one of Meta's own error codes, when it names a cause to fix.
+     *
+     * Some refusals reach the client as a bare HTTP 400 whose only telling
+     * part is Meta's code: the account still on the public test number, a
+     * display name not approved yet, or a template that belongs to another
+     * account than the sending number's. Retrying fixes none of them, so a
+     * test send has to say which one it was. An unknown code answers an empty string,
+     * leaving the caller's own description in place.
+     *
+     * @since 2.8.0
+     * @param int $meta_code | Meta's error code from the send details.
+     * @return string
+     */
+    public static function describe_meta_code( $meta_code ) {
+        switch ( (int) $meta_code ) {
+            case self::WINDOW_CLOSED_META_CODE:
+                return self::messages()[ self::WINDOW_CLOSED ];
+            case 131058:
+                return __( 'WhatsApp only sends the hello_world template from Meta\'s public test numbers. Choose another approved template.', 'joinotify' );
+            case 131037:
+                return __( 'The display name of this number is still awaiting Meta\'s approval. WhatsApp sends nothing from it until the name is approved.', 'joinotify' );
+            case 132001:
+                return __( 'The WhatsApp account of the sending number has no template with this name in this language. Templates belong to one account: choose one of the sender\'s account, or send from a number of the account that owns it.', 'joinotify' );
+            default:
+                return '';
+        }
+    }
+
+
+    /**
      * Describe a failure code in a sentence an administrator can act on.
      *
      * Unknown codes fall back to the generic message, so a transport error that
@@ -104,17 +134,18 @@ class Send_Error {
      * only settled once the request knows who is looking at it.
      *
      * @since 2.4.0
+     * @version 2.8.0
      * @return array<string,string>
      */
     protected static function messages() {
         return array(
             self::WINDOW_CLOSED => __( 'This contact has not replied in the last 24 hours. WhatsApp only delivers free-form messages inside that window — use an approved template message to reach them.', 'joinotify' ),
             'retry_cancelled' => __( 'The resend of this message was cancelled from the history screen.', 'joinotify' ),
-            'invalid_sender' => __( 'The sender number is not connected to this site. Check it under Joinotify → Settings → Phone numbers.', 'joinotify' ),
-            'cloud_no_token' => __( 'The Joinotify account is not connected, so there is no way to reach the WhatsApp API. Connect it under Joinotify → Settings.', 'joinotify' ),
-            'http_401' => __( 'The WhatsApp API rejected the credentials. Reconnect the Joinotify account under Joinotify → Settings.', 'joinotify' ),
+            'invalid_sender' => __( 'The sender number is not connected to this site. Check it under Joinotify → Settings → Phones.', 'joinotify' ),
+            'cloud_no_token' => __( 'The Joinotify account is not connected, so there is no way to reach the WhatsApp API. Connect it under Joinotify → Settings → General.', 'joinotify' ),
+            'http_401' => __( 'The WhatsApp API rejected the credentials. Reconnect the Joinotify account under Joinotify → Settings → General.', 'joinotify' ),
             'http_403' => __( 'The WhatsApp API refused this request. The number may not be authorized to send on this account.', 'joinotify' ),
-            'http_404' => __( 'The WhatsApp API could not find the sender number. Sync your numbers under Joinotify → Settings → Phone numbers.', 'joinotify' ),
+            'http_404' => __( 'The WhatsApp API could not find the sender number. Sync your numbers under Joinotify → Settings → Phones.', 'joinotify' ),
             'http_429' => __( 'The WhatsApp API rate limit was reached. The message will be retried shortly.', 'joinotify' ),
         );
     }

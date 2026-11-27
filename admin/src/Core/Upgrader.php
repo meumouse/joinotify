@@ -216,7 +216,7 @@ class Upgrader {
      * idempotent — a routine may re-run if a previous attempt failed.
      *
      * @since 2.0.0
-     * @version 2.7.0
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_routines() {
@@ -240,6 +240,11 @@ class Upgrader {
                 'id' => self::PAYMENT_TRIGGER_ROUTINE,
                 'version' => '2.7.0',
                 'callback' => array( Workflow_Migrator::class, 'migrate_stored_workflows' ),
+            ),
+            array(
+                'id' => 'enable_whatsapp_2_8_0',
+                'version' => '2.8.0',
+                'callback' => array( self::class, 'enable_whatsapp_integration' ),
             ),
         );
 
@@ -328,6 +333,33 @@ class Upgrader {
         }
 
         $settings['whatsapp_cloud_api_token'] = $sealed;
+
+        update_option( 'joinotify_settings', $settings );
+    }
+
+
+    /**
+     * Switch the WhatsApp integration back on.
+     *
+     * 2.8.0 removed its settings card, and with it the only way to turn it
+     * back on, so a site that had it off would have no WhatsApp actions left.
+     * Nothing reads the switch any more; it is set to 'yes' so add-ons that
+     * still check it see WhatsApp as on.
+     *
+     * Idempotent: writing 'yes' over 'yes' changes nothing.
+     *
+     * @since 2.8.0
+     * @return void
+     */
+    public static function enable_whatsapp_integration() {
+        // No settings stored yet means the defaults apply, and they have it on.
+        $settings = get_option( 'joinotify_settings', null );
+
+        if ( ! is_array( $settings ) || ( isset( $settings['enable_whatsapp_integration'] ) && 'yes' === $settings['enable_whatsapp_integration'] ) ) {
+            return;
+        }
+
+        $settings['enable_whatsapp_integration'] = 'yes';
 
         update_option( 'joinotify_settings', $settings );
     }

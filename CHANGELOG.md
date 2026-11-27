@@ -8,6 +8,48 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 
 ## [Unreleased]
 
+## [2.8.0] - 2026-11-27
+
+### Added
+
+- A Joinotify connection card at the top of Settings → General, with the account, the numbers and the last sync
+- WhatsApp steps in the builder warn when the site is not connected to Joinotify
+- The WooCommerce full address format fields have a variable picker
+- `Joinotify/WooCommerce/Address_Format_Placeholders` filter, which sets the variables those fields offer
+- The test message in Settings → Phones can send an approved template of the sender's WhatsApp account, with its variables and a preview
+- The test message warns when the recipient's 24-hour window is closed and offers to send a template instead
+- `Joinotify/WooCommerce/Order_Types` filter, which sets the order types the WooCommerce triggers and the cloud sync run for
+
+### Changed
+
+- **Heads-up:** Telegram and Resend steps no longer send while their integration is turned off
+- **Heads-up:** WhatsApp is always on, so sites that had turned it off get their WhatsApp steps back
+- The Applications tab of Settings is now called Integrations and no longer has a WhatsApp card
+- The WooCommerce full address formats are edited on a single line, with variables only
+- The builder no longer offers Telegram and Resend steps for new workflows
+- The Telegram and Resend settings cards only show on sites that still use them
+- A failed test message is no longer put in the retry queue, and its reason stays on screen in the test window
+- A refused test message names the cause when Meta gives one, such as a display name still under review
+
+### Deprecated
+
+- The Telegram and Resend integrations, which will be removed in 3.0.0
+- The `enable_whatsapp_integration` setting, which nothing reads any more
+
+### Fixed
+
+- Workflows and the cloud sync no longer run for orders that are not shop orders, such as the parts of a Headpress split payment
+- The builder's template step lists the templates of its sender's WhatsApp account instead of always the default account, whose templates the sender could not send
+- The builder's template step keeps the language chosen for a template approved in more than one language
+- The builder's template step warns when its saved template is not in the sender's WhatsApp account
+- The OTP login template field lists the templates of the OTP sender's WhatsApp account, fills in the template language and warns when the saved template is not in that account
+- OTP login codes go out in the language picked with the template when it is approved in more than one language
+
+### Security
+
+- The Telegram bot token and the Resend API key are no longer sent to the browser
+- Connecting through the Joinotify panel no longer sends the API key to the browser
+
 ## [2.7.2] - 2026-11-05
 
 ### Fixed
@@ -660,7 +702,8 @@ Release tooling only; the shipped package is unchanged since 2.3.2.
 
 - Initial release
 
-[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.7.2...HEAD
+[Unreleased]: https://github.com/meumouse/joinotify/compare/v2.8.0...HEAD
+[2.8.0]: https://github.com/meumouse/joinotify/compare/v2.7.2...v2.8.0
 [2.7.2]: https://github.com/meumouse/joinotify/compare/v2.7.1...v2.7.2
 [2.7.1]: https://github.com/meumouse/joinotify/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/meumouse/joinotify/compare/v2.6.2...v2.7.0

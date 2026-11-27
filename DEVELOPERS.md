@@ -381,6 +381,15 @@ Integrations) are declared the same way through `joinotify_register_integration(
 fully configurable from PHP alone. Toggle keys declared only in your schema (not in the plugin's
 default options) are still reset correctly to `'no'` when unchecked.
 
+A `textarea` field can be edited as rich text with a variable picker: set `'component' => 'richtext'`,
+a `placeholders` list and, in `component_props`, `single_line`, `allow_formatting` or `allow_emoji`
+(see [`docs/integrations.md`](docs/integrations.md)). The value is still stored as plain text.
+
+WhatsApp is always on since 2.8.0: it has no integration card, and the `enable_whatsapp_integration`
+setting is kept at `'yes'` for add-ons that still read it, but nothing in Joinotify does. The
+connection to Joinotify lives in a card at the top of Settings → General, fed by the `connection`
+key of the settings bootstrap (`Joinotify/Admin/Settings/Bootstrap_Data`).
+
 ### Custom field components
 
 Standard fields need no JavaScript. If your app needs a **custom control** (an OAuth "Connect"
@@ -893,6 +902,7 @@ The contact block needs a `ref`: without one the event is still recorded, but re
 |---|---|---|
 | `Joinotify/Cloud_Sync/Event_Data` | `$data, $name, $contact` | add data to one event or all of them; return `false` to drop the event |
 | `Joinotify/Cloud_Sync/Order_Data` | `$data, $order` | add an order meta to every order the sync sends |
+| `Joinotify/WooCommerce/Order_Types` | `$order_types` | set the order types the WooCommerce order triggers and the sync run for — `array( 'shop_order' )` by default, so the hidden orders other plugins create (such as Headpress split payment parts, `headpress_payment`) are skipped. Check an order with `Integrations\Woocommerce::is_shop_order( $order )` |
 | `Joinotify/Cloud_Sync/Links` | `$links, $order, $event` | replace the order links (`payment_url`, `order_received_url`, `my_account_url`, `review_urls`) — a headless store points them at its own pages. `$event` is the site event (`wc.order.paid`, …) or `webhook` for the "Send webhook" action |
 | `Joinotify/Cloud_Sync/Contact_Block` | `$block, $fields` | add a tag or attribute to the contact of every event and backfill row; `$fields['source']` says which integration built it (`woocommerce`, `wordpress`, `forms`, `carts`) |
 | `Joinotify/Contacts/Sources/Forms` | `$forms` | list a form of another plugin on the Sources tab, as `{ plugin, id, title, fields: [{ id, label, type }] }` |

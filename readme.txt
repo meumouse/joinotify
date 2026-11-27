@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.7.2
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,7 +38,7 @@ The plugin is free and has no locked features. Building, saving, testing and exp
 * WooCommerce — order status, confirmed payments, refunds, subscriptions, digital product delivery, abandoned carts, new customer accounts, low stock and back in stock alerts
 * WPForms, Elementor Forms and Flexify Checkout
 * WordPress user events
-* Telegram and Resend (e-mail) as additional delivery channels
+* Telegram and Resend (e-mail) as additional delivery channels (deprecated, to be removed in 3.0.0)
 * AI-generated message content through the WordPress AI Client, using the provider set up in Settings → Connectors (optional)
 
 = Operations =
@@ -141,7 +141,7 @@ The plugin itself is free and every feature is unlocked. Building, testing and e
 
 = Where do I get the API key? =
 
-Create it for your site on the Joinotify panel at https://app.joinotify.com, then paste it in the setup wizard (step 2) or in Settings → General → WhatsApp Cloud API.
+Create it for your site on the Joinotify panel at https://app.joinotify.com, then paste it in the setup wizard (step 2) or in the Joinotify connection card at the top of Settings → General ("I already have an API key"). The same card can also connect the site through the panel, without a key to copy.
 
 = Can I send a message to anyone at any time? =
 
@@ -176,6 +176,22 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 4. Settings, with integrations and senders.
 
 == Changelog ==
+
+= 2.8.0 =
+* New: a Joinotify connection card at the top of Settings → General, with the account, the numbers and the last sync.
+* New: WhatsApp steps in the builder warn when the site is not connected to Joinotify.
+* New: the test message in Settings → Phones can send an approved template of the sender's WhatsApp account, with its variables and a preview, and warns when the recipient's 24-hour window is closed.
+* New: the WooCommerce full address format fields have a variable picker.
+* New: `Joinotify/WooCommerce/Address_Format_Placeholders` and `Joinotify/WooCommerce/Order_Types` filters.
+* Changed: WhatsApp is always on, so sites that had turned it off get their WhatsApp steps back.
+* Changed: Telegram and Resend steps no longer send while their integration is turned off, and the builder no longer offers them for new workflows.
+* Changed: the Applications tab of Settings is now called Integrations and no longer has a WhatsApp card.
+* Changed: the WooCommerce full address formats are edited on a single line, with variables only.
+* Changed: a failed test message is no longer put in the retry queue, and its reason stays on screen.
+* Deprecated: the Telegram and Resend integrations, which will be removed in 3.0.0.
+* Fixed: workflows and the cloud sync no longer run for orders that are not shop orders, such as the parts of a Headpress split payment.
+* Fixed: the builder's template step and the OTP login template list the templates of their sender's WhatsApp account, and keep the language chosen for a template approved in more than one.
+* Security: the Telegram bot token, the Resend API key and the key received when connecting through the Joinotify panel are no longer sent to the browser.
 
 = 2.7.2 =
 * Fixed: WooCommerce workflows run outside the storefront, such as an order status change in the admin, no longer end in a fatal error.
@@ -336,6 +352,9 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 * New: attachments on e-mail (Resend) and WhatsApp media actions.
 
 == Upgrade Notice ==
+
+= 2.8.0 =
+WhatsApp is always on now, so sites that had turned it off get their WhatsApp steps back. Telegram and Resend are deprecated and leave in 3.0.0: replace those steps with WhatsApp messages. Order workflows no longer run for hidden orders.
 
 = 2.7.2 =
 Recommended for WooCommerce stores: changing an order status in the admin no longer ends in a fatal error.

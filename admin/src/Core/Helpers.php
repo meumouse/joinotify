@@ -135,7 +135,7 @@ class Helpers {
      * Resolve a WhatsApp Cloud API credential.
      *
      * The settings option is the single source: the setup wizard and the
-     * WhatsApp settings modal both write there, so nothing downstream has to
+     * connection card of Settings → General both write there, so nothing downstream has to
      * know which one the site owner used. The old fallback to the license
      * response object went away with the licensing system in 2.4.0.
      *

@@ -111,6 +111,7 @@ class Registry {
 	 * workflow is being drawn instead of letting it fail at send time.
 	 *
 	 * @since 2.3.0
+	 * @version 2.8.0
 	 * @return array<string,mixed>
 	 */
 	public static function get_transport_state() {
@@ -146,6 +147,10 @@ class Registry {
 			'requires_template_to_open_window' => 'cloud' === $transport,
 			'template_action' => 'send_whatsapp_message_template',
 			'free_form_actions' => array_values( array_unique( array_filter( (array) $free_form_actions, 'is_string' ) ) ),
+			// WhatsApp steps are always offered (2.8.0), so the builder tells the
+			// user when this site has nothing to send them through yet.
+			'cloud_ready' => Helpers::cloud_api_ready(),
+			'settings_url' => admin_url( 'admin.php?page=joinotify-settings' ),
 		);
 	}
 

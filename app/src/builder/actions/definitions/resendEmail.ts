@@ -6,10 +6,15 @@
  * normalization (recipient, subject, message), description builder, and
  * validation.
  *
+ * Deprecated since 2.8.0: never offered in the action library, but saved nodes
+ * keep their settings UI until the integration is removed.
+ *
  * @since 2.1.0
+ * @version 2.8.0
  */
 import ResendEmailSettings from '../settings/ResendEmailSettings.vue';
 import { truncateDescription } from '../utils/actionDescription';
+import { deprecatedIntegrationMessage } from '../utils/deprecation';
 import { normalizeValidationErrors, requiredFieldErrors } from '../utils/validators';
 import { normalizeAttachments } from '../utils/attachments';
 import type { ActionDefinition } from '../registry/types';
@@ -46,6 +51,8 @@ export const resendEmailDefinition: ActionDefinition = {
   iconSvg: RESEND_ICON,
   category: 'messages',
   requiresSetting: 'enable_resend_integration',
+  deprecated: true,
+  deprecatedMessage: deprecatedIntegrationMessage(__('Resend', textDomain)),
   hasSettings: true,
   priority: 70,
   isExpansible: false,

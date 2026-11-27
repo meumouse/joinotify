@@ -23,6 +23,7 @@ defined('ABSPATH') || exit;
  * used.
  *
  * @since 2.3.0
+ * @version 2.8.0
  * @package MeuMouse\Joinotify\Api
  * @author MeuMouse.com
  */
@@ -41,6 +42,82 @@ class Connect {
      * @var int
      */
     const STATE_TTL = 600;
+
+    /**
+     * Option holding the name of the connected Joinotify account.
+     *
+     * Kept apart from the settings so the connection card can name the account
+     * without asking the API on every page load.
+     *
+     * @since 2.8.0
+     * @var string
+     */
+    const ACCOUNT_OPTION = 'joinotify_cloud_account';
+
+
+    /**
+     * Name of the connected Joinotify account, as last reported by the API.
+     *
+     * @since 2.8.0
+     * @return string Empty when unknown (a site connected before 2.8.0 learns it on the next sync).
+     */
+    public static function account_name() {
+        return sanitize_text_field( (string) get_option( self::ACCOUNT_OPTION, '' ) );
+    }
+
+
+    /**
+     * Remember the account name the API reported.
+     *
+     * An empty name leaves the stored one alone: a failed lookup says nothing
+     * about the account having changed.
+     *
+     * @since 2.8.0
+     * @param string $name | Account name.
+     * @return void
+     */
+    public static function remember_account( $name ) {
+        $name = sanitize_text_field( (string) $name );
+
+        if ( '' !== $name ) {
+            update_option( self::ACCOUNT_OPTION, $name, false );
+        }
+    }
+
+
+    /**
+     * Forget the stored account name, once the site is no longer connected.
+     *
+     * @since 2.8.0
+     * @return void
+     */
+    public static function forget_account() {
+        delete_option( self::ACCOUNT_OPTION );
+    }
+
+
+    /**
+     * Ask the API for the account name and remember it.
+     *
+     * One request, made only at moments the user is already waiting on the API
+     * (connecting, syncing numbers).
+     *
+     * @since 2.8.0
+     * @return string The name, or '' when the API did not give one.
+     */
+    public static function refresh_account_name() {
+        $account = Cloud_Client::get_account();
+
+        if ( is_wp_error( $account ) || ! isset( $account['data'] ) || ! is_array( $account['data'] ) ) {
+            return '';
+        }
+
+        $name = sanitize_text_field( (string) ( $account['data']['name'] ?? '' ) );
+
+        self::remember_account( $name );
+
+        return $name;
+    }
 
 
     /**
@@ -76,6 +153,7 @@ class Connect {
      * store them.
      *
      * @since 2.3.0
+     * @version 2.8.0
      * @param string $code | Single-use code handed back by the panel.
      * @param string $state | State echoed back by the panel.
      * @return array|\WP_Error Stored credential summary, or the failure reason.
@@ -120,6 +198,8 @@ class Connect {
             'token' => $credentials['token'],
             'waba_id' => $credentials['waba_id'],
             'phone_number_id' => $credentials['phone_number_id'],
+            // The exchange does not name the account, so it is asked for once here.
+            'account' => self::refresh_account_name(),
             'senders' => is_wp_error( $senders ) ? array() : $senders,
             'sync_error' => is_wp_error( $senders ) ? $senders->get_error_message() : '',
             'webhook_error' => is_wp_error( $webhook ) ? $webhook->get_error_message() : '',
@@ -141,6 +221,7 @@ class Connect {
      * a sending credential.
      *
      * @since 2.3.1
+     * @version 2.8.0
      * @return array|\WP_Error Stored credential summary, or the failure reason.
      */
     public static function connect_with_license() {
@@ -203,6 +284,8 @@ class Connect {
         Sender_Sync::flush_cache();
         $stored = empty( $senders ) ? Sender_Sync::sync() : Sender_Sync::store( $senders );
 
+        self::remember_account( (string) ( $data['account']['name'] ?? '' ) );
+
         return array(
             'token' => $credentials['token'],
             'waba_id' => $credentials['waba_id'],
@@ -226,7 +309,7 @@ class Connect {
      * replaced from here: the constant would keep winning over what is stored.
      *
      * @since 2.3.0
-     * @version 2.6.0
+     * @version 2.8.0
      * @param string $token | API key issued for this site (sk_live_...).
      * @return array|\WP_Error Stored credential summary, or the failure reason.
      */
@@ -256,12 +339,7 @@ class Connect {
             return $senders;
         }
 
-        $account = Cloud_Client::get_account();
-        $account_name = '';
-
-        if ( ! is_wp_error( $account ) && isset( $account['data'] ) && is_array( $account['data'] ) ) {
-            $account_name = sanitize_text_field( (string) ( $account['data']['name'] ?? '' ) );
-        }
+        $account_name = self::refresh_account_name();
 
         // sync() answers with the stored phone list; the full entries it just
         // cached are what carry the origin and business account ids, so the site
