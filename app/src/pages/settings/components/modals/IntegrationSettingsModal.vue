@@ -3,10 +3,14 @@
 /**
  * IntegrationSettingsModal.vue frontend component.
  *
+ * Fields of the modal can read the other values of the form and change
+ * them through the `joinotifySettingsForm` context it provides: the OTP
+ * template field reads the chosen sender and writes the template language.
+ *
  * @since 1.4.7
- * @version 1.4.7
+ * @version 2.8.0
  */
-import { computed } from 'vue';
+import { computed, provide } from 'vue';
 import { __, textDomain } from '../../../../utils/i18n';
 import ModalDialog from '../../../../components/modals/ModalDialog.vue';
 import FieldRow from '../../../../components/fields/FieldRow.vue';
@@ -26,7 +30,12 @@ const props = defineProps({
   modalSize: { type: String, default: 'medium' },
 });
 
-defineEmits(['close', 'update-setting', 'action']);
+const emit = defineEmits(['close', 'update-setting', 'action']);
+
+provide('joinotifySettingsForm', {
+  get: (key) => props.settings?.[key],
+  update: (key, value) => emit('update-setting', key, value),
+});
 
 const modal = computed(() => props.integration?.modal || {});
 const fields = computed(() => props.integration?.settings || props.integration?.fields || []);

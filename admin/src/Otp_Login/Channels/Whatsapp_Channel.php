@@ -122,6 +122,7 @@ class Whatsapp_Channel implements Channel_Interface {
      * Deliver the code through the configured AUTHENTICATION template.
      *
      * @since 2.3.0
+     * @version 2.8.0
      * @param string      $sender | Origin phone number.
      * @param string      $receiver | Recipient phone number.
      * @param Otp_Message $message | OTP message to deliver.
@@ -135,13 +136,18 @@ class Whatsapp_Channel implements Channel_Interface {
         }
 
         // The language belongs to the template, not to the site: sending a code
-        // the template was not approved in is refused by Meta. Read it from the
-        // synced list and fall back to the setting when the list has no answer.
-        $synced = Template_Repository::find( $template );
+        // the template was not approved in is refused by Meta. The setting holds
+        // the language picked with the template, and wins when the synced list
+        // has the template in it; a name approved in several languages would
+        // otherwise go out in whichever the list holds first. When the list has
+        // the template only in another language, that one is used, and the
+        // setting is the answer when the list has no answer at all.
+        $configured = trim( (string) Admin::get_setting('otp_login_template_language') );
+        $synced = Template_Repository::find( $template, $configured );
         $language = is_array( $synced ) ? trim( (string) ( $synced['language'] ?? '' ) ) : '';
 
         if ( '' === $language ) {
-            $language = trim( (string) Admin::get_setting('otp_login_template_language') );
+            $language = $configured;
         }
 
         $language = '' !== $language ? $language : 'pt_BR';

@@ -33,6 +33,8 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 - The builder's template step lists the templates of its sender's WhatsApp account instead of always the default account, whose templates the sender could not send
 - The builder's template step keeps the language chosen for a template approved in more than one language
 - The builder's template step warns when its saved template is not in the sender's WhatsApp account
+- The OTP login template field lists the templates of the OTP sender's WhatsApp account, fills in the template language and warns when the saved template is not in that account
+- OTP login codes go out in the language picked with the template when it is approved in more than one language
 
 ### Deprecated
 

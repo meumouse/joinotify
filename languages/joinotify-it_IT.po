@@ -1234,7 +1234,7 @@ msgstr "Chiavi API, token o qualsiasi altra credenziale"
 msgid "Apply"
 msgstr "Applica"
 
-#: admin/src/Integrations/Otp_Login.php:185
+#: admin/src/Integrations/Otp_Login.php:187
 msgid ""
 "Approved AUTHENTICATION template used to deliver login codes over the "
 "WhatsApp Cloud API. Create it in the Joinotify panel; this list is synced "
@@ -1493,7 +1493,7 @@ msgstr "Bangladesh"
 msgid "Base"
 msgstr "Base"
 
-#: admin/src/Integrations/Otp_Login.php:140
+#: admin/src/Integrations/Otp_Login.php:142
 msgid ""
 "Base color used to theme the login form. The full shade palette is derived "
 "automatically."
@@ -1562,11 +1562,11 @@ msgstr "Bolivia"
 msgid "Boolean"
 msgstr "Booleano"
 
-#: admin/src/Integrations/Otp_Login.php:147
+#: admin/src/Integrations/Otp_Login.php:149
 msgid "Border radius"
 msgstr "Raggio del bordo"
 
-#: admin/src/Integrations/Otp_Login.php:157
+#: admin/src/Integrations/Otp_Login.php:159
 msgid "Border radius unit"
 msgstr "Unità del raggio del bordo"
 
@@ -2176,7 +2176,7 @@ msgstr "Componente di configurazione non disponibile per questa azione."
 #: admin/src/Cloud_Sync/Cloud_Sync.php:312
 #: admin/src/Integrations/Integrations_Base.php:471
 #: admin/src/Integrations/Integrations_Base.php:879
-#: admin/src/Integrations/Otp_Login.php:109
+#: admin/src/Integrations/Otp_Login.php:110
 #: admin/src/Integrations/Resend.php:130
 #: admin/src/Integrations/Telegram.php:130
 #: admin/src/Integrations/Whatsapp.php:123
@@ -2195,7 +2195,7 @@ msgstr ""
 "Configura i coupon sconto e la formattazione dei campi di checkout con i "
 "campi di integrazione nativi."
 
-#: admin/src/Integrations/Otp_Login.php:108
+#: admin/src/Integrations/Otp_Login.php:109
 msgid ""
 "Configure how verification codes are delivered, the visual theme, and the "
 "sender used for the login form."
@@ -2597,7 +2597,6 @@ msgstr "Impossibile caricare il flusso di lavoro."
 msgid "Could not load workflows."
 msgstr "Impossibile caricare i flussi di lavoro."
 
-#: app/src/components/fields/WhatsappTemplateField.vue:113
 #: app/src/composables/useWhatsappTemplates.ts:86
 msgid "Could not load your message templates."
 msgstr "Impossibile caricare i tuoi modelli di messaggio."
@@ -2716,7 +2715,6 @@ msgstr "Impossibile inviare il messaggio di prova del modello."
 msgid "Could not start the connection."
 msgstr "Impossibile avviare la connessione."
 
-#: app/src/components/fields/WhatsappTemplateField.vue:144
 #: app/src/composables/useWhatsappTemplates.ts:122
 msgid "Could not sync your message templates."
 msgstr "Impossibile sincronizzare i tuoi modelli di messaggio."
@@ -3264,7 +3262,7 @@ msgstr "Consegnato"
 msgid "Delivered at"
 msgstr "Consegnato il"
 
-#: admin/src/Integrations/Otp_Login.php:128
+#: admin/src/Integrations/Otp_Login.php:130
 msgid "Delivery channel"
 msgstr "Canale di consegna"
 
@@ -3768,7 +3766,7 @@ msgstr "El Salvador"
 msgid "Elementor"
 msgstr "Elementor"
 
-#: admin/src/Integrations/Otp_Login.php:161
+#: admin/src/Integrations/Otp_Login.php:163
 msgid "EM"
 msgstr "EM"
 
@@ -4333,6 +4331,16 @@ msgstr "Compila l'email o il nome utente e la password."
 msgid "Fill in the phone number and the code you received."
 msgstr "Compila il numero di telefono e il codice che hai ricevuto."
 
+#: admin/src/Integrations/Otp_Login.php:206
+msgid ""
+"Filled in when a template is picked above, since a template goes out in the "
+"language it was approved in. Change it only for a template that is not in "
+"the synced list, for example pt_BR or en_US."
+msgstr ""
+"Compilato quando scegli il modello qui sopra, perché un modello viene "
+"inviato nella lingua in cui è stato approvato. Modificalo solo per un "
+"modello che non è nell'elenco sincronizzato, ad esempio pt_BR o en_US."
+
 #: admin/src/Validations/Country_Codes.php:136
 msgid "Finland"
 msgstr "Finlandia"
@@ -4638,7 +4646,7 @@ msgstr "Abbandonato dopo ogni tentativo"
 msgid "Global instructions"
 msgstr "Istruzioni globali"
 
-#: admin/src/Integrations/Otp_Login.php:82
+#: admin/src/Integrations/Otp_Login.php:83
 msgid "Go to Plugins"
 msgstr "Vai ai Plugin"
 
@@ -4832,7 +4840,7 @@ msgstr ""
 msgid "How the consent was obtained"
 msgstr "Come è stato ottenuto il consenso"
 
-#: admin/src/Integrations/Otp_Login.php:129
+#: admin/src/Integrations/Otp_Login.php:131
 msgid ""
 "How the verification code is sent to the user. New channels (e-mail, "
 "Telegram) can be added by extensions."
@@ -5111,13 +5119,13 @@ msgid "Integration not active"
 msgstr "Integrazione non attiva"
 
 #: admin/src/Integrations/Integrations_Base.php:877
-#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:99
+#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:108
 msgid "Integration settings"
 msgstr "Impostazioni integrazione"
 
 #: admin/src/Admin/Settings/Registry.php:229
 #: admin/src/Admin/Settings/Registry.php:349
-#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:101
+#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:110
 msgid "Integrations"
 msgstr "Integrazioni"
 
@@ -5721,7 +5729,7 @@ msgstr "Meno di"
 msgid "Less than <span class=\"builder-placeholder\">%s</span>"
 msgstr "Meno di <span class=\"builder-placeholder\">%s</span>"
 
-#: admin/src/Integrations/Otp_Login.php:98
+#: admin/src/Integrations/Otp_Login.php:99
 msgid ""
 "Let your users log in securely with a verification code sent through "
 "Joinotify, offering a fast passwordless experience."
@@ -5862,7 +5870,7 @@ msgstr "Accedi con un codice di verifica"
 msgid "Log in with WhatsApp"
 msgstr "Accedi con WhatsApp"
 
-#: admin/src/Integrations/Otp_Login.php:184
+#: admin/src/Integrations/Otp_Login.php:186
 msgid "Login code template"
 msgstr "Modello di codice di accesso"
 
@@ -6035,7 +6043,7 @@ msgstr "Forse più tardi"
 msgid "Mayotte"
 msgstr "Mayotte"
 
-#: admin/src/Integrations/Otp_Login.php:158
+#: admin/src/Integrations/Otp_Login.php:160
 msgid "Measurement unit applied to the border radius value."
 msgstr "Unità di misura applicata al valore del raggio del bordo."
 
@@ -6534,7 +6542,7 @@ msgstr ""
 "Nessun modello approvato trovato. Creane uno nel pannello di Joinotify e "
 "fallo prima approvare da Meta."
 
-#: app/src/components/fields/WhatsappTemplateField.vue:90
+#: app/src/components/fields/WhatsappTemplateField.vue:155
 msgid ""
 "No approved template of this type was found on your account. Create it in "
 "the Joinotify panel and sync again."
@@ -6542,7 +6550,7 @@ msgstr ""
 "Nessun modello approvato di questo tipo è stato trovato sul tuo account. "
 "Crealo nel pannello di Joinotify e sincronizza di nuovo."
 
-#: app/src/components/fields/WhatsappTemplateField.vue:91
+#: app/src/components/fields/WhatsappTemplateField.vue:156
 msgid ""
 "No approved template was found on your account. Create it in the Joinotify "
 "panel and sync again."
@@ -6834,7 +6842,7 @@ msgstr "Non attivo su questo sito."
 msgid "Not connected"
 msgstr "Non connesso"
 
-#: app/src/components/fields/WhatsappTemplateField.vue:72
+#: app/src/components/fields/WhatsappTemplateField.vue:125
 msgid "not found in the account"
 msgstr "non trovato nell'account"
 
@@ -6998,16 +7006,6 @@ msgid ""
 msgstr ""
 "Solo le condizioni e gli operatori supportati dal motore per questo trigger "
 "sono mostrati."
-
-#: admin/src/Integrations/Otp_Login.php:198
-msgid ""
-"Only needed as a fallback: the language is normally taken from the template "
-"picked above. Fill it in if the template is not in the synced list, for "
-"example pt_BR or en_US."
-msgstr ""
-"Necessario solo come fallback: la lingua viene normalmente presa dal "
-"modello selezionato sopra. Compila se il modello non è nella lista "
-"sincronizzata, ad esempio pt_BR o en_US."
 
 #: app/src/pages/contacts/components/ConsentModal.vue:42
 msgid ""
@@ -7307,7 +7305,7 @@ msgstr "Altri"
 msgid "OTP"
 msgstr "OTP"
 
-#: admin/src/Integrations/Otp_Login.php:97
+#: admin/src/Integrations/Otp_Login.php:98
 msgid "OTP Login - Passwordless authentication"
 msgstr "Accesso OTP - Autenticazione senza password"
 
@@ -7384,7 +7382,7 @@ msgstr "Password"
 msgid "Password reset request"
 msgstr "Richiesta di reimpostazione della password"
 
-#: admin/src/Integrations/Otp_Login.php:80
+#: admin/src/Integrations/Otp_Login.php:81
 msgid ""
 "Passwordless login is now built into Joinotify, so the standalone "
 "\"Joinotify OTP Login\" plugin duplicates it. You can safely deactivate the "
@@ -7394,7 +7392,7 @@ msgstr ""
 "standalone \"Joinotify OTP Login\" lo duplica. Puoi disattivare in "
 "sicurezza il plugin standalone."
 
-#: admin/src/Integrations/Otp_Login.php:107
+#: admin/src/Integrations/Otp_Login.php:108
 msgid "Passwordless login settings"
 msgstr "Impostazioni di accesso senza password"
 
@@ -7450,7 +7448,7 @@ msgstr ""
 "e-mail."
 
 #: admin/src/Builder/Messages.php:328
-#: admin/src/Integrations/Otp_Login.php:163
+#: admin/src/Integrations/Otp_Login.php:165
 #: admin/src/Integrations/Woocommerce.php:2022
 msgid "Percentage"
 msgstr "Percentuale"
@@ -7613,7 +7611,7 @@ msgstr "Seleziona i tag…"
 msgid "Pick the column that holds the phone number."
 msgstr "Seleziona la colonna che contiene il numero di telefono."
 
-#: admin/src/Integrations/Otp_Login.php:160
+#: admin/src/Integrations/Otp_Login.php:162
 msgid "Pixel"
 msgstr "Pixel"
 
@@ -7728,7 +7726,7 @@ msgstr "Precedente"
 msgid "Previous month"
 msgstr "Mese precedente"
 
-#: admin/src/Integrations/Otp_Login.php:139
+#: admin/src/Integrations/Otp_Login.php:141
 msgid "Primary color"
 msgstr "Colore primario"
 
@@ -7958,7 +7956,7 @@ msgstr "rifiutato"
 msgid "Register"
 msgstr "Registrati"
 
-#: admin/src/Integrations/Otp_Login.php:172
+#: admin/src/Integrations/Otp_Login.php:174
 msgid ""
 "Registered Joinotify number used to deliver OTP codes. Leave on the first "
 "available sender to use the default."
@@ -7971,7 +7969,7 @@ msgstr ""
 msgid "Registered senders"
 msgstr "Mittenti registrati"
 
-#: admin/src/Integrations/Otp_Login.php:162
+#: admin/src/Integrations/Otp_Login.php:164
 msgid "REM"
 msgstr "REM"
 
@@ -8256,7 +8254,7 @@ msgstr ""
 msgid "Romania"
 msgstr "Romania"
 
-#: admin/src/Integrations/Otp_Login.php:148
+#: admin/src/Integrations/Otp_Login.php:150
 msgid "Rounding applied to cards, buttons, and form fields."
 msgstr "Arrotondamento applicato a carte, pulsanti e campi del modulo."
 
@@ -8943,7 +8941,7 @@ msgstr "E-mail del mittente"
 msgid "Sender name"
 msgstr "Nome del mittente"
 
-#: admin/src/Integrations/Otp_Login.php:171
+#: admin/src/Integrations/Otp_Login.php:173
 msgid "Sender phone"
 msgstr "Telefono del mittente"
 
@@ -9029,7 +9027,7 @@ msgstr "Server"
 msgid "Session window"
 msgstr "Finestra di assistenza"
 
-#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:134
+#: admin/src/Otp_Login/Channels/Whatsapp_Channel.php:135
 msgid ""
 "Set an approved AUTHENTICATION template to deliver login codes through the "
 "WhatsApp Cloud API."
@@ -9425,7 +9423,7 @@ msgstr ""
 msgid "Switzerland"
 msgstr "Svizzera"
 
-#: app/src/components/fields/WhatsappTemplateField.vue:186
+#: app/src/components/fields/WhatsappTemplateField.vue:216
 msgid "Sync"
 msgstr "Sincronizza"
 
@@ -9454,12 +9452,12 @@ msgstr "Sincronizzazione attivata"
 msgid "Sync paused"
 msgstr "Sincronizzazione in pausa"
 
-#: app/src/components/fields/WhatsappTemplateField.vue:178
+#: app/src/components/fields/WhatsappTemplateField.vue:208
 msgid "Sync templates with your account"
 msgstr "Sincronizza i modelli con il tuo account"
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:236
-#: app/src/components/fields/WhatsappTemplateField.vue:186
+#: app/src/components/fields/WhatsappTemplateField.vue:216
 #: app/src/pages/settings/components/cards/PhoneActions.vue:491
 msgid "Syncing…"
 msgstr "Sincronizzazione in corso…"
@@ -9642,7 +9640,7 @@ msgstr "Temperatura"
 msgid "Template"
 msgstr "Modello"
 
-#: admin/src/Integrations/Otp_Login.php:197
+#: admin/src/Integrations/Otp_Login.php:205
 msgid "Template language"
 msgstr "Lingua del modello"
 
@@ -10314,6 +10312,7 @@ msgstr ""
 "possiede."
 
 #: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:226
+#: app/src/components/fields/WhatsappTemplateField.vue:221
 msgid ""
 "The WhatsApp account of this sender does not have this template, so "
 "WhatsApp would refuse it. Choose a template from this list or another "
@@ -10506,7 +10505,7 @@ msgstr "Questo file non è un'esportazione di impostazioni Joinotify valida."
 msgid "This integration depends on an installed and active plugin."
 msgstr "Questa integrazione dipende da un plugin installato e attivo."
 
-#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:135
+#: app/src/pages/settings/components/modals/IntegrationSettingsModal.vue:144
 msgid "This integration has no additional settings."
 msgstr "Questa integrazione non ha impostazioni aggiuntive."
 
@@ -11618,7 +11617,7 @@ msgstr "Usa il provider predefinito"
 msgid "Use email and password"
 msgstr "Usa email e password"
 
-#: admin/src/Integrations/Otp_Login.php:217
+#: admin/src/Integrations/Otp_Login.php:248
 msgid "Use the first available sender"
 msgstr "Usa il primo mittente disponibile"
 

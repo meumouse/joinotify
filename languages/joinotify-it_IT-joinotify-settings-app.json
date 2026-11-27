@@ -967,6 +967,9 @@
       "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
         "La chiave Joinotify di questo sito è stata revocata o non può inviare questi dati. Riconnetti il sito in Impostazioni → Generale; la sincronizzazione riprende da sola."
       ],
+      "The WhatsApp account of this sender does not have this template, so WhatsApp would refuse it. Choose a template from this list or another sender.": [
+        "L'account WhatsApp di questo mittente non ha questo modello, quindi WhatsApp lo rifiuterebbe. Scegli un modello da questo elenco o un altro mittente."
+      ],
       "This contact has not messaged this number in the last 24 hours, so WhatsApp will refuse free text. Send an approved template instead.": [
         "Questo contatto non ha scritto a questo numero nelle ultime 24 ore, quindi WhatsApp rifiuterà il testo libero. Invia invece un modello approvato."
       ],

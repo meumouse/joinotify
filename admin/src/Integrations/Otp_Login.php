@@ -2,6 +2,7 @@
 
 namespace MeuMouse\Joinotify\Integrations;
 
+use MeuMouse\Joinotify\Core\Phone_Manager;
 use MeuMouse\Joinotify\Otp_Login\Channel_Registry;
 use MeuMouse\Joinotify\Otp_Login\Color_Scheme;
 use MeuMouse\Joinotify\Otp_Login\Settings;
@@ -119,6 +120,7 @@ class Otp_Login extends Integrations_Base {
      * Declarative settings rendered in the integration modal.
      *
      * @since 2.0.0
+     * @version 2.8.0
      * @return array<int,array<string,mixed>>
      */
     public static function get_integration_settings() {
@@ -187,20 +189,49 @@ class Otp_Login extends Integrations_Base {
                 array(
                     'default' => '',
                     'component' => 'whatsapp-template-select',
+                    // Meta looks a template up on the account of the number
+                    // that sends it, so the field lists the account of the
+                    // sender chosen above and writes the language it picks.
                     'component_props' => array(
                         'category' => 'AUTHENTICATION',
+                        'sender_setting' => 'otp_login_sender_phone',
+                        'language_setting' => 'otp_login_template_language',
+                        'senders' => self::get_sender_accounts(),
                     ),
                 )
             ),
             self::field_text(
                 'otp_login_template_language',
                 esc_html__( 'Template language', 'joinotify' ),
-                esc_html__( 'Only needed as a fallback: the language is normally taken from the template picked above. Fill it in if the template is not in the synced list, for example pt_BR or en_US.', 'joinotify' ),
+                esc_html__( 'Filled in when a template is picked above, since a template goes out in the language it was approved in. Change it only for a template that is not in the synced list, for example pt_BR or en_US.', 'joinotify' ),
                 array(
                     'placeholder' => 'pt_BR',
                 )
             ),
         );
+    }
+
+
+    /**
+     * The available senders with the WhatsApp Business Account of each.
+     *
+     * The first one is the sender used when the setting is left on "first
+     * available", which is how the template field tells which account to list.
+     *
+     * @since 2.8.0
+     * @return array<int,array{phone:string,waba_id:string}>
+     */
+    private static function get_sender_accounts() {
+        $accounts = array();
+
+        foreach ( Settings::get_available_senders() as $sender ) {
+            $accounts[] = array(
+                'phone' => (string) $sender,
+                'waba_id' => Phone_Manager::get_waba_id( $sender ),
+            );
+        }
+
+        return $accounts;
     }
 
 
