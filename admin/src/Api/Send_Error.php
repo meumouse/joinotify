@@ -59,6 +59,36 @@ class Send_Error {
 
 
     /**
+     * Describe one of Meta's own error codes, when it names a cause to fix.
+     *
+     * Some refusals reach the client as a bare HTTP 400 whose only telling
+     * part is Meta's code: the account still on the public test number, a
+     * display name not approved yet, or a template that belongs to another
+     * account than the sending number's. Retrying fixes none of them, so a
+     * test send has to say which one it was. An unknown code answers an empty string,
+     * leaving the caller's own description in place.
+     *
+     * @since 2.8.0
+     * @param int $meta_code | Meta's error code from the send details.
+     * @return string
+     */
+    public static function describe_meta_code( $meta_code ) {
+        switch ( (int) $meta_code ) {
+            case self::WINDOW_CLOSED_META_CODE:
+                return self::messages()[ self::WINDOW_CLOSED ];
+            case 131058:
+                return __( 'WhatsApp only sends the hello_world template from Meta\'s public test numbers. Choose another approved template.', 'joinotify' );
+            case 131037:
+                return __( 'The display name of this number is still awaiting Meta\'s approval. WhatsApp sends nothing from it until the name is approved.', 'joinotify' );
+            case 132001:
+                return __( 'The WhatsApp account of the sending number has no template with this name in this language. Templates belong to one account: choose one of the sender\'s account, or send from a number of the account that owns it.', 'joinotify' );
+            default:
+                return '';
+        }
+    }
+
+
+    /**
      * Describe a failure code in a sentence an administrator can act on.
      *
      * Unknown codes fall back to the generic message, so a transport error that

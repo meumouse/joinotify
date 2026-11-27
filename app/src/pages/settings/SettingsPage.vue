@@ -419,37 +419,51 @@ async function syncCloudNumbers() {
   }
 }
 
+/**
+ * Send a test message, as free text or as an approved template.
+ *
+ * A refused send still answers 200 with `status: 'error'`, and its reason (a
+ * closed 24-hour window, a template Meta refused, a number still on its
+ * display-name review) goes back to the modal, which keeps it on screen next
+ * to what was tried instead of in a toast that fades.
+ *
+ * @since 1.4.7
+ * @version 2.8.0
+ * @param {Object} payload Body of the test-message route.
+ * @returns {Promise<{ok: boolean, message: string}>}
+ */
 async function sendTestMessage(payload) {
-  debugLogger.log('phones:test-message-start', {
-    phone: payload?.phone || '',
-  });
+  const logContext = {
+    type: payload?.type || 'text',
+    template: payload?.template_name || '',
+  };
+
+  debugLogger.log('phones:test-message-start', logContext);
+
   try {
     const response = await api.post('/admin/settings/phones/test-message', payload);
 
-    // A refused send still answers 200 with `status: 'error'` — the reason it
-    // carries (a closed 24-hour window, most often) has to reach the toast as a
-    // failure, not be announced as a success.
     if (response?.status === 'error') {
-      toast(response.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
       debugLogger.log('phones:test-message-refused', {
-        phone: payload?.phone || '',
+        ...logContext,
         error_code: response?.error_code || '',
+        meta_code: response?.meta_code || 0,
       });
-      return false;
+      return { ok: false, message: response.message || __('Failed to send message.', textDomain) };
     }
 
     toast(response.message || __('Message sent.', textDomain), 'success', __('Phones', textDomain));
     debugLogger.log('phones:test-message-complete', {
-      phone: payload?.phone || '',
+      ...logContext,
+      message_id: response?.message_id || '',
     });
-    return true;
+    return { ok: true, message: response.message || '' };
   } catch (error) {
-    toast(error.message || __('Failed to send message.', textDomain), 'danger', __('Phones', textDomain));
     debugLogger.log('phones:test-message-failed', {
-      phone: payload?.phone || '',
+      ...logContext,
       error: error instanceof Error ? error.message : String(error),
     });
-    return false;
+    return { ok: false, message: error.message || __('Failed to send message.', textDomain) };
   }
 }
 

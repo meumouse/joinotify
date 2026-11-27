@@ -23,6 +23,7 @@ class Rest_Controller extends Abstract_Rest_Controller {
         '\MeuMouse\Joinotify\Rest\Phone_Register',
         '\MeuMouse\Joinotify\Rest\Phone_Remove',
         '\MeuMouse\Joinotify\Rest\Phone_Test_Message',
+        '\MeuMouse\Joinotify\Rest\Phone_Window',
         '\MeuMouse\Joinotify\Rest\Phone_Check_Connection',
         '\MeuMouse\Joinotify\Rest\Cloud_Numbers',
         '\MeuMouse\Joinotify\Rest\Cloud_Numbers_Sync',

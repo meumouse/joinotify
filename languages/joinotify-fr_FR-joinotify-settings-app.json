@@ -7,6 +7,12 @@
         "lang": "fr_FR",
         "plural-forms": "nplurals=2; plural=(n > 1);"
       },
+      "-23.5505 or a placeholder": [
+        "-23.5505 ou un placeholder"
+      ],
+      "{{ wc_billing_first_name }} or a fixed value": [
+        "{{ wc_billing_first_name }} ou une valeur fixe"
+      ],
       "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created.": [
         "%1$d de vos %2$d utilisateurs ont un numéro de téléphone, et il y a %3$d commandes passées sans compte. Chaque personne devient un contact dans Joinotify, étiqueté avec ce site ; aucun flux ne commence pour eux. Les personnes sans numéro de téléphone sont exclues, et les contacts dépassant la limite de votre plan ne sont pas créés."
       ],
@@ -28,6 +34,12 @@
       "+%d more": [
         "+%d autres"
       ],
+      "2026-12-31 23:59 or +2 days": [
+        "2026-12-31 23:59 ou +2 days"
+      ],
+      "2026-12-31 23:59, +2 days or a placeholder": [
+        "2026-12-31 23:59, +2 days ou un placeholder"
+      ],
       "24h limit:": [
         "Limite de 24h :"
       ],
@@ -42,6 +54,9 @@
       ],
       "Add variable": [
         "Ajouter une variable"
+      ],
+      "Address": [
+        "Adresse"
       ],
       "Advanced": [
         "Avancé"
@@ -76,6 +91,12 @@
       "Base": [
         "Base"
       ],
+      "BLACK20 or a placeholder": [
+        "BLACK20 ou un placeholder"
+      ],
+      "Body": [
+        "Corps"
+      ],
       "Bold": [
         "Gras"
       ],
@@ -85,8 +106,14 @@
       "Business account that owns the message templates. Filled in when you connect.": [
         "Compte professionnel qui possède les modèles de message. Rempli lorsque vous vous connectez."
       ],
+      "Button": [
+        "Bouton"
+      ],
       "Cancel": [
         "Annuler"
+      ],
+      "Card": [
+        "Carte"
       ],
       "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
         "Changer la couleur de base régénère la palette. Les nuances individuelles peuvent toujours être remplacées."
@@ -214,6 +241,9 @@
       "Could not save.": [
         "Impossible d'enregistrer."
       ],
+      "Could not send the test message.": [
+        "Impossible d'envoyer le message de test."
+      ],
       "Could not start the connection.": [
         "Impossible de démarrer la connexion."
       ],
@@ -228,6 +258,9 @@
       ],
       "Counting your customers…": [
         "Comptage de vos clients…"
+      ],
+      "Coupon code": [
+        "Code de coupon"
       ],
       "Critical": [
         "Critique"
@@ -295,6 +328,12 @@
       "Enable the integration to access its settings.": [
         "Activer l'intégration pour accéder à ses paramètres."
       ],
+      "End of the link, e.g. {{ wc_payment_url | remove_home_url }}": [
+        "Fin du lien, ex. : {{ wc_payment_url | remove_home_url }}"
+      ],
+      "End of the link, e.g. order/123": [
+        "Fin du lien, par exemple order/123"
+      ],
       "Enjoying Joinotify?": [
         "Vous aimez Joinotify ?"
       ],
@@ -352,6 +391,9 @@
       "File is too large. The maximum size is 5 MB.": [
         "Le fichier est trop volumineux. La taille maximale est de 5 Mo."
       ],
+      "Fill in every variable to send the template. Meta refuses it with an empty value.": [
+        "Remplissez toutes les variables pour envoyer le modèle. Meta le refuse si une valeur est vide."
+      ],
       "Fix on the panel": [
         "Corriger dans le panneau"
       ],
@@ -367,6 +409,21 @@
       "Group by category": [
         "Grouper par catégorie"
       ],
+      "Header": [
+        "En-tête"
+      ],
+      "Header document": [
+        "Document de l’en-tête"
+      ],
+      "Header image": [
+        "Image de l’en-tête"
+      ],
+      "Header location": [
+        "Emplacement de l’en-tête"
+      ],
+      "Header video": [
+        "Vidéo de l’en-tête"
+      ],
       "Hello, this is a test message.": [
         "Bonjour, ceci est un message test."
       ],
@@ -378,6 +435,9 @@
       ],
       "Hook": [
         "Crochet"
+      ],
+      "https://example.com/file.jpg or a placeholder": [
+        "https://example.com/fichier.jpg ou un placeholder"
       ],
       "I already did": [
         "Je l'ai déjà fait"
@@ -475,14 +535,26 @@
       "latest post": [
         "dernier post"
       ],
+      "Latitude": [
+        "Latitude"
+      ],
       "Leave a review": [
         "Laisser un avis"
+      ],
+      "Leave empty to repeat the code from the body": [
+        "Laissez vide pour reprendre le code du corps"
       ],
       "Level": [
         "Niveau"
       ],
+      "Library": [
+        "Bibliothèque"
+      ],
       "Load keys": [
         "Charger les clés"
+      ],
+      "Loading templates…": [
+        "Chargement des modèles…"
       ],
       "Loading the sync status…": [
         "Chargement de l'état de synchronisation…"
@@ -495,6 +567,9 @@
       ],
       "Logs cleared successfully.": [
         "Journaux effacés avec succès."
+      ],
+      "Longitude": [
+        "Longitude"
       ],
       "Manage numbers": [
         "Gérer les numéros"
@@ -517,14 +592,32 @@
       "Messages cannot be delivered until this site is connected.": [
         "Les messages ne peuvent pas être livrés tant que ce site n'est pas connecté."
       ],
+      "Meta disabled this template. It can no longer be sent.": [
+        "Meta a désactivé ce modèle. Il ne peut plus être envoyé."
+      ],
       "Meta key": [
         "Clé méta"
+      ],
+      "Meta paused this template because of low quality. It will not be delivered until it recovers.": [
+        "Meta a mis ce modèle en pause en raison de sa faible qualité. Il ne sera pas livré tant qu'il ne se sera pas amélioré."
+      ],
+      "Meta rejected this template.": [
+        "Meta a rejeté ce modèle."
+      ],
+      "Name": [
+        "Nom"
       ],
       "Never": [
         "Jamais"
       ],
       "New variable": [
         "Nouvelle variable"
+      ],
+      "No approved template": [
+        "Aucun modèle approuvé"
+      ],
+      "No approved template found. Create one on the Joinotify panel and approve it with Meta first.": [
+        "Aucun modèle approuvé trouvé. Créez-en un dans le panneau Joinotify et faites-le d'abord approuver par Meta."
       ],
       "No approved template of this type was found on your account. Create it in the Joinotify panel and sync again.": [
         "Aucun modèle approuvé de ce type n'a été trouvé sur votre compte. Créez-le dans le panneau Joinotify et synchronisez à nouveau."
@@ -580,11 +673,17 @@
       "Of those sent, %1$d %2$s.": [
         "Parmi ceux envoyés, %1$d %2$s."
       ],
+      "Offer expiration": [
+        "Expiration de l’offre"
+      ],
       "ok": [
         "ok"
       ],
       "older than what Joinotify has": [
         "plus ancien que ce que Joinotify a"
+      ],
+      "Only templates approved by Meta are listed. Each one is sent in the language it was approved in.": [
+        "Seuls les modèles approuvés par Meta sont listés. Chacun est envoyé dans la langue dans laquelle il a été approuvé."
       ],
       "Only the public prefix of your key is shown. Remove it to connect a different account.": [
         "Seul le préfixe public de votre clé est affiché. Supprimez-le pour connecter un compte différent."
@@ -594,6 +693,12 @@
       ],
       "Open the panel": [
         "Ouvrir le panneau"
+      ],
+      "Optional": [
+        "Optionnel"
+      ],
+      "Optional: sent back when the button is tapped": [
+        "Facultatif : renvoyé lorsque le bouton est touché"
       ],
       "Options have been reset.": [
         "Les options ont été réinitialisées."
@@ -667,6 +772,9 @@
       "Removing…": [
         "Suppression…"
       ],
+      "Reply payload": [
+        "Payload de la réponse"
+      ],
       "Request": [
         "Demande"
       ],
@@ -718,11 +826,17 @@
       "Select a sender": [
         "Sélectionner un expéditeur"
       ],
+      "Select a template": [
+        "Sélectionner un modèle"
+      ],
       "Select an entity": [
         "Sélectionner une entité"
       ],
       "Select an option": [
         "Sélectionnez une option"
+      ],
+      "Select media": [
+        "Sélectionnez un média"
       ],
       "Select the WhatsApp sender that will be used to deliver this test message.": [
         "Sélectionnez l'expéditeur WhatsApp qui sera utilisé pour envoyer ce message test."
@@ -730,11 +844,17 @@
       "Send": [
         "Envoyer"
       ],
+      "Send a template": [
+        "Envoyer un modèle"
+      ],
       "Send again": [
         "Envoyer à nouveau"
       ],
       "Send existing customers": [
         "Envoyer les clients existants"
+      ],
+      "Send free text, or an approved template that also reaches contacts outside the 24-hour window.": [
+        "Envoyez un texte libre, ou un modèle approuvé qui atteint aussi les contacts en dehors de la fenêtre de 24 heures."
       ],
       "Send test message": [
         "Envoyer un message test"
@@ -793,6 +913,9 @@
       "Sync": [
         "Synchroniser"
       ],
+      "Sync now": [
+        "Synchroniser maintenant"
+      ],
       "Sync numbers": [
         "Synchroniser les numéros"
       ],
@@ -817,11 +940,17 @@
       "System status:": [
         "État du système :"
       ],
+      "Template": [
+        "Modèle"
+      ],
       "Test phone number": [
         "Numéro de téléphone de test"
       ],
       "Test sender": [
         "Expéditeur de test"
+      ],
+      "Text": [
+        "Texte"
       ],
       "Thank you for supporting Joinotify!": [
         "Merci de soutenir Joinotify !"
@@ -838,8 +967,8 @@
       "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
         "La clé Joinotify de ce site a été révoquée ou ne peut pas envoyer ces données. Reconnectez le site dans Paramètres → Général ; la synchronisation reprend d’elle-même."
       ],
-      "The message is prefilled and can be adjusted before sending the test.": [
-        "Le message est prérempli et peut être ajusté avant l'envoi du test."
+      "This contact has not messaged this number in the last 24 hours, so WhatsApp will refuse free text. Send an approved template instead.": [
+        "Ce contact n'a pas écrit à ce numéro au cours des dernières 24 heures, WhatsApp refusera donc le texte libre. Envoyez plutôt un modèle approuvé."
       ],
       "This integration depends on an installed and active plugin.": [
         "Cette intégration dépend d'un plugin installé et actif."
@@ -853,6 +982,9 @@
       "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.": [
         "Cette clé est définie dans wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) et ne peut être modifiée que là."
       ],
+      "This list may be out of date.": [
+        "Cette liste peut être obsolète."
+      ],
       "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General.": [
         "Ce site est à l’adresse %1$s, mais sa clé Joinotify a été émise pour %2$s. S’il s’agit d’une copie de préproduction, laissez-la en pause : elle enverrait des commandes de test à de vrais clients. Si le site a déménagé, reconnectez-le dans Paramètres → Général."
       ],
@@ -861,6 +993,9 @@
       ],
       "This site was removed from your Joinotify account. Connect it again in Settings → General to resume.": [
         "Ce site a été retiré de votre compte Joinotify. Reconnectez-le dans Paramètres → Général pour reprendre."
+      ],
+      "This template is still awaiting Meta approval and cannot be delivered yet.": [
+        "Ce modèle est toujours en attente d'approbation de Meta et ne peut pas encore être livré."
       ],
       "This text variable may not work in this context": [
         "Cette variable de texte peut ne pas fonctionner dans ce contexte"
@@ -886,6 +1021,12 @@
       "Update variable": [
         "Mettre à jour la variable"
       ],
+      "Use this media": [
+        "Utilisez ce média"
+      ],
+      "Value for this variable": [
+        "Valeur de cette variable"
+      ],
       "Variable name": [
         "Nom de la variable"
       ],
@@ -897,6 +1038,9 @@
       ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "Les variables sont remplacées par des données réelles lorsque le message est envoyé. Cliquez sur l'une d'elles pour l'insérer."
+      ],
+      "Verification code": [
+        "Code de vérification"
       ],
       "View debug logs": [
         "Voir les journaux de débogage"

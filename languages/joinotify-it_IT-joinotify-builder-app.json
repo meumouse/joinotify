@@ -77,6 +77,9 @@
       "%s settings": [
         "%s impostazioni"
       ],
+      "2026-12-31 23:59 or +2 days": [
+        "2026-12-31 23:59 o +2 days"
+      ],
       "2026-12-31 23:59, +2 days or a placeholder": [
         "2026-12-31 23:59, +2 days o un placeholder"
       ],
@@ -598,6 +601,9 @@
       ],
       "End of the link, e.g. {{ wc_payment_url | remove_home_url }}": [
         "Parte finale del link, es. {{ wc_payment_url | remove_home_url }}"
+      ],
+      "End of the link, e.g. order/123": [
+        "Fine del link, ad esempio order/123"
       ],
       "End the workflow at this point.": [
         "Termina il flusso di lavoro a questo punto."
@@ -1636,6 +1642,9 @@
       ],
       "Value": [
         "Valore"
+      ],
+      "Value for this variable": [
+        "Valore di questa variabile"
       ],
       "Values used by the condition engine.": [
         "Valori utilizzati dal motore delle condizioni."

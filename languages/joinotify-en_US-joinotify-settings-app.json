@@ -7,6 +7,12 @@
         "lang": "en_US",
         "plural-forms": "nplurals=2; plural=(n != 1);"
       },
+      "-23.5505 or a placeholder": [
+        "-23.5505 or a placeholder"
+      ],
+      "{{ wc_billing_first_name }} or a fixed value": [
+        "{{ wc_billing_first_name }} or a fixed value"
+      ],
       "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created.": [
         "%1$d of your %2$d users have a phone number, and there are %3$d orders placed without an account. Each person becomes a contact in Joinotify, tagged with this site; no flow starts for them. People without a phone number are left out, and contacts over your plan's limit are not created."
       ],
@@ -28,6 +34,12 @@
       "+%d more": [
         "+%d more"
       ],
+      "2026-12-31 23:59 or +2 days": [
+        "2026-12-31 23:59 or +2 days"
+      ],
+      "2026-12-31 23:59, +2 days or a placeholder": [
+        "2026-12-31 23:59, +2 days or a placeholder"
+      ],
       "24h limit:": [
         "24h limit:"
       ],
@@ -42,6 +54,9 @@
       ],
       "Add variable": [
         "Add variable"
+      ],
+      "Address": [
+        "Address"
       ],
       "Advanced": [
         "Advanced"
@@ -76,6 +91,12 @@
       "Base": [
         "Base"
       ],
+      "BLACK20 or a placeholder": [
+        "BLACK20 or a placeholder"
+      ],
+      "Body": [
+        "Body"
+      ],
       "Bold": [
         "Bold"
       ],
@@ -85,8 +106,14 @@
       "Business account that owns the message templates. Filled in when you connect.": [
         "Business account that owns the message templates. Filled in when you connect."
       ],
+      "Button": [
+        "Button"
+      ],
       "Cancel": [
         "Cancel"
+      ],
+      "Card": [
+        "Card"
       ],
       "Changing the base color regenerates the palette. Individual shades can still be overridden.": [
         "Changing the base color regenerates the palette. Individual shades can still be overridden."
@@ -214,6 +241,9 @@
       "Could not save.": [
         "Could not save."
       ],
+      "Could not send the test message.": [
+        "Could not send the test message."
+      ],
       "Could not start the connection.": [
         "Could not start the connection."
       ],
@@ -228,6 +258,9 @@
       ],
       "Counting your customers…": [
         "Counting your customers…"
+      ],
+      "Coupon code": [
+        "Coupon code"
       ],
       "Critical": [
         "Critical"
@@ -295,6 +328,12 @@
       "Enable the integration to access its settings.": [
         "Enable the integration to access its settings."
       ],
+      "End of the link, e.g. {{ wc_payment_url | remove_home_url }}": [
+        "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
+      ],
+      "End of the link, e.g. order/123": [
+        "End of the link, e.g. order/123"
+      ],
       "Enjoying Joinotify?": [
         "Enjoying Joinotify?"
       ],
@@ -352,6 +391,9 @@
       "File is too large. The maximum size is 5 MB.": [
         "File is too large. The maximum size is 5 MB."
       ],
+      "Fill in every variable to send the template. Meta refuses it with an empty value.": [
+        "Fill in every variable to send the template. Meta refuses it with an empty value."
+      ],
       "Fix on the panel": [
         "Fix on the panel"
       ],
@@ -367,6 +409,21 @@
       "Group by category": [
         "Group by category"
       ],
+      "Header": [
+        "Header"
+      ],
+      "Header document": [
+        "Header document"
+      ],
+      "Header image": [
+        "Header image"
+      ],
+      "Header location": [
+        "Header location"
+      ],
+      "Header video": [
+        "Header video"
+      ],
       "Hello, this is a test message.": [
         "Hello, this is a test message."
       ],
@@ -378,6 +435,9 @@
       ],
       "Hook": [
         "Hook"
+      ],
+      "https://example.com/file.jpg or a placeholder": [
+        "https://example.com/file.jpg or a placeholder"
       ],
       "I already did": [
         "I already did"
@@ -475,14 +535,26 @@
       "latest post": [
         "latest post"
       ],
+      "Latitude": [
+        "Latitude"
+      ],
       "Leave a review": [
         "Leave a review"
+      ],
+      "Leave empty to repeat the code from the body": [
+        "Leave empty to repeat the code from the body"
       ],
       "Level": [
         "Level"
       ],
+      "Library": [
+        "Library"
+      ],
       "Load keys": [
         "Load keys"
+      ],
+      "Loading templates…": [
+        "Loading templates…"
       ],
       "Loading the sync status…": [
         "Loading the sync status…"
@@ -495,6 +567,9 @@
       ],
       "Logs cleared successfully.": [
         "Logs cleared successfully."
+      ],
+      "Longitude": [
+        "Longitude"
       ],
       "Manage numbers": [
         "Manage numbers"
@@ -517,14 +592,32 @@
       "Messages cannot be delivered until this site is connected.": [
         "Messages cannot be delivered until this site is connected."
       ],
+      "Meta disabled this template. It can no longer be sent.": [
+        "Meta disabled this template. It can no longer be sent."
+      ],
       "Meta key": [
         "Meta key"
+      ],
+      "Meta paused this template because of low quality. It will not be delivered until it recovers.": [
+        "Meta paused this template because of low quality. It will not be delivered until it recovers."
+      ],
+      "Meta rejected this template.": [
+        "Meta rejected this template."
+      ],
+      "Name": [
+        "Name"
       ],
       "Never": [
         "Never"
       ],
       "New variable": [
         "New variable"
+      ],
+      "No approved template": [
+        "No approved template"
+      ],
+      "No approved template found. Create one on the Joinotify panel and approve it with Meta first.": [
+        "No approved template found. Create one on the Joinotify panel and approve it with Meta first."
       ],
       "No approved template of this type was found on your account. Create it in the Joinotify panel and sync again.": [
         "No approved template of this type was found on your account. Create it in the Joinotify panel and sync again."
@@ -580,11 +673,17 @@
       "Of those sent, %1$d %2$s.": [
         "Of those sent, %1$d %2$s."
       ],
+      "Offer expiration": [
+        "Offer expiration"
+      ],
       "ok": [
         "ok"
       ],
       "older than what Joinotify has": [
         "older than what Joinotify has"
+      ],
+      "Only templates approved by Meta are listed. Each one is sent in the language it was approved in.": [
+        "Only templates approved by Meta are listed. Each one is sent in the language it was approved in."
       ],
       "Only the public prefix of your key is shown. Remove it to connect a different account.": [
         "Only the public prefix of your key is shown. Remove it to connect a different account."
@@ -594,6 +693,12 @@
       ],
       "Open the panel": [
         "Open the panel"
+      ],
+      "Optional": [
+        "Optional"
+      ],
+      "Optional: sent back when the button is tapped": [
+        "Optional: sent back when the button is tapped"
       ],
       "Options have been reset.": [
         "Options have been reset."
@@ -667,6 +772,9 @@
       "Removing…": [
         "Removing…"
       ],
+      "Reply payload": [
+        "Reply payload"
+      ],
       "Request": [
         "Request"
       ],
@@ -718,11 +826,17 @@
       "Select a sender": [
         "Select a sender"
       ],
+      "Select a template": [
+        "Select a template"
+      ],
       "Select an entity": [
         "Select an entity"
       ],
       "Select an option": [
         "Select an option"
+      ],
+      "Select media": [
+        "Select media"
       ],
       "Select the WhatsApp sender that will be used to deliver this test message.": [
         "Select the WhatsApp sender that will be used to deliver this test message."
@@ -730,11 +844,17 @@
       "Send": [
         "Send"
       ],
+      "Send a template": [
+        "Send a template"
+      ],
       "Send again": [
         "Send again"
       ],
       "Send existing customers": [
         "Send existing customers"
+      ],
+      "Send free text, or an approved template that also reaches contacts outside the 24-hour window.": [
+        "Send free text, or an approved template that also reaches contacts outside the 24-hour window."
       ],
       "Send test message": [
         "Send test message"
@@ -793,6 +913,9 @@
       "Sync": [
         "Sync"
       ],
+      "Sync now": [
+        "Sync now"
+      ],
       "Sync numbers": [
         "Sync numbers"
       ],
@@ -817,11 +940,17 @@
       "System status:": [
         "System status:"
       ],
+      "Template": [
+        "Template"
+      ],
       "Test phone number": [
         "Test phone number"
       ],
       "Test sender": [
         "Test sender"
+      ],
+      "Text": [
+        "Text"
       ],
       "Thank you for supporting Joinotify!": [
         "Thank you for supporting Joinotify!"
@@ -838,8 +967,8 @@
       "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own.": [
         "The Joinotify key of this site was revoked or cannot send this data. Connect the site again in Settings → General; the sync resumes on its own."
       ],
-      "The message is prefilled and can be adjusted before sending the test.": [
-        "The message is prefilled and can be adjusted before sending the test."
+      "This contact has not messaged this number in the last 24 hours, so WhatsApp will refuse free text. Send an approved template instead.": [
+        "This contact has not messaged this number in the last 24 hours, so WhatsApp will refuse free text. Send an approved template instead."
       ],
       "This integration depends on an installed and active plugin.": [
         "This integration depends on an installed and active plugin."
@@ -853,6 +982,9 @@
       "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there.": [
         "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can only be changed there."
       ],
+      "This list may be out of date.": [
+        "This list may be out of date."
+      ],
       "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General.": [
         "This site is at %1$s, but its Joinotify key was issued to %2$s. If this is a staging copy, leave it paused: it would send test orders to real customers. If the site moved, connect it again in Settings → General."
       ],
@@ -861,6 +993,9 @@
       ],
       "This site was removed from your Joinotify account. Connect it again in Settings → General to resume.": [
         "This site was removed from your Joinotify account. Connect it again in Settings → General to resume."
+      ],
+      "This template is still awaiting Meta approval and cannot be delivered yet.": [
+        "This template is still awaiting Meta approval and cannot be delivered yet."
       ],
       "This text variable may not work in this context": [
         "This text variable may not work in this context"
@@ -886,6 +1021,12 @@
       "Update variable": [
         "Update variable"
       ],
+      "Use this media": [
+        "Use this media"
+      ],
+      "Value for this variable": [
+        "Value for this variable"
+      ],
       "Variable name": [
         "Variable name"
       ],
@@ -897,6 +1038,9 @@
       ],
       "Variables are replaced with real data when the message is sent. Click one to insert it.": [
         "Variables are replaced with real data when the message is sent. Click one to insert it."
+      ],
+      "Verification code": [
+        "Verification code"
       ],
       "View debug logs": [
         "View debug logs"

@@ -14,6 +14,8 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 - WhatsApp steps in the builder warn when the site is not connected to Joinotify
 - The WooCommerce full address format fields have a variable picker
 - `Joinotify/WooCommerce/Address_Format_Placeholders` filter, which sets the variables those fields offer
+- The test message in Settings → Phones can send an approved template of the sender's WhatsApp account, with its variables and a preview
+- The test message warns when the recipient's 24-hour window is closed and offers to send a template instead
 
 ### Changed
 
@@ -23,6 +25,8 @@ Releases before 2.0.0 did not strictly follow SemVer, so their numbering is not 
 - The WooCommerce full address formats are edited on a single line, with variables only
 - The builder no longer offers Telegram and Resend steps for new workflows
 - The Telegram and Resend settings cards only show on sites that still use them
+- A failed test message is no longer put in the retry queue, and its reason stays on screen in the test window
+- A refused test message names the cause when Meta gives one, such as a display name still under review
 
 ### Deprecated
 

@@ -15,7 +15,7 @@ msgstr "12345"
 msgid "-1001234567890 or {{ telegram_chat_id }}"
 msgstr "-1001234567890 or {{ telegram_chat_id }}"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:284
+#: app/src/utils/whatsappTemplates.ts:257
 msgid "-23.5505 or a placeholder"
 msgstr "-23.5505 or a placeholder"
 
@@ -118,7 +118,7 @@ msgstr "(erased contact)"
 msgid "{{ wc_billing_email }} or customer@example.com"
 msgstr "{{ wc_billing_email }} or customer@example.com"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:300
+#: app/src/utils/whatsappTemplates.ts:275
 msgid "{{ wc_billing_first_name }} or a fixed value"
 msgstr "{{ wc_billing_first_name }} or a fixed value"
 
@@ -126,7 +126,7 @@ msgstr "{{ wc_billing_first_name }} or a fixed value"
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:218
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:87
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:96
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:454
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:104
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:47
 msgid "{{ wc_billing_phone }} or +5511999990000"
 msgstr "{{ wc_billing_phone }} or +5511999990000"
@@ -446,7 +446,11 @@ msgstr "1x - Men's cotton T-shirt (Sample product)"
 msgid "1x - Sunglasses with UV protection (Sample product)"
 msgstr "1x - Sunglasses with UV protection (Sample product)"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:289
+#: app/src/utils/whatsappTemplates.ts:264
+msgid "2026-12-31 23:59 or +2 days"
+msgstr "2026-12-31 23:59 or +2 days"
+
+#: app/src/utils/whatsappTemplates.ts:264
 msgid "2026-12-31 23:59, +2 days or a placeholder"
 msgstr "2026-12-31 23:59, +2 days or a placeholder"
 
@@ -479,8 +483,8 @@ msgstr "5 minutes"
 
 #: app/src/pages/builder/BuilderPage.vue:1500
 #: app/src/pages/history/HistoryPage.vue:317
-#: app/src/pages/settings/components/cards/PhoneActions.vue:126
-#: app/src/pages/settings/components/cards/PhoneActions.vue:212
+#: app/src/pages/settings/components/cards/PhoneActions.vue:336
+#: app/src/pages/settings/components/cards/PhoneActions.vue:422
 msgid "5541987111527"
 msgstr "5541987111527"
 
@@ -818,7 +822,7 @@ msgstr "Added to the URL, each value encoded for you."
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:221
 #: admin/src/Integrations/Woocommerce.php:296
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
+#: app/src/utils/whatsappTemplates.ts:177
 msgid "Address"
 msgstr "Address"
 
@@ -961,7 +965,7 @@ msgstr "All flows"
 msgid "All levels"
 msgstr "All levels"
 
-#: app/src/pages/settings/SettingsPage.vue:655
+#: app/src/pages/settings/SettingsPage.vue:669
 msgid "All options will return to the plugin defaults."
 msgstr "All options will return to the plugin defaults."
 
@@ -1218,7 +1222,7 @@ msgstr ""
 "WhatsApp Cloud API. Create it in the Joinotify panel; this list is synced "
 "from your account. Required on that transport, ignored on the legacy relay."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:462
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:112
 msgid ""
 "Approved templates of your WhatsApp Business Account. Only these can be "
 "delivered outside the 24-hour window."
@@ -1236,15 +1240,15 @@ msgstr "Archive"
 msgid "Archived"
 msgstr "Archived"
 
-#: app/src/pages/settings/SettingsPage.vue:634
+#: app/src/pages/settings/SettingsPage.vue:648
 msgid "Are you sure you want to clear the debug logs?"
 msgstr "Are you sure you want to clear the debug logs?"
 
-#: app/src/pages/settings/SettingsPage.vue:541
+#: app/src/pages/settings/SettingsPage.vue:555
 msgid "Are you sure you want to remove this sender?"
 msgstr "Are you sure you want to remove this sender?"
 
-#: app/src/pages/settings/SettingsPage.vue:513
+#: app/src/pages/settings/SettingsPage.vue:527
 msgid ""
 "Are you sure you want to remove this variable? Workflows that use it will "
 "no longer resolve it."
@@ -1499,7 +1503,7 @@ msgstr "Bhutan"
 msgid "Billing full address format"
 msgstr "Billing full address format"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:275
+#: app/src/utils/whatsappTemplates.ts:248
 msgid "BLACK20 or a placeholder"
 msgstr "BLACK20 or a placeholder"
 
@@ -1510,8 +1514,8 @@ msgstr "Blocked by Meta for marketing"
 #: admin/src/Builder/Webhook_Action.php:110
 #: app/src/builder/actions/settings/HttpRequestSettings.vue:242
 #: app/src/builder/actions/settings/HttpRequestSettings.vue:246
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:259
 #: app/src/pages/history/components/HistoryDetailsModal.vue:101
+#: app/src/utils/whatsappTemplates.ts:216
 msgid "Body"
 msgstr "Body"
 
@@ -1600,10 +1604,10 @@ msgstr "Build your first automation or review the full settings."
 #: app/src/pages/builder/BuilderPage.vue:1242
 #: app/src/pages/builder/BuilderPage.vue:1278
 #: app/src/pages/builder/BuilderPage.vue:1284
-#: app/src/pages/settings/SettingsPage.vue:502
-#: app/src/pages/settings/SettingsPage.vue:505
-#: app/src/pages/settings/SettingsPage.vue:518
-#: app/src/pages/settings/SettingsPage.vue:520
+#: app/src/pages/settings/SettingsPage.vue:516
+#: app/src/pages/settings/SettingsPage.vue:519
+#: app/src/pages/settings/SettingsPage.vue:532
+#: app/src/pages/settings/SettingsPage.vue:534
 msgid "Builder"
 msgstr "Builder"
 
@@ -1642,11 +1646,11 @@ msgstr ""
 "Business account that owns the message templates. Filled in when you "
 "connect."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:229
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:252
 #: app/src/pages/history/components/HistoryDetailsModal.vue:102
+#: app/src/utils/whatsappTemplates.ts:186
+#: app/src/utils/whatsappTemplates.ts:201
+#: app/src/utils/whatsappTemplates.ts:205
+#: app/src/utils/whatsappTemplates.ts:209
 msgid "Button"
 msgstr "Button"
 
@@ -1706,7 +1710,7 @@ msgstr "Canada"
 #: app/src/pages/contacts/components/TagFormModal.vue:107
 #: app/src/pages/queue/QueuePage.vue:371
 #: app/src/pages/settings/components/cards/JoinotifyConnectionCard.vue:563
-#: app/src/pages/settings/components/cards/PhoneActions.vue:247
+#: app/src/pages/settings/components/cards/PhoneActions.vue:532
 #: app/src/pages/settings/components/modals/BuilderVariableModal.vue:255
 msgid "Cancel"
 msgstr "Cancel"
@@ -1747,8 +1751,8 @@ msgstr "Cape Verde"
 msgid "Caption"
 msgstr "Caption"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:200
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:527
+#: app/src/components/whatsapp/TemplatePreview.vue:61
+#: app/src/utils/whatsappTemplates.ts:230
 msgid "Card"
 msgstr "Card"
 
@@ -1886,9 +1890,13 @@ msgstr "Choose an action to insert below the selected block."
 msgid "Choose and configure the workflow trigger before adding conditions."
 msgstr "Choose and configure the workflow trigger before adding conditions."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:189
+#: app/src/pages/settings/components/cards/PhoneActions.vue:399
 msgid "Choose one of the validated senders available in your account."
 msgstr "Choose one of the validated senders available in your account."
+
+#: admin/src/Rest/Phone_Test_Message.php:119
+msgid "Choose the approved template to send."
+msgstr "Choose the approved template to send."
 
 #: admin/src/Admin/Settings/Registry.php:128
 msgid ""
@@ -1902,13 +1910,17 @@ msgstr ""
 msgid "Choose the option you prefer to start building the workflow."
 msgstr "Choose the option you prefer to start building the workflow."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:171
+#: app/src/pages/settings/components/cards/PhoneActions.vue:381
 msgid ""
 "Choose the sender and review the message before sending a test WhatsApp "
 "message."
 msgstr ""
 "Choose the sender and review the message before sending a test WhatsApp "
 "message."
+
+#: admin/src/Rest/Phone_Test_Message.php:74
+msgid "Choose the sender and the recipient of the test message."
+msgstr "Choose the sender and the recipient of the test message."
 
 #: app/src/components/builder/BuilderTriggerSetupView.vue:156
 msgid "Choose the source"
@@ -1973,7 +1985,7 @@ msgstr "Clear filters"
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:40
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:248
-#: app/src/pages/settings/SettingsPage.vue:633
+#: app/src/pages/settings/SettingsPage.vue:647
 msgid "Clear logs"
 msgstr "Clear logs"
 
@@ -2149,7 +2161,7 @@ msgstr ""
 "Configure how verification codes are delivered, the visual theme, and the "
 "sender used for the login form."
 
-#: app/src/pages/settings/SettingsPage.vue:754
+#: app/src/pages/settings/SettingsPage.vue:768
 msgid ""
 "Configure senders, integrations, the builder and general plugin behavior. "
 "If you need help, visit our "
@@ -2237,7 +2249,7 @@ msgstr ""
 #: app/src/components/fields/JoinotifyApiKeyField.vue:192
 #: app/src/pages/onboarding/components/steps/ConnectStep.vue:95
 #: app/src/pages/settings/components/cards/JoinotifyConnectionCard.vue:80
-#: app/src/pages/settings/components/cards/PhoneActions.vue:45
+#: app/src/pages/settings/components/cards/PhoneActions.vue:90
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:118
 msgid "Connected"
 msgstr "Connected"
@@ -2275,7 +2287,7 @@ msgstr "Connecting…"
 msgid "Connection needs attention"
 msgstr "Connection needs attention"
 
-#: app/src/pages/settings/SettingsPage.vue:578
+#: app/src/pages/settings/SettingsPage.vue:592
 msgid "Connection updated."
 msgstr "Connection updated."
 
@@ -2414,7 +2426,7 @@ msgstr "Could not clear the debug logs."
 msgid "Could not clear the history."
 msgstr "Could not clear the history."
 
-#: app/src/pages/settings/SettingsPage.vue:643
+#: app/src/pages/settings/SettingsPage.vue:657
 msgid "Could not clear the logs."
 msgstr "Could not clear the logs."
 
@@ -2543,12 +2555,12 @@ msgstr "Could not load workflow."
 msgid "Could not load workflows."
 msgstr "Could not load workflows."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:380
 #: app/src/components/fields/WhatsappTemplateField.vue:113
+#: app/src/composables/useWhatsappTemplates.ts:86
 msgid "Could not load your message templates."
 msgstr "Could not load your message templates."
 
-#: app/src/pages/settings/SettingsPage.vue:609
+#: app/src/pages/settings/SettingsPage.vue:623
 msgid "Could not open the logs."
 msgstr "Could not open the logs."
 
@@ -2573,11 +2585,11 @@ msgstr "Could not read the selected file."
 msgid "Could not read this file. Save it as CSV (UTF-8) and try again."
 msgstr "Could not read this file. Save it as CSV (UTF-8) and try again."
 
-#: app/src/pages/settings/SettingsPage.vue:520
+#: app/src/pages/settings/SettingsPage.vue:534
 msgid "Could not remove the variable."
 msgstr "Could not remove the variable."
 
-#: app/src/pages/settings/SettingsPage.vue:550
+#: app/src/pages/settings/SettingsPage.vue:564
 msgid "Could not remove."
 msgstr "Could not remove."
 
@@ -2586,7 +2598,7 @@ msgstr "Could not remove."
 msgid "Could not resend the messages."
 msgstr "Could not resend the messages."
 
-#: app/src/pages/settings/SettingsPage.vue:664
+#: app/src/pages/settings/SettingsPage.vue:678
 msgid "Could not reset."
 msgstr "Could not reset."
 
@@ -2620,7 +2632,7 @@ msgid "Could not save the test phone number."
 msgstr "Could not save the test phone number."
 
 #: admin/src/Rest/Builder_Variables_Save.php:46
-#: app/src/pages/settings/SettingsPage.vue:505
+#: app/src/pages/settings/SettingsPage.vue:519
 msgid "Could not save the variable."
 msgstr "Could not save the variable."
 
@@ -2641,12 +2653,13 @@ msgstr "Could not save."
 msgid "Could not send one or more test messages."
 msgstr "Could not send one or more test messages."
 
-#: admin/src/Api/Send_Error.php:76
+#: admin/src/Api/Send_Error.php:106
 msgid "Could not send the message."
 msgstr "Could not send the message."
 
 #: admin/src/Rest/Builder_Test.php:107
-#: admin/src/Rest/Phone_Test_Message.php:66
+#: admin/src/Rest/Phone_Test_Message.php:204
+#: app/src/pages/settings/components/cards/PhoneActions.vue:315
 msgid "Could not send the test message."
 msgstr "Could not send the test message."
 
@@ -2659,8 +2672,8 @@ msgstr "Could not send the test template message."
 msgid "Could not start the connection."
 msgstr "Could not start the connection."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:410
 #: app/src/components/fields/WhatsappTemplateField.vue:144
+#: app/src/composables/useWhatsappTemplates.ts:122
 msgid "Could not sync your message templates."
 msgstr "Could not sync your message templates."
 
@@ -2669,7 +2682,7 @@ msgstr "Could not sync your message templates."
 msgid "Could not sync your numbers."
 msgstr "Could not sync your numbers."
 
-#: app/src/pages/settings/SettingsPage.vue:583
+#: app/src/pages/settings/SettingsPage.vue:597
 msgid "Could not update the connection."
 msgstr "Could not update the connection."
 
@@ -2711,7 +2724,7 @@ msgid "Coupon"
 msgstr "Coupon"
 
 #: app/src/builder/actions/settings/CreateCouponSettings.vue:127
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:244
+#: app/src/utils/whatsappTemplates.ts:201
 msgid "Coupon code"
 msgstr "Coupon code"
 
@@ -3351,7 +3364,7 @@ msgstr "Disconnect"
 msgid "Disconnect this site"
 msgstr "Disconnect this site"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:45
+#: app/src/pages/settings/components/cards/PhoneActions.vue:90
 #: app/src/pages/settings/components/cards/PhoneSenderList.vue:118
 msgid "Disconnected"
 msgstr "Disconnected"
@@ -3622,7 +3635,7 @@ msgstr ""
 msgid "Each source can add its own tags, on top of the tag of this site."
 msgstr "Each source can add its own tags, on top of the tag of this site."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:540
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:155
 msgid ""
 "Each template variable is filled at send time with the placeholder you map "
 "here."
@@ -3758,9 +3771,13 @@ msgstr "Enabled"
 msgid "End date"
 msgstr "End date"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:297
+#: app/src/utils/whatsappTemplates.ts:272
 msgid "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
 msgstr "End of the link, e.g. {{ wc_payment_url | remove_home_url }}"
+
+#: app/src/utils/whatsappTemplates.ts:272
+msgid "End of the link, e.g. order/123"
+msgstr "End of the link, e.g. order/123"
 
 #: app/src/pages/queue/QueuePage.vue:90
 msgid "End of workflow"
@@ -3797,7 +3814,7 @@ msgid "Enter a password to create the account."
 msgstr "Enter a password to create the account."
 
 #: app/src/pages/builder/BuilderPage.vue:1492
-#: app/src/pages/settings/components/cards/PhoneActions.vue:118
+#: app/src/pages/settings/components/cards/PhoneActions.vue:328
 msgid ""
 "Enter a phone number to receive test messages from the builder. Use "
 "international format and numbers only."
@@ -3840,13 +3857,17 @@ msgstr "Enter the %d-digit code sent to your WhatsApp."
 msgid "Enter the access code"
 msgstr "Enter the access code"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:203
+#: app/src/pages/settings/components/cards/PhoneActions.vue:413
 msgid "Enter the destination phone number that will receive the test message."
 msgstr "Enter the destination phone number that will receive the test message."
 
 #: admin/src/Integrations/Elementor_Forms.php:99
 msgid "Enter the field ID that collects the recipient's phone number."
 msgstr "Enter the field ID that collects the recipient's phone number."
+
+#: admin/src/Rest/Phone_Window.php:50
+msgid "Enter the recipient number."
+msgstr "Enter the recipient number."
 
 #: templates/otp-login/shared/otp-login-form.php:69
 msgid "Enter the verification code you received."
@@ -4133,8 +4154,8 @@ msgstr "Failed"
 msgid "Failed at"
 msgstr "Failed at"
 
-#: app/src/pages/settings/SettingsPage.vue:433
-#: app/src/pages/settings/SettingsPage.vue:447
+#: app/src/pages/settings/SettingsPage.vue:452
+#: app/src/pages/settings/SettingsPage.vue:466
 msgid "Failed to send message."
 msgstr "Failed to send message."
 
@@ -4230,6 +4251,14 @@ msgid ""
 msgstr ""
 "Files sent instead of the media URL above. Each file goes out as its own "
 "message, and the caption rides on the first one."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:510
+msgid ""
+"Fill in every variable to send the template. Meta refuses it with an empty "
+"value."
+msgstr ""
+"Fill in every variable to send the template. Meta refuses it with an empty "
+"value."
 
 #: templates/otp-login/shared/otp-login-form.php:70
 msgid "Fill in the email or username and password."
@@ -4606,23 +4635,23 @@ msgstr "has"
 #: admin/src/Integrations/Whatsapp_Interactive.php:140
 #: admin/src/Integrations/Whatsapp_Interactive.php:169
 #: admin/src/Integrations/Whatsapp_Interactive.php:199
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:256
 #: app/src/pages/history/components/HistoryDetailsModal.vue:100
+#: app/src/utils/whatsappTemplates.ts:213
 msgid "Header"
 msgstr "Header"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:237
+#: app/src/utils/whatsappTemplates.ts:194
 msgid "Header document"
 msgstr "Header document"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:239
+#: app/src/utils/whatsappTemplates.ts:196
 msgid "Header image"
 msgstr "Header image"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:214
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:216
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:218
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:220
+#: app/src/utils/whatsappTemplates.ts:171
+#: app/src/utils/whatsappTemplates.ts:173
+#: app/src/utils/whatsappTemplates.ts:175
+#: app/src/utils/whatsappTemplates.ts:177
 msgid "Header location"
 msgstr "Header location"
 
@@ -4630,7 +4659,7 @@ msgstr "Header location"
 msgid "Header name"
 msgstr "Header name"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:235
+#: app/src/utils/whatsappTemplates.ts:192
 msgid "Header video"
 msgstr "Header video"
 
@@ -4655,11 +4684,11 @@ msgstr ""
 msgid "Hello {{ field_id=[nome] }}, check out this file!"
 msgstr "Hello {{ field_id=[nome] }}, check out this file!"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:21
+#: app/src/pages/settings/components/cards/PhoneActions.vue:30
 msgid "Hello, this is a test message."
 msgstr "Hello, this is a test message."
 
-#: app/src/pages/settings/SettingsPage.vue:756
+#: app/src/pages/settings/SettingsPage.vue:770
 msgid "Help Center"
 msgstr "Help Center"
 
@@ -4769,7 +4798,7 @@ msgstr "HTTP request"
 msgid "HTTP status code, such as 200"
 msgstr "HTTP status code, such as 200"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:271
+#: app/src/utils/whatsappTemplates.ts:244
 msgid "https://example.com/file.jpg or a placeholder"
 msgstr "https://example.com/file.jpg or a placeholder"
 
@@ -5268,7 +5297,7 @@ msgstr "johndoe@email.com"
 #: app/src/pages/onboarding/OnboardingPage.vue:208
 #: app/src/pages/settings/components/cards/SystemStatusPanel.vue:66
 #: app/src/pages/settings/SettingsPage.vue:239
-#: app/src/pages/settings/SettingsPage.vue:783
+#: app/src/pages/settings/SettingsPage.vue:797
 msgid "Joinotify"
 msgstr "Joinotify"
 
@@ -5521,7 +5550,7 @@ msgid "latest post"
 msgstr "latest post"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:218
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:214
+#: app/src/utils/whatsappTemplates.ts:171
 msgid "Latitude"
 msgstr "Latitude"
 
@@ -5561,7 +5590,7 @@ msgstr "Leave as it is"
 msgid "Leave blank to remove a reaction already sent."
 msgstr "Leave blank to remove a reaction already sent."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:279
+#: app/src/utils/whatsappTemplates.ts:252
 msgid "Leave empty to repeat the code from the body"
 msgstr "Leave empty to repeat the code from the body"
 
@@ -5635,8 +5664,8 @@ msgid "Liberia"
 msgstr "Liberia"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:125
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:564
 #: app/src/builder/components/base/AttachmentsField.vue:216
+#: app/src/components/whatsapp/TemplateVariablesForm.vue:119
 msgid "Library"
 msgstr "Library"
 
@@ -5694,7 +5723,8 @@ msgstr "Loading flow canvas"
 msgid "Loading senders..."
 msgstr "Loading senders..."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:469
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:119
+#: app/src/pages/settings/components/cards/PhoneActions.vue:475
 msgid "Loading templates…"
 msgstr "Loading templates…"
 
@@ -5766,14 +5796,14 @@ msgstr "Login code template"
 msgid "Login successful."
 msgstr "Login successful."
 
-#: app/src/pages/settings/SettingsPage.vue:603
-#: app/src/pages/settings/SettingsPage.vue:609
-#: app/src/pages/settings/SettingsPage.vue:640
-#: app/src/pages/settings/SettingsPage.vue:643
+#: app/src/pages/settings/SettingsPage.vue:617
+#: app/src/pages/settings/SettingsPage.vue:623
+#: app/src/pages/settings/SettingsPage.vue:654
+#: app/src/pages/settings/SettingsPage.vue:657
 msgid "Logs"
 msgstr "Logs"
 
-#: app/src/pages/settings/SettingsPage.vue:640
+#: app/src/pages/settings/SettingsPage.vue:654
 msgid "Logs cleared successfully."
 msgstr "Logs cleared successfully."
 
@@ -5782,7 +5812,7 @@ msgid "Long"
 msgstr "Long"
 
 #: admin/src/Integrations/Whatsapp_Interactive.php:219
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:216
+#: app/src/utils/whatsappTemplates.ts:173
 msgid "Longitude"
 msgstr "Longitude"
 
@@ -6005,7 +6035,7 @@ msgstr "Merged with a duplicate"
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:53
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:56
 #: app/src/pages/settings/components/cards/DebugLogModal.vue:174
-#: app/src/pages/settings/components/cards/PhoneActions.vue:223
+#: app/src/pages/settings/components/cards/PhoneActions.vue:433
 msgid "Message"
 msgstr "Message"
 
@@ -6027,7 +6057,7 @@ msgstr "Message history"
 msgid "Message ID"
 msgstr "Message ID"
 
-#: app/src/pages/settings/SettingsPage.vue:441
+#: app/src/pages/settings/SettingsPage.vue:455
 msgid "Message sent."
 msgstr "Message sent."
 
@@ -6053,7 +6083,7 @@ msgstr "Messages cannot be delivered until this site is connected."
 msgid "Messages will send normally, but delivery reports could not be set up:"
 msgstr "Messages will send normally, but delivery reports could not be set up:"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:119
+#: app/src/utils/whatsappTemplates.ts:152
 msgid "Meta disabled this template. It can no longer be sent."
 msgstr "Meta disabled this template. It can no longer be sent."
 
@@ -6068,7 +6098,7 @@ msgstr "Meta key"
 msgid "Meta key, e.g. _billing_cpf"
 msgstr "Meta key, e.g. _billing_cpf"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:117
+#: app/src/utils/whatsappTemplates.ts:150
 msgid ""
 "Meta paused this template because of low quality. It will not be delivered "
 "until it recovers."
@@ -6076,7 +6106,7 @@ msgstr ""
 "Meta paused this template because of low quality. It will not be delivered "
 "until it recovers."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:121
+#: app/src/utils/whatsappTemplates.ts:154
 msgid "Meta rejected this template."
 msgstr "Meta rejected this template."
 
@@ -6219,11 +6249,11 @@ msgid "Myanmar"
 msgstr "Myanmar"
 
 #: app/src/builder/actions/settings/HttpRequestRowsField.vue:81
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:218
 #: app/src/components/workflows/WorkflowTableHeader.vue:35
 #: app/src/pages/contacts/components/AudienceEditor.vue:187
 #: app/src/pages/contacts/components/TagFormModal.vue:77
 #: app/src/pages/contacts/tabs/ContactsTab.vue:82
+#: app/src/utils/whatsappTemplates.ts:175
 msgid "Name"
 msgstr "Name"
 
@@ -6404,6 +6434,18 @@ msgstr ""
 "No AI provider is set up in WordPress yet. The AI actions stay unavailable "
 "until one is."
 
+#: app/src/pages/settings/components/cards/PhoneActions.vue:476
+msgid "No approved template"
+msgstr "No approved template"
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:500
+msgid ""
+"No approved template found. Create one on the Joinotify panel and approve "
+"it with Meta first."
+msgstr ""
+"No approved template found. Create one on the Joinotify panel and approve "
+"it with Meta first."
+
 #: app/src/components/fields/WhatsappTemplateField.vue:90
 msgid ""
 "No approved template of this type was found on your account. Create it in "
@@ -6571,7 +6613,7 @@ msgstr "No records selected."
 msgid "No scheduled item selected."
 msgstr "No scheduled item selected."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:191
+#: app/src/pages/settings/components/cards/PhoneActions.vue:401
 msgid "No sender available"
 msgstr "No sender available"
 
@@ -6583,7 +6625,7 @@ msgstr "No tags yet."
 msgid "No tags."
 msgstr "No tags."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:490
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:140
 msgid ""
 "No template found. Create one on the Joinotify panel and approve it with "
 "Meta first."
@@ -6813,7 +6855,7 @@ msgstr ""
 msgid "Off by default. You can change this at any time in Settings → About."
 msgstr "Off by default. You can change this at any time in Settings → About."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:225
+#: app/src/utils/whatsappTemplates.ts:182
 msgid "Offer expiration"
 msgstr "Offer expiration"
 
@@ -6882,6 +6924,14 @@ msgstr ""
 "Only record consent the contact actually gave. The evidence is kept with "
 "the contact and shown if the consent is ever questioned."
 
+#: app/src/pages/settings/components/cards/PhoneActions.vue:474
+msgid ""
+"Only templates approved by Meta are listed. Each one is sent in the "
+"language it was approved in."
+msgstr ""
+"Only templates approved by Meta are listed. Each one is sent in the "
+"language it was approved in."
+
 #: app/src/pages/contacts/tabs/SourcesTab.vue:82
 msgid "Only the forms switched on below"
 msgstr "Only the forms switched on below"
@@ -6935,7 +6985,7 @@ msgstr "Open the Joinotify panel"
 msgid "Open the Joinotify panel to get a key"
 msgstr "Open the Joinotify panel to get a key"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:145
+#: app/src/pages/settings/components/cards/PhoneActions.vue:355
 msgid "Open the panel"
 msgstr "Open the panel"
 
@@ -6991,8 +7041,8 @@ msgstr "Opted out"
 msgid "Opted out of marketing on"
 msgstr "Opted out of marketing on"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:285
 #: app/src/pages/onboarding/components/StepIndicator.vue:56
+#: app/src/utils/whatsappTemplates.ts:260
 msgid "Optional"
 msgstr "Optional"
 
@@ -7016,7 +7066,7 @@ msgstr "Optional rules, tone, and context for the AI."
 msgid "Optional text sent together with the media."
 msgstr "Optional text sent together with the media."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:293
+#: app/src/utils/whatsappTemplates.ts:268
 msgid "Optional: sent back when the button is tapped"
 msgstr "Optional: sent back when the button is tapped"
 
@@ -7055,7 +7105,7 @@ msgstr ""
 msgid "Options"
 msgstr "Options"
 
-#: app/src/pages/settings/SettingsPage.vue:661
+#: app/src/pages/settings/SettingsPage.vue:675
 msgid "Options have been reset."
 msgstr "Options have been reset."
 
@@ -7371,12 +7421,12 @@ msgstr "Phone number ID"
 
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:450
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:100
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 msgid "Phone number or a placeholder that resolves to one."
 msgstr "Phone number or a placeholder that resolves to one."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:211
+#: app/src/pages/settings/components/cards/PhoneActions.vue:421
 msgid "Phone number that will receive the test WhatsApp message."
 msgstr "Phone number that will receive the test WhatsApp message."
 
@@ -7394,17 +7444,15 @@ msgstr "Phone with country code"
 
 #: admin/src/Admin/Settings/Registry.php:209
 #: admin/src/Admin/Settings/Registry.php:343
-#: app/src/pages/settings/components/cards/PhoneActions.vue:172
+#: app/src/pages/settings/components/cards/PhoneActions.vue:382
 #: app/src/pages/settings/SettingsPage.vue:402
 #: app/src/pages/settings/SettingsPage.vue:408
 #: app/src/pages/settings/SettingsPage.vue:413
-#: app/src/pages/settings/SettingsPage.vue:433
-#: app/src/pages/settings/SettingsPage.vue:441
-#: app/src/pages/settings/SettingsPage.vue:447
-#: app/src/pages/settings/SettingsPage.vue:548
-#: app/src/pages/settings/SettingsPage.vue:550
-#: app/src/pages/settings/SettingsPage.vue:578
-#: app/src/pages/settings/SettingsPage.vue:583
+#: app/src/pages/settings/SettingsPage.vue:455
+#: app/src/pages/settings/SettingsPage.vue:562
+#: app/src/pages/settings/SettingsPage.vue:564
+#: app/src/pages/settings/SettingsPage.vue:592
+#: app/src/pages/settings/SettingsPage.vue:597
 msgid "Phones"
 msgstr "Phones"
 
@@ -7711,14 +7759,14 @@ msgstr "Reason (optional)"
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:86
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:92
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:95
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:450
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:453
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:100
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:103
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:43
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:46
 #: app/src/pages/history/components/HistoryDetailsModal.vue:76
 #: app/src/pages/history/HistoryPage.vue:415
 #: app/src/pages/queue/QueuePage.vue:301
-#: app/src/pages/settings/components/cards/PhoneActions.vue:201
+#: app/src/pages/settings/components/cards/PhoneActions.vue:411
 msgid "Recipient"
 msgstr "Recipient"
 
@@ -7726,7 +7774,7 @@ msgstr "Recipient"
 msgid "Recipient field ID"
 msgstr "Recipient field ID"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:210
+#: app/src/pages/settings/components/cards/PhoneActions.vue:420
 msgid "Recipient phone"
 msgstr "Recipient phone"
 
@@ -7860,7 +7908,7 @@ msgstr "Remove group"
 msgid "Remove key"
 msgstr "Remove key"
 
-#: app/src/pages/settings/SettingsPage.vue:540
+#: app/src/pages/settings/SettingsPage.vue:554
 msgid "Remove sender"
 msgstr "Remove sender"
 
@@ -7870,7 +7918,7 @@ msgstr "Remove sender"
 msgid "Remove tag"
 msgstr "Remove tag"
 
-#: app/src/pages/settings/SettingsPage.vue:512
+#: app/src/pages/settings/SettingsPage.vue:526
 msgid "Remove variable"
 msgstr "Remove variable"
 
@@ -7903,7 +7951,7 @@ msgstr "Renewal payment received"
 msgid "Replace information with "
 msgstr "Replace information with "
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:229
+#: app/src/utils/whatsappTemplates.ts:186
 msgid "Reply payload"
 msgstr "Reply payload"
 
@@ -7965,8 +8013,8 @@ msgstr "Resent"
 msgid "Resent at"
 msgstr "Resent at"
 
-#: app/src/pages/settings/SettingsPage.vue:661
-#: app/src/pages/settings/SettingsPage.vue:664
+#: app/src/pages/settings/SettingsPage.vue:675
+#: app/src/pages/settings/SettingsPage.vue:678
 msgid "Reset"
 msgstr "Reset"
 
@@ -7975,7 +8023,7 @@ msgid "Reset base shade override"
 msgstr "Reset base shade override"
 
 #: app/src/pages/settings/components/cards/DangerZone.vue:33
-#: app/src/pages/settings/SettingsPage.vue:654
+#: app/src/pages/settings/SettingsPage.vue:668
 msgid "Reset settings"
 msgstr "Reset settings"
 
@@ -8452,11 +8500,12 @@ msgstr "Select a digital product"
 msgid "Select a node to edit its settings."
 msgstr "Select a node to edit its settings."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:190
+#: app/src/pages/settings/components/cards/PhoneActions.vue:400
 msgid "Select a sender"
 msgstr "Select a sender"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:469
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:119
+#: app/src/pages/settings/components/cards/PhoneActions.vue:475
 msgid "Select a template"
 msgstr "Select a template"
 
@@ -8516,7 +8565,7 @@ msgid "Select file"
 msgstr "Select file"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:329
+#: app/src/components/whatsapp/TemplateVariablesForm.vue:77
 msgid "Select media"
 msgstr "Select media"
 
@@ -8524,7 +8573,7 @@ msgstr "Select media"
 msgid "Select month"
 msgstr "Select month"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:181
+#: app/src/pages/settings/components/cards/PhoneActions.vue:391
 msgid "Select the WhatsApp sender that will be used to deliver this test message."
 msgstr "Select the WhatsApp sender that will be used to deliver this test message."
 
@@ -8544,7 +8593,7 @@ msgstr "Selected"
 msgid "Selected file:"
 msgstr "Selected file:"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:251
+#: app/src/pages/settings/components/cards/PhoneActions.vue:536
 msgid "Send"
 msgstr "Send"
 
@@ -8587,6 +8636,10 @@ msgstr ""
 #: admin/src/Integrations/Whatsapp_Interactive.php:209
 msgid "Send a point on the map. Cloud API only, and only inside the 24-hour window."
 msgstr "Send a point on the map. Cloud API only, and only inside the 24-hour window."
+
+#: app/src/pages/settings/components/cards/PhoneActions.vue:453
+msgid "Send a template"
+msgstr "Send a template"
 
 #: admin/src/Integrations/Telegram.php:187
 #: app/src/builder/actions/definitions/telegramText.ts:46
@@ -8656,6 +8709,14 @@ msgstr "Send e-mail notifications for your automations through the Resend API."
 msgid "Send existing customers"
 msgstr "Send existing customers"
 
+#: app/src/pages/settings/components/cards/PhoneActions.vue:435
+msgid ""
+"Send free text, or an approved template that also reaches contacts outside "
+"the 24-hour window."
+msgstr ""
+"Send free text, or an approved template that also reaches contacts outside "
+"the 24-hour window."
+
 #: app/src/pages/contacts/tabs/SourcesTab.vue:255
 msgid "Send full addresses (city and state are always sent)"
 msgstr "Send full addresses (city and state are always sent)"
@@ -8684,8 +8745,8 @@ msgstr ""
 msgid "Send notifications to Telegram chats, groups and channels through a bot."
 msgstr "Send notifications to Telegram chats, groups and channels through a bot."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:164
-#: app/src/pages/settings/components/cards/PhoneActions.vue:170
+#: app/src/pages/settings/components/cards/PhoneActions.vue:374
+#: app/src/pages/settings/components/cards/PhoneActions.vue:380
 msgid "Send test message"
 msgstr "Send test message"
 
@@ -8744,13 +8805,13 @@ msgstr "Send webhook"
 #: app/src/builder/actions/settings/WhatsappAiMessageSettings.vue:78
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:83
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:87
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:441
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:445
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:91
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:95
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:34
 #: app/src/builder/actions/settings/WhatsappTextSettings.vue:38
 #: app/src/pages/history/components/HistoryDetailsModal.vue:75
 #: app/src/pages/history/HistoryPage.vue:416
-#: app/src/pages/settings/components/cards/PhoneActions.vue:188
+#: app/src/pages/settings/components/cards/PhoneActions.vue:398
 msgid "Sender"
 msgstr "Sender"
 
@@ -8766,7 +8827,7 @@ msgstr "Sender name"
 msgid "Sender phone"
 msgstr "Sender phone"
 
-#: app/src/pages/settings/SettingsPage.vue:548
+#: app/src/pages/settings/SettingsPage.vue:562
 msgid "Sender removed."
 msgstr "Sender removed."
 
@@ -8875,7 +8936,7 @@ msgstr "Set up Joinotify"
 #: app/src/components/builder/BuilderCanvasTrigger.vue:88
 #: app/src/components/flow/FlowNode.vue:296
 #: app/src/components/skeletons/PageShellSkeleton.vue:41
-#: app/src/pages/settings/SettingsPage.vue:752
+#: app/src/pages/settings/SettingsPage.vue:766
 msgid "Settings"
 msgstr "Settings"
 
@@ -9243,7 +9304,8 @@ msgstr "Switzerland"
 msgid "Sync"
 msgstr "Sync"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:481
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:131
+#: app/src/pages/settings/components/cards/PhoneActions.vue:491
 msgid "Sync now"
 msgstr "Sync now"
 
@@ -9251,7 +9313,7 @@ msgstr "Sync now"
 msgid "Sync numbers"
 msgstr "Sync numbers"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:156
+#: app/src/pages/settings/components/cards/PhoneActions.vue:366
 msgid "Sync numbers from Joinotify"
 msgstr "Sync numbers from Joinotify"
 
@@ -9271,8 +9333,9 @@ msgstr "Sync paused"
 msgid "Sync templates with your account"
 msgstr "Sync templates with your account"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:481
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:131
 #: app/src/components/fields/WhatsappTemplateField.vue:186
+#: app/src/pages/settings/components/cards/PhoneActions.vue:491
 msgid "Syncing…"
 msgstr "Syncing…"
 
@@ -9442,11 +9505,13 @@ msgid "Temperature"
 msgstr "Temperature"
 
 #: app/src/builder/actions/definitions/whatsappTemplate.ts:108
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:461
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:468
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:111
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:118
 #: app/src/pages/builder/BuilderPage.vue:997
 #: app/src/pages/history/components/HistoryDetailsModal.vue:163
 #: app/src/pages/history/HistoryPage.vue:105
+#: app/src/pages/settings/components/cards/PhoneActions.vue:83
+#: app/src/pages/settings/components/cards/PhoneActions.vue:473
 msgid "Template"
 msgstr "Template"
 
@@ -9467,11 +9532,11 @@ msgid "Test phone"
 msgstr "Test phone"
 
 #: app/src/pages/builder/BuilderPage.vue:1489
-#: app/src/pages/settings/components/cards/PhoneActions.vue:116
+#: app/src/pages/settings/components/cards/PhoneActions.vue:326
 msgid "Test phone number"
 msgstr "Test phone number"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:179
+#: app/src/pages/settings/components/cards/PhoneActions.vue:389
 msgid "Test sender"
 msgstr "Test sender"
 
@@ -9479,6 +9544,7 @@ msgstr "Test sender"
 #: app/src/builder/actions/settings/HttpRequestSettings.vue:316
 #: app/src/pages/contacts/labels.ts:143
 #: app/src/pages/history/HistoryPage.vue:102
+#: app/src/pages/settings/components/cards/PhoneActions.vue:82
 #: app/vite-plugins/wporg-i18n-calls.js:8
 #: app/vite-plugins/wporg-i18n-calls.js:13
 msgid "Text"
@@ -9724,9 +9790,17 @@ msgstr ""
 
 #: admin/src/Rest/Debug_Download.php:43
 #: admin/src/Rest/Debug_Logs.php:61
-#: app/src/pages/settings/SettingsPage.vue:603
+#: app/src/pages/settings/SettingsPage.vue:617
 msgid "The debug log is empty."
 msgstr "The debug log is empty."
+
+#: admin/src/Api/Send_Error.php:82
+msgid ""
+"The display name of this number is still awaiting Meta's approval. WhatsApp "
+"sends nothing from it until the name is approved."
+msgstr ""
+"The display name of this number is still awaiting Meta's approval. WhatsApp "
+"sends nothing from it until the name is approved."
 
 #: app/src/pages/onboarding/components/steps/PrivacyStep.vue:97
 msgid "The exact payload for this site right now"
@@ -9774,7 +9848,7 @@ msgstr ""
 "The integration that this flow's trigger depends on is not available. This "
 "flow will not be processed until the integration is available again."
 
-#: admin/src/Api/Send_Error.php:115
+#: admin/src/Api/Send_Error.php:145
 msgid ""
 "The Joinotify account is not connected, so there is no way to reach the "
 "WhatsApp API. Connect it under Joinotify → Settings → General."
@@ -9873,10 +9947,6 @@ msgstr ""
 "The key starts with a lowercase letter and holds only lowercase letters, "
 "digits and underscores, up to 40 characters."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:225
-msgid "The message is prefilled and can be adjusted before sending the test."
-msgstr "The message is prefilled and can be adjusted before sending the test."
-
 #: app/src/builder/actions/definitions/httpRequest.ts:126
 #. translators: %s: field name.
 msgid "The name \"%s\" is used more than once; only the last one is sent."
@@ -9936,7 +10006,7 @@ msgid_plural "The resend of %d messages was cancelled."
 msgstr[0] "The resend of %d message was cancelled."
 msgstr[1] "The resend of %d messages was cancelled."
 
-#: admin/src/Api/Send_Error.php:113
+#: admin/src/Api/Send_Error.php:143
 msgid "The resend of this message was cancelled from the history screen."
 msgstr "The resend of this message was cancelled from the history screen."
 
@@ -10000,7 +10070,7 @@ msgstr ""
 msgid "The sender is not one of the WhatsApp numbers connected to Joinotify."
 msgstr "The sender is not one of the WhatsApp numbers connected to Joinotify."
 
-#: admin/src/Api/Send_Error.php:114
+#: admin/src/Api/Send_Error.php:144
 msgid ""
 "The sender number is not connected to this site. Check it under Joinotify → "
 "Settings → Phones."
@@ -10033,9 +10103,13 @@ msgstr ""
 msgid "The templates could not be read."
 msgstr "The templates could not be read."
 
-#: admin/src/Rest/Phone_Test_Message.php:58
+#: admin/src/Rest/Phone_Test_Message.php:196
 msgid "The test message was sent successfully!"
 msgstr "The test message was sent successfully!"
+
+#: admin/src/Rest/Phone_Test_Message.php:251
+msgid "The test template was sent successfully!"
+msgstr "The test template was sent successfully!"
 
 #: app/src/components/builder/BuilderTriggerSetupView.vue:240
 msgid "The trigger that starts this flow."
@@ -10071,7 +10145,17 @@ msgstr "The variable \"%s\" already exists. Choose another name."
 msgid "The webhook endpoint could not be registered."
 msgstr "The webhook endpoint could not be registered."
 
-#: admin/src/Api/Send_Error.php:118
+#: admin/src/Api/Send_Error.php:84
+msgid ""
+"The WhatsApp account of the sending number has no template with this name "
+"in this language. Templates belong to one account: choose one of the "
+"sender's account, or send from a number of the account that owns it."
+msgstr ""
+"The WhatsApp account of the sending number has no template with this name "
+"in this language. Templates belong to one account: choose one of the "
+"sender's account, or send from a number of the account that owns it."
+
+#: admin/src/Api/Send_Error.php:148
 msgid ""
 "The WhatsApp API could not find the sender number. Sync your numbers under "
 "Joinotify → Settings → Phones."
@@ -10079,7 +10163,7 @@ msgstr ""
 "The WhatsApp API could not find the sender number. Sync your numbers under "
 "Joinotify → Settings → Phones."
 
-#: admin/src/Api/Send_Error.php:119
+#: admin/src/Api/Send_Error.php:149
 msgid ""
 "The WhatsApp API rate limit was reached. The message will be retried "
 "shortly."
@@ -10087,7 +10171,7 @@ msgstr ""
 "The WhatsApp API rate limit was reached. The message will be retried "
 "shortly."
 
-#: admin/src/Api/Send_Error.php:117
+#: admin/src/Api/Send_Error.php:147
 msgid ""
 "The WhatsApp API refused this request. The number may not be authorized to "
 "send on this account."
@@ -10095,7 +10179,7 @@ msgstr ""
 "The WhatsApp API refused this request. The number may not be authorized to "
 "send on this account."
 
-#: admin/src/Api/Send_Error.php:116
+#: admin/src/Api/Send_Error.php:146
 msgid ""
 "The WhatsApp API rejected the credentials. Reconnect the Joinotify account "
 "under Joinotify → Settings → General."
@@ -10206,7 +10290,15 @@ msgstr ""
 "This connection attempt expired or did not start here. Start the connection "
 "again."
 
-#: admin/src/Api/Send_Error.php:112
+#: app/src/pages/settings/components/cards/PhoneActions.vue:447
+msgid ""
+"This contact has not messaged this number in the last 24 hours, so WhatsApp "
+"will refuse free text. Send an approved template instead."
+msgstr ""
+"This contact has not messaged this number in the last 24 hours, so WhatsApp "
+"will refuse free text. Send an approved template instead."
+
+#: admin/src/Api/Send_Error.php:142
 msgid ""
 "This contact has not replied in the last 24 hours. WhatsApp only delivers "
 "free-form messages inside that window — use an approved template message to "
@@ -10257,7 +10349,7 @@ msgstr ""
 "This key is defined in wp-config.php (JOINOTIFY_CLOUD_API_TOKEN) and can "
 "only be changed there."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:387
+#: app/src/composables/useWhatsappTemplates.ts:93
 msgid "This list may be out of date."
 msgstr "This list may be out of date."
 
@@ -10348,7 +10440,7 @@ msgstr "This step is deprecated and will be removed in a future version."
 msgid "This step needs an open conversation"
 msgstr "This step needs an open conversation"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:115
+#: app/src/utils/whatsappTemplates.ts:148
 msgid "This template is still awaiting Meta approval and cannot be delivered yet."
 msgstr "This template is still awaiting Meta approval and cannot be delivered yet."
 
@@ -11150,7 +11242,7 @@ msgstr "Type your message... Use {{ placeholders }} and {{ joinotify_coupon_code
 msgid "Type your message... Use {{ placeholders }} and *bold*"
 msgstr "Type your message... Use {{ placeholders }} and *bold*"
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:232
+#: app/src/pages/settings/components/cards/PhoneActions.vue:460
 msgid "Type your test message..."
 msgstr "Type your test message..."
 
@@ -11332,7 +11424,7 @@ msgid "Use this file"
 msgstr "Use this file"
 
 #: app/src/builder/actions/settings/WhatsappMediaSettings.vue:66
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:329
+#: app/src/components/whatsapp/TemplateVariablesForm.vue:77
 msgid "Use this media"
 msgstr "Use this media"
 
@@ -11415,6 +11507,10 @@ msgstr "Uzbekistan"
 msgid "Value"
 msgstr "Value"
 
+#: app/src/utils/whatsappTemplates.ts:275
+msgid "Value for this variable"
+msgstr "Value for this variable"
+
 #: admin/src/Integrations/Elementor.php:151
 msgid "Value of a form field"
 msgstr "Value of a form field"
@@ -11446,7 +11542,7 @@ msgstr "Variable name"
 msgid "Variable removed successfully."
 msgstr "Variable removed successfully."
 
-#: app/src/pages/settings/SettingsPage.vue:518
+#: app/src/pages/settings/SettingsPage.vue:532
 msgid "Variable removed."
 msgstr "Variable removed."
 
@@ -11454,11 +11550,11 @@ msgstr "Variable removed."
 msgid "Variable saved successfully."
 msgstr "Variable saved successfully."
 
-#: app/src/pages/settings/SettingsPage.vue:502
+#: app/src/pages/settings/SettingsPage.vue:516
 msgid "Variable saved."
 msgstr "Variable saved."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:539
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:154
 msgid "Variables"
 msgstr "Variables"
 
@@ -11478,7 +11574,7 @@ msgstr "Vatican City"
 msgid "Venezuela"
 msgstr "Venezuela"
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:248
+#: app/src/utils/whatsappTemplates.ts:205
 msgid "Verification code"
 msgstr "Verification code"
 
@@ -11715,15 +11811,23 @@ msgstr "WhatsApp number that will send the media."
 msgid "WhatsApp number that will send the message."
 msgstr "WhatsApp number that will send the message."
 
-#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:441
+#: app/src/builder/actions/settings/WhatsappTemplateSettings.vue:91
 msgid "WhatsApp number that will send the template."
 msgstr "WhatsApp number that will send the template."
+
+#: admin/src/Api/Send_Error.php:80
+msgid ""
+"WhatsApp only sends the hello_world template from Meta's public test "
+"numbers. Choose another approved template."
+msgstr ""
+"WhatsApp only sends the hello_world template from Meta's public test "
+"numbers. Choose another approved template."
 
 #: admin/src/Api/Transport.php:206
 msgid "WhatsApp refused the template."
 msgstr "WhatsApp refused the template."
 
-#: admin/src/Api/Send_Error.php:84
+#: admin/src/Api/Send_Error.php:114
 msgid ""
 "WhatsApp refused the template. Check that it is approved, that its name and "
 "language match, and that every variable was filled."
@@ -12084,6 +12188,10 @@ msgstr ""
 msgid "Write in markdown to document your flow…"
 msgstr "Write in markdown to document your flow…"
 
+#: admin/src/Rest/Phone_Test_Message.php:84
+msgid "Write the test message before sending it."
+msgstr "Write the test message before sending it."
+
 #: app/src/builder/actions/settings/HttpRequestSettings.vue:96
 msgid "Writing the JSON"
 msgstr "Writing the JSON"
@@ -12236,7 +12344,7 @@ msgstr ""
 msgid "Your license is not linked to a Joinotify Cloud account yet."
 msgstr "Your license is not linked to a Joinotify Cloud account yet."
 
-#: app/src/pages/settings/components/cards/PhoneActions.vue:138
+#: app/src/pages/settings/components/cards/PhoneActions.vue:348
 msgid ""
 "Your numbers are connected on the Joinotify panel. Sync to import them "
 "here, along with their verified name, quality rating and 24-hour messaging "
