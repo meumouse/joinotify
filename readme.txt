@@ -4,7 +4,7 @@ Tags: automation, whatsapp, marketing, notifications, notify
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.1.0
-Stable tag: 2.7.3
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,9 +177,21 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Changelog ==
 
-= 2.7.3 =
-* New: `Joinotify/WooCommerce/Order_Types` filter, which sets the order types the WooCommerce triggers and the cloud sync run for.
+= 2.8.0 =
+* New: a Joinotify connection card at the top of Settings → General, with the account, the numbers and the last sync.
+* New: WhatsApp steps in the builder warn when the site is not connected to Joinotify.
+* New: the test message in Settings → Phones can send an approved template of the sender's WhatsApp account, with its variables and a preview, and warns when the recipient's 24-hour window is closed.
+* New: the WooCommerce full address format fields have a variable picker.
+* New: `Joinotify/WooCommerce/Address_Format_Placeholders` and `Joinotify/WooCommerce/Order_Types` filters.
+* Changed: WhatsApp is always on, so sites that had turned it off get their WhatsApp steps back.
+* Changed: Telegram and Resend steps no longer send while their integration is turned off, and the builder no longer offers them for new workflows.
+* Changed: the Applications tab of Settings is now called Integrations and no longer has a WhatsApp card.
+* Changed: the WooCommerce full address formats are edited on a single line, with variables only.
+* Changed: a failed test message is no longer put in the retry queue, and its reason stays on screen.
+* Deprecated: the Telegram and Resend integrations, which will be removed in 3.0.0.
 * Fixed: workflows and the cloud sync no longer run for orders that are not shop orders, such as the parts of a Headpress split payment.
+* Fixed: the builder's template step and the OTP login template list the templates of their sender's WhatsApp account, and keep the language chosen for a template approved in more than one.
+* Security: the Telegram bot token, the Resend API key and the key received when connecting through the Joinotify panel are no longer sent to the browser.
 
 = 2.7.2 =
 * Fixed: WooCommerce workflows run outside the storefront, such as an order status change in the admin, no longer end in a fatal error.
@@ -341,8 +353,8 @@ You can reopen the wizard at any time from `wp-admin/admin.php?page=joinotify-on
 
 == Upgrade Notice ==
 
-= 2.7.3 =
-Recommended for WooCommerce stores: order workflows no longer run for the hidden orders other plugins create, such as the parts of a Headpress split payment.
+= 2.8.0 =
+WhatsApp is always on now, so sites that had turned it off get their WhatsApp steps back. Telegram and Resend are deprecated and leave in 3.0.0: replace those steps with WhatsApp messages. Order workflows no longer run for hidden orders.
 
 = 2.7.2 =
 Recommended for WooCommerce stores: changing an order status in the admin no longer ends in a fatal error.
